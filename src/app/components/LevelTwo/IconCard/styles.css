@@ -1,0 +1,109 @@
+.selectType, .selectType label{
+    display: flex !important;
+    height: 200px;
+    width: 220px;
+}
+
+.selectType{
+    float: left;
+    margin: 20px;
+}
+
+.selectType:first-child{
+    margin-left: 0 !important;
+}
+
+.selectType label{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.selectType label:before{
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none;
+    background-image: url("../../../assets/images/Navvis_ch_spritesheet.svg");
+    background-position: 0px -236px;
+    height: 24px;
+    width: 24px;
+}
+
+.selectType label:after{
+    content: '';
+    position: absolute;
+    top: 40px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 72px;
+    width: 72px;
+}
+
+.selectType label.individual:after{
+    background-image: url("./Images/patient.png");
+}
+
+.selectType label.guardian:after{
+    background-image: url("./Images/guardian.png");
+}
+
+.selectType label:hover{
+    cursor: pointer;
+}
+
+.selectType label span{
+    display: block;
+    color: #373737;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    align-self: flex-end;
+}
+
+.selectType label span small {
+    display: block;
+    height: 40px;
+    margin-top: 5px;
+}
+
+.selectType input{
+    opacity: 0;
+    position: absolute !important;
+}
+
+/* .selectType input:checked + label{
+    background-color: #f1e7f7;
+}
+
+.selectType input:checked + label:before{
+    display: block;
+} */
+
+@media (max-width: 560px) {
+    .selectType, .selectType label {
+        width: 100%;
+        margin: 12px 0;
+    }
+    .selectType:first-child{
+        margin-top: 0;
+    }
+    .selectType:last-child{
+        margin-bottom: 0;
+    }
+}
+
+.selectType .checkedType{
+    background-color: #f1e7f7;
+}
+
+.selectType .checkedType:before{
+    display: block;
+}

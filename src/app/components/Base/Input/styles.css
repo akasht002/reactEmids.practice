@@ -1,0 +1,7 @@
+.react-floating-label-input label{
+    width: auto!important;
+}
+
+.react-floating-label-input > div{
+    padding-left: 0px !important;
+}

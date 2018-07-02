@@ -1,0 +1,122 @@
+.ContentCheckbox, .ContentCheckbox label{
+    display: flex !important;
+    width: 216px;
+    height: 145px;
+}
+
+.ContentCheckbox{
+    float: left;
+    margin: 20px 30px 20px 0px !important;
+    padding: 0 !important;
+}
+
+.ContentCheckbox:first-child{
+    margin-left: 0 !important;
+}
+
+.ContentCheckbox label{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.ContentCheckbox label:before{
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none;
+    background-image: url("../../../assets/images/Navvis_ch_spritesheet.svg");
+    background-position: 0px -236px;
+    height: 24px;
+    width: 24px;
+}
+
+.ContentCheckbox label:hover{
+    cursor: pointer;
+}
+
+.ContentCheckbox label span{
+    display: block;
+    color: #7a329f;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 20px;
+    width: 100%;
+}
+
+.ContentCheckbox label span small {
+    display: block;
+    position: relative;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 30px;
+}
+
+.ContentCheckbox label span small:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -30px;
+    top: 2px;
+    height: 16px;
+    width: 16px;
+    background-position: center;
+}
+
+.ContentCheckbox label span small.male:before {
+    background-image: url("./Images/male.png");
+}
+
+.ContentCheckbox label span small.female:before {
+    background-image: url("./Images/female.png");
+}
+
+/*.ContentCheckbox label span small.others:before {
+    background-image: url("../img/genderOthers.png");
+} */
+
+.ContentCheckbox label span small.dob:before {
+    background-image: url("./Images/birthdate.png");
+}
+
+.ContentCheckbox label span small.hmsa:before {
+    background-image: url("./Images/id.png");
+}
+
+.ContentCheckbox input{
+    opacity: 0;
+    position: absolute !important;
+}
+
+/* .ContentCheckbox input:checked + label{
+    background-color: #f1e7f7;
+}
+
+.ContentCheckbox input:checked + label:before{
+    display: block;
+} */
+
+@media (max-width: 560px) {
+    .ContentCheckbox, .ContentCheckbox label {
+        width: 100%;
+        margin: 12px 0;
+    }
+    .ContentCheckbox:first-child{
+        margin-top: 0;
+    }
+    .ContentCheckbox:last-child{
+        margin-bottom: 0;
+    }
+}
+
+.ContentCheckbox .checkedType{
+    background-color: #f1e7f7;
+}
+
+.ContentCheckbox .checkedType:before{
+    display: block;
+}

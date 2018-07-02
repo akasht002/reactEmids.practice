@@ -1,0 +1,551 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600,700');
+
+html, body{
+    font-family: 'Muli', sans-serif !important;
+    padding: 0;
+    margin: 0;
+}
+
+/*Width Options*/
+.width100{
+    width: 100%;
+}
+
+.width90{
+    width: 90%;
+}
+
+.width80{
+    width: 80%;
+}
+
+.width75{
+    width: 75%;
+}
+
+.width70{
+    width: 70%;
+}
+
+.width60{
+    width: 60%;
+}
+
+.width50{
+    width: 50%;
+}
+
+.width40{
+    width: 40%;
+}
+
+.width30{
+    width: 30%;
+}
+
+.width25{
+    width: 25%;
+}
+
+.width20{
+    width: 20%;
+}
+
+.width10{
+    width: 10%;
+}
+
+.width5{
+    width: 5%;
+}
+
+.primaryColor{
+    color: #3c1053 !important;
+}
+
+.agreementList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.agreementList li {
+    padding-left: 1em;
+    text-indent: -.7em;
+}
+
+.agreementList li::before {
+    content: "\2022 ";
+    color: #b16193;
+    font-size: 30px;
+    line-height: 26px;
+}
+
+a.btn.nav-link{
+    padding: .375rem .75rem !important;
+    color: #ffffff !important;
+}
+
+.btn{
+    display: block;
+    padding: 6px 30px !important;
+}
+
+.btn-primary, .btn-outline-primary{
+    border-color: #3c1053 !important;
+}
+
+.btn-primary{
+    background-color: #3c1053 !important;
+}
+
+.btn-outline-primary{
+    color: #3c1053 !important;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover{
+    color: #ffffff !important;
+    background-color: #633F75 !important;
+}
+
+input.form-control:focus, .btn-primary:focus, .btn-outline-primary:focus{
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    border-color: #3c1053 !important;
+}
+
+.boxShadowTop{
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.08);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.08);
+    -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,.08);
+}
+
+.boxShadowBottom{
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+.navbar{
+    height: 70px;
+}
+
+.mainWidget{
+    position: relative;
+    width: 100%;
+    min-height: calc( 100vh - 4.5rem );
+}
+
+.mainContent{
+    height: calc( 100vh - 9rem );
+    overflow-y: auto;
+}
+
+.mainContent .row > div > h4{
+    color: #3c1053 !important;
+}
+
+.sideContent{
+    width: 60%;
+    height: 100vh;
+    opacity: 1;
+    padding: 15px;
+    background-image: linear-gradient(to top, #3c1053, #66307f);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.3);
+}
+
+.sideNavigation{
+    position: relative;
+    align-content: center;
+    padding: 0 20px;
+}
+
+.sideNavigation li{
+    list-style: none;
+    color: rgba(255, 255, 255, .3);
+    margin: 20px 0 !important;
+}
+
+.sideNavigation li:before{
+    content: '';
+    position: absolute;
+    height: 36px;
+    width: 36px;
+    left: -35px;
+    background-image: url("app/assets/images/Navvis_ch_spritesheet.svg");
+    background-position: -72px -544px;
+}
+
+.sideNavigation li.active:before{
+    background-position: 0px -544px;
+}
+
+.sideNavigation li.visited:before{
+    background-position: -108px -544px;
+}
+
+.sideNavigation li.active{
+    color: #ffffff;
+}
+
+.sideNavigation li.visited{
+    color: rgba(255, 255, 255, .6);
+}
+
+.bottomFooterContent{
+    position: absolute;
+    height: 70px;
+    bottom: 0;
+}
+
+input.form-control{
+    padding: 5px 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #acacac;
+}
+
+input.form-control::placeholder {
+    color: #b9b6b6;
+}
+
+label{
+    color: #222222;
+}
+
+.receivePass{
+    position: fixed;
+    bottom: 100px;
+}
+
+.carousel{
+    height: calc( 100vh - 9rem );
+}
+
+.carousel-indicators{
+    position: fixed;
+}
+
+.carousel-indicators li{
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50%;
+    margin: 0 5px !important;
+    background-color: gray !important;
+}
+
+.carousel-indicators li.active{
+    width: 10px !important;
+    height: 10px !important;
+    top: -2px;
+    background-color: red !important;
+}
+
+.carousel-control-prev, .carousel-control-next{
+    display: none !important;
+}
+
+/************ MODAL BOX ************/
+
+.modal-dialog{
+    margin: 0 !important;
+    min-width: 100%;
+}
+
+.modal-lg{
+
+}
+
+.modal-lg .modal-content{
+    height: 100vh;
+    display: block !important;
+    overflow: hidden;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+}
+
+.modal-sm{
+    min-width: 500px;
+    margin: 0 auto !important;
+}
+
+.modal-sm .modal-content{
+    width: 500px;
+    display: flex !important;
+    height: fit-content !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    border-radius: 5px !important;
+}
+
+.modal-header{
+    height: 80px;
+}
+
+.modal-lg .modal-body{
+    height: calc( 100vh - 160px );
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.modal-footer{
+    height: 80px;
+}
+
+.selectType, .selectType label{
+    display: flex !important;
+    height: 200px;
+    width: 220px;
+}
+
+.selectType{
+    float: left;
+    margin: 20px;
+}
+
+.selectType:first-child{
+    margin-left: 0 !important;
+}
+
+.selectType label{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.selectType label:before{
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none;
+    background-image: url("app/assets/images/Navvis_ch_spritesheet.svg");
+    background-position: 0px -236px;
+    height: 24px;
+    width: 24px;
+}
+
+.selectType label:after{
+    content: '';
+    position: absolute;
+    top: 40px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 72px;
+    width: 72px;
+}
+
+.selectType label.individual:after{
+    background-image: url("app/assets/images/patient.png");
+}
+
+.selectType label.guardian:after{
+    background-image: url("app/assets/images/guardian.png");
+}
+
+.selectType label:hover{
+    cursor: pointer;
+}
+
+.selectType label span{
+    display: block;
+    color: #373737;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    align-self: flex-end;
+}
+
+.selectType label span small {
+    display: block;
+    height: 40px;
+    margin-top: 5px;
+}
+
+.selectType input{
+    opacity: 0;
+    position: absolute !important;
+}
+
+.selectType input:checked + label{
+    background-color: #f1e7f7;
+}
+
+.selectType input:checked + label:before{
+    display: block;
+}
+
+@media (max-width: 560px) {
+    .selectType, .selectType label {
+        width: 100%;
+        margin: 12px 0;
+    }
+    .selectType:first-child{
+        margin-top: 0;
+    }
+    .selectType:last-child{
+        margin-bottom: 0;
+    }
+}
+
+
+/*-----------------------------------------------------------------------------------------*/
+
+.ContentCheckbox, .ContentCheckbox label{
+    display: flex !important;
+    width: 216px;
+    height: 145px;
+}
+
+.ContentCheckbox{
+    float: left;
+    padding: 13px !important;
+}
+
+.ContentCheckbox label{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.ContentCheckbox label:before{
+    content: '';
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: none;
+    background-image: url("app/assets/images/Navvis_ch_spritesheet.svg");
+    background-position: 0px -236px;
+    height: 24px;
+    width: 24px;
+}
+
+.ContentCheckbox label:hover{
+    cursor: pointer;
+}
+
+.ContentCheckbox label span{
+    display: block;
+    color: #7a329f;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 20px;
+    width: 100%;
+}
+
+.ContentCheckbox label span small {
+    display: block;
+    position: relative;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 30px;
+}
+
+.ContentCheckbox label span small:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -30px;
+    top: 2px;
+    height: 16px;
+    width: 16px;
+    background-position: center;
+}
+
+.ContentCheckbox label span small.male:before {
+    background-image: url("app/assets/images/male.png");
+}
+
+.ContentCheckbox label span small.female:before {
+    background-image: url("app/assets/images/female.png");
+}
+
+/*.ContentCheckbox label span small.others:before {
+    background-image: url("../img/genderOthers.png");
+} */
+
+.ContentCheckbox label span small.dob:before {
+    background-image: url("app/assets/images/birthdate.png");
+}
+
+.ContentCheckbox label span small.hmsa:before {
+    background-image: url("app/assets/images/id.png");
+}
+
+.ContentCheckbox input{
+    opacity: 0;
+    position: absolute !important;
+}
+
+.ContentCheckbox input:checked + label{
+    background-color: #f1e7f7;
+}
+
+.ContentCheckbox input:checked + label:before{
+    display: block;
+}
+
+@media (max-width: 560px) {
+    .ContentCheckbox, .ContentCheckbox label {
+        width: 100%;
+        margin: 12px 0;
+    }
+    .ContentCheckbox:first-child{
+        margin-top: 0;
+    }
+    .ContentCheckbox:last-child{
+        margin-bottom: 0;
+    }
+}
+
+/************ CONTROLS FOR SCROLL BAR ************/
+
+@media screen and (min-width: 1170px) {
+
+	::-webkit-scrollbar {
+		width: 3px;
+		height: 5px;
+ 	}
+
+	::-webkit-scrollbar-button {
+		width: 0px;
+		height: 0px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: #cccccc;
+		border-radius: 50px;
+		opacity: 0;
+	}
+
+	::-webkit-scrollbar-thumb:hover{
+        background: #cccccc;
+    }
+    ::-webkit-scrollbar-thumb:active {
+        background: #cccccc;
+	}
+
+	::-webkit-scrollbar-track {
+        background-color: transparent;
+        border-radius: 50px;
+    }
+    ::-webkit-scrollbar-track:hover {
+        background-color: transparent;
+    }
+    ::-webkit-scrollbar-track:active {
+        background-color: transparent;
+	}
+}

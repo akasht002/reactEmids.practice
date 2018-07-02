@@ -1,0 +1,23 @@
+.icon, .success-msg-icon:before{
+    background-image: url("../assets/images/Navvis_ch_spritesheet.svg");
+}
+
+.icon-contact{
+    background-position: 7px -231px;
+    height: 32px;
+    width: 32px;
+}
+
+.success-msg-icon {
+    margin-left: 20px;
+}
+
+.success-msg-icon:before{
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 0px;
+    margin-top: 4px;
+    background-position: 0 0;
+}

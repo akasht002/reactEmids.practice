@@ -1,0 +1,595 @@
+<svg id="Help_-_Dark_Grey" data-name="Help - Dark Grey" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1380" height="1691" viewBox="0 0 1380 1691">
+  <defs>
+    <style>
+      .cls-1, .cls-48, .cls-9 {
+        fill: #7a329f;
+      }
+
+      .cls-1, .cls-15, .cls-16, .cls-17, .cls-18, .cls-19, .cls-2, .cls-20, .cls-22, .cls-24, .cls-26, .cls-28, .cls-29, .cls-3, .cls-30, .cls-31, .cls-32, .cls-33, .cls-34, .cls-37, .cls-39, .cls-41, .cls-42, .cls-44, .cls-46, .cls-50, .cls-51, .cls-52, .cls-53, .cls-54, .cls-56, .cls-58, .cls-60, .cls-62 {
+        fill-rule: evenodd;
+      }
+
+      .cls-13, .cls-15, .cls-16, .cls-17, .cls-18, .cls-19, .cls-2, .cls-20, .cls-21, .cls-23, .cls-25, .cls-27, .cls-29, .cls-30, .cls-31, .cls-32, .cls-33, .cls-40, .cls-41, .cls-50, .cls-51, .cls-52, .cls-53, .cls-54, .cls-57, .cls-59, .cls-60, .cls-61 {
+        fill: none;
+      }
+
+      .cls-15, .cls-2, .cls-27, .cls-51 {
+        stroke: #fff;
+      }
+
+      .cls-2 {
+        stroke-width: 2px;
+      }
+
+      .cls-3, .cls-7 {
+        fill: #a8a8a8;
+      }
+
+      .cls-14, .cls-28, .cls-4, .cls-6, .cls-8 {
+        fill: #fff;
+      }
+
+      .cls-4 {
+        stroke: #ba85d6;
+      }
+
+      .cls-4, .cls-6 {
+        stroke-width: 1.5px;
+      }
+
+      .cls-5 {
+        fill: #ba85d6;
+      }
+
+      .cls-18, .cls-6, .cls-8 {
+        stroke: #a8a8a8;
+      }
+
+      .cls-13, .cls-15, .cls-16, .cls-17, .cls-18, .cls-19, .cls-20, .cls-21, .cls-23, .cls-25, .cls-27, .cls-29, .cls-30, .cls-31, .cls-32, .cls-33, .cls-40, .cls-41, .cls-48, .cls-50, .cls-51, .cls-52, .cls-53, .cls-54, .cls-56, .cls-57, .cls-58, .cls-59, .cls-60, .cls-61, .cls-8 {
+        stroke-width: 1px;
+      }
+
+      .cls-10 {
+        fill: #787777;
+      }
+
+      .cls-11, .cls-22 {
+        fill: #afbbc4;
+      }
+
+      .cls-12 {
+        fill: #6b829b;
+      }
+
+      .cls-13, .cls-16, .cls-48 {
+        stroke: #7a329f;
+      }
+
+      .cls-17 {
+        stroke: #787777;
+      }
+
+      .cls-19, .cls-21, .cls-54, .cls-56 {
+        stroke: #afbbc4;
+      }
+
+      .cls-20, .cls-61 {
+        stroke: #6b829b;
+      }
+
+      .cls-23, .cls-41, .cls-53 {
+        stroke: #7489a0;
+      }
+
+      .cls-24, .cls-47 {
+        fill: #7489a0;
+      }
+
+      .cls-25, .cls-50, .cls-52 {
+        stroke: #47aedc;
+      }
+
+      .cls-26, .cls-49 {
+        fill: #47aedc;
+      }
+
+      .cls-29 {
+        stroke: #bcc5cc;
+      }
+
+      .cls-30, .cls-57, .cls-58 {
+        stroke: #8597aa;
+      }
+
+      .cls-31, .cls-40 {
+        stroke: #bdc6cd;
+      }
+
+      .cls-32 {
+        stroke: #8698ab;
+      }
+
+      .cls-33 {
+        stroke: #63b9df;
+      }
+
+      .cls-34, .cls-35 {
+        fill: #49d08b;
+      }
+
+      .cls-36, .cls-37 {
+        fill: #fd6870;
+      }
+
+      .cls-38, .cls-39 {
+        fill: #bdc6cd;
+      }
+
+      .cls-42 {
+        fill: #8698ab;
+      }
+
+      .cls-43, .cls-44 {
+        fill: #889aad;
+      }
+
+      .cls-45, .cls-46 {
+        fill: #f4f6f9;
+      }
+
+      .cls-51, .cls-52, .cls-53, .cls-54 {
+        opacity: 0.7;
+      }
+
+      .cls-55, .cls-62 {
+        fill: #39a9db;
+      }
+
+      .cls-56, .cls-58 {
+        fill: #e3e3e3;
+      }
+
+      .cls-59, .cls-60 {
+        stroke: #39a9db;
+      }
+    </style>
+  </defs>
+  <image y="32" width="16" height="16" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAw1BMVEUjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIjgjIAAAA4TenEAAAAP3RSTlMALYXD4OHFiTEFjPb4kQmqsQuGj/rk7jWHzBpsksbNDxO84qdgBBDOSPnTy+Mdi9WW/pXBOY4NsrkI/Zk4lDqs41g0AAAAAWJLR0RA/tlc2AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB+IGGRIsIV/z8XIAAACiSURBVBjTTY/XEoJQDERjQUEFRWxXQRALdgF7zf//lQkXkX1Jzk42kwCQCsVSWalUVZDSanVM1NANZqOJmVomGW3MyaJ8J6NuD7EPg4zFcIRog/PjsetNyAUfcTqjWWe+CMhW2LBguVob2obntkmEnJ0nkmAAey46uAe5KQQ14hof09UngHP+sJAuvVz/fHP5mXv8kBg9zfTfly18X7w/3H8BUzkqjYOjSrcAAAAASUVORK5CYII="/>
+  <image id="Wrong" x="16" y="32" width="16" height="16" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAzFBMVEXATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnATlnAT1q7QEu+SVW+R1O7P0u+SlXMb3nBUFq+SFTDVV/Nc3y+SVS6PkrNdH3+/P3ltrq7QEy9RVHsyMv////LbXa+R1LDVmHtzM/fpqvirrTmub3BUFu+SFPks7jgqa67QU3gqa/ksra9SFPnub7irbPgpqzsys7DVmDLbnfrx8vlt7z+/f3CVF/McHkAAACZDUZoAAAAFHRSTlMANI7P6QeMBrKRNpOS0u+1C481jVVPBBYAAAABYktHRENn0A1iAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH4gYZEiwhX/PxcgAAALxJREFUGNNFT2kDgVAQXEW5irRPQnohVq6Q+/b/f5T3EubT7Ozu7CyAQE5R83lVycEHBQ0zaAVZ60X8oagLoYQMmw5jLVeQEkBZNNqdruP1fC5oGSqIQX8wDEdjmoSIVTAQo+mM5gtaxmLEABORrbw10SbhDNFMBZ5siXZ7LxXECo8PdDzR+RLJFWEaXuk2Cu8PP5Cm8iz3n54Tv9rp2TSY22KMZ8FAr/2j12R0qFvf2qpn/zZswzQNuyH5Gx0TFdh5f9wtAAAAAElFTkSuQmCC"/>
+  <image id="_-e-Layer_542" data-name="-e-Layer 542" x="2" y="343" width="28" height="30" xlink:href="data:img/png;base64,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"/>
+  <image id="_-e-Layer_542_copy" data-name="-e-Layer 542 copy" x="34" y="343" width="28" height="30" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAeCAQAAACVzLYUAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQfiBhkSLCFf8/FyAAACa0lEQVQ4y43UUWhWdRjH8c8575u+GEJImDZK7UJd3cUQsaIIahPJ9KY/tDCRDLsQRhGiIs0F1U2BGBIKI2/MI2JBI4XVWOBFN4tKmaKI0qiF5GuOpu6de08Xe7e9buds/W7OOc//+fL8/s//f57ouBxFtnvAoZBmL8d5nKINXlXKW74ffNCSuq8xFZP1khXJw/lgi24tk1YL5olq2MvO2JQP/qbquGYRKn5w2h1Imp1w24/54GUbXbCpZvBzB2rxDS7aHC7f17sZXV1gkQZrPaaIUb/7yTXlMDa9d9P1lH1ewQ0pih7C1zp1zQUuUdKuW1mKgkXWeN03ycc6wmg2WPSO1Bd6DE8FA2eTTu32GtWR3Zx7GjzuXj1Wg/8JbQ7Znzyb3Zwn/WHItCsWas9kuR4DXpxo0lTFFU56U87NJFyTaNI402qjZYbMph53rZwJznPXwKzg7fr8iZdIkYmbmaNIqlB/HLH1XvKcUv4OQapkV7LG6fA9sYJPdNnmEemcYGqxbbqTj5I49ob3fWWdD1Rm+a3HrVbs94zDdtsae9clbc4r+z8qh3479Xkv9qgB18kfEnVWKREqLlgcO2e1JzA8xw7H0WGShZ52NdZhqaM2WiWe4ziIrEpaHNPow6JeO3zqlDtKRmbFqubbY76qtvBtEUec1WylQb9MJsW2eNtCvyafhZ9rsYqqPl3OhP6s0TGuHQ667pYGNz2vLJJa70uvhdokKGZikZ2ueMFfWh3xnb/FUk0u6ZuylA0WVA1hRGTMiIpRnVrD4ERKdsWqgw7o9acmN202KCb8W5+SDXLYAm9Z5qL2cCUr4T/HPLnuVbuvFAAAAABJRU5ErkJggg=="/>
+  <image id="_-e-Layer_542_copy-2" data-name="-e-Layer 542 copy" x="66" y="343" width="28" height="30" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAeCAMAAAAIG46tAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAB3VBMVEV6Mp////96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp96Mp8AAACnLmKwAAAAnXRSTlMAAAFmawWxugkLGK60CCEUU9NIBkbZZCXR8Educc8fx5cCksggChw3b4yQi201FQOy7OvvTE1/OignKjxyzPyDBGwQ/n6IipQP3sHWh/UsSmBF7VJQQztURFdLzfTOjfLkQvOGX6Zj7mWZYhZR1bxZW6O+Ik4NykD9w3V3s/s+OPH49ilwln0OxqQyaOXgVtjC0Bn30r0rsOYjDOlBCAOjiAAAAAFiS0dEnp+yowsAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQfiBhkSLCFf8/FyAAABp0lEQVQoz2NgQAJMzCxMjEgAWY6BlY2dA4skJxdYkpuHFyTIx48iKSAoBCSFITpFRMVQJMUlJKWYGBikZRgYGaUkZcVR7ZSTVwCSiopASSVlFXQHqaqpa2hqaWnr6OrpY7hW12DuXEMjI+O5c7lNMCRN2c3MLSwtraxtbO3sWZElHXQcHTghTEZGJy1nFxSdrm4wE0CC7nOtkSStPJiQJVU8vfThknze0gzIkow+vn5wSX/fAFTJwKBguGRIUCiqZFhQOEySKTwoAlXS2jASIqkYpRXti64zJjYuAiip7zY3PiEmEVXSPCnBeG6yIkPK3FS/tPQIdDszrDLnZjFIiGYz5GBKCjAK2+YyGOUxMOSjS5oHFTAyFhoxFCUUM5Sgu9bcMISxNLeMobyisqTKOBBdZ7VQjbMpA0NGvF1SbR2qZH1MQ2OTNCgQmlta29pB4ooBHYKdXSDJrvgiGyvUdNtd2+Pd0CtX2l7a12SClqiZcvu5GAqacr0qJzRNnIQmqdjvrcoQPnkK+9Sp7tMwsgOLXdn0hBkzVWfNwpJXWKtEZ3vNQcorACuZV+HgCHWkAAAAAElFTkSuQmCC"/>
+  <image id="_-e-Layer_542_copy_2" data-name="-e-Layer 542 copy 2" x="98" y="343" width="28" height="30" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAeCAQAAACVzLYUAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQfiBhkSLCFf8/FyAAACWElEQVQ4y42UXWjNcRjHP///OVtrNiStIc1LecuVIhFF2EReUi4oiiaF5UbuxBTlQnJBUsrNkgtJymqooSwhL224QQx5G8aOOedsHxd7O2fn/A/Pc/M8/9/3+3ue3/f//H6BRFhALUWcIgIQRvGIs4q1lEQtZxNHUJmR9ZDMqDeZsdHEGpqoGWw1RjFBf7aCRtZFE5/QywWqCYAkN7jGbwCquUiC5iys2V7lXU/3x6Fhf3TSFidlI4Mc0UoZwwTmM5E4kOINLbymg55hOIf7XK+o+sXPfvabqpdcPRwXz9G5khIO0kQHAjHGMI9NXOYo9aTyV4y7x93GHZHTxWhP2OuBqIppJhCSJp3TxXf2EucQN7mTr+IsRxlIhE/ypc3GBvKhhcm2WRdJQzxql7MHsqEBmEkVnRSym3QzLXdyiunmbUFiIhM/EATEYXAy81uAxAaSOBCykuUsogQLEqWE/czjGtcBYx5TO233l0sLirPAn7b7TT1iiFvVBme73Q6XFSQu9Ku1zvKMug0f+8IKcf1/ETeIxd63NWQ8b/kE0Y9Exhn7UEmeURHylBlMAbr+IU0ftQsoZw6vQuoZx3nWMJ3wH78DAqZTQwMzOYxYa6dpf5pyccEzzveXP+w2YV3f7TjLHaqZxgceDe4dsoUdlPOY4zzs/5aklwdcpZE2iNp9pynf2eYPX1tluSMtd6OJoZcgPy2w1edWiptN2Gqzt71lwkeOy70d2SLE6KUT+ENAD39IkuIcm/mQoXBe32Xae1623fdOtdQyy7IRUcQi9/nCjza7JD/iLyhhC5zpZI+HAAAAAElFTkSuQmCC"/>
+  <path id="_-e-Ellipse_4" data-name="-e-Ellipse 4" class="cls-1" d="M12,237A11,11,0,1,1,1,248,11,11,0,0,1,12,237ZM5.583,248.916l3.667,3.667"/>
+  <path id="_-e-Shape_2" data-name="-e-Shape 2" class="cls-2" d="M6,247l4,4,7-8"/>
+  <path id="_-e-Ellipse_4-2" data-name="-e-Ellipse 4" class="cls-3" d="M36,237a11,11,0,1,1-11,11A11,11,0,0,1,36,237Zm-6.417,11.916,3.667,3.667"/>
+  <g id="Wizard_-_Current_Step" data-name="Wizard - Current Step">
+    <circle id="_-e-Ellipse_2_copy_2" data-name="-e-Ellipse 2 copy 2" class="cls-4" cx="18" cy="562" r="17"/>
+    <circle id="_-e-Ellipse_2_copy" data-name="-e-Ellipse 2 copy" class="cls-5" cx="18" cy="562" r="9.844"/>
+  </g>
+  <g id="Wizard_-_Current_Step_-grey" data-name="Wizard - Current Step -grey">
+    <circle id="_-e-Ellipse_2_copy_3" data-name="-e-Ellipse 2 copy 3" class="cls-6" cx="54" cy="562" r="17"/>
+    <circle id="_-e-Ellipse_2_copy_3-2" data-name="-e-Ellipse 2 copy 3" class="cls-7" cx="54" cy="562" r="9.844"/>
+  </g>
+  <g id="Wizard_-_Current_Step_-grey_copy" data-name="Wizard - Current Step -grey copy">
+    <circle id="_-e-Ellipse_2_copy_3-3" data-name="-e-Ellipse 2 copy 3" class="cls-8" cx="90" cy="562" r="9.844"/>
+  </g>
+  <g id="Wizard_-_Completed_Step" data-name="Wizard - Completed Step">
+    <circle id="_-e-Ellipse_2_copy_3-4" data-name="-e-Ellipse 2 copy 3" class="cls-9" cx="126" cy="562" r="17"/>
+    <path id="_-e-Shape_2_copy" data-name="-e-Shape 2 copy" class="cls-2" d="M118.416,562.023l5.026,5.022L134.489,555"/>
+  </g>
+  <g id="Wizard_-_Completed_Step_copy" data-name="Wizard - Completed Step copy">
+    <circle id="_-e-Ellipse_2_copy_3-5" data-name="-e-Ellipse 2 copy 3" class="cls-10" cx="162" cy="562" r="17"/>
+    <circle class="cls-11" cx="328" cy="3" r="1"/>
+    <circle id="Ellipse_1_copy" data-name="Ellipse 1 copy" class="cls-11" cx="328" cy="8" r="1"/>
+    <circle id="Ellipse_1_copy_2" data-name="Ellipse 1 copy 2" class="cls-11" cx="328" cy="13" r="1"/>
+    <circle class="cls-12" cx="344" cy="3" r="1"/>
+    <circle id="Ellipse_1_copy-2" data-name="Ellipse 1 copy" class="cls-12" cx="344" cy="8" r="1"/>
+    <circle id="Ellipse_1_copy_2-2" data-name="Ellipse 1 copy 2" class="cls-12" cx="344" cy="13" r="1"/>
+    <circle class="cls-13" cx="360" cy="3" r="1"/>
+    <circle id="Ellipse_1_copy-3" data-name="Ellipse 1 copy" class="cls-13" cx="360" cy="8" r="1"/>
+    <circle id="Ellipse_1_copy_2-3" data-name="Ellipse 1 copy 2" class="cls-13" cx="360" cy="13" r="1"/>
+    <circle class="cls-14" cx="376" cy="3" r="1"/>
+    <circle id="Ellipse_1_copy-4" data-name="Ellipse 1 copy" class="cls-14" cx="376" cy="8" r="1"/>
+    <circle id="Ellipse_1_copy_2-4" data-name="Ellipse 1 copy 2" class="cls-14" cx="376" cy="13" r="1"/>
+    <image id="grey_copy" data-name="grey copy" x="274" y="23" width="12" height="2" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAACAgMAAAAREdUEAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAADFBMVEWvu8Svu8Svu8QAAADM1JTYAAAAA3RSTlMAw8SGqEb6AAAAAWJLR0QDEQxM8gAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB+IGGRIsIV/z8XIAAAAQSURBVAjXYwgQYWWYoMIJAATKAScqyGQ6AAAAAElFTkSuQmCC"/>
+    <image id="dark_blue" data-name="dark blue" x="290" y="23" width="12" height="2" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAACAgMAAAAREdUEAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAADFBMVEX///9rgptrgpsAAAAZP8ebAAAAA3RSTlMAw8SGqEb6AAAAAWJLR0QDEQxM8gAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB+IGGRIsIV/z8XIAAAAQSURBVAjXYwgQYWWYoMIJAATKAScqyGQ6AAAAAElFTkSuQmCC"/>
+    <image id="dark_blue_copy" data-name="dark blue copy" x="306" y="23" width="12" height="2" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAACAgMAAAAREdUEAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAADFBMVEX///85qds5qdsAAADJz0rGAAAAA3RSTlMAw8SGqEb6AAAAAWJLR0QDEQxM8gAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB+IGGRIsIV/z8XIAAAAQSURBVAjXYwgQYWWYoMIJAATKAScqyGQ6AAAAAElFTkSuQmCC"/>
+    <image id="dark_blue_copy_2" data-name="dark blue copy 2" x="322" y="23" width="12" height="2" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAACCAQAAADGdvUcAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQfiBhkSLCFf8/FyAAAAHUlEQVQI12P8f5iBgcGWgYGBgQGFxcTAyAADKCwAmvgDyYM8+xEAAAAASUVORK5CYII="/>
+    <path class="cls-15" d="M62,5.5l-6,6.513L50,5.5"/>
+    <path id="Shape_10_copy_7" data-name="Shape 10 copy 7" class="cls-2" d="M382,21.5l-6,6.513L370,21.5"/>
+    <path id="Shape_10_copy" data-name="Shape 10 copy" class="cls-16" d="M46,5.5l-6,6.513L34,5.5"/>
+    <path id="Shape_10_copy_2" data-name="Shape 10 copy 2" class="cls-17" d="M30,5.5l-6,6.513L18,5.5"/>
+    <path id="Shape_10_copy_3" data-name="Shape 10 copy 3" class="cls-18" d="M14,5.5L8,12.013,2,5.5"/>
+    <path class="cls-19" d="M65.41,10l6.018-6.106L77.446,10"/>
+    <path id="Shape_10_copy-2" data-name="Shape 10 copy" class="cls-20" d="M81.458,10l6.018-6.106L93.494,10"/>
+    <path id="Shape_10_copy_2-2" data-name="Shape 10 copy 2" class="cls-16" d="M97.506,10l6.018-6.106L109.542,10"/>
+    <path id="Shape_10_copy_3-2" data-name="Shape 10 copy 3" class="cls-15" d="M113.554,10l6.018-6.106L125.589,10"/>
+    <path class="cls-19" d="M133.312,2l5.7,6-5.7,6"/>
+    <path id="Shape_10_copy-3" data-name="Shape 10 copy" class="cls-20" d="M149.312,1.989l5.7,6-5.7,6"/>
+    <path id="Shape_10_copy_2-3" data-name="Shape 10 copy 2" class="cls-16" d="M165.312,2.006l5.7,6-5.7,6"/>
+    <path id="Shape_10_copy_3-3" data-name="Shape 10 copy 3" class="cls-15" d="M181.312,1.991l5.7,6-5.7,6"/>
+    <circle class="cls-21" cx="1096.5" cy="8.5" r="6.5"/>
+    <path class="cls-22" d="M1096,7h1v5h-1V7Z"/>
+    <path id="Shape_31_copy" data-name="Shape 31 copy" class="cls-22" d="M1096,4h1V6h-1V4Z"/>
+    <circle class="cls-23" cx="1112.5" cy="8.5" r="6.5"/>
+    <path class="cls-24" d="M1112,7h1v5h-1V7Z"/>
+    <path id="Shape_31_copy-2" data-name="Shape 31 copy" class="cls-24" d="M1112,4h1V6h-1V4Z"/>
+    <circle class="cls-25" cx="1128.5" cy="8.5" r="6.5"/>
+    <path class="cls-26" d="M1128,7h1v5h-1V7Z"/>
+    <path id="Shape_31_copy-3" data-name="Shape 31 copy" class="cls-26" d="M1128,4h1V6h-1V4Z"/>
+    <circle class="cls-27" cx="1144.5" cy="8.5" r="6.5"/>
+    <path class="cls-28" d="M1144,7h1v5h-1V7Z"/>
+    <path id="Shape_31_copy-4" data-name="Shape 31 copy" class="cls-28" d="M1144,4h1V6h-1V4Z"/>
+    <path class="cls-19" d="M201.588,14l-5.6-6,5.6-6"/>
+    <path id="Shape_10_copy-4" data-name="Shape 10 copy" class="cls-20" d="M217.588,14.01l-5.6-6,5.6-6"/>
+    <path id="Shape_10_copy_2-4" data-name="Shape 10 copy 2" class="cls-16" d="M233.588,13.994l-5.6-6,5.6-6"/>
+    <path id="Shape_10_copy_3-4" data-name="Shape 10 copy 3" class="cls-15" d="M249.588,14.009l-5.6-6,5.6-6"/>
+    <path class="cls-29" d="M268.243,2.343l1.414,1.414-9.9,9.9-1.414-1.414Z"/>
+    <path id="Rectangle_3833_copy" data-name="Rectangle 3833 copy" class="cls-29" d="M258.343,3.757l1.414-1.414,9.9,9.9-1.414,1.414Z"/>
+    <path class="cls-30" d="M284.243,2.343l1.414,1.414-9.9,9.9-1.414-1.414Z"/>
+    <path id="Rectangle_3833_copy-2" data-name="Rectangle 3833 copy" class="cls-30" d="M274.343,3.757l1.414-1.414,9.9,9.9-1.414,1.414Z"/>
+    <path class="cls-16" d="M300.243,1.343l1.414,1.414-9.9,9.9-1.414-1.414Z"/>
+    <path id="Rectangle_3833_copy-3" data-name="Rectangle 3833 copy" class="cls-16" d="M290.343,2.757l1.414-1.414,9.9,9.9-1.414,1.414Z"/>
+    <path class="cls-15" d="M316.243,2.343l1.414,1.414-9.9,9.9-1.414-1.414Z"/>
+    <path id="Rectangle_3833_copy-4" data-name="Rectangle 3833 copy" class="cls-15" d="M306.343,3.757l1.414-1.414,9.9,9.9-1.414,1.414Z"/>
+    <path id="white" class="cls-31" d="M392,1h1V14h-1V1Zm-6,7V7h13V8H386Z"/>
+    <path id="white_copy" data-name="white copy" class="cls-32" d="M408,1h1V14h-1V1Zm-6,7V7h13V8H402Z"/>
+    <path id="white_copy_2" data-name="white copy 2" class="cls-16" d="M424,1h1V14h-1V1Zm-6,7V7h13V8H418Z"/>
+    <path id="white_copy_3" data-name="white copy 3" class="cls-15" d="M440,1h1V14h-1V1Zm-6,7V7h13V8H434Z"/>
+    <path id="white-2" data-name="white" class="cls-31" d="M2,24V23H14v1H2Z"/>
+    <path id="white_copy-2" data-name="white copy" class="cls-32" d="M18,24V23H30v1H18Z"/>
+    <path id="white_copy_2-2" data-name="white copy 2" class="cls-33" d="M34,24V23H46v1H34Z"/>
+    <path id="white_copy_3-2" data-name="white copy 3" class="cls-15" d="M50,24V23H62v1H50Z"/>
+    <path id="Polygon_1" data-name="Polygon 1" class="cls-34" d="M456,2.007l7,6.986H449Z"/>
+    <rect class="cls-35" x="453" y="9" width="6" height="5"/>
+    <rect class="cls-36" x="469" y="9" width="6" height="5"/>
+    <path id="Polygon_1_copy" data-name="Polygon 1 copy" class="cls-37" d="M472,2.007l7,6.986H465Z"/>
+    <rect class="cls-38" x="485" y="9" width="6" height="5"/>
+    <path id="Polygon_1_copy_2" data-name="Polygon 1 copy 2" class="cls-39" d="M488,2.007l7,6.986H481Z"/>
+    <rect class="cls-35" x="501" y="2" width="6" height="5"/>
+    <path id="Polygon_1_copy_3" data-name="Polygon 1 copy 3" class="cls-34" d="M504.005,13.993l-7-6.986H511Z"/>
+    <path id="Polygon_1_copy_4" data-name="Polygon 1 copy 4" class="cls-37" d="M520.005,13.993l-7-6.986H527Z"/>
+    <rect class="cls-36" x="517" y="2" width="6" height="5"/>
+    <path id="Polygon_1_copy_5" data-name="Polygon 1 copy 5" class="cls-39" d="M536.005,13.993l-7-6.986H543Z"/>
+    <rect class="cls-38" x="533" y="2" width="6" height="5"/>
+    <rect class="cls-35" x="645" y="18" width="6" height="6"/>
+    <path id="Polygon_1_copy_3-2" data-name="Polygon 1 copy 3" class="cls-34" d="M648.005,30.993l-7-6.986H655Z"/>
+    <rect class="cls-35" x="661" y="24" width="6" height="6"/>
+    <path id="Polygon_1_copy_3-3" data-name="Polygon 1 copy 3" class="cls-34" d="M664.005,17.007l-7,6.986H671Z"/>
+    <rect class="cls-35" x="674" y="21" width="6" height="6"/>
+    <path id="Polygon_1_copy_3-4" data-name="Polygon 1 copy 3" class="cls-34" d="M686.989,24l-6.986-7V31Z"/>
+    <rect class="cls-35" x="696" y="21" width="6" height="6"/>
+    <path id="Polygon_1_copy_3-5" data-name="Polygon 1 copy 3" class="cls-34" d="M689.011,24l6.986-7V31Z"/>
+    <rect class="cls-36" x="709" y="18" width="6" height="6"/>
+    <path id="Polygon_1_copy_3-6" data-name="Polygon 1 copy 3" class="cls-37" d="M712.005,30.993l-7-6.986H719Z"/>
+    <rect class="cls-36" x="725" y="24" width="6" height="6"/>
+    <path id="Polygon_1_copy_3-7" data-name="Polygon 1 copy 3" class="cls-37" d="M728.005,17.007l-7,6.986H735Z"/>
+    <rect class="cls-36" x="738" y="21" width="6" height="6"/>
+    <path id="Polygon_1_copy_3-8" data-name="Polygon 1 copy 3" class="cls-37" d="M750.989,24l-6.986-7V31Z"/>
+    <rect class="cls-36" x="760" y="21" width="6" height="6"/>
+    <path id="Polygon_1_copy_3-9" data-name="Polygon 1 copy 3" class="cls-37" d="M753.01,24l6.987-7V31Z"/>
+    <g id="View_-_Light_Grey" data-name="View - Light Grey">
+      <path class="cls-31" d="M545.124,7.444s0.38,0.053.991-1.111a6.972,6.972,0,0,1,11.894,0A1.609,1.609,0,0,0,559,7.444"/>
+      <path id="Shape_15_copy" data-name="Shape 15 copy" class="cls-31" d="M558.877,8.555S558.5,8.5,557.9,9.667a6.878,6.878,0,0,1-11.789,0,1.606,1.606,0,0,0-.982-1.111"/>
+      <circle class="cls-40" cx="552" cy="8" r="2"/>
+    </g>
+    <g id="View_-_Dark_Grey" data-name="View - Dark Grey">
+      <path class="cls-41" d="M561.124,7.444s0.38,0.053.991-1.111a6.972,6.972,0,0,1,11.894,0A1.609,1.609,0,0,0,575,7.444"/>
+      <path id="Shape_15_copy-2" data-name="Shape 15 copy" class="cls-41" d="M574.877,8.555S574.5,8.5,573.9,9.667a6.878,6.878,0,0,1-11.789,0,1.606,1.606,0,0,0-.982-1.111"/>
+      <circle class="cls-23" cx="568" cy="8" r="2"/>
+    </g>
+    <g id="View_-_purple" data-name="View - purple">
+      <path class="cls-16" d="M577.124,7.444s0.38,0.053.991-1.111a6.972,6.972,0,0,1,11.894,0A1.609,1.609,0,0,0,591,7.444"/>
+      <path id="Shape_15_copy-3" data-name="Shape 15 copy" class="cls-16" d="M590.877,8.555S590.5,8.5,589.9,9.667a6.878,6.878,0,0,1-11.789,0,1.606,1.606,0,0,0-.982-1.111"/>
+      <circle class="cls-13" cx="584" cy="8" r="2"/>
+    </g>
+    <g id="View_-_White" data-name="View - White">
+      <path class="cls-15" d="M593.124,7.444s0.38,0.053.991-1.111a6.972,6.972,0,0,1,11.894,0A1.609,1.609,0,0,0,607,7.444"/>
+      <path id="Shape_15_copy-4" data-name="Shape 15 copy" class="cls-15" d="M606.877,8.555S606.5,8.5,605.9,9.667a6.878,6.878,0,0,1-11.789,0,1.606,1.606,0,0,0-.982-1.111"/>
+      <circle class="cls-27" cx="600" cy="8" r="2"/>
+    </g>
+    <path id="Shape_15_copy_2" data-name="Shape 15 copy 2" class="cls-41" d="M609.124,7.444s0.38,0.053.991-1.111a6.972,6.972,0,0,1,11.894,0A1.609,1.609,0,0,0,623,7.444"/>
+    <path id="Shape_15_copy_2-2" data-name="Shape 15 copy 2" class="cls-41" d="M622.877,8.555S622.5,8.5,621.9,9.667a6.878,6.878,0,0,1-11.789,0,1.606,1.606,0,0,0-.982-1.111"/>
+    <circle id="Ellipse_3_copy" data-name="Ellipse 3 copy" class="cls-23" cx="616" cy="8" r="2"/>
+    <path class="cls-42" d="M621.646,1.646l0.707,0.707-12,12-0.707-.707Z"/>
+    <rect class="cls-38" x="692" y="4" width="1" height="9"/>
+    <path id="Rectangle_15_copy" data-name="Rectangle 15 copy" class="cls-39" d="M691.379,3.086l0.707-.707,3.535,3.536-0.707.707Z"/>
+    <path id="Rectangle_15_copy_2" data-name="Rectangle 15 copy 2" class="cls-39" d="M692.914,2.379l0.707,0.707-3.535,3.535-0.707-.707Z"/>
+    <rect id="Rectangle_15_copy_3" data-name="Rectangle 15 copy 3" class="cls-38" x="697" y="5" width="5" height="1"/>
+    <rect id="Rectangle_15_copy_4" data-name="Rectangle 15 copy 4" class="cls-38" x="697" y="7" width="4" height="1"/>
+    <rect id="Rectangle_15_copy_5" data-name="Rectangle 15 copy 5" class="cls-38" x="697" y="9" width="3" height="1"/>
+    <rect id="Rectangle_15_copy_21" data-name="Rectangle 15 copy 21" class="cls-38" x="697" y="11" width="2" height="1"/>
+    <rect class="cls-43" x="708" y="4" width="1" height="9"/>
+    <path id="Rectangle_15_copy-2" data-name="Rectangle 15 copy" class="cls-44" d="M707.379,3.086l0.707-.707,3.535,3.536-0.707.707Z"/>
+    <path id="Rectangle_15_copy_2-2" data-name="Rectangle 15 copy 2" class="cls-44" d="M708.914,2.379l0.707,0.707-3.535,3.535-0.707-.707Z"/>
+    <rect id="Rectangle_15_copy_3-2" data-name="Rectangle 15 copy 3" class="cls-43" x="713" y="5" width="5" height="1"/>
+    <rect id="Rectangle_15_copy_4-2" data-name="Rectangle 15 copy 4" class="cls-43" x="713" y="7" width="4" height="1"/>
+    <rect id="Rectangle_15_copy_5-2" data-name="Rectangle 15 copy 5" class="cls-43" x="713" y="9" width="3" height="1"/>
+    <rect id="Rectangle_15_copy_22" data-name="Rectangle 15 copy 22" class="cls-43" x="713" y="11" width="2" height="1"/>
+    <g id="Table_Sort_-_up_-_Purple" data-name="Table Sort - up - Purple">
+      <rect class="cls-13" x="724" y="4" width="1" height="9"/>
+      <path id="Rectangle_15_copy-3" data-name="Rectangle 15 copy" class="cls-16" d="M723.379,3.086l0.707-.707,3.535,3.536-0.707.707Z"/>
+      <path id="Rectangle_15_copy_2-3" data-name="Rectangle 15 copy 2" class="cls-16" d="M724.914,2.379l0.707,0.707-3.535,3.535-0.708-.707Z"/>
+      <rect id="Rectangle_15_copy_3-3" data-name="Rectangle 15 copy 3" class="cls-13" x="729" y="5" width="5" height="1"/>
+      <rect id="Rectangle_15_copy_4-3" data-name="Rectangle 15 copy 4" class="cls-13" x="729" y="7" width="4" height="1"/>
+      <rect id="Rectangle_15_copy_5-3" data-name="Rectangle 15 copy 5" class="cls-13" x="729" y="9" width="3" height="1"/>
+      <rect id="Rectangle_15_copy_23" data-name="Rectangle 15 copy 23" class="cls-13" x="729" y="11" width="2" height="1"/>
+    </g>
+    <rect class="cls-45" x="740" y="4" width="1" height="9"/>
+    <path id="Rectangle_15_copy-4" data-name="Rectangle 15 copy" class="cls-46" d="M739.379,3.086l0.707-.707,3.535,3.536-0.707.707Z"/>
+    <path id="Rectangle_15_copy_2-4" data-name="Rectangle 15 copy 2" class="cls-46" d="M740.914,2.379l0.707,0.707-3.535,3.535-0.707-.707Z"/>
+    <rect id="Rectangle_15_copy_3-4" data-name="Rectangle 15 copy 3" class="cls-45" x="745" y="5" width="5" height="1"/>
+    <rect id="Rectangle_15_copy_4-4" data-name="Rectangle 15 copy 4" class="cls-45" x="745" y="7" width="4" height="1"/>
+    <rect id="Rectangle_15_copy_5-4" data-name="Rectangle 15 copy 5" class="cls-45" x="745" y="9" width="3" height="1"/>
+    <rect id="Rectangle_15_copy_24" data-name="Rectangle 15 copy 24" class="cls-45" x="745" y="11" width="2" height="1"/>
+    <rect class="cls-38" x="628" y="4" width="1" height="10"/>
+    <path id="Rectangle_15_copy-5" data-name="Rectangle 15 copy" class="cls-39" d="M625.379,11.086l0.707-.707,3.535,3.536-0.707.707Z"/>
+    <path id="Rectangle_15_copy_2-5" data-name="Rectangle 15 copy 2" class="cls-39" d="M630.914,10.379l0.707,0.707-3.535,3.536-0.707-.707Z"/>
+    <rect id="Rectangle_15_copy_3-5" data-name="Rectangle 15 copy 3" class="cls-38" x="633" y="7" width="3" height="1"/>
+    <rect id="Rectangle_15_copy_17" data-name="Rectangle 15 copy 17" class="cls-38" x="633" y="5" width="2" height="1"/>
+    <rect id="Rectangle_15_copy_14" data-name="Rectangle 15 copy 14" class="cls-38" x="633" y="9" width="4" height="1"/>
+    <rect id="Rectangle_15_copy_15" data-name="Rectangle 15 copy 15" class="cls-38" x="633" y="11" width="5" height="1"/>
+    <rect id="Rectangle_15_copy_16" data-name="Rectangle 15 copy 16" class="cls-38" x="633" y="11" width="5" height="1"/>
+    <rect class="cls-43" x="644" y="4" width="1" height="10"/>
+    <path id="Rectangle_15_copy-6" data-name="Rectangle 15 copy" class="cls-44" d="M641.379,11.086l0.707-.707,3.535,3.536-0.707.707Z"/>
+    <path id="Rectangle_15_copy_2-6" data-name="Rectangle 15 copy 2" class="cls-44" d="M646.914,10.379l0.707,0.707-3.535,3.536-0.707-.707Z"/>
+    <rect id="Rectangle_15_copy_3-6" data-name="Rectangle 15 copy 3" class="cls-43" x="649" y="7" width="3" height="1"/>
+    <rect id="Rectangle_15_copy_18" data-name="Rectangle 15 copy 18" class="cls-43" x="649" y="5" width="2" height="1"/>
+    <rect id="Rectangle_15_copy_4-5" data-name="Rectangle 15 copy 4" class="cls-43" x="649" y="9" width="4" height="1"/>
+    <rect id="Rectangle_15_copy_5-5" data-name="Rectangle 15 copy 5" class="cls-43" x="649" y="11" width="5" height="1"/>
+    <g id="Table_Sort_-_purple" data-name="Table Sort - purple">
+      <rect class="cls-13" x="660" y="4" width="1" height="10"/>
+      <path id="Rectangle_15_copy-7" data-name="Rectangle 15 copy" class="cls-16" d="M657.379,11.086l0.707-.707,3.535,3.536-0.707.707Z"/>
+      <path id="Rectangle_15_copy_2-7" data-name="Rectangle 15 copy 2" class="cls-16" d="M662.914,10.379l0.707,0.707-3.535,3.536-0.707-.707Z"/>
+      <rect id="Rectangle_15_copy_3-7" data-name="Rectangle 15 copy 3" class="cls-13" x="665" y="7" width="3" height="1"/>
+      <rect id="Rectangle_15_copy_19" data-name="Rectangle 15 copy 19" class="cls-13" x="665" y="5" width="2" height="1"/>
+      <rect id="Rectangle_15_copy_4-6" data-name="Rectangle 15 copy 4" class="cls-13" x="665" y="9" width="4" height="1"/>
+      <rect id="Rectangle_15_copy_5-6" data-name="Rectangle 15 copy 5" class="cls-13" x="665" y="11" width="5" height="1"/>
+    </g>
+    <rect class="cls-14" x="676" y="4" width="1" height="10"/>
+    <path id="Rectangle_15_copy-8" data-name="Rectangle 15 copy" class="cls-28" d="M673.379,11.086l0.707-.707,3.535,3.536-0.707.707Z"/>
+    <path id="Rectangle_15_copy_2-8" data-name="Rectangle 15 copy 2" class="cls-28" d="M678.914,10.379l0.707,0.707-3.535,3.536-0.707-.707Z"/>
+    <rect id="Rectangle_15_copy_3-8" data-name="Rectangle 15 copy 3" class="cls-14" x="681" y="7" width="3" height="1"/>
+    <rect id="Rectangle_15_copy_20" data-name="Rectangle 15 copy 20" class="cls-14" x="681" y="5" width="2" height="1"/>
+    <rect id="Rectangle_15_copy_4-7" data-name="Rectangle 15 copy 4" class="cls-14" x="681" y="9" width="4" height="1"/>
+    <rect id="Rectangle_15_copy_5-7" data-name="Rectangle 15 copy 5" class="cls-14" x="681" y="11" width="5" height="1"/>
+    <rect class="cls-11" x="781" y="2" width="1" height="4"/>
+    <rect class="cls-11" x="774" y="6" width="4" height="4"/>
+    <rect id="Rectangle_17_copy" data-name="Rectangle 17 copy" class="cls-11" x="778" y="2" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_2" data-name="Rectangle 17 copy 2" class="cls-11" x="770" y="2" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_2-2" data-name="Rectangle 17 copy 2" class="cls-11" x="770" y="2" width="1" height="4"/>
+    <rect id="Rectangle_17_copy_3" data-name="Rectangle 17 copy 3" class="cls-11" x="770" y="10" width="1" height="4"/>
+    <rect id="Rectangle_17_copy_3-2" data-name="Rectangle 17 copy 3" class="cls-11" x="770" y="13" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_4" data-name="Rectangle 17 copy 4" class="cls-11" x="778" y="13" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_4-2" data-name="Rectangle 17 copy 4" class="cls-11" x="781" y="10" width="1" height="4"/>
+    <rect class="cls-47" x="797" y="2" width="1" height="4"/>
+    <rect class="cls-47" x="790" y="6" width="4" height="4"/>
+    <rect id="Rectangle_17_copy-2" data-name="Rectangle 17 copy" class="cls-47" x="794" y="2" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_2-3" data-name="Rectangle 17 copy 2" class="cls-47" x="786" y="2" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_2-4" data-name="Rectangle 17 copy 2" class="cls-47" x="786" y="2" width="1" height="4"/>
+    <rect id="Rectangle_17_copy_3-3" data-name="Rectangle 17 copy 3" class="cls-47" x="786" y="10" width="1" height="4"/>
+    <rect id="Rectangle_17_copy_3-4" data-name="Rectangle 17 copy 3" class="cls-47" x="786" y="13" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_4-3" data-name="Rectangle 17 copy 4" class="cls-47" x="794" y="13" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_4-4" data-name="Rectangle 17 copy 4" class="cls-47" x="797" y="10" width="1" height="4"/>
+    <g id="Full_Screen_-_Purple" data-name="Full Screen - Purple">
+      <rect class="cls-13" x="813" y="2" width="1" height="4"/>
+      <rect class="cls-9" x="806" y="6" width="4" height="4"/>
+      <rect id="Rectangle_17_copy-3" data-name="Rectangle 17 copy" class="cls-13" x="810" y="2" width="4" height="1"/>
+      <rect id="Rectangle_17_copy_2-5" data-name="Rectangle 17 copy 2" class="cls-13" x="802" y="2" width="4" height="1"/>
+      <rect id="Rectangle_17_copy_2-6" data-name="Rectangle 17 copy 2" class="cls-13" x="802" y="2" width="1" height="4"/>
+      <rect id="Rectangle_17_copy_3-5" data-name="Rectangle 17 copy 3" class="cls-13" x="802" y="10" width="1" height="4"/>
+      <rect id="Rectangle_17_copy_3-6" data-name="Rectangle 17 copy 3" class="cls-13" x="802" y="13" width="4" height="1"/>
+      <rect id="Rectangle_17_copy_4-5" data-name="Rectangle 17 copy 4" class="cls-13" x="810" y="13" width="4" height="1"/>
+      <rect id="Rectangle_17_copy_4-6" data-name="Rectangle 17 copy 4" class="cls-13" x="813" y="10" width="1" height="4"/>
+    </g>
+    <rect class="cls-14" x="829" y="2" width="1" height="4"/>
+    <rect class="cls-14" x="822" y="6" width="4" height="4"/>
+    <rect id="Rectangle_17_copy-4" data-name="Rectangle 17 copy" class="cls-14" x="826" y="2" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_2-7" data-name="Rectangle 17 copy 2" class="cls-14" x="818" y="2" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_2-8" data-name="Rectangle 17 copy 2" class="cls-14" x="818" y="2" width="1" height="4"/>
+    <rect id="Rectangle_17_copy_3-7" data-name="Rectangle 17 copy 3" class="cls-14" x="818" y="10" width="1" height="4"/>
+    <rect id="Rectangle_17_copy_3-8" data-name="Rectangle 17 copy 3" class="cls-14" x="818" y="13" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_4-7" data-name="Rectangle 17 copy 4" class="cls-14" x="826" y="13" width="4" height="1"/>
+    <rect id="Rectangle_17_copy_4-8" data-name="Rectangle 17 copy 4" class="cls-14" x="829" y="10" width="1" height="4"/>
+    <rect class="cls-11" x="838" y="6" width="4" height="4"/>
+    <rect class="cls-11" x="843" y="2" width="1" height="3"/>
+    <rect id="Rectangle_17_copy-5" data-name="Rectangle 17 copy" class="cls-11" x="843" y="4" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_2-9" data-name="Rectangle 17 copy 2" class="cls-11" x="834" y="4" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_2-10" data-name="Rectangle 17 copy 2" class="cls-11" x="836" y="2" width="1" height="3"/>
+    <rect id="Rectangle_17_copy_3-9" data-name="Rectangle 17 copy 3" class="cls-11" x="836" y="11" width="1" height="3"/>
+    <rect id="Rectangle_17_copy_3-10" data-name="Rectangle 17 copy 3" class="cls-11" x="834" y="11" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_4-9" data-name="Rectangle 17 copy 4" class="cls-11" x="843" y="11" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_4-10" data-name="Rectangle 17 copy 4" class="cls-11" x="843" y="11" width="1" height="3"/>
+    <rect class="cls-47" x="854" y="6" width="4" height="4"/>
+    <rect class="cls-47" x="859" y="2" width="1" height="3"/>
+    <rect id="Rectangle_17_copy-6" data-name="Rectangle 17 copy" class="cls-47" x="859" y="4" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_2-11" data-name="Rectangle 17 copy 2" class="cls-47" x="850" y="4" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_2-12" data-name="Rectangle 17 copy 2" class="cls-47" x="852" y="2" width="1" height="3"/>
+    <rect id="Rectangle_17_copy_3-11" data-name="Rectangle 17 copy 3" class="cls-47" x="852" y="11" width="1" height="3"/>
+    <rect id="Rectangle_17_copy_3-12" data-name="Rectangle 17 copy 3" class="cls-47" x="850" y="11" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_4-11" data-name="Rectangle 17 copy 4" class="cls-47" x="859" y="11" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_4-12" data-name="Rectangle 17 copy 4" class="cls-47" x="859" y="11" width="1" height="3"/>
+    <g id="Exit_Full_Screen_-_purple" data-name="Exit Full Screen - purple">
+      <rect class="cls-48" x="870" y="6" width="4" height="4"/>
+      <rect class="cls-13" x="875" y="2" width="1" height="3"/>
+      <rect id="Rectangle_17_copy-7" data-name="Rectangle 17 copy" class="cls-13" x="875" y="4" width="3" height="1"/>
+      <rect id="Rectangle_17_copy_2-13" data-name="Rectangle 17 copy 2" class="cls-13" x="866" y="4" width="3" height="1"/>
+      <rect id="Rectangle_17_copy_2-14" data-name="Rectangle 17 copy 2" class="cls-13" x="868" y="2" width="1" height="3"/>
+      <rect id="Rectangle_17_copy_3-13" data-name="Rectangle 17 copy 3" class="cls-13" x="868" y="11" width="1" height="3"/>
+      <rect id="Rectangle_17_copy_3-14" data-name="Rectangle 17 copy 3" class="cls-13" x="866" y="11" width="3" height="1"/>
+      <rect id="Rectangle_17_copy_4-13" data-name="Rectangle 17 copy 4" class="cls-13" x="875" y="11" width="3" height="1"/>
+      <rect id="Rectangle_17_copy_4-14" data-name="Rectangle 17 copy 4" class="cls-13" x="875" y="11" width="1" height="3"/>
+    </g>
+    <rect class="cls-14" x="886" y="6" width="4" height="4"/>
+    <rect class="cls-14" x="891" y="2" width="1" height="3"/>
+    <rect id="Rectangle_17_copy-8" data-name="Rectangle 17 copy" class="cls-14" x="891" y="4" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_2-15" data-name="Rectangle 17 copy 2" class="cls-14" x="882" y="4" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_2-16" data-name="Rectangle 17 copy 2" class="cls-14" x="884" y="2" width="1" height="3"/>
+    <rect id="Rectangle_17_copy_3-15" data-name="Rectangle 17 copy 3" class="cls-14" x="884" y="11" width="1" height="3"/>
+    <rect id="Rectangle_17_copy_3-16" data-name="Rectangle 17 copy 3" class="cls-14" x="882" y="11" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_4-15" data-name="Rectangle 17 copy 4" class="cls-14" x="891" y="11" width="3" height="1"/>
+    <rect id="Rectangle_17_copy_4-16" data-name="Rectangle 17 copy 4" class="cls-14" x="891" y="11" width="1" height="3"/>
+    <path id="Rectangle_17_copy_6" data-name="Rectangle 17 copy 6" class="cls-22" d="M911.621,7.5L908.5,10.621l-0.707-.707,3.121-3.121Z"/>
+    <path id="Rectangle_17_copy_6-2" data-name="Rectangle 17 copy 6" class="cls-22" d="M911.621,7.5l-0.707.707-3.121-3.121,0.707-.707Z"/>
+    <path id="Rectangle_17_copy_5" data-name="Rectangle 17 copy 5" class="cls-22" d="M899.5,4.379l0.707,0.707-3.121,3.121L896.379,7.5Z"/>
+    <path id="Rectangle_17_copy_5-2" data-name="Rectangle 17 copy 5" class="cls-22" d="M897.086,6.793l3.121,3.121-0.707.707L896.379,7.5Z"/>
+    <rect class="cls-11" x="897" y="7" width="6" height="1"/>
+    <rect class="cls-11" x="905" y="7" width="5" height="1"/>
+    <path id="Rectangle_17_copy_6-3" data-name="Rectangle 17 copy 6" class="cls-24" d="M927.621,7.5L924.5,10.621l-0.707-.707,3.121-3.121Z"/>
+    <path id="Rectangle_17_copy_6-4" data-name="Rectangle 17 copy 6" class="cls-24" d="M927.621,7.5l-0.707.707-3.121-3.121,0.707-.707Z"/>
+    <path id="Rectangle_17_copy_5-3" data-name="Rectangle 17 copy 5" class="cls-24" d="M915.5,4.379l0.707,0.707-3.121,3.121L912.379,7.5Z"/>
+    <path id="Rectangle_17_copy_5-4" data-name="Rectangle 17 copy 5" class="cls-24" d="M913.086,6.793l3.121,3.121-0.707.707L912.379,7.5Z"/>
+    <rect class="cls-47" x="913" y="7" width="6" height="1"/>
+    <rect class="cls-47" x="921" y="7" width="5" height="1"/>
+    <path id="Rectangle_17_copy_6-5" data-name="Rectangle 17 copy 6" class="cls-26" d="M943.621,7.5L940.5,10.621l-0.707-.707,3.121-3.121Z"/>
+    <path id="Rectangle_17_copy_6-6" data-name="Rectangle 17 copy 6" class="cls-26" d="M943.621,7.5l-0.707.707-3.121-3.121,0.707-.707Z"/>
+    <path id="Rectangle_17_copy_5-5" data-name="Rectangle 17 copy 5" class="cls-26" d="M931.5,4.379l0.707,0.707-3.121,3.121L928.379,7.5Z"/>
+    <path id="Rectangle_17_copy_5-6" data-name="Rectangle 17 copy 5" class="cls-26" d="M929.086,6.793l3.121,3.121-0.707.707L928.379,7.5Z"/>
+    <rect class="cls-49" x="929" y="7" width="6" height="1"/>
+    <rect class="cls-49" x="937" y="7" width="5" height="1"/>
+    <path id="Rectangle_17_copy_6-7" data-name="Rectangle 17 copy 6" class="cls-28" d="M959.621,7.5L956.5,10.621l-0.707-.707,3.121-3.121Z"/>
+    <path id="Rectangle_17_copy_6-8" data-name="Rectangle 17 copy 6" class="cls-28" d="M959.621,7.5l-0.707.707-3.121-3.121,0.707-.707Z"/>
+    <path id="Rectangle_17_copy_5-7" data-name="Rectangle 17 copy 5" class="cls-28" d="M947.5,4.379l0.707,0.707-3.121,3.121L944.379,7.5Z"/>
+    <path id="Rectangle_17_copy_5-8" data-name="Rectangle 17 copy 5" class="cls-28" d="M945.086,6.793l3.121,3.121-0.707.707L944.379,7.5Z"/>
+    <rect class="cls-14" x="945" y="7" width="6" height="1"/>
+    <rect class="cls-14" x="953" y="7" width="5" height="1"/>
+    <path id="Rectangle_17_copy_6-9" data-name="Rectangle 17 copy 6" class="cls-22" d="M966.621,7.5L963.5,10.621l-0.707-.707,3.121-3.121Z"/>
+    <path id="Rectangle_17_copy_6-10" data-name="Rectangle 17 copy 6" class="cls-22" d="M966.621,7.5l-0.707.707-3.121-3.121,0.707-.707Z"/>
+    <path id="Rectangle_17_copy_5-9" data-name="Rectangle 17 copy 5" class="cls-22" d="M972.5,4.379l0.707,0.707-3.121,3.121L969.379,7.5Z"/>
+    <path id="Rectangle_17_copy_5-10" data-name="Rectangle 17 copy 5" class="cls-22" d="M970.086,6.793l3.121,3.121-0.707.707L969.379,7.5Z"/>
+    <rect class="cls-11" x="970" y="7" width="6" height="1"/>
+    <rect class="cls-11" x="960" y="7" width="5" height="1"/>
+    <path id="Rectangle_17_copy_6-11" data-name="Rectangle 17 copy 6" class="cls-24" d="M982.621,7.5L979.5,10.621l-0.707-.707,3.121-3.121Z"/>
+    <path id="Rectangle_17_copy_6-12" data-name="Rectangle 17 copy 6" class="cls-24" d="M982.621,7.5l-0.707.707-3.121-3.121,0.707-.707Z"/>
+    <path id="Rectangle_17_copy_5-11" data-name="Rectangle 17 copy 5" class="cls-24" d="M988.5,4.379l0.707,0.707-3.121,3.121L985.379,7.5Z"/>
+    <path id="Rectangle_17_copy_5-12" data-name="Rectangle 17 copy 5" class="cls-24" d="M986.086,6.793l3.121,3.121-0.707.707L985.379,7.5Z"/>
+    <rect class="cls-47" x="986" y="7" width="6" height="1"/>
+    <rect class="cls-47" x="976" y="7" width="5" height="1"/>
+    <path id="Rectangle_17_copy_6-13" data-name="Rectangle 17 copy 6" class="cls-26" d="M998.621,7.5L995.5,10.621l-0.707-.707,3.121-3.121Z"/>
+    <path id="Rectangle_17_copy_6-14" data-name="Rectangle 17 copy 6" class="cls-26" d="M998.621,7.5l-0.707.707-3.121-3.121,0.707-.707Z"/>
+    <path id="Rectangle_17_copy_5-13" data-name="Rectangle 17 copy 5" class="cls-26" d="M1004.5,4.379l0.71,0.707-3.12,3.121-0.71-.707Z"/>
+    <path id="Rectangle_17_copy_5-14" data-name="Rectangle 17 copy 5" class="cls-26" d="M1002.09,6.793l3.12,3.121-0.71.707L1001.38,7.5Z"/>
+    <rect class="cls-49" x="1002" y="7" width="6" height="1"/>
+    <rect class="cls-49" x="992" y="7" width="5" height="1"/>
+    <path id="Rectangle_17_copy_6-15" data-name="Rectangle 17 copy 6" class="cls-28" d="M1014.62,7.5l-3.12,3.121-0.71-.707,3.12-3.121Z"/>
+    <path id="Rectangle_17_copy_6-16" data-name="Rectangle 17 copy 6" class="cls-28" d="M1014.62,7.5l-0.71.707-3.12-3.121,0.71-.707Z"/>
+    <path id="Rectangle_17_copy_5-15" data-name="Rectangle 17 copy 5" class="cls-28" d="M1020.5,4.379l0.71,0.707-3.12,3.121-0.71-.707Z"/>
+    <path id="Rectangle_17_copy_5-16" data-name="Rectangle 17 copy 5" class="cls-28" d="M1018.09,6.793l3.12,3.121-0.71.707L1017.38,7.5Z"/>
+    <rect class="cls-14" x="1018" y="7" width="6" height="1"/>
+    <rect class="cls-14" x="1008" y="7" width="5" height="1"/>
+    <path class="cls-19" d="M1030,13h-3V10l8-8,3,3Z"/>
+    <path class="cls-19" d="M1031.65,5.354l0.7-.707,3,3-0.7.707Z"/>
+    <path class="cls-41" d="M1046,13h-3V10l8-8,3,3Z"/>
+    <path class="cls-41" d="M1047.65,5.354l0.7-.707,3,3-0.7.707Z"/>
+    <path class="cls-50" d="M1062,13h-3V10l8-8,3,3Z"/>
+    <path class="cls-50" d="M1063.65,5.354l0.7-.707,3,3-0.7.707Z"/>
+    <path class="cls-15" d="M1078,13h-3V10l8-8,3,3Z"/>
+    <path class="cls-15" d="M1079.65,5.354l0.7-.707,3,3-0.7.707Z"/>
+    <path id="Polygon_2" data-name="Polygon 2" class="cls-22" d="M1159.5,10.015L1155,5.991h9Z"/>
+    <path id="Polygon_2_copy" data-name="Polygon 2 copy" class="cls-24" d="M1171,5.991h9l-4.5,4.023"/>
+    <path id="Polygon_2_copy_2" data-name="Polygon 2 copy 2" class="cls-26" d="M1191.5,10.015L1187,5.991h9Z"/>
+    <path id="Polygon_2_copy_2-2" data-name="Polygon 2 copy 2" class="cls-28" d="M1203,5.991h9l-4.5,4.023"/>
+    <path id="Polygon_2_copy_4" data-name="Polygon 2 copy 4" class="cls-22" d="M1287.5,5.985l-4.5,4.024h9Z"/>
+    <path id="Polygon_2_copy_4-2" data-name="Polygon 2 copy 4" class="cls-24" d="M1299,10.009h9l-4.5-4.024"/>
+    <path id="Polygon_2_copy_4-3" data-name="Polygon 2 copy 4" class="cls-26" d="M1319.5,5.985l-4.5,4.024h9Z"/>
+    <path id="Polygon_2_copy_4-4" data-name="Polygon 2 copy 4" class="cls-28" d="M1331,10.009h9l-4.5-4.024"/>
+    <path id="Polygon_2_copy_3" data-name="Polygon 2 copy 3" class="cls-22" d="M1226.01,7.5l-4.02,4.5V3Z"/>
+    <path id="Polygon_2_copy_3-2" data-name="Polygon 2 copy 3" class="cls-24" d="M1237.99,12V3l4.02,4.5"/>
+    <path id="Polygon_2_copy_3-3" data-name="Polygon 2 copy 3" class="cls-26" d="M1258.01,7.5l-4.02,4.5V3Z"/>
+    <path id="Polygon_2_copy_3-4" data-name="Polygon 2 copy 3" class="cls-28" d="M1269.99,12V3l4.02,4.5"/>
+    <path class="cls-51" d="M115.732,20h1.027v9h-1.027V20Z"/>
+    <path id="Shape_1_copy_5" data-name="Shape 1 copy 5" class="cls-51" d="M123.946,24h1.027v5h-1.027V24Z"/>
+    <path id="Shape_1_copy" data-name="Shape 1 copy" class="cls-51" d="M115.732,25V24h9.241v1h-9.241Z"/>
+    <circle class="cls-27" cx="116" cy="19" r="2"/>
+    <circle id="Ellipse_1_copy-5" data-name="Ellipse 1 copy" class="cls-27" cx="116" cy="29" r="2"/>
+    <circle id="Ellipse_1_copy_2-5" data-name="Ellipse 1 copy 2" class="cls-27" cx="124" cy="29" r="2"/>
+    <path class="cls-52" d="M99.733,20h1.026v9H99.733V20Z"/>
+    <path id="Shape_1_copy_5-2" data-name="Shape 1 copy 5" class="cls-52" d="M107.946,24h1.027v5h-1.027V24Z"/>
+    <path id="Shape_1_copy-2" data-name="Shape 1 copy" class="cls-52" d="M99.733,25V24h9.24v1h-9.24Z"/>
+    <circle class="cls-25" cx="100" cy="19" r="2"/>
+    <circle id="Ellipse_1_copy-6" data-name="Ellipse 1 copy" class="cls-25" cx="100" cy="29" r="2"/>
+    <circle id="Ellipse_1_copy_2-6" data-name="Ellipse 1 copy 2" class="cls-25" cx="108" cy="29" r="2"/>
+    <path class="cls-53" d="M83.733,20h1.027v9H83.733V20Z"/>
+    <path id="Shape_1_copy_5-3" data-name="Shape 1 copy 5" class="cls-53" d="M91.946,24h1.027v5H91.946V24Z"/>
+    <path id="Shape_1_copy-3" data-name="Shape 1 copy" class="cls-53" d="M83.733,25V24h9.241v1H83.733Z"/>
+    <circle class="cls-23" cx="84" cy="19" r="2"/>
+    <circle id="Ellipse_1_copy-7" data-name="Ellipse 1 copy" class="cls-23" cx="84" cy="29" r="2"/>
+    <circle id="Ellipse_1_copy_2-7" data-name="Ellipse 1 copy 2" class="cls-23" cx="92" cy="29" r="2"/>
+    <path class="cls-54" d="M67.733,20h1.027v9H67.733V20Z"/>
+    <path id="Shape_1_copy_5-4" data-name="Shape 1 copy 5" class="cls-54" d="M75.946,24h1.027v5H75.946V24Z"/>
+    <path id="Shape_1_copy-4" data-name="Shape 1 copy" class="cls-54" d="M67.733,25V24h9.241v1H67.733Z"/>
+    <circle class="cls-21" cx="68" cy="19" r="2"/>
+    <circle id="Ellipse_1_copy-8" data-name="Ellipse 1 copy" class="cls-21" cx="68" cy="29" r="2"/>
+    <circle id="Ellipse_1_copy_2-8" data-name="Ellipse 1 copy 2" class="cls-21" cx="76" cy="29" r="2"/>
+    <path id="cross" class="cls-37" d="M141,20l-1-1-4,4-4-4-1,1,4,4-4,4,1,1,4-4,4,4,1-1-4-4Z"/>
+    <path id="check" class="cls-34" d="M146.114,24.365a0.357,0.357,0,0,1,0-.567l0.652-.567a0.5,0.5,0,0,1,.653,0l0.046,0.04,2.563,2.388a0.251,0.251,0,0,0,.327,0l6.245-5.626h0.046a0.5,0.5,0,0,1,.653,0l0.652,0.567a0.356,0.356,0,0,1,0,.566h0l-7.457,6.72a0.5,0.5,0,0,1-.652,0l-3.635-3.4Z"/>
+    <path id="warning_info_icon" class="cls-22" d="M168,31a7,7,0,1,1,7-7A7.021,7.021,0,0,1,168,31Zm0.9-11.5h-1.8v5.4h1.8V19.5Zm0,7.2h-1.8v1.8h1.8V26.7Z"/>
+    <circle class="cls-55" cx="184" cy="24" r="7"/>
+    <path class="cls-28" d="M183,20h2v8h-2V20Zm-3,3h8v2h-8V23Z"/>
+    <path class="cls-28" d="M349.1,18.9a6.5,6.5,0,1,1-9.192,0A6.5,6.5,0,0,1,349.1,18.9Zm-2.475,1.768,0.707,0.707-4.949,4.95-0.708-.707Zm-4.242,0,4.949,4.95-0.707.707-4.95-4.95Z"/>
+    <image id="cost_object" data-name="cost object" x="211" y="17" width="11" height="14" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOAgMAAACEDw4GAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACVBMVEWvu8Svu8QAAAB9wjb7AAAAAXRSTlMAQObYZgAAAAFiS0dEAmYLfGQAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQfiBhkSLCFf8/FyAAAAFElEQVQI12MIDQ1hcGBgIQkD9QAAk9oFLd6IhyMAAAAASUVORK5CYII="/>
+    <image id="cost_group" data-name="cost group" x="226" y="16" width="13" height="16" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAQAgMAAACwzR2qAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACVBMVEWvu8Svu8QAAAB9wjb7AAAAAXRSTlMAQObYZgAAAAFiS0dEAmYLfGQAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQfiBhkSLCFf8/FyAAAAIklEQVQI12NgDQ11YGBhYHBgCA0NcQBSLCQTrGAWA8gABgCJQQlh+Wd1SgAAAABJRU5ErkJggg=="/>
+    <rect class="cls-21" x="448.969" y="19" width="14.031" height="9.969"/>
+    <path class="cls-56" d="M451.984,22.953v-1h6v1h-6Z"/>
+    <path id="Shape_3961_copy" data-name="Shape 3961 copy" class="cls-56" d="M451.984,24.953v-1l4-.031v1Z"/>
+    <rect class="cls-57" x="464.969" y="19" width="14.031" height="9.969"/>
+    <path class="cls-58" d="M467.984,22.953v-1h6v1h-6Z"/>
+    <path id="Shape_3961_copy-2" data-name="Shape 3961 copy" class="cls-58" d="M467.984,24.953v-1l4-.031v1Z"/>
+    <rect class="cls-59" x="480.969" y="19" width="14.031" height="9.969"/>
+    <path class="cls-60" d="M483.984,22.953v-1h6v1h-6Z"/>
+    <path id="Shape_3961_copy-3" data-name="Shape 3961 copy" class="cls-60" d="M483.984,24.953v-1l4-.031v1Z"/>
+    <rect class="cls-27" x="496.969" y="19" width="14.031" height="9.969"/>
+    <path class="cls-15" d="M499.984,22.953v-1h6v1h-6Z"/>
+    <path id="Shape_3961_copy-4" data-name="Shape 3961 copy" class="cls-15" d="M499.984,24.953v-1l4-.031v1Z"/>
+    <rect class="cls-21" x="512.969" y="19.969" width="11.969" height="9"/>
+    <path id="Rectangle_3959_copy" data-name="Rectangle 3959 copy" class="cls-19" d="M513.975,17.968H527v9.013"/>
+    <path class="cls-56" d="M515.984,23.953V22.994h6v0.959h-6Z"/>
+    <path id="Shape_3961_copy-5" data-name="Shape 3961 copy" class="cls-56" d="M515.984,25.953V24.994l4-.031v0.959Z"/>
+    <rect class="cls-61" x="528.969" y="19.969" width="12" height="9"/>
+    <path id="Rectangle_3959_copy-2" data-name="Rectangle 3959 copy" class="cls-20" d="M529.975,17.968H543v9.013"/>
+    <path class="cls-20" d="M531.984,23.953V23.025h6v0.928h-6Z"/>
+    <path id="Shape_3961_copy-6" data-name="Shape 3961 copy" class="cls-20" d="M531.984,25.953V25.025l4-.031v0.928Z"/>
+    <rect class="cls-59" x="544.969" y="19.969" width="12" height="9"/>
+    <path id="Rectangle_3959_copy-3" data-name="Rectangle 3959 copy" class="cls-60" d="M545.975,17.968H559v9.013"/>
+    <path class="cls-60" d="M547.984,23.953V23.025h6v0.928h-6Z"/>
+    <path id="Shape_3961_copy-7" data-name="Shape 3961 copy" class="cls-60" d="M548.016,25.984l-0.032-.928,4-.031,0.032,0.928Z"/>
+    <rect class="cls-27" x="560.969" y="19.969" width="11.969" height="9"/>
+    <path id="Rectangle_3959_copy-4" data-name="Rectangle 3959 copy" class="cls-15" d="M561.975,17.968H575v9.013"/>
+    <path class="cls-15" d="M563.984,23.953v-1h6v1h-6Z"/>
+    <path id="Shape_3961_copy-8" data-name="Shape 3961 copy" class="cls-15" d="M563.984,25.953v-1l4-.031v1Z"/>
+    <rect class="cls-21" x="576.969" y="18.969" width="14.031" height="11"/>
+    <path id="Shape_4027_copy" data-name="Shape 4027 copy" class="cls-19" d="M583.984,20.984h0.969v6.969h-0.969V20.984Z"/>
+    <path class="cls-19" d="M581.984,22.984v-1h5v1h-5Z"/>
+    <path id="Shape_4028_copy_2" data-name="Shape 4028 copy 2" class="cls-19" d="M581.984,24.984v-1h5v1h-5Z"/>
+    <path id="Shape_4028_copy" data-name="Shape 4028 copy" class="cls-19" d="M581.984,26.984v-1h5v1h-5Z"/>
+    <path class="cls-19" d="M582.016,21.984h1v3h-1v-3Z"/>
+    <path id="Shape_4030_copy" data-name="Shape 4030 copy" class="cls-19" d="M586.016,24.016h1v2.969h-1V24.016Z"/>
+    <rect class="cls-61" x="592.969" y="18.969" width="14.031" height="11"/>
+    <path id="Shape_4027_copy-2" data-name="Shape 4027 copy" class="cls-20" d="M599.984,20.984h0.969v6.969h-0.969V20.984Z"/>
+    <path class="cls-20" d="M597.984,22.984v-1h5v1h-5Z"/>
+    <path id="Shape_4028_copy_2-2" data-name="Shape 4028 copy 2" class="cls-20" d="M597.984,24.984v-1h5v1h-5Z"/>
+    <path id="Shape_4028_copy-2" data-name="Shape 4028 copy" class="cls-20" d="M597.984,26.984v-1h5v1h-5Z"/>
+    <path class="cls-20" d="M598.016,21.984h1v3h-1v-3Z"/>
+    <path id="Shape_4030_copy-2" data-name="Shape 4030 copy" class="cls-20" d="M602.016,24.016h1v2.969h-1V24.016Z"/>
+    <rect class="cls-59" x="608.969" y="18.969" width="14.031" height="11"/>
+    <path id="Shape_4027_copy-3" data-name="Shape 4027 copy" class="cls-60" d="M615.984,20.984h0.969v6.969h-0.969V20.984Z"/>
+    <path class="cls-60" d="M613.984,22.984v-1h5v1h-5Z"/>
+    <path id="Shape_4028_copy_2-3" data-name="Shape 4028 copy 2" class="cls-60" d="M613.984,24.984v-1h5v1h-5Z"/>
+    <path id="Shape_4028_copy-3" data-name="Shape 4028 copy" class="cls-60" d="M613.984,26.984v-1h5v1h-5Z"/>
+    <path class="cls-60" d="M614.016,21.984h1v3h-1v-3Z"/>
+    <path id="Shape_4030_copy-3" data-name="Shape 4030 copy" class="cls-60" d="M618.015,24.016h1v2.969h-1V24.016Z"/>
+    <rect class="cls-27" x="624.969" y="18.969" width="14.031" height="11"/>
+    <path id="Shape_4027_copy-4" data-name="Shape 4027 copy" class="cls-15" d="M631.984,20.984h0.969v6.969h-0.969V20.984Z"/>
+    <path class="cls-15" d="M629.984,22.984v-1h5v1h-5Z"/>
+    <path id="Shape_4028_copy_2-4" data-name="Shape 4028 copy 2" class="cls-15" d="M629.984,24.984v-1h5v1h-5Z"/>
+    <path id="Shape_4028_copy-4" data-name="Shape 4028 copy" class="cls-15" d="M629.984,26.984v-1h5v1h-5Z"/>
+    <path class="cls-15" d="M630.016,21.984h1v3h-1v-3Z"/>
+    <path id="Shape_4030_copy-4" data-name="Shape 4030 copy" class="cls-15" d="M634.016,24.016h1v2.969h-1V24.016Z"/>
+    <image x="194" y="17" width="13" height="14" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAOCAMAAADDoWbgAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAZlBMVEWvu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8Svu8QAAAAL4pdIAAAAIHRSTlMACG0MJNLN3yhyeWkGKeWuCR2/3CUDfoNVzLPPRZonEwK08BsAAAABYktHRCHEbA0WAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH4gYZEiwhX/PxcgAAAExJREFUCNdjUEAABgYGEIYAVB4DMo+RiRnBY2FlY+eA8zi5uHkQcrx8/AJI+gSFhEXgPB5RbjFxOE9CUkpaBqGSRVYO2XZ5TJchuxoAX+IGjIn8KsMAAAAASUVORK5CYII="/>
+    <path id="Rounded_Rectangle_1757" data-name="Rounded Rectangle 1757" class="cls-62" d="M241.469,20.041h9.063a0.438,0.438,0,0,1,.438.438v0.053a0.438,0.438,0,0,1-.438.438h-9.063a0.438,0.438,0,0,1-.438-0.438V20.479A0.438,0.438,0,0,1,241.469,20.041ZM245.406,24h3.188a0.437,0.437,0,0,1,.437.438v0.094a0.437,0.437,0,0,1-.437.438h-3.188a0.437,0.437,0,0,1-.437-0.437V24.438A0.437,0.437,0,0,1,245.406,24Zm1.031,4.041h8.095a0.438,0.438,0,0,1,.438.438v0.053a0.438,0.438,0,0,1-.438.438h-8.095A0.438,0.438,0,0,1,246,28.532V28.479A0.437,0.437,0,0,1,246.437,28.041Z"/>
+    <path id="Forma_1_copy_28" data-name="Forma 1 copy 28" class="cls-62" d="M267.055,23.514a0.409,0.409,0,1,0-.582.576l2.948,2.948h-9.1a0.41,0.41,0,0,0-.413.407,0.414,0.414,0,0,0,.413.413h9.1L266.473,30.8a0.418,0.418,0,0,0,0,.582,0.408,0.408,0,0,0,.582,0l3.646-3.646a0.41,0.41,0,0,0,0-.575ZM260.7,17.548a0.409,0.409,0,0,1,.581.575l-2.948,2.948h9.259a0.409,0.409,0,0,1,.413.407,0.415,0.415,0,0,1-.413.413h-9.259l2.948,2.942a0.418,0.418,0,0,1,0,.582,0.407,0.407,0,0,1-.581,0l-3.646-3.646a0.41,0.41,0,0,1,0-.576Z"/>
+    <path id="_-e-Shape_2_copy-2" data-name="-e-Shape 2 copy" class="cls-2" d="M154.416,562.023l5.026,5.022L170.489,555"/>
+  </g>
+  <path id="_-e-Shape_2-2" data-name="-e-Shape 2" class="cls-2" d="M30,247l4,4,7-8"/>
+</svg>

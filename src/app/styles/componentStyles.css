@@ -1,0 +1,10 @@
+.react-floating-label-input label{
+    width: auto!important;
+}
+
+.react-floating-label-input > div{
+    padding-left: 0px !important;
+    border-bottom: 1px solid #3c1053 !important;
+}
+
+/* input::-webkit-datetime-edit{ color: transparent; } */
