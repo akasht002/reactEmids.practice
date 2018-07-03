@@ -19,6 +19,6 @@ class CoreoWizScreen extends React.Component {
             </div>
         )
     }
-};
+}
 
 export default CoreoWizScreen;

@@ -1,0 +1,29 @@
+.form-check-input{
+    opacity: 0;
+}
+
+.form-check-label{
+    margin-left: 8px;
+}
+
+.CheckboxIcon:before{
+    content: '';
+    position: absolute;
+    display: block;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    top: 4px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #3c1053;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.form-check-input:checked ~ .CheckboxIcon:before {
+    background-image: url("../../../assets/images/checked.svg");
+    background-color: #3c1053;
+    background-size: 10px;
+}

@@ -3,12 +3,14 @@ import { PropTypes } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import './styles.css';
 import { connect } from 'react-redux';
+import {Preloader} from '../../Base';
 
 class ScreenCover extends React.Component {
     render() {
         return(
             <section className="d-flex">
                {this.props.children}
+               {this.props.isLoading && <Preloader/>}
             </section>
         );
     }
@@ -27,7 +29,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-  
+
     };
 }
 

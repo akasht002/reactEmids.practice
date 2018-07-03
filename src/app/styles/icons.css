@@ -3,7 +3,8 @@
 }
 
 .icon-contact{
-    background-position: 7px -231px;
+    background-image: url("../assets/images/contact.png");
+    background-size: 32px auto;
     height: 32px;
     width: 32px;
 }

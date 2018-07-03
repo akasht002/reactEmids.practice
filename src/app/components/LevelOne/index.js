@@ -1,6 +1,6 @@
 import {Calendar} from './Calendar';
 import {CoreoWizFooter} from './CoreoWizFooter';
-import {CoreoWizListView} from './CoreoWizListView';
+import {CoreoWizFlow} from './CoreoWizFlow';
 import {Footer} from './Footer';
 import {Header} from './Header';
 import ModalTemplate from './ModalPopup';
@@ -10,7 +10,7 @@ import {ScreenCover} from './ScreenCover';
 export {
     Calendar, 
     CoreoWizFooter, 
-    CoreoWizListView, 
+    CoreoWizFlow, 
     Footer, 
     Header, 
     ModalTemplate, 

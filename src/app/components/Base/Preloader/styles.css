@@ -1,0 +1,11 @@
+.Loader{
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255,255,255,0.8);
+    background-image: url("../../../assets/images/loader.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 999;
+}

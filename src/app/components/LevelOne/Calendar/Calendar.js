@@ -5,33 +5,17 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 class Calendar extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            startDate: moment()
-        };
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(value) {
-        this.setState({
-          startDate: value
-        });
-        console.log(value);
-    }
-
     render() {
         return(
-            <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChange}
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                isClearable={true}
-                disabled={false}
-            />
+            <label> {this.props.label}
+                <DatePicker
+                    selected={this.props.startDate}
+                    onChange={this.props.onDateChange}
+                    dateFormat="LL"
+                    placeholderText="June 6, 1972"
+                    className="form-control datePicker"
+                />
+            </label>
         );
     }
 }

@@ -63,6 +63,25 @@ export function sendVerificationLink(data) {
 };
 
 
+export function getPlans() {
+    return (dispatch, getState) => {
+        dispatch(loadingStart());
+        axios.get(baseURL + API.GetPlan).then((resp) => {
+        //axios.get('http://www.mocky.io/v2/5b34e9ba2f0000560037612b').then((resp) => {
+            if(resp && resp.data){
+                dispatch(getPlansSuccess(resp.data))
+                dispatch(loadingEnd());
+            }else{
+               // dispatch(loginEnd())
+               // dispatch(loginFail())
+            }
+        }).catch((err) => {
+            dispatch(loadingEnd());
+        })
+    }
+}
+
+
 export const onSetUserIdCompletion = (data) => {
     return {
         type: Onboarding.onSetUserIdCompletion,

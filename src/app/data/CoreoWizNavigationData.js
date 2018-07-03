@@ -1,4 +1,4 @@
-export const CoreoWizArrayData = [
+export const CoreoWizNavigationData = [
     {
         id: 0,
         title: 'Verify My User ID',

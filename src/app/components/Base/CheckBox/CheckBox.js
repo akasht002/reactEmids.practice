@@ -1,30 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
+import './styles.css';
 
-class Checkbox extends React.Component {
+class CheckBox extends Component {
     render() {
-        const label = this.props.label;
-        const options = this.props.name.map(function(number){
-                return(
-                    <div className="form-check form-check-inline">
-                        <label className="form-check-label">
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                name="Checkbox"
-                                value={number}
-                            />
-                            {number}
-                        </label>
-                </div>
-                )
-            }
-        );
-        return(
-        <div className="form-group">
-            {options}
-        </div>
-        );
+        return (
+            <div className="form-check">
+                <label className="form-check-label">
+                    <span className="CheckboxIcon"></span>
+                    <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={this.props.value}
+                        id={this.props.id}
+                        onChange={this.props.onChange} />
+                    {this.props.children}
+                </label>
+            </div>
+        )
     }
-}
 
-export default Checkbox;
+};
+
+export default CheckBox;

@@ -2,7 +2,7 @@ import {
     FloatLabelInput, 
     SearchInput, 
     TextArea, 
-    Checkbox, 
+    CheckBox, 
     SelectBox, 
     Button, 
     Input,
@@ -11,7 +11,7 @@ import {
 import {
     Calendar, 
     CoreoWizFooter, 
-    CoreoWizListView, 
+    CoreoWizFlow, 
     Footer, 
     Header, 
     ModalTemplate, 
@@ -19,8 +19,7 @@ import {
     ScreenCover
 } from './LevelOne';
 import {
-    CarouselComp, 
-    CoreoWizFlow, 
+    CarouselComp,
     CoreoWizScreen, 
     IconCard, 
     InfoCard
@@ -36,16 +35,15 @@ export {
     IconCard,
     Header,
     Button,
-    Checkbox,
+    CheckBox,
     FloatLabelInput,
     Input,
     SearchInput,
     SelectBox,
     TextArea,
     Footer,
-    CoreoWizListView,
-    CoreoWizFooter,
     CoreoWizFlow,
+    CoreoWizFooter,
     CarouselComp,
     Calendar,
     ModalTemplate

@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea Component Jest 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    htmlFor={undefined}
+  />
+   
+  <i
+    className={undefined}
+  >
+    *
+  </i>
+  <textarea
+    className="textarea"
+    id={undefined}
+    placeholder="Write Some Thing"
+    required={true}
+    rows="5"
+  />
+</div>
+`;

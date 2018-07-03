@@ -1,9 +1,16 @@
 import React from "react";
 
-class CoreoWizListView extends React.Component {
+class CoreoWizFlow extends React.Component {
     render() {
-        const menuList = this.props.navi.map(
+        const menuList = this.props.coreoWizNavigationData.map(
             (menu) => {
+                if (menu.id === this.props.activeFlowId) {
+                    menu.status = 'active';
+                } else if (menu.id < this.props.activeFlowId) {
+                    menu.status = 'visited';
+                } else {
+                    menu.status = '';
+                }
                 return (
                     <li className={"nav-item py-2 "+menu.status}>
                         <h5 className="font-weight-normal">{menu.title}</h5>
@@ -23,4 +30,4 @@ class CoreoWizListView extends React.Component {
     }
 }
 
-export default CoreoWizListView;
+export default CoreoWizFlow;

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom"
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ScreenCover, CarouselComp} from '../../../components'
+import { ScreenCover, CarouselComp} from '../../components'
 
 const CarouselItems = [
     {

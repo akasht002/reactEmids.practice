@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Component Jest 1`] = `
+<div>
+  <button
+    className="btn"
+    disabled="true"
+    onClick={undefined}
+    type="button"
+  />
+</div>
+`;

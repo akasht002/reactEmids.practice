@@ -21,13 +21,6 @@ const onboardingState = (state = defaultState, action) => {
                 isLinkSent: action.isSuccess
             };
 
-
-
-
-
-
-
-
         case Onboarding.selectProfileType:
             return {
                 ...state,

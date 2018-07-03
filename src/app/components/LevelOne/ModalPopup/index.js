@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class ModalTemplate extends React.Component {

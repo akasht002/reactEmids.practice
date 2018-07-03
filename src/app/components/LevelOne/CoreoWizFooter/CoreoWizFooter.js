@@ -45,6 +45,6 @@ class CoreoWizFooter extends React.Component {
             </div>
         )
     }
-}
+};
 
 export default CoreoWizFooter;

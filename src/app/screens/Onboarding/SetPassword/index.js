@@ -2,26 +2,36 @@ import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { setPassword, onCancelClick } from '../../../redux/onboarding/actions';
-import { FloatLabelInput, ScreenCover, CoreoWizScreen, CoreoWizFlow } from '../../../components';
+import { push } from '../../../redux/navigation/actions';
+import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
+import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, CheckBox } from '../../../components';
 
 class SetPassword extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            pass: '',
-            confirmPass: '',
-            userAgreement: false
+            password: null,
+            confirmPassword: null,
+            userAgreement: false,
+            passwordMatch: true
         };
     };
 
     onSubmit = () => {
-        debugger
-            this.props.onSubmit(this.state.pass);
-    }
+        if (this.state.password === this.state.confirmPassword) {
+            this.props.onSubmit(this.state.password);
+        } else {
+            this.setState({ passwordMatch: false });
+        }
+    };
 
     onCancel = () => {
         this.props.onClickCancel();
+    }
+
+    onClickButtonPrevious = () => {
+        this.props.onClickPrevious();
     }
 
     render() {
@@ -29,50 +39,57 @@ class SetPassword extends React.Component {
 
         return (
             <ScreenCover>
-                <CoreoWizScreen menus={menus} activeCoreoWiz={2} displayPrevButton={true} displaySubmitButton={true} isSubmitDisabled={!this.state.pass || !this.state.confirmPass || !this.state.userAgreement || (this.state.pass !== this.state.confirmPass)} onSubmitClick={this.onSubmit} onCancelClick={this.onCancel}>
+                <CoreoWizScreen
+                    menus={menus}
+                    activeCoreoWiz={2}
+                    displayPrevButton={true}
+                    displaySubmitButton={true}
+                    isSubmitDisabled={!this.state.password || !this.state.confirmPassword}
+                    onSubmitClick={this.onSubmit}
+                    onCancelClick={this.onCancel}
+                    onPreviousClick={this.onClickButtonPrevious}>
                     <h4 className="font-weight-normal mb-4">Set My Password</h4>
                     <form className="form my-2 my-lg-0">
                         <div className="form-group my-4">
                         </div>
                         <div className="row">
                             <div className="col-md-6 my-3">
-                                <FloatLabelInput
+                                <Input
                                     id="newPass"
                                     autoComplete="off"
                                     required="required"
                                     type="password"
                                     label="Enter New Password"
-                                    className="mr-sm-2 mb-4"
-                                    value={this.state.pass}
-                                    placeholder="Enter your new Password"
-                                    onChange={(e) => this.setState({ pass: e.target.value })}
+                                    className="form-control"
+                                    value={this.state.password}
+                                    textChange={(e) => this.setState({ password: e.target.value })}
                                 />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-6 my-3">
-                                <FloatLabelInput
+                                <Input
                                     id="rePass"
                                     autoComplete="off"
                                     required="required"
                                     type="password"
                                     label="Confirm New password"
-                                    className="mr-sm-2 mb-4"
-                                    value={this.state.confirmPass}
-                                    onChange={(e) => this.setState({ confirmPass: e.target.value })}
+                                    className="form-control"
+                                    value={this.state.confirmPassword}
+                                    textChange={(e) => this.setState({ confirmPassword: e.target.value })}
                                 />
                             </div>
-                            {(this.state.pass !== this.state.confirmPass) && <div>Password not matching</div>}
+                            {!this.state.passwordMatch && <div>Password not matching</div>}
                         </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value={this.state.userAgreement} id="defaultCheck1" onChange={(e) => this.setState({ userAgreement: e.target.value })} />
-                            <label className="form-check-label">
-                                By clicking on Submit, I agree that I have read and accepted the <a onClick={this.toggle}>End User License Agreement</a>.
-                             </label>
-                        </div>
+                        <CheckBox
+                            value={this.state.userAgreement}
+                            id="userAgreement"
+                            onChange={(e) => this.setState({ userAgreement: e.target.value })}>
+                            By clicking on Submit, I agree that I have read and accepted the <a onClick={this.toggle}>End User License Agreement</a>.
+                        </CheckBox>
                     </form>
                 </CoreoWizScreen>
-                <CoreoWizFlow activeCoreoWiz={2} />
+                <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={2} />
             </ScreenCover>
         )
     }
@@ -81,7 +98,8 @@ class SetPassword extends React.Component {
 function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
-        onSubmit: (data) => dispatch(setPassword(data))
+        onSubmit: (data) => dispatch(setPassword(data)),
+        onClickPrevious: () => dispatch(push("/verifycontact"))
     }
 }
 
