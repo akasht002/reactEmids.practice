@@ -11,10 +11,6 @@ export const Onboarding = {
     loadingStart: 'loading_start/onboard',
     loadingEnd: 'loading_end/onboard',
     userEmailNotExist: 'email_fail/onboard',
-    passcodeSentSuccess: 'passcode_sent_success/onboard',
-    passcodeSentFailure: 'passcode_sent_fail/onboard',
-    passcodeVerifySuccess: 'passcode_verify_success/onboard',
-    passcodeVerifyFailure: 'passcode_verify_Failure/onboard',
     setUserId: 'set_useris/onboard',
     setTemporaryPasscode: 'set_passcode/onboard',
     serviceProviderOnboardSucess: 'onboard_success/onboard'
@@ -33,22 +29,7 @@ export function onCancelClick() {
         dispatch(clearOnboardingState());
         dispatch(push('/'));
     }
-}
-
-export function setPasswordSuccess(data) {
-    return (dispatch, getState) => {
-        dispatch(push('/'));
-    }
-}
-
-
-
-// export function sendVerificationLink(data) {
-//     return (dispatch, getState) => {
-//         dispatch(onSetUserIdCompletion(data));
-//         dispatch(sendVerificationLinkSuccess(true));
-//     }
-// };
+};
 
 
 export const loadingStart = () => {
@@ -212,7 +193,8 @@ export function setPassword(data) {
 
 export function onboardSucess() {
     return (dispatch, getState) => {
-        dispatch(passwordSetSuccess())
+        dispatch(passwordSetSuccess());
+        dispatch(clearOnboardingState());
         dispatch(push('/'));
     }
 };

@@ -90,7 +90,7 @@ class SetPassword extends React.Component {
                             value={this.state.userAgreement}
                             id="userAgreement"
                             onChange={(e) => this.setState({ userAgreement: e.target.value })}>
-                            By clicking on Submit, I agree that I have read and accepted the <a onClick={this.toggle}>End User License Agreement</a>.
+                            By clicking on Submit, I agree that I have read and accepted the <a className="primaryColor" onClick={this.toggle}>End User License Agreement</a>.
                         </CheckBox>
                     </form>
                 </CoreoWizScreen>

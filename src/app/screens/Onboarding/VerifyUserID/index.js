@@ -11,7 +11,8 @@ class VerifyUserID extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: null
+            email: null,
+            emailValid:true
         };
     };
 
@@ -19,6 +20,16 @@ class VerifyUserID extends React.Component {
         this.setState({
             email: e.target.value
         })
+    };
+
+
+    onClickSendVerificationLink = () => {
+        if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
+            this.setState({emailValid: true});
+            this.props.sendVerificationLink({emailId: this.state.email});
+        } else {
+            this.setState({emailValid: false});
+        }
     };
 
     componentDidMount() {
@@ -44,7 +55,7 @@ class VerifyUserID extends React.Component {
 
         return (
             <ScreenCover isLoading={this.props.isLoading}>
-                <CoreoWizScreen menus={menus} activeCoreoWiz={0} displayPrevButton={false} displayNextButton={true} isNextDisabled={!this.state.email} onNextClick={this.onClickButtonNext} onCancelClick={this.onClickButtonCancel}>
+                <CoreoWizScreen menus={menus} activeCoreoWiz={0} displayPrevButton={false} displayNextButton={true} isNextDisabled={!this.props.isEmailExist} onNextClick={this.onClickButtonNext} onCancelClick={this.onClickButtonCancel}>
                     <h4 className="font-weight-normal mb-4">Verify My User ID</h4>
                     <form className="form my-2 px-0 my-lg-0 col-md-6">
                         <Input
@@ -54,7 +65,7 @@ class VerifyUserID extends React.Component {
                             type="email"
                             placeholder="eg. smith@gmail.com"
                             label="Enter Email ID"
-                            className={`${this.props.isEmailExist ? "form-control inputSuccess" : (this.props.isEmailNotExist? "form-control inputFailure": "form-control" )}`}
+                            className={`${this.props.isEmailExist ? "form-control inputSuccess" : (this.props.isEmailNotExist || !this.state.emailValid ? "form-control inputFailure": "form-control" )}`}
                             value={this.state.email}
                             textChange={this.handleChange}
                         />
@@ -63,7 +74,7 @@ class VerifyUserID extends React.Component {
                                 type="button"
                                 classname={"my-3 btn btn-primary " + this.state.visible}
                                 label="Verify"
-                                onClick={() => this.props.sendVerificationLink({ emailId: this.state.email })}
+                                onClick={ this.onClickSendVerificationLink}
                                 disable={!this.state.email}
                             />}
                     </form>

@@ -16,7 +16,7 @@ class AppStackRoot extends React.Component {
                 <Route exact path="/" component={Welcome}/>                
                 <Route path="/setPassword" component={SetPassword}/>                
                 <Route path="/verifycontact" component={VerifyContact}/>
-                <Route path="/verifyemail" component={VerifyUserID}/>\
+                <Route path="/verifyemail" component={VerifyUserID}/>
             </div>
         </ConnectedRouter>
       );
