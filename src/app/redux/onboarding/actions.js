@@ -12,8 +12,11 @@ export const Onboarding = {
     loadingEnd: 'loading_end/onboard',
     userEmailNotExist: 'email_fail/onboard',
     setUserId: 'set_useris/onboard',
-    setTemporaryPasscode: 'set_passcode/onboard',
-    serviceProviderOnboardSucess: 'onboard_success/onboard'
+    passcodeSentSuccess: 'passcode_sent_success/onboard',
+    setPasscodeNotMatch: 'set_passcode_match/onboard',
+    serviceProviderOnboardSucess: 'onboard_success/onboard',
+    passcodeVerifySuccess : 'passcode_verify_success/onbaord',
+    setPasscodeErrorStatus: 'passcode_error_status/onbaord'
 };
 
 
@@ -98,9 +101,6 @@ export const onSetUserId = (data) => {
     }
 };
 
-
-
-
 export function sendTemporaryPasscode(data) {
     return (dispatch, getState) => {
         let modal = {
@@ -119,7 +119,6 @@ export function sendTemporaryPasscode(data) {
                 dispatch(loadingEnd());
             } else {
                 dispatch(loadingEnd());
-                dispatch(userEmailNotExist())
             }
         }).catch((err) => {
             dispatch(loadingEnd());
@@ -141,29 +140,44 @@ export function verifyTempPasscode(data) {
         };
         dispatch(loadingStart());
         axios.post(baseURL + API.verifyTemporaryPasscode, modal).then((resp) => {
-            if (resp && resp.data == true) {
+            dispatch(verifyPasscodeSuccess());
+            if (resp && resp.data === true) {
                 dispatch(temporaryPasscodeSuccess());
                 dispatch(loadingEnd());
             } else {
                 dispatch(loadingEnd());
-                dispatch(setPasscodeSuccess(false))
+                dispatch(setPasscodeSuccess(true))
             }
         }).catch((err) => {
             dispatch(loadingEnd());
+            dispatch(setPasscodeSuccess(false))
         })
+    }
+};
+
+export function setPasscodeError(){
+    return(dispatch, getState) => {
+        dispatch(setPasscodeSuccess(false));
+         dispatch(push('/verifyEmail'));
     }
 };
 
 export function temporaryPasscodeSuccess() {
     return (dispatch, getState) => {
-        dispatch(setPasscodeSuccess(true))
+        dispatch(setPasscodeSuccess(false))
         dispatch(push('/setPassword'));
     }
 };
 
+export function verifyPasscodeSuccess() {
+    return {
+        type: Onboarding.passcodeVerifySuccess
+    };
+};
+
 export function setPasscodeSuccess(isSuccess) {
     return {
-        type: Onboarding.setTemporaryPasscode,
+        type: Onboarding.setPasscodeNotMatch,
         isSuccess
     };
 };

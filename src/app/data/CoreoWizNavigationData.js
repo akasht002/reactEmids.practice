@@ -8,7 +8,7 @@ export const CoreoWizNavigationData = [
     {
         id: 1,
         title: 'Verify My Mobile Number',
-        label: 'A temporary passcode will be send to your registered Contact Number.',
+        label: 'A temporary passcode will be sent to your registered Contact Number.',
         status: ''
     },
     {

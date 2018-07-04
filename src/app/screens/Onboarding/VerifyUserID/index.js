@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input } from '../../../components';
 import { sendVerificationLink, onCancelClick, onUserEmailNext } from '../../../redux/onboarding/actions';
+import { setWorkflowDirty } from '../../../redux/wizard/actions';
 
 class VerifyUserID extends React.Component {
 
@@ -36,7 +36,8 @@ class VerifyUserID extends React.Component {
     componentDidMount() {
         if (this.props.serviceProviderDetails.emailId) {
             this.setState({ email: this.props.serviceProviderDetails.emailId });
-        }
+        };
+        this.props.setWorkflowDirty();
     };
 
     onClickButtonNext = () => {
@@ -103,7 +104,8 @@ function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onClickNext: (data) => dispatch(onUserEmailNext(data)),
-        sendVerificationLink: (data) => dispatch(sendVerificationLink(data))
+        sendVerificationLink: (data) => dispatch(sendVerificationLink(data)),
+        setWorkflowDirty: () => dispatch(setWorkflowDirty())
     }
 }
 

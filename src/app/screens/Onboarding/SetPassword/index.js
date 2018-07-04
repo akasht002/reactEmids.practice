@@ -43,7 +43,7 @@ class SetPassword extends React.Component {
         const menus = ["Contact"];
 
         return (
-            <ScreenCover>
+            <ScreenCover isLoading={this.props.isLoading}>
                 <CoreoWizScreen
                     menus={menus}
                     activeCoreoWiz={2}
@@ -118,7 +118,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        serviceProviderDetails: state.onboardingState.serviceProviderDetails
+        serviceProviderDetails: state.onboardingState.serviceProviderDetails,
+        isLoading: state.onboardingState.loading
     }
 }
 

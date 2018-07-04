@@ -1,4 +1,5 @@
-import {PUSH, REPLACE, GO, GO_BACK, GO_FORWARD, LOCATION_CHANGE} from './constants';
+import { PUSH, REPLACE, GO, GO_BACK, GO_FORWARD, LOCATION_CHANGE } from './constants';
+import { Path } from '../../routes';
 
 export const push = (href) => ({
   type: PUSH,
@@ -18,11 +19,34 @@ export const goBack = () => ({
 export const goForward = () => ({
   type: GO_FORWARD,
 });
-export const locationChange = ({ pathname, search, hash }) => ({
-  type: LOCATION_CHANGE,
-  payload: {
-    pathname,
-    search,
-    hash,
-  },
-});
+export const locationChange = ({ pathname, search, hash }) => {
+  return (dispatch, getState) => {
+    switch (pathname) {
+      case Path.verifycontact:
+      case Path.setPassword:
+        const isDirty = getState().wizardState.isDirty;
+        if (!isDirty) {
+          pathname = Path.verifyEmail;
+          dispatch(push(pathname));
+        }
+        return ({
+          type: LOCATION_CHANGE,
+          payload: {
+            pathname,
+            search,
+            hash,
+          }
+        });
+
+      default:
+        return ({
+          type: LOCATION_CHANGE,
+          payload: {
+            pathname,
+            search,
+            hash,
+          }
+        });
+    }
+  }
+};
