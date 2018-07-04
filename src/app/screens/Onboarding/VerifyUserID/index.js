@@ -12,7 +12,7 @@ class VerifyUserID extends React.Component {
         super(props);
         this.state = {
             email: null,
-            emailValid:true
+            emailValid: true
         };
     };
 
@@ -26,10 +26,10 @@ class VerifyUserID extends React.Component {
     onClickSendVerificationLink = () => {
         debugger;
         if (/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
-            this.setState({emailValid: true});
-            this.props.sendVerificationLink({emailId: this.state.email});
+            this.setState({ emailValid: true });
+            this.props.sendVerificationLink({ emailId: this.state.email });
         } else {
-            this.setState({emailValid: false});
+            this.setState({ emailValid: false });
         }
     };
 
@@ -41,7 +41,7 @@ class VerifyUserID extends React.Component {
 
     onClickButtonNext = () => {
         let email = this.state.email;
-        if(this.props.serviceProviderDetails.email){
+        if (this.props.serviceProviderDetails.email) {
             email = this.props.serviceProviderDetails.email
         };
         this.props.onClickNext({ emailId: email });
@@ -57,34 +57,41 @@ class VerifyUserID extends React.Component {
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <CoreoWizScreen menus={menus} activeCoreoWiz={0} displayPrevButton={false} displayNextButton={true} isNextDisabled={!this.props.isEmailExist} onNextClick={this.onClickButtonNext} onCancelClick={this.onClickButtonCancel}>
-                    <h4 className="font-weight-normal mb-4">Verify My User ID</h4>
-                    <form className="form my-2 px-0 my-lg-0 col-md-6">
-                        <Input
-                            id="userId"
-                            autoComplete="off"
-                            required="required"
-                            type="email"
-                            placeholder="eg. smith@gmail.com"
-                            label="Enter Email ID"
-                            className={`${this.props.isEmailExist ? "form-control inputSuccess" : (this.props.isEmailNotExist || !this.state.emailValid ? "form-control inputFailure": "form-control" )}`}
-                            value={this.state.email}
-                            textChange={this.handleChange}
-                        />
-                        {!this.props.isEmailExist &&
-                            <Button
-                                type="button"
-                                classname={"my-3 btn btn-primary " + this.state.visible}
-                                label="Verify"
-                                onClick={ this.onClickSendVerificationLink}
-                                disable={!this.state.email}
-                            />}
-                    </form>
-                    {this.props.isEmailExist && <div className="MsgWithIcon MsgSuccessIcon">
-                        <span className="text-success d-block mt-4 mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
-                    </div>}
-                    {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
-                        <span className="text-danger d-block mt-4 mb-2">We did not find your Email ID. Please retry or contact Support.</span>
-                    </div>}
+
+                    <div className="container-fluid mainContent px-5">
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-md-12 py-5 px-0">
+                                <h4 className="font-weight-normal mb-4">Verify My User ID</h4>
+                                <form className="form my-2 px-0 my-lg-0 col-md-6">
+                                    <Input
+                                        id="userId"
+                                        autoComplete="off"
+                                        required="required"
+                                        type="email"
+                                        placeholder="eg. smith@gmail.com"
+                                        label="Enter Email ID"
+                                        className={`${this.props.isEmailExist ? "form-control inputSuccess" : (this.props.isEmailNotExist || !this.state.emailValid ? "form-control inputFailure" : "form-control")}`}
+                                        value={this.state.email}
+                                        textChange={this.handleChange}
+                                    />
+                                    {!this.props.isEmailExist &&
+                                        <Button
+                                            type="button"
+                                            classname={"my-3 btn btn-primary " + this.state.visible}
+                                            label="Verify"
+                                            onClick={this.onClickSendVerificationLink}
+                                            disable={!this.state.email}
+                                        />}
+                                </form>
+                                {this.props.isEmailExist && <div className="MsgWithIcon MsgSuccessIcon">
+                                    <span className="text-success d-block mt-4 mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
+                                </div>}
+                                {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
+                                    <span className="text-danger d-block mt-4 mb-2">We did not find your Email ID. Please retry or contact Support.</span>
+                                </div>}
+                            </div>
+                        </div>
+                    </div>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={0} />
             </ScreenCover>

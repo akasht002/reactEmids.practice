@@ -16,7 +16,7 @@ class VerifyContact extends React.Component {
             visible: 'd-block',
             invisible: 'd-none',
             temporaryPassCode: '',
-            phoneNumber : this.props.serviceProviderDetails.mobileNumber.substring(this.props.serviceProviderDetails.mobileNumber.length-4)
+            phoneNumber: this.props.serviceProviderDetails.mobileNumber.substring(this.props.serviceProviderDetails.mobileNumber.length - 4)
         };
     };
 
@@ -24,7 +24,7 @@ class VerifyContact extends React.Component {
         this.setState({
             visible: 'd-none',
             invisible: 'd-block'
-        }); 
+        });
         debugger;
         let data = this.props;
         this.props.sendPassCode(this.props.serviceProviderDetails);
@@ -48,34 +48,43 @@ class VerifyContact extends React.Component {
         return (
             <ScreenCover>
                 <CoreoWizScreen menus={menus} activeCoreoWiz={1} displayNextButton={true} displayPrevButton={true} isNextDisabled={!this.state.temporaryPassCode} onNextClick={this.onClickButtonNext} onPreviousClick={this.onClickButtonPrevious} onCancelClick={this.onClickButtonCancel}>
-                    <h4 className="font-weight-normal mb-4">Verify My Mobile Number</h4>
-                    <p className="m-0">Your Registered Contact Number</p>
-                    <p className="contactNumber"> XXX XXX {this.state.phoneNumber}</p>
-                    <div className={"my-5 tempPassword " + this.state.visible}>
-                        <Button
-                            type="button"
-                            classname="btn btn-primary"
-                            label="Send Temporary Passcode"
-                            onClick={this.handleClick}
-                        />
-                        <span className="d-block my-3 text-muted">A temporary passcode will be sent to your registered Contact Number</span>
-                    </div>
-                    <div className={"tempPassForm " + this.state.invisible}>
 
-                        <form className="form my-2 px-0 my-lg-0 col-md-6">
-                            <Input
-                                id="passcode"
-                                autoComplete="off"
-                                required="required"
-                                type="text"
-                                label="Enter temporary passcode"
-                                className="form-control"
-                                value={this.state.temporaryPassCode}
-                                textChange={(e) => this.setState({ temporaryPassCode: e.target.value })}
-                            />
-                        </form>
-                        <span className="text-success MsgWithIcon MsgSuccessIcon">The temporary password has been sent to your registered Contact Number.</span>
-                        <div className="m-0 font-weight-bold receivePass">Didn’t receive your password yet? <a className="primaryColor px-1" >Click here</a> to resend or Contact <a className="primaryColor px-1">Support</a></div>
+                    <div className="container-fluid mainContent px-5 d-flex align-items-start flex-column">
+                        <div className="row d-block">
+                            <div className="col-md-12 py-5 px-0">
+                                <h4 className="font-weight-normal mb-4">Verify My Mobile Number</h4>
+                                <p className="m-0">Your Registered Contact Number</p>
+                                <p className="contactNumber"> XXX XXX {this.state.phoneNumber}</p>
+                                <div className={"my-5 tempPassword " + this.state.visible}>
+                                    <Button
+                                        type="button"
+                                        classname="btn btn-primary"
+                                        label="Send Temporary Passcode"
+                                        onClick={this.handleClick}
+                                    />
+                                    <span className="d-block my-3 text-muted">A temporary passcode will be sent to your registered Contact Number</span>
+                                </div>
+                                <div className={"tempPassForm " + this.state.invisible}>
+
+                                    <form className="form my-2">
+                                        <Input
+                                            id="passcode"
+                                            autoComplete="off"
+                                            required="required"
+                                            type="password"
+                                            label="Enter temporary passcode"
+                                            className="form-control"
+                                            value={this.state.temporaryPassCode}
+                                            textChange={(e) => this.setState({ temporaryPassCode: e.target.value })}
+                                        />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={"row mt-auto " + this.state.invisible}>
+                            <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been sent to your registered Contact Number.</span>
+                            <span className="d-block mb-3 width100 receivePass">Did not receive your passcode yet? <a className="primaryColor px-1" >Click here</a> to resend or Contact <a className="primaryColor px-1">Support</a></span>
+                        </div>
                     </div>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={1} />
@@ -89,15 +98,15 @@ function mapDispatchToProps(dispatch) {
         onClickCancel: () => dispatch(push("/")),
         onClickNext: () => dispatch(push("/setPassword")),
         onClickPrevious: () => dispatch(push("/verifyemail")),
-        sendPassCode: (data) =>(dispatch(sendTemporaryPasscode(data))),
-        verifyPasscode: (data)=>(dispatch(verifyTempPasscode(data)))
+        sendPassCode: (data) => (dispatch(sendTemporaryPasscode(data))),
+        verifyPasscode: (data) => (dispatch(verifyTempPasscode(data)))
     }
 };
 
-function mapStateToProps(state){
-    return{
+function mapStateToProps(state) {
+    return {
         serviceProviderDetails: state.onboardingState.serviceProviderDetails,
-        isPasscodeSent : state.onboardingState.isPasscodeSent
+        isPasscodeSent: state.onboardingState.isPasscodeSent
     }
 };
 

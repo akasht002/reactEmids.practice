@@ -224,11 +224,6 @@ label{
     color: #222222;
 }
 
-.receivePass{
-    position: fixed;
-    bottom: 100px;
-}
-
 .carousel{
     height: calc( 100vh - 9rem );
 }

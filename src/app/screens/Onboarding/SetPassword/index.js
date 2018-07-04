@@ -53,46 +53,53 @@ class SetPassword extends React.Component {
                     onSubmitClick={this.onSubmit}
                     onCancelClick={this.onCancel}
                     onPreviousClick={this.onClickButtonPrevious}>
-                    <h4 className="font-weight-normal mb-4">Set My Password</h4>
-                    <form className="form my-2 my-lg-0">
-                        <div className="form-group my-4">
-                        </div>
-                        <div className="row">
-                            <div className="col-md-6 my-3">
-                                <Input
-                                    id="newPass"
-                                    autoComplete="off"
-                                    required="required"
-                                    type="password"
-                                    label="Enter New Password"
-                                    className="form-control"
-                                    value={this.state.password}
-                                    textChange={(e) => this.setState({ password: e.target.value })}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-6 my-3">
-                                <Input
-                                    id="rePass"
-                                    autoComplete="off"
-                                    required="required"
-                                    type="password"
-                                    label="Confirm New password"
-                                    className="form-control"
-                                    value={this.state.confirmPassword}
-                                    textChange={(e) => this.setState({ confirmPassword: e.target.value })}
-                                />
-                            </div>
-                            {!this.state.passwordMatch && <div>Password not matching</div>}
-                        </div>
-                        <CheckBox
-                            value={this.state.userAgreement}
-                            id="userAgreement"
-                            onChange={ (e) => this.setState({userAgreement : e.target.checked})}>
-                            By clicking on Submit, I agree that I have read and accepted the <a className="primaryColor" onClick={this.toggle}>End User License Agreement</a>.
+
+                    <div className="container-fluid mainContent px-5">
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-md-12 py-5 px-0">
+                                <h4 className="font-weight-normal mb-4">Set My Password</h4>
+                                <form className="form my-2 my-lg-0">
+                                    <div className="form-group my-4">
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6 my-3">
+                                            <Input
+                                                id="newPass"
+                                                autoComplete="off"
+                                                required="required"
+                                                type="password"
+                                                label="Enter New Password"
+                                                className="form-control"
+                                                value={this.state.password}
+                                                textChange={(e) => this.setState({ password: e.target.value })}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6 my-3">
+                                            <Input
+                                                id="rePass"
+                                                autoComplete="off"
+                                                required="required"
+                                                type="password"
+                                                label="Confirm New password"
+                                                className="form-control"
+                                                value={this.state.confirmPassword}
+                                                textChange={(e) => this.setState({ confirmPassword: e.target.value })}
+                                            />
+                                        {!this.state.passwordMatch && <span className="d-block text-danger MsgWithIcon MsgWrongIcon">Password not matching</span>}
+                                        </div>
+                                    </div>
+                                    <CheckBox
+                                        value={this.state.userAgreement}
+                                        id="userAgreement"
+                                        onChange={(e) => this.setState({ userAgreement: e.target.checked })}>
+                                        By clicking on Submit, I agree that I have read and accepted the <a className="primaryColor" onClick={this.toggle}>End User License Agreement</a>.
                         </CheckBox>
-                    </form>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={2} />
             </ScreenCover>
