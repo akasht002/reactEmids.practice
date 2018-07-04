@@ -9,17 +9,50 @@ const defaultState = {
         code: ''
     },
     isDirty: false,
-    isLinkSent: false,
-    userEmail: ''
+    isEmailExist: false,
+    isEmailNotExist: false,
+    userEmail: '',
+    serviceProviderDetails: {
+        memberId: '',
+        emailId: '',
+        fullName: '',
+        mobileNumber: ''
+    }
 };
 
 const onboardingState = (state = defaultState, action) => {
     switch (action.type) {
-        case Onboarding.sendVerificationLink:
+        case Onboarding.onSetUserIdCompletion:
             return {
                 ...state,
-                isLinkSent: action.isSuccess
+                userEmail: action.data.emailId,
+                isEmailExist: true,
+                isEmailNotExist: false,
+                serviceProviderDetails: {
+                    ...state.serviceProviderDetails,
+                    memberId: action.data.memberId,
+                    emailId: action.data.emailId,
+                    fullName: action.data.firstName + ' ' + action.data.lastName,
+                    mobileNumber: action.data.mobileNumber
+                }
             };
+        case Onboarding.loadingStart:
+            return {
+                ...state,
+                loading: true
+            };
+
+        case Onboarding.loadingEnd:
+            return {
+                ...state,
+                loading: false
+            };
+        case Onboarding.userEmailNotExist:
+        return{
+            ...state,
+            isEmailExist: false,
+            isEmailNotExist: true
+        }
 
         case Onboarding.selectProfileType:
             return {
@@ -49,7 +82,7 @@ const onboardingState = (state = defaultState, action) => {
                     code: ''
                 }
             };
-        
+
         case Onboarding.getPlans:
             return {
                 ...state,
@@ -72,11 +105,6 @@ const onboardingState = (state = defaultState, action) => {
                     ...state.profileData,
                     profileType: action.data.profileType
                 }
-            };
-        case Onboarding.onSetUserIdCompletion:
-            return {
-                ...state,
-                userEmail: action.data.emailId
             };
         case Onboarding.clearOnboardingState:
             return defaultState;

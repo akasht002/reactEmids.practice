@@ -63,6 +63,14 @@ html, body{
     color: #3c1053 !important;
 }
 
+.inputSuccess{
+    border-bottom-color: #28a745 !important;
+}
+
+.inputFailure{
+    border-bottom-color: #dc3545 !important;
+}
+
 .agreementList {
     list-style: none;
     padding: 0;

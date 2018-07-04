@@ -70,7 +70,7 @@ class VerifyContact extends React.Component {
                             />
                         </form>
                         <span className="text-success MsgWithIcon MsgSuccessIcon">The temporary password has been sent to your registered Contact Number.</span>
-                        <div className="m-0 font-weight-bold receivePass">Didn’t receive your password yet? <Link className="px-1" to="/"> Click here </Link> to resend.</div>
+                        <div className="m-0 font-weight-bold receivePass">Didn’t receive your password yet? <Link className="primaryColor px-1" to="/">Click here</Link> to resend.</div>
                     </div>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={1} />

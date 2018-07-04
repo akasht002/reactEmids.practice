@@ -6,14 +6,14 @@ class CheckBox extends Component {
         return (
             <div className="form-check">
                 <label className="form-check-label">
-                    <span className="CheckboxIcon"></span>
+                    {this.props.children}
                     <input
                         className="form-check-input"
                         type="checkbox"
                         value={this.props.value}
                         id={this.props.id}
                         onChange={this.props.onChange} />
-                    {this.props.children}
+                    <span className="CheckboxIcon"></span>
                 </label>
             </div>
         )

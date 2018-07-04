@@ -1,12 +1,16 @@
-
-import { push } from '../navigation/actions';
 import axios from 'axios';
+import { push } from '../navigation/actions';
+import {API, baseURL} from '../../services/api';
+
 
 export const Onboarding = {
     sendVerificationLink: 'send_verification_link/onboard',
     onSetUserIdCompletion: 'set_user_id/onboard',
     setPassword: 'set_password/onboard',
-    clearOnboardingState: 'clear_state/onboard'
+    clearOnboardingState: 'clear_state/onboard',
+    loadingStart: 'loading_start/onboard',
+    loadingEnd: 'loading_end/onboard',
+    userEmailNotExist: 'email_fail/onboard'
 };
 
 
@@ -55,37 +59,56 @@ export function setPassword(data) {
     }
 }
 
-export function sendVerificationLink(data) {
-    return (dispatch, getState) => {
-        dispatch(onSetUserIdCompletion(data));
-        dispatch(sendVerificationLinkSuccess(true));
+// export function sendVerificationLink(data) {
+//     return (dispatch, getState) => {
+//         dispatch(onSetUserIdCompletion(data));
+//         dispatch(sendVerificationLinkSuccess(true));
+//     }
+// };
+
+
+export const loadingStart = () => {
+    return {
+        type: Onboarding.loadingStart
     }
 };
 
 
-export function getPlans() {
+export const loadingEnd = () => {
+    return {
+        type: Onboarding.loadingEnd
+    }
+};
+
+export function sendVerificationLink(emailData) {
+    debugger;
     return (dispatch, getState) => {
         dispatch(loadingStart());
-        axios.get(baseURL + API.GetPlan).then((resp) => {
-        //axios.get('http://www.mocky.io/v2/5b34e9ba2f0000560037612b').then((resp) => {
+        axios.get(baseURL + API.sendEmailVerification).then((resp) => {
             if(resp && resp.data){
-                dispatch(getPlansSuccess(resp.data))
+                dispatch(onSetUserIdCompletion(resp.data));
                 dispatch(loadingEnd());
             }else{
-               // dispatch(loginEnd())
-               // dispatch(loginFail())
+               dispatch(loadingEnd());
+               dispatch(userEmailNotExist())
             }
         }).catch((err) => {
             dispatch(loadingEnd());
         })
     }
-}
+};
 
 
 export const onSetUserIdCompletion = (data) => {
     return {
         type: Onboarding.onSetUserIdCompletion,
         data
+    }
+};
+
+export const userEmailNotExist = (data) => {
+    return {
+        type: Onboarding.onSetUserIdCompletion,
     }
 };
 
@@ -97,7 +120,6 @@ export const sendVerificationLinkSuccess = (isSuccess) => {
 };
 
 export function onUserEmailNext(data){
-    debugger;
      return (dispatch, getState) => {
         dispatch(onSetUserIdCompletion(data))
         dispatch(push('/verifycontact'));
