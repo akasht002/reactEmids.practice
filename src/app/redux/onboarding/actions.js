@@ -20,12 +20,11 @@ export const Onboarding = {
 };
 
 
-
 export const clearOnboardingState = () => {
     return {
         type: Onboarding.clearOnboardingState
     }
-}
+};
 
 export function onCancelClick() {
     return (dispatch, getState) => {
@@ -49,7 +48,6 @@ export const loadingEnd = () => {
 };
 
 export function sendVerificationLink(emailData) {
-    debugger;
     return (dispatch, getState) => {
         dispatch(loadingStart());
         axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
@@ -89,7 +87,6 @@ export const sendVerificationLinkSuccess = (isSuccess) => {
 
 export function onUserEmailNext(data) {
     return (dispatch, getState) => {
-        //dispatch(onSetUserId(data))
         dispatch(push('/verifycontact'));
     }
 };
@@ -158,14 +155,14 @@ export function verifyTempPasscode(data) {
 export function setPasscodeError(){
     return(dispatch, getState) => {
         dispatch(setPasscodeSuccess(false));
-         dispatch(push('/verifyEmail'));
+         dispatch(push('/verifyemail'));
     }
 };
 
 export function temporaryPasscodeSuccess() {
     return (dispatch, getState) => {
         dispatch(setPasscodeSuccess(false))
-        dispatch(push('/setPassword'));
+        dispatch(push('/setpassword'));
     }
 };
 

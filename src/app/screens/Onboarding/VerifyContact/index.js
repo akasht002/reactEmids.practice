@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom"
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
+import { ContactMenu } from '../../../data/HeaderMenu';
 import { sendTemporaryPasscode, verifyTempPasscode, setPasscodeError } from '../../../redux/onboarding/actions';
 import { Input, Button, ScreenCover, CoreoWizScreen, CoreoWizFlow } from '../../../components';
 
@@ -16,11 +16,11 @@ class VerifyContact extends React.Component {
             visible: 'd-block',
             invisible: 'd-none',
             temporaryPassCode: '',
-            phoneNumber: this.props.serviceProviderDetails.mobileNumber.substring(this.props.serviceProviderDetails.mobileNumber.length - 4)
+            mobileNumber: this.props.serviceProviderDetails.mobileNumber.substring(this.props.serviceProviderDetails.mobileNumber.length - 4)
         };
     };
 
-    handleClick = () => {
+    onClickSendPasscode = () => {
         this.setState({
             visible: 'd-none',
             invisible: 'd-block'
@@ -30,40 +30,38 @@ class VerifyContact extends React.Component {
 
     onClickButtonNext = () => {
         let data = {
-            serviceProviderId : this.props.serviceProviderDetails.serviceProviderId,
-            emailId : this.props.serviceProviderDetails.emailId,
-            mobileNumber : this.props.serviceProviderDetails.mobileNumber,
-            passcode : this.state.temporaryPassCode
+            serviceProviderId: this.props.serviceProviderDetails.serviceProviderId,
+            emailId: this.props.serviceProviderDetails.emailId,
+            mobileNumber: this.props.serviceProviderDetails.mobileNumber,
+            passcode: this.state.temporaryPassCode
         }
         this.props.verifyPasscode(data);
     };
 
     onClickButtonCancel = () => {
         this.props.onClickCancel();
-    }
+    };
 
     onClickButtonPrevious = () => {
         this.props.onClickPrevious();
-    }
+    };
 
     render() {
-        const menus = ["Contact"];
         return (
             <ScreenCover isLoading={this.props.isLoading}>
-                <CoreoWizScreen menus={menus} activeCoreoWiz={1} displayNextButton={true} displayPrevButton={true} isNextDisabled={!this.state.temporaryPassCode} onNextClick={this.onClickButtonNext} onPreviousClick={this.onClickButtonPrevious} onCancelClick={this.onClickButtonCancel}>
-
+                <CoreoWizScreen menus={ContactMenu} activeCoreoWiz={1} displayNextButton={true} displayPrevButton={true} isNextDisabled={!this.state.temporaryPassCode} onNextClick={this.onClickButtonNext} onPreviousClick={this.onClickButtonPrevious} onCancelClick={this.onClickButtonCancel}>
                     <div className="container-fluid mainContent px-5 d-flex align-items-start flex-column">
                         <div className="row d-block">
                             <div className="col-md-12 py-5 px-0">
                                 <h4 className="font-weight-normal mb-4">Verify My Mobile Number</h4>
                                 <p className="m-0">Your registered Contact Number</p>
-                                <p className="contactNumber"> XXX XXX {this.state.phoneNumber}</p>
+                                <p className="contactNumber"> XXX XXX {this.state.mobileNumber}</p>
                                 <div className={"my-5 tempPassword " + this.state.visible}>
                                     <Button
                                         type="button"
                                         classname="btn btn-primary"
                                         label="Send Temporary Passcode"
-                                        onClick={this.handleClick}
+                                        onClick={this.onClickSendPasscode}
                                     />
                                     <span className="d-block my-3 text-muted">A temporary passcode will be sent to your registered Contact Number</span>
                                 </div>
@@ -86,7 +84,7 @@ class VerifyContact extends React.Component {
                         </div>
                         <div className={"row mt-auto " + this.state.invisible}>
                             <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been sent to your registered Contact Number.</span>
-                            { this.props.isPasscodeNotMatch  && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Sorry, passcode entered is not matching.</span>}
+                            {this.props.isPasscodeNotMatch && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Sorry, passcode entered is not matching.</span>}
                             <span className="d-block mb-3 width100 receivePass">Didn't receive your passcode yet? <a className="primaryColor px-1" >Click here</a> to resend or Contact <a className="primaryColor px-1">Support</a></span>
                         </div>
                     </div>
@@ -110,9 +108,9 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         serviceProviderDetails: state.onboardingState.serviceProviderDetails,
-        isPasscodeSent : state.onboardingState.isPasscodeSent,
+        isPasscodeSent: state.onboardingState.isPasscodeSent,
         isLoading: state.onboardingState.loading,
-        isPasscodeNotMatch : state.onboardingState.isPasscodeNotMatch
+        isPasscodeNotMatch: state.onboardingState.isPasscodeNotMatch
     }
 };
 

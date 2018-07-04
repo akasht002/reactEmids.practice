@@ -22,7 +22,7 @@ export const goForward = () => ({
 export const locationChange = ({ pathname, search, hash }) => {
   return (dispatch, getState) => {
     switch (pathname) {
-      case Path.verifycontact:
+      case Path.verifyContact:
       case Path.setPassword:
         const isDirty = getState().wizardState.isDirty;
         if (!isDirty) {

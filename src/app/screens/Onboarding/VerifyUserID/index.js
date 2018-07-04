@@ -2,12 +2,12 @@ import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
+import { ContactMenu } from '../../../data/HeaderMenu';
 import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input } from '../../../components';
 import { sendVerificationLink, onCancelClick, onUserEmailNext } from '../../../redux/onboarding/actions';
 import { setWorkflowDirty } from '../../../redux/wizard/actions';
 
 class VerifyUserID extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -16,15 +16,13 @@ class VerifyUserID extends React.Component {
         };
     };
 
-    handleChange = (e) => {
+    onChangeEmail = (e) => {
         this.setState({
             email: e.target.value
         })
     };
 
-
     onClickSendVerificationLink = () => {
-        debugger;
         if (/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
             this.setState({ emailValid: true });
             this.props.sendVerificationLink({ emailId: this.state.email });
@@ -53,12 +51,9 @@ class VerifyUserID extends React.Component {
     };
 
     render() {
-        const menus = ["Contact"];
-
         return (
             <ScreenCover isLoading={this.props.isLoading}>
-                <CoreoWizScreen menus={menus} activeCoreoWiz={0} displayPrevButton={false} displayNextButton={true} isNextDisabled={!this.props.isEmailExist} onNextClick={this.onClickButtonNext} onCancelClick={this.onClickButtonCancel}>
-
+                <CoreoWizScreen menus={ContactMenu} activeCoreoWiz={0} displayPrevButton={false} displayNextButton={true} isNextDisabled={!this.props.isEmailExist} onNextClick={this.onClickButtonNext} onCancelClick={this.onClickButtonCancel}>
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
@@ -73,12 +68,12 @@ class VerifyUserID extends React.Component {
                                         label="Enter Email ID"
                                         className={`${this.props.isEmailExist ? "form-control inputSuccess" : (this.props.isEmailNotExist || !this.state.emailValid ? "form-control inputFailure" : "form-control")}`}
                                         value={this.state.email}
-                                        textChange={this.handleChange}
+                                        textChange={this.onChangeEmail}
                                     />
                                     {!this.props.isEmailExist &&
                                         <Button
                                             type="button"
-                                            classname={"my-3 btn btn-primary " + this.state.visible}
+                                            classname={"my-3 btn btn-primary"}
                                             label="Verify"
                                             onClick={this.onClickSendVerificationLink}
                                             disable={!this.state.email}
@@ -98,7 +93,7 @@ class VerifyUserID extends React.Component {
             </ScreenCover>
         )
     }
-}
+};
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -107,7 +102,7 @@ function mapDispatchToProps(dispatch) {
         sendVerificationLink: (data) => dispatch(sendVerificationLink(data)),
         setWorkflowDirty: () => dispatch(setWorkflowDirty())
     }
-}
+};
 
 
 function mapStateToProps(state) {

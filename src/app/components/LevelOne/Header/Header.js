@@ -77,7 +77,6 @@ class Header extends React.Component {
 
         const menuList = this.state.menus.map((menu) => {
             if (menu.status && menu.role !== "Outerlink") {
-                console.log(menu.role);
                 let clsName = "btn btn-primary";
                 let menuName = menu.label;
                 if(menu.role === "link"){

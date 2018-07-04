@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { setPassword, onCancelClick } from '../../../redux/onboarding/actions';
 import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
+import { ContactMenu } from '../../../data/HeaderMenu';
 import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, CheckBox } from '../../../components';
 
 class SetPassword extends React.Component {
@@ -18,7 +19,7 @@ class SetPassword extends React.Component {
         };
     };
 
-    onSubmit = () => {
+    onClickSubmit = () => {
         if (this.state.password === this.state.confirmPassword) {
             const data = {
                 username: this.props.serviceProviderDetails.emailId,
@@ -31,29 +32,26 @@ class SetPassword extends React.Component {
         }
     };
 
-    onCancel = () => {
+    onClickCancel = () => {
         this.props.onClickCancel();
-    }
+    };
 
     onClickButtonPrevious = () => {
         this.props.onClickPrevious();
-    }
+    };
 
     render() {
-        const menus = ["Contact"];
-
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <CoreoWizScreen
-                    menus={menus}
+                    menus={ContactMenu}
                     activeCoreoWiz={2}
                     displayPrevButton={true}
                     displaySubmitButton={true}
                     isSubmitDisabled={!this.state.password || !this.state.confirmPassword || !this.state.userAgreement}
-                    onSubmitClick={this.onSubmit}
-                    onCancelClick={this.onCancel}
+                    onSubmitClick={this.onClickSubmit}
+                    onCancelClick={this.onClickCancel}
                     onPreviousClick={this.onClickButtonPrevious}>
-
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
@@ -87,7 +85,7 @@ class SetPassword extends React.Component {
                                                 value={this.state.confirmPassword}
                                                 textChange={(e) => this.setState({ confirmPassword: e.target.value })}
                                             />
-                                        {!this.state.passwordMatch && <span className="d-block text-danger MsgWithIcon MsgWrongIcon">Password not matching</span>}
+                                            {!this.state.passwordMatch && <span className="d-block text-danger MsgWithIcon MsgWrongIcon">Password not matching</span>}
                                         </div>
                                     </div>
                                     <CheckBox
@@ -105,7 +103,7 @@ class SetPassword extends React.Component {
             </ScreenCover>
         )
     }
-}
+};
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -113,7 +111,7 @@ function mapDispatchToProps(dispatch) {
         onSetPassword: (data) => dispatch(setPassword(data)),
         onClickPrevious: () => dispatch(push("/verifycontact"))
     }
-}
+};
 
 
 function mapStateToProps(state) {
@@ -121,6 +119,6 @@ function mapStateToProps(state) {
         serviceProviderDetails: state.onboardingState.serviceProviderDetails,
         isLoading: state.onboardingState.loading
     }
-}
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SetPassword));

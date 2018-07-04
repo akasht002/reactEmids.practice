@@ -10,9 +10,9 @@ import { ConnectedRouter } from "react-router-redux";
 
 export const Path = {
   root: '/',
-  setPassword: '/setPassword',
+  setPassword: '/setpassword',
   verifyEmail: '/verifyemail',
-  verifycontact: '/verifycontact'
+  verifyContact: '/verifycontact'
 };
 
 class AppStackRoot extends React.Component {
@@ -22,7 +22,7 @@ class AppStackRoot extends React.Component {
         <div>
           <Route exact path={Path.root} component={Welcome} />
           <Route path={Path.setPassword} component={SetPassword} />
-          <Route path={Path.verifycontact} component={VerifyContact} />
+          <Route path={Path.verifyContact} component={VerifyContact} />
           <Route path={Path.verifyEmail} component={VerifyUserID} />
         </div>
       </ConnectedRouter>
