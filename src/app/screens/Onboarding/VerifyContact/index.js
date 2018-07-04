@@ -82,7 +82,7 @@ class VerifyContact extends React.Component {
             </ScreenCover>
         )
     }
-}
+};
 
 function mapDispatchToProps(dispatch) {
     return {

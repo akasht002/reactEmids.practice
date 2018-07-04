@@ -25,7 +25,7 @@ const defaultState = {
 
 const onboardingState = (state = defaultState, action) => {
     switch (action.type) {
-        case Onboarding.onSetUserIdCompletion:
+        case Onboarding.onSetUserDetailsCompletion:
             return {
                 ...state,
                 userEmail: action.data.emailId,
@@ -37,7 +37,7 @@ const onboardingState = (state = defaultState, action) => {
                     memberId: action.data.memberId,
                     emailId: action.data.serviceProviderEmailId,
                     fullName: action.data.firstName + ' ' + action.data.lastName,
-                    mobileNumber: action.data.mobileNumber,
+                    mobileNumber: action.data.telephoneId,
                     passcode: action.data.tempPassword
                 }
             };
@@ -64,6 +64,14 @@ const onboardingState = (state = defaultState, action) => {
             ...state,
             isPasscodeSent: true
         }
+
+
+        case Onboarding.setUserId:
+        return{
+            ...state,
+            userEmail: action.data.emailId
+        }
+
 
 
 

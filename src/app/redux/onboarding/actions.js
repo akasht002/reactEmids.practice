@@ -5,7 +5,7 @@ import {API, baseURL} from '../../services/api';
 
 export const Onboarding = {
     sendVerificationLink: 'send_verification_link/onboard',
-    onSetUserIdCompletion: 'set_user_id/onboard',
+    onSetUserDetailsCompletion: 'set_user_id/onboard',
     setPassword: 'set_password/onboard',
     clearOnboardingState: 'clear_state/onboard',
     loadingStart: 'loading_start/onboard',
@@ -14,7 +14,8 @@ export const Onboarding = {
     passcodeSentSuccess: 'passcode_sent_success/onboard',
     passcodeSentFailure: 'passcode_sent_fail/onboard',
     passcodeVerifySuccess: 'passcode_verify_success/onboard',
-    passcodeVerifyFailure: 'passcode_verify_Failure/onboard'
+    passcodeVerifyFailure: 'passcode_verify_Failure/onboard',
+    setUserId: 'set_useris/onboard'
 };
 
 
@@ -29,12 +30,6 @@ export function onCancelClick(){
     return (dispatch, getState) => {
         dispatch(clearOnboardingState());
         dispatch(push('/'));
-    }
-}
-export function onSetUserIdPrevious(data){
-    return (dispatch, getState) => {
-        dispatch(onSetUserIdCompletion(data))
-        dispatch(push('/memberdetails'));
     }
 }
 
@@ -106,7 +101,7 @@ export function sendVerificationLink(emailData) {
 export const onSetUserIdCompletion = (data) => {
     debugger;
     return {
-        type: Onboarding.onSetUserIdCompletion,
+        type: Onboarding.onSetUserDetailsCompletion,
         data
     }
 };
@@ -126,10 +121,19 @@ export const sendVerificationLinkSuccess = (isSuccess) => {
 
 export function onUserEmailNext(data){
      return (dispatch, getState) => {
-        dispatch(onSetUserIdCompletion(data))
+        dispatch(onSetUserId(data))
         dispatch(push('/verifycontact'));
     }
 };
+
+export const onSetUserId = (data) => {
+    debugger;
+    return {
+        type: Onboarding.setUserId,
+        data
+    }
+};
+
 
 
 
