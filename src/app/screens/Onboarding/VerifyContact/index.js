@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
+import { sendTemporaryPasscode, verifyTempPasscode } from '../../../redux/onboarding/actions';
 import { Input, Button, ScreenCover, CoreoWizScreen, CoreoWizFlow } from '../../../components';
 
 
@@ -19,14 +20,18 @@ class VerifyContact extends React.Component {
     };
 
     handleClick = () => {
+        //API Call not there as of now
         this.setState({
             visible: 'd-none',
             invisible: 'd-block'
-        });
+        }); 
+        debugger;
+        let data = this.props;
+        this.props.sendPassCode(this.props.serviceProviderDetails);
     };
 
     onClickButtonNext = () => {
-        this.props.onClickNext();
+        this.props.verifyPasscode(this.props.serviceProviderDetails);
     }
 
     onClickButtonCancel = () => {
@@ -45,7 +50,7 @@ class VerifyContact extends React.Component {
                 <CoreoWizScreen menus={menus} activeCoreoWiz={1} displayNextButton={true} displayPrevButton={true} isNextDisabled={!this.state.temporaryPassCode} onNextClick={this.onClickButtonNext} onPreviousClick={this.onClickButtonPrevious} onCancelClick={this.onClickButtonCancel}>
                     <h4 className="font-weight-normal mb-4">Verify My Mobile Number</h4>
                     <p className="m-0">Your Registered Contact Number</p>
-                    <p className="contactNumber">XXXXXXX8541</p>
+                    <p className="contactNumber">{this.props.serviceProviderDetails.mobileNumber}</p>
                     <div className={"my-5 tempPassword " + this.state.visible}>
                         <Button
                             type="button"
@@ -83,8 +88,17 @@ function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(push("/")),
         onClickNext: () => dispatch(push("/setPassword")),
-        onClickPrevious: () => dispatch(push("/verifyemail"))
+        onClickPrevious: () => dispatch(push("/verifyemail")),
+        sendPassCode: (data) =>(dispatch(sendTemporaryPasscode(data))),
+        verifyPasscode: (data)=>(dispatch(verifyTempPasscode(data)))
     }
-}
+};
 
-export default withRouter(connect(null, mapDispatchToProps)(VerifyContact));
+function mapStateToProps(state){
+    return{
+        serviceProviderDetails: state.onboardingState.serviceProviderDetails,
+        isPasscodeSent : state.onboardingState.isPasscodeSent
+    }
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VerifyContact));

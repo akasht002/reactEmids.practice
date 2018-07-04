@@ -10,7 +10,11 @@ export const Onboarding = {
     clearOnboardingState: 'clear_state/onboard',
     loadingStart: 'loading_start/onboard',
     loadingEnd: 'loading_end/onboard',
-    userEmailNotExist: 'email_fail/onboard'
+    userEmailNotExist: 'email_fail/onboard',
+    passcodeSentSuccess: 'passcode_sent_success/onboard',
+    passcodeSentFailure: 'passcode_sent_fail/onboard',
+    passcodeVerifySuccess: 'passcode_verify_success/onboard',
+    passcodeVerifyFailure: 'passcode_verify_Failure/onboard'
 };
 
 
@@ -84,7 +88,7 @@ export function sendVerificationLink(emailData) {
     debugger;
     return (dispatch, getState) => {
         dispatch(loadingStart());
-        axios.get(baseURL + API.sendEmailVerification).then((resp) => {
+        axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
             if(resp && resp.data){
                 dispatch(onSetUserIdCompletion(resp.data));
                 dispatch(loadingEnd());
@@ -100,6 +104,7 @@ export function sendVerificationLink(emailData) {
 
 
 export const onSetUserIdCompletion = (data) => {
+    debugger;
     return {
         type: Onboarding.onSetUserIdCompletion,
         data
@@ -108,7 +113,7 @@ export const onSetUserIdCompletion = (data) => {
 
 export const userEmailNotExist = (data) => {
     return {
-        type: Onboarding.onSetUserIdCompletion,
+        type: Onboarding.userEmailNotExist,
     }
 };
 
@@ -123,5 +128,69 @@ export function onUserEmailNext(data){
      return (dispatch, getState) => {
         dispatch(onSetUserIdCompletion(data))
         dispatch(push('/verifycontact'));
+    }
+};
+
+
+
+export function sendTemporaryPasscode(data) {
+    debugger;
+    return (dispatch, getState) => {
+        let modal = {
+            serviceProviderId : data.serviceProviderId,
+            serviceProviderEmailId: data.emailId,
+            mobileNumber: data.mobileNumber,
+            firstName: '',
+            lastName: '',
+            memberId : '',
+            tempPassword: ''
+        }
+        debugger;
+        dispatch(loadingStart());
+        axios.post(baseURL + API.sendTemporaryPasscode, modal).then((resp) => {
+            if(resp && resp.data){
+                dispatch(onPasscodeSent());
+                dispatch(loadingEnd());
+            }else{
+               dispatch(loadingEnd());
+               dispatch(userEmailNotExist())
+            }
+        }).catch((err) => {
+            dispatch(loadingEnd());
+        })
+    }
+};
+
+
+export function verifyTempPasscode(data) {
+    debugger;
+    let modal = {
+        serviceProviderId : data.serviceProviderId,
+        serviceProviderEmailId: data.emailId,
+        mobileNumber: data.mobileNumber,
+        firstName: '',
+        lastName: '',
+        memberId : '',
+        tempPassword: data.passcode
+    };
+    return (dispatch, getState) => {
+        dispatch(loadingStart());
+        axios.post(baseURL + API.verifyTemporaryPasscode, modal).then((resp) => {
+            if(resp && resp.data){
+                dispatch(onPasscodeSent());
+                dispatch(loadingEnd());
+            }else{
+               dispatch(loadingEnd());
+               dispatch(userEmailNotExist())
+            }
+        }).catch((err) => {
+            dispatch(loadingEnd());
+        })
+    }
+};
+
+export function onPasscodeSent(){
+    return {
+        type: Onboarding.sendVerificationLink
     }
 };

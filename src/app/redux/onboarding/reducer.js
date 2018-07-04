@@ -13,11 +13,14 @@ const defaultState = {
     isEmailNotExist: false,
     userEmail: '',
     serviceProviderDetails: {
+        serviceProviderId: '',
         memberId: '',
         emailId: '',
         fullName: '',
-        mobileNumber: ''
-    }
+        mobileNumber: '',
+        passcode: ''
+    },
+    isPasscodeSent : false
 };
 
 const onboardingState = (state = defaultState, action) => {
@@ -30,10 +33,12 @@ const onboardingState = (state = defaultState, action) => {
                 isEmailNotExist: false,
                 serviceProviderDetails: {
                     ...state.serviceProviderDetails,
+                    serviceProviderId: action.data.serviceProviderId,
                     memberId: action.data.memberId,
-                    emailId: action.data.emailId,
+                    emailId: action.data.serviceProviderEmailId,
                     fullName: action.data.firstName + ' ' + action.data.lastName,
-                    mobileNumber: action.data.mobileNumber
+                    mobileNumber: action.data.mobileNumber,
+                    passcode: action.data.tempPassword
                 }
             };
         case Onboarding.loadingStart:
@@ -53,6 +58,15 @@ const onboardingState = (state = defaultState, action) => {
             isEmailExist: false,
             isEmailNotExist: true
         }
+
+        case Onboarding.passcodeSentSuccess:
+        return{
+            ...state,
+            isPasscodeSent: true
+        }
+
+
+
 
         case Onboarding.selectProfileType:
             return {
