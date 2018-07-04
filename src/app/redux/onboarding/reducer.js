@@ -20,7 +20,9 @@ const defaultState = {
         mobileNumber: '',
         passcode: ''
     },
-    isPasscodeSent : false
+    isPasscodeSent : false,
+    isPasscodeCorrect: false,
+    isOnboardSucess: false
 };
 
 const onboardingState = (state = defaultState, action) => {
@@ -37,7 +39,7 @@ const onboardingState = (state = defaultState, action) => {
                     memberId: action.data.memberId,
                     emailId: action.data.serviceProviderEmailId,
                     fullName: action.data.firstName + ' ' + action.data.lastName,
-                    mobileNumber: action.data.telephoneId,
+                    mobileNumber: action.data.mobileNumber,
                     passcode: action.data.tempPassword
                 }
             };
@@ -70,6 +72,18 @@ const onboardingState = (state = defaultState, action) => {
         return{
             ...state,
             userEmail: action.data.emailId
+        }
+
+        case Onboarding.setTemporaryPasscode:
+        return{
+            ...state,
+            isPasscodeCorrect: action.isSuccess
+        }
+
+        case Onboarding.serviceProviderOnboardSucess:
+        return{
+            ...state,
+            isOnboardSucess: true
         }
 
 

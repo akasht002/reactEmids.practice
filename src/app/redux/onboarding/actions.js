@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push } from '../navigation/actions';
-import {API, baseURL} from '../../services/api';
+import { API, baseURL } from '../../services/api';
 
 
 export const Onboarding = {
@@ -15,7 +15,9 @@ export const Onboarding = {
     passcodeSentFailure: 'passcode_sent_fail/onboard',
     passcodeVerifySuccess: 'passcode_verify_success/onboard',
     passcodeVerifyFailure: 'passcode_verify_Failure/onboard',
-    setUserId: 'set_useris/onboard'
+    setUserId: 'set_useris/onboard',
+    setTemporaryPasscode: 'set_passcode/onboard',
+    serviceProviderOnboardSucess: 'onboard_success/onboard'
 };
 
 
@@ -26,37 +28,20 @@ export const clearOnboardingState = () => {
     }
 }
 
-export function onCancelClick(){
+export function onCancelClick() {
     return (dispatch, getState) => {
         dispatch(clearOnboardingState());
         dispatch(push('/'));
     }
 }
 
-export function setPasswordSuccess(data){
+export function setPasswordSuccess(data) {
     return (dispatch, getState) => {
         dispatch(push('/'));
     }
 }
 
-export function setPassword(data) {
-    return (dispatch, getState) => {
-        //dispatch(loginStart())
-        dispatch(setPasswordSuccess(data))
-        // axios.post('http://www.mocky.io/v2/5b34e9ba2f0000560037612b', data).then((resp) => {
-        //     if(resp && resp.data){
-        //         dispatch(setPasswordSuccess(resp.data))
-        //         //dispatch(loginEnd())
-        //     }else{
-        //        // dispatch(loginEnd())
-        //        // dispatch(loginFail())
-        //     }
-        // }).catch((err) => {
-        //    // dispatch(loginEnd())
-        //     //dispatch(loginFail())
-        // })
-    }
-}
+
 
 // export function sendVerificationLink(data) {
 //     return (dispatch, getState) => {
@@ -80,16 +65,15 @@ export const loadingEnd = () => {
 };
 
 export function sendVerificationLink(emailData) {
-    debugger;
     return (dispatch, getState) => {
         dispatch(loadingStart());
         axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
-            if(resp && resp.data){
+            if (resp && resp.data) {
                 dispatch(onSetUserIdCompletion(resp.data));
                 dispatch(loadingEnd());
-            }else{
-               dispatch(loadingEnd());
-               dispatch(userEmailNotExist())
+            } else {
+                dispatch(loadingEnd());
+                dispatch(userEmailNotExist())
             }
         }).catch((err) => {
             dispatch(loadingEnd());
@@ -99,7 +83,6 @@ export function sendVerificationLink(emailData) {
 
 
 export const onSetUserIdCompletion = (data) => {
-    debugger;
     return {
         type: Onboarding.onSetUserDetailsCompletion,
         data
@@ -119,15 +102,14 @@ export const sendVerificationLinkSuccess = (isSuccess) => {
     }
 };
 
-export function onUserEmailNext(data){
-     return (dispatch, getState) => {
+export function onUserEmailNext(data) {
+    return (dispatch, getState) => {
         dispatch(onSetUserId(data))
         dispatch(push('/verifycontact'));
     }
 };
 
 export const onSetUserId = (data) => {
-    debugger;
     return {
         type: Onboarding.setUserId,
         data
@@ -138,26 +120,24 @@ export const onSetUserId = (data) => {
 
 
 export function sendTemporaryPasscode(data) {
-    debugger;
     return (dispatch, getState) => {
         let modal = {
-            serviceProviderId : data.serviceProviderId,
+            serviceProviderId: data.serviceProviderId,
             serviceProviderEmailId: data.emailId,
             mobileNumber: data.mobileNumber,
             firstName: '',
             lastName: '',
-            memberId : '',
-            tempPassword: ''
+            memberId: '',
+            tempPassword: 0
         }
-        debugger;
         dispatch(loadingStart());
         axios.post(baseURL + API.sendTemporaryPasscode, modal).then((resp) => {
-            if(resp && resp.data){
+            if (resp && resp.data) {
                 dispatch(onPasscodeSent());
                 dispatch(loadingEnd());
-            }else{
-               dispatch(loadingEnd());
-               dispatch(userEmailNotExist())
+            } else {
+                dispatch(loadingEnd());
+                dispatch(userEmailNotExist())
             }
         }).catch((err) => {
             dispatch(loadingEnd());
@@ -167,25 +147,24 @@ export function sendTemporaryPasscode(data) {
 
 
 export function verifyTempPasscode(data) {
-    debugger;
-    let modal = {
-        serviceProviderId : data.serviceProviderId,
-        serviceProviderEmailId: data.emailId,
-        mobileNumber: data.mobileNumber,
-        firstName: '',
-        lastName: '',
-        memberId : '',
-        tempPassword: data.passcode
-    };
     return (dispatch, getState) => {
+        let modal = {
+            serviceProviderId: data.serviceProviderId,
+            serviceProviderEmailId: data.emailId,
+            mobileNumber: data.mobileNumber,
+            firstName: '',
+            lastName: '',
+            memberId: '',
+            tempPassword: data.passcode
+        };
         dispatch(loadingStart());
         axios.post(baseURL + API.verifyTemporaryPasscode, modal).then((resp) => {
-            if(resp && resp.data){
-                dispatch(onPasscodeSent());
+            if (resp && resp.data == true) {
+                dispatch(temporaryPasscodeSuccess());
                 dispatch(loadingEnd());
-            }else{
-               dispatch(loadingEnd());
-               dispatch(userEmailNotExist())
+            } else {
+                dispatch(loadingEnd());
+                dispatch(setPasscodeSuccess(false))
             }
         }).catch((err) => {
             dispatch(loadingEnd());
@@ -193,8 +172,54 @@ export function verifyTempPasscode(data) {
     }
 };
 
-export function onPasscodeSent(){
+export function temporaryPasscodeSuccess() {
+    return (dispatch, getState) => {
+        dispatch(setPasscodeSuccess(true))
+        dispatch(push('/setPassword'));
+    }
+};
+
+export function setPasscodeSuccess(isSuccess) {
+    return {
+        type: Onboarding.setTemporaryPasscode,
+        isSuccess
+    };
+};
+
+export function onPasscodeSent() {
     return {
         type: Onboarding.sendVerificationLink
+    }
+};
+
+
+export function setPassword(data) {
+    return (dispatch, getState) => {
+        let body = {
+            userName: data.username,
+            password: data.password,
+            confirmPassword: data.confirmPassword
+        };
+        dispatch(loadingStart());
+        axios.post(baseURL + API.setPassword, body).then((resp) => {
+            dispatch(onboardSucess());
+            dispatch(loadingEnd());
+        }).catch((err) => {
+            dispatch(loadingEnd());
+        })
+    }
+};
+
+export function onboardSucess() {
+    return (dispatch, getState) => {
+        dispatch(passwordSetSuccess())
+        dispatch(push('/'));
+    }
+};
+
+
+export function passwordSetSuccess(){
+    return{
+        type: Onboarding.serviceProviderOnboardSucess
     }
 };

@@ -20,7 +20,12 @@ class SetPassword extends React.Component {
 
     onSubmit = () => {
         if (this.state.password === this.state.confirmPassword) {
-            this.props.onSubmit(this.state.password);
+            const data = {
+                username: this.props.serviceProviderDetails.emailId,
+                password: this.state.password,
+                confirmPassword: this.state.confirmPassword
+            };
+            this.props.onSetPassword(data);
         } else {
             this.setState({ passwordMatch: false });
         }
@@ -98,9 +103,16 @@ class SetPassword extends React.Component {
 function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
-        onSubmit: (data) => dispatch(setPassword(data)),
+        onSetPassword: (data) => dispatch(setPassword(data)),
         onClickPrevious: () => dispatch(push("/verifycontact"))
     }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(SetPassword));
+
+function mapStateToProps(state) {
+    return {
+        serviceProviderDetails: state.onboardingState.serviceProviderDetails
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SetPassword));
