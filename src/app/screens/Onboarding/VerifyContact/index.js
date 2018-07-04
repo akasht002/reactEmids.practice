@@ -15,12 +15,12 @@ class VerifyContact extends React.Component {
         this.state = {
             visible: 'd-block',
             invisible: 'd-none',
-            temporaryPassCode: ''
+            temporaryPassCode: '',
+            phoneNumber : this.props.serviceProviderDetails.mobileNumber.substring(this.props.serviceProviderDetails.mobileNumber.length-4)
         };
     };
 
     handleClick = () => {
-        //API Call not there as of now
         this.setState({
             visible: 'd-none',
             invisible: 'd-block'
@@ -45,13 +45,12 @@ class VerifyContact extends React.Component {
 
     render() {
         const menus = ["Contact"];
-
         return (
             <ScreenCover>
                 <CoreoWizScreen menus={menus} activeCoreoWiz={1} displayNextButton={true} displayPrevButton={true} isNextDisabled={!this.state.temporaryPassCode} onNextClick={this.onClickButtonNext} onPreviousClick={this.onClickButtonPrevious} onCancelClick={this.onClickButtonCancel}>
                     <h4 className="font-weight-normal mb-4">Verify My Mobile Number</h4>
                     <p className="m-0">Your Registered Contact Number</p>
-                    <p className="contactNumber">{this.props.serviceProviderDetails.mobileNumber}</p>
+                    <p className="contactNumber"> XXX XXX {this.state.phoneNumber}</p>
                     <div className={"my-5 tempPassword " + this.state.visible}>
                         <Button
                             type="button"

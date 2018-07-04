@@ -24,7 +24,8 @@ class VerifyUserID extends React.Component {
 
 
     onClickSendVerificationLink = () => {
-        if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
+        debugger;
+        if (/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
             this.setState({emailValid: true});
             this.props.sendVerificationLink({emailId: this.state.email});
         } else {
@@ -33,8 +34,8 @@ class VerifyUserID extends React.Component {
     };
 
     componentDidMount() {
-        if (this.props.userEmail) {
-            this.setState({ email: this.props.userEmail });
+        if (this.props.serviceProviderDetails.emailId) {
+            this.setState({ email: this.props.serviceProviderDetails.emailId });
         }
     };
 

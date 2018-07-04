@@ -6,7 +6,6 @@ const defaultState = {
     loading: false,
     isEmailExist: false,
     isEmailNotExist: false,
-    userEmail: '',
     serviceProviderDetails: {
         serviceProviderId: '',
         memberId: '',

@@ -46,6 +46,7 @@ export const loadingEnd = () => {
 };
 
 export function sendVerificationLink(emailData) {
+    debugger;
     return (dispatch, getState) => {
         dispatch(loadingStart());
         axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
@@ -85,7 +86,7 @@ export const sendVerificationLinkSuccess = (isSuccess) => {
 
 export function onUserEmailNext(data) {
     return (dispatch, getState) => {
-        dispatch(onSetUserId(data))
+        //dispatch(onSetUserId(data))
         dispatch(push('/verifycontact'));
     }
 };
