@@ -49,12 +49,11 @@ export const loadingEnd = () => {
 };
 
 export function sendVerificationLink(emailData) {
-    debugger;
     return (dispatch, getState) => {
         dispatch(loadingStart());
         axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
             if (resp && resp.data) {
-                if(!resp.data.isExist === "Onboarded"){
+                if(resp.data.isExist === "Valid"){
                     dispatch(onSetUserIdCompletion(resp.data));
                     dispatch(isAlreadyOnboarded(false));
                 }else{
@@ -62,6 +61,7 @@ export function sendVerificationLink(emailData) {
                 }
                 dispatch(loadingEnd());
             } else {
+                dispatch(isAlreadyOnboarded(false));
                 dispatch(loadingEnd());
                 dispatch(userEmailNotExist())
             }
