@@ -143,25 +143,25 @@ export function verifyTempPasscode(data) {
                 dispatch(loadingEnd());
             } else {
                 dispatch(loadingEnd());
-                dispatch(setPasscodeSuccess(true))
+                dispatch(setPasscodeNotMatch(true))
             }
         }).catch((err) => {
             dispatch(loadingEnd());
-            dispatch(setPasscodeSuccess(false))
+            dispatch(setPasscodeNotMatch(true));
         })
     }
 };
 
 export function setPasscodeError(){
     return(dispatch, getState) => {
-        dispatch(setPasscodeSuccess(false));
+        dispatch(setPasscodeNotMatch(false));
          dispatch(push('/verifyemail'));
     }
 };
 
 export function temporaryPasscodeSuccess() {
     return (dispatch, getState) => {
-        dispatch(setPasscodeSuccess(false))
+        dispatch(setPasscodeNotMatch(false))
         dispatch(push('/setpassword'));
     }
 };
@@ -172,7 +172,7 @@ export function verifyPasscodeSuccess() {
     };
 };
 
-export function setPasscodeSuccess(isSuccess) {
+export function setPasscodeNotMatch(isSuccess) {
     return {
         type: Onboarding.setPasscodeNotMatch,
         isSuccess

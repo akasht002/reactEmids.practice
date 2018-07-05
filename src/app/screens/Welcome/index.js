@@ -2,30 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom"
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ScreenCover, CarouselComp} from '../../components'
-
-const CarouselItems = [
-    {
-        src: 'https://dummyimage.com/640x480',
-        altText: 'Live Health Councelling',
-        caption: 'Connect with our guides with Telehealth and get solutions on your problem in few steps'
-    },
-    {
-        src: 'https://dummyimage.com/640x480',
-        altText: 'Live Health Councelling',
-        caption: 'Connect with our guides with Telehealth and get solutions on your problem in few steps'
-    },
-    {
-        src: 'https://dummyimage.com/640x480',
-        altText: 'Live Health Councelling',
-        caption: 'Connect with our guides with Telehealth and get solutions on your problem in few steps'
-    },
-    {
-        src: 'https://dummyimage.com/640x480',
-        altText: 'Live Health Councelling',
-        caption: 'Connect with our guides with Telehealth and get solutions on your problem in few steps'
-    }
-];
+import { ScreenCover} from '../../components'
 
 class Welcome extends React.Component {
     render(){
@@ -35,7 +12,6 @@ class Welcome extends React.Component {
                 <div className="container mainContent">
                     <div className="row d-flex justify-content-center">
                         <div className="col-md-8 d-flex justify-content-center">
-                            <CarouselComp CarouselItems={CarouselItems} />
                         </div>
                     </div>
                 </div>
