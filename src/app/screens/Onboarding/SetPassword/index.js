@@ -41,11 +41,10 @@ class SetPassword extends React.Component {
     };
 
     onChangeConfirmPassword = (e) => {
-        debugger;
         this.setState({ confirmPassword: e.target.value });
         if(!this.state.passwordMatch && e.target.value.length === 0){
             this.setState({ passwordMatch: true });
-        }
+        };
     };
 
     render() {

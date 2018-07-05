@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
-import { sendTemporaryPasscode, verifyTempPasscode, setPasscodeError } from '../../../redux/onboarding/actions';
+import { sendTemporaryPasscode, verifyTempPasscode, setPasscodeError, onCancelClick } from '../../../redux/onboarding/actions';
 import { Input, Button, ScreenCover, CoreoWizScreen, CoreoWizFlow } from '../../../components';
 
 
@@ -97,7 +97,7 @@ class VerifyContact extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onClickCancel: () => dispatch(push("/")),
+        onClickCancel: () => dispatch(onCancelClick()),
         onClickNext: () => dispatch(push("/setPassword")),
         onClickPrevious: () => dispatch(setPasscodeError()),
         sendPassCode: (data) => (dispatch(sendTemporaryPasscode(data))),

@@ -11,7 +11,7 @@ class CoreoWizFooter extends React.Component {
                         <Button
                             type="button"
                             classname="btn outline btn-outline-primary mx-2 float-left"
-                            label="Cancel"
+                            label="CANCEL"
                             onClick={this.props.onCancelClick}
                             disable={false}
                         />
@@ -19,7 +19,7 @@ class CoreoWizFooter extends React.Component {
                         <Button
                             type="button"
                             classname="btn outline btn-primary mx-2 float-right"
-                            label="Next"
+                            label="NEXT"
                             onClick={this.props.onNextClick}
                             disable={this.props.isNextDisabled}
                         />}
@@ -27,7 +27,7 @@ class CoreoWizFooter extends React.Component {
                         <Button
                             type="button"
                             classname="btn outline btn-primary mx-2 float-right"
-                            label="Submit"
+                            label="SUBMIT"
                             onClick={this.props.onSubmitClick}
                             disable={this.props.isSubmitDisabled}
                         />}
@@ -35,7 +35,7 @@ class CoreoWizFooter extends React.Component {
                             <Button
                                 type="button"
                                 classname="btn outline btn-outline-primary mx-2 float-right"
-                                label="Previous"
+                                label="PREVIOUS"
                                 onClick={this.props.onPreviousClick}
                                 disable={false}
                             />

@@ -12,14 +12,20 @@ class VerifyUserID extends React.Component {
         super(props);
         this.state = {
             email: null,
-            emailValid: true
+            emailValid: true,
+            isEmailNotExist: false,
+            isAlreadyOnboarded: false
         };
     };
 
     onChangeEmail = (e) => {
         this.setState({
             email: e.target.value
-        })
+        });
+
+        if(e.target.value.length === 0){
+            this.setState({ isEmailNotExist : false, isAlreadyOnboarded: false });
+        }
     };
 
     onClickSendVerificationLink = () => {
@@ -50,7 +56,12 @@ class VerifyUserID extends React.Component {
         this.props.onClickCancel();
     };
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({isEmailNotExist: nextProps.isEmailNotExist, isAlreadyOnboarded: nextProps.isAlreadyOnboarded});
+    };
+
     render() {
+        
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <CoreoWizScreen menus={ContactMenu} activeCoreoWiz={0} displayPrevButton={false} displayNextButton={true} isNextDisabled={!this.props.isEmailExist} onNextClick={this.onClickButtonNext} onCancelClick={this.onClickButtonCancel}>
@@ -63,10 +74,10 @@ class VerifyUserID extends React.Component {
                                         id="userId"
                                         autoComplete="off"
                                         required="required"
-                                        type="email"
+                                        type="text"
                                         placeholder="eg. smith@gmail.com"
                                         label="Enter Email ID"
-                                        className={`${this.props.isEmailExist ? "form-control inputSuccess" : (this.props.isEmailNotExist || !this.state.emailValid ? "form-control inputFailure" : "form-control")}`}
+                                        className={`${this.props.isEmailExist ? "form-control inputSuccess" : ((this.props.isEmailNotExist || !this.state.emailValid) && !this.state.isInputEmpty ? "form-control inputFailure" : "form-control")}`}
                                         value={this.state.email}
                                         textChange={this.onChangeEmail}
                                     />
@@ -82,11 +93,11 @@ class VerifyUserID extends React.Component {
                                 {this.props.isEmailExist && <div className="MsgWithIcon MsgSuccessIcon">
                                     <span className="text-success d-block mt-4 mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
                                 </div>}
-                                {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
+                                {this.state.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
                                     <span className="text-danger d-block mt-4 mb-2">We did not find your Email ID. Please retry or contact Support.</span>
                                 </div>}
 
-                                {this.props.isAlreadyOnboarded && <div className={"MsgWithIcon MsgWrongIcon"}>
+                                {this.state.isAlreadyOnboarded &&  <div className={"MsgWithIcon MsgWrongIcon"}>
                                     <span className="text-danger d-block mt-4 mb-2">Sorry, you are already onboarded for this registered userId.</span>
                                 </div>}
                             </div>
