@@ -5,7 +5,7 @@ class CheckBox extends Component {
     render() {
         return (
             <div className="form-check">
-                <label for="userAgreement" className="form-check-label">
+                <label htmlFor="userAgreement" className="form-check-label">
                     {this.props.children}
                     <input
                         className="form-check-input"

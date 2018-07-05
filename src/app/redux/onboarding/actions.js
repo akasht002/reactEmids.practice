@@ -207,7 +207,7 @@ export function onboardSucess() {
     return (dispatch, getState) => {
         dispatch(passwordSetSuccess());
         dispatch(clearOnboardingState());
-        dispatch(push('/'));
+        dispatch(push('/onboardsuccess'));
     }
 };
 

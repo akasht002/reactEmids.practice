@@ -81,11 +81,11 @@ class SetPassword extends React.Component {
                                                 required="required"
                                                 type="password"
                                                 label="Confirm New password"
-                                                className="form-control"
+                                                className={`${!this.state.passwordMatch ? "form-control inputFailure" : "form-control"}`}
                                                 value={this.state.confirmPassword}
                                                 textChange={(e) => this.setState({ confirmPassword: e.target.value })}
                                             />
-                                            {!this.state.passwordMatch && <span className="d-block text-danger MsgWithIcon MsgWrongIcon">Password not matching</span>}
+                                            {!this.state.passwordMatch && <span className="d-block text-danger MsgWithIcon MsgWrongIcon">Passwords not matching.</span>}
                                         </div>
                                     </div>
                                     <CheckBox
@@ -93,7 +93,7 @@ class SetPassword extends React.Component {
                                         id="userAgreement"
                                         onChange={(e) => this.setState({ userAgreement: e.target.checked })}>
                                         By clicking on Submit, I agree that I have read and accepted the <a className="primaryColor" onClick={this.toggle}>End User License Agreement</a>.
-                        </CheckBox>
+                                    </CheckBox>
                                 </form>
                             </div>
                         </div>

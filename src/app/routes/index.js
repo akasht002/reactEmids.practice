@@ -5,6 +5,7 @@ import {
   VerifyContact,
   SetPassword,
   VerifyUserID,
+  OnboardSuccess
 } from '../screens'
 import { ConnectedRouter } from "react-router-redux";
 
@@ -12,7 +13,8 @@ export const Path = {
   root: '/',
   setPassword: '/setpassword',
   verifyEmail: '/verifyemail',
-  verifyContact: '/verifycontact'
+  verifyContact: '/verifycontact',
+  onboardSuccess: '/onboardsuccess'
 };
 
 class AppStackRoot extends React.Component {
@@ -24,6 +26,7 @@ class AppStackRoot extends React.Component {
           <Route path={Path.setPassword} component={SetPassword} />
           <Route path={Path.verifyContact} component={VerifyContact} />
           <Route path={Path.verifyEmail} component={VerifyUserID} />
+          <Route path={Path.onboardSuccess} component={OnboardSuccess} />
         </div>
       </ConnectedRouter>
     );

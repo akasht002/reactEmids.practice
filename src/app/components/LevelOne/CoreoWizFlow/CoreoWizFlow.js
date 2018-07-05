@@ -12,7 +12,7 @@ class CoreoWizFlow extends React.Component {
                     menu.status = '';
                 }
                 return (
-                    <li className={"nav-item py-2 "+menu.status}>
+                    <li key={menu.id} className={"nav-item py-2 "+menu.status}>
                         <h5 className="font-weight-normal">{menu.title}</h5>
                         <p>{menu.label}</p>
                     </li>

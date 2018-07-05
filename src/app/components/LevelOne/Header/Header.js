@@ -6,7 +6,8 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink, } from 'reactstrap';
+    NavLink,
+} from 'reactstrap';
 
 class Header extends React.Component {
     constructor(props) {
@@ -42,19 +43,19 @@ class Header extends React.Component {
         };
     }
 
-    componentDidMount(){
-        if(this.props.menuArray){
+    componentDidMount() {
+        if (this.props.menuArray) {
             this.props.menuArray.map((menu) => {
                 return this.onMenu(menu);
             });
         }
     }
 
-    onMenu(menuVal){
+    onMenu(menuVal) {
         let menus = this.state.menus.map((menu) => {
-            if(menu.name.toLowerCase() === menuVal.toLowerCase()){
+            if (menu.name.toLowerCase() === menuVal.toLowerCase()) {
                 menu.status = true;
-                if(menu.role === 'Outerlink'){
+                if (menu.role === 'Outerlink') {
                     this.setState({
                         dBlock: "d-none"
                     });
@@ -63,7 +64,7 @@ class Header extends React.Component {
             return menu;
         });
         this.setState({
-            menus:menus
+            menus: menus
         });
     }
 
@@ -77,39 +78,40 @@ class Header extends React.Component {
 
         const menuList = this.state.menus.map((menu) => {
             if (menu.status && menu.role !== "Outerlink") {
+                console.log(menu.role);
                 let clsName = "btn btn-primary";
                 let menuName = menu.label;
-                if(menu.role === "link"){
+                if (menu.role === "link") {
                     clsName = ""
                 }
-                if(menu.label !== menu.name){
-                    clsName += "icon "+menu.label;
+                if (menu.label !== menu.name) {
+                    clsName += "icon " + menu.label;
                     menuName = "";
                 }
                 return (
-                    <NavItem>
+                    <NavItem key={menu.id}>
                         <NavLink className={clsName}
-                              href={menu.link}> {menuName}</NavLink>
+                            href={menu.link}> {menuName}</NavLink>
                     </NavItem>
                 )
             }
             return true;
         });
 
-        const OuterLink = this.state.menus.map((menu)=>{
+        const OuterLink = this.state.menus.map((menu) => {
             if (menu.status) {
-                if(menu.role === "Outerlink") {
+                if (menu.role === "Outerlink") {
                     let clsName = "";
                     let menuName = menu.label;
-                    if(menu.label !== menu.name){
-                        clsName += "menuRightIcon icon "+menu.label;
+                    if (menu.label !== menu.name) {
+                        clsName += "menuRightIcon icon " + menu.label;
                         menuName = "";
                     }
                     return (
-                        <Nav className="ml-auto" navbar>
+                        <Nav key={menu.role} className="ml-auto" navbar>
                             <NavItem>
                                 <NavLink className={clsName}
-                                     href={menu.link}> {menuName}</NavLink>
+                                    href={menu.link}> {menuName}</NavLink>
                             </NavItem>
                         </Nav>
                     )
@@ -119,16 +121,16 @@ class Header extends React.Component {
         });
 
         return (
-                <Navbar className="navbar-light boxShadowBottom" expand="md">
-                    <NavbarBrand className="text-uppercase px-3" href="/">Coreo Home</NavbarBrand>
-                    <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            {menuList}
-                        </Nav>
-                    </Collapse>
-                    {OuterLink}
-                </Navbar>
+            <Navbar className="navbar-light boxShadowBottom" expand="md">
+                <NavbarBrand className="text-uppercase px-3" href="/">Coreo Home</NavbarBrand>
+                <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
+                <Collapse isOpen={this.state.isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        {menuList}
+                    </Nav>
+                </Collapse>
+                {OuterLink}
+            </Navbar>
         );
     }
 }
