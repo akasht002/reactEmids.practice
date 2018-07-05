@@ -56,14 +56,16 @@ export function sendVerificationLink(emailData) {
                 if(resp.data.isExist === "Valid"){
                     dispatch(onSetUserIdCompletion(resp.data));
                     dispatch(isAlreadyOnboarded(false));
+                    dispatch(userEmailNotExist(false, true));
                 }else{
                     dispatch(isAlreadyOnboarded(true));
+                    dispatch(userEmailNotExist(false, false));
                 }
                 dispatch(loadingEnd());
             } else {
                 dispatch(isAlreadyOnboarded(false));
                 dispatch(loadingEnd());
-                dispatch(userEmailNotExist())
+                dispatch(userEmailNotExist(true, false));
             }
         }).catch((err) => {
             dispatch(loadingEnd());
@@ -86,9 +88,11 @@ export const onSetUserIdCompletion = (data) => {
     }
 };
 
-export const userEmailNotExist = (data) => {
+export const userEmailNotExist = (isNotExistMsg, isExistMsge) => {
     return {
         type: Onboarding.userEmailNotExist,
+        isNotExistMsg,
+        isExistMsge
     }
 };
 

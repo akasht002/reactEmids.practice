@@ -53,8 +53,8 @@ const onboardingState = (state = defaultState, action) => {
         case Onboarding.userEmailNotExist:
             return {
                 ...state,
-                isEmailExist: false,
-                isEmailNotExist: true
+                isEmailExist: action.isExistMsge,
+                isEmailNotExist: action.isNotExistMsg
             }
         case Onboarding.setIsAlreadyOnboarded:
             return {
