@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
@@ -85,7 +85,7 @@ class VerifyContact extends React.Component {
                         <div className={"row mt-auto " + this.state.invisible}>
                             <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been sent to your registered Contact Number.</span>
                             {this.props.isPasscodeNotMatch && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Sorry, passcode entered is not matching.</span>}
-                            <span className="d-block mb-3 width100 receivePass">Didn't receive your passcode yet? <a className="primaryColor px-1" >Click here</a> to resend or Contact <a className="primaryColor px-1">Support</a></span>
+                            <span className="d-block mb-3 width100 receivePass">Didn't receive your passcode yet? <Link className="primaryColor px-1" to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
                         </div>
                     </div>
                 </CoreoWizScreen>

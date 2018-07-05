@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { setPassword, onCancelClick } from '../../../redux/onboarding/actions';
 import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
@@ -40,6 +40,14 @@ class SetPassword extends React.Component {
         this.props.onClickPrevious();
     };
 
+    onChangeConfirmPassword = (e) => {
+        debugger;
+        this.setState({ confirmPassword: e.target.value });
+        if(!this.state.passwordMatch && e.target.value.length === 0){
+            this.setState({ passwordMatch: true });
+        }
+    };
+
     render() {
         return (
             <ScreenCover isLoading={this.props.isLoading}>
@@ -67,7 +75,7 @@ class SetPassword extends React.Component {
                                                 required="required"
                                                 type="password"
                                                 label="Enter New Password"
-                                                className="form-control"
+                                                className={`${!this.state.passwordMatch ? "form-control inputFailure" : "form-control"}`}
                                                 value={this.state.password}
                                                 textChange={(e) => this.setState({ password: e.target.value })}
                                             />
@@ -83,7 +91,7 @@ class SetPassword extends React.Component {
                                                 label="Confirm New password"
                                                 className={`${!this.state.passwordMatch ? "form-control inputFailure" : "form-control"}`}
                                                 value={this.state.confirmPassword}
-                                                textChange={(e) => this.setState({ confirmPassword: e.target.value })}
+                                                textChange={this.onChangeConfirmPassword}
                                             />
                                             {!this.state.passwordMatch && <span className="d-block text-danger MsgWithIcon MsgWrongIcon">Passwords not matching.</span>}
                                         </div>
@@ -92,7 +100,7 @@ class SetPassword extends React.Component {
                                         value={this.state.userAgreement}
                                         id="userAgreement"
                                         onChange={(e) => this.setState({ userAgreement: e.target.checked })}>
-                                        By clicking on Submit, I agree that I have read and accepted the <a className="primaryColor" onClick={this.toggle}>End User License Agreement</a>.
+                                        By clicking on Submit, I agree that I have read and accepted the <Link className="primaryColor" to="/setPassword">End User License Agreement</Link>.
                                     </CheckBox>
                                 </form>
                             </div>
