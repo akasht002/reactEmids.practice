@@ -3,7 +3,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import configureStore from './app/redux/store';
 import { startListener } from './app/redux/store/listener'
-import createHistory from "history/createBrowserHistory";
+import createHistory from "history/createHashHistory";
 
 import AppRoute from './app/app';
 

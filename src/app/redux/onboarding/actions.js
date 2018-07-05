@@ -16,7 +16,8 @@ export const Onboarding = {
     setPasscodeNotMatch: 'set_passcode_match/onboard',
     serviceProviderOnboardSucess: 'onboard_success/onboard',
     passcodeVerifySuccess : 'passcode_verify_success/onbaord',
-    setPasscodeErrorStatus: 'passcode_error_status/onbaord'
+    setPasscodeErrorStatus: 'passcode_error_status/onbaord',
+    setIsAlreadyOnboarded: 'set_already_Onboarded'
 };
 
 
@@ -48,11 +49,17 @@ export const loadingEnd = () => {
 };
 
 export function sendVerificationLink(emailData) {
+    debugger;
     return (dispatch, getState) => {
         dispatch(loadingStart());
         axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
             if (resp && resp.data) {
-                dispatch(onSetUserIdCompletion(resp.data));
+                if(!resp.data.isExist === "Onboarded"){
+                    dispatch(onSetUserIdCompletion(resp.data));
+                    dispatch(isAlreadyOnboarded(false));
+                }else{
+                    dispatch(isAlreadyOnboarded(true));
+                }
                 dispatch(loadingEnd());
             } else {
                 dispatch(loadingEnd());
@@ -61,6 +68,13 @@ export function sendVerificationLink(emailData) {
         }).catch((err) => {
             dispatch(loadingEnd());
         })
+    }
+};
+
+export const isAlreadyOnboarded =(isExist) =>{
+    return{
+        type: Onboarding.setIsAlreadyOnboarded,
+        isExist
     }
 };
 

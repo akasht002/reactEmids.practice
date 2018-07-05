@@ -1,5 +1,7 @@
 import React from 'react'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router'
+import { ConnectedRouter } from "react-router-redux";
+import { HashRouter } from 'react-router-dom';
 import {
   Welcome,
   VerifyContact,
@@ -7,7 +9,7 @@ import {
   VerifyUserID,
   OnboardSuccess
 } from '../screens'
-import { ConnectedRouter } from "react-router-redux";
+
 
 export const Path = {
   root: '/',
@@ -21,13 +23,15 @@ class AppStackRoot extends React.Component {
   render() {
     return (
       <ConnectedRouter history={this.props.history}>
-        <div>
-          <Route exact path={Path.root} component={Welcome} />
-          <Route path={Path.setPassword} component={SetPassword} />
-          <Route path={Path.verifyContact} component={VerifyContact} />
-          <Route path={Path.verifyEmail} component={VerifyUserID} />
-          <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-        </div>
+        <HashRouter>
+          <Switch>
+            <Route exact path={Path.root} component={Welcome} />
+            <Route path={Path.setPassword} component={SetPassword} />
+            <Route path={Path.verifyContact} component={VerifyContact} />
+            <Route path={Path.verifyEmail} component={VerifyUserID} />
+            <Route path={Path.onboardSuccess} component={OnboardSuccess} />
+          </Switch>
+        </HashRouter>
       </ConnectedRouter>
     );
   }

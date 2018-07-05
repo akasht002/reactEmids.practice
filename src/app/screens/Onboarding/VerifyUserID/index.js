@@ -85,6 +85,10 @@ class VerifyUserID extends React.Component {
                                 {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
                                     <span className="text-danger d-block mt-4 mb-2">We did not find your Email ID. Please retry or contact Support.</span>
                                 </div>}
+
+                                {this.props.isAlreadyOnboarded && <div className={"MsgWithIcon MsgWrongIcon"}>
+                                    <span className="text-danger d-block mt-4 mb-2">Sorry, you are already onboarded for this registered userId.</span>
+                                </div>}
                             </div>
                         </div>
                     </div>
@@ -112,7 +116,8 @@ function mapStateToProps(state) {
         isLoading: state.onboardingState.loading,
         isEmailExist: state.onboardingState.isEmailExist,
         isEmailNotExist: state.onboardingState.isEmailNotExist,
-        serviceProviderDetails: state.onboardingState.serviceProviderDetails
+        serviceProviderDetails: state.onboardingState.serviceProviderDetails,
+        isAlreadyOnboarded : state.onboardingState.setIsAlreadyOnboarded
     }
 };
 
