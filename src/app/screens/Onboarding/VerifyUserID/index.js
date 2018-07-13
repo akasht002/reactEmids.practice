@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
-import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input } from '../../../components';
+import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input, ModalTemplate } from '../../../components';
 import { sendVerificationLink, onCancelClick, onUserEmailNext } from '../../../redux/onboarding/actions';
 import { setWorkflowDirty } from '../../../redux/wizard/actions';
+import { checkEmail } from '../../../utils/validations'
 
 class VerifyUserID extends React.Component {
     constructor(props) {
@@ -14,22 +15,32 @@ class VerifyUserID extends React.Component {
             email: null,
             emailValid: true,
             isEmailNotExist: false,
-            isAlreadyOnboarded: false
+            isAlreadyOnboarded: false,
+            showModalOnCancel: false,
         };
     };
 
     onChangeEmail = (e) => {
         this.setState({
-            email: e.target.value
+            email: e.target.value,
+            emailValid: true,
+            isEmailNotExist: false
         });
-
-        if(e.target.value.length === 0){
-            this.setState({ isEmailNotExist : false, isAlreadyOnboarded: false });
+        if (e.target.value.length === 0) {
+            this.setState({ isEmailNotExist: false, isAlreadyOnboarded: false });
         }
     };
 
+    validateEmail = () => {
+        if (checkEmail(this.state.email)) {
+            this.setState({ emailValid: true });
+        } else {
+            this.setState({ emailValid: false });
+        }
+    }
+
     onClickSendVerificationLink = () => {
-        if (/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
+        if (checkEmail(this.state.email)) {
             this.setState({ emailValid: true });
             this.props.sendVerificationLink({ emailId: this.state.email });
         } else {
@@ -53,15 +64,16 @@ class VerifyUserID extends React.Component {
     };
 
     onClickButtonCancel = () => {
-        this.props.onClickCancel();
+        //this.props.onClickCancel();
+        this.setState({ showModalOnCancel: true });
     };
 
     componentWillReceiveProps(nextProps) {
-        this.setState({isEmailNotExist: nextProps.isEmailNotExist, isAlreadyOnboarded: nextProps.isAlreadyOnboarded});
+        this.setState({ isEmailNotExist: nextProps.isEmailNotExist, isAlreadyOnboarded: nextProps.isAlreadyOnboarded });
     };
 
     render() {
-        
+
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <CoreoWizScreen menus={ContactMenu} activeCoreoWiz={0} displayPrevButton={false} displayNextButton={true} isNextDisabled={!this.props.isEmailExist} onNextClick={this.onClickButtonNext} onCancelClick={this.onClickButtonCancel}>
@@ -77,9 +89,11 @@ class VerifyUserID extends React.Component {
                                         type="text"
                                         placeholder="eg. smith@gmail.com"
                                         label="Enter Email ID"
-                                        className={`${this.props.isEmailExist ? "form-control inputSuccess" : ((this.props.isEmailNotExist || !this.state.emailValid) && !this.state.isInputEmpty ? "form-control inputFailure" : "form-control")}`}
+                                        className={"form-control " + (this.props.isEmailExist ? 'inputSuccess' : !this.state.emailValid && 'inputFailure')}
+                                        disabled={this.props.isEmailExist}
                                         value={this.state.email}
                                         textChange={this.onChangeEmail}
+                                        onBlur={this.validateEmail}
                                     />
                                     {!this.props.isEmailExist &&
                                         <Button
@@ -94,10 +108,12 @@ class VerifyUserID extends React.Component {
                                     <span className="text-success d-block mt-4 mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
                                 </div>}
                                 {this.state.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
-                                    <span className="text-danger d-block mt-4 mb-2">We did not find your Email ID. Please retry or contact Support.</span>
+                                    <span className="text-danger d-block mt-4 mb-2">We did not find your Email ID. Please retry or contact <Link to={this.props.match.url} className="primaryColor px-1">Support</Link>.</span>
                                 </div>}
-
-                                {this.state.isAlreadyOnboarded &&  <div className={"MsgWithIcon MsgWrongIcon"}>
+                                {!this.state.emailValid && <div className="MsgWithIcon MsgWrongIcon">
+                                    <span className="text-danger d-block mt-4 mb-2">Please enter a valid email address. e.g. abc@xyz.com</span>
+                                </div>}
+                                {this.state.isAlreadyOnboarded && <div className={"MsgWithIcon MsgWrongIcon"}>
                                     <span className="text-danger d-block mt-4 mb-2">Sorry, you are already onboarded for this registered userId.</span>
                                 </div>}
                             </div>
@@ -105,6 +121,19 @@ class VerifyUserID extends React.Component {
                     </div>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={0} />
+                <ModalTemplate
+                    isOpen={this.state.showModalOnCancel}
+                    ModalBody={<span>Do you want to cancel the onboarding process?</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
+                    onConfirm={() => this.props.onClickCancel()}
+                    onCancel={() => this.setState({
+                        showModalOnCancel: !this.state.showModalOnCancel
+                    })}
+                />
             </ScreenCover>
         )
     }
@@ -128,7 +157,7 @@ function mapStateToProps(state) {
         isEmailExist: state.onboardingState.isEmailExist,
         isEmailNotExist: state.onboardingState.isEmailNotExist,
         serviceProviderDetails: state.onboardingState.serviceProviderDetails,
-        isAlreadyOnboarded : state.onboardingState.setIsAlreadyOnboarded
+        isAlreadyOnboarded: state.onboardingState.setIsAlreadyOnboarded
     }
 };
 

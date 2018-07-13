@@ -6,7 +6,7 @@ import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
 import { sendTemporaryPasscode, verifyTempPasscode, setPasscodeError, onCancelClick } from '../../../redux/onboarding/actions';
 import { Input, Button, ScreenCover, CoreoWizScreen, CoreoWizFlow } from '../../../components';
-
+import { checkSpace } from '../../../utils/validations'
 
 class VerifyContact extends React.Component {
 
@@ -75,7 +75,7 @@ class VerifyContact extends React.Component {
                                             type="password"
                                             label="Enter temporary passcode"
                                             className="form-control"
-                                            value={this.state.temporaryPassCode}
+                                            value={checkSpace(this.state.temporaryPassCode)}
                                             textChange={(e) => this.setState({ temporaryPassCode: e.target.value })}
                                         />
                                     </form>

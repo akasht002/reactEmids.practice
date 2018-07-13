@@ -582,3 +582,8 @@ label{
     background-color: #dc3545;
     background-image: url("./app/assets/images/remove.svg");
 }
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: transparent !important;
+    opacity: 1;
+}
