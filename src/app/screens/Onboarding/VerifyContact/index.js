@@ -82,10 +82,10 @@ class VerifyContact extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className={"row mt-auto " + this.state.invisible}>
+                        <div className="row mt-auto">
                             <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been sent to your registered Contact Number.</span>
-                            {this.props.isPasscodeNotMatch && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Sorry, passcode entered is not matching.</span>}
-                            <span className="d-block mb-3 width100 receivePass">Didn't receive your passcode yet? <Link className="primaryColor px-1" to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
+                            {this.props.isPasscodeNotMatch && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Please enter valid Passcode.</span>}
+                            <span className="d-block mb-3 width100 receivePass">Haven't received your passcode yet? <Link className="primaryColor px-1" to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
                         </div>
                     </div>
                 </CoreoWizScreen>
