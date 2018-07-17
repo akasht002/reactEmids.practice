@@ -4,18 +4,11 @@ import { withRouter, Link } from 'react-router-dom';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
 import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input, ModalTemplate } from '../../../components';
-// import {
-//     onNextClick,
-//     onCancelClick,
-//     sendVerificationLink,
-//     onUserEmailNext,
-//     onPreviousClick,
-//     resetClick,
-//     getPlans,
-//     searchMembers,
-//     formDirty
-// } from '../../../redux/onboarding/VerifyUserID/actions';
-import { sendVerificationLink, onCancelClick, onUserEmailNext } from '../../../redux/onboarding/actions';
+import {
+    onCancelClick,
+    sendVerificationLink,
+    onUserEmailNext,
+} from '../../../redux/onboarding/VerifyUserID/actions';
 import { setWorkflowDirty } from '../../../redux/wizard/actions';
 import { checkEmail } from '../../../utils/validations'
 
@@ -75,7 +68,6 @@ class VerifyUserID extends React.Component {
     };
 
     onClickButtonCancel = () => {
-        //this.props.onClickCancel();
         this.setState({ showModalOnCancel: true });
     };
 
@@ -162,11 +154,11 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        isLoading: state.onboardingState.loading,
-        isEmailExist: state.onboardingState.isEmailExist,
-        isEmailNotExist: state.onboardingState.isEmailNotExist,
-        serviceProviderDetails: state.onboardingState.serviceProviderDetails,
-        isAlreadyOnboarded: state.onboardingState.setIsAlreadyOnboarded
+        isLoading: state.onboardingState.verifyUserIDState.loading,
+        isEmailExist: state.onboardingState.verifyUserIDState.isEmailExist,
+        isEmailNotExist: state.onboardingState.verifyUserIDState.isEmailNotExist,
+        serviceProviderDetails: state.onboardingState.verifyUserIDState.serviceProviderDetails,
+        isAlreadyOnboarded: state.onboardingState.verifyUserIDState.setIsAlreadyOnboarded
     }
 };
 

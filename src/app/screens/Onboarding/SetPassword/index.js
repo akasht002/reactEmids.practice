@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { setPassword, onCancelClick } from '../../../redux/onboarding/actions';
+import { setPassword, onCancelClick, getUserData } from '../../../redux/onboarding/SetPassword/actions';
 import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
@@ -24,24 +24,9 @@ class SetPassword extends React.Component {
         };
     };
 
-    // validatePassword = () => {
-    //     if (checkPassword(this.state.password) || this.state.password === '') {
-    //         if (this.state.password === this.state.confirmPassword) {
-    //             // const data = {
-    //             //     username: this.props.serviceProviderDetails.emailId,
-    //             //     password: this.state.password,
-    //             //     confirmPassword: this.state.confirmPassword
-    //             // };
-    //             // this.props.onSetPassword(data);
-    //             this.setState({ passwordMatch: true });
-    //         } else {
-    //             this.setState({ passwordMatch: false });
-    //         }
-    //     } else {
-    //         this.setState({ passwordCombination: false });
-
-    //     }
-    // };
+    componentDidMount(){
+        this.props.getUserData()
+    }
 
     validatePassword = () => {
         if (checkPassword(this.state.password) || !this.state.password === '') {
@@ -192,15 +177,16 @@ function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onSetPassword: (data) => dispatch(setPassword(data)),
-        onClickPrevious: () => dispatch(push("/verifycontact"))
+        onClickPrevious: () => dispatch(push("/verifycontact")),
+        getUserData: () => dispatch(getUserData())
     }
 };
 
 
 function mapStateToProps(state) {
     return {
-        serviceProviderDetails: state.onboardingState.serviceProviderDetails,
-        isLoading: state.onboardingState.loading
+        serviceProviderDetails: state.onboardingState.setPasswordState.serviceProviderDetails,
+        isLoading: state.onboardingState.setPasswordState.loading
     }
 };
 
