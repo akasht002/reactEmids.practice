@@ -17,6 +17,8 @@ class Input extends React.Component {
                 onChange={this.props.textChange}
                 value={this.props.value}
                 onBlur={this.props.onBlur}
+                onCopy={this.props.onCopy}
+                onPaste={this.props.onPaste}
             />
                 <small id={this.props.name+"Help"} className="form-text text-muted">{this.props.help}</small>
         </div>

@@ -4,6 +4,17 @@ import { withRouter, Link } from 'react-router-dom';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
 import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input, ModalTemplate } from '../../../components';
+// import {
+//     onNextClick,
+//     onCancelClick,
+//     sendVerificationLink,
+//     onUserEmailNext,
+//     onPreviousClick,
+//     resetClick,
+//     getPlans,
+//     searchMembers,
+//     formDirty
+// } from '../../../redux/onboarding/VerifyUserID/actions';
 import { sendVerificationLink, onCancelClick, onUserEmailNext } from '../../../redux/onboarding/actions';
 import { setWorkflowDirty } from '../../../redux/wizard/actions';
 import { checkEmail } from '../../../utils/validations'
@@ -89,7 +100,7 @@ class VerifyUserID extends React.Component {
                                         type="text"
                                         placeholder="eg. smith@gmail.com"
                                         label="Enter Email ID"
-                                        className={"form-control " + (this.props.isEmailExist ? 'inputSuccess' : !this.state.emailValid && 'inputFailure')}
+                                        className={"form-control " + (this.props.isEmailExist ? 'inputSuccess' : (!this.state.emailValid || this.state.isEmailNotExist) && 'inputFailure')}
                                         disabled={this.props.isEmailExist}
                                         value={this.state.email}
                                         textChange={this.onChangeEmail}
@@ -151,8 +162,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        isSuccessLinkSent: state.onboardingState.isLinkSent,
-        userEmail: state.onboardingState.userEmail,
         isLoading: state.onboardingState.loading,
         isEmailExist: state.onboardingState.isEmailExist,
         isEmailNotExist: state.onboardingState.isEmailNotExist,

@@ -14,6 +14,7 @@ export const Onboarding = {
     setUserId: 'set_useris/onboard',
     passcodeSentSuccess: 'passcode_sent_success/onboard',
     setPasscodeNotMatch: 'set_passcode_match/onboard',
+    setPasscodeMatch: 'set_passCode_match/onboard',
     serviceProviderOnboardSucess: 'onboard_success/onboard',
     passcodeVerifySuccess : 'passcode_verify_success/onbaord',
     setPasscodeErrorStatus: 'passcode_error_status/onbaord',
@@ -165,7 +166,7 @@ export function verifyTempPasscode(data) {
             }
         }).catch((err) => {
             dispatch(loadingEnd());
-            dispatch(setPasscodeNotMatch(true));
+            dispatch(setPasscodeNotMatch(false))
         })
     }
 };
@@ -180,9 +181,18 @@ export function setPasscodeError(){
 export function temporaryPasscodeSuccess() {
     return (dispatch, getState) => {
         dispatch(setPasscodeNotMatch(false))
+        dispatch(setPasscodeMatch(true))        
         dispatch(push('/setpassword'));
     }
 };
+
+export function setPasscodeMatch(isSuccess) {
+    return {
+        type: Onboarding.setPasscodeMatch,
+        isSuccess
+    }
+};
+
 
 export function verifyPasscodeSuccess() {
     return {

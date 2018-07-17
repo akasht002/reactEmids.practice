@@ -16,6 +16,7 @@ const defaultState = {
     },
     isPasscodeSent: false,
     isPasscodeNotMatch: false,
+    isPasscodeMatch: false,
     isOnboardSucess: false,
     isVerifiedPasscode: false,
     setIsAlreadyOnboarded: false
@@ -61,7 +62,7 @@ const onboardingState = (state = defaultState, action) => {
                 ...state,
                 setIsAlreadyOnboarded: action.isExist
             }
-            
+
         case Onboarding.passcodeSentSuccess:
             return {
                 ...state,
@@ -75,12 +76,18 @@ const onboardingState = (state = defaultState, action) => {
                 userEmail: action.data.emailId
             }
 
+        case Onboarding.setPasscodeMatch:
+            return {
+                ...state,
+                isPasscodeMatch: action.isSuccess
+            }
+
         case Onboarding.setPasscodeNotMatch:
             return {
                 ...state,
                 isPasscodeNotMatch: action.isSuccess
             }
-        
+
         case Onboarding.passcodeVerifySuccess:
             return {
                 ...state,

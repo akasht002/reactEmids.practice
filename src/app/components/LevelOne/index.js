@@ -4,6 +4,7 @@ import {CoreoWizFlow} from './CoreoWizFlow';
 import {Footer} from './Footer';
 import {Header} from './Header';
 import {ModalTemplate} from './ModalPopup';
+import {ModalUserAgreement} from './ModalUserAgreement';
 import PanelCard from './PanelCard';
 import {ScreenCover} from './ScreenCover';
 
@@ -15,5 +16,6 @@ export {
     Header, 
     ModalTemplate, 
     PanelCard,
-    ScreenCover
+    ScreenCover,
+    ModalUserAgreement
 };
