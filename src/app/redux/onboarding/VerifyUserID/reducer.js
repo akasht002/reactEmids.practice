@@ -3,7 +3,6 @@ import {
 } from './actions'
 
 const defaultState = {
-    loading: false,
     isEmailExist: false,
     isEmailNotExist: false,
     setIsAlreadyOnboarded: false,
@@ -54,18 +53,6 @@ const verifyUserIDState = (state = defaultState, action) => {
                 ...state,
                 userEmail: action.data.emailId
             }
-
-        case VerifyUserID.loadingStart:
-            return {
-                ...state,
-                loading: true
-            };
-
-        case VerifyUserID.loadingEnd:
-            return {
-                ...state,
-                loading: false
-            };
 
         case VerifyUserID.cancelClick:
             return defaultState;

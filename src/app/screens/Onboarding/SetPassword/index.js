@@ -14,13 +14,14 @@ class SetPassword extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            password: null,
-            confirmPassword: null,
+            password: '',
+            confirmPassword: '',
             userAgreement: false,
             passwordMatch: true,
             passwordCombination: true,
             agreementModal: false,
-            showModalOnCancel: false
+            showModalOnCancel: false,
+            passMatch: false
         };
     };
 
@@ -29,10 +30,11 @@ class SetPassword extends React.Component {
     }
 
     validatePassword = () => {
-        if (checkPassword(this.state.password) || !this.state.password === '') {
+        if (checkPassword(this.state.password) || this.state.password === '') {
             if (this.state.password === this.state.confirmPassword) {
-                this.setState({ passwordMatch: true });
-            } else {
+                this.setState({ passwordMatch: true, passMatch: true });
+            }
+             else if(this.state.password !== this.state.confirmPassword && this.state.confirmPassword !== ''){
                 this.setState({ passwordMatch: false });
             }
         }
@@ -44,7 +46,7 @@ class SetPassword extends React.Component {
     onClickButtonSubmit = () => {
         if (this.state.passwordMatch && this.state.passwordCombination) {
             const data = {
-                username: this.props.serviceProviderDetails.emailId,
+                username: this.props.userEmail,
                 password: this.state.password,
                 confirmPassword: this.state.confirmPassword
             };
@@ -62,13 +64,6 @@ class SetPassword extends React.Component {
         this.props.onClickPrevious();
     };
 
-    onChangeConfirmPassword = (e) => {
-        this.setState({ confirmPassword: e.target.value, passwordCombination: true });
-        if (!this.state.passwordMatch && e.target.value.length === 0) {
-            this.setState({ passwordMatch: true });
-        };
-    };
-
     render() {
         return (
             <ScreenCover isLoading={this.props.isLoading}>
@@ -77,7 +72,7 @@ class SetPassword extends React.Component {
                     activeCoreoWiz={2}
                     displayPrevButton={false}
                     displaySubmitButton={true}
-                    isSubmitDisabled={!this.state.password || !this.state.confirmPassword || !this.state.userAgreement}
+                    isSubmitDisabled={this.state.password === '' || this.state.confirmPassword === '' || !this.state.passMatch || !this.state.userAgreement}
                     onSubmitClick={this.onClickButtonSubmit}
                     onCancelClick={this.onClickCancel}
                     onPreviousClick={this.onClickButtonPrevious}>
@@ -93,7 +88,7 @@ class SetPassword extends React.Component {
                                             <Input
                                                 id="newPass"
                                                 autoComplete="off"
-                                                required="required"
+                                                
                                                 type="password"
                                                 label="Enter New Password"
                                                 className="form-control"
@@ -101,7 +96,9 @@ class SetPassword extends React.Component {
                                                 textChange={(e) => this.setState({
                                                     password: e.target.value,
                                                     passwordMatch: true,
-                                                    passwordCombination: true
+                                                    passwordCombination: true,
+                                                    passMatch: false,
+                                                    
                                                 })}
                                                 onBlur={this.validatePassword}
                                                 onCopy={(e) => { e.preventDefault() }}
@@ -114,7 +111,7 @@ class SetPassword extends React.Component {
                                             <Input
                                                 id="rePass"
                                                 autoComplete="off"
-                                                required="required"
+                                                
                                                 type="password"
                                                 label="Confirm New password"
                                                 className="form-control"
@@ -122,7 +119,8 @@ class SetPassword extends React.Component {
                                                 textChange={(e) => this.setState({ 
                                                     confirmPassword: e.target.value, 
                                                     passwordMatch: true,
-                                                    passwordCombination : true
+                                                    passwordCombination : true,
+                                                    passMatch: false,
                                                 })}
                                                 onBlur={this.validatePassword}
                                                 onCopy={(e) => { e.preventDefault() }}
@@ -130,12 +128,13 @@ class SetPassword extends React.Component {
                                             />
                                         </div>
                                     </div>
-                                    <CheckBox
-                                        value={this.state.userAgreement}
-                                        id="userAgreement"
-                                        onChange={(e) => this.setState({ userAgreement: e.target.checked })}>
-                                        By clicking on Submit, I agree that I have read and accepted the <Link className="primaryColor" to={this.props.match.url} onClick={() => this.setState({ agreementModal: true })}>End User License Agreement</Link>.
-                                    </CheckBox>
+                                    <div className="form-check">
+                                        <label className="form-check-label">
+                                            <input className="form-check-input" type="checkbox" value={this.state.userAgreement} id="defaultCheck1" onChange={(e) => this.setState({ userAgreement: e.target.checked })} />
+                                            <span className="CheckboxIcon"></span>
+                                            By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
+                                        </label>
+                                    </div>
                                     {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords not matching.</span>}
                                     {!this.state.passwordCombination && <div className="MsgWithIcon MsgWrongIcon">
                                         <span className="text-danger d-block mt-4 mb-2">Password should contain a combination of upper case, lower case, special characters and number, and should be at least 8 characters.</span>
@@ -185,7 +184,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        serviceProviderDetails: state.onboardingState.setPasswordState.serviceProviderDetails,
+        userEmail: state.onboardingState.setPasswordState.userEmail,
         isLoading: state.onboardingState.setPasswordState.loading
     }
 };

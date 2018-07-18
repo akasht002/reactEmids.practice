@@ -1,13 +1,15 @@
 import axios from 'axios';
 import {API, baseURL} from '../../../services/api';
 import {startLoading, endLoading} from '../../loading/actions';
+import {clearState as verifyContactClear} from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
 import {Path} from '../../../routes';
 
 export const SetPassword = {
     setPassword: 'set_password/setPassword',
     onSetUserDetailsCompletion: 'set_user_details/setPassword',
-    cancelClick: 'cancel_click/verifycontact',
+    cancelClick: 'cancel_click/setPassword',
+    clearOnboardingState: 'clear_state/setPassword',
 };
 
 export const cancelClick = () => {
@@ -16,11 +18,17 @@ export const cancelClick = () => {
     }
 }
 
-// export const clearState = () => {
-//     return {
-//         type: SetPassword.clearState
-//     }
-// }
+export const clearState = () => {
+    return {
+        type: SetPassword.clearState
+    }
+}
+
+export const clearOnboardingState = () => {
+    return {
+        type: SetPassword.clearOnboardingState
+    }
+};
 
 export function getUserData() {
     return (dispatch, getState) => {
@@ -64,8 +72,8 @@ export function setPassword(data) {
 export function onboardSucess() {
     return (dispatch, getState) => {
         dispatch(passwordSetSuccess());
-        //dispatch(clearOnboardingState());
-        dispatch(push('/onboardsuccess'));
+        dispatch(clearOnboardingState());
+        dispatch(push('/Onboardsuccess'));
     }
 };
 
@@ -80,6 +88,7 @@ export function passwordSetSuccess(){
 export function onCancelClick(){
     return (dispatch, getState) => {
         dispatch(cancelClick());
+        dispatch(verifyContactClear());
         dispatch(push(Path.root));
     }
 }

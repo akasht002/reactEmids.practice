@@ -22,12 +22,6 @@ export function onUserEmailNext(data) {
     }
 };
 
-export const nextClick = () => {
-    return {
-        type: VerifyUserID.nextClick,        
-    }
-}
-
 export const cancelClick = () => {
     return {
         type: VerifyUserID.cancelClick
@@ -90,6 +84,7 @@ export const userEmailNotExist = (isNotExistMsg, isExistMsge) => {
 export function onCancelClick(){
     return (dispatch, getState) => {
         dispatch(cancelClick());
+        dispatch(clearState());
         dispatch(push(Path.root));
     }
 }

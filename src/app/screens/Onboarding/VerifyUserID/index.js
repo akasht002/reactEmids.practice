@@ -10,13 +10,13 @@ import {
     onUserEmailNext,
 } from '../../../redux/onboarding/VerifyUserID/actions';
 import { setWorkflowDirty } from '../../../redux/wizard/actions';
-import { checkEmail } from '../../../utils/validations'
+import { checkEmail, checkSpace } from '../../../utils/validations'
 
 class VerifyUserID extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: null,
+            email: '',
             emailValid: true,
             isEmailNotExist: false,
             isAlreadyOnboarded: false,
@@ -94,7 +94,7 @@ class VerifyUserID extends React.Component {
                                         label="Enter Email ID"
                                         className={"form-control " + (this.props.isEmailExist ? 'inputSuccess' : (!this.state.emailValid || this.state.isEmailNotExist) && 'inputFailure')}
                                         disabled={this.props.isEmailExist}
-                                        value={this.state.email}
+                                        value={checkSpace(this.state.email)}
                                         textChange={this.onChangeEmail}
                                         onBlur={this.validateEmail}
                                     />

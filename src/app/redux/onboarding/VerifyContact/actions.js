@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API, baseURL } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
+import {clearState as verifyUserIdClear} from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 
@@ -14,12 +15,6 @@ export const VerifyContact = {
     cancelClick: 'cancel_click/verifycontact',
 };
 
-export function onUserEmailNext(data) {
-    return (dispatch, getState) => {
-        dispatch(push('/verifycontact'));
-    }
-};
-
 export const onSetUserId = (data) => {
     return {
         type: VerifyContact.setUserId,
@@ -30,6 +25,12 @@ export const onSetUserId = (data) => {
 export const cancelClick = () => {
     return {
         type: VerifyContact.cancelClick
+    }
+}
+
+export const clearState = () => {
+    return {
+        type: VerifyContact.clearState
     }
 }
 
@@ -143,6 +144,7 @@ export function onPasscodeSent() {
 export function onCancelClick() {
     return (dispatch, getState) => {
         dispatch(cancelClick());
+        dispatch(verifyUserIdClear());
         dispatch(push(Path.root));
     }
 }

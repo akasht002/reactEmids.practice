@@ -35,7 +35,10 @@ const setPasswordState = (state = defaultState, action) => {
 
         case SetPassword.clearState:
             return defaultState;
-            
+
+        case SetPassword.clearOnboardingState:
+            return defaultState;
+
         default:
             return state;
     }
