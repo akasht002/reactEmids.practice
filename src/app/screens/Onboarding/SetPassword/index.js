@@ -1,50 +1,62 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { setPassword, onCancelClick } from '../../../redux/onboarding/actions';
-import { push } from '../../../redux/navigation/actions';
+import { setPassword, onCancelClick, getUserData } from '../../../redux/onboarding/SetPassword/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
-import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, CheckBox } from '../../../components';
+import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalUserAgreement, ModalPopup } from '../../../components';
+import { checkPassword } from '../../../utils/validations'
+import { endUserAgreement } from '../../../assets/templates/EndUserAgreement';
 
 class SetPassword extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            password: null,
-            confirmPassword: null,
+            password: '',
+            confirmPassword: '',
             userAgreement: false,
-            passwordMatch: true
+            passwordMatch: true,
+            passwordCombination: true,
+            agreementModal: false,
+            showModalOnCancel: false,
+            passMatch: false
         };
     };
 
-    onClickSubmit = () => {
-        if (this.state.password === this.state.confirmPassword) {
+    componentDidMount(){
+        this.props.getUserData()
+    }
+
+    validatePassword = () => {
+        if (checkPassword(this.state.password) || this.state.password === '') {
+            if (this.state.password === this.state.confirmPassword) {
+                this.setState({ passwordMatch: true, passMatch: true });
+            }
+             else if(this.state.password !== this.state.confirmPassword && this.state.confirmPassword !== ''){
+                this.setState({ passwordMatch: false });
+            }
+        }
+        else {
+            this.setState({ passwordCombination: false });
+        }
+    }
+
+    onClickButtonSubmit = () => {
+        if (this.state.passwordMatch && this.state.passwordCombination) {
             const data = {
-                username: this.props.serviceProviderDetails.emailId,
+                username: this.props.userEmail,
                 password: this.state.password,
                 confirmPassword: this.state.confirmPassword
             };
             this.props.onSetPassword(data);
-        } else {
-            this.setState({ passwordMatch: false });
         }
-    };
+    }
 
     onClickCancel = () => {
-        this.props.onClickCancel();
-    };
-
-    onClickButtonPrevious = () => {
-        this.props.onClickPrevious();
-    };
-
-    onChangeConfirmPassword = (e) => {
-        this.setState({ confirmPassword: e.target.value });
-        if(!this.state.passwordMatch && e.target.value.length === 0){
-            this.setState({ passwordMatch: true });
-        };
+        this.setState({
+            showModalOnCancel: true
+        });
     };
 
     render() {
@@ -53,12 +65,12 @@ class SetPassword extends React.Component {
                 <CoreoWizScreen
                     menus={ContactMenu}
                     activeCoreoWiz={2}
-                    displayPrevButton={true}
+                    displayPrevButton={false}
                     displaySubmitButton={true}
-                    isSubmitDisabled={!this.state.password || !this.state.confirmPassword || !this.state.userAgreement}
-                    onSubmitClick={this.onClickSubmit}
+                    isSubmitDisabled={this.state.password === '' || this.state.confirmPassword === '' || !this.state.passMatch || !this.state.userAgreement}
+                    onSubmitClick={this.onClickButtonSubmit}
                     onCancelClick={this.onClickCancel}
-                    onPreviousClick={this.onClickButtonPrevious}>
+                    >
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
@@ -70,13 +82,21 @@ class SetPassword extends React.Component {
                                         <div className="col-md-6 my-3">
                                             <Input
                                                 id="newPass"
-                                                autoComplete="off"
-                                                required="required"
+                                                autoComplete="off"                                               
                                                 type="password"
                                                 label="Enter New Password"
-                                                className={`${!this.state.passwordMatch ? "form-control inputFailure" : "form-control"}`}
+                                                className="form-control"
                                                 value={this.state.password}
-                                                textChange={(e) => this.setState({ password: e.target.value })}
+                                                textChange={(e) => this.setState({
+                                                    password: e.target.value,
+                                                    passwordMatch: true,
+                                                    passwordCombination: true,
+                                                    passMatch: false,
+                                                    
+                                                })}
+                                                onBlur={this.validatePassword}
+                                                onCopy={(e) => { e.preventDefault() }}
+                                                onPaste={(e) => { e.preventDefault() }}
                                             />
                                         </div>
                                     </div>
@@ -84,29 +104,62 @@ class SetPassword extends React.Component {
                                         <div className="col-md-6 my-3">
                                             <Input
                                                 id="rePass"
-                                                autoComplete="off"
-                                                required="required"
+                                                autoComplete="off"                                                
                                                 type="password"
                                                 label="Confirm New password"
-                                                className={`${!this.state.passwordMatch ? "form-control inputFailure" : "form-control"}`}
-                                                value={this.state.confirmPassword}
-                                                textChange={this.onChangeConfirmPassword}
+                                                className="form-control"
+                                                value={this.state.confirmPassword}                                                                                          
+                                                textChange={(e) => this.setState({ 
+                                                    confirmPassword: e.target.value, 
+                                                    passwordMatch: true,
+                                                    passwordCombination : true,
+                                                    passMatch: false,
+                                                })}
+                                                onBlur={this.validatePassword}
+                                                onCopy={(e) => { e.preventDefault() }}
+                                                onPaste={(e) => { e.preventDefault() }}
                                             />
-                                            {!this.state.passwordMatch && <span className="d-block text-danger MsgWithIcon MsgWrongIcon">Passwords not matching.</span>}
                                         </div>
                                     </div>
-                                    <CheckBox
-                                        value={this.state.userAgreement}
-                                        id="userAgreement"
-                                        onChange={(e) => this.setState({ userAgreement: e.target.checked })}>
-                                        By clicking on Submit, I agree that I have read and accepted the <Link className="primaryColor" to="/setPassword">End User License Agreement</Link>.
-                                    </CheckBox>
+                                    <div className="form-check">
+                                        <label className="form-check-label">
+                                            <input className="form-check-input" type="checkbox" value={this.state.userAgreement} id="defaultCheck1" onChange={(e) => this.setState({ userAgreement: e.target.checked })} />
+                                            <span className="CheckboxIcon"></span>
+                                            By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
+                                        </label>
+                                    </div>
+                                    {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match..</span>}
+                                    {!this.state.passwordCombination && <div className="MsgWithIcon MsgWrongIcon">
+                                        <span className="text-danger d-block mt-4 mb-2">Password should contain a combination of upper case, lower case, special characters and number, and should be at least 8 characters.</span>
+                                    </div>}
                                 </form>
                             </div>
                         </div>
                     </div>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={2} />
+                <ModalPopup
+                    isOpen={this.state.showModalOnCancel}
+                    ModalBody={<span>Do you want to cancel the onboarding process?</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
+                    onConfirm={() => this.props.onClickCancel()}
+                    onCancel={() => this.setState({
+                        showModalOnCancel: !this.state.showModalOnCancel,
+                    })}
+                />
+                <ModalUserAgreement
+                    isOpen={this.state.agreementModal}
+                    ModalBody={endUserAgreement}
+                    className="modal-lg"
+                    modalTitle="End User License Agreement"
+                    onClick={() => this.setState({
+                        agreementModal: !this.state.agreementModal
+                    })}
+                />
             </ScreenCover>
         )
     }
@@ -116,15 +169,15 @@ function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onSetPassword: (data) => dispatch(setPassword(data)),
-        onClickPrevious: () => dispatch(push("/verifycontact"))
+        getUserData: () => dispatch(getUserData())
     }
 };
 
 
 function mapStateToProps(state) {
     return {
-        serviceProviderDetails: state.onboardingState.serviceProviderDetails,
-        isLoading: state.onboardingState.loading
+        userEmail: state.onboardingState.setPasswordState.userEmail,
+        isLoading: state.onboardingState.setPasswordState.loading
     }
 };
 

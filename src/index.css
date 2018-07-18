@@ -251,54 +251,6 @@ label{
     display: none !important;
 }
 
-/************ MODAL BOX ************/
-
-.modal-dialog{
-    margin: 0 !important;
-    min-width: 100%;
-}
-
-.modal-lg{
-
-}
-
-.modal-lg .modal-content{
-    height: 100vh;
-    display: block !important;
-    overflow: hidden;
-    border-radius: 0 !important;
-    -webkit-border-radius: 0 !important;
-    -moz-border-radius: 0 !important;
-}
-
-.modal-sm{
-    min-width: 500px;
-    margin: 0 auto !important;
-}
-
-.modal-sm .modal-content{
-    width: 500px;
-    display: flex !important;
-    height: fit-content !important;
-    -webkit-border-radius: 5px !important;
-    -moz-border-radius: 5px !important;
-    border-radius: 5px !important;
-}
-
-.modal-header{
-    height: 80px;
-}
-
-.modal-lg .modal-body{
-    height: calc( 100vh - 160px );
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.modal-footer{
-    height: 80px;
-}
-
 .selectType, .selectType label{
     display: flex !important;
     height: 200px;
@@ -581,4 +533,13 @@ label{
 .MsgWrongIcon:before{
     background-color: #dc3545;
     background-image: url("./app/assets/images/remove.svg");
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: transparent !important;
+    opacity: 1;
+}
+
+a{
+    color: #3c1053 !important;
 }

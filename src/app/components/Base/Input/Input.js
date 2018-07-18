@@ -12,9 +12,13 @@ class Input extends React.Component {
                 type={this.props.type}
                 placeholder={this.props.placeholder}
                 className={this.props.className}
+                disabled={this.props.disabled}
                 maxLength={this.props.maxlength}
                 onChange={this.props.textChange}
                 value={this.props.value}
+                onBlur={this.props.onBlur}
+                onCopy={this.props.onCopy}
+                onPaste={this.props.onPaste}
             />
                 <small id={this.props.name+"Help"} className="form-text text-muted">{this.props.help}</small>
         </div>

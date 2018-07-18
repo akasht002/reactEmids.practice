@@ -21,7 +21,6 @@ class Header extends React.Component {
                 {
                     name: "Home",
                     label: "Home",
-                    link: "/",
                     role: "link",
                     status: false
                 },
@@ -35,7 +34,6 @@ class Header extends React.Component {
                 {
                     name: "Contact",
                     label: "icon-contact",
-                    link: "login",
                     role: "Outerlink",
                     status: false
                 }
@@ -122,7 +120,7 @@ class Header extends React.Component {
 
         return (
             <Navbar className="navbar-light boxShadowBottom" expand="md">
-                <NavbarBrand className="text-uppercase px-3" href="/">Coreo Home</NavbarBrand>
+                <NavbarBrand className="text-uppercase px-3">Coreo Home</NavbarBrand>
                 <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
