@@ -33,15 +33,18 @@ export const clearOnboardingState = () => {
 export function getUserData() {
     return (dispatch, getState) => {
         let currstate = getState();
-        let getUserData = {
-            serviceProviderId: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.serviceProviderId,
-            memberId: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.memberId,
-            emailId: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.emailId,
-            fullName: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.fullName,
-            mobileNumber: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.mobileNumber,
-            passcode: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.passcode
-        };
-        dispatch(onSetUserIdCompletion(getUserData));
+        let serviceProviderDetails = currstate.onboardingState.verifyUserIDState.serviceProviderDetails;
+        if (serviceProviderDetails) {
+            let getUserData = {
+                serviceProviderId: serviceProviderDetails.serviceProviderId,
+                memberId: serviceProviderDetails.memberId,
+                emailId: serviceProviderDetails.emailId,
+                fullName: serviceProviderDetails.fullName,
+                mobileNumber: serviceProviderDetails.mobileNumber,
+                passcode: serviceProviderDetails.passcode
+            };
+            dispatch(onSetUserIdCompletion(getUserData));
+        }
     }
 };
 
@@ -71,9 +74,9 @@ export function setPassword(data) {
 
 export function onboardSucess() {
     return (dispatch, getState) => {
-        dispatch(passwordSetSuccess());
-        dispatch(clearOnboardingState());
-        dispatch(push('/Onboardsuccess'));
+        //dispatch(passwordSetSuccess());
+        //dispatch(clearOnboardingState());
+        dispatch(push(Path.onboardSuccess));
     }
 };
 

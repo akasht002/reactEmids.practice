@@ -14,7 +14,7 @@ import {
     CoreoWizFlow, 
     Footer, 
     Header, 
-    ModalTemplate, 
+    ModalPopup, 
     PanelCard,
     ScreenCover,
     ModalUserAgreement
@@ -47,6 +47,6 @@ export {
     CoreoWizFooter,
     CarouselComp,
     Calendar,
-    ModalTemplate,
+    ModalPopup,
     ModalUserAgreement
 };

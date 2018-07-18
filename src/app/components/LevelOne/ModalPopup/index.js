@@ -1,3 +1,3 @@
-import ModalTemplate from './ModalPopup';
+import ModalPopup from './ModalPopup';
 
-export {ModalTemplate}
+export {ModalPopup}

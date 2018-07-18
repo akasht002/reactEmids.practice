@@ -45,7 +45,7 @@ const verifyUserIDState = (state = defaultState, action) => {
             return {
                 ...state,
                 isEmailExist: action.isExistMsge,
-                isEmailNotExist: action.isNotExistMsg
+                isEmailNotExist: !action.isExistMsge
             }
 
         case VerifyUserID.setUserId:
@@ -59,7 +59,7 @@ const verifyUserIDState = (state = defaultState, action) => {
 
         case VerifyUserID.clearState:
             return defaultState;
-            
+
         default:
             return state;
     }

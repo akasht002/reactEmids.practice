@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API, baseURL } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
-import {clearState as verifyUserIdClear} from '../VerifyUserID/actions';
+import { clearState as verifyUserIdClear } from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 
@@ -9,10 +9,12 @@ export const VerifyContact = {
     passcodeSentSuccess: 'passcode_sent_success/verifycontact',
     setPasscodeNotMatch: 'set_passcode_match/verifycontact',
     setPasscodeMatch: 'set_passCode_match/verifycontact',
+    temporaryPasscodeExpired: 'temporary_password_expired/verifycontact',
     passcodeVerifySuccess: 'passcode_verify_success/verifycontact',
     setPasscodeErrorStatus: 'passcode_error_status/verifycontact',
     onSetUserDetailsCompletion: 'set_user_details/verifycontact',
     cancelClick: 'cancel_click/verifycontact',
+    formDirty: 'form_dirty/memberdetails',
 };
 
 export const onSetUserId = (data) => {
@@ -33,6 +35,13 @@ export const clearState = () => {
         type: VerifyContact.clearState
     }
 }
+
+export const formDirty = () => {
+    return {
+        type: VerifyContact.formDirty
+    }
+}
+
 
 
 export function sendTemporaryPasscode(data) {
@@ -63,11 +72,14 @@ export function verifyTempPasscode(data) {
         };
         dispatch(startLoading());
         axios.post(baseURL + API.verifyTemporaryPasscode, modal).then((resp) => {
-            dispatch(verifyPasscodeSuccess());
-            if (resp && resp.data === true) {
+            if (resp && resp.data === 'Otp Matched') {
+                dispatch(verifyPasscodeSuccess());
                 dispatch(temporaryPasscodeSuccess());
                 dispatch(endLoading());
-            } else {
+            } else if(resp && resp.data === 'Otp Expired'){
+                dispatch(endLoading());
+                dispatch(temporaryPasscodeExpired(true))
+            } else if(resp && resp.data === 'Otp Not Matched'){
                 dispatch(endLoading());
                 dispatch(setPasscodeNotMatch(true))
             }
@@ -81,15 +93,18 @@ export function verifyTempPasscode(data) {
 export function getUserData() {
     return (dispatch, getState) => {
         let currstate = getState();
-        let getUserData = {
-            serviceProviderId: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.serviceProviderId,
-            memberId: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.memberId,
-            emailId: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.emailId,
-            fullName: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.fullName,
-            mobileNumber: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.mobileNumber,
-            passcode: currstate.onboardingState.verifyUserIDState.serviceProviderDetails.passcode
-        };
-        dispatch(onSetUserIdCompletion(getUserData));
+        let serviceProviderDetails = currstate.onboardingState.verifyUserIDState.serviceProviderDetails;
+        if (serviceProviderDetails) {
+            let getUserData = {
+                serviceProviderId: serviceProviderDetails.serviceProviderId,
+                memberId: serviceProviderDetails.memberId,
+                emailId: serviceProviderDetails.emailId,
+                fullName: serviceProviderDetails.fullName,
+                mobileNumber: serviceProviderDetails.mobileNumber,
+                passcode: serviceProviderDetails.passcode
+            };
+            dispatch(onSetUserIdCompletion(getUserData));
+        }
     }
 };
 
@@ -103,7 +118,7 @@ export const onSetUserIdCompletion = (data) => {
 export function setPasscodeError() {
     return (dispatch, getState) => {
         dispatch(setPasscodeNotMatch(false));
-        dispatch(push('/verifyemail'));
+        dispatch(push(Path.verifyEmail));
     }
 };
 
@@ -111,7 +126,14 @@ export function temporaryPasscodeSuccess() {
     return (dispatch, getState) => {
         dispatch(setPasscodeNotMatch(false))
         dispatch(setPasscodeMatch(true))
-        dispatch(push('/setpassword'));
+        dispatch(push(Path.setPassword));
+    }
+};
+
+export function temporaryPasscodeExpired(isExpired) {
+    return {
+        type: VerifyContact.temporaryPasscodeExpired,
+        isExpired
     }
 };
 

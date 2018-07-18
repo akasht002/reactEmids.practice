@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './styles.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import './styles.css';
 
  class ModalUserAgreement extends Component {
     render() {

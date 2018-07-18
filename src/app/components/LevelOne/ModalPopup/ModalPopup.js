@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './styles.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Button } from '../../';
+import './styles.css';
 
- class ModalTemplate extends Component {
+ class ModalPopup extends Component {
     render() {
         return (
                 <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className} centered={this.props.centered} >
@@ -35,4 +35,4 @@ import { Button } from '../../';
     }
 }
 
-export default ModalTemplate;
+export default ModalPopup;

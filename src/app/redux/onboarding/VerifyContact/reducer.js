@@ -9,6 +9,7 @@ const defaultState = {
     isPasscodeMatch: false,
     isOnboardSucess: false,
     isVerifiedPasscode: false,
+    isPasscodeExpired: false,
     serviceProviderDetails: {
         serviceProviderId: '',
         memberId: '',
@@ -49,6 +50,13 @@ const verifyContactState = (state = defaultState, action) => {
                 loading: false
             };
 
+        case VerifyContact.formDirty:
+            return {
+                ...state,
+                isPasscodeNotMatch: false,
+                isPasscodeExpired: false
+            };
+
         case VerifyContact.passcodeSentSuccess:
             return {
                 ...state,
@@ -60,6 +68,12 @@ const verifyContactState = (state = defaultState, action) => {
             return {
                 ...state,
                 userEmail: action.data.emailId
+            }
+
+        case VerifyContact.temporaryPasscodeExpired:
+            return {
+                ...state,
+                isPasscodeExpired: action.isExpired
             }
 
         case VerifyContact.setPasscodeMatch:

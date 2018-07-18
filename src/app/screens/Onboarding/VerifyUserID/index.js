@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
-import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input, ModalTemplate } from '../../../components';
+import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input, ModalPopup } from '../../../components';
 import {
     onCancelClick,
     sendVerificationLink,
@@ -88,7 +88,6 @@ class VerifyUserID extends React.Component {
                                     <Input
                                         id="userId"
                                         autoComplete="off"
-                                        required="required"
                                         type="text"
                                         placeholder="eg. smith@gmail.com"
                                         label="Enter Email ID"
@@ -124,7 +123,7 @@ class VerifyUserID extends React.Component {
                     </div>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={0} />
-                <ModalTemplate
+                <ModalPopup
                     isOpen={this.state.showModalOnCancel}
                     ModalBody={<span>Do you want to cancel the onboarding process?</span>}
                     btn1="YES"

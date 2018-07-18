@@ -1,8 +1,9 @@
 import axios from 'axios';
-import {API, baseURL} from '../../../services/api';
-import {startLoading, endLoading} from '../../loading/actions';
+import { API, baseURL } from '../../../services/api';
+import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions';
-import {Path} from '../../../routes';
+import { Path } from '../../../routes';
+import { VALID } from '../../constants/constants';
 
 export const VerifyUserID = {
     verifyEmail: 'verify_email/verifyuserid',
@@ -18,7 +19,7 @@ export const VerifyUserID = {
 
 export function onUserEmailNext(data) {
     return (dispatch, getState) => {
-        dispatch(push('/verifycontact'));
+        dispatch(push(Path.verifyContact));
     }
 };
 
@@ -39,19 +40,19 @@ export function sendVerificationLink(emailData) {
         dispatch(startLoading());
         axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
             if (resp && resp.data) {
-                if(resp.data.isExist === "Valid"){
+                if (resp.data.isExist === VALID) {
                     dispatch(onSetUserIdCompletion(resp.data));
                     dispatch(isAlreadyOnboarded(false));
-                    dispatch(userEmailNotExist(false, true));
-                }else{
+                    dispatch(userEmailNotExist(true));
+                } else {
                     dispatch(isAlreadyOnboarded(true));
-                    dispatch(userEmailNotExist(false, false));
+                    dispatch(userEmailNotExist(false));
                 }
                 dispatch(endLoading());
             } else {
                 dispatch(isAlreadyOnboarded(false));
                 dispatch(endLoading());
-                dispatch(userEmailNotExist(true, false));
+                dispatch(userEmailNotExist(false));
             }
         }).catch((err) => {
             dispatch(endLoading());
@@ -66,26 +67,24 @@ export const onSetUserIdCompletion = (data) => {
     }
 };
 
-export const isAlreadyOnboarded =(isExist) =>{
-    return{
+export const isAlreadyOnboarded = (isExist) => {
+    return {
         type: VerifyUserID.setIsAlreadyOnboarded,
         isExist
     }
 };
 
-export const userEmailNotExist = (isNotExistMsg, isExistMsge) => {
+export const userEmailNotExist = (isExistMsge) => {
     return {
         type: VerifyUserID.userEmailNotExist,
-        isNotExistMsg,
         isExistMsge
     }
 };
 
-export function onCancelClick(){
+export function onCancelClick() {
     return (dispatch, getState) => {
         dispatch(cancelClick());
         dispatch(clearState());
         dispatch(push(Path.root));
     }
 }
-    

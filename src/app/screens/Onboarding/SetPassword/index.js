@@ -2,10 +2,9 @@ import React from "react";
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { setPassword, onCancelClick, getUserData } from '../../../redux/onboarding/SetPassword/actions';
-import { push } from '../../../redux/navigation/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
-import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, CheckBox, ModalUserAgreement, ModalTemplate } from '../../../components';
+import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalUserAgreement, ModalPopup } from '../../../components';
 import { checkPassword } from '../../../utils/validations'
 import { endUserAgreement } from '../../../assets/templates/EndUserAgreement';
 
@@ -60,10 +59,6 @@ class SetPassword extends React.Component {
         });
     };
 
-    onClickButtonPrevious = () => {
-        this.props.onClickPrevious();
-    };
-
     render() {
         return (
             <ScreenCover isLoading={this.props.isLoading}>
@@ -75,7 +70,7 @@ class SetPassword extends React.Component {
                     isSubmitDisabled={this.state.password === '' || this.state.confirmPassword === '' || !this.state.passMatch || !this.state.userAgreement}
                     onSubmitClick={this.onClickButtonSubmit}
                     onCancelClick={this.onClickCancel}
-                    onPreviousClick={this.onClickButtonPrevious}>
+                    >
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
@@ -87,8 +82,7 @@ class SetPassword extends React.Component {
                                         <div className="col-md-6 my-3">
                                             <Input
                                                 id="newPass"
-                                                autoComplete="off"
-                                                
+                                                autoComplete="off"                                               
                                                 type="password"
                                                 label="Enter New Password"
                                                 className="form-control"
@@ -110,8 +104,7 @@ class SetPassword extends React.Component {
                                         <div className="col-md-6 my-3">
                                             <Input
                                                 id="rePass"
-                                                autoComplete="off"
-                                                
+                                                autoComplete="off"                                                
                                                 type="password"
                                                 label="Confirm New password"
                                                 className="form-control"
@@ -135,7 +128,7 @@ class SetPassword extends React.Component {
                                             By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
                                         </label>
                                     </div>
-                                    {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords not matching.</span>}
+                                    {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match..</span>}
                                     {!this.state.passwordCombination && <div className="MsgWithIcon MsgWrongIcon">
                                         <span className="text-danger d-block mt-4 mb-2">Password should contain a combination of upper case, lower case, special characters and number, and should be at least 8 characters.</span>
                                     </div>}
@@ -145,7 +138,7 @@ class SetPassword extends React.Component {
                     </div>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={2} />
-                <ModalTemplate
+                <ModalPopup
                     isOpen={this.state.showModalOnCancel}
                     ModalBody={<span>Do you want to cancel the onboarding process?</span>}
                     btn1="YES"
@@ -176,7 +169,6 @@ function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onSetPassword: (data) => dispatch(setPassword(data)),
-        onClickPrevious: () => dispatch(push("/verifycontact")),
         getUserData: () => dispatch(getUserData())
     }
 };
