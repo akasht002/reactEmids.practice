@@ -12,5 +12,8 @@ export const API = {
     sendEmailVerification: 'ServiceProviderOnBoarding/',
     sendTemporaryPasscode: 'ServiceProviderOnBoarding',
     verifyTemporaryPasscode: 'ServiceProviderOnBoarding/VerifyServiceProvider',
-    setPassword: 'ServiceProviderOnBoarding/SetPassword'
+    setPassword: 'ServiceProviderOnBoarding/SetPassword',
+    getCertification: 'ServiceProvider/Certification/ServiceProvider/',
+    addCertification: 'ServiceProvider/Certification',
+    deleteCertification: 'ServiceProvider/Certification/'
 }

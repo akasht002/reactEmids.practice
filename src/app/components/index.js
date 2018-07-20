@@ -14,10 +14,12 @@ import {
     CoreoWizFlow, 
     Footer, 
     Header, 
+    ProfileHeader,
     ModalPopup, 
     PanelCard,
     ScreenCover,
-    ModalUserAgreement
+    ModalUserAgreement,
+    ProfileModalPopup
 } from './LevelOne';
 import {
     CarouselComp,
@@ -35,6 +37,7 @@ export {
     InfoCard,
     IconCard,
     Header,
+    ProfileHeader,
     Button,
     CheckBox,
     FloatLabelInput,
@@ -48,5 +51,6 @@ export {
     CarouselComp,
     Calendar,
     ModalPopup,
-    ModalUserAgreement
+    ModalUserAgreement,
+    ProfileModalPopup
 };
