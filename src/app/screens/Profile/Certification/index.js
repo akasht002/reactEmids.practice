@@ -24,7 +24,7 @@ class Certification extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getCertification();
+        this.props.getCertification(this.props.serviceProviderId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -240,6 +240,7 @@ function mapStateToProps(state) {
         certificationList: state.profileState.CertificationState.certificationList,
         addCertificationSuccess: state.profileState.CertificationState.addCertificationSuccess,
         certificationFieldDetails: state.profileState.CertificationState.certificationFieldDetails,
+        serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId
     };
 };
 

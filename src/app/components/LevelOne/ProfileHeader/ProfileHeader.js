@@ -67,7 +67,7 @@ class ProfileHeader extends React.Component {
 
         return (
             <Navbar className="navbar-light navbarProfile boxShadowBottom bgWhite" expand="md">
-                <NavbarBrand className="text-uppercase" href="/">Coreo Home</NavbarBrand>
+                <NavbarBrand className="text-uppercase">Coreo Home</NavbarBrand>
                 <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav navbar className="SearchWidget width100">

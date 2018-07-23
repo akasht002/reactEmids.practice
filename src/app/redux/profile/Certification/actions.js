@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API, baseURL } from '../../../services/api';
-import {startLoading, endLoading} from '../../loading/actions';
+import { startLoading, endLoading } from '../../loading/actions';
 
 export const Certification = {
     getCertificationSuccess: 'get_certification_success/certification',
@@ -31,8 +31,10 @@ export const getCertificationFieldDetails = (data) => {
 
 export function getCertification() {
     return (dispatch, getState) => {
+        let currstate = getState();
+        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
-        axios.get(baseURL + API.getCertification + '1').then((resp) => {
+        axios.get(baseURL + API.getCertification + serviceProviderId).then((resp) => {
             dispatch(getCertificationSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -43,8 +45,10 @@ export function getCertification() {
 
 export function addCertification(data) {
     return (dispatch, getState) => {
+        let currstate = getState();
+        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let modal = {
-            serviceProviderId: '1',
+            serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
             authority: data.authority,
             licenceNumber: data.licenceNumber,
@@ -75,8 +79,10 @@ export function editCertification(data) {
 
 export function updateCertification(data) {
     return (dispatch, getState) => {
+        let currstate = getState();
+        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let modal = {
-            serviceProviderId: '1',
+            serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
             authority: data.authority,
             licenceNumber: data.licenceNumber,
