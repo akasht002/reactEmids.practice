@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
-import { getCertification, addCertification, editCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
+import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
+import { checkAlphaNumeric } from "../../../utils/validations"
 
 class Certification extends React.Component {
 
@@ -15,31 +16,51 @@ class Certification extends React.Component {
             CertificateLicenceNumber: '',
             certificationId: '',
             showModalOnDelete: false,
+            modalSaveAction: '',
             add: false,
-            edit: false
+            edit: false,
+            isValid: true
         };
     };
-
-    toggleCertification(action, e) {
-        this.setState({
-            CertificationModal: !this.state.CertificationModal,
-            [action]: !this.state[action],
-        })
-    }
 
     componentDidMount() {
         this.props.getCertification();
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            CertificationName: nextProps.certificationFieldDetails.certificationName,
+            CertificationAuthority: nextProps.certificationFieldDetails.authority,
+            CertificateLicenceNumber: nextProps.certificationFieldDetails.licenceNumber,
+            certificationId: nextProps.certificationFieldDetails.certificationId
+        })
+    }
+
+    toggleCertification(action, e) {
+        this.setState({
+            CertificationModal: !this.state.CertificationModal,
+            modalSaveAction: this.addCertification,
+            CertificationName: '',
+            CertificationAuthority: '',
+            CertificateLicenceNumber: '',
+            certificationId: '',
+            add: true,
+            edit: false,
+            isValid: true
+        })
+    }
+
     addCertification = () => {
-        if (this.state.CertificationName && this.state.CertificationAuthority && this.state.CertificateLicenceNumber) {
+        if ((this.state.CertificationName) && (this.state.CertificationAuthority) && (this.state.CertificateLicenceNumber)) {
             const data = {
                 certificationName: this.state.CertificationName,
                 authority: this.state.CertificationAuthority,
                 licenceNumber: this.state.CertificateLicenceNumber
             };
             this.props.addCertification(data);
-            this.setState({ CertificationModal: !this.state.CertificationModal, CertificationName: '', CertificationAuthority: '', CertificateLicenceNumber: '' });
+            this.setState({ modalSaveAction: this.addCertification, CertificationModal: !this.state.CertificationModal, CertificationName: '', CertificationAuthority: '', CertificateLicenceNumber: '' });
+        } else {
+            this.setState({ isValid: false });
         }
     }
 
@@ -48,8 +69,21 @@ class Certification extends React.Component {
     }
 
     editCertification = (e) => {
-        this.setState({ CertificationModal: true, certificationId: e.target.id });
-        this.props.editCertification(this.state.certificationId);
+        this.setState({ modalSaveAction: this.updateCertification, CertificationModal: true, add: false, edit: true, certificationId: e.target.id });
+        this.props.editCertification(e.target.id);
+    }
+
+    updateCertification = () => {
+        if (this.state.CertificationName && this.state.CertificationAuthority && this.state.CertificateLicenceNumber) {
+            const data = {
+                certificationName: this.state.CertificationName,
+                authority: this.state.CertificationAuthority,
+                licenceNumber: this.state.CertificateLicenceNumber,
+                certificationId: this.state.certificationId
+            };
+            this.props.updateCertification(data);
+            this.setState({ CertificationModal: !this.state.CertificationModal, CertificationName: '', CertificationAuthority: '', CertificateLicenceNumber: '' });
+        }
     }
 
     deleteCertification = () => {
@@ -70,11 +104,11 @@ class Certification extends React.Component {
                         name="Certification"
                         label="Certification"
                         autoComplete="off"
-                        required="required"
                         type="text"
                         placeholder="e.g. Home Care Aide Organization"
-                        className="form-control"
+                        className={"form-control " + (!this.state.isValid && !this.state.CertificationName && 'inputFailure')}
                         value={this.state.CertificationName}
+                        maxlength={'500'}
                         textChange={(e) => this.setState({
                             CertificationName: e.target.value,
                         })}
@@ -85,11 +119,11 @@ class Certification extends React.Component {
                         name="CertificationAuthority"
                         label="Certification Authority"
                         autoComplete="off"
-                        required="required"
                         type="text"
                         placeholder="e.g. California Associaion"
-                        className="form-control"
+                        className={"form-control " + (!this.state.isValid && !this.state.CertificationAuthority && 'inputFailure')}
                         value={this.state.CertificationAuthority}
+                        maxlength={'500'}
                         textChange={(e) => this.setState({
                             CertificationAuthority: e.target.value,
                         })}
@@ -100,11 +134,11 @@ class Certification extends React.Component {
                         name="CertificateLicenceNum"
                         label="Certificate / License Number"
                         autoComplete="off"
-                        required="required"
                         type="text"
                         placeholder="e.g. HCA7521698432"
-                        className="form-control"
+                        className={"form-control " + (!this.state.isValid && !this.state.CertificateLicenceNumber && 'inputFailure')}
                         value={this.state.CertificateLicenceNumber}
+                        maxlength={'50'}
                         textChange={(e) => this.setState({
                             CertificateLicenceNumber: e.target.value,
                         })}
@@ -170,7 +204,7 @@ class Certification extends React.Component {
                     className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
                     centered="centered"
-                    onClick={this.addCertification}
+                    onClick={this.state.modalSaveAction}
                 />
 
                 <ModalPopup
@@ -196,6 +230,7 @@ function mapDispatchToProps(dispatch) {
         getCertification: () => dispatch(getCertification()),
         addCertification: (data) => dispatch(addCertification(data)),
         editCertification: (data) => dispatch(editCertification(data)),
+        updateCertification: (data) => dispatch(updateCertification(data)),
         deleteCertification: (data) => dispatch(deleteCertification(data))
     }
 };

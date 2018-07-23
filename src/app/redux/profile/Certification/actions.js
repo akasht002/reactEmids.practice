@@ -73,6 +73,26 @@ export function editCertification(data) {
     }
 };
 
+export function updateCertification(data) {
+    return (dispatch, getState) => {
+        let modal = {
+            serviceProviderId: '1',
+            certificationName: data.certificationName,
+            authority: data.authority,
+            licenceNumber: data.licenceNumber,
+            isActive: true,
+            certificationId: data.certificationId
+        };
+        dispatch(startLoading());
+        axios.put(baseURL + API.editCertification, modal).then((resp) => {
+            dispatch(getCertification());
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
 export function deleteCertification(data) {
     return (dispatch, getState) => {
         dispatch(startLoading());

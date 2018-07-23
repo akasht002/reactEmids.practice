@@ -4,7 +4,7 @@ import {
 
 const defaultState = {
     certificationList: [],
-    certificationFieldDetails: [],
+    certificationFieldDetails: '',
     addCertificationSuccess: false
 };
 

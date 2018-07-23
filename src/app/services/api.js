@@ -16,5 +16,6 @@ export const API = {
     getCertification: 'ServiceProvider/Certification/ServiceProvider/',
     addCertification: 'ServiceProvider/Certification',
     deleteCertification: 'ServiceProvider/Certification/',
-    editCertification: 'ServiceProvider/Certification/Certification/'
+    editCertification: 'ServiceProvider/Certification/Certification/',
+    updateCertification: 'ServiceProvider/Certification/'
 }

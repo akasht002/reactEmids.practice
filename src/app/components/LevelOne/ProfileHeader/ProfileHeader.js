@@ -19,22 +19,18 @@ class ProfileHeader extends React.Component {
             menus: [
                 {
                     name: "contact",
-                    link: "/",
                     status: true
                 },
                 {
                     name: "videoChat",
-                    link: "about",
                     status: true
                 },
                 {
                     name: "messages",
-                    link: "login",
                     status: true
                 },
                 {
                     name: "notification",
-                    link: "login",
                     status: true
                 }
             ]
