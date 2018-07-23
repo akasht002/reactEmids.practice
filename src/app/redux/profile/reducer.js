@@ -1,30 +1,6 @@
-import {
-    Profile
-} from './actions'
+import { combineReducers } from 'redux';
+import CertificationState from './Certification/reducer';
 
-const defaultState = {
-    certificationList: [],
-    addCertificationSuccess: false
-};
-
-const ProfileState = (state = defaultState, action) => {
-    switch (action.type) {
-
-        case Profile.getCertificationSuccess:
-            return {
-                ...state,
-                certificationList: action.data
-            };
-
-        case Profile.addCertificationSuccess:
-            return {
-                ...state,
-                addCertificationSuccess: action.isSuccess
-            };
-
-        default:
-            return state;
-    }
-}
-
-export default ProfileState;
+export const profileState = combineReducers({
+    CertificationState
+});

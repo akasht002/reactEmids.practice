@@ -1,23 +1,31 @@
 import axios from 'axios';
-import { API, baseURL } from '../../services/api';
-import { startLoading, endLoading } from '../loading/actions';
+import { API, baseURL } from '../../../services/api';
+import {startLoading, endLoading} from '../../loading/actions';
 
-export const Profile = {
-    getCertificationSuccess: 'get_certification_success/profile',
-    addCertificationSuccess: 'add_certifications_success/profile'
+export const Certification = {
+    getCertificationSuccess: 'get_certification_success/certification',
+    addCertificationSuccess: 'add_certifications_success/certification',
+    getCertificationFieldDetails: 'get_certification_field_details/certification'
 };
 
 export const getCertificationSuccess = (data) => {
     return {
-        type: Profile.getCertificationSuccess,
+        type: Certification.getCertificationSuccess,
         data
     }
 }
 
 export const addCertificationSuccess = (isSuccess) => {
     return {
-        type: Profile.addCertificationSuccess,
+        type: Certification.addCertificationSuccess,
         isSuccess
+    }
+}
+
+export const getCertificationFieldDetails = (data) => {
+    return {
+        type: Certification.getCertificationFieldDetails,
+        data
     }
 }
 
@@ -46,6 +54,18 @@ export function addCertification(data) {
         axios.post(baseURL + API.addCertification, modal).then((resp) => {
             dispatch(addCertificationSuccess(true));
             dispatch(getCertification());
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function editCertification(data) {
+    return (dispatch, getState) => {
+        dispatch(startLoading());
+        axios.get(baseURL + API.editCertification + data).then((resp) => {
+            dispatch(getCertificationFieldDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

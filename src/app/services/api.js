@@ -15,5 +15,6 @@ export const API = {
     setPassword: 'ServiceProviderOnBoarding/SetPassword',
     getCertification: 'ServiceProvider/Certification/ServiceProvider/',
     addCertification: 'ServiceProvider/Certification',
-    deleteCertification: 'ServiceProvider/Certification/'
+    deleteCertification: 'ServiceProvider/Certification/',
+    editCertification: 'ServiceProvider/Certification/Certification/'
 }
