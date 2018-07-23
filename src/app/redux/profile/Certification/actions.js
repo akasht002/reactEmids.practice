@@ -34,7 +34,7 @@ export function getCertification() {
         let currstate = getState();
         let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
-        axios.get(baseURL + API.getCertification + serviceProviderId).then((resp) => {
+        axios.get(baseURL + API.getCertification + serviceProviderId).then((resp) => {        
             dispatch(getCertificationSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -48,7 +48,7 @@ export function addCertification(data) {
         let currstate = getState();
         let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let modal = {
-            serviceProviderId: serviceProviderId,
+            serviceProviderId: serviceProviderId,           
             certificationName: data.certificationName,
             authority: data.authority,
             licenceNumber: data.licenceNumber,

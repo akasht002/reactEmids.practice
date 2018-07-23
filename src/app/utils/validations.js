@@ -13,7 +13,3 @@ export function checkDate(date) {
 export function checkSpace(text) {
     return (text).replace(/\s/g, "");
 }
-
-export function checkAlphaNumeric(text){
-   return /^[a-z0-9]+$/.test(text);
-}

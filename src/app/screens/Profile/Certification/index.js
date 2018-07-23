@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
-import { checkAlphaNumeric } from "../../../utils/validations"
 
 class Certification extends React.Component {
 
@@ -24,7 +23,7 @@ class Certification extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getCertification(this.props.serviceProviderId);
+        this.props.getCertification();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -51,7 +50,7 @@ class Certification extends React.Component {
     }
 
     addCertification = () => {
-        if ((this.state.CertificationName) && (this.state.CertificationAuthority) && (this.state.CertificateLicenceNumber)) {
+        if (this.state.CertificationName && this.state.CertificationAuthority) {
             const data = {
                 certificationName: this.state.CertificationName,
                 authority: this.state.CertificationAuthority,
@@ -74,7 +73,7 @@ class Certification extends React.Component {
     }
 
     updateCertification = () => {
-        if (this.state.CertificationName && this.state.CertificationAuthority && this.state.CertificateLicenceNumber) {
+        if (this.state.CertificationName && this.state.CertificationAuthority) {
             const data = {
                 certificationName: this.state.CertificationName,
                 authority: this.state.CertificationAuthority,
@@ -83,6 +82,8 @@ class Certification extends React.Component {
             };
             this.props.updateCertification(data);
             this.setState({ CertificationModal: !this.state.CertificationModal, CertificationName: '', CertificationAuthority: '', CertificateLicenceNumber: '' });
+        } else {
+            this.setState({ isValid: false });
         }
     }
 
@@ -106,8 +107,8 @@ class Certification extends React.Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Home Care Aide Organization"
-                        className={"form-control " + (!this.state.isValid && !this.state.CertificationName && 'inputFailure')}
-                        value={this.state.CertificationName}
+                        className={"form-control " + (!this.state.isValid && 'inputFailure')}
+                        value={(this.state.CertificationName)}
                         maxlength={'500'}
                         textChange={(e) => this.setState({
                             CertificationName: e.target.value,
@@ -136,7 +137,7 @@ class Certification extends React.Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. HCA7521698432"
-                        className={"form-control " + (!this.state.isValid && !this.state.CertificateLicenceNumber && 'inputFailure')}
+                        className={"form-control"}
                         value={this.state.CertificateLicenceNumber}
                         maxlength={'50'}
                         textChange={(e) => this.setState({
@@ -144,6 +145,7 @@ class Certification extends React.Component {
                         })}
                     />
                 </div>
+                {!this.state.isValid && (!this.state.CertificationName || !this.state.CertificationAuthority) && <span className="text-danger d-block ml-30 mt-4 mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && 'Certification'} {this.state.CertificationAuthority === '' && '&'} {this.state.CertificationAuthority === '' && 'Certification Authority'}</span>}
             </div>
         </form>;
 
@@ -240,7 +242,6 @@ function mapStateToProps(state) {
         certificationList: state.profileState.CertificationState.certificationList,
         addCertificationSuccess: state.profileState.CertificationState.addCertificationSuccess,
         certificationFieldDetails: state.profileState.CertificationState.certificationFieldDetails,
-        serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId
     };
 };
 
