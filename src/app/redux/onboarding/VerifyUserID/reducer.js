@@ -23,7 +23,6 @@ const verifyUserIDState = (state = defaultState, action) => {
                 ...state,
                 userEmail: action.data.emailId,
                 isEmailExist: true,
-                isEmailNotExist: false,
                 serviceProviderDetails: {
                     ...state.serviceProviderDetails,
                     serviceProviderId: action.data.serviceProviderId,
@@ -41,11 +40,16 @@ const verifyUserIDState = (state = defaultState, action) => {
                 setIsAlreadyOnboarded: action.isExist
             }
 
-        case VerifyUserID.userEmailNotExist:
+        case VerifyUserID.userEmailExist:
             return {
                 ...state,
                 isEmailExist: action.isExistMsge,
-                isEmailNotExist: !action.isExistMsge
+            }
+
+        case VerifyUserID.userEmailNotExist:
+            return {
+                ...state,
+                isEmailNotExist: action.isExist,
             }
 
         case VerifyUserID.setUserId:
@@ -53,6 +57,14 @@ const verifyUserIDState = (state = defaultState, action) => {
                 ...state,
                 userEmail: action.data.emailId
             }
+
+        case VerifyUserID.formDirty:
+            return {
+                ...state,
+                isEmailExist: false,
+                isEmailNotExist: false,
+                setIsAlreadyOnboarded: false,
+            };
 
         case VerifyUserID.cancelClick:
             return defaultState;

@@ -8,6 +8,7 @@ import {
     onCancelClick,
     sendVerificationLink,
     onUserEmailNext,
+    formDirty
 } from '../../../redux/onboarding/VerifyUserID/actions';
 import { setWorkflowDirty } from '../../../redux/wizard/actions';
 import { checkEmail, checkSpace } from '../../../utils/validations'
@@ -30,15 +31,23 @@ class VerifyUserID extends React.Component {
             emailValid: true,
             isEmailNotExist: false
         });
+        if (e.target.value === " ") {
+            this.setState({ email: '' });
+        }
         if (e.target.value.length === 0) {
             this.setState({ isEmailNotExist: false, isAlreadyOnboarded: false });
         }
+        this.props.formDirty();
     };
 
     validateEmail = () => {
-        if (checkEmail(this.state.email)) {
-            this.setState({ emailValid: true });
-        } else {
+        if (this.state.email) {
+            this.setState({ email: (this.state.email).trim() });
+            if (checkEmail(this.state.email)) {
+                this.setState({ emailValid: true });
+            }
+        }
+        else {
             this.setState({ emailValid: false });
         }
     }
@@ -72,7 +81,7 @@ class VerifyUserID extends React.Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ isEmailNotExist: nextProps.isEmailNotExist, isAlreadyOnboarded: nextProps.isAlreadyOnboarded });
+        this.setState({ isAlreadyOnboarded: nextProps.isAlreadyOnboarded });
     };
 
     render() {
@@ -109,7 +118,7 @@ class VerifyUserID extends React.Component {
                                 {this.props.isEmailExist && <div className="MsgWithIcon MsgSuccessIcon">
                                     <span className="text-success d-block mt-4 mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
                                 </div>}
-                                {this.state.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
+                                {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
                                     <span className="text-danger d-block mt-4 mb-2">We did not find your Email ID. Please retry or contact <Link to={this.props.match.url} className="primaryColor px-1">Support</Link>.</span>
                                 </div>}
                                 {!this.state.emailValid && <div className="MsgWithIcon MsgWrongIcon">
@@ -146,7 +155,8 @@ function mapDispatchToProps(dispatch) {
         onClickCancel: () => dispatch(onCancelClick()),
         onClickNext: (data) => dispatch(onUserEmailNext(data)),
         sendVerificationLink: (data) => dispatch(sendVerificationLink(data)),
-        setWorkflowDirty: () => dispatch(setWorkflowDirty())
+        setWorkflowDirty: () => dispatch(setWorkflowDirty()),
+        formDirty: () => dispatch(formDirty())
     }
 };
 
