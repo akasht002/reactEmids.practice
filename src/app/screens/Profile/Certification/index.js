@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
+import { ProfileModalPopup, ModalPopup } from "../../../components";
 import { checkSpace, checkTrim } from "../../../utils/validations"
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
+import SyncValidationForm  from './certiticationForm'
+import RemoteSubmitButton from './certificationButton'
 
 class Certification extends React.Component {
 
@@ -45,6 +47,7 @@ class Certification extends React.Component {
             certificationId: ''
         })
     }
+   
 
     toggleCertification(action, e) {
         this.setState({
@@ -60,19 +63,25 @@ class Certification extends React.Component {
         })
     }
 
-    addCertification = () => {
-        if (checkSpace(this.state.CertificationName) && checkSpace(this.state.CertificationAuthority)) {
-            const data = {
-                certificationName: this.state.CertificationName.trim(),
-                authority: this.state.CertificationAuthority.trim(),
-                licenceNumber: this.state.CertificateLicenceNumber.trim()
-            };
-            this.props.addCertification(data);
-            this.setState({ modalSaveAction: this.addCertification });
-            this.reset();
-        } else {
-            this.setState({ isValid: false });
-        }
+    addCertification = (data) => {
+        console.log(data)
+        // if (checkSpace(this.state.CertificationName) && checkSpace(this.state.CertificationAuthority)) {
+        //     const data = {
+        //         certificationName: this.state.CertificationName.trim(),
+        //         authority: this.state.CertificationAuthority.trim(),
+        //         licenceNumber: this.state.CertificateLicenceNumber.trim()
+        //     };
+        //     this.props.addCertification(data);
+        //     this.setState({ modalSaveAction: this.addCertification });
+        //     this.reset();
+        // } else {
+        //     this.setState({ isValid: false });
+        // }
+        this.props.addCertification(data);
+        this.setState({
+            certificationModal: !this.state.certificationModal,
+        })
+        
     }
 
     showModalOnDelete = (e) => {
@@ -110,59 +119,10 @@ class Certification extends React.Component {
         let modalContent;
         let modalTitle;
         let modalType = '';
+        let modalFooter = '';
+        
 
-        const CertificationModalContent = <form className="form my-2 my-lg-0">
-            <div className="row">
-                <div className="col-md-12 mb-2">
-                    <Input
-                        name="Certification"
-                        label="Certification"
-                        autoComplete="off"
-                        type="text"
-                        placeholder="e.g. Home Care Aide Organization"
-                        className={"form-control " + (!this.state.isValid && !this.state.CertificationName && 'inputFailure')}
-                        value={this.state.CertificationName}
-                        maxlength={'500'}
-                        textChange={(e) => this.setState({
-                            CertificationName: e.target.value,
-                        })}
-                    />
-                </div>
-                <div className="col-md-12 mb-2">
-                    <Input
-                        name="CertificationAuthority"
-                        label="Certification Authority"
-                        autoComplete="off"
-                        type="text"
-                        placeholder="e.g. California Associaion"
-                        className={"form-control " + (!this.state.isValid && !this.state.CertificationAuthority && 'inputFailure')}
-                        value={this.state.CertificationAuthority}
-                        maxlength={'500'}
-                        textChange={(e) => this.setState({
-                            CertificationAuthority: e.target.value,
-                        })}
-                    />
-                </div>
-                <div className="col-md-12 mb-2">
-                    <Input
-                        name="CertificateLicenceNum"
-                        label="Certificate / License Number"
-                        autoComplete="off"
-                        type="text"
-                        placeholder="e.g. HCA7521698432"
-                        className={"form-control"}
-                        value={this.state.CertificateLicenceNumber}
-                        maxlength={'50'}
-                        textChange={(e) => this.setState({
-                            CertificateLicenceNumber: e.target.value,
-                        })}
-                    />
-                </div>
-                <div className="col-md-12 mb-2">
-                    {!this.state.isValid && (!this.state.CertificationName || !this.state.CertificationAuthority) && <span className="text-danger d-block ml-30 mt-4 mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && ' Certification'} {(this.state.CertificationAuthority === '' && this.state.CertificationName === '') ? '&' : ''} {this.state.CertificationAuthority === '' && 'Certification Authority'}</span>}
-                </div>
-            </div>
-        </form>;
+        
 
         const certificationList = this.props.certificationList && this.props.certificationList.map((certificateList, i) => {
             return (
@@ -187,11 +147,14 @@ class Certification extends React.Component {
                 modalTitle = 'Edit Certification';
                 modalType = 'edit';
             }
-            modalContent = CertificationModalContent;
+            modalContent = <SyncValidationForm onSubmit={this.addCertification}/>;
+            
         }
+         // modalFooter = <RemoteSubmitButton/>
 
         return (
             <div>
+                
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification</h4>
                     <i className="SPIconLarge SPIconAdd"
@@ -218,7 +181,8 @@ class Certification extends React.Component {
                     isOpen={this.state.certificationModal}
                     toggle={this.toggleCertification.bind(this, modalType)}
                     ModalBody={modalContent}
-                    className="modal-lg asyncModal certificationModal"
+                    ModalFooter={modalFooter}
+                    className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
                     centered="centered"
                     onClick={this.state.modalSaveAction}
