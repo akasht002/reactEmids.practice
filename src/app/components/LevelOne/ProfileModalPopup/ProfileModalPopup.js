@@ -10,10 +10,6 @@ export default class ProfileModalPopup extends React.Component {
                 <ModalHeader toggle={this.props.toggle} className={"font-weight-light asyncModalHeader"}>{this.props.modalTitle}
                 </ModalHeader>
                 <ModalBody>{this.props.ModalBody} </ModalBody>
-                <ModalFooter className={this.props.headerFooter}>
-                {this.props.ModalFooter}
-                    {/* <Button className="" color="primary" onClick={this.props.onClick}>Save</Button> */}
-                </ModalFooter>
             </Modal>
         );
     }

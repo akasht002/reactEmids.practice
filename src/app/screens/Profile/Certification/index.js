@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { ProfileModalPopup, ModalPopup } from "../../../components";
 import { checkSpace, checkTrim } from "../../../utils/validations"
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
-import SyncValidationForm  from './certiticationForm'
+import SyncValidationForm from './certiticationForm'
 import RemoteSubmitButton from './certificationButton'
 
 class Certification extends React.Component {
@@ -21,7 +21,8 @@ class Certification extends React.Component {
             modalSaveAction: '',
             add: false,
             edit: false,
-            isValid: true
+            isValid: true,
+            data: []
         };
     };
 
@@ -31,10 +32,12 @@ class Certification extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            CertificationName: nextProps.certificationFieldDetails.certificationName,
-            CertificationAuthority: nextProps.certificationFieldDetails.authority,
-            CertificateLicenceNumber: nextProps.certificationFieldDetails.licenceNumber,
-            certificationId: nextProps.certificationFieldDetails.certificationId
+            data: {
+                CertificationName: nextProps.certificationFieldDetails.certificationName,
+                CertificationAuthority: nextProps.certificationFieldDetails.authority,
+                CertificateLicenceNumber: nextProps.certificationFieldDetails.licenceNumber,
+                certificationId: nextProps.certificationFieldDetails.certificationId
+            }
         })
     }
 
@@ -47,7 +50,7 @@ class Certification extends React.Component {
             certificationId: ''
         })
     }
-   
+
 
     toggleCertification(action, e) {
         this.setState({
@@ -64,24 +67,11 @@ class Certification extends React.Component {
     }
 
     addCertification = (data) => {
-        console.log(data)
-        // if (checkSpace(this.state.CertificationName) && checkSpace(this.state.CertificationAuthority)) {
-        //     const data = {
-        //         certificationName: this.state.CertificationName.trim(),
-        //         authority: this.state.CertificationAuthority.trim(),
-        //         licenceNumber: this.state.CertificateLicenceNumber.trim()
-        //     };
-        //     this.props.addCertification(data);
-        //     this.setState({ modalSaveAction: this.addCertification });
-        //     this.reset();
-        // } else {
-        //     this.setState({ isValid: false });
-        // }
         this.props.addCertification(data);
         this.setState({
             certificationModal: !this.state.certificationModal,
         })
-        
+
     }
 
     showModalOnDelete = (e) => {
@@ -120,9 +110,9 @@ class Certification extends React.Component {
         let modalTitle;
         let modalType = '';
         let modalFooter = '';
-        
 
-        
+
+
 
         const certificationList = this.props.certificationList && this.props.certificationList.map((certificateList, i) => {
             return (
@@ -147,14 +137,14 @@ class Certification extends React.Component {
                 modalTitle = 'Edit Certification';
                 modalType = 'edit';
             }
-            modalContent = <SyncValidationForm onSubmit={this.addCertification}/>;
-            
+            modalContent = <SyncValidationForm onSubmit={this.addCertification} data={this.state.data} />;
+
         }
-         // modalFooter = <RemoteSubmitButton/>
+        // modalFooter = <RemoteSubmitButton/>
 
         return (
             <div>
-                
+
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification</h4>
                     <i className="SPIconLarge SPIconAdd"
