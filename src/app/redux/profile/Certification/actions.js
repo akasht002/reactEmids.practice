@@ -50,8 +50,8 @@ export function addCertification(data) {
         let modal = {
             serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
-            authority: data.authority,
-            licenceNumber: data.licenceNumber,
+            authority: data.certificationAuthority,
+            licenceNumber: data.certificateLicenceNumber?data.certificateLicenceNumber:'',
             isActive: true
         };
         dispatch(startLoading());

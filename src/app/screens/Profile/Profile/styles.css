@@ -756,7 +756,8 @@ div.SPTabContentEdit{
 }
 
 .WorkHistoryModal .modal-content .modal-body, .educationModal .modal-content .modal-body, .CertificationModal .modal-content .modal-body, .LanguagesModal .modal-content .modal-body, .editSkillsModal .modal-content .modal-body {
-    padding: 20px 30px;
+    padding: 20px 30px !important;
+    height: auto;
 }
 
 .SPBlackoutItems{
