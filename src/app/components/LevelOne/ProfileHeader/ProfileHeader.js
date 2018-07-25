@@ -6,8 +6,10 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink, } from 'reactstrap';
+    NavLink,
+} from 'reactstrap';
 import { SearchInput } from "../../../components";
+import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 
 class ProfileHeader extends React.Component {
     constructor(props) {
@@ -16,28 +18,7 @@ class ProfileHeader extends React.Component {
         this.state = {
             isOpen: false,
             dBlock: "",
-            menus: [
-                {
-                    name: "contact",
-                    status: true
-                },
-                {
-                    name: "videoChat",
-                    status: true
-                },
-                {
-                    name: "messages",
-                    status: true
-                },
-                {
-                    name: "notification",
-                    status: true
-                }
-            ]
         };
-    }
-
-    componentDidMount(){
     }
 
     toggle() {
@@ -48,21 +29,22 @@ class ProfileHeader extends React.Component {
 
     render() {
 
-        const menuList = this.state.menus.map((menu) => {
+        const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
             let Separator = "";
-            if(menu.status) {
+            if (menu.status) {
                 let clsName = "navIcon icon" + menuName.charAt(0).toUpperCase() + menuName.slice(1);
-                if(menuName === "notification"){
+                if (menuName === "notification") {
                     Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem className={menuName+"Widget navIconWidget "+Separator}>
+                    <NavItem className={menuName + "Widget navIconWidget " + Separator}>
                         <NavLink className={clsName}
-                                 href={menu.link} />
+                            href={menu.link} />
                     </NavItem>
                 )
             }
+            return menuList;
         });
 
         return (

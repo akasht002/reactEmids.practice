@@ -29,9 +29,7 @@ class OnboardSuccess extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        continueToProfile: () => dispatch(continueToProfile()),
-        navigateToScreenMainStack: (url) => dispatch(url),
-        onLogout: () => dispatch()
+        continueToProfile: () => dispatch(continueToProfile())
     }
 };
 

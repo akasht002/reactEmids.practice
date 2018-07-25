@@ -13,3 +13,7 @@ export function checkDate(date) {
 export function checkSpace(text) {
     return (text).replace(/\s/g, "");
 }
+
+export function checkTrim(text) {
+    return (text).trim();
+}

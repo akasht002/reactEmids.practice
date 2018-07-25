@@ -7,10 +7,6 @@ import './styles.css';
 
 class Profile extends React.Component {
 
-    constructor(props) {
-        super(props);
-    };
-
     updateWindowDimensions() {
         this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
