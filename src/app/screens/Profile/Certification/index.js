@@ -127,6 +127,7 @@ class Certification extends React.Component {
                             CertificationName: e.target.value,
                         })}
                     />
+                    {!this.state.isValid && (!this.state.CertificationName ) && <span className="text-danger d-block ml-30 mt-4 mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && ' Certification'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -142,6 +143,7 @@ class Certification extends React.Component {
                             CertificationAuthority: e.target.value,
                         })}
                     />
+                    {!this.state.isValid && (!this.state.CertificationAuthority ) && <span className="text-danger d-block ml-30 mt-4 mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationAuthority === '' && ' Certification Authority'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -157,9 +159,6 @@ class Certification extends React.Component {
                             CertificateLicenceNumber: e.target.value,
                         })}
                     />
-                </div>
-                <div className="col-md-12 mb-2">
-                    {!this.state.isValid && (!this.state.CertificationName || !this.state.CertificationAuthority) && <span className="text-danger d-block ml-30 mt-4 mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && ' Certification'} {(this.state.CertificationAuthority === '' && this.state.CertificationName === '') ? '&' : ''} {this.state.CertificationAuthority === '' && 'Certification Authority'}</span>}
                 </div>
             </div>
         </form>;
