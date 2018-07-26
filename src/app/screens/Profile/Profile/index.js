@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
 import Certification from "../Certification/index";
+import Education from "../Education/index";
+
 import './styles.css';
 
 class Profile extends React.Component {
@@ -28,6 +30,9 @@ class Profile extends React.Component {
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Certification />
+                                </div>
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                    <Education />
                                 </div>
                             </div>
                         </div>
