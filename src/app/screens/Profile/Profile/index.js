@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
 import Certification from "../Certification/index";
 import Education from "../Education/index";
+import WorkHistory from "../WorkHistory";
 
 import './styles.css';
 
@@ -33,6 +34,9 @@ class Profile extends React.Component {
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Education />
+                                </div>
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                    <WorkHistory />
                                 </div>
                             </div>
                         </div>
