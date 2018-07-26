@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
+import Languages from "../Languages/index";
 import Certification from "../Certification/index";
 import Education from "../Education/index";
 
@@ -33,6 +34,9 @@ class Profile extends React.Component {
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Education />
+                                </div>
+                                <div className="col-md-12 card CardWidget SPLanguages">
+                                    <Languages />
                                 </div>
                             </div>
                         </div>
