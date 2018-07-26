@@ -3,7 +3,8 @@ import {
 } from './actions'
 
 const defaultState = {
-    workhistoryList:[]
+    workhistoryList:[],
+    addeworkhistorySuccess: false
 };
 
 const WorkHistoryState = (state = defaultState, action) => {
@@ -12,6 +13,12 @@ const WorkHistoryState = (state = defaultState, action) => {
             return {
                 ...state,
                 workhistoryList: action.data
+            };
+
+        case WorkHistory.addeworkhistorySuccess:
+            return {
+                ...state,
+                addeworkhistorySuccess: action.isSuccess
             };
         default:
         return state;

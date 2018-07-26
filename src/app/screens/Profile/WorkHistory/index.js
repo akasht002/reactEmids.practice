@@ -18,9 +18,26 @@ class WorkHistory extends Component {
         this.props.getWorkHistory(this.props.workHistoryId);
     }
 
+    toggleWorkHistory(action, e){
+        this.setState({
+            EducationModal: !this.state.WorkHistoryModal,
+            modalSaveAction: this.addEducation,
+            add: true,
+            edit: false,
+            isValid: true,
+            school:'',
+            degree:'',
+            fieldOfStudy:'',
+            startYear:'',
+            endYear:''
+        })
+    }
+
     render(){
-        return(
-            <form className="form my-2 my-lg-0">
+           let modalContent;
+        let modalTitle;
+        let modalType = '';
+        const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
                 <div className="col-md-12 mb-2">
                     <Input
@@ -77,6 +94,12 @@ class WorkHistory extends Component {
                 </div>
             </div>
         </form>
+        return(
+            <div className="SPCardTitle d-flex">
+            <h4 className="primaryColor">Work History</h4>
+            <i className="SPIconLarge SPIconAdd"
+                onClick={this.toggleWorkHistory.bind(this, 'add')} />
+        </div>
         )
     }
 
