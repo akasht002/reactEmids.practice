@@ -38,7 +38,7 @@
     }
 
     .navbar-brand{
-        color: #3c1053;
+        color: #7a329f;
     }
 
     .navbar-collapse{
@@ -110,4 +110,20 @@
     .btn{
         padding: 5px 22px !important;
     }
+}
+
+@media (max-height: 768px) {
+    .sideNavigation li.nav-item{
+       margin: 10px 0 !important;
+    }
+
+    .sideNavigation li.nav-item p{
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    .sideNavigation li.nav-item h5{
+        font-size: 18px;
+    }
+
 }
