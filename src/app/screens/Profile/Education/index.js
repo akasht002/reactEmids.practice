@@ -89,7 +89,7 @@ class Education extends React.Component {
     }
 
     updateEducation = () => {
-        if (this.state.school && this.state.degree && this.state.fieldOfStudy && this.state.startYear && this.state.endYear) {
+        if (this.state) {
             const data = {
                 school: this.state.school,
                 degree: this.state.degree,
@@ -150,7 +150,7 @@ class Education extends React.Component {
                         name="School"
                         label="School/University"
                         autoComplete="off"
-                        required="required"
+                        
                         type="text"
                         placeholder="e.g. San Francisco University"
                         className={"form-control"}
@@ -167,7 +167,7 @@ class Education extends React.Component {
                         name="Degree"
                         label="Degree"
                         autoComplete="off"
-                        required="required"
+                        
                         type="text"
                         placeholder="e.g. Master of Science (M.S.)"
                         className={"form-control"}
@@ -184,7 +184,6 @@ class Education extends React.Component {
                         name="FieldOfStudy"
                         label="Field of Study"
                         autoComplete="off"
-                        required="required"
                         type="text"
                         placeholder="e.g. Speech Language Pathology / Pathologist"
                         className={"form-control"}
