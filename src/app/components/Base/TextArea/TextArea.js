@@ -10,6 +10,7 @@ class TextArea extends React.Component {
                 placeholder={this.props.placeholder}
                 className={this.props.className}
                 rows={this.props.rows}
+                maxLength={this.props.maxlength}
             />
         </div>
         );

@@ -23,7 +23,8 @@ class WorkHistory extends React.Component {
             add: false,
             edit: false,
             isValid: true,
-            disabledSaveBtn: true
+            disabledSaveBtn: true,
+            isChecked:true
         }
     }
 
@@ -116,6 +117,12 @@ class WorkHistory extends React.Component {
         this.setState({ showModalOnDelete: !this.state.showModalOnDelete });
     }
 
+    toggleCheckbox() {
+        this.setState({
+            isChecked: !this.state.isChecked,
+        });
+    }
+
     render() {
         let modalContent;
         let modalTitle;
@@ -131,6 +138,7 @@ class WorkHistory extends React.Component {
                         type="text"
                         placeholder="e.g. Car Provider"
                         className="form-control"
+                        maxlength={"100"}
                     />
                 </div>
                 <div className="col-md-12 mb-2">
@@ -141,6 +149,7 @@ class WorkHistory extends React.Component {
                         type="text"
                         placeholder="e.g. Home Supportive SVC"
                         className="form-control"
+                        maxlength={"100"}
                     />
                 </div>
                 <div className="col-md-12 mb-2">
@@ -151,6 +160,7 @@ class WorkHistory extends React.Component {
                         type="text"
                         placeholder="e.g. San Francisco Bay Area"
                         className="form-control"
+                        maxlength={"100"}
                     />
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
@@ -158,10 +168,16 @@ class WorkHistory extends React.Component {
                         <label>From Date</label>
                     </div>
                 </div>
+                <div className="col-md-6 MonthlyPicker mb-2">
+                <div className="form-group">
+                    <label>To Date</label>
+                </div>
+            </div>
                 <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
+                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"
+                            onClick={this.toggleCheckbox.bind(this)}/>
                             I am currently working here
                             <span className="CheckboxIcon"/>
                         </label>
@@ -174,12 +190,13 @@ class WorkHistory extends React.Component {
                         className='form-control'
                         rows='5'
                         value='Description'
+                        maxlength={"100"}
                     />
                 </div>
             </div>
         </form>
 
-
+        
         const workhistoryList = this.props.workhistoryList && this.props.workhistoryList.map((WorkHistoryList, i) => {
             return (
                 <li className="SPWorkHistoryItems" key={WorkHistoryList.company}>
@@ -203,10 +220,10 @@ class WorkHistory extends React.Component {
 
         if (this.state.WorkHistoryModal) {
             if (this.state.add) {
-                modalTitle = 'Add Education';
+                modalTitle = 'Add Work History';
                 modalType = 'add';
             } else if (this.state.edit) {
-                modalTitle = 'Edit Education';
+                modalTitle = 'Edit Work History';
                 modalType = 'edit';
             }
             modalContent = WorkHistoryModalContent;
