@@ -46,7 +46,7 @@ export const formDirty = () => {
 export function sendVerificationLink(emailData) {
     return (dispatch, getState) => {
         dispatch(startLoading());
-        axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
+         axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
             if (resp && resp.data) {
                 if (resp.data.isExist === VALID) {
                     dispatch(onSetUserIdCompletion(resp.data));
