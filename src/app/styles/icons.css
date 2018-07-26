@@ -22,3 +22,345 @@
     margin-top: 4px;
     background-position: 0 0;
 }
+
+.icon-tick{
+    background-position: 7px -231px;
+    height: 16px;
+    width: 16px;
+}
+
+.navIconWidget{
+    padding: 10px 5px;
+}
+
+.NavIconSeparator{
+    margin-left: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.NavIconSeparator:before{
+    content: '';
+    position: absolute;
+    height: 60%;
+    width: 100%;
+    top: 20%;
+    left: 0;
+    border-left: 1px solid #d7d7d7;
+}
+
+.navIcon{
+    position: relative;
+    height: 24px;
+    width: 24px;
+    margin: 5px;
+}
+
+.navIcon:before{
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-size: 21px auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.iconContact:before{
+    background-image: url("../assets/images/contact.png");
+}
+
+.iconVideoChat:before{
+    background-image: url("../assets/images/videoChat.png");
+}
+
+.iconMessages:before{
+    background-image: url("../assets/images/messages.png");
+}
+
+.iconNotification:before {
+    background-image: url("../assets/images/notification.png");
+}
+
+.searchInputIcon{
+}
+
+.searchInputIcon::before{
+    content: "";
+    height: 35px;
+    display: block;
+    width: 45px;
+    background-image: url("../assets/images/search.png");
+    background-position: center;
+    background-size: 20px;
+    background-repeat: no-repeat;
+}
+
+.Icon{
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+}
+
+.icon-back:before{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 18px;
+    left: 0;
+    background-image: url("../assets/images/BackWhite.svg");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.iconFilledStar{
+    display: inline-block;
+    position: relative;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+
+.iconFilledStar:before{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 15px;
+    height: 16px;
+    background-image: url("../assets/images/RatingFilledStar.svg");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.SPIconMedium{
+    display: inline-block;
+    position: relative;
+    width: 18px;
+    height: 18px;
+}
+
+.SPIconMedium:before{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 18px;
+    height: 18px;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.SPIconEdit{
+}
+
+.SPIconEdit:before{
+    background-image: url("../assets/images/edit.svg");
+}
+
+.SPIconDelete:before{
+    background-image: url("../assets/images/Delete.svg");
+}
+
+.SPIconLarge, .SPIconXLarge{
+    display: inline-block;
+    position: relative;
+    top: 4px;
+}
+
+.SPIconLarge:hover, .SPIconMedium:hover, .SPIconXLarge:hover{
+    cursor: pointer;
+}
+
+.SPIconLarge:before, .SPIconXLarge:before{
+    content: '';
+    position: absolute;
+    display: block;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.SPIconLarge{
+    width: 24px;
+    height: 24px;
+}
+
+.SPIconXLarge{
+    width: 32px;
+    height: 32px;
+}
+
+.SPIconLarge:before{
+    width: 24px;
+    height: 24px;
+}
+
+.SPIconXLarge:before{
+    width: 32px;
+    height: 32px;
+}
+
+.SPIconAdd{
+}
+
+.SPIconAdd:before{
+    background-image: url("../assets/images/Add_Purple.svg");
+}
+
+.SPIconAddGrayScale:before{
+    background-image: url("../assets/images/AddGrayscale.svg");
+}
+
+.SPContactMessage:before{
+    background-image: url("../assets/images/Message_Purple.svg");
+}
+
+.SPContactVideoCall:before{
+    background-image: url("../assets/images/TeleHealth_Purple.svg");
+}
+
+.SPContactFavourite:before{
+    background-image: url("../assets/images/Like_Purple.svg");
+}
+
+.SPIconServices{
+    display: table;
+    position: relative;
+    height: 135px;
+    width: 14.75%;
+    text-align: center;
+    list-style: none;
+    padding: 80px 10px 0;
+    border-radius: 5px;
+    margin: 0 10px 15px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+}
+
+.SPIconServices:after{
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    background-position: top;
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+
+.SPIconServices span{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.SPIconServices1:after{
+    background-image: url("../assets/images/Bathing_Purple.svg");
+}
+
+.SPIconServices2:after{
+    background-image: url("../assets/images/Meal_Prep_Purple.svg");
+}
+
+.SPIconServices3:after{
+    background-image: url("../assets/images/Medication_Purple.svg");
+}
+
+.SPIconServices4:after{
+    background-image: url("../assets/images/Bathing_Purple.svg");
+}
+
+.SPIconServices5:after{
+    background-image: url("../assets/images/Meal_Prep_Purple.svg");
+}
+
+.SPIconServices6:after{
+    background-image: url("../assets/images/Medication_Purple.svg");
+}
+
+.SPIconSlideArrow{
+    display: block;
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    top: 15px;
+}
+
+.SPIconSlideArrow.right{
+    right: 70px;
+}
+
+.SPIconSlideArrow.left{
+    right: 100px;
+}
+
+.SPIconSlideArrow:before{
+    content: '';
+    position: absolute;
+    display: block;
+    top: 4px;
+    left: 16px;
+    width: 100%;
+    height: 100%;
+    background-image: url("../assets/images/Caret_Dropdown_Purple.svg");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.SPIconSlideArrow.right:before{
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.SPIconSlideArrow.left:before{
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.CountryIcon{
+    position: relative;
+    padding: 5px 20px 5px 50px;
+}
+
+.CountryIcon:before{
+    content: '';
+    position: absolute;
+    display: block;
+    top: 4px;
+    left: 16px;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.english:before{
+    background-image: url("../assets/images/Flags/English.svg");
+}
+
+.spanish:before{
+    background-image: url("../assets/images/Flags/Spain.svg");
+}
+
+.french:before{
+    background-image: url("../assets/images/Flags/France.svg");
+}
+
+.polish:before{
+    background-image: url("../assets/images/Flags/Poland.svg");
+}

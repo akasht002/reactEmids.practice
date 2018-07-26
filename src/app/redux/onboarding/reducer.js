@@ -6,5 +6,5 @@ import setPasswordState from './SetPassword/reducer';
 export const onboardingState = combineReducers({
     verifyUserIDState,
     verifyContactState,
-    setPasswordState
+    setPasswordState,
 });
