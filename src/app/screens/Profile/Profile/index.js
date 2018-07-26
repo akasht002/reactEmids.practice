@@ -22,7 +22,7 @@ class Profile extends React.Component {
                             <div className="row d-flex justify-content-center m-auto">
                                 <div className="col-md-12">
                                     <h4 className="my-3 text-white SPTitleText">
-                                        <Link to=""><i className="Icon icon-back" /></Link>
+                                        <a><i className="Icon icon-back" /></a>
                                         Profile
                                     </h4>
                                 </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
-import { checkSpace, checkTrim } from "../../../utils/validations"
+import { checkSpace } from "../../../utils/validations"
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 
 class Certification extends React.Component {
@@ -19,7 +19,8 @@ class Certification extends React.Component {
             modalSaveAction: '',
             add: false,
             edit: false,
-            isValid: true
+            isValid: true,
+            disabledSaveBtn: true
         };
     };
 
@@ -125,9 +126,10 @@ class Certification extends React.Component {
                         maxlength={'500'}
                         textChange={(e) => this.setState({
                             CertificationName: e.target.value,
+                            disabledSaveBtn: false
                         })}
                     />
-                    {!this.state.isValid && (!this.state.CertificationName ) && <span className="text-danger d-block ml-30 mt-4 mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && ' Certification'}</span>}
+                    {!this.state.isValid && (!this.state.CertificationName ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && ' Certification'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -141,9 +143,10 @@ class Certification extends React.Component {
                         maxlength={'500'}
                         textChange={(e) => this.setState({
                             CertificationAuthority: e.target.value,
+                            disabledSaveBtn: false
                         })}
                     />
-                    {!this.state.isValid && (!this.state.CertificationAuthority ) && <span className="text-danger d-block ml-30 mt-4 mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationAuthority === '' && ' Certification Authority'}</span>}
+                    {!this.state.isValid && (!this.state.CertificationAuthority ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationAuthority === '' && ' Certification Authority'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -217,8 +220,9 @@ class Certification extends React.Component {
                     isOpen={this.state.certificationModal}
                     toggle={this.toggleCertification.bind(this, modalType)}
                     ModalBody={modalContent}
-                    className="modal-lg asyncModal certificationModal"
+                    className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
+                    disabled={this.state.disabledSaveBtn}
                     centered="centered"
                     onClick={this.state.modalSaveAction}
                 />
