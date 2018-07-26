@@ -1,5 +1,5 @@
 body{
-    background-color: #f8f8f8 !important;
+    background-color: #f8f8f8;
 }
 
 .navbarProfile{
@@ -20,7 +20,8 @@ body{
     position: absolute;
     height: 300px;
     top: 0;
-    background-image: linear-gradient(to top, #7a329f, #551178);
+    /*background-image: linear-gradient(to top, #7a329f, #551178);*/
+    background-image: linear-gradient(to top, #67307f, #3b1a53);
     z-index: 1;
 }
 
@@ -168,7 +169,7 @@ i.SPIconEditPersonalDetails{
     display: table;
     width: fit-content;
     margin-left: auto;
-    border: 2px solid #7a329f;;
+    border: 2px solid #7a329f;
     padding: 4px 12px;
     line-height: 28px;
     text-align: center;
