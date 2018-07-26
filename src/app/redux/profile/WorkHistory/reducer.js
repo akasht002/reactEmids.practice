@@ -4,7 +4,8 @@ import {
 
 const defaultState = {
     workhistoryList:[],
-    addeworkhistorySuccess: false
+    addeworkhistorySuccess: false,
+    workhistoyFieldDetails: ''
 };
 
 const WorkHistoryState = (state = defaultState, action) => {
@@ -20,6 +21,13 @@ const WorkHistoryState = (state = defaultState, action) => {
                 ...state,
                 addeworkhistorySuccess: action.isSuccess
             };
+
+        case WorkHistory.workhistoyFieldDetails:
+            return {
+                ...state,
+                workhistoyFieldDetails: action.data
+            };
+
         default:
         return state;
     }
