@@ -1,18 +1,25 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ScreenCover} from '../../../components'
+import { ScreenCover } from '../../../components'
+import { continueToProfile } from '../../../redux/onboarding/OnboardSuccess/actions';
 
 class OnboardSuccess extends React.Component {
-    render(){
+
+    continueToProfile = () => {
+        this.props.continueToProfile();
+    }
+
+    render() {
         const menus = ["login"];
         return (
             <ScreenCover menus={menus}>
                 <div className="container mainContent">
                     <div className="row d-flex justify-content-center">
-                        <div className="col-md-8 d-flex justify-content-center">
+                        <div className="col-md-12 d-flex justify-content-center">
                             <h4 className="font-weight-normal mb-4 text-success">You are successfully onboarded!!</h4>
                         </div>
+                        <button type="button" class="btn btn-success" onClick={this.continueToProfile}>CONTINUE</button>
                     </div>
                 </div>
             </ScreenCover>
@@ -21,16 +28,15 @@ class OnboardSuccess extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return{
-      navigateToScreenMainStack: (url) => dispatch(url),
-      onLogout:()=>dispatch()
-    }
-  };
-  
-  function mapStateToProps(state) {
     return {
-  
+        continueToProfile: () => dispatch(continueToProfile())
+    }
+};
+
+function mapStateToProps(state) {
+    return {
+
     };
-  };
-  
-  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OnboardSuccess));
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OnboardSuccess));

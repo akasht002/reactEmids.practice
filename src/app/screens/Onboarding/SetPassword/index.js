@@ -128,7 +128,7 @@ class SetPassword extends React.Component {
                                             By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
                                         </label>
                                     </div>
-                                    {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match..</span>}
+                                    {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match.</span>}
                                     {!this.state.passwordCombination && <div className="MsgWithIcon MsgWrongIcon">
                                         <span className="text-danger d-block mt-4 mb-2">Password should contain a combination of upper case, lower case, special characters and number, and should be at least 8 characters.</span>
                                     </div>}

@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600,700');
+/* @import url('https://fonts.googleapis.com/css?family=Muli:300,400,600,700'); */
 
 html, body{
-    font-family: 'Muli', sans-serif !important;
+    /* font-family: 'Muli', sans-serif !important; */
     padding: 0;
     margin: 0;
 }
@@ -59,8 +59,34 @@ html, body{
     width: 5%;
 }
 
+/*----------------------------------------------------------------------------------------- Font Size Controls */
+
+.font-weight-semi-bold{
+    font-weight: 600;
+}
+
+.font-size-sm{
+    font-size: 14px !important;
+}
+
+/*----------------------------------------------------------------------------------------- Custom colors */
+
 .primaryColor{
-    color: #3c1053 !important;
+    color: #7a329f !important;
+}
+
+.bgWhite{
+    background-color: #ffffff;
+}
+
+/*----------------------------------------------------------------------------------------- Card Content */
+
+.card{
+    border: none !important;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.08);
 }
 
 .inputSuccess{
@@ -94,6 +120,10 @@ a.btn.nav-link{
     color: #ffffff !important;
 }
 
+a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.btn:not([href]):not([tabindex]):hover{
+    color: #ffffff;
+}
+
 .btn{
     display: block;
     padding: 6px 30px !important;
@@ -111,17 +141,49 @@ a.btn.nav-link{
     color: #3c1053 !important;
 }
 
-.btn-primary:hover, .btn-outline-primary:hover{
+.close:focus, .close:hover{
+    outline: 0;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover, .btn-outline-primary:active{
     color: #ffffff !important;
     background-color: #633F75 !important;
 }
 
-input.form-control:focus, .btn-primary:focus, .btn-outline-primary:focus{
+.btn-primary.disabled, .btn-primary:disabled{
+    opacity: .5 !important;
+    background-color: #633F75 !important;
+}
+
+textarea.form-control:focus, select.form-control:focus, input.form-control:focus, .btn-primary:focus, .btn-outline-primary:focus, .btn-outline-primary:active{
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     border-color: #3c1053 !important;
 }
+
+input.form-control, select.form-control{
+    padding: 5px 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #acacac;
+}
+
+input.form-control::placeholder {
+    color: #b9b6b6;
+}
+
+label{
+    color: #222222;
+}
+
+.hrLine{
+    width: 100%;
+    border: .5px solid #e1e1e1;
+    margin: 22px 0;
+}
+
+/*----------------------------------------------------------------------------------------- Box Shadow Top and Bottom */
 
 .boxShadowTop{
     box-shadow: 0 0 10px 0 rgba(0,0,0,.08);
@@ -275,7 +337,12 @@ label{
     -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
-.selectType label:before{
+.readMore:hover{
+    color: #a7a6cf !important;
+    cursor: pointer;
+}
+
+.trueAvailable .SPAvailTitle:before, .selectType label:before{
     content: '';
     position: absolute;
     top: 10px;
@@ -333,6 +400,10 @@ label{
 }
 
 .selectType input:checked + label{
+    background-color: #f1e7f7;
+}
+
+.selectType label:hover{
     background-color: #f1e7f7;
 }
 
@@ -464,6 +535,11 @@ label{
     .ContentCheckbox:last-child{
         margin-bottom: 0;
     }
+}
+
+button.navbar-toggler{
+    border: 0;
+    padding: 0;
 }
 
 /************ CONTROLS FOR SCROLL BAR ************/
