@@ -10,7 +10,7 @@ const defaultState = {
 
 const WorkHistoryState = (state = defaultState, action) => {
     switch (action.type) {
-        case WorkHistory.getEducationSuccess:
+        case WorkHistory.getWorkhistorySuccess:
             return {
                 ...state,
                 workhistoryList: action.data

@@ -5,7 +5,7 @@ import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../componen
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
-class WorkHistory extends Component {
+class WorkHistory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -111,8 +111,8 @@ class WorkHistory extends Component {
         }
     }
 
-    deleteEducation = () => {
-        this.props.deleteEducation(this.state.workHistoryId);
+    deleteWorkHistory = () => {
+        this.props.deleteWorkHistory(this.state.workHistoryId);
         this.setState({ showModalOnDelete: !this.state.showModalOnDelete });
     }
 
@@ -182,17 +182,20 @@ class WorkHistory extends Component {
 
         const workhistoryList = this.props.workhistoryList && this.props.workhistoryList.map((WorkHistoryList, i) => {
             return (
-                <li className='SPEducationItems' key={WorkHistoryList.educationId}>
-                    <div className='SPCertificateContent'>
-                    <div className={'width100 d-flex'}>
-                    <h5 className={'SPCertificateHeader'}>{WorkHistoryList.school}</h5>
-                    <span className={'ml-auto SPWorkYear'}>{WorkHistoryList.startYear} - {WorkHistoryList.endYear}</span>
+                <li className="SPWorkHistoryItems" key={WorkHistoryList.company}>
+                    <div className="SPCertificateContent">
+                    <div className="width100 d-flex">
+                        <h5 className="SPCertificateHeader">{WorkHistoryList.description}
+                            <span>{WorkHistoryList.description}</span>
+                            <span className="ml-auto SPWorkYear"></span>
+                        </h5>
+                    <span className={'ml-auto SPWorkYear'}>{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
                     </div>
-                    <span className={'SPEducationDesc'}>{WorkHistoryList.degree} {WorkHistoryList.fieldOfStudy}</span>
+                    <span className={'SPEducationDesc'}>{WorkHistoryList.degree} {WorkHistoryList.description}</span>
                     </div>
-                    <i className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.educationId}
+                    <i className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.showModalOnDelete(e)} />
-                    <i className="SPIconMedium SPIconEdit" id={WorkHistoryList.educationId}
+                    <i className="SPIconMedium SPIconEdit" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.editWorkHistory(e)} />
                 </li>
             )
@@ -211,15 +214,17 @@ class WorkHistory extends Component {
 
 
         return(
+            <div className="col-md-12 card CardWidget SPWorkHistory">
             <div className="SPCardTitle d-flex">
-            <h4 className="primaryColor">WorkHistory</h4>
-            <i className="SPIconLarge SPIconAdd"
+                <h4 className="primaryColor">WorkHistory</h4>
+                <i className="SPIconLarge SPIconAdd"
                 onClick={this.toggleWorkHistory.bind(this, 'add')} />
+            </div>
 
             <div className="SPCertificateContainer width100">
                     
-                    {this.props.workhistoryList.length > 0 ? <ul className="SPEducationList"> {workhistoryList} </ul> :
-                    <ul className="SPEducationList">
+                    {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
+                    <ul className="SPCertificateList">
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
@@ -249,7 +254,7 @@ class WorkHistory extends Component {
                 className="modal-sm"
                 headerFooter="d-none"
                 centered={true}
-                onConfirm={() => this.deleteEducation()}
+                onConfirm={() => this.deleteWorkHistory()}
                 onCancel={() => this.setState({
                     showModalOnDelete: !this.state.showModalOnDelete,
                 })}
@@ -274,7 +279,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         workhistoryList: state.profileState.WorkHistoryState.workhistoryList,
-        addeworkhistorySuccess: state.profileState.EducationState.addeworkhistorySuccess,
+        addeworkhistorySuccess: state.profileState.WorkHistoryState.addeworkhistorySuccess,
         workhistoyFieldDetails: state.profileState.WorkHistoryState.workhistoyFieldDetails,
         serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId
     }
