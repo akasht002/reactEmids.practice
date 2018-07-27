@@ -11,6 +11,7 @@ class TextArea extends React.Component {
                 className={this.props.className}
                 rows={this.props.rows}
                 maxLength={this.props.maxlength}
+                onChange={this.props.textChange}
             />
         </div>
         );

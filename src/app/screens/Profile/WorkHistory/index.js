@@ -34,13 +34,16 @@ class WorkHistory extends React.Component {
 
     componentWillReceiveProps(nextProps){
         this.setState({
+            workHistoryId:nextProps.workhistoyFieldDetails.workHistoryId,
             designation: nextProps.workhistoyFieldDetails.designation,
             company: nextProps.workhistoyFieldDetails.company,
             location: nextProps.workhistoyFieldDetails.location,
-            fromDate: nextProps.workhistoyFieldDetails.fromDate,
-            toDate: nextProps.workhistoyFieldDetails.toDate,
-            description:nextProps.workhistoyFieldDetails.description,
-            workHistoryId:nextProps.workhistoyFieldDetails.workHistoryId
+            // fromDate: nextProps.workhistoyFieldDetails.fromDate,
+            // toDate: nextProps.workhistoyFieldDetails.toDate,
+            fromDate: "2018-07-26",
+            toDate: "2018-07-26",
+            description:nextProps.workhistoyFieldDetails.description
+            
         })
     }
 
@@ -52,7 +55,6 @@ class WorkHistory extends React.Component {
             edit: false,
             isValid: true,
             designation:'',
-            degree:'',
             location:'',
             company:'',
             fromDate:'',
@@ -61,25 +63,27 @@ class WorkHistory extends React.Component {
         })
     }
     addWorkhistory = () => {
-        if (!this.state) {
+        if (this) {
             const data = {
-                designation: this.state.designation,
-                degree: this.state.degree,
-                location: this.state.location,
+                workHistoryId:this.state.workHistoryId,
                 company:this.state.company,
-                fromDate:this.state.fromDate,
-                toDate:this.state.toDate,
+                designation: this.state.designation,
+                location: this.state.location,
+                //fromDate:this.state.fromDate,
+                //toDate:this.state.toDate,
+                fromDate:"2018-07-26",
+                toDate:"2018-07-26",
+                isWorking:false,
                 description:this.state.description,
-                workHistoryId:this.state.workHistoryId
+                isActive:true
             };
             this.props.getWorkHistory(data);
             this.setState({ 
                 modalSaveAction: this.addEducation, 
-                WorkHistoryModal: !this.state.WorkHistoryModal, 
+                WorkHistoryModal: !this.state.WorkHistoryModal,
+                company: '',
                 designation: '', 
-                degree: '', 
                 location:'',
-                company: '',  
                 fromDate:'',
                 toDate:'',
                 description:''
@@ -100,15 +104,16 @@ class WorkHistory extends React.Component {
     updateWorkHistory = () => {
         if (this.state) {
             const data = {
-                school: this.state.school,
-                degree: this.state.degree,
-                fieldOfStudy: this.state.fieldOfStudy,
-                startYear: this.state.startYear,
-                endYear: this.state.endYear,
+                designation: this.state.designation,
+                company: this.state.company,
+                location: this.state.location,
+                fromDate: this.state.fromDate,
+                toDate: this.state.toDate,
+                description:this.state.description,
                 workHistoryId: this.state.workHistoryId
             };
-            this.props.updateEducation(data);
-            this.setState({ WorkHistoryModal: !this.state.WorkHistoryModal, school: '', degree: '', fieldOfStudy: '',startYear:'',endYear:''});
+            this.props.updateWorkHistory(data);
+            this.setState({ WorkHistoryModal: !this.state.WorkHistoryModal, designation: '', company: '', location: '',fromDate:'',toDate:'',description:''});
         }
     }
 
@@ -139,6 +144,10 @@ class WorkHistory extends React.Component {
                         placeholder="e.g. Car Provider"
                         className="form-control"
                         maxlength={"100"}
+                        textChange={(e) => this.setState({
+                            designation: e.target.value,
+                            disabledSaveBtn:false
+                        })}
                     />
                 </div>
                 <div className="col-md-12 mb-2">
@@ -150,6 +159,10 @@ class WorkHistory extends React.Component {
                         placeholder="e.g. Home Supportive SVC"
                         className="form-control"
                         maxlength={"100"}
+                        textChange={(e) => this.setState({
+                            company: e.target.value,
+                            disabledSaveBtn:false
+                        })}
                     />
                 </div>
                 <div className="col-md-12 mb-2">
@@ -161,6 +174,10 @@ class WorkHistory extends React.Component {
                         placeholder="e.g. San Francisco Bay Area"
                         className="form-control"
                         maxlength={"100"}
+                        textChange={(e) => this.setState({
+                            location: e.target.value,
+                            disabledSaveBtn:false
+                        })}
                     />
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
@@ -191,6 +208,10 @@ class WorkHistory extends React.Component {
                         rows='5'
                         value='Description'
                         maxlength={"100"}
+                        textChange={(e) => this.setState({
+                            description: e.target.value,
+                            disabledSaveBtn:false
+                        })}
                     />
                 </div>
             </div>
@@ -208,7 +229,7 @@ class WorkHistory extends React.Component {
                         </h5>
                     <span className={'ml-auto SPWorkYear'}>{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
                     </div>
-                    <span className={'SPEducationDesc'}>{WorkHistoryList.degree} {WorkHistoryList.description}</span>
+                    <span className={'SPEducationDesc'}>{WorkHistoryList.description} {WorkHistoryList.description}</span>
                     </div>
                     <i className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.showModalOnDelete(e)} />

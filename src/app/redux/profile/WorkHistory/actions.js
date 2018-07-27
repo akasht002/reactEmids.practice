@@ -84,8 +84,16 @@ export function editWorkHistory(data) {
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let workHistoryId =data;
         let modal = {
-            ServiceProviderId: serviceProviderId,
-            designation: data
+            serviceProviderId: serviceProviderId,
+            workHistoryId: data,
+            designation: data.designation,
+            company: data.company,
+            location:data.location,
+            fromDate: "2018-07-26",
+            toDate:"2018-07-26",
+            isWorking:true,
+            description:data.description,
+            isActive:true
 
         };
 
