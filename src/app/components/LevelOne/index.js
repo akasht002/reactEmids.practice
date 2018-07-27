@@ -9,6 +9,7 @@ import {ModalUserAgreement} from './ModalUserAgreement';
 import {ProfileModalPopup} from './ProfileModalPopup';
 import PanelCard from './PanelCard';
 import {ScreenCover} from './ScreenCover';
+import {SkillsMultiSelect} from './SkillsMultiSelect';
 
 export {
     Calendar, 
@@ -21,5 +22,6 @@ export {
     PanelCard,
     ScreenCover,
     ModalUserAgreement,
-    ProfileModalPopup
+    ProfileModalPopup,
+    SkillsMultiSelect
 };
