@@ -349,27 +349,6 @@
     background-repeat: no-repeat;
 }
 
-/* .english:before{
-    background-image: url("../assets/images/Flags/flags/English.svg");
-}
-
-.spanish:before{
-    background-image: url("../assets/images/Flags/flags/Spain.svg");
-}
-
-.french:before{
-    background-image: url("../assets/images/Flags/flags/France.svg");
-}
-
-.polish:before{
-    background-image: url("../assets/images/Flags/flags/Poland.svg");
-}
-
-.fd{
-    background-image: url("../assets/images/Flags/flags/Arabic.svg");
-} */
-
-
 .Arabic:before{
     background-image: url("../assets/images/Flags/flags/Arabic.svg");
 }

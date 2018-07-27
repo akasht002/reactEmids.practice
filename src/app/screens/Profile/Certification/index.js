@@ -129,7 +129,7 @@ class Certification extends React.Component {
                             disabledSaveBtn: false
                         })}
                     />
-                    {!this.state.isValid && (!this.state.CertificationName ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && ' Certification'}</span>}
+                    {!this.state.isValid && (!this.state.CertificationName) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && ' Certification'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -146,7 +146,7 @@ class Certification extends React.Component {
                             disabledSaveBtn: false
                         })}
                     />
-                    {!this.state.isValid && (!this.state.CertificationAuthority ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationAuthority === '' && ' Certification Authority'}</span>}
+                    {!this.state.isValid && (!this.state.CertificationAuthority) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationAuthority === '' && ' Certification Authority'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -209,7 +209,7 @@ class Certification extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleCertification.bind(this, 'add')} /> to add Certification</span>
+                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" /> to add Certification</span>
                                 </div>
                             </div>
                         }
