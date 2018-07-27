@@ -27,7 +27,7 @@ class WorkHistory extends React.Component {
             edit: false,
             isValid: true,
             disabledSaveBtn: true,
-            isChecked:true
+            //isChecked:true
         }
     }
 
@@ -42,7 +42,8 @@ class WorkHistory extends React.Component {
             location: nextProps.workhistoyFieldDetails.location,
             fromDate: nextProps.workhistoyFieldDetails.fromDate,
             toDate: nextProps.workhistoyFieldDetails.toDate,
-            description:nextProps.workhistoyFieldDetails.description
+            description:nextProps.workhistoyFieldDetails.description,
+            isWorking:nextProps.workhistoyFieldDetails.isWorking
             
         })
     }
@@ -80,11 +81,8 @@ class WorkHistory extends React.Component {
                 location: this.state.location,
                 fromDate:this.state.fromDate,
                 toDate:this.state.toDate,
-                //fromDate:"2018-07-26",
-                //toDate:"2018-07-26",
-                isWorking:false,
-                description:this.state.description,
-                isActive:true
+                isWorking:this.state.isWorking,
+                description:this.state.description
             };
             this.props.addWorkHistory(data);
             this.setState({ 
@@ -133,11 +131,11 @@ class WorkHistory extends React.Component {
         this.setState({ showModalOnDelete: !this.state.showModalOnDelete });
     }
 
-    toggleCheckbox() {
-        this.setState({
-            isChecked: !this.state.isChecked,
-        });
-    }
+    // toggleCheckbox() {
+    //     this.setState({
+    //         isChecked: !this.state.isChecked,
+    //     });
+    // }
 
     dateChanged = (date) => {
         const formattedDate = date ? moment(new Date(date.toString())).format('MM/DD/YYYY') : null;
@@ -254,7 +252,7 @@ class WorkHistory extends React.Component {
                 </div>
                 
                 <div className="col-md-6 MonthlyPicker mb-2">
-                {this.state.isChecked && <div className="form-group">
+                {!this.state.isWorking && <div className="form-group">
                     <label>To Date</label>
                     <Calendar 
                         startDate={this.state.toDate && moment(this.state.toDate)}
@@ -272,8 +270,9 @@ class WorkHistory extends React.Component {
                 <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"
-                            onClick={this.toggleCheckbox.bind(this)}/>
+                            <input className="form-check-input" type="checkbox" value={this.state.isWorking} id="defaultCheck1"
+                            onChange={(e) => this.setState({ isWorking: e.target.checked })}
+                           />
                             I am currently working here
                             <span className="CheckboxIcon"/>
                         </label>
@@ -345,7 +344,7 @@ class WorkHistory extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleWorkHistory.bind(this, 'add')} /> to add Services Offered</span>
+                                <span className='SPNoInfoDesc'> to add Services Offered</span>
                             </div>
                         </div>
                         </ul>

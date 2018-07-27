@@ -34,7 +34,7 @@ export function getWorkHistory(data) {
         
         let currstate = getState();
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-        let serviceProviderId=1;
+        let serviceProviderId=7;
         let workHistoryId=data;
         dispatch(startLoading());
         axios.get(baseURL + API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
@@ -52,7 +52,7 @@ export function addWorkHistory(data) {
        
         let currstate = getState();
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-        let serviceProviderId=1;
+        let serviceProviderId=7;
         let modal = {
             ServiceProviderId: serviceProviderId,
             workHistoryId:data.workHistoryId,
@@ -62,8 +62,8 @@ export function addWorkHistory(data) {
             fromDate:data.fromDate,
             toDate:data.toDate,
             description:data.description,
-            "isActive": true,
-            "isWorking":false
+            isWorking:data.isWorking,
+            "isActive": true
 
         };
         dispatch(startLoading());
@@ -82,7 +82,7 @@ export function editWorkHistory(data) {
     return (dispatch, getState) => {
        
         let currstate = getState();
-        let serviceProviderId =1;
+        let serviceProviderId =7;
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let workHistoryId=data;
         let modal = {
@@ -104,7 +104,7 @@ export function updateWorkHistory(data) {
     return (dispatch, getState) => {
        
         let currstate = getState();
-        let serviceProviderId =1;
+        let serviceProviderId =7;
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let modal = {
             serviceProviderId: serviceProviderId,
@@ -132,7 +132,7 @@ export function deleteWorkHistory(data) {
     return (dispatch, getState) => {
         dispatch(startLoading());
         let currstate = getState();
-        let serviceProviderId =1
+        let serviceProviderId =7;
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let id =data;
         axios.delete(baseURL + API.Education+`${serviceProviderId}/WorkHistory/${id}`,data).then((resp) => {
