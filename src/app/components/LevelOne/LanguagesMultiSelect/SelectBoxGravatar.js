@@ -25,8 +25,10 @@ const Gravatar = createClass({
     render() {
         var base = this.props.base;
         const formattedValue = this.props.value;
-        const src = base + formattedValue + '.' + this.props.extension;
-        const retinaSrc = base + formattedValue + '.' + this.props.extension;
+        // const src = base + formattedValue + '.' + this.props.extension;
+        // const retinaSrc = base + formattedValue + '.' + this.props.extension;
+        const src = base + '.' + this.props.extension;
+        const retinaSrc = base + '.' + this.props.extension;
 
         let modernBrowser = true;  // server-side, we render for modern browsers
 
@@ -40,7 +42,7 @@ const Gravatar = createClass({
             className = `${className} ${this.props.className}`
         }
 
-        let {...rest} = this.props;
+        let { ...rest } = this.props;
         delete rest.md5;
         delete rest.protocol;
         delete rest.rating;
@@ -53,7 +55,8 @@ const Gravatar = createClass({
                 <img
                     alt={`${formattedValue}`}
                     style={this.props.style}
-                    src={retinaSrc}
+                    // src={retinaSrc}
+                    src={require('../../../assets/images/Flags/flags/' + src)}
                     height={this.props.size}
                     width={this.props.size}
                     {...rest}
@@ -65,8 +68,9 @@ const Gravatar = createClass({
             <img
                 alt={`${formattedValue}`}
                 style={this.props.style}
-                src={src}
-                srcSet={`${retinaSrc} 2x`}
+                // src={src}
+                // srcSet={`${retinaSrc} 2x`}
+                src={require('../../../assets/images/Flags/flags/' + src)}
                 height={this.props.size}
                 width={this.props.size}
                 {...rest}

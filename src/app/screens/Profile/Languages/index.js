@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { ProfileModalPopup } from "../../../components";
 import { LanguagesMultiSelect } from "../../../components"
 import { getLanguages, getSelectedLanguages, addLanguages } from '../../../redux/profile/Languages/actions';
+// import flags from "../../../assets/images/Flags/flags/";
 
 class Languages extends React.Component {
 
@@ -11,7 +12,9 @@ class Languages extends React.Component {
         super(props);
         this.state = {
             LanguagesModal: false,
-            selectedLaguage: []
+            modalSaveAction: '',
+            selectedLanguage: [],
+            selectedLanguageIds: ''
         };
     };
 
@@ -21,49 +24,75 @@ class Languages extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        let selectedLanguageIds = '';
 
+        if (nextProps.selectedLanguagesList && nextProps.selectedLanguagesList.languages) {
+            for (const language of nextProps.selectedLanguagesList.languages) {
+                if (selectedLanguageIds === '') {
+                    selectedLanguageIds = language.id;
+                } else {
+                    selectedLanguageIds = selectedLanguageIds + ',' + language.id;
+                }
+            }
+        }
+        this.setState({ selectedLanguage: selectedLanguageIds });
     }
 
     toggleLanguages = () => {
-        this.setState({ LanguagesModal: !this.state.LanguagesModal })
+        this.setState({
+            LanguagesModal: !this.state.LanguagesModal,
+            modalSaveAction: this.addLanguages
+        })
     }
 
     onChangeLanguage = (value) => {
-        this.setState({ selectedLaguage: value });
+        this.setState({ selectedLanguage: value });
     }
 
     addLanguages = () => {
-        this.props.addLanguages(this.state.selectedLaguage);
+        this.props.addLanguages(this.state.selectedLanguage);
+        this.setState({ LanguagesModal: !this.state.LanguagesModal, modalSaveAction: this.addLanguages })
+    }
+
+    editLanguages = () => {
+        this.setState({ modalSaveAction: this.updateLanguages, LanguagesModal: true });
+    }
+
+    updateLanguages = () => {
+        this.props.addLanguages(this.state.selectedLanguage);
+        this.setState({ LanguagesModal: false })
     }
 
     render() {
 
-        let modalContent;
         let modalTitle;
-
-        let src = "/static/media/";
+        // let src = "/static/media/";
         let extension = "svg";
 
-        const LanguagesOptions = this.props.LanguagesList && this.props.LanguagesList.map((LanguageList, i) => {
-            LanguageList.label = LanguageList.name;
-            LanguageList.value = LanguageList.id;
-            LanguageList.src = src;
-            LanguageList.extension = extension;
-            return LanguageList;
+        const languagesOptions = this.props.LanguagesList && this.props.LanguagesList.map((languageList, i) => {
+            languageList.label = languageList.name;
+            languageList.value = languageList.id;
+            languageList.src = languageList.name;
+            languageList.extension = extension;
+            return languageList;
         });
 
-        const LanguagesModalContent = <LanguagesMultiSelect onselect={this.onChangeLanguage} listItems={LanguagesOptions} multi={true} closeOnSelect={true} placeholder='Select Individual'
-            className="" />;
-
-        if (this.state.LanguagesModal) {
-            modalContent = LanguagesModalContent;
-        }
+        const LanguagesModalContent =
+            <LanguagesMultiSelect
+                onselect={this.onChangeLanguage}
+                listItems={languagesOptions}
+                value={this.state.selectedLanguage}
+                multi={true}
+                closeOnSelect={true}
+                placeholder='Select Individual'
+                className="" />;
 
         const selectedItems = this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.map(item => {
             return (
-                <div key={item.id}>
-                    <li className='SPSkillsItems CountryIcon english'>{item.name}</li>
-                </div>
+                <li className={'SPSkillsItems CountryIcon ' + item.name} key={item.id}>
+                    {/* <img src={require('../../../assets/images/Flags/flags/' + item.name + '.' + 'svg')} /> */}
+                    {item.name}
+                </li >
             )
         })
 
@@ -71,25 +100,37 @@ class Languages extends React.Component {
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Languages Spoken</h4>
-                    <i className="SPIconLarge SPIconAdd"
-                        onClick={this.toggleLanguages} />
+                    {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
+                        <i className="SPIconMedium SPIconEdit" onClick={(e) => this.editLanguages(e)} />
+                        :
+                        < i className="SPIconLarge SPIconAdd" onClick={this.toggleLanguages} />
+                    }
                 </div>
                 <div className="SPCertificateContainer width100">
-                    <ul className="SPCertificateList">
-                        {selectedItems}
-                    </ul>
+                    {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
+                        <ul className="SPSkillsList">
+                            {selectedItems}
+                        </ul>
+                        :
+                        <div className='SPNoInfo'>
+                            <div className='SPNoInfoContent'>
+                                <div className='SPInfoContentImage' />
+                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleLanguages.bind(this, 'add')} /> to add Services Offered</span>
+                            </div>
+                        </div>
+                    }
                 </div>
 
                 <ProfileModalPopup
                     isOpen={this.state.LanguagesModal}
                     toggle={this.toggleLanguages}
-                    ModalBody={modalContent}
+                    ModalBody={LanguagesModalContent}
                     className="modal-lg asyncModal LanguageModal"
                     modalTitle='Edit Languages Spoken'
                     centered="centered"
-                    onClick={this.addLanguages}
+                    onClick={this.state.modalSaveAction}
                 />
-            </div>
+            </div >
         )
     }
 }

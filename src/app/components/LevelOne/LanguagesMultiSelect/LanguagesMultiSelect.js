@@ -108,7 +108,7 @@ const LanguagesMultiSelect = createClass({
                     optionComponent={GravatarOption}
                     options={this.props.listItems}
                     placeholder={this.props.placeholder}
-                    value={this.state.value}
+                    value={this.props.value}
                     valueComponent={GravatarValue}
                     className={this.props.className}
                 />

@@ -464,3 +464,7 @@
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
 }
+
+.Select--multi .Select-value-icon:hover, .Select--multi .Select-value-icon:focus {
+    background-color: #ffffff !important;
+}

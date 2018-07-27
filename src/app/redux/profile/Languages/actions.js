@@ -37,12 +37,12 @@ export function addLanguages(data) {
     return (dispatch, getState) => {
         //let currstate = getState();
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-        let languages = data.split(/\s*,\s*/).map((val) => {
+        let languages = data ? data.split(/\s*,\s*/).map((val) => {
             return {
                 id: Number.parseInt(val),
                 name: ""
             }
-        });
+        }) : [];
         let modal = {
             // serviceProviderId: serviceProviderId,
             serviceProviderId: '1',
@@ -52,7 +52,7 @@ export function addLanguages(data) {
         dispatch(startLoading());
         axios.post(baseURL + API.addLanguages + '1' + '/Language', modal).then((resp) => {
             // dispatch(addCertificationSuccess(true));
-            // dispatch(getCertification());
+            dispatch(getSelectedLanguages());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
