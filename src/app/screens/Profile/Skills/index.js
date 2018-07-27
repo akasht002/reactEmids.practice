@@ -10,12 +10,12 @@ class Skills extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            skillsModal: false,
+            isSkillsModalOpen: false,
             modalSaveAction: '',
             selectedSkills: [],
             selectedSkillIds: '',
             disabledSaveBtn: true,
-            add: false,
+            isAdd: false,
         };
     };
 
@@ -27,23 +27,23 @@ class Skills extends React.Component {
     componentWillReceiveProps(nextProps) {
         let selectedSkillIds = '';
 
-        if (nextProps.selectedSkillsList && nextProps.selectedSkillsList.languages) {
-            for (const language of nextProps.selectedSkillsList.languages) {
+        if (nextProps.selectedSkillsList && nextProps.selectedSkillsList.skills) {
+            for (const skills of nextProps.selectedSkillsList.skills) {
                 if (selectedSkillIds === '') {
-                    selectedSkillIds = language.id;
+                    selectedSkillIds = skills.id;
                 } else {
-                    selectedSkillIds = selectedSkillIds + ',' + language.id;
+                    selectedSkillIds = selectedSkillIds + ',' + skills.id;
                 }
             }
         }
         this.setState({ selectedSkills: selectedSkillIds });
     }
 
-    toggleLanguages = () => {
+    toggleSkills = () => {
         this.setState({
-            skillsModal: !this.state.skillsModal,
+            isSkillsModalOpen: !this.state.isSkillsModalOpen,
             modalSaveAction: this.addSkills,
-            add: true
+            isAdd: true
         })
     }
 
@@ -56,53 +56,52 @@ class Skills extends React.Component {
 
     addSkills = () => {
         this.props.addSkills(this.state.selectedSkills);
-        this.setState({ skillsModal: !this.state.skillsModal, modalSaveAction: this.addSkills, disabledSaveBtn: true })
+        this.setState({ isSkillsModalOpen: !this.state.isSkillsModalOpen, modalSaveAction: this.addSkills, disabledSaveBtn: true })
     }
 
     editLanguages = () => {
-        this.setState({ modalSaveAction: this.updateSkills, skillsModal: true, add: false });
+        this.setState({ modalSaveAction: this.updateSkills, isSkillsModalOpen: true, isAdd: false });
     }
 
     updateSkills = () => {
         this.props.addSkills(this.state.selectedSkills);
-        this.setState({ skillsModal: false, disabledSaveBtn: true })
+        this.setState({ isSkillsModalOpen: false, disabledSaveBtn: true })
     }
 
     render() {
 
         let modalTitle;
         let modalContent;
-        let extension = "svg";
 
-        const skillsOptions = this.props.LanguagesList && this.props.LanguagesList.map((skillsList, i) => {
+        let skillsOptions = this.props.SkillsList && this.props.SkillsList.map((skillsList, i) => {
             skillsList.label = skillsList.name;
             skillsList.value = skillsList.id;
             return skillsList;
         });
 
-        const SkillsModalContent =
+        let SkillsModalContent =
             <SkillsMultiSelect
                 onselect={this.onChangeLanguage}
                 listItems={skillsOptions}
                 value={this.state.selectedSkills}
                 multi={true}
                 closeOnSelect={true}
-                placeholder='Select Individual'
+                placeholder='Select your skills'
             />;
 
-        const selectedItems = this.props.selectedSkillsList.languages && this.props.selectedSkillsList.languages.map(item => {
+        let selectedItems = this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.map(item => {
             return (
-                <li className={'SPSkillsItems CountryIcon ' + item.name} key={item.id}>
+                <li className={'SPSkillsItems'} key={item.id}>
                     {item.name}
                 </li>
             )
         })
 
-        if (this.state.skillsModal) {
-            if (this.state.add) {
-                modalTitle = 'Add Languages Spoken';
+        if (this.state.isSkillsModalOpen) {
+            if (this.state.isAdd) {
+                modalTitle = 'Add Skills and Experience';
             } else {
-                modalTitle = 'Edit Languages Spoken';
+                modalTitle = 'Edit Skills and Experience';
             }
             modalContent = SkillsModalContent;
         }
@@ -110,15 +109,15 @@ class Skills extends React.Component {
         return (
             <div>
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Languages Spoken</h4>
-                    {this.props.selectedSkillsList.languages && this.props.selectedSkillsList.languages.length > 0 ?
+                    <h4 className="primaryColor">Skills and Experience</h4>
+                    {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
                         <i className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={this.toggleLanguages} />
+                        < i className="SPIconLarge SPIconAdd" onClick={this.toggleSkills} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
-                    {this.props.selectedSkillsList.languages && this.props.selectedSkillsList.languages.length > 0 ?
+                    {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
                         <ul className="SPSkillsList">
                             {selectedItems}
                         </ul>
@@ -126,15 +125,15 @@ class Skills extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleLanguages} /> to add Languages Spoken</span>
+                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" /> to add Skills and Experience</span>
                             </div>
                         </div>
                     }
                 </div>
 
                 <ProfileModalPopup
-                    isOpen={this.state.skillsModal}
-                    toggle={this.toggleLanguages}
+                    isOpen={this.state.isSkillsModalOpen}
+                    toggle={this.toggleSkills}
                     ModalBody={modalContent}
                     className="modal-lg asyncModal LanguageModal"
                     modalTitle={modalTitle}

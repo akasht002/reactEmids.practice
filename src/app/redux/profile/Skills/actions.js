@@ -3,8 +3,8 @@ import { API, baseURL } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
 
 export const Skills = {
-    getLanguagesSuccess: 'get_languages_success/languages',
-    getSelectedLanguageDetails: 'get_selected_language_details/languages'
+    getSkillsSuccess: 'get_skills_success/skills',
+    getSelectedSkillsDetails: 'get_selected_skills_details/skills'
 };
 
 export const getSkillsSuccess = (data) => {
@@ -24,7 +24,7 @@ export const getSelectedSkillsDetails = (data) => {
 export function getSkills() {
     return (dispatch, getState) => {
         dispatch(startLoading());
-        axios.get(baseURL + API.getLanguages).then((resp) => {
+        axios.get(baseURL + API.getSkills).then((resp) => {
             dispatch(getSkillsSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -37,7 +37,7 @@ export function addSkills(data) {
     return (dispatch, getState) => {
         let currstate = getState();
         let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-        let languages = data ? data.split(/\s*,\s*/).map((val) => {
+        let skills = data ? data.split(/\s*,\s*/).map((val) => {
             return {
                 id: Number.parseInt(val),
                 name: ""
@@ -45,12 +45,12 @@ export function addSkills(data) {
         }) : [];
         let modal = {
             serviceProviderId: serviceProviderId,
-            languages: languages
+            skills: skills
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.addLanguages + serviceProviderId + '/Language', modal).then((resp) => {
-            dispatch(getSkillsSuccess());
+        axios.post(baseURL + API.addSkills + serviceProviderId + '/Skill', modal).then((resp) => {
+            dispatch(getSelectedSkills());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -63,7 +63,7 @@ export function getSelectedSkills() {
         let currstate = getState();
         let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
-        axios.get(baseURL + API.addLanguages + serviceProviderId + '/Language').then((resp) => {
+        axios.get(baseURL + API.addSkills + serviceProviderId + '/Skills').then((resp) => {
             dispatch(getSelectedSkillsDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
