@@ -246,7 +246,7 @@ class WorkHistory extends React.Component {
                         mandatory={true}
                         maxDate={moment()}
                         value={this.state.fromDate}
-                        className={"form-control datePicker " + (!this.state.isValid && this.state.fromDate  && 'inputFailure')}
+                        className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate )) && 'inputFailure')}
                     />
                     {!this.state.isValid && (!this.state.fromDate ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.fromDate === '' && ' From Date '}</span>}
                     </div>
@@ -262,7 +262,7 @@ class WorkHistory extends React.Component {
                         mandatory={true}
                         maxDate={moment()}
                         value={this.state.toDate}
-                        className={"form-control datePicker " + (!this.state.isValid && this.state.toDate  && 'inputFailure')}
+                        className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
                     />
                     {!this.state.isValid && (!this.state.toDate ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.toDate === '' && ' To Date '}</span>}
                     
