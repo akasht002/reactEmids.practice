@@ -13,7 +13,7 @@ class Calendar extends Component {
     render() {
         return(
             <div className="form-group">
-                <label className="width100" onClick={e => this.calendar.state.open && e.preventDefault()}> {this.props.label}{this.props.mandatory && <i>*</i>}
+                <label className="width100" onClick={e => this.calendar.state.open && e.preventDefault()}> {this.props.label}
                     <DatePicker
                         selected={this.props.startDate}
                         onChange={this.props.onDateChange}

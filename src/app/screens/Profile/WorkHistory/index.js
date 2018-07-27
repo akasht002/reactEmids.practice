@@ -27,7 +27,7 @@ class WorkHistory extends React.Component {
             edit: false,
             isValid: true,
             disabledSaveBtn: true,
-            //isChecked:true
+            isValidDate:true
         }
     }
 
@@ -72,7 +72,7 @@ class WorkHistory extends React.Component {
         })
     }
     addWorkhistory = () => {
-        if (checkSpace(this.state.designation) && checkSpace(this.state.company) && this.state.fromDate && this.state.fromDate) {
+        if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate) && (this.state.toDate)) {
            
             const data = {
                 workHistoryId:this.state.workHistoryId,
@@ -93,6 +93,7 @@ class WorkHistory extends React.Component {
                 location:'',
                 fromDate:'',
                 toDate:'',
+                isWorking:'',
                 description:''
             });
             //this.setState({ modalSaveAction: this.addCertification });
@@ -300,14 +301,14 @@ class WorkHistory extends React.Component {
             return (
                 <li className="SPWorkHistoryItems" key={WorkHistoryList.company}>
                     <div className="SPCertificateContent">
-                    <div className="width100 d-flex">
-                        <h5 className="SPCertificateHeader">{WorkHistoryList.description}
-                            <span>{WorkHistoryList.description}</span>
-                            <span className="ml-auto SPWorkYear"></span>
-                        </h5>
-                    <span className={'ml-auto SPWorkYear'}>{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
-                    </div>
-                    <span className={'SPEducationDesc'}>{WorkHistoryList.description} {WorkHistoryList.description}</span>
+                        <div className="width100 d-flex">
+                            <h5 className="SPCertificateHeader">
+                                {WorkHistoryList.description} - <span>{WorkHistoryList.company}</span>
+                                <span className="ml-auto SPWorkYear">{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
+                            </h5>
+                        </div>
+                        <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
+                        <span className="SPCertificateDesc">{WorkHistoryList.description}</span>
                     </div>
                     <i className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.showModalOnDelete(e)} />
@@ -331,25 +332,25 @@ class WorkHistory extends React.Component {
 
         return(
             <div className="col-md-12 card CardWidget SPWorkHistory">
-            <div className="SPCardTitle d-flex">
-                <h4 className="primaryColor">WorkHistory</h4>
-                <i className="SPIconLarge SPIconAdd"
-                onClick={this.toggleWorkHistory.bind(this, 'add')} />
-            </div>
+                <div className="SPCardTitle d-flex">
+                    <h4 className="primaryColor">Work History</h4>
+                    <i className="SPIconLarge SPIconAdd"
+                    onClick={this.toggleWorkHistory.bind(this, 'add')} />
+                </div>
 
-            <div className="SPCertificateContainer width100">
-                    
-                    {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
-                    <ul className="SPCertificateList">
-                        <div className='SPNoInfo'>
-                            <div className='SPNoInfoContent'>
-                                <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'> to add Services Offered</span>
+                <div className="SPCertificateContainer width100">
+                        
+                        {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
+                        <ul className="SPCertificateList">
+                            <div className='SPNoInfo'>
+                                <div className='SPNoInfoContent'>
+                                    <div className='SPInfoContentImage' />
+                                    <span className='SPNoInfoDesc'> to add Services Offered</span>
+                                </div>
                             </div>
-                        </div>
-                        </ul>
-                    }
-            </div>
+                            </ul>
+                        }
+                </div>
 
             <ProfileModalPopup
                 isOpen={this.state.WorkHistoryModal}
