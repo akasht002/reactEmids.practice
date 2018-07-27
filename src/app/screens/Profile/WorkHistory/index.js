@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
+import { checkSpace } from "../../../utils/validations"
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
@@ -46,7 +47,15 @@ class WorkHistory extends React.Component {
             
         })
     }
-
+    reset() {
+        this.setState({
+            WorkHistoryModal: !this.state.WorkHistoryModal,
+            designation: '',
+            company: '',
+            location: '',
+            description: ''
+        })
+    }
     toggleWorkHistory(action, e){
         this.setState({
             WorkHistoryModal: !this.state.WorkHistoryModal,
@@ -63,11 +72,12 @@ class WorkHistory extends React.Component {
         })
     }
     addWorkhistory = () => {
-        if (this) {
+        if (checkSpace(this.state.designation)&& checkSpace(this.state.company)) {
+           
             const data = {
                 workHistoryId:this.state.workHistoryId,
-                company:this.state.company,
-                designation: this.state.designation,
+                company:this.state.company.trim(),
+                designation: this.state.designation.trim(),
                 location: this.state.location,
                 //fromDate:this.state.fromDate,
                 //toDate:this.state.toDate,
@@ -79,7 +89,7 @@ class WorkHistory extends React.Component {
             };
             this.props.getWorkHistory(data);
             this.setState({ 
-                modalSaveAction: this.addEducation, 
+                modalSaveAction: this.addCertification, 
                 WorkHistoryModal: !this.state.WorkHistoryModal,
                 company: '',
                 designation: '', 
@@ -88,6 +98,8 @@ class WorkHistory extends React.Component {
                 toDate:'',
                 description:''
             });
+            this.setState({ modalSaveAction: this.addCertification });
+            this.reset();
         } else {
             this.setState({ isValid: false });
         }
@@ -142,13 +154,16 @@ class WorkHistory extends React.Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Car Provider"
-                        className="form-control"
+                        className={"form-control " + (!this.state.isValid && !this.state.designation && 'inputFailure')}
+                        value={this.state.designation}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
                             designation: e.target.value,
                             disabledSaveBtn:false
                         })}
+                        
                     />
+                    {!this.state.isValid && (!this.state.designation ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.designation === '' && ' Designation'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -157,13 +172,16 @@ class WorkHistory extends React.Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Home Supportive SVC"
-                        className="form-control"
+                        className={"form-control " + (!this.state.isValid && !this.state.company && 'inputFailure')}
+                        value={this.state.company}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
                             company: e.target.value,
                             disabledSaveBtn:false
                         })}
                     />
+                    {!this.state.isValid && (!this.state.company ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.company === '' && ' CompanyName'}</span>}
+
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -173,10 +191,10 @@ class WorkHistory extends React.Component {
                         type="text"
                         placeholder="e.g. San Francisco Bay Area"
                         className="form-control"
+                        value={this.state.location}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
-                            location: e.target.value,
-                            disabledSaveBtn:false
+                            location: e.target.value
                         })}
                     />
                 </div>
@@ -203,14 +221,14 @@ class WorkHistory extends React.Component {
                 <div className="col-md-12">
                     <TextArea
                         name='Description'
+                        label="Description"
                         placeholder='Write your Description'
                         className='form-control'
                         rows='5'
-                        value='Description'
+                        value={this.state.description}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
-                            description: e.target.value,
-                            disabledSaveBtn:false
+                            description: e.target.value
                         })}
                     />
                 </div>
