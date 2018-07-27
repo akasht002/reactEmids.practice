@@ -35,8 +35,8 @@ export function getLanguages() {
 
 export function addLanguages(data) {
     return (dispatch, getState) => {
-        //let currstate = getState();
-        //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let currstate = getState();
+        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let languages = data ? data.split(/\s*,\s*/).map((val) => {
             return {
                 id: Number.parseInt(val),
@@ -44,14 +44,12 @@ export function addLanguages(data) {
             }
         }) : [];
         let modal = {
-            // serviceProviderId: serviceProviderId,
-            serviceProviderId: '1',
+            serviceProviderId: serviceProviderId,
             languages: languages
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.addLanguages + '1' + '/Language', modal).then((resp) => {
-            // dispatch(addCertificationSuccess(true));
+        axios.post(baseURL + API.addLanguages + serviceProviderId + '/Language', modal).then((resp) => {
             dispatch(getSelectedLanguages());
             dispatch(endLoading());
         }).catch((err) => {
@@ -60,10 +58,12 @@ export function addLanguages(data) {
     }
 };
 
-export function getSelectedLanguages(data) {
+export function getSelectedLanguages() {
     return (dispatch, getState) => {
+        let currstate = getState();
+        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
-        axios.get(baseURL + API.addLanguages + '1' + '/Language').then((resp) => {
+        axios.get(baseURL + API.addLanguages + serviceProviderId + '/Language').then((resp) => {
             dispatch(getSelectedLanguageDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -71,39 +71,3 @@ export function getSelectedLanguages(data) {
         })
     }
 };
-
-// export function updateCertification(data) {
-//     return (dispatch, getState) => {
-//         let currstate = getState();
-//         let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-//         let modal = {
-//             serviceProviderId: serviceProviderId,
-//             certificationName: data.certificationName,
-//             authority: data.authority,
-//             licenceNumber: data.licenceNumber,
-//             isActive: true,
-//             certificationId: data.certificationId
-//         };
-//         dispatch(startLoading());
-//         axios.put(baseURL + API.editCertification, modal).then((resp) => {
-//             dispatch(getCertification());
-//             dispatch(endLoading());
-//         }).catch((err) => {
-//             dispatch(endLoading());
-//         })
-//     }
-// };
-
-// export function deleteCertification(data) {
-//     return (dispatch, getState) => {
-//         dispatch(startLoading());
-//         axios.delete(baseURL + API.deleteCertification + data).then((resp) => {
-//             dispatch(getCertification());
-//             dispatch(endLoading());
-//         }).catch((err) => {
-//             dispatch(endLoading());
-//         })
-//     }
-// };
-
-

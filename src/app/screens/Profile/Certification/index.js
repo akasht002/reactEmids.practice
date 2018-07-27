@@ -209,7 +209,7 @@ class Certification extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleCertification.bind(this, 'add')} /> to add Services Offered</span>
+                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleCertification.bind(this, 'add')} /> to add Certification</span>
                                 </div>
                             </div>
                         }

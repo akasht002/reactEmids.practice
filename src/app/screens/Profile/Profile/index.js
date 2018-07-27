@@ -5,7 +5,6 @@ import { ProfileHeader } from '../../../components'
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
 import Education from "../Education/index";
-
 import './styles.css';
 
 class Profile extends React.Component {
@@ -29,14 +28,14 @@ class Profile extends React.Component {
                                         Profile
                                     </h4>
                                 </div>
+                                <div className="col-md-12 card CardWidget SPLanguages">
+                                    <Languages />
+                                </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Certification />
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Education />
-                                </div>
-                                <div className="col-md-12 card CardWidget SPLanguages">
-                                    <Languages />
                                 </div>
                             </div>
                         </div>

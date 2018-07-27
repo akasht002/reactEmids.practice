@@ -4,17 +4,18 @@ import { withRouter } from 'react-router-dom';
 import { ProfileModalPopup } from "../../../components";
 import { LanguagesMultiSelect } from "../../../components"
 import { getLanguages, getSelectedLanguages, addLanguages } from '../../../redux/profile/Languages/actions';
-// import flags from "../../../assets/images/Flags/flags/";
 
 class Languages extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            LanguagesModal: false,
+            languagesModal: false,
             modalSaveAction: '',
             selectedLanguage: [],
-            selectedLanguageIds: ''
+            selectedLanguageIds: '',
+            disabledSaveBtn: true,
+            add: false,
         };
     };
 
@@ -40,33 +41,37 @@ class Languages extends React.Component {
 
     toggleLanguages = () => {
         this.setState({
-            LanguagesModal: !this.state.LanguagesModal,
-            modalSaveAction: this.addLanguages
+            languagesModal: !this.state.languagesModal,
+            modalSaveAction: this.addLanguages,
+            add: true
         })
     }
 
     onChangeLanguage = (value) => {
-        this.setState({ selectedLanguage: value });
+        this.setState({ selectedLanguage: value, disabledSaveBtn: false });
+        if (value) {
+            this.setState({ disabledSaveBtn: false });
+        }
     }
 
     addLanguages = () => {
         this.props.addLanguages(this.state.selectedLanguage);
-        this.setState({ LanguagesModal: !this.state.LanguagesModal, modalSaveAction: this.addLanguages })
+        this.setState({ languagesModal: !this.state.languagesModal, modalSaveAction: this.addLanguages, disabledSaveBtn: true })
     }
 
     editLanguages = () => {
-        this.setState({ modalSaveAction: this.updateLanguages, LanguagesModal: true });
+        this.setState({ modalSaveAction: this.updateLanguages, languagesModal: true, add: false });
     }
 
     updateLanguages = () => {
         this.props.addLanguages(this.state.selectedLanguage);
-        this.setState({ LanguagesModal: false })
+        this.setState({ languagesModal: false, disabledSaveBtn: true })
     }
 
     render() {
 
         let modalTitle;
-        // let src = "/static/media/";
+        let modalContent;
         let extension = "svg";
 
         const languagesOptions = this.props.LanguagesList && this.props.LanguagesList.map((languageList, i) => {
@@ -85,23 +90,31 @@ class Languages extends React.Component {
                 multi={true}
                 closeOnSelect={true}
                 placeholder='Select Individual'
-                className="" />;
+            />;
 
         const selectedItems = this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.map(item => {
             return (
                 <li className={'SPSkillsItems CountryIcon ' + item.name} key={item.id}>
-                    {/* <img src={require('../../../assets/images/Flags/flags/' + item.name + '.' + 'svg')} /> */}
                     {item.name}
-                </li >
+                </li>
             )
         })
+
+        if (this.state.languagesModal) {
+            if (this.state.add) {
+                modalTitle = 'Add Languages Spoken';
+            } else {
+                modalTitle = 'Edit Languages Spoken';
+            }
+            modalContent = LanguagesModalContent;
+        }
 
         return (
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Languages Spoken</h4>
                     {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
-                        <i className="SPIconMedium SPIconEdit" onClick={(e) => this.editLanguages(e)} />
+                        <i className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
                         :
                         < i className="SPIconLarge SPIconAdd" onClick={this.toggleLanguages} />
                     }
@@ -115,20 +128,21 @@ class Languages extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleLanguages.bind(this, 'add')} /> to add Services Offered</span>
+                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleLanguages} /> to add Languages Spoken</span>
                             </div>
                         </div>
                     }
                 </div>
 
                 <ProfileModalPopup
-                    isOpen={this.state.LanguagesModal}
+                    isOpen={this.state.languagesModal}
                     toggle={this.toggleLanguages}
-                    ModalBody={LanguagesModalContent}
+                    ModalBody={modalContent}
                     className="modal-lg asyncModal LanguageModal"
-                    modalTitle='Edit Languages Spoken'
+                    modalTitle={modalTitle}
                     centered="centered"
                     onClick={this.state.modalSaveAction}
+                    disabled={this.state.disabledSaveBtn}
                 />
             </div >
         )
@@ -139,10 +153,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getLanguages: () => dispatch(getLanguages()),
         getSelectedLanguages: () => dispatch(getSelectedLanguages()),
-        addLanguages: (data) => dispatch(addLanguages(data)),
-        // editCertification: (data) => dispatch(editCertification(data)),
-        // updateCertification: (data) => dispatch(updateCertification(data)),
-        // deleteCertification: (data) => dispatch(deleteCertification(data))
+        addLanguages: (data) => dispatch(addLanguages(data))
     }
 };
 
@@ -150,7 +161,6 @@ function mapStateToProps(state) {
     return {
         LanguagesList: state.profileState.LanguagesState.LanguagesList,
         selectedLanguagesList: state.profileState.LanguagesState.selectedLanguagesList,
-        // certificationFieldDetails: state.profileState.CertificationState.certificationFieldDetails,
     };
 };
 

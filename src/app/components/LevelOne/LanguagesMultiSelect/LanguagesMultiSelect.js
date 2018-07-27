@@ -86,7 +86,6 @@ const LanguagesMultiSelect = createClass({
     setValue(value) {
         this.props.onselect(value);
         this.setState({value});
-        //console.log(value)
         return(value);
     },
 
@@ -118,9 +117,3 @@ const LanguagesMultiSelect = createClass({
 });
 
 export default LanguagesMultiSelect;
-
-// module.exports = {
-//     LanguagesMultiSelect: MultiSelectAvatar,
-//     GravatarOption: GravatarOption,
-//     GravatarValue: GravatarValue
-// };
