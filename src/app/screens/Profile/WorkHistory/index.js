@@ -2,7 +2,9 @@ import React,{Component} from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
-import { checkSpace } from "../../../utils/validations"
+import {Calendar} from "../../../components/LevelOne/index";
+import moment from 'moment';
+import { checkDate,checkSpace } from "../../../utils/validations"
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
@@ -35,14 +37,11 @@ class WorkHistory extends React.Component {
 
     componentWillReceiveProps(nextProps){
         this.setState({
-            workHistoryId:nextProps.workhistoyFieldDetails.workHistoryId,
             designation: nextProps.workhistoyFieldDetails.designation,
             company: nextProps.workhistoyFieldDetails.company,
             location: nextProps.workhistoyFieldDetails.location,
-            // fromDate: nextProps.workhistoyFieldDetails.fromDate,
-            // toDate: nextProps.workhistoyFieldDetails.toDate,
-            fromDate: "2018-07-26",
-            toDate: "2018-07-26",
+            fromDate: nextProps.workhistoyFieldDetails.fromDate,
+            toDate: nextProps.workhistoyFieldDetails.toDate,
             description:nextProps.workhistoyFieldDetails.description
             
         })
@@ -72,22 +71,22 @@ class WorkHistory extends React.Component {
         })
     }
     addWorkhistory = () => {
-        if (checkSpace(this.state.designation)&& checkSpace(this.state.company)) {
+        if (checkSpace(this.state.designation) && checkSpace(this.state.company) && this.state.fromDate && this.state.fromDate) {
            
             const data = {
                 workHistoryId:this.state.workHistoryId,
                 company:this.state.company.trim(),
                 designation: this.state.designation.trim(),
                 location: this.state.location,
-                //fromDate:this.state.fromDate,
-                //toDate:this.state.toDate,
-                fromDate:"2018-07-26",
-                toDate:"2018-07-26",
+                fromDate:this.state.fromDate,
+                toDate:this.state.toDate,
+                //fromDate:"2018-07-26",
+                //toDate:"2018-07-26",
                 isWorking:false,
                 description:this.state.description,
                 isActive:true
             };
-            this.props.getWorkHistory(data);
+            this.props.addWorkHistory(data);
             this.setState({ 
                 modalSaveAction: this.addCertification, 
                 WorkHistoryModal: !this.state.WorkHistoryModal,
@@ -98,8 +97,8 @@ class WorkHistory extends React.Component {
                 toDate:'',
                 description:''
             });
-            this.setState({ modalSaveAction: this.addCertification });
-            this.reset();
+            //this.setState({ modalSaveAction: this.addCertification });
+            //this.reset();
         } else {
             this.setState({ isValid: false });
         }
@@ -140,6 +139,46 @@ class WorkHistory extends React.Component {
         });
     }
 
+    dateChanged = (date) => {
+        const formattedDate = date ? moment(new Date(date.toString())).format('MM/DD/YYYY') : null;
+        this.setState({  
+            fromDate: formattedDate,
+            disabledSaveBtn:false 
+        });
+        //this.props.formDirty();
+    }
+
+    dateChangedRaw = (event) => {
+        if (event.target.value.length === 10
+            && checkDate(event.target.value)
+            && new Date(event.target.value)
+            && moment().isAfter(event.target.value)) {
+            const formattedDate = event.target.value ? moment(new Date(event.target.value.toString())).format('MM/DD/YYYY') : null;
+            this.setState({  
+                fromDate: formattedDate
+            });
+        } 
+        //this.props.formDirty();
+    }
+
+    todateChanged = (date) => {
+        const formattedDate = date ? moment(new Date(date.toString())).format('MM/DD/YYYY') : null;
+        this.setState({  toDate: formattedDate,
+            disabledSaveBtn:false });
+        //this.props.formDirty();
+    }
+
+    todateChangedRaw = (event) => {
+        if (event.target.value.length === 10
+            && checkDate(event.target.value)
+            && new Date(event.target.value)
+            && moment().isAfter(event.target.value)) {
+            const formattedDate = event.target.value ? moment(new Date(event.target.value.toString())).format('MM/DD/YYYY') : null;
+            this.setState({  toDate: formattedDate});
+        } 
+        //this.props.formDirty();
+    }
+
     render() {
         let modalContent;
         let modalTitle;
@@ -163,7 +202,7 @@ class WorkHistory extends React.Component {
                         })}
                         
                     />
-                    {!this.state.isValid && (!this.state.designation ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.designation === '' && ' Designation'}</span>}
+                    {!this.state.isValid && (!this.state.designation ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.designation === '' && ' Designation'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -180,7 +219,7 @@ class WorkHistory extends React.Component {
                             disabledSaveBtn:false
                         })}
                     />
-                    {!this.state.isValid && (!this.state.company ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.company === '' && ' CompanyName'}</span>}
+                    {!this.state.isValid && (!this.state.company ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.company === '' && ' CompanyName'}</span>}
 
                 </div>
                 <div className="col-md-12 mb-2">
@@ -201,12 +240,34 @@ class WorkHistory extends React.Component {
                 <div className="col-md-6 MonthlyPicker mb-2">
                     <div className="form-group">
                         <label>From Date</label>
+                    <Calendar 
+                        startDate={this.state.fromDate && moment(this.state.fromDate)}
+                        onDateChange={this.dateChanged}
+                        onDateChangeRaw={this.dateChangedRaw}
+                        mandatory={true}
+                        maxDate={moment()}
+                        value={this.state.fromDate}
+                        className={"form-control datePicker " + (!this.state.isValid && this.state.fromDate  && 'inputFailure')}
+                    />
+                    {!this.state.isValid && (!this.state.fromDate ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.fromDate === '' && ' From Date '}</span>}
                     </div>
                 </div>
+                
                 <div className="col-md-6 MonthlyPicker mb-2">
-                <div className="form-group">
+                {this.state.isChecked && <div className="form-group">
                     <label>To Date</label>
-                </div>
+                    <Calendar 
+                        startDate={this.state.toDate && moment(this.state.toDate)}
+                        onDateChange={this.todateChanged}
+                        onDateChangeRaw={this.todateChangedRaw}
+                        mandatory={true}
+                        maxDate={moment()}
+                        value={this.state.toDate}
+                        className={"form-control datePicker " + (!this.state.isValid && this.state.toDate  && 'inputFailure')}
+                    />
+                    {!this.state.isValid && (!this.state.toDate ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.toDate === '' && ' To Date '}</span>}
+                    
+                </div>}
             </div>
                 <div className="col-md-12 mb-3">
                     <div className="form-check">

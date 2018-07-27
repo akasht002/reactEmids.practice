@@ -37,7 +37,7 @@ export function getWorkHistory(data) {
         let serviceProviderId=1;
         let workHistoryId=data;
         dispatch(startLoading());
-        axios.get(baseURL + API.WorkHistory + serviceProviderId+'/WorkHistory').then((resp) => {
+        axios.get(baseURL + API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
             dispatch(getWorkhistorySuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -55,6 +55,7 @@ export function addWorkHistory(data) {
         let serviceProviderId=1;
         let modal = {
             ServiceProviderId: serviceProviderId,
+            workHistoryId:data.workHistoryId,
             designation: data.designation,
             company: data.company,
             location: data.location,
@@ -66,8 +67,9 @@ export function addWorkHistory(data) {
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.WorkHistory+serviceProviderId+'/WorkHistory', modal).then((resp) => {
+        axios.post(baseURL + API.WorkHistory+`${serviceProviderId}/WorkHistory`, modal).then((resp) => {
             dispatch(addWorkhistorySuccess(true));
+            dispatch(getWorkHistory())
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -82,23 +84,14 @@ export function editWorkHistory(data) {
         let currstate = getState();
         let serviceProviderId =1;
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-        let workHistoryId =data;
+        let workHistoryId=data;
         let modal = {
             serviceProviderId: serviceProviderId,
-            workHistoryId: data,
-            designation: data.designation,
-            company: data.company,
-            location:data.location,
-            fromDate: "2018-07-26",
-            toDate:"2018-07-26",
-            isWorking:true,
-            description:data.description,
-            isActive:true
-
+            workHistoryId: workHistoryId
         };
 
         dispatch(startLoading());
-        axios.get(baseURL + API.Education +serviceProviderId+`/WorkHistory/${workHistoryId}`,modal).then((resp) => {
+        axios.get(baseURL + API.Education +`${serviceProviderId}/WorkHistory/${workHistoryId}`,modal).then((resp) => {
             dispatch(getWorkhistoryFieldDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -126,7 +119,7 @@ export function updateWorkHistory(data) {
 
         };
         dispatch(startLoading());
-        axios.put(baseURL + API.Education+serviceProviderId+'/WorkHistory', modal).then((resp) => {
+        axios.put(baseURL + API.Education+`${serviceProviderId}'/WorkHistory`, modal).then((resp) => {
             dispatch(getWorkHistory());
             dispatch(endLoading());
         }).catch((err) => {

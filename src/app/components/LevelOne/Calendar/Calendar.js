@@ -1,22 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { PropTypes } from 'prop-types';
+import './styles.css';
 
-class Calendar extends React.Component {
+class Calendar extends Component {
+
+    clickOutside = () => {
+        this.calendar.cancelFocusInput();
+        this.calendar.setOpen(false);
+    }
 
     render() {
         return(
-            <label> {this.props.label}
-                <DatePicker
-                    selected={this.props.startDate}
-                    onChange={this.props.onDateChange}
-                    dateFormat="LL"
-                    placeholderText="June 6, 1972"
-                    className="form-control datePicker"
-                />
-            </label>
+            <div className="form-group">
+                <label className="width100" onClick={e => this.calendar.state.open && e.preventDefault()}> {this.props.label}{this.props.mandatory && <i>*</i>}
+                    <DatePicker
+                        selected={this.props.startDate}
+                        onChange={this.props.onDateChange}
+                        onChangeRaw={this.props.onDateChangeRaw}
+                        dateFormat="MM-DD-YYYY"
+                        ref={r => this.calendar = r}
+                        onClickOutside={this.clickOutside}
+                        placeholderText="MM-DD-YYYY"
+                        className={this.props.className}
+                        disabled={this.props.disabled}
+                        shouldCloseOnSelect={true}
+                        maxDate={this.props.maxDate}
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                        value={this.props.value}
+                    />
+                </label>
+            </div>
         );
     }
+}
+
+Calendar.propTypes = {
+    startDate: PropTypes.object,
+    onDateChange: PropTypes.func,
+    onDateChangeRaw: PropTypes.func,
+    className: PropTypes.string
 }
 
 export default Calendar;

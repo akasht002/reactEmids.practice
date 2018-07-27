@@ -22,7 +22,7 @@ const WorkHistoryState = (state = defaultState, action) => {
                 addeworkhistorySuccess: action.isSuccess
             };
 
-        case WorkHistory.workhistoyFieldDetails:
+        case WorkHistory.getWorkhistoryFieldDetails:
             return {
                 ...state,
                 workhistoyFieldDetails: action.data

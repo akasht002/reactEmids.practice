@@ -3,7 +3,7 @@ import React from 'react';
 class TextArea extends React.Component {
     render() {
         return(<div className="form-group">
-            <label htmlFor={this.props.name}>{this.props.value}</label> <i className={this.props.mandatory}>*</i>
+            <label htmlFor={this.props.name}>{this.props.name}</label> <i className={this.props.mandatory}>*</i>
             <textarea 
                 id={this.props.name}
                 required
