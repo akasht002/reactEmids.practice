@@ -29,13 +29,12 @@ export const getWorkhistoryFieldDetails = (data) => {
     }
 }
 
-export function getWorkHistory(data) {
+export function getWorkHistory() {
     return (dispatch, getState) => {
         
         let currstate = getState();
         //let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let serviceProviderId=7;
-        let workHistoryId=data;
         dispatch(startLoading());
         axios.get(baseURL + API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
             dispatch(getWorkhistorySuccess(resp.data))

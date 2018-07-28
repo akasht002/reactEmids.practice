@@ -32,7 +32,7 @@ class WorkHistory extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getWorkHistory(this.props.workHistoryId);
+        this.props.getWorkHistory();
     }
 
     componentWillReceiveProps(nextProps){
@@ -43,20 +43,25 @@ class WorkHistory extends React.Component {
             fromDate: nextProps.workhistoyFieldDetails.fromDate,
             toDate: nextProps.workhistoyFieldDetails.toDate,
             description:nextProps.workhistoyFieldDetails.description,
-            isWorking:nextProps.workhistoyFieldDetails.isWorking
+            isWorking:nextProps.workhistoyFieldDetails.isWorking,
+            workHistoryId:nextProps.workhistoyFieldDetails.workHistoryId
             
         })
     }
     reset() {
         this.setState({
             isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
-            designation: '',
-            company: '',
-            location: '',
-            description: ''
+            designation:'',
+            company:'',
+            location:'',
+            fromDate:'',
+            toDate:'',
+            description: '',
+            isWorking:'',
+            disabledSaveBtn:true
         })
     }
-    toggleWorkHistory=(action, e)=>{
+    toggleWorkHistory=()=>{
         this.setState({
             isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
             modalSaveAction: this.addWorkhistory,
@@ -110,7 +115,7 @@ class WorkHistory extends React.Component {
     }
 
     updateWorkHistory = () => {
-        if (this.state) {
+        if (this.state.designation && this.state.company && this.state.fromDate && this.state.toDate) {
             const data = {
                 designation: this.state.designation,
                 company: this.state.company,
@@ -121,7 +126,10 @@ class WorkHistory extends React.Component {
                 workHistoryId: this.state.workHistoryId
             };
             this.props.updateWorkHistory(data);
-            this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen, designation: '', company: '', location: '',fromDate:'',toDate:'',description:''});
+            this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,  disabledSaveBtn: true});
+            this.reset();
+        }else {
+            this.setState({ isValid: false });
         }
     }
 
@@ -173,7 +181,7 @@ class WorkHistory extends React.Component {
     render() {
         let modalContent;
         let modalTitle;
-        let modalType = '';
+       
 
         const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
@@ -313,10 +321,8 @@ class WorkHistory extends React.Component {
         if (this.state.isWorkHistoryModalOpen) {
             if (this.state.isAdd) {
                 modalTitle = 'Add Work History';
-                modalType = 'isAdd';
             } else if (this.state.isEdit) {
                 modalTitle = 'Edit Work History';
-                modalType = 'isEdit';
             }
             modalContent = WorkHistoryModalContent;
         }
@@ -327,7 +333,7 @@ class WorkHistory extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Work History</h4>
                     <i className="SPIconLarge SPIconAdd"
-                    onClick={()=>this.toggleWorkHistory('isAdd')} />
+                    onClick={this.toggleWorkHistory} />
                 </div>
 
                 <div className="SPCertificateContainer width100">
@@ -346,12 +352,12 @@ class WorkHistory extends React.Component {
 
             <ProfileModalPopup
                 isOpen={this.state.isWorkHistoryModalOpen}
-                toggle={()=>this.toggleWorkHistory(modalType)}
+                toggle={this.toggleWorkHistory}
                 ModalBody={modalContent}
                 className="modal-lg asyncModal CertificationModal"
                 modalTitle={modalTitle}
                 centered="centered"
-                onClick={this.state.modalSaveAction}
+                onClick={this.state.isAdd ? this.addWorkhistory : this.updateWorkHistory}
                 disabled={this.state.disabledSaveBtn}
             />
 
