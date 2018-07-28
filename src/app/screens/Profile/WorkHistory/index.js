@@ -345,7 +345,7 @@ class WorkHistory extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'> to add Services Offered</span>
+                                    <span className='SPNoInfoDesc'> to add Work History</span>
                                 </div>
                             </div>
                             </ul>
