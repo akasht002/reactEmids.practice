@@ -1,9 +1,9 @@
 import React,{Component} from "react";
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
-import moment from 'moment';
 import { checkDate,checkSpace } from "../../../utils/validations"
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
@@ -12,7 +12,7 @@ class WorkHistory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            WorkHistoryModal: false,
+            isWorkHistoryModalOpen: false,
             workHistoryId:'',
             designation:'',
             company:'',
@@ -21,10 +21,10 @@ class WorkHistory extends React.Component {
             toDate:'',
             isWorking:false,
             description:'',
-            showModalOnDelete: false,
+            isOnDeleteModalOpen: false,
             modalSaveAction: '',
-            add: false,
-            edit: false,
+            isAdd: false,
+            isEdit: false,
             isValid: true,
             disabledSaveBtn: true,
             isValidDate:true
@@ -49,19 +49,19 @@ class WorkHistory extends React.Component {
     }
     reset() {
         this.setState({
-            WorkHistoryModal: !this.state.WorkHistoryModal,
+            isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
             designation: '',
             company: '',
             location: '',
             description: ''
         })
     }
-    toggleWorkHistory(action, e){
+    toggleWorkHistory=(action, e)=>{
         this.setState({
-            WorkHistoryModal: !this.state.WorkHistoryModal,
+            isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
             modalSaveAction: this.addWorkhistory,
-            add: true,
-            edit: false,
+            isAdd: true,
+            isEdit: false,
             isValid: true,
             designation:'',
             location:'',
@@ -87,7 +87,7 @@ class WorkHistory extends React.Component {
             this.props.addWorkHistory(data);
             this.setState({ 
                 modalSaveAction: this.addCertification, 
-                WorkHistoryModal: !this.state.WorkHistoryModal,
+                isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
                 company: '',
                 designation: '', 
                 location:'',
@@ -96,18 +96,16 @@ class WorkHistory extends React.Component {
                 isWorking:'',
                 description:''
             });
-            //this.setState({ modalSaveAction: this.addCertification });
-            //this.reset();
         } else {
             this.setState({ isValid: false });
         }
     }
-    showModalOnDelete = (e) => {
-        this.setState({ showModalOnDelete: !this.state.showModalOnDelete, workHistoryId: e.target.id });
+    isOnDeleteModalOpen = (e) => {
+        this.setState({ isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen, workHistoryId: e.target.id });
     }
 
     editWorkHistory = (e) => {
-        this.setState({ modalSaveAction: this.updateWorkHistory, WorkHistoryModal: true, add: false, edit: true, workHistoryId: e.target.id });
+        this.setState({ modalSaveAction: this.updateWorkHistory, isWorkHistoryModalOpen: true, isAdd: false, isEdit: true, workHistoryId: e.target.id });
         this.props.editWorkHistory(e.target.id);
     }
 
@@ -123,20 +121,14 @@ class WorkHistory extends React.Component {
                 workHistoryId: this.state.workHistoryId
             };
             this.props.updateWorkHistory(data);
-            this.setState({ WorkHistoryModal: !this.state.WorkHistoryModal, designation: '', company: '', location: '',fromDate:'',toDate:'',description:''});
+            this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen, designation: '', company: '', location: '',fromDate:'',toDate:'',description:''});
         }
     }
 
     deleteWorkHistory = () => {
         this.props.deleteWorkHistory(this.state.workHistoryId);
-        this.setState({ showModalOnDelete: !this.state.showModalOnDelete });
+        this.setState({ isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen });
     }
-
-    // toggleCheckbox() {
-    //     this.setState({
-    //         isChecked: !this.state.isChecked,
-    //     });
-    // }
 
     dateChanged = (date) => {
         const formattedDate = date ? moment(new Date(date.toString())).format('MM/DD/YYYY') : null;
@@ -146,7 +138,7 @@ class WorkHistory extends React.Component {
         });
         //this.props.formDirty();
     }
-
+    
     dateChangedRaw = (event) => {
         if (event.target.value.length === 10
             && checkDate(event.target.value)
@@ -311,20 +303,20 @@ class WorkHistory extends React.Component {
                         <span className="SPCertificateDesc">{WorkHistoryList.description}</span>
                     </div>
                     <i className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
-                        onClick={(e) => this.showModalOnDelete(e)} />
+                        onClick={(e) => this.isOnDeleteModalOpen(e)} />
                     <i className="SPIconMedium SPIconEdit" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.editWorkHistory(e)} />
                 </li>
             )
         });
 
-        if (this.state.WorkHistoryModal) {
-            if (this.state.add) {
+        if (this.state.isWorkHistoryModalOpen) {
+            if (this.state.isAdd) {
                 modalTitle = 'Add Work History';
-                modalType = 'add';
-            } else if (this.state.edit) {
+                modalType = 'isAdd';
+            } else if (this.state.isEdit) {
                 modalTitle = 'Edit Work History';
-                modalType = 'edit';
+                modalType = 'isEdit';
             }
             modalContent = WorkHistoryModalContent;
         }
@@ -335,7 +327,7 @@ class WorkHistory extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Work History</h4>
                     <i className="SPIconLarge SPIconAdd"
-                    onClick={this.toggleWorkHistory.bind(this, 'add')} />
+                    onClick={()=>this.toggleWorkHistory('isAdd')} />
                 </div>
 
                 <div className="SPCertificateContainer width100">
@@ -353,8 +345,8 @@ class WorkHistory extends React.Component {
                 </div>
 
             <ProfileModalPopup
-                isOpen={this.state.WorkHistoryModal}
-                toggle={this.toggleWorkHistory.bind(this, modalType)}
+                isOpen={this.state.isWorkHistoryModalOpen}
+                toggle={()=>this.toggleWorkHistory(modalType)}
                 ModalBody={modalContent}
                 className="modal-lg asyncModal CertificationModal"
                 modalTitle={modalTitle}
@@ -364,8 +356,8 @@ class WorkHistory extends React.Component {
             />
 
             <ModalPopup
-                isOpen={this.state.showModalOnDelete}
-                ModalBody={<span>Do you really want to remove the Education details</span>}
+                isOpen={this.state.isOnDeleteModalOpen}
+                ModalBody={<span>Do you really want to remove the Work History details</span>}
                 btn1="YES"
                 btn2="NO"
                 className="modal-sm"
@@ -373,7 +365,7 @@ class WorkHistory extends React.Component {
                 centered={true}
                 onConfirm={() => this.deleteWorkHistory()}
                 onCancel={() => this.setState({
-                    showModalOnDelete: !this.state.showModalOnDelete,
+                    isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen,
                 })}
             />
         </div>
