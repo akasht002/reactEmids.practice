@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
+import Languages from "../Languages/index";
 import Certification from "../Certification/index";
 import Education from "../Education/index";
-
 import './styles.css';
 
-class Profile extends React.Component {
+class Profile extends Component {
 
     updateWindowDimensions() {
         this.setState({ width: window.innerWidth, height: window.innerHeight });
@@ -27,6 +27,9 @@ class Profile extends React.Component {
                                         <a><i className="Icon icon-back" /></a>
                                         Profile
                                     </h4>
+                                </div>
+                                <div className="col-md-12 card CardWidget SPLanguages">
+                                    <Languages />
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Certification />
