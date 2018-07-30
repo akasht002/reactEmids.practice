@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
 import Certification from "../Certification/index";
 import Education from "../Education/index";
+import PersonalDetail from "../PersonalDetail/index";
 
 import './styles.css';
 
@@ -27,6 +28,9 @@ class Profile extends React.Component {
                                         <a><i className="Icon icon-back" /></a>
                                         Profile
                                     </h4>
+                                </div>
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                    <PersonalDetail />
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Certification />

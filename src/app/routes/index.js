@@ -8,7 +8,8 @@ import {
   SetPassword,
   VerifyUserID,
   OnboardSuccess,
-  Profile
+  Profile,
+  Home
 } from '../screens'
 
 
@@ -18,7 +19,8 @@ export const Path = {
   verifyEmail: '/verifyemail',
   verifyContact: '/verifycontact',
   onboardSuccess: '/onboardsuccess',
-  profile: '/profile'
+  profile: '/profile',
+  home:'/home'
 };
 
 class AppStackRoot extends React.Component {
@@ -27,7 +29,7 @@ class AppStackRoot extends React.Component {
       <ConnectedRouter history={this.props.history}>
         <HashRouter>
           <Switch>
-            <Route exact path={Path.root} component={Welcome} />
+            <Route exact path={Path.root} component={Home} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
