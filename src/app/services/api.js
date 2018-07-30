@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 // export const baseURL = "http://10.11.111.52:9905/api/";
+
 export const baseURL = "http://localhost:63633/api/";
 
 export const Api = axios.create({
@@ -13,6 +14,7 @@ export const API = {
     verifyTemporaryPasscode: 'ServiceProviderOnBoarding/VerifyServiceProvider',
     setPassword: 'ServiceProviderOnBoarding/SetPassword',
     certification: 'ServiceProvider/',
+    WorkHistory:'ServiceProvider/',
     getSkills: 'ServiceProvider/Skill',
     addSkills: 'ServiceProvider/',
     education: 'ServiceProvider/',
