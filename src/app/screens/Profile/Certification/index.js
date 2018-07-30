@@ -78,7 +78,7 @@ class Certification extends React.Component {
     }
 
     editCertification = (e) => {
-        this.setState({ certificationModal: true, isAdd: false, isEdit: true,certificationId: e.target.id });
+        this.setState({ certificationModal: true, isAdd: false, certificationId: e.target.id });
         this.props.editCertification(e.target.id);
     }
 

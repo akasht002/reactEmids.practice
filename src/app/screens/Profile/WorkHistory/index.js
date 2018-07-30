@@ -295,6 +295,7 @@ class WorkHistory extends React.Component {
                         placeholder='Write your Description'
                         className='form-control'
                         rows='5'
+                        required={false}
                         value={this.state.description}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
