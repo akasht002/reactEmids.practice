@@ -4,7 +4,7 @@ import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
-import { checkDate,checkSpace,formattedDateMoment,formattedDateChange } from "../../../utils/validations"
+import { checkDate,checkSpace,formattedDateMoment,formattedDateChange,formateStateDate } from "../../../utils/validations"
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
@@ -22,9 +22,7 @@ class WorkHistory extends React.Component {
             isWorking:false,
             description:'',
             isOnDeleteModalOpen: false,
-            modalSaveAction: '',
             isAdd: false,
-            isEdit: false,
             isValid: true,
             disabledSaveBtn: true,
             isValidDate:true
@@ -48,12 +46,25 @@ class WorkHistory extends React.Component {
             
         })
     }
+
+    reset() {
+        this.setState({
+            isWorkHistoryModalOpen: false,
+            designation: '',
+            company: '',
+            location: '',
+            fromDate: '',
+            toDate: '',
+            description: '',
+            isWorking: '',
+            disabledSaveBtn: true
+        })
+    }
+
     toggleWorkHistory=()=>{
         this.setState({
             isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
-            modalSaveAction: this.addWorkhistory,
             isAdd: true,
-            isEdit: false,
             isValid: true,
             disabledSaveBtn:true,
             designation:'',
@@ -71,11 +82,11 @@ class WorkHistory extends React.Component {
                 workHistoryId:this.state.workHistoryId,
                 company:this.state.company.trim(),
                 designation: this.state.designation.trim(),
-                location: this.state.location,
+                location: this.state.location.trim(),
                 fromDate:this.state.fromDate,
                 toDate:this.state.toDate,
                 isWorking:this.state.isWorking,
-                description:this.state.description
+                description:this.state.description.trim()
             };
             if(data.isWorking){
                 const data ={
@@ -87,17 +98,7 @@ class WorkHistory extends React.Component {
                 }
             }
             this.props.addWorkHistory(data);
-            this.setState({ 
-                modalSaveAction: this.addWorkhistory, 
-                isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
-                company: '',
-                designation: '', 
-                location:'',
-                fromDate:'',
-                toDate:'',
-                isWorking:'',
-                description:''
-            });
+           this.reset();
         } else {
             this.setState({ isValid: false });
         }
@@ -107,7 +108,7 @@ class WorkHistory extends React.Component {
     }
 
     editWorkHistory = (e) => {
-        this.setState({ modalSaveAction: this.updateWorkHistory, isWorkHistoryModalOpen: true, isAdd: false, isEdit: true, workHistoryId: e.target.id });
+        this.setState({ isWorkHistoryModalOpen: true, isAdd: false, workHistoryId: e.target.id });
         this.props.editWorkHistory(e.target.id);
     }
 
@@ -124,7 +125,7 @@ class WorkHistory extends React.Component {
             };
             this.props.updateWorkHistory(data);
             this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,  disabledSaveBtn: true});
-
+            this.reset();
         }else {
             this.setState({ isValid: false });
         }
@@ -231,11 +232,11 @@ class WorkHistory extends React.Component {
                     <div className="form-group">
                         <label>From Date</label>
                     <Calendar 
-                        startDate={this.state.fromDate && moment(this.state.fromDate)}
+                        startDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
                         onDateChange={this.dateChanged}
                         onDateChangeRaw={this.dateChangedRaw}
                         mandatory={true}
-                        maxDate={this.state.toDate && moment(this.state.toDate)}
+                        maxDate={this.state.toDate && formateStateDate(this.state.toDate)}
                         value={this.state.fromDate}
                         className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate )) && 'inputFailure')}
                     />
@@ -247,11 +248,11 @@ class WorkHistory extends React.Component {
                 {!this.state.isWorking && <div className="form-group">
                     <label>To Date</label>
                     <Calendar 
-                        startDate={this.state.toDate && moment(this.state.toDate)}
+                        startDate={this.state.toDate && formateStateDate(this.state.toDate)}
                         onDateChange={this.todateChanged}
                         onDateChangeRaw={this.todateChangedRaw}
                         mandatory={true}
-                        minDate={this.state.fromDate && moment(this.state.fromDate)}
+                        minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
                         value={this.state.toDate}
                         className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
                     />
@@ -313,7 +314,7 @@ class WorkHistory extends React.Component {
         if (this.state.isWorkHistoryModalOpen) {
             if (this.state.isAdd) {
                 modalTitle = 'Add Work History';
-            } else if (this.state.isEdit) {
+            } else {
                 modalTitle = 'Edit Work History';
             }
             modalContent = WorkHistoryModalContent;
@@ -366,7 +367,7 @@ class WorkHistory extends React.Component {
                 centered={true}
                 onConfirm={() => this.deleteWorkHistory()}
                 onCancel={() => this.setState({
-                    isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen,
+                    isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen
                 })}
             />
         </div>
