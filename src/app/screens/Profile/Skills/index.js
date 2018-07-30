@@ -29,10 +29,11 @@ class Skills extends React.Component {
 
         if (nextProps.selectedSkillsList && nextProps.selectedSkillsList.skills) {
             for (const skills of nextProps.selectedSkillsList.skills) {
-                if (selectedSkillIds === '') {
-                    selectedSkillIds = skills.id;
-                } else {
-                    selectedSkillIds = selectedSkillIds + ',' + skills.id;
+                {
+                    selectedSkillIds === '' ?
+                        selectedSkillIds = skills.id
+                        :
+                        selectedSkillIds = selectedSkillIds + ',' + skills.id
                 }
             }
         }
@@ -59,7 +60,7 @@ class Skills extends React.Component {
         this.setState({ isSkillsModalOpen: !this.state.isSkillsModalOpen, modalSaveAction: this.addSkills, disabledSaveBtn: true })
     }
 
-    editLanguages = () => {
+    editSkills = () => {
         this.setState({ modalSaveAction: this.updateSkills, isSkillsModalOpen: true, isAdd: false });
     }
 
@@ -73,10 +74,11 @@ class Skills extends React.Component {
         let modalTitle;
         let modalContent;
 
-        let skillsOptions = this.props.SkillsList && this.props.SkillsList.map((skillsList, i) => {
-            skillsList.label = skillsList.name;
-            skillsList.value = skillsList.id;
-            return skillsList;
+        let skillsOptions = this.props.SkillsList && this.props.SkillsList.map((skillsList) => {
+            return {
+                label: skillsList.name,
+                value: skillsList.id
+            }
         });
 
         let SkillsModalContent =
@@ -97,21 +99,21 @@ class Skills extends React.Component {
             )
         })
 
-        if (this.state.isSkillsModalOpen) {
-            if (this.state.isAdd) {
-                modalTitle = 'Add Skills and Experience';
-            } else {
-                modalTitle = 'Edit Skills and Experience';
-            }
-            modalContent = SkillsModalContent;
+        {
+            this.state.isSkillsModalOpen && this.state.isAdd ?
+                modalTitle = 'Add Skills and Experience'
+                :
+                modalTitle = 'Edit Skills and Experience'
         }
+
+        modalContent = SkillsModalContent;
 
         return (
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Skills and Experience</h4>
                     {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
-                        <i className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
+                        <i className="SPIconMedium SPIconEdit" onClick={this.editSkills} />
                         :
                         < i className="SPIconLarge SPIconAdd" onClick={this.toggleSkills} />
                     }
