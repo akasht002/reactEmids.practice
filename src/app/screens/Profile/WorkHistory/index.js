@@ -127,7 +127,7 @@ class WorkHistory extends React.Component {
             };
             this.props.updateWorkHistory(data);
             this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,  disabledSaveBtn: true});
-            this.reset();
+            //this.reset();
         }else {
             this.setState({ isValid: false });
         }
