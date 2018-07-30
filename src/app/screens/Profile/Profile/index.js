@@ -5,6 +5,7 @@ import { ProfileHeader } from '../../../components'
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
 import Education from "../Education/index";
+import Skills from "../Skills/index";
 import './styles.css';
 
 class Profile extends Component {
@@ -27,6 +28,9 @@ class Profile extends Component {
                                         <a><i className="Icon icon-back" /></a>
                                         Profile
                                     </h4>
+                                </div>
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                    <Skills />
                                 </div>
                                 <div className="col-md-12 card CardWidget SPLanguages">
                                     <Languages />
