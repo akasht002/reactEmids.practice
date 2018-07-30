@@ -4,7 +4,7 @@ import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
-import { checkDate,checkSpace } from "../../../utils/validations"
+import { checkDate,checkSpace,formattedDateMoment,formattedDateChange } from "../../../utils/validations"
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
@@ -136,7 +136,7 @@ class WorkHistory extends React.Component {
     }
 
     dateChanged = (date) => {
-        const formattedDate = date ? moment(new Date(date.toString())).format('MM/DD/YYYY') : null;
+        const formattedDate = formattedDateMoment(date);
         this.setState({  
             fromDate: formattedDate,
             disabledSaveBtn:false 
@@ -145,34 +145,28 @@ class WorkHistory extends React.Component {
     }
     
     dateChangedRaw = (event) => {
-        if (event.target.value.length === 10
-            && checkDate(event.target.value)
-            && new Date(event.target.value)
-            && moment().isAfter(event.target.value)) {
-            const formattedDate = event.target.value ? moment(new Date(event.target.value.toString())).format('MM/DD/YYYY') : null;
-            this.setState({  
-                fromDate: formattedDate
-            });
-        } 
+        const formattedDate = formattedDateChange(event);
+        this.setState({  
+            fromDate: formattedDate
+        });
  
     }
 
     todateChanged = (date) => {
-        const formattedDate = date ? moment(new Date(date.toString())).format('MM/DD/YYYY') : null;
-        this.setState({  toDate: formattedDate,
-            disabledSaveBtn:false });
+        const formattedDate = formattedDateMoment(date);
+        this.setState({  
+            toDate: formattedDate,
+            disabledSaveBtn:false
+         });
 
     }
 
     todateChangedRaw = (event) => {
-        if (event.target.value.length === 10
-            && checkDate(event.target.value)
-            && new Date(event.target.value)
-            && moment().isAfter(event.target.value)) {
-            const formattedDate = event.target.value ? moment(new Date(event.target.value.toString())).format('MM/DD/YYYY') : null;
-            this.setState({  toDate: formattedDate});
-        } 
-        //this.props.formDirty();
+        const formattedDate = formattedDateChange(event);
+            this.setState({  
+                toDate: formattedDate
+            });
+      
     }
 
     render() {

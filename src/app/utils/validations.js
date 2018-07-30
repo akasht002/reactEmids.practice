@@ -1,3 +1,5 @@
+
+import moment from 'moment';
 export function checkEmail(email) {
     return /^(([^<>()[\]\\.,;:@"]+(\.[^<>()[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 }
@@ -16,4 +18,17 @@ export function checkSpace(text) {
 
 export function checkTrim(text) {
     return (text).trim();
+}
+
+export function formattedDateMoment(date){
+   return  date ? moment(new Date(date.toString())).format('MM/DD/YYYY') : null;
+}
+
+export function formattedDateChange(event){
+    if (event.target.value.length === 10
+        && new Date(event.target.value)
+        && moment().isAfter(event.target.value)) {
+        return  event.target.value ? moment(new Date(event.target.value.toString())).format('MM/DD/YYYY') : null;
+      
+    } 
 }
