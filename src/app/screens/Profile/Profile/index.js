@@ -5,7 +5,9 @@ import { ProfileHeader } from '../../../components'
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
 import Education from "../Education/index";
+import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
+
 import './styles.css';
 
 class Profile extends Component {
@@ -40,6 +42,9 @@ class Profile extends Component {
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Education />
+                                </div>
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                    <WorkHistory />
                                 </div>
                             </div>
                         </div>

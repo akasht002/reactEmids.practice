@@ -1,129 +1,165 @@
-@media (min-width: 1025px) and (max-width: 1280px) {
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-}
-
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-
-}
-
-@media (max-width: 990px) {
-    .ratePerHour{
-        margin-right: 40px;
-        padding: 0 5px;
-        font-size: 22px;
-    }
-    
-    .ratePerHour span:before{
-        font-size: 18px;
-    }
-    
-    .SPName{
-        font-size: 22px;
-    }
-    
-    .SPName:after{
-        height: 20px;
-        width: 20px;
-    }}
-
-@media (max-width: 768px) {
-    .navbar{
-        position: fixed !important;
-        height: auto !important;
-        width: 100%;
-        z-index: 2;
-        background-color: #ffffff;
-    }
-
-    .navbar-brand{
-        color: #7a329f;
-    }
-
-    .navbar-collapse{
-        z-index: 2;
-    }
-
-    .mainWidget{
-        min-height: calc( 100vh - 140px );
-    }
-    .mainContent{
-        margin-top: 140px;
-        height: calc( 100vh - 210px );
-    }
-    .sideContent{
-        position: absolute;
-        top: 58px;
-        height: 80px;
-        width: 100%;
-        z-index: 1;
-    }
-    .sideNavigation{
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        margin: 0 30px;
-        padding: 0;
-    }
-    .sideNavigation li{
+html{height: 100%!important;
+    width:100%;
+    margin: 0;
+    padding: 0;}
+    .coreoWizardScreen{
         position: relative;
-        height: 80px;
-        width: 100%;
+        height: 100%;
     }
-    .sideNavigation li:before{
-        bottom: -20px;
-        left: 0;
-        margin: 0 auto;
-        right: 0;
+    
+    @media (min-width: 1025px) and (max-width: 1280px) {
     }
-    .sideNavigation li h5{
-        position: fixed;
-        font-size: 18px;
-        width: calc( 100% - 60px );
-        opacity: 0;
-        left: 30px;
-        margin-top: 10px;
+    
+    @media (min-width: 768px) and (max-width: 1024px) {
     }
-    .sideNavigation li.active h5{
-        opacity: 1;
+    
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
     }
-    .sideNavigation li p{
+    @media (max-height: 800px) and (max-width: 1280px){
+        .mainContent{        
+            height: calc( 100vh - 240px );
+        }
+    }
+    @media (max-width: 800px) {
+        .navbar{
+            position: fixed !important;
+            height: auto !important;
+            width: 100%;
+            z-index: 2;
+            background-color: #ffffff;
+        }
+    
+        .navbar-brand{
+            color: #3c1053;
+        }
+    
+        .navbar-collapse{
+            z-index: 2;
+        }
+    
+        .mainWidget{
+            min-height: calc( 100vh - 140px );
+        }
+        .mainContent{
+            margin-top: 140px;
+            height: calc( 100vh - 300px );
+        }
+        .sideContent{
+            position: absolute;
+            top: 58px;
+            height: 80px;
+            width: 100%;
+            z-index: 1;
+        }
+        .sideNavigation{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 0 30px;
+            padding: 0;
+        }
+        .sideNavigation li{
+            position: relative;
+            height: 80px;
+            width: 100%;
+        }
+        .sideNavigation li:before{
+            bottom: -20px;
+            left: 0;
+            margin: 0 auto;
+            right: 0;
+        }
+        .sideNavigation li h5{
+            position: fixed;
+            font-size: 18px;
+            width: calc( 100% - 60px );
+            opacity: 0;
+            left: 30px;
+            margin-top: 10px;
+        }
+        .sideNavigation li.active h5{
+            opacity: 1;
+        }
+        .sideNavigation li p{
+            display: none;
+        }
+    
+        input.form-control{
+            width: 100%;
+        }
+    
+        .mainContent .row > div > h4{
+            display: none;
+        }
+        .receivePass{
+            width: calc( 100% - 60px );
+        }
+    
+        .navbar-toggler:focus{
+            outline: 0;
+        }
+    
+        .btn{
+            padding: 5px 22px !important;
+        }
+    
+        .modal-sm{
+            min-width: 90%;
+            margin: 0 auto !important;
+            z-index: 9999!important;
+        }
+        
+        .modal-sm .modal-content{
+            width: 90%;
+            margin: 0 auto;
+        }
+    }
+    
+    nav.navbarProfile{
+        padding: 1rem;
+    }
+    
+    li.navIconWidget{
+        padding: 10px 5px;
+        margin: 0;
+    }
+    
+    li.navIconWidget:before{
         display: none;
     }
-
-    input.form-control{
-        width: 100%;
+    
+    ul.navIconContainer{
+        flex-direction: row;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        justify-content: space-around;
+        -webkit-justify-content: space-around;
+        background-color: #f1f1fb;
     }
-
-    .mainContent .row > div > h4{
-        display: none;
+    
+    ul.SearchWidget{
+        margin: 10px 0;
     }
-    .receivePass{
-        width: calc( 100% - 60px );
+    
+    @media (max-height: 768px) {
+        
+        .nav-item p{
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .nav-item h5{
+            font-size: 18px;
+        }
     }
-
-    .navbar-toggler:focus{
-        outline: 0;
+    body{overflow: hidden!important;}
+    
+    
+    @media (min-width: 992px) {
+        /*@media all and (min-width:992px)*/
+    .modal-lg {
+        max-width: 1200px!important;
     }
-
-    .btn{
-        padding: 5px 22px !important;
+    
+    
     }
-}
-
-@media (max-height: 768px) {
-    .sideNavigation li.nav-item{
-       margin: 10px 0 !important;
-    }
-
-    .sideNavigation li.nav-item p{
-        margin-bottom: 5px;
-        font-size: 14px;
-    }
-
-    .sideNavigation li.nav-item h5{
-        font-size: 18px;
-    }
-
-}
