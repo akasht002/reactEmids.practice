@@ -26,6 +26,7 @@ class Calendar extends Component {
                         disabled={this.props.disabled}
                         shouldCloseOnSelect={true}
                         maxDate={this.props.maxDate}
+                        minDate={this.props.minDate}
                         showMonthDropdown
                         showYearDropdown
                         dropdownMode="select"
