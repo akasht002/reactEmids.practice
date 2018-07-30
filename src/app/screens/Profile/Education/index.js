@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import moment  from 'moment';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual'
 import { Input ,ProfileModalPopup, ModalPopup } from "../../../components";
+import {formateYearDate} from "../../../utils/validations"
 import { getEducation, addEducation, editEducation, updateEducation, deleteEducation } from '../../../redux/profile/Education/actions';
 
 import "./styles.css";
@@ -83,7 +83,7 @@ class Education extends React.Component {
 
             }
         ]
-         const fieldDifference = _.isEqual(educationFielarray, stateArray);
+         const fieldDifference = isEqual(educationFielarray, stateArray);
          if (fieldDifference === true) {
             this.setState({ EducationModal: false, isDiscardModalOpen: false })
         } else {
@@ -141,7 +141,7 @@ class Education extends React.Component {
     YearList() {
         var year = [];
         var selectedYear = "2018";
-        var curYear = moment().format('YYYY');
+        var curYear = formateYearDate('YYYY');
         year.push(<option value="" disabled selected>YYYY</option>)
         for (var i = '1901'; i <= curYear; i++) {
             var selectedOption = 'false';
@@ -156,7 +156,7 @@ class Education extends React.Component {
     YearListCal(){
         var year = [];
         var selectedYear = "2018";
-        var curYear = moment().format('YYYY');
+        var curYear = formateYearDate('YYYY');
         year.push(<option value="" disabled selected>YYYY</option>)
         for (var i = this.state.startYear; i <= curYear; i++) {
             var selectedOption = 'false';
