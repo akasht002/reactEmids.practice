@@ -20,6 +20,7 @@ import {
     ScreenCover,
     ModalUserAgreement,
     ProfileModalPopup,
+    SkillsMultiSelect,
     LanguagesMultiSelect
 } from './LevelOne';
 import {
@@ -54,5 +55,6 @@ export {
     ModalPopup,
     ModalUserAgreement,
     ProfileModalPopup,
+    SkillsMultiSelect,
     LanguagesMultiSelect
 };
