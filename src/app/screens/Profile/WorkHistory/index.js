@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
-import { checkDate,checkSpace,formattedDateMoment,formattedDateChange,formateStateDate } from "../../../utils/validations"
+import { checkSpace,formattedDateMoment,formattedDateChange,formateStateDate } from "../../../utils/validations"
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 

@@ -9,7 +9,6 @@ export const profileState = combineReducers({
     EducationState,
     LanguagesState,
     WorkHistoryState,
-    SkillsState,
-    LanguagesState
+    SkillsState
 
 });
