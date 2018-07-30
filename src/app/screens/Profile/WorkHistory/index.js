@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import { connect } from 'react-redux';
-import moment from 'moment';
+import _ from 'lodash'
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
@@ -25,7 +25,8 @@ class WorkHistory extends React.Component {
             isAdd: false,
             isValid: true,
             disabledSaveBtn: true,
-            isValidDate:true
+            isValidDate:true,
+            isDiscardModalOpen:false
         }
     }
 
@@ -57,7 +58,10 @@ class WorkHistory extends React.Component {
             toDate: '',
             description: '',
             isWorking: '',
-            disabledSaveBtn: true
+            disabledSaveBtn: true,
+            isDiscardModalOpen:false,
+            isAdd:true,
+            isValid:true
         })
     }
 
@@ -67,13 +71,36 @@ class WorkHistory extends React.Component {
             isAdd: true,
             isValid: true,
             disabledSaveBtn:true,
-            designation:'',
-            location:'',
-            company:'',
-            fromDate:'',
-            toDate:'',
-            description:''
+            isDiscardModalOpen:false
         })
+        let workhistoryFieldarray = [
+            {
+                designation: this.props.workhistoyFieldDetails.designation,
+                company: this.props.workhistoyFieldDetails.company,
+                location: this.props.workhistoyFieldDetails.location,
+                fromDate: this.props.workhistoyFieldDetails.fromDate,
+                toDate: this.props.workhistoyFieldDetails.toDate,
+                description: this.props.workhistoyFieldDetails.description,
+                isWorking:this.props.workhistoyFieldDetails.isWorking
+            }
+        ]
+         let stateArray = [
+            {
+                designation: this.state.designation,
+                company: this.state.company,
+                location: this.state.location,
+                fromDate: this.state.fromDate,
+                toDate: this.state.toDate,
+                description: this.state.description,
+                isWorking:this.state.isWorking
+            }
+        ]
+         const fieldDifference = _.isEqual(stateArray, workhistoryFieldarray);
+         if (fieldDifference === true) {
+            this.setState({ isWorkHistoryModalOpen: false, isDiscardModalOpen: false })
+        } else {
+            this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
+        }
     }
     addWorkhistory = () => {
         if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate)) {
@@ -326,7 +353,7 @@ class WorkHistory extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Work History</h4>
                     <i className="SPIconLarge SPIconAdd"
-                    onClick={this.toggleWorkHistory} />
+                    onClick={() => this.setState({ isWorkHistoryModalOpen: true })} />
                 </div>
 
                 <div className="SPCertificateContainer width100">
@@ -356,6 +383,21 @@ class WorkHistory extends React.Component {
                     this.updateWorkHistory
                 }
             />
+
+            <ModalPopup
+            isOpen={this.state.isDiscardModalOpen}
+            toggle={this.reset}
+            ModalBody={<span>Do you want to discard the changes?</span>}
+            btn1="YES"
+            btn2="NO"
+            className="modal-sm"
+            headerFooter="d-none"
+            centered="centered"
+            onConfirm={() => this.reset()}
+            onCancel={() => this.setState({
+                isDiscardModalOpen: false,
+            })}
+        />
 
             <ModalPopup
                 isOpen={this.state.isOnDeleteModalOpen}
