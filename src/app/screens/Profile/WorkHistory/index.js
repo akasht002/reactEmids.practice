@@ -77,7 +77,7 @@ class WorkHistory extends React.Component {
         })
     }
     addWorkhistory = () => {
-        if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate) && (this.state.toDate)) {
+        if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate)) {
            
             const data = {
                 workHistoryId:this.state.workHistoryId,
@@ -89,6 +89,15 @@ class WorkHistory extends React.Component {
                 isWorking:this.state.isWorking,
                 description:this.state.description
             };
+            if(data.isWorking){
+                const data ={
+                    fromDate:""
+                }
+            }else {
+                const data ={
+                    fromDate:this.state.fromDate
+                }
+            }
             this.props.addWorkHistory(data);
             this.setState({ 
                 modalSaveAction: this.addCertification, 
