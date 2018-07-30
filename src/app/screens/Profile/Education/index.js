@@ -141,7 +141,7 @@ class Education extends React.Component {
     YearList() {
         var year = [];
         var selectedYear = "2018";
-        var curYear = formateYearDate('YYYY');
+        var curYear = formateYearDate();
         year.push(<option value="" disabled selected>YYYY</option>)
         for (var i = '1901'; i <= curYear; i++) {
             var selectedOption = 'false';
@@ -156,7 +156,7 @@ class Education extends React.Component {
     YearListCal(){
         var year = [];
         var selectedYear = "2018";
-        var curYear = formateYearDate('YYYY');
+        var curYear = formateYearDate();
         year.push(<option value="" disabled selected>YYYY</option>)
         for (var i = this.state.startYear; i <= curYear; i++) {
             var selectedOption = 'false';

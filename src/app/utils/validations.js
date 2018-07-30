@@ -38,6 +38,6 @@ export function formateStateDate(data){
     return moment(data);
 }
 
-export function formateYearDate(data){
+export function formateYearDate(){
     return  moment().format(DATE_YEAR);
 }
