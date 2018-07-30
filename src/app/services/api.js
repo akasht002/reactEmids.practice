@@ -12,7 +12,7 @@ export const API = {
     verifyTemporaryPasscode: 'ServiceProviderOnBoarding/VerifyServiceProvider',
     setPassword: 'ServiceProviderOnBoarding/SetPassword',
     certification: 'ServiceProvider/',
-    education: 'ServiceProvider/',
+    Education: 'ServiceProvider/',
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/'
 }

@@ -19,14 +19,14 @@ class Education extends React.Component {
             endYear:'',
             showModalOnDelete: false,
             modalSaveAction: '',
-            add: false,
-            edit: false,
+            isAdd: false,
+            isEdit:false,
             isValid: true,
             disabledSaveBtn: true
         };
     };
     componentDidMount() {
-        this.props.getEducation(this.props.educationId);
+        this.props.getEducation();
     }
     componentWillReceiveProps(nextProps){
      this.setState({
@@ -40,22 +40,22 @@ class Education extends React.Component {
 
 
     }
-    toggleEducation(action, e){
+    toggleEducation= () => {
         this.setState({
             EducationModal: !this.state.EducationModal,
             modalSaveAction: this.addEducation,
-            add: true,
-            edit: false,
-            isValid: true,
             school:'',
             degree:'',
             fieldOfStudy:'',
             startYear:'',
-            endYear:''
+            endYear:'',
+            isAdd: true,
+            isEdit: false,
+            isValid: true
         })
     }
     addEducation = () => {
-        if ((this.state.school) && (this.state.degree) && (this.state.fieldOfStudy) && (this.state.startYear) && (this.state.endYear)) {
+        if ((this.state.school) && (this.state.degree)) {
             const data = {
                 school: this.state.school,
                 degree: this.state.degree,
@@ -84,7 +84,7 @@ class Education extends React.Component {
     }
 
     editEducation = (e) => {
-        this.setState({ modalSaveAction: this.updateEducation, EducationModal: true, add: false, edit: true, educationId: e.target.id });
+        this.setState({ modalSaveAction: this.updateEducation, EducationModal: true, isAdd: false,isEdit: true, educationId: e.target.id });
         this.props.editEducation(e.target.id);
     }
 
@@ -99,7 +99,7 @@ class Education extends React.Component {
                 educationId: this.state.educationId
             };
             this.props.updateEducation(data);
-            this.setState({ EducationModal: !this.state.EducationModal, school: '', degree: '', fieldOfStudy: '',startYear:'',endYear:''});
+            this.setState({ EducationModal: !this.state.EducationModal, disabledSaveBtn: true});
         }
     }
 
@@ -141,7 +141,6 @@ class Education extends React.Component {
     render() {
         let modalContent;
         let modalTitle;
-        let modalType = '';
 
         const EducationModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
@@ -153,7 +152,7 @@ class Education extends React.Component {
                         
                         type="text"
                         placeholder="e.g. San Francisco University"
-                        className={"form-control"}
+                        className={"form-control " + (!this.state.isValid && !this.state.school && 'inputFailure')}
                         value={this.state.school}
                         maxlength={'500'}
                         textChange={(e) => this.setState({
@@ -161,6 +160,8 @@ class Education extends React.Component {
                             disabledSaveBtn:false
                         })}
                     />
+                    {!this.state.isValid && (!this.state.school) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.school === '' && ' School/University'}</span>}
+
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -170,7 +171,7 @@ class Education extends React.Component {
                         
                         type="text"
                         placeholder="e.g. Master of Science (M.S.)"
-                        className={"form-control"}
+                        className={"form-control " + (!this.state.isValid && !this.state.degree && 'inputFailure')}
                         value={this.state.degree}
                         maxlength={'500'}
                         textChange={(e) => this.setState({
@@ -178,6 +179,7 @@ class Education extends React.Component {
                             disabledSaveBtn:false
                         })}
                     />
+                    {!this.state.isValid && (!this.state.degree) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.degree === '' && ' Degree'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -190,8 +192,7 @@ class Education extends React.Component {
                         value={this.state.fieldOfStudy}
                         maxlength={'500'}
                         textChange={(e) => this.setState({
-                            fieldOfStudy: e.target.value,
-                            disabledSaveBtn:false
+                            fieldOfStudy: e.target.value
                         })}
                     />
                 </div>
@@ -213,8 +214,7 @@ class Education extends React.Component {
                         <select  className={"form-control"}
                         value={this.state.endYear}
                         onChange={(e) => this.setState({
-                            endYear: e.target.value,
-                            disabledSaveBtn:false
+                            endYear: e.target.value
                         })}>
                         {this.YearListCal()}                            
                         </select>
@@ -243,12 +243,10 @@ class Education extends React.Component {
         });
 
         if (this.state.EducationModal) {
-            if (this.state.add) {
+            if (this.state.isAdd) {
                 modalTitle = 'Add Education';
-                modalType = 'add';
-            } else if (this.state.edit) {
+            } else if(this.state.isEdit){
                 modalTitle = 'Edit Education';
-                modalType = 'edit';
             }
             modalContent = EducationModalContent;
         }
@@ -258,7 +256,7 @@ class Education extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Education</h4>
                     <i className="SPIconLarge SPIconAdd"
-                        onClick={this.toggleEducation.bind(this, 'add')} />
+                        onClick={this.toggleEducation} />
                 </div>
                 <div className="SPCertificateContainer width100">
                     
@@ -276,12 +274,12 @@ class Education extends React.Component {
 
                 <ProfileModalPopup
                     isOpen={this.state.EducationModal}
-                    toggle={this.toggleEducation.bind(this, modalType)}
+                    toggle={this.toggleEducation}
                     ModalBody={modalContent}
                     className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
                     centered="centered"
-                    onClick={this.state.modalSaveAction}
+                    onClick={this.state.isAdd ? this.addEducation : this.updateEducation}
                     disabled={this.state.disabledSaveBtn}
                 />
 

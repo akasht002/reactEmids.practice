@@ -29,12 +29,11 @@ export const getEducationFieldDetails = (data) => {
     }
 }
 
-export function getEducation(data) {
+export function getEducation() {
     return (dispatch, getState) => {
         
         let currstate = getState();
         let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-        let educationId=data;
         dispatch(startLoading());
         axios.get(baseURL + API.Education + serviceProviderId+'/Education').then((resp) => {
             dispatch(getEducationSuccess(resp.data))
