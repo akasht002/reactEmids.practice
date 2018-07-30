@@ -9,11 +9,8 @@ import {ModalUserAgreement} from './ModalUserAgreement';
 import {ProfileModalPopup} from './ProfileModalPopup';
 import PanelCard from './PanelCard';
 import {ScreenCover} from './ScreenCover';
-<<<<<<< HEAD
 import {SkillsMultiSelect} from './SkillsMultiSelect';
-=======
 import {LanguagesMultiSelect} from './LanguagesMultiSelect';
->>>>>>> 1989b2b5bccc132b95ea1efcdd191e8336905597
 
 export {
     Calendar, 
@@ -27,9 +24,6 @@ export {
     ScreenCover,
     ModalUserAgreement,
     ProfileModalPopup,
-<<<<<<< HEAD
-    SkillsMultiSelect
-=======
+    SkillsMultiSelect,
     LanguagesMultiSelect
->>>>>>> 1989b2b5bccc132b95ea1efcdd191e8336905597
 };
