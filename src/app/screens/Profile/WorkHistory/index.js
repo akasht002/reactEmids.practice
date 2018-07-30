@@ -48,19 +48,6 @@ class WorkHistory extends React.Component {
             
         })
     }
-    reset() {
-        this.setState({
-            isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
-            designation:'',
-            company:'',
-            location:'',
-            fromDate:'',
-            toDate:'',
-            description: '',
-            isWorking:'',
-            disabledSaveBtn:true
-        })
-    }
     toggleWorkHistory=()=>{
         this.setState({
             isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
@@ -68,6 +55,7 @@ class WorkHistory extends React.Component {
             isAdd: true,
             isEdit: false,
             isValid: true,
+            disabledSaveBtn:true,
             designation:'',
             location:'',
             company:'',
@@ -100,7 +88,7 @@ class WorkHistory extends React.Component {
             }
             this.props.addWorkHistory(data);
             this.setState({ 
-                modalSaveAction: this.addCertification, 
+                modalSaveAction: this.addWorkhistory, 
                 isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
                 company: '',
                 designation: '', 
@@ -136,7 +124,7 @@ class WorkHistory extends React.Component {
             };
             this.props.updateWorkHistory(data);
             this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,  disabledSaveBtn: true});
-            //this.reset();
+
         }else {
             this.setState({ isValid: false });
         }
@@ -153,7 +141,7 @@ class WorkHistory extends React.Component {
             fromDate: formattedDate,
             disabledSaveBtn:false 
         });
-        //this.props.formDirty();
+
     }
     
     dateChangedRaw = (event) => {
@@ -166,14 +154,14 @@ class WorkHistory extends React.Component {
                 fromDate: formattedDate
             });
         } 
-        //this.props.formDirty();
+ 
     }
 
     todateChanged = (date) => {
         const formattedDate = date ? moment(new Date(date.toString())).format('MM/DD/YYYY') : null;
         this.setState({  toDate: formattedDate,
             disabledSaveBtn:false });
-        //this.props.formDirty();
+
     }
 
     todateChangedRaw = (event) => {
@@ -367,8 +355,11 @@ class WorkHistory extends React.Component {
                 className="modal-lg asyncModal CertificationModal"
                 modalTitle={modalTitle}
                 centered="centered"
-                onClick={this.state.isAdd ? this.addWorkhistory : this.updateWorkHistory}
                 disabled={this.state.disabledSaveBtn}
+                onClick={this.state.isAdd ? 
+                    this.addWorkhistory : 
+                    this.updateWorkHistory
+                }
             />
 
             <ModalPopup
