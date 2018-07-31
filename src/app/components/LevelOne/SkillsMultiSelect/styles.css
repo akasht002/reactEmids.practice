@@ -467,4 +467,5 @@
 
 .Select--multi .Select-value-icon:hover, .Select--multi .Select-value-icon:focus {
     background-color: #ffffff !important;
+    color: #ffffff !important;
 }

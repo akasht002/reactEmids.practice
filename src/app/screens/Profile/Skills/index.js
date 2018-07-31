@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ProfileModalPopup } from "../../../components";
-import { SkillsMultiSelect } from "../../../components"
+import _ from 'lodash';
+import { SkillsMultiSelect, ModalPopup, ProfileModalPopup } from "../../../components"
 import { getSkills, addSkills, getSelectedSkills } from '../../../redux/profile/Skills/actions';
 
 class Skills extends React.Component {
@@ -16,7 +16,9 @@ class Skills extends React.Component {
             selectedSkillIds: '',
             disabledSaveBtn: true,
             isAdd: false,
+            isDiscardModalOpen: false
         };
+        this.oldSelectedValue = '';
     };
 
     componentDidMount() {
@@ -25,6 +27,7 @@ class Skills extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        this.oldSelectedValue = nextProps.selectedSkillsList.skills;
         let selectedSkillIds = '';
 
         if (nextProps.selectedSkillsList && nextProps.selectedSkillsList.skills) {
@@ -46,6 +49,30 @@ class Skills extends React.Component {
             modalSaveAction: this.addSkills,
             isAdd: true
         })
+
+        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
+            return elem.id;
+        }).join(",");
+
+        let array1 = [
+            {
+                selectedSkills: previouslySelectedValues
+            }
+        ]
+
+        let array2 = [
+            {
+                selectedSkills: this.state.selectedSkills
+            }
+        ]
+
+        const fieldDifference = _.isEqual(array1, array2);
+
+        if (fieldDifference === true) {
+
+        } else {
+            this.setState({ isSkillsModalOpen: true, isDiscardModalOpen: true })
+        }
     }
 
     onChangeLanguage = (value) => {
@@ -67,6 +94,24 @@ class Skills extends React.Component {
     updateSkills = () => {
         this.props.addSkills(this.state.selectedSkills);
         this.setState({ isSkillsModalOpen: false, disabledSaveBtn: true })
+    }
+
+    reset = () => {
+
+        const array1 = [];
+
+        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
+            return array1.push(elem.id);
+        }).join(",");
+
+        const array2 = [];
+
+        const newlySelectedValues = this.state.selectedSkills;
+        array2.push(newlySelectedValues);
+
+        const result = _.differenceWith(array1, array2)
+
+        this.setState({ selectedSkills: result, isSkillsModalOpen: false, isDiscardModalOpen: false, disabledSaveBtn: true });
     }
 
     render() {
@@ -142,6 +187,21 @@ class Skills extends React.Component {
                     centered="centered"
                     onClick={this.state.modalSaveAction}
                     disabled={this.state.disabledSaveBtn}
+                />
+
+                <ModalPopup
+                    isOpen={this.state.isDiscardModalOpen}
+                    toggle={this.reset}
+                    ModalBody={<span>Do you want to discard the changes?</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered="centered"
+                    onConfirm={() => this.reset()}
+                    onCancel={() => this.setState({
+                        isDiscardModalOpen: false,
+                    })}
                 />
             </div >
         )
