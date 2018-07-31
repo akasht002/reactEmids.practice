@@ -295,7 +295,7 @@ class Education extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'> to add Education</span>
+                                    <span className='SPNoInfoDesc'>  click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ EducationModal: true })}/> to add Education</span>
                                 </div>
                             </div>
                             </ul>
