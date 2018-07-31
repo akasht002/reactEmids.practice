@@ -182,7 +182,7 @@ class Skills extends React.Component {
                     isOpen={this.state.isSkillsModalOpen}
                     toggle={this.toggleSkills}
                     ModalBody={modalContent}
-                    className="modal-lg asyncModal LanguageModal"
+                    className="modal-lg asyncModal LanguagesModal"
                     modalTitle={modalTitle}
                     centered="centered"
                     onClick={this.state.modalSaveAction}
