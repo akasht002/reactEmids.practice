@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ProfileModalPopup } from "../../../components";
-import { LanguagesMultiSelect } from "../../../components"
+import _ from 'lodash';
+import { LanguagesMultiSelect, ProfileModalPopup, ModalPopup } from "../../../components"
 import { getLanguages, getSelectedLanguages, addLanguages } from '../../../redux/profile/Languages/actions';
 
 class Languages extends React.Component {
@@ -15,7 +15,12 @@ class Languages extends React.Component {
             selectedLanguageIds: '',
             disabledSaveBtn: true,
             isAdd: false,
+            newlySelectedLanguages: '',
+            newValue: '',
+            isDiscardModalOpen: false
         };
+        this.oldSelectedValue = '';
+        this.previouslySelectedValues = ''
     };
 
     componentDidMount() {
@@ -24,7 +29,9 @@ class Languages extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        this.oldSelectedValue = nextProps.selectedLanguagesList.languages;
         let selectedLanguageIds = '';
+        let newlySelectedLanguages = ''
 
         if (nextProps.selectedLanguagesList && nextProps.selectedLanguagesList.languages) {
             for (const language of nextProps.selectedLanguagesList.languages) {
@@ -32,10 +39,11 @@ class Languages extends React.Component {
                     selectedLanguageIds = language.id;
                 } else {
                     selectedLanguageIds = selectedLanguageIds + ',' + language.id;
+                    newlySelectedLanguages = language.id;
                 }
             }
         }
-        this.setState({ selectedLanguage: selectedLanguageIds });
+        this.setState({ selectedLanguage: selectedLanguageIds, newlySelectedLanguages: newlySelectedLanguages });
     }
 
     toggleLanguages = () => {
@@ -43,12 +51,36 @@ class Languages extends React.Component {
             isModalOpen: !this.state.isModalOpen,
             isAdd: true
         })
+
+        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
+            return elem.id;
+        }).join(",");
+
+        let array1 = [
+            {
+                selectedLanguage: previouslySelectedValues
+            }
+        ]
+
+        let array2 = [
+            {
+                selectedLanguage: this.state.selectedLanguage
+            }
+        ]
+
+        const fieldDifference = _.isEqual(array1, array2);
+
+        if (fieldDifference === true) {
+            
+        } else{
+            this.setState({ isModalOpen: true, isDiscardModalOpen: true })
+        }
     }
 
     onChangeLanguage = (value) => {
         this.setState({ selectedLanguage: value, disabledSaveBtn: false });
         if (value) {
-            this.setState({ disabledSaveBtn: false });
+            this.setState({ disabledSaveBtn: false, newValue: value });
         }
     }
 
@@ -59,6 +91,24 @@ class Languages extends React.Component {
 
     editLanguages = () => {
         this.setState({ isModalOpen: true, isAdd: false });
+    }
+
+    reset = () => {
+
+        const array1 = [];
+
+        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
+            return array1.push(elem.id);
+        }).join(",");
+
+        const array2 = [];
+
+        const newlySelectedValues = this.state.selectedLanguage;
+        array2.push(newlySelectedValues);
+
+        const result = _.differenceWith(array1, array2)
+
+        this.setState({ selectedLanguage: result, isModalOpen: false, isDiscardModalOpen: false, disabledSaveBtn: true });
     }
 
     updateLanguages = () => {
@@ -88,7 +138,7 @@ class Languages extends React.Component {
                 value={this.state.selectedLanguage}
                 multi={true}
                 closeOnSelect={true}
-                placeholder='Select Individual'
+                placeholder='Select languages'
             />;
 
         let selectedItems = this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.map(item => {
@@ -115,7 +165,7 @@ class Languages extends React.Component {
                     {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
                         <i className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={this.toggleLanguages} />
+                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({isModalOpen: true})} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -127,7 +177,7 @@ class Languages extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" /> to add Languages Spoken</span>
+                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isModalOpen: true})}/> to add Languages Spoken</span>
                             </div>
                         </div>
                     }
@@ -146,6 +196,21 @@ class Languages extends React.Component {
                         :
                         this.updateLanguages
                     }
+                />
+
+                <ModalPopup
+                    isOpen={this.state.isDiscardModalOpen}
+                    toggle={this.reset}
+                    ModalBody={<span>Do you want to discard the changes?</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered="centered"
+                    onConfirm={() => this.reset()}
+                    onCancel={() => this.setState({
+                        isDiscardModalOpen: false,
+                    })}
                 />
             </div >
         )

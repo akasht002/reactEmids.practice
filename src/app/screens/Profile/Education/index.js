@@ -286,7 +286,7 @@ class Education extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Education</h4>
                     <i className="SPIconLarge SPIconAdd"
-                        onClick={() => this.setState({ EducationModal: true })} />
+                        onClick={() => this.setState({EducationModal: true})} />
                 </div>
                 <div className="SPCertificateContainer width100">
                     
