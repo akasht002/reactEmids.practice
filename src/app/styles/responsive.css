@@ -157,9 +157,9 @@ html{height: 100%!important;
     
     @media (min-width: 992px) {
         /*@media all and (min-width:992px)*/
-    .modal-lg {
+    /* .modal-lg {
         max-width: 1200px!important;
-    }
+    } */
     
     
     }

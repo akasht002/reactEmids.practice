@@ -187,7 +187,7 @@ class Languages extends React.Component {
                     isOpen={this.state.isModalOpen}
                     toggle={this.toggleLanguages}
                     ModalBody={modalContent}
-                    className="modal-lg asyncModal LanguageModal"
+                    className="modal-lg asyncModal LanguagesModal"
                     modalTitle={modalTitle}
                     disabled={this.state.disabledSaveBtn}
                     centered="centered"
