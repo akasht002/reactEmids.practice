@@ -15,6 +15,7 @@ export const API = {
     education: 'ServiceProvider/',
     WorkHistory:'ServiceProvider/',
     getSkills: 'ServiceProvider/Skill',
+    addSkills: 'ServiceProvider/',
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/'
 }
