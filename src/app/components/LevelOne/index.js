@@ -9,6 +9,7 @@ import {ModalUserAgreement} from './ModalUserAgreement';
 import {ProfileModalPopup} from './ProfileModalPopup';
 import PanelCard from './PanelCard';
 import {ScreenCover} from './ScreenCover';
+import {SkillsMultiSelect} from './SkillsMultiSelect';
 import {LanguagesMultiSelect} from './LanguagesMultiSelect';
 
 export {
@@ -23,5 +24,6 @@ export {
     ScreenCover,
     ModalUserAgreement,
     ProfileModalPopup,
+    SkillsMultiSelect,
     LanguagesMultiSelect
 };

@@ -1,0 +1,31 @@
+
+.SPCertificateHeader span{
+    font-weight: 400;
+}
+
+.SPWorkYear{
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 40px;
+}
+
+.SPWorkYear{
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 40px;
+}
+.SPCertificateSubtle, .SPCertificateDesc{
+    display: block;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.SPCertificateSubtle{
+    color: #919090;
+    margin-bottom: 10px;
+}
+
+.SPCertificateDesc{
+    color: #444444;
+}
+
