@@ -160,7 +160,7 @@ class Skills extends React.Component {
                     {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
                         <i className="SPIconMedium SPIconEdit" onClick={this.editSkills} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={this.toggleSkills} />
+                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({isSkillsModalOpen: true})} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -172,7 +172,7 @@ class Skills extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" /> to add Skills and Experience</span>
+                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isSkillsModalOpen: true})} /> to add Skills and Experience</span>
                             </div>
                         </div>
                     }

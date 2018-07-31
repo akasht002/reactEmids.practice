@@ -165,7 +165,7 @@ class Languages extends React.Component {
                     {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
                         <i className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={this.toggleLanguages} />
+                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({isModalOpen: true})} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -177,7 +177,7 @@ class Languages extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" /> to add Languages Spoken</span>
+                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isModalOpen: true})}/> to add Languages Spoken</span>
                             </div>
                         </div>
                     }
