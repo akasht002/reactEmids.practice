@@ -20,6 +20,7 @@ export const renderPhoneNumber = ({ input, label, name, type, meta: { touched, e
         component="input"
         type="text"
         placeholder="xxx-xxx-xxxx"
+        // format="sdfgsd"
         normalize={normalizePhone}
         validate={required}
       />

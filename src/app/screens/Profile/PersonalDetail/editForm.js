@@ -1,18 +1,18 @@
 import React from 'react'
 import { Input } from "../../../components";
 import { connect } from 'react-redux'
-import { Field, reduxForm, formValueSelector } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
 
-import { required, checkNotStartWithNumber, requiredSelect,minValue18, number, tooOld } from '../../../utils/reduxValidations';
+import { required, checkNotStartWithNumber} from '../../../utils/reduxValidations';
 import { renderField, renderPhoneNumber, renderSelectField, renderTextField } from '../../../utils/renderFields';
 
 let datas = {};
 
 let PersonalDetailForm = (props) => {
-    console.log(props.data);
-    const { handleSubmit, pristine, reset, submitting, invalid, data } = props
-    console.log(data);
-    datas = data;
+    console.log(props.personalDetailData);
+    const { handleSubmit, pristine, reset, submitting, invalid, personalDetailData } = props
+    console.log(personalDetailData);
+    datas = personalDetailData;
     return (
         <form initialValues={{ CertificationName: "US" }} className="form my-2 my-lg-0" onSubmit={handleSubmit}>
             <div className="row">
@@ -26,15 +26,16 @@ let PersonalDetailForm = (props) => {
                 <div className="col-md-8 mb-2 editProfileDetailsContainer">
                     <div className='row'>
                         <div className='col-md-6 mb-2'>
-                            <Field name="FirstName"
+                            <Field name="firstName"
                                 type="text"
                                 component={renderField}
                                 label="First Name"
+                                textVal={personalDetailData.firstName}
                                 validate={[required, checkNotStartWithNumber]}
                             />
                         </div>
                         <div className='col-md-6 mb-2'>
-                            <Field name="LastName"
+                            <Field name="lastName"
                                 type="text"
                                 component={renderField}
                                 label="Last Name"
@@ -53,7 +54,7 @@ let PersonalDetailForm = (props) => {
                             </div>
                         </div>
                         <div className='col-md-6 mb-2'>
-                            <Field name="Age"
+                            <Field name="age"
                                 type="number"
                                 component={renderField}
                                 label="Age"
@@ -62,7 +63,7 @@ let PersonalDetailForm = (props) => {
                             />
                         </div>
                         <div className='col-md-6 mb-2'>
-                            <Field name="YearsExperience"
+                            <Field name="yearOfExperience"
                                 type="number"
                                 component={renderField}
                                 label="Years of Experience"
@@ -90,7 +91,7 @@ let PersonalDetailForm = (props) => {
                     </div>
                 </div>
                 <div className='col-md-12 mb-2'>
-                    <Field name="Description"
+                    <Field name="description"
                         type="textarea"
                         rows='5'
                         component={renderTextField}
@@ -173,7 +174,7 @@ let PersonalDetailForm = (props) => {
                             <div className='row'>
                                 <div className='col-md-6 mb-2'>
                                     <Field
-                                        name="PhoneNumber"
+                                        name="phoneNumber"
                                         component={renderPhoneNumber}
                                         type="text"
                                         label="Phone Number"

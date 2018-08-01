@@ -222,6 +222,7 @@ const EditPersonalDetail = (props) =>{
                     </div>
                 </div>
             </div>
+            </div>
         {/* </div>
         <BlackoutModal
             isOpen={this.state.uploadImage}

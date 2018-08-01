@@ -12,6 +12,7 @@ const PersonalDetailState = (state = defaultState, action) => {
     switch (action.type) {
 
         case PersonalDetails.GET_PERSONAL_DETAIL_SUCCESS:
+            console.log("3333333333333333333333333333333333333333")           
             return {
                 ...state,
                 personalDetail: action.data
