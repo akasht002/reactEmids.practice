@@ -11,7 +11,7 @@ class Skills extends React.Component {
         super(props);
         this.state = {
             isSkillsModalOpen: false,
-            modalSaveAction: '',
+            //modalSaveAction: '',
             selectedSkills: [],
             selectedSkillIds: '',
             disabledSaveBtn: true,
@@ -46,7 +46,7 @@ class Skills extends React.Component {
     toggleSkills = () => {
         this.setState({
             isSkillsModalOpen: !this.state.isSkillsModalOpen,
-            modalSaveAction: this.addSkills,
+           // modalSaveAction: this.addSkills,
             isAdd: true
         })
 
@@ -84,11 +84,17 @@ class Skills extends React.Component {
 
     addSkills = () => {
         this.props.addSkills(this.state.selectedSkills);
-        this.setState({ isSkillsModalOpen: !this.state.isSkillsModalOpen, modalSaveAction: this.addSkills, disabledSaveBtn: true })
+        this.setState({ isSkillsModalOpen: !this.state.isSkillsModalOpen,
+             //modalSaveAction: this.addSkills, 
+             disabledSaveBtn: true })
     }
 
     editSkills = () => {
-        this.setState({ modalSaveAction: this.updateSkills, isSkillsModalOpen: true, isAdd: false });
+        this.setState({ 
+            //modalSaveAction: this.updateSkills, 
+            isSkillsModalOpen: true, 
+            isAdd: false 
+        });
     }
 
     updateSkills = () => {
@@ -185,7 +191,11 @@ class Skills extends React.Component {
                     className="modal-lg asyncModal LanguagesModal"
                     modalTitle={modalTitle}
                     centered="centered"
-                    onClick={this.state.modalSaveAction}
+                    onClick={this.state.isAdd ?
+                        this.addSkills
+                        :
+                        this.updateSkills
+                    }
                     disabled={this.state.disabledSaveBtn}
                 />
 
@@ -200,7 +210,7 @@ class Skills extends React.Component {
                     centered="centered"
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
-                        isDiscardModalOpen: false,
+                        isDiscardModalOpen: false
                     })}
                 />
             </div >
