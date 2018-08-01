@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getPersonalDetail } from '../redux/profile/PersonalDetail/actions';
 
 // export const baseURL = "http://10.11.111.52:9905/api/";
 
@@ -18,5 +19,7 @@ export const API = {
     WorkHistory:'ServiceProvider/',
     getSkills: 'ServiceProvider/Skill',
     getLanguages: 'ServiceProvider/Language',
-    addLanguages: 'ServiceProvider/'
+    addLanguages: 'ServiceProvider/',
+    getPersonalDetail:'',
+    updatePersonalDetail:'',
 }
