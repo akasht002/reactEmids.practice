@@ -50,7 +50,7 @@ class Skills extends React.Component {
             isAdd: true
         })
 
-        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
+        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return elem.id;
         }).join(",");
 
@@ -100,7 +100,7 @@ class Skills extends React.Component {
 
         const array1 = [];
 
-        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
+        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return array1.push(elem.id);
         }).join(",");
 
