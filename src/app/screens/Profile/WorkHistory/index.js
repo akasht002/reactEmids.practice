@@ -101,6 +101,7 @@ class WorkHistory extends React.Component {
         } else {
             this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
         }
+        this.reset();
     }
     addWorkhistory = () => {
         if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate)) {
@@ -124,8 +125,9 @@ class WorkHistory extends React.Component {
                     fromDate:this.state.fromDate
                 }
             }
+            
             this.props.addWorkHistory(data);
-           this.reset();
+            this.reset();
         } else {
             this.setState({ isValid: false });
         }
