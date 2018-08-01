@@ -49,7 +49,7 @@ export function addWorkHistory(data) {
     return (dispatch, getState) => {
        
         let currstate = getState();
-         let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let modal = {
             ServiceProviderId: serviceProviderId,
             workHistoryId:data.workHistoryId,
