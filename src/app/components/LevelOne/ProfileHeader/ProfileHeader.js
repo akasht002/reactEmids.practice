@@ -59,6 +59,7 @@ class ProfileHeader extends React.Component {
                             placeholder="search your keyword"
                             className="form-control SearchInput"
                             iconName="searchInputIcon"
+                            disable={"true"}
                         />
                     </Nav>
                     <Nav className="ml-auto navIconContainer" navbar>
