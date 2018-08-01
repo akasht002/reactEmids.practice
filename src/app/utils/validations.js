@@ -41,3 +41,7 @@ export function formateStateDate(data){
 export function formateYearDate(){
     return  moment().format(DATE_YEAR);
 }
+
+export function checkLengthRemoveSpace(data) {
+    return data.replace(/\s/g, "").length;
+}

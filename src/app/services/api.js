@@ -21,4 +21,5 @@ export const API = {
     addLanguages: 'ServiceProvider/',
     getPersonalDetail:'ServiceProvider/',
     updatePersonalDetail:'ServiceProvider/',
+    getCity:'ServiceProviderLookUp/GetState',
 }

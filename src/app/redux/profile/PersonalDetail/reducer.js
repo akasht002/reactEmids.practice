@@ -5,14 +5,13 @@ import {
 const defaultState = {
     personalDetail: [],
     updatePersonalDetailSuccess: false,
-
+    cityDetail:[]
 };
 
 const PersonalDetailState = (state = defaultState, action) => {
     switch (action.type) {
 
-        case PersonalDetails.GET_PERSONAL_DETAIL_SUCCESS:
-            console.log("3333333333333333333333333333333333333333")           
+        case PersonalDetails.GET_PERSONAL_DETAIL_SUCCESS:           
             return {
                 ...state,
                 personalDetail: action.data
@@ -23,6 +22,12 @@ const PersonalDetailState = (state = defaultState, action) => {
                 ...state,
                 updatePersonalDetailSuccess: action.isSuccess
             };
+
+            case PersonalDetails.GET_CITY_SUCCESS:
+            return {
+                ...state,
+                cityDetail: action.data
+            };    
 
         default:
             return state;

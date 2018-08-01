@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { Input, TextArea, SelectBox, ProfileModalPopup, ModalPopup } from "../../../components";
+import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
+import { checkLengthRemoveSpace } from "../../../utils/validations"
 
 // import PersonalDetailForm from './editForm'
 
@@ -18,10 +20,10 @@ class PersonalDetail extends React.PureComponent {
 
     componentDidMount() {
         this.props.getPersonalDetail();
+        this.props.getCityDetail();
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.personalDetail);
         this.setState({
             firstName: nextProps.personalDetail.firstName,
             lastName: nextProps.personalDetail.lastName,
@@ -31,10 +33,11 @@ class PersonalDetail extends React.PureComponent {
             yearOfExperience: nextProps.personalDetail.yearOfExperience,
             description: nextProps.personalDetail.description,
             hourlyRate: nextProps.personalDetail.hourlyRate,
-            city: nextProps.personalDetail.address[0].city,
-            streetAddress: nextProps.personalDetail.address[0].streetAddress,
-            zipCode: nextProps.personalDetail.address[0].zipCode,
-            phoneNumber: nextProps.personalDetail.phoneNumber,
+            city: nextProps.personalDetail.address && nextProps.personalDetail.address[0].city,
+            streetAddress: nextProps.personalDetail.address && nextProps.personalDetail.address[0].streetAddress,
+            zipCode: nextProps.personalDetail.address && nextProps.personalDetail.address[0].zipCode,
+            phoneNumber: nextProps.personalDetail.address && nextProps.personalDetail.phoneNumber,
+            state_id: nextProps.personalDetail.address && nextProps.personalDetail.address[0].state.id,
         })
     }
 
@@ -42,15 +45,22 @@ class PersonalDetail extends React.PureComponent {
         this.setState({
             EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
             isValid: true,
-            disabledSaveBtn: true,
+            disabledSaveBtn: false,
         })
     }
 
-    onSubmit = () => {
-        this.setState({
-            EditPersonalDetailModal: !this.state.EditPersonalDetailModal
-        })
-         this.props.updatePersonalDetail(this.state);
+    onSubmit = () => {        
+        if (checkLengthRemoveSpace(this.state.firstName) === 0 || checkLengthRemoveSpace(this.state.lastName) ===0 || checkLengthRemoveSpace(this.state.phoneNumber) ===0 ) {
+            this.setState({ isValid: false });
+            console.log("dddddddddddddddddddddddddddddddddddd");
+            console.log(checkLengthRemoveSpace(this.state.firstName) );            
+        } else {
+            this.setState({
+                EditPersonalDetailModal: !this.state.EditPersonalDetailModal
+            })
+            console.log("dffffffffffffffffffffffffff");
+            this.props.updatePersonalDetail(this.state);
+        }
     }
 
     street = this.props.personalDetail.map((person, i) => <span key={i}>{person}</span>)
@@ -154,6 +164,11 @@ class PersonalDetail extends React.PureComponent {
         let modalContent;
         let modalTitle = 'Edit Personal Detials';
         let modalType = '';
+        const cityDetail = this.props.cityDetail.map((city, i) => {
+            city.label = city.name;
+            city.value = city.id;
+            return city;
+        });
 
         const EducationModalContent = <form className="form my-2 my-lg-0" onSubmit={this.onSubmit}>
             <div className="row">
@@ -181,10 +196,9 @@ class PersonalDetail extends React.PureComponent {
                                 required="required"
                                 type="text"
                                 value={this.state.firstName}
-                                className={"form-control " + (!this.state.isValid && !this.state.degree && 'inputFailure')}
+                                className={"form-control " + (!this.state.isValid && !this.state.firstName && 'inputFailure')}
                                 textChange={(e) => this.setState({
-                                    firstName: e.target.value,
-                                    disabledSaveBtn: false
+                                    firstName: e.target.value
                                 })}
                             />
                             {!this.state.isValid && (!this.state.firstName) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.firstName === '' && ' First Name'}</span>}
@@ -199,25 +213,26 @@ class PersonalDetail extends React.PureComponent {
                                 value={this.state.lastName}
                                 className={"form-control " + (!this.state.isValid && !this.state.lastName && 'inputFailure')}
                                 textChange={(e) => this.setState({
-                                    lastName: e.target.value,
-                                    disabledSaveBtn: false
+                                    lastName: e.target.value
                                 })}
                             />
                             {!this.state.isValid && (!this.state.lastName) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.lastName === '' && ' Last Name'}</span>}
-                            />
-                    </div>
+
+                        </div>
                         <div className='col-md-6 mb-2'>
                             <div className="form-group">
                                 <label>Select Gender</label>
                                 <SelectBox
                                     options={[
                                         { label: "Female", value: '1' },
-                                        { label: "Male", value: '2' },
+                                        { label: "Male", value: '6' },
                                     ]}
                                     simpleValue
                                     placeholder='Select Gender'
-                                    onChange={(value) => { this.setState({ genderName: value }); }}
-                                    selectedValue={this.state.genderName}
+                                    onChange={(value) => {
+                                        this.setState({ genderName: value });
+                                    }}
+                                    selectedValue={this.state.genderName === 'Male' ? 6 : 1}
                                     className={'inputFailure'}
                                 />
                             </div>
@@ -228,7 +243,8 @@ class PersonalDetail extends React.PureComponent {
                                 label="Age"
                                 autoComplete="off"
                                 required="required"
-                                type="text"
+                                type="number"
+                                maxLength="2"
                                 value={this.state.age}
                                 textChange={(e) => this.setState({
                                     age: e.target.value,
@@ -315,19 +331,20 @@ class PersonalDetail extends React.PureComponent {
                                     <div className="form-group">
                                         <label>State</label>
                                         <SelectBox
-                                            options={[
-                                                { label: "AABB (formerly American Association of Blood Banks)", value: '1' },
-                                                { label: "Academy of International Business (AIB)", value: '2' },
-                                                { label: "Academy of Management (AOM)", value: '3' },
-                                                { label: "Association for the Advancement of Cost Engineering (AACE International)", value: '4' },
-                                                { label: "Association for Volunteer Administration (AVA)", value: '5' },
-                                                { label: "Association of Information Technology Professionals (AITP)", value: '6' },
-                                                { label: "Chartered Global Management Accountant (CGMA)", value: '7' },
-                                            ]}
+                                            options={cityDetail}
+                                            // options={[
+                                            //     { label: "AABB (formerly American Association of Blood Banks)", value: '1' },
+                                            //     { label: "Academy of International Business (AIB)", value: '2' },
+                                            //     { label: "Academy of Management (AOM)", value: '3' },
+                                            //     { label: "Association for the Advancement of Cost Engineering (AACE International)", value: '4' },
+                                            //     { label: "Association for Volunteer Administration (AVA)", value: '5' },
+                                            //     { label: "Association of Information Technology Professionals (AITP)", value: '6' },
+                                            //     { label: "Chartered Global Management Accountant (CGMA)", value: '7' },
+                                            // ]}
                                             simpleValue
                                             placeholder='Select the state'
-                                            onChange={(value) => { this.setState({ state: value }); }}
-                                            selectedValue={this.state.state}
+                                            onChange={(value) => { this.setState({ state_id: value }); }}
+                                            selectedValue={this.state.state_id}
                                             className={'inputFailure'}
                                         />
 
@@ -352,7 +369,7 @@ class PersonalDetail extends React.PureComponent {
                                             simpleValue
                                             placeholder='Select the city'
                                             onChange={(value) => { this.setState({ state: value }); }}
-                                            selectedValue={this.state.state}
+                                            selectedValue={this.state.city}
                                             className={'inputFailure'}
                                         />
 
@@ -380,7 +397,8 @@ class PersonalDetail extends React.PureComponent {
                                         label="Zip"
                                         autoComplete="off"
                                         required="required"
-                                        type="text"
+                                        type="number"
+                                        maxLength="8"
                                         value={this.state.zipCode}
                                         textChange={(e) => this.setState({
                                             zipCode: e.target.value
@@ -406,19 +424,30 @@ class PersonalDetail extends React.PureComponent {
                                         label="Phone Number"
                                         autoComplete="off"
                                         required="required"
-                                        type="text"
+                                        maxLength="10"
+                                        type="number"
                                         value={this.state.phoneNumber}
+                                        className={"form-control " + (!this.state.isValid && !this.state.phoneNumber && 'inputFailure')}
                                         textChange={(e) => this.setState({
                                             phoneNumber: e.target.value
                                         })}
-                                        className="form-control"
                                     />
+                                    {!this.state.isValid && (!this.state.phoneNumber) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.phoneNumber === '' && ' Phone Number'}</span>}
+                                   
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <BlackoutModal
+                isOpen={this.state.uploadImage}
+                toggle={this.CloseImageUpload}
+                ModalBody={modalContent}
+                className="modal-lg asyncModal BlackoutModal"
+                modalTitle="Edit Profile Image"
+                centered="centered"
+            />
         </form>
 
         modalContent = EducationModalContent;
@@ -447,14 +476,16 @@ class PersonalDetail extends React.PureComponent {
 function mapDispatchToProps(dispatch) {
     return {
         getPersonalDetail: () => dispatch(action.getPersonalDetail()),
-        updatePersonalDetail: (data) => dispatch(action.updatePersonalDetail(data))
+        updatePersonalDetail: (data) => dispatch(action.updatePersonalDetail(data)),
+        getCityDetail: () => dispatch(action.getCityDetail()),
     }
 };
 
 function mapStateToProps(state) {
     return {
         personalDetail: state.profileState.PersonalDetailState.personalDetail,
-        updatePersonalDetailSuccess: state.profileState.PersonalDetailState.updatePersonalDetailSuccess
+        updatePersonalDetailSuccess: state.profileState.PersonalDetailState.updatePersonalDetailSuccess,
+        cityDetail: state.profileState.PersonalDetailState.cityDetail
     };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PersonalDetail));
