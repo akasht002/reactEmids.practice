@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import _ from 'lodash';
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
 import { checkSpace } from "../../../utils/validations"
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
@@ -18,7 +19,8 @@ class Certification extends React.Component {
             showModalOnDelete: false,
             isAdd: false,
             isValid: true,
-            disabledSaveBtn: true
+            disabledSaveBtn: true,
+            isDiscardModalOpen: false
         };
     };
 
@@ -35,28 +37,54 @@ class Certification extends React.Component {
         })
     }
 
-    reset() {
+    reset = () => {
         this.setState({
             certificationModal: false,
             certificationName: '',
             certificationAuthority: '',
             certificateLicenceNumber: '',
             certificationId: '',
-            disabledSaveBtn: true
+            disabledSaveBtn: true,
+            isDiscardModalOpen: false,
+            isAdd: true,
+            isValid: true,
         })
     }
 
     toggleCertification = () => {
+
         this.setState({
             certificationModal: !this.state.certificationModal,
-            certificationName: '',
-            certificationAuthority: '',
-            certificateLicenceNumber: '',
-            certificationId: '',
+            isDiscardModalOpen: false,
             isAdd: true,
             isValid: true,
             disabledSaveBtn: true
         })
+
+        let array1 = [
+            {
+                authority: this.props.certificationFieldDetails.authority,
+                certificationName: this.props.certificationFieldDetails.certificationName,
+                licenceNumber: this.props.certificationFieldDetails.licenceNumber
+            }
+        ]
+
+        let array2 = [
+            {
+                authority: this.state.certificationAuthority,
+                certificationName: this.state.certificationName,
+                licenceNumber: this.state.certificateLicenceNumber
+            }
+        ]
+
+        const fieldDifference = _.isEqual(array1, array2);
+
+        if (fieldDifference === true) {
+            this.setState({ certificationModal: false, isDiscardModalOpen: false })
+        } else {
+            this.setState({ isDiscardModalOpen: true, certificationModal: true })
+        }
+
     }
 
     addCertification = () => {
@@ -122,7 +150,7 @@ class Certification extends React.Component {
                         maxlength={'500'}
                         textChange={(e) => this.setState({
                             certificationName: e.target.value,
-                            disabledSaveBtn: false
+                            disabledSaveBtn: false,
                         })}
                     />
                     {!this.state.isValid && (!this.state.certificationName) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.certificationName === '' && ' Certification'}</span>}
@@ -139,7 +167,7 @@ class Certification extends React.Component {
                         maxlength={'500'}
                         textChange={(e) => this.setState({
                             certificationAuthority: e.target.value,
-                            disabledSaveBtn: false
+                            disabledSaveBtn: false,
                         })}
                     />
                     {!this.state.isValid && (!this.state.certificationAuthority) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.certificationAuthority === '' && ' Certification Authority'}</span>}
@@ -191,7 +219,7 @@ class Certification extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification</h4>
                     <i className="SPIconLarge SPIconAdd"
-                        onClick={this.toggleCertification} />
+                        onClick={() => this.setState({ certificationModal: true })} />
                 </div>
                 <div className="SPCertificateContainer width100">
                     <ul className="SPCertificateList">
@@ -203,7 +231,7 @@ class Certification extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" /> to add Certification</span>
+                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true })}/> to add Certification</span>
                                 </div>
                             </div>
                         }
@@ -223,6 +251,21 @@ class Certification extends React.Component {
                         :
                         this.updateCertification
                     }
+                />
+
+                <ModalPopup
+                    isOpen={this.state.isDiscardModalOpen}
+                    toggle={this.reset}
+                    ModalBody={<span>Do you want to discard the changes?</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered="centered"
+                    onConfirm={() => this.reset()}
+                    onCancel={() => this.setState({
+                        isDiscardModalOpen: false,
+                    })}
                 />
 
                 <ModalPopup
@@ -249,7 +292,7 @@ function mapDispatchToProps(dispatch) {
         addCertification: (data) => dispatch(addCertification(data)),
         editCertification: (data) => dispatch(editCertification(data)),
         updateCertification: (data) => dispatch(updateCertification(data)),
-        deleteCertification: (data) => dispatch(deleteCertification(data))
+        deleteCertification: (data) => dispatch(deleteCertification(data)),
     }
 };
 

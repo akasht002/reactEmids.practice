@@ -1038,7 +1038,6 @@ div.SPTabContentEdit{
 
 .SPNoInfoDesc i{
     top: 4px;
-    pointer-events: none;
 }
 
 .ProfileImageMultiSelect img.react-gravatar{

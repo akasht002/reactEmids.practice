@@ -81,7 +81,9 @@ const LanguagesMultiSelect = createClass({
         label: PropTypes.string,
     },
     getInitialState() {
-        return {};
+        return {
+            value:''
+        };
     },
     setValue(value) {
         this.props.onselect(value);
@@ -110,6 +112,7 @@ const LanguagesMultiSelect = createClass({
                     value={this.props.value}
                     valueComponent={GravatarValue}
                     className={this.props.className}
+                    isSearchable={true}
                 />
             </div>
         );
