@@ -89,7 +89,7 @@ class PersonalDetail extends React.PureComponent {
         'load',
         () =>
           this.setState({
-            src: reader.result,
+            src: reader.result
           }),
         false
       )
@@ -205,7 +205,7 @@ class PersonalDetail extends React.PureComponent {
     )
   }
 
-  getModalContent = cityDetail => {
+  getModalContent = stateDetail => {
     return (
       <div className='row'>
         <div className='col-md-12'>
@@ -420,9 +420,9 @@ class PersonalDetail extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label>State</label>
+                    <label>State</label>                    
                     <SelectBox
-                      options={cityDetail}
+                      options={stateDetail}
                       simpleValue
                       placeholder='Select the state'
                       onChange={value => {
@@ -436,27 +436,19 @@ class PersonalDetail extends React.PureComponent {
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
                     <label>City</label>
-                    <SelectBox
-                      options={[
-                        { label: 'Alabama', value: '1' },
-                        { label: 'Alaska', value: '2' },
-                        { label: 'Arizona', value: '3' },
-                        { label: 'Arkansas', value: '4' },
-                        { label: 'California', value: '5' },
-                        { label: 'Colorado', value: '6' },
-                        { label: 'Connecticut', value: '7' },
-                        { label: 'Delaware', value: '8' },
-                        { label: 'Florida', value: '9' },
-                        { label: 'Georgia', value: '10' }
-                      ]}
-                      simpleValue
-                      placeholder='Select the city'
-                      onChange={value => {
-                        this.setState({ state: value })
-                      }}
-                      selectedValue={this.state.city}
-                      className={'inputFailure'}
-                    />
+                    <Input
+                      name='city'
+                      label='City'
+                      autoComplete='off'
+                      required='required'
+                      type='text'
+                      value={this.state.city}
+                      textChange={e =>
+                        this.setState({
+                          city: e.target.value
+                        })}
+                      className='form-control'
+                    />                    
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
