@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import { connect } from 'react-redux';
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual';
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
@@ -94,9 +94,18 @@ class WorkHistory extends React.Component {
                 isWorking:this.state.isWorking
             }
         ]
-         const fieldDifference = _.isEqual(stateArray, workhistoryFieldarray);
+         const fieldDifference = isEqual(stateArray, workhistoryFieldarray);
          if (fieldDifference === true) {
-            this.setState({ isWorkHistoryModalOpen: false, isDiscardModalOpen: false })
+            this.setState({ isWorkHistoryModalOpen: false,
+                isDiscardModalOpen: false,
+                designation:'',
+                company:'',
+                location:'',
+                fromDate:'',
+                toDate:'',
+                description:'',
+                isWorking:''
+            })
         } else {
             this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
         }

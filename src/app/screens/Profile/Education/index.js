@@ -84,7 +84,14 @@ class Education extends React.Component {
         ]
          const fieldDifference = isEqual(educationFielarray, stateArray);
          if (fieldDifference === true) {
-            this.setState({ EducationModal: false, isDiscardModalOpen: false })
+            this.setState({ EducationModal: false, 
+                isDiscardModalOpen: false,
+                school:'',
+                degree:'',
+                fieldOfStudy:'',
+                startYear:'',
+                endYear:''
+             })
         } else {
             this.setState({ isDiscardModalOpen: true, EducationModal: true })
         }

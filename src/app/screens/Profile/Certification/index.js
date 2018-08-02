@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual'
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
 import { checkSpace } from "../../../utils/validations"
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
@@ -76,10 +76,14 @@ class Certification extends React.Component {
             }
         ]
 
-        const fieldDifference = _.isEqual(array1, array2);
+        const fieldDifference = isEqual(array1, array2);
 
         if (fieldDifference === true) {
-            this.setState({ certificationModal: false, isDiscardModalOpen: false })
+            this.setState({ certificationModal: false, isDiscardModalOpen: false,
+                certificationAuthority:'',
+                certificateLicenceNumber: '',
+                certificationName: ''
+             })
         } else {
             this.setState({ isDiscardModalOpen: true, certificationModal: true })
         }
