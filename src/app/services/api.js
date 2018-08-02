@@ -22,4 +22,6 @@ export const API = {
     getPersonalDetail:'ServiceProvider/',
     updatePersonalDetail:'ServiceProvider/',
     getCity:'ServiceProviderLookUp/GetState',
+    uploadImage:'ServiceProvider/Image',
+    getImage:'ServiceProvider/Image/'
 }

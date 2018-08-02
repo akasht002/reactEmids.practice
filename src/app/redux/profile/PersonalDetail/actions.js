@@ -7,12 +7,21 @@ export const PersonalDetails = {
     UPDATE_PERSONAL_DETAIL_SUCCESS: 'UPDATE_PERSONAL_DETAIL_SUCCESS',
     GET_PERSONAL_DETAIL: 'GET_PERSONAL_DETAIL',
     GET_CITY_SUCCESS: 'GET_CITY_SUCCESS',
-    GET_CITY_DETAIL: 'GET_CITY_DETAIL'
+    GET_CITY_DETAIL: 'GET_CITY_DETAIL',
+    UPLOAD_IMG_SUCCESS: 'UPLOAD_IMG_SUCCESS',
+    UPLOAD_IMG: 'UPLOAD_IMG_SUCCESS'
 };
 
 export const getPersonalDetailSuccess = (data) => {    
     return {
         type: PersonalDetails.GET_PERSONAL_DETAIL_SUCCESS,
+        data
+    }
+};
+
+export const uploadImgSuccess = (data) => {    
+    return {
+        type: PersonalDetails.UPLOAD_IMG_SUCCESS,
         data
     }
 };
@@ -42,6 +51,42 @@ export const updatePersonalDetailSuccess = (isSuccess) => {
         isSuccess
     }
 }
+
+export function uploadImg(data) {
+    return (dispatch, getState) => {       
+        let currstate = getState();
+        let serviceProviderId = 1;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let modal ={            
+            "serviceProviderTypeId": 1,
+            "image": data
+        }
+        console.log("dsaffffffffffffffffffffffffffff");
+        console.log(data);
+        dispatch(startLoading());
+        axios.post(baseURL + API.uploadImage+serviceProviderId, modal).then((resp) => {
+            dispatch(getImage());
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+}
+
+export function getImage() {
+    return (dispatch, getState) => {
+        let serviceProviderId = 1;
+        let currstate = getState();
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        dispatch(startLoading());
+        axios.get(baseURL + API.getImage + serviceProviderId ).then((resp) => {
+            dispatch(getPersonalDetailSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
 
 export function getPersonalDetail() {
     return (dispatch, getState) => {
@@ -106,7 +151,6 @@ export function updatePersonalDetail(data) {
             "phoneNumber": data.phoneNumber,
             "isActive": true 
         }
-        console.log(data);
         dispatch(startLoading());
         axios.put(baseURL + API.updatePersonalDetail+serviceProviderId, modal).then((resp) => {
             dispatch(getPersonalDetail());

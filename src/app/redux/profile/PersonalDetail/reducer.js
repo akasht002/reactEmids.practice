@@ -5,7 +5,8 @@ import {
 const defaultState = {
     personalDetail: [],
     updatePersonalDetailSuccess: false,
-    cityDetail:[]
+    cityDetail:[],
+    imageData:''
 };
 
 const PersonalDetailState = (state = defaultState, action) => {
@@ -27,7 +28,14 @@ const PersonalDetailState = (state = defaultState, action) => {
             return {
                 ...state,
                 cityDetail: action.data
-            };    
+            };   
+            
+            case PersonalDetails.UPLOAD_IMG_SUCCESS:           
+            return {
+                ...state,
+                imageData: action.data
+            };       
+
 
         default:
             return state;

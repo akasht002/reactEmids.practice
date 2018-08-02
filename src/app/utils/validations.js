@@ -42,6 +42,20 @@ export function formateYearDate(){
     return  moment().format(DATE_YEAR);
 }
 
+
 export function checkLengthRemoveSpace(data) {
     return data.replace(/\s/g, "").length;
 }
+
+
+export function checkTextNotStartWithNumber(data) {
+    return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*()'."]+$/.test(data)
+}
+
+export function isDecimal(data) {
+    return /^\d+(\.\d+)?$/.test(data)
+}
+
+export function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }

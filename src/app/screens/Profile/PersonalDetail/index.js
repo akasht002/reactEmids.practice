@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import ReactCrop from 'react-image-crop'
+import _ from 'lodash'
+import ImageCrop from 'react-image-crop-component'
+import 'react-image-crop-component/style.css'
 
 import 'react-image-crop/dist/ReactCrop.css'
 import 'react-image-crop/lib/ReactCrop.scss'
-
+import './index.css'
 import {
   Input,
   TextArea,
@@ -15,7 +17,11 @@ import {
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
-import { checkLengthRemoveSpace } from '../../../utils/validations'
+import {
+  checkLengthRemoveSpace,
+  checkTextNotStartWithNumber,
+  isDecimal
+} from '../../../utils/validations'
 
 class PersonalDetail extends React.PureComponent {
   constructor (props) {
@@ -59,14 +65,57 @@ class PersonalDetail extends React.PureComponent {
       state_id: nextProps.personalDetail.address &&
         nextProps.personalDetail.address[0].state.id
     })
+    this.city = this.state.address
+    this.streetAddress = this.state.streetAddress
+    this.zipCode = this.state.zipCode
+    this.phoneNumber = this.state.phoneNumber
   }
 
-  togglePersonalDetails (action, e) {
+  reset = () => {
+    this.setState({
+      EditPersonalDetailModal: false,
+      isDiscardModalOpen: false
+    })
+    this.props.history.push('/profile')
+  }
+
+  togglePersonalDetails (action, e) {     
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isValid: true,
       disabledSaveBtn: false
     })
+    let old_data = [
+      {
+        firstName: this.props.personalDetail.firstName,
+        age: this.props.personalDetail.age,
+        yearOfExperience: this.props.personalDetail.yearOfExperience,
+        description: this.props.personalDetail.description,
+        hourlyRate: this.props.personalDetail.hourlyRate,
+        lastName: this.props.personalDetail.lastName,
+        phoneNumber: this.props.personalDetail.phoneNumber
+      }
+    ]
+
+    let updated_data = [
+      {
+        firstName: this.state.firstName,
+        age: this.state.age,
+        yearOfExperience: this.state.yearOfExperience,
+        description: this.state.description,
+        hourlyRate: this.state.hourlyRate,
+        lastName: this.state.lastName,
+        phoneNumber: this.state.phoneNumber
+      }
+    ]  
+
+    const fieldDifference = _.isEqual(old_data, updated_data)
+
+    if (fieldDifference === true) {
+      this.setState({ certificationModal: false, isDiscardModalOpen: false })     
+    } else {
+      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
+    }   
   }
 
   handleChange = e => {
@@ -97,18 +146,6 @@ class PersonalDetail extends React.PureComponent {
     }
   }
 
-  onImageLoaded = image => {
-    console.log('onCropComplete', image)
-  }
-
-  onCropComplete = crop => {
-    console.log('onCropComplete', crop)
-  }
-
-  onCropChange = crop => {
-    this.setState({ crop })
-  }
-
   onSubmit = () => {
     if (
       checkLengthRemoveSpace(this.state.firstName) === 0 ||
@@ -116,16 +153,33 @@ class PersonalDetail extends React.PureComponent {
       checkLengthRemoveSpace(this.state.phoneNumber) === 0
     ) {
       this.setState({ isValid: false })
+    } else {
+      this.props.updatePersonalDetail(this.state)
       this.setState({
         EditPersonalDetailModal: !this.state.EditPersonalDetailModal
       })
-      this.props.updatePersonalDetail(this.state)
     }
   }
 
   street = this.props.personalDetail.map((person, i) => (
     <span key={i}>{person}</span>
   ))
+
+  closeImageUpload = () => {
+    this.setState({
+      uploadImage: !this.state.uploadImage
+    })
+    this.props.uploadImg(this.state.croppedImage)
+  }
+
+  onCroppeds = e => {
+    let image = e.image
+    let image_data = e.data
+    // this.props.updatePersonalDetail(this.state)
+    this.setState({
+      croppedImage: image
+    })
+  }
 
   render () {
     let modalContent
@@ -142,7 +196,7 @@ class PersonalDetail extends React.PureComponent {
         {this.getModalContent(cityDetail)}
         <BlackoutModal
           isOpen={this.state.uploadImage}
-          toggle={this.CloseImageUpload}
+          toggle={this.closeImageUpload}
           ModalBody={this.getBlackModalContent()}
           className='modal-lg asyncModal BlackoutModal'
           modalTitle='Edit Profile Image'
@@ -166,6 +220,20 @@ class PersonalDetail extends React.PureComponent {
           onClick={this.onSubmit}
           disabled={this.state.disabledSaveBtn}
         />
+         <ModalPopup
+                    isOpen={this.state.isDiscardModalOpen}
+                    toggle={this.reset}
+                    ModalBody={<span>Do you want to discard the changes?</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered="centered"
+                    onConfirm={() => this.reset()}
+                    onCancel={() => this.setState({
+                        isDiscardModalOpen: false,
+                    })}
+                />
       </React.Fragment>
     )
   }
@@ -174,14 +242,18 @@ class PersonalDetail extends React.PureComponent {
     return (
       <div className={'UploadProfileImageWidget'}>
         <div className={'width100 UploadProfileImageContainer'}>
-          <ReactCrop
-            src={this.state.uploadedImageFile}
-            crop={this.state.crop}
-            onImageLoaded={this.onImageLoaded}
-            onComplete={this.onCropComplete}
-            onChange={this.onCropChange}
-          />
-          {/* <img className={'UploadedImage'} src={this.state.uploadedImageFile} /> */}
+          <div style={{ width: '300px', height: '300px' }}>
+            <ImageCrop
+              src={this.state.uploadedImageFile}
+              setWidth={300}
+              setHeight={300}
+              square={false}
+              resize
+              border={'dashed #ffffff 2px'}
+              onCrop={this.onCroppeds}
+              watch={this.watch}
+            />
+          </div>
         </div>
         <div className={'row'}>
           <div className={'col-md-8'}>
@@ -217,8 +289,8 @@ class PersonalDetail extends React.PureComponent {
           <div className='profileImage'>
             <img
               alt='profile-image'
+              src={require('../../../assets/images/Blank_Profile_icon.png')}
               className={'SPdpImage'}
-              src='http://lorempixel.com/1500/600/abstract/1'
             />
             <span className='editDpImage' />
             <div className='uploadWidget'>
@@ -240,6 +312,7 @@ class PersonalDetail extends React.PureComponent {
                 autoComplete='off'
                 required='required'
                 type='text'
+                maxlength='100'
                 value={this.state.firstName}
                 className={
                   'form-control ' +
@@ -247,15 +320,29 @@ class PersonalDetail extends React.PureComponent {
                       !this.state.firstName &&
                       'inputFailure')
                 }
-                textChange={e =>
-                  this.setState({
-                    firstName: e.target.value
-                  })}
+                textChange={e => {
+                  this.setState({ firstName: e.target.value })
+                  if (!checkTextNotStartWithNumber(this.state.firstName)) {
+                    this.setState({
+                      firstNameInvaild: true,
+                      disabledSaveBtn: true
+                    })
+                  } else {
+                    this.setState({
+                      firstNameInvaild: false,
+                      disabledSaveBtn: false
+                    })
+                  }
+                }}
               />
               {!this.state.isValid &&
                 !this.state.firstName &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                   Please enter {this.state.firstName === '' && ' First Name'}
+                </span>}
+              {this.state.firstNameInvaild &&
+                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                  Please enter vaild first name
                 </span>}
             </div>
             <div className='col-md-6 mb-2'>
@@ -263,8 +350,8 @@ class PersonalDetail extends React.PureComponent {
                 name='LastName'
                 label='Last Name'
                 autoComplete='off'
-                required='required'
                 type='text'
+                maxlength='100'
                 value={this.state.lastName}
                 className={
                   'form-control ' +
@@ -272,15 +359,29 @@ class PersonalDetail extends React.PureComponent {
                       !this.state.lastName &&
                       'inputFailure')
                 }
-                textChange={e =>
-                  this.setState({
-                    lastName: e.target.value
-                  })}
+                textChange={e => {
+                  this.setState({ lastName: e.target.value })
+                  if (!checkTextNotStartWithNumber(this.state.lastName)) {
+                    this.setState({
+                      lastNameInvaild: true,
+                      disabledSaveBtn: true
+                    })
+                  } else {
+                    this.setState({
+                      lastNameInvaild: false,
+                      disabledSaveBtn: false
+                    })
+                  }
+                }}
               />
               {!this.state.isValid &&
                 !this.state.lastName &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                   Please enter {this.state.lastName === '' && ' Last Name'}
+                </span>}
+              {this.state.lastNameInvaild &&
+                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                  Please enter vaild last name
                 </span>}
 
             </div>
@@ -307,15 +408,18 @@ class PersonalDetail extends React.PureComponent {
                 name='Age'
                 label='Age'
                 autoComplete='off'
-                required='required'
-                type='number'
-                maxLength='2'
+                type='text'
+                maxLength='3'
                 value={this.state.age}
-                textChange={e =>
-                  this.setState({
-                    age: e.target.value,
-                    disabledSaveBtn: false
-                  })}
+                textChange={e => {
+                  const re = /^[0-9\b]+$/
+                  if (
+                    (e.target.value === '' || re.test(e.target.value)) &&
+                    checkLengthRemoveSpace(e.target.value) <= 3
+                  ) {
+                    this.setState({ age: e.target.value })
+                  }
+                }}
                 className='form-control'
               />
             </div>
@@ -327,11 +431,15 @@ class PersonalDetail extends React.PureComponent {
                 required='required'
                 type='text'
                 value={this.state.yearOfExperience}
-                textChange={e =>
-                  this.setState({
-                    yearOfExperience: e.target.value,
-                    disabledSaveBtn: false
-                  })}
+                textChange={e => {
+                  const re = /^[0-9\b]+$/
+                  if (
+                    (e.target.value === '' || re.test(e.target.value)) &&
+                    checkLengthRemoveSpace(e.target.value) <= 2
+                  ) {
+                    this.setState({ yearOfExperience: e.target.value })
+                  }
+                }}
                 className='form-control'
               />
             </div>
@@ -387,10 +495,11 @@ class PersonalDetail extends React.PureComponent {
             className='form-control'
             rows='5'
             value={this.state.description}
-            textChange={e =>
-              this.setState({
-                description: e.target.value
-              })}
+            textChange={e => {
+              if (checkLengthRemoveSpace(e.target.value) <= 500) {
+                this.setState({ description: e.target.value })
+              }
+            }}
           />
         </div>
         <div className='col-md-4'>
@@ -398,13 +507,16 @@ class PersonalDetail extends React.PureComponent {
             name='hourlyRate'
             label='Hourly Rate ($/hr)'
             autoComplete='off'
-            required='required'
             type='text'
             value={this.state.hourlyRate}
-            textChange={e =>
-              this.setState({
-                hourlyRate: e.target.value
-              })}
+            textChange={e => {
+              this.setState({ hourlyRate: e.target.value })
+              // if (isDecimal(this.state.hourlyRate) ) {
+              //   this.setState({ hourlyRate: e.target.value })
+              // }else {
+              //       this.setState({ lastNameInvaild: false,disabledSaveBtn:true })
+              //     }
+            }}
             className='form-control'
           />
         </div>
@@ -420,7 +532,7 @@ class PersonalDetail extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label>State</label>                    
+                    <label>State</label>
                     <SelectBox
                       options={stateDetail}
                       simpleValue
@@ -435,12 +547,11 @@ class PersonalDetail extends React.PureComponent {
                 </div>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label>City</label>
                     <Input
                       name='city'
                       label='City'
                       autoComplete='off'
-                      required='required'
+                      maxlength='50'
                       type='text'
                       value={this.state.city}
                       textChange={e =>
@@ -448,7 +559,7 @@ class PersonalDetail extends React.PureComponent {
                           city: e.target.value
                         })}
                       className='form-control'
-                    />                    
+                    />
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
@@ -456,8 +567,8 @@ class PersonalDetail extends React.PureComponent {
                     name='Street'
                     label='Street'
                     autoComplete='off'
-                    required='required'
                     type='text'
+                    maxlength='500'
                     value={this.state.streetAddress}
                     textChange={e =>
                       this.setState({
@@ -471,14 +582,18 @@ class PersonalDetail extends React.PureComponent {
                     name='Zip'
                     label='Zip'
                     autoComplete='off'
-                    required='required'
-                    type='number'
-                    maxLength='8'
+                    type='text'
+                    maxlength='5'
                     value={this.state.zipCode}
-                    textChange={e =>
-                      this.setState({
-                        zipCode: e.target.value
-                      })}
+                    textChange={e => {
+                      const re = /^[0-9\b]+$/
+                      if (
+                        (e.target.value === '' || re.test(e.target.value)) &&
+                        checkLengthRemoveSpace(e.target.value) <= 5
+                      ) {
+                        this.setState({ zipCode: e.target.value })
+                      }
+                    }}
                     className='form-control'
                   />
                 </div>
@@ -501,9 +616,8 @@ class PersonalDetail extends React.PureComponent {
                     name='PhoneNumber'
                     label='Phone Number'
                     autoComplete='off'
-                    required='required'
-                    maxLength='10'
-                    type='number'
+                    maxlength='15'
+                    type='text'
                     value={this.state.phoneNumber}
                     className={
                       'form-control ' +
@@ -511,10 +625,15 @@ class PersonalDetail extends React.PureComponent {
                           !this.state.phoneNumber &&
                           'inputFailure')
                     }
-                    textChange={e =>
-                      this.setState({
-                        phoneNumber: e.target.value
-                      })}
+                    textChange={e => {
+                      const re = /^[0-9\b]+$/
+                      if (
+                        (e.target.value === '' || re.test(e.target.value)) &&
+                        checkLengthRemoveSpace(e.target.value) <= 15
+                      ) {
+                        this.setState({ phoneNumber: e.target.value })
+                      }
+                    }}
                   />
                   {!this.state.isValid &&
                     !this.state.phoneNumber &&
@@ -546,8 +665,12 @@ class PersonalDetail extends React.PureComponent {
                 d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
               />
             </svg>
-            {/* <img className={"SPdpImage"} src={imagePath("./avatar/user-5.jpg")}/> */}
-            {/* <img alt="profile-image" className={"SPdpImage"} src="http://lorempixel.com/1500/600/abstract/1" /> */}
+
+            <img
+              className={'SPdpImage'}
+              src={require('../../../assets/images/Blank_Profile_icon.png')}
+            />
+            {/* Blank_Profile_icon <img alt="profile-image" className={"SPdpImage"} src="http://lorempixel.com/1500/600/abstract/1" /> */}
           </div>
           <span className={'SPRating'}>
             <i className={'Icon iconFilledStar'} />4.2
@@ -676,7 +799,8 @@ function mapDispatchToProps (dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
-    getCityDetail: () => dispatch(action.getCityDetail())
+    getCityDetail: () => dispatch(action.getCityDetail()),
+    uploadImg: data => dispatch(action.uploadImg())
   }
 }
 
@@ -685,7 +809,9 @@ function mapStateToProps (state) {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState
       .updatePersonalDetailSuccess,
-    cityDetail: state.profileState.PersonalDetailState.cityDetail
+    cityDetail: state.profileState.PersonalDetailState.cityDetail,
+    uploadImgData: state.profileState.PersonalDetailState
+      .updatePersonalDetailSuccess
   }
 }
 export default withRouter(
