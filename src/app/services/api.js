@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export cnst baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
+export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 
 
 export const Api = axios.create({
