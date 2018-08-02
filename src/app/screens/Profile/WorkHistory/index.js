@@ -68,7 +68,6 @@ class WorkHistory extends React.Component {
     toggleWorkHistory=(e)=>{
         this.setState({
             isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
-            isAdd: true,
             isValid: true,
             disabledSaveBtn:true,
             isDiscardModalOpen:false

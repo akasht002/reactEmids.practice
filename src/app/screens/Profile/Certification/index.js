@@ -56,7 +56,6 @@ class Certification extends React.Component {
         this.setState({
             certificationModal: !this.state.certificationModal,
             isDiscardModalOpen: false,
-            isAdd: true,
             isValid: true,
             disabledSaveBtn: true
         })

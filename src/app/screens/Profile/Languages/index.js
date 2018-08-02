@@ -48,8 +48,7 @@ class Languages extends React.Component {
 
     toggleLanguages = () => {
         this.setState({
-            isModalOpen: !this.state.isModalOpen,
-            isAdd: true
+            isModalOpen: !this.state.isModalOpen
         })
 
         const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {

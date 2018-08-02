@@ -47,7 +47,6 @@ class Skills extends React.Component {
         this.setState({
             isSkillsModalOpen: !this.state.isSkillsModalOpen,
            // modalSaveAction: this.addSkills,
-            isAdd: true
         })
 
         const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {

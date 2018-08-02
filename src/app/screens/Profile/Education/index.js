@@ -58,7 +58,6 @@ class Education extends React.Component {
     toggleEducation= () => {
         this.setState({
             EducationModal: !this.state.EducationModal,
-            isAdd: true,
             isValid: true,
             disabledSaveBtn: true,
             isDiscardModalOpen:false
