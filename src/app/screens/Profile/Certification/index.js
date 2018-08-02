@@ -218,7 +218,7 @@ class Certification extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification</h4>
                     <i className="SPIconLarge SPIconAdd"
-                        onClick={() => this.setState({ certificationModal: true })} />
+                        onClick={() => this.setState({ certificationModal: true, isAdd: true })} />
                 </div>
                 <div className="SPCertificateContainer width100">
                     <ul className="SPCertificateList">
@@ -230,7 +230,7 @@ class Certification extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true })}/> to add Certification</span>
+                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
                                 </div>
                             </div>
                         }

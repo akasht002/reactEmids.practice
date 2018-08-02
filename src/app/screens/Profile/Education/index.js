@@ -285,7 +285,7 @@ class Education extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Education</h4>
                     <i className="SPIconLarge SPIconAdd"
-                        onClick={() => this.setState({EducationModal: true})} />
+                        onClick={() => this.setState({EducationModal: true,isAdd: true})} />
                 </div>
                 <div className="SPCertificateContainer width100">
                     
@@ -294,7 +294,7 @@ class Education extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>  click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ EducationModal: true })}/> to add Education</span>
+                                    <span className='SPNoInfoDesc'>  click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ EducationModal: true ,isAdd: true})}/> to add Education</span>
                                 </div>
                             </div>
                             </ul>

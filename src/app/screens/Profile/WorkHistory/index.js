@@ -355,7 +355,7 @@ class WorkHistory extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Work History</h4>
                     <i className="SPIconLarge SPIconAdd"
-                    onClick={() => this.setState({ isWorkHistoryModalOpen: true })} />
+                    onClick={() => this.setState({ isWorkHistoryModalOpen: true,isAdd: true })} />
                 </div>
 
                 <div className="SPCertificateContainer width100">
@@ -365,7 +365,7 @@ class WorkHistory extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'> click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true })}/> to add Work History</span>
+                                    <span className='SPNoInfoDesc'> click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true,isAdd: true })}/> to add Work History</span>
                                 </div>
                             </div>
                             </ul>
