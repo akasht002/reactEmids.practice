@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import isEqual from 'lodash/isEqual'
 import { Input ,ProfileModalPopup, ModalPopup } from "../../../components";
-import {formateYearDate} from "../../../utils/validations"
+import {formateYearDate,compareUtility} from "../../../utils/validations";
 import { getEducation, addEducation, editEducation, updateEducation, deleteEducation } from '../../../redux/profile/Education/actions';
 
 import "./styles.css";
@@ -82,7 +81,7 @@ class Education extends React.Component {
 
             }
         ]
-         const fieldDifference = isEqual(educationFielarray, stateArray);
+         const fieldDifference = compareUtility(educationFielarray, stateArray);
          if (fieldDifference === true) {
             this.setState({ EducationModal: false, 
                 isDiscardModalOpen: false,

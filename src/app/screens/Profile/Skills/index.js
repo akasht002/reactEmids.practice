@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 import { SkillsMultiSelect, ModalPopup, ProfileModalPopup } from "../../../components"
 import { getSkills, addSkills, getSelectedSkills } from '../../../redux/profile/Skills/actions';
+import {compareUtility,differenceUtility} from "../../../utils/validations";
 
 class Skills extends React.Component {
 
@@ -65,7 +65,7 @@ class Skills extends React.Component {
             }
         ]
 
-        const fieldDifference = _.isEqual(array1, array2);
+        const fieldDifference = compareUtility(array1, array2);
 
         if (fieldDifference === true) {
 
@@ -114,7 +114,7 @@ class Skills extends React.Component {
         const newlySelectedValues = this.state.selectedSkills;
         array2.push(newlySelectedValues);
 
-        const result = _.differenceWith(array1, array2)
+        const result = differenceUtility(array1, array2)
 
         this.setState({ selectedSkills: result, isSkillsModalOpen: false, isDiscardModalOpen: false, disabledSaveBtn: true });
     }

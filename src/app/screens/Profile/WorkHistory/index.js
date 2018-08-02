@@ -1,10 +1,9 @@
 import React,{Component} from "react";
 import { connect } from 'react-redux';
-import isEqual from 'lodash/isEqual';
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
-import { checkSpace,formattedDateMoment,formattedDateChange,formateStateDate } from "../../../utils/validations"
+import { checkSpace,formattedDateMoment,formattedDateChange,formateStateDate,compareUtility } from "../../../utils/validations"
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
@@ -94,7 +93,7 @@ class WorkHistory extends React.Component {
                 isWorking:this.state.isWorking
             }
         ]
-         const fieldDifference = isEqual(stateArray, workhistoryFieldarray);
+         const fieldDifference = compareUtility(stateArray, workhistoryFieldarray);
          if (fieldDifference === true) {
             this.setState({ isWorkHistoryModalOpen: false,
                 isDiscardModalOpen: false,

@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import isEqual from 'lodash/isEqual'
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
-import { checkSpace } from "../../../utils/validations"
+import { checkSpace,compareUtility } from "../../../utils/validations";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 
 class Certification extends React.Component {
@@ -76,7 +75,7 @@ class Certification extends React.Component {
             }
         ]
 
-        const fieldDifference = isEqual(array1, array2);
+        const fieldDifference = compareUtility(array1, array2);
 
         if (fieldDifference === true) {
             this.setState({ certificationModal: false, isDiscardModalOpen: false,

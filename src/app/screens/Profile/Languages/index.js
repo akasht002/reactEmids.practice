@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 import { LanguagesMultiSelect, ProfileModalPopup, ModalPopup } from "../../../components"
 import { getLanguages, getSelectedLanguages, addLanguages } from '../../../redux/profile/Languages/actions';
+import {compareUtility,differenceUtility} from "../../../utils/validations";
 
 class Languages extends React.Component {
 
@@ -67,7 +67,7 @@ class Languages extends React.Component {
             }
         ]
 
-        const fieldDifference = _.isEqual(array1, array2);
+        const fieldDifference = compareUtility(array1, array2);
 
         if (fieldDifference === true) {
             
@@ -105,7 +105,7 @@ class Languages extends React.Component {
         const newlySelectedValues = this.state.selectedLanguage;
         array2.push(newlySelectedValues);
 
-        const result = _.differenceWith(array1, array2)
+        const result = differenceUtility(array1, array2)
 
         this.setState({ selectedLanguage: result, isModalOpen: false, isDiscardModalOpen: false, disabledSaveBtn: true });
     }
