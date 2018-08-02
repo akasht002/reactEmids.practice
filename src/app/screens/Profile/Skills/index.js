@@ -11,7 +11,6 @@ class Skills extends React.Component {
         super(props);
         this.state = {
             isSkillsModalOpen: false,
-            //modalSaveAction: '',
             selectedSkills: [],
             selectedSkillIds: '',
             disabledSaveBtn: true,
@@ -46,7 +45,6 @@ class Skills extends React.Component {
     toggleSkills = () => {
         this.setState({
             isSkillsModalOpen: !this.state.isSkillsModalOpen,
-           // modalSaveAction: this.addSkills,
         })
 
         const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
@@ -84,13 +82,11 @@ class Skills extends React.Component {
     addSkills = () => {
         this.props.addSkills(this.state.selectedSkills);
         this.setState({ isSkillsModalOpen: !this.state.isSkillsModalOpen,
-             //modalSaveAction: this.addSkills, 
              disabledSaveBtn: true })
     }
 
     editSkills = () => {
         this.setState({ 
-            //modalSaveAction: this.updateSkills, 
             isSkillsModalOpen: true, 
             isAdd: false 
         });

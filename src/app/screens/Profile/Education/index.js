@@ -76,8 +76,8 @@ class Education extends React.Component {
                 school: this.state.school,
                 degree: this.state.degree,
                 fieldOfStudy: this.state.fieldOfStudy,
-                startYear: this.setState.startYear,
-                endYear: this.setState.endYear
+                startYear: this.state.startYear,
+                endYear: this.state.endYear
 
             }
         ]
