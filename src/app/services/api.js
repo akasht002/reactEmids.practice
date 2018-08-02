@@ -21,5 +21,6 @@ export const API = {
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/',
     getServiceOffered: 'ServiceProvider/',
-    editServiceOffered: 'ServiceProvider/'
+    editServiceOffered: 'ServiceProvider/',
+    addServiceOffered: 'ServiceProvider/'
 }
