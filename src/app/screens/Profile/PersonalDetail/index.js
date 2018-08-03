@@ -54,18 +54,18 @@ class PersonalDetail extends React.PureComponent {
       yearOfExperience: nextProps.personalDetail.yearOfExperience,
       description: nextProps.personalDetail.description,
       hourlyRate: nextProps.personalDetail.hourlyRate,
-      city: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].city,
-      streetAddress: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].streetAddress,
-      zipCode: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].zipCode,
-      phoneNumber: nextProps.personalDetail.address &&
-        nextProps.personalDetail.phoneNumber,
-      state_id: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].state.id,
-        isActive: nextProps.personalDetail.isActive &&
-        nextProps.personalDetail.isActive
+      // city: nextProps.personalDetail.address[0] &&
+      //   nextProps.personalDetail.address[0].city,
+      // streetAddress: nextProps.personalDetail.address[0] &&
+      //   nextProps.personalDetail.address[0].streetAddress,
+      // zipCode: nextProps.personalDetail.address[0] &&
+      //   nextProps.personalDetail.address[0].zipCode,
+      // phoneNumber: nextProps.personalDetail.address[0] &&
+      //   nextProps.personalDetail.phoneNumber,
+      // state_id: nextProps.personalDetail.address[0] &&
+      //   nextProps.personalDetail.address[0].state.id,
+      //   isActive: nextProps.personalDetail.isActive &&
+      //   nextProps.personalDetail.isActive
     })
     this.city = this.state.address
     this.streetAddress = this.state.streetAddress
