@@ -63,12 +63,19 @@ class PersonalDetail extends React.PureComponent {
       phoneNumber: nextProps.personalDetail.address &&
         nextProps.personalDetail.phoneNumber,
       state_id: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].state.id
+        nextProps.personalDetail.address[0].state.id,
+        isActive: nextProps.personalDetail.isActive &&
+        nextProps.personalDetail.isActive
     })
     this.city = this.state.address
     this.streetAddress = this.state.streetAddress
     this.zipCode = this.state.zipCode
     this.phoneNumber = this.state.phoneNumber
+    this.styles = {
+      height: 100,
+      maxHeight: 100
+    };
+  
   }
 
   reset = () => {
@@ -277,6 +284,8 @@ class PersonalDetail extends React.PureComponent {
     )
   }
 
+  
+
   getModalContent = stateDetail => {
     return (
       <div className='row'>
@@ -445,10 +454,20 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>
         </div>
+        <div className="row">
         <div className='col-md-12 mb-2'>
-          <div className='form-group'>
-            <label>Affiliation</label>
-            <label>Certified member of organization(s)</label>
+        <label>Affiliation</label>
+        </div> 
+        <div className='col-md-12'>           
+        Certified member of organization(s) <input type="checkbox" 
+            onClick={e => {
+              this.setState({isActive: !e.target.checked});
+            }}
+            defaultChecked={this.state.isActive}/>
+        </div>
+        </div>
+        <div className='col-md-12 mb-2'>
+          <div className='form-group'>           
             <SelectBox
               options={[
                 {
@@ -509,13 +528,22 @@ class PersonalDetail extends React.PureComponent {
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
-            textChange={e => {
-              this.setState({ hourlyRate: e.target.value })
-              // if (isDecimal(this.state.hourlyRate) ) {
-              //   this.setState({ hourlyRate: e.target.value })
-              // }else {
-              //       this.setState({ lastNameInvaild: false,disabledSaveBtn:true })
-              //     }
+            // textChange={e => {
+            //   this.setState({ hourlyRate: e.target.value })
+            //   // if (isDecimal(this.state.hourlyRate) ) {
+            //   //   this.setState({ hourlyRate: e.target.value })
+            //   // }else {
+            //   //       this.setState({ lastNameInvaild: false,disabledSaveBtn:true })
+            //   //     }
+            // }}
+           textChange={e => {
+              const re = /^\d*\.?\d{0,2}$/
+              if (
+                (e.target.value === '' || re.test(e.target.value)) &&
+                checkLengthRemoveSpace(e.target.value) <= 7
+              ) {
+                this.setState({ hourlyRate: e.target.value })
+              }
             }}
             className='form-control'
           />
