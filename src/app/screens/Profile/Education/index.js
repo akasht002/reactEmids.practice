@@ -282,7 +282,7 @@ class Education extends React.Component {
         }
         
         return (
-            <div>
+            <div className="col-md-12 card CardWidget SPCertificate">
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Education</h4>
                     <i className="SPIconLarge SPIconAdd"

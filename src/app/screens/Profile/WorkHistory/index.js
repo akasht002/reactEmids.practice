@@ -324,8 +324,9 @@ class WorkHistory extends React.Component {
                         <div className="width100 d-flex">
                             <h5 className="SPCertificateHeader">
                                 {WorkHistoryList.description} - <span>{WorkHistoryList.company}</span>
-                                <span className="ml-auto SPWorkYear">{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
                             </h5>
+                            <span className="ml-auto SPWorkYear">{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
+
                         </div>
                         <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
                         <span className="SPCertificateDesc">{WorkHistoryList.description}</span>
