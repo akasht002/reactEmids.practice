@@ -9,8 +9,13 @@ class ServiceOfferedContent extends React.Component {
         this.serviceTypes = [];
     }
 
+
     handleClick = (serviceTypes) => {
+        // serviceTypes.map((services) => {
+            
+        // });
         this.serviceTypes.push(serviceTypes);
+        //this.serviceTypes.push(serviceTypes);
         this.props.handleClick(this.serviceTypes);
     }
 

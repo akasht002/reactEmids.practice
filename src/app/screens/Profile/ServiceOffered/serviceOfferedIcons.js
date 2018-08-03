@@ -7,7 +7,9 @@ class ServiceOfferedIcons extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isActive: false
+            isActive: false,
+            selectAllCheck: false,
+            isClicked: false
         };
     }
 
@@ -32,12 +34,19 @@ class ServiceOfferedIcons extends React.Component {
 
     componentDidMount() {
         this.setState({
-            isActive: this.props.service.isActive
+            isActive: this.props.service.isActive,
+            selectAllCheck: this.props.selectAllCheck
         });
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ isActive: nextProps.selectAllCheck });
+        if (this.state.selectAllCheck !== nextProps.selectAllCheck) {
+            if (!nextProps.selectAllCheck && nextProps.individualSelected) {
+                this.setState({ selectAllCheck: false});
+            } else {
+                this.setState({ isActive: nextProps.selectAllCheck, selectAllCheck: nextProps.selectAllCheck});
+            }
+        }
     }
 
     render() {
@@ -56,10 +65,11 @@ class ServiceOfferedIcons extends React.Component {
                         id={this.props.service.serviceTypeId}
                         className="form-check-input"
                         type="checkbox"
-                        value={this.state.isActive}
+                        value={this.props.service.serviceTypeDescription}
                         //data-id={this.props.category.serviceCategoryId}
                         onChange={this.handleClick}
                         checked={this.state.isActive}
+                        defaultChecked={this.state.isActive}
                     />
                     <label htmlFor={this.props.service.serviceTypeId}
                         className={"form-check-label SPIconServices" + (this.props.index + 1)}>

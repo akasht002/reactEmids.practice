@@ -9,19 +9,48 @@ class ServiceOfferedAccordian extends React.Component {
         this.serviceTypes = [];
         this.state = {
             selectAllChecked: false,
-            serviceTypes: []
+            serviceTypes: [],
+            individualSelected: false
         };
     }
 
     handleClick = (selectedServiceType) => {
-        //this.serviceTypes.push(selectedServiceType);
+        if (!selectedServiceType.isActive) {
+            this.setState({selectAllChecked: false, individualSelected: true});
+        }
+        // const index = this.serviceTypes.findIndex((service) => {
+        //     return service.serviceTypeId == service.serviceTypeId
+        // });
+        // if (index > -1) {
+        //     this.serviceTypes.splice(index, 1);
+        //     console.log(this.serviceTypes);
+        // }
+        // this.serviceTypes.push(selectedServiceType);
+        // console.log(this.serviceTypes);
+        
         this.props.selectedServiceTypes(selectedServiceType);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentDidMount() {
         this.setState({
-            serviceTypes: nextProps.category.serviceTypeModel
+            serviceTypes: this.props.category.serviceTypeModel,
+            selectAllChecked: false
         });
+        if(this.props.category.serviceTypeModel.every((service) => {
+            return service.isActive === true;
+        })) {
+            this.setState({
+                selectAllChecked: true
+            });
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.category.serviceTypeModel !== this.serviceTypes) {
+            this.setState({
+                serviceTypes: nextProps.category.serviceTypeModel
+            });
+        }
     }
 
     onChangeSelectAll() {
@@ -31,7 +60,8 @@ class ServiceOfferedAccordian extends React.Component {
                 isActive: !this.state.selectAllChecked
             };
         });
-        this.setState({ selectAllChecked: !this.state.selectAllChecked, serviceTypes: serviceTypes });
+        this.setState({ selectAllChecked: !this.state.selectAllChecked, serviceTypes: serviceTypes, individualSelected: false });
+        this.props.selectedServiceTypes(serviceTypes);
     }
 
     render() {
@@ -44,7 +74,7 @@ class ServiceOfferedAccordian extends React.Component {
 
         return (
             <div>
-                <div>
+                
                     <UncontrolledCollapse toggler={'#a' + this.props.category.serviceCategoryId} className={contentClassName + " SPTabContent " + showFirstContentDefault}>
                         {this.props.type === 'edit' && <div className={'width100 selectServiceTypes d-flex'}>
                             <p className={'mr-auto'}>Select the Service Types</p>
@@ -67,6 +97,7 @@ class ServiceOfferedAccordian extends React.Component {
                             return (
                                 <ServiceOfferedIcons
                                     selectAllCheck={this.state.selectAllChecked}
+                                    individualSelected={this.state.individualSelected}
                                     categoryId={this.props.category.serviceCategoryId}
                                     service={listService}
                                     index={index}
@@ -76,7 +107,7 @@ class ServiceOfferedAccordian extends React.Component {
                             )
                         })}
                     </UncontrolledCollapse>
-                </div>
+                
                 <div className={'SPTabHeader'} id={'a' + this.props.category.serviceCategoryId} onClick={this.toggleCollapse}>
                     <div className={'SPTabTitle'}>
                         <h5 className={'SPTabTitleContent'}>{this.props.category.serviceCategoryDescription}</h5>
