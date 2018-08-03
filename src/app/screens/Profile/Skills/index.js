@@ -51,19 +51,17 @@ class Skills extends React.Component {
             return elem.id;
         }).join(",");
 
-        let array1 = [
-            {
-                selectedSkills: previouslySelectedValues
-            }
-        ]
+        let previousValue = {
+            selectedSkills: previouslySelectedValues
+        }
+        
 
-        let array2 = [
-            {
-                selectedSkills: this.state.selectedSkills
-            }
-        ]
+        let staeSelectValue = {
+            selectedSkills: this.state.selectedSkills
+        }
+        
 
-        const fieldDifference = compare(array1, array2);
+        const fieldDifference = compare(previousValue, staeSelectValue);
 
         if (fieldDifference === true) {
 
@@ -99,18 +97,18 @@ class Skills extends React.Component {
 
     reset = () => {
 
-        const array1 = [];
+        const previosInitValue = [];
 
         const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
-            return array1.push(elem.id);
+            return previosInitValue.push(elem.id);
         }).join(",");
 
-        const array2 = [];
+        const newlyInitValue = [];
 
         const newlySelectedValues = this.state.selectedSkills;
-        array2.push(newlySelectedValues);
+        newlyInitValue.push(newlySelectedValues);
 
-        const result = difference(array1, array2)
+        const result = difference(previosInitValue, newlyInitValue)
 
         this.setState({ selectedSkills: result, isSkillsModalOpen: false, isDiscardModalOpen: false, disabledSaveBtn: true });
     }

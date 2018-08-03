@@ -72,29 +72,27 @@ class WorkHistory extends React.Component {
             disabledSaveBtn:true,
             isDiscardModalOpen:false
         })
-        let workhistoryFielObject = [
-            {
-                designation: this.props.workhistoyFieldDetails.designation,
-                company: this.props.workhistoyFieldDetails.company,
-                location: this.props.workhistoyFieldDetails.location,
-                fromDate: this.props.workhistoyFieldDetails.fromDate,
-                toDate: this.props.workhistoyFieldDetails.toDate,
-                description: this.props.workhistoyFieldDetails.description,
-                isWorking:this.props.workhistoyFieldDetails.isWorking
-            }
-        ]
-         let stateObject = [
-            {
-                designation: this.state.designation,
-                company: this.state.company,
-                location: this.state.location,
-                fromDate: this.state.fromDate,
-                toDate: this.state.toDate,
-                description: this.state.description,
-                isWorking:this.state.isWorking
-            }
-        ]
-         const fieldDifference = compare(stateObject, workhistoryFielObject);
+        let workhistoryFielObject = {
+            designation: this.props.workhistoyFieldDetails.designation,
+            company: this.props.workhistoyFieldDetails.company,
+            location: this.props.workhistoyFieldDetails.location,
+            fromDate: this.props.workhistoyFieldDetails.fromDate,
+            toDate: this.props.workhistoyFieldDetails.toDate,
+            description: this.props.workhistoyFieldDetails.description,
+            isWorking:this.props.workhistoyFieldDetails.isWorking
+        }
+        
+         let stateObject = {
+            designation: this.state.designation,
+            company: this.state.company,
+            location: this.state.location,
+            fromDate: this.state.fromDate,
+            toDate: this.state.toDate,
+            description: this.state.description,
+            isWorking:this.state.isWorking
+        }
+        
+         const fieldDifference = compare(workhistoryFielObject, stateObject);
          if (fieldDifference === true) {
             this.setState({ isWorkHistoryModalOpen: false,
                 isDiscardModalOpen: false,
