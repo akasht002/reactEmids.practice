@@ -148,8 +148,9 @@
     outline: none;
     opacity: 1;
     line-height: 17px;
+    line-height: 18px;
     /* For IE 8 compatibility */
-    padding: 8px 0 12px;
+    padding: 8px 10px 12px;
     /* For IE 8 compatibility */
     -webkit-appearance: none;
 }

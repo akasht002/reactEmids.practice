@@ -38,7 +38,7 @@ class ProfileHeader extends React.Component {
                     Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem className={menuName + "Widget navIconWidget " + Separator}>
+                    <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
                         <NavLink className={clsName}
                             href={menu.link} />
                     </NavItem>

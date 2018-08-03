@@ -1,0 +1,332 @@
+#app {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+.onBoardingContent{
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.onBoardingHeader{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    padding: 60px;
+    top: 0;
+    z-index: 2;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.onBoardingHeader a.brandName{
+    color: #fff;
+    font-size: 24px;
+}
+
+.onBoardingHeader a.brandName:hover{
+    color: #dedeff;
+    text-decoration: none;
+}
+
+.onBoardingHeader a.btn, .GetStartedBtnContainer .btn{
+    padding: 8px 20px;
+}
+
+.GetStartedBtnContainer .btn:hover{
+    background-color: #ffffff !important;
+    color: #3c1053 !important;
+}
+
+.GetStartedBtnContainer .btn:focus{
+    background-color: rgba(255,255,255,.2) !important;
+    color: #ffffff !important;
+}
+
+.sliderWrapper {
+    height: 100vh;
+    overflow: hidden;
+    padding: 60px;
+}
+
+.slider {
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+}
+
+.sliderContainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sliderItem, .hide {
+    position: absolute;
+    left: 0;
+    color: #fff;
+    background: #383838;
+    text-align: center;
+    transition: all .4s linear;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.sliderItem{
+    opacity: 1;
+}
+
+.hide{
+    opacity: 0;
+}
+
+.buttonsWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -15px;
+}
+
+.buttonsWrapper .prevButton {
+    background-image: url(http://static.birgun.net/static/images/slider-arrow-left.svg);
+    background-size: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 30px;
+    width: 30px;
+    border-radius: 4px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.4s linear;
+}
+
+.buttonsWrapper .nextButton {
+    background-image: url(http://static.birgun.net/static/images/slider-arrow-right.svg);
+    background-size: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 30px;
+    width: 30px;
+    border-radius: 4px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s linear;
+}
+
+.buttonsWrapper button:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+/* indicators */
+
+.indicators {
+    position: absolute;
+    bottom: 50px;
+    left: 60px;
+    margin: 0;
+    padding: 0;
+    z-index: 2 !important;
+    text-align: center;
+}
+
+.indicators li {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    width: 10px;
+    height: 10px;
+    top: 0;
+    border-radius: 100%;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.4);
+    color: #333;
+    text-indent: -9999px;
+    cursor: pointer;
+    transition: all 0.2s linear;
+}
+
+.indicators li:last-child {
+    margin-right: 0;
+}
+
+li.activeIndicator {
+    background: rgba(255, 255, 255, 1) !important;
+    width: 14px;
+    height: 14px;
+    top: -2px;
+    color: #fff !important;
+}
+
+.sliderInnerContent{
+    position: absolute;
+    display: block;
+    width: 100%;
+    padding: 50px 60px 110px;
+    bottom: 0;
+    background-image: linear-gradient(rgba(102, 48, 127, .8),rgba(60, 16, 83, .9));
+}
+
+.sliderTitleText, .sliderLabelText{
+    position: relative;
+    display: block;
+    width: calc(100% - 300px);
+    text-align: left;
+}
+
+.sliderTitleText{
+    font-size: 40px;
+    font-weight: 400;
+}
+
+.sliderLabelText{
+    font-size: 18px;
+}
+
+.GetStartedBtnContainer{
+    position: absolute;
+    right: 60px;
+    bottom: 55px;
+    z-index: 2;
+}
+
+.GetStartedBtnContainer .btn{
+    border-color: #fff !important;
+    color: #ffffff !important;
+}
+
+.onBoardSuccessHeader{
+    padding: 20px;
+}
+
+.onBoardSuccessWidget{
+    display: table;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    background-image: linear-gradient(rgba(102, 48, 127, .8), rgba(60, 16, 83, .8)), url("../assets/img/coverImg1.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.onBoardSuccessContainer{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.onBoardSuccessContainer span{
+    font-size: 22px;
+    display: block;
+    color: #ffffff;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.onBoardSuccessIcon{
+    height: 64px;
+    width: 64px;
+    background-image: url("../assets/img/SuccessTick.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: contain;
+    background-size: contain;
+}
+
+a.onBoardSuccessBtn{
+    padding: 10px;
+    width: 250px;
+    background-color: #4f236b !important;
+    border-color: #4f236b !important;
+}
+
+@media (max-width: 1024px) {
+    .GetStartedBtnContainer{
+        right: 40px;
+        bottom: 40px;
+    }
+    .sliderInnerContent{
+        padding: 40px 40px 90px;
+    }
+    .onBoardingHeader{
+        padding: 40px;
+    }
+    .indicators{
+        left: 40px;
+        bottom: 35px;
+    }
+}
+@media (max-width: 800px) {
+    .onBoardingHeader a.brandName{
+        font-size: 20px;
+    }
+
+    .sliderTitleText, .sliderLabelText{
+        width: 100%;
+        text-align: center;
+    }
+
+    .sliderInnerContent{
+        padding: 20px 20px 130px;
+    }
+    .sliderTitleText{
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .sliderLabelText{
+        font-size: 14px;
+    }
+
+    .onBoardingHeader{
+        padding: 20px;
+    }
+
+    .GetStartedBtnContainer{
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 30px;
+        text-align: center;
+    }
+
+    .GetStartedBtnContainer .btn{
+        width: 80%;
+    }
+
+    .indicators{
+        width: 100%;
+        left: 0;
+        bottom: 80px;
+    }
+
+    .sliderWrapper{
+        padding: 20px;
+    }
+    .onBoardSuccessContainer span {
+        font-size: 18px;
+    }
+
+    a.onBoardSuccessBtn {
+        padding: 12px 10px !important;
+        width: 100%;
+    }
+}
+/* indicators */
