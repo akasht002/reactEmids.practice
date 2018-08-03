@@ -16,10 +16,21 @@ const WorkHistoryState = (state = defaultState, action) => {
                 workhistoryList: action.data
             };
 
-        case WorkHistory.addeworkhistorySuccess:
+        case WorkHistory.addWorkhistorySuccess:
             return {
                 ...state,
-                addeworkhistorySuccess: action.isSuccess
+                addeworkhistorySuccess: action.isSuccess,
+                workhistoyFieldDetails: {
+                    designation: '',
+                    company: '',
+                    location: '',
+                    fromDate: '',
+                    toDate: '',
+                    description:'',
+                    isWorking:'',
+                    workHistoryId:''
+                    
+                }
             };
 
         case WorkHistory.getWorkhistoryFieldDetails:

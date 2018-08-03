@@ -6,6 +6,7 @@ import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
 import Education from "../Education/index";
+import PersonalDetail from "../PersonalDetail/index";
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
 
@@ -33,7 +34,10 @@ class Profile extends Component {
                                     </h4>
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
-                                    <ServiceOffered />
+                                    <PersonalDetail />                                   
+                                </div>
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                <ServiceOffered />
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Skills />
@@ -44,12 +48,10 @@ class Profile extends Component {
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Certification />
                                 </div>
-                                <div className="col-md-12 card CardWidget SPCertificate">
-                                    <Education />
-                                </div>
-                                <div className="col-md-12 card CardWidget SPCertificate">
+                                
                                     <WorkHistory />
-                                </div>
+                                    <Education />
+                                
                             </div>
                         </div>
                     </div>

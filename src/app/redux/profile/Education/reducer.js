@@ -26,7 +26,15 @@ const EducationState = (state = defaultState, action) => {
         case Education.addEducationSuccess:
             return {
                 ...state,
-                addEducationSuccess: action.isSuccess
+                addEducationSuccess: action.isSuccess,
+                educationFieldDetails:{
+                    school: '',
+                    degree: '',
+                    fieldOfStudy: '',
+                    startYear: '',
+                    endYear: ''
+                    
+                }
             };
 
         default:

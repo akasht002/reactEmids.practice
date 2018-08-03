@@ -93,6 +93,7 @@ class ServiceOfferedAccordian extends React.Component {
                                 </label>
                             </div>
                         </div>}
+                        
                         {this.state.serviceTypes && this.state.serviceTypes.map((listService, index) => {
                             return (
                                 <ServiceOfferedIcons
@@ -103,6 +104,7 @@ class ServiceOfferedAccordian extends React.Component {
                                     index={index}
                                     type={this.props.type}
                                     handleClick={this.handleClick}
+                                    checkboxCount={this.props.checkboxCount}
                                 />
                             )
                         })}
@@ -112,7 +114,7 @@ class ServiceOfferedAccordian extends React.Component {
                     <div className={'SPTabTitle'}>
                         <h5 className={'SPTabTitleContent'}>{this.props.category.serviceCategoryDescription}</h5>
                         {this.props.type === 'view' ?
-                            checkboxCount
+                            this.props.checkboxCount
                             :
                             ''
                         }

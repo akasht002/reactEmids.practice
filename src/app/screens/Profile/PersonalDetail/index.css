@@ -1,0 +1,15 @@
+
+
+
+
+.ReactCrop__crop-selection{
+    border-radius: 50%;
+    width:100%;
+}
+
+.ReactCrop__crop-selection:before{
+	content: "";
+    display: block;
+    padding-top: 100%!important;
+ }  
+.preview{border-radius: 50%;}

@@ -1,10 +1,10 @@
 import React,{Component} from "react";
 import { connect } from 'react-redux';
-import _ from 'lodash'
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
-import { checkSpace,formattedDateMoment,formattedDateChange,formateStateDate } from "../../../utils/validations"
+import { checkSpace,formattedDateMoment,formattedDateChange,formateStateDate } from "../../../utils/validations";
+import {compare} from "../../../utils/comparerUtility";
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
@@ -68,12 +68,11 @@ class WorkHistory extends React.Component {
     toggleWorkHistory=(e)=>{
         this.setState({
             isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
-            isAdd: true,
             isValid: true,
             disabledSaveBtn:true,
             isDiscardModalOpen:false
         })
-        let workhistoryFieldarray = [
+        let workhistoryFielObject = [
             {
                 designation: this.props.workhistoyFieldDetails.designation,
                 company: this.props.workhistoyFieldDetails.company,
@@ -84,7 +83,7 @@ class WorkHistory extends React.Component {
                 isWorking:this.props.workhistoyFieldDetails.isWorking
             }
         ]
-         let stateArray = [
+         let stateObject = [
             {
                 designation: this.state.designation,
                 company: this.state.company,
@@ -95,12 +94,22 @@ class WorkHistory extends React.Component {
                 isWorking:this.state.isWorking
             }
         ]
-         const fieldDifference = _.isEqual(stateArray, workhistoryFieldarray);
+         const fieldDifference = compare(stateObject, workhistoryFielObject);
          if (fieldDifference === true) {
-            this.setState({ isWorkHistoryModalOpen: false, isDiscardModalOpen: false })
+            this.setState({ isWorkHistoryModalOpen: false,
+                isDiscardModalOpen: false,
+                designation:'',
+                company:'',
+                location:'',
+                fromDate:'',
+                toDate:'',
+                description:'',
+                isWorking:''
+            })
         } else {
             this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
         }
+        this.reset();
     }
     addWorkhistory = () => {
         if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate)) {
@@ -124,8 +133,9 @@ class WorkHistory extends React.Component {
                     fromDate:this.state.fromDate
                 }
             }
+            
             this.props.addWorkHistory(data);
-           this.reset();
+            this.reset();
         } else {
             this.setState({ isValid: false });
         }
@@ -324,8 +334,9 @@ class WorkHistory extends React.Component {
                         <div className="width100 d-flex">
                             <h5 className="SPCertificateHeader">
                                 {WorkHistoryList.description} - <span>{WorkHistoryList.company}</span>
-                                <span className="ml-auto SPWorkYear">{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
                             </h5>
+                            <span className="ml-auto SPWorkYear">{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
+
                         </div>
                         <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
                         <span className="SPCertificateDesc">{WorkHistoryList.description}</span>
@@ -353,7 +364,7 @@ class WorkHistory extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Work History</h4>
                     <i className="SPIconLarge SPIconAdd"
-                    onClick={() => this.setState({ isWorkHistoryModalOpen: true })} />
+                    onClick={() => this.setState({ isWorkHistoryModalOpen: true,isAdd: true })} />
                 </div>
 
                 <div className="SPCertificateContainer width100">
@@ -363,7 +374,7 @@ class WorkHistory extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'> click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true })}/> to add Work History</span>
+                                    <span className='SPNoInfoDesc'> click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true,isAdd: true })}/> to add Work History</span>
                                 </div>
                             </div>
                             </ul>

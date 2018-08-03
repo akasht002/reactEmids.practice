@@ -27,9 +27,6 @@ class ServiceOfferedIcons extends React.Component {
             isActive: e.target.checked,
             categoryId: this.props.categoryId
         });
-
-        console.log('hi')
-
     }
 
     componentDidMount() {
@@ -58,7 +55,6 @@ class ServiceOfferedIcons extends React.Component {
                 <li className={"SPIconServices SPIconServices" + (this.props.index + 1)}><span>{this.props.service.serviceTypeDescription}</span></li>
             )
         } else if (this.props.type === 'edit') {
-
             return (
                 <div className="form-check form-check-inline selectType SPIconServicesCheckbox">
                     <input

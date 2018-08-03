@@ -26,11 +26,6 @@ class ServicesCheckbox extends React.Component {
     }
 
     handleClickSelectAll = (check) => {
-        // this.setState({
-        //     selectAll: !this.state.selectAll,
-        //     checked: !this.state.checked
-        // });
-        console.log(check);
         for (const c of check.services) {
             c.isActive = check.selectAll;
         }
@@ -52,13 +47,6 @@ class ServicesCheckbox extends React.Component {
 
             toggleid = 'toggle' + check.id;
 
-            // {
-            //     check.services && check.services.map((serviceType, i) => {
-            //         return
-            //         checkboxName = serviceType.serviceTypeDescription
-            //     })
-            // }
-
             let contentClassName = '';
             let widgetClassName = '';
             let selectAll = '';
@@ -75,12 +63,7 @@ class ServicesCheckbox extends React.Component {
                                 type="checkbox"
                                 value={check.selectAll}
                                 checked={check.selectAll}
-                                onChange={() => {
-                                    //check.selectAll = !check.selectAll;
-                                    // for (const c of check.services) {
-                                    //     c.isActive = check.selectAll;
-                                    // }
-                                }}
+                                onChange={() => { }}
                             />
                             Select All
                             <span className="CheckboxIcon" />
@@ -90,35 +73,15 @@ class ServicesCheckbox extends React.Component {
             }
 
             return (
-                <div className={'SPTabWidget ' + widgetClassName}>
+                <div key={i} className={'SPTabWidget ' + widgetClassName}>
                     <UncontrolledCollapse toggler={'#' + toggleid} className={contentClassName + " SPTabContent " + showFirstContentDefault}>
-                        <div className={'width100 selectServiceTypes d-flex'}>
-                            <p className={'mr-auto'}>Select the Service Types</p>
-                            <div className='form-check ml-auto'>
-                                <label className="form-check-label">
-                                    <input className="form-check-input"
-                                        type="checkbox"
-                                        value={check.selectAll}
-                                        checked={check.selectAll}
-                                        onChange={() => {
-                                            //check.selectAll = !check.selectAll;
-                                            for (const c of check.services) {
-                                                c.isActive = check.selectAll;
-                                            }
-                                            this.setState({checked: true});
-                                        }}
-                                    />
-                                    Select All
-                                    <span className="CheckboxIcon" />
-                                </label>
-                            </div>
-                        </div>
+                        
                         {check.services.map((listService, index) => {
                             if (this.props.type === 'view') {
 
                                 checkboxCount = <span className={'SPServiceCount'}>{index + 1}</span>;
                                 return (
-                                    <li className={"SPIconServices SPIconServices" + (index + 1)}><span>{listService}</span></li>
+                                    <li key={index} className={"SPIconServices SPIconServices" + (index + 1)}><span>{listService}</span></li>
                                 )
                             } else if (this.props.type === 'edit') {
                                 

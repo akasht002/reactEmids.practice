@@ -88,6 +88,7 @@ export function editWorkHistory(data) {
 
         dispatch(startLoading());
         axios.get(baseURL + API.WorkHistory +`${serviceProviderId}/WorkHistory/${workHistoryId}`,modal).then((resp) => {
+            
             dispatch(getWorkhistoryFieldDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -115,6 +116,7 @@ export function updateWorkHistory(data) {
         };
         dispatch(startLoading());
         axios.put(baseURL + API.WorkHistory+`${serviceProviderId}'/WorkHistory`, modal).then((resp) => {
+            dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory());
             dispatch(endLoading());
         }).catch((err) => {

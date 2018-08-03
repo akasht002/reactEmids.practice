@@ -23,10 +23,10 @@ export const getServiceOfferedDetails = (data) => {
 
 export function getServiceOffered() {
     return (dispatch, getState) => {
-        // let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let currstate = getState();
+        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
-        axios.get(baseURL + API.getServiceOffered + '1' + '/Offer/Selected').then((resp) => {
+        axios.get(baseURL + API.getServiceOffered + serviceProviderId + '/Offer/Selected').then((resp) => {
             dispatch(getServicesOfferedSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -40,7 +40,7 @@ export function addServiceOfferd(data) {
         let currstate = getState();
         let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
-        axios.post(baseURL + API.addServiceOffered + '1' + '/Offer', data).then((resp) => {
+        axios.post(baseURL + API.addServiceOffered + serviceProviderId + '/Offer', data).then((resp) => {
             dispatch(getServiceOffered());
             dispatch(editServiceOffered());
             dispatch(endLoading());
@@ -52,10 +52,10 @@ export function addServiceOfferd(data) {
 
 export function editServiceOffered(data) {
     return (dispatch, getState) => {
-        // let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let currstate = getState();
+        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
-        axios.get(baseURL + API.editServiceOffered + '1' + '/Offer').then((resp) => {
+        axios.get(baseURL + API.editServiceOffered + serviceProviderId + '/Offer').then((resp) => {
             dispatch(getServiceOfferedDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { getPersonalDetail } from '../redux/profile/PersonalDetail/actions';
 
 // export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 
 export const baseURL = "http://localhost:63633/api/";
+
 
 export const Api = axios.create({
     baseURL: baseURL,
@@ -20,6 +22,11 @@ export const API = {
     addSkills: 'ServiceProvider/',
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/',
+    getPersonalDetail:'ServiceProvider/',
+    updatePersonalDetail:'ServiceProvider/',
+    getCity:'ServiceProviderLookUp/GetState',
+    uploadImage:'ServiceProvider/Image',
+    getImage:'ServiceProvider/Image/',
     getServiceOffered: 'ServiceProvider/',
     editServiceOffered: 'ServiceProvider/',
     addServiceOffered: 'ServiceProvider/'

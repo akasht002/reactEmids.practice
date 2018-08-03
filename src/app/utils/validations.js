@@ -1,6 +1,7 @@
 
 import moment from 'moment';
-import {DATE_FORMAT, DATE_YEAR} from '../constants/variables'
+import {DATE_FORMAT, DATE_YEAR} from '../constants/variables';
+
 export function checkEmail(email) {
     return /^(([^<>()[\]\\.,;:@"]+(\.[^<>()[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 }
@@ -41,3 +42,21 @@ export function formateStateDate(data){
 export function formateYearDate(){
     return  moment().format(DATE_YEAR);
 }
+
+
+export function checkLengthRemoveSpace(data) {
+    return data.replace(/\s/g, "").length;
+}
+
+
+export function checkTextNotStartWithNumber(data) {
+    return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*()'."]+$/.test(data)
+}
+
+export function isDecimal(data) {
+    return /^\d+(\.\d+)?$/.test(data)
+}
+
+export function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }

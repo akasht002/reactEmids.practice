@@ -38,7 +38,7 @@ class ProfileHeader extends React.Component {
                     Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem className={menuName + "Widget navIconWidget " + Separator}>
+                    <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
                         <NavLink className={clsName}
                             href={menu.link} />
                     </NavItem>
@@ -59,6 +59,7 @@ class ProfileHeader extends React.Component {
                             placeholder="search your keyword"
                             className="form-control SearchInput"
                             iconName="searchInputIcon"
+                            disable={"true"}
                         />
                     </Nav>
                     <Nav className="ml-auto navIconContainer" navbar>
