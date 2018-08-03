@@ -1079,6 +1079,6 @@ div.SPTabContentEdit{
     border: 1px solid #acacac;
 }
 
-.modal-body .Select-menu-outer{
-    position: relative;
+.LanguagesModal .modal-body, .LanguagesModal .modal-content{
+    overflow: initial;
 }
