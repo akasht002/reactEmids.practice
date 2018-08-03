@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
 import {Calendar} from "../../../components/LevelOne/index";
-import { checkSpace,formattedDateMoment,formattedDateChange,formateStateDate,compareUtility } from "../../../utils/validations";
+import { checkSpace,formattedDateMoment,formattedDateChange,formateStateDate } from "../../../utils/validations";
+import {compare} from "../../../utils/comparerUtility";
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
@@ -71,7 +72,7 @@ class WorkHistory extends React.Component {
             disabledSaveBtn:true,
             isDiscardModalOpen:false
         })
-        let workhistoryFieldarray = [
+        let workhistoryFielObject = [
             {
                 designation: this.props.workhistoyFieldDetails.designation,
                 company: this.props.workhistoyFieldDetails.company,
@@ -82,7 +83,7 @@ class WorkHistory extends React.Component {
                 isWorking:this.props.workhistoyFieldDetails.isWorking
             }
         ]
-         let stateArray = [
+         let stateObject = [
             {
                 designation: this.state.designation,
                 company: this.state.company,
@@ -93,7 +94,7 @@ class WorkHistory extends React.Component {
                 isWorking:this.state.isWorking
             }
         ]
-         const fieldDifference = compareUtility(stateArray, workhistoryFieldarray);
+         const fieldDifference = compare(stateObject, workhistoryFielObject);
          if (fieldDifference === true) {
             this.setState({ isWorkHistoryModalOpen: false,
                 isDiscardModalOpen: false,

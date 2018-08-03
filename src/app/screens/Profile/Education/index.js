@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input ,ProfileModalPopup, ModalPopup } from "../../../components";
-import {formateYearDate,compareUtility} from "../../../utils/validations";
+import {formateYearDate} from "../../../utils/validations";
+import {compare} from "../../../utils/comparerUtility";
 import { getEducation, addEducation, editEducation, updateEducation, deleteEducation } from '../../../redux/profile/Education/actions';
 
 import "./styles.css";
@@ -61,27 +62,24 @@ class Education extends React.Component {
             disabledSaveBtn: true,
             isDiscardModalOpen:false
         })
-        let educationFielarray = [
-            {
-                school: this.props.educationFieldDetails.school,
-                degree: this.props.educationFieldDetails.degree,
-                fieldOfStudy: this.props.educationFieldDetails.fieldOfStudy,
-                startYear:this.props.educationFieldDetails.startYear,
-                endYear:this.props.educationFieldDetails.endYear
+        let educationPropObject = {
+            school: this.props.educationFieldDetails.school,
+            degree: this.props.educationFieldDetails.degree,
+            fieldOfStudy: this.props.educationFieldDetails.fieldOfStudy,
+            startYear:this.props.educationFieldDetails.startYear,
+            endYear:this.props.educationFieldDetails.endYear
 
-            }
-        ]
-         let stateArray = [
-            {
-                school: this.state.school,
-                degree: this.state.degree,
-                fieldOfStudy: this.state.fieldOfStudy,
-                startYear: this.state.startYear,
-                endYear: this.state.endYear
+        };
+        
+        let stateObject = {
+            school: this.state.school,
+            degree: this.state.degree,
+            fieldOfStudy: this.state.fieldOfStudy,
+            startYear: this.state.startYear,
+            endYear: this.state.endYear
 
-            }
-        ]
-         const fieldDifference = compareUtility(educationFielarray, stateArray);
+        };
+         const fieldDifference = compare(educationPropObject, stateObject);
          if (fieldDifference === true) {
             this.setState({ EducationModal: false, 
                 isDiscardModalOpen: false,

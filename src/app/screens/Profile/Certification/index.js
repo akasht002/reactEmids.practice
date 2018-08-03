@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
-import { checkSpace,compareUtility } from "../../../utils/validations";
+import { checkSpace } from "../../../utils/validations";
+import {compare} from "../../../utils/comparerUtility";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 
 class Certification extends React.Component {
@@ -59,23 +60,21 @@ class Certification extends React.Component {
             disabledSaveBtn: true
         })
 
-        let array1 = [
-            {
+        let array1 = {
                 authority: this.props.certificationFieldDetails.authority,
                 certificationName: this.props.certificationFieldDetails.certificationName,
                 licenceNumber: this.props.certificationFieldDetails.licenceNumber
-            }
-        ]
+        }
+        
 
-        let array2 = [
-            {
+        let array2 = {
                 authority: this.state.certificationAuthority,
                 certificationName: this.state.certificationName,
                 licenceNumber: this.state.certificateLicenceNumber
-            }
-        ]
+        }
+        
 
-        const fieldDifference = compareUtility(array1, array2);
+        const fieldDifference = compare(array1, array2);
 
         if (fieldDifference === true) {
             this.setState({ certificationModal: false, isDiscardModalOpen: false,
