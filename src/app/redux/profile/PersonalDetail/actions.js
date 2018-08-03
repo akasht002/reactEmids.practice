@@ -60,8 +60,6 @@ export function uploadImg(data) {
             "serviceProviderTypeId": serviceProviderId,
             "image": data
         }
-        console.log(modal);
-        console.log(data);
         dispatch(startLoading());
         axios.post(baseURL + API.uploadImage, modal).then((resp) => {
             dispatch(getImage());
