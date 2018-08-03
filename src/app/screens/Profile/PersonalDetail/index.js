@@ -176,6 +176,7 @@ class PersonalDetail extends React.PureComponent {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
+    console.log(this.state.croppedImage);
     this.props.uploadImg(this.state.croppedImage)
   }
 
@@ -828,7 +829,7 @@ function mapDispatchToProps (dispatch) {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
     getCityDetail: () => dispatch(action.getCityDetail()),
-    uploadImg: data => dispatch(action.uploadImg())
+    uploadImg: data => dispatch(action.uploadImg(data))
   }
 }
 
