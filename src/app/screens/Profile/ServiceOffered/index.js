@@ -14,7 +14,7 @@ class ServiceOffered extends React.Component {
         this.state = {
             isModalOpen: false,
             isDiscardModalOpen: false,
-            disabledSaveBtn: false,
+            disabledSaveBtn: true,
             isAdd: false,
             serviceType: [],
         };
@@ -31,8 +31,8 @@ class ServiceOffered extends React.Component {
     toggleServiceOffered = () => {
         this.setState({
             isModalOpen: !this.state.isModalOpen,
-            disabledSaveBtn: true
-            // isDiscardModalOpen: true
+            disabledSaveBtn: true,
+            //isDiscardModalOpen: true
         })
     }
 
@@ -49,7 +49,7 @@ class ServiceOffered extends React.Component {
     oncheckedServices = (serviceType) => {
         this.setState({
             serviceType: serviceType,
-            disabledSaveBtn: false
+            disabledSaveBtn: false,
         })
     }
 
@@ -60,9 +60,9 @@ class ServiceOffered extends React.Component {
             }
         ]
         this.props.addServiceOfferd(data);
-        this.setState({ 
-            isModalOpen: false, 
-            disabledSaveBtn: true 
+        this.setState({
+            isModalOpen: false,
+            disabledSaveBtn: true
         });
     }
 
@@ -107,7 +107,7 @@ class ServiceOffered extends React.Component {
 
         {
             listOfServicesOffered ?
-                modalContent = <ServiceOfferedContent handleClick={this.oncheckedServices} name={this.props.serviceOfferedDetails} type={'edit'}/>
+                modalContent = <ServicesCheckbox handleClick={this.oncheckedServices} name={listOfServicesOfferedSelected} type={'edit'} />
                 :
                 ''
         }
@@ -123,7 +123,7 @@ class ServiceOffered extends React.Component {
 
         return (
             <div>
-                <div className="col-md-12 card CardWidget SPServices">
+                
                     <div className={"SPCardTitle d-flex"}>
                         <h4 className={"primaryColor"}>Services Offered</h4>
                         {this.props.serviceOfferedList && this.props.serviceOfferedList.length > 0 ?
@@ -132,27 +132,28 @@ class ServiceOffered extends React.Component {
                             < i className="SPIconLarge SPIconAdd" onClick={this.addIconServiceOffered} />
                         }
                     </div>
-
-                    {this.props.serviceOfferedList.length > 0 ?
-                        <div>
-                            <ServiceOfferedContent
+                    <div className="SPCertificateContainer width100">
+                        {this.props.serviceOfferedList.length > 0 ?
+                            <div>
+                                {/* <ServiceOfferedContent
                                 name={this.props.serviceOfferedList}
                                 type={'view'}
-                            />
-                            {/* <ServicesCheckbox
-                                name={listOfServicesOffered}
-                                type={'view'}
                             /> */}
-                        </div>
-                        :
-                        <div className='SPNoInfo'>
-                            <div className='SPNoInfoContent'>
-                                <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.addIconServiceOffered} /> to Services Offered</span>
+                                <ServicesCheckbox
+                                    name={listOfServicesOffered}
+                                    type={'view'}
+                                />
                             </div>
-                        </div>
-                    }
-                </div>
+                            :
+                            <div className='SPNoInfo'>
+                                <div className='SPNoInfoContent'>
+                                    <div className='SPInfoContentImage' />
+                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.addIconServiceOffered} /> to Services Offered</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+               
 
                 <ProfileModalPopup
                     isOpen={this.state.isModalOpen}
@@ -160,8 +161,8 @@ class ServiceOffered extends React.Component {
                     ModalBody={modalContent}
                     className="modal-lg asyncModal ModalPadding0"
                     modalTitle={modalTitle}
-                    // disabled={this.state.disabledSaveBtn}
-                    centered="centered"
+                    disabled={this.state.disabledSaveBtn}
+                    centered="true"
                     onClick={this.addServiceOfferd}
                 />
 
@@ -173,10 +174,11 @@ class ServiceOffered extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered="true"
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
+                        isModalOpen: true
                     })}
                 />
             </div>

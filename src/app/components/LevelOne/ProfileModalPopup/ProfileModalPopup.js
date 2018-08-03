@@ -6,7 +6,7 @@ export default class ProfileModalPopup extends React.Component {
 
     render() {
         return (
-            <Modal isOpen={this.props.isOpen} className={this.props.className} centered={this.props.centered} >
+            <Modal isOpen={this.props.isOpen} className={this.props.className} centered={true}>
                 <ModalHeader toggle={this.props.toggle} className={"font-weight-light asyncModalHeader"}>{this.props.modalTitle}
                 </ModalHeader>
                 <ModalBody>{this.props.ModalBody} </ModalBody>
