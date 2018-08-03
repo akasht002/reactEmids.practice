@@ -42,10 +42,12 @@ class PersonalDetail extends React.PureComponent {
   componentDidMount () {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
+    this.props.getImage()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps) {    
     this.setState({
+      imageProfile: nextProps.profileImgData.image,
       firstName: nextProps.personalDetail.firstName,
       lastName: nextProps.personalDetail.lastName,
       age: nextProps.personalDetail.age,
@@ -54,18 +56,22 @@ class PersonalDetail extends React.PureComponent {
       yearOfExperience: nextProps.personalDetail.yearOfExperience,
       description: nextProps.personalDetail.description,
       hourlyRate: nextProps.personalDetail.hourlyRate,
-      // city: nextProps.personalDetail.address[0] &&
-      //   nextProps.personalDetail.address[0].city,
-      // streetAddress: nextProps.personalDetail.address[0] &&
-      //   nextProps.personalDetail.address[0].streetAddress,
-      // zipCode: nextProps.personalDetail.address[0] &&
-      //   nextProps.personalDetail.address[0].zipCode,
-      // phoneNumber: nextProps.personalDetail.address[0] &&
-      //   nextProps.personalDetail.phoneNumber,
-      // state_id: nextProps.personalDetail.address[0] &&
-      //   nextProps.personalDetail.address[0].state.id,
-      //   isActive: nextProps.personalDetail.isActive &&
-      //   nextProps.personalDetail.isActive
+      city: nextProps.personalDetail.address
+        ? nextProps.personalDetail.address[0].city
+        : '',
+      streetAddress: nextProps.personalDetail.address
+        ? nextProps.personalDetail.address[0].streetAddress
+        : '',
+      zipCode: nextProps.personalDetail.address
+        ? nextProps.personalDetail.address[0].zipCode
+        : '',
+      phoneNumber: nextProps.personalDetail.phoneNumber
+        ? nextProps.personalDetail.phoneNumber
+        : '',
+      state_id: nextProps.personalDetail.address
+        ? nextProps.personalDetail.address[0].state.id
+        : '',
+      isActive: false
     })
     this.city = this.state.address
     this.streetAddress = this.state.streetAddress
@@ -74,8 +80,7 @@ class PersonalDetail extends React.PureComponent {
     this.styles = {
       height: 100,
       maxHeight: 100
-    };
-  
+    }
   }
 
   reset = () => {
@@ -83,10 +88,10 @@ class PersonalDetail extends React.PureComponent {
       EditPersonalDetailModal: false,
       isDiscardModalOpen: false
     })
-    this.props.history.push('/profile')
+    // this.props.history.push('/profile')
   }
 
-  togglePersonalDetails (action, e) {     
+  togglePersonalDetails (action, e) {
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isValid: true,
@@ -114,15 +119,17 @@ class PersonalDetail extends React.PureComponent {
         lastName: this.state.lastName,
         phoneNumber: this.state.phoneNumber
       }
-    ]  
+    ]
 
     const fieldDifference = _.isEqual(old_data, updated_data)
 
     if (fieldDifference === true) {
-      this.setState({ certificationModal: false, isDiscardModalOpen: false })     
+      console.log(old_data);
+      console.log(updated_data);
+      this.setState({ certificationModal: false, isDiscardModalOpen: false })
     } else {
       this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
-    }   
+    }
   }
 
   handleChange = e => {
@@ -176,7 +183,7 @@ class PersonalDetail extends React.PureComponent {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
-    console.log(this.state.croppedImage);
+    console.log(this.state.croppedImage)
     this.props.uploadImg(this.state.croppedImage)
   }
 
@@ -228,20 +235,21 @@ class PersonalDetail extends React.PureComponent {
           onClick={this.onSubmit}
           disabled={this.state.disabledSaveBtn}
         />
-         <ModalPopup
-                    isOpen={this.state.isDiscardModalOpen}
-                    toggle={this.reset}
-                    ModalBody={<span>Do you want to discard the changes?</span>}
-                    btn1="YES"
-                    btn2="NO"
-                    className="modal-sm"
-                    headerFooter="d-none"
-                    centered="centered"
-                    onConfirm={() => this.reset()}
-                    onCancel={() => this.setState({
-                        isDiscardModalOpen: false,
-                    })}
-                />
+        <ModalPopup
+          isOpen={this.state.isDiscardModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Do you want to discard the changes?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() => this.reset()}
+          onCancel={() =>
+            this.setState({
+              isDiscardModalOpen: false
+            })}
+        />
       </React.Fragment>
     )
   }
@@ -285,8 +293,6 @@ class PersonalDetail extends React.PureComponent {
     )
   }
 
-  
-
   getModalContent = stateDetail => {
     return (
       <div className='row'>
@@ -297,11 +303,10 @@ class PersonalDetail extends React.PureComponent {
         </div>
         <div className='col-md-4 mb-2 editProfileImageContainer'>
           <div className='profileImage'>
-            <img
-              alt='profile-image'
-              src={require('../../../assets/images/Blank_Profile_icon.png')}
-              className={'SPdpImage'}
-            />
+           <img src=
+            {this.state.imageProfile
+              ? this.state.imageProfile
+              : require('../../../assets/images/Blank_Profile_icon.png')} />
             <span className='editDpImage' />
             <div className='uploadWidget'>
               <button className='addImageBtn' />
@@ -455,59 +460,66 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>
         </div>
-        <div className="row">
-        <div className='col-md-12 mb-2'>
-        <label>Affiliation</label>
-        </div> 
-        <div className='col-md-12'>           
-        Certified member of organization(s) <input type="checkbox" 
-            onClick={e => {
-              this.setState({isActive: !e.target.checked});
-            }}
-            defaultChecked={this.state.isActive}/>
-        </div>
-        </div>
-        <div className='col-md-12 mb-2'>
-          <div className='form-group'>           
-            <SelectBox
-              options={[
-                {
-                  label: 'AABB (formerly American Association of Blood Banks)',
-                  value: '1'
-                },
-                {
-                  label: 'Academy of International Business (AIB)',
-                  value: '2'
-                },
-                { label: 'Academy of Management (AOM)', value: '3' },
-                {
-                  label: 'Association for the Advancement of Cost Engineering (AACE International)',
-                  value: '4'
-                },
-                {
-                  label: 'Association for Volunteer Administration (AVA)',
-                  value: '5'
-                },
-                {
-                  label: 'Association of Information Technology Professionals (AITP)',
-                  value: '6'
-                },
-                {
-                  label: 'Chartered Global Management Accountant (CGMA)',
-                  value: '7'
-                }
-              ]}
-              simpleValue
-              placeholder='Select the Organization'
-              onChange={value => {
-                this.setState({ organization: value })
-              }}
-              selectedValue={this.state.organization}
-              className={'inputFailure'}
-            />
+        <div className='row'>
+          <div className='col-md-12 mb-2'>
+            <label>Affiliation</label>
           </div>
+          <div className='col-md-12'>
+            <input
+              type='checkbox'
+              onClick={e => {
+                this.setState({ isActive: !e.target.checked })
+              }}
+              defaultChecked={this.state.isActive}
+            />
+            Certified member of organization(s)
+          </div>
+          <div
+            className='col-md-12 mb-2'
+            style={{ visibility: !this.state.isActive ? 'visible' : 'hidden' }}
+          >
+            <div className='form-group'>
+              <SelectBox
+                options={[
+                  {
+                    label: 'AABB (formerly American Association of Blood Banks)',
+                    value: '1'
+                  },
+                  {
+                    label: 'Academy of International Business (AIB)',
+                    value: '2'
+                  },
+                  { label: 'Academy of Management (AOM)', value: '3' },
+                  {
+                    label: 'Association for the Advancement of Cost Engineering (AACE International)',
+                    value: '4'
+                  },
+                  {
+                    label: 'Association for Volunteer Administration (AVA)',
+                    value: '5'
+                  },
+                  {
+                    label: 'Association of Information Technology Professionals (AITP)',
+                    value: '6'
+                  },
+                  {
+                    label: 'Chartered Global Management Accountant (CGMA)',
+                    value: '7'
+                  }
+                ]}
+                simpleValue
+                placeholder='Select the Organization'
+                onChange={value => {
+                  this.setState({ organization: value })
+                }}
+                selectedValue={this.state.organization}
+                className={'inputFailure'}
+              />
+            </div>
 
+          </div>
         </div>
+
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
@@ -537,7 +549,7 @@ class PersonalDetail extends React.PureComponent {
             //   //       this.setState({ lastNameInvaild: false,disabledSaveBtn:true })
             //   //     }
             // }}
-           textChange={e => {
+            textChange={e => {
               const re = /^\d*\.?\d{0,2}$/
               if (
                 (e.target.value === '' || re.test(e.target.value)) &&
@@ -697,7 +709,11 @@ class PersonalDetail extends React.PureComponent {
 
             <img
               className={'SPdpImage'}
-              src={require('../../../assets/images/Blank_Profile_icon.png')}
+              src={
+                this.state.imageProfile
+                  ? this.state.imageProfile
+                  : require('../../../assets/images/Blank_Profile_icon.png')
+              }
             />
             {/* Blank_Profile_icon <img alt="profile-image" className={"SPdpImage"} src="http://lorempixel.com/1500/600/abstract/1" /> */}
           </div>
@@ -829,7 +845,8 @@ function mapDispatchToProps (dispatch) {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
     getCityDetail: () => dispatch(action.getCityDetail()),
-    uploadImg: data => dispatch(action.uploadImg(data))
+    uploadImg: data => dispatch(action.uploadImg(data)),
+    getImage: () => dispatch(action.getImage())
   }
 }
 
@@ -839,8 +856,7 @@ function mapStateToProps (state) {
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState
       .updatePersonalDetailSuccess,
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
-    uploadImgData: state.profileState.PersonalDetailState
-      .updatePersonalDetailSuccess
+    profileImgData: state.profileState.PersonalDetailState.imageData
   }
 }
 export default withRouter(
