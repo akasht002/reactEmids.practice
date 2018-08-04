@@ -385,7 +385,7 @@ class WorkHistory extends React.Component {
                 ModalBody={modalContent}
                 className="modal-lg asyncModal CertificationModal"
                 modalTitle={modalTitle}
-                centered="centered"
+                centered={true}
                 disabled={this.state.disabledSaveBtn}
                 onClick={this.state.isAdd ? 
                     this.addWorkhistory : 
@@ -401,7 +401,7 @@ class WorkHistory extends React.Component {
             btn2="NO"
             className="modal-sm"
             headerFooter="d-none"
-            centered="centered"
+            centered={true}
             onConfirm={() => this.reset()}
             onCancel={() => this.setState({
                 isDiscardModalOpen: false,

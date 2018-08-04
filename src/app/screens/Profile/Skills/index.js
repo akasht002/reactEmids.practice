@@ -183,7 +183,7 @@ class Skills extends React.Component {
                     ModalBody={modalContent}
                     className="modal-lg asyncModal LanguagesModal"
                     modalTitle={modalTitle}
-                    centered="centered"
+                    centered={true}
                     onClick={this.state.isAdd ?
                         this.addSkills
                         :
@@ -200,7 +200,7 @@ class Skills extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered={true}
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false

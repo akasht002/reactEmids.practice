@@ -246,7 +246,7 @@ class Certification extends React.Component {
                     className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
                     disabled={this.state.disabledSaveBtn}
-                    centered="centered"
+                    centered={true}
                     onClick={this.state.isAdd ?
                         this.addCertification
                         :
@@ -262,7 +262,7 @@ class Certification extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered={true}
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
