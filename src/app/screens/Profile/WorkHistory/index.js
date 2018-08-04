@@ -271,7 +271,7 @@ class WorkHistory extends React.Component {
                         onDateChange={this.dateChanged}
                         onDateChangeRaw={this.dateChangedRaw}
                         mandatory={true}
-                        maxDate={this.state.toDate && formateStateDate(this.state.toDate)}
+                        maxDate={this.state.toDate ? formateStateDate(this.state.toDate) : formateStateDate()}
                         value={this.state.fromDate}
                         className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate )) && 'inputFailure')}
                     />
@@ -288,6 +288,7 @@ class WorkHistory extends React.Component {
                         onDateChangeRaw={this.todateChangedRaw}
                         mandatory={true}
                         minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
+                        maxDate={formateStateDate()}
                         value={this.state.toDate}
                         className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
                     />
