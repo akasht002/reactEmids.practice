@@ -153,6 +153,7 @@ export function updatePersonalDetail(data) {
             dispatch(getPersonalDetail());
             dispatch(endLoading());
         }).catch((err) => {
+            dispatch(getPersonalDetail());
             dispatch(endLoading());
         })
     }
