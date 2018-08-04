@@ -20,7 +20,8 @@ import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
   checkLengthRemoveSpace,
   checkTextNotStartWithNumber,
-  isDecimal
+  isDecimal,
+  getArrayLength
 } from '../../../utils/validations'
 
 class PersonalDetail extends React.PureComponent {
@@ -29,6 +30,7 @@ class PersonalDetail extends React.PureComponent {
     this.state = {
       useEllipsis: true,
       EducationModal: false,
+      isDiscardModalOpen: false,
       src: null,
       crop: {
         x: 10,
@@ -43,7 +45,7 @@ class PersonalDetail extends React.PureComponent {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
     this.props.getImage()
-  }
+  }  
 
   componentWillReceiveProps (nextProps) {    
     this.setState({
@@ -56,82 +58,27 @@ class PersonalDetail extends React.PureComponent {
       yearOfExperience: nextProps.personalDetail.yearOfExperience,
       description: nextProps.personalDetail.description,
       hourlyRate: nextProps.personalDetail.hourlyRate,
-      city: nextProps.personalDetail.address
+      city: getArrayLength(nextProps.personalDetail.address)>0
         ? nextProps.personalDetail.address[0].city
         : '',
-      streetAddress: nextProps.personalDetail.address
+      streetAddress: getArrayLength(nextProps.personalDetail.address)>0
         ? nextProps.personalDetail.address[0].streetAddress
         : '',
-      zipCode: nextProps.personalDetail.address
+      zipCode: getArrayLength(nextProps.personalDetail.address)>0
         ? nextProps.personalDetail.address[0].zipCode
         : '',
-      phoneNumber: nextProps.personalDetail.phoneNumber
-        ? nextProps.personalDetail.phoneNumber
-        : '',
-      state_id: nextProps.personalDetail.address
+      phoneNumber: nextProps.personalDetail.phoneNumber,
+      state_id: getArrayLength(nextProps.personalDetail.address)>0
         ? nextProps.personalDetail.address[0].state.id
         : '',
       isActive: false
-    })
-    this.city = this.state.address
-    this.streetAddress = this.state.streetAddress
-    this.zipCode = this.state.zipCode
-    this.phoneNumber = this.state.phoneNumber
+    })   
     this.styles = {
       height: 100,
       maxHeight: 100
     }
   }
-
-  reset = () => {
-    this.setState({
-      EditPersonalDetailModal: false,
-      isDiscardModalOpen: false
-    })
-    // this.props.history.push('/profile')
-  }
-
-  togglePersonalDetails (action, e) {
-    this.setState({
-      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
-      isValid: true,
-      disabledSaveBtn: false
-    })
-    let old_data = [
-      {
-        firstName: this.props.personalDetail.firstName,
-        age: this.props.personalDetail.age,
-        yearOfExperience: this.props.personalDetail.yearOfExperience,
-        description: this.props.personalDetail.description,
-        hourlyRate: this.props.personalDetail.hourlyRate,
-        lastName: this.props.personalDetail.lastName,
-        phoneNumber: this.props.personalDetail.phoneNumber
-      }
-    ]
-
-    let updated_data = [
-      {
-        firstName: this.state.firstName,
-        age: this.state.age,
-        yearOfExperience: this.state.yearOfExperience,
-        description: this.state.description,
-        hourlyRate: this.state.hourlyRate,
-        lastName: this.state.lastName,
-        phoneNumber: this.state.phoneNumber
-      }
-    ]
-
-    const fieldDifference = _.isEqual(old_data, updated_data)
-
-    if (fieldDifference === true) {
-      console.log(old_data);
-      console.log(updated_data);
-      this.setState({ certificationModal: false, isDiscardModalOpen: false })
-    } else {
-      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
-    }
-  }
-
+  
   handleChange = e => {
     this.setState({
       uploadedImageFile: URL.createObjectURL(e.target.files[0]),
@@ -190,7 +137,6 @@ class PersonalDetail extends React.PureComponent {
   onCroppeds = e => {
     let image = e.image
     let image_data = e.data
-    // this.props.updatePersonalDetail(this.state)
     this.setState({
       croppedImage: image
     })
@@ -292,7 +238,150 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
+  renderDetails = () => {
+    let text = ''
+    return (
+      <div className='col-md-12 card CardWidget SPDetails'>
+        <div className={'SPDetailsContainer SPdpWidget'}>
+          <div className={'SPdpContainer'}>
+            <svg viewBox='0 0 36 36' className='circular-chart'>
+              <path
+                className='circle'
+                strokeDasharray='80, 100'
+                d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
+              />
+            </svg>
 
+            <img
+              className={'SPdpImage'}
+              src={
+                this.state.imageProfile
+                  ? this.state.imageProfile
+                  : require('../../../assets/images/Blank_Profile_icon.png')
+              }
+            />           
+          </div>
+          {/* <span className={'SPRating'}>
+            <i className={'Icon iconFilledStar'} />4.2
+          </span> */}
+        </div>
+        <div className={'SPDetailsContainer SPNameWidget'}>
+          <div className={'d-flex'}>
+            <div className={'col-md-7 p-0'}>
+              <h3 className={'SPName'}>
+                {this.props.personalDetail &&
+                  `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
+              </h3>
+              <p className={'SPsubTitle'}>
+                <span>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.genderName}
+                  {' '}
+                </span>
+                <span>
+                  {this.props.personalDetail && this.props.personalDetail.age}
+                  {' '}
+                  years
+                </span>
+                <span>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.yearOfExperience}
+                  {' '}
+                  years exp
+                </span>
+              </p>
+            </div>
+            <div className={'col p-0'}>
+              <h3 className={'ratePerHour primaryColor'}>
+                <span>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.hourlyRate}
+                </span>
+              </h3>
+            </div>
+          </div>
+          <div className={'width100'}>
+            <div className={'SPAffiliatedList'}>
+              <span className={'AffiliatedList'}>
+                Affiliated to In
+                {' '}
+                <bd>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.affiliationName}
+                </bd>
+              </span>
+            </div>
+          </div>
+          <div className={'width100'}>
+            {this.props.personalDetail && this.props.personalDetail.description}
+            {this.state.useEllipsis
+              ? <div>
+                {/* <ResponsiveEllipsis
+                                    text={text}
+                                    maxLine='3'
+                                    ellipsis='...'
+                                    trimRight
+                                    className="SPDesc"
+                                /> */}
+                <i
+                  className={'readMore primaryColor'}
+                    // onClick={this.onTextClick.bind(this)}
+                  >
+                  {' '}<small>read more</small>
+                </i>
+              </div>
+              : <div className={'SPDesc'}>
+                {text}
+                {' '}
+                <i
+                  className={'readMore primaryColor'}
+                  onClick={this.onTextClick.bind(this)}
+                  >
+                  <small>Show less</small>
+                </i>
+              </div>}
+          </div>
+        </div>
+        <div className={'SPDetailsContainer SPAddressWidget'}>
+          <div className={'SPAddressContent'}>
+            <div className={'width100 SPAddressTitle d-flex'}>
+              <span className={'SPAddressText primaryColor'}>Address</span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span className={'AddressContentLabel'}>Street</span>
+              <span>
+                {this.props.personalDetail && this.state.streetAddress}
+              </span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span className={'AddressContentLabel'}>City</span>
+              <span>{this.props.personalDetail && this.state.city}</span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span className={'AddressContentLabel'}>State</span>
+              <span>{this.props.personalDetail && this.state.state}</span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span className={'AddressContentLabel'}>ZIP</span>
+              <span>{this.props.personalDetail && this.state.zipCode}</span>
+            </div>
+          </div>
+          <div className={'SPAddressContent'}>
+            <div className={'width100 SPAddressTitle d-flex'}>
+              <span className={'SPAddressText primaryColor'}>Phone</span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span>{this.props.personalDetail && this.state.phoneNumber}</span>
+            </div>
+          </div>
+        </div>
+        <i
+          className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
+          onClick={this.togglePersonalDetails.bind(this)}
+        />
+      </div>
+    )
+  }
   getModalContent = stateDetail => {
     return (
       <div className='row'>
@@ -303,7 +392,7 @@ class PersonalDetail extends React.PureComponent {
         </div>
         <div className='col-md-4 mb-2 editProfileImageContainer'>
           <div className='profileImage'>
-           <img src=
+           <img className={'SPdpImage'} src=
             {this.state.imageProfile
               ? this.state.imageProfile
               : require('../../../assets/images/Blank_Profile_icon.png')} />
@@ -396,7 +485,7 @@ class PersonalDetail extends React.PureComponent {
                 </span>}
               {this.state.lastNameInvaild &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter vaild last name
+                      Please enter vaild last name
                 </span>}
 
             </div>
@@ -405,15 +494,16 @@ class PersonalDetail extends React.PureComponent {
                 <label>Select Gender</label>
                 <SelectBox
                   options={[
-                    { label: 'Female', value: '1' },
-                    { label: 'Male', value: '6' }
+                    { label: 'Select', value: '' },
+                    { label: 'Female', value: '2' },
+                    { label: 'Male', value: '1' }
                   ]}
                   simpleValue
                   placeholder='Select Gender'
                   onChange={value => {
                     this.setState({ genderName: value })
                   }}
-                  selectedValue={this.state.genderName === 'Male' ? 6 : 1}
+                  selectedValue={this.state.genderName === 'Male' ? 1 : 2}
                   className={'inputFailure'}
                 />
               </div>
@@ -468,15 +558,16 @@ class PersonalDetail extends React.PureComponent {
             <input
               type='checkbox'
               onClick={e => {
-                this.setState({ isActive: !e.target.checked })
+                this.setState({ isActive: e.target.checked })
               }}
               defaultChecked={this.state.isActive}
             />
             Certified member of organization(s)
           </div>
+      
           <div
             className='col-md-12 mb-2'
-            style={{ visibility: !this.state.isActive ? 'visible' : 'hidden' }}
+            style={{ visibility: this.state.isActive ? 'visible' : 'hidden' }}
           >
             <div className='form-group'>
               <SelectBox
@@ -604,6 +695,9 @@ class PersonalDetail extends React.PureComponent {
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
+                  <div className="row">
+                  <div className='col-md-6 mb-2'>
+                  <div className='form-group'>
                   <Input
                     name='Street'
                     label='Street'
@@ -617,6 +711,7 @@ class PersonalDetail extends React.PureComponent {
                       })}
                     className='form-control'
                   />
+                </div>
                 </div>
                 <div className='col-md-6'>
                   <Input
@@ -638,6 +733,8 @@ class PersonalDetail extends React.PureComponent {
                     className='form-control'
                   />
                 </div>
+                </div>
+              </div>
               </div>
             </div>
           </div>
@@ -693,151 +790,59 @@ class PersonalDetail extends React.PureComponent {
     )
   }
 
-  renderDetails = () => {
-    let text = ''
-    return (
-      <div className='col-md-12 card CardWidget SPDetails'>
-        <div className={'SPDetailsContainer SPdpWidget'}>
-          <div className={'SPdpContainer'}>
-            <svg viewBox='0 0 36 36' className='circular-chart'>
-              <path
-                className='circle'
-                strokeDasharray='80, 100'
-                d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
-              />
-            </svg>
+  togglePersonalDetails (action, e) {
+    this.setState({
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
+      isDiscardModalOpen: false,
+      isValid: true,
+      disabledSaveBtn: false
+    })
+    let old_data = {
+        firstName: this.props.personalDetail.firstName,
+        age: this.props.personalDetail.age,
+        yearOfExperience: this.props.personalDetail.yearOfExperience,
+        description: this.props.personalDetail.description,
+        hourlyRate: this.props.personalDetail.hourlyRate,
+        lastName: this.props.personalDetail.lastName,
+        phoneNumber: this.props.personalDetail.phoneNumber
+    }
 
-            <img
-              className={'SPdpImage'}
-              src={
-                this.state.imageProfile
-                  ? this.state.imageProfile
-                  : require('../../../assets/images/Blank_Profile_icon.png')
-              }
-            />
-            {/* Blank_Profile_icon <img alt="profile-image" className={"SPdpImage"} src="http://lorempixel.com/1500/600/abstract/1" /> */}
-          </div>
-          <span className={'SPRating'}>
-            <i className={'Icon iconFilledStar'} />4.2
-          </span>
-        </div>
-        <div className={'SPDetailsContainer SPNameWidget'}>
-          <div className={'d-flex'}>
-            <div className={'col-md-7 p-0'}>
-              <h3 className={'SPName'}>
-                {this.props.personalDetail &&
-                  `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
-              </h3>
-              <p className={'SPsubTitle'}>
-                <span>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.genderName}
-                  {' '}
-                </span>
-                <span>
-                  {this.props.personalDetail && this.props.personalDetail.age}
-                  {' '}
-                  years
-                </span>
-                <span>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.yearOfExperience}
-                  {' '}
-                  years exp
-                </span>
-              </p>
-            </div>
-            <div className={'col p-0'}>
-              <h3 className={'ratePerHour primaryColor'}>
-                <span>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.hourlyRate}
-                </span>
-              </h3>
-            </div>
-          </div>
-          <div className={'width100'}>
-            <div className={'SPAffiliatedList'}>
-              <span className={'AffiliatedList'}>
-                Affiliated to In
-                {' '}
-                <bd>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.affiliationName}
-                </bd>
-              </span>
-            </div>
-          </div>
-          <div className={'width100'}>
-            {this.props.personalDetail && this.props.personalDetail.description}
-            {this.state.useEllipsis
-              ? <div>
-                {/* <ResponsiveEllipsis
-                                    text={text}
-                                    maxLine='3'
-                                    ellipsis='...'
-                                    trimRight
-                                    className="SPDesc"
-                                /> */}
-                <i
-                  className={'readMore primaryColor'}
-                    // onClick={this.onTextClick.bind(this)}
-                  >
-                  {' '}<small>read more</small>
-                </i>
-              </div>
-              : <div className={'SPDesc'}>
-                {text}
-                {' '}
-                <i
-                  className={'readMore primaryColor'}
-                  onClick={this.onTextClick.bind(this)}
-                  >
-                  <small>Show less</small>
-                </i>
-              </div>}
-          </div>
-        </div>
-        <div className={'SPDetailsContainer SPAddressWidget'}>
-          <div className={'SPAddressContent'}>
-            <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Address</span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>Street</span>
-              <span>
-                {this.props.personalDetail && this.state.streetAddress}
-              </span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>City</span>
-              <span>{this.props.personalDetail && this.state.city}</span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>State</span>
-              <span>{this.props.personalDetail && this.state.state}</span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>ZIP</span>
-              <span>{this.props.personalDetail && this.state.zipCode}</span>
-            </div>
-          </div>
-          <div className={'SPAddressContent'}>
-            <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Phone</span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span>{this.props.personalDetail && this.state.phoneNumber}</span>
-            </div>
-          </div>
-        </div>
-        <i
-          className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
-          onClick={this.togglePersonalDetails.bind(this)}
-        />
-      </div>
-    )
+    let updated_data = {
+        firstName: this.state.firstName,
+        age: this.state.age,
+        yearOfExperience: this.state.yearOfExperience,
+        description: this.state.description,
+        hourlyRate: this.state.hourlyRate,
+        lastName: this.state.lastName,
+        phoneNumber: this.state.phoneNumber
+      }
+
+    const fieldDifference = _.isEqual(old_data, updated_data)
+    console.log(_.isEqual(old_data, updated_data))
+
+    if (fieldDifference === true) {
+      this.setState({ certificationModal: false, isDiscardModalOpen: false })
+    } else {
+      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
+    }
   }
+  
+  reset = () => {
+    this.setState({
+      EditPersonalDetailModal: false,
+      isDiscardModalOpen: false,
+      firstName: this.props.personalDetail.firstName,
+        age: this.props.personalDetail.age,
+        yearOfExperience: this.props.personalDetail.yearOfExperience,
+        description: this.props.personalDetail.description,
+        hourlyRate: this.props.personalDetail.hourlyRate,
+        lastName: this.props.personalDetail.lastName,
+        phoneNumber: this.props.personalDetail.phoneNumber
+    })
+  }
+
+
+  
 }
 
 function mapDispatchToProps (dispatch) {
