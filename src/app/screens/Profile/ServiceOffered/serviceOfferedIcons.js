@@ -1,56 +1,10 @@
 import React from "react";
 
-//import ServiceOfferedAccordian from '../ServiceOffered/serviceOfferedAccordian'
-
 class ServiceOfferedIcons extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isActive: false,
-            selectAllCheck: false,
-            isClicked: false
-        };
-    }
-
-    handleClick = (e) => {
-        // this.serviceType.push({
-        //     serviceTypeId: e.target.id,
-        //     serviceTypeDescription: e.target.value,
-        //     isActive: e.target.checked,
-        //     categoryId: this.props.categoryId
-        // })
-        this.setState({ isActive: !this.state.isActive });
-        this.props.handleClick({
-            serviceTypeId: e.target.id,
-            serviceTypeDescription: e.target.value,
-            isActive: e.target.checked,
-            categoryId: this.props.categoryId
-        });
-    }
-
-    componentDidMount() {
-        this.setState({
-            isActive: this.props.service.isActive,
-            selectAllCheck: this.props.selectAllCheck
-        });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.state.selectAllCheck !== nextProps.selectAllCheck) {
-            if (!nextProps.selectAllCheck && nextProps.individualSelected) {
-                this.setState({ selectAllCheck: false});
-            } else {
-                this.setState({ isActive: nextProps.selectAllCheck, selectAllCheck: nextProps.selectAllCheck});
-            }
-        }
-    }
-
     render() {
-        let checkboxCount = '';
 
         if (this.props.type === 'view') {
-            checkboxCount = <span className={'SPServiceCount'}>{this.props.index + 1}</span>;
             return (
                 <li className={"SPIconServices SPIconServices" + (this.props.index + 1)}><span>{this.props.service.serviceTypeDescription}</span></li>
             )
@@ -62,10 +16,9 @@ class ServiceOfferedIcons extends React.Component {
                         className="form-check-input"
                         type="checkbox"
                         value={this.props.service.serviceTypeDescription}
-                        //data-id={this.props.category.serviceCategoryId}
-                        onChange={this.handleClick}
-                        checked={this.state.isActive}
-                        defaultChecked={this.state.isActive}
+                        onChange={this.props.handleClick}
+                        checked={this.props.service.isActive}
+                        defaultChecked={this.props.service.isActive}
                     />
                     <label htmlFor={this.props.service.serviceTypeId}
                         className={"form-check-label SPIconServices" + (this.props.index + 1)}>
@@ -76,12 +29,6 @@ class ServiceOfferedIcons extends React.Component {
                 </div>
             )
         }
-
-        // return (
-        //     <div>
-
-        //     </div>
-        // )
     }
 }
 
