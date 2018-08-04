@@ -1,16 +1,35 @@
-import React from 'react'
-import { Route, Switch } from 'react-router'
+import React,{Component} from 'react';
+import { Route,Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import {
-  Welcome,
   VerifyContact,
   SetPassword,
   VerifyUserID,
   OnboardSuccess,
-  Profile
-} from '../screens'
+  Profile,
+  Home
+} from '../screens';
+import { PrivateRoute } from './privateRouter';
 
+function Loading({ error }) {
+  if (error) {
+    return 'Oh nooess!';
+  } else {
+    return <h3>Loading...</h3>;
+  }
+}
+
+const LoginCallBack = Loadable({
+  loader: () => import('../screens/Login/LoginCallBack'),
+  loading: Loading
+});
+
+const Login = Loadable({
+  loader: () => import('../screens/Login'),
+  loading: Loading
+});
 
 export const Path = {
   root: '/',
@@ -18,21 +37,25 @@ export const Path = {
   verifyEmail: '/verifyemail',
   verifyContact: '/verifycontact',
   onboardSuccess: '/onboardsuccess',
-  profile: '/profile'
+  profile: '/profile',
+  login: '/login',
+  loginCallBack: '/loginCallBack',
 };
 
-class AppStackRoot extends React.Component {
+class AppStackRoot extends Component {
   render() {
     return (
       <ConnectedRouter history={this.props.history}>
         <HashRouter>
           <Switch>
-            <Route exact path={Path.root} component={Welcome} />
+            <Route exact path={Path.root} component={Home} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-            <Route path={Path.profile} component={Profile} />
+            <Route path={Path.login} component={Login}/>
+            <Route path={Path.loginCallBack} component={LoginCallBack}/>
+            <PrivateRoute path={Path.profile} component={Profile} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

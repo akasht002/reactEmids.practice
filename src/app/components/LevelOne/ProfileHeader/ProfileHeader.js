@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from 'react-redux';
 import {
     Collapse,
     Navbar,
@@ -10,37 +11,47 @@ import {
 } from 'reactstrap';
 import { SearchInput } from "../../../components";
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
+import { onLogout } from '../../../redux/auth/logout/actions';
+import { makeProperCase } from '../../../utils/stringHelper';
 
-class ProfileHeader extends React.Component {
+class ProfileHeader extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false,
             dBlock: "",
         };
     }
 
-    toggle() {
+    toggleAsideMenu = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
     }
 
-    render() {
+    handleNavigation = (event) =>{
+        switch (event.target.title) {
+            case "logout":
+                this.props.onLogout();
+                break;
+            default:
+                break;
+        }
+    }
 
+    render() {
         const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
-            let Separator = "";
+            let separator = "";
             if (menu.status) {
-                let clsName = "navIcon icon" + menuName.charAt(0).toUpperCase() + menuName.slice(1);
+                let clsName = "navIcon icon" + makeProperCase(menuName);
                 if (menuName === "notification") {
-                    Separator = "NavIconSeparator"
+                    separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem className={menuName + "Widget navIconWidget " + Separator}>
-                        <NavLink className={clsName}
-                            href={menu.link} />
+                    <NavItem className={menuName + "Widget navIconWidget " + separator}>
+                        <NavLink className={clsName} title={menuName}
+                            href={menu.link} onClick={this.handleNavigation} />
                     </NavItem>
                 )
             }
@@ -50,7 +61,7 @@ class ProfileHeader extends React.Component {
         return (
             <Navbar className="navbar-light navbarProfile boxShadowBottom bgWhite" expand="md">
                 <NavbarBrand className="text-uppercase">Coreo Home</NavbarBrand>
-                <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
+                <NavbarToggler className={this.state.dBlock} onClick={this.toggleAsideMenu} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav navbar className="SearchWidget width100">
                         <SearchInput
@@ -70,4 +81,10 @@ class ProfileHeader extends React.Component {
     }
 }
 
-export default ProfileHeader;
+function mapDispatchToProps(dispatch) {
+    return {
+        onLogout: () => dispatch(onLogout())
+    }
+  }
+  
+export default connect(null, mapDispatchToProps)(ProfileHeader);

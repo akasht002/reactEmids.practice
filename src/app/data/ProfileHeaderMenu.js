@@ -14,5 +14,9 @@ export const ProfileHeaderMenu = [
     {
         name: "notification",
         status: true
+    },
+    {
+        name: "logout",
+        status: true
     }
 ];
