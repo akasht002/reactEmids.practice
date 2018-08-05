@@ -52,6 +52,10 @@ export function checkLengthRemoveSpace(data) {
         // return 0;
 }
 
+export function getLength(data){
+    return _.size(data)
+}
+
 
 export function checkTextNotStartWithNumber(data) {
     return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*()'."]+$/.test(data)

@@ -39,7 +39,7 @@ class Calendar extends Component {
 }
 
 Calendar.propTypes = {
-    startDate: PropTypes.object,
+    startDate: PropTypes.string,
     onDateChange: PropTypes.func,
     onDateChangeRaw: PropTypes.func,
     className: PropTypes.string

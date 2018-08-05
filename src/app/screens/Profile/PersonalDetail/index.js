@@ -21,7 +21,8 @@ import {
   checkLengthRemoveSpace,
   checkTextNotStartWithNumber,
   isDecimal,
-  getArrayLength
+  getArrayLength,
+  getLength
 } from '../../../utils/validations'
 
 class PersonalDetail extends React.PureComponent {
@@ -77,9 +78,22 @@ class PersonalDetail extends React.PureComponent {
       height: 100,
       maxHeight: 100
     }
+    this.city= getArrayLength(nextProps.personalDetail.address)>0
+        ? nextProps.personalDetail.address[0].city
+        : ''
+    this.streetAddress= getArrayLength(nextProps.personalDetail.address)>0
+        ? nextProps.personalDetail.address[0].streetAddress
+        : ''
+    this.zipCode= getArrayLength(nextProps.personalDetail.address)>0
+        ? nextProps.personalDetail.address[0].zipCode
+        : ''    
+    this.state_id= getArrayLength(nextProps.personalDetail.address)>0
+        ? nextProps.personalDetail.address[0].state.id
+        : ''
   }
   
   handleChange = e => {
+    //alert(e.target.files[0].size);
     this.setState({
       uploadedImageFile: URL.createObjectURL(e.target.files[0]),
       uploadImage: !this.state.uploadImage
@@ -350,12 +364,12 @@ class PersonalDetail extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
               <span>
-                {this.props.personalDetail && this.state.streetAddress}
+                {this.props.personalDetail && this.streetAddress}
               </span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>City</span>
-              <span>{this.props.personalDetail && this.state.city}</span>
+              <span>{this.props.personalDetail && this.city}</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>State</span>
@@ -363,7 +377,7 @@ class PersonalDetail extends React.PureComponent {
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>ZIP</span>
-              <span>{this.props.personalDetail && this.state.zipCode}</span>
+              <span>{this.props.personalDetail && this.zipCode}</span>
             </div>
           </div>
           <div className={'SPAddressContent'}>
@@ -371,7 +385,7 @@ class PersonalDetail extends React.PureComponent {
               <span className={'SPAddressText primaryColor'}>Phone</span>
             </div>
             <div className={'width100 d-flex'}>
-              <span>{this.props.personalDetail && this.state.phoneNumber}</span>
+              <span>{this.props.personalDetail && this.props.personalDetail.phoneNumber}</span>
             </div>
           </div>
         </div>
@@ -520,7 +534,7 @@ class PersonalDetail extends React.PureComponent {
                   const re = /^[0-9\b]+$/
                   if (
                     (e.target.value === '' || re.test(e.target.value)) &&
-                    checkLengthRemoveSpace(e.target.value) <= 3
+                    getLength(e.target.value) <= 3
                   ) {
                     this.setState({ age: e.target.value })
                   }
@@ -540,7 +554,7 @@ class PersonalDetail extends React.PureComponent {
                   const re = /^[0-9\b]+$/
                   if (
                     (e.target.value === '' || re.test(e.target.value)) &&
-                    checkLengthRemoveSpace(e.target.value) <= 2
+                    getLength(e.target.value) <= 2
                   ) {
                     this.setState({ yearOfExperience: e.target.value })
                   }
@@ -632,19 +646,12 @@ class PersonalDetail extends React.PureComponent {
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
-            // textChange={e => {
-            //   this.setState({ hourlyRate: e.target.value })
-            //   // if (isDecimal(this.state.hourlyRate) ) {
-            //   //   this.setState({ hourlyRate: e.target.value })
-            //   // }else {
-            //   //       this.setState({ lastNameInvaild: false,disabledSaveBtn:true })
-            //   //     }
-            // }}
+            maxlength="7"
             textChange={e => {
               const re = /^\d*\.?\d{0,2}$/
               if (
                 (e.target.value === '' || re.test(e.target.value)) &&
-                checkLengthRemoveSpace(e.target.value) <= 7
+                getLength(e.target.value) <= 7
               ) {
                 this.setState({ hourlyRate: e.target.value })
               }
@@ -799,6 +806,7 @@ class PersonalDetail extends React.PureComponent {
     })
     let old_data = {
         firstName: this.props.personalDetail.firstName,
+        lastName: this.props.personalDetail.lastName,
         age: this.props.personalDetail.age,
         yearOfExperience: this.props.personalDetail.yearOfExperience,
         description: this.props.personalDetail.description,
@@ -809,6 +817,7 @@ class PersonalDetail extends React.PureComponent {
 
     let updated_data = {
         firstName: this.state.firstName,
+        lastName: this.state.lastName,
         age: this.state.age,
         yearOfExperience: this.state.yearOfExperience,
         description: this.state.description,
@@ -832,6 +841,7 @@ class PersonalDetail extends React.PureComponent {
       EditPersonalDetailModal: false,
       isDiscardModalOpen: false,
       firstName: this.props.personalDetail.firstName,
+      lastName: this.props.personalDetail.lastName,
         age: this.props.personalDetail.age,
         yearOfExperience: this.props.personalDetail.yearOfExperience,
         description: this.props.personalDetail.description,

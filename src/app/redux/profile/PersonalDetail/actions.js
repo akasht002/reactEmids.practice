@@ -55,8 +55,8 @@ export const updatePersonalDetailSuccess = (isSuccess) => {
 export function uploadImg(data) {
     return (dispatch, getState) => {       
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-        // let serviceProviderId = 10
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = 10
         let modal ={            
             "serviceProviderId": serviceProviderId,
             "image": data
@@ -74,8 +74,8 @@ export function uploadImg(data) {
 export function getImage() {
     return (dispatch, getState) => {
         let currstate = getState();
-        // let serviceProviderId = 10;
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = 10;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
         axios.get(baseURL + API.getImage + serviceProviderId ).then((resp) => {
             dispatch(uploadImgSuccess(resp.data))
@@ -89,8 +89,8 @@ export function getImage() {
 export function getPersonalDetail() {
     return (dispatch, getState) => {
         let currstate = getState();
-        // let serviceProviderId = 10;
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = 10;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         dispatch(startLoading());
         axios.get(baseURL + API.getPersonalDetail + serviceProviderId + '/ProfileView').then((resp) => {
             dispatch(getPersonalDetailSuccess(resp.data))
@@ -104,8 +104,8 @@ export function getPersonalDetail() {
 export function updatePersonalDetail(data) {
     return (dispatch, getState) => {
         let currstate = getState();
-        // let serviceProviderId = 10;
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = 10;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let modal ={
             "serviceProviderId": serviceProviderId,
             "serviceProviderTypeId": 1,

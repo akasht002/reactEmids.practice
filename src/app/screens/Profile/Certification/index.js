@@ -60,21 +60,21 @@ class Certification extends React.Component {
             disabledSaveBtn: true
         })
 
-        let array1 = {
-                authority: this.props.certificationFieldDetails.authority,
-                certificationName: this.props.certificationFieldDetails.certificationName,
-                licenceNumber: this.props.certificationFieldDetails.licenceNumber
+        let propObj = {
+            authority: this.props.certificationFieldDetails.authority,
+            certificationName: this.props.certificationFieldDetails.certificationName,
+            licenceNumber: this.props.certificationFieldDetails.licenceNumber
         }
         
 
-        let array2 = {
-                authority: this.state.certificationAuthority,
-                certificationName: this.state.certificationName,
-                licenceNumber: this.state.certificateLicenceNumber
+        let stateObj = {
+            authority: this.state.certificationAuthority,
+            certificationName: this.state.certificationName,
+            licenceNumber: this.state.certificateLicenceNumber
         }
         
 
-        const fieldDifference = compare(array1, array2);
+        const fieldDifference = compare(propObj, stateObj);
 
         if (fieldDifference === true) {
             this.setState({ certificationModal: false, isDiscardModalOpen: false,
@@ -246,7 +246,7 @@ class Certification extends React.Component {
                     className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
                     disabled={this.state.disabledSaveBtn}
-                    centered="centered"
+                    centered={true}
                     onClick={this.state.isAdd ?
                         this.addCertification
                         :
@@ -262,7 +262,7 @@ class Certification extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered={true}
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
