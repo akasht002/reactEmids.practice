@@ -38,6 +38,7 @@
 
 .onBoardingHeader a.btn, .GetStartedBtnContainer .btn{
     padding: 8px 20px;
+    color: #ffffff !important
 }
 
 .GetStartedBtnContainer .btn:hover{
