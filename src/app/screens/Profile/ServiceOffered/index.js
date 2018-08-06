@@ -24,10 +24,6 @@ class ServiceOffered extends React.Component {
         this.props.getServiceOffered();
     }
 
-    componentWillReceiveProps(nextProps) {
-
-    }
-
     toggleServiceOffered = () => {
         this.setState({
             isModalOpen: !this.state.isModalOpen,
@@ -46,7 +42,7 @@ class ServiceOffered extends React.Component {
         this.setState({ isModalOpen: true, isAdd: false });
     }
 
-    oncheckedServices = (serviceType) => {
+    oncheckedServices = (serviceType, category) => {
         this.setState({
             serviceType: serviceType,
             disabledSaveBtn: false,
@@ -107,7 +103,12 @@ class ServiceOffered extends React.Component {
 
         {
             listOfServicesOffered ?
-                modalContent = <ServicesCheckbox handleClick={this.oncheckedServices} name={listOfServicesOfferedSelected} type={'edit'} />
+                modalContent = 
+                <ServiceOfferedContent 
+                    handleClick={this.oncheckedServices} 
+                    name={this.props.serviceOfferedDetails} 
+                    type={'edit'} 
+                />
                 :
                 ''
         }
@@ -135,14 +136,14 @@ class ServiceOffered extends React.Component {
                     <div className="SPCertificateContainer width100">
                         {this.props.serviceOfferedList.length > 0 ?
                             <div>
-                                {/* <ServiceOfferedContent
-                                name={this.props.serviceOfferedList}
-                                type={'view'}
-                            /> */}
-                                <ServicesCheckbox
-                                    name={listOfServicesOffered}
+                                <ServiceOfferedContent
+                                    name={this.props.serviceOfferedList}
                                     type={'view'}
                                 />
+                                {/* <ServicesCheckbox
+                                    name={listOfServicesOffered}
+                                    type={'view'}
+                                /> */}
                             </div>
                             :
                             <div className='SPNoInfo'>
