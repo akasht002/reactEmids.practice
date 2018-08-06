@@ -1,9 +1,13 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, { PureComponent } from "react";
+import { withRouter, Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
-import  '../../styles/onBoarding.css'
+import { Button } from '../../components';
+import { onLogin } from '../../redux/auth/login/actions';
+import { onLogout } from '../../redux/auth/logout/actions';
+import  '../../styles/onBoarding.css';
 
-class Home extends React.Component {
+class Home extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -86,6 +90,14 @@ class Home extends React.Component {
         this.setState({sliderWidth: window.innerWidth, sliderHeight: window.innerHeight});
     }
 
+    onLoginPress = () => {
+        this.props.onLogin();
+    }
+
+    onLogOutPress = () => {
+        this.props.onLogout();
+    }
+
     render() {
         const style2 = {
             width: (this.state.sliderWidth * this.state.slider.length) + 'px',
@@ -102,7 +114,11 @@ class Home extends React.Component {
                             <div className="row">
                                 <div className="onBoardingHeader">
                                     <Link className="brandName text-uppercase" to="/">Coreo Home</Link>
-                                    <Link className="btn btn-primary text-uppercase" to="/">Login</Link>
+                                    <Button
+                                            type="submit"
+                                            classname="btn btn-primary"
+                                            label={this.props.user ? "Log Out" : "Log In"}
+                                            onClick={this.props.user ? this.onLogOutPress : this.onLoginPress}/>
                                 </div>
                                 <div className="sliderWrapper" style={style3}>
                                     <div className="sliderContainer">
@@ -112,7 +128,7 @@ class Home extends React.Component {
                                                     /*left: this.state.left,*/
                                                     width: this.state.sliderWidth + 'px',
                                                     height: this.state.sliderHeight + 'px',
-                                                    backgroundImage: 'linear-gradient(rgba(60, 16, 83, .35), rgba(102, 48, 127, .35)), url("../assets/img/coverImg'+ (index+1) +'.jpg")'
+                                                    backgroundImage: 'linear-gradient(rgba(60, 16, 83, .35), rgba(102, 48, 127, .35)), url("../assets/images/home/coverImg'+ (index+1) +'.jpg")'
                                                 };
                                                 return (
                                                     <div style={style1}
@@ -127,10 +143,6 @@ class Home extends React.Component {
                                             }
                                         </div>
                                     </div>
-                                    {/*<div className="buttonsWrapper">
-                                        <button className="prevButton" onClick={this.prevSlide.bind(this)}/>
-                                        <button className="nextButton" onClick={this.nextSlide.bind(this)}/>
-                                    </div>*/}
                                     <div className="indicatorsWrapper">
                                         <ul className="indicators">
                                             {this.state.slider.map(function (item, index) {
@@ -155,4 +167,17 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+function mapDispatchToProps(dispatch) {
+  return {
+      onLogin: () => dispatch(onLogin()),
+      onLogout: () => dispatch(onLogout())
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.oidc.user,
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
