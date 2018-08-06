@@ -18,7 +18,6 @@ import {
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
-  checkLengthRemoveSpace,
   checkTextNotStartWithNumber,
   isDecimal,
   getArrayLength,
@@ -134,9 +133,9 @@ class PersonalDetail extends React.PureComponent {
 
   onSubmit = () => {
     if (
-      checkLengthRemoveSpace(this.state.firstName) === 0 ||
-      checkLengthRemoveSpace(this.state.lastName) === 0 ||
-      checkLengthRemoveSpace(this.state.phoneNumber) === 0
+      getLength(this.state.firstName) === 0 ||
+      getLength(this.state.lastName) === 0 ||
+      getLength(this.state.phoneNumber) === 0
     ) {
       this.setState({ isValid: false })
     } else {
@@ -541,13 +540,11 @@ class PersonalDetail extends React.PureComponent {
                 autoComplete='off'
                 required='required'
                 type='text'
+                maxlength='2'
                 value={this.state.yearOfExperience}
                 textChange={e => {
                   const re = /^[0-9\b]+$/
-                  if (
-                    (e.target.value === '' || re.test(e.target.value)) &&
-                    getLength(e.target.value) <= 2
-                  ) {
+                  if (e.target.value === '' || re.test(e.target.value))  {
                     this.setState({ yearOfExperience: e.target.value })
                   }
                 }}
@@ -625,7 +622,7 @@ class PersonalDetail extends React.PureComponent {
             rows='5'
             value={this.state.description}
             textChange={e => {
-              if (checkLengthRemoveSpace(e.target.value) <= 500) {
+              if (getLength(e.target.value) <= 500) {
                 this.setState({ description: e.target.value })
               }
             }}
@@ -641,10 +638,7 @@ class PersonalDetail extends React.PureComponent {
             maxlength='7'
             textChange={e => {
               const re = /^\d*\.?\d{0,2}$/
-              if (
-                (e.target.value === '' || re.test(e.target.value)) &&
-                getLength(e.target.value) <= 7
-              ) {
+              if  (e.target.value === '' || re.test(e.target.value)) {
                 this.setState({ hourlyRate: e.target.value })
               }
             }}
@@ -725,7 +719,7 @@ class PersonalDetail extends React.PureComponent {
                           if (
                             (e.target.value === '' ||
                               re.test(e.target.value)) &&
-                            checkLengthRemoveSpace(e.target.value) <= 5
+                              getLength(e.target.value) <= 5
                           ) {
                             this.setState({ zipCode: e.target.value })
                           }
@@ -767,7 +761,7 @@ class PersonalDetail extends React.PureComponent {
                       const re = /^[0-9\b]+$/
                       if (
                         (e.target.value === '' || re.test(e.target.value)) &&
-                        checkLengthRemoveSpace(e.target.value) <= 15
+                        getLength(e.target.value) <= 15
                       ) {
                         this.setState({ phoneNumber: e.target.value })
                       }

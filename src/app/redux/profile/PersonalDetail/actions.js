@@ -61,8 +61,8 @@ export const updatePersonalDetailSuccess = isSuccess => {
 export function uploadImg (data) {
   return (dispatch, getState) => {
     let currstate = getState()
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-    let serviceProviderId = 1
+    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    // let serviceProviderId = 1
     let modal = {
       serviceProviderId: serviceProviderId,
       image: data
@@ -83,8 +83,8 @@ export function uploadImg (data) {
 export function getImage () {
   return (dispatch, getState) => {
     let currstate = getState()
-    let serviceProviderId = 1
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    // let serviceProviderId = 1
+    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     dispatch(startLoading())
     axios
       .get(baseURL + API.getImage + serviceProviderId)
@@ -101,8 +101,8 @@ export function getImage () {
 export function getPersonalDetail () {
   return (dispatch, getState) => {
     let currstate = getState()
-    let serviceProviderId = 1
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    // let serviceProviderId = 1
+    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     dispatch(startLoading())
     axios
       .get(baseURL + API.getPersonalDetail + serviceProviderId + '/ProfileView')
@@ -122,8 +122,8 @@ export function updatePersonalDetail (data) {
   let organization = _.split(data.organization, '-')
   return (dispatch, getState) => {
     let currstate = getState()
-    let serviceProviderId = 1
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    // let serviceProviderId = 1
+    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     let modal = {
       serviceProviderId: serviceProviderId,
       serviceProviderTypeId: 1,
