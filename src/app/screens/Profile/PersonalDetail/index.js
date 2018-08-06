@@ -165,7 +165,7 @@ class PersonalDetail extends React.PureComponent {
     this.setState({
       croppedImage: image
     })
-  }
+  } 
 
   render () {
     let modalContent
@@ -336,35 +336,9 @@ class PersonalDetail extends React.PureComponent {
                 </bd>
               </span>
             </div>
-          </div>
+          </div>         
           <div className={'width100'}>
-            {this.props.personalDetail && this.props.personalDetail.description}
-            {this.state.useEllipsis
-              ? <div>
-                {/* <ResponsiveEllipsis
-                                    text={text}
-                                    maxLine='3'
-                                    ellipsis='...'
-                                    trimRight
-                                    className="SPDesc"
-                                /> */}
-                <i
-                  className={'readMore primaryColor'}
-                    // onClick={this.onTextClick.bind(this)}
-                  >
-                  {' '}<small>read more</small>
-                </i>
-              </div>
-              : <div className={'SPDesc'}>
-                {text}
-                {' '}
-                <i
-                  className={'readMore primaryColor'}
-                  onClick={this.onTextClick.bind(this)}
-                  >
-                  <small>Show less</small>
-                </i>
-              </div>}
+            {this.props.personalDetail && this.props.personalDetail.description}            
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
@@ -526,7 +500,6 @@ class PersonalDetail extends React.PureComponent {
                 <label>Select Gender</label>
                 <SelectBox
                   options={[
-                    { label: 'Select', value: '' },
                     { label: 'Female', value: '2' },
                     { label: 'Male', value: '1' }
                   ]}
@@ -534,8 +507,9 @@ class PersonalDetail extends React.PureComponent {
                   placeholder='Select Gender'
                   onChange={value => {
                     this.setState({ genderName: value })
+                    console.log(value);
                   }}
-                  selectedValue={this.state.genderName === 'Male' ? 1 : 2}
+                  selectedValue={this.state.genderName}
                   className={'inputFailure'}
                 />
               </div>

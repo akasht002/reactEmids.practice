@@ -232,7 +232,7 @@ class Certification extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
+                                    <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
                                 </div>
                             </div>
                         }

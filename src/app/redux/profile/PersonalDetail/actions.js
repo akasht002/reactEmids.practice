@@ -61,8 +61,8 @@ export const updatePersonalDetailSuccess = isSuccess => {
 export function uploadImg (data) {
   return (dispatch, getState) => {
     let currstate = getState()
-    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-    // let serviceProviderId = 1
+    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    let serviceProviderId = 1
     let modal = {
       serviceProviderId: serviceProviderId,
       image: data
@@ -83,8 +83,8 @@ export function uploadImg (data) {
 export function getImage () {
   return (dispatch, getState) => {
     let currstate = getState()
-    // let serviceProviderId = 1
-    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    let serviceProviderId = 1
+    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     dispatch(startLoading())
     axios
       .get(baseURL + API.getImage + serviceProviderId)
@@ -101,8 +101,8 @@ export function getImage () {
 export function getPersonalDetail () {
   return (dispatch, getState) => {
     let currstate = getState()
-    // let serviceProviderId = 1
-    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    let serviceProviderId = 1
+    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     dispatch(startLoading())
     axios
       .get(baseURL + API.getPersonalDetail + serviceProviderId + '/ProfileView')
@@ -117,12 +117,13 @@ export function getPersonalDetail () {
 }
 
 export function updatePersonalDetail (data) {
+  console.log(data)
   let states = _.split(data.state_id, '-')
   let organization = _.split(data.organization, '-')
   return (dispatch, getState) => {
     let currstate = getState()
-    // let serviceProviderId = 1
-    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    let serviceProviderId = 1
+    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     let modal = {
       serviceProviderId: serviceProviderId,
       serviceProviderTypeId: 1,
@@ -132,25 +133,23 @@ export function updatePersonalDetail (data) {
         lastName: data.lastName,
         age: data.age,
         gender: {
-          genderId: data.genderName === 'Male' ? 1 : 2,
-          name: data.genderName
+          genderId: 2,
+          name: 'Invalid'
         },
         yearOfExperience: data.yearOfExperience,
         affiliation: {
-          affiliationId: organization[0],
-          name:  organization[1]
+          affiliationId: data.organization ? organization[0] : 0
         }
       },
       entity: {
-        organization: organization[0],
-        entityId: organization[0]
+        organization: data.organization ? organization[1] : ''
       },
       description: data.description,
       hourlyRate: data.hourlyRate,
       addresses: [
         {
           addressId: 1,
-          serviceProviderId: 0,
+          serviceProviderId: serviceProviderId,
           addressTypeId: 2,
           streetAddress: data.streetAddress,
           city: data.city,
@@ -164,8 +163,7 @@ export function updatePersonalDetail (data) {
       ],
       phoneNumber: data.phoneNumber,
       isActive: true
-    }
-    console.log(modal);
+    }    
     dispatch(startLoading())
     axios
       .put(baseURL + API.updatePersonalDetail + serviceProviderId, modal)
