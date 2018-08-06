@@ -26,11 +26,6 @@ const LoginCallBack = Loadable({
   loading: Loading
 });
 
-const Login = Loadable({
-  loader: () => import('../screens/Login'),
-  loading: Loading
-});
-
 export const Path = {
   root: '/',
   setPassword: '/setpassword',
@@ -38,8 +33,7 @@ export const Path = {
   verifyContact: '/verifycontact',
   onboardSuccess: '/onboardsuccess',
   profile: '/profile',
-  login: '/login',
-  loginCallBack: '/loginCallBack',
+    loginCallBack: '/loginCallBack',
 };
 
 class AppStackRoot extends Component {
@@ -53,7 +47,6 @@ class AppStackRoot extends Component {
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-            <Route path={Path.login} component={Login}/>
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
             <PrivateRoute path={Path.profile} component={Profile} />
           </Switch>

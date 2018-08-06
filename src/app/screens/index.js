@@ -5,7 +5,7 @@ import VerifyUserID from './Onboarding/VerifyUserID';
 import OnboardSuccess from './Onboarding/OnboardSuccess';
 import Profile from './Profile/Profile';
 import Home from './Home';
-import { LoginCallBack, Login } from './Login';
+import { LoginCallBack } from './Login/LoginCallBack';
 
 export {
     Welcome,
@@ -15,6 +15,5 @@ export {
     OnboardSuccess,
     Profile,
     Home,
-    LoginCallBack,
-    Login
+    LoginCallBack
 };
