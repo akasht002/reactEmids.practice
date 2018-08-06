@@ -58,7 +58,7 @@ export function getLength(data){
 
 
 export function checkTextNotStartWithNumber(data) {
-    return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*()'."]+$/.test(data)
+    return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*()'. "]+$/.test(data)
 }
 
 export function isDecimal(data) {
@@ -71,4 +71,8 @@ export function isNumber(n) {
 
 export const getArrayLength = (data) => {
     return _.size(data);
+}
+
+export const getDataValueArray = (data,split)=> {
+    return _.split(data,split)
 }

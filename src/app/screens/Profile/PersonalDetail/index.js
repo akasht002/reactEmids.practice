@@ -25,6 +25,8 @@ import {
   getLength
 } from '../../../utils/validations'
 
+import { SETTING } from '../../../services/api'
+
 class PersonalDetail extends React.PureComponent {
   constructor (props) {
     super(props)
@@ -46,9 +48,9 @@ class PersonalDetail extends React.PureComponent {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
     this.props.getImage()
-  }  
+  }
 
-  componentWillReceiveProps (nextProps) {    
+  componentWillReceiveProps (nextProps) {
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       firstName: nextProps.personalDetail.firstName,
@@ -59,51 +61,60 @@ class PersonalDetail extends React.PureComponent {
       yearOfExperience: nextProps.personalDetail.yearOfExperience,
       description: nextProps.personalDetail.description,
       hourlyRate: nextProps.personalDetail.hourlyRate,
-      city: getArrayLength(nextProps.personalDetail.address)>0
+      city: getArrayLength(nextProps.personalDetail.address) > 0
         ? nextProps.personalDetail.address[0].city
         : '',
-      streetAddress: getArrayLength(nextProps.personalDetail.address)>0
+      streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
         ? nextProps.personalDetail.address[0].streetAddress
         : '',
-      zipCode: getArrayLength(nextProps.personalDetail.address)>0
+      zipCode: getArrayLength(nextProps.personalDetail.address) > 0
         ? nextProps.personalDetail.address[0].zipCode
         : '',
       phoneNumber: nextProps.personalDetail.phoneNumber,
-      state_id: getArrayLength(nextProps.personalDetail.address)>0
+      state_id: getArrayLength(nextProps.personalDetail.address) > 0
         ? nextProps.personalDetail.address[0].state.id
         : '',
       isActive: false
-    })   
+    })
     this.styles = {
       height: 100,
       maxHeight: 100
     }
-    this.city= getArrayLength(nextProps.personalDetail.address)>0
-        ? nextProps.personalDetail.address[0].city
-        : ''
-    this.streetAddress= getArrayLength(nextProps.personalDetail.address)>0
-        ? nextProps.personalDetail.address[0].streetAddress
-        : ''
-    this.zipCode= getArrayLength(nextProps.personalDetail.address)>0
-        ? nextProps.personalDetail.address[0].zipCode
-        : ''    
-    this.state_id= getArrayLength(nextProps.personalDetail.address)>0
-        ? nextProps.personalDetail.address[0].state.id
-        : ''
+    this.city = getArrayLength(nextProps.personalDetail.address) > 0
+      ? nextProps.personalDetail.address[0].city
+      : ''
+    this.streetAddress = getArrayLength(nextProps.personalDetail.address) > 0
+      ? nextProps.personalDetail.address[0].streetAddress
+      : ''
+    this.zipCode = getArrayLength(nextProps.personalDetail.address) > 0
+      ? nextProps.personalDetail.address[0].zipCode
+      : ''
+    this.states = getArrayLength(nextProps.personalDetail.address) > 0
+      ? nextProps.personalDetail.address[0].state.name
+      : ''
   }
-  
+
   handleChange = e => {
-    //alert(e.target.files[0].size);
-    this.setState({
-      uploadedImageFile: URL.createObjectURL(e.target.files[0]),
-      uploadImage: !this.state.uploadImage
-    })
+    console.log(e.target.files[0].size)
+    console.log(SETTING.FILE_UPLOAD_SIZE)
+    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
+      this.setState({
+        uploadedImageFile: URL.createObjectURL(e.target.files[0]),
+        uploadImage: !this.state.uploadImage
+      })
+    } else {
+      alert('Please insert a image less than 2 MB')
+    }
   }
 
   reUpload = e => {
-    this.setState({
-      uploadedImageFile: URL.createObjectURL(e.target.files[0])
-    })
+    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
+      this.setState({
+        uploadedImageFile: URL.createObjectURL(e.target.files[0])
+      })
+    } else {
+      alert('Please insert a image less than 2 MB')
+    }
   }
 
   onSelectFile = e => {
@@ -162,7 +173,7 @@ class PersonalDetail extends React.PureComponent {
     let modalType = ''
     const cityDetail = this.props.cityDetail.map((city, i) => {
       city.label = city.name
-      city.value = city.id
+      city.value = city.id+'-'+city.name
       return city
     })
 
@@ -273,7 +284,7 @@ class PersonalDetail extends React.PureComponent {
                   ? this.state.imageProfile
                   : require('../../../assets/images/Blank_Profile_icon.png')
               }
-            />           
+            />
           </div>
           {/* <span className={'SPRating'}>
             <i className={'Icon iconFilledStar'} />4.2
@@ -373,7 +384,7 @@ class PersonalDetail extends React.PureComponent {
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>State</span>
-              <span>{this.props.personalDetail && this.state.state}</span>
+              <span>{this.props.personalDetail && this.states}</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>ZIP</span>
@@ -385,7 +396,10 @@ class PersonalDetail extends React.PureComponent {
               <span className={'SPAddressText primaryColor'}>Phone</span>
             </div>
             <div className={'width100 d-flex'}>
-              <span>{this.props.personalDetail && this.props.personalDetail.phoneNumber}</span>
+              <span>
+                {this.props.personalDetail &&
+                  this.props.personalDetail.phoneNumber}
+              </span>
             </div>
           </div>
         </div>
@@ -406,10 +420,14 @@ class PersonalDetail extends React.PureComponent {
         </div>
         <div className='col-md-4 mb-2 editProfileImageContainer'>
           <div className='profileImage'>
-           <img className={'SPdpImage'} src=
-            {this.state.imageProfile
-              ? this.state.imageProfile
-              : require('../../../assets/images/Blank_Profile_icon.png')} />
+            <img
+              className={'SPdpImage'}
+              src={
+                this.state.imageProfile
+                  ? this.state.imageProfile
+                  : require('../../../assets/images/Blank_Profile_icon.png')
+              }
+            />
             <span className='editDpImage' />
             <div className='uploadWidget'>
               <button className='addImageBtn' />
@@ -499,7 +517,7 @@ class PersonalDetail extends React.PureComponent {
                 </span>}
               {this.state.lastNameInvaild &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                      Please enter vaild last name
+                  Please enter vaild last name
                 </span>}
 
             </div>
@@ -578,7 +596,7 @@ class PersonalDetail extends React.PureComponent {
             />
             Certified member of organization(s)
           </div>
-      
+
           <div
             className='col-md-12 mb-2'
             style={{ visibility: this.state.isActive ? 'visible' : 'hidden' }}
@@ -588,28 +606,28 @@ class PersonalDetail extends React.PureComponent {
                 options={[
                   {
                     label: 'AABB (formerly American Association of Blood Banks)',
-                    value: '1'
+                    value: '1-AABB'
                   },
                   {
                     label: 'Academy of International Business (AIB)',
-                    value: '2'
+                    value: '2-AABB'
                   },
-                  { label: 'Academy of Management (AOM)', value: '3' },
+                  { label: 'Academy of Management (AOM)', value: '3-AOM' },
                   {
                     label: 'Association for the Advancement of Cost Engineering (AACE International)',
-                    value: '4'
+                    value: '4-AACE International'
                   },
                   {
                     label: 'Association for Volunteer Administration (AVA)',
-                    value: '5'
+                    value: '5-AVA'
                   },
                   {
                     label: 'Association of Information Technology Professionals (AITP)',
-                    value: '6'
+                    value: '6-AITP'
                   },
                   {
                     label: 'Chartered Global Management Accountant (CGMA)',
-                    value: '7'
+                    value: '7-CGMA'
                   }
                 ]}
                 simpleValue
@@ -646,7 +664,7 @@ class PersonalDetail extends React.PureComponent {
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
-            maxlength="7"
+            maxlength='7'
             textChange={e => {
               const re = /^\d*\.?\d{0,2}$/
               if (
@@ -702,46 +720,47 @@ class PersonalDetail extends React.PureComponent {
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
-                  <div className="row">
-                  <div className='col-md-6 mb-2'>
-                  <div className='form-group'>
-                  <Input
-                    name='Street'
-                    label='Street'
-                    autoComplete='off'
-                    type='text'
-                    maxlength='500'
-                    value={this.state.streetAddress}
-                    textChange={e =>
-                      this.setState({
-                        streetAddress: e.target.value
-                      })}
-                    className='form-control'
-                  />
+                  <div className='row'>
+                    <div className='col-md-6 mb-2'>
+                      <div className='form-group'>
+                        <Input
+                          name='Street'
+                          label='Street'
+                          autoComplete='off'
+                          type='text'
+                          maxlength='500'
+                          value={this.state.streetAddress}
+                          textChange={e =>
+                            this.setState({
+                              streetAddress: e.target.value
+                            })}
+                          className='form-control'
+                        />
+                      </div>
+                    </div>
+                    <div className='col-md-6'>
+                      <Input
+                        name='Zip'
+                        label='Zip'
+                        autoComplete='off'
+                        type='text'
+                        maxlength='5'
+                        value={this.state.zipCode}
+                        textChange={e => {
+                          const re = /^[0-9\b]+$/
+                          if (
+                            (e.target.value === '' ||
+                              re.test(e.target.value)) &&
+                            checkLengthRemoveSpace(e.target.value) <= 5
+                          ) {
+                            this.setState({ zipCode: e.target.value })
+                          }
+                        }}
+                        className='form-control'
+                      />
+                    </div>
+                  </div>
                 </div>
-                </div>
-                <div className='col-md-6'>
-                  <Input
-                    name='Zip'
-                    label='Zip'
-                    autoComplete='off'
-                    type='text'
-                    maxlength='5'
-                    value={this.state.zipCode}
-                    textChange={e => {
-                      const re = /^[0-9\b]+$/
-                      if (
-                        (e.target.value === '' || re.test(e.target.value)) &&
-                        checkLengthRemoveSpace(e.target.value) <= 5
-                      ) {
-                        this.setState({ zipCode: e.target.value })
-                      }
-                    }}
-                    className='form-control'
-                  />
-                </div>
-                </div>
-              </div>
               </div>
             </div>
           </div>
@@ -805,26 +824,25 @@ class PersonalDetail extends React.PureComponent {
       disabledSaveBtn: false
     })
     let old_data = {
-        firstName: this.props.personalDetail.firstName,
-        lastName: this.props.personalDetail.lastName,
-        age: this.props.personalDetail.age,
-        yearOfExperience: this.props.personalDetail.yearOfExperience,
-        description: this.props.personalDetail.description,
-        hourlyRate: this.props.personalDetail.hourlyRate,
-        lastName: this.props.personalDetail.lastName,
-        phoneNumber: this.props.personalDetail.phoneNumber
+      firstName: this.props.personalDetail.firstName,
+      lastName: this.props.personalDetail.lastName,
+      age: this.props.personalDetail.age,
+      yearOfExperience: this.props.personalDetail.yearOfExperience,
+      description: this.props.personalDetail.description,
+      hourlyRate: this.props.personalDetail.hourlyRate,
+      lastName: this.props.personalDetail.lastName,
+      phoneNumber: this.props.personalDetail.phoneNumber
     }
 
     let updated_data = {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        age: this.state.age,
-        yearOfExperience: this.state.yearOfExperience,
-        description: this.state.description,
-        hourlyRate: this.state.hourlyRate,
-        lastName: this.state.lastName,
-        phoneNumber: this.state.phoneNumber
-      }
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      age: this.state.age,
+      yearOfExperience: this.state.yearOfExperience,
+      description: this.state.description,
+      hourlyRate: this.state.hourlyRate,
+      phoneNumber: this.state.phoneNumber
+    }
 
     const fieldDifference = _.isEqual(old_data, updated_data)
     console.log(_.isEqual(old_data, updated_data))
@@ -835,24 +853,20 @@ class PersonalDetail extends React.PureComponent {
       this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
     }
   }
-  
+
   reset = () => {
     this.setState({
       EditPersonalDetailModal: false,
       isDiscardModalOpen: false,
       firstName: this.props.personalDetail.firstName,
       lastName: this.props.personalDetail.lastName,
-        age: this.props.personalDetail.age,
-        yearOfExperience: this.props.personalDetail.yearOfExperience,
-        description: this.props.personalDetail.description,
-        hourlyRate: this.props.personalDetail.hourlyRate,
-        lastName: this.props.personalDetail.lastName,
-        phoneNumber: this.props.personalDetail.phoneNumber
+      age: this.props.personalDetail.age,
+      yearOfExperience: this.props.personalDetail.yearOfExperience,
+      description: this.props.personalDetail.description,
+      hourlyRate: this.props.personalDetail.hourlyRate,
+      phoneNumber: this.props.personalDetail.phoneNumber
     })
   }
-
-
-  
 }
 
 function mapDispatchToProps (dispatch) {

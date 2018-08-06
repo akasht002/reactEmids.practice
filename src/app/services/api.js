@@ -1,14 +1,17 @@
 import axios from 'axios';
-import { getPersonalDetail } from '../redux/profile/PersonalDetail/actions';
 
-export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
+// export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 
-//  export const baseURL = "http://localhost:63633/api/";
+ export const baseURL = "http://localhost:63633/api/";
 
 
 export const Api = axios.create({
     baseURL: baseURL,
 });
+
+export const SETTING = {
+    FILE_UPLOAD_SIZE : 2097152 
+}
 
 export const API = {
     sendEmailVerification: 'ServiceProviderOnBoarding/',
