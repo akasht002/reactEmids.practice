@@ -134,7 +134,7 @@ export function updatePersonalDetail (data) {
         age: data.age,
         gender: {
           genderId: 2,
-          name: 'Invalid'
+          name: 'Male'
         },
         yearOfExperience: data.yearOfExperience,
         affiliation: {
