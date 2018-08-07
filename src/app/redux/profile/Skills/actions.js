@@ -36,7 +36,8 @@ export function getSkills() {
 export function addSkills(data) {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         let skills = data ? data.split(/\s*,\s*/).map((val) => {
             return {
                 id: Number.parseInt(val),
@@ -61,7 +62,8 @@ export function addSkills(data) {
 export function getSelectedSkills() {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.get(baseURL + API.addSkills + serviceProviderId + '/Skills').then((resp) => {
             dispatch(getSelectedSkillsDetails(resp.data))

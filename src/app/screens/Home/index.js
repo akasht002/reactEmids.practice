@@ -6,6 +6,7 @@ import { Button } from '../../components';
 import { onLogin } from '../../redux/auth/login/actions';
 import { onLogout } from '../../redux/auth/logout/actions';
 import  '../../styles/onBoarding.css';
+import { loadData } from '../../utils/storage';
 
 class Home extends PureComponent {
 
@@ -79,6 +80,7 @@ class Home extends PureComponent {
     componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+        let test = loadData("userData");
     }
 
     componentWillUnmount() {

@@ -61,8 +61,9 @@ export const updatePersonalDetailSuccess = isSuccess => {
 export function uploadImg (data) {
   return (dispatch, getState) => {
     let currstate = getState()
-    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-    // let serviceProviderId = 1
+    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    let serviceProviderId = localStorage.getItem('serviceProviderID');
+    
     let modal = {
       serviceProviderId: serviceProviderId,
       image: data
@@ -84,7 +85,8 @@ export function getImage () {
   return (dispatch, getState) => {
     let currstate = getState()
     // let serviceProviderId = 1
-    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
       .get(baseURL + API.getImage + serviceProviderId)
@@ -99,10 +101,11 @@ export function getImage () {
 }
 
 export function getPersonalDetail () {
+///console.log(localStorage.getItem("serviceProvider"));
   return (dispatch, getState) => {
-    let currstate = getState()
-    // let serviceProviderId = 1
-    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    // let currstate = getState();
+    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
       .get(baseURL + API.getPersonalDetail + serviceProviderId + '/ProfileView')
@@ -117,13 +120,13 @@ export function getPersonalDetail () {
 }
 
 export function updatePersonalDetail (data) {
-  console.log(data)
   let states = _.split(data.state_id, '-')
   let organization = _.split(data.organization, '-')
   return (dispatch, getState) => {
-    let currstate = getState()
+    // let currstate = getState()
     // let serviceProviderId = 1
-    let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    let serviceProviderId = localStorage.getItem('serviceProviderID');
     let modal = {
       serviceProviderId: serviceProviderId,
       serviceProviderTypeId: 1,
@@ -131,12 +134,12 @@ export function updatePersonalDetail (data) {
         firstName: data.firstName,
         middleName: 'M',
         lastName: data.lastName,
-        age: data.age,
+        age: data.age?data.age:0,
         gender: {
           genderId: 2,
-          name: 'Male'
+          name: data.genderName?data.genderName:''
         },
-        yearOfExperience: data.yearOfExperience,
+        yearOfExperience: data.yearOfExperience? data.yearOfExperience:0,
         affiliation: {
           affiliationId: data.organization ? organization[0] : 0
         }
@@ -145,7 +148,7 @@ export function updatePersonalDetail (data) {
         organization: data.organization ? organization[1] : ''
       },
       description: data.description,
-      hourlyRate: data.hourlyRate,
+      hourlyRate: data.hourlyRate?data.hourlyRate:0,
       addresses: [
         {
           addressId: 1,
@@ -157,7 +160,7 @@ export function updatePersonalDetail (data) {
             id: states[0],
             name: states[1]
           },
-          zipCode: data.zipCode,
+          zipCode: data.zipCode?data.zipCode:0,
           isActive: true
         }
       ],

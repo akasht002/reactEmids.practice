@@ -43,6 +43,12 @@ export default (state = defaultState, action) => {
                 }
             };
 
+            case LOGIN.service_provider_id:
+            return {
+                ...state,
+                userProfileData: action.data,
+            };
+
         default:
             return state;
     }

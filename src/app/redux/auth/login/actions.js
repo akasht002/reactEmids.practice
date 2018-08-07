@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { API, baseURL } from '../../../services/api'
 import { push } from '../../navigation/actions';
 import { save } from '../../../utils/storage';
 import { Path } from '../../../routes';
@@ -9,6 +11,7 @@ export const LOGIN = {
     end: 'authentication_end/login',
     success: 'authentication_success/login',
     failed: 'authentication_failed/login',
+    service_provider_id:'authentication/service_provider_id'
 };
 
 export const loginStart = () => {
@@ -36,10 +39,19 @@ export const loginSuccess = (userData) => {
     }
 }
 
+export const getServiceProviderIDSuccess = (data)=>{
+    return {
+        type: LOGIN.service_provider_id,
+        data
+    }
+}
+
 export function onLoginSuccess(data){
     return (dispatch, getState) => {
         dispatch(loginSuccess(data));
-        save(USER_LOCALSTORAGE, data);
+        save(USER_LOCALSTORAGE, getState().oidc.user);
+        // console.log(2222222222222222222222222222222222222222222);   
+        dispatch(setServiceProviderID(JSON.parse(localStorage.getItem("userData")).data.profile.sub));
         dispatch(push(Path.profile));
     }
 }
@@ -56,4 +68,20 @@ export function onLogin() {
         dispatch(loginStart());
         userManager.signinRedirect();
     }
+}
+
+
+export function setServiceProviderID(emailID){ 
+    // let mailId = 'Radhika.Murali@emids.com'
+    return (dispatch, getState) => {           
+        axios
+          .get(baseURL + API.getServiceProviderID + emailID )
+          .then(resp => {
+            dispatch(getServiceProviderIDSuccess(resp.data))
+            localStorage.setItem("serviceProviderID",resp.data.serviceProviderId)
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      }
 }

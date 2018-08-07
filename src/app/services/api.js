@@ -32,5 +32,6 @@ export const API = {
     getImage:'ServiceProvider/Image/',
     getServiceOffered: 'ServiceProvider/',
     editServiceOffered: 'ServiceProvider/',
-    addServiceOffered: 'ServiceProvider/'
+    addServiceOffered: 'ServiceProvider/',
+    getServiceProviderID:'ServiceProviderOnBoarding/'
 }
