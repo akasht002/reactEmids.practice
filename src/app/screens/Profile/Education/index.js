@@ -145,14 +145,14 @@ class Education extends React.Component {
         var year = [];
         var selectedYear = "2018";
         var curYear = formateYearDate();
-        year.push(<option value="" disabled selected>YYYY</option>)
+        year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
         for (var i = '1901'; i <= curYear; i++) {
             var selectedOption = 'false';
             if (i === selectedYear) {
                 selectedOption = 'selected'
                 
             }
-            year.push(<option value={i} selected={selectedOption}>{i}</option>)
+            year.push(<option key= {i} value={i} selected={selectedOption}>{i}</option>)
         }
         return year;
     };
@@ -160,14 +160,14 @@ class Education extends React.Component {
         var year = [];
         var selectedYear = "2018";
         var curYear = formateYearDate();
-        year.push(<option value="" disabled selected>YYYY</option>)
+        year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
         for (var i = this.state.startYear; i <= curYear; i++) {
             var selectedOption = 'false';
             if (i === selectedYear) {
                 selectedOption = 'selected'
                 
             }
-            year.push(<option value={i} selected={selectedOption}>{i}</option>)
+            year.push(<option  key= {i} value={i} selected={selectedOption}>{i}</option>)
         }
         return year;
     }
@@ -298,7 +298,7 @@ class Education extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>  click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ EducationModal: true ,isAdd: true})}/> to add Education</span>
+                                    <span className='SPNoInfoDesc'>  Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ EducationModal: true ,isAdd: true})}/> to add Education</span>
                                 </div>
                             </div>
                             </ul>
@@ -311,7 +311,7 @@ class Education extends React.Component {
                     ModalBody={modalContent}
                     className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
-                    centered="centered"
+                    centered={true}
                     onClick={this.state.isAdd ? this.addEducation : this.updateEducation}
                     disabled={this.state.disabledSaveBtn}
                 />
@@ -324,7 +324,7 @@ class Education extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered={true}
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,

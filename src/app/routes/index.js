@@ -1,17 +1,30 @@
-import React from 'react'
-import { Route, Switch } from 'react-router'
+import React,{Component} from 'react';
+import { Route,Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import {
-  Welcome,
   VerifyContact,
   SetPassword,
   VerifyUserID,
   OnboardSuccess,
   Profile,
   Home
-} from '../screens'
+} from '../screens';
+import { PrivateRoute } from './privateRouter';
 
+function Loading({ error }) {
+  if (error) {
+    return 'Oh nooess!';
+  } else {
+    return <h3>Loading...</h3>;
+  }
+}
+
+const LoginCallBack = Loadable({
+  loader: () => import('../screens/Login/LoginCallBack'),
+  loading: Loading
+});
 
 export const Path = {
   root: '/',
@@ -20,10 +33,11 @@ export const Path = {
   verifyContact: '/verifycontact',
   onboardSuccess: '/onboardsuccess',
   profile: '/profile',
-  home:'/home'
+  home:'/home',
+  loginCallBack: '/loginCallBack',
 };
 
-class AppStackRoot extends React.Component {
+class AppStackRoot extends Component {
   render() {
     return (
       <ConnectedRouter history={this.props.history}>
@@ -34,7 +48,8 @@ class AppStackRoot extends React.Component {
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-            <Route path={Path.profile} component={Profile} />
+            <Route path={Path.loginCallBack} component={LoginCallBack}/>
+            <PrivateRoute path={Path.profile} component={Profile} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

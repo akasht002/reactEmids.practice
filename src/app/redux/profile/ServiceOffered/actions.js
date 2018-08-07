@@ -24,7 +24,8 @@ export const getServiceOfferedDetails = (data) => {
 export function getServiceOffered() {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.get(baseURL + API.getServiceOffered + serviceProviderId + '/Offer/Selected').then((resp) => {
             dispatch(getServicesOfferedSuccess(resp.data))
@@ -38,7 +39,8 @@ export function getServiceOffered() {
 export function addServiceOfferd(data) {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.post(baseURL + API.addServiceOffered + serviceProviderId + '/Offer', data).then((resp) => {
             dispatch(getServiceOffered());
@@ -53,7 +55,8 @@ export function addServiceOfferd(data) {
 export function editServiceOffered(data) {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.get(baseURL + API.editServiceOffered + serviceProviderId + '/Offer').then((resp) => {
             dispatch(getServiceOfferedDetails(resp.data))

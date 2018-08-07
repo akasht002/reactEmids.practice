@@ -72,29 +72,27 @@ class WorkHistory extends React.Component {
             disabledSaveBtn:true,
             isDiscardModalOpen:false
         })
-        let workhistoryFielObject = [
-            {
-                designation: this.props.workhistoyFieldDetails.designation,
-                company: this.props.workhistoyFieldDetails.company,
-                location: this.props.workhistoyFieldDetails.location,
-                fromDate: this.props.workhistoyFieldDetails.fromDate,
-                toDate: this.props.workhistoyFieldDetails.toDate,
-                description: this.props.workhistoyFieldDetails.description,
-                isWorking:this.props.workhistoyFieldDetails.isWorking
-            }
-        ]
-         let stateObject = [
-            {
-                designation: this.state.designation,
-                company: this.state.company,
-                location: this.state.location,
-                fromDate: this.state.fromDate,
-                toDate: this.state.toDate,
-                description: this.state.description,
-                isWorking:this.state.isWorking
-            }
-        ]
-         const fieldDifference = compare(stateObject, workhistoryFielObject);
+        let workhistoryFielObject = {
+            designation: this.props.workhistoyFieldDetails.designation,
+            company: this.props.workhistoyFieldDetails.company,
+            location: this.props.workhistoyFieldDetails.location,
+            fromDate: this.props.workhistoyFieldDetails.fromDate,
+            toDate: this.props.workhistoyFieldDetails.toDate,
+            description: this.props.workhistoyFieldDetails.description,
+            isWorking:this.props.workhistoyFieldDetails.isWorking
+        }
+        
+         let stateObject = {
+            designation: this.state.designation,
+            company: this.state.company,
+            location: this.state.location,
+            fromDate: this.state.fromDate,
+            toDate: this.state.toDate,
+            description: this.state.description,
+            isWorking:this.state.isWorking
+        }
+        
+         const fieldDifference = compare(workhistoryFielObject, stateObject);
          if (fieldDifference === true) {
             this.setState({ isWorkHistoryModalOpen: false,
                 isDiscardModalOpen: false,
@@ -273,7 +271,7 @@ class WorkHistory extends React.Component {
                         onDateChange={this.dateChanged}
                         onDateChangeRaw={this.dateChangedRaw}
                         mandatory={true}
-                        maxDate={this.state.toDate && formateStateDate(this.state.toDate)}
+                        maxDate={this.state.toDate ? formateStateDate(this.state.toDate) : formateStateDate()}
                         value={this.state.fromDate}
                         className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate )) && 'inputFailure')}
                     />
@@ -290,6 +288,7 @@ class WorkHistory extends React.Component {
                         onDateChangeRaw={this.todateChangedRaw}
                         mandatory={true}
                         minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
+                        maxDate={formateStateDate()}
                         value={this.state.toDate}
                         className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
                     />
@@ -374,7 +373,7 @@ class WorkHistory extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'> click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true,isAdd: true })}/> to add Work History</span>
+                                    <span className='SPNoInfoDesc'> Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true,isAdd: true })}/> to add Work History</span>
                                 </div>
                             </div>
                             </ul>
@@ -387,7 +386,7 @@ class WorkHistory extends React.Component {
                 ModalBody={modalContent}
                 className="modal-lg asyncModal CertificationModal"
                 modalTitle={modalTitle}
-                centered="centered"
+                centered={true}
                 disabled={this.state.disabledSaveBtn}
                 onClick={this.state.isAdd ? 
                     this.addWorkhistory : 
@@ -403,7 +402,7 @@ class WorkHistory extends React.Component {
             btn2="NO"
             className="modal-sm"
             headerFooter="d-none"
-            centered="centered"
+            centered={true}
             onConfirm={() => this.reset()}
             onCancel={() => this.setState({
                 isDiscardModalOpen: false,

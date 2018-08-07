@@ -32,7 +32,8 @@ export const getCertificationFieldDetails = (data) => {
 export function getCertification() {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
 
         dispatch(startLoading());
         axios.get(baseURL + API.certification + serviceProviderId + '/Certification').then((resp) => {
@@ -47,7 +48,8 @@ export function getCertification() {
 export function addCertification(data) {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
             serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
@@ -69,7 +71,8 @@ export function addCertification(data) {
 export function editCertification(data) {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.get(baseURL + API.certification + serviceProviderId + '/Certification/' + data).then((resp) => {
             dispatch(getCertificationFieldDetails(resp.data))
@@ -83,7 +86,8 @@ export function editCertification(data) {
 export function updateCertification(data) {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
             serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
@@ -106,7 +110,8 @@ export function updateCertification(data) {
 export function deleteCertification(data) {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.delete(baseURL + API.certification + serviceProviderId + '/' + data).then((resp) => {
             dispatch(getCertification());

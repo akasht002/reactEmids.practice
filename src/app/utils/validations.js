@@ -1,6 +1,7 @@
 
 import moment from 'moment';
 import {DATE_FORMAT, DATE_YEAR} from '../constants/variables';
+import _ from 'lodash'
 
 export function checkEmail(email) {
     return /^(([^<>()[\]\\.,;:@"]+(\.[^<>()[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
@@ -45,12 +46,19 @@ export function formateYearDate(){
 
 
 export function checkLengthRemoveSpace(data) {
-    return data.replace(/\s/g, "").length;
+    // if(data !== undefined )
+        return data.replace(/\s/g, "").length;
+    // else
+        // return 0;
+}
+
+export function getLength(data){
+    return _.size(data)
 }
 
 
 export function checkTextNotStartWithNumber(data) {
-    return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*()'."]+$/.test(data)
+    return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*()'. "]+$/.test(data)
 }
 
 export function isDecimal(data) {
@@ -59,4 +67,12 @@ export function isDecimal(data) {
 
 export function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
-  }
+}
+
+export const getArrayLength = (data) => {
+    return _.size(data);
+}
+
+export const getDataValueArray = (data,split)=> {
+    return _.split(data,split)
+}

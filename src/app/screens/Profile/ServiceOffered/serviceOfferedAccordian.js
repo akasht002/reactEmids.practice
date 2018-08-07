@@ -1,8 +1,20 @@
 import React from "react";
-import { UncontrolledCollapse } from 'reactstrap';
+import { UncontrolledCollapse, Collapse } from 'reactstrap';
 import ServiceOfferedIcons from '../ServiceOffered/serviceOfferedIcons'
 
 class ServiceOfferedAccordian extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: false
+        }
+    }
+
+    toggleCollapse = () => {
+        this.setState({ isOpen: !this.state.isOpen })
+    }
+
     render() {
         let showFirstContentDefault;
         let contentClassName = '';
@@ -10,7 +22,7 @@ class ServiceOfferedAccordian extends React.Component {
 
         return (
             <div>
-                 <div className={'SPTabHeader'} id={'toggle' + this.props.category.serviceCategoryId} onClick={this.toggleCollapse}>
+                <div className={'SPTabHeader'} id={'toggle' + this.props.category.serviceCategoryId} onClick={this.toggleCollapse}>
                     <div className={'SPTabTitle'}>
                         <h5 className={'SPTabTitleContent'}>{this.props.category.serviceCategoryDescription}</h5>
                         {this.props.type === 'view' ?
@@ -20,7 +32,7 @@ class ServiceOfferedAccordian extends React.Component {
                         }
                     </div>
                 </div>
-                <UncontrolledCollapse toggler={'#toggle' + this.props.category.serviceCategoryId} className={contentClassName + " SPTabContent " + showFirstContentDefault}>
+                <Collapse isOpen={this.state.isOpen} toggler={'#toggle' + this.props.category.serviceCategoryId} className={contentClassName + " SPTabContent " + showFirstContentDefault}>
                     {this.props.type === 'edit' && <div className={'width100 selectServiceTypes d-flex'}>
                         <p className={'mr-auto'}>Select the Service Types</p>
                         <div className='form-check ml-auto'>
@@ -38,7 +50,7 @@ class ServiceOfferedAccordian extends React.Component {
                             </label>
                         </div>
                     </div>}
-                    
+
                     {this.props.category.serviceTypeModel && this.props.category.serviceTypeModel.map((listService, index) => {
                         return (
                             <ServiceOfferedIcons
@@ -57,9 +69,9 @@ class ServiceOfferedAccordian extends React.Component {
                             />
                         )
                     })}
-                </UncontrolledCollapse>
-                
-               
+                </Collapse>
+
+
             </div>
         )
     }

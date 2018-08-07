@@ -377,6 +377,7 @@
     padding: 2px 5px;
     position: relative;
     order: 1;
+    min-width:88px;
 }
 .Select--multi a.Select-value-label {
     cursor: pointer;

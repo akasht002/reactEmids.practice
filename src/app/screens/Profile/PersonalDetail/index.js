@@ -18,10 +18,13 @@ import {
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
-  checkLengthRemoveSpace,
   checkTextNotStartWithNumber,
-  isDecimal
+  isDecimal,
+  getArrayLength,
+  getLength
 } from '../../../utils/validations'
+
+import { SETTING } from '../../../services/api'
 
 class PersonalDetail extends React.PureComponent {
   constructor (props) {
@@ -29,6 +32,7 @@ class PersonalDetail extends React.PureComponent {
     this.state = {
       useEllipsis: true,
       EducationModal: false,
+      isDiscardModalOpen: false,
       src: null,
       crop: {
         x: 10,
@@ -42,10 +46,12 @@ class PersonalDetail extends React.PureComponent {
   componentDidMount () {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
+    this.props.getImage()
   }
 
   componentWillReceiveProps (nextProps) {
     this.setState({
+      imageProfile: nextProps.profileImgData.image,
       firstName: nextProps.personalDetail.firstName,
       lastName: nextProps.personalDetail.lastName,
       age: nextProps.personalDetail.age,
@@ -54,88 +60,60 @@ class PersonalDetail extends React.PureComponent {
       yearOfExperience: nextProps.personalDetail.yearOfExperience,
       description: nextProps.personalDetail.description,
       hourlyRate: nextProps.personalDetail.hourlyRate,
-      city: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].city,
-      streetAddress: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].streetAddress,
-      zipCode: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].zipCode,
-      phoneNumber: nextProps.personalDetail.address &&
-        nextProps.personalDetail.phoneNumber,
-      state_id: nextProps.personalDetail.address &&
-        nextProps.personalDetail.address[0].state.id,
-        isActive: nextProps.personalDetail.isActive &&
-        nextProps.personalDetail.isActive
+      city: getArrayLength(nextProps.personalDetail.address) > 0
+        ? nextProps.personalDetail.address[0].city
+        : '',
+      streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
+        ? nextProps.personalDetail.address[0].streetAddress
+        : '',
+      zipCode: getArrayLength(nextProps.personalDetail.address) > 0
+        ? nextProps.personalDetail.address[0].zipCode
+        : '',
+      phoneNumber: nextProps.personalDetail.phoneNumber,
+      state_id: getArrayLength(nextProps.personalDetail.address) > 0
+        ? nextProps.personalDetail.address[0].state.id
+        : '',
+      isActive: false
     })
-    this.city = this.state.address
-    this.streetAddress = this.state.streetAddress
-    this.zipCode = this.state.zipCode
-    this.phoneNumber = this.state.phoneNumber
     this.styles = {
       height: 100,
       maxHeight: 100
-    };
-  
-  }
-
-  reset = () => {
-    this.setState({
-      EditPersonalDetailModal: false,
-      isDiscardModalOpen: false
-    })
-    this.props.history.push('/profile')
-  }
-
-  togglePersonalDetails (action, e) {     
-    this.setState({
-      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
-      isValid: true,
-      disabledSaveBtn: false
-    })
-    let old_data = [
-      {
-        firstName: this.props.personalDetail.firstName,
-        age: this.props.personalDetail.age,
-        yearOfExperience: this.props.personalDetail.yearOfExperience,
-        description: this.props.personalDetail.description,
-        hourlyRate: this.props.personalDetail.hourlyRate,
-        lastName: this.props.personalDetail.lastName,
-        phoneNumber: this.props.personalDetail.phoneNumber
-      }
-    ]
-
-    let updated_data = [
-      {
-        firstName: this.state.firstName,
-        age: this.state.age,
-        yearOfExperience: this.state.yearOfExperience,
-        description: this.state.description,
-        hourlyRate: this.state.hourlyRate,
-        lastName: this.state.lastName,
-        phoneNumber: this.state.phoneNumber
-      }
-    ]  
-
-    const fieldDifference = _.isEqual(old_data, updated_data)
-
-    if (fieldDifference === true) {
-      this.setState({ certificationModal: false, isDiscardModalOpen: false })     
-    } else {
-      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
-    }   
+    }
+    this.city = getArrayLength(nextProps.personalDetail.address) > 0
+      ? nextProps.personalDetail.address[0].city
+      : ''
+    this.streetAddress = getArrayLength(nextProps.personalDetail.address) > 0
+      ? nextProps.personalDetail.address[0].streetAddress
+      : ''
+    this.zipCode = getArrayLength(nextProps.personalDetail.address) > 0
+      ? nextProps.personalDetail.address[0].zipCode
+      : ''
+    this.states = getArrayLength(nextProps.personalDetail.address) > 0
+      ? nextProps.personalDetail.address[0].state.name
+      : ''
   }
 
   handleChange = e => {
-    this.setState({
-      uploadedImageFile: URL.createObjectURL(e.target.files[0]),
-      uploadImage: !this.state.uploadImage
-    })
+    console.log(e.target.files[0].size)
+    console.log(SETTING.FILE_UPLOAD_SIZE)
+    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
+      this.setState({
+        uploadedImageFile: URL.createObjectURL(e.target.files[0]),
+        uploadImage: !this.state.uploadImage
+      })
+    } else {
+      alert('Please insert a image less than 2 MB')
+    }
   }
 
   reUpload = e => {
-    this.setState({
-      uploadedImageFile: URL.createObjectURL(e.target.files[0])
-    })
+    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
+      this.setState({
+        uploadedImageFile: URL.createObjectURL(e.target.files[0])
+      })
+    } else {
+      alert('Please insert a image less than 2 MB')
+    }
   }
 
   onSelectFile = e => {
@@ -155,9 +133,9 @@ class PersonalDetail extends React.PureComponent {
 
   onSubmit = () => {
     if (
-      checkLengthRemoveSpace(this.state.firstName) === 0 ||
-      checkLengthRemoveSpace(this.state.lastName) === 0 ||
-      checkLengthRemoveSpace(this.state.phoneNumber) === 0
+      getLength(this.state.firstName) === 0 ||
+      getLength(this.state.lastName) === 0 ||
+      getLength(this.state.phoneNumber) === 0
     ) {
       this.setState({ isValid: false })
     } else {
@@ -176,17 +154,17 @@ class PersonalDetail extends React.PureComponent {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
+    console.log(this.state.croppedImage)
     this.props.uploadImg(this.state.croppedImage)
   }
 
   onCroppeds = e => {
     let image = e.image
     let image_data = e.data
-    // this.props.updatePersonalDetail(this.state)
     this.setState({
       croppedImage: image
     })
-  }
+  } 
 
   render () {
     let modalContent
@@ -194,7 +172,7 @@ class PersonalDetail extends React.PureComponent {
     let modalType = ''
     const cityDetail = this.props.cityDetail.map((city, i) => {
       city.label = city.name
-      city.value = city.id
+      city.value = city.id+'-'+city.name
       return city
     })
 
@@ -227,20 +205,21 @@ class PersonalDetail extends React.PureComponent {
           onClick={this.onSubmit}
           disabled={this.state.disabledSaveBtn}
         />
-         <ModalPopup
-                    isOpen={this.state.isDiscardModalOpen}
-                    toggle={this.reset}
-                    ModalBody={<span>Do you want to discard the changes?</span>}
-                    btn1="YES"
-                    btn2="NO"
-                    className="modal-sm"
-                    headerFooter="d-none"
-                    centered="centered"
-                    onConfirm={() => this.reset()}
-                    onCancel={() => this.setState({
-                        isDiscardModalOpen: false,
-                    })}
-                />
+        <ModalPopup
+          isOpen={this.state.isDiscardModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Do you want to discard the changes?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() => this.reset()}
+          onCancel={() =>
+            this.setState({
+              isDiscardModalOpen: false
+            })}
+        />
       </React.Fragment>
     )
   }
@@ -283,9 +262,127 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
+  renderDetails = () => {
+    let text = ''
+    return (
+      <div className='col-md-12 card CardWidget SPDetails'>
+        <div className={'SPDetailsContainer SPdpWidget'}>
+          <div className={'SPdpContainer'}>
+            <svg viewBox='0 0 36 36' className='circular-chart'>
+              <path
+                className='circle'
+                strokeDasharray='80, 100'
+                d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
+              />
+            </svg>
 
-  
-
+            <img
+              className={'SPdpImage'}
+              src={
+                this.state.imageProfile
+                  ? this.state.imageProfile
+                  : require('../../../assets/images/Blank_Profile_icon.png')
+              }
+            />
+          </div>
+          {/* <span className={'SPRating'}>
+            <i className={'Icon iconFilledStar'} />4.2
+          </span> */}
+        </div>
+        <div className={'SPDetailsContainer SPNameWidget'}>
+          <div className={'d-flex'}>
+            <div className={'col-md-7 p-0'}>
+              <h3 className={'SPName'}>
+                {this.props.personalDetail &&
+                  `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
+              </h3>
+              <p className={'SPsubTitle'}>
+                <span>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.genderName}
+                  {' '}
+                </span>
+                <span>
+                  {this.props.personalDetail && this.props.personalDetail.age}
+                  {' '}
+                  years
+                </span>
+                <span>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.yearOfExperience}
+                  {' '}
+                  years exp
+                </span>
+              </p>
+            </div>
+            <div className={'col p-0'}>
+              <h3 className={'ratePerHour primaryColor'}>
+                <span>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.hourlyRate}
+                </span>
+              </h3>
+            </div>
+          </div>
+          <div className={'width100'}>
+            <div className={'SPAffiliatedList'}>
+              <span className={'AffiliatedList'}>
+                Affiliated to In
+                {' '}
+                <bd>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.affiliationName}
+                </bd>
+              </span>
+            </div>
+          </div>         
+          <div className={'width100'}>
+            {this.props.personalDetail && this.props.personalDetail.description}            
+          </div>
+        </div>
+        <div className={'SPDetailsContainer SPAddressWidget'}>
+          <div className={'SPAddressContent'}>
+            <div className={'width100 SPAddressTitle d-flex'}>
+              <span className={'SPAddressText primaryColor'}>Address</span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span className={'AddressContentLabel'}>Street</span>
+              <span>
+                {this.props.personalDetail && this.streetAddress}
+              </span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span className={'AddressContentLabel'}>City</span>
+              <span>{this.props.personalDetail && this.city}</span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span className={'AddressContentLabel'}>State</span>
+              <span>{this.props.personalDetail && this.states}</span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span className={'AddressContentLabel'}>ZIP</span>
+              <span>{this.props.personalDetail && this.zipCode}</span>
+            </div>
+          </div>
+          <div className={'SPAddressContent'}>
+            <div className={'width100 SPAddressTitle d-flex'}>
+              <span className={'SPAddressText primaryColor'}>Phone</span>
+            </div>
+            <div className={'width100 d-flex'}>
+              <span>
+                {this.props.personalDetail &&
+                  this.props.personalDetail.phoneNumber}
+              </span>
+            </div>
+          </div>
+        </div>
+        <i
+          className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
+          onClick={this.togglePersonalDetails.bind(this)}
+        />
+      </div>
+    )
+  }
   getModalContent = stateDetail => {
     return (
       <div className='row'>
@@ -297,9 +394,12 @@ class PersonalDetail extends React.PureComponent {
         <div className='col-md-4 mb-2 editProfileImageContainer'>
           <div className='profileImage'>
             <img
-              alt='profile-image'
-              src={require('../../../assets/images/Blank_Profile_icon.png')}
               className={'SPdpImage'}
+              src={
+                this.state.imageProfile
+                  ? this.state.imageProfile
+                  : require('../../../assets/images/Blank_Profile_icon.png')
+              }
             />
             <span className='editDpImage' />
             <div className='uploadWidget'>
@@ -399,15 +499,16 @@ class PersonalDetail extends React.PureComponent {
                 <label>Select Gender</label>
                 <SelectBox
                   options={[
-                    { label: 'Female', value: '1' },
-                    { label: 'Male', value: '6' }
+                    { label: 'Female', value: '2' },
+                    { label: 'Male', value: '1' }
                   ]}
                   simpleValue
                   placeholder='Select Gender'
                   onChange={value => {
                     this.setState({ genderName: value })
+                    console.log(value);
                   }}
-                  selectedValue={this.state.genderName === 'Male' ? 6 : 1}
+                  selectedValue={this.state.genderName}
                   className={'inputFailure'}
                 />
               </div>
@@ -424,7 +525,7 @@ class PersonalDetail extends React.PureComponent {
                   const re = /^[0-9\b]+$/
                   if (
                     (e.target.value === '' || re.test(e.target.value)) &&
-                    checkLengthRemoveSpace(e.target.value) <= 3
+                    getLength(e.target.value) <= 3
                   ) {
                     this.setState({ age: e.target.value })
                   }
@@ -439,13 +540,11 @@ class PersonalDetail extends React.PureComponent {
                 autoComplete='off'
                 required='required'
                 type='text'
+                maxlength='2'
                 value={this.state.yearOfExperience}
                 textChange={e => {
                   const re = /^[0-9\b]+$/
-                  if (
-                    (e.target.value === '' || re.test(e.target.value)) &&
-                    checkLengthRemoveSpace(e.target.value) <= 2
-                  ) {
+                  if (e.target.value === '' || re.test(e.target.value))  {
                     this.setState({ yearOfExperience: e.target.value })
                   }
                 }}
@@ -454,59 +553,67 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>
         </div>
-        <div className="row">
-        <div className='col-md-12 mb-2'>
-        <label>Affiliation</label>
-        </div> 
-        <div className='col-md-12'>           
-        Certified member of organization(s) <input type="checkbox" 
-            onClick={e => {
-              this.setState({isActive: !e.target.checked});
-            }}
-            defaultChecked={this.state.isActive}/>
-        </div>
-        </div>
-        <div className='col-md-12 mb-2'>
-          <div className='form-group'>           
-            <SelectBox
-              options={[
-                {
-                  label: 'AABB (formerly American Association of Blood Banks)',
-                  value: '1'
-                },
-                {
-                  label: 'Academy of International Business (AIB)',
-                  value: '2'
-                },
-                { label: 'Academy of Management (AOM)', value: '3' },
-                {
-                  label: 'Association for the Advancement of Cost Engineering (AACE International)',
-                  value: '4'
-                },
-                {
-                  label: 'Association for Volunteer Administration (AVA)',
-                  value: '5'
-                },
-                {
-                  label: 'Association of Information Technology Professionals (AITP)',
-                  value: '6'
-                },
-                {
-                  label: 'Chartered Global Management Accountant (CGMA)',
-                  value: '7'
-                }
-              ]}
-              simpleValue
-              placeholder='Select the Organization'
-              onChange={value => {
-                this.setState({ organization: value })
+        <div className='row'>
+          <div className='col-md-12 mb-2'>
+            <label>Affiliation</label>
+          </div>
+          <div className='col-md-12'>
+            <input
+              type='checkbox'
+              onClick={e => {
+                this.setState({ isActive: e.target.checked })
               }}
-              selectedValue={this.state.organization}
-              className={'inputFailure'}
+              defaultChecked={this.state.isActive}
             />
+            Certified member of organization(s)
           </div>
 
+          <div
+            className='col-md-12 mb-2'
+            style={{ visibility: this.state.isActive ? 'visible' : 'hidden' }}
+          >
+            <div className='form-group'>
+              <SelectBox
+                options={[
+                  {
+                    label: 'AABB (formerly American Association of Blood Banks)',
+                    value: '1-AABB'
+                  },
+                  {
+                    label: 'Academy of International Business (AIB)',
+                    value: '2-AABB'
+                  },
+                  { label: 'Academy of Management (AOM)', value: '3-AOM' },
+                  {
+                    label: 'Association for the Advancement of Cost Engineering (AACE International)',
+                    value: '4-AACE International'
+                  },
+                  {
+                    label: 'Association for Volunteer Administration (AVA)',
+                    value: '5-AVA'
+                  },
+                  {
+                    label: 'Association of Information Technology Professionals (AITP)',
+                    value: '6-AITP'
+                  },
+                  {
+                    label: 'Chartered Global Management Accountant (CGMA)',
+                    value: '7-CGMA'
+                  }
+                ]}
+                simpleValue
+                placeholder='Select the Organization'
+                onChange={value => {
+                  this.setState({ organization: value })
+                }}
+                selectedValue={this.state.organization}
+                className={'inputFailure'}
+              />
+            </div>
+
+          </div>
         </div>
+
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
@@ -515,7 +622,7 @@ class PersonalDetail extends React.PureComponent {
             rows='5'
             value={this.state.description}
             textChange={e => {
-              if (checkLengthRemoveSpace(e.target.value) <= 500) {
+              if (getLength(e.target.value) <= 500) {
                 this.setState({ description: e.target.value })
               }
             }}
@@ -528,20 +635,10 @@ class PersonalDetail extends React.PureComponent {
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
-            // textChange={e => {
-            //   this.setState({ hourlyRate: e.target.value })
-            //   // if (isDecimal(this.state.hourlyRate) ) {
-            //   //   this.setState({ hourlyRate: e.target.value })
-            //   // }else {
-            //   //       this.setState({ lastNameInvaild: false,disabledSaveBtn:true })
-            //   //     }
-            // }}
-           textChange={e => {
+            maxlength='7'
+            textChange={e => {
               const re = /^\d*\.?\d{0,2}$/
-              if (
-                (e.target.value === '' || re.test(e.target.value)) &&
-                checkLengthRemoveSpace(e.target.value) <= 7
-              ) {
+              if  (e.target.value === '' || re.test(e.target.value)) {
                 this.setState({ hourlyRate: e.target.value })
               }
             }}
@@ -591,39 +688,46 @@ class PersonalDetail extends React.PureComponent {
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
-                  <Input
-                    name='Street'
-                    label='Street'
-                    autoComplete='off'
-                    type='text'
-                    maxlength='500'
-                    value={this.state.streetAddress}
-                    textChange={e =>
-                      this.setState({
-                        streetAddress: e.target.value
-                      })}
-                    className='form-control'
-                  />
-                </div>
-                <div className='col-md-6'>
-                  <Input
-                    name='Zip'
-                    label='Zip'
-                    autoComplete='off'
-                    type='text'
-                    maxlength='5'
-                    value={this.state.zipCode}
-                    textChange={e => {
-                      const re = /^[0-9\b]+$/
-                      if (
-                        (e.target.value === '' || re.test(e.target.value)) &&
-                        checkLengthRemoveSpace(e.target.value) <= 5
-                      ) {
-                        this.setState({ zipCode: e.target.value })
-                      }
-                    }}
-                    className='form-control'
-                  />
+                  <div className='row'>
+                    <div className='col-md-6 mb-2'>
+                      <div className='form-group'>
+                        <Input
+                          name='Street'
+                          label='Street'
+                          autoComplete='off'
+                          type='text'
+                          maxlength='500'
+                          value={this.state.streetAddress}
+                          textChange={e =>
+                            this.setState({
+                              streetAddress: e.target.value
+                            })}
+                          className='form-control'
+                        />
+                      </div>
+                    </div>
+                    <div className='col-md-6'>
+                      <Input
+                        name='Zip'
+                        label='Zip'
+                        autoComplete='off'
+                        type='text'
+                        maxlength='5'
+                        value={this.state.zipCode}
+                        textChange={e => {
+                          const re = /^[0-9\b]+$/
+                          if (
+                            (e.target.value === '' ||
+                              re.test(e.target.value)) &&
+                              getLength(e.target.value) <= 5
+                          ) {
+                            this.setState({ zipCode: e.target.value })
+                          }
+                        }}
+                        className='form-control'
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -657,7 +761,7 @@ class PersonalDetail extends React.PureComponent {
                       const re = /^[0-9\b]+$/
                       if (
                         (e.target.value === '' || re.test(e.target.value)) &&
-                        checkLengthRemoveSpace(e.target.value) <= 15
+                        getLength(e.target.value) <= 15
                       ) {
                         this.setState({ phoneNumber: e.target.value })
                       }
@@ -680,146 +784,56 @@ class PersonalDetail extends React.PureComponent {
     )
   }
 
-  renderDetails = () => {
-    let text = ''
-    return (
-      <div className='col-md-12 card CardWidget SPDetails'>
-        <div className={'SPDetailsContainer SPdpWidget'}>
-          <div className={'SPdpContainer'}>
-            <svg viewBox='0 0 36 36' className='circular-chart'>
-              <path
-                className='circle'
-                strokeDasharray='80, 100'
-                d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
-              />
-            </svg>
+  togglePersonalDetails (action, e) {
+    this.setState({
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
+      isDiscardModalOpen: false,
+      isValid: true,
+      disabledSaveBtn: false
+    })
+    let old_data = {
+      firstName: this.props.personalDetail.firstName,
+      lastName: this.props.personalDetail.lastName,
+      age: this.props.personalDetail.age,
+      yearOfExperience: this.props.personalDetail.yearOfExperience,
+      description: this.props.personalDetail.description,
+      hourlyRate: this.props.personalDetail.hourlyRate,
+      lastName: this.props.personalDetail.lastName,
+      phoneNumber: this.props.personalDetail.phoneNumber
+    }
 
-            <img
-              className={'SPdpImage'}
-              src={require('../../../assets/images/Blank_Profile_icon.png')}
-            />
-            {/* Blank_Profile_icon <img alt="profile-image" className={"SPdpImage"} src="http://lorempixel.com/1500/600/abstract/1" /> */}
-          </div>
-          <span className={'SPRating'}>
-            <i className={'Icon iconFilledStar'} />4.2
-          </span>
-        </div>
-        <div className={'SPDetailsContainer SPNameWidget'}>
-          <div className={'d-flex'}>
-            <div className={'col-md-7 p-0'}>
-              <h3 className={'SPName'}>
-                {this.props.personalDetail &&
-                  `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
-              </h3>
-              <p className={'SPsubTitle'}>
-                <span>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.genderName}
-                  {' '}
-                </span>
-                <span>
-                  {this.props.personalDetail && this.props.personalDetail.age}
-                  {' '}
-                  years
-                </span>
-                <span>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.yearOfExperience}
-                  {' '}
-                  years exp
-                </span>
-              </p>
-            </div>
-            <div className={'col p-0'}>
-              <h3 className={'ratePerHour primaryColor'}>
-                <span>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.hourlyRate}
-                </span>
-              </h3>
-            </div>
-          </div>
-          <div className={'width100'}>
-            <div className={'SPAffiliatedList'}>
-              <span className={'AffiliatedList'}>
-                Affiliated to In
-                {' '}
-                <bd>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.affiliationName}
-                </bd>
-              </span>
-            </div>
-          </div>
-          <div className={'width100'}>
-            {this.props.personalDetail && this.props.personalDetail.description}
-            {this.state.useEllipsis
-              ? <div>
-                {/* <ResponsiveEllipsis
-                                    text={text}
-                                    maxLine='3'
-                                    ellipsis='...'
-                                    trimRight
-                                    className="SPDesc"
-                                /> */}
-                <i
-                  className={'readMore primaryColor'}
-                    // onClick={this.onTextClick.bind(this)}
-                  >
-                  {' '}<small>read more</small>
-                </i>
-              </div>
-              : <div className={'SPDesc'}>
-                {text}
-                {' '}
-                <i
-                  className={'readMore primaryColor'}
-                  onClick={this.onTextClick.bind(this)}
-                  >
-                  <small>Show less</small>
-                </i>
-              </div>}
-          </div>
-        </div>
-        <div className={'SPDetailsContainer SPAddressWidget'}>
-          <div className={'SPAddressContent'}>
-            <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Address</span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>Street</span>
-              <span>
-                {this.props.personalDetail && this.state.streetAddress}
-              </span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>City</span>
-              <span>{this.props.personalDetail && this.state.city}</span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>State</span>
-              <span>{this.props.personalDetail && this.state.state}</span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>ZIP</span>
-              <span>{this.props.personalDetail && this.state.zipCode}</span>
-            </div>
-          </div>
-          <div className={'SPAddressContent'}>
-            <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Phone</span>
-            </div>
-            <div className={'width100 d-flex'}>
-              <span>{this.props.personalDetail && this.state.phoneNumber}</span>
-            </div>
-          </div>
-        </div>
-        <i
-          className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
-          onClick={this.togglePersonalDetails.bind(this)}
-        />
-      </div>
-    )
+    let updated_data = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      age: this.state.age,
+      yearOfExperience: this.state.yearOfExperience,
+      description: this.state.description,
+      hourlyRate: this.state.hourlyRate,
+      phoneNumber: this.state.phoneNumber
+    }
+
+    const fieldDifference = _.isEqual(old_data, updated_data)
+    console.log(_.isEqual(old_data, updated_data))
+
+    if (fieldDifference === true) {
+      this.setState({ certificationModal: false, isDiscardModalOpen: false })
+    } else {
+      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
+    }
+  }
+
+  reset = () => {
+    this.setState({
+      EditPersonalDetailModal: false,
+      isDiscardModalOpen: false,
+      firstName: this.props.personalDetail.firstName,
+      lastName: this.props.personalDetail.lastName,
+      age: this.props.personalDetail.age,
+      yearOfExperience: this.props.personalDetail.yearOfExperience,
+      description: this.props.personalDetail.description,
+      hourlyRate: this.props.personalDetail.hourlyRate,
+      phoneNumber: this.props.personalDetail.phoneNumber
+    })
   }
 }
 
@@ -828,7 +842,8 @@ function mapDispatchToProps (dispatch) {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
     getCityDetail: () => dispatch(action.getCityDetail()),
-    uploadImg: data => dispatch(action.uploadImg())
+    uploadImg: data => dispatch(action.uploadImg(data)),
+    getImage: () => dispatch(action.getImage())
   }
 }
 
@@ -838,8 +853,7 @@ function mapStateToProps (state) {
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState
       .updatePersonalDetailSuccess,
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
-    uploadImgData: state.profileState.PersonalDetailState
-      .updatePersonalDetailSuccess
+    profileImgData: state.profileState.PersonalDetailState.imageData
   }
 }
 export default withRouter(
