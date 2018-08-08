@@ -21,6 +21,7 @@ class ServiceOfferedContent extends React.Component {
                     allCheck={category.serviceTypeModel.every((service) => {
                         return service.isActive === true;
                     })}
+                    isOpen={false}
                     handleClick={(serviceType) => {
                         var array = [...this.state.selectedServiceTypes];
                         const index = array.findIndex((service) => {
