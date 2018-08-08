@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
-import VisitServiceState from './VisitService/reducer';
+import VisitServiceListState from './VisitServiceList/reducer';
+import VisitServiceDetailsState from './VisitServiceDetails/reducer';
 export const visitSelectionState = combineReducers({
-    VisitServiceState
+    VisitServiceListState,
+    VisitServiceDetailsState
 });

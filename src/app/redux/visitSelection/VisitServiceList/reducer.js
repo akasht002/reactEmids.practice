@@ -1,15 +1,15 @@
 import {
-    VisitService
+    VisitServiceList
 } from './actions'
 
 const defaultState = {
     visitServiceList: [],
 };
 
-const VisitServiceState = (state = defaultState, action) => {
+const VisitServiceListState = (state = defaultState, action) => {
     switch (action.type) {
 
-        case VisitService.getVisitServiceListSuccess:
+        case VisitServiceList.getVisitServiceListSuccess:
             return {
                 ...state,
                 visitServiceList: action.data
@@ -20,4 +20,4 @@ const VisitServiceState = (state = defaultState, action) => {
     }
 }
 
-export default VisitServiceState;
+export default VisitServiceListState;

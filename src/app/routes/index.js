@@ -9,7 +9,8 @@ import {
   VerifyUserID,
   OnboardSuccess,
   Profile,
-  VisitService
+  VisitServiceList,
+  VisitServiceDetails
 } from '../screens'
 
 
@@ -20,7 +21,8 @@ export const Path = {
   verifyContact: '/verifycontact',
   onboardSuccess: '/onboardsuccess',
   profile: '/profile',
-  visitService: '/visitservice'
+  visitServiceList: '/Visitservicelist',
+  visitServiceDetails: '/visitservicedetails'
 };
 
 class AppStackRoot extends React.Component {
@@ -35,7 +37,8 @@ class AppStackRoot extends React.Component {
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
             <Route path={Path.profile} component={Profile} />
-            <Route path={Path.visitService} component={VisitService} />
+            <Route path={Path.visitServiceList} component={VisitServiceList} />
+            <Route path={Path.visitServiceDetails} component={VisitServiceDetails} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>
