@@ -4,7 +4,7 @@ import SetPassword from './Onboarding/SetPassword';
 import VerifyUserID from './Onboarding/VerifyUserID';
 import OnboardSuccess from './Onboarding/OnboardSuccess';
 import Profile from './Profile/Profile';
-
+import VisitService from './VisitSelection/VisitService';
 
 export {
     Welcome,
@@ -12,5 +12,6 @@ export {
     SetPassword,
     VerifyUserID,
     OnboardSuccess,
-    Profile
+    Profile,
+    VisitService
 };
