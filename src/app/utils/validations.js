@@ -3,6 +3,8 @@ import moment from 'moment';
 import {DATE_FORMAT, DATE_YEAR} from '../constants/variables';
 import _ from 'lodash'
 
+const genderID = [{'Female':1},{'Male':2}]
+
 export function checkEmail(email) {
     return /^(([^<>()[\]\\.,;:@"]+(\.[^<>()[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 }
@@ -75,4 +77,8 @@ export const getArrayLength = (data) => {
 
 export const getDataValueArray = (data,split)=> {
     return _.split(data,split)
+}
+
+export const getGenderID = (data) => {
+    return genderID[data]
 }

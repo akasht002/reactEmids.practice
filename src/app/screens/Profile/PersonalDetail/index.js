@@ -499,8 +499,8 @@ class PersonalDetail extends React.PureComponent {
                 <label>Select Gender</label>
                 <SelectBox
                   options={[
-                    { label: 'Female', value: '2' },
-                    { label: 'Male', value: '1' }
+                    { label: 'Female', value: 'Female' },
+                    { label: 'Male', value: 'Male' }
                   ]}
                   simpleValue
                   placeholder='Select Gender'
