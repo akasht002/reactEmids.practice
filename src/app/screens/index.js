@@ -6,6 +6,7 @@ import OnboardSuccess from './Onboarding/OnboardSuccess';
 import Profile from './Profile/Profile';
 import VisitServiceList from './VisitSelection/VisitServiceList';
 import VisitServiceDetails from './VisitSelection/VisitServiceDetails';
+import VisitServiceProcessing from './VisitSelection/VisitServiceProcessing';
 
 export {
     Welcome,
@@ -15,5 +16,6 @@ export {
     OnboardSuccess,
     Profile,
     VisitServiceList,
-    VisitServiceDetails
+    VisitServiceDetails,
+    VisitServiceProcessing
 };

@@ -52,9 +52,9 @@ class VisitServiceDetails extends Component {
                                             <br />
                                             <br />
                                             <h6>Service Types</h6>
-                                            {this.state.visitServiceDetails && this.state.visitServiceDetails.ServiceTypes.map(st => {
+                                            {this.state.visitServiceDetails && this.state.visitServiceDetails.ServiceTypes.map(serviceType => {
                                                 return (
-                                                    <p key={st.id}>{st.name}</p>
+                                                    <p key={serviceType.id}>{serviceType.name}</p>
                                                 )
                                             })}
                                             <br />

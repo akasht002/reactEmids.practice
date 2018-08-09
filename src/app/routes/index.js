@@ -10,7 +10,8 @@ import {
   OnboardSuccess,
   Profile,
   VisitServiceList,
-  VisitServiceDetails
+  VisitServiceDetails,
+  VisitServiceProcessing
 } from '../screens'
 
 
@@ -22,7 +23,8 @@ export const Path = {
   onboardSuccess: '/onboardsuccess',
   profile: '/profile',
   visitServiceList: '/Visitservicelist',
-  visitServiceDetails: '/visitservicedetails'
+  visitServiceDetails: '/visitservicedetails',
+  visitServiceProcessing:'/visitserviceprocessing'
 };
 
 class AppStackRoot extends React.Component {
@@ -39,6 +41,7 @@ class AppStackRoot extends React.Component {
             <Route path={Path.profile} component={Profile} />
             <Route path={Path.visitServiceList} component={VisitServiceList} />
             <Route path={Path.visitServiceDetails} component={VisitServiceDetails} />
+            <Route path={Path.visitServiceProcessing} component={VisitServiceProcessing} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>
