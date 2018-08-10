@@ -1,6 +1,6 @@
 
 import moment from 'moment';
-import {DATE_FORMAT, DATE_YEAR} from '../constants/variables';
+import { DATE_FORMAT, DATE_YEAR } from '../constants/variables';
 import _ from 'lodash'
 
 export function checkEmail(email) {
@@ -23,36 +23,33 @@ export function checkTrim(text) {
     return (text).trim();
 }
 
-export function formattedDateMoment(date){
-   return  date ? moment(new Date(date.toString())).format(DATE_FORMAT) : null;
+export function formattedDateMoment(date) {
+    return date ? moment(new Date(date.toString())).format(DATE_FORMAT) : null;
 }
 
-export function formattedDateChange(event){
+export function formattedDateChange(event) {
     if (event.target.value.length === 10
         && new Date(event.target.value)
         && moment().isAfter(event.target.value)) {
-        return  event.target.value ? formattedDateMoment(event.target.value) : null;
-      
-    } 
+        return event.target.value ? formattedDateMoment(event.target.value) : null;
+
+    }
 }
 
-export function formateStateDate(data){
+export function formateStateDate(data) {
     return moment(data);
 }
 
-export function formateYearDate(){
-    return  moment().format(DATE_YEAR);
+export function formateYearDate() {
+    return moment().format(DATE_YEAR);
 }
 
 
 export function checkLengthRemoveSpace(data) {
-    // if(data !== undefined )
-        return data.replace(/\s/g, "").length;
-    // else
-        // return 0;
+    return data.replace(/\s/g, "").length;
 }
 
-export function getLength(data){
+export function getLength(data) {
     return _.size(data)
 }
 
@@ -73,6 +70,6 @@ export const getArrayLength = (data) => {
     return _.size(data);
 }
 
-export const getDataValueArray = (data,split)=> {
-    return _.split(data,split)
+export const getDataValueArray = (data, split) => {
+    return _.split(data, split)
 }

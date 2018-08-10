@@ -23,15 +23,15 @@ class ServiceOfferedContent extends React.Component {
                     })}
                     isOpen={false}
                     handleClick={(serviceType) => {
-                        var array = [...this.state.selectedServiceTypes];
-                        const index = array.findIndex((service) => {
+                        let selectedServiceType = [...this.state.selectedServiceTypes];
+                        const index = selectedServiceType.findIndex((service) => {
                             return (service.categoryId === serviceType.categoryId) &&
                                 (service.serviceTypeId === serviceType.serviceTypeId) 
                         });
                         if (index > -1) {
-                            array.splice(index, 1);
+                            selectedServiceType.splice(index, 1);
                         }
-                        array.push(serviceType);
+                        selectedServiceType.push(serviceType);
 
                         const serviceTypes = category.serviceTypeModel.map((service) => {
                             if (service.serviceTypeId === serviceType.serviceTypeId) {
@@ -41,11 +41,11 @@ class ServiceOfferedContent extends React.Component {
                         });
                         category.serviceTypeModel = serviceTypes;
 
-                        this.setState({selectedServiceTypes: array});
-                        this.props.handleClick(array, category);
+                        this.setState({selectedServiceTypes: selectedServiceType});
+                        this.props.handleClick(selectedServiceType, category);
                     }}
                     selectOrUnselectAll={(selected) => {
-                        var array = this.state.selectedServiceTypes.filter((service) => {
+                        let selectedServiceType = this.state.selectedServiceTypes.filter((service) => {
                             return service.categoryId !== category.serviceCategoryId;
                         });
 
@@ -57,8 +57,8 @@ class ServiceOfferedContent extends React.Component {
                             }
                         });
                         category.serviceTypeModel = serviceTypes;
-                        this.setState({selectedServiceTypes: [...array, ...category.serviceTypeModel]});
-                        this.props.handleClick([...array, ...category.serviceTypeModel], category);
+                        this.setState({selectedServiceTypes: [...selectedServiceType, ...category.serviceTypeModel]});
+                        this.props.handleClick([...selectedServiceType, ...category.serviceTypeModel], category);
                     }}
                 />
             )

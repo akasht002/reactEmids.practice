@@ -34,9 +34,7 @@ export function getLanguages() {
 };
 
 export function addLanguages(data) {
-    return (dispatch, getState) => {
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let languages = data ? data.split(/\s*,\s*/).map((val) => {
             return {
@@ -60,9 +58,7 @@ export function addLanguages(data) {
 };
 
 export function getSelectedLanguages() {
-    return (dispatch, getState) => {
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.get(baseURL + API.addLanguages + serviceProviderId + '/Language').then((resp) => {

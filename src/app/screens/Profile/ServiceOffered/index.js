@@ -72,17 +72,17 @@ class ServiceOffered extends React.Component {
         let modalContent;
         let modalTitle;
 
-        let listOfServicesOffered = this.props.serviceOfferedList && this.props.serviceOfferedList.map((ServiceList) => {
+        let listOfServicesOffered = this.props.serviceOfferedList && this.props.serviceOfferedList.map((serviceList) => {
             const services = [];
-            ServiceList.serviceTypeModel && ServiceList.serviceTypeModel.forEach(element => {
+            serviceList.serviceTypeModel && serviceList.serviceTypeModel.forEach(element => {
                 services.push(element.serviceTypeDescription);
             });
 
             return (
                 {
-                    label: ServiceList.serviceCategoryDescription,
+                    label: serviceList.serviceCategoryDescription,
                     services: services,
-                    id: ServiceList.serviceCategoryId
+                    id: serviceList.serviceCategoryId
                 }
             )
         });
@@ -100,12 +100,11 @@ class ServiceOffered extends React.Component {
                 ''
         }
 
-        if (this.state.isModalOpen) {
-            if (this.state.isAdd) {
-                modalTitle = 'Add Services Offered';
-            } else {
-                modalTitle = 'Edit Services Offered';
-            }
+        {
+            this.state.isModalOpen && this.state.isAdd ?
+                modalTitle = 'Add Skills and Experience'
+                :
+                modalTitle = 'Edit Skills and Experience'
         }
 
         return (
