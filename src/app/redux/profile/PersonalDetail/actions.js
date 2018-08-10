@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API, baseURL } from '../../../services/api'
-import _ from 'lodash'
+import {getDataValueArray} from '../../../utils/validations';
 import { startLoading, endLoading } from '../../loading/actions'
 
 export const PersonalDetails = {
@@ -61,9 +61,7 @@ export const updatePersonalDetailSuccess = isSuccess => {
 export function uploadImg (data) {
   return (dispatch, getState) => {
     let currstate = getState()
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     let serviceProviderId = localStorage.getItem('serviceProviderID');
-    
     let modal = {
       serviceProviderId: serviceProviderId,
       image: data
@@ -84,8 +82,6 @@ export function uploadImg (data) {
 export function getImage () {
   return (dispatch, getState) => {
     let currstate = getState()
-    // let serviceProviderId = 1
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
@@ -101,10 +97,7 @@ export function getImage () {
 }
 
 export function getPersonalDetail () {
-///console.log(localStorage.getItem("serviceProvider"));
   return (dispatch, getState) => {
-    // let currstate = getState();
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
@@ -120,12 +113,10 @@ export function getPersonalDetail () {
 }
 
 export function updatePersonalDetail (data) {
-  let states = _.split(data.state_id, '-')
-  let organization = _.split(data.organization, '-')
+  let states = getDataValueArray(data.state_id, '-')
+  let organization = getDataValueArray(data.organization, '-')
   return (dispatch, getState) => {
-    // let currstate = getState()
-    // let serviceProviderId = 1
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     let modal = {
       serviceProviderId: serviceProviderId,
