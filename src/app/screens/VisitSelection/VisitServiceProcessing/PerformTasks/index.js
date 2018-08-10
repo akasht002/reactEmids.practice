@@ -16,7 +16,10 @@ class PerformTasks extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { taskList: {} }
+        this.state = {
+            taskList: {},
+            checked: false
+        }
     }
 
     componentDidMount() {
@@ -29,6 +32,7 @@ class PerformTasks extends Component {
 
     handleChange = (e) => {
         console.log(e.target.id)
+        this.setState({ checked: !this.state.checked })
     }
 
     render() {
@@ -50,7 +54,21 @@ class PerformTasks extends Component {
                                                 return (
                                                     <li>
                                                         {serviceTask.ServiceTaskDescription}
-                                                        <input type="checkbox" id={serviceTask.ServiceTaskId} onChange={(e) => this.handleChange(e)}></input>
+                                                        <input
+                                                            type="checkbox"
+                                                            id={serviceTask.ServiceTaskId}
+                                                            onChange={(e) => this.handleChange(e)}
+                                                            checked={this.state.checked}
+                                                        />
+                                                        {/* <input
+                                                            id={this.props.service.serviceTypeId}
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            value={this.props.service.serviceTypeDescription}
+                                                            onChange={this.props.handleClick}
+                                                            checked={this.props.service.isActive}
+                                                            defaultChecked={this.props.service.isActive}
+                                                        /> */}
                                                     </li>
                                                 )
                                             })}
