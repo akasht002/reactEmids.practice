@@ -66,8 +66,8 @@ class Languages extends React.Component {
         
         const fieldDifference = compare(previosObj, selectStateObject);
 
-        if (fieldDifference === true) {
-            
+        if (fieldDifference === true || previosObj == NaN) {
+            this.setState({ isModalOpen: false, isDiscardModalOpen: false })
         } else{
             this.setState({ isModalOpen: true, isDiscardModalOpen: true })
         }
