@@ -56,15 +56,14 @@ class Languages extends React.Component {
         }).join(",");
 
         let previosObj = {
-                selectedLanguage: previouslySelectedValues
+            selectedLanguage: previouslySelectedValues
         }
         
 
         let selectStateObject = {
-                selectedLanguage: this.state.selectedLanguage
+            selectedLanguage: this.state.selectedLanguage
         }
-    
-
+        
         const fieldDifference = compare(previosObj, selectStateObject);
 
         if (fieldDifference === true) {
@@ -94,17 +93,14 @@ class Languages extends React.Component {
 
         const previosValue = [];
         const newValue = [];
-
         const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return previosValue.push(elem.id);
         }).join(",");
-
 
         const newlySelectedValues = this.state.selectedLanguage;
         newValue.push(newlySelectedValues);
 
         const result = difference(previosValue, newValue)
-
         this.setState({ selectedLanguage: result, isModalOpen: false, isDiscardModalOpen: false, disabledSaveBtn: true });
     }
 

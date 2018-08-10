@@ -1,12 +1,12 @@
-import React from "react";
+import React,{Component} from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { SkillsMultiSelect, ModalPopup, ProfileModalPopup } from "../../../components"
 import { getSkills, addSkills, getSelectedSkills } from '../../../redux/profile/Skills/actions';
 import {compare,difference} from "../../../utils/comparerUtility";
 
-class Skills extends React.Component {
-
+class Skills extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -46,7 +46,6 @@ class Skills extends React.Component {
         this.setState({
             isSkillsModalOpen: !this.state.isSkillsModalOpen,
         })
-
         const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return elem.id;
         }).join(",");
@@ -54,13 +53,11 @@ class Skills extends React.Component {
         let previousValue = {
             selectedSkills: previouslySelectedValues
         }
-        
 
         let staeSelectValue = {
             selectedSkills: this.state.selectedSkills
         }
         
-
         const fieldDifference = compare(previousValue, staeSelectValue);
 
         if (fieldDifference === true) {
@@ -206,7 +203,7 @@ class Skills extends React.Component {
                         isDiscardModalOpen: false
                     })}
                 />
-            </div >
+            </div>
         )
     }
 }
