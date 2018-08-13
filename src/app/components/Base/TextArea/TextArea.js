@@ -1,10 +1,8 @@
 import React from 'react';
+import './styles.css';
 
 class TextArea extends React.Component {    
     render() {
-        var style = {
-            resize: 'none'
-          };
         return(<div className="form-group">
             <label htmlFor={this.props.name}>{this.props.name}</label> <i className={this.props.mandatory}></i>
             <textarea 
@@ -13,7 +11,6 @@ class TextArea extends React.Component {
                 placeholder={this.props.placeholder}
                 className={this.props.className}
                 rows={this.props.rows}
-                style={style}
                 maxLength={this.props.maxlength}
                 onChange={this.props.textChange}
                 value={this.props.value}

@@ -8,7 +8,7 @@ import {compare} from "../../../utils/comparerUtility";
 import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
-class WorkHistory extends React.Component {
+class WorkHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
