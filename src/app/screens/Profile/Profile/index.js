@@ -33,7 +33,8 @@ class Profile extends Component {
                                         Profile                                        
                                     </h4>
                                 </div>
-                                <PersonalDetail />
+                               
+                                    <PersonalDetail /> 
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                 <ServiceOffered />
                                 </div>

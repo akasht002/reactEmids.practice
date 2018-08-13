@@ -549,7 +549,14 @@ class PersonalDetail extends React.PureComponent {
               <div className='form-group'>
                 <label>Select Gender</label>
                 <SelectBox
+<<<<<<< HEAD
                   options={genderDetail}
+=======
+                  options={[
+                    { label: 'Female', value: 'Female' },
+                    { label: 'Male', value: 'Male' }
+                  ]}
+>>>>>>> 5749e4b4c6e0a0e8d69d21675425fdb25f4d05e3
                   simpleValue
                   placeholder='Select Gender'
                   onChange={value => {

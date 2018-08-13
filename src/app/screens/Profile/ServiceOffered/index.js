@@ -1,10 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 import { ProfileModalPopup, ModalPopup } from "../../../components";
 import ServiceOfferedContent from '../ServiceOffered/serviceOfferedContent'
-import ServicesCheckbox from '../ServiceOffered/ServicesCheckbox'
 import { getServiceOffered, addServiceOfferd, editServiceOffered } from '../../../redux/profile/ServiceOffered/actions';
 
 class ServiceOffered extends React.Component {
@@ -28,7 +26,6 @@ class ServiceOffered extends React.Component {
         this.setState({
             isModalOpen: !this.state.isModalOpen,
             disabledSaveBtn: true,
-            //isDiscardModalOpen: true
         })
     }
 
@@ -75,16 +72,6 @@ class ServiceOffered extends React.Component {
         let modalContent;
         let modalTitle;
 
-        let listOfServicesOfferedSelected = this.props.serviceOfferedDetails && this.props.serviceOfferedDetails.map((ServiceList) => {
-            return (
-                {
-                    label: ServiceList.serviceCategoryDescription,
-                    services: ServiceList.serviceTypeModel,
-                    id: ServiceList.serviceCategoryId
-                }
-            )
-        });
-
         let listOfServicesOffered = this.props.serviceOfferedList && this.props.serviceOfferedList.map((ServiceList) => {
             const services = [];
             ServiceList.serviceTypeModel && ServiceList.serviceTypeModel.forEach(element => {
@@ -103,11 +90,11 @@ class ServiceOffered extends React.Component {
 
         {
             listOfServicesOffered ?
-                modalContent = 
-                <ServiceOfferedContent 
-                    handleClick={this.oncheckedServices} 
-                    name={this.props.serviceOfferedDetails} 
-                    type={'edit'} 
+                modalContent =
+                <ServiceOfferedContent
+                    handleClick={this.oncheckedServices}
+                    name={this.props.serviceOfferedDetails}
+                    type={'edit'}
                 />
                 :
                 ''
@@ -121,40 +108,34 @@ class ServiceOffered extends React.Component {
             }
         }
 
-
         return (
             <div>
-                
-                    <div className={"SPCardTitle d-flex"}>
-                        <h4 className={"primaryColor"}>Services Offered</h4>
-                        {this.props.serviceOfferedList && this.props.serviceOfferedList.length > 0 ?
-                            <i className="SPIconMedium SPIconEdit" onClick={this.editServiceOffered} />
-                            :
-                            < i className="SPIconLarge SPIconAdd" onClick={this.addIconServiceOffered} />
-                        }
-                    </div>
-                    <div className="SPCertificateContainer width100">
-                        {this.props.serviceOfferedList.length > 0 ?
-                            <div>
-                                <ServiceOfferedContent
-                                    name={this.props.serviceOfferedList}
-                                    type={'view'}
-                                />
-                                {/* <ServicesCheckbox
-                                    name={listOfServicesOffered}
-                                    type={'view'}
-                                /> */}
+
+                <div className={"SPCardTitle d-flex"}>
+                    <h4 className={"primaryColor"}>Services Offered</h4>
+                    {this.props.serviceOfferedList && this.props.serviceOfferedList.length > 0 ?
+                        <i className="SPIconMedium SPIconEdit" onClick={this.editServiceOffered} />
+                        :
+                        < i className="SPIconLarge SPIconAdd" onClick={this.addIconServiceOffered} />
+                    }
+                </div>
+                <div className="SPCertificateContainer width100">
+                    {this.props.serviceOfferedList.length > 0 ?
+                        <div>
+                            <ServiceOfferedContent
+                                name={this.props.serviceOfferedList}
+                                type={'view'}
+                            />
+                        </div>
+                        :
+                        <div className='SPNoInfo'>
+                            <div className='SPNoInfoContent'>
+                                <div className='SPInfoContentImage' />
+                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.addIconServiceOffered} /> to Services Offered</span>
                             </div>
-                            :
-                            <div className='SPNoInfo'>
-                                <div className='SPNoInfoContent'>
-                                    <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.addIconServiceOffered} /> to Services Offered</span>
-                                </div>
-                            </div>
-                        }
-                    </div>
-               
+                        </div>
+                    }
+                </div>
 
                 <ProfileModalPopup
                     isOpen={this.state.isModalOpen}
