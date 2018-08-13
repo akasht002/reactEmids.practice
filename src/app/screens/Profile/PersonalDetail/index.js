@@ -47,6 +47,7 @@ class PersonalDetail extends React.PureComponent {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
     this.props.getImage()
+    this.props.getGender()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -69,11 +70,12 @@ class PersonalDetail extends React.PureComponent {
       zipCode: getArrayLength(nextProps.personalDetail.address) > 0
         ? nextProps.personalDetail.address[0].zipCode
         : '',
-      phoneNumber: nextProps.personalDetail.phoneNumber,
-      state_id: getArrayLength(nextProps.personalDetail.address) > 0
+        phoneNumber: nextProps.personalDetail.phoneNumber,
+      state_id: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
         ? nextProps.personalDetail.address[0].state.id
         : '',
       isActive: false
+       
     })
     this.styles = {
       height: 100,
@@ -88,7 +90,7 @@ class PersonalDetail extends React.PureComponent {
     this.zipCode = getArrayLength(nextProps.personalDetail.address) > 0
       ? nextProps.personalDetail.address[0].zipCode
       : ''
-    this.states = getArrayLength(nextProps.personalDetail.address) > 0
+    this.states = getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
       ? nextProps.personalDetail.address[0].state.name
       : ''
   }
@@ -174,11 +176,20 @@ class PersonalDetail extends React.PureComponent {
       city.label = city.name
       city.value = city.id+'-'+city.name
       return city
-    })
+    }
+  )
+  const genderDetail = this.props.genderList.map((gender, i) => {
+    gender.label = gender.name
+    gender.value = gender.id+'-'+gender.name
+    return gender
+  })
+  
+
+  //console.log(this.props.genderList)
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
-        {this.getModalContent(cityDetail)}
+        {this.getModalContent(cityDetail,genderDetail)}
         <BlackoutModal
           isOpen={this.state.uploadImage}
           toggle={this.closeImageUpload}
@@ -262,6 +273,44 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
+  getBlackModalContent = () => {
+    return (
+      <div className={'UploadProfileImageWidget'}>
+        <div className={'width100 UploadProfileImageContainer'}>
+          <div style={{ width: '300px', height: '300px' }}>
+            <ImageCrop
+              src={this.state.uploadedImageFile}
+              setWidth={300}
+              setHeight={300}
+              square={false}
+              resize
+              border={'dashed #ffffff 2px'}
+              onCrop={this.onCroppeds}
+              watch={this.watch}
+            />
+          </div>
+        </div>
+        <div className={'row'}>
+          <div className={'col-md-8'}>
+            <ul className={'UploadedImageLimitation'}>
+              <li>The image should not exceed beyond 2MB.</li>
+              <li>The image should be either of PNG or JPEG/JPG type only.</li>
+            </ul>
+          </div>
+          <div className={'col-md-4 text-right'}>
+            <button className='btn btn-outline-primary UploadImageBtn'>
+              Change Photo
+            </button>
+            <input
+              className='addImageInput'
+              type='file'
+              onChange={this.reUpload}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
   renderDetails = () => {
     let text = ''
     return (
@@ -301,6 +350,7 @@ class PersonalDetail extends React.PureComponent {
                   {this.props.personalDetail &&
                     this.props.personalDetail.genderName}
                   {' '}
+                  gender
                 </span>
                 <span>
                   {this.props.personalDetail && this.props.personalDetail.age}
@@ -328,7 +378,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'SPAffiliatedList'}>
               <span className={'AffiliatedList'}>
                 Affiliated to In
-                {' '}
+                {' '}0
                 <bd>
                   {this.props.personalDetail &&
                     this.props.personalDetail.affiliationName}
@@ -337,7 +387,8 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>         
           <div className={'width100'}>
-            {this.props.personalDetail && this.props.personalDetail.description}            
+          {(this.props.personalDetail && this.props.personalDetail.description !=='')?this.props.personalDetail.description
+          :<span className={'SPDescriptionNone'}  onClick={this.togglePersonalDetails.bind(this)}>Edit your profile here</span>}            
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
@@ -383,7 +434,7 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
-  getModalContent = stateDetail => {
+  getModalContent = (stateDetail,genderDetail) => {
     return (
       <div className='row'>
         <div className='col-md-12'>
@@ -447,7 +498,7 @@ class PersonalDetail extends React.PureComponent {
               {!this.state.isValid &&
                 !this.state.firstName &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter {this.state.firstName === '' && ' First Name'}
+                  Please enter  {this.state.firstName === '' && ' First Name'}
                 </span>}
               {this.state.firstNameInvaild &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -498,10 +549,7 @@ class PersonalDetail extends React.PureComponent {
               <div className='form-group'>
                 <label>Select Gender</label>
                 <SelectBox
-                  options={[
-                    { label: 'Female', value: '2' },
-                    { label: 'Male', value: '1' }
-                  ]}
+                  options={genderDetail}
                   simpleValue
                   placeholder='Select Gender'
                   onChange={value => {
@@ -553,19 +601,25 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>
         </div>
-        <div className='row'>
           <div className='col-md-12 mb-2'>
             <label>Affiliation</label>
           </div>
           <div className='col-md-12'>
+          <div className="form-check mb-2">
+            <label className='form-check-label'>
+            Certified member of organization(s)
             <input
+            className='form-check-input'
               type='checkbox'
+              maxLength='100'
               onClick={e => {
                 this.setState({ isActive: e.target.checked })
               }}
               defaultChecked={this.state.isActive}
             />
-            Certified member of organization(s)
+            <span class="CheckboxIcon"/>
+            </label>
+          </div>
           </div>
 
           <div
@@ -612,7 +666,6 @@ class PersonalDetail extends React.PureComponent {
             </div>
 
           </div>
-        </div>
 
         <div className='col-md-12 mb-2'>
           <TextArea
@@ -843,7 +896,8 @@ function mapDispatchToProps (dispatch) {
     updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
     getCityDetail: () => dispatch(action.getCityDetail()),
     uploadImg: data => dispatch(action.uploadImg(data)),
-    getImage: () => dispatch(action.getImage())
+    getImage: () => dispatch(action.getImage()),
+    getGender: () => dispatch(action.getGender()),
   }
 }
 
@@ -853,7 +907,8 @@ function mapStateToProps (state) {
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState
       .updatePersonalDetailSuccess,
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
-    profileImgData: state.profileState.PersonalDetailState.imageData
+    profileImgData: state.profileState.PersonalDetailState.imageData,
+    genderList: state.profileState.PersonalDetailState.genderList,
   }
 }
 export default withRouter(

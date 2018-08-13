@@ -14,3 +14,7 @@
  }  
 .preview{border-radius: 50%;}
 .UploadProfileImageContainer > div{margin:auto;}
+
+.SPDescriptionNone{
+    color:#989892;
+}

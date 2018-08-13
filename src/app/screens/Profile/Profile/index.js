@@ -30,12 +30,10 @@ class Profile extends Component {
                                 <div className="col-md-12">
                                     <h4 className="my-3 text-white SPTitleText">
                                         <a><i className="Icon icon-back" /></a>
-                                        Profile
+                                        Profile                                        
                                     </h4>
                                 </div>
-                                <div className="col-md-12 card CardWidget SPCertificate">
-                                    <PersonalDetail />                                   
-                                </div>
+                                <PersonalDetail />
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                 <ServiceOffered />
                                 </div>
