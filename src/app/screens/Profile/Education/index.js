@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import isEqual from 'lodash/isEqual'
 import { Input ,ProfileModalPopup, ModalPopup } from "../../../components";
-import {formateYearDate} from "../../../utils/validations"
+import {formateYearDate} from "../../../utils/validations";
+import {compare} from "../../../utils/comparerUtility";
 import { getEducation, addEducation, editEducation, updateEducation, deleteEducation } from '../../../redux/profile/Education/actions';
 
 import "./styles.css";
@@ -11,7 +11,7 @@ class Education extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            EducationModal: false,
+            IsEducationModalOpen: false,
             educationId:'',
             school:'',
             degree:'',
@@ -31,17 +31,17 @@ class Education extends React.Component {
     }
     componentWillReceiveProps(nextProps){
      this.setState({
-        school: nextProps.educationFieldDetails.school,
-        degree: nextProps.educationFieldDetails.degree,
-        fieldOfStudy: nextProps.educationFieldDetails.fieldOfStudy,
-        startYear: nextProps.educationFieldDetails.startYear,
-        endYear: nextProps.educationFieldDetails.endYear,
-        educationId:nextProps.educationFieldDetails.educationId
+        school: nextProps.educationalDetails.school,
+        degree: nextProps.educationalDetails.degree,
+        fieldOfStudy: nextProps.educationalDetails.fieldOfStudy,
+        startYear: nextProps.educationalDetails.startYear,
+        endYear: nextProps.educationalDetails.endYear,
+        educationId:nextProps.educationalDetails.educationId
      })
     }
     reset = () => {
         this.setState({
-            EducationModal: false,
+            IsEducationModalOpen: false,
             school: '',
             degree: '',
             fieldOfStudy: '',
@@ -57,37 +57,41 @@ class Education extends React.Component {
 
     toggleEducation= () => {
         this.setState({
-            EducationModal: !this.state.EducationModal,
-            isAdd: true,
+            IsEducationModalOpen: !this.state.IsEducationModalOpen,
             isValid: true,
             disabledSaveBtn: true,
             isDiscardModalOpen:false
         })
-        let educationFielarray = [
-            {
-                school: this.props.educationFieldDetails.school,
-                degree: this.props.educationFieldDetails.degree,
-                fieldOfStudy: this.props.educationFieldDetails.fieldOfStudy,
-                startYear:this.props.educationFieldDetails.startYear,
-                endYear:this.props.educationFieldDetails.endYear
+        let education = this.props.educationalDetails;
+        let educationPropObject = {
+            school: education.school,
+            degree: education.degree,
+            fieldOfStudy: education.fieldOfStudy,
+            startYear:education.startYear,
+            endYear:education.endYear
 
-            }
-        ]
-         let stateArray = [
-            {
-                school: this.state.school,
-                degree: this.state.degree,
-                fieldOfStudy: this.state.fieldOfStudy,
-                startYear: this.setState.startYear,
-                endYear: this.setState.endYear
+        };
+        
+        let stateObject = {
+            school: this.state.school,
+            degree: this.state.degree,
+            fieldOfStudy: this.state.fieldOfStudy,
+            startYear: this.state.startYear,
+            endYear: this.state.endYear
 
-            }
-        ]
-         const fieldDifference = isEqual(educationFielarray, stateArray);
+        };
+         const fieldDifference = compare(educationPropObject, stateObject);
          if (fieldDifference === true) {
-            this.setState({ EducationModal: false, isDiscardModalOpen: false })
+            this.setState({ IsEducationModalOpen: false, 
+                isDiscardModalOpen: false,
+                school:'',
+                degree:'',
+                fieldOfStudy:'',
+                startYear:'',
+                endYear:''
+             })
         } else {
-            this.setState({ isDiscardModalOpen: true, EducationModal: true })
+            this.setState({ isDiscardModalOpen: true, IsEducationModalOpen: true })
         }
     }
     addEducation = () => {
@@ -112,7 +116,7 @@ class Education extends React.Component {
     }
 
     editEducation = (e) => {
-        this.setState({EducationModal: true, isAdd: false, educationId: e.target.id });
+        this.setState({IsEducationModalOpen: true, isAdd: false, educationId: e.target.id });
         this.props.editEducation(e.target.id);
     }
 
@@ -127,7 +131,7 @@ class Education extends React.Component {
                 educationId: this.state.educationId
             };
             this.props.updateEducation(data);
-            this.setState({ EducationModal: !this.state.EducationModal, disabledSaveBtn: true});
+            this.setState({ IsEducationModalOpen: !this.state.IsEducationModalOpen, disabledSaveBtn: true});
             this.reset();
         }else {
             this.setState({ isValid: false });
@@ -141,15 +145,16 @@ class Education extends React.Component {
     YearList() {
         var year = [];
         var selectedYear = "2018";
+        var defaultYear ="1901";
         var curYear = formateYearDate();
-        year.push(<option value="" disabled selected>YYYY</option>)
-        for (var i = '1901'; i <= curYear; i++) {
+        year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
+        for (var i = defaultYear; i <= curYear; i++) {
             var selectedOption = 'false';
             if (i === selectedYear) {
                 selectedOption = 'selected'
                 
             }
-            year.push(<option value={i} selected={selectedOption}>{i}</option>)
+            year.push(<option key= {i} value={i} selected={selectedOption}>{i}</option>)
         }
         return year;
     };
@@ -157,14 +162,14 @@ class Education extends React.Component {
         var year = [];
         var selectedYear = "2018";
         var curYear = formateYearDate();
-        year.push(<option value="" disabled selected>YYYY</option>)
+        year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
         for (var i = this.state.startYear; i <= curYear; i++) {
             var selectedOption = 'false';
             if (i === selectedYear) {
                 selectedOption = 'selected'
                 
             }
-            year.push(<option value={i} selected={selectedOption}>{i}</option>)
+            year.push(<option  key= {i} value={i} selected={selectedOption}>{i}</option>)
         }
         return year;
     }
@@ -272,7 +277,7 @@ class Education extends React.Component {
             )
         });
 
-        if (this.state.EducationModal) {
+        if (this.state.IsEducationModalOpen) {
             if (this.state.isAdd) {
                 modalTitle = 'Add Education';
             } else {
@@ -286,7 +291,7 @@ class Education extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Education</h4>
                     <i className="SPIconLarge SPIconAdd"
-                        onClick={() => this.setState({EducationModal: true})} />
+                        onClick={() => this.setState({IsEducationModalOpen: true,isAdd: true})} />
                 </div>
                 <div className="SPCertificateContainer width100">
                     
@@ -295,7 +300,7 @@ class Education extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>  click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ EducationModal: true })}/> to add Education</span>
+                                    <span className='SPNoInfoDesc'>  click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ IsEducationModalOpen: true ,isAdd: true})}/> to add Education</span>
                                 </div>
                             </div>
                             </ul>
@@ -303,12 +308,12 @@ class Education extends React.Component {
                 </div>
 
                 <ProfileModalPopup
-                    isOpen={this.state.EducationModal}
+                    isOpen={this.state.IsEducationModalOpen}
                     toggle={this.toggleEducation}
                     ModalBody={modalContent}
                     className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
-                    centered="centered"
+                    centered={true}
                     onClick={this.state.isAdd ? this.addEducation : this.updateEducation}
                     disabled={this.state.disabledSaveBtn}
                 />
@@ -321,7 +326,7 @@ class Education extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered={true}
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
@@ -363,7 +368,7 @@ function mapStateToProps(state) {
     return {
         educationList: state.profileState.EducationState.educationList,
         addeducationSuccess: state.profileState.EducationState.addeducationSuccess,
-        educationFieldDetails: state.profileState.EducationState.educationFieldDetails,
+        educationalDetails: state.profileState.EducationState.educationalDetails,
         serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId
     };
 };

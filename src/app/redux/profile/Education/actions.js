@@ -110,6 +110,7 @@ export function updateEducation(data) {
         };
         dispatch(startLoading());
         axios.put(baseURL + API.education+serviceProviderId+'/Education', modal).then((resp) => {
+            dispatch(addEducationSuccess(true));
             dispatch(getEducation());
             dispatch(endLoading());
         }).catch((err) => {

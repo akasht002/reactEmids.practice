@@ -26,7 +26,12 @@ const CertificationState = (state = defaultState, action) => {
         case Certification.addCertificationSuccess:
             return {
                 ...state,
-                addCertificationSuccess: action.isSuccess
+                addCertificationSuccess: action.isSuccess,
+                certificationFieldDetails:{
+                    certificationName:'',
+                    authority: '',
+                    licenceNumber: ''
+                }
             };
 
         default:

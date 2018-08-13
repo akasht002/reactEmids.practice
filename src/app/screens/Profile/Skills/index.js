@@ -1,17 +1,16 @@
-import React from "react";
+import React,{Component} from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 import { SkillsMultiSelect, ModalPopup, ProfileModalPopup } from "../../../components"
 import { getSkills, addSkills, getSelectedSkills } from '../../../redux/profile/Skills/actions';
+import {compare,difference} from "../../../utils/comparerUtility";
 
-class Skills extends React.Component {
-
+class Skills extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             isSkillsModalOpen: false,
-            modalSaveAction: '',
             selectedSkills: [],
             selectedSkillIds: '',
             disabledSaveBtn: true,
@@ -46,30 +45,23 @@ class Skills extends React.Component {
     toggleSkills = () => {
         this.setState({
             isSkillsModalOpen: !this.state.isSkillsModalOpen,
-            modalSaveAction: this.addSkills,
-            isAdd: true
         })
-
-        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
+        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return elem.id;
         }).join(",");
 
-        let array1 = [
-            {
-                selectedSkills: previouslySelectedValues
-            }
-        ]
+        let previousValue = {
+            selectedSkills: previouslySelectedValues
+        }
 
-        let array2 = [
-            {
-                selectedSkills: this.state.selectedSkills
-            }
-        ]
+        let staeSelectValue = {
+            selectedSkills: this.state.selectedSkills
+        }
+        
+        const fieldDifference = compare(previousValue, staeSelectValue);
 
-        const fieldDifference = _.isEqual(array1, array2);
-
-        if (fieldDifference === true) {
-
+        if (fieldDifference === true || previousValue == NaN) {
+            this.setState({ isSkillsModalOpen: false, isDiscardModalOpen: false })
         } else {
             this.setState({ isSkillsModalOpen: true, isDiscardModalOpen: true })
         }
@@ -84,11 +76,15 @@ class Skills extends React.Component {
 
     addSkills = () => {
         this.props.addSkills(this.state.selectedSkills);
-        this.setState({ isSkillsModalOpen: !this.state.isSkillsModalOpen, modalSaveAction: this.addSkills, disabledSaveBtn: true })
+        this.setState({ isSkillsModalOpen: !this.state.isSkillsModalOpen,
+             disabledSaveBtn: true })
     }
 
     editSkills = () => {
-        this.setState({ modalSaveAction: this.updateSkills, isSkillsModalOpen: true, isAdd: false });
+        this.setState({ 
+            isSkillsModalOpen: true, 
+            isAdd: false 
+        });
     }
 
     updateSkills = () => {
@@ -98,18 +94,18 @@ class Skills extends React.Component {
 
     reset = () => {
 
-        const array1 = [];
+        const previosInitValue = [];
 
-        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
-            return array1.push(elem.id);
+        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
+            return previosInitValue.push(elem.id);
         }).join(",");
 
-        const array2 = [];
+        const newlyInitValue = [];
 
         const newlySelectedValues = this.state.selectedSkills;
-        array2.push(newlySelectedValues);
+        newlyInitValue.push(newlySelectedValues);
 
-        const result = _.differenceWith(array1, array2)
+        const result = difference(previosInitValue, newlyInitValue)
 
         this.setState({ selectedSkills: result, isSkillsModalOpen: false, isDiscardModalOpen: false, disabledSaveBtn: true });
     }
@@ -160,7 +156,7 @@ class Skills extends React.Component {
                     {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
                         <i className="SPIconMedium SPIconEdit" onClick={this.editSkills} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({isSkillsModalOpen: true})} />
+                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({isSkillsModalOpen: true,isAdd:true})} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -172,7 +168,7 @@ class Skills extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isSkillsModalOpen: true})} /> to add Skills and Experience</span>
+                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isSkillsModalOpen: true,isAdd: true})} /> to add Skills and Experience</span>
                             </div>
                         </div>
                     }
@@ -184,8 +180,12 @@ class Skills extends React.Component {
                     ModalBody={modalContent}
                     className="modal-lg asyncModal LanguagesModal"
                     modalTitle={modalTitle}
-                    centered="centered"
-                    onClick={this.state.modalSaveAction}
+                    centered={true}
+                    onClick={this.state.isAdd ?
+                        this.addSkills
+                        :
+                        this.updateSkills
+                    }
                     disabled={this.state.disabledSaveBtn}
                 />
 
@@ -197,13 +197,13 @@ class Skills extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered={true}
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
-                        isDiscardModalOpen: false,
+                        isDiscardModalOpen: false
                     })}
                 />
-            </div >
+            </div>
         )
     }
 }

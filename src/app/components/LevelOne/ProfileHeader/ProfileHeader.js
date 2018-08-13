@@ -31,6 +31,7 @@ class ProfileHeader extends React.Component {
 
         const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
+            let id = menu.id;
             let Separator = "";
             if (menu.status) {
                 let clsName = "navIcon icon" + menuName.charAt(0).toUpperCase() + menuName.slice(1);
@@ -38,9 +39,11 @@ class ProfileHeader extends React.Component {
                     Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem className={menuName + "Widget navIconWidget " + Separator}>
+                    <NavItem className={menuName + "Widget navIconWidget " + Separator} key={menu.id}>
                         <NavLink className={clsName}
-                            href={menu.link} />
+                            href={menu.link} 
+                            key={menu.id}
+                            />
                     </NavItem>
                 )
             }
@@ -59,6 +62,7 @@ class ProfileHeader extends React.Component {
                             placeholder="search your keyword"
                             className="form-control SearchInput"
                             iconName="searchInputIcon"
+                            disable={"true"}
                         />
                     </Nav>
                     <Nav className="ml-auto navIconContainer" navbar>
