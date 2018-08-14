@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
@@ -6,7 +6,7 @@ import { checkSpace } from "../../../utils/validations";
 import {compare} from "../../../utils/comparerUtility";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 
-class Certification extends React.Component {
+class Certification extends Component {
 
     constructor(props) {
         super(props);

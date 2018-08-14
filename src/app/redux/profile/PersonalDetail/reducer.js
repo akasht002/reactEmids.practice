@@ -4,7 +4,8 @@ const defaultState = {
   personalDetail: [],
   updatePersonalDetailSuccess: false,
   cityDetail: [],
-  imageData: ''
+  imageData: '',
+  genderList:[]
 }
 
 const PersonalDetailState = (state = defaultState, action) => {
@@ -13,6 +14,12 @@ const PersonalDetailState = (state = defaultState, action) => {
       return {
         ...state,
         personalDetail: action.data
+      }
+
+      case PersonalDetails.GET_GENDER_SUCCESS:
+      return {
+        ...state,
+        genderList: action.data
       }
 
     case PersonalDetails.UPDATE_PERSONAL_DETAIL_SUCCESS:
