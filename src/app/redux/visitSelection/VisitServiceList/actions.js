@@ -14,9 +14,9 @@ export const getVisitServiceListSuccess = (data) => {
 }
 
 export function getVisitServiceList() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading());
-        axios.get('http://www.mocky.io/v2/5b6ac54632000010003730d2').then((resp) => {
+        axios.get(baseURL + API.getServiceRequestList + '1').then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

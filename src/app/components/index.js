@@ -6,7 +6,8 @@ import {
     SelectBox, 
     Button, 
     Input,
-    Preloader
+    Preloader,
+    Scrollbars
 } from './Base';
 import {
     Calendar, 
@@ -21,7 +22,8 @@ import {
     ModalUserAgreement,
     ProfileModalPopup,
     SkillsMultiSelect,
-    LanguagesMultiSelect
+    LanguagesMultiSelect,
+    LeftSideMenu
 } from './LevelOne';
 import {
     CarouselComp,
@@ -56,5 +58,7 @@ export {
     ModalUserAgreement,
     ProfileModalPopup,
     SkillsMultiSelect,
-    LanguagesMultiSelect
+    LanguagesMultiSelect,
+    LeftSideMenu,
+    Scrollbars
 };

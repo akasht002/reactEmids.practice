@@ -4,6 +4,7 @@ import {
 
 const defaultState = {
     VisitServiceDetails: [],
+    VisitServiceSchedule: []
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -13,6 +14,12 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 VisitServiceDetails: action.data
+            };
+
+        case VisitServiceDetails.getVisitServiceScheduleSuccess:
+            return {
+                ...state,
+                VisitServiceSchedule: action.data
             };
 
         default:

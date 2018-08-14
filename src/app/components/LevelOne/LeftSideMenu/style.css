@@ -1,0 +1,245 @@
+.ProfileLeftWidget{
+    position: relative;
+    height: 100vh;
+    width: 180px;
+    background-image: linear-gradient(to top, #67307f, #3b1a53);
+}
+
+.BrandNameWidget{
+    height: 70px;
+    padding: 20px 15px;
+}
+
+.BrandName{
+    position: relative;
+    display: block;
+}
+
+.BrandName a.BrandLink{
+    display: block;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+}
+
+.ProfileImageContainer{
+    position: relative;
+    padding: 5px;
+    width: 90px;
+    margin: 0 auto;
+}
+
+.ProfileImage{
+    height: 80px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.circular-chart, .ProfileImage {
+    display: block;
+}
+
+.circular-chart {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 90px !important;
+}
+.circle {
+    stroke: #ffffff;
+    fill: none;
+    stroke-width: 1;
+    animation: progress 1s ease-out forwards;
+}
+
+.disabledCircle {
+    stroke: #b7b7b7;
+    fill: none;
+    stroke-width: 1;
+    animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
+}
+
+.ProfileNameWidget{
+    margin-top: 10px;
+}
+
+.ProfileNameContent{
+    text-align: center;
+}
+
+/************************************************************************************************************************************************************************/
+.SelectFormControl .Select-control{
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    background: rgba(0,0,0,0);
+    color: #ffffff;
+    border:none;
+    outline:none;
+}
+
+.SelectFormControl .Select-control, .SelectFormControl .Select-control .Select-placeholder{
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
+.SelectFormControl .Select-control .Select-placeholder{
+    display: inline-table;
+    position: relative;
+}
+
+.SelectFormControl .Select-control .Select-placeholder:before, .SelectFormControl .Select-control .Select-value:before, .SelectFormControl .Select-control .Select-placeholder:after, .SelectFormControl .Select-control .Select-value:after{
+    position: absolute;
+    display: block;
+    top: 0;
+    font-size: 14px;
+}
+
+.SelectFormControl .Select-control .Select-placeholder:before, .SelectFormControl .Select-control .Select-value:before{
+    content: '';
+    left: 0;
+}
+
+.SelectFormControl .Select-control .Select-placeholder:after, .SelectFormControl .Select-control .Select-value:after{
+    content: '';
+    right: 0;
+    top: 8px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #ffffff;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -ms-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
+}
+
+.SelectFormControl.is-open .Select-control .Select-placeholder:after, .SelectFormControl.is-open .Select-control .Select-value:after{
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    top: 9px;
+}
+
+.SelectFormControl .Select-control .Select-multi-value-wrapper{
+    position: relative;
+    bottom: 0;
+    display: inline-block;
+    height: 20px;
+    top: 0;
+    width: 100%;
+}
+
+.SelectFormControl .Select-control .Select-value{
+    width: auto;
+    left: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.SelectFormControl .Select-menu-outer {
+    top: 25px;
+}
+
+.SelectFormControl .Select-control .Select-value .Select-value-label{
+    font-size: 14px;
+    position: relative;
+    padding: 0 16px 0 0;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Select.has-value.is-clearable.Select--single>.Select-control .Select-value{
+    padding: 0;
+}
+
+.SelectFormControl .Select-control .Select-placeholder, .SelectFormControl .Select-control .Select-value, .SelectFormControl .Select-control .Select-value .Select-value-label{
+    color: #ffffff !important;
+}
+
+.SelectFormControl .Select-control .Select-arrow-zone{
+    position: absolute;
+    opacity: 0;
+}
+
+.SelectFormControl .Select-control .Select-input:focus, .SelectFormControl.Select.is-focused > .Select-control, .SelectFormControl.Select.is-focused:not(.is-open) > .Select-control{
+    background: rgba(0,0,0,0);
+}
+
+/************************************************************************************************************************************************************************/
+
+.ProfileSideNavigation{
+    list-style: none;
+    padding: 0;
+    margin: 36px 0 0 0;
+}
+
+.profileSideNavigationLink{
+    display: block;
+    font-size: 14px;
+    padding: 8px 0;
+    color: #ffffff !important;
+    -webkit-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    transition: all linear .2s;
+}
+
+.profileSideNavigationLink:hover {
+    background-color: rgba(0,0,0, .25);
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.iconProfile{
+    position: relative;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    top: 2px;
+    margin: 0 10px;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.iconProfileDashboard{
+    background-image: url("../../../assets/images/DashboardWhite.svg");
+}
+
+.iconProfileServiceRequest{
+    background-image: url("../../../assets/images/ServiceRequestWhite.svg");
+}
+
+.iconProfileServiceVisits{
+    background-image: url("../../../assets/images/MyServiceVisitsWhite.svg");
+}
+
+.iconProfileServiceProviders{
+    background-image: url("../../../assets/images/ServiceProvidersWhite.svg");
+}
+
+.iconProfilePayments{
+    background-image: url("../../../assets/images/PaymentsWhite.svg");
+}
+
+.iconProfileMySettings{
+    background-image: url("../../../assets/images/MySettingsWhite.svg");
+}
+
+.iconProfileMyConnections{
+    background-image: url("../../../assets/images/MySettingsWhite.svg");
+}
