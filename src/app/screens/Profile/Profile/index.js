@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
 import Education from "../Education/index";
-import PersonalDetail from "../PersonalDetail/index";
+import PersonalDetail from "../PersonalDetail";
+import Organization from "../Organization"
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
 
@@ -30,13 +31,14 @@ class Profile extends Component {
                                 <div className="col-md-12">
                                     <h4 className="my-3 text-white SPTitleText">
                                         <a><i className="Icon icon-back" /></a>
-                                        Profile                                        
+                                        Profile
                                     </h4>
                                 </div>
-                               
-                                    <PersonalDetail /> 
+
+                                <PersonalDetail />
+                                <Organization/>
                                 <div className="col-md-12 card CardWidget SPCertificate">
-                                <ServiceOffered />
+                                    <ServiceOffered />
                                 </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Skills />
@@ -47,10 +49,10 @@ class Profile extends Component {
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Certification />
                                 </div>
-                                
-                                    <WorkHistory />
-                                    <Education />
-                                
+
+                                <WorkHistory />
+                                <Education />
+
                             </div>
                         </div>
                     </div>

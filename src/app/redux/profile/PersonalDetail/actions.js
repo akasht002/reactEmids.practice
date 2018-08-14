@@ -164,3 +164,26 @@ export function updatePersonalDetail (data) {
       })
   }
 }
+
+
+export function updateOrganizationDetail (data) {
+  let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL)
+  let serviceProviderId = 1;
+  return (dispatch, getState) => {    
+    dispatch(startLoading())
+    axios
+      .put(baseURL + API.updatePersonalDetail + serviceProviderId, modelData)
+      .then(resp => {
+        dispatch(getPersonalDetail())
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(getPersonalDetail())
+        dispatch(endLoading())
+      })
+  }
+}
+
+
+
+
