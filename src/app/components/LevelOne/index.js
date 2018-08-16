@@ -12,6 +12,7 @@ import {ScreenCover} from './ScreenCover';
 import {SkillsMultiSelect} from './SkillsMultiSelect';
 import {LanguagesMultiSelect} from './LanguagesMultiSelect';
 import {LeftSideMenu} from './LeftSideMenu';
+import {Wizard} from './Wizard';
 
 export {
     Calendar, 
@@ -27,5 +28,6 @@ export {
     ProfileModalPopup,
     SkillsMultiSelect,
     LanguagesMultiSelect,
-    LeftSideMenu
+    LeftSideMenu,
+    Wizard
 };

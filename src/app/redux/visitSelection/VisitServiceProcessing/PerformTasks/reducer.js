@@ -3,7 +3,7 @@ import {
 } from './actions'
 
 const defaultState = {
-    PerformTasksList: [],
+    PerformTasksList: {},
 };
 
 const PerformTasksState = (state = defaultState, action) => {

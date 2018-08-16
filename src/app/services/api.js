@@ -23,5 +23,5 @@ export const API = {
     getServiceRequestList: 'ServiceRequest/ServiceRequests/',
     getServiceRequestDetails: 'ServiceRequest/ServiceRequestDetails/',
     getServiceRequestSchedule: 'VisitProcessing/ServiceRequestVisit/',
-
+    getServiceRequestPerformTasks: 'VisitProcessing/ServiceRequestVisitDetails/'
 }

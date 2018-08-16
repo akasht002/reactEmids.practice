@@ -23,7 +23,8 @@ import {
     ProfileModalPopup,
     SkillsMultiSelect,
     LanguagesMultiSelect,
-    LeftSideMenu
+    LeftSideMenu,
+    Wizard
 } from './LevelOne';
 import {
     CarouselComp,
@@ -60,5 +61,6 @@ export {
     SkillsMultiSelect,
     LanguagesMultiSelect,
     LeftSideMenu,
-    Scrollbars
+    Scrollbars,
+    Wizard
 };

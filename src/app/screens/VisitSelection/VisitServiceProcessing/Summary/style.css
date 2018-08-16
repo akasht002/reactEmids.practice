@@ -1,0 +1,268 @@
+.VisitSummaryWidget{
+    display: flex;
+    display: -moz-flex;
+}
+
+.VisitSummaryWidget .LeftWidget{
+    width: 60%;
+    border-right: 1px solid #dcdcdc;
+}
+
+.VisitSummaryWidget .RightWidget{
+    width: 40%;
+}
+
+.LeftWidget .LeftContent, .RightWidget .RightContent{
+    padding: 20px 30px 30px 30px;
+}
+
+.SummaryContentTitle{
+    color: #7a329f;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.CategoryName{
+    color: #444444;
+}
+
+.CategoryName span{
+    display: block;
+}
+
+.CategoryTitle{
+    margin-bottom: 5px;
+}
+
+.CategorySub{
+    font-size: 14px;
+}
+
+.CostTableWidget{
+    position: relative;
+    padding-right: 15px;
+}
+
+.CostTableWidget .CostTableContainer{
+    color: #444444;
+}
+
+.CostTableWidget .CostTableContainer p span, .EstimatedCostWidget .EstimatedCostContainer p span{
+    display: block;
+}
+
+.CostTableWidget .CostTableContainer.Cost{
+    text-align: right;
+}
+
+.CostTableContainer.Cost p.TotalCost span{
+    font-weight: 600;
+}
+
+div.EstimatedCostWidget{
+    border: 1px solid #7a329f;
+    padding: 10px 15px;
+    margin: 30px 0 0 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.EstimatedCostWidget .EstimatedCostContainer.Label{
+    padding-left: 0;
+}
+
+.EstimatedCostWidget .EstimatedCostContainer.Cost, .CostTableContainer .TotalCost{
+    text-align: right;
+    font-weight: 600;
+    padding-right: 0;
+}
+
+.EstimatedCostWidget .EstimatedCostContainer p{
+    margin: 0;
+    color: #7a329f;
+}
+
+.EstimatedCostWidget .EstimatedCostContainer p span:first-child{
+    margin-bottom: 5px;
+}
+
+.SummaryRange{
+    display: flex;
+    display: -moz-flex;
+    font-size: 14px;
+}
+
+.SummaryRange .bottomTaskName, .SummaryRange .bottomTaskRange{
+    margin-right: 10px;
+}
+
+.SummaryRange .bottomTaskRange{
+    width: 100%;
+    top: 10px;
+}
+
+.SummaryRange .bottomTaskRange, .SummaryRange .bottomTaskRange .bottomTaskCompletedRange{
+    height: 5px;
+}
+
+.CostTableContainer.Total{
+    display: flex;
+    display: -moz-flex;
+    justify-content: space-between;
+    border-top: 1px solid #dcdcdc;
+    padding: 10px 30px 0 0;
+    margin: 0 0 0 15px;
+}
+
+.EditIcon{
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    height: 14px;
+    width: 14px;
+    background-repeat: no-repeat;
+    background-image: url("../../../../assets/images/edit.svg");
+    background-size: 100%;
+    background-position: center
+}
+
+.EditIcon:hover{
+    cursor: pointer;
+}
+
+.DisclaimerText{
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-top: 10px;
+}
+
+.SignatureColumn{
+    height: 320px;
+    width: 100%;
+    border: 1px solid #acacac;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.react-numeric-input{
+    margin-right: 20px;
+    margin-left: 5px;
+}
+
+.react-numeric-input, .react-numeric-input input{
+    width: 45px !important;
+    height: 25px;
+    font-size: 14px;
+}
+
+.react-numeric-input b{
+    background: #ffffff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.react-numeric-input b i{
+    border-width: 0 5px 4px !important;
+}
+
+.react-numeric-input b:last-child i{
+    border-width: 4px 5px 0 !important;
+}
+
+.NumericInput{
+
+}
+
+.NumericInput:focus, .NumericInput:hover{
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    outline: 0;
+}
+
+.AdjustTimeForm{
+    padding: 15px;
+}
+
+.AdjustTimeForm .AdjustTimeText{
+    font-weight: 600;
+}
+
+.AdjustTimeForm .AdjustTimeContent{
+    font-size: 14px;
+    margin-bottom: 60px;
+}
+
+@media (max-width: 768px){
+    .VisitSummaryWidget {
+        flex-direction: column;
+    }
+
+    .VisitSummaryWidget .LeftWidget, .VisitSummaryWidget .RightWidget{
+        width: 100%;
+        border: 0;
+    }
+
+    .VisitSummaryWidget .LeftWidget{
+        border-bottom: 1px solid #dcdcdc;
+    }
+
+    .DisclaimerText {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .LeftWidget .LeftContent, .RightWidget .RightContent {
+        padding: 0 20px 20px;
+    }
+
+    .SummaryContentTitle {
+        margin: 20px 0 10px 0;
+    }
+
+    .CostTableContainer{
+        font-size: 14px;
+    }
+
+    .CostTableContainer.Label, .EstimatedCostContainer.Label{
+        width: 72%;
+        padding: 0 0 0 15px;
+    }
+    .CostTableContainer.Cost, .EstimatedCostContainer.Cost{
+        width: 28%;
+        padding: 0 15px 0 0;
+    }
+
+    div.EstimatedCostWidget{
+        margin: 15px 0 0;
+        font-size: 14px;
+    }
+
+    .RightContent p{
+        font-size: 14px;
+    }
+
+    .RightContent p.SummaryContentTitle{
+        font-size: 18px;
+    }
+
+    .CostTableContainer.Total {
+        padding: 10px 15px 0 0;
+    }
+
+    .ServiceContent .bottomButton a.btn {
+        font-size: 14px;
+    }
+
+    .SummaryRange{
+        margin-bottom: 20px;
+    }
+
+    .SignatureColumn {
+        height: 200px;
+    }
+}
