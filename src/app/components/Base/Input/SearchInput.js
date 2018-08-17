@@ -10,6 +10,7 @@ class SearchInput extends React.Component {
                     autoComplete={this.props.autoComplete}
                     placeholder={this.props.placeholder}
                     className={this.props.className}
+                    disabled={this.props.disable}
                 />
             </div>
             

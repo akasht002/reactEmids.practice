@@ -2,7 +2,7 @@ import React from 'react';
 
 class Button extends React.Component {
     render() {
-        return(<div>
+        return(
             <button
                 type={this.props.type}
                 className={this.props.classname}
@@ -10,7 +10,6 @@ class Button extends React.Component {
                 disabled={this.props.disable}>
                 {this.props.label}
             </button>
-        </div>
         );
     }
 }

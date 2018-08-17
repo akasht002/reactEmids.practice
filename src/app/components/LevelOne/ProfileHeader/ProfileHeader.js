@@ -43,6 +43,8 @@ class ProfileHeader extends Component {
         const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
             let separator = "";
+            let id = menu.id;
+
             if (menu.status) {
                 let clsName = "navIcon icon" + makeProperCase(menuName);
                 if (menuName === "notification") {
@@ -70,6 +72,7 @@ class ProfileHeader extends Component {
                             placeholder="search your keyword"
                             className="form-control SearchInput"
                             iconName="searchInputIcon"
+                            disable={"true"}
                         />
                     </Nav>
                     <Nav className="ml-auto navIconContainer" navbar>
