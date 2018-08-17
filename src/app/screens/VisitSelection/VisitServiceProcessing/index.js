@@ -84,8 +84,8 @@ class VisitServiceProcessing extends Component {
                                     </div>
                                 </div>
                                 <div className='CardContainers ServiceCategoryWidget'>
-                                    <PerformTasks />
-                                    {/* <Feedback /> */}
+                                    {/* <PerformTasks /> */}
+                                    <Feedback />
                                     {/* <Summary /> */}
                                 </div>
                             </div>

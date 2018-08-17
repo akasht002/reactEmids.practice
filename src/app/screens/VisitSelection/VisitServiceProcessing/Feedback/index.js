@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './style.css'
 import { Link } from "react-router-dom";
 import { Collapse, CardBody, Card } from 'reactstrap';
+import { getQuestionsList } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
 
 class Feedback extends Component {
 
@@ -19,15 +20,27 @@ class Feedback extends Component {
         this.setState({ collapse: !this.state.collapse });
     }
 
+    componentDidMount() {
+        this.props.getQuestionsList();
+    }
+
+    handleSelected = (e) => {
+        console.log(e.target.value)
+    }
+
+    handleSelectedRating = (e) => {
+        console.log(e.target.value)
+    }
 
     render() {
         return (
             <form className='ServiceContent'>
                 <div className="FeedbackWidget">
+
                     <div className="FeedbackRating">
                         <p>Please rate your experience in engaging with Christopher W</p>
                         <div className="FeedbackContent">
-                            <fieldset className="rating">
+                            <fieldset className="rating" onChange={(e) => this.handleSelectedRating(e)}> 
                                 <input type="radio" id="star5" name="rating" value="5" />
                                 <label className="full" htmlFor="star5" />
                                 <input type="radio" id="star4" name="rating" value="4" />
@@ -41,37 +54,59 @@ class Feedback extends Component {
                             </fieldset>
                         </div>
                     </div>
-                    <div className="FeedbackQuestionWidget">
-                        <p className="FeedbackQuestion">1. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris?</p>
-                        <div className='FeedbackAnswerWidget'>
-                            <div className="form-radio col-md-3">
-                                <input className="form-radio-input" name="answer1" id="answer11" type="radio"
-                                    value="1" />
-                                <label className="form-radio-label" htmlFor="answer11">Answer 1</label>
-                                <span className="RadioBoxIcon" />
-                            </div>
-                            <div className="form-radio col-md-3">
-                                <input className="form-radio-input" name="answer1" id="answer12" type="radio"
-                                    value="1" />
-                                <label className="form-radio-label" htmlFor="answer12">Answer 2</label>
-                                <span className="RadioBoxIcon" />
-                            </div>
-                            <div className="form-radio col-md-3">
-                                <input className="form-radio-input" name="answer1" id="answer13" type="radio"
-                                    value="1" />
-                                <label className="form-radio-label" htmlFor="answer13">Answer 3</label>
-                                <span className="RadioBoxIcon" />
-                            </div>
-                            <div className="form-radio col-md-3">
-                                <input className="form-radio-input" name="answer1" id="answer14" type="radio"
-                                    value="1" />
-                                <label className="form-radio-label" htmlFor="answer14">Answer 4</label>
-                                <span className="RadioBoxIcon" />
-                            </div>
-                        </div>
-                    </div>
+                    {this.props.QuestionsList.length > 0 ?
+                        <div>
+                            {this.props.QuestionsList && this.props.QuestionsList.map((questionList, i) => {
+                                if (questionList.answerTypeDescription === 'ChoiceBased') {
+                                    return (
+                                        <div className="FeedbackQuestionWidget">
+                                            <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
+                                            <div className='FeedbackAnswerWidget'>
+                                                {questionList.answers.map((answer, i) => {
+                                                    return (
+                                                        <div className="form-radio col-md-3" key={answer.id}>
+                                                            <input className="form-radio-input"
+                                                                id={answer.id}
+                                                                type="radio"
+                                                                value={answer.answerName}
+                                                                name={questionList.feedbackQuestionnaireId}
+                                                                onChange={(e) => this.handleSelected(e)}
+                                                            />
+                                                            <label className="form-radio-label" htmlFor={answer.id}>{answer.answerName}</label>
+                                                            <span className="RadioBoxIcon" />
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    )
+                                }
 
-                    <div className="FeedbackQuestionWidget">
+                                if (questionList.answerTypeDescription === 'answerTypeDescription') {
+                                    return (
+                                        <div className="FeedbackQuestionWidget">
+                                            <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
+                                            <div className='FeedbackAnswerWidget'>
+                                                {questionList.answers.map((answer, i) => {
+                                                    return (
+                                                        <div className="feedbackForm">
+                                                            <textarea id={answer.id} rows={4} className='form-control'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim urna at justo viverra consequat. Integer id pulvinar dui. Mauris tristique ex eros, sed consequat lectus interdum varius. Nulla mollis, erat eu </textarea>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            })
+                            }
+                        </div>
+                        :
+                        ''
+                    }
+
+
+                    {/* <div className="FeedbackQuestionWidget">
                         <p className="FeedbackQuestion">2. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris?</p>
                         <div className='FeedbackAnswerWidget'>
                             <div className="form-radio col-md-6">
@@ -138,7 +173,7 @@ class Feedback extends Component {
                                 <textarea rows={4} className='form-control'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim urna at justo viverra consequat. Integer id pulvinar dui. Mauris tristique ex eros, sed consequat lectus interdum varius. Nulla mollis, erat eu </textarea>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                 </div>
                 <div className='bottomButton'>
@@ -154,12 +189,13 @@ class Feedback extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-
+        getQuestionsList: () => dispatch(getQuestionsList())
     }
 };
 
 function mapStateToProps(state) {
     return {
+        QuestionsList: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.QuestionsList,
     };
 };
 

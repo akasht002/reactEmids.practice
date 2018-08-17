@@ -10,10 +10,11 @@ import {
 } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/minimal-example.css';
 import 'react-accessible-accordion/dist/fancy-example.css';
-import { getPerformTasksList } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { getPerformTasksList, addPerformedTask } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import './style.css'
 import { Link } from "react-router-dom";
-import {Collapse, CardBody, Card} from 'reactstrap';
+import { Collapse, CardBody, Card, UncontrolledCollapse } from 'reactstrap';
+import Stopwatch from 'react-stopwatch';
 
 class PerformTasks extends Component {
 
@@ -22,12 +23,15 @@ class PerformTasks extends Component {
         this.state = {
             collapse: false,
             taskList: {},
-            checked: false
+            //checked: false
+            checkedCount: 0,
+            checkedData: ''
         };
+        this.checkedTask = [];
     };
 
-    toggle() {
-        this.setState({collapse: !this.state.collapse});
+    toggleCollapse = () => {
+        this.setState({ isOpen: !this.state.isOpen })
     }
 
     componentDidMount() {
@@ -38,73 +42,79 @@ class PerformTasks extends Component {
         this.setState({ taskList: nextProps.PerformTasksList })
     }
 
-    handleChange = (e) => {
-        console.log(e.target.id)
-        this.setState({ checked: !this.state.checked })
+    handleChange = (taskList) => {
+        this.checkedTask.push(taskList)
+        console.log(this.checkedTask)
+        this.setState({ checkedData: this.checkedTask })
+        //this.setState({ checkedCount:  })
+    }
+
+    onClickNext = () => {
+        const data = {
+            serviceRequestVisitId: this.state.taskList.serviceRequestVisitId,
+            serviceRequestId: this.state.taskList.serviceRequestId,
+            visitStatusId: this.state.taskList.visitStatusId,
+            serviceProviderId: this.state.taskList.serviceProviderId,
+            visitDate: this.state.taskList.visitDate,
+            isActive: true,
+            serviceRequestTypeTaskVisits: this.checkedTask
+        }
+        this.props.addPerformedTask(data);
     }
 
     render() {
 
         return (
-
             <form className='ServiceContent'>
-                <div className="TabContainerWidget">
-                    <div className={"TabContainer " + this.state.collapse} onClick={this.toggle.bind(this)}>
-                        {/* <img src={imagePath("./Bathing_Purple.svg")} className="ServiceTasksImg" /> */}
-                        <div className="TabHeaderContent">
-                            <span className="TabHeaderText">Bathing</span>
-                            <span><i className="SelectedTask">3</i><i
-                                className="TotalTasks">/4</i> tasks completed</span>
+                {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
+                    return (
+                        <div className="TabContainerWidget" key={serviceType.serviceRequestTypeDetailsId}>
+                            <div id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer"} onClick={this.toggleCollapse}>
+                                {/* <img src={imagePath("./Bathing_Purple.svg")} className="ServiceTasksImg" /> */}
+                                <div className="TabHeaderContent">
+                                    <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>
+                                    <span><i className="SelectedTask">{this.state.checkedCount}</i>
+                                        <i className="TotalTasks">/{(serviceType.serviceRequestTypeTaskVisits).length}</i> tasks completed</span>
+                                </div>
+                            </div>
+                            <Collapse toggler={'#toggle' + serviceType.serviceRequestTypeDetailsId} isOpen={this.state.isOpen}>
+                                <Card>
+                                    <CardBody>
+                                        {/* <Stopwatch
+                                            seconds={0}
+                                            minutes={0}
+                                            hours={0}
+                                            limit={"00:10"}
+                                            withLoop={true}
+                                            onCallback={() => console.log('Finish')}
+                                        /> */}
+                                        {serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
+                                            return (
+                                                <div className='ServiceList' key={taskList.serviceRequestTypeTaskDetailsId}>
+                                                    <input
+                                                        id={taskList.serviceRequestTypeTaskVisitId}
+                                                        type='checkbox'
+                                                        className='ServicesInput'
+                                                        name='serviceType'
+                                                        value={taskList.serviceRequestTypeTaskVisitId}
+                                                        onChange={(e) => this.handleChange(taskList)}
+                                                    />
+                                                    <label className='ServicesLink' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
+                                                        <div className='servicesDesc'>
+                                                            <span className='serviceName'>{taskList.serviceTaskDescription}</span>
+                                                        </div>
+                                                    </label>
+                                                    <span className='ServiceIndicatorBottom' />
+                                                </div>
+                                            )
+                                        })}
+                                    </CardBody>
+                                </Card>
+                            </Collapse>
                         </div>
-                    </div>
-                    <Collapse isOpen={this.state.collapse}>
-                        <Card>
-                            <CardBody>
-                                <div className='ServiceList'>
-                                    <input id='Services1' type='checkbox' className='ServicesInput' name='serviceType'
-                                        value="2" />
-                                    <label className='ServicesLink' htmlFor='Services1'>
-                                        <div className='servicesDesc'>
-                                            <span className='serviceName'>Collect Clothes</span>
-                                        </div>
-                                    </label>
-                                    <span className='ServiceIndicatorBottom' />
-                                </div>
-                                <div className='ServiceList'>
-                                    <input id='Services2' type='checkbox' className='ServicesInput' name='serviceType'
-                                        value="2" />
-                                    <label className='ServicesLink' htmlFor='Services2'>
-                                        <div className='servicesDesc'>
-                                            <span
-                                                className='serviceName'>Help the individual to reach the bathroom</span>
-                                        </div>
-                                    </label>
-                                    <span className='ServiceIndicatorBottom' />
-                                </div>
-                                <div className='ServiceList'>
-                                    <input id='Services3' type='checkbox' className='ServicesInput' name='serviceType'
-                                        value="2" />
-                                    <label className='ServicesLink' htmlFor='Services3'>
-                                        <div className='servicesDesc'>
-                                            <span className='serviceName'>Help in bathing</span>
-                                        </div>
-                                    </label>
-                                    <span className='ServiceIndicatorBottom' />
-                                </div>
-                                <div className='ServiceList'>
-                                    <input id='Services4' type='checkbox' className='ServicesInput' name='serviceType'
-                                        value="2" />
-                                    <label className='ServicesLink' htmlFor='Services4'>
-                                        <div className='servicesDesc'>
-                                            <span className='serviceName'>Help the individual in changing clothes</span>
-                                        </div>
-                                    </label>
-                                    <span className='ServiceIndicatorBottom' />
-                                </div>
-                            </CardBody>
-                        </Card>
-                    </Collapse>
-                </div>
+                    )
+                })}
+
                 <div className='bottomButton'>
                     <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                         <span className="bottomTaskName">Tasks</span>
@@ -113,7 +123,7 @@ class PerformTasks extends Component {
                         </span>
                         <span className="bottomTaskPercentage">83.3%</span>
                     </div>
-                    <Link className='btn btn-primary ml-auto' to='/schedulerequest'>Next</Link>
+                    <Link className='btn btn-primary ml-auto' to='' onClick={this.onClickNext}>Next</Link>
                 </div>
             </form>
 
@@ -156,7 +166,8 @@ class PerformTasks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getPerformTasksList: () => dispatch(getPerformTasksList())
+        getPerformTasksList: () => dispatch(getPerformTasksList()),
+        addPerformedTask: (data) => dispatch(addPerformedTask(data))
     }
 };
 

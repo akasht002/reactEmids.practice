@@ -16,9 +16,20 @@ export const getPerformTasksListSuccess = (data) => {
 export function getPerformTasksList() {
     return (dispatch, getState) => {
         dispatch(startLoading());
-        // axios.get('http://www.mocky.io/v2/5b6c49db2f00003700893cb9').then((resp) => {
         axios.get(baseURL + API.getServiceRequestPerformTasks + '3').then((resp) => {
             dispatch(getPerformTasksListSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function addPerformedTask(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        axios.put(baseURL + API.savePerformedTask + '3', data).then((resp) => {
+            console.log('Success' + resp.data);
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
