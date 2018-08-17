@@ -1,5 +1,5 @@
-import React,{Component} from 'react';
-import { Route,Switch } from 'react-router';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
@@ -9,7 +9,12 @@ import {
   VerifyUserID,
   OnboardSuccess,
   Profile,
-  Home
+  Home,
+  ForgetPassword,
+  ResetPassword,
+  ResetPasswordSuccess,
+  ResetPasswordConfirmation
+
 } from '../screens';
 import { PrivateRoute } from './privateRouter';
 
@@ -22,7 +27,7 @@ function Loading({ error }) {
 }
 
 const LoginCallBack = Loadable({
-  loader: () => import('../screens/Login/LoginCallBack'),
+  loader: () => import('../screens/Authentication/Login/LoginCallBack'),
   loading: Loading
 });
 
@@ -33,7 +38,12 @@ export const Path = {
   verifyContact: '/verifycontact',
   onboardSuccess: '/onboardsuccess',
   profile: '/profile',
-    loginCallBack: '/loginCallBack',
+  loginCallBack: '/loginCallBack',
+  forgetPassword: '/forgetPassword',
+  resetPassword: '/resetPassword:uid/:token',
+  resetPasswordSuccess: '/resetPasswordSuccess',
+  resetPasswordConfirmation: '/resetPasswordConfirmation'
+
 };
 
 class AppStackRoot extends Component {
@@ -47,7 +57,11 @@ class AppStackRoot extends Component {
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-            <Route path={Path.loginCallBack} component={LoginCallBack}/>
+            <Route path={Path.loginCallBack} component={LoginCallBack} />
+            <Route path={Path.forgetPassword} component={ForgetPassword} />
+            <Route path={Path.resetPassword} component={ResetPassword} />
+            <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
+            <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
             <PrivateRoute path={Path.profile} component={Profile} />
           </Switch>
         </HashRouter>
