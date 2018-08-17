@@ -49,8 +49,7 @@ class AppStackRoot extends Component {
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
-            <Route path={Path.profile} component={Profile} />
-            {/* <PrivateRoute path={Path.profile} component={Profile} /> */}
+            <PrivateRoute path={Path.profile} component={Profile} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

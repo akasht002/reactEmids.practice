@@ -19,8 +19,4 @@ export const ProfileHeaderMenu = [
         status: true,
         id:4
     }
-    // {
-    //     name: "logout",
-    //     status: true
-    // }
 ];
