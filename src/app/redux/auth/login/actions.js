@@ -49,8 +49,7 @@ export const getServiceProviderIDSuccess = (data)=>{
 export function onLoginSuccess(data){
     return (dispatch, getState) => {
         dispatch(loginSuccess(data));
-        save(USER_LOCALSTORAGE, getState().oidc.user);
-        // console.log(2222222222222222222222222222222222222222222);   
+        save(USER_LOCALSTORAGE, getState().oidc.user);   
         dispatch(setServiceProviderID(JSON.parse(localStorage.getItem("userData")).data.profile.sub));
         dispatch(push(Path.profile));
     }
@@ -72,7 +71,6 @@ export function onLogin() {
 
 
 export function setServiceProviderID(emailID){ 
-    // let mailId = 'Radhika.Murali@emids.com'
     return (dispatch, getState) => {           
         axios
           .get(baseURL + API.getServiceProviderID + emailID )

@@ -11,8 +11,8 @@ export const getModal = (data, action) => {
     switch (action) {
         case PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL:           
             return {
-                serviceProviderId: 1,
-                serviceProviderTypeId: 0,
+                serviceProviderId: localStorage.getItem('serviceProviderID'),
+                serviceProviderTypeId: 1,
                 individual: {
                     firstName: data.firstName,
                     middleName: 'M',
@@ -52,8 +52,8 @@ export const getModal = (data, action) => {
             }
         case PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL:
             return {
-                serviceProviderId: 1,
-                serviceProviderTypeId: 1,
+                serviceProviderId: localStorage.getItem('serviceProviderID'),
+                serviceProviderTypeId: 2,
                 individual: {
                     firstName: '',
                     middleName: '',

@@ -1,7 +1,6 @@
 import axios from 'axios'
 import {PERSONAL_DETAIL ,getModal} from './modal'
-import { API, baseURL } from '../../../services/api'
-import {getDataValueArray} from '../../../utils/validations';
+import { API, baseURL } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions'
 
 export const PersonalDetails = {
@@ -85,11 +84,7 @@ export const updatePersonalDetailSuccess = isSuccess => {
 
 export function uploadImg (data) {
   return (dispatch, getState) => {
-    let currstate = getState()
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-    // let serviceProviderId = localStorage.getItem('serviceProviderID');
-    let serviceProviderId =1
-    
+    let serviceProviderId = localStorage.getItem('serviceProviderID');    
     let modal = {
       serviceProviderId: serviceProviderId,
       image: data
@@ -109,7 +104,6 @@ export function uploadImg (data) {
 
 export function getImage () {
   return (dispatch, getState) => {
-    let currstate = getState()
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
@@ -126,10 +120,7 @@ export function getImage () {
 
 export function getPersonalDetail () {
   return (dispatch, getState) => {
-    // let currstate = getState();
-    // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
-    // let serviceProviderId = localStorage.getItem('serviceProviderID');
-      let serviceProviderId = 1
+    let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
       .get(baseURL + API.getPersonalDetail + serviceProviderId + '/ProfileView')
@@ -145,8 +136,7 @@ export function getPersonalDetail () {
 
 export function updatePersonalDetail (data) {
   let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL)
-  let serviceProviderId = 1;
-  console.log(modelData);
+  let serviceProviderId = localStorage.getItem('serviceProviderID');
   return (dispatch, getState) => {    
     dispatch(startLoading())
     axios
@@ -165,7 +155,7 @@ export function updatePersonalDetail (data) {
 
 export function updateOrganizationDetail (data) {
   let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL)
-  let serviceProviderId = 1;
+  let serviceProviderId = localStorage.getItem('serviceProviderID');
   return (dispatch, getState) => {    
     dispatch(startLoading())
     axios
