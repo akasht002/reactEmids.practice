@@ -22,7 +22,7 @@ export const getSelectedLanguageDetails = (data) => {
 }
 
 export function getLanguages() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading());
         axios.get(baseURL + API.getLanguages).then((resp) => {
             dispatch(getLanguagesSuccess(resp.data))

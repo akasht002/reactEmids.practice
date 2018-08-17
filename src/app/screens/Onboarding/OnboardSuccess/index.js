@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 import { ScreenCover } from '../../../components'
 import { continueToProfile } from '../../../redux/onboarding/OnboardSuccess/actions';
+import './styles.css';
 
 class OnboardSuccess extends React.Component {
 
@@ -14,12 +15,23 @@ class OnboardSuccess extends React.Component {
         const menus = ["login"];
         return (
             <ScreenCover menus={menus}>
-                <div className="container mainContent">
-                    <div className="row d-flex justify-content-center">
-                        <div className="col-md-12 d-flex justify-content-center">
-                            <h4 className="font-weight-normal mb-4 text-success">You are successfully onboarded!!</h4>
+            
+                <div className="container-fluid p-0">
+                    <div className="width100 onBoardingWidget">
+                        <div className="container-fluid onBoardingContent">
+                            <div className="row">
+                            <div className="onBoardingHeader onBoardSuccessHeader">
+                                    <Link className="brandName text-uppercase" to="/">Coreo Home</Link>
+                                </div>
+                                <div className="onBoardSuccessWidget">
+                                    <div className="onBoardSuccessContainer">
+                                        <span className="onBoardSuccessIcon"/>
+                                        <span className="onBoardSuccessText my-3 mb-4">You are Successfully onboarded!</span>
+                                        <button type="button" class="onBoardSuccessBtn btn btn-primary" onClick={this.continueToProfile}>CONTINUE</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-success" onClick={this.continueToProfile}>CONTINUE</button>
                     </div>
                 </div>
             </ScreenCover>

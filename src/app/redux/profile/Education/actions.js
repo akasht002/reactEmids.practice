@@ -30,10 +30,7 @@ export const getEducationFieldDetails = (data) => {
 }
 
 export function getEducation() {
-    return (dispatch, getState) => {
-        
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.get(baseURL + API.education + serviceProviderId+'/Education').then((resp) => {
@@ -47,9 +44,7 @@ export function getEducation() {
 };
 
 export function addEducation(data) {
-    return (dispatch, getState) => {
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
             ServiceProviderId: serviceProviderId,
@@ -74,9 +69,7 @@ export function addEducation(data) {
 
 export function editEducation(data) {
 
-    return (dispatch, getState) => {
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let educationId =data;
         let modal = {
@@ -96,10 +89,7 @@ export function editEducation(data) {
 };
 
 export function updateEducation(data) {
-    return (dispatch, getState) => {
-       
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
             serviceProviderId: serviceProviderId,
@@ -124,10 +114,8 @@ export function updateEducation(data) {
 };
 
 export function deleteEducation(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading());
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let id =data;
         axios.delete(baseURL + API.education+`${serviceProviderId}/Education/${id}`,data).then((resp) => {

@@ -22,7 +22,7 @@ export const getSelectedSkillsDetails = (data) => {
 }
 
 export function getSkills() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading());
         axios.get(baseURL + API.getSkills).then((resp) => {
             dispatch(getSkillsSuccess(resp.data))
@@ -34,9 +34,7 @@ export function getSkills() {
 };
 
 export function addSkills(data) {
-    return (dispatch, getState) => {
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let skills = data ? data.split(/\s*,\s*/).map((val) => {
             return {
@@ -60,9 +58,7 @@ export function addSkills(data) {
 };
 
 export function getSelectedSkills() {
-    return (dispatch, getState) => {
-        let currstate = getState();
-        // let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.get(baseURL + API.addSkills + serviceProviderId + '/Skills').then((resp) => {

@@ -4,7 +4,7 @@ import {
 
 const defaultState = {
     educationList: [],
-    educationFieldDetails: '',
+    educationalDetails: '',
     addeducationSuccess: false
 };
 
@@ -20,14 +20,14 @@ const EducationState = (state = defaultState, action) => {
         case Education.getEducationFieldDetails:
             return {
                 ...state,
-                educationFieldDetails: action.data
+                educationalDetails: action.data
             };
 
         case Education.addEducationSuccess:
             return {
                 ...state,
                 addEducationSuccess: action.isSuccess,
-                educationFieldDetails:{
+                educationalDetails:{
                     school: '',
                     degree: '',
                     fieldOfStudy: '',

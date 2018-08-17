@@ -72,14 +72,15 @@ class WorkHistory extends Component {
             disabledSaveBtn:true,
             isDiscardModalOpen:false
         })
+        let workHistory = this.props.workhistoyFieldDetails;
         let workhistoryFielObject = {
-            designation: this.props.workhistoyFieldDetails.designation,
-            company: this.props.workhistoyFieldDetails.company,
-            location: this.props.workhistoyFieldDetails.location,
-            fromDate: this.props.workhistoyFieldDetails.fromDate,
-            toDate: this.props.workhistoyFieldDetails.toDate,
-            description: this.props.workhistoyFieldDetails.description,
-            isWorking:this.props.workhistoyFieldDetails.isWorking
+            designation: workHistory.designation,
+            company: workHistory.company,
+            location: workHistory.location,
+            fromDate: workHistory.fromDate,
+            toDate: workHistory.toDate,
+            description: workHistory.description,
+            isWorking:workHistory.isWorking
         }
         
          let stateObject = {
