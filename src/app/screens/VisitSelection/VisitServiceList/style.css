@@ -660,6 +660,7 @@ a.ProfileCardHeaderLink:hover{
     width: 370px;
     min-height: 197px;
     margin-bottom: 22px;
+    cursor: pointer;
 }
 
 .ServiceRequestBoard .NewBoard:after{

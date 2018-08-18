@@ -25,10 +25,10 @@ export const getVisitServiceScheduleSuccess = (data) => {
 
 export function getVisitServiceDetails(data) {
     return (dispatch) => {
+        dispatch(getVisitServiceSchedule(data))
         dispatch(startLoading());
-        //axios.get('http://www.mocky.io/v2/5b6ae51b3200006507373197').then((resp) => {
         axios.get(baseURL + API.getServiceRequestDetails + '1').then((resp) => {
-            dispatch(getVisitServiceDetailsSuccess(resp.data))
+            dispatch(getVisitServiceDetailsSuccess(resp.data))           
             dispatch(push(Path.visitServiceDetails))
             dispatch(endLoading());
         }).catch((err) => {
@@ -37,7 +37,7 @@ export function getVisitServiceDetails(data) {
     }
 };
 
-export function getVisitServiceSchedule() {
+export function getVisitServiceSchedule(data) {
     return (dispatch) => {
         dispatch(startLoading());
         axios.get(baseURL + API.getServiceRequestSchedule + '1').then((resp) => {

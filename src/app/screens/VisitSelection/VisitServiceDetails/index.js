@@ -145,7 +145,7 @@ class VisitServiceDetails extends Component {
                                                 Request ID
                                                 </span>
                                             <span className='HeaderRequestLabelID'>
-                                                {/* id value */}
+                                                {this.state.visitServiceDetails.serviceRequestId}
                                             </span>
                                         </div>
                                         <div className='ProfileHeaderButton'>
@@ -301,7 +301,16 @@ class VisitServiceDetails extends Component {
                                                                 </div>
                                                                 <div>
                                                                     <div class='ScheduleRowButton'>
-                                                                        <a className='btn btn-outline-primary' to='/'>Summary</a>
+                                                                        {ScheduleList.visitStatusName === 'Completed' ?
+                                                                            <a className='btn btn-outline-primary' to='/'>Summary</a>
+                                                                            :
+                                                                            ''
+                                                                        }
+                                                                        {ScheduleList.visitStatusName === 'Scheduled' ?
+                                                                            <a className='btn btn-outline-primary' to='/'>Start Visit</a>
+                                                                            :
+                                                                            ''
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                             </div>

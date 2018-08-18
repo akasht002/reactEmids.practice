@@ -7,6 +7,7 @@ import Profile from './Profile/Profile';
 import VisitServiceList from './VisitSelection/VisitServiceList';
 import VisitServiceDetails from './VisitSelection/VisitServiceDetails';
 import VisitServiceProcessing from './VisitSelection/VisitServiceProcessing';
+import PerformTasks from './VisitSelection/VisitServiceProcessing/PerformTasks';
 
 export {
     Welcome,
@@ -17,5 +18,6 @@ export {
     Profile,
     VisitServiceList,
     VisitServiceDetails,
-    VisitServiceProcessing
+    VisitServiceProcessing,
+    PerformTasks
 };
