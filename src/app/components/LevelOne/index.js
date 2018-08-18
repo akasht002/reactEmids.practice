@@ -13,6 +13,7 @@ import {SkillsMultiSelect} from './SkillsMultiSelect';
 import {LanguagesMultiSelect} from './LanguagesMultiSelect';
 import {LeftSideMenu} from './LeftSideMenu';
 import {Wizard} from './Wizard';
+import {DashboardWizFlow} from './Dashboard/WizFlow';
 
 export {
     Calendar, 
@@ -29,5 +30,6 @@ export {
     SkillsMultiSelect,
     LanguagesMultiSelect,
     LeftSideMenu,
-    Wizard
+    Wizard,
+    DashboardWizFlow
 };

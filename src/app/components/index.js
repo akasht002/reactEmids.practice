@@ -24,7 +24,8 @@ import {
     SkillsMultiSelect,
     LanguagesMultiSelect,
     LeftSideMenu,
-    Wizard
+    Wizard,
+    DashboardWizFlow
 } from './LevelOne';
 import {
     CarouselComp,
@@ -62,5 +63,6 @@ export {
     LanguagesMultiSelect,
     LeftSideMenu,
     Scrollbars,
-    Wizard
+    Wizard,
+    DashboardWizFlow
 };

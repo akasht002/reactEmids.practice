@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API, baseURL } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
-import { push } from '../../../redux/navigation/actions';
+import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 
 export const VisitServiceDetails = {

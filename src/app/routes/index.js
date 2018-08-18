@@ -12,7 +12,8 @@ import {
   VisitServiceList,
   VisitServiceDetails,
   VisitServiceProcessing,
-  PerformTasks
+  PerformTasks,
+  Feedback
 } from '../screens'
 
 
@@ -26,7 +27,8 @@ export const Path = {
   visitServiceList: '/Visitservicelist',
   visitServiceDetails: '/visitservicedetails',
   visitServiceProcessing:'/visitserviceprocessing',
-  performTasks:'/performtasks'
+  performTasks:'/performtasks',
+  feedback:'/feedback'
 };
 
 class AppStackRoot extends React.Component {
@@ -45,6 +47,7 @@ class AppStackRoot extends React.Component {
             <Route path={Path.visitServiceDetails} component={VisitServiceDetails} />
             <Route path={Path.visitServiceProcessing} component={VisitServiceProcessing} />
             <Route path={Path.performTasks} component={PerformTasks} />
+            <Route path={Path.feedback} component={Feedback} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

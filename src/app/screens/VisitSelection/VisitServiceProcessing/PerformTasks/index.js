@@ -5,8 +5,11 @@ import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Moment from 'react-moment';
-import { getPerformTasksList, addPerformedTask } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { LeftSideMenu, ProfileHeader, Scrollbars, Wizard } from '../../../../components';
+import moment from 'moment';
+import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
+import { getPerformTasksList, addPerformedTask, startOrStopService } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow } from '../../../../components';
+import Stopwatch from './Stopwatch'
 import './style.css'
 
 class PerformTasks extends Component {
@@ -18,7 +21,9 @@ class PerformTasks extends Component {
             taskList: {},
             checkedCount: 0,
             checkedData: '',
-            isOpen: false
+            isOpen: false,
+            startService: true,
+            startedTime: ''
         };
         this.checkedTask = [];
     };
@@ -43,8 +48,16 @@ class PerformTasks extends Component {
 
     handleChange = (taskList) => {
         this.checkedTask.push(taskList)
-        console.log(this.checkedTask)
         this.setState({ checkedData: this.checkedTask })
+    }
+
+    startService = (data) => {
+        if (data === 1) {
+            let current_time = new moment().format("HH:mm");
+            this.setState({ startedTime: current_time })
+        }
+        this.setState({ startService: !this.state.startService })
+        this.props.startOrStopService(data);
     }
 
     onClickNext = () => {
@@ -62,11 +75,11 @@ class PerformTasks extends Component {
 
     render() {
 
-        return (            
-            <section className = "d-flex" >
+        return (
+            <section className="d-flex" >
                 <LeftSideMenu isOpen={this.state.isOpen} />
                 <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.toggle.bind(this)} />
+                    <ProfileHeader />
                     <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)} />
                     <div className='ProfileRightContainer'>
                         <div className='ProfileHeaderWidget'>
@@ -79,7 +92,7 @@ class PerformTasks extends Component {
                             <div className='card mainProfileCard'>
                                 <div className='CardContainers TitleWizardWidget'>
                                     <div className='TitleContainer'>
-                                        <Link className="TitleContent backProfileIcon" to="/" />
+                                        <a className="TitleContent backProfileIcon" />
                                         <div className='requestContent'>
                                             <div className='requestNameContent'>
                                                 <span><i className='requestName'><Moment format="DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestId}</span>
@@ -89,7 +102,7 @@ class PerformTasks extends Component {
                                                     {/* <img
                                                     src={imagePath("./avatar/user-10.jpg")}
                                                     className="avatarImage avatarImageBorder" /> */}
-                                                    <i className='requestName'>Christopher W</i></span>
+                                                    <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {this.state.taskList.patient && this.state.taskList.patient.lastName}</i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -97,16 +110,26 @@ class PerformTasks extends Component {
                                 <div className='CardContainers WizardWidget'>
                                     <div className="row">
                                         <div className="col col-md-9 WizardContent">
-                                            <Wizard />
+                                            <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={0} />
                                         </div>
                                         <div className="col col-md-3 rightTimerWidget">
                                             <div className="row rightTimerContainer">
                                                 <div className="col-md-5 rightTimerContent">
-                                                    <span className="TimerContent">01<i>:</i>45</span>
+                                                    <span className="TimerContent">
+                                                        <Stopwatch ref={instance => { this.child = instance; }} />
+                                                    </span>
                                                 </div>
                                                 <div className="col-md-7 rightTimerContent">
-                                                    <Link className="btn btn-primary" to="/">Stop Service</Link>
-                                                    <span className="TimerStarted">Started at 12:30 pm</span>
+                                                    {this.state.startService ?
+                                                        <a className="btn btn-primary" onClick={() => { this.startService(1); this.child.handleStartClick(); }}>Start Service</a>
+                                                        :
+                                                        <a className="btn btn-primary" onClick={() => { this.startService(0); this.child.handleStopClick(); }}>Stop Service</a>
+                                                    }
+                                                    {this.state.startedTime ?
+                                                        <span className="TimerStarted">Started at {this.state.startedTime}</span>
+                                                        :
+                                                        ''
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +148,7 @@ class PerformTasks extends Component {
                                                                 <i className="TotalTasks">/{(serviceType.serviceRequestTypeTaskVisits).length}</i> tasks completed</span>
                                                         </div>
                                                     </div>
-                                                    <Collapse toggler={'#toggle' + serviceType.serviceRequestTypeDetailsId} isOpen={this.state.isOpen}>
+                                                    <Collapse isOpen={this.state.isOpen} toggler={'#toggle' + serviceType.serviceRequestTypeDetailsId}>
                                                         <Card>
                                                             <CardBody>
                                                                 {serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
@@ -156,17 +179,16 @@ class PerformTasks extends Component {
                                         })}
 
                                         <div className='bottomButton'>
-                                            <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
+                                            {/* <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                                                 <span className="bottomTaskName">Tasks</span>
                                                 <span className="bottomTaskRange">
                                                     <i style={{ width: '83.3%' }} className="bottomTaskCompletedRange" />
                                                 </span>
                                                 <span className="bottomTaskPercentage">83.3%</span>
-                                            </div>
+                                            </div> */}
                                             <Link className='btn btn-primary ml-auto' to='' onClick={this.onClickNext}>Next</Link>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                             <div className='cardBottom' />
@@ -174,40 +196,6 @@ class PerformTasks extends Component {
                     </div>
                 </div>
             </section >
-
-            // <div className="container">
-            //     <div className="card">
-            //         <div className="card-header">Request ID: {this.state.taskList.ServiceRequestId}</div>
-            //         <div className="card-body">
-            //             {this.props.PerformTasksList.ServiceTypes && this.props.PerformTasksList.ServiceTypes.map((serviceType) => {
-            //                 return (
-            //                     <Accordion>
-            //                         <AccordionItem>
-            //                             <AccordionItemTitle>
-            //                                 {serviceType.ServiceTypeDescription}
-            //                             </AccordionItemTitle>
-            //                             <AccordionItemBody>
-            //                                 {serviceType.ServiceTasks && serviceType.ServiceTasks.map((serviceTask) => {
-            //                                     return (
-            //                                         <li>
-            //                                             {serviceTask.ServiceTaskDescription}
-            //                                             <input
-            //                                                 type="checkbox"
-            //                                                 id={serviceTask.ServiceTaskId}
-            //                                                 onChange={(e) => this.handleChange(e)}
-            //                                                 checked={this.state.checked}
-            //                                             />
-            //                                         </li>
-            //                                     )
-            //                                 })}
-            //                             </AccordionItemBody>
-            //                         </AccordionItem>
-            //                     </Accordion>
-            //                 )
-            //             })}
-            //         </div>
-            //     </div>
-            // </div>
         )
     }
 }
@@ -215,7 +203,8 @@ class PerformTasks extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: () => dispatch(getPerformTasksList()),
-        addPerformedTask: (data) => dispatch(addPerformedTask(data))
+        addPerformedTask: (data) => dispatch(addPerformedTask(data)),
+        startOrStopService: (data) => dispatch(startOrStopService(data))
     }
 };
 

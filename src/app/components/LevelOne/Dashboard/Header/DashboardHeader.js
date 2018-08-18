@@ -8,10 +8,9 @@ import {
     NavItem,
     NavLink,
 } from 'reactstrap';
-import { SearchInput } from "../../../components";
-import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
+import { DashboardHeaderMenu } from "../../../../data/DashboardHeaderMenu";
 
-class ProfileHeader extends React.Component {
+class DashboardHeader extends React.Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
@@ -29,7 +28,7 @@ class ProfileHeader extends React.Component {
 
     render() {
 
-        const menuList = ProfileHeaderMenu.map((menu) => {
+        const menuList = DashboardHeaderMenu.map((menu) => {
             let menuName = menu.name;
             let Separator = "";
             if (menu.status) {
@@ -38,36 +37,27 @@ class ProfileHeader extends React.Component {
                     Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
+                    <NavItem className={menuName + "Widget navIconWidget " + Separator} key={menu.id}>
                         <NavLink className={clsName}
-                            href={menu.link} />
+                                 href={menu.link} key={menu.id}/>
                     </NavItem>
                 )
             }
-            return menuList;
         });
 
         return (
             <Navbar className="navbar-light navbarProfile boxShadowBottom bgWhite" expand="md">
-                <NavbarBrand className="text-uppercase">Coreo Home</NavbarBrand>
-                <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
-                <Collapse isOpen={this.state.isOpen} navbar>
-                    <Nav navbar className="SearchWidget width100">
-                        <SearchInput
-                            name="search"
-                            autoComplete="off"
-                            placeholder="search your keyword"
-                            className="form-control SearchInput"
-                            iconName="searchInputIcon"
-                        />
-                    </Nav>
+                <NavbarToggler className={this.state.dBlock} onClick={this.props.toggle}/>
+                <NavbarBrand className="text-uppercase mr-auto" href="/">Coreo Home</NavbarBrand>
+                <Collapse isOpen={false} navbar>
                     <Nav className="ml-auto navIconContainer" navbar>
                         {menuList}
                     </Nav>
                 </Collapse>
+
             </Navbar>
         );
     }
 }
 
-export default ProfileHeader;
+export default DashboardHeader;

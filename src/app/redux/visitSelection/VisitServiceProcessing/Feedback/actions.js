@@ -25,5 +25,16 @@ export function getQuestionsList() {
     }
 };
 
+export function saveAnswers(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        axios.post(baseURL + API.saveAnswers, data).then((resp) => {
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
 
 

@@ -9,9 +9,7 @@ import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components'
 import { push } from '../../../redux/navigation/actions';
 import { Path } from '../../../routes';
 import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import '../../../screens/VisitSelection/VisitServiceDetails/dashboard.css'
-
-
+import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 
 class VisitServiceDetails extends Component {
 
@@ -23,7 +21,6 @@ class VisitServiceDetails extends Component {
             activeTab: '1',
             visitServiceDetails: '',
             visitServiceSchedule: '',
-            ServicesTypes: ["Bathing", "Meal Preparation"],
         };
     };
 
@@ -327,66 +324,6 @@ class VisitServiceDetails extends Component {
                     </div>
                 </div>
             </section>
-
-
-            // <div>
-            //     <div className="row">
-            //         <div className="container">
-            //             <div className="card">
-            //                 <div className="card-header"><span><h1 onClick={this.visitService}> X </h1> Request ID  {this.state.visitServiceDetails.ServiceRequestId}</span></div>
-            //                 <div className="card-body">
-            //                     <div className="row">
-            //                         <div className="col-md-3">
-            //                             <div className="card-header">
-            //                                 <h6>Posted By</h6>
-            //                                 <p>{this.state.visitServiceDetails.PostedBy}</p>
-            //                                 <p>{this.state.visitServiceDetails.PostedOn}</p>
-            //                                 <br />
-            //                                 <br />
-            //                                 <button type="button" className="btn btn-primary">Click to Begin</button>
-            //                             </div>
-            //                         </div>
-            //                         <div className="col-md-9">
-            //                             <div className="card-header">
-            //                                 <h6>Service Category</h6>
-            //                                 <p>{this.state.visitServiceDetails.ServiceCategory}</p>
-            //                                 <br />
-            //                                 <br />
-            //                                 <h6>Service Types</h6>
-            //                                 {this.state.visitServiceDetails && this.state.visitServiceDetails.ServiceTypes.map(serviceType => {
-            //                                     return (
-            //                                         <p key={serviceType.id}>{serviceType.name}</p>
-            //                                     )
-            //                                 })}
-            //                                 <br />
-            //                                 <br />
-            //                                 {this.state.visitServiceDetails && this.state.visitServiceDetails.ServiceTasks.map(task => {
-            //                                     return (
-            //                                         <li key={task.id}>{task.name}</li>
-            //                                     )
-            //                                 })}
-            //                                 <br />
-            //                                 <br />
-            //                                 <h6>Description</h6>
-            //                                 <p>{this.state.visitServiceDetails.ServiceRequestDescription}</p>
-            //                                 <br />
-            //                                 <br />
-            //                                 <h6>Special Care Considerations</h6>
-            //                                 <br />
-            //                                 <br />
-            //                                 {this.state.visitServiceDetails && this.state.visitServiceDetails.SpecialCareConsiderations.map(scd => {
-            //                                     return (
-            //                                         <p key={scd.id}>{scd.name}</p>
-            //                                     )
-            //                                 })}
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //         </div>
-            //     </div>
-            // </div>
         )
     }
 }

@@ -8,6 +8,7 @@ import VisitServiceList from './VisitSelection/VisitServiceList';
 import VisitServiceDetails from './VisitSelection/VisitServiceDetails';
 import VisitServiceProcessing from './VisitSelection/VisitServiceProcessing';
 import PerformTasks from './VisitSelection/VisitServiceProcessing/PerformTasks';
+import Feedback from './VisitSelection/VisitServiceProcessing/Feedback';
 
 export {
     Welcome,
@@ -19,5 +20,6 @@ export {
     VisitServiceList,
     VisitServiceDetails,
     VisitServiceProcessing,
-    PerformTasks
+    PerformTasks,
+    Feedback
 };

@@ -25,5 +25,7 @@ export const API = {
     getServiceRequestSchedule: 'VisitProcessing/ServiceRequestVisit/',
     getServiceRequestPerformTasks: 'VisitProcessing/ServiceRequestVisitDetails/',
     getQuestionsList: 'VisitProcessing/ServiceRequestVisitFeedback/49',
-    savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/'
+    savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/',
+    saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
+    startOrStopService: 'VisitProcessing/ServiceRequestVisit/'
 }
