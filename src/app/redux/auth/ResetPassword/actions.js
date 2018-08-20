@@ -51,7 +51,7 @@ export const getEmailIdError = (data) => {
 export function getEmailId(data) {
     return (dispatch) => {
         let url;
-        url = authURL + API.GetEmailIdByCoreoHomeUserId + data.uid + '/' + data.tokenkey;
+        url = authURL + API.getEmailIdByUserId + data.uid + '/' + data.tokenkey;
         dispatch(startLoading());
 
         axios.get(url).then((resp) => {

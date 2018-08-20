@@ -24,7 +24,7 @@ export const API = {
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/',
     SendResetPasswordLink: 'api/User/',
-    GetEmailIdByCoreoHomeUserId: 'api/user/verifypasswordlink/',
+    getEmailIdByUserId: 'api/user/verifypasswordlink/',
     resetPassword: 'api/user',
     getPersonalDetail:'ServiceProvider/',
     updatePersonalDetail:'ServiceProvider/',

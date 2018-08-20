@@ -6,15 +6,7 @@ import { onLogin } from '../../../redux/auth/login/actions';
 import './resetPasswordSuccess.css'
 
 export class ResetPasswordSuccess extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            emailValid: true,
-        };
-    };
-
+    
     onClickButtonLogin = () => {
         this.props.onLogin();
     }

@@ -8,15 +8,7 @@ import './resetPasswordConfirmation.css';
 import { Path } from '../../../routes';
 
 export class ResetPasswordConfirmation extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            emailValid: true,
-        };
-    };
-
+    
     resendEmail = () => {
         this.props.redirect(Path.forgetPassword);
     }
