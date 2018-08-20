@@ -48,47 +48,39 @@ export class ForgetPassword extends Component {
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className="forgetPassword-body">
-                    <div className="col-md-12 heading"><h2>COREO HOME</h2></div>
-                    <div className="container">
-                        <div className="row justify-content-center align-self-center">
-                            <div className="col-sm-12 col-md-12 col-lg-12">
-                                <div className="jumbotron vertical-center text-center">
-                                    <div className="login-box">
-                                        <div className="login-bg">
-                                            <div className="login-body text-center">
-                                                <h3>Forgot your password ?</h3>
-                                                <p>Don't  worry. Resetting password is easy. Just tell us your Email ID registered with CoreoHome.</p>
-                                                <div className="form-group text-center">
-                                                    <Input
-                                                        name="emailId"
-                                                        autoComplete="off"
-                                                        required="required"
-                                                        type="email"
-                                                        placeholder="Enter User ID"
-                                                        maxlength={100}
-                                                        className="form-control"
-                                                        value={this.state.email}
-                                                        textChange={this.onChangeEmail}
-                                                    />
-                                                </div>
-                                                {!this.state.emailValid &&
-                                                    <p className="text-danger">Please enter a valid User ID(e.g. abc@xyz.com)</p>
-                                                }
-                                                {this.props.isSendResetPasswordLinkError &&
-                                                    <p className="text-danger d-block mt-4 mb-2">Invalid User ID. Please try again</p>
-                                                }
-                                                <Button
-                                                    type="button"
-                                                    classname="btn send-btn"
-                                                    label="Send Link"
-                                                    onClick={this.onClicksendResetPasswordLink}
-                                                    disable={false}
-                                                />
-                                                <p><span className = "login" onClick={this.onClickButtonLogin}>Back to Login</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div className="col-md-12 headingForgetPassWord"><h2>COREO HOME</h2></div>
+                    <div className="login-boxForgetPassword">
+                        <div className="login-bgForgetPassword">
+                            <div className="login-body text-center">
+                                <h3>Forgot your password ?</h3>
+                                <p>Don't  worry. Resetting password is easy. Just tell us your Email ID registered with CoreoHome.</p>
+                                <div className="form-group text-center">
+                                    <Input
+                                        name="emailId"
+                                        autoComplete="off"
+                                        required="required"
+                                        type="email"
+                                        placeholder="Enter User ID"
+                                        maxlength={100}
+                                        className="form-control"
+                                        value={this.state.email}
+                                        textChange={this.onChangeEmail}
+                                    />
                                 </div>
+                                {!this.state.emailValid &&
+                                    <p className="text-danger">Please enter a valid User ID(e.g. abc@xyz.com)</p>
+                                }
+                                {this.props.isSendResetPasswordLinkError &&
+                                    <p className="text-danger d-block mt-4 mb-2">Invalid User ID. Please try again</p>
+                                }
+                                <Button
+                                    type="button"
+                                    classname="btn send-btn"
+                                    label="Send Link"
+                                    onClick={this.onClicksendResetPasswordLink}
+                                    disable={false}
+                                />
+                                <p><span className="login" onClick={this.onClickButtonLogin}>Back to Login</span></p>
                             </div>
                         </div>
                     </div>

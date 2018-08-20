@@ -18,5 +18,8 @@ export const API = {
     getSkills: 'ServiceProvider/Skill',
     addSkills: 'ServiceProvider/',
     getLanguages: 'ServiceProvider/Language',
-    addLanguages: 'ServiceProvider/'
+    addLanguages: 'ServiceProvider/',
+    SendResetPasswordLink: 'api/User/',
+    GetEmailIdByCoreoHomeUserId: 'api/user/verifypasswordlink/',
+    resetPassword: 'api/user'
 }
