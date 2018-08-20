@@ -1,10 +1,16 @@
-.asyncModalHeader{
+.profileModalHeader {
     height: 60px;
     background-color: #f4ecfc;
     padding: 14px 30px !important;
 }
 
-.asyncModalHeader .modal-title{
+.profileModalHeader{
+    height: 60px;
+    background-color: #f4ecfc;
+    padding: 14px 30px !important;
+}
+
+.profileModalHeader .modal-title{
     font-weight: 600;
     font-size: 18px;
     color: #7a329f;
@@ -46,5 +52,4 @@ button.CloseMsgModal span{
 }
 .asyncModal .modal-body{
     max-height: calc(100vh - 200px);
-    /* height: calc(100vh - 200px); */
 }

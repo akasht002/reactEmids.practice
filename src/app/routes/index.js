@@ -42,8 +42,8 @@ export const Path = {
   forgetPassword: '/forgetPassword',
   resetPassword: '/resetPassword:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
-  resetPasswordConfirmation: '/resetPasswordConfirmation'
-
+  resetPasswordConfirmation: '/resetPasswordConfirmation',
+  home:'/home',
 };
 
 class AppStackRoot extends Component {

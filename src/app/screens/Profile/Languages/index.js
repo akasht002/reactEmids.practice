@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { LanguagesMultiSelect, ProfileModalPopup, ModalPopup } from "../../../components"
 import { getLanguages, getSelectedLanguages, addLanguages } from '../../../redux/profile/Languages/actions';
-import {compare,difference} from "../../../utils/comparerUtility";
+import { compare, difference } from "../../../utils/comparerUtility";
+import { stringConcat } from "../../../utils/stringHelper"; 
 
 class Languages extends React.Component {
 
@@ -53,22 +54,23 @@ class Languages extends React.Component {
 
         const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return elem.id;
-        }).join(",");
+        });
 
         let previosObj = {
-            selectedLanguage: previouslySelectedValues
+            selectedLanguage: stringConcat(previouslySelectedValues)
         }
-        
+
 
         let selectStateObject = {
             selectedLanguage: this.state.selectedLanguage
         }
-        
+
+
         const fieldDifference = compare(previosObj, selectStateObject);
 
-        if (fieldDifference === true || previosObj == NaN) {
-            this.setState({ isModalOpen: false, isDiscardModalOpen: false })
-        } else{
+        if (fieldDifference === true) {
+
+        } else {
             this.setState({ isModalOpen: true, isDiscardModalOpen: true })
         }
     }
@@ -158,7 +160,7 @@ class Languages extends React.Component {
                     {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
                         <i className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({isModalOpen: true,isAdd:true})} />
+                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -170,7 +172,7 @@ class Languages extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isModalOpen: true,isAdd: true})}/> to add Languages Spoken</span>
+                                <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} /> to add Languages Spoken</span>
                             </div>
                         </div>
                     }

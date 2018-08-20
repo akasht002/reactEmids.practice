@@ -1,6 +1,7 @@
 import React from 'react';
+import './styles.css';
 
-class TextArea extends React.Component {
+class TextArea extends React.Component {    
     render() {
         return(<div className="form-group">
             <label htmlFor={this.props.name}>{this.props.name}</label> <i className={this.props.mandatory}></i>

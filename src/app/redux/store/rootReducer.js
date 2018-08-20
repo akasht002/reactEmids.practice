@@ -8,6 +8,7 @@ import { profileState } from '../profile/reducer';
 import wizardState from '../wizard/reducer';
 import { reducer as reduxFormReducer } from 'redux-form';
 import { reducer as oidcReducer } from 'redux-oidc';
+import authUser from '../auth/login/reducer'
 
 export default combineReducers({
     authState,
@@ -18,5 +19,6 @@ export default combineReducers({
     profileState,
     wizardState,
     loadingState,
-    oidc:oidcReducer
+    oidc:oidcReducer,
+    authUser
 });
