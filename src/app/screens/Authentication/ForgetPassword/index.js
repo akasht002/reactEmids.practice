@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { Input, ScreenCover, Button } from '../../../components';
+import { Input, Button, LoginCover } from '../../../components';
 import { checkEmail } from '../../../utils/validations'
 import {
     sendResetPasswordLink,
@@ -46,46 +46,37 @@ export class ForgetPassword extends Component {
 
     render() {
         return (
-            <ScreenCover isLoading={this.props.isLoading}>
-                <div className="forgetPassword-body">
-                    <div className="col-md-12 headingForgetPassWord"><h2>COREO HOME</h2></div>
-                    <div className="login-boxForgetPassword">
-                        <div className="login-bgForgetPassword">
-                            <div className="login-body text-center">
-                                <h3>Forgot your password ?</h3>
-                                <p>Don't  worry. Resetting password is easy. Just tell us your Email ID registered with CoreoHome.</p>
-                                <div className="form-group text-center">
-                                    <Input
-                                        name="emailId"
-                                        autoComplete="off"
-                                        required="required"
-                                        type="email"
-                                        placeholder="Enter User ID"
-                                        maxlength={100}
-                                        className="form-control"
-                                        value={this.state.email}
-                                        textChange={this.onChangeEmail}
-                                    />
-                                </div>
-                                {!this.state.emailValid &&
-                                    <p className="text-danger">Please enter a valid User ID(e.g. abc@xyz.com)</p>
-                                }
-                                {this.props.isSendResetPasswordLinkError &&
-                                    <p className="text-danger d-block mt-4 mb-2">Invalid User ID. Please try again</p>
-                                }
-                                <Button
-                                    type="button"
-                                    classname="btn send-btn"
-                                    label="Send Link"
-                                    onClick={this.onClicksendResetPasswordLink}
-                                    disable={false}
-                                />
-                                <p><span className="login" onClick={this.onClickButtonLogin}>Back to Login</span></p>
-                            </div>
-                        </div>
-                    </div>
+            <LoginCover isLoading={this.props.isLoading}>
+                <h3>Forgot your password ?</h3>
+                <p>Don't  worry. Resetting password is easy. Just tell us your Email ID registered with CoreoHome.</p>
+                <div className="form-group text-center">
+                    <Input
+                        name="emailId"
+                        autoComplete="off"
+                        required="required"
+                        type="email"
+                        placeholder="Enter User ID"
+                        maxlength={100}
+                        className={"emailField " + (this.props.isSendResetPasswordLinkSuccess ? 'inputSuccess' : (!this.state.emailValid || this.props.isSendResetPasswordLinkError) && 'inputFailure')}
+                        value={this.state.email}
+                        textChange={this.onChangeEmail}
+                    />
                 </div>
-            </ScreenCover>
+                {!this.state.emailValid &&
+                    <p className="text-danger">Please enter a valid User ID(e.g. abc@xyz.com)</p>
+                }
+                {this.props.isSendResetPasswordLinkError &&
+                    <p className="text-danger d-block mt-4 mb-2">Invalid User ID. Please try again</p>
+                }
+                <Button
+                    type="button"
+                    classname="btn send-btn"
+                    label="Send Link"
+                    onClick={this.onClicksendResetPasswordLink}
+                    disable={false}
+                />
+                <p><span className="login" onClick={this.onClickButtonLogin}>Back to Login</span></p>
+            </LoginCover>
         );
     }
 }

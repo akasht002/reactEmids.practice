@@ -11,6 +11,7 @@ import PanelCard from './PanelCard';
 import {ScreenCover} from './ScreenCover';
 import {SkillsMultiSelect} from './SkillsMultiSelect';
 import {LanguagesMultiSelect} from './LanguagesMultiSelect';
+import {LoginCover} from './LoginCover';
 
 export {
     Calendar, 
@@ -25,5 +26,6 @@ export {
     ModalUserAgreement,
     ProfileModalPopup,
     SkillsMultiSelect,
-    LanguagesMultiSelect
+    LanguagesMultiSelect,
+    LoginCover
 };

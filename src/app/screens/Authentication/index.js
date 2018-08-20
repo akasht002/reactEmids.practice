@@ -7,5 +7,5 @@ export {
     ForgetPassword,
     ResetPassword,
     ResetPasswordSuccess,
-    ResetPasswordConfirmation
+    ResetPasswordConfirmation,
 };
