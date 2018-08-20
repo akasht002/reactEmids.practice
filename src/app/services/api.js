@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const baseURL = "http://localhost:63633/api/";
-export const authURL = "http://localhost:5000/";
+export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
+export const authURL = "http://52.172.45.185:9005/";
 
 export const Api = axios.create({
     baseURL: baseURL,
