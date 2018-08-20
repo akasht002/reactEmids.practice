@@ -30,10 +30,8 @@ export const getWorkhistoryFieldDetails = (data) => {
 }
 
 export function getWorkHistory() {
-    return (dispatch, getState) => {
-        
-        let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
         axios.get(baseURL + API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
             dispatch(getWorkhistorySuccess(resp.data))
@@ -46,10 +44,8 @@ export function getWorkHistory() {
 };
 
 export function addWorkHistory(data) {
-    return (dispatch, getState) => {
-       
-        let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
             ServiceProviderId: serviceProviderId,
             workHistoryId:data.workHistoryId,
@@ -76,10 +72,8 @@ export function addWorkHistory(data) {
 
 export function editWorkHistory(data) {
 
-    return (dispatch, getState) => {
-       
-        let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         let workHistoryId=data;
         let modal = {
             serviceProviderId: serviceProviderId,
@@ -88,6 +82,7 @@ export function editWorkHistory(data) {
 
         dispatch(startLoading());
         axios.get(baseURL + API.WorkHistory +`${serviceProviderId}/WorkHistory/${workHistoryId}`,modal).then((resp) => {
+            
             dispatch(getWorkhistoryFieldDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -97,10 +92,8 @@ export function editWorkHistory(data) {
 };
 
 export function updateWorkHistory(data) {
-    return (dispatch, getState) => {
-       
-        let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+    return (dispatch) => {
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
             serviceProviderId: serviceProviderId,
             workHistoryId: data.workHistoryId,
@@ -115,6 +108,7 @@ export function updateWorkHistory(data) {
         };
         dispatch(startLoading());
         axios.put(baseURL + API.WorkHistory+`${serviceProviderId}'/WorkHistory`, modal).then((resp) => {
+            dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory());
             dispatch(endLoading());
         }).catch((err) => {
@@ -124,10 +118,9 @@ export function updateWorkHistory(data) {
 };
 
 export function deleteWorkHistory(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading());
-        let currstate = getState();
-        let serviceProviderId = currstate.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId;
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         let id =data;
         axios.delete(baseURL + API.WorkHistory+`${serviceProviderId}/WorkHistory/${id}`,data).then((resp) => {
             dispatch(getWorkHistory());

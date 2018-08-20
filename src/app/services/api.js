@@ -8,6 +8,10 @@ export const Api = axios.create({
     baseURL: baseURL,
 });
 
+export const SETTING = {
+    FILE_UPLOAD_SIZE : 2097152 
+}
+
 export const API = {
     sendEmailVerification: 'ServiceProviderOnBoarding/',
     sendTemporaryPasscode: 'ServiceProviderOnBoarding',
@@ -27,5 +31,15 @@ export const API = {
     getQuestionsList: 'VisitProcessing/ServiceRequestVisitFeedback/49',
     savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/',
     saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
-    startOrStopService: 'VisitProcessing/ServiceRequestVisit/'
+    startOrStopService: 'VisitProcessing/ServiceRequestVisit/',
+    getPersonalDetail:'ServiceProvider/',
+    updatePersonalDetail:'ServiceProvider/',
+    getCity:'ServiceProviderLookUp/GetState',
+    uploadImage:'ServiceProvider/Image',
+    getImage:'ServiceProvider/Image/',
+    getServiceOffered: 'ServiceProvider/',
+    editServiceOffered: 'ServiceProvider/',
+    addServiceOffered: 'ServiceProvider/',
+    getServiceProviderID:'ServiceProviderOnBoarding/',
+    getGender: 'ServiceProviderLookUp/gender'
 }

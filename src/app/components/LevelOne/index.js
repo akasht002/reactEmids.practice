@@ -14,6 +14,7 @@ import {LanguagesMultiSelect} from './LanguagesMultiSelect';
 import {LeftSideMenu} from './LeftSideMenu';
 import {Wizard} from './Wizard';
 import {DashboardWizFlow} from './Dashboard/WizFlow';
+import Scrollbars from "../LevelOne/CustomScrollbar"
 
 export {
     Calendar, 
@@ -31,5 +32,6 @@ export {
     LanguagesMultiSelect,
     LeftSideMenu,
     Wizard,
-    DashboardWizFlow
+    DashboardWizFlow,
+    Scrollbars
 };

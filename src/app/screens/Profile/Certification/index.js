@@ -1,12 +1,12 @@
-import React from "react";
+import React, {Component} from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
-import { checkSpace } from "../../../utils/validations"
+import { checkSpace } from "../../../utils/validations";
+import {compare} from "../../../utils/comparerUtility";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 
-class Certification extends React.Component {
+class Certification extends Component {
 
     constructor(props) {
         super(props);
@@ -56,31 +56,32 @@ class Certification extends React.Component {
         this.setState({
             certificationModal: !this.state.certificationModal,
             isDiscardModalOpen: false,
-            isAdd: true,
             isValid: true,
             disabledSaveBtn: true
         })
 
-        let array1 = [
-            {
-                authority: this.props.certificationFieldDetails.authority,
-                certificationName: this.props.certificationFieldDetails.certificationName,
-                licenceNumber: this.props.certificationFieldDetails.licenceNumber
-            }
-        ]
+        let propObj = {
+            authority: this.props.certificationFieldDetails.authority,
+            certificationName: this.props.certificationFieldDetails.certificationName,
+            licenceNumber: this.props.certificationFieldDetails.licenceNumber
+        }
+        
 
-        let array2 = [
-            {
-                authority: this.state.certificationAuthority,
-                certificationName: this.state.certificationName,
-                licenceNumber: this.state.certificateLicenceNumber
-            }
-        ]
+        let stateObj = {
+            authority: this.state.certificationAuthority,
+            certificationName: this.state.certificationName,
+            licenceNumber: this.state.certificateLicenceNumber
+        }
+        
 
-        const fieldDifference = _.isEqual(array1, array2);
+        const fieldDifference = compare(propObj, stateObj);
 
         if (fieldDifference === true) {
-            this.setState({ certificationModal: false, isDiscardModalOpen: false })
+            this.setState({ certificationModal: false, isDiscardModalOpen: false,
+                certificationAuthority:'',
+                certificateLicenceNumber: '',
+                certificationName: ''
+             })
         } else {
             this.setState({ isDiscardModalOpen: true, certificationModal: true })
         }
@@ -219,7 +220,7 @@ class Certification extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification</h4>
                     <i className="SPIconLarge SPIconAdd"
-                        onClick={() => this.setState({ certificationModal: true })} />
+                        onClick={() => this.setState({ certificationModal: true, isAdd: true })} />
                 </div>
                 <div className="SPCertificateContainer width100">
                     <ul className="SPCertificateList">
@@ -231,7 +232,7 @@ class Certification extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true })}/> to add Certification</span>
+                                    <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
                                 </div>
                             </div>
                         }
@@ -245,7 +246,7 @@ class Certification extends React.Component {
                     className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
                     disabled={this.state.disabledSaveBtn}
-                    centered="centered"
+                    centered={true}
                     onClick={this.state.isAdd ?
                         this.addCertification
                         :
@@ -261,7 +262,7 @@ class Certification extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered={true}
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,

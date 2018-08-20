@@ -146,10 +146,11 @@
     font-size: inherit;
     margin: 0;
     outline: none;
-    opacity: 0;
+    opacity: 1;
     line-height: 17px;
+    line-height: 18px;
     /* For IE 8 compatibility */
-    padding: 8px 0 12px;
+    padding: 8px 10px 12px;
     /* For IE 8 compatibility */
     -webkit-appearance: none;
 }
@@ -376,6 +377,7 @@
     padding: 2px 5px;
     position: relative;
     order: 1;
+    min-width:88px;
 }
 .Select--multi a.Select-value-label {
     cursor: pointer;

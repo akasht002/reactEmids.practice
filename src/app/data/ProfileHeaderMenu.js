@@ -1,18 +1,27 @@
 export const ProfileHeaderMenu = [
     {
         name: "contact",
-        status: true
+        status: true,
+        id:1
     },
     {
         name: "videoChat",
-        status: true
+        status: true,
+        id:2
     },
     {
         name: "messages",
-        status: true
+        status: true,
+        id:3
     },
     {
         name: "notification",
-        status: true
+        status: true,
+        id:4
+    },
+    {
+        name: "logout",
+        status: true,
+        id:5
     }
 ];

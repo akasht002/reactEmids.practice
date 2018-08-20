@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 import { LanguagesMultiSelect, ProfileModalPopup, ModalPopup } from "../../../components"
 import { getLanguages, getSelectedLanguages, addLanguages } from '../../../redux/profile/Languages/actions';
+import { compare, difference } from "../../../utils/comparerUtility";
+import { stringConcat } from "../../../utils/stringHelper"; 
 
 class Languages extends React.Component {
 
@@ -48,31 +49,28 @@ class Languages extends React.Component {
 
     toggleLanguages = () => {
         this.setState({
-            isModalOpen: !this.state.isModalOpen,
-            isAdd: true
+            isModalOpen: !this.state.isModalOpen
         })
 
-        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
+        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return elem.id;
-        }).join(",");
+        });
 
-        let array1 = [
-            {
-                selectedLanguage: previouslySelectedValues
-            }
-        ]
+        let previosObj = {
+            selectedLanguage: stringConcat(previouslySelectedValues)
+        }
 
-        let array2 = [
-            {
-                selectedLanguage: this.state.selectedLanguage
-            }
-        ]
 
-        const fieldDifference = _.isEqual(array1, array2);
+        let selectStateObject = {
+            selectedLanguage: this.state.selectedLanguage
+        }
+
+
+        const fieldDifference = compare(previosObj, selectStateObject);
 
         if (fieldDifference === true) {
-            
-        } else{
+
+        } else {
             this.setState({ isModalOpen: true, isDiscardModalOpen: true })
         }
     }
@@ -95,19 +93,16 @@ class Languages extends React.Component {
 
     reset = () => {
 
-        const array1 = [];
-
-        const previouslySelectedValues = this.oldSelectedValue.map(function (elem) {
-            return array1.push(elem.id);
+        const previosValue = [];
+        const newValue = [];
+        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
+            return previosValue.push(elem.id);
         }).join(",");
 
-        const array2 = [];
-
         const newlySelectedValues = this.state.selectedLanguage;
-        array2.push(newlySelectedValues);
+        newValue.push(newlySelectedValues);
 
-        const result = _.differenceWith(array1, array2)
-
+        const result = difference(previosValue, newValue)
         this.setState({ selectedLanguage: result, isModalOpen: false, isDiscardModalOpen: false, disabledSaveBtn: true });
     }
 
@@ -165,7 +160,7 @@ class Languages extends React.Component {
                     {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
                         <i className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({isModalOpen: true})} />
+                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -177,7 +172,7 @@ class Languages extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isModalOpen: true})}/> to add Languages Spoken</span>
+                                <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} /> to add Languages Spoken</span>
                             </div>
                         </div>
                     }
@@ -190,7 +185,7 @@ class Languages extends React.Component {
                     className="modal-lg asyncModal LanguagesModal"
                     modalTitle={modalTitle}
                     disabled={this.state.disabledSaveBtn}
-                    centered="centered"
+                    centered={true}
                     onClick={this.state.isAdd ?
                         this.addLanguages
                         :
@@ -206,7 +201,7 @@ class Languages extends React.Component {
                     btn2="NO"
                     className="modal-sm"
                     headerFooter="d-none"
-                    centered="centered"
+                    centered={true}
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,

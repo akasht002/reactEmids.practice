@@ -6,7 +6,7 @@ import './styles.css';
  class ModalPopup extends Component {
     render() {
         return (
-                <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className} centered={this.props.centered} >
+                <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className} centered={true} >
                     <ModalHeader className={"text-uppercase font-weight-light " + this.props.headerFooter}>Coreo Home</ModalHeader>
                     <ModalBody>
                         <p className="text-center lead pt-4">{this.props.ModalBody}</p>

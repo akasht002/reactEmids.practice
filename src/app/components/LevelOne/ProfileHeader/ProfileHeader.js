@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from 'react-redux';
 import {
     Collapse,
     Navbar,
@@ -10,11 +11,12 @@ import {
 } from 'reactstrap';
 import { SearchInput } from "../../../components";
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
+import { onLogout } from '../../../redux/auth/logout/actions';
+import { makeProperCase } from '../../../utils/stringHelper';
 
-class ProfileHeader extends React.Component {
+class ProfileHeader extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.state = {
             dropDownOpen: false,
             dBlock: "",
@@ -30,20 +32,33 @@ class ProfileHeader extends React.Component {
         });
     }
 
-    render() {
+    handleNavigation = (event) =>{
+        switch (event.target.title) {
+            case "logout":
+                this.props.onLogout();
+                break;
+            default:
+                break;
+        }
+    }
 
+    render() {
         const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
+            let id = menu.id;
             let Separator = "";
+            let separator = "";
             if (menu.status) {
-                let clsName = "navIcon icon" + menuName.charAt(0).toUpperCase() + menuName.slice(1);
+                let clsName = "navIcon icon" + makeProperCase(menuName);
                 if (menuName === "notification") {
-                    Separator = "NavIconSeparator"
+                    separator = "NavIconSeparator"
                 }
                 return (
                     <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
                         <NavLink className={clsName}
-                            href={menu.link} />
+                            href={menu.link} 
+                            key={menu.id}
+                            />
                     </NavItem>
                 )
             }
@@ -62,6 +77,7 @@ class ProfileHeader extends React.Component {
                             placeholder="search your keyword"
                             className="form-control SearchInput"
                             iconName="searchInputIcon"
+                            disable={"true"}
                         />
                     </Nav>
                     <Nav className="ml-auto navIconContainer" navbar>
@@ -73,4 +89,10 @@ class ProfileHeader extends React.Component {
     }
 }
 
-export default ProfileHeader;
+function mapDispatchToProps(dispatch) {
+    return {
+        onLogout: () => dispatch(onLogout())
+    }
+  }
+  
+export default connect(null, mapDispatchToProps)(ProfileHeader);

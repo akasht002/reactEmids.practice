@@ -85,6 +85,10 @@
     background-image: url("../assets/images/notification.png");
 }
 
+.iconLogout:before {
+    background-image: url("../assets/images/call.png");
+}
+
 .searchInputIcon{
 }
 
