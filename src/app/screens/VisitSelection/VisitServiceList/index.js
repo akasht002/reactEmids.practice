@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { getVisitServiceList } from '../../../redux/visitSelection/VisitServiceList/actions';
-import { getVisitServiceDetails } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import Moment from 'react-moment';
-import { LeftSideMenu, ProfileHeader, Scrollbars, Wizard } from '../../../components';
+import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components';
 import './style.css'
 
 class VisitServiceList extends Component {
@@ -26,7 +26,9 @@ class VisitServiceList extends Component {
     }
 
     handleClick = (requestId) => {
-        this.props.getVisitServiceDetails(requestId)
+        this.props.getVisitServiceDetails(requestId);
+        this.props.getVisitServiceSchedule(requestId);
+
     }
 
     render() {
@@ -36,7 +38,7 @@ class VisitServiceList extends Component {
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card' onClick={() => this.handleClick(serviceList.serviceRequestId)}>
                         <div className="BlockImageContainer">
-                            <img className="ProfileImage" src="https://portal.propertyhandling.com/assets/images/default-avatar.png" />
+                            <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
                                     {serviceList.serviceRequestTypeDetails && serviceList.serviceRequestTypeDetails.map((serviceType) => {
@@ -55,8 +57,7 @@ class VisitServiceList extends Component {
                             </div>
                         </div>
                         <div className="BlockProfileContainer">
-                            <img className="ProfileImage" src="https://portal.propertyhandling.com/assets/images/default-avatar.png" />
-                            {/* <img className="ProfileImage" src={"data:image/png;base64," + serviceList.patientImage} alt="patientImage" /> */}
+                            <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientName}
@@ -119,7 +120,8 @@ class VisitServiceList extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getVisitServiceList: () => dispatch(getVisitServiceList()),
-        getVisitServiceDetails: (data) => dispatch(getVisitServiceDetails(data))
+        getVisitServiceDetails: (data) => dispatch(getVisitServiceDetails(data)),
+        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data))
     }
 };
 

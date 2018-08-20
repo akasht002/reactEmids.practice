@@ -119,7 +119,7 @@ li div.dropdown-menu{
     position: relative;
     width: 100%;
     height: calc(100vh - 120px);
-    overflow: auto;
+    overflow: hidden;
     padding: 0 20px;
 }
 
@@ -509,6 +509,10 @@ li div.dropdown-menu{
 
 .TabBody .ServiceTasks.Summary{
     margin: 52px 0;
+}
+
+.TabBody .SPAvailWidget{
+    padding-left: 0;
 }
 
 .TabBody .SPAvailWidget div:first-child{
@@ -1090,25 +1094,18 @@ div.scrollarea .scrollbar-container.vertical {
 
     }
 
-    /*.ProfileLeftWidget {
-        position: absolute;
-        z-index: 99;
-        background: transparent;
-        width: 0;
-        height: 0;
+    .SPAvailItems {
+        display: block;
+        position: relative;
+        padding: 5px 15px 5px 40px;
+        list-style: none;
+        font-size: 16px;
+        margin: 1px 0;
+        color: rgba(79, 79, 79, 0.5);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
-    .ProfileSideNavigation{
-        display: flex;
-        display: -moz-flex;
-        position: fixed;
-        margin: 0;
-        bottom: 0;
-        background: #7a329f;
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .profileSideNavigationLink span{
-        display: none;
-    }*/
 }

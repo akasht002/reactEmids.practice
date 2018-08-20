@@ -17,7 +17,7 @@
 
 .BrandName a.BrandLink{
     display: block;
-    color: #fff;
+    color: #fff !important;
     text-align: center;
     font-size: 20px;
 }
@@ -72,6 +72,7 @@
 
 .ProfileNameContent{
     text-align: center;
+    color: #ffffff;
 }
 
 /************************************************************************************************************************************************************************/

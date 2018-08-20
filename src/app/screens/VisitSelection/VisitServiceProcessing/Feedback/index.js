@@ -6,6 +6,7 @@ import './style.css'
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
+import { convertTime24to12, getFirstCharOfString } from '../../../../utils/validations'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
 import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components';
 
@@ -101,10 +102,10 @@ class Feedback extends Component {
                                             </div>
                                             <div className='requestImageContent'>
                                                 <span>
-                                                    {/* <img
-                                                    src={imagePath("./avatar/user-10.jpg")}
-                                                    className="avatarImage avatarImageBorder" /> */}
-                                                    <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName}</i></span>
+                                                <img
+                                                        src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
+                                                        className="avatarImage avatarImageBorder" alt="patientImage"/>
+                                                    <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i></span>
                                             </div>
                                         </div>
                                     </div>

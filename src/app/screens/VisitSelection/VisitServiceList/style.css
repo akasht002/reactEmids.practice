@@ -36,6 +36,14 @@ a.ProfileIcon{
     padding: 0;
 }
 
+.ProfileIcon{
+    position: relative;
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    top: 10px;
+}
+
 .ProfileIcon img{
     width: 100%;
     height: 100%;
@@ -119,7 +127,7 @@ li div.dropdown-menu{
     position: relative;
     width: 100%;
     height: calc(100vh - 120px);
-    overflow: auto;
+    overflow: hidden;
     padding: 0 20px;
 }
 
@@ -198,7 +206,7 @@ li div.dropdown-menu{
     -moz-border-radius: 8px;
     border: solid 1px #b7b7b7;
     margin: 40px 29px;
-    padding: 30px;
+    padding: 20px;
     float: left;
 }
 
@@ -214,8 +222,13 @@ li div.dropdown-menu{
 }
 
 .PostedByImageContainer{
-    padding: 15px 0;
-    border-bottom: 2px solid #dcdcdc;
+    padding: 10px 0;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.PostedByImageContainer:last-child{
+    border: 0;
+    padding-bottom: 0;
 }
 
 .PostedByImageContainer .ProfileImage{

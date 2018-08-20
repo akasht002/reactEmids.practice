@@ -9,6 +9,8 @@ import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components'
 import { push } from '../../../redux/navigation/actions';
 import { Path } from '../../../routes';
 import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getPerformTasksList } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { convertTime24to12, getFirstCharOfString } from '../../../utils/validations'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 
 class VisitServiceDetails extends Component {
@@ -21,6 +23,8 @@ class VisitServiceDetails extends Component {
             activeTab: '1',
             visitServiceDetails: '',
             visitServiceSchedule: '',
+            serviceType: '',
+            isOpen: false,
         };
     };
 
@@ -46,18 +50,29 @@ class VisitServiceDetails extends Component {
         }
     };
 
-    render() {
+    ToggleLeftPanel = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
 
-        const Days = ["Sunday", "Monday"];
-        const workingHrs = ["Morning", "Afternoon", "Evening"];
+    visitProcessing = (data) => {
+        this.props.getPerformTasksList(data)
+    }
+
+    selectedServiceType = (e) => {
+        this.setState({ serviceType: parseInt(e.target.id) })
+    }
+
+    render() {
 
         let sliderTypes = this.state.visitServiceDetails.serviceRequestTypeDetails && this.state.visitServiceDetails.serviceRequestTypeDetails.map((serviceTypes, index) => {
             let catNum = index + 1;
             return (
                 <div className='ServiceTypeList'>
-                    <input id={'ServiceType' + catNum} type='radio' className='ServiceTypeInput' name='serviceType'
-                        value={catNum} />
-                    <label className='ServiceTypeLink' htmlFor={'ServiceType' + catNum}>
+                    <input id={serviceTypes.serviceRequestTypeDetailsId} type='radio' className='ServiceTypeInput' name='serviceType'
+                        value={catNum} onChange={(e) => this.selectedServiceType(e)} />
+                    <label className='ServiceTypeLink' htmlFor={serviceTypes.serviceRequestTypeDetailsId}>
                         <span className={'ServiceTypeIcon SPIconServices' + catNum} />
                         <div className='serviceTypeDesc'>
                             <span className='serviceName'>{serviceTypes.serviceTypeDescription}</span>
@@ -68,62 +83,68 @@ class VisitServiceDetails extends Component {
             )
         });
 
-        let description = this.state.visitServiceDetails.serviceRequestTypeDetails && this.state.visitServiceDetails.serviceRequestTypeDetails.map((b, index) => {
+        let description = this.state.visitServiceDetails.serviceRequestTypeDetails && this.state.visitServiceDetails.serviceRequestTypeDetails.map((typeDetails, index) => {
             return (
                 <div>
-                    {b.serviceRequestTypeTaskDetails.map((aaaa, i) => {
-                        return (
-                            <li><i>{i + 1}</i>{aaaa.serviceTaskDescription}</li>
-                        )
+                    {typeDetails.serviceRequestTypeTaskDetails.map((taskDetails, i) => {
+                        if (this.state.serviceType && this.state.serviceType === taskDetails.serviceRequestTypeDetailsId) {
+                            return (
+                                <li><i>{i + 1}</i>{taskDetails.serviceTaskDescription}</li>
+                            )
+                        }
                     })}
                 </div>
             )
-        })
-        // let WorkinHours = '';
-        // let AvailDays = Days.map((days, i) => {
-        //     let DayCount = 'Days' + (i + 1);
-        //     let Count = '';
-        //     this.state.availableList.map((checkbox, i) => {
-        //         if (checkbox.name === DayCount) {
-        //             if (checkbox.count) {
-        //                 Count = 'true'
-        //             } else {
-        //                 Count = '';
-        //             }
-        //         }
-        //     });
-        //     return (
-        //         <div className={'SPAvailContainer ' + Count + 'Available'}>
-        //             <div className={'SPAvailTitle'}>
-        //                 <label className="SPAvailTitleText">{days}
-        //                     {/*<input type={'checkbox'} className={'availabilityCheck'} onChange={this.toggleCheckbox}
-        //                            value={(i + 1)}/>*/}
-        //                 </label>
-        //             </div>
-        //             <div className={'SPAvailContent'}>
-        //                 {
-        //                     WorkinHours = workingHrs.map((workHrs, index) => {
-        //                         return (
-        //                             <div>
-        //                                 <input type={'checkbox'} className={'availabilityCheck'} checked
-        //                                     value={(i + 1)} id={'checked' + i + (index + 1)}
-        //                                     name={'checked' + i + (index + 1)} />
-        //                                 <label className="SPAvailItems" htmlFor={'checked' + i + (index + 1)}>{workHrs}
-        //                                 </label>
-        //                             </div>
-        //                         )
-        //                     })}
-        //             </div>
-        //         </div>
-        //     )
-        // });
+        });
+
+        let AvailDays = this.state.visitServiceDetails.serviceRequestSlots && this.state.visitServiceDetails.serviceRequestSlots.map((days, index) => {
+            let Count = '';
+            return (
+                <div className={'SPAvailContainer ' + Count + 'Available'}>
+                    <div className={'SPAvailTitle'}>
+                        <label className="SPAvailTitleText">{days.day}</label>
+                    </div>
+                    <div className={'SPAvailContent'}>
+                        <div>
+                            {days.slot === 'Morning' ?
+                                <div>
+                                    <label className="SPAvailItems active">Morning</label>
+                                    <label className="SPAvailItems">Afternoon</label>
+                                    <label className="SPAvailItems">Evening</label>
+                                </div>
+                                :
+                                ''
+                            }
+                            {days.slot === 'Afternoon' ?
+                                <div>
+                                    <label className="SPAvailItems">Morning</label>
+                                    <label className="SPAvailItems active">Afternoon</label>
+                                    <label className="SPAvailItems">Evening</label>
+                                </div>
+                                :
+                                ''
+                            }
+                            {days.slot === 'Evening' ?
+                                <div>
+                                    <label className="SPAvailItems">Morning</label>
+                                    <label className="SPAvailItems">Afternoon</label>
+                                    <label className="SPAvailItems active">Evening</label>
+                                </div>
+                                :
+                                ''
+                            }
+                        </div>
+                    </div>
+                </div>
+            )
+        });
 
         return (
             <section className="d-flex">
                 <LeftSideMenu isOpen={this.state.isOpen} />
                 <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.toggle.bind(this)} />
-                    <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)} />
+                    <ProfileHeader toggle={this.ToggleLeftPanel} />
+                    <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.ToggleLeftPanel} />
                     <div className='ProfileRightContainer'>
                         <div className='ProfileHeaderWidget'>
                             <div className='ProfileHeaderTitle'>
@@ -136,7 +157,7 @@ class VisitServiceDetails extends Component {
                                     <section className='ProfileCardHeader'>
                                         <div className='primaryColor'>
                                             <span className='HeaderBackWrapper'>
-                                                <a href='/' className='HeaderBackButton' />
+                                                <Link to='/visitServiceList' className='HeaderBackButton' />
                                             </span>
                                             <span className='HeaderRequestLabel'>
                                                 Request ID
@@ -151,16 +172,14 @@ class VisitServiceDetails extends Component {
                                     </section>
                                     <section class="LeftPalette">
                                         <div className='primaryColor LeftPaletteHeader'>
-                                            Request ID
+                                            Posted By
                                         </div>
                                         <div class='LeftPostedBy'>
                                             <div class="PostedByImageContainer">
-                                                {/* <img class="ProfileImage" src="../dist/img/user-5.jpg" /> */}
-                                                {/* <img class="ProfileImage" src={"data:image/png;base64," + this.state.visitServiceDetails.patientImage} alt="patientImage" /> */}
-                                                <img className="ProfileImage" src="https://portal.propertyhandling.com/assets/images/default-avatar.png" />
+                                                <img className="ProfileImage" src={this.state.visitServiceDetails.image} alt="patientImage" />
                                                 <div class='PostedByProfileDetails'>
                                                     <div class='ProfileDetailsName'>
-                                                        {this.state.visitServiceDetails.patientName}
+                                                        {this.state.visitServiceDetails.patientName} {this.state.visitServiceDetails.lastName && getFirstCharOfString(this.state.visitServiceDetails.lastName)}
                                                     </div>
                                                     <div class='ProfileDetailsDate'>
                                                         Posted on <Moment format="DD MMM">{this.state.visitServiceDetails.requestDate}</Moment>
@@ -214,7 +233,6 @@ class VisitServiceDetails extends Component {
                                                             <h2 className='ServicesTitle'>Service Category</h2>
                                                             <p className='ScheduleTypeTitle'>{this.state.visitServiceDetails.serviceCategoryDescription}</p>
                                                             <h2 className='ServicesTitle mt-4'>Service Types</h2>
-
                                                             <div className='ServiceType'>
                                                                 <div className="ServiceTypesSlider Summary">
                                                                     {sliderTypes}
@@ -222,15 +240,6 @@ class VisitServiceDetails extends Component {
                                                             </div>
                                                             <div className='ServiceTasks Summary'>
                                                                 <ul className='SelectedTask'>
-                                                                    {/* <li><i>1</i> Ut ornare lectus sit amet</li>
-                                                                        <li><i>2</i> Odio pellentesque diam volutpat commodo</li>
-                                                                        <li><i>3</i> Ut ornare lectus sit amet</li>
-                                                                        <li><i>4</i> Nunc consequat interdum varius sit amet mattis vulputate enim nulla</li>
-                                                                        <li><i>5</i> Purus ut faucibus pulvinar elementum integer enim neque volutpat</li>
-                                                                        <li><i>6</i> Semper auctor neque vitae tempus quam pellentesque. Ipsum dolor sit amet
-                                                                            consectetur adipiscing elit duis tristique sollicitudin.
-                                                                        </li> */}
-
                                                                     {description}
 
                                                                 </ul>
@@ -246,7 +255,7 @@ class VisitServiceDetails extends Component {
                                                             </div>
                                                             <div className='AvailabilityWidget'>
                                                                 <div className='SPAvailWidget Summary mb-4'>
-                                                                    {/* {AvailDays} */}
+                                                                    {AvailDays}
                                                                 </div>
                                                             </div>
                                                             <h2 className='ServicesTitle'>Point of Service</h2>
@@ -304,7 +313,7 @@ class VisitServiceDetails extends Component {
                                                                             ''
                                                                         }
                                                                         {ScheduleList.visitStatusName === 'Scheduled' ?
-                                                                            <a className='btn btn-outline-primary' to='/'>Start Visit</a>
+                                                                            <a className='btn btn-outline-primary' onClick={() => this.visitProcessing(ScheduleList.serviceRequestVisitId)}>Start Visit</a>
                                                                             :
                                                                             ''
                                                                         }
@@ -332,7 +341,8 @@ function mapDispatchToProps(dispatch) {
     return {
         getVisitServiceDetails: () => dispatch(getVisitServiceDetails()),
         getVisitServiceSchedule: () => dispatch(getVisitServiceSchedule()),
-        visitService: () => dispatch(push(Path.visitServiceList))
+        visitService: () => dispatch(push(Path.visitServiceList)),
+        getPerformTasksList: (data) => dispatch(getPerformTasksList(data)),
     }
 };
 

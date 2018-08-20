@@ -8,8 +8,9 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow } from '../../../../components';
+import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components';
 import Stopwatch from './Stopwatch'
+import { convertTime24to12, getFirstCharOfString } from '../../../../utils/validations'
 import './style.css'
 
 class PerformTasks extends Component {
@@ -23,7 +24,11 @@ class PerformTasks extends Component {
             checkedData: '',
             isOpen: false,
             startService: true,
-            startedTime: ''
+            startedTime: '',
+            isModalOpen: false,
+            disabled: true,
+            taskCount: '',
+            a:''
         };
         this.checkedTask = [];
     };
@@ -51,16 +56,23 @@ class PerformTasks extends Component {
         this.setState({ checkedData: this.checkedTask })
     }
 
-    startService = (data) => {
+    startService = (data, visitId) => {
         if (data === 1) {
             let current_time = new moment().format("HH:mm");
             this.setState({ startedTime: current_time })
         }
-        this.setState({ startService: !this.state.startService })
-        this.props.startOrStopService(data);
+        this.setState({ startService: !this.state.startService, disabled: false })
+        this.props.startOrStopService(data, visitId);
     }
 
     onClickNext = () => {
+        if (!this.state.startService) {
+            // if()
+            this.setState({ isModalOpen: true })
+        }
+    }
+
+    onSubmit = () => {
         const data = {
             serviceRequestVisitId: this.state.taskList.serviceRequestVisitId,
             serviceRequestId: this.state.taskList.serviceRequestId,
@@ -99,10 +111,10 @@ class PerformTasks extends Component {
                                             </div>
                                             <div className='requestImageContent'>
                                                 <span>
-                                                    {/* <img
-                                                    src={imagePath("./avatar/user-10.jpg")}
-                                                    className="avatarImage avatarImageBorder" /> */}
-                                                    <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {this.state.taskList.patient && this.state.taskList.patient.lastName}</i></span>
+                                                    <img
+                                                        src={this.state.taskList.patient && this.state.taskList.patient.imageString}
+                                                        className="avatarImage avatarImageBorder" alt="patientImage" />
+                                                    <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {(this.state.taskList.patient && getFirstCharOfString(this.state.taskList.patient.lastName))}</i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -121,12 +133,12 @@ class PerformTasks extends Component {
                                                 </div>
                                                 <div className="col-md-7 rightTimerContent">
                                                     {this.state.startService ?
-                                                        <a className="btn btn-primary" onClick={() => { this.startService(1); this.child.handleStartClick(); }}>Start Service</a>
+                                                        <a className="btn btn-primary" onClick={() => { this.startService(1, this.state.taskList.serviceRequestVisitId); this.child.handleStartClick(); }}>Start Service</a>
                                                         :
-                                                        <a className="btn btn-primary" onClick={() => { this.startService(0); this.child.handleStopClick(); }}>Stop Service</a>
+                                                        <a className="btn btn-primary" onClick={() => { this.startService(0, this.state.taskList.serviceRequestVisitId); this.child.handleStopClick(); }}>Stop Service</a>
                                                     }
                                                     {this.state.startedTime ?
-                                                        <span className="TimerStarted">Started at {this.state.startedTime}</span>
+                                                        <span className="TimerStarted">Started at {convertTime24to12(this.state.startedTime)}</span>
                                                         :
                                                         ''
                                                     }
@@ -137,14 +149,16 @@ class PerformTasks extends Component {
                                 </div>
                                 <div className='CardContainers ServiceCategoryWidget'>
                                     <form className='ServiceContent'>
-                                        {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
+                                        {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {                
                                             return (
                                                 <div className="TabContainerWidget" key={serviceType.serviceRequestTypeDetailsId}>
                                                     <div id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer"} onClick={this.toggleCollapse}>
-                                                        {/* <img src={imagePath("./Bathing_Purple.svg")} className="ServiceTasksImg" /> */}
+                                                        <img src={require("../../../../assets/images/Bathing_Purple.svg")} className="ServiceTasksImg" alt="categoryImage" />
                                                         <div className="TabHeaderContent">
                                                             <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>
-                                                            <span><i className="SelectedTask">{this.state.checkedCount}</i>
+                                                            <span><i className="SelectedTask">{serviceType.serviceRequestTypeTaskVisits.filter((taskList) => {
+                                                                return taskList.checked
+                                                            }).length}</i>
                                                                 <i className="TotalTasks">/{(serviceType.serviceRequestTypeTaskVisits).length}</i> tasks completed</span>
                                                         </div>
                                                     </div>
@@ -152,6 +166,7 @@ class PerformTasks extends Component {
                                                         <Card>
                                                             <CardBody>
                                                                 {serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
+                                                                    console.log(taskList.length)
                                                                     return (
                                                                         <div className='ServiceList' key={taskList.serviceRequestTypeTaskDetailsId}>
                                                                             <input
@@ -160,7 +175,10 @@ class PerformTasks extends Component {
                                                                                 className='ServicesInput'
                                                                                 name='serviceType'
                                                                                 value={taskList.serviceRequestTypeTaskVisitId}
-                                                                                onChange={(e) => this.handleChange(taskList)}
+                                                                                onChange={(e) => {
+                                                                                    taskList.checked = e.target.checked;
+                                                                                    this.handleChange(taskList);
+                                                                                }}
                                                                             />
                                                                             <label className='ServicesLink' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
                                                                                 <div className='servicesDesc'>
@@ -186,12 +204,25 @@ class PerformTasks extends Component {
                                                 </span>
                                                 <span className="bottomTaskPercentage">83.3%</span>
                                             </div> */}
-                                            <Link className='btn btn-primary ml-auto' to='' onClick={this.onClickNext}>Next</Link>
+                                            <a className='btn btn-primary ml-auto' onClick={this.onClickNext} disabled={this.state.disabled}>Next</a>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <div className='cardBottom' />
+                            <ModalPopup
+                                isOpen={this.state.isModalOpen}
+                                ModalBody={<span>You have not completed {this.state.taskCount} .Are you sure you want to proceed to the next step?</span>}
+                                btn1="Confirm"
+                                btn2="Cancel"
+                                className="modal-sm"
+                                headerFooter="d-none"
+                                centered={true}
+                                onConfirm={() => this.onSubmit()}
+                                onCancel={() => this.setState({
+                                    isModalOpen: !this.state.isModalOpen,
+                                })}
+                            />
                         </Scrollbars>
                     </div>
                 </div>
@@ -204,7 +235,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: () => dispatch(getPerformTasksList()),
         addPerformedTask: (data) => dispatch(addPerformedTask(data)),
-        startOrStopService: (data) => dispatch(startOrStopService(data))
+        startOrStopService: (data, visitId) => dispatch(startOrStopService(data, visitId))
     }
 };
 

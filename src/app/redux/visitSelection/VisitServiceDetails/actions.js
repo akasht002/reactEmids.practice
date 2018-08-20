@@ -27,7 +27,8 @@ export function getVisitServiceDetails(data) {
     return (dispatch) => {
         dispatch(getVisitServiceSchedule(data))
         dispatch(startLoading());
-        axios.get(baseURL + API.getServiceRequestDetails + '1').then((resp) => {
+        // axios.get(baseURL + API.getServiceRequestDetails + data).then((resp) => {
+            axios.get(baseURL + API.getServiceRequestDetails + '1').then((resp) => {
             dispatch(getVisitServiceDetailsSuccess(resp.data))           
             dispatch(push(Path.visitServiceDetails))
             dispatch(endLoading());

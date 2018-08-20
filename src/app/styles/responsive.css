@@ -114,9 +114,21 @@ html{height: 100%!important;
             width: 90%;
             margin: 0 auto;
         }
-    }
     
-    nav.navbarProfile{
+    }    
+    @media (max-height: 768px) {
+        
+        .nav-item p{
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .nav-item h5{
+            font-size: 18px;
+        }
+    }
+
+    @media (max-height: 468px) {
+        nav.navbarProfile{
         padding: 1rem;
     }
     
@@ -141,17 +153,8 @@ html{height: 100%!important;
     ul.SearchWidget{
         margin: 10px 0;
     }
-    
-    @media (max-height: 768px) {
-        
-        .nav-item p{
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-        .nav-item h5{
-            font-size: 18px;
-        }
-    }
+}
+
     body{overflow: hidden!important;}
     
     

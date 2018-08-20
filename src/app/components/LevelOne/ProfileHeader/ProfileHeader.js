@@ -16,14 +16,17 @@ class ProfileHeader extends React.Component {
         super(props);
         this.toggle = this.toggle.bind(this);
         this.state = {
-            isOpen: false,
+            dropDownOpen: false,
             dBlock: "",
         };
     }
 
     toggle() {
+        // this.setState({
+        //     isOpen: !this.state.isOpen
+        // });
         this.setState({
-            isOpen: !this.state.isOpen
+            dropdownOpen: !this.state.dropdownOpen
         });
     }
 
@@ -50,8 +53,8 @@ class ProfileHeader extends React.Component {
         return (
             <Navbar className="navbar-light navbarProfile boxShadowBottom bgWhite" expand="md">
                 <NavbarBrand className="text-uppercase">Coreo Home</NavbarBrand>
-                <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
-                <Collapse isOpen={this.state.isOpen} navbar>
+                <NavbarToggler className={this.state.dBlock} onClick={this.props.toggle} />
+                <Collapse isOpen={false} navbar>
                     <Nav navbar className="SearchWidget width100">
                         <SearchInput
                             name="search"

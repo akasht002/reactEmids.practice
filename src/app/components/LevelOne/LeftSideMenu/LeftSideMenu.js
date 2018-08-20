@@ -39,12 +39,14 @@ class LeftSideMenu extends React.Component {
                                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                             />
                         </svg>
-                        {/* <img className="ProfileImage" src={imagePath("./avatar/user-5.jpg")}/> */}
+                        <img className="ProfileImage" src={require('../../../assets/images/avatar/user-5.jpg')}/>
                     </div>
                 </div>
                 <div className='ProfileNameWidget'>
                     <div className='ProfileNameContent'>
-                        <div className="form-group">
+                    <p>John Smith</p>
+                        {/* <div className="form-group">
+                        
                             <Select
                                 id="ProfileName"
                                 multiple={false}
@@ -57,7 +59,7 @@ class LeftSideMenu extends React.Component {
                                 onChange={this.optionChanged.bind(this)}
                                 value={this.state.selectedValue}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <ul className="ProfileSideNavigation">
@@ -66,7 +68,7 @@ class LeftSideMenu extends React.Component {
                             <span>Dashboard</span></Link>
                     </li>
                     <li className='profileSideNavigationList'>
-                        <Link className='profileSideNavigationLink' to='/'>
+                        <Link className='profileSideNavigationLink' to='/visitServiceList'>
                             <i className='iconProfile iconProfileServiceRequest'/><span>Service Requests</span></Link>
                     </li>
                     <li className='profileSideNavigationList'>
