@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CallbackComponent } from "redux-oidc";
-import userManager from "../../utils/userManager";
-import { ScreenCover } from '../../components';
-import { onLoginSuccess, onLoginFail } from '../../redux/auth/login/actions';
+import userManager from "../../../utils/userManager";
+import { ScreenCover } from '../../../components';
+import { onLoginSuccess, onLoginFail } from '../../../redux/auth/login/actions';
 
-class LoginCallBack extends React.Component {
+class LoginCallBack extends Component {
   render() {
     return (
       <ScreenCover onPress={this.onBtnPress}>
@@ -16,7 +16,6 @@ class LoginCallBack extends React.Component {
           }}
           errorCallback={error => {
             this.props.onLoginFail();
-            console.error(error);
           }}>
           <div>Redirecting...</div>
         </CallbackComponent>

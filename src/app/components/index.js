@@ -18,6 +18,7 @@ import {
     ModalPopup, 
     PanelCard,
     ScreenCover,
+    LoginCover,
     ModalUserAgreement,
     ProfileModalPopup,
     SkillsMultiSelect,
@@ -56,5 +57,6 @@ export {
     ModalUserAgreement,
     ProfileModalPopup,
     SkillsMultiSelect,
-    LanguagesMultiSelect
+    LanguagesMultiSelect,
+    LoginCover
 };

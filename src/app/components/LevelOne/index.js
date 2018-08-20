@@ -11,6 +11,7 @@ import PanelCard from './PanelCard';
 import {ScreenCover} from './ScreenCover';
 import {SkillsMultiSelect} from './SkillsMultiSelect';
 import {LanguagesMultiSelect} from './LanguagesMultiSelect';
+import {LoginCover} from './LoginCover';
 import Scrollbars from "../LevelOne/CustomScrollbar"
 
 export {
@@ -27,5 +28,6 @@ export {
     ProfileModalPopup,
     SkillsMultiSelect,
     LanguagesMultiSelect,
+    LoginCover,
     Scrollbars
 };
