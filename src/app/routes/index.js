@@ -33,7 +33,8 @@ export const Path = {
   verifyContact: '/verifycontact',
   onboardSuccess: '/onboardsuccess',
   profile: '/profile',
-    loginCallBack: '/loginCallBack',
+  home:'/home',
+  loginCallBack: '/loginCallBack',
 };
 
 class AppStackRoot extends Component {

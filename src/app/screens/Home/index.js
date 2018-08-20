@@ -6,34 +6,15 @@ import { Button } from '../../components';
 import { onLogin } from '../../redux/auth/login/actions';
 import { onLogout } from '../../redux/auth/logout/actions';
 import  '../../styles/onBoarding.css';
+import { loadData } from '../../utils/storage';
+import { slider } from '../../data/HomeScreen'
 
 class Home extends PureComponent {
 
     constructor(props) {
         super(props);
         this.state = ({
-            slider: [
-                {
-                    title: 'Your Caring Companion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
-                },
-                {
-                    title: 'Your Caring Compassion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
-                },
-                {
-                    title: 'Your Caring Companion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
-                },
-                {
-                    title: 'Your Caring Compassion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
-                },
-                {
-                    title: 'Your Caring Companion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
-                },
-            ],
+            slider: slider,
             activeIndex: 1,
             left: 0,
             sliderWidth: window.innerWidth,
@@ -78,15 +59,16 @@ class Home extends PureComponent {
 
     componentDidMount() {
         this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+        window.addEventListener('resize', this.updateWindowDimensions());
+        let test = loadData("userData");
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
-        window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+        window.removeEventListener('resize', this.updateWindowDimensions());
     }
 
-    updateWindowDimensions() {
+    updateWindowDimensions = () => {
         this.setState({sliderWidth: window.innerWidth, sliderHeight: window.innerHeight});
     }
 
@@ -175,7 +157,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    debugger;
   return {
     user: state.oidc.user,
   }

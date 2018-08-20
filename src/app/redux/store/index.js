@@ -10,7 +10,6 @@ const loggerMiddleware = createLogger();
 export default function configureStore(history) {
     const middleware = routerHistoryMiddleware(history);
     const reeduxMiddleware = routerMiddleware(history);
-    // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 	return createStore(
 		rootReducer,
 		compose(
