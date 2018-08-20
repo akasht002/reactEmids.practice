@@ -11,7 +11,6 @@ import {
   Profile,
   VisitServiceList,
   VisitServiceDetails,
-  VisitServiceProcessing,
   PerformTasks,
   Feedback
 } from '../screens'
@@ -26,7 +25,6 @@ export const Path = {
   profile: '/profile',
   visitServiceList: '/Visitservicelist',
   visitServiceDetails: '/visitservicedetails',
-  visitServiceProcessing:'/visitserviceprocessing',
   performTasks:'/performtasks',
   feedback:'/feedback'
 };
@@ -45,7 +43,6 @@ class AppStackRoot extends React.Component {
             <Route path={Path.profile} component={Profile} />
             <Route path={Path.visitServiceList} component={VisitServiceList} />
             <Route path={Path.visitServiceDetails} component={VisitServiceDetails} />
-            <Route path={Path.visitServiceProcessing} component={VisitServiceProcessing} />
             <Route path={Path.performTasks} component={PerformTasks} />
             <Route path={Path.feedback} component={Feedback} />
           </Switch>

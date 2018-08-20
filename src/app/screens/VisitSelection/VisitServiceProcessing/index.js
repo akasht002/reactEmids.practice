@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import { LeftSideMenu, ProfileHeader, Scrollbars, Wizard } from '../../../components';
 import './style.css'
 import './style1.css'
-// import { getVisitServiceList } from '../../../redux/visitSelection/VisitServiceList/actions';
 
 class VisitServiceProcessing extends Component {
 

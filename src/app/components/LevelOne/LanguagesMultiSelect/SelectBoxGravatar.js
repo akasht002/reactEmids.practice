@@ -56,7 +56,7 @@ const Gravatar = createClass({
                     alt={`${formattedValue}`}
                     style={this.props.style}
                     // src={retinaSrc}
-                    src={require('../../../assets/images/Flags/flags/' + src)}
+                    src={require('../../../assets/images/Flags/' + src)}
                     height={this.props.size}
                     width={this.props.size}
                     {...rest}
@@ -70,7 +70,7 @@ const Gravatar = createClass({
                 style={this.props.style}
                 // src={src}
                 // srcSet={`${retinaSrc} 2x`}
-                src={require('../../../assets/images/Flags/flags/' + src)}
+                src={require('../../../assets/images/Flags/' + src)}
                 height={this.props.size}
                 width={this.props.size}
                 {...rest}
