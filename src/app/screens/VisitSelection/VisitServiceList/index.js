@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 import { getVisitServiceList } from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components';
+import { getFirstCharOfString } from '../../../utils/validations'
 import { VISIT_SERVICE_STATUS_OPEN, VISIT_SERVICE_STATUS_APPLIED, VISIT_SERVICE_STATUS_INVITED } from '../../../constants/constants'
 import './style.css'
 
@@ -60,7 +61,7 @@ class VisitServiceList extends Component {
                             <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
-                                    {serviceList.patientName}
+                                    {serviceList.patientName} {serviceList.lastName && getFirstCharOfString(serviceList.lastName)}
                                 </div>
                                 <div className='BlockProfileDetailsActivity'>
                                     Posted on <Moment format="DD MMM">{serviceList.requestDate}</Moment>

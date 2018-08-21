@@ -13,7 +13,8 @@ import {
   VisitServiceDetails,
   PerformTasks,
   Feedback,
-  Home
+  Home,
+  Summary
 } from '../screens';
 import { PrivateRoute } from './privateRouter';
 
@@ -43,6 +44,7 @@ export const Path = {
   feedback:'/feedback',
   home:'/home',
   loginCallBack: '/loginCallBack',
+  summary: '/summary'
 };
 
 class AppStackRoot extends Component {
@@ -61,6 +63,7 @@ class AppStackRoot extends Component {
             <Route path={Path.visitServiceDetails} component={VisitServiceDetails} />
             <Route path={Path.performTasks} component={PerformTasks} />
             <Route path={Path.feedback} component={Feedback} />
+            <Route path={Path.summary} component={Summary} />
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
             <PrivateRoute path={Path.profile} component={Profile} />
           </Switch>
