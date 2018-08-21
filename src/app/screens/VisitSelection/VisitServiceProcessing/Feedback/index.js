@@ -131,7 +131,7 @@ class Feedback extends Component {
                                     <form className='ServiceContent'>
                                         <div className="FeedbackWidget">
                                             <div className="FeedbackRating">
-                                                <p>Please rate your experience in engaging with {this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName}</p>
+                                                <p>Rate {this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</p>
                                                 <div className="FeedbackContent">
                                                     <fieldset className="rating" onChange={(e) => this.handleSelectedRating(e)}>
                                                         <input type="radio" id="star5" name="rating" value="5" />

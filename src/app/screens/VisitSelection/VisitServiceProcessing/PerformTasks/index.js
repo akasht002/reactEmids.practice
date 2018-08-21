@@ -108,7 +108,7 @@ class PerformTasks extends Component {
                                         <a className="TitleContent backProfileIcon" />
                                         <div className='requestContent'>
                                             <div className='requestNameContent'>
-                                                <span><i className='requestName'><Moment format="DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestId}</span>
+                                                <span><i className='requestName'>Sun, <Moment format="DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestId}</span>
                                             </div>
                                             <div className='requestImageContent'>
                                                 <span>
