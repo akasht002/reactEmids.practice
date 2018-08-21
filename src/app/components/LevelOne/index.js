@@ -1,29 +1,29 @@
-import {Calendar} from './Calendar';
-import {CoreoWizFooter} from './CoreoWizFooter';
-import {CoreoWizFlow} from './CoreoWizFlow';
-import {Footer} from './Footer';
-import {Header} from './Header';
-import {ProfileHeader} from './ProfileHeader';
-import {ModalPopup} from './ModalPopup';
-import {ModalUserAgreement} from './ModalUserAgreement';
-import {ProfileModalPopup} from './ProfileModalPopup';
+import { Calendar } from './Calendar';
+import { CoreoWizFooter } from './CoreoWizFooter';
+import { CoreoWizFlow } from './CoreoWizFlow';
+import { Footer } from './Footer';
+import { Header } from './Header';
+import { ProfileHeader } from './ProfileHeader';
+import { ModalPopup } from './ModalPopup';
+import { ModalUserAgreement } from './ModalUserAgreement';
+import { ProfileModalPopup } from './ProfileModalPopup';
 import PanelCard from './PanelCard';
-import {ScreenCover} from './ScreenCover';
-import {SkillsMultiSelect} from './SkillsMultiSelect';
-import {LanguagesMultiSelect} from './LanguagesMultiSelect';
-import {LeftSideMenu} from './LeftSideMenu';
-import {Wizard} from './Wizard';
-import {DashboardWizFlow} from './Dashboard/WizFlow';
-import Scrollbars from "../LevelOne/CustomScrollbar"
+import { ScreenCover } from './ScreenCover';
+import { SkillsMultiSelect } from './SkillsMultiSelect';
+import { LanguagesMultiSelect } from './LanguagesMultiSelect';
+import { LeftSideMenu } from './LeftSideMenu';
+import { DashboardWizFlow } from './Dashboard/WizFlow';
+import Scrollbars from "../LevelOne/CustomScrollbar";
+import { StarRating } from "./StarRating";
 
 export {
-    Calendar, 
-    CoreoWizFooter, 
-    CoreoWizFlow, 
-    Footer, 
-    Header, 
+    Calendar,
+    CoreoWizFooter,
+    CoreoWizFlow,
+    Footer,
+    Header,
     ProfileHeader,
-    ModalPopup, 
+    ModalPopup,
     PanelCard,
     ScreenCover,
     ModalUserAgreement,
@@ -31,7 +31,7 @@ export {
     SkillsMultiSelect,
     LanguagesMultiSelect,
     LeftSideMenu,
-    Wizard,
     DashboardWizFlow,
-    Scrollbars
+    Scrollbars,
+    StarRating
 };

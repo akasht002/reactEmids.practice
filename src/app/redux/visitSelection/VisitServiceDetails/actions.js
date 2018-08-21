@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API, baseURLServiceRequest } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
@@ -27,8 +27,7 @@ export function getVisitServiceDetails(data) {
     return (dispatch) => {
         dispatch(getVisitServiceSchedule(data))
         dispatch(startLoading());
-        // axios.get(baseURL + API.getServiceRequestDetails + data).then((resp) => {
-            axios.get(baseURL + API.getServiceRequestDetails + '1').then((resp) => {
+        axios.get(baseURLServiceRequest + API.getServiceRequestDetails + data).then((resp) => {
             dispatch(getVisitServiceDetailsSuccess(resp.data))           
             dispatch(push(Path.visitServiceDetails))
             dispatch(endLoading());
@@ -41,7 +40,7 @@ export function getVisitServiceDetails(data) {
 export function getVisitServiceSchedule(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURL + API.getServiceRequestSchedule + '1').then((resp) => {
+        axios.get(baseURLServiceRequest + API.getServiceRequestSchedule + '1').then((resp) => {
             dispatch(getVisitServiceScheduleSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import './style.css'
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
-import { convertTime24to12, getFirstCharOfString } from '../../../../utils/validations'
+import { getFirstCharOfString } from '../../../../utils/validations'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
 import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components';
+import './style.css'
 
 class Feedback extends Component {
 
@@ -25,7 +24,7 @@ class Feedback extends Component {
         this.selectedAnswers = [];
     };
 
-    toggle() {
+    toggle = () => {
         this.setState({ collapse: !this.state.collapse });
     }
 
@@ -82,7 +81,7 @@ class Feedback extends Component {
             <section className="d-flex">
                 <LeftSideMenu isOpen={this.state.isOpen} />
                 <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.toggle.bind(this)} />
+                    <ProfileHeader toggle={this.toggle} />
                     <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)} />
                     <div className='ProfileRightContainer'>
                         <div className='ProfileHeaderWidget'>
@@ -102,9 +101,9 @@ class Feedback extends Component {
                                             </div>
                                             <div className='requestImageContent'>
                                                 <span>
-                                                <img
+                                                    <img
                                                         src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
-                                                        className="avatarImage avatarImageBorder" alt="patientImage"/>
+                                                        className="avatarImage avatarImageBorder" alt="patientImage" />
                                                     <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i></span>
                                             </div>
                                         </div>
@@ -178,7 +177,7 @@ class Feedback extends Component {
 
                                                         if (questionList.answerTypeDescription === 'OpenText') {
                                                             return (
-                                                                <div className="FeedbackQuestionWidget" key={questionList.feedbackQuestionnaireId}> 
+                                                                <div className="FeedbackQuestionWidget" key={questionList.feedbackQuestionnaireId}>
                                                                     <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
                                                                     <div className='FeedbackAnswerWidget'>
                                                                         {questionList.answers.map((answer, i) => {

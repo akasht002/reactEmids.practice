@@ -1,5 +1,3 @@
-export const ACTIVE = "active";
-export const VISITED = "visited";
 //OIDC auth config for implicit mode
 export const AUTH_CONFIG_IMPLICIT = {
     clientId : "js",

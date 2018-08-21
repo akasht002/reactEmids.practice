@@ -28,12 +28,12 @@ class PerformTasks extends Component {
             isModalOpen: false,
             disabled: true,
             taskCount: '',
-            a:''
+            a: ''
         };
         this.checkedTask = [];
     };
 
-    toggle() {
+    toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
@@ -57,7 +57,8 @@ class PerformTasks extends Component {
     }
 
     startService = (data, visitId) => {
-        if (data === 1) {
+        let startServiceAction = 1;
+        if (data === startServiceAction) {
             let current_time = new moment().format("HH:mm");
             this.setState({ startedTime: current_time })
         }
@@ -66,10 +67,9 @@ class PerformTasks extends Component {
     }
 
     onClickNext = () => {
-        if (!this.state.startService) {
-            // if()
+        // if (!this.state.startService) {
             this.setState({ isModalOpen: true })
-        }
+        //}
     }
 
     onSubmit = () => {
@@ -86,13 +86,14 @@ class PerformTasks extends Component {
     }
 
     render() {
-
+        let startService = 1;
+        let stopService = 0;
         return (
             <section className="d-flex" >
                 <LeftSideMenu isOpen={this.state.isOpen} />
                 <div className="container-fluid ProfileRightWidget">
                     <ProfileHeader />
-                    <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)} />
+                    <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle} />
                     <div className='ProfileRightContainer'>
                         <div className='ProfileHeaderWidget'>
                             <div className='ProfileHeaderTitle'>
@@ -133,9 +134,9 @@ class PerformTasks extends Component {
                                                 </div>
                                                 <div className="col-md-7 rightTimerContent">
                                                     {this.state.startService ?
-                                                        <a className="btn btn-primary" onClick={() => { this.startService(1, this.state.taskList.serviceRequestVisitId); this.child.handleStartClick(); }}>Start Service</a>
+                                                        <a className="btn btn-primary" onClick={() => { this.startService(startService, this.state.taskList.serviceRequestVisitId); this.child.handleStartClick(); }}>Start Service</a>
                                                         :
-                                                        <a className="btn btn-primary" onClick={() => { this.startService(0, this.state.taskList.serviceRequestVisitId); this.child.handleStopClick(); }}>Stop Service</a>
+                                                        <a className="btn btn-primary" onClick={() => { this.startService(stopService, this.state.taskList.serviceRequestVisitId); this.child.handleStopClick(); }}>Stop Service</a>
                                                     }
                                                     {this.state.startedTime ?
                                                         <span className="TimerStarted">Started at {convertTime24to12(this.state.startedTime)}</span>
@@ -149,7 +150,7 @@ class PerformTasks extends Component {
                                 </div>
                                 <div className='CardContainers ServiceCategoryWidget'>
                                     <form className='ServiceContent'>
-                                        {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {                
+                                        {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
                                             return (
                                                 <div className="TabContainerWidget" key={serviceType.serviceRequestTypeDetailsId}>
                                                     <div id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer"} onClick={this.toggleCollapse}>
@@ -204,7 +205,7 @@ class PerformTasks extends Component {
                                                 </span>
                                                 <span className="bottomTaskPercentage">83.3%</span>
                                             </div> */}
-                                            <a className='btn btn-primary ml-auto' onClick={this.onClickNext} disabled={this.state.disabled}>Next</a>
+                                            <a className='btn btn-primary ml-auto' onClick={this.onClickNext}>Next</a>
                                         </div>
                                     </form>
                                 </div>

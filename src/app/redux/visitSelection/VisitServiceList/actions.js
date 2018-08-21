@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API, baseURLServiceRequest } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
 
 export const VisitServiceList = {
@@ -15,8 +15,9 @@ export const getVisitServiceListSuccess = (data) => {
 
 export function getVisitServiceList() {
     return (dispatch) => {
+        let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.getServiceRequestList + '1').then((resp) => {
+        axios.get(baseURLServiceRequest + API.getServiceRequestList + serviceProviderId).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

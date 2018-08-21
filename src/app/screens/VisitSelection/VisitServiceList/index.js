@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Link } from "react-router-dom";
+import Moment from 'react-moment';
 import { getVisitServiceList } from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import Moment from 'react-moment';
 import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components';
+import { VISIT_SERVICE_STATUS_OPEN, VISIT_SERVICE_STATUS_APPLIED, VISIT_SERVICE_STATUS_INVITED } from '../../../constants/constants'
 import './style.css'
 
 class VisitServiceList extends Component {
@@ -67,17 +67,17 @@ class VisitServiceList extends Component {
                                 </div>
                             </div>
                             <div class='BlockProfileDetailsStatus'>
-                                {serviceList.statusName === 'Open' ?
+                                {serviceList.statusName === VISIT_SERVICE_STATUS_OPEN ?
                                     <a className='btn btn-hired' to='/'>{serviceList.statusName}</a>
                                     :
                                     ''
                                 }
-                                {serviceList.statusName === 'Applied' ?
+                                {serviceList.statusName === VISIT_SERVICE_STATUS_APPLIED ?
                                     <a className='btn btn-applied' to='/'>{serviceList.statusName}</a>
                                     :
                                     ''
                                 }
-                                {serviceList.statusName === 'Invited' ?
+                                {serviceList.statusName === VISIT_SERVICE_STATUS_INVITED ?
                                     <a className='btn btn-outline-primary btn-invited' to='/'>{serviceList.statusName}</a>
                                     :
                                     ''

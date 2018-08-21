@@ -1,13 +1,11 @@
 export const VisitProcessingNavigationData = [
     {
         id: 0,
-        title: 'Tasks',
-        
+        title: 'Tasks',     
     },
     {
         id: 1,
-        title: 'Feedback',
-        
+        title: 'Feedback', 
     },
     {
         id: 2,

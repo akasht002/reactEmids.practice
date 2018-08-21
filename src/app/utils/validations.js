@@ -1,6 +1,6 @@
 
 import moment from 'moment';
-import { DATE_FORMAT, DATE_YEAR } from '../constants/variables';
+import { DATE_FORMAT, DATE_YEAR } from '../constants/constants';
 import _ from 'lodash'
 
 const genderID = [{'Female':1},{'Male':2}]

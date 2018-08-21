@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { push } from '../../../redux/navigation/actions';
-import { Path } from '../../../routes';
-import PerformTasks from './PerformTasks/index';
-import Feedback from './Feedback/index';
-import Summary from './Summary/index';
 import { Link } from "react-router-dom";
-import { LeftSideMenu, ProfileHeader, Scrollbars, Wizard } from '../../../components';
+import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components';
 import './style.css'
-import './style1.css'
 
 class VisitServiceProcessing extends Component {
 
@@ -20,14 +14,10 @@ class VisitServiceProcessing extends Component {
         };
     };
 
-    toggle() {
+    toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
-    }
-
-    componentDidMount() {
-
     }
 
     render() {
@@ -36,7 +26,7 @@ class VisitServiceProcessing extends Component {
             <section className="d-flex">
                 <LeftSideMenu isOpen={this.state.isOpen} />
                 <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.toggle.bind(this)} />
+                    <ProfileHeader toggle={this.toggle} />
                     <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)} />
                     <div className='ProfileRightContainer'>
                         <div className='ProfileHeaderWidget'>
@@ -56,9 +46,6 @@ class VisitServiceProcessing extends Component {
                                             </div>
                                             <div className='requestImageContent'>
                                                 <span>
-                                                    {/* <img
-                                                    src={imagePath("./avatar/user-10.jpg")}
-                                                    className="avatarImage avatarImageBorder" /> */}
                                                     <i className='requestName'>Christopher W</i></span>
                                             </div>
                                         </div>
@@ -67,7 +54,6 @@ class VisitServiceProcessing extends Component {
                                 <div className='CardContainers WizardWidget'>
                                     <div className="row">
                                         <div className="col col-md-9 WizardContent">
-                                            <Wizard />
                                         </div>
                                         <div className="col col-md-3 rightTimerWidget">
                                             <div className="row rightTimerContainer">
@@ -83,9 +69,6 @@ class VisitServiceProcessing extends Component {
                                     </div>
                                 </div>
                                 <div className='CardContainers ServiceCategoryWidget'>
-                                    {/* <PerformTasks /> */}
-                                    <Feedback />
-                                    {/* <Summary /> */}
                                 </div>
                             </div>
                             <div className='cardBottom' />
@@ -97,16 +80,4 @@ class VisitServiceProcessing extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-
-    }
-};
-
-function mapStateToProps(state) {
-    return {
-
-    };
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VisitServiceProcessing));
+export default withRouter(connect(VisitServiceProcessing));

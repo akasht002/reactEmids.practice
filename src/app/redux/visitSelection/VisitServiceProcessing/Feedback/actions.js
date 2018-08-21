@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API, baseURL } from '../../../../services/api';
+import { API, baseURLServiceRequest } from '../../../../services/api';
 import { startLoading, endLoading } from '../../../loading/actions';
 
 export const QuestionsList = {
@@ -16,7 +16,7 @@ export const getQuestionsListSuccess = (data) => {
 export function getQuestionsList() {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURL + API.getQuestionsList).then((resp) => {
+        axios.get(baseURLServiceRequest + API.getQuestionsList).then((resp) => {
             dispatch(getQuestionsListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -28,7 +28,7 @@ export function getQuestionsList() {
 export function saveAnswers(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.post(baseURL + API.saveAnswers, data).then((resp) => {
+        axios.post(baseURLServiceRequest + API.saveAnswers, data).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

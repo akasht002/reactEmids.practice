@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import './style.css'
 import { Link } from "react-router-dom";
-import { Collapse, CardBody, Card } from 'reactstrap';
-import NumericInput from 'react-numeric-input';
 
 class Summary extends Component {
 
@@ -17,11 +14,11 @@ class Summary extends Component {
         };
     };
 
-    toggle() {
+    toggle = () => {
         this.setState({collapse: !this.state.collapse});
     }
 
-    AdjustTime(){
+    AdjustTime = () =>{
         this.setState({
             modal: !this.state.modal
         });
@@ -38,7 +35,7 @@ class Summary extends Component {
                     Time taken to complete the service
                 </p>
                 <p className="AdjustTimeContent">
-                    HH <NumericInput min={0} max={12} value={12} className="NumericInput"/> MM <NumericInput min={0} max={60} value={55} className="NumericInput"/>
+                    HH 
                 </p>
             </form>
         }
@@ -65,7 +62,7 @@ class Summary extends Component {
                             <p className="SummaryContentTitle">Payment Details</p>
 
                             <div className="row CostTableWidget">
-                                <span className="EditIcon" onClick={this.AdjustTime.bind(this)} />
+                                <span className="EditIcon" onClick={this.AdjustTime} />
                                 <div className="col-md-8 CostTableContainer Label">
                                     <p><span>Total Chargeable Time</span>
                                         <span>Hourly Rate</span></p>
@@ -111,16 +108,6 @@ class Summary extends Component {
                         <Link className='btn btn-primary' to='/schedulerequest'>Proceed to Payment</Link>
                     </div>
                 </div>
-
-                {/* <ServiceProviderModalTemplate
-                    isOpen={this.state.modal}
-                    toggle={this.AdjustTime.bind(this)}
-                    ModalBody={ModalContent}
-                    className="modal-lg"
-                    modalTitle="Adjust Time"
-                    centered="centered"
-                /> */}
-
             </form>
         );
     }

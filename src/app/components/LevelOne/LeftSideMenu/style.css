@@ -218,29 +218,29 @@
 }
 
 .iconProfileDashboard{
-    background-image: url("../../../assets/images/DashboardWhite.svg");
+    background-image: url("../../../assets/images/icons/dashboard.svg");
 }
 
 .iconProfileServiceRequest{
-    background-image: url("../../../assets/images/ServiceRequestWhite.svg");
+    background-image: url("../../../assets/images/icons/service_request.svg");
 }
 
 .iconProfileServiceVisits{
-    background-image: url("../../../assets/images/MyServiceVisitsWhite.svg");
+    background-image: url("../../../assets/images/icons/service_visits.svg");
 }
 
 .iconProfileServiceProviders{
-    background-image: url("../../../assets/images/ServiceProvidersWhite.svg");
+    background-image: url("../../../assets/images/icons/service_provider.svg");
 }
 
 .iconProfilePayments{
-    background-image: url("../../../assets/images/PaymentsWhite.svg");
+    background-image: url("../../../assets/images/icons/payments.svg");
 }
 
 .iconProfileMySettings{
-    background-image: url("../../../assets/images/MySettingsWhite.svg");
+    background-image: url("../../../assets/images/icons/settings.svg");
 }
 
 .iconProfileMyConnections{
-    background-image: url("../../../assets/images/MySettingsWhite.svg");
+    background-image: url("../../../assets/images/icons/settings.svg");
 }
