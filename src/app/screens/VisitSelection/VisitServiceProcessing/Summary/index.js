@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
-// import SignaturePad from 'react-signature-pad';
 import SignaturePad from 'react-signature-pad-wrapper'
-import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow } from '../../../../components';
-import { getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow, ProfileModalPopup } from '../../../../components';
+import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
+import moment from 'moment';
 import './style.css'
 
 class Summary extends Component {
@@ -15,18 +15,26 @@ class Summary extends Component {
         super(props);
         this.state = {
             collapse: false,
-            modal: false,
-            summaryDetails: {}
+            isModalOpen: false,
+            summaryDetails: {},
+            updatedHour: '',
+            updatedMin: '',
+            originalEstimation: '',
+            actualEstimation: '',
+            signatureImage: ''
         };
     };
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getSummaryDetails();
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ summaryDetails: nextProps.SummaryDetails })
-        console.log(this.state.summaryDetails)
+        this.setState({
+            summaryDetails: nextProps.SummaryDetails,
+            updatedHour: nextProps.CalculationsData.totalHours,
+            updatedMin: nextProps.CalculationsData.totalMinutes,
+        })
     }
 
     toggle = () => {
@@ -35,27 +43,63 @@ class Summary extends Component {
 
     AdjustTime = () => {
         this.setState({
-            modal: !this.state.modal
+            isModalOpen: !this.state.isModalOpen
         });
     }
 
     saveSignature = () => {
         const data = this.signaturePad.toDataURL();
-        console.log(data);
+        console.log(data)
+        this.setState({ signatureImage: data })
+    }
+
+    onClickNext = () => {
+        this.saveSignature();
+        const data = {
+            serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
+            ServiceProviderId: this.state.summaryDetails.serviceProviderId,
+            ServiceRequestId: this.state.summaryDetails.serviceRequestId,
+            EstimatedClaim: this.state.summaryDetails.estimatedClaim,
+            OutOfPocketAmount: this.state.summaryDetails.outOfPocketAmount,
+            HourlyRate: this.state.summaryDetails.hourlyRate,
+            OriginalTotalDuration: parseInt(this.state.summaryDetails.originalTotalDuration),
+            BilledTotalDuration: (this.props.actualTimeDiff / 1000)  / 60,
+            TaxPaid: this.state.summaryDetails.taxPaid,
+            BilledPerService: this.state.summaryDetails.billedPerService,
+            TotalCost: this.state.summaryDetails.totalCost,
+            Image: "Image"
+        }
+        this.props.saveSummaryDetails(data);
+    }
+
+    updateTime = () => {
+        const data = {
+            hour: parseInt(this.state.updatedHour),
+            min: parseInt(this.state.updatedMin)
+        }
+        this.props.onUpdateTime(data)
     }
 
     render() {
 
-        let ModalContent = '';
-        console.log(this.state.summaryDetails && this.state.summaryDetails)
+        let modalContent = '';
 
-        if (this.state.modal) {
-            ModalContent = <form className="AdjustTimeForm">
+        if (this.state.isModalOpen) {
+            modalContent = <form className="AdjustTimeForm">
                 <p className="AdjustTimeText">
                     Time taken to complete the service
                 </p>
                 <p className="AdjustTimeContent">
-                    HH
+                    HH <input
+                        type="number"
+                        value={this.state.updatedHour}
+                        onChange={(e) => this.setState({ updatedHour: e.target.value })}
+                    />
+                    MM <input
+                        type="number"
+                        value={this.state.updatedMin}
+                        onChange={(e) => this.setState({ updatedMin: e.target.value })}
+                    />
                 </p>
             </form>
         }
@@ -115,8 +159,13 @@ class Summary extends Component {
                                                     <p className="SummaryContentTitle">Service Visit Details</p>
                                                     <div className="row">
                                                         <div className="col-md-8">
-                                                            <p className="CategoryName"><span className="CategoryTitle">Bathing, Grooming, Nursing</span>
-                                                                <span className="CategorySub">Activities of Daily Living</span></p>
+                                                            <p className="CategoryName">
+                                                                <span className="CategoryTitle">
+                                                                    {this.props.SummaryDetails.serviceRequestTypeVisits && this.props.SummaryDetails.serviceRequestTypeVisits.map((serviceType) => {
+                                                                        return serviceType.serviceTypeDescription + ', ';
+                                                                    })}
+                                                                </span>
+                                                                <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span></p>
                                                         </div>
                                                         <div className="col-md-4 SummaryRange">
                                                             <span className="bottomTaskName">Tasks</span>
@@ -137,14 +186,14 @@ class Summary extends Component {
                                                                 <span>Taxes and Fees</span></p>
                                                         </div>
                                                         <div className="col-md-4 CostTableContainer Cost">
-                                                            <p><span>01:45 hrs</span>
+                                                            <p><span>{this.props.CalculationsData.totalChargableTime} hrs</span>
                                                                 <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate}/hr</span></p>
-                                                            <p className="TaxCost"><span>${this.props.SummaryDetails.totalCost && this.props.SummaryDetails.totalCost}</span>
-                                                                <span>${this.props.SummaryDetails.taxPaid && this.props.SummaryDetails.taxPaid}</span></p>
+                                                            <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
+                                                                <span>${this.props.CalculationsData.taxes}</span></p>
                                                         </div>
                                                         <div className="col-md-12 CostTableContainer Total">
                                                             <p className="TotalLabel"><span>Total Cost </span></p>
-                                                            <p className="TotalCost"><span>$32.50</span></p>
+                                                            <p className="TotalCost"><span>${this.props.CalculationsData.grandTotalAmount}</span></p>
                                                         </div>
                                                     </div>
 
@@ -175,13 +224,26 @@ class Summary extends Component {
                                         <div className='bottomButton'>
                                             <div className='ml-auto'>
                                                 <Link className='btn btn-outline-primary mr-3' to='/VisitProcessing'>Previous</Link>
-                                                <Link className='btn btn-primary' to='/schedulerequest'>Proceed to Payment</Link>
+                                                <a className='btn btn-primary' onClick={this.onClickNext}>Proceed to Payment</a>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <div className='cardBottom' />
+                            <ProfileModalPopup
+                                isOpen={this.state.isModalOpen}
+                                ModalBody={modalContent}
+                                modalTitle={'Adjust Time'}
+                                className="modal-lg asyncModal CertificationModal"
+                                centered={true}
+                                onClick={() => {
+                                    this.updateTime(),
+                                        this.setState({
+                                            isModalOpen: !this.state.isModalOpen,
+                                        })
+                                }}
+                            />
                         </Scrollbars>
                     </div>
                 </div>
@@ -193,12 +255,16 @@ class Summary extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetails: () => dispatch(getSummaryDetails()),
+        onUpdateTime: (data) => dispatch(onUpdateTime(data)),
+        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data))
     }
 };
 
 function mapStateToProps(state) {
     return {
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
+        CalculationsData: state.visitSelectionState.VisitServiceProcessingState.SummaryState.CalculationsData,
+        actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff
     };
 };
 

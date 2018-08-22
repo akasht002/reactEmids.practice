@@ -50,7 +50,7 @@ class VisitServiceList extends Component {
                                     }
                                 </div>
                                 <div className='BlockImageDetailsActivity'>
-                                    {serviceList.serviceRequestDescription}
+                                    {serviceList.serviceCategoryDescription}
                                 </div>
                                 <div className='BlockImageDetailsDate'>
                                     {serviceList.recurringPatternDescription} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>

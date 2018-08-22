@@ -43,5 +43,6 @@ export const API = {
     addServiceOffered: 'ServiceProvider/',
     getServiceProviderID:'ServiceProviderOnBoarding/',
     getGender: 'ServiceProviderLookUp/gender',
-    getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/'
+    getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
+    saveSummaryDetails: 'VisitProcessing/'
 }
