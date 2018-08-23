@@ -95,7 +95,7 @@ export function calculationsFirstTime(data) {
         let dataObj = {
             timediffms: timediffms,
             hourlyRate: data.hourlyRate,
-            taxPaid: data.taxPaid
+            taxPaid: data.taxAmount
         }
         dispatch(saveOriginalTimeDiff(dataObj));
         dispatch(calculationActualData());
@@ -114,7 +114,7 @@ export function onUpdateTime(data) {
 export function saveSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.put(baseURLServiceRequest + API.saveSummaryDetails + '3/' + 'SubmitBillingForVisit', data).then((resp) => {
+        axios.put(baseURLServiceRequest + API.saveSummaryDetails + '3', data).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

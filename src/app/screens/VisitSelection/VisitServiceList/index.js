@@ -61,7 +61,7 @@ class VisitServiceList extends Component {
                             <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
-                                    {serviceList.patientName} {serviceList.lastName && getFirstCharOfString(serviceList.lastName)}
+                                    {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
                                 </div>
                                 <div className='BlockProfileDetailsActivity'>
                                     Posted on <Moment format="DD MMM">{serviceList.requestDate}</Moment>

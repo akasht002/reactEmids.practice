@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
-import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow, ProfileModalPopup } from '../../../../components';
+import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow, ProfileModalPopup, GeneralModalPopup } from '../../../../components';
 import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import moment from 'moment';
+import { getFirstCharOfString } from '../../../../utils/validations'
 import './style.css'
 
 class Summary extends Component {
@@ -21,7 +22,8 @@ class Summary extends Component {
             updatedMin: '',
             originalEstimation: '',
             actualEstimation: '',
-            signatureImage: ''
+            signatureImage: '',
+            completedTaskPercent:''
         };
     };
 
@@ -63,11 +65,11 @@ class Summary extends Component {
             OutOfPocketAmount: this.state.summaryDetails.outOfPocketAmount,
             HourlyRate: this.state.summaryDetails.hourlyRate,
             OriginalTotalDuration: parseInt(this.state.summaryDetails.originalTotalDuration),
-            BilledTotalDuration: (this.props.actualTimeDiff / 1000)  / 60,
-            TaxPaid: this.state.summaryDetails.taxPaid,
-            BilledPerService: this.state.summaryDetails.billedPerService,
-            TotalCost: this.state.summaryDetails.totalCost,
-            Image: "Image"
+            BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
+            TaxPaid: this.props.CalculationsData.taxes,
+            BilledPerService: this.props.CalculationsData.totalVisitCost,
+            TotalCost: this.props.CalculationsData.grandTotalAmount,
+            Image: this.state.signatureImage
         }
         this.props.saveSummaryDetails(data);
     }
@@ -83,6 +85,7 @@ class Summary extends Component {
     render() {
 
         let modalContent = '';
+        let completedTaskPercent = (this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100;
 
         if (this.state.isModalOpen) {
             modalContent = <form className="AdjustTimeForm">
@@ -94,11 +97,13 @@ class Summary extends Component {
                         type="number"
                         value={this.state.updatedHour}
                         onChange={(e) => this.setState({ updatedHour: e.target.value })}
+                        style={{ width: 10 + '%' }}
                     />
                     MM <input
                         type="number"
                         value={this.state.updatedMin}
                         onChange={(e) => this.setState({ updatedMin: e.target.value })}
+                        style={{ width: 10 + '%' }}
                     />
                 </p>
             </form>
@@ -113,7 +118,7 @@ class Summary extends Component {
                     <div className='ProfileRightContainer'>
                         <div className='ProfileHeaderWidget'>
                             <div className='ProfileHeaderTitle'>
-                                <h5 className='primaryColor m-0'>Service Requests <span>/ VID97531</span></h5>
+                                <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
                             </div>
                         </div>
                         <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -121,14 +126,24 @@ class Summary extends Component {
                             <div className='card mainProfileCard'>
                                 <div className='CardContainers TitleWizardWidget'>
                                     <div className='TitleContainer'>
-                                        <Link className="TitleContent backProfileIcon" to="/" />
+                                        <a className="TitleContent backProfileIcon" />
                                         <div className='requestContent'>
                                             <div className='requestNameContent'>
-                                                <span><i className='requestName'>Sun, 24 Aug, Morning</i>VID97531</span>
+                                                <span><i className='requestName'>Sun, 24 Aug, Morning</i>1</span>
                                             </div>
                                             <div className='requestImageContent'>
-                                                <span>
-                                                    <i className='requestName'>Christopher W</i></span>
+
+                                                {this.props.patientDetails.patient ?
+                                                    <span>
+                                                        <img
+                                                            src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
+                                                            className="avatarImage avatarImageBorder" alt="patientImage" />
+                                                        <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i>
+                                                    </span>
+                                                    :
+                                                    ''
+                                                }
+
                                             </div>
                                         </div>
                                     </div>
@@ -138,14 +153,13 @@ class Summary extends Component {
                                         <div className="col col-md-9 WizardContent">
                                             <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={2} />
                                         </div>
-                                        <div className="col col-md-3 rightTimerWidget">
+                                        <div className="col col-md-3 rightTimerWidget running">
                                             <div className="row rightTimerContainer">
-                                                <div className="col-md-5 rightTimerContent">
-                                                    <span className="TimerContent">01<i>:</i>45</span>
+                                                <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                                    <span className="TimerContent running">01<i>:</i>45</span>
                                                 </div>
-                                                <div className="col-md-7 rightTimerContent">
-                                                    <Link className="btn btn-primary" to="/">Stop Service</Link>
-                                                    <span className="TimerStarted">Started at 12:30 pm</span>
+                                                <div className="col-md-7 rightTimerContent FeedbackTimer">
+                                                    <span className="TimerStarted running">Started at 12:30 pm</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,15 +184,20 @@ class Summary extends Component {
                                                         <div className="col-md-4 SummaryRange">
                                                             <span className="bottomTaskName">Tasks</span>
                                                             <span className="bottomTaskRange">
-                                                                <i style={{ width: '83.3%' }} className="bottomTaskCompletedRange" />
+                                                                <i style={{ width: completedTaskPercent + '%' }} className="bottomTaskCompletedRange" />
                                                             </span>
-                                                            <span className="bottomTaskPercentage">83.3%</span>
+                                                            <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                         </div>
                                                     </div>
                                                     <p className="SummaryContentTitle">Payment Details</p>
 
                                                     <div className="row CostTableWidget">
-                                                        <span className="EditIcon" onClick={this.AdjustTime} />
+                                                        {!this.state.signatureImage ?
+                                                            <span className="EditIcon" onClick={this.AdjustTime} />
+                                                            :
+                                                            ''
+                                                        }
+
                                                         <div className="col-md-8 CostTableContainer Label">
                                                             <p><span>Total Chargeable Time</span>
                                                                 <span>Hourly Rate</span></p>
@@ -188,12 +207,12 @@ class Summary extends Component {
                                                         <div className="col-md-4 CostTableContainer Cost">
                                                             <p><span>{this.props.CalculationsData.totalChargableTime} hrs</span>
                                                                 <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate}/hr</span></p>
-                                                            <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
-                                                                <span>${this.props.CalculationsData.taxes}</span></p>
+                                                            <p className="TaxCost"><span>${parseFloat(this.props.CalculationsData.totalVisitCost).toFixed(2)}</span>
+                                                                <span>${parseFloat(this.props.CalculationsData.taxes).toFixed(2)}</span></p>
                                                         </div>
                                                         <div className="col-md-12 CostTableContainer Total">
                                                             <p className="TotalLabel"><span>Total Cost </span></p>
-                                                            <p className="TotalCost"><span>${this.props.CalculationsData.grandTotalAmount}</span></p>
+                                                            <p className="TotalCost"><span>${parseFloat(this.props.CalculationsData.grandTotalAmount).toFixed(2)}</span></p>
                                                         </div>
                                                     </div>
 
@@ -217,7 +236,7 @@ class Summary extends Component {
                                                     <div className="SignatureColumn">
                                                         <SignaturePad width={420} height={320} ref={ref => this.signaturePad = ref} />
                                                     </div>
-                                                    <button onClick={this.saveSignature}>log signature</button>
+                                                    {/* <button onClick={this.saveSignature}>log signature</button> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -231,12 +250,13 @@ class Summary extends Component {
                                 </div>
                             </div>
                             <div className='cardBottom' />
-                            <ProfileModalPopup
+                            <GeneralModalPopup
                                 isOpen={this.state.isModalOpen}
                                 ModalBody={modalContent}
                                 modalTitle={'Adjust Time'}
                                 className="modal-lg asyncModal CertificationModal"
                                 centered={true}
+                                label={'Update'}
                                 onClick={() => {
                                     this.updateTime(),
                                         this.setState({
@@ -264,7 +284,8 @@ function mapStateToProps(state) {
     return {
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
         CalculationsData: state.visitSelectionState.VisitServiceProcessingState.SummaryState.CalculationsData,
-        actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff
+        actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,
+        patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList
     };
 };
 

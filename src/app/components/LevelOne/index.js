@@ -15,6 +15,7 @@ import { LeftSideMenu } from './LeftSideMenu';
 import { DashboardWizFlow } from './Dashboard/WizFlow';
 import Scrollbars from "../LevelOne/CustomScrollbar";
 import { StarRating } from "./StarRating";
+import { GeneralModalPopup } from './GeneralModalPopup';
 
 export {
     Calendar,
@@ -33,5 +34,6 @@ export {
     LeftSideMenu,
     DashboardWizFlow,
     Scrollbars,
-    StarRating
+    StarRating,
+    GeneralModalPopup
 };

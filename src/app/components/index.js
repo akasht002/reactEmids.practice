@@ -25,7 +25,8 @@ import {
     LanguagesMultiSelect,
     LeftSideMenu,
     DashboardWizFlow,
-    StarRating
+    StarRating,
+    GeneralModalPopup
 } from './LevelOne';
 import {
     CarouselComp,
@@ -64,5 +65,6 @@ export {
     LeftSideMenu,
     Scrollbars,
     DashboardWizFlow,
-    StarRating
+    StarRating,
+    GeneralModalPopup
 };

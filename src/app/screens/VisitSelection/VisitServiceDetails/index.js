@@ -97,7 +97,7 @@ class VisitServiceDetails extends Component {
             )
         });
 
-        let AvailDays = this.state.visitServiceDetails.serviceRequestSlots && this.state.visitServiceDetails.serviceRequestSlots.map((days, index) => {
+        let AvailDays = this.state.visitServiceDetails.serviceRequestSlot && this.state.visitServiceDetails.serviceRequestSlot.map((days, index) => {
             let Count = '';
             return (
                 <div className={'SPAvailContainer ' + Count + 'Available'}>
@@ -106,7 +106,7 @@ class VisitServiceDetails extends Component {
                     </div>
                     <div className={'SPAvailContent'}>
                         <div>
-                            {days.slot === 'Morning' ?
+                            {days.slotDescription === 'Morning' ?
                                 <div>
                                     <label className="SPAvailItems active">Morning</label>
                                     <label className="SPAvailItems">Afternoon</label>
@@ -115,7 +115,7 @@ class VisitServiceDetails extends Component {
                                 :
                                 ''
                             }
-                            {days.slot === 'Afternoon' ?
+                            {days.slotDescription === 'Afternoon' ?
                                 <div>
                                     <label className="SPAvailItems">Morning</label>
                                     <label className="SPAvailItems active">Afternoon</label>
@@ -124,7 +124,7 @@ class VisitServiceDetails extends Component {
                                 :
                                 ''
                             }
-                            {days.slot === 'Evening' ?
+                            {days.slotDescription === 'Evening' ?
                                 <div>
                                     <label className="SPAvailItems">Morning</label>
                                     <label className="SPAvailItems">Afternoon</label>
@@ -179,7 +179,7 @@ class VisitServiceDetails extends Component {
                                                 <img className="ProfileImage" src={this.state.visitServiceDetails.image} alt="patientImage" />
                                                 <div class='PostedByProfileDetails'>
                                                     <div class='ProfileDetailsName'>
-                                                        {this.state.visitServiceDetails.patientName} {this.state.visitServiceDetails.lastName && getFirstCharOfString(this.state.visitServiceDetails.lastName)}
+                                                        {this.state.visitServiceDetails.patientFirstName} {this.state.visitServiceDetails.patientLastName && getFirstCharOfString(this.state.visitServiceDetails.patientLastName)}
                                                     </div>
                                                     <div class='ProfileDetailsDate'>
                                                         Posted on <Moment format="DD MMM">{this.state.visitServiceDetails.requestDate}</Moment>
