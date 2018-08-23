@@ -98,12 +98,14 @@ class Summary extends Component {
                         value={this.state.updatedHour}
                         onChange={(e) => this.setState({ updatedHour: e.target.value })}
                         style={{ width: 10 + '%' }}
+                        min={0}
                     />
                     MM <input
                         type="number"
                         value={this.state.updatedMin}
                         onChange={(e) => this.setState({ updatedMin: e.target.value })}
                         style={{ width: 10 + '%' }}
+                        min={0}
                     />
                 </p>
             </form>
