@@ -4,6 +4,7 @@ import {startLoading, endLoading} from '../../loading/actions';
 import {clearState as verifyContactClear} from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
 import {Path} from '../../../routes';
+import {encryptPassword} from '../../../utils/encryptPassword';
 
 export const SetPassword = {
     setPassword: 'set_password/setPassword',
@@ -59,8 +60,8 @@ export function setPassword(data) {
     return (dispatch, getState) => {
         let body = {
             userName: data.username,
-            password: data.password,
-            confirmPassword: data.confirmPassword
+            password: encryptPassword(data.password),
+            confirmPassword: encryptPassword(data.confirmPassword)
         };
         dispatch(startLoading());
         axios.post(baseURL + API.setPassword, body).then((resp) => {
