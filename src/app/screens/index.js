@@ -11,6 +11,7 @@ import VisitServiceProcessing from './VisitSelection/VisitServiceProcessing';
 import PerformTasks from './VisitSelection/VisitServiceProcessing/PerformTasks';
 import Feedback from './VisitSelection/VisitServiceProcessing/Feedback';
 import Summary from './VisitSelection/VisitServiceProcessing/Summary';
+import VisitHistory from './VisitHistory'
 import { LoginCallBack } from './Login/LoginCallBack';
 
 export {
@@ -26,6 +27,7 @@ export {
     PerformTasks,
     Feedback,
     Home,
+    VisitHistory,
     LoginCallBack,
     Summary
 };
