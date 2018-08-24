@@ -16,6 +16,7 @@ import { DashboardWizFlow } from './Dashboard/WizFlow';
 import Scrollbars from "../LevelOne/CustomScrollbar";
 import { StarRating } from "./StarRating";
 import { GeneralModalPopup } from './GeneralModalPopup';
+import {LoginCover} from './LoginCover';
 
 export {
     Calendar,
@@ -35,5 +36,6 @@ export {
     DashboardWizFlow,
     Scrollbars,
     StarRating,
-    GeneralModalPopup
+    GeneralModalPopup,
+    LoginCover,
 };

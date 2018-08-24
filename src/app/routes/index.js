@@ -1,5 +1,5 @@
-import React,{Component} from 'react';
-import { Route,Switch } from 'react-router';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
@@ -14,7 +14,12 @@ import {
   PerformTasks,
   Feedback,
   Home,
-  Summary
+  Summary,
+  ForgetPassword,
+  ResetPassword,
+  ResetPasswordSuccess,
+  ResetPasswordConfirmation
+
 } from '../screens';
 import { PrivateRoute } from './privateRouter';
 
@@ -27,7 +32,7 @@ function Loading({ error }) {
 }
 
 const LoginCallBack = Loadable({
-  loader: () => import('../screens/Login/LoginCallBack'),
+  loader: () => import('../screens/Authentication/Login/LoginCallBack'),
   loading: Loading
 });
 
@@ -44,7 +49,11 @@ export const Path = {
   feedback:'/feedback',
   home:'/home',
   loginCallBack: '/loginCallBack',
-  summary: '/summary'
+  summary: '/summary',
+  forgetPassword: '/forgetPassword',
+  resetPassword: '/resetPassword/:uid/:token',
+  resetPasswordSuccess: '/resetPasswordSuccess',
+  resetPasswordConfirmation: '/resetPasswordConfirmation',
 };
 
 class AppStackRoot extends Component {
@@ -65,6 +74,10 @@ class AppStackRoot extends Component {
             <Route path={Path.feedback} component={Feedback} />
             <Route path={Path.summary} component={Summary} />
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
+            <Route path={Path.forgetPassword} component={ForgetPassword} />
+            <Route path={Path.resetPassword} component={ResetPassword} />
+            <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
+            <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
             <PrivateRoute path={Path.profile} component={Profile} />
           </Switch>
         </HashRouter>

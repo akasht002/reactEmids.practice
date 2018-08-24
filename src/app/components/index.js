@@ -19,6 +19,7 @@ import {
     ModalPopup, 
     PanelCard,
     ScreenCover,
+    LoginCover,
     ModalUserAgreement,
     ProfileModalPopup,
     SkillsMultiSelect,
@@ -66,5 +67,6 @@ export {
     Scrollbars,
     DashboardWizFlow,
     StarRating,
-    GeneralModalPopup
+    GeneralModalPopup,
+    LoginCover
 };
