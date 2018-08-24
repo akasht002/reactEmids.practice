@@ -14,7 +14,6 @@ import {
   ResetPassword,
   ResetPasswordSuccess,
   ResetPasswordConfirmation
-
 } from '../screens';
 import { PrivateRoute } from './privateRouter';
 
@@ -40,7 +39,7 @@ export const Path = {
   profile: '/profile',
   loginCallBack: '/loginCallBack',
   forgetPassword: '/forgetPassword',
-  resetPassword: '/resetPassword:uid/:token',
+  resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
   home:'/home',
