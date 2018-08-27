@@ -27,31 +27,31 @@ import {
 import { SETTING } from '../../../services/api'
 
 class PersonalDetail extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       useEllipsis: true,
       EducationModal: false,
       isDiscardModalOpen: false,
-      ModalOrg:true,
+      ModalOrg: true,
       src: null,
       crop: {
         x: 10,
         y: 10,
         width: 80,
         height: 80
-      }
+      }      
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
     this.props.getImage()
     this.props.getGender()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       firstName: nextProps.personalDetail.firstName,
@@ -71,12 +71,24 @@ class PersonalDetail extends React.PureComponent {
       zipCode: getArrayLength(nextProps.personalDetail.address) > 0
         ? nextProps.personalDetail.address[0].zipCode
         : '',
-        phoneNumber: nextProps.personalDetail.phoneNumber,
+      phoneNumber: nextProps.personalDetail.phoneNumber,
       state_id: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
         ? nextProps.personalDetail.address[0].state.id
         : '',
-      isActive: false
-       
+      isActive: false,
+      selectedGender: {
+        label: nextProps.personalDetail.genderName,
+        value: nextProps.personalDetail.genderId + '-'+nextProps.personalDetail.genderName
+      },
+      selectedState: {
+        label: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+        ? nextProps.personalDetail.address[0].state.name
+        : '',
+        value: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+        ? nextProps.personalDetail.address[0].state.id
+        : '' + '-' +getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+        ? nextProps.personalDetail.address[0].state.name:''
+      }
     })
     this.styles = {
       height: 100,
@@ -167,30 +179,30 @@ class PersonalDetail extends React.PureComponent {
     this.setState({
       croppedImage: image
     })
-  } 
+  }
 
-  render () {
+  render() {
     let modalContent
     let modalTitle = 'Edit Personal Detials'
     let modalType = ''
     const cityDetail = this.props.cityDetail.map((city, i) => {
       city.label = city.name
-      city.value = city.id+'-'+city.name
+      city.value = city.id + '-' + city.name
       return city
     }
-  )
-  const genderDetail = this.props.genderList.map((gender, i) => {
-    gender.label = gender.name
-    gender.value = gender.id+'-'+gender.name
-    return gender
-  })
-  
+    )
+    const genderDetail = this.props.genderList.map((gender, i) => {
+      gender.label = gender.name
+      gender.value = gender.id + '-' + gender.name
+      return gender
+    })
 
-  //console.log(this.props.genderList)
+
+    //console.log(this.props.genderList)
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
-        {this.getModalContent(cityDetail,genderDetail)}
+        {this.getModalContent(cityDetail, genderDetail)}
         <BlackoutModal
           isOpen={this.state.uploadImage}
           toggle={this.closeImageUpload}
@@ -386,10 +398,10 @@ class PersonalDetail extends React.PureComponent {
                 </bd>
               </span>
             </div>
-          </div>         
+          </div>
           <div className={'width100'}>
-          {(this.props.personalDetail && this.props.personalDetail.description !=='')?this.props.personalDetail.description
-          :<span className={'SPDescriptionNone'}  onClick={this.togglePersonalDetails.bind(this)}>Edit your profile here</span>}            
+            {(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
+              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails.bind(this)}>Edit your profile here</span>}
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
@@ -435,7 +447,7 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
-  getModalContent = (stateDetail,genderDetail) => {
+  getModalContent = (stateDetail, genderDetail) => {
     return (
       <div className='row'>
         <div className='col-md-12'>
@@ -477,9 +489,9 @@ class PersonalDetail extends React.PureComponent {
                 value={this.state.firstName}
                 className={
                   'form-control ' +
-                    (!this.state.isValid &&
-                      !this.state.firstName &&
-                      'inputFailure')
+                  (!this.state.isValid &&
+                    !this.state.firstName &&
+                    'inputFailure')
                 }
                 textChange={e => {
                   this.setState({ firstName: e.target.value })
@@ -496,12 +508,11 @@ class PersonalDetail extends React.PureComponent {
                   }
                 }}
               />
-              {!this.state.isValid &&
-                !this.state.firstName &&
+              {this.state.firstName === '' && !this.state.isValid &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter  {this.state.firstName === '' && ' First Name'}
+                  Please enter  the firstName
                 </span>}
-              {this.state.firstNameInvaild &&
+              {this.state.firstNameInvaild  &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                   Please enter vaild first name
                 </span>}
@@ -516,9 +527,9 @@ class PersonalDetail extends React.PureComponent {
                 value={this.state.lastName}
                 className={
                   'form-control ' +
-                    (!this.state.isValid &&
-                      !this.state.lastName &&
-                      'inputFailure')
+                  (!this.state.isValid &&
+                    !this.state.lastName &&
+                    'inputFailure')
                 }
                 textChange={e => {
                   this.setState({ lastName: e.target.value })
@@ -535,12 +546,12 @@ class PersonalDetail extends React.PureComponent {
                   }
                 }}
               />
-              {!this.state.isValid && this.state.lastName=== ''&&
+              {!this.state.isValid &&
                 !this.state.lastName &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                   Please enter {this.state.lastName === '' && ' Last Name'}
                 </span>}
-              {this.state.lastNameInvaild && 
+              {this.state.lastNameInvaild &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                   Please enter vaild last name
                 </span>}
@@ -553,11 +564,13 @@ class PersonalDetail extends React.PureComponent {
                   options={genderDetail}
                   simpleValue
                   placeholder='Select Gender'
-                  onChange={value => {
-                    this.setState({ genderName: value })
-                    console.log(value);
+                  onChange={e => {
+                    this.setState({
+                      selectedGender: e
+                    })
+                    console.log(this.state.selectedGender)
                   }}
-                  selectedValue={this.state.genderName}
+                  selectedValue={this.state.selectedGender}
                   className={'inputFailure'}
                 />
               </div>
@@ -593,7 +606,7 @@ class PersonalDetail extends React.PureComponent {
                 value={this.state.yearOfExperience}
                 textChange={e => {
                   const re = /^[0-9\b]+$/
-                  if (e.target.value === '' || re.test(e.target.value))  {
+                  if (e.target.value === '' || re.test(e.target.value)) {
                     this.setState({ yearOfExperience: e.target.value })
                   }
                 }}
@@ -602,71 +615,71 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>
         </div>
-          <div className='col-md-12 mb-2'>
-            <label>Affiliation</label>
-          </div>
-          <div className='col-md-12'>
+        <div className='col-md-12 mb-2'>
+          <label>Affiliation</label>
+        </div>
+        <div className='col-md-12'>
           <div className="form-check mb-2">
             <label className='form-check-label'>
-            Certified member of organization(s)
+              Certified member of organization(s)
             <input
-            className='form-check-input'
-              type='checkbox'
-              maxLength='100'
-              onClick={e => {
-                this.setState({ isActive: e.target.checked })
-              }}
-              defaultChecked={this.state.isActive}
-            />
-            <span class="CheckboxIcon"/>
+                className='form-check-input'
+                type='checkbox'
+                maxLength='100'
+                onClick={e => {
+                  this.setState({ isActive: e.target.checked })
+                }}
+                defaultChecked={this.state.isActive}
+              />
+              <span class="CheckboxIcon" />
             </label>
           </div>
+        </div>
+
+        <div
+          className='col-md-12 mb-2'
+          style={{ visibility: this.state.isActive ? 'visible' : 'hidden' }}
+        >
+          <div className='form-group'>
+            <SelectBox
+              options={[
+                {
+                  label: 'AABB (formerly American Association of Blood Banks)',
+                  value: '1-AABB'
+                },
+                {
+                  label: 'Academy of International Business (AIB)',
+                  value: '2-AABB'
+                },
+                { label: 'Academy of Management (AOM)', value: '3-AOM' },
+                {
+                  label: 'Association for the Advancement of Cost Engineering (AACE International)',
+                  value: '4-AACE International'
+                },
+                {
+                  label: 'Association for Volunteer Administration (AVA)',
+                  value: '5-AVA'
+                },
+                {
+                  label: 'Association of Information Technology Professionals (AITP)',
+                  value: '6-AITP'
+                },
+                {
+                  label: 'Chartered Global Management Accountant (CGMA)',
+                  value: '7-CGMA'
+                }
+              ]}
+              simpleValue
+              placeholder='Select the Organization'
+              onChange={value => {
+                this.setState({ organization: value })
+              }}
+              selectedValue={this.state.organization}
+              className={'inputFailure'}
+            />
           </div>
 
-          <div
-            className='col-md-12 mb-2'
-            style={{ visibility: this.state.isActive ? 'visible' : 'hidden' }}
-          >
-            <div className='form-group'>
-              <SelectBox
-                options={[
-                  {
-                    label: 'AABB (formerly American Association of Blood Banks)',
-                    value: '1-AABB'
-                  },
-                  {
-                    label: 'Academy of International Business (AIB)',
-                    value: '2-AABB'
-                  },
-                  { label: 'Academy of Management (AOM)', value: '3-AOM' },
-                  {
-                    label: 'Association for the Advancement of Cost Engineering (AACE International)',
-                    value: '4-AACE International'
-                  },
-                  {
-                    label: 'Association for Volunteer Administration (AVA)',
-                    value: '5-AVA'
-                  },
-                  {
-                    label: 'Association of Information Technology Professionals (AITP)',
-                    value: '6-AITP'
-                  },
-                  {
-                    label: 'Chartered Global Management Accountant (CGMA)',
-                    value: '7-CGMA'
-                  }
-                ]}
-                simpleValue
-                placeholder='Select the Organization'
-                onChange={value => {
-                  this.setState({ organization: value })
-                }}
-                selectedValue={this.state.organization}
-                className={'inputFailure'}
-              />
-            </div>
-
-          </div>
+        </div>
 
         <div className='col-md-12 mb-2'>
           <TextArea
@@ -692,7 +705,7 @@ class PersonalDetail extends React.PureComponent {
             maxlength='7'
             textChange={e => {
               const re = /^\d*\.?\d{0,2}$/
-              if  (e.target.value === '' || re.test(e.target.value)) {
+              if (e.target.value === '' || re.test(e.target.value)) {
                 this.setState({ hourlyRate: e.target.value })
               }
             }}
@@ -717,9 +730,9 @@ class PersonalDetail extends React.PureComponent {
                       simpleValue
                       placeholder='Select the state'
                       onChange={value => {
-                        this.setState({ state_id: value })
+                        this.setState({ selectedState: value })
                       }}
-                      selectedValue={this.state.state_id}
+                      selectedValue={this.state.selectedState}
                       className={'inputFailure'}
                     />
                   </div>
@@ -773,7 +786,7 @@ class PersonalDetail extends React.PureComponent {
                           if (
                             (e.target.value === '' ||
                               re.test(e.target.value)) &&
-                              getLength(e.target.value) <= 5
+                            getLength(e.target.value) <= 5
                           ) {
                             this.setState({ zipCode: e.target.value })
                           }
@@ -807,9 +820,9 @@ class PersonalDetail extends React.PureComponent {
                     value={this.state.phoneNumber}
                     className={
                       'form-control ' +
-                        (!this.state.isValid &&
-                          !this.state.phoneNumber &&
-                          'inputFailure')
+                      (!this.state.isValid &&
+                        !this.state.phoneNumber &&
+                        'inputFailure')
                     }
                     textChange={e => {
                       const re = /^[0-9\b]+$/
@@ -837,9 +850,9 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
-        
 
-  togglePersonalDetails (action, e) {
+
+  togglePersonalDetails(action, e) {
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
@@ -892,7 +905,7 @@ class PersonalDetail extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
@@ -903,7 +916,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

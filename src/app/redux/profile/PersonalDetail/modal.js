@@ -5,8 +5,9 @@ export const PERSONAL_DETAIL = {
 }
 
 export const getModal = (data, action) => {
-    let states = _.split(data.state_id, '-')
-    let gender = _.split(data.genderName, '-')
+    console.log(data.selectedGender.value)
+    let states = _.split(data.selectedState.value, '-')
+    let gender = _.split(data.selectedGender.value, '-')
     let organization = _.split(data.organization, '-')
     switch (action) {
         case PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL:           
@@ -19,16 +20,16 @@ export const getModal = (data, action) => {
                     lastName: data.lastName,
                     age: data.age ? data.age : 0,
                     gender: {
-                        genderId: gender[0]? gender[0]:0,
-                        name: gender[1]?gender[1]:''
+                        genderId: gender? gender[0]:0,
+                        name: gender?gender[1]:''
                     },
                     yearOfExperience: data.yearOfExperience ? data.yearOfExperience : 0,
                     affiliation: {
-                        affiliationId: data.organization ? organization[0] : 0
+                        affiliationId: data.organization ? organization[0] : "1"
                     }
                 },
                 entity: {
-                    organization: data.organization ? organization[1] : ''
+                    organization: data.organization ? organization[1] : 'AOM'
                 },
                 description: data.description,
                 hourlyRate: data.hourlyRate ? data.hourlyRate : 0,
