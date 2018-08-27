@@ -1,13 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
+import ServiceOffered from "../ServiceOffered/index";
+import Languages from "../Languages/index";
 import Certification from "../Certification/index";
 import Education from "../Education/index";
+import PersonalDetail from "../PersonalDetail";
+import Organization from "../Organization"
+import WorkHistory from "../WorkHistory";
+import Skills from "../Skills/index";
 
 import './styles.css';
 
-class Profile extends React.Component {
+class Profile extends Component {
 
     updateWindowDimensions() {
         this.setState({ width: window.innerWidth, height: window.innerHeight });
@@ -28,12 +34,25 @@ class Profile extends React.Component {
                                         Profile
                                     </h4>
                                 </div>
+
+                                <PersonalDetail />
+                                <Organization/>
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                    <ServiceOffered />
+                                </div>
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                    <Skills />
+                                </div>
+                                <div className="col-md-12 card CardWidget SPLanguages">
+                                    <Languages />
+                                </div>
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <Certification />
                                 </div>
-                                <div className="col-md-12 card CardWidget SPCertificate">
-                                    <Education />
-                                </div>
+
+                                <WorkHistory />
+                                <Education />
+
                             </div>
                         </div>
                     </div>

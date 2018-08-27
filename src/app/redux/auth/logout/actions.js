@@ -1,8 +1,9 @@
 //actions
 import {  push } from '../../navigation/actions';
-
-import {remove } from '../../offline/actions';
-//export const ON_LOGOUT = "ON_LOGOUT";
+import { remove } from '../../offline/actions';
+import { Path } from '../../../routes';
+import { USER_LOCALSTORAGE } from '../../../constants/variables';
+import userManager from '../../../utils/userManager';
 
 export const LOGOUT = {
     start: 'fetch_start/logout',
@@ -38,20 +39,17 @@ export const logoutSuccess = (userData) => {
 
 export function onLogout(){
     return (dispatch, getState) => {
-        dispatch(logoutSuccess(null))
-        //save('userData',null);
-        dispatch(logoutEnd());
-        //dispatch(navigateToScreenMainStack('LoginScreen'));
-        dispatch(remove('userData', onClear))
-        dispatch(push('/login'));
-        
+        userManager.removeUser();
+        dispatch(remove(USER_LOCALSTORAGE, onClear));
+        userManager.signoutRedirect();
     }
 }
 
 export function onClear(data){
     return (dispatch, getState) => {
-        dispatch(push('/login'));
-        //dispatch(onBack());
+        dispatch(logoutSuccess(null));
+        dispatch(logoutEnd());
+        dispatch(push(Path.root));
     }
 }
 

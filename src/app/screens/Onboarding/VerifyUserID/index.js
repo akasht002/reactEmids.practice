@@ -45,6 +45,8 @@ class VerifyUserID extends React.Component {
             this.setState({ email: (this.state.email).trim() });
             if (checkEmail(this.state.email)) {
                 this.setState({ emailValid: true });
+            }else {
+                this.setState({ emailValid: false });
             }
         }
         else {

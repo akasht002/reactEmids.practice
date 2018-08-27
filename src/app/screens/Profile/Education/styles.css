@@ -109,7 +109,7 @@ button.CloseMsgModal span{
 }
 .asyncModal .modal-body{
     max-height: calc(100vh - 200px);
-    height: calc(100vh - 200px);
+    /* height: calc(100vh - 200px); */
 }
 
 .SPEducationList{

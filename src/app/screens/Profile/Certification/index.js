@@ -1,26 +1,26 @@
-import React from "react";
+import React, {Component} from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
-import { checkSpace } from "../../../utils/validations"
+import { checkSpace } from "../../../utils/validations";
+import {compare} from "../../../utils/comparerUtility";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 
-class Certification extends React.Component {
+class Certification extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             certificationModal: false,
-            CertificationName: '',
-            CertificationAuthority: '',
-            CertificateLicenceNumber: '',
+            certificationName: '',
+            certificationAuthority: '',
+            certificateLicenceNumber: '',
             certificationId: '',
             showModalOnDelete: false,
-            modalSaveAction: '',
-            add: false,
-            edit: false,
+            isAdd: false,
             isValid: true,
-            disabledSaveBtn: true
+            disabledSaveBtn: true,
+            isDiscardModalOpen: false
         };
     };
 
@@ -30,46 +30,72 @@ class Certification extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            CertificationName: nextProps.certificationFieldDetails.certificationName,
-            CertificationAuthority: nextProps.certificationFieldDetails.authority,
-            CertificateLicenceNumber: nextProps.certificationFieldDetails.licenceNumber,
+            certificationName: nextProps.certificationFieldDetails.certificationName,
+            certificationAuthority: nextProps.certificationFieldDetails.authority,
+            certificateLicenceNumber: nextProps.certificationFieldDetails.licenceNumber,
             certificationId: nextProps.certificationFieldDetails.certificationId
         })
     }
 
-    reset() {
+    reset = () => {
         this.setState({
-            certificationModal: !this.state.certificationModal,
-            CertificationName: '',
-            CertificationAuthority: '',
-            CertificateLicenceNumber: '',
-            certificationId: ''
+            certificationModal: false,
+            certificationName: '',
+            certificationAuthority: '',
+            certificateLicenceNumber: '',
+            certificationId: '',
+            disabledSaveBtn: true,
+            isDiscardModalOpen: false,
+            isAdd: true,
+            isValid: true,
         })
     }
 
-    toggleCertification(action, e) {
+    toggleCertification = () => {
+
         this.setState({
             certificationModal: !this.state.certificationModal,
-            modalSaveAction: this.addCertification,
-            CertificationName: '',
-            CertificationAuthority: '',
-            CertificateLicenceNumber: '',
-            certificationId: '',
-            add: true,
-            edit: false,
-            isValid: true
+            isDiscardModalOpen: false,
+            isValid: true,
+            disabledSaveBtn: true
         })
+
+        let propObj = {
+            authority: this.props.certificationFieldDetails.authority,
+            certificationName: this.props.certificationFieldDetails.certificationName,
+            licenceNumber: this.props.certificationFieldDetails.licenceNumber
+        }
+        
+
+        let stateObj = {
+            authority: this.state.certificationAuthority,
+            certificationName: this.state.certificationName,
+            licenceNumber: this.state.certificateLicenceNumber
+        }
+        
+
+        const fieldDifference = compare(propObj, stateObj);
+
+        if (fieldDifference === true) {
+            this.setState({ certificationModal: false, isDiscardModalOpen: false,
+                certificationAuthority:'',
+                certificateLicenceNumber: '',
+                certificationName: ''
+             })
+        } else {
+            this.setState({ isDiscardModalOpen: true, certificationModal: true })
+        }
+
     }
 
     addCertification = () => {
-        if (checkSpace(this.state.CertificationName) && checkSpace(this.state.CertificationAuthority)) {
+        if (checkSpace(this.state.certificationName) && checkSpace(this.state.certificationAuthority)) {
             const data = {
-                certificationName: this.state.CertificationName.trim(),
-                authority: this.state.CertificationAuthority.trim(),
-                licenceNumber: this.state.CertificateLicenceNumber.trim()
+                certificationName: this.state.certificationName.trim(),
+                authority: this.state.certificationAuthority.trim(),
+                licenceNumber: this.state.certificateLicenceNumber.trim()
             };
             this.props.addCertification(data);
-            this.setState({ modalSaveAction: this.addCertification });
             this.reset();
         } else {
             this.setState({ isValid: false });
@@ -81,20 +107,20 @@ class Certification extends React.Component {
     }
 
     editCertification = (e) => {
-        this.setState({ modalSaveAction: this.updateCertification, certificationModal: true, add: false, edit: true, certificationId: e.target.id });
+        this.setState({ certificationModal: true, isAdd: false, certificationId: e.target.id });
         this.props.editCertification(e.target.id);
     }
 
     updateCertification = () => {
-        if (this.state.CertificationName && this.state.CertificationAuthority) {
+        if (this.state.certificationName && this.state.certificationAuthority) {
             const data = {
-                certificationName: this.state.CertificationName.trim(),
-                authority: this.state.CertificationAuthority.trim(),
-                licenceNumber: this.state.CertificateLicenceNumber.trim(),
+                certificationName: this.state.certificationName.trim(),
+                authority: this.state.certificationAuthority.trim(),
+                licenceNumber: this.state.certificateLicenceNumber.trim(),
                 certificationId: this.state.certificationId
             };
             this.props.updateCertification(data);
-            this.setState({ certificationModal: !this.state.certificationModal });
+            this.setState({ certificationModal: !this.state.certificationModal, disabledSaveBtn: true });
             this.reset();
         } else {
             this.setState({ isValid: false });
@@ -110,7 +136,6 @@ class Certification extends React.Component {
 
         let modalContent;
         let modalTitle;
-        let modalType = '';
 
         const CertificationModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
@@ -121,32 +146,32 @@ class Certification extends React.Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Home Care Aide Organization"
-                        className={"form-control " + (!this.state.isValid && !this.state.CertificationName && 'inputFailure')}
-                        value={this.state.CertificationName}
+                        className={"form-control " + (!this.state.isValid && !this.state.certificationName && 'inputFailure')}
+                        value={this.state.certificationName}
                         maxlength={'500'}
                         textChange={(e) => this.setState({
-                            CertificationName: e.target.value,
-                            disabledSaveBtn: false
+                            certificationName: e.target.value,
+                            disabledSaveBtn: false,
                         })}
                     />
-                    {!this.state.isValid && (!this.state.CertificationName ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationName === '' && ' Certification'}</span>}
+                    {!this.state.isValid && (!this.state.certificationName) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.certificationName === '' && ' Certification'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
-                        name="CertificationAuthority"
+                        name="certificationAuthority"
                         label="Certification Authority"
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. California Associaion"
-                        className={"form-control " + (!this.state.isValid && !this.state.CertificationAuthority && 'inputFailure')}
-                        value={this.state.CertificationAuthority}
+                        className={"form-control " + (!this.state.isValid && !this.state.certificationAuthority && 'inputFailure')}
+                        value={this.state.certificationAuthority}
                         maxlength={'500'}
                         textChange={(e) => this.setState({
-                            CertificationAuthority: e.target.value,
-                            disabledSaveBtn: false
+                            certificationAuthority: e.target.value,
+                            disabledSaveBtn: false,
                         })}
                     />
-                    {!this.state.isValid && (!this.state.CertificationAuthority ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.CertificationAuthority === '' && ' Certification Authority'}</span>}
+                    {!this.state.isValid && (!this.state.certificationAuthority) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.certificationAuthority === '' && ' Certification Authority'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -156,10 +181,10 @@ class Certification extends React.Component {
                         type="text"
                         placeholder="e.g. HCA7521698432"
                         className={"form-control"}
-                        value={this.state.CertificateLicenceNumber}
+                        value={this.state.certificateLicenceNumber}
                         maxlength={'50'}
                         textChange={(e) => this.setState({
-                            CertificateLicenceNumber: e.target.value,
+                            certificateLicenceNumber: e.target.value,
                         })}
                     />
                 </div>
@@ -182,12 +207,10 @@ class Certification extends React.Component {
         });
 
         if (this.state.certificationModal) {
-            if (this.state.add) {
+            if (this.state.isAdd) {
                 modalTitle = 'Add Certification';
-                modalType = 'add';
-            } else if (this.state.edit) {
+            } else {
                 modalTitle = 'Edit Certification';
-                modalType = 'edit';
             }
             modalContent = CertificationModalContent;
         }
@@ -197,7 +220,7 @@ class Certification extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification</h4>
                     <i className="SPIconLarge SPIconAdd"
-                        onClick={this.toggleCertification.bind(this, 'add')} />
+                        onClick={() => this.setState({ certificationModal: true, isAdd: true })} />
                 </div>
                 <div className="SPCertificateContainer width100">
                     <ul className="SPCertificateList">
@@ -209,7 +232,7 @@ class Certification extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleCertification.bind(this, 'add')} /> to add Services Offered</span>
+                                    <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
                                 </div>
                             </div>
                         }
@@ -218,13 +241,32 @@ class Certification extends React.Component {
 
                 <ProfileModalPopup
                     isOpen={this.state.certificationModal}
-                    toggle={this.toggleCertification.bind(this, modalType)}
+                    toggle={this.toggleCertification}
                     ModalBody={modalContent}
                     className="modal-lg asyncModal CertificationModal"
                     modalTitle={modalTitle}
                     disabled={this.state.disabledSaveBtn}
-                    centered="centered"
-                    onClick={this.state.modalSaveAction}
+                    centered={true}
+                    onClick={this.state.isAdd ?
+                        this.addCertification
+                        :
+                        this.updateCertification
+                    }
+                />
+
+                <ModalPopup
+                    isOpen={this.state.isDiscardModalOpen}
+                    toggle={this.reset}
+                    ModalBody={<span>Do you want to discard the changes?</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
+                    onConfirm={() => this.reset()}
+                    onCancel={() => this.setState({
+                        isDiscardModalOpen: false,
+                    })}
                 />
 
                 <ModalPopup
@@ -251,7 +293,7 @@ function mapDispatchToProps(dispatch) {
         addCertification: (data) => dispatch(addCertification(data)),
         editCertification: (data) => dispatch(editCertification(data)),
         updateCertification: (data) => dispatch(updateCertification(data)),
-        deleteCertification: (data) => dispatch(deleteCertification(data))
+        deleteCertification: (data) => dispatch(deleteCertification(data)),
     }
 };
 

@@ -18,8 +18,11 @@ import {
     ModalPopup, 
     PanelCard,
     ScreenCover,
+    LoginCover,
     ModalUserAgreement,
-    ProfileModalPopup
+    ProfileModalPopup,
+    SkillsMultiSelect,
+    LanguagesMultiSelect
 } from './LevelOne';
 import {
     CarouselComp,
@@ -52,5 +55,8 @@ export {
     Calendar,
     ModalPopup,
     ModalUserAgreement,
-    ProfileModalPopup
+    ProfileModalPopup,
+    SkillsMultiSelect,
+    LanguagesMultiSelect,
+    LoginCover
 };
