@@ -11,12 +11,13 @@ import PanelCard from './PanelCard';
 import { ScreenCover } from './ScreenCover';
 import { SkillsMultiSelect } from './SkillsMultiSelect';
 import { LanguagesMultiSelect } from './LanguagesMultiSelect';
-import { LeftSideMenu } from './LeftSideMenu';
+import { AsideMenu } from './AsideMenu';
 import { DashboardWizFlow } from './Dashboard/WizFlow';
 import Scrollbars from "../LevelOne/CustomScrollbar";
 import { StarRating } from "./StarRating";
 import { GeneralModalPopup } from './GeneralModalPopup';
 import {LoginCover} from './LoginCover';
+import {ProfileImage} from './ProfileImage';
 
 export {
     Calendar,
@@ -32,10 +33,11 @@ export {
     ProfileModalPopup,
     SkillsMultiSelect,
     LanguagesMultiSelect,
-    LeftSideMenu,
+    AsideMenu,
     DashboardWizFlow,
     Scrollbars,
     StarRating,
     GeneralModalPopup,
     LoginCover,
+    ProfileImage
 };

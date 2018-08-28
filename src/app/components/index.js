@@ -24,10 +24,11 @@ import {
     ProfileModalPopup,
     SkillsMultiSelect,
     LanguagesMultiSelect,
-    LeftSideMenu,
+    AsideMenu,
     DashboardWizFlow,
     StarRating,
-    GeneralModalPopup
+    GeneralModalPopup,
+    ProfileImage
 } from './LevelOne';
 import {
     CarouselComp,
@@ -63,10 +64,11 @@ export {
     ProfileModalPopup,
     SkillsMultiSelect,
     LanguagesMultiSelect,
-    LeftSideMenu,
+    AsideMenu,
     Scrollbars,
     DashboardWizFlow,
     StarRating,
     GeneralModalPopup,
-    LoginCover
+    LoginCover,
+    ProfileImage
 };

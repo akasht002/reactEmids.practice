@@ -1,0 +1,650 @@
+
+section .ProfileRightWidget {
+    width: calc(100% - 180px);
+    padding: 0;
+}
+
+.hiddenScreen {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .4);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 100;
+}
+
+.ProfileRightContainer {
+    display: block;
+    position: relative;
+    /*height: 100%;*/
+}
+
+.hiddenScreen, .ProfileLeftWidget {
+    -webkit-transition: all ease-in-out 0.2s;
+    -moz-transition: all ease-in-out 0.2s;
+    -ms-transition: all ease-in-out 0.2s;
+    -o-transition: all ease-in-out 0.2s;
+    transition: all ease-in-out 0.2s;
+}
+
+.hiddenScreen.true {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ProfileLeftWidget{
+    position: relative;
+    height: 100vh;
+    width: 180px;
+    background-image: linear-gradient(to top, #67307f, #3b1a53);
+}
+
+.BrandNameWidget{
+    height: 70px;
+    padding: 20px 15px;
+}
+
+.BrandName{
+    position: relative;
+    display: block;
+}
+
+.BrandName a.BrandLink{
+    display: block;
+    color: #fff !important;
+    text-align: center;
+    font-size: 20px;
+}
+
+.ProfileImageContainer{
+    position: relative;
+    padding: 5px;
+    width: 90px;
+    margin: 0 auto;
+}
+
+.ProfileImage{
+    height: 80px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.circular-chart, .ProfileImage {
+    display: block;
+}
+
+.circular-chart {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 90px !important;
+}
+.circle {
+    stroke: #ffffff;
+    fill: none;
+    stroke-width: 1;
+    animation: progress 1s ease-out forwards;
+}
+
+.disabledCircle {
+    stroke: #b7b7b7;
+    fill: none;
+    stroke-width: 1;
+    animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
+}
+
+.ProfileNameWidget{
+    margin-top: 10px;
+}
+
+.ProfileNameContent{
+    text-align: center;
+    color: #ffffff;
+}
+
+/************************************************************************************************************************************************************************/
+.SelectFormControl .Select-control{
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    background: rgba(0,0,0,0);
+    color: #ffffff;
+    border:none;
+    outline:none;
+}
+
+.SelectFormControl .Select-control, .SelectFormControl .Select-control .Select-placeholder{
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
+.SelectFormControl .Select-control .Select-placeholder{
+    display: inline-table;
+    position: relative;
+}
+
+.SelectFormControl .Select-control .Select-placeholder:before, .SelectFormControl .Select-control .Select-value:before, .SelectFormControl .Select-control .Select-placeholder:after, .SelectFormControl .Select-control .Select-value:after{
+    position: absolute;
+    display: block;
+    top: 0;
+    font-size: 14px;
+}
+
+.SelectFormControl .Select-control .Select-placeholder:before, .SelectFormControl .Select-control .Select-value:before{
+    content: '';
+    left: 0;
+}
+
+.SelectFormControl .Select-control .Select-placeholder:after, .SelectFormControl .Select-control .Select-value:after{
+    content: '';
+    right: 0;
+    top: 8px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #ffffff;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -ms-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
+}
+
+.SelectFormControl.is-open .Select-control .Select-placeholder:after, .SelectFormControl.is-open .Select-control .Select-value:after{
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    top: 9px;
+}
+
+.SelectFormControl .Select-control .Select-multi-value-wrapper{
+    position: relative;
+    bottom: 0;
+    display: inline-block;
+    height: 20px;
+    top: 0;
+    width: 100%;
+}
+
+.SelectFormControl .Select-control .Select-value{
+    width: auto;
+    left: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.SelectFormControl .Select-menu-outer {
+    top: 25px;
+}
+
+.SelectFormControl .Select-control .Select-value .Select-value-label{
+    font-size: 14px;
+    position: relative;
+    padding: 0 16px 0 0;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Select.has-value.is-clearable.Select--single>.Select-control .Select-value{
+    padding: 0;
+}
+
+.SelectFormControl .Select-control .Select-placeholder, .SelectFormControl .Select-control .Select-value, .SelectFormControl .Select-control .Select-value .Select-value-label{
+    color: #ffffff !important;
+}
+
+.SelectFormControl .Select-control .Select-arrow-zone{
+    position: absolute;
+    opacity: 0;
+}
+
+.SelectFormControl .Select-control .Select-input:focus, .SelectFormControl.Select.is-focused > .Select-control, .SelectFormControl.Select.is-focused:not(.is-open) > .Select-control{
+    background: rgba(0,0,0,0);
+}
+
+/************************************************************************************************************************************************************************/
+
+.ProfileSideNavigation{
+    list-style: none;
+    padding: 0;
+    margin: 36px 0 0 0;
+}
+
+.profileSideNavigationLink{
+    display: block;
+    font-size: 14px;
+    padding: 8px 0;
+    color: #ffffff !important;
+    -webkit-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    transition: all linear .2s;
+}
+
+.profileSideNavigationLink:hover {
+    background-color: rgba(0,0,0, .25);
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.iconProfile{
+    position: relative;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    top: 2px;
+    margin: 0 10px;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.iconProfileDashboard{
+    background-image: url("../../../assets/images/icons/dashboard.svg");
+}
+
+.iconProfileServiceRequest{
+    background-image: url("../../../assets/images/icons/service_request.svg");
+}
+
+.iconProfileServiceVisits{
+    background-image: url("../../../assets/images/icons/service_visits.svg");
+}
+
+.iconProfileServiceProviders{
+    background-image: url("../../../assets/images/icons/service_provider.svg");
+}
+
+.iconProfilePayments{
+    background-image: url("../../../assets/images/icons/payments.svg");
+}
+
+.iconProfileMySettings{
+    background-image: url("../../../assets/images/icons/settings.svg");
+}
+
+.iconProfileMyConnections{
+    background-image: url("../../../assets/images/icons/settings.svg");
+}
+
+@media (max-width: 1024px) {
+    .ProfileLeftWidget {
+        width: 150px;
+    }
+
+    .profileSideNavigationLink {
+        font-size: 12px;
+        padding: 6px 0;
+    }
+
+    section .ProfileRightWidget {
+        width: calc(100% - 150px);
+    }
+
+    .SPContentWidget .ProfileContainer.topProfile {
+        height: calc(100vh - 88px);
+    }
+
+    .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
+        height: calc(100vh - 235px);
+    }
+
+    .ProfileCardNameContainer {
+        width: 80px;
+    }
+
+    .ProfileServices {
+        max-width: calc(100% - 193px);
+    }
+
+    .ProfileServices .ServicesTitle, .ProfileSkillServices .ServicesTitle, .SPThreadContent .SPIndiTitle {
+        font-size: 14px;
+    }
+
+    .ProfileServices .ServicesDesc, .ProfileSkillServices .ServicesDesc, .SPThreadContent .SPContent {
+        font-size: 12px;
+    }
+
+    .SPThreadContent .SPContent span {
+        margin: 0 5px;
+    }
+
+    .SPThreadContent .SPContent span:before {
+        left: -10px;
+    }
+
+    .SPThreadContent {
+        line-height: 22px;
+        width: calc(100% - 180px);
+    }
+
+    .SPAvatarWidget {
+        margin: 0 10px 0 0;
+    }
+
+    .SPCount .SPRate {
+        line-height: 22px;
+    }
+
+    .SPCount .SPRate span {
+        font-size: 16px;
+    }
+
+    .SPCount {
+        width: 90px;
+    }
+
+    .dateRow label {
+        margin: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .ProfileLeftWidget {
+        position: fixed;
+        height: 100%;
+    }
+
+    section .ProfileRightWidget {
+        margin: 0 0 0 150px;
+    }
+
+    nav.navbarProfile {
+        width: calc(100% - 150px);
+        height: 60px !important;
+        padding: 10px;
+    }
+
+    .card > .list-group {
+        display: none;
+    }
+
+    .ProfileHeaderWidget {
+        margin: 0 20px;
+    }
+
+    .ProfileContentWidget, .SPContentWidget {
+        padding: 0 10px;
+    }
+
+    .ProfileRightContainer {
+        margin-top: 60px;
+    }
+
+    .ProfileContentWidget .ProfileContainer, .SPContentWidget .ProfileContainer {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .SPContentWidget .ProfileContainer {
+        width: calc(100% - 20px);
+    }
+
+    .ProfileContentWidget .ProfileContainer {
+        width: 100%;
+    }
+
+    .SPContentWidget .ProfileContainer.topProfile, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette, .bottomProfile .innerWidget:first-child, .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content, .ProfileCardBody .ServiceRequestPalette, .bottomPalette, .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
+        height: 100%;
+    }
+
+    .ProfileCardNameContainer {
+        width: 110px;
+    }
+
+    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
+        padding: 15px 20px;
+    }
+
+    .ProfileServices {
+        max-width: calc(100% - 240px);
+    }
+
+    .ProfileServicesVisitList {
+        padding: 15px 0;
+    }
+
+    .ProfileCard {
+        width: calc(100% - 20px);
+    }
+    .rightPalette{
+        width: 100%;
+        margin: 40px 29px;
+        float: left;
+        height: 100%;
+    }
+    .ScheduleTableRow > div{
+        width: 30%;
+        float: left;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .iconProfile{
+        margin: 0 10px 0 15px;
+    }
+
+    .navbar-brand {
+        display: inline-block !important;
+        margin: 0 0 0 10px;
+    }
+
+    nav.navbarProfile {
+        padding: 10px 20px;
+    }
+
+    section .ProfileRightWidget {
+        margin: 0;
+        width: 100%;
+    }
+
+    nav.navbarProfile {
+        width: 100%;
+    }
+
+    .profileSideNavigationLink {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+
+    .ProfileRightContainer {
+        margin-bottom: 60px;
+    }
+
+    .ProfileLeftWidget {
+        z-index: 101;
+        width: 180px;
+        left: calc(70px - 100%);
+    }
+
+    .hiddenScreen {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, .4);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 100;
+    }
+
+    .hiddenScreen, .ProfileLeftWidget {
+        -webkit-transition: all ease-in-out 0.2s;
+        -moz-transition: all ease-in-out 0.2s;
+        -ms-transition: all ease-in-out 0.2s;
+        -o-transition: all ease-in-out 0.2s;
+        transition: all ease-in-out 0.2s;
+    }
+
+    .ProfileLeftWidget.true {
+        left: 0;
+    }
+
+    .hiddenScreen.true {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .ProfileServicesVisitContent{
+
+    }
+
+    div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
+        display: inline-block;
+        height: auto;
+    }
+
+    .ServicesTimeContainer{
+        float: right;
+        margin: 0 0 6px 0;
+        width: 48px;
+    }
+
+    .ProfileServices{
+        width: 100%;
+        float: left;
+        max-width: calc(100% - 60px);
+        margin: 0 0 6px 0;
+        height: 48px;
+        justify-content: center;
+        display: flex !important;
+        flex-direction: column;
+    }
+
+    .ServicesTimeContainer .ServicesTime{
+        width: 48px;
+        height: 48px;
+    }
+
+    .ProfileCardImageContainer{
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        float: left;
+    }
+
+    .ProfileCardNameContainer{
+        display: flex;
+        height: 40px;
+        justify-content: center;
+        flex-direction: column;
+        width: calc(100% - 70px);
+        float: left;
+    }
+
+    .ProfileSubOptions{
+        display: flex;
+        float: right;
+        height: 40px;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .ServicesTypeContainer{
+        width: 40px;
+        float: left;
+    }
+
+    .ProfileSkillServices{
+        width: 100%;
+        max-width: calc(100% - 60px);
+    }
+
+    .ProfileApplicationNumbers {
+        margin: 8px 0 0 55px;
+        padding: 6px 0 0 0;
+        border-top: 1px solid #eaeaea;
+    }
+
+    div.avatarWidget{
+        width: 80px !important;
+    }
+
+    .ProfileCardBody>div {
+        padding: 0 15px;
+    }
+
+    .avatarContainer {
+        width: 20px!important;
+    }
+
+    .MsgCount {
+        width: 72px!important;
+    }
+
+    .MsgThreadContent {
+        max-width: calc(100% - 152px);
+    }
+
+    .ProfileConversation .ProfileConversationWidget li.myConversationContainer, .ProfileConversation .ProfileConversationWidget li.mySPContainer {
+        padding: 15px;
+    }
+
+    .mySPContent{
+        display: block;
+    }
+
+    .SPAvatarWidget{
+        float: left;
+    }
+
+    .SPThreadContent{
+        width: calc(100% - 80px);
+    }
+
+    .SPCount{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        height: 25px;
+        margin: 25px 0 0 0;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .SPCount .SPRate, .SPFavouriteIcon{
+        display: block;
+        margin: 0 auto;
+        bottom: 0;
+    }
+
+    .SPCount .SPRate{
+
+    }
+
+    /*.ProfileLeftWidget {
+        position: absolute;
+        z-index: 99;
+        background: transparent;
+        width: 0;
+        height: 0;
+    }
+    .ProfileSideNavigation{
+        display: flex;
+        display: -moz-flex;
+        position: fixed;
+        margin: 0;
+        bottom: 0;
+        background: #7a329f;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .profileSideNavigationLink span{
+        display: none;
+    }*/
+}

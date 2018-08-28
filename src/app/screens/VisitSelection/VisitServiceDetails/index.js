@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import classnames from 'classnames';
 import Moment from 'react-moment';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components'
+import { ProfileHeader, Scrollbars } from '../../../components'
 import { push } from '../../../redux/navigation/actions';
 import { Path } from '../../../routes';
 import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getPerformTasksList } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import { convertTime24to12, getFirstCharOfString } from '../../../utils/validations'
+import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 
 class VisitServiceDetails extends Component {
@@ -65,7 +66,6 @@ class VisitServiceDetails extends Component {
     }
 
     render() {
-
         let sliderTypes = this.state.visitServiceDetails.serviceRequestTypeDetails && this.state.visitServiceDetails.serviceRequestTypeDetails.map((serviceTypes, index) => {
             let catNum = index + 1;
             return (
@@ -140,199 +140,192 @@ class VisitServiceDetails extends Component {
         });
 
         return (
-            <section className="d-flex">
-                <LeftSideMenu isOpen={this.state.isOpen} />
-                <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.ToggleLeftPanel} />
-                    <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.ToggleLeftPanel} />
-                    <div className='ProfileRightContainer'>
-                        <div className='ProfileHeaderWidget'>
-                            <div className='ProfileHeaderTitle'>
-                                <h5 className='primaryColor m-0'>Service Requests</h5>
-                            </div>
-                        </div>
-                        <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
-                            <div className='card mainProfileCard'>
-                                <div className='CardContainers'>
-                                    <section className='ProfileCardHeader'>
-                                        <div className='primaryColor'>
-                                            <span className='HeaderBackWrapper'>
-                                                <Link to='/visitServiceList' className='HeaderBackButton' />
-                                            </span>
-                                            <span className='HeaderRequestLabel'>
-                                                Request ID
-                                                </span>
-                                            <span className='HeaderRequestLabelID'>
-                                                {this.state.visitServiceDetails.serviceRequestId}
-                                            </span>
-                                        </div>
-                                        <div className='ProfileHeaderButton'>
-                                            <Link className='btn btn-outline-primary' to='/'>Cancel Service</Link>
-                                        </div>
-                                    </section>
-                                    <section class="LeftPalette">
-                                        <div className='primaryColor LeftPaletteHeader'>
-                                            Posted By
-                                        </div>
-                                        <div class='LeftPostedBy'>
-                                            <div class="PostedByImageContainer">
-                                                <img className="ProfileImage" src={this.state.visitServiceDetails.image} alt="patientImage" />
-                                                <div class='PostedByProfileDetails'>
-                                                    <div class='ProfileDetailsName'>
-                                                        {this.state.visitServiceDetails.patientFirstName} {this.state.visitServiceDetails.patientLastName && getFirstCharOfString(this.state.visitServiceDetails.patientLastName)}
-                                                    </div>
-                                                    <div class='ProfileDetailsDate'>
-                                                        Posted on <Moment format="DD MMM">{this.state.visitServiceDetails.requestDate}</Moment>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='PostedByImageContainer'>
-                                                <i class="ProfileIcon IconCall"></i>
-                                                <div class='PostedByProfileDetails'>
-                                                    <div class='ProfileIconDetails'>
-                                                        Phone Call
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='PostedByImageContainer'>
-                                                <i class="ProfileIcon IconConversations"></i>
-                                                <div class='PostedByProfileDetails'>
-                                                    <div class='ProfileIconDetails'>
-                                                        Conversations
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='PostedByImageContainer'>
-                                                <i class="ProfileIcon IconVideo"></i>
-                                                <div class='PostedByProfileDetails'>
-                                                    <div class='ProfileIconDetails'>
-                                                        Video Call
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section className="rightPalette">
-                                        <div className="container-fluid">
-                                            <Nav tabs className='PaletteTabs'>
-                                                <NavItem>
-                                                    <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
-                                                        Details
-                                                    </NavLink>
-                                                </NavItem>
-                                                <NavItem>
-                                                    <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => { this.toggle('2'); }}>
-                                                        Schedule
-                                                    </NavLink>
-                                                </NavItem>
-                                            </Nav>
-                                            <TabContent activeTab={this.state.activeTab}>
-                                                <TabPane tabId="1" className='TabBody'>
-                                                    <form className='ServiceContent'>
-                                                        <div className='ServiceCategoryContent'>
-                                                            <h2 className='ServicesTitle'>Service Category</h2>
-                                                            <p className='ScheduleTypeTitle'>{this.state.visitServiceDetails.serviceCategoryDescription}</p>
-                                                            <h2 className='ServicesTitle mt-4'>Service Types</h2>
-                                                            <div className='ServiceType'>
-                                                                <div className="ServiceTypesSlider Summary">
-                                                                    {sliderTypes}
-                                                                </div>
-                                                            </div>
-                                                            <div className='ServiceTasks Summary'>
-                                                                <ul className='SelectedTask'>
-                                                                    {description}
-
-                                                                </ul>
-                                                            </div>
-                                                            <h2 className='ServicesTitle'>Additional Information</h2>
-                                                            <p className="AdditionInfo mt-3 mb-5">{this.state.visitServiceDetails.serviceRequestDescription}</p>
-                                                            <h2 className='ServicesTitle'>Schedule and Frequency</h2>
-                                                            <div className="ContentTitle Summary mt-3 mb-4">
-                                                                <span className='ContentTitle Summary'>Recurring Schedule</span>
-                                                                <span><Moment format="DD MMM YYYY">{this.state.visitServiceDetails.startDate}</Moment> - till {this.state.visitServiceDetails.recurringPattern} occurences</span>
-                                                                <span className='ContentTitle Summary'>Recurring Pattern</span>
-                                                                <span>{this.state.visitServiceDetails.recurringPatternDescription}</span>
-                                                            </div>
-                                                            <div className='AvailabilityWidget'>
-                                                                <div className='SPAvailWidget Summary mb-4'>
-                                                                    {AvailDays}
-                                                                </div>
-                                                            </div>
-                                                            <h2 className='ServicesTitle'>Point of Service</h2>
-                                                            <div className="SummaryContent POS mt-3 mb-5">
-                                                                <p className='ContentTitle Summary'>Home</p>
-                                                                <p><span>Street</span>3343 Kooter Lane, 59 College Avenue</p>
-                                                                <p><span>City</span>Farmington</p>
-                                                                <p><span>State</span>West Virginia</p>
-                                                                <p><span>ZIP</span>26571</p>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </TabPane>
-                                                <TabPane tabId="2" className='TabBody'>
-                                                    <div className='ScheduleTableHeader primaryColor'>
-                                                        <div>
-                                                            <span>Date</span>
-                                                        </div>
-                                                        <div>
-                                                            <span>Time Slot</span>
-                                                        </div>
-                                                        <div>
-                                                            <span>Visit Status</span>
-                                                        </div>
-                                                        <div>
-                                                            <span>Visit Length</span>
-                                                        </div>
-                                                        <div>
-                                                        </div>
-                                                    </div>
-                                                    {this.state.visitServiceSchedule && this.state.visitServiceSchedule.map((ScheduleList) => {
-                                                        return (
-                                                            <div className='ScheduleTableRow'>
-                                                                <div>
-                                                                    <span><Moment format="DD MMM">{ScheduleList.visitDate}</Moment></span>
-                                                                </div>
-                                                                <div>
-                                                                    <span>{ScheduleList.slot}</span>
-                                                                </div>
-                                                                <div>
-                                                                    <span>{ScheduleList.visitStatusName}</span>
-                                                                </div>
-                                                                <div>
-                                                                    {ScheduleList.originalTotalDuration ?
-                                                                        <span>{ScheduleList.originalTotalDuration}Hrs</span>
-                                                                        :
-                                                                        <span> - </span>
-                                                                    }
-                                                                </div>
-                                                                <div>
-                                                                    <div class='ScheduleRowButton'>
-                                                                        {ScheduleList.visitStatusName === 'Completed' ?
-                                                                            <a className='btn btn-outline-primary' to='/'>Summary</a>
-                                                                            :
-                                                                            ''
-                                                                        }
-                                                                        {ScheduleList.visitStatusName === 'Scheduled' ?
-                                                                            <a className='btn btn-outline-primary' onClick={() => this.visitProcessing(ScheduleList.serviceRequestVisitId)}>Start Visit</a>
-                                                                            :
-                                                                            ''
-                                                                        }
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    })
-                                                    }
-                                                </TabPane>
-                                            </TabContent>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </Scrollbars>
+            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+                <div className='ProfileHeaderWidget'>
+                    <div className='ProfileHeaderTitle'>
+                        <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                 </div>
-            </section>
+                <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
+                    <div className='card mainProfileCard'>
+                        <div className='CardContainers'>
+                            <section className='ProfileCardHeader'>
+                                <div className='primaryColor'>
+                                    <span className='HeaderBackWrapper'>
+                                        <Link to='/visitServiceList' className='HeaderBackButton' />
+                                    </span>
+                                    <span className='HeaderRequestLabel'>
+                                        Request ID
+                                                </span>
+                                    <span className='HeaderRequestLabelID'>
+                                        {this.state.visitServiceDetails.serviceRequestId}
+                                    </span>
+                                </div>
+                                <div className='ProfileHeaderButton'>
+                                    <Link className='btn btn-outline-primary' to='/'>Cancel Service</Link>
+                                </div>
+                            </section>
+                            <section class="LeftPalette">
+                                <div className='primaryColor LeftPaletteHeader'>
+                                    Posted By
+                                        </div>
+                                <div class='LeftPostedBy'>
+                                    <div class="PostedByImageContainer">
+                                        <img className="ProfileImage" src={this.state.visitServiceDetails.image} alt="patientImage" />
+                                        <div class='PostedByProfileDetails'>
+                                            <div class='ProfileDetailsName'>
+                                                {this.state.visitServiceDetails.patientFirstName} {this.state.visitServiceDetails.patientLastName && getFirstCharOfString(this.state.visitServiceDetails.patientLastName)}
+                                            </div>
+                                            <div class='ProfileDetailsDate'>
+                                                Posted on <Moment format="DD MMM">{this.state.visitServiceDetails.requestDate}</Moment>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='PostedByImageContainer'>
+                                        <i class="ProfileIcon IconCall"></i>
+                                        <div class='PostedByProfileDetails'>
+                                            <div class='ProfileIconDetails'>
+                                                Phone Call
+                                                    </div>
+                                        </div>
+                                    </div>
+                                    <div className='PostedByImageContainer'>
+                                        <i class="ProfileIcon IconConversations"></i>
+                                        <div class='PostedByProfileDetails'>
+                                            <div class='ProfileIconDetails'>
+                                                Conversations
+                                                    </div>
+                                        </div>
+                                    </div>
+                                    <div className='PostedByImageContainer'>
+                                        <i class="ProfileIcon IconVideo"></i>
+                                        <div class='PostedByProfileDetails'>
+                                            <div class='ProfileIconDetails'>
+                                                Video Call
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section className="rightPalette">
+                                <div className="container-fluid">
+                                    <Nav tabs className='PaletteTabs'>
+                                        <NavItem>
+                                            <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => { this.toggle('1'); }}>
+                                                Details
+                                                    </NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => { this.toggle('2'); }}>
+                                                Schedule
+                                                    </NavLink>
+                                        </NavItem>
+                                    </Nav>
+                                    <TabContent activeTab={this.state.activeTab}>
+                                        <TabPane tabId="1" className='TabBody'>
+                                            <form className='ServiceContent'>
+                                                <div className='ServiceCategoryContent'>
+                                                    <h2 className='ServicesTitle'>Service Category</h2>
+                                                    <p className='ScheduleTypeTitle'>{this.state.visitServiceDetails.serviceCategoryDescription}</p>
+                                                    <h2 className='ServicesTitle mt-4'>Service Types</h2>
+                                                    <div className='ServiceType'>
+                                                        <div className="ServiceTypesSlider Summary">
+                                                            {sliderTypes}
+                                                        </div>
+                                                    </div>
+                                                    <div className='ServiceTasks Summary'>
+                                                        <ul className='SelectedTask'>
+                                                            {description}
+
+                                                        </ul>
+                                                    </div>
+                                                    <h2 className='ServicesTitle'>Additional Information</h2>
+                                                    <p className="AdditionInfo mt-3 mb-5">{this.state.visitServiceDetails.serviceRequestDescription}</p>
+                                                    <h2 className='ServicesTitle'>Schedule and Frequency</h2>
+                                                    <div className="ContentTitle Summary mt-3 mb-4">
+                                                        <span className='ContentTitle Summary'>Recurring Schedule</span>
+                                                        <span><Moment format="DD MMM YYYY">{this.state.visitServiceDetails.startDate}</Moment> - till {this.state.visitServiceDetails.recurringPattern} occurences</span>
+                                                        <span className='ContentTitle Summary'>Recurring Pattern</span>
+                                                        <span>{this.state.visitServiceDetails.recurringPatternDescription}</span>
+                                                    </div>
+                                                    <div className='AvailabilityWidget'>
+                                                        <div className='SPAvailWidget Summary mb-4'>
+                                                            {AvailDays}
+                                                        </div>
+                                                    </div>
+                                                    <h2 className='ServicesTitle'>Point of Service</h2>
+                                                    <div className="SummaryContent POS mt-3 mb-5">
+                                                        <p className='ContentTitle Summary'>Home</p>
+                                                        <p><span>Street</span>3343 Kooter Lane, 59 College Avenue</p>
+                                                        <p><span>City</span>Farmington</p>
+                                                        <p><span>State</span>West Virginia</p>
+                                                        <p><span>ZIP</span>26571</p>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </TabPane>
+                                        <TabPane tabId="2" className='TabBody'>
+                                            <div className='ScheduleTableHeader primaryColor'>
+                                                <div>
+                                                    <span>Date</span>
+                                                </div>
+                                                <div>
+                                                    <span>Time Slot</span>
+                                                </div>
+                                                <div>
+                                                    <span>Visit Status</span>
+                                                </div>
+                                                <div>
+                                                    <span>Visit Length</span>
+                                                </div>
+                                                <div>
+                                                </div>
+                                            </div>
+                                            {this.state.visitServiceSchedule && this.state.visitServiceSchedule.map((ScheduleList) => {
+                                                return (
+                                                    <div className='ScheduleTableRow'>
+                                                        <div>
+                                                            <span><Moment format="DD MMM">{ScheduleList.visitDate}</Moment></span>
+                                                        </div>
+                                                        <div>
+                                                            <span>{ScheduleList.slot}</span>
+                                                        </div>
+                                                        <div>
+                                                            <span>{ScheduleList.visitStatusName}</span>
+                                                        </div>
+                                                        <div>
+                                                            {ScheduleList.originalTotalDuration ?
+                                                                <span>{ScheduleList.originalTotalDuration}Hrs</span>
+                                                                :
+                                                                <span> - </span>
+                                                            }
+                                                        </div>
+                                                        <div>
+                                                            <div class='ScheduleRowButton'>
+                                                                {ScheduleList.visitStatusName === 'Completed' ?
+                                                                    <a className='btn btn-outline-primary' to='/'>Summary</a>
+                                                                    :
+                                                                    ''
+                                                                }
+                                                                {ScheduleList.visitStatusName === 'Scheduled' ?
+                                                                    <a className='btn btn-outline-primary' onClick={() => this.visitProcessing(ScheduleList.serviceRequestVisitId)}>Start Visit</a>
+                                                                    :
+                                                                    ''
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                            }
+                                        </TabPane>
+                                    </TabContent>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </Scrollbars>
+            </AsideScreenCover>
         )
     }
 }

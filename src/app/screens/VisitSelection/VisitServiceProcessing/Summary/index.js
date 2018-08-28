@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
-import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow, ProfileModalPopup, GeneralModalPopup } from '../../../../components';
+import { ProfileHeader, Scrollbars, DashboardWizFlow, ProfileModalPopup, GeneralModalPopup } from '../../../../components';
 import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
+import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import moment from 'moment';
 import { getFirstCharOfString } from '../../../../utils/validations'
 import './style.css'
@@ -23,7 +24,7 @@ class Summary extends Component {
             originalEstimation: '',
             actualEstimation: '',
             signatureImage: '',
-            completedTaskPercent:''
+            completedTaskPercent: ''
         };
     };
 
@@ -112,164 +113,157 @@ class Summary extends Component {
         }
 
         return (
-            <section className="d-flex">
-                <LeftSideMenu isOpen={this.state.isOpen} />
-                <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.toggle} />
-                    <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)} />
-                    <div className='ProfileRightContainer'>
-                        <div className='ProfileHeaderWidget'>
-                            <div className='ProfileHeaderTitle'>
-                                <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
+            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+                <div className='ProfileHeaderWidget'>
+                    <div className='ProfileHeaderTitle'>
+                        <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
+                    </div>
+                </div>
+                <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
+                    className='ProfileContentWidget'>
+                    <div className='card mainProfileCard'>
+                        <div className='CardContainers TitleWizardWidget'>
+                            <div className='TitleContainer'>
+                                <a className="TitleContent backProfileIcon" />
+                                <div className='requestContent'>
+                                    <div className='requestNameContent'>
+                                        <span><i className='requestName'>Sun, 24 Aug, Morning</i>1</span>
+                                    </div>
+                                    <div className='requestImageContent'>
+
+                                        {this.props.patientDetails.patient ?
+                                            <span>
+                                                <img
+                                                    src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
+                                                    className="avatarImage avatarImageBorder" alt="patientImage" />
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i>
+                                            </span>
+                                            :
+                                            ''
+                                        }
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
-                            className='ProfileContentWidget'>
-                            <div className='card mainProfileCard'>
-                                <div className='CardContainers TitleWizardWidget'>
-                                    <div className='TitleContainer'>
-                                        <a className="TitleContent backProfileIcon" />
-                                        <div className='requestContent'>
-                                            <div className='requestNameContent'>
-                                                <span><i className='requestName'>Sun, 24 Aug, Morning</i>1</span>
-                                            </div>
-                                            <div className='requestImageContent'>
-
-                                                {this.props.patientDetails.patient ?
-                                                    <span>
-                                                        <img
-                                                            src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
-                                                            className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                        <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i>
+                        <div className='CardContainers WizardWidget'>
+                            <div className="row">
+                                <div className="col col-md-9 WizardContent">
+                                    <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={2} />
+                                </div>
+                                <div className="col col-md-3 rightTimerWidget running">
+                                    <div className="row rightTimerContainer">
+                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerContent running">01<i>:</i>45</span>
+                                        </div>
+                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at 12:30 pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='CardContainers ServiceCategoryWidget'>
+                            <form className='ServiceContent'>
+                                <div className="VisitSummaryWidget">
+                                    <div className="LeftWidget">
+                                        <div className="LeftContent">
+                                            <p className="SummaryContentTitle">Service Visit Details</p>
+                                            <div className="row">
+                                                <div className="col-md-8">
+                                                    <p className="CategoryName">
+                                                        <span className="CategoryTitle">
+                                                            {this.props.SummaryDetails.serviceRequestTypeVisits && this.props.SummaryDetails.serviceRequestTypeVisits.map((serviceType) => {
+                                                                return serviceType.serviceTypeDescription + ', ';
+                                                            })}
+                                                        </span>
+                                                        <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span></p>
+                                                </div>
+                                                <div className="col-md-4 SummaryRange">
+                                                    <span className="bottomTaskName">Tasks</span>
+                                                    <span className="bottomTaskRange">
+                                                        <i style={{ width: completedTaskPercent + '%' }} className="bottomTaskCompletedRange" />
                                                     </span>
+                                                    <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
+                                                </div>
+                                            </div>
+                                            <p className="SummaryContentTitle">Payment Details</p>
+
+                                            <div className="row CostTableWidget">
+                                                {!this.state.signatureImage ?
+                                                    <span className="EditIcon" onClick={this.AdjustTime} />
                                                     :
                                                     ''
                                                 }
 
+                                                <div className="col-md-8 CostTableContainer Label">
+                                                    <p><span>Total Chargeable Time</span>
+                                                        <span>Hourly Rate</span></p>
+                                                    <p className="TaxLabel"><span>Total Visit Cost </span>
+                                                        <span>Taxes and Fees</span></p>
+                                                </div>
+                                                <div className="col-md-4 CostTableContainer Cost">
+                                                    <p><span>{this.props.CalculationsData.totalChargableTime} hrs</span>
+                                                        <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate}/hr</span></p>
+                                                    <p className="TaxCost"><span>${parseFloat(this.props.CalculationsData.totalVisitCost).toFixed(2)}</span>
+                                                        <span>${parseFloat(this.props.CalculationsData.taxes).toFixed(2)}</span></p>
+                                                </div>
+                                                <div className="col-md-12 CostTableContainer Total">
+                                                    <p className="TotalLabel"><span>Total Cost </span></p>
+                                                    <p className="TotalCost"><span>${parseFloat(this.props.CalculationsData.grandTotalAmount).toFixed(2)}</span></p>
+                                                </div>
                                             </div>
+
+                                            <div className="row EstimatedCostWidget">
+                                                <div className="col-md-8 EstimatedCostContainer Label">
+                                                    <p><span>Estimated Claim</span>
+                                                        <span>Out of Pocket Amount</span></p>
+                                                </div>
+                                                <div className="col-md-4 EstimatedCostContainer Cost">
+                                                    <p><span>${this.props.SummaryDetails.estimatedClaim && this.props.SummaryDetails.estimatedClaim}</span>
+                                                        <span>${this.props.SummaryDetails.outOfPocketAmount && this.props.SummaryDetails.outOfPocketAmount}</span></p>
+                                                </div>
+                                            </div>
+                                            <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that this claim is an estimate pending the claim process</p>
+                                        </div>
+                                    </div>
+                                    <div className="RightWidget">
+                                        <div className="RightContent">
+                                            <p className="SummaryContentTitle">Customer Signature</p>
+                                            <p>Put your signature inside the box</p>
+                                            <div className="SignatureColumn">
+                                                <SignaturePad width={420} height={320} ref={ref => this.signaturePad = ref} />
+                                            </div>
+                                            {/* <button onClick={this.saveSignature}>log signature</button> */}
                                         </div>
                                     </div>
                                 </div>
-                                <div className='CardContainers WizardWidget'>
-                                    <div className="row">
-                                        <div className="col col-md-9 WizardContent">
-                                            <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={2} />
-                                        </div>
-                                        <div className="col col-md-3 rightTimerWidget running">
-                                            <div className="row rightTimerContainer">
-                                                <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                                    <span className="TimerContent running">01<i>:</i>45</span>
-                                                </div>
-                                                <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                                    <span className="TimerStarted running">Started at 12:30 pm</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div className='bottomButton'>
+                                    <div className='ml-auto'>
+                                        <Link className='btn btn-outline-primary mr-3' to='/VisitProcessing'>Previous</Link>
+                                        <a className='btn btn-primary' onClick={this.onClickNext}>Proceed to Payment</a>
                                     </div>
                                 </div>
-                                <div className='CardContainers ServiceCategoryWidget'>
-                                    <form className='ServiceContent'>
-                                        <div className="VisitSummaryWidget">
-                                            <div className="LeftWidget">
-                                                <div className="LeftContent">
-                                                    <p className="SummaryContentTitle">Service Visit Details</p>
-                                                    <div className="row">
-                                                        <div className="col-md-8">
-                                                            <p className="CategoryName">
-                                                                <span className="CategoryTitle">
-                                                                    {this.props.SummaryDetails.serviceRequestTypeVisits && this.props.SummaryDetails.serviceRequestTypeVisits.map((serviceType) => {
-                                                                        return serviceType.serviceTypeDescription + ', ';
-                                                                    })}
-                                                                </span>
-                                                                <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span></p>
-                                                        </div>
-                                                        <div className="col-md-4 SummaryRange">
-                                                            <span className="bottomTaskName">Tasks</span>
-                                                            <span className="bottomTaskRange">
-                                                                <i style={{ width: completedTaskPercent + '%' }} className="bottomTaskCompletedRange" />
-                                                            </span>
-                                                            <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
-                                                        </div>
-                                                    </div>
-                                                    <p className="SummaryContentTitle">Payment Details</p>
-
-                                                    <div className="row CostTableWidget">
-                                                        {!this.state.signatureImage ?
-                                                            <span className="EditIcon" onClick={this.AdjustTime} />
-                                                            :
-                                                            ''
-                                                        }
-
-                                                        <div className="col-md-8 CostTableContainer Label">
-                                                            <p><span>Total Chargeable Time</span>
-                                                                <span>Hourly Rate</span></p>
-                                                            <p className="TaxLabel"><span>Total Visit Cost </span>
-                                                                <span>Taxes and Fees</span></p>
-                                                        </div>
-                                                        <div className="col-md-4 CostTableContainer Cost">
-                                                            <p><span>{this.props.CalculationsData.totalChargableTime} hrs</span>
-                                                                <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate}/hr</span></p>
-                                                            <p className="TaxCost"><span>${parseFloat(this.props.CalculationsData.totalVisitCost).toFixed(2)}</span>
-                                                                <span>${parseFloat(this.props.CalculationsData.taxes).toFixed(2)}</span></p>
-                                                        </div>
-                                                        <div className="col-md-12 CostTableContainer Total">
-                                                            <p className="TotalLabel"><span>Total Cost </span></p>
-                                                            <p className="TotalCost"><span>${parseFloat(this.props.CalculationsData.grandTotalAmount).toFixed(2)}</span></p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="row EstimatedCostWidget">
-                                                        <div className="col-md-8 EstimatedCostContainer Label">
-                                                            <p><span>Estimated Claim</span>
-                                                                <span>Out of Pocket Amount</span></p>
-                                                        </div>
-                                                        <div className="col-md-4 EstimatedCostContainer Cost">
-                                                            <p><span>${this.props.SummaryDetails.estimatedClaim && this.props.SummaryDetails.estimatedClaim}</span>
-                                                                <span>${this.props.SummaryDetails.outOfPocketAmount && this.props.SummaryDetails.outOfPocketAmount}</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that this claim is an estimate pending the claim process</p>
-                                                </div>
-                                            </div>
-                                            <div className="RightWidget">
-                                                <div className="RightContent">
-                                                    <p className="SummaryContentTitle">Customer Signature</p>
-                                                    <p>Put your signature inside the box</p>
-                                                    <div className="SignatureColumn">
-                                                        <SignaturePad width={420} height={320} ref={ref => this.signaturePad = ref} />
-                                                    </div>
-                                                    {/* <button onClick={this.saveSignature}>log signature</button> */}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className='bottomButton'>
-                                            <div className='ml-auto'>
-                                                <Link className='btn btn-outline-primary mr-3' to='/VisitProcessing'>Previous</Link>
-                                                <a className='btn btn-primary' onClick={this.onClickNext}>Proceed to Payment</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div className='cardBottom' />
-                            <GeneralModalPopup
-                                isOpen={this.state.isModalOpen}
-                                ModalBody={modalContent}
-                                modalTitle={'Adjust Time'}
-                                className="modal-lg asyncModal CertificationModal"
-                                centered={true}
-                                label={'Update'}
-                                onClick={() => {
-                                    this.updateTime(),
-                                        this.setState({
-                                            isModalOpen: !this.state.isModalOpen,
-                                        })
-                                }}
-                            />
-                        </Scrollbars>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </section>
+                    <div className='cardBottom' />
+                    <GeneralModalPopup
+                        isOpen={this.state.isModalOpen}
+                        ModalBody={modalContent}
+                        modalTitle={'Adjust Time'}
+                        className="modal-lg asyncModal CertificationModal"
+                        centered={true}
+                        label={'Update'}
+                        onClick={() => {
+                            this.updateTime(),
+                                this.setState({
+                                    isModalOpen: !this.state.isModalOpen,
+                                })
+                        }}
+                    />
+                </Scrollbars>
+            </AsideScreenCover>
         );
     }
 }
