@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
-import { ProfileHeader, Scrollbars, DashboardWizFlow, ProfileModalPopup, GeneralModalPopup } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, GeneralModalPopup } from '../../../../components';
 import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import moment from 'moment';
-import { getFirstCharOfString } from '../../../../utils/validations'
+import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import './style.css'
 
 class Summary extends Component {
@@ -29,7 +28,7 @@ class Summary extends Component {
     };
 
     componentDidMount() {
-        this.props.getSummaryDetails();
+        this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -270,7 +269,7 @@ class Summary extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getSummaryDetails: () => dispatch(getSummaryDetails()),
+        getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         onUpdateTime: (data) => dispatch(onUpdateTime(data)),
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data))
     }

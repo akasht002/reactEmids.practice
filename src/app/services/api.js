@@ -4,7 +4,9 @@ export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 
 export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
 //export const baseURLServiceRequest = "http://localhost:5615/api/";
+
 export const authURL = "http://52.172.45.185:9005/";
+//export const authURL = "http://localhost:5000/";
 
 export const Api = axios.create({
     baseURL: baseURL,

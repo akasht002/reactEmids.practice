@@ -7,7 +7,7 @@ const formattedSeconds = (sec) =>
     ('0' + sec % 60).slice(-2);
 
 
-class Stopwatch extends Component {
+class StopWatch extends Component {
 
     constructor(props) {
         super(props);
@@ -62,4 +62,4 @@ class Stopwatch extends Component {
     }
 }
 
-export default Stopwatch
+export default StopWatch

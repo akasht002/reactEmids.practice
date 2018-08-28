@@ -1,19 +1,15 @@
 import React, { Component } from "react";
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Link } from "react-router-dom";
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { LeftSideMenu, ProfileHeader, Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import Stopwatch from './Stopwatch'
-import { convertTime24to12, getFirstCharOfString } from '../../../../utils/validations'
+import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
 import './style.css'
-
 class PerformTasks extends Component {
 
     constructor(props) {
@@ -24,12 +20,12 @@ class PerformTasks extends Component {
             checkedCount: 0,
             checkedData: '',
             isOpen: false,
+            isCollapseOpen: false,
             startService: true,
             startedTime: '',
             isModalOpen: false,
             disabled: true,
             taskCount: '',
-            a: ''
         };
         this.checkedTask = [];
     };
@@ -41,11 +37,11 @@ class PerformTasks extends Component {
     }
 
     toggleCollapse = () => {
-        this.setState({ isOpen: !this.state.isOpen })
+        this.setState({ isCollapseOpen: !this.state.isCollapseOpen })
     }
 
     componentDidMount() {
-        this.props.getPerformTasksList();
+        this.props.getPerformTasksList(this.props.ServiceRequestVisitId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -68,18 +64,17 @@ class PerformTasks extends Component {
     }
 
     onClickNext = () => {
-        // if (!this.state.startService) {
         this.setState({ isModalOpen: true })
-        //}
     }
 
     onSubmit = () => {
-        const data = {
-            serviceRequestVisitId: this.state.taskList.serviceRequestVisitId,
-            serviceRequestId: this.state.taskList.serviceRequestId,
-            visitStatusId: this.state.taskList.visitStatusId,
-            serviceProviderId: this.state.taskList.serviceProviderId,
-            visitDate: this.state.taskList.visitDate,
+        let taskList = this.state.taskList
+        let data = {
+            serviceRequestVisitId: taskList.serviceRequestVisitId,
+            serviceRequestId: taskList.serviceRequestId,
+            visitStatusId: taskList.visitStatusId,
+            serviceProviderId: taskList.serviceProviderId,
+            visitDate: taskList.visitDate,
             isActive: true,
             serviceRequestTypeTaskVisits: this.checkedTask
         }
@@ -125,7 +120,7 @@ class PerformTasks extends Component {
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-5 rightTimerContent">
                                             <span className="TimerContent">
-                                                <Stopwatch ref={instance => { this.child = instance; }} />
+                                                <StopWatch ref={instance => { this.child = instance; }} />
                                             </span>
                                         </div>
                                         <div className="col-md-7 rightTimerContent">
@@ -159,7 +154,7 @@ class PerformTasks extends Component {
                                                         <i className="TotalTasks">/{(serviceType.serviceRequestTypeTaskVisits).length}</i> tasks completed</span>
                                                 </div>
                                             </div>
-                                            <Collapse isOpen={this.state.isOpen} toggler={'#toggle' + serviceType.serviceRequestTypeDetailsId}>
+                                            <Collapse isOpen={this.state.isCollapseOpen} toggler={'#toggle' + serviceType.serviceRequestTypeDetailsId}>
                                                 <Card>
                                                     <CardBody>
                                                         {serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
@@ -228,7 +223,7 @@ class PerformTasks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getPerformTasksList: () => dispatch(getPerformTasksList()),
+        getPerformTasksList: (data) => dispatch(getPerformTasksList(data)),
         addPerformedTask: (data) => dispatch(addPerformedTask(data)),
         startOrStopService: (data, visitId) => dispatch(startOrStopService(data, visitId))
     }
@@ -237,6 +232,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         PerformTasksList: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
+        ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
     };
 };
 

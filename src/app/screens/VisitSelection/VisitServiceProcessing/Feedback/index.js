@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
-import { getFirstCharOfString } from '../../../../utils/validations'
+import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
-import { ProfileHeader, Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components';
+import { ProfileHeader, Scrollbars, DashboardWizFlow, ModalPopup, StarRating } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 
 import './style.css'
@@ -67,7 +67,7 @@ class Feedback extends Component {
     onSubmit = () => {
         let answers = this.selectedAnswers
         answers.push(this.state.textareaData);
-        const data = {
+        let data = {
             serviceRequestVisitId: this.props.patientDetails.serviceRequestVisitId,
             serviceRequestId: this.props.patientDetails.serviceRequestId,
             serviceProviderId: this.props.patientDetails.serviceProviderId,
@@ -129,20 +129,7 @@ class Feedback extends Component {
                                 <div className="FeedbackWidget">
                                     <div className="FeedbackRating">
                                         <p>Rate {this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</p>
-                                        <div className="FeedbackContent">
-                                            <fieldset className="rating" onChange={(e) => this.handleSelectedRating(e)}>
-                                                <input type="radio" id="star5" name="rating" value="5" />
-                                                <label className="full" htmlFor="star5" />
-                                                <input type="radio" id="star4" name="rating" value="4" />
-                                                <label className="full" htmlFor="star4" />
-                                                <input type="radio" id="star3" name="rating" value="3" />
-                                                <label className="full" htmlFor="star3" />
-                                                <input type="radio" id="star2" name="rating" value="2" />
-                                                <label className="full" htmlFor="star2" />
-                                                <input type="radio" id="star1" name="rating" value="1" />
-                                                <label className="full" htmlFor="star1" />
-                                            </fieldset>
-                                        </div>
+                                        <StarRating handleSelectedRating={(e) => this.handleSelectedRating(e)} />
                                     </div>
                                     {this.props.QuestionsList.length > 0 ?
                                         <div>

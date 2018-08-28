@@ -38,10 +38,10 @@ export const saveActualTimeDiff = (data) => {
     }
 }
 
-export function getSummaryDetails() {
+export function getSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURLServiceRequest + API.getSummaryDetails + '3').then((resp) => {
+        axios.get(baseURLServiceRequest + API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(calculationsFirstTime(resp.data))
             dispatch(endLoading());
@@ -114,7 +114,7 @@ export function onUpdateTime(data) {
 export function saveSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.put(baseURLServiceRequest + API.saveSummaryDetails + '3', data).then((resp) => {
+        axios.put(baseURLServiceRequest + API.saveSummaryDetails + data.serviceRequestVisitId, data).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

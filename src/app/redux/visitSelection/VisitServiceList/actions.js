@@ -17,8 +17,7 @@ export function getVisitServiceList() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        // axios.get(baseURLServiceRequest + API.getServiceRequestList + serviceProviderId).then((resp) => {
-        axios.get(baseURLServiceRequest + API.getServiceRequestList + '1').then((resp) => {
+        axios.get(baseURLServiceRequest + API.getServiceRequestList + serviceProviderId).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

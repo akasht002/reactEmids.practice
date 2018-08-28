@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import { getVisitServiceList } from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components';
+import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
-import { getFirstCharOfString } from '../../../utils/validations'
+import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { VISIT_SERVICE_STATUS_OPEN, VISIT_SERVICE_STATUS_APPLIED, VISIT_SERVICE_STATUS_INVITED } from '../../../constants/constants'
 import './style.css'
 
@@ -30,7 +30,6 @@ class VisitServiceList extends Component {
     handleClick = (requestId) => {
         this.props.getVisitServiceDetails(requestId);
         this.props.getVisitServiceSchedule(requestId);
-
     }
 
     render() {
