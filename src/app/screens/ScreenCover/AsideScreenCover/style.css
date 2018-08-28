@@ -57,44 +57,6 @@ section .ProfileRightWidget {
     font-size: 20px;
 }
 
-.ProfileImageContainer{
-    position: relative;
-    padding: 5px;
-    width: 90px;
-    margin: 0 auto;
-}
-
-.ProfileImage{
-    height: 80px;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-}
-
-.circular-chart, .ProfileImage {
-    display: block;
-}
-
-.circular-chart {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 90px !important;
-}
-.circle {
-    stroke: #ffffff;
-    fill: none;
-    stroke-width: 1;
-    animation: progress 1s ease-out forwards;
-}
-
-.disabledCircle {
-    stroke: #b7b7b7;
-    fill: none;
-    stroke-width: 1;
-    animation: progress 1s ease-out forwards;
-}
-
 @keyframes progress {
     0% {
         stroke-dasharray: 0 100;
