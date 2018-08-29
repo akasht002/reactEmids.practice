@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { API, baseURL } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Languages = {
     getLanguagesSuccess: 'get_languages_success/languages',
@@ -43,13 +45,14 @@ export function addLanguages(data) {
             }
         }) : [];
         let modal = {
-            serviceProviderId: serviceProviderId,
+            serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
             languages: languages
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.addLanguages + serviceProviderId + '/Language', modal).then((resp) => {
+        axios.post(baseURL + API.addLanguages + SERVICE_PROVIDER_TYPE_ID + '/Language', modal).then((resp) => {
             dispatch(getSelectedLanguages());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -61,7 +64,7 @@ export function getSelectedLanguages() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.addLanguages + serviceProviderId + '/Language').then((resp) => {
+        axios.get(baseURL + API.addLanguages + SERVICE_PROVIDER_TYPE_ID + '/Language').then((resp) => {
             dispatch(getSelectedLanguageDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

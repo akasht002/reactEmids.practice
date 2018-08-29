@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { API, baseURL } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Education = {
     getEducationSuccess: 'get_education_success/education',
@@ -33,7 +35,7 @@ export function getEducation() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.education + serviceProviderId+'/Education').then((resp) => {
+        axios.get(baseURL + API.education + SERVICE_PROVIDER_TYPE_ID+'/Education').then((resp) => {
             dispatch(getEducationSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -47,7 +49,7 @@ export function addEducation(data) {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
-            ServiceProviderId: serviceProviderId,
+            ServiceProviderId: SERVICE_PROVIDER_TYPE_ID,
             school: data.school,
             degree: data.degree,
             fieldOfStudy: data.fieldOfStudy,
@@ -57,9 +59,10 @@ export function addEducation(data) {
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.education+serviceProviderId+'/Education/', modal).then((resp) => {
+        axios.post(baseURL + API.education+SERVICE_PROVIDER_TYPE_ID+'/Education/', modal).then((resp) => {
             dispatch(addEducationSuccess(true));
             dispatch(getEducation());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -73,14 +76,15 @@ export function editEducation(data) {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let educationId =data;
         let modal = {
-            ServiceProviderId: serviceProviderId,
+            ServiceProviderId: SERVICE_PROVIDER_TYPE_ID,
             school: data
 
         };
 
         dispatch(startLoading());
-        axios.get(baseURL + API.education +serviceProviderId+`/Education/${educationId}`,modal).then((resp) => {
+        axios.get(baseURL + API.education +SERVICE_PROVIDER_TYPE_ID+`/Education/${educationId}`,modal).then((resp) => {
             dispatch(getEducationFieldDetails(resp.data))
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -92,7 +96,7 @@ export function updateEducation(data) {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
-            serviceProviderId: serviceProviderId,
+            serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
             educationId: data.educationId,
             school: data.school,
             degree: data.degree,
@@ -103,9 +107,10 @@ export function updateEducation(data) {
 
         };
         dispatch(startLoading());
-        axios.put(baseURL + API.education+serviceProviderId+'/Education', modal).then((resp) => {
+        axios.put(baseURL + API.education+SERVICE_PROVIDER_TYPE_ID+'/Education', modal).then((resp) => {
             dispatch(addEducationSuccess(true));
             dispatch(getEducation());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -118,8 +123,9 @@ export function deleteEducation(data) {
         dispatch(startLoading());
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let id =data;
-        axios.delete(baseURL + API.education+`${serviceProviderId}/Education/${id}`,data).then((resp) => {
+        axios.delete(baseURL + API.education+`${SERVICE_PROVIDER_TYPE_ID}/Education/${id}`,data).then((resp) => {
             dispatch(getEducation());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

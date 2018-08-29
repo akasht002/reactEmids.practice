@@ -321,7 +321,7 @@ class PersonalDetail extends React.PureComponent {
             <svg viewBox='0 0 36 36' className='circular-chart'>
               <path
                 className='circle'
-                strokeDasharray='80, 100'
+                strokeDasharray={`${this.props.profilePercentage},100`}
                 d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
               />
             </svg>
@@ -331,7 +331,7 @@ class PersonalDetail extends React.PureComponent {
               src={
                 this.state.imageProfile
                   ? this.state.imageProfile
-                  : require('../../../assets/images/Blank_Profile_icon.png')
+                  : null
               }
             />
           </div>

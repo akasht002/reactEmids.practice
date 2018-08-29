@@ -2,6 +2,8 @@ import axios from 'axios'
 import {PERSONAL_DETAIL ,getModal} from './modal'
 import { API, baseURL } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions'
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const PersonalDetails = {
   GET_PERSONAL_DETAIL_SUCCESS: 'GET_PERSONAL_DETAIL_SUCCESS',
@@ -86,7 +88,7 @@ export function uploadImg (data) {
   return (dispatch, getState) => {
     let serviceProviderId = localStorage.getItem('serviceProviderID');    
     let modal = {
-      serviceProviderId: serviceProviderId,
+      serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
       image: data
     }
     dispatch(startLoading())
@@ -94,6 +96,7 @@ export function uploadImg (data) {
       .post(baseURL + API.uploadImage, modal)
       .then(resp => {
         dispatch(getImage())
+        dispatch(getProfilePercentage())
         dispatch(endLoading())
       })
       .catch(err => {
@@ -107,7 +110,7 @@ export function getImage () {
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
-      .get(baseURL + API.getImage + serviceProviderId)
+      .get(baseURL + API.getImage + SERVICE_PROVIDER_TYPE_ID)
       .then(resp => {
         dispatch(uploadImgSuccess(resp.data))
         dispatch(endLoading())
@@ -123,7 +126,7 @@ export function getPersonalDetail () {
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
-      .get(baseURL + API.getPersonalDetail + serviceProviderId + '/ProfileView')
+      .get(baseURL + API.getPersonalDetail + SERVICE_PROVIDER_TYPE_ID + '/ProfileView')
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -140,9 +143,10 @@ export function updatePersonalDetail (data) {
   return (dispatch, getState) => {    
     dispatch(startLoading())
     axios
-      .put(baseURL + API.updatePersonalDetail + serviceProviderId, modelData)
+      .put(baseURL + API.updatePersonalDetail + SERVICE_PROVIDER_TYPE_ID, modelData)
       .then(resp => {
         dispatch(getPersonalDetail())
+        dispatch(getProfilePercentage())
         dispatch(endLoading())
       })
       .catch(err => {
@@ -159,9 +163,10 @@ export function updateOrganizationDetail (data) {
   return (dispatch, getState) => {    
     dispatch(startLoading())
     axios
-      .put(baseURL + API.updatePersonalDetail + serviceProviderId, modelData)
+      .put(baseURL + API.updatePersonalDetail + SERVICE_PROVIDER_TYPE_ID, modelData)
       .then(resp => {
         dispatch(getPersonalDetail())
+        dispatch(getProfilePercentage())
         dispatch(endLoading())
       })
       .catch(err => {
