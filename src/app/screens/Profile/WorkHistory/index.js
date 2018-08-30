@@ -1,11 +1,11 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Input ,TextArea,ProfileModalPopup, ModalPopup } from "../../../components";
-import {Calendar} from "../../../components/LevelOne/index";
-import { checkSpace,formattedDateMoment,formattedDateChange,formateStateDate } from "../../../utils/validations";
-import {compare} from "../../../utils/comparerUtility";
-import {getWorkHistory, addWorkHistory,editWorkHistory, updateWorkHistory, deleteWorkHistory} from "../../../redux/profile/WorkHistory/actions";
+import { Input, TextArea, ProfileModalPopup, ModalPopup } from "../../../components";
+import { Calendar } from "../../../components/LevelOne/index";
+import { checkSpace, formattedDateMoment, formattedDateChange, formateStateDate } from "../../../utils/validations";
+import { compare } from "../../../utils/comparerUtility";
+import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, deleteWorkHistory } from "../../../redux/profile/WorkHistory/actions";
 import "./styles.css";
 
 class WorkHistory extends Component {
@@ -13,20 +13,20 @@ class WorkHistory extends Component {
         super(props);
         this.state = {
             isWorkHistoryModalOpen: false,
-            workHistoryId:'',
-            designation:'',
-            company:'',
-            location:'',
-            fromDate:'',
-            toDate:'',
-            isWorking:false,
-            description:'',
+            workHistoryId: '',
+            designation: '',
+            company: '',
+            location: '',
+            fromDate: '',
+            toDate: '',
+            isWorking: false,
+            description: '',
             isOnDeleteModalOpen: false,
             isAdd: false,
             isValid: true,
             disabledSaveBtn: true,
-            isValidDate:true,
-            isDiscardModalOpen:false
+            isValidDate: true,
+            isDiscardModalOpen: false
         }
     }
 
@@ -34,17 +34,17 @@ class WorkHistory extends Component {
         this.props.getWorkHistory();
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         this.setState({
             designation: nextProps.workhistoyFieldDetails.designation,
             company: nextProps.workhistoyFieldDetails.company,
             location: nextProps.workhistoyFieldDetails.location,
             fromDate: nextProps.workhistoyFieldDetails.fromDate,
             toDate: nextProps.workhistoyFieldDetails.toDate,
-            description:nextProps.workhistoyFieldDetails.description,
-            isWorking:nextProps.workhistoyFieldDetails.isWorking,
-            workHistoryId:nextProps.workhistoyFieldDetails.workHistoryId
-            
+            description: nextProps.workhistoyFieldDetails.description,
+            isWorking: nextProps.workhistoyFieldDetails.isWorking,
+            workHistoryId: nextProps.workhistoyFieldDetails.workHistoryId
+
         })
     }
 
@@ -59,18 +59,18 @@ class WorkHistory extends Component {
             description: '',
             isWorking: '',
             disabledSaveBtn: true,
-            isDiscardModalOpen:false,
-            isAdd:true,
-            isValid:true
+            isDiscardModalOpen: false,
+            isAdd: true,
+            isValid: true
         })
     }
 
-    toggleWorkHistory=(e)=>{
+    toggleWorkHistory = (e) => {
         this.setState({
             isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
             isValid: true,
-            disabledSaveBtn:true,
-            isDiscardModalOpen:false
+            disabledSaveBtn: true,
+            isDiscardModalOpen: false
         })
         let workHistory = this.props.workhistoyFieldDetails;
         let workhistoryFielObject = {
@@ -80,30 +80,31 @@ class WorkHistory extends Component {
             fromDate: workHistory.fromDate,
             toDate: workHistory.toDate,
             description: workHistory.description,
-            isWorking:workHistory.isWorking
+            isWorking: workHistory.isWorking
         }
-        
-         let stateObject = {
+
+        let stateObject = {
             designation: this.state.designation,
             company: this.state.company,
             location: this.state.location,
             fromDate: this.state.fromDate,
             toDate: this.state.toDate,
             description: this.state.description,
-            isWorking:this.state.isWorking
+            isWorking: this.state.isWorking
         }
-        
-         const fieldDifference = compare(workhistoryFielObject, stateObject);
-         if (fieldDifference === true) {
-            this.setState({ isWorkHistoryModalOpen: false,
+
+        const fieldDifference = compare(workhistoryFielObject, stateObject);
+        if (fieldDifference === true) {
+            this.setState({
+                isWorkHistoryModalOpen: false,
                 isDiscardModalOpen: false,
-                designation:'',
-                company:'',
-                location:'',
-                fromDate:'',
-                toDate:'',
-                description:'',
-                isWorking:''
+                designation: '',
+                company: '',
+                location: '',
+                fromDate: '',
+                toDate: '',
+                description: '',
+                isWorking: ''
             })
         } else {
             this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
@@ -112,27 +113,27 @@ class WorkHistory extends Component {
     }
     addWorkhistory = () => {
         if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate)) {
-           
+
             const data = {
-                workHistoryId:this.state.workHistoryId,
-                company:this.state.company.trim(),
+                workHistoryId: this.state.workHistoryId,
+                company: this.state.company.trim(),
                 designation: this.state.designation.trim(),
                 location: this.state.location.trim(),
-                fromDate:this.state.fromDate,
-                toDate:this.state.toDate,
-                isWorking:this.state.isWorking,
-                description:this.state.description.trim()
+                fromDate: this.state.fromDate,
+                toDate: this.state.toDate,
+                isWorking: this.state.isWorking,
+                description: this.state.description.trim()
             };
-            if(data.isWorking){
-                const data ={
-                    fromDate:""
+            if (data.isWorking) {
+                const data = {
+                    fromDate: ""
                 }
-            }else {
-                const data ={
-                    fromDate:this.state.fromDate
+            } else {
+                const data = {
+                    fromDate: this.state.fromDate
                 }
             }
-            
+
             this.props.addWorkHistory(data);
             this.reset();
         } else {
@@ -156,13 +157,13 @@ class WorkHistory extends Component {
                 location: this.state.location,
                 fromDate: this.state.fromDate,
                 toDate: this.state.toDate,
-                description:this.state.description,
+                description: this.state.description,
                 workHistoryId: this.state.workHistoryId
             };
             this.props.updateWorkHistory(data);
-            this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,  disabledSaveBtn: true});
+            this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen, disabledSaveBtn: true });
             this.reset();
-        }else {
+        } else {
             this.setState({ isValid: false });
         }
     }
@@ -174,42 +175,42 @@ class WorkHistory extends Component {
 
     dateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
-        this.setState({  
+        this.setState({
             fromDate: formattedDate,
-            disabledSaveBtn:false 
+            disabledSaveBtn: false
         });
 
     }
-    
+
     dateChangedRaw = (event) => {
         const formattedDate = formattedDateChange(event);
-        this.setState({  
+        this.setState({
             fromDate: formattedDate
         });
- 
+
     }
 
     todateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
-        this.setState({  
+        this.setState({
             toDate: formattedDate,
-            disabledSaveBtn:false
-         });
+            disabledSaveBtn: false
+        });
 
     }
 
     todateChangedRaw = (event) => {
         const formattedDate = formattedDateChange(event);
-            this.setState({  
-                toDate: formattedDate
-            });
-      
+        this.setState({
+            toDate: formattedDate
+        });
+
     }
 
     render() {
         let modalContent;
         let modalTitle;
-       
+
 
         const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
@@ -225,11 +226,11 @@ class WorkHistory extends Component {
                         maxlength={"100"}
                         textChange={(e) => this.setState({
                             designation: e.target.value,
-                            disabledSaveBtn:false
+                            disabledSaveBtn: false
                         })}
-                        
+
                     />
-                    {!this.state.isValid && (!this.state.designation ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.designation === '' && ' Designation'}</span>}
+                    {!this.state.isValid && (!this.state.designation) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.designation === '' && ' Designation'}</span>}
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -243,10 +244,10 @@ class WorkHistory extends Component {
                         maxlength={"100"}
                         textChange={(e) => this.setState({
                             company: e.target.value,
-                            disabledSaveBtn:false
+                            disabledSaveBtn: false
                         })}
                     />
-                    {!this.state.isValid && (!this.state.company ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.company === '' && ' CompanyName'}</span>}
+                    {!this.state.isValid && (!this.state.company) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.company === '' && ' CompanyName'}</span>}
 
                 </div>
                 <div className="col-md-12 mb-2">
@@ -267,44 +268,44 @@ class WorkHistory extends Component {
                 <div className="col-md-6 MonthlyPicker mb-2">
                     <div className="form-group">
                         <label>From Date</label>
-                    <Calendar 
-                        startDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
-                        onDateChange={this.dateChanged}
-                        onDateChangeRaw={this.dateChangedRaw}
-                        mandatory={true}
-                        maxDate={this.state.toDate ? formateStateDate(this.state.toDate) : formateStateDate()}
-                        value={this.state.fromDate}
-                        className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate )) && 'inputFailure')}
-                    />
-                    {!this.state.isValid && (!this.state.fromDate ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.fromDate === '' ? 'From Date' : 'From Date'}</span>}
+                        <Calendar
+                            startDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
+                            onDateChange={this.dateChanged}
+                            onDateChangeRaw={this.dateChangedRaw}
+                            mandatory={true}
+                            maxDate={this.state.toDate ? formateStateDate(this.state.toDate) : formateStateDate()}
+                            value={this.state.fromDate}
+                            className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate)) && 'inputFailure')}
+                        />
+                        {!this.state.isValid && (!this.state.fromDate) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.fromDate === '' ? 'From Date' : 'From Date'}</span>}
                     </div>
                 </div>
-                
+
                 <div className="col-md-6 MonthlyPicker mb-2">
-                {!this.state.isWorking && <div className="form-group">
-                    <label>To Date</label>
-                    <Calendar 
-                        startDate={this.state.toDate && formateStateDate(this.state.toDate)}
-                        onDateChange={this.todateChanged}
-                        onDateChangeRaw={this.todateChangedRaw}
-                        mandatory={true}
-                        minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
-                        maxDate={formateStateDate()}
-                        value={this.state.toDate}
-                        className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
-                    />
-                    {!this.state.isValid && (!this.state.toDate ) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.toDate === '' ? 'To Date' :'To Date'}</span>}
-                    
-                </div>}
-            </div>
+                    {!this.state.isWorking && <div className="form-group">
+                        <label>To Date</label>
+                        <Calendar
+                            startDate={this.state.toDate && formateStateDate(this.state.toDate)}
+                            onDateChange={this.todateChanged}
+                            onDateChangeRaw={this.todateChangedRaw}
+                            mandatory={true}
+                            minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
+                            maxDate={formateStateDate()}
+                            value={this.state.toDate}
+                            className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
+                        />
+                        {!this.state.isValid && (!this.state.toDate) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.toDate === '' ? 'To Date' : 'To Date'}</span>}
+
+                    </div>}
+                </div>
                 <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
                             <input className="form-check-input" type="checkbox" value={this.state.isWorking} id="defaultCheck1"
-                            onChange={(e) => this.setState({ isWorking: e.target.checked })}
-                           />
+                                onChange={(e) => this.setState({ isWorking: e.target.checked })}
+                            />
                             I am currently working here
-                            <span className="CheckboxIcon"/>
+                            <span className="CheckboxIcon" />
                         </label>
                     </div>
                 </div>
@@ -326,7 +327,7 @@ class WorkHistory extends Component {
             </div>
         </form>
 
-        
+
         const workhistoryList = this.props.workhistoryList && this.props.workhistoryList.map((WorkHistoryList, i) => {
             return (
                 <li className="SPWorkHistoryItems" key={WorkHistoryList.company}>
@@ -359,71 +360,71 @@ class WorkHistory extends Component {
         }
 
 
-        return(
+        return (
             <div className="col-md-12 card CardWidget SPWorkHistory">
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Work History</h4>
                     <i className="SPIconLarge SPIconAdd"
-                    onClick={() => this.setState({ isWorkHistoryModalOpen: true,isAdd: true })} />
+                        onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} />
                 </div>
 
                 <div className="SPCertificateContainer width100">
-                        
-                        {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
+
+                    {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
                         <ul className="SPCertificateList">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'> Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true,isAdd: true })}/> to add Work History</span>
+                                    <span className='SPNoInfoDesc'> Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} /> to add Work History</span>
                                 </div>
                             </div>
-                            </ul>
-                        }
+                        </ul>
+                    }
                 </div>
 
-            <ProfileModalPopup
-                isOpen={this.state.isWorkHistoryModalOpen}
-                toggle={this.toggleWorkHistory}
-                ModalBody={modalContent}
-                className="modal-lg asyncModal CertificationModal"
-                modalTitle={modalTitle}
-                centered={true}
-                disabled={this.state.disabledSaveBtn}
-                onClick={this.state.isAdd ? 
-                    this.addWorkhistory : 
-                    this.updateWorkHistory
-                }
-            />
+                <ProfileModalPopup
+                    isOpen={this.state.isWorkHistoryModalOpen}
+                    toggle={this.toggleWorkHistory}
+                    ModalBody={modalContent}
+                    className="modal-lg asyncModal CertificationModal"
+                    modalTitle={modalTitle}
+                    centered={true}
+                    disabled={this.state.disabledSaveBtn}
+                    onClick={this.state.isAdd ?
+                        this.addWorkhistory :
+                        this.updateWorkHistory
+                    }
+                />
 
-            <ModalPopup
-            isOpen={this.state.isDiscardModalOpen}
-            toggle={this.reset}
-            ModalBody={<span>Do you want to discard the changes?</span>}
-            btn1="YES"
-            btn2="NO"
-            className="modal-sm"
-            headerFooter="d-none"
-            centered={true}
-            onConfirm={() => this.reset()}
-            onCancel={() => this.setState({
-                isDiscardModalOpen: false,
-            })}
-        />
+                <ModalPopup
+                    isOpen={this.state.isDiscardModalOpen}
+                    toggle={this.reset}
+                    ModalBody={<span>Do you want to discard the changes?</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
+                    onConfirm={() => this.reset()}
+                    onCancel={() => this.setState({
+                        isDiscardModalOpen: false,
+                    })}
+                />
 
-            <ModalPopup
-                isOpen={this.state.isOnDeleteModalOpen}
-                ModalBody={<span>Do you really want to remove the Work History details</span>}
-                btn1="YES"
-                btn2="NO"
-                className="modal-sm"
-                headerFooter="d-none"
-                centered={true}
-                onConfirm={() => this.deleteWorkHistory()}
-                onCancel={() => this.setState({
-                    isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen
-                })}
-            />
-        </div>
+                <ModalPopup
+                    isOpen={this.state.isOnDeleteModalOpen}
+                    ModalBody={<span>Do you really want to remove the Work History details</span>}
+                    btn1="YES"
+                    btn2="NO"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
+                    onConfirm={() => this.deleteWorkHistory()}
+                    onCancel={() => this.setState({
+                        isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen
+                    })}
+                />
+            </div>
         )
     }
 

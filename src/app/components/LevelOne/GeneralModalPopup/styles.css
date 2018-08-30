@@ -1,0 +1,55 @@
+.profileModalHeader {
+    height: 60px;
+    background-color: #f4ecfc;
+    padding: 14px 30px !important;
+}
+
+.profileModalHeader{
+    height: 60px;
+    background-color: #f4ecfc;
+    padding: 14px 30px !important;
+}
+
+.profileModalHeader .modal-title{
+    font-weight: 600;
+    font-size: 18px;
+    color: #7a329f;
+}
+
+button.CloseMsgModal{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    opacity: 1;
+}
+
+button.CloseMsgModal:focus, button.CloseMsgModal span:focus{
+    outline: 0;
+}
+
+button.CloseMsgModal span{
+    position: relative;
+    background-color: #d44950;
+    line-height: 17px;
+    font-size: 20px;
+    height: 22px;
+    width: 22px;
+    display: block;
+    border-radius: 50%;
+    text-shadow: none;
+    color: #ffffff;
+}
+
+.MsgModal .modal-content{
+    width: auto;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.modal-content .MsgModalBody{
+    padding: 0;
+    overflow: auto;
+}
+.asyncModal .modal-body{
+    max-height: calc(100vh - 200px);
+}

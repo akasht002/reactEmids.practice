@@ -1,39 +1,17 @@
-import React from 'react'
+import React, {Component} from 'react'
 import isRetina from 'is-retina'
-import createClass from 'create-react-class';
-import PropTypes from 'prop-types'
 
-const Gravatar = createClass({
-    propTypes: {
-        base: PropTypes.string,
-        value: PropTypes.string,
-        size: PropTypes.number,
-        rating: PropTypes.string,
-        default: PropTypes.string,
-        className: PropTypes.string,
-        protocol: PropTypes.string,
-        style: PropTypes.object,
-        extension: PropTypes.string
-    },
-    defaultProps: {
-        size: 50,
-        rating: 'g',
-        default: 'retro',
-        protocol: '//',
-    },
+class Gravatar extends Component {
 
     render() {
         var base = this.props.base;
         const formattedValue = this.props.value;
-        // const src = base + formattedValue + '.' + this.props.extension;
-        // const retinaSrc = base + formattedValue + '.' + this.props.extension;
-        const src = base + '.' + this.props.extension;
-        const retinaSrc = base + '.' + this.props.extension;
 
-        let modernBrowser = true;  // server-side, we render for modern browsers
+        const src = base + '.' + this.props.extension;
+
+        let modernBrowser = true;
 
         if (typeof window !== 'undefined') {
-            // this is not NodeJS
             modernBrowser = 'srcset' in document.createElement('img')
         }
 
@@ -55,8 +33,7 @@ const Gravatar = createClass({
                 <img
                     alt={`${formattedValue}`}
                     style={this.props.style}
-                    // src={retinaSrc}
-                    src={require('../../../assets/images/Flags/flags/' + src)}
+                    src={require('../../../assets/images/Flags/' + src)}
                     height={this.props.size}
                     width={this.props.size}
                     {...rest}
@@ -67,10 +44,7 @@ const Gravatar = createClass({
         return (
             <img
                 alt={`${formattedValue}`}
-                style={this.props.style}
-                // src={src}
-                // srcSet={`${retinaSrc} 2x`}
-                src={require('../../../assets/images/Flags/flags/' + src)}
+                src={require('../../../assets/images/Flags/' + src)}
                 height={this.props.size}
                 width={this.props.size}
                 {...rest}
@@ -78,7 +52,7 @@ const Gravatar = createClass({
             />
         )
     }
-});
+}
 
 
 export default Gravatar;

@@ -9,7 +9,12 @@ import {
   VerifyUserID,
   OnboardSuccess,
   Profile,
+  VisitServiceList,
+  VisitServiceDetails,
+  PerformTasks,
+  Feedback,
   Home,
+  Summary,
   ForgetPassword,
   ResetPassword,
   ResetPasswordSuccess,
@@ -38,12 +43,17 @@ export const Path = {
   verifyContact: '/verifycontact',
   onboardSuccess: '/onboardsuccess',
   profile: '/profile',
+  visitServiceList: '/Visitservicelist',
+  visitServiceDetails: '/visitservicedetails',
+  performTasks: '/performtasks',
+  feedback: '/feedback',
+  home: '/home',
   loginCallBack: '/loginCallBack',
+  summary: '/summary',
   forgetPassword: '/forgetPassword',
-  resetPassword: '/resetPassword:uid/:token',
+  resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
-  home:'/home',
 };
 
 class AppStackRoot extends Component {
@@ -63,6 +73,11 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
             <PrivateRoute path={Path.profile} component={Profile} />
+            <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
+            <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
+            <PrivateRoute path={Path.performTasks} component={PerformTasks} />
+            <PrivateRoute path={Path.feedback} component={Feedback} />
+            <PrivateRoute path={Path.summary} component={Summary} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

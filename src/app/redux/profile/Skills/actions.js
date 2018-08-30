@@ -43,7 +43,7 @@ export function addSkills(data) {
             }
         }) : [];
         let modal = {
-            serviceProviderId: serviceProviderId,
+            serviceProviderId: '1',
             skills: skills
 
         };

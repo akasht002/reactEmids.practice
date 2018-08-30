@@ -4,6 +4,7 @@ import {CheckBox} from './CheckBox';
 import {TextArea} from './TextArea';
 import {FloatLabelInput, Input, SearchInput} from './Input';
 import {Preloader} from './Preloader';
+import {Scrollbars} from './CSB';
 
 export {
     FloatLabelInput, 
@@ -13,5 +14,6 @@ export {
     SelectBox, 
     Button, 
     Input,
-    Preloader
+    Preloader,
+    Scrollbars
 };

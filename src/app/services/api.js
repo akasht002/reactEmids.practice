@@ -1,7 +1,12 @@
 import axios from 'axios';
 
 export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
+
+export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
+//export const baseURLServiceRequest = "http://localhost:5615/api/";
+
 export const authURL = "http://52.172.45.185:9005/";
+//export const authURL = "http://localhost:5000/";
 
 export const Api = axios.create({
     baseURL: baseURL,
@@ -23,6 +28,14 @@ export const API = {
     addSkills: 'ServiceProvider/',
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/',
+    getServiceRequestList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
+    getServiceRequestDetails: 'ServiceRequest/ServiceRequestDetails/',
+    getServiceRequestSchedule: 'VisitProcessing/ServiceRequestVisit/',
+    getServiceRequestPerformTasks: 'VisitProcessing/ServiceRequestVisitDetails/',
+    getQuestionsList: 'VisitProcessing/ServiceRequestVisitFeedback/49',
+    savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/',
+    saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
+    startOrStopService: 'VisitProcessing/ServiceRequestVisit/',
     SendResetPasswordLink: 'api/User/',
     getEmailIdByUserId: 'api/user/verifypasswordlink/',
     resetPassword: 'api/user',
@@ -35,5 +48,7 @@ export const API = {
     editServiceOffered: 'ServiceProvider/',
     addServiceOffered: 'ServiceProvider/',
     getServiceProviderID:'ServiceProviderOnBoarding/',
-    getGender: 'ServiceProviderLookUp/gender'
+    getGender: 'ServiceProviderLookUp/gender',
+    getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
+    saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/'
 }

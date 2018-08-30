@@ -1,0 +1,114 @@
+.WizardWidget{
+    width: 100%;
+}
+
+.WizardList{
+    display: flex;
+    display: -moz-flex;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    justify-content: center;
+}
+
+.WizardItems{
+    width: 180px;
+    position: relative;
+    font-size: 14px;
+    text-align: center;
+    padding: 50px 40px 0;
+    color: #acacac;
+}
+
+.WizardItems.active{
+    color: #7a329f;
+    font-weight: 600;
+}
+
+.WizardItems.visited{
+    font-weight: 400;
+    color: #7a329f;
+}
+
+.WizardItems:before{
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: block;
+    width: 22px;
+    height: 22px;
+    background-color: #ffffff;
+    border: 2px solid #e1e1e1;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    z-index: 2;
+}
+
+.WizardItems:after{
+    content: "";
+    position: absolute;
+    top: 18px;
+    width: 100%;
+    height: 2px;
+    left: -200px;
+    right: 0;
+    margin: 0 auto;
+    display: block;
+    background-color: #e1e1e1;
+    z-index: 1;
+}
+
+.WizardItems:first-child:after{
+    display: none;
+}
+
+.WizardItems.visited:before{
+    background-image: url("./images/checked.svg");
+    background-size: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #7a329f;
+    border: 1px solid #7a329f;
+    height: 38px;
+    width: 38px;
+    top: 0;
+}
+
+.WizardItems.visited:after{
+    background-color: #7a329f;
+}
+
+.WizardItems.active:before{
+    background-color: #ba85d6;
+    top: 2px;
+    border: 6px solid #fff;
+    width: 34px;
+    height: 34px;
+    -webkit-box-shadow: 0 0 0 2px #ba85d6;
+    -moz-box-shadow: 0 0 0 2px #ba85d6;
+    box-shadow: 0 0 0 2px #ba85d6;
+}
+
+.WizardItems.active:after{
+    background-color: #7a329f;
+}
+
+@media (max-width: 480px) {
+    .WizardItems{
+        padding: 50px 5px 0;
+        font-size: 0;
+    }
+
+    .WizardItems:after{
+        left: -100px;
+    }
+
+    div.RangeSliderWidget {
+        max-width: 100% !important;
+    }
+}
