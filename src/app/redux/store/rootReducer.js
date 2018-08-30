@@ -8,6 +8,7 @@ import wizardState from '../wizard/reducer';
 import { reducer as reduxFormReducer } from 'redux-form';
 import { reducer as oidcReducer } from 'redux-oidc';
 import authUser from '../auth/login/reducer'
+import {visitHistoryState} from '../visitHistory/reducer'
 
 export default combineReducers({
     form:reduxFormReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
     visitSelectionState,
     wizardState,
     oidc:oidcReducer,
-    authUser
+    authUser,
+    visitHistoryState
 });

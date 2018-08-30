@@ -1,9 +1,13 @@
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import React, { Component } from "react";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import {SelectField, Select, Item} from '@zendeskgarden/react-select';
 
-import React, { Component } from "react";
+
 import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../components';
-import VisitList from "./VisitList"
+import { getVisitServiceDetails } from '../../redux/visitHistory/VisitServiceDetails/actions';
+import {VisitList} from "./VisitList"
 import VisitFilter from "../VisitHistoryFilter";
 
 import '../../styles/dashboard.css'
@@ -19,6 +23,14 @@ class VisitHistory extends Component {
             selectedKey: 'item-1'
         };
     };
+
+    componentDidMount () {
+        this.props.getVisitServiceDetails()
+        
+      }
+    
+      componentWillReceiveProps (nextProps) {
+      }
 
     toggle() {
         this.setState({
@@ -41,7 +53,6 @@ class VisitHistory extends Component {
     }
 
     render() {
-        debugger;
         return (           
             <section className="d-flex">
                 <LeftSideMenu isOpen={this.state.isOpen}/>
@@ -74,7 +85,7 @@ class VisitHistory extends Component {
                         </div>
                         <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
                                     className='ProfileContentWidget'>
-                            <VisitList/>
+                            <VisitList visitHistoryList = {this.props.VisitServiceDetails}/>
                             <div className='cardBottom'/>
                         </Scrollbars>
                         <VisitFilter isOpen={this.state.filterOpen} toggle={this.toggleFilter.bind(this)}/>
@@ -85,4 +96,18 @@ class VisitHistory extends Component {
     }
 }
 
-export default VisitHistory;
+function mapDispatchToProps(dispatch) {
+    return {
+        getVisitServiceDetails: () => dispatch(getVisitServiceDetails())
+    }
+};
+
+function mapStateToProps(state) {
+    return {
+        VisitServiceDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceHistory
+    };
+};
+
+  export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(VisitHistory)
+  )

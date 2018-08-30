@@ -1,0 +1,427 @@
+.TitleWizardWidget .TitleContainer, .backProfileIcon, .requestImageContent{
+    height: 70px;
+}
+
+.backProfileIcon{
+    display: block;
+    position: relative;
+    width: 60px;
+    background-image: url("../assets/images/BackProfilePurple.svg");
+    background-position: center;
+    background-size: 18px;
+    background-repeat: no-repeat;
+}
+
+.TitleWizardWidget{
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.TitleWizardWidget .TitleContainer, .requestContent{
+    display: flex;
+    display: -moz-flex;
+}
+
+.requestContent{
+    width: 100%;
+    flex-direction: row;
+}
+
+.TitleContent{
+    border-right: 1px solid #d7d7d7;
+}
+
+.requestNameContent, .requestImageContent{
+    position: relative;
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 30px 20px 20px;
+    color: #444444;
+}
+
+.requestNameContent .requestName{
+    display: block;
+    color: #444444;
+    font-style: normal;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.requestImageContent{
+    margin-left: auto;
+}
+
+.requestImageContent span .avatarImage{
+    height: 40px;
+    width: 40px;
+    border: 0;
+}
+
+.requestImageContent span .requestName{
+    color: #444444;
+    font-weight: 600;
+    font-style: normal;
+    margin-left: 15px;
+}
+
+.rightTimerContent span.TimerStarted{
+    position: absolute;
+    bottom: 6px;
+    font-size: 14px;
+    color: #444444;
+}
+
+.WizardWidget{
+    padding: 0;
+}
+
+.WizardWidget .row{
+    margin: 0;
+}
+
+.WizardWidget .col{
+    padding: 0;
+}
+
+.WizardWidget .WizardContent{
+    padding: 20px;
+    border-right: 1px solid #d7d7d7;
+}
+
+.rightTimerWidget{
+
+}
+
+div.rightTimerContainer{
+    margin: 0;
+    height: 100%;
+}
+
+.rightTimerContainer .rightTimerContent{
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.rightTimerContainer .rightTimerContent a.btn{
+    padding: 10px 0 !important;
+    width: 130px;
+    font-size: 16px;
+}
+
+.rightTimerContent span{
+    font-size: 14px;
+    color: #8c8c8c;
+}
+
+span.TimerContent{
+    font-size: 28px;
+    font-weight: 600;
+    color: #444444;
+}
+
+span.TimerContent.running{
+    color: #8c8c8c;
+}
+
+.rightTimerContent span.TimerStarted.running{
+    position: relative;
+    bottom: 0;
+}
+
+.rightTimerWidget.running{
+    padding: 0 15px 0 0;
+}
+
+span.TimerContent i{
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    top: -5px;
+    position: relative;
+    margin: 0 5px;
+    display: inline-block;
+}
+
+div.bottomTaskbar{
+    padding: 0;
+    top: 6px;
+}
+
+.bottomTaskName, .bottomTaskRange{
+    margin-right: 20px;
+}
+
+.bottomTaskRange{
+    position: relative;
+    display: block;
+    background-color: #e0e0e0;
+    height: 10px;
+    top: 8px;
+    overflow: hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width: 215px;
+}
+
+.bottomTaskCompletedRange{
+    display: block;
+    position: absolute;
+    background-color: #b286bc;
+    left: 0;
+    width: 10%;
+    height: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    transition: all linear 0.3s;
+}
+
+.IndividualName .btn{
+    padding: 8px 16px !important;
+    margin-left: 25px;
+    height: 40px;
+}
+
+@media(max-width: 1024px){
+    div.rightTimerContainer{
+        flex-direction: column;
+    }
+
+    .rightTimerContainer div.rightTimerContent{
+        width: 100%;
+        max-width: 100%;
+        padding: 0 30px;
+        display: block;
+    }
+
+    .rightTimerContainer .rightTimerContent a.btn{
+        width: 100%;
+    }
+
+    .rightTimerContent span.TimerStarted {
+        left: 0;
+        width: 100%;
+    }
+
+    span.TimerContent {
+        top: 6px;
+        position: relative;
+    }
+
+    .WizardItems:after {
+        left: -150px;
+    }
+}
+
+@media(max-width: 768px){
+    .WizardItems {
+        padding: 50px 20px 0;
+    }
+
+    .WizardItems.active:before {
+        top: 6px;
+        width: 26px;
+        height: 26px;
+    }
+
+    .WizardItems.visited:before {
+        height: 32px;
+        width: 32px;
+        top: 3px;
+    }
+
+    .WizardItems:after {
+        left: -100px;
+    }
+
+    div.bottomTaskbar {
+        width: 60%;
+        max-width: 60%;
+    }
+
+    .WizardWidget .WizardContent {
+        width: 70%;
+        max-width: 70%;
+    }
+
+    .col.rightTimerWidget{
+        width: 30%;
+        max-width: 30%;
+    }
+
+    .rightTimerContainer div.rightTimerContent{
+        padding: 0 0 0 20px;
+    }
+    .rightTimerContainer .rightTimerContent a.btn {
+        font-size: 14px;
+    }
+    .rightTimerContent span.TimerStarted{
+        right: 0;
+        font-size: 12px;
+        padding: 0 0 0 20px;
+    }
+    .IndividualName .btn {
+        display: inline;
+    }
+}
+
+@media (max-width: 480px){
+
+    .requestImageContent span .requestName{
+        margin-left: 10px;
+    }
+
+    .TitleWizardWidget .TitleContainer{
+        height: 100%;
+    }
+
+    .TitleContent{
+        height: 97px;
+        float: left;
+    }
+
+    .requestImageContent, .requestNameContent{
+        float: right;
+        width: 100%;
+    }
+
+    .requestImageContent{
+        padding: 10px 20px;
+        height: 100%;
+        margin: 0;
+    }
+
+    .requestNameContent{
+        padding: 0 20px 10px 64px;
+        order: 2;
+        top: -5px;
+    }
+
+    .requestContent{
+        flex-direction: column;
+        width: calc(100% - 60px);
+    }
+
+    .requestNameContent span{
+        font-size: 14px;
+    }
+
+    .requestNameContent .requestName{
+        margin: 0;
+        font-size: 12px;
+    }
+
+    .WizardWidget > .row{
+        flex-direction: column;
+    }
+
+    .WizardWidget .WizardContent, .WizardWidget .ServiceCategoryWidget, .col.rightTimerWidget{
+        width: 100%;
+        max-width: 100%;
+        flex-basis: auto;
+    }
+
+    .col.rightTimerWidget{
+        margin-top: 15px;
+    }
+
+    div.rightTimerContainer{
+        flex-direction: row;
+    }
+
+    .rightTimerContainer div.rightTimerContent{
+        width: 50%;
+        padding: 0 20px;
+    }
+
+    .WizardWidget .WizardContent{
+        padding: 0;
+        border: 0;
+    }
+
+    .rightTimerContent span.TimerStarted {
+        position: relative;
+        width: 100%;
+        display: block;
+        bottom: 0;
+        padding: 5px 0 0 0;
+    }
+
+    .WizardItems {
+        padding: 40px 20px 0;
+    }
+
+    .WizardWidget{
+        padding: 20px 0;
+    }
+
+    div.rightTimerContainer div.FeedbackTimer{
+        top: 0;
+        display: flex;
+    }
+
+    .TabContainer{
+        height: 75px;
+        padding: 15px 50px 15px 20px;
+    }
+
+    .TabContainer .ServiceTasksImg{
+        height: 45px;
+        margin-right: 10px;
+    }
+
+    .ServicesLink {
+        padding: 15px 40px 15px 0;
+        margin: 0 20px 0 75px;
+    }
+
+    .ServicesLink:after {
+        top: 13px;
+        height: 26px;
+        width: 26px;
+    }
+
+    .ServiceList:before {
+        left: 39px;
+    }
+
+    .ServicesLink:before {
+        top: 20px;
+    }
+
+    .bottomTaskName, .bottomTaskRange{
+        margin-right: 10px;
+    }
+
+    .requestNameContent{
+        display: none;
+    }
+
+    .IndividualName .btn {
+        display: block;
+        font-size: 14px;
+        margin-top: 5px;
+        margin-left: auto;
+        padding: 4px 12px!important;
+        height: 30px;
+        width: 100px;
+    }
+
+    .IndividualName{
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 100%;
+        white-space: nowrap;
+    }
+}

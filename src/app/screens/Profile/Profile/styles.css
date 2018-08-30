@@ -39,7 +39,8 @@
     overflow-y: auto;
 }
 
-.mainProfileContent{
+div.mainProfileContent{
+    display: block;
     position: relative;
     max-height: calc( 100vh - 60px );
     background-color: rgba(0,0,0,0);

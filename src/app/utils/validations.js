@@ -100,3 +100,10 @@ export const getDataValueArray = (data, split) => {
 export const getGenderID = (data) => {
     return genderID[data]
 }
+
+
+export function getFields (input, field) {
+    var output = []
+    for (var i = 0; i < input.length; ++i) { output.push(input[i][field] + ', ') }
+    return output
+  }

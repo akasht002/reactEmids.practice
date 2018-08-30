@@ -77,7 +77,7 @@
 
 /************************************************************************************************************************************************************************/
 .SelectFormControl .Select-control{
-    position: relative;
+    position: absolute;
     display: inline-block;
     height: 20px;
     background: rgba(0,0,0,0);
