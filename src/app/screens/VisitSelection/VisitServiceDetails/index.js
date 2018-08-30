@@ -13,6 +13,7 @@ import { getPerformTasksList } from '../../../redux/visitSelection/VisitServiceP
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
+import { MORNING, AFTERNOON, EVENING } from "../../../constants/constants";
 
 class VisitServiceDetails extends Component {
 
@@ -304,14 +305,30 @@ class VisitServiceDetails extends Component {
                                                             <span><Moment format="DD MMM">{ScheduleList.visitDate}</Moment></span>
                                                         </div>
                                                         <div>
-                                                            <span>{ScheduleList.slot}</span>
+                                                            <span>
+                                                                {ScheduleList.slot === MORNING ?
+                                                                    'MORN'
+                                                                    :
+                                                                    ''
+                                                                }
+                                                                {ScheduleList.slot === AFTERNOON ?
+                                                                    'AFTE'
+                                                                    :
+                                                                    ''
+                                                                }
+                                                                {ScheduleList.slot === EVENING ?
+                                                                    'EVE'
+                                                                    :
+                                                                    ''
+                                                                }
+                                                            </span>
                                                         </div>
                                                         <div>
                                                             <span>{ScheduleList.visitStatusName}</span>
                                                         </div>
                                                         <div>
                                                             {ScheduleList.originalTotalDuration ?
-                                                                <span>{ScheduleList.originalTotalDuration}Hrs</span>
+                                                                <span>{ScheduleList.originalTotalDuration} Hrs</span>
                                                                 :
                                                                 <span> - </span>
                                                             }

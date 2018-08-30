@@ -111,14 +111,13 @@ class Feedback extends Component {
                                 <div className="col col-md-9 WizardContent">
                                     <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={1} />
                                 </div>
-                                <div className="col col-md-3 rightTimerWidget">
+                                <div className="col col-md-3 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
-                                        <div className="col-md-5 rightTimerContent">
-                                            <span className="TimerContent">01<i>:</i>45</span>
+                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
-                                        <div className="col-md-7 rightTimerContent">
-                                            <Link className="btn btn-primary" to="/">Stop Service</Link>
-                                            <span className="TimerStarted">Started at 12:30 pm</span>
+                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -173,6 +172,7 @@ class Feedback extends Component {
                                                                                 className='form-control'
                                                                                 value={this.state.textareaValue}
                                                                                 onChange={(e) => this.handleTextarea(e)}
+                                                                                maxLength={1000}
                                                                             />
                                                                         </div>
                                                                     )
@@ -230,6 +230,8 @@ function mapStateToProps(state) {
     return {
         QuestionsList: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.QuestionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
+        startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
+        SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
     };
 };
 
