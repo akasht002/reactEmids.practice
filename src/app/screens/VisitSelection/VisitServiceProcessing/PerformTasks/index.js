@@ -4,9 +4,10 @@ import { withRouter } from 'react-router-dom';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
+import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, GeneralModalPopup, Button } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
 import './style.css'
@@ -26,6 +27,8 @@ class PerformTasks extends Component {
             isModalOpen: false,
             disabled: true,
             taskCount: '',
+            stopTime: false,
+            isStopModalOpen: false
         };
         this.checkedTask = [];
     };
@@ -55,16 +58,24 @@ class PerformTasks extends Component {
 
     startService = (data, visitId) => {
         let startServiceAction = 1;
+        let current_time;
         if (data === startServiceAction) {
-            let current_time = new moment().format("HH:mm");
-            this.setState({ startedTime: current_time })
+            current_time = new moment().format("HH:mm");
+            this.setState({ startedTime: current_time, disabled: false })
+        } else {
+            current_time = this.state.startedTime;
+            this.setState({ stopTime: true })
         }
-        this.setState({ startService: !this.state.startService, disabled: false })
-        this.props.startOrStopService(data, visitId);
+        this.setState({ startService: !this.state.startService, disabled: false, isStopModalOpen: !this.state.startService })
+        this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
     }
 
     onClickNext = () => {
-        this.setState({ isModalOpen: true })
+        if (this.state.startService) {
+            this.setState({ isModalOpen: true })
+        } else {
+            this.setState({ isStopModalOpen: true })
+        }
     }
 
     onSubmit = () => {
@@ -116,27 +127,41 @@ class PerformTasks extends Component {
                                 <div className="col col-md-9 WizardContent">
                                     <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={0} />
                                 </div>
-                                <div className="col col-md-3 rightTimerWidget">
-                                    <div className="row rightTimerContainer">
-                                        <div className="col-md-5 rightTimerContent">
-                                            <span className="TimerContent">
-                                                <StopWatch ref={instance => { this.child = instance; }} />
-                                            </span>
-                                        </div>
-                                        <div className="col-md-7 rightTimerContent">
-                                            {this.state.startService ?
-                                                <a className="btn btn-primary" onClick={() => { this.startService(startService, this.state.taskList.serviceRequestVisitId); this.child.handleStartClick(); }}>Start Service</a>
-                                                :
-                                                <a className="btn btn-primary" onClick={() => { this.startService(stopService, this.state.taskList.serviceRequestVisitId); this.child.handleStopClick(); }}>Stop Service</a>
-                                            }
-                                            {this.state.startedTime ?
-                                                <span className="TimerStarted">Started at {convertTime24to12(this.state.startedTime)}</span>
-                                                :
-                                                ''
-                                            }
+
+                                {this.state.stopTime ?
+                                    <div className="col col-md-3 rightTimerWidget running">
+                                        <div className="row rightTimerContainer">
+                                            <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                                <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
+                                            </div>
+                                            <div className="col-md-7 rightTimerContent FeedbackTimer">
+                                                <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    :
+                                    <div className="col col-md-3 rightTimerWidget">
+                                        <div className="row rightTimerContainer">
+                                            <div className="col-md-5 rightTimerContent">
+                                                <span className="TimerContent">
+                                                    <StopWatch ref={instance => { this.child = instance; }} />
+                                                </span>
+                                            </div>
+                                            <div className="col-md-7 rightTimerContent">
+                                                {this.state.startService ?
+                                                    <a className="btn btn-primary" onClick={() => { this.startService(startService, this.state.taskList.serviceRequestVisitId); this.child.handleStartClick(); }}>Start Service</a>
+                                                    :
+                                                    <a className="btn btn-primary" onClick={() => { this.startService(stopService, this.state.taskList.serviceRequestVisitId); this.child.handleStopClick(); }}>Stop Service</a>
+                                                }
+                                                {this.state.startedTime ?
+                                                    <span className="TimerStarted">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                                    :
+                                                    ''
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div className='CardContainers ServiceCategoryWidget'>
@@ -158,7 +183,6 @@ class PerformTasks extends Component {
                                                 <Card>
                                                     <CardBody>
                                                         {serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
-                                                            console.log(taskList.length)
                                                             return (
                                                                 <div className='ServiceList' key={taskList.serviceRequestTypeTaskDetailsId}>
                                                                     <input
@@ -196,7 +220,11 @@ class PerformTasks extends Component {
                                                 </span>
                                                 <span className="bottomTaskPercentage">83.3%</span>
                                             </div> */}
-                                    <a className='btn btn-primary ml-auto' onClick={this.onClickNext}>Next</a>
+                                    <Button
+                                        classname='btn btn-primary ml-auto'
+                                        onClick={this.onClickNext}
+                                        disable={this.state.disabled}
+                                        label={'Next'} />
                                 </div>
                             </form>
                         </div>
@@ -215,6 +243,34 @@ class PerformTasks extends Component {
                             isModalOpen: !this.state.isModalOpen,
                         })}
                     />
+                    {/* <GeneralModalPopup
+                        isOpen={this.state.isStopModalOpen}
+                        ModalBody={<span>Please stop the service to proceed</span>}
+                        className="modal-lg"
+                        centered={true}
+                        label={'OK'}
+                        onClick={() => {
+                            this.setState({
+                                isStopModalOpen: !this.state.isStopModalOpen,
+                            })
+                        }}
+                    /> */}
+
+                    <ModalPopup
+                        isOpen={this.state.isStopModalOpen}
+                        ModalBody={<span>Please stop the service to proceed</span>}
+                        btn1="OK"
+                        btn2="Cancel"
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                        onConfirm={() => this.setState({
+                            isStopModalOpen: !this.state.isStopModalOpen,
+                        })}
+                        onCancel={() => this.setState({
+                            isStopModalOpen: !this.state.isStopModalOpen,
+                        })}
+                    />
                 </Scrollbars>
             </AsideScreenCover>
         )
@@ -225,7 +281,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data)),
         addPerformedTask: (data) => dispatch(addPerformedTask(data)),
-        startOrStopService: (data, visitId) => dispatch(startOrStopService(data, visitId))
+        startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime))
     }
 };
 
@@ -233,6 +289,8 @@ function mapStateToProps(state) {
     return {
         PerformTasksList: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
+        startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
+        SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
     };
 };
 

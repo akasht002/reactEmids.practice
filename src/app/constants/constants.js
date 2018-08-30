@@ -5,5 +5,8 @@ export const DATE_YEAR ="YYYY";
 export const VISIT_SERVICE_STATUS_OPEN = "Open";
 export const VISIT_SERVICE_STATUS_APPLIED = "Applied";
 export const VISIT_SERVICE_STATUS_INVITED = "Invited";
+export const MORNING = "Morning";
+export const AFTERNOON = "Afternoon";
+export const EVENING = "Evening";
 
 

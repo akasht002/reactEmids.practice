@@ -153,10 +153,10 @@ class Summary extends Component {
                                 <div className="col col-md-3 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerContent running">01<i>:</i>45</span>
+                                            <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
                                         <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at 12:30 pm</span>
+                                            <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +280,8 @@ function mapStateToProps(state) {
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
         CalculationsData: state.visitSelectionState.VisitServiceProcessingState.SummaryState.CalculationsData,
         actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,
-        patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList
+        patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
+        startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
     };
 };
 
