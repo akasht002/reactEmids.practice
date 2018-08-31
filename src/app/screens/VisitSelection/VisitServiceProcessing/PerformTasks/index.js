@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Collapse, CardBody, Card } from 'reactstrap';
+import { Collapse, CardBody, Card, UncontrolledCollapse  } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { Link } from "react-router-dom";
@@ -21,14 +21,16 @@ class PerformTasks extends Component {
             checkedCount: 0,
             checkedData: '',
             isOpen: false,
-            isCollapseOpen: false,
+            isCollapseOpen: true,
             startService: true,
             startedTime: '',
             isModalOpen: false,
             disabled: true,
             taskCount: '',
             stopTime: false,
-            isStopModalOpen: false
+            isStopModalOpen: false,
+            disableCheckbox: true,
+            caret: false
         };
         this.checkedTask = [];
     };
@@ -39,8 +41,10 @@ class PerformTasks extends Component {
         });
     }
 
-    toggleCollapse = () => {
-        this.setState({ isCollapseOpen: !this.state.isCollapseOpen })
+    aaa = () => {
+        this.setState({
+            caret: !this.state.caret
+        });
     }
 
     componentDidMount() {
@@ -61,10 +65,10 @@ class PerformTasks extends Component {
         let current_time;
         if (data === startServiceAction) {
             current_time = new moment().format("HH:mm");
-            this.setState({ startedTime: current_time, disabled: false })
+            this.setState({ startedTime: current_time, disabled: false, disableCheckbox: false })
         } else {
             current_time = this.state.startedTime;
-            this.setState({ stopTime: true })
+            this.setState({ stopTime: true, disableCheckbox: true })
         }
         this.setState({ startService: !this.state.startService, disabled: false, isStopModalOpen: !this.state.startService })
         this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
@@ -107,10 +111,10 @@ class PerformTasks extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <a className="TitleContent backProfileIcon" />
+                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'>Sun, <Moment format="DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestId}</span>
                                     </div>
                                     <div className='requestImageContent'>
                                         <span>
@@ -168,8 +172,8 @@ class PerformTasks extends Component {
                             <form className='ServiceContent'>
                                 {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
                                     return (
-                                        <div className="TabContainerWidget" key={serviceType.serviceRequestTypeDetailsId}>
-                                            <div id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer"} onClick={this.toggleCollapse}>
+                                        <div className={"TabContainerWidget"} key={serviceType.serviceRequestTypeDetailsId}>
+                                            <div onClick={this.aaa} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + this.state.caret}>
                                                 <img src={require("../../../../assets/images/Bathing_Purple.svg")} className="ServiceTasksImg" alt="categoryImage" />
                                                 <div className="TabHeaderContent">
                                                     <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>
@@ -179,7 +183,7 @@ class PerformTasks extends Component {
                                                         <i className="TotalTasks">/{(serviceType.serviceRequestTypeTaskVisits).length}</i> tasks completed</span>
                                                 </div>
                                             </div>
-                                            <Collapse isOpen={this.state.isCollapseOpen} toggler={'#toggle' + serviceType.serviceRequestTypeDetailsId}>
+                                            <UncontrolledCollapse toggler={'#toggle' + serviceType.serviceRequestTypeDetailsId}>
                                                 <Card>
                                                     <CardBody>
                                                         {serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
@@ -195,6 +199,7 @@ class PerformTasks extends Component {
                                                                             taskList.checked = e.target.checked;
                                                                             this.handleChange(taskList);
                                                                         }}
+                                                                        disabled={this.state.disableCheckbox}
                                                                     />
                                                                     <label className='ServicesLink' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
                                                                         <div className='servicesDesc'>
@@ -207,7 +212,7 @@ class PerformTasks extends Component {
                                                         })}
                                                     </CardBody>
                                                 </Card>
-                                            </Collapse>
+                                            </UncontrolledCollapse>
                                         </div>
                                     )
                                 })}

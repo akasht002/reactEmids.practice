@@ -745,15 +745,15 @@ div.feedbackForm {
     border-radius: 100%;
 }
 
-.form-radio-label:hover ~ .RadioBoxIcon {
+.form-radio-label:hover ~ label .RadioBoxIcon {
     border: 1px solid #7a329f;
 }
 
-.form-radio-input:checked ~ .RadioBoxIcon, .form-radio-input:checked ~ .form-radio-label {
+.form-radio-input:checked ~ label .RadioBoxIcon, .form-radio-input:checked ~ .form-radio-label {
     border: 1px solid #7a329f;
 }
 
-.form-radio-input:checked ~ .RadioBoxIcon:before {
+.form-radio-input:checked ~ label .RadioBoxIcon:before {
     content: '';
     position: relative;
     height: 7px;
