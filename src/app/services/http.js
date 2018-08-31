@@ -114,10 +114,10 @@ export const handleError = (err)=>  {
 export const getHeader = ()=>  {
     let userState = store.getState().authState.userState;
     let token = userState && userState.authData && userState.authData.data && userState.authData.data.user_token;
-    let authHeder = token ? {
+    let authHeader = token ? {
         Authorization: 'Bearer ' + token
     } : {}
     return {
-        headers: authHeder
+        headers: authHeader
     }
 }
