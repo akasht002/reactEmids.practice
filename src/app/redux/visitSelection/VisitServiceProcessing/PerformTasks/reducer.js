@@ -4,6 +4,7 @@ import {
 
 const defaultState = {
     PerformTasksList: {},
+    ServiceRequestVisitId: ''
 };
 
 const PerformTasksState = (state = defaultState, action) => {
@@ -13,6 +14,12 @@ const PerformTasksState = (state = defaultState, action) => {
             return {
                 ...state,
                 PerformTasksList: action.data
+            };
+
+            case PerformTasks.getServiceRequestVisitId:
+            return {
+                ...state,
+                ServiceRequestVisitId: action.data
             };
 
         default:

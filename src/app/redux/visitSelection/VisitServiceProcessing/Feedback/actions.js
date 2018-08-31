@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { API, baseURLServiceRequest } from '../../../../services/api';
 import { startLoading, endLoading } from '../../../loading/actions';
+import { push } from '../../../navigation/actions';
+import { Path } from '../../../../routes';
 
 export const QuestionsList = {
     getQuestionsListSuccess: 'get_questions_list_success/performtasks',
@@ -29,9 +31,11 @@ export function saveAnswers(data) {
     return (dispatch) => {
         dispatch(startLoading());
         axios.post(baseURLServiceRequest + API.saveAnswers, data).then((resp) => {
+            dispatch(push(Path.summary))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
+            dispatch(push(Path.summary))
         })
     }
 };

@@ -23,10 +23,7 @@ class ProfileHeader extends Component {
         };
     }
 
-    toggle() {
-        // this.setState({
-        //     isOpen: !this.state.isOpen
-        // });
+    toggle = () => {
         this.setState({
             dropdownOpen: !this.state.dropdownOpen
         });

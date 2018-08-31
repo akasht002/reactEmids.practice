@@ -9,7 +9,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Scrollbars, DatePickerComp  } from '../../components'
+import { Scrollbars  } from '../../components'
 
 import '../../styles/VisitFilter.css'
 
@@ -135,7 +135,7 @@ class VisitFilter extends React.Component {
                   <div className='form-group'>
                     <label>Select the Date range</label>
                   </div>
-                  <div className='col-md-12 mb-4 p-0'>
+                  {/* <div className='col-md-12 mb-4 p-0'>
                     <DatePickerComp
                       dateFormat='D MMM YYYY'
                       placeholder='DD MMM YYYY'
@@ -150,7 +150,7 @@ class VisitFilter extends React.Component {
                       className='form-control datePicker'
                       labelText='To Date'
                     />
-                  </div>
+                  </div> */}
                 </TabPane>
                 <TabPane tabId='3'>
                   <div className='form-group'>

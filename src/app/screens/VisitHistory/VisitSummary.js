@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../components'
+import {  ProfileHeader, Scrollbars } from '../../components'
+import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
+
 
 import '../../styles/VisitSummary.css'
 import 'react-accessible-accordion/dist/fancy-example.css'
@@ -46,8 +48,8 @@ class VisitSummary extends React.Component {
     }
 
     return (
-        <section className="d-flex">
-        <LeftSideMenu isOpen={this.state.isOpen}/>
+      
+       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className="container-fluid ProfileRightWidget">
             <ProfileHeader toggle={this.toggle.bind(this)}/>
             <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)}/>
@@ -94,7 +96,7 @@ class VisitSummary extends React.Component {
                 /> */}
             </div>
         </div>
-    </section>
+    </AsideScreenCover>
     )
   }
 }

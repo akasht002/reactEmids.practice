@@ -6,6 +6,7 @@ import { Path } from '../../../../routes';
 
 export const PerformTasks = {
     getPerformTasksListSuccess: 'get_perform_tasks_list_success/performtasks',
+    getServiceRequestVisitId: 'get_service_request_visitId/performtasks'
 };
 
 export const getPerformTasksListSuccess = (data) => {
@@ -15,11 +16,18 @@ export const getPerformTasksListSuccess = (data) => {
     }
 }
 
+export const getServiceRequestVisitId = (data) => {
+    return {
+        type: PerformTasks.getServiceRequestVisitId,
+        data
+    }
+}
+
 export function getPerformTasksList(data) {
     return (dispatch) => {
+        dispatch(getServiceRequestVisitId(data))
         dispatch(startLoading());
-        // axios.get(baseURLServiceRequest + API.getServiceRequestPerformTasks + data).then((resp) => {
-        axios.get(baseURLServiceRequest + API.getServiceRequestPerformTasks + '3').then((resp) => {
+        axios.get(baseURLServiceRequest + API.getServiceRequestPerformTasks + data).then((resp) => {
             dispatch(getPerformTasksListSuccess(resp.data))
             dispatch(push(Path.performTasks))
             dispatch(endLoading());
@@ -33,8 +41,7 @@ export function addPerformedTask(data) {
     console.log(data)
     return (dispatch) => {
         dispatch(startLoading());
-        // axios.put(baseURLServiceRequest + API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
-        axios.put(baseURLServiceRequest + API.savePerformedTask + '3', data).then((resp) => {
+        axios.put(baseURLServiceRequest + API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
             dispatch(push(Path.feedback))
             dispatch(endLoading());
         }).catch((err) => {
@@ -47,8 +54,7 @@ export function addPerformedTask(data) {
 export function startOrStopService(data, visitId) {
     return (dispatch) => {
         dispatch(startLoading());
-        //axios.put(baseURLServiceRequest + API.startOrStopService + visitId/ + data).then((resp) => {
-        axios.put(baseURLServiceRequest + API.startOrStopService + '3/' + data).then((resp) => {
+        axios.put(baseURLServiceRequest + API.startOrStopService + visitId/ + data).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

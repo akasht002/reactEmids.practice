@@ -4,8 +4,9 @@ import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import { getVisitServiceList } from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../../components';
-import { getFirstCharOfString } from '../../../utils/validations'
+import { Scrollbars } from '../../../components';
+import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
+import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { VISIT_SERVICE_STATUS_OPEN, VISIT_SERVICE_STATUS_APPLIED, VISIT_SERVICE_STATUS_INVITED } from '../../../constants/constants'
 import './style.css'
 
@@ -29,7 +30,6 @@ class VisitServiceList extends Component {
     handleClick = (requestId) => {
         this.props.getVisitServiceDetails(requestId);
         this.props.getVisitServiceSchedule(requestId);
-
     }
 
     render() {
@@ -61,7 +61,7 @@ class VisitServiceList extends Component {
                             <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
-                                    {serviceList.patientName} {serviceList.lastName && getFirstCharOfString(serviceList.lastName)}
+                                    {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
                                 </div>
                                 <div className='BlockProfileDetailsActivity'>
                                     Posted on <Moment format="DD MMM">{serviceList.requestDate}</Moment>
@@ -91,29 +91,22 @@ class VisitServiceList extends Component {
         })
 
         return (
-            <section className="d-flex">
-                <LeftSideMenu isOpen={this.state.isOpen} />
-                <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.toggle.bind(this)} />
-                    <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)} />
-                    <div className='ProfileRightContainer'>
-                        <div className='ProfileHeaderWidget'>
-                            <div className='ProfileHeaderTitle'>
-                                <h5 className='primaryColor m-0'>Service Requests</h5>
-                            </div>
-                            <div className='ProfileHeaderOptions'>
-                                <a className='primaryColor ProfileHeaderSort' to=''>Sort</a>
-                                <a className='primaryColor' to=''>Filters</a>
-                            </div>
-                        </div>
-                        <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
-                            <div className='BoardContainer'>
-                                {visitList}
-                            </div>
-                        </Scrollbars>
+            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+                <div className='ProfileHeaderWidget'>
+                    <div className='ProfileHeaderTitle'>
+                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                    </div>
+                    <div className='ProfileHeaderOptions'>
+                        <a className='primaryColor ProfileHeaderSort' to=''>Sort</a>
+                        <a className='primaryColor' to=''>Filters</a>
                     </div>
                 </div>
-            </section>
+                <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
+                    <div className='BoardContainer'>
+                        {visitList}
+                    </div>
+                </Scrollbars>
+            </AsideScreenCover>
         )
     }
 }

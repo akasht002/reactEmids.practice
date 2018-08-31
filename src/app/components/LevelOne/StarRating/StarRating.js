@@ -1,13 +1,11 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import './styles.css';
 
 class StarRating extends React.Component {
     render() {
         return (
             <div className="FeedbackContent">
-                <fieldset className="rating" onChange={(e) => this.handleSelectedRating(e)}>
+                <fieldset className="rating" onChange={this.props.handleSelectedRating}>
                     <input type="radio" id="star5" name="rating" value="5" />
                     <label className="full" htmlFor="star5" />
                     <input type="radio" id="star4" name="rating" value="4" />
@@ -24,5 +22,5 @@ class StarRating extends React.Component {
     }
 };
 
-export default withRouter(connect(StarRating));
+export default StarRating;
 

@@ -5,10 +5,12 @@ import { ThemeProvider } from '@zendeskgarden/react-theming';
 import {SelectField, Select, Item} from '@zendeskgarden/react-select';
 
 
-import { LeftSideMenu, ProfileHeader, Scrollbars } from '../../components';
+import { ProfileHeader, Scrollbars } from '../../components';
 import { getVisitServiceDetails } from '../../redux/visitHistory/VisitServiceDetails/actions';
 import {VisitList} from "./VisitList"
 import VisitFilter from "../VisitHistoryFilter";
+import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
+
 
 import '../../styles/dashboard.css'
 import '../../styles/SelectDropDown.css'
@@ -54,8 +56,7 @@ class VisitHistory extends Component {
 
     render() {
         return (           
-            <section className="d-flex">
-                <LeftSideMenu isOpen={this.state.isOpen}/>
+            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className="container-fluid ProfileRightWidget">
                     <ProfileHeader toggle={this.toggle.bind(this)}/>
                     <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggleHiddenScreen.bind(this)}/>
@@ -91,7 +92,7 @@ class VisitHistory extends Component {
                         <VisitFilter isOpen={this.state.filterOpen} toggle={this.toggleFilter.bind(this)}/>
                     </div>
                 </div>
-            </section>
+                </AsideScreenCover>
         )
     }
 }

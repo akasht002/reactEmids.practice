@@ -7,6 +7,7 @@ import { Path } from '../../../routes';
 export const VisitServiceDetails = {
     getVisitServiceDetailsSuccess: 'get_visit_service_details_success/visitservicedetails',
     getVisitServiceScheduleSuccess: 'get_visit_service_schedule_success/visitservicedetails',
+    getServiceRequestId: 'get_service_requestId/visitservicedetails'
 };
 
 export const getVisitServiceDetailsSuccess = (data) => {
@@ -23,9 +24,16 @@ export const getVisitServiceScheduleSuccess = (data) => {
     }
 }
 
+export const getServiceRequestId = (data) => {
+    return {
+        type: VisitServiceDetails.getServiceRequestId,
+        data
+    }
+}
+
 export function getVisitServiceDetails(data) {
     return (dispatch) => {
-        dispatch(getVisitServiceSchedule(data))
+        dispatch(getServiceRequestId(data))
         dispatch(startLoading());
         axios.get(baseURLServiceRequest + API.getServiceRequestDetails + data).then((resp) => {
             dispatch(getVisitServiceDetailsSuccess(resp.data))           
@@ -40,7 +48,7 @@ export function getVisitServiceDetails(data) {
 export function getVisitServiceSchedule(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURLServiceRequest + API.getServiceRequestSchedule + '1').then((resp) => {
+        axios.get(baseURLServiceRequest + API.getServiceRequestSchedule + data).then((resp) => {
             dispatch(getVisitServiceScheduleSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

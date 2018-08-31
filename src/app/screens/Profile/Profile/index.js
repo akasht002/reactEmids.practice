@@ -10,6 +10,7 @@ import PersonalDetail from "../PersonalDetail";
 import Organization from "../Organization"
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 
 import './styles.css';
 
@@ -34,9 +35,8 @@ class Profile extends Component {
                                         Profile
                                     </h4>
                                 </div>
-
-                                <PersonalDetail />
-                                <Organization/>
+                                {/* Added for story number CH-302 */}
+                                {SERVICE_PROVIDER_TYPE_ID === 1 ? <PersonalDetail /> : <Organization/> }
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <ServiceOffered />
                                 </div>

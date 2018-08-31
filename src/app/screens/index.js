@@ -13,7 +13,15 @@ import Feedback from './VisitSelection/VisitServiceProcessing/Feedback';
 import Summary from './VisitSelection/VisitServiceProcessing/Summary';
 import VisitHistory from './VisitHistory'
 import VistSummary from './VisitHistory/VisitSummary'
-import { LoginCallBack } from './Login/LoginCallBack';
+import { LoginCallBack } from './Authentication/Login/LoginCallBack';
+import { AsideScreenCover } from './ScreenCover/AsideScreenCover';
+
+import {    
+    ForgetPassword,
+    ResetPassword,
+    ResetPasswordSuccess,
+    ResetPasswordConfirmation
+} from './Authentication';
 
 export {
     Welcome,
@@ -31,5 +39,10 @@ export {
     VisitHistory,
     LoginCallBack,
     Summary,
-    VistSummary
+    VistSummary,
+    ForgetPassword,
+    ResetPassword,
+    ResetPasswordSuccess,
+    ResetPasswordConfirmation,
+    AsideScreenCover
 };

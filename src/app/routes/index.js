@@ -1,5 +1,5 @@
-import React,{Component} from 'react';
-import { Route,Switch } from 'react-router';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
@@ -16,7 +16,12 @@ import {
   Home,
   Summary,
   VisitHistory,
-  VistSummary
+  VistSummary,
+  ForgetPassword,
+  ResetPassword,
+  ResetPasswordSuccess,
+  ResetPasswordConfirmation
+
 } from '../screens';
 import { PrivateRoute } from './privateRouter';
 
@@ -29,7 +34,7 @@ function Loading({ error }) {
 }
 
 const LoginCallBack = Loadable({
-  loader: () => import('../screens/Login/LoginCallBack'),
+  loader: () => import('../screens/Authentication/Login/LoginCallBack'),
   loading: Loading
 });
 
@@ -42,13 +47,17 @@ export const Path = {
   profile: '/profile',
   visitServiceList: '/Visitservicelist',
   visitServiceDetails: '/visitservicedetails',
-  performTasks:'/performtasks',
-  feedback:'/feedback',
-  home:'/home',
+  performTasks: '/performtasks',
+  feedback: '/feedback',
+  home: '/home',
   loginCallBack: '/loginCallBack',
   summary: '/summary',
   VisitHistory: '/visitHistory',
   visitSummaryDetail: '/visitSummary/:id',
+  forgetPassword: '/forgetPassword',
+  resetPassword: '/resetPassword/:uid/:token',
+  resetPasswordSuccess: '/resetPasswordSuccess',
+  resetPasswordConfirmation: '/resetPasswordConfirmation',
 };
 
 class AppStackRoot extends Component {
@@ -71,7 +80,17 @@ class AppStackRoot extends Component {
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
             <Route path={Path.VisitHistory} component={VisitHistory}/>
             <Route exact path={Path.visitSummaryDetail} component={VistSummary} />
+            <Route path={Path.loginCallBack} component={LoginCallBack} />
+            <Route path={Path.forgetPassword} component={ForgetPassword} />
+            <Route path={Path.resetPassword} component={ResetPassword} />
+            <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
+            <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
             <PrivateRoute path={Path.profile} component={Profile} />
+            <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
+            <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
+            <PrivateRoute path={Path.performTasks} component={PerformTasks} />
+            <PrivateRoute path={Path.feedback} component={Feedback} />
+            <PrivateRoute path={Path.summary} component={Summary} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>
