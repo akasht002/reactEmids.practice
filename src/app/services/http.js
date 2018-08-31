@@ -107,14 +107,13 @@ export const AuthDelete = (url) => {
     })
 }
 
-
 export const handleError = (err)=>  {
     throw err;
 }
 
 export const getHeader = ()=>  {
     let userState = store.getState().authState.userState;
-    let token = userState.authData && userState.authData.data && userState.authData.data.user_token;
+    let token = userState && userState.authData && userState.authData.data && userState.authData.data.user_token;
     let authHeder = token ? {
         Authorization: 'Bearer ' + token
     } : {}

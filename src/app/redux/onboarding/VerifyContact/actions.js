@@ -109,7 +109,7 @@ export function verifyTempPasscode(data) {
             isActive: true
         };
         dispatch(startLoading());
-        Post(PI.verifyTemporaryPasscode, modal).then((resp) => {
+        Post(API.verifyTemporaryPasscode, modal).then((resp) => {
             if (resp && resp.data === 'Otp Matched') {
                 dispatch(verifyPasscodeSuccess());
                 dispatch(temporaryPasscodeSuccess());
