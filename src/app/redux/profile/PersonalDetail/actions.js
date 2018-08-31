@@ -1,6 +1,6 @@
-import axios from 'axios'
 import {PERSONAL_DETAIL ,getModal} from './modal'
-import { API, baseURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { Get, Post, Put } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions'
 
 export const PersonalDetails = {
@@ -46,10 +46,9 @@ export const getGenderSuccess = data => {
 
 
 export function getGender () {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(startLoading())
-    axios
-      .get(baseURL + API.getGender)
+    Get(API.getGender)
       .then(resp => {
         dispatch(getGenderSuccess(resp.data))
         dispatch(endLoading())
@@ -63,8 +62,7 @@ export function getGender () {
 export function getCityDetail () {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    axios
-      .get(baseURL + API.getCity)
+    Get(API.getCity)
       .then(resp => {
         dispatch(getCitySuccess(resp.data))
         dispatch(endLoading())
@@ -90,8 +88,7 @@ export function uploadImg (data) {
       image: data
     }
     dispatch(startLoading())
-    axios
-      .post(baseURL + API.uploadImage, modal)
+    Post(API.uploadImage, modal)
       .then(resp => {
         dispatch(getImage())
         dispatch(endLoading())
@@ -106,8 +103,7 @@ export function getImage () {
   return (dispatch, getState) => {
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
-    axios
-      .get(baseURL + API.getImage + serviceProviderId)
+    Get(API.getImage + serviceProviderId)
       .then(resp => {
         dispatch(uploadImgSuccess(resp.data))
         dispatch(endLoading())
@@ -122,8 +118,7 @@ export function getPersonalDetail () {
   return (dispatch, getState) => {
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
-    axios
-      .get(baseURL + API.getPersonalDetail + serviceProviderId + '/ProfileView')
+    Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -139,8 +134,7 @@ export function updatePersonalDetail (data) {
   let serviceProviderId = localStorage.getItem('serviceProviderID');
   return (dispatch, getState) => {    
     dispatch(startLoading())
-    axios
-      .put(baseURL + API.updatePersonalDetail + serviceProviderId, modelData)
+    Put(API.updatePersonalDetail + serviceProviderId, modelData)
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(endLoading())
@@ -158,8 +152,7 @@ export function updateOrganizationDetail (data) {
   let serviceProviderId = localStorage.getItem('serviceProviderID');
   return (dispatch, getState) => {    
     dispatch(startLoading())
-    axios
-      .put(baseURL + API.updatePersonalDetail + serviceProviderId, modelData)
+    Put(API.updatePersonalDetail + serviceProviderId, modelData)
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(endLoading())
