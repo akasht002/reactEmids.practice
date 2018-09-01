@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 import { resetPassword, getEmailId, formDirty } from '../../../redux/auth/ResetPassword/actions';
 import { Input, LoginCover, Button } from '../../../components';
 import { checkPassword } from '../../../utils/validations';
-import { RESPONSE_STATUS } from '../../../constants/variables'
+import { RESPONSE_STATUS } from '../../../constants/constants'
 import './resetPassword.css';
 
 export class ResetPassword extends Component {

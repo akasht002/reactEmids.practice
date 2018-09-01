@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, authURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { AuthGet } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
@@ -35,14 +35,13 @@ export function sendResetPasswordLink(data) {
     return (dispatch) => {
         let emailId = data && data.emailId;
         dispatch(startLoading());
-        axios.get(
-            authURL + API.SendResetPasswordLink + emailId
+        AuthGet(
+            API.SendResetPasswordLink + emailId
         ).then((resp) => {
             if (resp && resp.statusText === RESPONSE_STATUS.OK) {
                 dispatch(sendResetPasswordLinkSuccess(resp.data, emailId));
                 dispatch(push(Path.resetPasswordConfirmation));
-
-            } else{
+            } else {
                 dispatch(sendResetPasswordLinkError());
             }
             dispatch(endLoading());

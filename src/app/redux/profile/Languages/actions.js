@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 
 export const Languages = {
@@ -24,7 +24,7 @@ export const getSelectedLanguageDetails = (data) => {
 export function getLanguages() {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURL + API.getLanguages).then((resp) => {
+        Get(API.getLanguages).then((resp) => {
             dispatch(getLanguagesSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -48,7 +48,7 @@ export function addLanguages(data) {
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.addLanguages + serviceProviderId + '/Language', modal).then((resp) => {
+        Post(API.addLanguages + serviceProviderId + '/Language', modal).then((resp) => {
             dispatch(getSelectedLanguages());
             dispatch(endLoading());
         }).catch((err) => {
@@ -61,7 +61,7 @@ export function getSelectedLanguages() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.addLanguages + serviceProviderId + '/Language').then((resp) => {
+        Get(API.addLanguages + serviceProviderId + '/Language').then((resp) => {
             dispatch(getSelectedLanguageDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

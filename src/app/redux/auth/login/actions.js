@@ -1,9 +1,9 @@
-import axios from 'axios'
-import { API, baseURL } from '../../../services/api'
+import { API } from '../../../services/api'
+import { Get } from '../../../services/http'
 import { push } from '../../navigation/actions';
 import { save } from '../../../utils/storage';
 import { Path } from '../../../routes';
-import { USER_LOCALSTORAGE } from '../../../constants/variables';
+import { USER_LOCALSTORAGE } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
 
 export const LOGIN = {
@@ -56,24 +56,22 @@ export function onLoginSuccess(data){
 }
 
 export function onLoginFail(){
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(loginFail());
         dispatch(push(Path.root));
     }
 }
 
 export function onLogin() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(loginStart());
         userManager.signinRedirect();
     }
 }
 
-
 export function setServiceProviderID(emailID){ 
-    return (dispatch, getState) => {           
-        axios
-          .get(baseURL + API.getServiceProviderID + emailID )
+    return (dispatch) => {           
+        Get(API.getServiceProviderID + emailID )
           .then(resp => {
             dispatch(getServiceProviderIDSuccess(resp.data))
             localStorage.setItem("serviceProviderID",resp.data.serviceProviderId)

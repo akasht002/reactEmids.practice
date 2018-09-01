@@ -6,7 +6,7 @@ import {
   baseURLServiceRequest
 } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
-import { SERVICE_PROVIDER,MSG_SERVICE_PROVIDER } from '../../constants/constants'
+import { SERVICE_PROVIDER,MSG_SERVICE_PROVIDER,MSG_TYPE } from '../../constants/constants'
 
 export const DashboardDetail = {
   GET_CONVERSATION_DETAIL_SUCCESS: 'GET_CONVERSATION_DETAIL_SUCCESS',
@@ -126,7 +126,7 @@ export function getConversationDetail () {
   return (dispatch, getState) => {
     dispatch(startLoading())
     axios
-      .get(messageURL + API.getConversation + MSG_SERVICE_PROVIDER + '/S')
+      .get(messageURL + API.getConversation + MSG_SERVICE_PROVIDER + MSG_TYPE)
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
         dispatch(endLoading())
