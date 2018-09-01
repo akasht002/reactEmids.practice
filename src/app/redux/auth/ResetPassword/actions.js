@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, authURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { AuthGet, AuthPut } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
@@ -51,10 +51,9 @@ export const getEmailIdError = (data) => {
 export function getEmailId(data) {
     return (dispatch) => {
         let url;
-        url = authURL + API.getEmailIdByUserId + data.uid + '/' + data.tokenkey;
+        url = API.getEmailIdByUserId + data.uid + '/' + data.tokenkey;
         dispatch(startLoading());
-
-        axios.get(url).then((resp) => {
+        AuthGet(url).then((resp) => {
             if (resp && resp.data && resp.data.result === RESPONSE_STATUS.LINK_ACTIVE) {
                 dispatch(getEmailIdSuccess(resp.data));
             } else {
@@ -86,9 +85,8 @@ export function resetPassword(data) {
                 token: data.token
             };
         }
-        let url = authURL + API.resetPassword;
         dispatch(startLoading());
-        axios.put(url, userModel).then((resp) => {
+        AuthPut(API.resetPassword, userModel).then((resp) => {
             if (resp && resp.statusText === RESPONSE_STATUS.OK) {
                 dispatch(resetPasswordSuccess(resp.data));
                 dispatch(push(Path.resetPasswordSuccess));

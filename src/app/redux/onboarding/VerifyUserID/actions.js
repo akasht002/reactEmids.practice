@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { Get } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
@@ -20,7 +20,7 @@ export const VerifyUserID = {
 };
 
 export function onUserEmailNext(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(push(Path.verifyContact));
     }
 };
@@ -42,34 +42,6 @@ export const formDirty = () => {
         type: VerifyUserID.formDirty
     }
 }
-
-export function sendVerificationLink(emailData) {
-    return (dispatch, getState) => {
-        dispatch(startLoading());
-        axios.get(baseURL + API.sendEmailVerification + emailData.emailId).then((resp) => {
-            if (resp && resp.data) {
-                if (resp.data.isExist === VALID) {
-                    dispatch(onSetUserIdCompletion(resp.data));
-                    dispatch(isAlreadyOnboarded(false));
-                    dispatch(userEmailExist(true));
-                    dispatch(userEmailNotExist(false));
-                } else {
-                    dispatch(isAlreadyOnboarded(true));
-                    dispatch(userEmailExist(false));
-                    dispatch(userEmailNotExist(false));
-                }
-                dispatch(endLoading());
-            } else {
-                dispatch(isAlreadyOnboarded(false));
-                dispatch(endLoading());
-                dispatch(userEmailExist(false));
-                dispatch(userEmailNotExist(true));
-            }
-        }).catch((err) => {
-            dispatch(endLoading());
-        })
-    }
-};
 
 export const onSetUserIdCompletion = (data) => {
     return {
@@ -99,8 +71,36 @@ export const userEmailNotExist = (isExist) => {
     }
 };
 
+export function sendVerificationLink(emailData) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        Get(API.sendEmailVerification + emailData.emailId).then((resp) => {
+            if (resp && resp.data) {
+                if (resp.data.isExist === VALID) {
+                    dispatch(onSetUserIdCompletion(resp.data));
+                    dispatch(isAlreadyOnboarded(false));
+                    dispatch(userEmailExist(true));
+                    dispatch(userEmailNotExist(false));
+                } else {
+                    dispatch(isAlreadyOnboarded(true));
+                    dispatch(userEmailExist(false));
+                    dispatch(userEmailNotExist(false));
+                }
+                dispatch(endLoading());
+            } else {
+                dispatch(isAlreadyOnboarded(false));
+                dispatch(endLoading());
+                dispatch(userEmailExist(false));
+                dispatch(userEmailNotExist(true));
+            }
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
 export function onCancelClick() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(cancelClick());
         dispatch(clearState());
         dispatch(push(Path.root));

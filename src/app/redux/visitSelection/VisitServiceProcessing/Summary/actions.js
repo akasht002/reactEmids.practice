@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURLServiceRequest } from '../../../../services/api';
+import { API } from '../../../../services/api';
+import { ServiceRequestGet, ServiceRequestPut } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import moment from 'moment'
 
@@ -41,7 +41,7 @@ export const saveActualTimeDiff = (data) => {
 export function getSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURLServiceRequest + API.getSummaryDetails + data).then((resp) => {
+        ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(calculationsFirstTime(resp.data))
             dispatch(endLoading());
@@ -114,7 +114,7 @@ export function onUpdateTime(data) {
 export function saveSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.put(baseURLServiceRequest + API.saveSummaryDetails + data.serviceRequestVisitId, data).then((resp) => {
+        ServiceRequestPut(API.saveSummaryDetails + data.serviceRequestVisitId, data).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
