@@ -9,12 +9,7 @@ import { Path } from './';
 import { checkUserData } from '../redux/auth/user/actions';
 
 class PrivateRoute extends Component  {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userData: ''
-    }
-  }
+
   
   componentDidMount() {
     this.props.checkUserData();
