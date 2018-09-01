@@ -20,7 +20,8 @@ import {
   ForgetPassword,
   ResetPassword,
   ResetPasswordSuccess,
-  ResetPasswordConfirmation
+  ResetPasswordConfirmation,
+  Dashboard
 
 } from '../screens';
 import { PrivateRoute } from './privateRouter';
@@ -58,6 +59,7 @@ export const Path = {
   resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
+  dashboard:'/dashboard'
 };
 
 class AppStackRoot extends Component {
@@ -84,13 +86,15 @@ class AppStackRoot extends Component {
             <Route path={Path.forgetPassword} component={ForgetPassword} />
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
+            <Route path={Path.dashboard} component={Dashboard} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
             <PrivateRoute path={Path.profile} component={Profile} />
             <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
             <PrivateRoute path={Path.performTasks} component={PerformTasks} />
             <PrivateRoute path={Path.feedback} component={Feedback} />
-            <PrivateRoute path={Path.summary} component={Summary} />
+            <PrivateRoute path={Path.summary} component={Summary} />Dashboard
+
           </Switch>
         </HashRouter>
       </ConnectedRouter>

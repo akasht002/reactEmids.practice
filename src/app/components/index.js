@@ -7,7 +7,8 @@ import {
   Button,
   Input,
   Preloader,
-  Scrollbars
+  Scrollbars,
+  ToggleSwitch
 } from './Base'
 import {
     Calendar, 
@@ -72,5 +73,6 @@ export {
     GeneralModalPopup,
     LoginCover,
     ProfileImage,
-    StopWatch
+    StopWatch,
+    ToggleSwitch
 };

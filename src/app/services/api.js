@@ -2,11 +2,12 @@ import axios from 'axios';
 
 export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 
-export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
-//export const baseURLServiceRequest = "http://localhost:5615/api/";
+// export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
+export const baseURLServiceRequest = "http://localhost:5615/api/";
 
 export const authURL = "http://52.172.45.185:9005/";
 //export const authURL = "http://localhost:5000/";
+export const messageURL = 'http://52.172.45.185:9002/api/'
 
 export const Api = axios.create({
     baseURL: baseURL,
@@ -51,5 +52,11 @@ export const API = {
     getGender: 'ServiceProviderLookUp/gender',
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     saveSummaryDetails: 'VisitProcessing/',
-    getVisitHistoryList: 'ServiceRequest/ServiceRequests/ServiceProvider/'
+    getVisitHistoryList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
+    getConversation: 'conversation/user/',
+    getUnreadCount: 'Conversation/Unread/User/',
+    getServiceProviders: 'Patient/FavouriteServiceProvider/',
+    getServiceProviderRequests: 'ServiceRequest/ServiceRequests/ServiceProvider/',
+    getServiceProviderVists: 'ServiceRequest/Visits/ServiceProvider/',
+    getServiceRequestStatus:'lookup/ServiceRequestStatus',
 }

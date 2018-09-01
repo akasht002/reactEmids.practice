@@ -85,3 +85,14 @@ export function getFields (input, field) {
     for (var i = 0; i < input.length; ++i) { output.push(input[i][field] + ', ') }
     return output
   }
+
+  export const convertStringToDate = data => {
+    let date_string = data.toString()
+    let month = date_string.substring(2, 4)
+    let date = date_string.substring(0, 2)
+    let year = date_string.substring(4, 8)
+    return year + '-' + month + '-' + date
+  }
+  
+
+

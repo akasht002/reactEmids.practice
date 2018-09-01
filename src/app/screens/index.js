@@ -15,6 +15,7 @@ import VisitHistory from './VisitHistory'
 import VistSummary from './VisitHistory/VisitSummary'
 import { LoginCallBack } from './Authentication/Login/LoginCallBack';
 import { AsideScreenCover } from './ScreenCover/AsideScreenCover';
+import Dashboard from './Dashboard'
 
 import {    
     ForgetPassword,
@@ -44,5 +45,6 @@ export {
     ResetPassword,
     ResetPasswordSuccess,
     ResetPasswordConfirmation,
-    AsideScreenCover
+    AsideScreenCover,
+    Dashboard
 };
