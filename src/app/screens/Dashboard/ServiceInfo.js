@@ -10,7 +10,7 @@ export const ServiceCalendarInfo = props => {
       <Fragment>
         <li key={index} className='list-group-item ProfileServicesVisitContent'>
           <div className='ServicesTimeContainer'>
-            <i className='ServicesTime Morning' />
+            <i className={'ServicesTime ' + conversations.slotDescription}/>
           </div>
           <div className='ProfileServices'>
             <span className='ServicesTitle'>
@@ -24,7 +24,7 @@ export const ServiceCalendarInfo = props => {
               alt={'NO_IMAGE'}
               key={index}
               className='avatarImage avatarImageBorder'
-              src={
+              src={ conversations.patientImage ?  conversations.patientImage:
                 require('../../assets/images/Blank_Profile_icon.png')
               }
             />

@@ -119,8 +119,6 @@ class serviceCalendar extends React.Component {
   componentDidMount () {
     let utc = new Date().toJSON().slice(0,10).replace(/-/g,'-');
     this.props.getServiceProviderVists(utc)
-    
-    console.log(utc)
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions.bind(this))
   }
@@ -143,9 +141,7 @@ class serviceCalendar extends React.Component {
 
   showServiceProviderList = data => {
     let date = convertStringToDate(data.target.value);
-    console.log(date)
     this.props.getServiceProviderVists(date)
-    console.log(data.target.value)
   }
 
   render () {
@@ -209,20 +205,13 @@ class serviceCalendar extends React.Component {
 
     let optionChecked = this.state.reportDay
 
-    let getLastMonths = function(n) {
-      let arr =[];
-    
-      arr.push(moment().format('YYYY MM'));
-    
-      for(var i=1; i< 3; i++){
-        arr.push(moment().add(i*-1, 'Month').format('YYYY MM'));
-      }
-      
-      return arr;
-    }
+    let current_month = new Date().getMonth();
+    let pervious_month = moment.months().splice((current_month-3),3)
+    let next_month_list = moment.months().splice((current_month),3)
 
-    let monthList = moment.months().map(month => {
-      console.log(getLastMonths(3))
+    let monthLists = pervious_month.concat(next_month_list)
+
+    let monthList = monthLists.map(month => { 
       return { label: month, value: month }
     })
 
