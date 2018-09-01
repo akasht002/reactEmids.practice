@@ -55,11 +55,9 @@ export function getPerformTasksList(data) {
 };
 
 export function addPerformedTask(data) {
-    console.log(data)
     return (dispatch) => {
         dispatch(startLoading());
-        // axios.put(baseURLServiceRequest + API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
-        axios.put(baseURLServiceRequest + API.savePerformedTask + data.serviceRequestVisitId, '4').then((resp) => {
+        axios.put(baseURLServiceRequest + API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
             dispatch(push(Path.feedback))
             dispatch(endLoading());
         }).catch((err) => {

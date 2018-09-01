@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Collapse, CardBody, Card, UncontrolledCollapse  } from 'reactstrap';
+import { Collapse, CardBody, Card, UncontrolledCollapse } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { Link } from "react-router-dom";
@@ -30,7 +30,8 @@ class PerformTasks extends Component {
             stopTime: false,
             isStopModalOpen: false,
             disableCheckbox: true,
-            caret: false
+            caret: false,
+            percentageCompletion: 0
         };
         this.checkedTask = [];
     };
@@ -56,8 +57,15 @@ class PerformTasks extends Component {
     }
 
     handleChange = (taskList) => {
+        
+        let filteredData = this.checkedTask.filter((list) => {
+            return list.serviceRequestTypeTaskDetailsId !== taskList.serviceRequestTypeTaskDetailsId
+        });
+        console.log(filteredData)
         this.checkedTask.push(taskList)
-        this.setState({ checkedData: this.checkedTask })
+        // let percentageCalculation = (this.checkedTask / this.state.taskList.totalTask) * 100;
+        let percentageCalculation = ((this.checkedTask).length / 8) * 100;
+        this.setState({ checkedData: this.checkedTask, percentageCompletion: percentageCalculation })
     }
 
     startService = (data, visitId) => {
@@ -82,7 +90,7 @@ class PerformTasks extends Component {
         }
     }
 
-    onSubmit = () => {
+    saveData = () => {
         let taskList = this.state.taskList
         let data = {
             serviceRequestVisitId: taskList.serviceRequestVisitId,
@@ -169,7 +177,7 @@ class PerformTasks extends Component {
                             </div>
                         </div>
                         <div className='CardContainers ServiceCategoryWidget'>
-                            <form className='ServiceContent'>
+                            <div className='ServiceContent'>
                                 {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
                                     return (
                                         <div className={"TabContainerWidget"} key={serviceType.serviceRequestTypeDetailsId}>
@@ -218,20 +226,20 @@ class PerformTasks extends Component {
                                 })}
 
                                 <div className='bottomButton'>
-                                    {/* <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
-                                                <span className="bottomTaskName">Tasks</span>
-                                                <span className="bottomTaskRange">
-                                                    <i style={{ width: '83.3%' }} className="bottomTaskCompletedRange" />
-                                                </span>
-                                                <span className="bottomTaskPercentage">83.3%</span>
-                                            </div> */}
+                                    <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
+                                        <span className="bottomTaskName">Tasks</span>
+                                        <span className="bottomTaskRange">
+                                            <i style={{ width: this.state.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
+                                        </span>
+                                        <span className="bottomTaskPercentage">{this.state.percentageCompletion}%</span>
+                                    </div>
                                     <Button
                                         classname='btn btn-primary ml-auto'
                                         onClick={this.onClickNext}
                                         disable={this.state.disabled}
                                         label={'Next'} />
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <div className='cardBottom' />
@@ -243,7 +251,7 @@ class PerformTasks extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onConfirm={() => this.onSubmit()}
+                        onConfirm={() => this.saveData()}
                         onCancel={() => this.setState({
                             isModalOpen: !this.state.isModalOpen,
                         })}
