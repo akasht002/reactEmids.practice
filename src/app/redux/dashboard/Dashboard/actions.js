@@ -57,7 +57,7 @@ export function getServiceProviderVists (data) {
     axios
       .get(
         baseURLServiceRequest +
-          API.getServiceProviderVists  + SERVICE_PROVIDER 
+          API.getServiceProviderVists  + SERVICE_PROVIDER + '/'+ data
       )
       .then(resp => {
         dispatch(getPatientVisitDetailSuccess(resp.data))

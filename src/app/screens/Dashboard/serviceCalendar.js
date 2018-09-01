@@ -144,7 +144,7 @@ class serviceCalendar extends React.Component {
   showServiceProviderList = data => {
     let date = convertStringToDate(data.target.value);
     console.log(date)
-    this.props.getPatientVisitDetail(date)
+    this.props.getServiceProviderVists(date)
     console.log(data.target.value)
   }
 

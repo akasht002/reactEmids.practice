@@ -14,17 +14,9 @@ export const ServiceCalendarInfo = props => {
           </div>
           <div className='ProfileServices'>
             <span className='ServicesTitle'>
-              {' '}{conversations.servicecategories &&
-                conversations.servicecategories.map((type, i) => {
-                  return <span key={i}>{type.serviceCategoryDescription}</span>
-                })}
+            {conversations.serviceTypes && conversations.serviceTypes.toString()}             
             </span>
-            <span className='ServicesDesc'>{conversations.serviceCategory && conversations.serviceCategory}
-              {/* {conversations.servicecategories &&
-                conversations.servicecategories.map((type, i) => {
-                  type.serviceType &&
-                    getFields(type.serviceType, 'serviceTypeDescription')
-                })} */}
+            <span className='ServicesDesc'>{conversations.serviceCategory && conversations.serviceCategory}            
             </span>
           </div>
           <div className='ProfileCardImageContainer'>
@@ -39,9 +31,9 @@ export const ServiceCalendarInfo = props => {
           </div>
           <div className='ProfileCardNameContainer'>
             <span>
-              {conversations.firstName&&conversations.firstName}
+              {conversations.patientFirstName&&conversations.patientFirstName}
               {' '}
-              {conversations.firstName&&conversations.lastName}
+              {conversations.patientLastName&&conversations.patientLastName}
             </span>
           </div>
           <Select
