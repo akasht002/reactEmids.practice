@@ -1,5 +1,5 @@
 import {
-    LOGIN
+    USER
 } from './actions'
 
 const defaultState = {
@@ -14,38 +14,23 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
     switch (action.type) {
-        case LOGIN.start:
-            return {
-                ...state,
-                loading: true
-            };
-
-        case LOGIN.end:
-            return {
-                ...state,
-                loading: false
-            };
-
-        case LOGIN.success:
+        case USER.setUser:
             return {
                 ...state,
                 userData: action.userData,
             };
 
 
-        case LOGIN.failed:
-            return {
-                ...state,
-                error: {
-                    message: '',
-                    code: ''
-                }
-            };
-
-            case LOGIN.service_provider_id:
+        case USER.service_provider_id:
             return {
                 ...state,
                 serviceProviderID: action.data,
+            };
+
+        case USER.deleteUser:
+            return {
+                ...state,
+                userData: null,
             };
 
         default:

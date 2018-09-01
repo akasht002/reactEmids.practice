@@ -75,6 +75,7 @@ export function setServiceProviderID(emailID){
           .then(resp => {
             dispatch(getServiceProviderIDSuccess(resp.data))
             localStorage.setItem("serviceProviderID",resp.data.serviceProviderId)
+            localStorage.setItem("serviceProviderTypeID",resp.data.serviceProviderTypeId)
           })
           .catch(err => {
             console.log(err);
