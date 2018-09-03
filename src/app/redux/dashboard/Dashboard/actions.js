@@ -9,22 +9,22 @@ import { startLoading, endLoading } from '../../loading/actions'
 import { SERVICE_PROVIDER,MSG_SERVICE_PROVIDER,MSG_TYPE } from '../../constants/constants'
 
 export const DashboardDetail = {
-  GET_CONVERSATION_DETAIL_SUCCESS: 'GET_CONVERSATION_DETAIL_SUCCESS',
-  GET_CONVERSATION_DETAIL: 'GET_CONVERSATION_DETAIL',
-  SET_UNREAD_CONVERSATION_COUNT_DETAILS: 'SET_UNREAD_CONVERSATION__COUNT_DETAILS',
-  GET_SERVICE_PROVIDER_DETAIL_SUCCESS: 'GET_SERVICE_PROVIDER_DETAIL_SUCCESS',
-  GET_SERVICE_PROVIDER_DETAIL: 'GET_SERVICE_PROVIDER_DETAIL',
-  GET_PATIENT_SERVICE_REQUEST_DETAIL: 'GET_PATIENT_SERVICE_REQUEST_DETAIL',
-  GET_PATIENT_SERVICE_REQUEST_DETAIL_SUCCESS: 'GET_PATIENT_SERVICE_REQUEST_DETAIL_SUCCESS',
-  GET_PATIENT_VISIT_DETAIL: 'GET_PATIENT_VISIT_DETAIL',
-  GET_PATIENT_VISIT_DETAIL_SUCCESS: 'GET_PATIENT_VISIT_DETAIL',
-  GET_SERVICE_REQUEST_SUCCESS: 'GET_SERVICE_REQUEST_SUCCESS',
-  GET_SERVICE_REQUEST: 'GET_SERVICE_REQUEST'
+  get_conversation_detail_success: 'get_conversation_detail_success/dashboard',
+  get_conversation_detail: 'get_conversation_detail/dashboard',
+  set_unread_conversation_count_detail: 'set_unread_conversation_count_detail/dashboard',
+  get_service_provider_detail_success: 'get_service_provider_detail_success/dashboard',
+  get_service_provider_detail: 'get_service_provider_detail/dashboard',
+  get_patient_service_request_detail: 'get_patient_service_request_detail/dashboard',
+  get_patient_service_request_detail_success: 'get_patient_service_request_detail_success/dashboard',
+  get_patient_visit_detail: 'get_patient_visit_detail/dashboard',
+  get_patient_visit_detail_success: 'get_patient_visit_detail_success/dashboard',
+  get_service_request_success: 'get_service_request_success/dashboard',
+  get_service_request: 'get_service_request/dashboard'
 }
 
 export const getServiceStatusSuccess = data => {
   return {
-    type: DashboardDetail.GET_SERVICE_REQUEST_SUCCESS,
+    type: DashboardDetail.get_service_request_success,
     data
   }
 }
@@ -46,7 +46,7 @@ export function getServiceStatusDetail () {
 
 export const getPatientVisitDetailSuccess = data => {
   return {
-    type: DashboardDetail.GET_PATIENT_VISIT_DETAIL_SUCCESS,
+    type: DashboardDetail.get_patient_visit_detail_success,
     data
   }
 }
@@ -71,7 +71,7 @@ export function getServiceProviderVists (data) {
 
 export const getPatientServiceRequestDetailSuccess = data => {
   return {
-    type: DashboardDetail.GET_PATIENT_SERVICE_REQUEST_DETAIL_SUCCESS,
+    type: DashboardDetail.get_patient_service_request_detail_success,
     data
   }
 }
@@ -94,7 +94,7 @@ export function getPatientServiceRequestDetail (data) {
 
 export const getServiceProviderDetailSuccess = data => {
   return {
-    type: DashboardDetail.GET_SERVICE_PROVIDER_DETAIL_SUCCESS,
+    type: DashboardDetail.get_service_provider_detail_success,
     data
   }
 }
@@ -117,7 +117,7 @@ export function getServiceProviderDetail (data) {
 
 export const getConversationDetailSuccess = data => {
   return {
-    type: DashboardDetail.GET_CONVERSATION_DETAIL_SUCCESS,
+    type: DashboardDetail.get_conversation_detail_success,
     data
   }
 }
@@ -138,7 +138,7 @@ export function getConversationDetail () {
 }
 export const onUnreadCountSuccess = data => {
   return {
-    type: DashboardDetail.SET_UNREAD_CONVERSATION_COUNT_DETAILS,
+    type: DashboardDetail.set_unread_conversation_count_detail,
     data: data
   }
 }
