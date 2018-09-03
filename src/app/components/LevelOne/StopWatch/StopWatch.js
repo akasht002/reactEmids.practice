@@ -54,9 +54,9 @@ class StopWatch extends Component {
         return (
             <div className="stopwatch">
                 {this.state.startTimer ?
-                    <h1 className="stopwatch-timer">{formattedSeconds(this.state.secondsElapsed)}</h1>
+                    <span className="TimerContent running">{formattedSeconds(this.state.secondsElapsed)}</span>
                     :
-                    <span className="TimerContent running">HH<i>:</i>MM</span>
+                    <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
                 }
             </div>
         );

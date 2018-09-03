@@ -42,7 +42,7 @@ class PerformTasks extends Component {
         });
     }
 
-    aaa = () => {
+    caret = () => {
         this.setState({
             caret: !this.state.caret
         });
@@ -57,14 +57,12 @@ class PerformTasks extends Component {
     }
 
     handleChange = (taskList) => {
-        
         let filteredData = this.checkedTask.filter((list) => {
             return list.serviceRequestTypeTaskDetailsId !== taskList.serviceRequestTypeTaskDetailsId
         });
         console.log(filteredData)
         this.checkedTask.push(taskList)
-        // let percentageCalculation = (this.checkedTask / this.state.taskList.totalTask) * 100;
-        let percentageCalculation = ((this.checkedTask).length / 8) * 100;
+        let percentageCalculation = ((this.checkedTask).length / this.state.taskList.totalTask) * 100;
         this.setState({ checkedData: this.checkedTask, percentageCompletion: percentageCalculation })
     }
 
@@ -78,7 +76,7 @@ class PerformTasks extends Component {
             current_time = this.state.startedTime;
             this.setState({ stopTime: true, disableCheckbox: true })
         }
-        this.setState({ startService: !this.state.startService, disabled: false, isStopModalOpen: !this.state.startService })
+        this.setState({ startService: !this.state.startService, disabled: false })
         this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
     }
 
@@ -143,10 +141,10 @@ class PerformTasks extends Component {
                                 {this.state.stopTime ?
                                     <div className="col col-md-3 rightTimerWidget running">
                                         <div className="row rightTimerContainer">
-                                            <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <div className="col-md-6 rightTimerContent FeedbackTimer">
                                                 <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                             </div>
-                                            <div className="col-md-7 rightTimerContent FeedbackTimer">
+                                            <div className="col-md-5 rightTimerContent FeedbackTimer">
                                                 <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
                                             </div>
                                         </div>
@@ -154,12 +152,12 @@ class PerformTasks extends Component {
                                     :
                                     <div className="col col-md-3 rightTimerWidget">
                                         <div className="row rightTimerContainer">
-                                            <div className="col-md-5 rightTimerContent">
+                                            <div className="col-md-6 rightTimerContent">
                                                 <span className="TimerContent">
                                                     <StopWatch ref={instance => { this.child = instance; }} />
                                                 </span>
                                             </div>
-                                            <div className="col-md-7 rightTimerContent">
+                                            <div className="col-md-5 rightTimerContent">
                                                 {this.state.startService ?
                                                     <a className="btn btn-primary" onClick={() => { this.startService(startService, this.state.taskList.serviceRequestVisitId); this.child.handleStartClick(); }}>Start Service</a>
                                                     :
@@ -181,7 +179,7 @@ class PerformTasks extends Component {
                                 {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
                                     return (
                                         <div className={"TabContainerWidget"} key={serviceType.serviceRequestTypeDetailsId}>
-                                            <div onClick={this.aaa} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + this.state.caret}>
+                                            <div onClick={this.caret} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + this.state.caret}>
                                                 <img src={require("../../../../assets/images/Bathing_Purple.svg")} className="ServiceTasksImg" alt="categoryImage" />
                                                 <div className="TabHeaderContent">
                                                     <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>

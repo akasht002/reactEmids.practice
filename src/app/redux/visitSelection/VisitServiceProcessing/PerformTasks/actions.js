@@ -43,8 +43,7 @@ export function getPerformTasksList(data) {
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))
         dispatch(startLoading());
-        // axios.get(baseURLServiceRequest + API.getServiceRequestPerformTasks + data).then((resp) => {
-        axios.get(baseURLServiceRequest + API.getServiceRequestPerformTasks + '4').then((resp) => {
+        axios.get(baseURLServiceRequest + API.getServiceRequestPerformTasks + data).then((resp) => {
             dispatch(getPerformTasksListSuccess(resp.data))
             dispatch(push(Path.performTasks))
             dispatch(endLoading());

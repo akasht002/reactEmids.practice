@@ -196,6 +196,10 @@ div.EstimatedCostWidget{
     margin-bottom: 60px;
 }
 
+button.btn.ResetSignature{
+    padding: 10px
+}
+
 @media (max-width: 768px){
     .VisitSummaryWidget {
         flex-direction: column;

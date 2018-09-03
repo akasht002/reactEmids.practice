@@ -133,20 +133,6 @@ class VisitServiceDetails extends Component {
                 </div>
             )
         });
-        // let address;
-        // if (this.state.visitServiceDetails.patient) {
-        //     address = this.state.visitServiceDetails.patient.patientAddresses && this.state.visitServiceDetails.patient.patientAddresses.map((address, index) => {
-        //         return (
-        //             <p>
-        //                 <p><span>Street</span>{address[0].stateName}</p>
-        //                 <p><span>City</span>Farmington</p>
-        //                 <p><span>State</span>West Virginia</p>
-        //                 <p><span>ZIP</span>26571</p>
-        //             </p>
-        //         )
-        //     })
-        // }
-
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -336,7 +322,7 @@ class VisitServiceDetails extends Component {
                                                         <div>
                                                             <div class='ScheduleRowButton'>
                                                                 {ScheduleList.visitStatusName === 'Completed' ?
-                                                                    <a className='btn btn-outline-primary' to='/'>Summary</a>
+                                                                    <a className='btn btn-outline-primary' to='/'><i className='ProfileIconEye' />Summary</a>
                                                                     :
                                                                     ''
                                                                 }
