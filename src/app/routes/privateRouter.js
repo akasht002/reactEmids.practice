@@ -17,7 +17,7 @@ class PrivateRoute extends Component  {
 
   checkUserData = () => {
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
-    return this.props.user_token || localStorageData && localStorageData.authData && localStorageData.authData.access_token;
+    return this.props.user_token || localStorageData && localStorageData.data && localStorageData.data.access_token;
   }
 
   renderMethod = () => {
@@ -45,7 +45,7 @@ class PrivateRoute extends Component  {
 
 const mapStateToProps = state => {
     return {
-      user_token: state.authState.userState.userData && state.authState.userState.userData.authData && state.authState.userState.userData.authData.access_token
+      user_token: state.authState.userState.userData && state.authState.userState.userData.data && state.authState.userState.userData.data.access_token
     }
 }
 

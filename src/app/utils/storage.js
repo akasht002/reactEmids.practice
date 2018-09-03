@@ -1,5 +1,5 @@
-export function save(id, data, serviceData) {
-    let payLoad = { id: id, authData: data, serviceData: serviceData };
+export function save(id, data) {
+    let payLoad = { id: id, data: data };
     localStorage.setItem(id, JSON.stringify(payLoad));
 }
 
