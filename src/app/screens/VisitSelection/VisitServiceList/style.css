@@ -328,6 +328,19 @@ li div.dropdown-menu{
     color: #fff !important;
 }
 
+.btn-open{
+    color: #ef6f48 !important;
+    border-color: #ef6f48 !important;
+    font-size: 12px !important;
+    padding: 5px !important;
+    line-height: 12px !important;
+}
+
+.btn-open:hover{
+    background-color: #ef6f48 !important;
+    color: #ffffff !important
+}
+
 .btn-applied{
     color: #3089df !important;
     border-color: #3089df !important;
