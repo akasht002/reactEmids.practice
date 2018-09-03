@@ -7,7 +7,7 @@ import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../utils/stringHelper'
-import { VISIT_SERVICE_STATUS_OPEN, VISIT_SERVICE_STATUS_APPLIED, VISIT_SERVICE_STATUS_INVITED } from '../../../constants/constants'
+import { VISIT_SERVICE_STATUS_OPEN, VISIT_SERVICE_STATUS_APPLIED, VISIT_SERVICE_STATUS_INVITED, VISIT_SERVICE_STATUS_HIRED } from '../../../constants/constants'
 import './style.css'
 
 class VisitServiceList extends Component {
@@ -80,6 +80,11 @@ class VisitServiceList extends Component {
                                 }
                                 {serviceList.statusName === VISIT_SERVICE_STATUS_INVITED ?
                                     <a className='btn btn-outline-primary btn-invited' to='/'>{serviceList.statusName}</a>
+                                    :
+                                    ''
+                                }
+                                {serviceList.statusName === VISIT_SERVICE_STATUS_HIRED ?
+                                    <a className='btn btn-outline-primary btn-hired' to='/'>{serviceList.statusName}</a>
                                     :
                                     ''
                                 }

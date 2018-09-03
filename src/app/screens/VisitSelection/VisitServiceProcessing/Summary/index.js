@@ -234,7 +234,9 @@ class Summary extends Component {
                                             <div className="SignatureColumn">
                                                 <SignaturePad width={420} height={320} ref={ref => this.signaturePad = ref} />
                                             </div>
-                                            <button className="btn btn-outline-primary ResetSignature" onClick={this.saveSignature}>Reset signature</button>
+                                            <div className="width100 text-right">
+                                                <button className="btn btn-outline-primary CancelSignature">Reset Signature</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
