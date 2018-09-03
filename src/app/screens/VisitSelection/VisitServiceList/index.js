@@ -58,13 +58,7 @@ class VisitServiceList extends Component {
             return null;
         }
     }
-
-    // renderStatus = (serviceList) => {
-    //    if(serviceList.statusName === VISIT_SERVICE_STATUS_NOT_HIRED ) {
-    //        return  
-    //    }
-    // }
-
+    
     render() {
 
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
