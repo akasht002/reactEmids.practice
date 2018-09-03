@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { API, baseURL } from '../../../services/api'
+import { API } from '../../../services/api';
+import { Get } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { save } from '../../../utils/storage';
 import { remove } from '../../offline/actions';
@@ -23,13 +23,13 @@ export function onSetUserSuccess(data){
     return (dispatch, getState) => {
         dispatch(setUserSuccess(data));
         save(USER_LOCALSTORAGE, getState().oidc.user);
-        dispatch(setServiceProviderID(JSON.parse(localStorage.getItem("userData")).data.profile.sub));   
+        dispatch(setServiceProviderDetials(JSON.parse(localStorage.getItem("userData")).data.profile.sub));   
     }
 }
 
-export const getServiceProviderIDSuccess = (data)=>{
+export const getServiceProviderDetailsSuccess = (data)=>{
     return {
-        type: USER.service_provider_id,
+        type: USER.setUser,
         data
     }
 }
@@ -56,15 +56,16 @@ export function onClear(){
     }
 }
 
-export function setServiceProviderID(emailID) { 
+export function setServiceProviderDetials(emailID){ 
     return (dispatch, getState) => {           
-        axios
-          .get(baseURL + API.getServiceProviderID + emailID )
+        Get(API.getServiceProviderID + emailID )
           .then(resp => {
-            dispatch(getServiceProviderIDSuccess(resp.data.serviceProviderId))
-            localStorage.setItem("serviceProviderTypeID",resp.data.serviceProviderTypeId)
-            localStorage.setItem("serviceProviderID",resp.data.serviceProviderId)
-            dispatch(push(Path.profile));
+            dispatch(getServiceProviderDetailsSuccess(resp.data))
+            const serviceData = {
+                serviceProviderID: resp.data.serviceProviderId,
+                serviceProviderTypeID: resp.data.serviceProviderTypeId
+            }
+            save(USER_LOCALSTORAGE, getState().oidc.user, serviceData);   
           })
           .catch(err => {
             console.log(err);
@@ -74,19 +75,12 @@ export function setServiceProviderID(emailID) {
 
 export const checkUserData = () => {
     return (dispatch, getState) => {
-        var userData = getState().userData;
+        const userData = getState().userData;
         if (userData) {
             dispatch(onSetUserSuccess(userData));
         } else {
-            let authData = JSON.parse(localStorage.getItem("userData"));
-            let serviceProviderID = localStorage.getItem('serviceProviderID');
-            let serviceProviderTypeID = localStorage.getItem('serviceProviderTypeID');
-            let userObj = {
-                authData,
-                serviceProviderID,
-                serviceProviderTypeID
-            }
-            dispatch(setUserSuccess(userObj));
+            const userData = localStorage.getItem("userData");
+            dispatch(setUserSuccess(userData));
         }
       }
 }

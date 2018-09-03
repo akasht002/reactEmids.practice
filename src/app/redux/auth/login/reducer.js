@@ -1,11 +1,8 @@
-import {
-    LOGIN
-} from './actions'
+import { LOGIN } from './actions'
 
 const defaultState = {
     userData: {},
     loading: false,
-    serviceProviderID: '',
     error: {
         message: '',
         code: ''
@@ -40,12 +37,6 @@ export default (state = defaultState, action) => {
                     message: '',
                     code: ''
                 }
-            };
-
-            case LOGIN.service_provider_id:
-            return {
-                ...state,
-                serviceProviderID: action.data,
             };
 
         default:
