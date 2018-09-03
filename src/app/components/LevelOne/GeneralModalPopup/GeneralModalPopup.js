@@ -15,7 +15,7 @@ export default class GeneralModalPopup extends React.Component {
                     <Button
                         type="button"
                         classname="btn outline btn-primary mx-2 float-right"
-                        label={'Update'}
+                        label={this.props.label}
                         disable={false}
                         onClick={this.props.onClick}
                     />

@@ -66,7 +66,7 @@ class VisitServiceList extends Component {
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card' onClick={() => this.handleClick(serviceList.serviceRequestId)}>
                         <div className="BlockImageContainer">
-                            <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
+                            <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ProfileImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
                                     {serviceList.serviceRequestTypeDetails && serviceList.serviceRequestTypeDetails.map((serviceType) => {
@@ -100,6 +100,11 @@ class VisitServiceList extends Component {
                                         serviceList.statusName === VISIT_SERVICE_STATUS_NOT_HIRED ?
                                             serviceList.matchPercentage : serviceList.statusName
                                     }</a>
+                                }
+                                {serviceList.statusName === VISIT_SERVICE_STATUS_HIRED ?
+                                    <a className='btn btn-outline-primary btn-hired' to='/'>{serviceList.statusName}</a>
+                                    :
+                                    ''
                                 }
                             </div>
                         </div>

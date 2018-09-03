@@ -13,6 +13,7 @@ import { getPerformTasksList } from '../../../redux/visitSelection/VisitServiceP
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
+import { MORNING, AFTERNOON, EVENING } from "../../../constants/constants";
 
 class VisitServiceDetails extends Component {
 
@@ -57,6 +58,15 @@ class VisitServiceDetails extends Component {
 
     selectedServiceType = (e) => {
         this.setState({ serviceType: parseInt(e.target.id) })
+    }
+
+    getSlotName = (slot) => {
+        if (slot === MORNING)
+            return 'MORN';
+        else if (slot === AFTERNOON)
+            return 'AFTE';
+        else if (slot === EVENING)
+            return 'EVE';
     }
 
     render() {
@@ -132,20 +142,6 @@ class VisitServiceDetails extends Component {
                 </div>
             )
         });
-        // let address;
-        // if (this.state.visitServiceDetails.patient) {
-        //     address = this.state.visitServiceDetails.patient.patientAddresses && this.state.visitServiceDetails.patient.patientAddresses.map((address, index) => {
-        //         return (
-        //             <p>
-        //                 <p><span>Street</span>{address[0].stateName}</p>
-        //                 <p><span>City</span>Farmington</p>
-        //                 <p><span>State</span>West Virginia</p>
-        //                 <p><span>ZIP</span>26571</p>
-        //             </p>
-        //         )
-        //     })
-        // }
-
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -304,14 +300,16 @@ class VisitServiceDetails extends Component {
                                                             <span><Moment format="DD MMM">{ScheduleList.visitDate}</Moment></span>
                                                         </div>
                                                         <div>
-                                                            <span>{ScheduleList.slot}</span>
+                                                            <span>
+                                                                {this.getSlotName(ScheduleList.slot)}
+                                                            </span>
                                                         </div>
                                                         <div>
                                                             <span>{ScheduleList.visitStatusName}</span>
                                                         </div>
                                                         <div>
                                                             {ScheduleList.originalTotalDuration ?
-                                                                <span>{ScheduleList.originalTotalDuration}Hrs</span>
+                                                                <span>{ScheduleList.originalTotalDuration} Hrs</span>
                                                                 :
                                                                 <span> - </span>
                                                             }
@@ -319,7 +317,7 @@ class VisitServiceDetails extends Component {
                                                         <div>
                                                             <div class='ScheduleRowButton'>
                                                                 {ScheduleList.visitStatusName === 'Completed' ?
-                                                                    <a className='btn btn-outline-primary' to='/'>Summary</a>
+                                                                    <a className='btn btn-outline-primary' to='/'><i className='ProfileIconEye' />Summary</a>
                                                                     :
                                                                     ''
                                                                 }
