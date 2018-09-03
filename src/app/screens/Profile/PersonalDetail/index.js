@@ -174,15 +174,18 @@ class PersonalDetail extends React.PureComponent {
     let modalTitle = 'Edit Personal Detials'
     let modalType = ''
     const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
-      city.label = city.name
-      city.value = city.id+'-'+city.name
-      return city
+      return {
+        label : city.name,
+        value : city.id+'-'+city.name
+      }
     }
   )
   const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
-    gender.label = gender.name
-    gender.value = gender.id+'-'+gender.name
-    return gender
+    return {
+      label : gender.name,
+      value : gender.id+'-'+gender.name
+
+    }
   })
   
 

@@ -23,14 +23,8 @@ export function onSetUserSuccess(data){
     return (dispatch, getState) => {
         dispatch(setUserSuccess(data));
         save(USER_LOCALSTORAGE, getState().oidc.user);
-        dispatch(setServiceProviderDetials(JSON.parse(localStorage.getItem("userData")).data.profile.sub));   
-    }
-}
-
-export const getServiceProviderDetailsSuccess = (data)=>{
-    return {
-        type: USER.setUser,
-        data
+        dispatch(setServiceProviderDetails(JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)).authData.profile.sub));   
+        dispatch(push(Path.profile));
     }
 }
 
@@ -56,12 +50,12 @@ export function onClear(){
     }
 }
 
-export function setServiceProviderDetials(emailID){ 
+export function setServiceProviderDetails(emailID){ 
     return (dispatch, getState) => {           
         Get(API.getServiceProviderID + emailID )
           .then(resp => {
-            dispatch(getServiceProviderDetailsSuccess(resp.data))
-            const serviceData = {
+            dispatch(setUserSuccess(resp.data))
+            let serviceData = {
                 serviceProviderID: resp.data.serviceProviderId,
                 serviceProviderTypeID: resp.data.serviceProviderTypeId
             }
@@ -75,11 +69,11 @@ export function setServiceProviderDetials(emailID){
 
 export const checkUserData = () => {
     return (dispatch, getState) => {
-        const userData = getState().userData;
+        let userData = getState().userData;
         if (userData) {
             dispatch(onSetUserSuccess(userData));
         } else {
-            const userData = localStorage.getItem("userData");
+            let userData = localStorage.getItem(USER_LOCALSTORAGE);
             dispatch(setUserSuccess(userData));
         }
       }

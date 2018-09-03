@@ -1,7 +1,6 @@
 import { LOGIN } from './actions'
 
 const defaultState = {
-    userData: {},
     loading: false,
     error: {
         message: '',
@@ -22,13 +21,6 @@ export default (state = defaultState, action) => {
                 ...state,
                 loading: false
             };
-
-        case LOGIN.success:
-            return {
-                ...state,
-                userData: action.userData,
-            };
-
 
         case LOGIN.failed:
             return {

@@ -7,16 +7,17 @@ import {
   } from "react-router-dom";
 import { Path } from './';
 import { checkUserData } from '../redux/auth/user/actions';
+import { USER_LOCALSTORAGE } from '../constants/constants'; 
 
 class PrivateRoute extends Component  {
 
-  
   componentDidMount() {
     this.props.checkUserData();
   }
 
   checkUserData = () => {
-    return this.props.user_token || JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).authData.access_token;
+    let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)) && JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)).authData && JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)).authData.access_token;
+    return this.props.user_token || localStorageData;
   }
 
   renderMethod = () => {
