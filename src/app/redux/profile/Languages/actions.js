@@ -45,12 +45,12 @@ export function addLanguages(data) {
             }
         }) : [];
         let modal = {
-            serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
+            serviceProviderId: serviceProviderId,
             languages: languages
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.addLanguages + SERVICE_PROVIDER_TYPE_ID + '/Language', modal).then((resp) => {
+        axios.post(baseURL + API.addLanguages + serviceProviderId + '/Language', modal).then((resp) => {
             dispatch(getSelectedLanguages());
             dispatch(getProfilePercentage());
             dispatch(endLoading());
@@ -64,7 +64,7 @@ export function getSelectedLanguages() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.addLanguages + SERVICE_PROVIDER_TYPE_ID + '/Language').then((resp) => {
+        axios.get(baseURL + API.addLanguages + serviceProviderId + '/Language').then((resp) => {
             dispatch(getSelectedLanguageDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

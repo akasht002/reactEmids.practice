@@ -35,7 +35,7 @@ export function getWorkHistory() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.WorkHistory +`${SERVICE_PROVIDER_TYPE_ID}/WorkHistory`).then((resp) => {
+        axios.get(baseURL + API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
             dispatch(getWorkhistorySuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -49,7 +49,7 @@ export function addWorkHistory(data) {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
-            ServiceProviderId: SERVICE_PROVIDER_TYPE_ID,
+            ServiceProviderId: serviceProviderId,
             workHistoryId:data.workHistoryId,
             designation: data.designation,
             company: data.company,
@@ -62,7 +62,7 @@ export function addWorkHistory(data) {
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.WorkHistory+`${SERVICE_PROVIDER_TYPE_ID}/WorkHistory`, modal).then((resp) => {
+        axios.post(baseURL + API.WorkHistory+`${serviceProviderId}/WorkHistory`, modal).then((resp) => {
             dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory())
             dispatch(getProfilePercentage());
@@ -79,12 +79,12 @@ export function editWorkHistory(data) {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let workHistoryId=data;
         let modal = {
-            serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
+            serviceProviderId: serviceProviderId,
             workHistoryId
         };
 
         dispatch(startLoading());
-        axios.get(baseURL + API.WorkHistory +`${SERVICE_PROVIDER_TYPE_ID}/WorkHistory/${workHistoryId}`,modal).then((resp) => {
+        axios.get(baseURL + API.WorkHistory +`${serviceProviderId}/WorkHistory/${workHistoryId}`,modal).then((resp) => {
             
             dispatch(getWorkhistoryFieldDetails(resp.data))
             dispatch(getProfilePercentage());
@@ -99,7 +99,7 @@ export function updateWorkHistory(data) {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
-            serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
+            serviceProviderId: serviceProviderId,
             workHistoryId: data.workHistoryId,
             designation: data.designation,
             company: data.company,
@@ -111,7 +111,7 @@ export function updateWorkHistory(data) {
 
         };
         dispatch(startLoading());
-        axios.put(baseURL + API.WorkHistory+`${SERVICE_PROVIDER_TYPE_ID}'/WorkHistory`, modal).then((resp) => {
+        axios.put(baseURL + API.WorkHistory+`${serviceProviderId}'/WorkHistory`, modal).then((resp) => {
             dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory());
             dispatch(getProfilePercentage());
@@ -127,7 +127,7 @@ export function deleteWorkHistory(data) {
         dispatch(startLoading());
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let id =data;
-        axios.delete(baseURL + API.WorkHistory+`${SERVICE_PROVIDER_TYPE_ID}/WorkHistory/${id}`,data).then((resp) => {
+        axios.delete(baseURL + API.WorkHistory+`${serviceProviderId}/WorkHistory/${id}`,data).then((resp) => {
             dispatch(getWorkHistory());
             dispatch(getProfilePercentage());
             dispatch(endLoading());

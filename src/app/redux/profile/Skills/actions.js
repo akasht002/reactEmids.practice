@@ -50,7 +50,7 @@ export function addSkills(data) {
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.addSkills + SERVICE_PROVIDER_TYPE_ID + '/Skill', modal).then((resp) => {
+        axios.post(baseURL + API.addSkills + serviceProviderId + '/Skill', modal).then((resp) => {
             dispatch(getSelectedSkills());
             dispatch(getProfilePercentage());
             dispatch(endLoading());
@@ -64,7 +64,7 @@ export function getSelectedSkills() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.addSkills + SERVICE_PROVIDER_TYPE_ID + '/Skills').then((resp) => {
+        axios.get(baseURL + API.addSkills + serviceProviderId + '/Skills').then((resp) => {
             dispatch(getSelectedSkillsDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

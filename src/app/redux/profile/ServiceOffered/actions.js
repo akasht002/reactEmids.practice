@@ -27,7 +27,7 @@ export function getServiceOffered() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.getServiceOffered + SERVICE_PROVIDER_TYPE_ID + '/Offer/Selected').then((resp) => {
+        axios.get(baseURL + API.getServiceOffered + serviceProviderId + '/Offer/Selected').then((resp) => {
             dispatch(getServicesOfferedSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -40,7 +40,7 @@ export function addServiceOfferd(data) {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.post(baseURL + API.addServiceOffered + SERVICE_PROVIDER_TYPE_ID + '/Offer', data).then((resp) => {
+        axios.post(baseURL + API.addServiceOffered + serviceProviderId + '/Offer', data).then((resp) => {
             dispatch(getServiceOffered());
             dispatch(editServiceOffered());
             dispatch(getProfilePercentage());
@@ -55,7 +55,7 @@ export function editServiceOffered(data) {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.editServiceOffered + SERVICE_PROVIDER_TYPE_ID + '/Offer').then((resp) => {
+        axios.get(baseURL + API.editServiceOffered + serviceProviderId + '/Offer').then((resp) => {
             dispatch(getServiceOfferedDetails(resp.data));
             dispatch(getProfilePercentage());
             dispatch(endLoading());

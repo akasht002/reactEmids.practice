@@ -35,7 +35,7 @@ export function getCertification() {
     return (dispatch, getState) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.certification + SERVICE_PROVIDER_TYPE_ID + '/Certification').then((resp) => {
+        axios.get(baseURL + API.certification + serviceProviderId+ '/Certification').then((resp) => {
             dispatch(getCertificationSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -48,14 +48,14 @@ export function addCertification(data) {
     return (dispatch, getState) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
-            serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
+            serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
             authority: data.authority,
             licenceNumber: data.licenceNumber,
             isActive: true
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.certification + SERVICE_PROVIDER_TYPE_ID + '/Certification', modal).then((resp) => {
+        axios.post(baseURL + API.certification + serviceProviderId+ '/Certification', modal).then((resp) => {
             dispatch(addCertificationSuccess(true));
             dispatch(getCertification());
             dispatch(getProfilePercentage());
@@ -70,7 +70,7 @@ export function editCertification(data) {
     return (dispatch, getState) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.certification + SERVICE_PROVIDER_TYPE_ID + '/Certification/' + data).then((resp) => {
+        axios.get(baseURL + API.certification + serviceProviderId+ '/Certification/' + data).then((resp) => {
             dispatch(getCertificationFieldDetails(resp.data));
             dispatch(getProfilePercentage());
             dispatch(endLoading());
@@ -84,7 +84,7 @@ export function updateCertification(data) {
     return (dispatch, getState) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
-            serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
+            serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
             authority: data.authority,
             licenceNumber: data.licenceNumber,
@@ -92,7 +92,7 @@ export function updateCertification(data) {
             certificationId: data.certificationId
         };
         dispatch(startLoading());
-        axios.put(baseURL + API.certification + SERVICE_PROVIDER_TYPE_ID + '/Certification', modal).then((resp) => {
+        axios.put(baseURL + API.certification + serviceProviderId+ '/Certification', modal).then((resp) => {
             dispatch(addCertificationSuccess(true));
             dispatch(getCertification());
             dispatch(getProfilePercentage());
@@ -107,7 +107,7 @@ export function deleteCertification(data) {
     return (dispatch, getState) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.delete(baseURL + API.certification + SERVICE_PROVIDER_TYPE_ID + '/' + data).then((resp) => {
+        axios.delete(baseURL + API.certification + serviceProviderId+ '/' + data).then((resp) => {
             dispatch(getCertification());
             dispatch(getProfilePercentage());
             dispatch(endLoading());

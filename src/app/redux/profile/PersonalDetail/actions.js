@@ -88,7 +88,7 @@ export function uploadImg (data) {
   return (dispatch, getState) => {
     let serviceProviderId = localStorage.getItem('serviceProviderID');    
     let modal = {
-      serviceProviderId: SERVICE_PROVIDER_TYPE_ID,
+      serviceProviderId: serviceProviderId,
       image: data
     }
     dispatch(startLoading())
@@ -110,7 +110,7 @@ export function getImage () {
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
-      .get(baseURL + API.getImage + SERVICE_PROVIDER_TYPE_ID)
+      .get(baseURL + API.getImage + serviceProviderId)
       .then(resp => {
         dispatch(uploadImgSuccess(resp.data))
         dispatch(endLoading())
@@ -126,7 +126,7 @@ export function getPersonalDetail () {
     let serviceProviderId = localStorage.getItem('serviceProviderID');
     dispatch(startLoading())
     axios
-      .get(baseURL + API.getPersonalDetail + SERVICE_PROVIDER_TYPE_ID + '/ProfileView')
+      .get(baseURL + API.getPersonalDetail + serviceProviderId + '/ProfileView')
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -143,7 +143,7 @@ export function updatePersonalDetail (data) {
   return (dispatch, getState) => {    
     dispatch(startLoading())
     axios
-      .put(baseURL + API.updatePersonalDetail + SERVICE_PROVIDER_TYPE_ID, modelData)
+      .put(baseURL + API.updatePersonalDetail + serviceProviderId, modelData)
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
@@ -163,7 +163,7 @@ export function updateOrganizationDetail (data) {
   return (dispatch, getState) => {    
     dispatch(startLoading())
     axios
-      .put(baseURL + API.updatePersonalDetail + SERVICE_PROVIDER_TYPE_ID, modelData)
+      .put(baseURL + API.updatePersonalDetail + serviceProviderId, modelData)
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
