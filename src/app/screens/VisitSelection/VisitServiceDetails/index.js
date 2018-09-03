@@ -60,6 +60,15 @@ class VisitServiceDetails extends Component {
         this.setState({ serviceType: parseInt(e.target.id) })
     }
 
+    getSlotName = (slot) => {
+        if (slot === MORNING)
+            return 'MORN';
+        else if (slot === AFTERNOON)
+            return 'AFTE';
+        else if (slot === EVENING)
+            return 'EVE';
+    }
+
     render() {
         let sliderTypes = this.state.visitServiceDetails.serviceRequestTypeDetails && this.state.visitServiceDetails.serviceRequestTypeDetails.map((serviceTypes, index) => {
             let catNum = index + 1;
@@ -292,21 +301,7 @@ class VisitServiceDetails extends Component {
                                                         </div>
                                                         <div>
                                                             <span>
-                                                                {ScheduleList.slot === MORNING ?
-                                                                    'MORN'
-                                                                    :
-                                                                    ''
-                                                                }
-                                                                {ScheduleList.slot === AFTERNOON ?
-                                                                    'AFTE'
-                                                                    :
-                                                                    ''
-                                                                }
-                                                                {ScheduleList.slot === EVENING ?
-                                                                    'EVE'
-                                                                    :
-                                                                    ''
-                                                                }
+                                                                {this.getSlotName(ScheduleList.slot)}
                                                             </span>
                                                         </div>
                                                         <div>
