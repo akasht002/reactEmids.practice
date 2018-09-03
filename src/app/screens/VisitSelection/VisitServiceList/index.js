@@ -7,7 +7,13 @@ import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../utils/stringHelper'
-import { VISIT_SERVICE_STATUS_OPEN, VISIT_SERVICE_STATUS_APPLIED, VISIT_SERVICE_STATUS_INVITED, VISIT_SERVICE_STATUS_HIRED } from '../../../constants/constants'
+import {
+    VISIT_SERVICE_STATUS_OPEN,
+    VISIT_SERVICE_STATUS_APPLIED,
+    VISIT_SERVICE_STATUS_INVITED,
+    VISIT_SERVICE_STATUS_HIRED,
+    VISIT_SERVICE_STATUS_NOT_HIRED
+} from '../../../constants/constants'
 import './style.css'
 
 class VisitServiceList extends Component {
@@ -32,6 +38,27 @@ class VisitServiceList extends Component {
         this.props.getVisitServiceSchedule(requestId);
     }
 
+    renderStatusClassName = (status) => {
+        if (status === VISIT_SERVICE_STATUS_OPEN) {
+            return 'btn btn-open';
+        }
+        else if (status === VISIT_SERVICE_STATUS_APPLIED) {
+            return 'btn btn-applied';
+        }
+        else if (status === VISIT_SERVICE_STATUS_HIRED) {
+            return 'btn btn-hired';
+        }
+        else if (status === VISIT_SERVICE_STATUS_INVITED) {
+            return 'btn btn-outline-primary btn-invited';
+        }
+        else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
+            return 'BlockProfileMatching';
+        }
+        else {
+            return null;
+        }
+    }
+    
     render() {
 
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -68,20 +95,11 @@ class VisitServiceList extends Component {
                                 </div>
                             </div>
                             <div class='BlockProfileDetailsStatus'>
-                                {serviceList.statusName === VISIT_SERVICE_STATUS_OPEN ?
-                                    <a className='btn btn-hired' to='/'>{serviceList.statusName}</a>
-                                    :
-                                    ''
-                                }
-                                {serviceList.statusName === VISIT_SERVICE_STATUS_APPLIED ?
-                                    <a className='btn btn-applied' to='/'>{serviceList.statusName}</a>
-                                    :
-                                    ''
-                                }
-                                {serviceList.statusName === VISIT_SERVICE_STATUS_INVITED ?
-                                    <a className='btn btn-outline-primary btn-invited' to='/'>{serviceList.statusName}</a>
-                                    :
-                                    ''
+                                {
+                                    <a className={`${this.renderStatusClassName(serviceList.statusName)}`} to='/'>{
+                                        serviceList.statusName === VISIT_SERVICE_STATUS_NOT_HIRED ?
+                                            serviceList.matchPercentage : serviceList.statusName
+                                    }</a>
                                 }
                                 {serviceList.statusName === VISIT_SERVICE_STATUS_HIRED ?
                                     <a className='btn btn-outline-primary btn-hired' to='/'>{serviceList.statusName}</a>

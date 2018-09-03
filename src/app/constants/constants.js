@@ -9,6 +9,8 @@ export const VISIT_SERVICE_STATUS_HIRED = "Hired";
 export const MORNING = "Morning";
 export const AFTERNOON = "Afternoon";
 export const EVENING = "Evening";
+export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
+
 export const USER_LOCALSTORAGE = "userData";
 
 export const RESPONSE_STATUS = {
