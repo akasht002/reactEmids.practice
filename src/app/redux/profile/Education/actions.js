@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 
 export const Education = {
@@ -33,7 +33,7 @@ export function getEducation() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.education + serviceProviderId+'/Education').then((resp) => {
+        Get(API.education + serviceProviderId+'/Education').then((resp) => {
             dispatch(getEducationSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -57,7 +57,7 @@ export function addEducation(data) {
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.education+serviceProviderId+'/Education/', modal).then((resp) => {
+        Post(API.education+serviceProviderId+'/Education/', modal).then((resp) => {
             dispatch(addEducationSuccess(true));
             dispatch(getEducation());
             dispatch(endLoading());
@@ -68,7 +68,6 @@ export function addEducation(data) {
 };
 
 export function editEducation(data) {
-
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let educationId =data;
@@ -77,9 +76,8 @@ export function editEducation(data) {
             school: data
 
         };
-
         dispatch(startLoading());
-        axios.get(baseURL + API.education +serviceProviderId+`/Education/${educationId}`,modal).then((resp) => {
+        Get(API.education +serviceProviderId+`/Education/${educationId}`,modal).then((resp) => {
             dispatch(getEducationFieldDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -103,7 +101,7 @@ export function updateEducation(data) {
 
         };
         dispatch(startLoading());
-        axios.put(baseURL + API.education+serviceProviderId+'/Education', modal).then((resp) => {
+        Put(API.education+serviceProviderId+'/Education', modal).then((resp) => {
             dispatch(addEducationSuccess(true));
             dispatch(getEducation());
             dispatch(endLoading());
@@ -117,8 +115,8 @@ export function deleteEducation(data) {
     return (dispatch) => {
         dispatch(startLoading());
         let serviceProviderId = localStorage.getItem('serviceProviderID');
-        let id =data;
-        axios.delete(baseURL + API.education+`${serviceProviderId}/Education/${id}`,data).then((resp) => {
+        let id = data;
+        Delete(API.education + `${serviceProviderId}/Education/${id}`, data).then((resp) => {
             dispatch(getEducation());
             dispatch(endLoading());
         }).catch((err) => {
@@ -126,5 +124,3 @@ export function deleteEducation(data) {
         })
     }
 };
-
-

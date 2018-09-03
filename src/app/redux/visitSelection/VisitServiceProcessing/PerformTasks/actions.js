@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURLServiceRequest } from '../../../../services/api';
+import { API } from '../../../../services/api';
+import { ServiceRequestGet, ServiceRequestPut } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
@@ -43,7 +43,7 @@ export function getPerformTasksList(data) {
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))
         dispatch(startLoading());
-        axios.get(baseURLServiceRequest + API.getServiceRequestPerformTasks + data).then((resp) => {
+        ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
             dispatch(getPerformTasksListSuccess(resp.data))
             dispatch(push(Path.performTasks))
             dispatch(endLoading());
@@ -56,7 +56,7 @@ export function getPerformTasksList(data) {
 export function addPerformedTask(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.put(baseURLServiceRequest + API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
+        ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
             dispatch(push(Path.feedback))
             dispatch(endLoading());
         }).catch((err) => {
@@ -72,7 +72,7 @@ export function startOrStopService(data, visitId, startedTime) {
             dispatch(getSummaryDetails(visitId));
         }
         dispatch(startLoading());
-        axios.put(baseURLServiceRequest + API.startOrStopService + visitId + '/' + data).then((resp) => {
+        ServiceRequestPut(API.startOrStopService + visitId + '/' + data).then((resp) => {
             dispatch(saveStartedTime(startedTime))
             dispatch(endLoading());
         }).catch((err) => {
@@ -84,7 +84,7 @@ export function startOrStopService(data, visitId, startedTime) {
 export function getSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURLServiceRequest + API.getSummaryDetails + data).then((resp) => {
+        ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(endLoading());
         }).catch((err) => {
