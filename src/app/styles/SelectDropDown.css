@@ -85,7 +85,7 @@
     right: 8px;
     transition: opacity .1s ease-in-out;
     opacity: 0;
-    background: url("../assets/images/Navvis_ch_spritesheet.svg");
+    background: url("../../../assets/images/Navvis_ch_spritesheet.svg");
     background-position: -144px -16px;
     width: 16px;
     height: 16px;
@@ -657,7 +657,7 @@
 
 .text__c-txt__input--select___7_VcN:not(select):before, select.text__c-txt__input--select___7_VcN {
     transition: background-image .25s ease-in-out, transform .25s ease-in-out, border-color .25s ease-in-out, box-shadow .1s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
-    background-image: url('../assets/images/Caret_Dropdown_Purple.svg');
+    background-image: url('../../../assets/images/Caret_Dropdown_Purple.svg');
     background-repeat: no-repeat;
     background-position: center
 }
@@ -691,7 +691,7 @@ select.text__c-txt__input--select___7_VcN:-moz-focusring {
 }
 
 .text__c-txt__input--select___7_VcN.text__is-focused___3mc46:not(.text__is-disabled___3Uekk):not([disabled]):not(select):before, .text__c-txt__input--select___7_VcN.text__is-hovered___3bSTC:not(.text__is-disabled___3Uekk):not([disabled]):not(select):before, .text__c-txt__input--select___7_VcN:focus:not(.text__is-disabled___3Uekk):not([disabled]):not(select):before, .text__c-txt__input--select___7_VcN:hover:not(.text__is-disabled___3Uekk):not([disabled]):not(select):before, select.text__c-txt__input--select___7_VcN.text__is-focused___3mc46:not(.text__is-disabled___3Uekk):not([disabled]), select.text__c-txt__input--select___7_VcN.text__is-hovered___3bSTC:not(.text__is-disabled___3Uekk):not([disabled]), select.text__c-txt__input--select___7_VcN:focus:not(.text__is-disabled___3Uekk):not([disabled]), select.text__c-txt__input--select___7_VcN:hover:not(.text__is-disabled___3Uekk):not([disabled]) {
-    background-image: url('../assets/images/Caret_Dropdown_Purple.svg');
+    background-image: url('../../../assets/images/Caret_Dropdown_Purple.svg');
 }
 
 .text__c-txt__input--select___7_VcN.text__is-open___1jG9_:not(.text__is-disabled___3Uekk):not([disabled]):not(select):before {
@@ -699,7 +699,7 @@ select.text__c-txt__input--select___7_VcN:-moz-focusring {
 }
 
 .text__c-txt__input--select___7_VcN.text__is-disabled___3Uekk:not(select):before, .text__c-txt__input--select___7_VcN[disabled]:not(select):before, select.text__c-txt__input--select___7_VcN[disabled] {
-    background-image: url('../assets/images/Caret_Dropdown_Purple.svg');
+    background-image: url('../../../assets/images/Caret_Dropdown_Purple.svg');
 }
 
 .text__is-rtl___3wDRT.text__c-txt__input--select___7_VcN {

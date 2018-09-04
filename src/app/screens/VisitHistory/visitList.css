@@ -30,7 +30,7 @@
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../../assets/images/Caret.svg");
+    background-image: url("../../assets/images/Caret.svg");
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);

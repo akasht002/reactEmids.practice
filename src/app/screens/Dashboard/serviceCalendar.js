@@ -4,10 +4,18 @@ import Select from 'react-select'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import { Scrollbars } from '../../components'
-import '../../styles/ProfileMainPanel.css'
-import { convertStringToDate,getFields,getLength } from '../../utils/validations'
-import { getServiceProviderVists,getServiceVisitCount } from '../../redux/dashboard/Dashboard/actions'
-import {ServiceCalendarInfo,ServiceRequestDefault} from './ServiceInfo'
+import './ProfileMainPanel.css'
+import {
+  convertStringToDate,
+  getFields,
+  partialCompare,
+  getLength
+} from '../../utils/validations'
+import {
+  getServiceProviderVists,
+  getServiceVisitCount
+} from '../../redux/dashboard/Dashboard/actions'
+import { ServiceCalendarInfo, ServiceRequestDefault } from './ServiceInfo'
 
 const today = new Date()
 
@@ -117,9 +125,19 @@ class serviceCalendar extends React.Component {
   }
 
   componentDidMount () {
-    let utc = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+    let utc = new Date().toJSON().slice(0, 10).replace(/-/g, '-')
     this.props.getServiceProviderVists(utc)
-    this.props.getServiceVisitCount('2018-08-15')
+    let d = new Date(utc)
+    d.setMonth(d.getMonth() - 3)
+    let start_date = d.toLocaleDateString()
+    let d2 = new Date(utc)
+    d2.setMonth(d2.getMonth() + 3)
+    let end_date = d2.toLocaleDateString()
+    const date_range = {
+      start_date: start_date,
+      end_date: end_date
+    }
+    this.props.getServiceVisitCount(date_range)
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions.bind(this))
   }
@@ -141,12 +159,14 @@ class serviceCalendar extends React.Component {
   }
 
   showServiceProviderList = data => {
-    let date = convertStringToDate(data.target.value);
+    let date = convertStringToDate(data.target.value)
     this.props.getServiceProviderVists(date)
   }
 
   render () {
     let selectedDate = this.state.startDate
+
+    const visitCount = this.props.serviceVistCount
 
     let dates = [
       {
@@ -206,16 +226,16 @@ class serviceCalendar extends React.Component {
 
     let optionChecked = this.state.reportDay
 
-    let current_month = new Date().getMonth();
-    let pervious_month = moment.months().splice((current_month-3),3)
-    let next_month_list = moment.months().splice((current_month),3)
+    let current_month = new Date().getMonth()
+    let pervious_month = moment.months().splice(current_month - 3, 3)
+    let next_month_list = moment.months().splice(current_month, 3)
 
     let monthLists = pervious_month.concat(next_month_list)
 
-    let monthList = monthLists.map(month => { 
+    let monthList = monthLists.map(month => {
       return { label: month, value: month }
     })
-    
+
     let dateList = dates.map((daysMapping, i) => {
       let className = ''
       if (daysMapping.date.format() === moment(today).format()) {
@@ -240,7 +260,11 @@ class serviceCalendar extends React.Component {
             <span className='dayElement'>{daysMapping.date.format('ddd')}</span>
             <span className='dateElement'>{daysMapping.day.format('D')}</span>
           </label>
-          <div className='eventIndicator'>          
+          <div className='eventIndicator'>
+
+          {partialCompare(daysMapping.date.format('YYYY-MM-DD'),visitCount)&& <i className='indicator' />}
+
+           
             {/* <i className='indicator' />
             <i className='indicator' /> */}
           </div>
@@ -249,8 +273,10 @@ class serviceCalendar extends React.Component {
     })
 
     let serviceVist = this.props.serviceVist
-    let visitData = getLength(serviceVist)>0 ? <ServiceCalendarInfo Servicelist = {serviceVist}/> : <ServiceRequestDefault/>
-    
+    let visitData = getLength(serviceVist) > 0
+      ? <ServiceCalendarInfo Servicelist={serviceVist} />
+      : <ServiceRequestDefault />
+
     return (
       <div
         className={
@@ -269,12 +295,13 @@ class serviceCalendar extends React.Component {
               <Select
                 id='ProfileMonth'
                 multiple={false}
-                className="ProfileMonthList MonthName"
+                className='ProfileMonthList MonthName'
                 searchable={false}
                 options={monthList}
                 onChange={this.MonthChange.bind(this)}
                 value={this.state.selectedMonth}
-              /><span>{this.state.startYear}</span>
+              />
+              <span>{this.state.startYear}</span>
             </div>
             <div className='todayPalette'>
               <span
@@ -336,7 +363,7 @@ function mapDispatchToProps (dispatch) {
 }
 
 function mapStateToProps (state) {
-  return {   
+  return {
     serviceVist: state.dashboardState.dashboardState.serviceVist,
     serviceVistCount: state.dashboardState.dashboardState.serviceVistCount
   }

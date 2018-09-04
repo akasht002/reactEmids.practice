@@ -11,10 +11,6 @@ import {VisitList} from "./VisitList"
 import VisitFilter from "../VisitHistoryFilter";
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 
-
-import '../../styles/dashboard.css'
-import '../../styles/SelectDropDown.css'
-
 class VisitHistory extends Component {
 
     constructor(props) {

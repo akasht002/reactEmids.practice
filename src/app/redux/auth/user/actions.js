@@ -55,6 +55,7 @@ export function setServiceProviderDetails(emailID){
         Get(API.getServiceProviderID + emailID )
           .then(resp => {
             dispatch(setUserSuccess(resp.data))
+            localStorage.setItem('serviceProviderID',resp.data.serviceProviderId)
             let userData = getState().oidc.user;
             let serviceData = {
                 serviceProviderID: resp.data.serviceProviderId,

@@ -6,6 +6,7 @@ import {
   baseURLServiceRequest
 } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
+import {formatDate} from '../../../utils/validations'
 import { SERVICE_PROVIDER,MSG_SERVICE_PROVIDER,MSG_TYPE } from '../../constants/constants'
 
 export const DashboardDetail = {
@@ -60,15 +61,14 @@ export const getServiceVisitCountSuccess = data =>{
   }
 }
 
+
 export function getServiceVisitCount (data) {
-  let start_date = data
-  let end_date = data
   return (dispatch, getState) => {
     dispatch(startLoading())
     axios
       .get(
         baseURLServiceRequest +
-          API.getServiceVisitsCount  + SERVICE_PROVIDER + '/'+ start_date +'/'+ end_date
+          API.getServiceVisitsCount  + SERVICE_PROVIDER + '/'+ formatDate(data.start_date) +'/'+formatDate(data.end_date)
       )
       .then(resp => {
         dispatch(getServiceVisitCountSuccess(resp.data))

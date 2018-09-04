@@ -160,11 +160,11 @@
 }
 
 .CaretPrev{
-    background-image: url("../assets/images/Caret.svg");
+    background-image: url("../../assets/images/Caret.svg");
 }
 
 .CaretNext{
-    background-image: url("../assets/images/Caret.svg");
+    background-image: url("../../assets/images/Caret.svg");
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
@@ -200,7 +200,7 @@
     display: block;
     height: 44px;
     width: 44px;
-    background-image: url("../assets/images/No_Information.svg");
+    background-image: url("../../assets/images/No_Information.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -228,18 +228,18 @@
 }
 
 .NoServiceReq .NewReqIcon{
-    background-image: url("../assets/images/Message.svg");
+    background-image: url("../../assets/images/Message.svg");
 }
 
 .NoServiceReq .BrowseSPIcon{
-    background-image: url("../assets/images/Patient.svg");
+    background-image: url("../../assets/images/Patient.svg");
 }
 
 .SPNoInfo{
     height: 80px;
     display: block;
     width: 80px;
-    background-image: url("../assets/images/No_Information.svg");
+    background-image: url("../../assets/images/No_Information.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -390,15 +390,15 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
 }
 
 .ServicesTime.Morning{
-    background-image: url("../assets/images/Morning.svg");
+    background-image: url("../../assets/images/Morning.svg");
 }
 
 .ServicesTime.Afternoon{
-    background-image: url("../assets/images/Afternoon.svg");
+    background-image: url("../../assets/images/Afternoon.svg");
 }
 
 .ServicesTime.Evening{
-    background-image: url("../assets/images/Evening.svg");
+    background-image: url("../../assets/images/Evening.svg");
 }
 
 .ProfileServices span, .ProfileCardNameContainer span, .ProfileSkillServices span{
@@ -508,7 +508,7 @@ div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent
     display: inline-block;
     height: 24px;
     width: 24px;
-    background-image: url("../assets/images/No_Information.svg");
+    background-image: url("../../assets/images/No_Information.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -536,7 +536,7 @@ div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent
 }
 
 .Bathing{
-    background-image: url("../assets/images/Bathing_Purple.svg");
+    background-image: url("../../assets/images/Bathing_Purple.svg");
 }
 
 div.ProfileConversation{
@@ -651,7 +651,7 @@ div.ProfileConversation{
 .iconFilledStar:before{
     width: 100%;
     height: 100%;
-    background-image: url("../assets/images/RatingFilledStar.svg");
+    background-image: url("../../assets/images/RatingFilledStar.svg");
 }
 
 .SPThreadContent{
@@ -825,7 +825,7 @@ div.ProfileConversation{
     height: 100%;
     width: 100%;
     left: 15px;
-    background-image: url("../assets/images/Like_Purple.svg");
+    background-image: url("../../assets/images/Like_Purple.svg");
     background-size: contain;
 }
 

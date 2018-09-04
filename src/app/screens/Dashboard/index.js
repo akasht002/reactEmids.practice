@@ -8,7 +8,7 @@ import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 
-import '../../styles/dashboard.css'
+import './dashboard.css'
 
 class Dashboard extends React.Component {
   constructor (props) {

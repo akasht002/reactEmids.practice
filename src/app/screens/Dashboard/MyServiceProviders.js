@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import '../../styles/ProfileMainPanel.css'
+import './ProfileMainPanel.css'
 import {
   getServiceProviderDetail
 } from '../../redux/dashboard/Dashboard/actions'

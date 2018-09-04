@@ -122,7 +122,7 @@ div.EstimatedCostWidget{
     height: 14px;
     width: 14px;
     background-repeat: no-repeat;
-    background-image: url("../../../assets/images/edit.svg");
+    background-image: url("../../assets/images/edit.svg");
     background-size: 100%;
     background-position: center
 }

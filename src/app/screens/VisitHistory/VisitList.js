@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import '../../styles/visitList.css'
+import './visitList.css'
 import { getFields } from '../../utils/validations'
 import Moment from 'react-moment';
 

@@ -5,15 +5,14 @@ import {  ProfileHeader, Scrollbars } from '../../components'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 
 
-import '../../styles/VisitSummary.css'
+import './VisitSummary.css'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import Summary from './Summary'
 // import ServiceProviderModalTemplate from 'primary_path/components/ProfileModal'
 import Feedback
   from './FeedbackContent'
 
-import '../../styles/dashboard.css'
-import '../../styles/visitProcessing.css'
+import './visitProcessing.css'
 
 class VisitSummary extends React.Component {
   constructor (props) {

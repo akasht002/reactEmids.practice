@@ -92,7 +92,24 @@ export const getFields = (input, field)=> {
     let date = date_string.substring(0, 2)
     let year = date_string.substring(4, 8)
     return year + '-' + month + '-' + date
-  }
+  } 
+
+
+  export const formatDate =(date)=> {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
   
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+  
+    return [year, month, day].join('-');
+  }
 
 
+  export const partialCompare = (value,array) =>{
+    array.filter(obj => { 
+         return value === obj.visitDate.substring(0, 10) ? obj.visits : 0
+      })
+  }

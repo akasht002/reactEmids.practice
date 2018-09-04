@@ -8,7 +8,7 @@ import {
   ServiceProviderRequestDetails,
   ServiceRequestDefault
 } from './ServiceInfo'
-import '../../styles/ProfileMainPanel.css'
+import './ProfileMainPanel.css'
 import {
   getPatientServiceRequestDetail,
   getServiceStatusDetail

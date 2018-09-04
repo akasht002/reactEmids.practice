@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import '../../styles/Feedback.css'
+import './Feedback.css'
 
 class FeedbackContent extends React.Component {
     constructor(props) {
