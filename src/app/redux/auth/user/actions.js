@@ -59,6 +59,8 @@ export function setServiceProviderDetails(emailID){
                 serviceProviderID: resp.data.serviceProviderId,
                 serviceProviderTypeID: resp.data.serviceProviderTypeId,
             }
+            localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
+            localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
             save(USER_LOCALSTORAGE, {
                 ...userData,
                 serviceData
