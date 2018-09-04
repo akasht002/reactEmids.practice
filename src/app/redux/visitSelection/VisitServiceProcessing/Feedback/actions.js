@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURLServiceRequest } from '../../../../services/api';
+import { API } from '../../../../services/api';
+import { ServiceRequestGet, ServiceRequestPost } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
@@ -18,7 +18,7 @@ export const getQuestionsListSuccess = (data) => {
 export function getQuestionsList() {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURLServiceRequest + API.getQuestionsList).then((resp) => {
+        ServiceRequestGet(API.getQuestionsList).then((resp) => {
             dispatch(getQuestionsListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -30,7 +30,7 @@ export function getQuestionsList() {
 export function saveAnswers(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.post(baseURLServiceRequest + API.saveAnswers, data).then((resp) => {
+        ServiceRequestPost(API.saveAnswers, data).then((resp) => {
             dispatch(push(Path.summary))
             dispatch(endLoading());
         }).catch((err) => {

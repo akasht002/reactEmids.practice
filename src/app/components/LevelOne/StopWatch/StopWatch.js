@@ -7,14 +7,15 @@ const formattedSeconds = (sec) =>
     ('0' + sec % 60).slice(-2);
 
 
-class Stopwatch extends Component {
+class StopWatch extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             secondsElapsed: 0,
             laps: [],
-            lastClearedIncrementer: null
+            lastClearedIncrementer: null,
+            startTimer: false
         };
         this.incrementer = null;
     }
@@ -22,7 +23,8 @@ class Stopwatch extends Component {
     handleStartClick() {
         this.incrementer = setInterval(() =>
             this.setState({
-                secondsElapsed: this.state.secondsElapsed + 1
+                secondsElapsed: this.state.secondsElapsed + 1,
+                startTimer: true
             })
             , 1000);
     }
@@ -51,15 +53,14 @@ class Stopwatch extends Component {
     render() {
         return (
             <div className="stopwatch">
-                <h1 className="stopwatch-timer">{formattedSeconds(this.state.secondsElapsed)}</h1>
-                <ul className="stopwatch-laps">
-                    {this.state.laps.map((lap, i) =>
-                        <li className="stopwatch-lap"><strong>{i + 1}</strong>/ {formattedSeconds(lap)}</li>)
-                    }
-                </ul>
+                {this.state.startTimer ?
+                    <span className="TimerContent running">{formattedSeconds(this.state.secondsElapsed)}</span>
+                    :
+                    <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
+                }
             </div>
         );
     }
 }
 
-export default Stopwatch
+export default StopWatch

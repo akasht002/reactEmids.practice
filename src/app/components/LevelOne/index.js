@@ -18,6 +18,7 @@ import { StarRating } from "./StarRating";
 import { GeneralModalPopup } from './GeneralModalPopup';
 import {LoginCover} from './LoginCover';
 import {ProfileImage} from './ProfileImage';
+import {StopWatch} from './StopWatch';
 
 export {
     Calendar,
@@ -39,5 +40,6 @@ export {
     StarRating,
     GeneralModalPopup,
     LoginCover,
-    ProfileImage
+    ProfileImage,
+    StopWatch
 };

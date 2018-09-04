@@ -1,6 +1,7 @@
-import { LOGIN } from './actions'
+import { USER } from './actions';
 
 const defaultState = {
+    userData: {},
     loading: false,
     error: {
         message: '',
@@ -10,25 +11,16 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
     switch (action.type) {
-        case LOGIN.start:
+        case USER.setUser:
             return {
                 ...state,
-                loading: true
+                userData: action.userData,
             };
 
-        case LOGIN.end:
+        case USER.deleteUser:
             return {
                 ...state,
-                loading: false
-            };
-
-        case LOGIN.failed:
-            return {
-                ...state,
-                error: {
-                    message: '',
-                    code: ''
-                }
+                userData: null,
             };
 
         default:

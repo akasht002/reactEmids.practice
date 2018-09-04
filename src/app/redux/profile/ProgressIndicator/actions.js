@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { Get } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 
@@ -18,7 +18,7 @@ export function getProfilePercentage() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.getProfilePercentage + serviceProviderId).then((resp) => {
+        Get(API.getProfilePercentage + serviceProviderId).then((resp) => {
             dispatch(getProfilePercentageSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

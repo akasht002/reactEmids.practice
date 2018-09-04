@@ -150,7 +150,7 @@ class PersonalDetail extends React.PureComponent {
     }
   }
 
-  street = this.props.personalDetail.map((person, i) => (
+  street = this.props.personalDetail && this.props.personalDetail.map((person, i) => (
     <span key={i}>{person}</span>
   ))
 
@@ -174,18 +174,21 @@ class PersonalDetail extends React.PureComponent {
     let modalContent
     let modalTitle = 'Edit Personal Detials'
     let modalType = ''
-    const cityDetail = this.props.cityDetail.map((city, i) => {
-      city.label = city.name
-      city.value = city.id + '-' + city.name
-      return city
+    const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
+      return {
+        label : city.name,
+        value : city.id+'-'+city.name
+      }
     }
-    )
-    const genderDetail = this.props.genderList.map((gender, i) => {
-      gender.label = gender.name
-      gender.value = gender.id + '-' + gender.name
-      return gender
-    })
+  )
+  const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
+    return {
+      label : gender.name,
+      value : gender.id+'-'+gender.name
 
+    }
+  })
+  
 
     //console.log(this.props.genderList)
 

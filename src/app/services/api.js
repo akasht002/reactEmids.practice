@@ -7,7 +7,7 @@ export const baseURL = "http://localhost:63633/api/";
 export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
 //export const baseURLServiceRequest = "http://localhost:5615/api/";
 //export const authURL = "http://52.172.45.185:9005/";
-export const authURL = "http://localhost:5000/";
+export const authURL = "http://52.172.45.185:9005/";
 
 export const Api = axios.create({
     baseURL: baseURL,
@@ -37,9 +37,9 @@ export const API = {
     savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/',
     saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
     startOrStopService: 'VisitProcessing/ServiceRequestVisit/',
-    SendResetPasswordLink: 'api/User/',
-    getEmailIdByUserId: 'api/user/verifypasswordlink/',
-    resetPassword: 'api/user',
+    SendResetPasswordLink: 'User/',
+    getEmailIdByUserId: 'user/verifypasswordlink/',
+    resetPassword: 'user',
     getPersonalDetail:'ServiceProvider/',
     updatePersonalDetail:'ServiceProvider/',
     getCity:'ServiceProviderLookUp/GetState',

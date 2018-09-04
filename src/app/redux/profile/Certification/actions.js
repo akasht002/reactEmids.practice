@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
@@ -32,10 +32,10 @@ export const getCertificationFieldDetails = (data) => {
 }
 
 export function getCertification() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.certification + serviceProviderId+ '/Certification').then((resp) => {
+        Get(API.certification + serviceProviderId + '/Certification').then((resp) => {
             dispatch(getCertificationSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -45,7 +45,7 @@ export function getCertification() {
 };
 
 export function addCertification(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
             serviceProviderId: serviceProviderId,
@@ -55,7 +55,7 @@ export function addCertification(data) {
             isActive: true
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.certification + serviceProviderId+ '/Certification', modal).then((resp) => {
+        Post(API.certification + serviceProviderId + '/Certification', modal).then((resp) => {
             dispatch(addCertificationSuccess(true));
             dispatch(getCertification());
             dispatch(getProfilePercentage());
@@ -67,12 +67,11 @@ export function addCertification(data) {
 };
 
 export function editCertification(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.certification + serviceProviderId+ '/Certification/' + data).then((resp) => {
-            dispatch(getCertificationFieldDetails(resp.data));
-            dispatch(getProfilePercentage());
+        Get(API.certification + serviceProviderId + '/Certification/' + data).then((resp) => {
+            dispatch(getCertificationFieldDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -81,7 +80,7 @@ export function editCertification(data) {
 };
 
 export function updateCertification(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let modal = {
             serviceProviderId: serviceProviderId,
@@ -92,7 +91,7 @@ export function updateCertification(data) {
             certificationId: data.certificationId
         };
         dispatch(startLoading());
-        axios.put(baseURL + API.certification + serviceProviderId+ '/Certification', modal).then((resp) => {
+        Put(API.certification + serviceProviderId + '/Certification', modal).then((resp) => {
             dispatch(addCertificationSuccess(true));
             dispatch(getCertification());
             dispatch(getProfilePercentage());
@@ -104,10 +103,10 @@ export function updateCertification(data) {
 };
 
 export function deleteCertification(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.delete(baseURL + API.certification + serviceProviderId+ '/' + data).then((resp) => {
+        Delete(API.certification + serviceProviderId + '/' + data).then((resp) => {
             dispatch(getCertification());
             dispatch(getProfilePercentage());
             dispatch(endLoading());

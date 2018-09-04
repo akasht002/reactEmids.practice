@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API } from '../../../services/api';
+import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
@@ -26,7 +26,7 @@ export const getSelectedSkillsDetails = (data) => {
 export function getSkills() {
     return (dispatch) => {
         dispatch(startLoading());
-        axios.get(baseURL + API.getSkills).then((resp) => {
+        Get(API.getSkills).then((resp) => {
             dispatch(getSkillsSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -45,12 +45,12 @@ export function addSkills(data) {
             }
         }) : [];
         let modal = {
-            serviceProviderId: '1',
+            serviceProviderId: serviceProviderId,
             skills: skills
 
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.addSkills + serviceProviderId + '/Skill', modal).then((resp) => {
+        Post(API.addSkills + serviceProviderId + '/Skill', modal).then((resp) => {
             dispatch(getSelectedSkills());
             dispatch(getProfilePercentage());
             dispatch(endLoading());
@@ -64,7 +64,7 @@ export function getSelectedSkills() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.addSkills + serviceProviderId + '/Skills').then((resp) => {
+        Get(API.addSkills + serviceProviderId + '/Skills').then((resp) => {
             dispatch(getSelectedSkillsDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

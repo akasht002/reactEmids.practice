@@ -5,14 +5,15 @@ import { Link } from "react-router-dom";
 import classnames from 'classnames';
 import Moment from 'react-moment';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import { ProfileHeader, Scrollbars } from '../../../components'
+import { Scrollbars } from '../../../components'
 import { push } from '../../../redux/navigation/actions';
 import { Path } from '../../../routes';
 import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getPerformTasksList } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { convertTime24to12, getFirstCharOfString } from '../../../utils/validations'
+import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
+import { MORNING, AFTERNOON, EVENING } from "../../../constants/constants";
 
 class VisitServiceDetails extends Component {
 
@@ -30,8 +31,8 @@ class VisitServiceDetails extends Component {
     };
 
     componentDidMount() {
-        this.props.getVisitServiceDetails();
-        this.props.getVisitServiceSchedule();
+        this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+        this.props.getVisitServiceSchedule(this.props.ServiceRequestId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -51,18 +52,21 @@ class VisitServiceDetails extends Component {
         }
     };
 
-    ToggleLeftPanel = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
-
     visitProcessing = (data) => {
         this.props.getPerformTasksList(data)
     }
 
     selectedServiceType = (e) => {
         this.setState({ serviceType: parseInt(e.target.id) })
+    }
+
+    getSlotName = (slot) => {
+        if (slot === MORNING)
+            return 'MORN';
+        else if (slot === AFTERNOON)
+            return 'AFTE';
+        else if (slot === EVENING)
+            return 'EVE';
     }
 
     render() {
@@ -256,10 +260,18 @@ class VisitServiceDetails extends Component {
                                                     <h2 className='ServicesTitle'>Point of Service</h2>
                                                     <div className="SummaryContent POS mt-3 mb-5">
                                                         <p className='ContentTitle Summary'>Home</p>
-                                                        <p><span>Street</span>3343 Kooter Lane, 59 College Avenue</p>
-                                                        <p><span>City</span>Farmington</p>
-                                                        <p><span>State</span>West Virginia</p>
-                                                        <p><span>ZIP</span>26571</p>
+
+                                                        {(this.state.visitServiceDetails.patient) ?
+                                                            <span>
+                                                                <p><span>Street</span> {this.state.visitServiceDetails.patient.patientAddresses[0].streetAddress}</p>
+                                                                <p><span>City</span> {this.state.visitServiceDetails.patient.patientAddresses[0].city}</p>
+                                                                <p><span>State</span> {this.state.visitServiceDetails.patient.patientAddresses[0].stateName}</p>
+                                                                <p><span>ZIP</span> {this.state.visitServiceDetails.patient.patientAddresses[0].zipCode}</p>
+                                                            </span>
+                                                            :
+                                                            ''
+                                                        }
+
                                                     </div>
                                                 </div>
                                             </form>
@@ -288,14 +300,16 @@ class VisitServiceDetails extends Component {
                                                             <span><Moment format="DD MMM">{ScheduleList.visitDate}</Moment></span>
                                                         </div>
                                                         <div>
-                                                            <span>{ScheduleList.slot}</span>
+                                                            <span>
+                                                                {this.getSlotName(ScheduleList.slot)}
+                                                            </span>
                                                         </div>
                                                         <div>
                                                             <span>{ScheduleList.visitStatusName}</span>
                                                         </div>
                                                         <div>
                                                             {ScheduleList.originalTotalDuration ?
-                                                                <span>{ScheduleList.originalTotalDuration}Hrs</span>
+                                                                <span>{ScheduleList.originalTotalDuration} Hrs</span>
                                                                 :
                                                                 <span> - </span>
                                                             }
@@ -303,7 +317,7 @@ class VisitServiceDetails extends Component {
                                                         <div>
                                                             <div class='ScheduleRowButton'>
                                                                 {ScheduleList.visitStatusName === 'Completed' ?
-                                                                    <a className='btn btn-outline-primary' to='/'>Summary</a>
+                                                                    <a className='btn btn-outline-primary' to='/'><i className='ProfileIconEye' />Summary</a>
                                                                     :
                                                                     ''
                                                                 }
@@ -332,8 +346,8 @@ class VisitServiceDetails extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getVisitServiceDetails: () => dispatch(getVisitServiceDetails()),
-        getVisitServiceSchedule: () => dispatch(getVisitServiceSchedule()),
+        getVisitServiceDetails: (data) => dispatch(getVisitServiceDetails(data)),
+        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data)),
         visitService: () => dispatch(push(Path.visitServiceList)),
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data)),
     }
@@ -343,6 +357,7 @@ function mapStateToProps(state) {
     return {
         VisitServiceDetails: state.visitSelectionState.VisitServiceDetailsState.VisitServiceDetails,
         VisitServiceSchedule: state.visitSelectionState.VisitServiceDetailsState.VisitServiceSchedule,
+        ServiceRequestId: state.visitSelectionState.VisitServiceDetailsState.ServiceRequestId
     };
 };
 

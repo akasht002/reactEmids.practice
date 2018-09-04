@@ -1,5 +1,5 @@
-import axios from 'axios';
-import {API, baseURL} from '../../../services/api';
+import {API} from '../../../services/api';
+import {Post} from '../../../services/http';
 import {startLoading, endLoading} from '../../loading/actions';
 import {clearState as verifyContactClear} from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
@@ -57,13 +57,13 @@ export const onSetUserIdCompletion = (data) => {
 };
 
 export function setPassword(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         let body = {
             userName: data.username,
             password: encryptPassword(data.password)
         };
         dispatch(startLoading());
-        axios.post(baseURL + API.setPassword, body).then((resp) => {
+        Post(API.setPassword, body).then((resp) => {
             dispatch(onboardSucess());
             dispatch(endLoading());
         }).catch((err) => {
@@ -73,9 +73,7 @@ export function setPassword(data) {
 };
 
 export function onboardSucess() {
-    return (dispatch, getState) => {
-        //dispatch(passwordSetSuccess());
-        //dispatch(clearOnboardingState());
+    return (dispatch) => {
         dispatch(push(Path.onboardSuccess));
     }
 };
@@ -89,7 +87,7 @@ export function passwordSetSuccess(){
 
 
 export function onCancelClick(){
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(cancelClick());
         dispatch(verifyContactClear());
         dispatch(push(Path.root));

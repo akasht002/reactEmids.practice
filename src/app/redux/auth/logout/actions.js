@@ -2,7 +2,7 @@
 import {  push } from '../../navigation/actions';
 import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
-import { USER_LOCALSTORAGE } from '../../../constants/variables';
+import { USER_LOCALSTORAGE } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
 
 export const LOGOUT = {

@@ -28,7 +28,8 @@ import {
     DashboardWizFlow,
     StarRating,
     GeneralModalPopup,
-    ProfileImage
+    ProfileImage,
+    StopWatch
 } from './LevelOne';
 import {
     CarouselComp,
@@ -70,5 +71,6 @@ export {
     StarRating,
     GeneralModalPopup,
     LoginCover,
-    ProfileImage
+    ProfileImage,
+    StopWatch
 };
