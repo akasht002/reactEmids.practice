@@ -18,7 +18,7 @@ export function getProfilePercentage() {
     return (dispatch) => {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         dispatch(startLoading());
-        axios.get(baseURL + API.getProfilePercentage + 1).then((resp) => {
+        axios.get(baseURL + API.getProfilePercentage + serviceProviderId).then((resp) => {
             dispatch(getProfilePercentageSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

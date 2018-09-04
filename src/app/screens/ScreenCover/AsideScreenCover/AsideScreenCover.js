@@ -1,8 +1,10 @@
 import React from "react";
-import Select from "react-select"
 import { Link } from "react-router-dom"
 // import { ACTIVE, VISITED } from "../../../../constants/constants";
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage } from '../../../components';
+import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
 
 import './style.css'
@@ -20,8 +22,11 @@ class AsideScreenCover extends React.Component {
         this.setState({
             selectedValue: e
         });
-        /*window.location = '/dashboard';*/
     };
+
+    componentDidMount() {
+        this.props.getProfilePercentage();
+    }
 
     render() {
         return (
@@ -34,25 +39,11 @@ class AsideScreenCover extends React.Component {
                     </div>
                     <ProfileImage
                         src={this.props.patientImage}
+                        profilePercentage={this.props.profilePercentage}
                     />
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
                             <p>John Smith</p>
-                            {/* <div className="form-group">
-                        
-                            <Select
-                                id="ProfileName"
-                                multiple={false}
-                                className="SelectFormControl"
-                                searchable={false}
-                                options={[
-                                    {label: "John Smith", value: '1'},
-                                    {label: "Brett Smith", value: '2'},
-                                ]}
-                                onChange={this.optionChanged.bind(this)}
-                                value={this.state.selectedValue}
-                            />
-                        </div> */}
                         </div>
                     </div>
                     <AsideMenu menuData={MenuData} />
@@ -69,4 +60,16 @@ class AsideScreenCover extends React.Component {
     }
 }
 
-export default AsideScreenCover;
+function mapDispatchToProps(dispatch) {
+    return {
+        getProfilePercentage: () => dispatch(getProfilePercentage()),
+    }
+};
+
+function mapStateToProps(state) {
+    return {
+        profilePercentage: state.profileState.progressIndicatorState.profilePercentage
+    };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover));
