@@ -22,7 +22,6 @@ export const setUserSuccess = (userData) => {
 export function onSetUserSuccess(data){
     return (dispatch, getState) => {
         dispatch(setUserSuccess(data));
-        console.log('getState().oidc.user.data.profile.sub', getState())
         dispatch(setServiceProviderDetails(getState().oidc.user.profile.sub));   
     }
 }
