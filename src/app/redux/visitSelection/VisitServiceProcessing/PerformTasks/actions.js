@@ -6,7 +6,9 @@ import { Path } from '../../../../routes';
 
 export const PerformTasks = {
     getPerformTasksListSuccess: 'get_perform_tasks_list_success/performtasks',
-    getServiceRequestVisitId: 'get_service_request_visitId/performtasks'
+    getServiceRequestVisitId: 'get_service_request_visitId/performtasks',
+    saveStartedTime: 'save_started_time/performtasks',
+    getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
 };
 
 export const getPerformTasksListSuccess = (data) => {
@@ -19,6 +21,20 @@ export const getPerformTasksListSuccess = (data) => {
 export const getServiceRequestVisitId = (data) => {
     return {
         type: PerformTasks.getServiceRequestVisitId,
+        data
+    }
+}
+
+export const getSummaryDetailsSuccess = (data) => {
+    return {
+        type: PerformTasks.getSummaryDetailsSuccess,
+        data
+    }
+}
+
+export const saveStartedTime = (data) => {
+    return {
+        type: PerformTasks.saveStartedTime,
         data
     }
 }
@@ -38,7 +54,6 @@ export function getPerformTasksList(data) {
 };
 
 export function addPerformedTask(data) {
-    console.log(data)
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
@@ -51,10 +66,26 @@ export function addPerformedTask(data) {
     }
 };
 
-export function startOrStopService(data, visitId) {
+export function startOrStopService(data, visitId, startedTime) {
+    return (dispatch) => {
+        if (data === 0) {
+            dispatch(getSummaryDetails(visitId));
+        }
+        dispatch(startLoading());
+        ServiceRequestPut(API.startOrStopService + visitId + '/' + data).then((resp) => {
+            dispatch(saveStartedTime(startedTime))
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function getSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        ServiceRequestPut(API.startOrStopService + visitId + "/" + data).then((resp) => {
+        ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
+            dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

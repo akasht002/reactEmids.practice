@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, GeneralModalPopup } from '../../../../components';
 import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
@@ -126,7 +127,7 @@ class Summary extends Component {
                                 <a className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'>Sun, 24 Aug, Morning</i>1</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
                                     </div>
                                     <div className='requestImageContent'>
 
@@ -153,10 +154,10 @@ class Summary extends Component {
                                 <div className="col col-md-3 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerContent running">01<i>:</i>45</span>
+                                            <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
                                         <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at 12:30 pm</span>
+                                            <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +234,9 @@ class Summary extends Component {
                                             <div className="SignatureColumn">
                                                 <SignaturePad width={420} height={320} ref={ref => this.signaturePad = ref} />
                                             </div>
-                                            {/* <button onClick={this.saveSignature}>log signature</button> */}
+                                            <div className="width100 text-right">
+                                                <button className="btn btn-outline-primary CancelSignature">Reset Signature</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +283,8 @@ function mapStateToProps(state) {
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
         CalculationsData: state.visitSelectionState.VisitServiceProcessingState.SummaryState.CalculationsData,
         actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,
-        patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList
+        patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
+        startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
     };
 };
 
