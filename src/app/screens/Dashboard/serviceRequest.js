@@ -88,7 +88,7 @@ class ServiceRequest extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               Service Requests
             </span>
-            <Link className='ProfileCardHeaderLink' to='/'>View all</Link>
+            <Link className='ProfileCardHeaderLink' to='/visitServiceList'>View all</Link>
           </div>
           <div className='topPalette'>
             <div className='monthPalette'>

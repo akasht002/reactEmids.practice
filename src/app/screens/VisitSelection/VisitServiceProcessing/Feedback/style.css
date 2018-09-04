@@ -79,9 +79,9 @@
     margin: 0 0 15px 0;
 }
 
-.FeedbackAnswerWidget .form-radio .RadioBoxIcon{
+/* .FeedbackAnswerWidget .form-radio .RadioBoxIcon{
     left: 35px;
-}
+} */
 
 .FeedbackAnswerWidget .feedbackForm{
     width: 100%;
@@ -112,9 +112,9 @@
         padding: 0;
     }
 
-    .FeedbackAnswerWidget .form-radio .RadioBoxIcon {
+    /* .FeedbackAnswerWidget .form-radio .RadioBoxIcon {
         left: 20px;
-    }
+    } */
 
     .FeedbackAnswerWidget .feedbackForm {
         padding: 0;

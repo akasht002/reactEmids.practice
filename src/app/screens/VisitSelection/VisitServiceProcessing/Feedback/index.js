@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
-import { ProfileHeader, Scrollbars, DashboardWizFlow, ModalPopup, StarRating } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, StarRating } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-
 import './style.css'
 
 class Feedback extends Component {
@@ -34,16 +32,21 @@ class Feedback extends Component {
         this.props.getQuestionsList();
     }
 
-    handleSelected = (answer) => {
-        this.selectedAnswers.push(answer)
-        this.setState({ answerList: this.selectedAnswers })
+    handleSelected = (answer, id) => {
+        let answers = { feedbackQuestionnaireId: id, answerName: answer }
+        let filteredData = this.selectedAnswers.filter((answer) => {
+            return answer.feedbackQuestionnaireId !== id
+        });
+        filteredData.push(answers);
+        this.selectedAnswers = filteredData;
+        this.setState({ answerList: filteredData });
     }
 
-    handleTextarea = (e) => {
+    handleTextarea = (e, id) => {
         this.setState({
             textareaValue: e.target.value,
             textareaData: {
-                id: parseInt(e.target.id),
+                feedbackQuestionnaireId: id,
                 answerName: this.state.textareaValue
             }
         });
@@ -55,8 +58,9 @@ class Feedback extends Component {
 
     onClickNext = () => {
         let answers = this.selectedAnswers
-        answers.push(this.state.textareaData);
-
+        if (this.state.textareaData) {
+            answers.push(this.state.textareaData);
+        }
         if (this.props.QuestionsList.length === answers.length) {
             this.onSubmit();
         } else {
@@ -66,7 +70,9 @@ class Feedback extends Component {
 
     onSubmit = () => {
         let answers = this.selectedAnswers
-        answers.push(this.state.textareaData);
+        if (this.state.textareaData) {
+            answers.push(this.state.textareaData);
+        }
         let data = {
             serviceRequestVisitId: this.props.patientDetails.serviceRequestVisitId,
             serviceRequestId: this.props.patientDetails.serviceRequestId,
@@ -94,14 +100,18 @@ class Feedback extends Component {
                                 <a className="TitleContent backProfileIcon"></a>
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
                                     </div>
                                     <div className='requestImageContent'>
-                                        <span>
-                                            <img
-                                                src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
-                                                className="avatarImage avatarImageBorder" alt="patientImage" />
-                                            <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i></span>
+                                        {this.props.patientDetails.patient ?
+                                            <span>
+                                                <img
+                                                    src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
+                                                    className="avatarImage avatarImageBorder" alt="patientImage" />
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i></span>
+                                            :
+                                            ''
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -111,14 +121,13 @@ class Feedback extends Component {
                                 <div className="col col-md-9 WizardContent">
                                     <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={1} />
                                 </div>
-                                <div className="col col-md-3 rightTimerWidget">
+                                <div className="col col-md-3 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
-                                        <div className="col-md-5 rightTimerContent">
-                                            <span className="TimerContent">01<i>:</i>45</span>
+                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
-                                        <div className="col-md-7 rightTimerContent">
-                                            <Link className="btn btn-primary" to="/">Stop Service</Link>
-                                            <span className="TimerStarted">Started at 12:30 pm</span>
+                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +137,11 @@ class Feedback extends Component {
                             <form className='ServiceContent'>
                                 <div className="FeedbackWidget">
                                     <div className="FeedbackRating">
-                                        <p>Rate {this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</p>
+                                        {this.props.patientDetails.patient ?
+                                            <p>Rate {this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</p>
+                                            :
+                                            ''
+                                        }
                                         <StarRating handleSelectedRating={(e) => this.handleSelectedRating(e)} />
                                     </div>
                                     {this.props.QuestionsList.length > 0 ?
@@ -147,10 +160,10 @@ class Feedback extends Component {
                                                                                 type="radio"
                                                                                 value={answer.answerName}
                                                                                 name={questionList.feedbackQuestionnaireId}
-                                                                                onChange={(e) => this.handleSelected(answer)}
+                                                                                onChange={(e) => this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)}
                                                                             />
-                                                                            <label className="form-radio-label" htmlFor={answer.id}>{answer.answerName}</label>
-                                                                            <span className="RadioBoxIcon" />
+                                                                            <label className="form-radio-label" htmlFor={answer.id}>
+                                                                                <span className="RadioBoxIcon" /> {answer.answerName}</label>
                                                                         </div>
                                                                     )
                                                                 })}
@@ -172,7 +185,8 @@ class Feedback extends Component {
                                                                                 rows={4}
                                                                                 className='form-control'
                                                                                 value={this.state.textareaValue}
-                                                                                onChange={(e) => this.handleTextarea(e)}
+                                                                                onChange={(e) => this.handleTextarea(e, questionList.feedbackQuestionnaireId)}
+                                                                                maxLength={1000}
                                                                             />
                                                                         </div>
                                                                     )
@@ -230,6 +244,8 @@ function mapStateToProps(state) {
     return {
         QuestionsList: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.QuestionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
+        startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
+        SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
     };
 };
 

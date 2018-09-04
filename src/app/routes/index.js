@@ -24,7 +24,7 @@ import {
   Dashboard
 
 } from '../screens';
-import { PrivateRoute } from './privateRouter';
+import PrivateRoute from './privateRouter';
 
 function Loading({ error }) {
   if (error) {
