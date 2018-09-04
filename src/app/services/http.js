@@ -121,3 +121,5 @@ export const getHeader = ()=>  {
         headers: authHeader
     }
 }
+
+export const SERVICE_PROVIDER_ID = store && store.getState().authState.userState && store.getState().authState.userState.userData && JSON.parse(store.getState().authState.userState.userData) && JSON.parse(store.getState().authState.userState.userData).data.serviceData.serviceProviderID;
