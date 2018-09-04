@@ -7,6 +7,7 @@ const defaultState = {
   patientServiceRequest:[],
   serviceVist:[],
   serviceStatusLookUp:[],
+  serviceVistCount:[],
 }
 
 const DashboardState = (state = defaultState, action) => {
@@ -40,6 +41,11 @@ const DashboardState = (state = defaultState, action) => {
       return {
         ...state,
         serviceStatusLookUp: action.data
+      }
+      case DashboardDetail.get_service_visit_count:
+      return{
+        ...state,
+        serviceVistCount:action.data
       }
     default:
       return state

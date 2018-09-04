@@ -80,9 +80,9 @@ export const getGenderID = (data) => {
 }
 
 
-export function getFields (input, field) {
-    var output = []
-    for (var i = 0; i < input.length; ++i) { output.push(input[i][field] + ', ') }
+export const getFields = (input, field)=> {
+    let output = []
+    for (let i = 0; i < input.length; ++i) { output.push(input[i][field] + ', ') }
     return output
   }
 

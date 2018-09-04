@@ -76,8 +76,8 @@ export const ServiceProviderRequestDetails = props => {
           </div>
           <div className='ProfileSkillServices'>
             <span className='ServicesTitle'>
-              {sp.serviceTypes &&
-                getFields(sp.serviceTypes, 'serviceTypeDescription')}
+              {sp.serviceRequestTypeDetails &&
+                getFields(sp.serviceRequestTypeDetails, 'serviceTypeDescription')}
             </span>
             <span className='ServicesDesc'>
               {sp.serviceCategoryDescription}
@@ -104,7 +104,7 @@ export const ServiceProviderRequestDetails = props => {
               }
             />
             {' '}
-            <span>{sp.patientFirstName && sp.patientFirstName}</span>
+            <span>{sp.patientFirstName && sp.patientFirstName} {sp.patientLastName && sp.patientLastName}</span>
           </div>
         </li>
       </Fragment>
@@ -113,14 +113,13 @@ export const ServiceProviderRequestDetails = props => {
 }
 
 export const MyConversionDetail = props => {
-  console.log(props.conversation)
   let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
   return conversation.slice(0, 3).map((conversations, index) => {
     return (
       <Fragment>
-        <li className='list-group-item myConversationContainer'>
+        <li key={index} className='list-group-item myConversationContainer'>
           <div className={'myConversationContent ' + MsgClass}>
             <div className='avatarWidget'>
               {conversations.participantList.map((chatMem, index) => {

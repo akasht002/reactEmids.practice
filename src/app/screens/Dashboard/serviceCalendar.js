@@ -6,7 +6,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { Scrollbars } from '../../components'
 import '../../styles/ProfileMainPanel.css'
 import { convertStringToDate,getFields,getLength } from '../../utils/validations'
-import { getServiceProviderVists } from '../../redux/dashboard/Dashboard/actions'
+import { getServiceProviderVists,getServiceVisitCount } from '../../redux/dashboard/Dashboard/actions'
 import {ServiceCalendarInfo,ServiceRequestDefault} from './ServiceInfo'
 
 const today = new Date()
@@ -119,6 +119,7 @@ class serviceCalendar extends React.Component {
   componentDidMount () {
     let utc = new Date().toJSON().slice(0,10).replace(/-/g,'-');
     this.props.getServiceProviderVists(utc)
+    this.props.getServiceVisitCount('2018-08-15')
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions.bind(this))
   }
@@ -214,7 +215,7 @@ class serviceCalendar extends React.Component {
     let monthList = monthLists.map(month => { 
       return { label: month, value: month }
     })
-
+    
     let dateList = dates.map((daysMapping, i) => {
       let className = ''
       if (daysMapping.date.format() === moment(today).format()) {
@@ -239,7 +240,7 @@ class serviceCalendar extends React.Component {
             <span className='dayElement'>{daysMapping.date.format('ddd')}</span>
             <span className='dateElement'>{daysMapping.day.format('D')}</span>
           </label>
-          <div className='eventIndicator'>
+          <div className='eventIndicator'>          
             {/* <i className='indicator' />
             <i className='indicator' /> */}
           </div>
@@ -329,13 +330,15 @@ class serviceCalendar extends React.Component {
 
 function mapDispatchToProps (dispatch) {
   return {
-    getServiceProviderVists: data => dispatch(getServiceProviderVists(data))
+    getServiceProviderVists: data => dispatch(getServiceProviderVists(data)),
+    getServiceVisitCount: data => dispatch(getServiceVisitCount(data))
   }
 }
 
 function mapStateToProps (state) {
   return {   
-    serviceVist: state.dashboardState.dashboardState.serviceVist
+    serviceVist: state.dashboardState.dashboardState.serviceVist,
+    serviceVistCount: state.dashboardState.dashboardState.serviceVistCount
   }
 }
 export default withRouter(

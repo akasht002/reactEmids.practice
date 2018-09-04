@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  ProfileHeader,
   Scrollbars,
   ToggleSwitch
 } from '../../components'
@@ -29,7 +28,6 @@ class Dashboard extends React.Component {
   render () {
     return (    
     <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-     <ProfileHeader toggle={this.toggle.bind(this)}/>
              <div className='ProfileHeaderWidget'>
               <div className='ProfileHeaderTitle'>
                 <h5 className='primaryColor m-0'>Dashboard</h5>

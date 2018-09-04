@@ -19,7 +19,8 @@ export const DashboardDetail = {
   get_patient_visit_detail: 'get_patient_visit_detail/dashboard',
   get_patient_visit_detail_success: 'get_patient_visit_detail_success/dashboard',
   get_service_request_success: 'get_service_request_success/dashboard',
-  get_service_request: 'get_service_request/dashboard'
+  get_service_request: 'get_service_request/dashboard',
+  get_service_visit_count: 'get_service_visit_count'
 }
 
 export const getServiceStatusSuccess = data => {
@@ -50,6 +51,36 @@ export const getPatientVisitDetailSuccess = data => {
     data
   }
 }
+
+
+export const getServiceVisitCountSuccess = data =>{
+  return{
+    type : DashboardDetail.get_service_visit_count,
+    data
+  }
+}
+
+export function getServiceVisitCount (data) {
+  let start_date = data
+  let end_date = data
+  return (dispatch, getState) => {
+    dispatch(startLoading())
+    axios
+      .get(
+        baseURLServiceRequest +
+          API.getServiceVisitsCount  + SERVICE_PROVIDER + '/'+ start_date +'/'+ end_date
+      )
+      .then(resp => {
+        dispatch(getServiceVisitCountSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
+
 
 export function getServiceProviderVists (data) {
   return (dispatch, getState) => {

@@ -1,12 +1,9 @@
 import React from 'react'
-import { Link,withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import '../../styles/ProfileMainPanel.css'
 import { getLength } from '../../utils/validations'
-import {
-  MyConversionDetail,
-  MyConversionDefault
-} from './ServiceInfo'
+import { MyConversionDetail, MyConversionDefault } from './ServiceInfo'
 
 import {
   getConversationDetail,
@@ -14,7 +11,6 @@ import {
 } from '../../redux/dashboard/Dashboard/actions'
 
 class MyConversation extends React.Component {
-
   componentDidMount () {
     this.props.getConversationDetail()
     this.props.getUnreadMessageCounts()
@@ -25,9 +21,9 @@ class MyConversation extends React.Component {
 
   render () {
     let conversation_data = this.props.conversationDetail
-    console.log(conversation_data)    
-    let conversation_item = getLength(conversation_data)>0?<MyConversionDetail conversation={this.state.conversationDetail}/>:
-    <MyConversionDefault/>    
+    let conversation_item = getLength(conversation_data) > 0
+      ? <MyConversionDetail conversation={conversation_data} />
+      : <MyConversionDefault />
     return (
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
@@ -52,13 +48,12 @@ function mapDispatchToProps (dispatch) {
   return {
     getConversationDetail: () => dispatch(getConversationDetail()),
     getUnreadMessageCounts: () => dispatch(getUnreadMessageCounts())
-     
   }
 }
 
 function mapStateToProps (state) {
   return {
-    conversationDetail: state.dashboardState.dashboardState.conversationDetail     
+    conversationDetail: state.dashboardState.dashboardState.conversationDetail
   }
 }
 export default withRouter(
