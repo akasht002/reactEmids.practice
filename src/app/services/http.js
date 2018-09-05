@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { store } from '../redux/store';
 
-export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
-export const authURL = "http://52.172.45.185:9005/";
-export const serviceRequestURL = "http://52.172.45.185:9007/api/";
+export const baseURL = process.env.REACT_APP_API_URL;
+export const authURL = process.env.REACT_APP_AUTH_URL;
+export const serviceRequestURL = process.env.REACT_APP_SR_URL;
 
 export const AuthLogin = (url, data)=>{
     var bodyFormData = new FormData();
