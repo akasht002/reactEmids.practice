@@ -87,7 +87,7 @@
     "build": "node scripts/build.js",
     "build-qa": "node scripts/build.js --qa",
     "build-dev": "node scripts/build.js --dev",
-    "test": "node scripts/test.js --env=jsdom"    
+    "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
     "collectCoverage": true,
