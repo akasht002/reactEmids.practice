@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { SERVICE_PROVIDER_ID } from '../../../services/http';
+import { getServiceProviderId } from '../../../services/http';
 export const PERSONAL_DETAIL = {
     UPDATE_PERSONAL_DETAIL: 'UPDATE_PERSONAL_DETAIL',
     UPDATE_ORGANIZATION_DETAIL: 'UPDATE_ORGANIZATION_DETAIL'
@@ -53,7 +53,7 @@ export const getModal = (data, action) => {
             }
         case PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL:
             return {
-                serviceProviderId: SERVICE_PROVIDER_ID,
+                serviceProviderId: getServiceProviderId(),
                 serviceProviderTypeId: 2,
                 individual: {
                     firstName: '',
@@ -80,7 +80,7 @@ export const getModal = (data, action) => {
                 addresses: [
                     {
                         addressId: 1,
-                        serviceProviderId: SERVICE_PROVIDER_ID,
+                        serviceProviderId: getServiceProviderId(),
                         addressTypeId: 2,
                         streetAddress: data.streetAddress,
                         city: data.city,
