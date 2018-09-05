@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import ImageCrop from 'react-image-crop-component'
 import 'react-image-crop-component/style.css'
-
 import 'react-image-crop/dist/ReactCrop.css'
 import 'react-image-crop/lib/ReactCrop.scss'
 import './index.css'
@@ -16,13 +15,15 @@ import {
   ModalPopup
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
+import { OrganizationData } from '../../../data/OrganizationData';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { ProfileImage } from '../../../components';
 import {
   checkTextNotStartWithNumber,
   isDecimal,
   getArrayLength,
-  getLength
+  getLength,
+  checkhourlyRate
 } from '../../../utils/validations'
 
 import { SETTING } from '../../../services/api'
@@ -34,7 +35,7 @@ class PersonalDetail extends React.PureComponent {
       useEllipsis: true,
       EducationModal: false,
       isDiscardModalOpen: false,
-      ModalOrg: true,
+      modalOrg: true,
       src: null,
       crop: {
         x: 10,
@@ -189,9 +190,6 @@ class PersonalDetail extends React.PureComponent {
     }
   })
   
-
-    //console.log(this.props.genderList)
-
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
         {this.getModalContent(cityDetail, genderDetail)}
@@ -618,33 +616,7 @@ class PersonalDetail extends React.PureComponent {
         >
           <div className='form-group'>
             <SelectBox
-              options={[
-                {
-                  label: 'AABB (formerly American Association of Blood Banks)',
-                  value: '1-AABB'
-                },
-                {
-                  label: 'Academy of International Business (AIB)',
-                  value: '2-AABB'
-                },
-                { label: 'Academy of Management (AOM)', value: '3-AOM' },
-                {
-                  label: 'Association for the Advancement of Cost Engineering (AACE International)',
-                  value: '4-AACE International'
-                },
-                {
-                  label: 'Association for Volunteer Administration (AVA)',
-                  value: '5-AVA'
-                },
-                {
-                  label: 'Association of Information Technology Professionals (AITP)',
-                  value: '6-AITP'
-                },
-                {
-                  label: 'Chartered Global Management Accountant (CGMA)',
-                  value: '7-CGMA'
-                }
-              ]}
+              options={OrganizationData}
               simpleValue
               placeholder='Select the Organization'
               onChange={value => {
@@ -681,7 +653,7 @@ class PersonalDetail extends React.PureComponent {
             maxlength='7'
             textChange={e => {
               const re = /^\d*\.?\d{0,2}$/
-              if (e.target.value === '' || re.test(e.target.value)) {
+              if (e.target.value === '' || checkhourlyRate(e.target.value)) {
                 this.setState({ hourlyRate: e.target.value })
               }
             }}

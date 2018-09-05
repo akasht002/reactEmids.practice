@@ -78,3 +78,7 @@ export const getDataValueArray = (data, split) => {
 export const getGenderID = (data) => {
     return genderID[data]
 }
+
+export function checkhourlyRate(data) {
+    return /^\d*\.?\d{0,2}$/.test(data);
+}

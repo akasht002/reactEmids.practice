@@ -16,11 +16,7 @@ import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 import './styles.css';
 
 class Profile extends Component {
-
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
-    }
-
+    
     componentDidMount() {
         this.props.getProfilePercentage();
     }
