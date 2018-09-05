@@ -19,7 +19,7 @@
     top: 0;
     /*background-image: linear-gradient(to top, #7a329f, #551178);*/
     background-image: linear-gradient(to top, #67307f, #3b1a53);
-    z-index: 1;
+    z-index: -1;
 }
 
 .SPTitleText{
@@ -96,6 +96,7 @@ div.mainProfileContent{
     position: relative;
     display: block;
     width: 140px;
+    height:140px;
     padding: 0;
     margin: 0 auto;
     -webkit-border-radius: 50%;
@@ -383,8 +384,8 @@ i.SPIconEditPersonalDetails{
 
 .SPTabTitleContent{
     width: 100%;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 400;
     margin: 0;
     -webkit-transition: all linear .2s;
     -moz-transition: all linear .2s;
@@ -770,8 +771,13 @@ div.SPTabContentEdit{
 .WorkHistoryModal .modal-content .modal-body, .educationModal .modal-content .modal-body, .CertificationModal .modal-content .modal-body, .LanguagesModal .modal-content .modal-body, .editSkillsModal .modal-content .modal-body {
     padding: 20px 30px;
 }
+
+div.CertificationModal{
+    width: 100%;
+}
+
 .modal-body .Select-menu-outer{
-    position: relative;
+    /* position: relative; */
 }
 
 .SPBlackoutItems{
@@ -1082,4 +1088,8 @@ div.SPTabContentEdit{
 
 .LanguagesModal .modal-body, .LanguagesModal .modal-content{
     overflow: initial;
+}
+
+.LanguagesModal .modal-body{
+    min-height: 350px
 }
