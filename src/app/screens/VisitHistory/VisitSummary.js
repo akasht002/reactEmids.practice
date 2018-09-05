@@ -100,7 +100,7 @@ class VisitSummary extends React.Component {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        getVisitServiceHistoryByIdDetail: () => dispatch(getVisitServiceHistoryByIdDetail())
+        getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data))
     }
 };
 

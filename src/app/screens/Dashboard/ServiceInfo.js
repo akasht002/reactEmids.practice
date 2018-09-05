@@ -58,7 +58,7 @@ export const ServiceCalendarInfo = props => {
 export const ServiceRequestDefault = () => {
   return (
     <div className='NoInformationServiceProvider'>
-      <span><i className='SPNoInfo' /></span>
+      <span><i className='SPNoInfoDashboard' /></span>
       <span className='NoInfoText'>
         Click HERE to add a new Service Request
       </span>

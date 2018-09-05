@@ -58,7 +58,7 @@ export const VisitList = (props) => {
           </div>
         </div>
         <div className='visitListContainerRight'>
-          <Link className='visitListNavigation' to='/visitSummary/1' />
+          <Link className='visitListNavigation' to={'/visitSummary/'+vistList.serviceRequestId} />
         </div>
       </div>
         )

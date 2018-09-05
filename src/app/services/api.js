@@ -59,7 +59,7 @@ export const API = {
     getServiceProviders: 'Patient/FavouriteServiceProvider/',
     getServiceProviderRequests: 'ServiceRequest/ServiceRequests/ServiceProvider/',
     getServiceProviderVists: 'VisitProcessing/ServiceProviderVisit/',
-    getServiceRequestStatus:'lookup/ServiceRequestStatus',
+    getServiceRequestStatus:'ServiceProviderLookUp/ServiceRequestStatus',
     getServiceVisitsCount : 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
     getServiceVisitsHistoryById:'ServiceRequest/VisitSummary/',
 }
