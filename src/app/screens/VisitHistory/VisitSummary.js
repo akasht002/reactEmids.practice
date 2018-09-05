@@ -1,8 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link,withRouter} from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import {  ProfileHeader, Scrollbars } from '../../components'
+import {  Scrollbars } from '../../components'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
+import { getVisitServiceHistoryByIdDetail } from '../../redux/visitHistory/VisitServiceDetails/actions';
 
 
 import './VisitSummary.css'
@@ -37,6 +39,7 @@ class VisitSummary extends React.Component {
 
   componentWillMount(){
     console.log(this.props.match.params.id)
+    this.props.getVisitServiceHistoryByIdDetail(this.props.match.params.id)
   }
 
   render () {
@@ -48,10 +51,7 @@ class VisitSummary extends React.Component {
 
     return (
       
-       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-        <div className="container-fluid ProfileRightWidget">
-            <ProfileHeader toggle={this.toggle.bind(this)}/>
-            <div className={'hiddenScreen ' + this.state.isOpen} onClick={this.toggle.bind(this)}/>
+       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>       
             <div className='ProfileRightContainer'>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
@@ -93,11 +93,23 @@ class VisitSummary extends React.Component {
                     modalTitle="Feedback"
                     centered="centered"
                 /> */}
-            </div>
-        </div>
+            </div>       
     </AsideScreenCover>
     )
   }
 }
+function mapDispatchToProps(dispatch) {
+    return {
+        getVisitServiceHistoryByIdDetail: () => dispatch(getVisitServiceHistoryByIdDetail())
+    }
+};
 
-export default VisitSummary
+function mapStateToProps(state) {
+    return {
+        VisitServiceDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceHistory
+    };
+};
+
+  export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(VisitSummary)
+  )

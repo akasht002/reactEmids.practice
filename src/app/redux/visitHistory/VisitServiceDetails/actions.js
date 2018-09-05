@@ -6,21 +6,43 @@ import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 
 export const vistServiceHistoryDetails = {
-    getVisitServiceHistoryDetailsSuccess: 'getVisitServiceHistoryDetailsSuccess/visitHistory'
+    getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
+    getVisitServiceHistoryByIdDetailSuccess: 'getVisitServiceHistoryByIdDetailSuccess/visitHistory',
+
 };
 
-export const getVisitServiceHistoryDetailsSuccess = (data) => {
+export const getVisitServiceHistoryListSuccess = (data) => {
     return {
-        type: vistServiceHistoryDetails.getVisitServiceHistoryDetailsSuccess,
+        type: vistServiceHistoryDetails.getVisitServiceHistoryListSuccess,
         data
     }
 }
 
-export function getVisitServiceDetails() {
+export const getVisitServiceHistoryByIdDetailSuccess = (data) => {
+    return {
+        type: vistServiceHistoryDetails.getVisitServiceHistoryByIdDetailSuccess,
+        data
+    }
+}
+
+export function getVisitServiceLists() {
     return (dispatch) => {
         dispatch(startLoading());
         axios.get(baseURLServiceRequest + API.getVisitHistoryList + SERVICE_PROVIDER).then((resp) => {           
-            dispatch(getVisitServiceHistoryDetailsSuccess(resp.data)) 
+            dispatch(getVisitServiceHistoryListSuccess(resp.data)) 
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+
+export function getVisitServiceHistoryByIdDetail(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        axios.get(baseURLServiceRequest + API.getServiceVisitsHistoryById + data).then((resp) => {           
+            dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data)) 
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

@@ -11,7 +11,7 @@ import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Scrollbars  } from '../../components'
 
-import '../../styles/VisitFilter.css'
+import './VisitFilter.css'
 
 
 class VisitFilter extends React.Component {

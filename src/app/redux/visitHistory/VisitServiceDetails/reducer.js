@@ -9,11 +9,15 @@ const defaultState = {
 
 const vistServiceHistoryState = (state = defaultState, action) => {
     switch (action.type) {
-
-        case vistServiceHistoryDetails.getVisitServiceHistoryDetailsSuccess:
+        case vistServiceHistoryDetails.getVisitServiceHistoryListSuccess:
             return {
                 ...state,
                 VisitServiceHistory: action.data
+            };
+            case vistServiceHistoryDetails.getVisitServiceHistoryByIdDetailSuccess:
+            return {
+                ...state,
+                VisitServiceDetails: action.data
             };
         default:
             return state;

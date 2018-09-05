@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import '../../styles/ProfileMainPanel.css'
+import './ProfileMainPanel.css'
 import { getLength } from '../../utils/validations'
 import { MyConversionDetail, MyConversionDefault } from './ServiceInfo'
 
