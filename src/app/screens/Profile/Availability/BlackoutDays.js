@@ -74,9 +74,6 @@ class BlackoutDays extends Component {
     let blackoutData = this.state.blackoutData.map(item => {
       let { isActive, startDate, endDate, remarks } = item;
       let indexId = item.serviceProviderBlackoutDayId;
-      // // let day = moment(startDate).format("dddd");
-      // // let dateStart = moment(startDate).format("MMM DD");
-      // // let dateEnd = moment(endDate).format("MMM DD");
       let day = formateDate(startDate, 'dddd');
       let dateStart = formateDate(startDate, 'MMM DD');
       let dateEnd = formateDate(endDate, 'MMM DD');
@@ -86,15 +83,6 @@ class BlackoutDays extends Component {
       }
 
       let currentDate = new Date(), disabledEdit = "";
-      // if (
-      //   currentDate > new Date(startDate) &&
-      //   currentDate > new Date(endDate)
-      // ) {
-      //   disabledEdit = "disabled";
-      // } else {
-      //   disabledEdit = "";
-      // }
-
      currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit='disabled') : ''; 
 
 
