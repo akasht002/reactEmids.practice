@@ -123,5 +123,8 @@ export const getHeader = ()=>  {
 }
 
 export const getServiceProviderId = () => {
-    return store && store.getState().authState.userState && store.getState().authState.userState.userData && JSON.parse(store.getState().authState.userState.userData) && JSON.parse(store.getState().authState.userState.userData).data.serviceData.serviceProviderID;
+    return store && store.getState().authState.userState && 
+        store.getState().authState.userState.userData && 
+        store.getState().authState.userState.userData.serviceData && 
+        store.getState().authState.userState.userData.serviceData.serviceProviderID;
 }

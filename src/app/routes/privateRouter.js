@@ -8,15 +8,16 @@ import {
 import { Path } from './';
 import { checkUserData } from '../redux/auth/user/actions';
 import { USER_LOCALSTORAGE } from '../constants/constants'; 
+import {getServiceProviderId} from '../services/http';
 
 class PrivateRoute extends Component  {
 
   checkUserData = () => {
-    if (!this.props.userData) {
+    if (!getServiceProviderId()) {
       this.props.checkUserData();
     }
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
-    return this.props.userData || (localStorageData && localStorageData.serviceData && localStorageData.serviceData.serviceProviderID);
+    return getServiceProviderId() || (localStorageData && localStorageData.serviceData && localStorageData.serviceData.serviceProviderID);
   }
 
   renderMethod = () => {
@@ -42,18 +43,12 @@ class PrivateRoute extends Component  {
     }
 };
 
-const mapStateToProps = state => {
-    return {
-      userData: state.authState.userState.userData && state.authState.userState.userData.serviceData && state.authState.userState.userData.serviceData.serviceProviderID
-    }
-}
-
 const mapDispatchToProps = dispatch => {
     return {
       checkUserData: () => dispatch(checkUserData())
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PrivateRoute));
+export default withRouter(connect(null, mapDispatchToProps)(PrivateRoute));
 
   
