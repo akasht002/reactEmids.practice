@@ -26,9 +26,9 @@ class AvailabilityEdit extends Component {
         let index = tempUpdatedAvailableDays.findIndex(data => data.dayName === day.dayName);
         let dayIndex = this.state.lookupDays.findIndex( data => data.dayName === day.dayName);
         let slotIndex = this.state.lookupSlots.findIndex( data => data.slotName === slot.slotName);
+        tempDay = tempUpdatedAvailableDays[index];
+        tempDay.dayId = this.state.lookupDays[dayIndex].dayId;
         if (e.target.checked) {
-            tempDay = tempUpdatedAvailableDays[index];
-            tempDay.dayId = this.state.lookupDays[dayIndex].dayId;
             tempDay.slots.map(selectedSlot => {
                 if (selectedSlot.slotName === slot.slotName) {
                     selectedSlot.isActive = true;
@@ -40,8 +40,6 @@ class AvailabilityEdit extends Component {
                 }   
             });
         } else {
-            tempDay = tempUpdatedAvailableDays[index];
-            tempDay.dayId = this.state.lookupDays[dayIndex].dayId;
             tempDay.slots.map(selectedSlot => {
                 if (selectedSlot.slotName === slot.slotName) {
                     selectedSlot.isActive = false;
@@ -166,10 +164,4 @@ const mapStateToProps = state => {
     } 
 };
 
-const mapDispatchToProps = () => {
-    return {
-
-    }
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AvailabilityEdit));
+export default withRouter(connect(mapStateToProps, null)(AvailabilityEdit));

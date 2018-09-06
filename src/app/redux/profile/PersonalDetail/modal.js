@@ -1,12 +1,13 @@
 import _ from 'lodash'
 import { getServiceProviderId } from '../../../services/http';
+import { getDataValueArray } from '../../../utils/validations'
 export const PERSONAL_DETAIL = {
     UPDATE_PERSONAL_DETAIL: 'UPDATE_PERSONAL_DETAIL',
     UPDATE_ORGANIZATION_DETAIL: 'UPDATE_ORGANIZATION_DETAIL'
 };
 
 export const getModal = (data, action) => {
-    let states = _.split(data.selectedState, "-");
+    let states = getDataValueArray(data.selectedState, "-");
     let gender = _.split(data.genderName, '-')
     let organization = _.split(data.organization, '-')
     switch (action) {

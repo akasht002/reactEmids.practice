@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { API, baseURL } from '../../../services/api';
+import { API } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
 import { Get, Post, Put } from '../../../services/http';
 import { getServiceProviderId } from '../../../services/http';
@@ -34,7 +33,6 @@ export const updateAvailabilityDays = (data) => {
          };
         dispatch(startLoading());
         Post(API.addBlackOutDay + getServiceProviderId() + '/Available', modal).then(resp => {
-            console.log('updateAvailabilityDays response', resp);
             dispatch(getAvailableDays());
         }).catch(err => {
             dispatch(endLoading());
@@ -61,7 +59,6 @@ export const getBlackOutDaysSuccess = (data) =>{
 
 export const addBlackOutDay = (data) => {
     return (dispatch, getState) => {
-      // let SERVICE_PROVIDER_ID = JSON.parse(getState().authState.userState.userData).data.serviceData.serviceProviderID;
        let serviceProviderBlackoutDayId = 0;
        let modal = {
             serviceProviderId: getServiceProviderId(),
@@ -81,7 +78,6 @@ export const addBlackOutDay = (data) => {
 }
 
 export const updateBlackOutDay = (data) => {
-    console.log('updateBlackOutDay', data);
     return dispatch => {
        let modal = {
             serviceProviderId: getServiceProviderId(),

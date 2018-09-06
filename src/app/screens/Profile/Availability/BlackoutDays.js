@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
+import { formateDate } from '../../../utils/validations';
 import BlackoutModal from "./BlackoutModal";
 import {
   getBlackOutDays,
@@ -26,10 +27,7 @@ class BlackoutDays extends Component {
       e.stopPropagation();
     } else {
       let currentDate = new Date();
-      if (
-        currentDate > new Date(data.startDate) &&
-        currentDate < new Date(data.endDate)
-      ) {
+      if ( currentDate > new Date(data.startDate) && currentDate < new Date(data.endDate)) {
         this.setState({
           disabledStartDate: "disabled"
         });
@@ -39,7 +37,7 @@ class BlackoutDays extends Component {
         });
       }
       this.setState({
-        BlackoutModal: !this.state.BlackoutModal,
+        IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen,
         [action]: !this.state[action],
         itemData: data,
         modalTypeValue: action
@@ -58,7 +56,7 @@ class BlackoutDays extends Component {
 
   closeBlackoutModal = () => {
     this.setState({
-        BlackoutModal: !this.state.BlackoutModal
+         IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen
       });
   }
 
@@ -76,24 +74,29 @@ class BlackoutDays extends Component {
     let blackoutData = this.state.blackoutData.map(item => {
       let { isActive, startDate, endDate, remarks } = item;
       let indexId = item.serviceProviderBlackoutDayId;
-      let day = moment(startDate).format("dddd");
-      let dateStart = moment(startDate).format("MMM DD");
-      let dateEnd = moment(endDate).format("MMM DD");
+      // // let day = moment(startDate).format("dddd");
+      // // let dateStart = moment(startDate).format("MMM DD");
+      // // let dateEnd = moment(endDate).format("MMM DD");
+      let day = formateDate(startDate, 'dddd');
+      let dateStart = formateDate(startDate, 'MMM DD');
+      let dateEnd = formateDate(endDate, 'MMM DD');
       let dateEqual = false;
       if (startDate === endDate) {
         dateEqual = true;
       }
 
-      let currentDate = new Date(),
-        disabledEdit = "";
-      if (
-        currentDate > new Date(startDate) &&
-        currentDate > new Date(endDate)
-      ) {
-        disabledEdit = "disabled";
-      } else {
-        disabledEdit = "";
-      }
+      let currentDate = new Date(), disabledEdit = "";
+      // if (
+      //   currentDate > new Date(startDate) &&
+      //   currentDate > new Date(endDate)
+      // ) {
+      //   disabledEdit = "disabled";
+      // } else {
+      //   disabledEdit = "";
+      // }
+
+     currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit='disabled') : ''; 
+
 
       return (
         <li id={indexId}>
@@ -141,7 +144,7 @@ class BlackoutDays extends Component {
 
     let modalTitle = "";
     let modalType = "";
-    if (this.state.BlackoutModal) {
+    if (this.state.IsBlackoutModalOpen) {
       if (this.state.add) {
         modalTitle = "Add Blackout Days";
         modalType = "add";
@@ -173,7 +176,7 @@ class BlackoutDays extends Component {
         </div>
 
         <BlackoutModal
-          isOpen={this.state.BlackoutModal}
+          isOpen={this.state.IsBlackoutModalOpen}
           toggle={this.toggleBlackout.bind(this, modalType)}
           className="modal-lg asyncModal BlackoutModal"
           itemData={this.state.itemData}
