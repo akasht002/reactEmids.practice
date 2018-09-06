@@ -15,8 +15,6 @@ import {
   Feedback,
   Home,
   Summary,
-  VisitHistory,
-  VistSummary,
   ForgetPassword,
   ResetPassword,
   ResetPasswordSuccess,
@@ -53,8 +51,6 @@ export const Path = {
   home: '/home',
   loginCallBack: '/loginCallBack',
   summary: '/summary',
-  VisitHistory: '/visitHistory',
-  visitSummaryDetail: '/visitSummary/:id',
   forgetPassword: '/forgetPassword',
   resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
@@ -80,8 +76,6 @@ class AppStackRoot extends Component {
             <Route path={Path.feedback} component={Feedback} />
             <Route path={Path.summary} component={Summary} />
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
-            <Route path={Path.VisitHistory} component={VisitHistory}/>
-            <Route exact path={Path.visitSummaryDetail} component={VistSummary} />
             <Route path={Path.loginCallBack} component={LoginCallBack} />
             <Route path={Path.forgetPassword} component={ForgetPassword} />
             <Route path={Path.resetPassword} component={ResetPassword} />

@@ -11,8 +11,6 @@ import VisitServiceProcessing from './VisitSelection/VisitServiceProcessing';
 import PerformTasks from './VisitSelection/VisitServiceProcessing/PerformTasks';
 import Feedback from './VisitSelection/VisitServiceProcessing/Feedback';
 import Summary from './VisitSelection/VisitServiceProcessing/Summary';
-import VisitHistory from './VisitHistory'
-import VistSummary from './VisitHistory/VisitSummary'
 import { LoginCallBack } from './Authentication/Login/LoginCallBack';
 import { AsideScreenCover } from './ScreenCover/AsideScreenCover';
 import Dashboard from './Dashboard'
@@ -37,10 +35,8 @@ export {
     PerformTasks,
     Feedback,
     Home,
-    VisitHistory,
     LoginCallBack,
     Summary,
-    VistSummary,
     ForgetPassword,
     ResetPassword,
     ResetPasswordSuccess,

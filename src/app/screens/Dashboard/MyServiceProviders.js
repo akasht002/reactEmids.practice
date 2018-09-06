@@ -16,16 +16,12 @@ class MyServiceProviders extends React.Component {
   }  
   componentDidMount () {
     this.props.getServiceProviderDetail(this.state.selectedValue.value)
-  }
+  } 
 
-  componentWillReceiveProps (nextProps) {    
-  }
-
-  optionChanged (e) {
+  optionChanged = (e) =>{
     this.setState({
       selectedValue: e
     })
-    console.log(e)
     this.props.getServiceProviderDetail(e.value)
   }
 
@@ -99,7 +95,7 @@ class MyServiceProviders extends React.Component {
                 placeholder='Male'
                 className='ProfileMonthList'
                 searchable={false}
-                onChange={this.optionChanged.bind(this)}
+                onChange={this.optionChanged}
                 options={[
                   { label: 'Favourites', value: 'favorite' } ,
                   { label: 'Recent', value: 'recent' } ,

@@ -7,7 +7,6 @@ import { Scrollbars } from '../../components'
 import './ProfileMainPanel.css'
 import {
   convertStringToDate,
-  getFields,
   partialCompare,
   getLength
 } from '../../utils/validations'
@@ -40,8 +39,7 @@ class serviceCalendar extends React.Component {
     }
   }
 
-  MonthChange (e) {
-    /* console.log(e.value); */
+  MonthChange = e => {
     let curDate = this.state.startYear + ',' + e.value + ',01'
     curDate = new Date(curDate)
     this.setState({
@@ -51,7 +49,7 @@ class serviceCalendar extends React.Component {
     })
   }
 
-  clickNextWeek () {
+  clickNextWeek = () => {
     let updatedDay = ''
     if (this.state.width > '1280') {
       updatedDay = moment(this.state.startDate).add(5, 'days')
@@ -70,7 +68,7 @@ class serviceCalendar extends React.Component {
     })
   }
 
-  clickPrevWeek () {
+  clickPrevWeek = () => {
     let updatedDay = ''
     if (this.state.width > '1280') {
       updatedDay = moment(this.state.startDate).subtract(5, 'days')
@@ -89,7 +87,7 @@ class serviceCalendar extends React.Component {
     })
   }
 
-  todayDate () {
+  todayDate = () => {
     this.setState({
       startYear: moment(today).format('YYYY'),
       startDate: moment(today).format(),
@@ -98,7 +96,7 @@ class serviceCalendar extends React.Component {
     })
   }
 
-  handleDayChange (e) {
+  handleDayChange = e => {
     let getDate = moment(e.target.getAttribute('data-date'))
     this.setState({
       reportDay: e.target.getAttribute('data-date'),
@@ -111,14 +109,14 @@ class serviceCalendar extends React.Component {
     })
   }
 
-  clickShowMore () {
+  clickShowMore = () => {
     this.setState({
       showMore: !this.state.showMore,
       verticalScroll: !this.state.verticalScroll
     })
   }
 
-  optionChanged (e) {
+  optionChanged = e => {
     this.setState({
       selectedValue: e
     })
@@ -139,20 +137,20 @@ class serviceCalendar extends React.Component {
     }
     this.props.getServiceVisitCount(date_range)
     this.updateWindowDimensions()
-    window.addEventListener('resize', this.updateWindowDimensions.bind(this))
+    window.addEventListener('resize', this.updateWindowDimensions)
   }
 
   componentWillUnmount () {
-    window.removeEventListener('resize', this.updateWindowDimensions.bind(this))
+    window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
-  updateWindowDimensions () {
+  updateWindowDimensions = () => {
     this.setState({ width: window.innerWidth })
   }
 
   SelectOnBlur (e) {}
 
-  optionClicked (e) {
+  optionClicked = e => {
     console.log(this.offset)
     let testDiv = document.getElementsByClassName('Select-menu-outer')
     testDiv.offsetBottom = testDiv.offsetTop + testDiv.offsetHeight
@@ -262,9 +260,11 @@ class serviceCalendar extends React.Component {
           </label>
           <div className='eventIndicator'>
 
-          {partialCompare(daysMapping.date.format('YYYY-MM-DD'),visitCount)&& <i className='indicator' />}
+            {partialCompare(
+              daysMapping.date.format('YYYY-MM-DD'),
+              visitCount
+            ) && <i className='indicator' />}
 
-           
             {/* <i className='indicator' />
             <i className='indicator' /> */}
           </div>
@@ -298,7 +298,7 @@ class serviceCalendar extends React.Component {
                 className='ProfileMonthList MonthName'
                 searchable={false}
                 options={monthList}
-                onChange={this.MonthChange.bind(this)}
+                onChange={this.MonthChange}
                 value={this.state.selectedMonth}
               />
               <span>{this.state.startYear}</span>
@@ -306,7 +306,7 @@ class serviceCalendar extends React.Component {
             <div className='todayPalette'>
               <span
                 className='btn btn-outline-primary ProfileCardTodayLink'
-                onClick={this.todayDate.bind(this)}
+                onClick={this.todayDate}
               >
                 Today
               </span>
@@ -316,17 +316,14 @@ class serviceCalendar extends React.Component {
             <div className='datePalette'>
               <span
                 className='ProfileCalendarCaret CaretPrev'
-                onClick={this.clickPrevWeek.bind(this)}
+                onClick={this.clickPrevWeek}
               />
-              <div
-                onChange={this.handleDayChange.bind(this)}
-                className='datesList'
-              >
+              <div onChange={this.handleDayChange} className='datesList'>
                 {dateList}
               </div>
               <span
                 className='ProfileCalendarCaret CaretNext'
-                onClick={this.clickNextWeek.bind(this)}
+                onClick={this.clickNextWeek}
               />
             </div>
           </div>
@@ -345,7 +342,7 @@ class serviceCalendar extends React.Component {
         <ul className='list-group list-group-flush'>
           <li
             className='list-group-item ProfileShowMore'
-            onClick={this.clickShowMore.bind(this)}
+            onClick={this.clickShowMore}
           >
             Show more <i className='ProfileIconShowMore' />
           </li>

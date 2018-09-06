@@ -108,7 +108,6 @@ export const getPatientServiceRequestDetailSuccess = data => {
 }
 
 export function getPatientServiceRequestDetail (data) {
-  let type = data ?data:38;
   return (dispatch, getState) => {
     dispatch(startLoading())
     axios
@@ -131,7 +130,6 @@ export const getServiceProviderDetailSuccess = data => {
 }
 
 export function getServiceProviderDetail (data) {
-  console.log(data);
   return (dispatch, getState) => {
     dispatch(startLoading())
     axios

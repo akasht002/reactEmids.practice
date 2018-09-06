@@ -3,8 +3,8 @@ import {
 } from './actions'
 
 const defaultState = {
-    VisitServiceDetails: [],
-    VisitServiceHistory: []
+    visitServiceDetails: [],
+    visitServiceHistory: []
 };
 
 const vistServiceHistoryState = (state = defaultState, action) => {

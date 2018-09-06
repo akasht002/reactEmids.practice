@@ -32,20 +32,20 @@ class ServiceRequest extends React.Component {
 
   componentWillReceiveProps (nextProps) {}
 
-  clickShowMore () {
+  clickShowMore = () => {
     this.setState({
       showMore: !this.state.showMore
     })
   }
 
-  optionChanged (e) {
+  optionChanged = (e)=> {
     this.setState({
       selectedValue: e
     })
     this.props.getPatientServiceRequestDetail(e.id)
   }
 
-  menuRenderer (params) {
+  menuRenderer =(params)=> {
     const menu = Select.defaultProps.menuRenderer(params)
 
     const scrollBarProps = {
@@ -98,7 +98,7 @@ class ServiceRequest extends React.Component {
                 multiple={false}
                 className='ProfileMonthList'
                 searchable={false}
-                onChange={this.optionChanged.bind(this)}
+                onChange={this.optionChanged}
                 options={serviceStatusLookUp}
                 value={this.state.selectedValue}
               />
@@ -119,7 +119,7 @@ class ServiceRequest extends React.Component {
         <ul className='list-group list-group-flush'>
           <li
             className='list-group-item ProfileShowMore'
-            onClick={this.clickShowMore.bind(this)}
+            onClick={this.clickShowMore}
           >
             Show more <i className='ProfileIconShowMore' />
           </li>
