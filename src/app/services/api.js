@@ -51,5 +51,9 @@ export const API = {
     getGender: 'ServiceProviderLookUp/gender',
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
+    getBlackOutDays: 'ServiceProvider/',
+    addBlackOutDay: 'ServiceProvider/',
+    getAvailableDays: 'ServiceProvider/',
+    updateAvailabilityDays: 'ServiceProvider/',
     getTimeoutMilliseconds: 'ServiceProviderLookup/AutoLogout'
 }
