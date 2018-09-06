@@ -12,11 +12,11 @@ import { USER_LOCALSTORAGE } from '../constants/constants';
 class PrivateRoute extends Component  {
 
   checkUserData = () => {
-    if (!this.props.user_token) {
+    if (!this.props.userData) {
       this.props.checkUserData();
     }
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
-    return this.props.user_token || (localStorageData && localStorageData.data && localStorageData.data.access_token);
+    return this.props.userData || (localStorageData && localStorageData.serviceData && localStorageData.serviceData.serviceProviderID);
   }
 
   renderMethod = () => {
@@ -44,7 +44,7 @@ class PrivateRoute extends Component  {
 
 const mapStateToProps = state => {
     return {
-      user_token: state.authState.userState.userData && state.authState.userState.userData.data && state.authState.userState.userData.data.access_token
+      userData: state.authState.userState.userData && state.authState.userState.userData.serviceData && state.authState.userState.userData.serviceData.serviceProviderID
     }
 }
 

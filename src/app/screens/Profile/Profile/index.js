@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { ProfileHeader } from '../../../components'
+import { ProfileHeader, ScreenCover } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
@@ -22,7 +20,7 @@ class Profile extends Component {
 
     render() {
         return (
-            <section className="d-flex">
+            <ScreenCover>
                 <div className="container-fluid p-0">
                     <ProfileHeader />
                     <div className="width100 mainWidgetProfile mainWidgetOverflow">
@@ -57,21 +55,9 @@ class Profile extends Component {
                         </div>
                     </div>
                 </div>
-            </section>
+            </ScreenCover>
         )
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-
-    }
-};
-
-function mapStateToProps(state) {
-    return {
-
-    };
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
+export default Profile;

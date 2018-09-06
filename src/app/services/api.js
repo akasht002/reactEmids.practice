@@ -50,5 +50,6 @@ export const API = {
     getServiceProviderID:'ServiceProviderOnBoarding/',
     getGender: 'ServiceProviderLookUp/gender',
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
-    saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/'
+    saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
+    getTimeoutMilliseconds: 'ServiceProviderLookup/AutoLogout'
 }

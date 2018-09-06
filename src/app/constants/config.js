@@ -1,11 +1,11 @@
 //OIDC auth config for implicit mode
 export const AUTH_CONFIG_IMPLICIT = {
     clientId : "js",
-    authority :  "http://localhost:5000",  //http://52.172.45.185:9005
-    redirectUri : "http://localhost:3000/#/loginCallBack/#",  //http://52.172.45.185:9009/#/loginCallBack/#
+    authority :  process.env.REACT_APP_AUTH_URL,
+    redirectUri : process.env.REACT_APP_UI_URL + "loginCallBack/#",
     reponseType : "id_token token",
     scope : "openid profile api1",
-    postLogoutRedirectUri : "http://localhost:3000/#/",  //http://52.172.45.185:9009/#/
+    postLogoutRedirectUri : process.env.REACT_APP_UI_URL,
     loadUserInfo : false
 };
 

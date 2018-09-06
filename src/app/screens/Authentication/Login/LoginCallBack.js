@@ -26,7 +26,7 @@ class LoginCallBack extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-      onLoginSuccess: () => dispatch(onLoginSuccess()),
+      onLoginSuccess: (data) => dispatch(onLoginSuccess(data)),
       onLoginFail: () => dispatch(onLoginFail())
   }
 }
