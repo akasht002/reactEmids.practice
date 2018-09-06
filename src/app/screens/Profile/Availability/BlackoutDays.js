@@ -71,7 +71,7 @@ class BlackoutDays extends Component {
   }
 
   render() {
-    let blackoutData = this.state.blackoutData.map(item => {
+    let blackoutData = this.state.blackoutData && this.state.blackoutData.map(item => {
       let { isActive, startDate, endDate, remarks } = item;
       let indexId = item.serviceProviderBlackoutDayId;
       let day = formateDate(startDate, 'dddd');
