@@ -1,0 +1,52 @@
+.dateHolder{
+    flex-direction: column;
+    width:50%;
+}
+.dateHolder:last-child{
+  text-align: right;
+  margin-right: 15px;
+
+}
+.SPBlackoutDate {
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    width: 200px!important;
+    flex-direction: row !important;
+}
+.date.last{
+    margin-left:30px;
+}
+.SPBlackoutDate .date {
+    display: block;
+}
+.bDayList{line-height: 15px;}
+.bDayListLiContent{width: 100%;
+    flex-direction: row;
+    padding: 20px 0 0px 0;
+    border-top: 1px solid rgba(225,225,225,.4);
+    }
+.bDayListLiContent>.SPCertificateContent{
+  width:90%;
+}
+.bDayListLiContent>.SPIconEdit{
+  float:right;
+}
+.SPBlackoutItems .SPIconEdit {
+    top: -5px!important;
+}
+li.SPBlackoutItems:last-child>.bDayListLiContent{
+    border-bottom: 1px solid rgba(225,225,225,.4);
+    }
+.bListForm{width: 100%;
+flex: 1;}
+
+li.SPAvailItems.disabled:hover{
+    cursor: auto;
+}
+
+.SPEducationList{
+    list-style: none;
+    padding: 0 30px;
+    margin: 0;
+}
