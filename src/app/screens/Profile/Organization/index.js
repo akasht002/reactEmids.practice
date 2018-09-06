@@ -523,8 +523,9 @@ class Organization extends React.PureComponent {
                       placeholder='Select the state'
                       onChange={value => {
                         this.setState({ selectedState: value })
+                        console.log(value);
                       }}
-                      selectedValue={this.selectedState}
+                      selectedValue={this.state.selectedState}
                       className={'inputFailure'}
                     />
                   </div>

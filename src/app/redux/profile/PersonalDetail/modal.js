@@ -7,6 +7,7 @@ export const PERSONAL_DETAIL = {
 };
 
 export const getModal = (data, action) => {
+    debugger;
     let states = getDataValueArray(data.selectedState, "-");
     let gender = _.split(data.genderName, '-')
     let organization = _.split(data.organization, '-')
