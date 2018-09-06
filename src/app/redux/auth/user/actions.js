@@ -22,7 +22,6 @@ export const setUserSuccess = (userData) => {
 export function onSetUserSuccess(data){
     return (dispatch, getState) => {
         dispatch(setUserSuccess(data));
-        console.log('getState().oidc.user.data.profile.sub', getState())
         dispatch(setServiceProviderDetails(getState().oidc.user.profile.sub));   
     }
 }
@@ -61,6 +60,8 @@ export function setServiceProviderDetails(emailID){
                 serviceProviderID: resp.data.serviceProviderId,
                 serviceProviderTypeID: resp.data.serviceProviderTypeId,
             }
+            localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
+            localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
             save(USER_LOCALSTORAGE, {
                 ...userData,
                 serviceData

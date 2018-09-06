@@ -11,13 +11,12 @@ import { USER_LOCALSTORAGE } from '../constants/constants';
 
 class PrivateRoute extends Component  {
 
-  componentDidMount() {
-    this.props.checkUserData();
-  }
-
   checkUserData = () => {
+    if (!this.props.user_token) {
+      this.props.checkUserData();
+    }
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
-    return this.props.user_token || localStorageData && localStorageData.data && localStorageData.data.access_token;
+    return this.props.user_token || (localStorageData && localStorageData.data && localStorageData.data.access_token);
   }
 
   renderMethod = () => {

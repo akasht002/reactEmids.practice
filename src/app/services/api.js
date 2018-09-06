@@ -62,4 +62,9 @@ export const API = {
     getServiceRequestStatus:'ServiceProviderLookUp/ServiceRequestStatus',
     getServiceVisitsCount : 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
     getServiceVisitsHistoryById:'ServiceRequest/VisitSummary/',
+    getBlackOutDays: 'ServiceProvider/',
+    addBlackOutDay: 'ServiceProvider/',
+    getAvailableDays: 'ServiceProvider/',
+    updateAvailabilityDays: 'ServiceProvider/',
+
 }

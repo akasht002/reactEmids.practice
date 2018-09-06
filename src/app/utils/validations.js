@@ -38,12 +38,24 @@ export function formattedDateChange(event) {
     }
 }
 
-export function formateStateDate(data) {
-    return moment(data);
+export function formateStateDate(date) {
+    return date ? moment(date) : null;
 }
 
 export function formateYearDate() {
     return moment().format(DATE_YEAR);
+}
+
+export function formateDate(date, format) {
+    return date ? moment(date).format(format) : null;
+}
+
+export function newDate() {
+    return moment(new Date());
+}
+
+export function newDateValue(date) {
+    return date ? moment(new Date(date)) : null;
 }
 
 export function checkLengthRemoveSpace(data) {

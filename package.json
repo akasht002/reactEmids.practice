@@ -89,7 +89,11 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "start-qa": "node scripts/start.js --qa",
+    "start-dev": "node scripts/start.js --dev",
     "build": "node scripts/build.js",
+    "build-qa": "node scripts/build.js --qa",
+    "build-dev": "node scripts/build.js --dev",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
