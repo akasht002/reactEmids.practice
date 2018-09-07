@@ -3,7 +3,7 @@ export const MenuData = [
         id: 0,
         title: 'Dashboard',     
         iconName: 'iconProfile iconProfileDashboard',
-        link:'/'
+        link:'/dashboard'
     },
     {
         id: 1,
