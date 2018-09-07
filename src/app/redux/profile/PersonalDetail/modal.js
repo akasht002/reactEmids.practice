@@ -93,7 +93,7 @@ export const getModal = (data, action) => {
         addresses: [
           {
             addressId: 1,
-            serviceProviderId: getUserInfo().serviceProviderId,
+            serviceProviderId: getUserInfo().serviceProviderID,
             addressTypeId: 2,
             streetAddress: data.streetAddress,
             city: data.city,
