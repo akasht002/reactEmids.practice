@@ -19,7 +19,6 @@ import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
   checkTextNotStartWithNumber,
-  isDecimal,
   getArrayLength,
   getLength
 } from '../../../utils/validations'
@@ -163,7 +162,6 @@ class PersonalDetail extends React.PureComponent {
 
   onCroppeds = e => {
     let image = e.image
-    let image_data = e.data
     this.setState({
       croppedImage: image
     })
@@ -187,9 +185,7 @@ class PersonalDetail extends React.PureComponent {
 
     }
   })
-  
-
-  //console.log(this.props.genderList)
+ 
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
@@ -329,7 +325,7 @@ class PersonalDetail extends React.PureComponent {
               />
             </svg>
 
-            <img
+            <img alt ="NO"
               className={'SPdpImage'}
               src={
                 this.state.imageProfile
@@ -448,7 +444,7 @@ class PersonalDetail extends React.PureComponent {
         </div>
         <div className='col-md-4 mb-2 editProfileImageContainer'>
           <div className='profileImage'>
-            <img
+            <img alt="NO"
               className={'SPdpImage'}
               src={
                 this.state.imageProfile
@@ -856,7 +852,6 @@ class PersonalDetail extends React.PureComponent {
       yearOfExperience: this.props.personalDetail.yearOfExperience,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      lastName: this.props.personalDetail.lastName,
       phoneNumber: this.props.personalDetail.phoneNumber
     }
 
