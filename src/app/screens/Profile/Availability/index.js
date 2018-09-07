@@ -89,7 +89,7 @@ class Availability extends Component {
     }
 
     getAvailableDays = () => {
-        return this.state.availableDays.days.map(day => {
+        return this.state.availableDays.days && this.state.availableDays.days.map(day => {
            let slots = this.getSlots(day.slots);
            return (
                this.slotList < 1 ? '' :
