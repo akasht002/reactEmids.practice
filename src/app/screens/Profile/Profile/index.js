@@ -12,6 +12,8 @@ import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
 import Availability from "../Availability/index";
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
+import { ModalUserAgreement } from '../../../components';
 
 import './styles.css';
 
@@ -19,6 +21,14 @@ class Profile extends Component {
 
     updateWindowDimensions() {
         this.setState({ width: window.innerWidth, height: window.innerHeight });
+    }
+
+    componentDidMount() {
+        this.props.getUserInfo();
+    }
+
+    onClickOk = () => {
+        this.props.onClickOk();
     }
 
     render() {
@@ -37,7 +47,7 @@ class Profile extends Component {
                                     </h4>
                                 </div>
                                 {/* Added for story number CH-302 */}
-                                {SERVICE_PROVIDER_TYPE_ID === 1 ? <PersonalDetail /> : <Organization/> }
+                                {SERVICE_PROVIDER_TYPE_ID === 1 ? <PersonalDetail /> : <Organization />}
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <ServiceOffered />
                                 </div>
@@ -55,13 +65,20 @@ class Profile extends Component {
                                 <Education />
 
                                 <div className="col-md-12 card CardWidget SPCertificate">
-                                  <Availability />
+                                    <Availability />
                                 </div>
 
                             </div>
                         </div>
                     </div>
                 </div>
+                <ModalUserAgreement
+                    isOpen={this.props.isEulaUpdated}
+                    ModalBody={<div dangerouslySetInnerHTML={{ __html: this.props.eulaContent }} />}
+                    className="modal-lg"
+                    modalTitle="User Agreement has been updated, please accept to proceed."
+                    onClick={this.onClickOk}
+                />
             </section>
         )
     }
@@ -69,13 +86,15 @@ class Profile extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-
+        getUserInfo: () => dispatch(getUserInfo()),
+        onClickOk: () => dispatch(updateEula())
     }
 };
 
 function mapStateToProps(state) {
     return {
-
+        isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
+        eulaContent: state.authState.userAgreementState.eulaContent
     };
 };
 
