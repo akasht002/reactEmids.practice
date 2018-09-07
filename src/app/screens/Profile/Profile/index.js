@@ -10,15 +10,16 @@ import PersonalDetail from "../PersonalDetail";
 import Organization from "../Organization"
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
+import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from "../Availability/index";
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 
 import './styles.css';
 
 class Profile extends Component {
-
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    
+    componentDidMount() {
+        this.props.getProfilePercentage();
     }
 
     render() {
@@ -37,7 +38,11 @@ class Profile extends Component {
                                     </h4>
                                 </div>
                                 {/* Added for story number CH-302 */}
-                                {SERVICE_PROVIDER_TYPE_ID === 1 ? <PersonalDetail /> : <Organization/> }
+                                {SERVICE_PROVIDER_TYPE_ID === 1 ?
+                                    <PersonalDetail
+                                        profilePercentage={this.props.profilePercentage} /> :
+                                    <Organization
+                                        profilePercentage={this.props.profilePercentage} />}
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <ServiceOffered />
                                 </div>
@@ -69,13 +74,13 @@ class Profile extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-
+        getProfilePercentage: () => dispatch(getProfilePercentage()),
     }
 };
 
 function mapStateToProps(state) {
     return {
-
+        profilePercentage: state.profileState.progressIndicatorState.profilePercentage
     };
 };
 

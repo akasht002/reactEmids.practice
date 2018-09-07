@@ -125,3 +125,6 @@ export const getFields = (input, field)=> {
          return value === obj.visitDate.substring(0, 10) ? obj.visits : 0
       })
   }
+export function checkhourlyRate(data) {
+    return /^\d*\.?\d{0,2}$/.test(data);
+}

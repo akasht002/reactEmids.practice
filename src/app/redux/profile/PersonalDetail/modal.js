@@ -7,9 +7,8 @@ export const PERSONAL_DETAIL = {
 };
 
 export const getModal = (data, action) => {
-    console.log(data)
-    let states = getDataValueArray(data.selectedState, '-')
-    let gender = getDataValueArray(data.selectedGender.value, '-')
+    let states = getDataValueArray(data.selectedState.value, '-')
+    let gender = getDataValueArray(data.selectedGender, '-')
     let organization = _.split(data.organization, '-')
     switch (action) {
         case PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL:           
