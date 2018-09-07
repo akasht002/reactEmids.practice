@@ -4,6 +4,7 @@ import { store } from '../redux/store';
 export const baseURL = process.env.REACT_APP_API_URL;
 export const authURL = process.env.REACT_APP_AUTH_URL;
 export const serviceRequestURL = process.env.REACT_APP_SR_URL;
+export const messageURL = process.env.REACT_APP_MSG_URL;
 
 export const AuthLogin = (url, data)=>{
     var bodyFormData = new FormData();
@@ -120,6 +121,14 @@ export const getHeader = ()=>  {
     return {
         headers: authHeader
     }
+}
+
+export const MessageURLGet = (url, data) => {
+    return axios.get(messageURL + url).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
 }
 
 export const getServiceProviderId = () => {
