@@ -12,6 +12,8 @@ export const EVENING = "Evening";
 export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
 
 export const USER_LOCALSTORAGE = "userData";
+export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
+export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
 
 export const RESPONSE_STATUS = {
     VALID: "Valid",
