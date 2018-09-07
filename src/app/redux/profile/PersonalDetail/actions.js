@@ -2,7 +2,6 @@ import {PERSONAL_DETAIL ,getModal} from './modal'
 import { API } from '../../../services/api';
 import { Get, Post, Put } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions'
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 import { getUserInfo } from '../../../services/http';
 
@@ -85,7 +84,7 @@ export const updatePersonalDetailSuccess = isSuccess => {
 
 export function uploadImg (data) {
   return (dispatch, getState) => {
-    let serviceProviderId = getUserInfo().serviceProviderId    
+    let serviceProviderId = getUserInfo().serviceProviderId;    
     let modal = {
       serviceProviderId: serviceProviderId,
       image: data
