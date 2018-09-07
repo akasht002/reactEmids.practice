@@ -124,7 +124,7 @@ export const AuthPut = (url, data) => {
 
 export const AuthGet = url => {
   return axios
-    .get(authURL + url)
+    .get(authURL + url, getHeader())
     .then(resp => {
       return resp
     })
@@ -148,18 +148,12 @@ export const handleError = err => {
   throw err
 }
 
-export const getHeader = () => {
-  let userState = store.getState().authState.userState
-  let token =
-    userState &&
-    userState.authData &&
-    userState.authData.data &&
-    userState.authData.data.user_token
-  let authHeader = token
-    ? {
-      Authorization: 'Bearer ' + token
-    }
-    : {}
+export const getHeader = ()=>  {
+    let userState = store.getState().oidc.user;
+    let token = userState && userState.access_token;
+    let authHeader = token ? {
+        Authorization: 'Bearer ' + token
+    } : {}
   return {
     headers: authHeader
   }

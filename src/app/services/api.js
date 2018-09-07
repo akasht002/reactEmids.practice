@@ -68,5 +68,7 @@ export const API = {
     addBlackOutDay: 'ServiceProvider/',
     getAvailableDays: 'ServiceProvider/',
     updateAvailabilityDays: 'ServiceProvider/',
-
+    getLoginInfo: 'connect/userinfo',
+    getEulaContent: 'api/user/config/EulaContent',
+    updateEula: 'api/User/Eula'
 }
