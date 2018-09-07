@@ -6,7 +6,6 @@ import { Button } from '../../components';
 import { onLogin } from '../../redux/auth/login/actions';
 import { onLogout } from '../../redux/auth/logout/actions';
 import  '../../styles/onBoarding.css';
-import { loadData } from '../../utils/storage';
 import { slider } from '../../data/HomeScreen'
 
 class Home extends PureComponent {
@@ -52,15 +51,14 @@ class Home extends PureComponent {
 
     clickIndicator(e) {
         this.setState({
-            activeIndex: parseInt(e.target.textContent),
-            left: this.state.sliderWidth - parseInt(e.target.textContent) * this.state.sliderWidth
+            activeIndex: parseInt(e.target.textContent, 0),
+            left: this.state.sliderWidth - parseInt(e.target.textContent, 0) * this.state.sliderWidth
         });
     };
 
     componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions());
-        let test = loadData("userData");
     }
 
     componentWillUnmount() {

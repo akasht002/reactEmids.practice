@@ -1,7 +1,5 @@
 import React from "react";
-import Select from "react-select"
 import { Link } from "react-router-dom"
-// import { ACTIVE, VISITED } from "../../../../constants/constants";
 import { AsideMenu, ProfileHeader, ProfileImage } from '../../../components';
 import { MenuData } from '../../../data/MenuData';
 
@@ -14,13 +12,6 @@ class AsideScreenCover extends React.Component {
         this.state = {
             selectedValue: { label: "Brett Smith", value: '2' },
         };
-    };
-
-    optionChanged(e) {
-        this.setState({
-            selectedValue: e
-        });
-        /*window.location = '/dashboard';*/
     };
 
     render() {
@@ -36,21 +27,6 @@ class AsideScreenCover extends React.Component {
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
                             <p>John Smith</p>
-                            {/* <div className="form-group">
-                        
-                            <Select
-                                id="ProfileName"
-                                multiple={false}
-                                className="SelectFormControl"
-                                searchable={false}
-                                options={[
-                                    {label: "John Smith", value: '1'},
-                                    {label: "Brett Smith", value: '2'},
-                                ]}
-                                onChange={this.optionChanged.bind(this)}
-                                value={this.state.selectedValue}
-                            />
-                        </div> */}
                         </div>
                     </div>
                     <AsideMenu menuData={MenuData} />

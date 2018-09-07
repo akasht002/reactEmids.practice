@@ -42,13 +42,11 @@ class ProfileHeader extends Component {
     render() {
         const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
-            let id = menu.id;
             let Separator = "";
-            let separator = "";
             if (menu.status) {
                 let clsName = "navIcon icon" + makeProperCase(menuName);
                 if (menuName === "notification") {
-                    separator = "NavIconSeparator"
+                    Separator = "NavIconSeparator"
                 }
                 return (
                     <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import moment from "moment";
 import { formateDate } from '../../../utils/validations';
 import BlackoutModal from "./BlackoutModal";
 import {
@@ -27,7 +26,7 @@ class BlackoutDays extends Component {
       e.stopPropagation();
     } else {
       let currentDate = new Date();
-      if ( currentDate > new Date(data.startDate) && currentDate < new Date(data.endDate)) {
+      if (currentDate > new Date(data.startDate) && currentDate < new Date(data.endDate)) {
         this.setState({
           disabledStartDate: "disabled"
         });
@@ -56,8 +55,8 @@ class BlackoutDays extends Component {
 
   closeBlackoutModal = () => {
     this.setState({
-         IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen
-      });
+      IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen
+    });
   }
 
   componentDidMount() {
@@ -83,7 +82,7 @@ class BlackoutDays extends Component {
       }
 
       let currentDate = new Date(), disabledEdit = "";
-     currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit='disabled') : ''; 
+      currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit = 'disabled') : '';
 
 
       return (
@@ -112,18 +111,18 @@ class BlackoutDays extends Component {
                 </div>
               </div>
               {
-                  !this.props.showBalckout && (
-                    <i
-                        className={"SPIconMedium SPIconEdit"}
-                        onClick={this.toggleBlackout.bind(
-                        this,
-                        "edit",
-                        item,
-                        disabledEdit
-                        )}
-                    />
-                  )
-              }              
+                !this.props.showBalckout && (
+                  <i
+                    className={"SPIconMedium SPIconEdit"}
+                    onClick={this.toggleBlackout.bind(
+                      this,
+                      "edit",
+                      item,
+                      disabledEdit
+                    )}
+                  />
+                )
+              }
             </div>
           )}
         </li>
@@ -149,12 +148,12 @@ class BlackoutDays extends Component {
             <div className={"SPCardTitle d-flex"}>
               <h4 className={"primaryColor"}>Blackout Days</h4>
               {
-                  !this.props.showBalckout && (
-                    <i
-                      className={"SPIconLarge SPIconAdd"}
-                      onClick={this.toggleBlackout.bind(this, "add")}
-                   />
-                  )
+                !this.props.showBalckout && (
+                  <i
+                    className={"SPIconLarge SPIconAdd"}
+                    onClick={this.toggleBlackout.bind(this, "add")}
+                  />
+                )
               }
             </div>
             <div className={"SPCertificateContainer width100"}>

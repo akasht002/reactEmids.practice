@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Collapse, CardBody, Card, UncontrolledCollapse } from 'reactstrap';
+import { Collapse, CardBody, Card } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, GeneralModalPopup, Button } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
 import './style.css'
@@ -59,7 +59,7 @@ class PerformTasks extends Component {
         }
         else {
             this.checkedTask.splice(this.checkedTask.findIndex(function (item, index) {
-                return item.serviceRequestTypeTaskVisitId === parseInt(e.target.value);
+                return item.serviceRequestTypeTaskVisitId === parseInt(e.target.value, 0);
             }), 1);
             percentageCalculation = ((this.checkedTask).length / this.state.taskList.totalTask) * 100;
         }
@@ -127,7 +127,7 @@ class PerformTasks extends Component {
                                 {!this.state.backDisabled ?
                                     <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                     :
-                                    <a className="TitleContent backProfileIcon" />
+                                    <i className="TitleContent backProfileIcon" />
                                 }
 
                                 <div className='requestContent'>
@@ -270,18 +270,6 @@ class PerformTasks extends Component {
                             isModalOpen: !this.state.isModalOpen,
                         })}
                     />
-                    {/* <GeneralModalPopup
-                        isOpen={this.state.isStopModalOpen}
-                        ModalBody={<span>Please stop the service to proceed</span>}
-                        className="modal-lg"
-                        centered={true}
-                        label={'OK'}
-                        onClick={() => {
-                            this.setState({
-                                isStopModalOpen: !this.state.isStopModalOpen,
-                            })
-                        }}
-                    /> */}
 
                     <ModalPopup
                         isOpen={this.state.isStopModalOpen}
