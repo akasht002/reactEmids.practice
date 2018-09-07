@@ -561,7 +561,7 @@ class PersonalDetail extends React.PureComponent {
                   const re = /^[0-9\b]+$/
                   if (
                     (e.target.value === '' || re.test(e.target.value)) &&
-                    getLength(e.target.value) <= 3
+                    getLength(e.target.value) <= 3 && (e.target.value)<=100
                   ) {
                     this.setState({ age: e.target.value })
                   }
