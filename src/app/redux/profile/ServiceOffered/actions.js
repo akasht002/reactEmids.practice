@@ -1,6 +1,8 @@
 import { API } from '../../../services/api';
 import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
+import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 
 export const ServiceOffered = {
     getServicesOfferedSuccess: 'get_certification_success/serviceoffered',
@@ -41,6 +43,7 @@ export function addServiceOfferd(data) {
         Post(API.addServiceOffered + serviceProviderId + '/Offer', data).then((resp) => {
             dispatch(getServiceOffered());
             dispatch(editServiceOffered());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

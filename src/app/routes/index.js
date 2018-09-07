@@ -18,7 +18,8 @@ import {
   ForgetPassword,
   ResetPassword,
   ResetPasswordSuccess,
-  ResetPasswordConfirmation
+  ResetPasswordConfirmation,
+  Dashboard
 
 } from '../screens';
 import PrivateRoute from './privateRouter';
@@ -54,6 +55,7 @@ export const Path = {
   resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
+  dashboard:'/dashboard'
 };
 
 class AppStackRoot extends Component {
@@ -67,6 +69,13 @@ class AppStackRoot extends Component {
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
+            <Route path={Path.profile} component={Profile} />
+            <Route path={Path.visitServiceList} component={VisitServiceList} />
+            <Route path={Path.visitServiceDetails} component={VisitServiceDetails} />
+            <Route path={Path.performTasks} component={PerformTasks} />
+            <Route path={Path.feedback} component={Feedback} />
+            <Route path={Path.summary} component={Summary} />
+            <Route path={Path.loginCallBack} component={LoginCallBack}/>
             <Route path={Path.loginCallBack} component={LoginCallBack} />
             <Route path={Path.forgetPassword} component={ForgetPassword} />
             <Route path={Path.resetPassword} component={ResetPassword} />
@@ -77,7 +86,9 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
             <PrivateRoute path={Path.performTasks} component={PerformTasks} />
             <PrivateRoute path={Path.feedback} component={Feedback} />
-            <PrivateRoute path={Path.summary} component={Summary} />
+            <PrivateRoute path={Path.summary} component={Summary} />            
+            <Route path={Path.dashboard} component={Dashboard} />
+
           </Switch>
         </HashRouter>
       </ConnectedRouter>

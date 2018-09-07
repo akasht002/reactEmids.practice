@@ -1,6 +1,8 @@
 import { API } from '../../../services/api';
 import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Education = {
     getEducationSuccess: 'get_education_success/education',
@@ -60,6 +62,7 @@ export function addEducation(data) {
         Post(API.education+serviceProviderId+'/Education/', modal).then((resp) => {
             dispatch(addEducationSuccess(true));
             dispatch(getEducation());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -79,6 +82,7 @@ export function editEducation(data) {
         dispatch(startLoading());
         Get(API.education +serviceProviderId+`/Education/${educationId}`,modal).then((resp) => {
             dispatch(getEducationFieldDetails(resp.data))
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -104,6 +108,7 @@ export function updateEducation(data) {
         Put(API.education+serviceProviderId+'/Education', modal).then((resp) => {
             dispatch(addEducationSuccess(true));
             dispatch(getEducation());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -118,6 +123,7 @@ export function deleteEducation(data) {
         let id = data;
         Delete(API.education + `${serviceProviderId}/Education/${id}`, data).then((resp) => {
             dispatch(getEducation());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
