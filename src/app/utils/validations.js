@@ -87,6 +87,15 @@ export const getDataValueArray = (data, split) => {
     return _.split(data, split)
 }
 
+export const getValueOfArray =(data,split)=>{
+    if(_.isArray(data)){
+        // console.log(getDataValueArray(data.value,'-'))
+        return getDataValueArray(data.value,'-');        
+    }else{
+        return getDataValueArray(data,'-');
+    }
+}
+
 export const getGenderID = (data) => {
     return genderID[data]
 }
@@ -125,3 +134,6 @@ export const getFields = (input, field)=> {
          return value === obj.visitDate.substring(0, 10) ? obj.visits : 0
       })
   }
+export function checkhourlyRate(data) {
+    return /^\d*\.?\d{0,2}$/.test(data);
+}

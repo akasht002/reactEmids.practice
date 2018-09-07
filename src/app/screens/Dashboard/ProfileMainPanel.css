@@ -296,7 +296,7 @@
 
 .monthPalette > span{
     position: absolute;
-    top: 4px;
+    top: 10px;
     right: 20px;
     z-index: 0;
 }

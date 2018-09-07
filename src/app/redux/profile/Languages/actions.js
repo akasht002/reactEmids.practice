@@ -1,6 +1,8 @@
 import { API } from '../../../services/api';
 import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Languages = {
     getLanguagesSuccess: 'get_languages_success/languages',
@@ -50,6 +52,7 @@ export function addLanguages(data) {
         dispatch(startLoading());
         Post(API.addLanguages + serviceProviderId + '/Language', modal).then((resp) => {
             dispatch(getSelectedLanguages());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

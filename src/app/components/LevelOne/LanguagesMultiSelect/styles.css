@@ -99,7 +99,7 @@
     height: 40px;
     outline: none;
     overflow: hidden;
-    position: absolute;
+    position: relative;
     width: 100%;
 }
 .Select-control:hover {

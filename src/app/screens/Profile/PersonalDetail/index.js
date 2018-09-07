@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import ImageCrop from 'react-image-crop-component'
 import 'react-image-crop-component/style.css'
-
 import 'react-image-crop/dist/ReactCrop.css'
 import 'react-image-crop/lib/ReactCrop.scss'
 import './index.css'
@@ -16,11 +15,14 @@ import {
   ModalPopup
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
+import { OrganizationData } from '../../../data/OrganizationData';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
+import { ProfileImage } from '../../../components';
 import {
   checkTextNotStartWithNumber,
   getArrayLength,
-  getLength
+  getLength,
+  checkhourlyRate
 } from '../../../utils/validations'
 
 import { SETTING } from '../../../services/api'
@@ -172,19 +174,12 @@ class PersonalDetail extends React.PureComponent {
     let modalTitle = 'Edit Personal Detials'
     let modalType = ''
     const cityDetail = this.props.cityDetail.map((city, i) => {
-      city.label = city.name
-      city.value = city.id + '-' + city.name
-      return city
-    }
-    )
-    const genderDetail = this.props.genderList.map((gender, i) => {
-      gender.label = gender.name
-      gender.value = gender.id + '-' + gender.name
-      return gender
+      return {label :  city.name ,value:city.id + '-' + city.name}
     })
-
-
-    //console.log(this.props.genderList)
+    const genderDetail = this.props.genderList.map((gender, i) => {
+      return {label :  gender.name ,value:gender.id + '-' + gender.name}
+    })
+   
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
@@ -207,7 +202,7 @@ class PersonalDetail extends React.PureComponent {
         {ProfileDetail}
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
-          toggle={this.togglePersonalDetails.bind(this, modalType)}
+          toggle={() => this.togglePersonalDetails(this, modalType)}
           ModalBody={modalContent}
           className='modal-lg asyncModal CertificationModal'
           modalTitle={modalTitle}
@@ -311,7 +306,6 @@ class PersonalDetail extends React.PureComponent {
     )
   }
   renderDetails = () => {
-    let text = ''
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
         <div className={'SPDetailsContainer SPdpWidget'}>
@@ -428,7 +422,7 @@ class PersonalDetail extends React.PureComponent {
         </div>
         <i
           className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
-          onClick={this.togglePersonalDetails.bind(this)}
+          onClick={this.togglePersonalDetails}
         />
       </div>
     )
@@ -545,11 +539,10 @@ class PersonalDetail extends React.PureComponent {
                   options={genderDetail}
                   simpleValue
                   placeholder='Select Gender'
-                  onChange={e => {
+                  onChange={value  => {
                     this.setState({
-                      selectedGender: e
+                      selectedGender: value 
                     })
-                    console.log(this.state.selectedGender)
                   }}
                   selectedValue={this.state.selectedGender}
                   className={'inputFailure'}
@@ -623,33 +616,7 @@ class PersonalDetail extends React.PureComponent {
         >
           <div className='form-group'>
             <SelectBox
-              options={[
-                {
-                  label: 'AABB (formerly American Association of Blood Banks)',
-                  value: '1-AABB'
-                },
-                {
-                  label: 'Academy of International Business (AIB)',
-                  value: '2-AABB'
-                },
-                { label: 'Academy of Management (AOM)', value: '3-AOM' },
-                {
-                  label: 'Association for the Advancement of Cost Engineering (AACE International)',
-                  value: '4-AACE International'
-                },
-                {
-                  label: 'Association for Volunteer Administration (AVA)',
-                  value: '5-AVA'
-                },
-                {
-                  label: 'Association of Information Technology Professionals (AITP)',
-                  value: '6-AITP'
-                },
-                {
-                  label: 'Chartered Global Management Accountant (CGMA)',
-                  value: '7-CGMA'
-                }
-              ]}
+              options={OrganizationData}
               simpleValue
               placeholder='Select the Organization'
               onChange={value => {
@@ -686,7 +653,7 @@ class PersonalDetail extends React.PureComponent {
             maxlength='7'
             textChange={e => {
               const re = /^\d*\.?\d{0,2}$/
-              if (e.target.value === '' || re.test(e.target.value)) {
+              if (e.target.value === '' || checkhourlyRate(e.target.value)) {
                 this.setState({ hourlyRate: e.target.value })
               }
             }}
@@ -712,7 +679,9 @@ class PersonalDetail extends React.PureComponent {
                       placeholder='Select the state'
                       onChange={value => {
                         this.setState({ selectedState: value })
-                      }}
+                        console.log(this.state.selectedState)
+                      }                      
+                    }                      
                       selectedValue={this.state.selectedState}
                       className={'inputFailure'}
                     />
@@ -833,7 +802,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
 
-  togglePersonalDetails(action, e) {
+  togglePersonalDetails = (action, e) => {
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,

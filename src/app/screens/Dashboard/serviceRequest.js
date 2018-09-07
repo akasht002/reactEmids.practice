@@ -64,7 +64,7 @@ class ServiceRequest extends React.Component {
   render () {
     const serviceStatusLookUp = this.props.serviceStatusLookUp.map(
       (data, i) => {
-        data.label = data.name
+        data.label = data.keyValue
         data.value = data.id
         return data
       }

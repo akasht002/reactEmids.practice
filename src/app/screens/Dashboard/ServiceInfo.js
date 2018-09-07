@@ -10,13 +10,15 @@ export const ServiceCalendarInfo = props => {
       <Fragment>
         <li key={index} className='list-group-item ProfileServicesVisitContent'>
           <div className='ServicesTimeContainer'>
-            <i className={'ServicesTime ' + conversations.slotDescription}/>
+            <i className={'ServicesTime ' + conversations.slotDescription} />
           </div>
           <div className='ProfileServices'>
             <span className='ServicesTitle'>
-            {conversations.serviceTypes && conversations.serviceTypes.toString()}             
+              {conversations.serviceTypes &&
+                conversations.serviceTypes.toString()}
             </span>
-            <span className='ServicesDesc'>{conversations.serviceCategory && conversations.serviceCategory}            
+            <span className='ServicesDesc'>
+              {conversations.serviceCategory && conversations.serviceCategory}
             </span>
           </div>
           <div className='ProfileCardImageContainer'>
@@ -24,16 +26,18 @@ export const ServiceCalendarInfo = props => {
               alt={'NO_IMAGE'}
               key={index}
               className='avatarImage avatarImageBorder'
-              src={ conversations.patientImage ?  conversations.patientImage:
-                require('../../assets/images/Blank_Profile_icon.png')
+              src={
+                conversations.patientImage
+                  ? conversations.patientImage
+                  : require('../../assets/images/Blank_Profile_icon.png')
               }
             />
           </div>
           <div className='ProfileCardNameContainer'>
             <span>
-              {conversations.patientFirstName&&conversations.patientFirstName}
+              {conversations.patientFirstName && conversations.patientFirstName}
               {' '}
-              {conversations.patientLastName&&conversations.patientLastName}
+              {conversations.patientLastName && conversations.patientLastName}
             </span>
           </div>
           <Select
@@ -53,6 +57,95 @@ export const ServiceCalendarInfo = props => {
       </Fragment>
     )
   })
+}
+
+export const ServiceCalendarDefault = props => {
+  return (
+    <React.Fragment>
+       <h6 className='VisitScheduleTitle'>Morning</h6>
+      <ul className='list-group ProfileServicesVisitList'>
+        <li className='list-group-item ProfileServicesVisitContent'>
+        <div className='NoProfileServices'>
+            <i className='NoInformationIcon' /><span>No Visits</span>
+          </div>
+          {/* <div className='ServicesTimeContainer'>
+                                    <i className='ServicesTime Morning'/>
+                                </div> */}
+          {/* <div className='ProfileServices'>
+            <span className='ServicesTitle'>Bathing, Grooming, Nursing</span>
+            <span className='ServicesDesc'>Activity of Daily Living</span>
+          </div>
+          <div className='ProfileCardImageContainer'>
+            <img alt="NO"
+              className='ProfileImage'
+              src={ require('../assets/images/Morning.png')}
+            />
+          </div>
+          <div className='ProfileCardNameContainer'>
+            <span>Anya Lee</span>
+          </div>
+          <Select
+            id='ProfileMonth'
+            onBlurResetsInput={false}
+            multiple={false}
+            className='ProfileSubOptions ProfileMonthList'
+            searchable={false}
+            options={[
+              { label: 'Hired', value: '1' },
+              { label: 'Alaska', value: '2' },
+              { label: 'Arizona', value: '3' }
+            ]}
+            value={this.state.selectedValue}
+          /> */}
+        </li>
+      </ul>
+      <h6 className='VisitScheduleTitle'>Afternoon</h6>
+      <ul className='list-group ProfileServicesVisitList'>
+        <li className='list-group-item ProfileServicesVisitContent'>
+        <div className='NoProfileServices'>
+            <i className='NoInformationIcon' /><span>No Visits</span>
+          </div>
+          {/* <div className='ServicesTimeContainer'>
+                                    <i className='ServicesTime Afternoon'/>
+                                </div> */}
+          {/* <div className='ProfileServices'>
+            <span className='ServicesTitle'>Bathing, Grooming, Nursing</span>
+            <span className='ServicesDesc'>Activity of Daily Living</span>
+          </div>
+          <div className='ProfileCardImageContainer'>
+            <img
+              className='ProfileImage'
+              src={ require('../assets/images/Morning.png')}
+            />
+          </div>
+          <div className='ProfileCardNameContainer'>
+            <span>Anya Lee</span>
+          </div>
+          <Select
+            id='ProfileMonth'
+            onBlurResetsInput={false}
+            multiple={false}
+            className='ProfileSubOptions ProfileMonthList'
+            searchable={false}
+            options={[
+              { label: 'Hired', value: '1' },
+              { label: 'Alaska', value: '2' },
+              { label: 'Arizona', value: '3' }
+            ]}
+            value={this.state.selectedValue}
+          /> */}
+        </li>
+      </ul>
+      <h6 className='VisitScheduleTitle'>Evening</h6>
+      <ul className='list-group ProfileServicesVisitList'>
+        <li className='list-group-item ProfileServicesVisitContent'>
+          <div className='NoProfileServices'>
+            <i className='NoInformationIcon' /><span>No Visits</span>
+          </div>
+        </li>
+      </ul>
+    </React.Fragment>
+  )
 }
 
 export const ServiceRequestDefault = () => {
@@ -77,7 +170,10 @@ export const ServiceProviderRequestDetails = props => {
           <div className='ProfileSkillServices'>
             <span className='ServicesTitle'>
               {sp.serviceRequestTypeDetails &&
-                getFields(sp.serviceRequestTypeDetails, 'serviceTypeDescription')}
+                getFields(
+                  sp.serviceRequestTypeDetails,
+                  'serviceTypeDescription'
+                )}
             </span>
             <span className='ServicesDesc'>
               {sp.serviceCategoryDescription}
@@ -104,7 +200,11 @@ export const ServiceProviderRequestDetails = props => {
               }
             />
             {' '}
-            <span>{sp.patientFirstName && sp.patientFirstName} {sp.patientLastName && sp.patientLastName}</span>
+            <span>
+              {sp.patientFirstName && sp.patientFirstName}
+              {' '}
+              {sp.patientLastName && sp.patientLastName}
+            </span>
           </div>
         </li>
       </Fragment>

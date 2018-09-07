@@ -14,7 +14,7 @@ import {
   getServiceProviderVists,
   getServiceVisitCount
 } from '../../redux/dashboard/Dashboard/actions'
-import { ServiceCalendarInfo, ServiceRequestDefault } from './ServiceInfo'
+import { ServiceCalendarInfo, ServiceRequestDefault,ServiceCalendarDefault } from './ServiceInfo'
 
 const today = new Date()
 
@@ -275,7 +275,7 @@ class serviceCalendar extends React.Component {
     let serviceVist = this.props.serviceVist
     let visitData = getLength(serviceVist) > 0
       ? <ServiceCalendarInfo Servicelist={serviceVist} />
-      : <ServiceRequestDefault />
+      : <ServiceCalendarDefault />
 
     return (
       <div
