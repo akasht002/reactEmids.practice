@@ -116,7 +116,7 @@ export function getImage () {
 
 export function getPersonalDetail () {
   return (dispatch, getState) => {
-    let serviceProviderId = localStorage.getItem('serviceProviderID');
+    let serviceProviderId = localStorage.getItem('serviceProviderID')?localStorage.getItem('serviceProviderID'):1;
     dispatch(startLoading())
     Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
       .then(resp => {
@@ -131,7 +131,7 @@ export function getPersonalDetail () {
 
 export function updatePersonalDetail (data) {
   let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL)
-  let serviceProviderId = localStorage.getItem('serviceProviderID');
+  let serviceProviderId = localStorage.getItem('serviceProviderID')?localStorage.getItem('serviceProviderID'):1;
   return (dispatch, getState) => {    
     dispatch(startLoading())
     Put(API.updatePersonalDetail + serviceProviderId, modelData)
