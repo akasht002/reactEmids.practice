@@ -1,5 +1,3 @@
-import { push } from '../../navigation/actions';
-import { Path } from '../../../routes';
 import { AuthGet, AuthPut } from '../../../services/http';
 import { API } from '../../../services/api';
 
