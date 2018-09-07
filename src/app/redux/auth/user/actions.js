@@ -48,7 +48,6 @@ export function onClear(){
 }
 
 export function setServiceProviderDetails(emailID){ 
-    console.log('setServiceProviderDetails', emailID);
     return (dispatch, getState) => {           
         Get(API.getServiceProviderID + emailID )
           .then(resp => {
@@ -60,7 +59,7 @@ export function setServiceProviderDetails(emailID){
             localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
             save(USER_LOCALSTORAGE, userData);
             dispatch(setUserSuccess(userData))
-            dispatch(push(Path.profile));   
+            dispatch(push(Path.dashboard));   
           })
           .catch(err => {
             console.log(err);

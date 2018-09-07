@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
@@ -10,6 +10,7 @@ import PersonalDetail from "../PersonalDetail";
 import Organization from "../Organization"
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
+import {Path} from '../../../routes';
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from "../Availability/index";
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
@@ -33,7 +34,8 @@ class Profile extends Component {
                             <div className="row d-flex justify-content-center m-auto">
                                 <div className="col-md-12">
                                     <h4 className="my-3 text-white SPTitleText">
-                                        <a><i className="Icon icon-back" /></a>
+                                    <Link className='BrandLink' to={Path.dashboard}>
+                                    <i className="Icon icon-back" /></Link>
                                         Profile
                                     </h4>
                                 </div>
