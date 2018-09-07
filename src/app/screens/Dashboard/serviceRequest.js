@@ -21,7 +21,7 @@ class ServiceRequest extends React.Component {
     super(props)
     this.state = {
       showMore: true,
-      selectedValue: { label: 'Hired', value: '38' }
+      selectedValue: { label: 'Select', value: '0' }
     }
   }
 
