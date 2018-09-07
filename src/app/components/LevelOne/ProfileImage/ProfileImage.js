@@ -7,11 +7,15 @@ function ProfileImage(props) {
             <div className='ProfileImageContainer'>
                 <svg viewBox="1.55 1.55 33 33" className="circular-chart">
                     <path className="circle"
-                        strokeDasharray="80, 100"
+                        strokeDasharray={`${props.profilePercentage},100`}
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
                 </svg>
+<<<<<<< HEAD
                 <img className="ProfileImage" src={require('../../../assets/images/avatar/user-5.jpg')} alt="profile_image" />
+=======
+                <img className="ProfileImage" src={props.src} alt="user"/>
+>>>>>>> 6c8ce2b34322e8fd55197b234d62cf349d5f5ea2
             </div>
         </div>
 

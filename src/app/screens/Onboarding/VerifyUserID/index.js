@@ -14,8 +14,8 @@ import { setWorkflowDirty } from '../../../redux/wizard/actions';
 import { checkEmail, checkSpace } from '../../../utils/validations'
 
 class VerifyUserID extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             email: '',
             emailValid: true,
@@ -32,7 +32,7 @@ class VerifyUserID extends React.Component {
             isEmailNotExist: false
         });
         if (e.target.value === " ") {
-            this.setState({ email: '' });
+            this.setState({ email: '' })
         }
         if (e.target.value.length === 0) {
             this.setState({ isEmailNotExist: false, isAlreadyOnboarded: false });

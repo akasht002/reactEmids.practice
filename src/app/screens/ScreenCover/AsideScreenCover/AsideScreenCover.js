@@ -1,6 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom"
+<<<<<<< HEAD
+=======
+// import { ACTIVE, VISITED } from "../../../../constants/constants";
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+>>>>>>> 6c8ce2b34322e8fd55197b234d62cf349d5f5ea2
 import { AsideMenu, ProfileHeader, ProfileImage } from '../../../components';
+import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
 
 import './style.css'
@@ -14,6 +21,19 @@ class AsideScreenCover extends React.Component {
         };
     };
 
+<<<<<<< HEAD
+=======
+    optionChanged(e) {
+        this.setState({
+            selectedValue: e
+        });
+    };
+
+    componentDidMount() {
+        this.props.getProfilePercentage();
+    }
+
+>>>>>>> 6c8ce2b34322e8fd55197b234d62cf349d5f5ea2
     render() {
         return (
             <section className="d-flex">
@@ -23,7 +43,10 @@ class AsideScreenCover extends React.Component {
                             <Link className='BrandLink' to='/'>Coreo Home</Link>
                         </div>
                     </div>
-                    <ProfileImage />
+                    <ProfileImage
+                        src={this.props.patientImage}
+                        profilePercentage={this.props.profilePercentage}
+                    />
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
                             <p>John Smith</p>
@@ -43,4 +66,16 @@ class AsideScreenCover extends React.Component {
     }
 }
 
-export default AsideScreenCover;
+function mapDispatchToProps(dispatch) {
+    return {
+        getProfilePercentage: () => dispatch(getProfilePercentage()),
+    }
+};
+
+function mapStateToProps(state) {
+    return {
+        profilePercentage: state.profileState.progressIndicatorState.profilePercentage
+    };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover));

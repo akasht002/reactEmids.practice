@@ -6,7 +6,12 @@ process.env.NODE_ENV = 'production';
 
 process.env.REACT_APP_API_URL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 process.env.REACT_APP_AUTH_URL = 'http://52.172.45.185:9005/';
+<<<<<<< HEAD
 process.env.REACT_APP_SR_URL = "http://localhost:56166/api/";
+=======
+process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
+process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
+>>>>>>> 6c8ce2b34322e8fd55197b234d62cf349d5f5ea2
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -21,10 +26,12 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
   process.env.REACT_APP_AUTH_URL = 'http://52.172.45.185:9005/';
   process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
+  process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
 } else if (argv.includes('--dev')) {
   process.env.REACT_APP_API_URL = 'http://ch-api.coreoflowsandbox.com:9008/api/';
   process.env.REACT_APP_AUTH_URL = 'http://52.172.45.185:9005/';
   process.env.REACT_APP_SR_URL = 'http://ch-api.coreoflowsandbox.com:9007/api/';
+  process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
 }
 
 // Ensure environment variables are read.

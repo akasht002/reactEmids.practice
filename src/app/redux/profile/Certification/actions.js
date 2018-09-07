@@ -1,6 +1,8 @@
 import { API } from '../../../services/api';
 import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Certification = {
     getCertificationSuccess: 'get_certification_success/certification',
@@ -56,6 +58,7 @@ export function addCertification(data) {
         Post(API.certification + serviceProviderId + '/Certification', modal).then((resp) => {
             dispatch(addCertificationSuccess(true));
             dispatch(getCertification());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -91,6 +94,7 @@ export function updateCertification(data) {
         Put(API.certification + serviceProviderId + '/Certification', modal).then((resp) => {
             dispatch(addCertificationSuccess(true));
             dispatch(getCertification());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -104,6 +108,7 @@ export function deleteCertification(data) {
         dispatch(startLoading());
         Delete(API.certification + serviceProviderId + '/' + data).then((resp) => {
             dispatch(getCertification());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
