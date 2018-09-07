@@ -148,23 +148,6 @@ export const handleError = err => {
   throw err
 }
 
-export const getHeader = () => {
-  let userState = store.getState().authState.userState
-  let token =
-    userState &&
-    userState.authData &&
-    userState.authData.data &&
-    userState.authData.data.user_token
-  let authHeader = token
-    ? {
-      Authorization: 'Bearer ' + token
-    }
-    : {}
-  return {
-    headers: authHeader
-  }
-}
-
 export const MessageURLGet = (url, data) => {
   return axios
     .get(messageURL + url)
@@ -181,4 +164,21 @@ export const getServiceProviderId = () => {
     store.getState().authState.userState.userData &&
     store.getState().authState.userState.userData.serviceProviderId
   )
+}
+
+export const getHeader = ()=> {
+  let userState = store.getState().authState.userState;
+  let token = userState && userState.userData && userState.userData.access_token;
+  let authHeader = token ? {
+  Authorization: 'Bearer ' + token
+  } : {}
+  return {
+  headers: authHeader
+  }
+}
+  
+  
+export const getUserInfo = () => {
+  let userState = store && store.getState().authState.userState;
+  return userState && userState.userData && userState.userData.userInfo;
 }

@@ -38,7 +38,7 @@ class Profile extends Component {
                                     </h4>
                                 </div>
                                 {/* Added for story number CH-302 */}
-                                {SERVICE_PROVIDER_TYPE_ID === 1 ?
+                                {SERVICE_PROVIDER_TYPE_ID === 2 ?
                                     <PersonalDetail
                                         profilePercentage={this.props.profilePercentage} /> :
                                     <Organization

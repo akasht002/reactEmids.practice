@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { getServiceProviderId } from '../../../services/http'
+import { getUserInfo } from '../../../services/http'
 import { getDataValueArray } from '../../../utils/validations'
 export const PERSONAL_DETAIL = {
   UPDATE_PERSONAL_DETAIL: 'UPDATE_PERSONAL_DETAIL',
@@ -11,16 +11,17 @@ export const getModal = (data, action) => {
     data.selectedState.value ? data.selectedState.value : data.selectedState,
     '-'
   )
-  let gender = getDataValueArray(
-    data.selectedGender.value ? data.selectedGender.value : data.selectedGender,
-    '-'
-  )
+  
   let organization = _.split(data.organization, '-')
   console.log(data.selectedState)
   console.log(states)
   switch (action) {
     case PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL:
-      return {
+    let gender = getDataValueArray(
+      data.selectedGender.value ? data.selectedGender.value : data.selectedGender,
+      '-'
+    )
+    return {
         serviceProviderId: localStorage.getItem('serviceProviderID')
           ? localStorage.getItem('serviceProviderID')
           : 1,
@@ -63,17 +64,18 @@ export const getModal = (data, action) => {
         isActive: true
       }
     case PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL:
+    console.log('getUserInfo', getUserInfo());
       return {
-        serviceProviderId: getServiceProviderId(),
+        serviceProviderId: getUserInfo().serviceProviderId,
         serviceProviderTypeId: 2,
         individual: {
           firstName: '',
           middleName: '',
-          lastName: data.lastName,
-          age: data.age ? data.age : 0,
+          lastName: '',
+          age: '',
           gender: {
-            genderId: gender ? gender[0] : 0,
-            name: gender ? gender[1] : ''
+            genderId: 0,
+            name: ''
           },
           yearOfExperience: data.yearOfExperience ? data.yearOfExperience : 0,
           affiliation: {
@@ -83,7 +85,7 @@ export const getModal = (data, action) => {
         },
         entity: {
           organization: data.organizationName ? data.organizationName : '',
-          entityId: '',
+          entityId: 0,
           hourlyRate: ''
         },
         description: data.description,
@@ -91,7 +93,7 @@ export const getModal = (data, action) => {
         addresses: [
           {
             addressId: 1,
-            serviceProviderId: getServiceProviderId(),
+            serviceProviderId: getUserInfo().serviceProviderId,
             addressTypeId: 2,
             streetAddress: data.streetAddress,
             city: data.city,
