@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { ProfileHeader, Scrollbars } from '../../../components';
+import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 
 import './style.css'

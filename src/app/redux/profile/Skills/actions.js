@@ -40,7 +40,7 @@ export function addSkills(data) {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let skills = data ? data.split(/\s*,\s*/).map((val) => {
             return {
-                id: Number.parseInt(val),
+                id: Number.parseInt(val,0),
                 name: ""
             }
         }) : [];

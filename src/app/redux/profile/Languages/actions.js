@@ -40,7 +40,7 @@ export function addLanguages(data) {
         let serviceProviderId = localStorage.getItem('serviceProviderID');
         let languages = data ? data.split(/\s*,\s*/).map((val) => {
             return {
-                id: Number.parseInt(val),
+                id: Number.parseInt(val, 0),
                 name: ""
             }
         }) : [];

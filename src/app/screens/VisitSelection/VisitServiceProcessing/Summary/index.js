@@ -24,7 +24,8 @@ class Summary extends Component {
             originalEstimation: '',
             actualEstimation: '',
             signatureImage: '',
-            completedTaskPercent: ''
+            completedTaskPercent: '',
+            disableTimeAdjust: true
         };
     };
 
@@ -54,6 +55,15 @@ class Summary extends Component {
         const data = this.signaturePad.toDataURL();
         console.log(data)
         this.setState({ signatureImage: data })
+
+    }
+
+    resetSignature = () => {
+        this.signaturePad.clear();
+    }
+
+    onClickSignaturePad = () => {
+        this.setState({ disableTimeAdjust: false })
     }
 
     onClickNext = () => {
@@ -65,7 +75,7 @@ class Summary extends Component {
             EstimatedClaim: this.state.summaryDetails.estimatedClaim,
             OutOfPocketAmount: this.state.summaryDetails.outOfPocketAmount,
             HourlyRate: this.state.summaryDetails.hourlyRate,
-            OriginalTotalDuration: parseInt(this.state.summaryDetails.originalTotalDuration),
+            OriginalTotalDuration: parseInt(this.state.summaryDetails.originalTotalDuration, 0),
             BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
             TaxPaid: this.props.CalculationsData.taxes,
             BilledPerService: this.props.CalculationsData.totalVisitCost,
@@ -77,8 +87,8 @@ class Summary extends Component {
 
     updateTime = () => {
         const data = {
-            hour: parseInt(this.state.updatedHour),
-            min: parseInt(this.state.updatedMin)
+            hour: parseInt(this.state.updatedHour, 0),
+            min: parseInt(this.state.updatedMin, 0)
         }
         this.props.onUpdateTime(data)
     }
@@ -124,7 +134,7 @@ class Summary extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <a className="TitleContent backProfileIcon" />
+                                <i className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
@@ -164,7 +174,7 @@ class Summary extends Component {
                             </div>
                         </div>
                         <div className='CardContainers ServiceCategoryWidget'>
-                            <form className='ServiceContent'>
+                            <div className='ServiceContent'>
                                 <div className="VisitSummaryWidget">
                                     <div className="LeftWidget">
                                         <div className="LeftContent">
@@ -231,11 +241,11 @@ class Summary extends Component {
                                         <div className="RightContent">
                                             <p className="SummaryContentTitle">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
-                                            <div className="SignatureColumn">
+                                            <div className="SignatureColumn" onClick={this.onClickSignaturePad}>
                                                 <SignaturePad width={420} height={320} ref={ref => this.signaturePad = ref} />
                                             </div>
                                             <div className="width100 text-right">
-                                                <button className="btn btn-outline-primary CancelSignature">Reset Signature</button>
+                                                <button className="btn btn-outline-primary CancelSignature" onClick={this.resetSignature}>Reset Signature</button>
                                             </div>
                                         </div>
                                     </div>
@@ -246,7 +256,7 @@ class Summary extends Component {
                                         <a className='btn btn-primary' onClick={this.onClickNext}>Proceed to Payment</a>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <div className='cardBottom' />
@@ -258,10 +268,8 @@ class Summary extends Component {
                         centered={true}
                         label={'Update'}
                         onClick={() => {
-                            this.updateTime(),
-                                this.setState({
-                                    isModalOpen: !this.state.isModalOpen,
-                                })
+                            this.updateTime()
+                            this.setState({ isModalOpen: !this.state.isModalOpen })
                         }}
                     />
                 </Scrollbars>

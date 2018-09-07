@@ -124,16 +124,6 @@ class WorkHistory extends Component {
                 isWorking: this.state.isWorking,
                 description: this.state.description && this.state.description.trim()
             };
-            if (data.isWorking) {
-                const data = {
-                    fromDate: ""
-                }
-            } else {
-                const data = {
-                    fromDate: this.state.fromDate
-                }
-            }
-
             this.props.addWorkHistory(data);
             this.reset();
         } else {

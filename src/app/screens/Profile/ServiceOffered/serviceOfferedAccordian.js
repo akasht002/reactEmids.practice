@@ -1,5 +1,5 @@
 import React from "react";
-import { UncontrolledCollapse, Collapse } from 'reactstrap';
+import { Collapse } from 'reactstrap';
 import ServiceOfferedIcons from '../ServiceOffered/serviceOfferedIcons'
 
 class ServiceOfferedAccordian extends React.Component {

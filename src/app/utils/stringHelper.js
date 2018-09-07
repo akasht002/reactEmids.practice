@@ -8,7 +8,7 @@ export function stringConcat(text){
 
 export function convertTime24to12(time24) {
     var tmpArr = time24.split(':'), time12;
-    if (+tmpArr[0] == 12) {
+    if (+tmpArr[0] === 12) {
         time12 = tmpArr[0] + ':' + tmpArr[1] + ' pm';
     } else {
         if (+tmpArr[0] === '00') {
