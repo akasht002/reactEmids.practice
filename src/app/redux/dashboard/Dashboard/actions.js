@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { ServiceRequestGet,MessageURLGet } from '../../../services/http'
+import { ServiceRequestGet } from '../../../services/http'
 import {
   API,
-  baseURL,
-  messageURL,
-  baseURLServiceRequest
+  messageURL
 } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
@@ -183,7 +181,7 @@ export function getUnreadMessageCounts (userId) {
         messageURL +
           API.getUnreadCount +
           SERVICE_PROVIDER +
-          + MSG_TYPE
+          '?participantType=i'
       )
       .then(resp => {
         dispatch(onUnreadCountSuccess(resp.data))
