@@ -55,7 +55,7 @@ class Profile extends Component {
                                 <Education />
 
                                 <div className="col-md-12 card CardWidget SPCertificate">
-                                  {/* <Availability /> */}
+                                  <Availability />
                                 </div>
 
                             </div>
