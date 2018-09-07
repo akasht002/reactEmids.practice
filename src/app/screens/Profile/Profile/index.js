@@ -11,6 +11,7 @@ import Organization from "../Organization"
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
+import Availability from "../Availability/index";
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 
 import './styles.css';
@@ -57,6 +58,10 @@ class Profile extends Component {
 
                                 <WorkHistory />
                                 <Education />
+
+                                <div className="col-md-12 card CardWidget SPCertificate">
+                                  <Availability />
+                                </div>
 
                             </div>
                         </div>

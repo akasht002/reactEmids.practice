@@ -122,4 +122,6 @@ export const getHeader = ()=>  {
     }
 }
 
-export const SERVICE_PROVIDER_ID = store && store.getState().authState.userState && store.getState().authState.userState.userData && JSON.parse(store.getState().authState.userState.userData) && JSON.parse(store.getState().authState.userState.userData).data.serviceData.serviceProviderID;
+export const getServiceProviderId = () => {
+    return store && store.getState().authState.userState && store.getState().authState.userState.userData && JSON.parse(store.getState().authState.userState.userData) && JSON.parse(store.getState().authState.userState.userData).data.serviceData.serviceProviderID;
+}

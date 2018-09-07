@@ -53,4 +53,9 @@ export const API = {
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
     getProfilePercentage: 'ServiceProvider/ProgressIndicator/',
+    getBlackOutDays: 'ServiceProvider/',
+    addBlackOutDay: 'ServiceProvider/',
+    getAvailableDays: 'ServiceProvider/',
+    updateAvailabilityDays: 'ServiceProvider/',
+
 }

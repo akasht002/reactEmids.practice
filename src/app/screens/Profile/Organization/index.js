@@ -68,8 +68,16 @@ class Organization extends React.PureComponent {
       state_id: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
         ? nextProps.personalDetail.address[0].state.id
         : '',
-      isActive: false
-       
+      isActive: false,
+      selectedState: {
+        label: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+        ? nextProps.personalDetail.address[0].state.name
+        : '',
+        value: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+        ? nextProps.personalDetail.address[0].state.id
+        : '' + '-' +getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+        ? nextProps.personalDetail.address[0].state.name:''
+      } 
     })
     this.styles = {
       height: 100,
@@ -90,8 +98,6 @@ class Organization extends React.PureComponent {
   }
 
   handleChange = e => {
-    console.log(e.target.files[0].size)
-    console.log(SETTING.FILE_UPLOAD_SIZE)
     if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
       this.setState({
         uploadedImageFile: URL.createObjectURL(e.target.files[0]),
@@ -516,9 +522,10 @@ class Organization extends React.PureComponent {
                       simpleValue
                       placeholder='Select the state'
                       onChange={value => {
-                        this.setState({ state_id: value })
+                        this.setState({ selectedState: value })
+                        console.log(value);
                       }}
-                      selectedValue={this.state.state_id}
+                      selectedValue={this.state.selectedState}
                       className={'inputFailure'}
                     />
                   </div>
