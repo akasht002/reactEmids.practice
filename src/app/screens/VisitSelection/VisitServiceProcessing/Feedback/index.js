@@ -57,11 +57,10 @@ class Feedback extends Component {
     }
 
     onClickNext = () => {
-        let answers = this.selectedAnswers
         if (this.state.textareaData) {
-            answers.push(this.state.textareaData);
+            this.selectedAnswers.push(this.state.textareaData);
         }
-        if (this.props.QuestionsList.length === answers.length) {
+        if (this.props.QuestionsList.length === this.selectedAnswers.length) {
             this.onSubmit();
         } else {
             this.setState({ isModalOpen: true })
@@ -69,16 +68,12 @@ class Feedback extends Component {
     }
 
     onSubmit = () => {
-        let answers = this.selectedAnswers
-        if (this.state.textareaData) {
-            answers.push(this.state.textareaData);
-        }
         let data = {
             serviceRequestVisitId: this.props.patientDetails.serviceRequestVisitId,
             serviceRequestId: this.props.patientDetails.serviceRequestId,
             serviceProviderId: this.props.patientDetails.serviceProviderId,
             rating: this.state.rating,
-            answers: answers
+            answers: this.selectedAnswers
         }
         this.props.saveAnswers(data);
         this.setState({ isModalOpen: false })

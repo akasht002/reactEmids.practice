@@ -1,12 +1,23 @@
 
 import React, { Component } from "react";
 
-const formattedSeconds = (sec) =>
-    Math.floor(sec / 60) +
-    ':' +
-    ('0' + sec % 60).slice(-2);
+function pad(num) {
+    return ("0" + num).slice(-2);
+}
 
+export const formattedSeconds = (secs) => {
 
+    var minutes = Math.floor(secs / 60);
+
+    secs = secs % 60;
+
+    var hours = Math.floor(minutes / 60)
+
+    minutes = minutes % 60;
+
+    return pad(hours) + ":" + pad(minutes) + ":" + pad(secs);
+
+}
 class StopWatch extends Component {
 
     constructor(props) {
