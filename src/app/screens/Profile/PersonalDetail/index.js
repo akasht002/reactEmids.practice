@@ -318,11 +318,7 @@ class PersonalDetail extends React.PureComponent {
               />
             </svg>
 
-<<<<<<< HEAD
-            <img alt="profile_image"
-=======
             <img alt ="NO"
->>>>>>> 6c8ce2b34322e8fd55197b234d62cf349d5f5ea2
               className={'SPdpImage'}
               src={
                 this.state.imageProfile
@@ -441,11 +437,7 @@ class PersonalDetail extends React.PureComponent {
         </div>
         <div className='col-md-4 mb-2 editProfileImageContainer'>
           <div className='profileImage'>
-<<<<<<< HEAD
-            <img alt="profile_image"
-=======
             <img alt="NO"
->>>>>>> 6c8ce2b34322e8fd55197b234d62cf349d5f5ea2
               className={'SPdpImage'}
               src={
                 this.state.imageProfile

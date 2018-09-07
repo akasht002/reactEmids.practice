@@ -1,13 +1,6 @@
 import axios from 'axios';
 
-<<<<<<< HEAD
-export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
-
-//export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
-export const baseURLServiceRequest = "http://localhost:56166/api/";
-=======
 // export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
->>>>>>> 6c8ce2b34322e8fd55197b234d62cf349d5f5ea2
 
 export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
 //export const baseURLServiceRequest = "http://localhost:5615/api/";
