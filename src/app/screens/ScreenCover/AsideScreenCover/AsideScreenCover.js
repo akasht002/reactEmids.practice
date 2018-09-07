@@ -37,10 +37,11 @@ class AsideScreenCover extends React.Component {
                             <Link className='BrandLink' to='/'>Coreo Home</Link>
                         </div>
                     </div>
-                    <ProfileImage
+                   <ProfileImage
                         src={this.props.patientImage}
                         profilePercentage={this.props.profilePercentage}
-                    />
+                    /> 
+                    
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
                             <p>John Smith</p>

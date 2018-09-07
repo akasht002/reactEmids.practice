@@ -9,7 +9,8 @@ import { formatDate } from '../../../utils/validations'
 import {
   SERVICE_PROVIDER,
   MSG_SERVICE_PROVIDER,
-  MSG_TYPE
+  MSG_TYPE,
+  DEFAULT_SERVICE_STATUS
 } from '../../constants/constants'
 
 export const DashboardDetail = {
@@ -107,11 +108,13 @@ export const getPatientServiceRequestDetailSuccess = data => {
 }
 
 export function getPatientServiceRequestDetail (data) {
+  let id = data ? data : DEFAULT_SERVICE_STATUS;
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestGet(
           API.getServiceProviderRequests +
           SERVICE_PROVIDER
+          + '/' + id
       )
       .then(resp => {
         dispatch(getPatientServiceRequestDetailSuccess(resp.data))
