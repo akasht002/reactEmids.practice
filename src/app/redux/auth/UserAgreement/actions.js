@@ -37,7 +37,6 @@ export function getUserInfo() {
           .then(resp => {
             dispatch(getUserInfoSuccess(resp.data));
             dispatch(getEulaContent());
-            dispatch(push(Path.profile));
           })
           .catch(err => {
             console.log(err);
