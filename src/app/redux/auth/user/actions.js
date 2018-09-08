@@ -8,8 +8,10 @@ import { USER_LOCALSTORAGE } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
 
 export const USER = {
-    setUser: 'authentication_success/login',
-    deleteUser: 'authentication_success/login'
+    setUser: 'fetch_success/user',
+    deleteUser: 'delete_user/user',
+    setAutoLogout: 'set_auto_logout/user',
+    clearData: 'clear_data/user'
 };
 
 export const setUserSuccess = (userData) => {
@@ -19,10 +21,24 @@ export const setUserSuccess = (userData) => {
     }
 }
 
+export const setAutoLogout = (data) => {
+    return {
+        type: USER.setAutoLogout,
+        data
+    }
+}
+
+export const clearData = () => {
+    return {
+        type: USER.clearData
+    }
+}
+
 export function onSetUserSuccess(data){
     return (dispatch, getState) => {
         dispatch(setUserSuccess(data));
-        dispatch(setServiceProviderDetails(getState().oidc.user.profile.sub));   
+        dispatch(setServiceProviderDetails(getState().oidc.user.profile.sub));
+        dispatch(getUserInactiveTimeout()); 
     }
 }
 
@@ -49,29 +65,35 @@ export function onClear(){
 }
 
 export function setServiceProviderDetails(emailID){ 
-    console.log('setServiceProviderDetails', emailID);
-    return (dispatch, getState) => {           
+    return (dispatch, getState) => {
         Get(API.getServiceProviderID + emailID )
           .then(resp => {
-            dispatch(setUserSuccess(resp.data))
-            localStorage.setItem('serviceProviderID',resp.data.serviceProviderId)
-            let userData = getState().oidc.user;
-            let serviceData = {
-                serviceProviderID: resp.data.serviceProviderId,
-                serviceProviderTypeID: resp.data.serviceProviderTypeId,
-            }
+          let userData = {
+                ...getState().oidc.user,
+                serviceData: {
+                    serviceProviderID: resp.data.serviceProviderId,
+                    serviceProviderTypeID: resp.data.serviceProviderTypeId,
+                }
+            };
             localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
             localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
-            save(USER_LOCALSTORAGE, {
-                ...userData,
-                serviceData
-            });
+            save(USER_LOCALSTORAGE, userData);
+            dispatch(setUserSuccess(userData))
             dispatch(push(Path.profile));   
           })
           .catch(err => {
             console.log(err);
           })
       }
+}
+
+export function getUserInactiveTimeout() {
+    return (dispatch) => {
+        Get(API.getTimeoutMilliseconds).then((response) => {
+            dispatch(setAutoLogout(parseInt(response.data[0].name)));
+        })
+        .catch((error) => { });
+    }
 }
 
 export const checkUserData = () => {
@@ -85,4 +107,3 @@ export const checkUserData = () => {
         }
       }
 }
-

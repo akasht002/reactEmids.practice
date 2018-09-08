@@ -1,16 +1,36 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import './styles.css';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Preloader} from '../../Base';
+import { PropTypes } from 'prop-types';
 
-class ScreenCover extends React.Component {
+import {Preloader, UserInactivityView} from '../../';
+import { onLogout } from '../../../redux/auth/logout/actions';
+import {getUserInactiveTimeout} from '../../../redux/auth/user/actions';
+import './styles.css';
+
+class ScreenCover extends Component {
+
+    componentDidMount() {
+        if (!this.props.timeForInactivity) {
+            this.props.getUserInactiveTimeout();
+        }
+    }
+
     render() {
         return(
             <section className="d-flex">
-               {this.props.children}
-               {this.props.isLoading && <Preloader/>}
+                {this.props.accessToken ? 
+                    <UserInactivityView
+                        timeForInactivity={this.props.timeForInactivity}
+                        inactiveUser={this.props.inactiveUser}
+                    > 
+                        {this.props.children}
+                        {this.props.isLoading && <Preloader/>}
+                    </UserInactivityView> :
+                    <div>
+                        {this.props.children}
+                        {this.props.isLoading && <Preloader/>}
+                    </div>
+                }
             </section>
         );
     }
@@ -21,16 +41,18 @@ ScreenCover.propTypes = {
     backgroundColor: PropTypes.string
 }
 
-function mapDispatchToProps(dispatch) {
-    return{
-      //onLogOut: () => dispatch(onLogOut)
+function mapStateToProps(state) {
+    return {
+        timeForInactivity: state.authState.userState.autoLogoutTime,
+        accessToken: state.oidc.user && state.oidc.user.access_token
     }
 }
 
-function mapStateToProps(state) {
+function mapDispatchToProps(dispatch) {
     return {
-
-    };
+        inactiveUser: () => dispatch(onLogout()),
+        getUserInactiveTimeout: () => dispatch(getUserInactiveTimeout())
+    }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ScreenCover));
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenCover); 

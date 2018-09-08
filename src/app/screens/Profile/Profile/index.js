@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { ProfileHeader } from '../../../components'
+import { ProfileHeader, ScreenCover } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
@@ -31,7 +29,7 @@ class Profile extends Component {
 
     render() {
         return (
-            <section className="d-flex">
+            <ScreenCover>
                 <div className="container-fluid p-0">
                     <ProfileHeader />
                     <div className="width100 mainWidgetProfile mainWidgetOverflow">
@@ -81,7 +79,7 @@ class Profile extends Component {
                     modalTitle="User Agreement has been updated, please accept to proceed."
                     onClick={this.onClickOk}
                 />
-            </section>
+            </ScreenCover>
         )
     }
 }
@@ -103,3 +101,4 @@ function mapStateToProps(state) {
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
+

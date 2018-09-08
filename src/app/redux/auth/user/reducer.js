@@ -6,7 +6,8 @@ const defaultState = {
     error: {
         message: '',
         code: ''
-    }
+    },
+    autoLogoutTime: 0
 };
 
 export default (state = defaultState, action) => {
@@ -22,6 +23,13 @@ export default (state = defaultState, action) => {
                 ...state,
                 userData: null,
             };
+        case USER.setAutoLogout:
+            return {
+                ...state,
+                autoLogoutTime: action.data
+            };
+        case USER.clearData:
+            return defaultState;
 
         default:
             return state;
