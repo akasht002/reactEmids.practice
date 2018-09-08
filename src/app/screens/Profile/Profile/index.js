@@ -80,7 +80,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        profilePercentage: state.profileState.progressIndicatorState.profilePercentage
+        profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
+        SERVICE_PROVIDER_TYPE_ID: state.authState.userState.userData.userInfo.serviceProviderTypeId
     };
 };
 
