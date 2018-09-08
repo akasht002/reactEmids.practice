@@ -9,7 +9,6 @@ process.env.REACT_APP_AUTH_URL = 'http://52.172.45.185:9005/';
 process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
 process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
 
-
 // process.env.REACT_APP_API_URL = "http://localhost:63633/api/";
 // process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
 // process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
