@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom"
+import React from 'react'
+import { Link } from 'react-router-dom'
 // import { ACTIVE, VISITED } from "../../../../constants/constants";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -12,19 +12,23 @@ import { Path } from '../../../routes/';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      selectedValue: { label: 'Brett Smith', value: '2' }
+    }
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedValue: { label: "Brett Smith", value: '2' },
-        };
-    };
+  optionChanged (e) {
+    this.setState({
+      selectedValue: e
+    })
+  }
 
-    optionChanged(e) {
-        this.setState({
-            selectedValue: e
-        });
-    };
+  componentDidMount () {
+    this.props.getProfilePercentage()
+    this.props.getImage()
+  }
 
     componentDidMount() {
         this.props.getProfilePercentage();
@@ -84,4 +88,6 @@ function mapStateToProps(state) {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover)
+)

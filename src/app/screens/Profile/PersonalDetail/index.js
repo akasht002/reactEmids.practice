@@ -35,6 +35,7 @@ class PersonalDetail extends React.PureComponent {
       EducationModal: false,
       isDiscardModalOpen: false,
       isAlertModalOpen:false,
+      isValidPhoneNumber:true,
       ModalOrg: true,
       src: null,
       crop: {
@@ -160,9 +161,10 @@ class PersonalDetail extends React.PureComponent {
     if (
       getLength(this.state.firstName) === 0 ||
       getLength(this.state.lastName) === 0 ||
-      getLength(this.state.phoneNumber) === 0
+      getLength(this.state.phoneNumber) <10
     ) {
-      this.setState({ isValid: false })
+      
+      this.setState({ isValid: false})
     } else {
       this.props.updatePersonalDetail(this.state)
       this.setState({
@@ -823,24 +825,41 @@ class PersonalDetail extends React.PureComponent {
                         !this.state.phoneNumber &&
                         'inputFailure')
                     }
-                    textChange={e => {
-                      const re = /^[0-9\b]+$/
-                      if (
-                        (e.target.value === '' || re.test(e.target.value)) &&
-                        getLength(e.target.value) <= 10
-                      ) {
-                        this.setState({ phoneNumber: e.target.value })
+                    textChange={e =>
+                    //    {
+                    //   const re = /^[0-9\b]+$/
+                    //   if (
+                    //     (e.target.value === '' || re.test(e.target.value)) &&
+                    //     getLength(e.target.value) <= 10
+                    //   ) {
+                    //     this.setState({ phoneNumber: e.target.value })
+                    //   }
+                    // }
+                    {
+                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+                      if (onlyNums.length < 10) {
+                        this.setState({ phoneNumber: onlyNums,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10) })
+                      } else if (onlyNums.length === 10) {
+                        const number = onlyNums.replace(
+                          /(\d{3})(\d{3})(\d{4})/,
+                          '$1-$2-$3'
+                        )
+                        this.setState({ phoneNumber: number ,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10)})
                       }
-                    }}
+                    }
+                  }
                   />
                   {!this.state.isValid &&
-                    !this.state.phoneNumber &&
+                    !getLength(this.state.phoneNumber) >10 &&
                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                       Please enter
                       {' '}
                       {this.state.phoneNumber === '' && ' Phone Number'}
-                    </span>}
-
+                    </span>}  
+                    {!this.state.isValidPhoneNumber &&
+                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                  Please enter vaild last name
+                </span>}                 
                 </div>
               </div>
             </div>
@@ -879,7 +898,6 @@ class PersonalDetail extends React.PureComponent {
     }
 
     const fieldDifference = _.isEqual(old_data, updated_data)
-    console.log(_.isEqual(old_data, updated_data))
 
     if (fieldDifference === true) {
       this.setState({ certificationModal: false, isDiscardModalOpen: false })
