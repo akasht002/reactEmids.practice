@@ -1,44 +1,3 @@
-/* .ProfileImageContainer{
-    position: relative;
-    padding: 5px;
-    width: 90px;
-    margin: 0 auto;
-}
-
-.ProfileImage{
-    height: 80px;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-}
-
-.circular-chart, .ProfileImage {
-    display: block;
-}
-
-.circular-chart {
-    display: block;
-    position: absolute;
-    left: 0;
-    height: 100px;
-}
-
-.circle {
-    stroke: #ffffff;
-    fill: none;
-    stroke-width: 1;
-    animation: progress 1s ease-out forwards;
-}
-
-.disabledCircle {
-    stroke: #b7b7b7;
-    fill: none;
-    stroke-width: 1;
-    animation: progress 1s ease-out forwards;
-} */
-
-
-
 .ProfileImageContainer{
     position: relative;
     padding: 5px;
@@ -57,7 +16,7 @@
     display: block;
 }
 
-.circular-chart-Dashboard {
+.circular-chart {
     position: absolute;
     left: 0;
     top: 0;
@@ -78,12 +37,52 @@
     animation: progress 1s ease-out forwards;
 }
 
-/*user-pic*/
-/* .CardWidget .ProfileImageWidget
-{
-    width: auto;
-    padding: 20px 30px;
+.SPdpContainer{
     display: block;
     position: relative;
-    padding-top: 35px;
-} */
+    width: 170px;
+    height: 170px;
+    margin: 0 auto;
+}
+
+.SPdpCircularChart {
+    display: block;
+    position: absolute;
+    left: 0;
+    height: 170px;
+}
+
+.SPdpCircle {
+    stroke: #2ab498;
+    fill: none;
+    stroke-width: 1;
+    animation: progress 1s ease-out forwards;
+}
+
+.SPdpImage {
+    position: relative;
+    display: block;
+    width: 150px;
+    height:150px;
+    padding: 0;
+    margin: 0 auto;
+    top: 10px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.SPDetailsContainer{
+    min-height: 100px;
+    border-left: 1px solid #e1e1e1;
+    padding: 40px;
+}
+
+.SPDetailsContainer:first-child {
+    border: 0;
+}
+
+ .SPdpWidget{
+    width: 250px;
+    text-align: center;
+}

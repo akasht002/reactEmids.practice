@@ -1,15 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 // import { ACTIVE, VISITED } from "../../../../constants/constants";
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { AsideMenu, ProfileHeader, ProfileImage } from '../../../components'
-import {
-  getProfilePercentage
-} from '../../../redux/profile/ProgressIndicator/actions'
-import { MenuData } from '../../../data/MenuData'
-import { Path } from '../../../routes/'
-import { getImage } from '../../../redux/profile/PersonalDetail/actions'
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { AsideMenu, ProfileHeader, ProfileImage } from '../../../components';
+import * as action from '../../../redux/profile/PersonalDetail/actions'
+import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
+import { MenuData } from '../../../data/MenuData';
+import { Path } from '../../../routes/';
 
 import './style.css'
 
@@ -32,62 +30,63 @@ class AsideScreenCover extends React.Component {
     this.props.getImage()
   }
 
-  render () {
-    return (
-      <section className='d-flex'>
-        <div className={'ProfileLeftWidget ' + this.props.isOpen}>
-          <div className='BrandNameWidget'>
-            <div className='BrandName'>
-              <Link className='BrandLink' to='/'>Coreo Home</Link>
-            </div>
-          </div>
-          <ProfileImage
-            src={
-              this.props.profileImgData
-                ? this.props.profileImgData
-                : require('../../../assets/images/Blank_Profile_icon.png')
-            }
-            profilePercentage={this.props.profilePercentage}
-          />
+    componentDidMount() {
+        this.props.getProfilePercentage();
+        this.props.getImage();
+    }
 
-          <div className='ProfileNameWidget'>
-            <div className='ProfileNameContent'>
-              <Link className='BrandLink' to={Path.profile}>
-                {' '}<p>John Smith</p>
-              </Link>
-            </div>
-          </div>
-          <AsideMenu menuData={MenuData} />
-        </div>
-        <div className='container-fluid ProfileRightWidget'>
-          <ProfileHeader toggle={this.props.toggle} />
-          <div
-            className={'hiddenScreen ' + this.props.isOpen}
-            onClick={this.props.toggle}
-          />
-          <div className='ProfileRightContainer'>
-            {this.props.children}
-          </div>
-        </div>
-      </section>
-    )
-  }
+    render() {
+        return (
+            <section className="d-flex">
+                <div className={"ProfileLeftWidget " + this.props.isOpen}>
+                    <div className='BrandNameWidget'>
+                        <div className='BrandName'>
+                            <Link className='BrandLink' to='/'>Coreo Home</Link>
+                        </div>
+                    </div>
+                    <ProfileImage
+                        src={this.props.profileImgData.image ? this.props.profileImgData.image
+                            : require('../../../assets/images/Blank_Profile_icon.png')}
+                        profilePercentage={this.props.profilePercentage}
+                        profileImageWidget='ProfileImageWidget'
+                        profileImageContainer='ProfileImageContainer'
+                        cicularChart='circular-chart'
+                        circle='SPdpCircle'
+                        profileImage='ProfileImage'
+                    />
+
+                    <div className='ProfileNameWidget'>
+                        <div className='ProfileNameContent'>
+                            <Link className='BrandLink' to={Path.profile}> <p>John Smith</p></Link>
+                        </div>
+                    </div>
+                    <AsideMenu menuData={MenuData} />
+                </div>
+                <div className="container-fluid ProfileRightWidget">
+                    <ProfileHeader toggle={this.props.toggle} />
+                    <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
+                    <div className='ProfileRightContainer'>
+                        {this.props.children}
+                    </div>
+                </div>
+            </section>
+        )
+    }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    getProfilePercentage: () => dispatch(getProfilePercentage()),
-    getImage: () => dispatch(getImage())
-  }
-}
+function mapDispatchToProps(dispatch) {
+    return {
+        getProfilePercentage: () => dispatch(getProfilePercentage()),
+        getImage: () => dispatch(action.getImage()),
+    }
+};
 
-function mapStateToProps (state) {
-  return {
-    profilePercentage: state.profileState.progressIndicatorState
-      .profilePercentage,
-    profileImgData: state.profileState.PersonalDetailState.imageData
-  }
-}
+function mapStateToProps(state) {
+    return {
+        profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
+        profileImgData: state.profileState.PersonalDetailState.imageData
+    };
+};
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover)
