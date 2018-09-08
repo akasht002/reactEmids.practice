@@ -1,27 +1,29 @@
 import _ from 'lodash'
 import { getUserInfo } from '../../../services/http'
-import { getDataValueArray } from '../../../utils/validations'
-import { PROFILE_SERVICE_PROVIDER_TYPE_ID, ORG_SERVICE_PROVIDER_TYPE_ID} from '../../../constants/constants';
+import { getDataValueArray, getValueOfArray } from '../../../utils/validations'
+import {
+  PROFILE_SERVICE_PROVIDER_TYPE_ID,
+  ORG_SERVICE_PROVIDER_TYPE_ID
+} from '../../../constants/constants'
 export const PERSONAL_DETAIL = {
   UPDATE_PERSONAL_DETAIL: 'UPDATE_PERSONAL_DETAIL',
   UPDATE_ORGANIZATION_DETAIL: 'UPDATE_ORGANIZATION_DETAIL'
-};
-
+}
 
 export const getModal = (data, action) => {
-  let states = getDataValueArray(
-    data.selectedState.value ? data.selectedState.value : data.selectedState,
-    '-'
-  )
-  
+  let states = data.selectedState.value
+    ? getDataValueArray(data.selectedState.value, '-')
+    : getValueOfArray(data.selectedState, '-')
   let organization = _.split(data.organization, '-')
   switch (action) {
     case PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL:
-    let gender = getDataValueArray(
-      data.selectedGender.value ? data.selectedGender.value : data.selectedGender,
-      '-'
-    )
-    return {
+      let gender = getDataValueArray(
+        data.selectedGender.value
+          ? data.selectedGender.value
+          : data.selectedGender,
+        '-'
+      )
+      return {
         serviceProviderId: getUserInfo().serviceProviderId,
         serviceProviderTypeId: PROFILE_SERVICE_PROVIDER_TYPE_ID,
         individual: {
@@ -45,14 +47,14 @@ export const getModal = (data, action) => {
         hourlyRate: data.hourlyRate ? data.hourlyRate : 0,
         addresses: [
           {
-            addressId: 1,
+            addressId: data.addressId,
             serviceProviderId: getUserInfo().serviceProviderId,
-            addressTypeId: 2,
+            addressTypeId: data.addressTypeId,
             streetAddress: data.streetAddress,
             city: data.city,
             state: {
               id: states[0],
-              name: states[1]?states[1]:''
+              name: states[1] ? states[1] : ''
             },
             zipCode: data.zipCode ? data.zipCode : 0,
             isActive: true

@@ -132,7 +132,7 @@ export function getPersonalDetail () {
   }
 }
 
-export function updatePersonalDetail (data) {
+export function updatePersonalDetail (data) { 
   let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL)
   let serviceProviderId = getUserInfo().serviceProviderId;
   return (dispatch, getState) => {    

@@ -12,7 +12,7 @@ import {
   TextArea,
   SelectBox,
   ProfileModalPopup,
-  ModalPopup
+  ModalPopup,ScreenCover
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import { OrganizationData } from '../../../data/OrganizationData';
@@ -33,6 +33,7 @@ class PersonalDetail extends React.PureComponent {
       useEllipsis: true,
       EducationModal: false,
       isDiscardModalOpen: false,
+      isAlertModalOpen:false,
       ModalOrg: true,
       src: null,
       crop: {
@@ -88,7 +89,11 @@ class PersonalDetail extends React.PureComponent {
         ? nextProps.personalDetail.address[0].state.id
         : '' + '-' +getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
         ? nextProps.personalDetail.address[0].state.name:''
-      }
+      },
+      addressId:getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressId != null
+      ? nextProps.personalDetail.address[0].addressId:0,
+      addressTypeId:getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressTypeId != null
+      ? nextProps.personalDetail.address[0].addressTypeId:2
     })
     this.styles = {
       height: 100,
@@ -105,7 +110,7 @@ class PersonalDetail extends React.PureComponent {
       : ''
     this.states = getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
       ? nextProps.personalDetail.address[0].state.name
-      : ''
+      : ''      
   }
 
   handleChange = () => {
@@ -113,12 +118,24 @@ class PersonalDetail extends React.PureComponent {
   }
 
   reUpload = e => {
-    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
+    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE && e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
       this.setState({
         uploadedImageFile: URL.createObjectURL(e.target.files[0])
-      })
+      }) 
+      const reader = new FileReader()
+      reader.addEventListener(
+        'load',
+        () =>
+          this.setState({
+            src: reader.result
+          }),
+        false
+      )
+      reader.readAsDataURL(e.target.files[0])
     } else {
-      alert('Please insert a image less than 2 MB')
+      this.setState({
+        isAlertModalOpen: !this.state.isAlertModalOpen
+      })  
     }
   }
 
@@ -134,6 +151,7 @@ class PersonalDetail extends React.PureComponent {
         false
       )
       reader.readAsDataURL(e.target.files[0])
+    
     }
   }
 
@@ -157,12 +175,12 @@ class PersonalDetail extends React.PureComponent {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
-    console.log(this.state.croppedImage)
-    this.props.uploadImg(this.state.croppedImage)
+    this.props.uploadImg(this.state.src)
   }
 
   onCroppeds = e => {
     let image = e.image
+    console.log( e.image)
     this.setState({
       croppedImage: image
     })
@@ -197,7 +215,7 @@ class PersonalDetail extends React.PureComponent {
 
     const ProfileDetail = this.renderDetails()
     return (
-      <React.Fragment>
+      <ScreenCover isLoading={this.props.isLoading}>
         {ProfileDetail}
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
@@ -224,7 +242,25 @@ class PersonalDetail extends React.PureComponent {
               isDiscardModalOpen: false
             })}
         />
-      </React.Fragment>
+        <ModalPopup
+          isOpen={this.state.isAlertModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)</span>}
+          btn1='OK'
+          // btn2='OK'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() =>
+            this.setState({
+              isAlertModalOpen: false
+            })}
+          onCancel={() =>
+            this.setState({
+              isDiscardModalOpen: false
+            })}
+        />
+       </ScreenCover>
     )
   }
 
@@ -872,6 +908,7 @@ function mapStateToProps(state) {
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
     profileImgData: state.profileState.PersonalDetailState.imageData,
     genderList: state.profileState.PersonalDetailState.genderList,
+    isLoading:state.loadingState.isLoading
   }
 }
 export default withRouter(

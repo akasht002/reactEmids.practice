@@ -13,7 +13,7 @@ import {
   TextArea,
   SelectBox,
   ProfileModalPopup,
-  ModalPopup
+  ModalPopup,ScreenCover
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
@@ -31,7 +31,8 @@ class Organization extends React.PureComponent {
     this.state = {
       useEllipsis: true,
       EducationModal: false,
-      isDiscardModalOpen: false,
+      isDiscardModalOpen: false,      
+      isAlertModalOpen:false,
       ModalOrg:true,
       src: null,
       crop: {
@@ -97,24 +98,29 @@ class Organization extends React.PureComponent {
       : ''
   }
 
-  handleChange = e => {
-    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
-      this.setState({
-        uploadedImageFile: URL.createObjectURL(e.target.files[0]),
-        uploadImage: !this.state.uploadImage
-      })
-    } else {
-      alert('Please insert a image less than 2 MB')
-    }
+  handleChange = () => {
+    this.setState({ uploadImage: true })  
   }
 
   reUpload = e => {
-    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
+    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE && e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
       this.setState({
         uploadedImageFile: URL.createObjectURL(e.target.files[0])
-      })
+      }) 
+      const reader = new FileReader()
+      reader.addEventListener(
+        'load',
+        () =>
+          this.setState({
+            src: reader.result
+          }),
+        false
+      )
+      reader.readAsDataURL(e.target.files[0])
     } else {
-      alert('Please insert a image less than 2 MB')
+      this.setState({
+        isAlertModalOpen: !this.state.isAlertModalOpen
+      })  
     }
   }
 
@@ -155,8 +161,7 @@ class Organization extends React.PureComponent {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
-    console.log(this.state.croppedImage)
-    this.props.uploadImg(this.state.croppedImage)
+    this.props.uploadImg(this.state.src)
   }
 
   onCroppeds = e => {
@@ -194,7 +199,7 @@ class Organization extends React.PureComponent {
 
     const ProfileDetail = this.renderDetails()
     return (
-      <React.Fragment>
+      <ScreenCover isLoading={this.props.isLoading}>
         {ProfileDetail}
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
@@ -221,7 +226,25 @@ class Organization extends React.PureComponent {
               isDiscardModalOpen: false
             })}
         />
-      </React.Fragment>
+         <ModalPopup
+          isOpen={this.state.isAlertModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)</span>}
+          btn1='OK'
+          // btn2='OK'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() =>
+            this.setState({
+              isAlertModalOpen: false
+            })}
+          onCancel={() =>
+            this.setState({
+              isDiscardModalOpen: false
+            })}
+        />
+     </ScreenCover>
     )
   }
 
@@ -414,12 +437,7 @@ class Organization extends React.PureComponent {
             />
             <span className='editDpImage' />
             <div className='uploadWidget'>
-              <button className='addImageBtn' />
-              <input
-                className='addImageInput'
-                type='file'
-                onChange={this.handleChange}
-              />
+              <i className='addImageBtn' onClick={this.handleChange} />             
             </div>
           </div>
         </div>
