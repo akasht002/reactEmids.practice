@@ -153,9 +153,9 @@ class Organization extends React.PureComponent {
     }
   }
 
-  street = this.props.personalDetail.map((person, i) => (
-    <span key={i}>{person}</span>
-  ))
+//   street = this.props.personalDetail.map((person, i) => (
+//     <span key={i}>{person}</span>
+//   ))
 
   closeImageUpload = () => {
     this.setState({
