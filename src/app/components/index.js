@@ -36,9 +36,9 @@ import {
     CarouselComp,
     CoreoWizScreen, 
     IconCard, 
-    InfoCard
+    InfoCard,
+    UserInactivityView
 } from './LevelTwo';
-
 
 export {
     CoreoWizScreen,
@@ -74,5 +74,6 @@ export {
     LoginCover,
     ProfileImage,
     StopWatch,
+    UserInactivityView,
     ToggleSwitch
 };

@@ -8,8 +8,10 @@ import { USER_LOCALSTORAGE } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
 
 export const USER = {
-    setUser: 'authentication_success/login',
-    deleteUser: 'authentication_success/login'
+    setUser: 'fetch_success/user',
+    deleteUser: 'delete_user/user',
+    setAutoLogout: 'set_auto_logout/user',
+    clearData: 'clear_data/user'
 };
 
 export const setUserSuccess = (userData) => {
@@ -19,9 +21,24 @@ export const setUserSuccess = (userData) => {
     }
 }
 
+export const setAutoLogout = (data) => {
+    return {
+        type: USER.setAutoLogout,
+        data
+    }
+}
+
+export const clearData = () => {
+    return {
+        type: USER.clearData
+    }
+}
+
 export function onSetUserSuccess(data){
     return (dispatch, getState) => {
-        dispatch(setServiceProviderDetails(getState().oidc.user.profile.sub));   
+        // dispatch(setUserSuccess(data));
+        dispatch(setServiceProviderDetails(getState().oidc.user.profile.sub));
+        dispatch(getUserInactiveTimeout()); 
     }
 }
 
@@ -67,7 +84,16 @@ export function setServiceProviderDetails(emailID){
       }
 }
 
-export const checkUserData = () => { 
+export function getUserInactiveTimeout() {
+    return (dispatch) => {
+        Get(API.getTimeoutMilliseconds).then((response) => {
+            dispatch(setAutoLogout(parseInt(response.data[0].name)));
+        })
+        .catch((error) => { });
+    }
+}
+
+export const checkUserData = () => {
     return (dispatch, getState) => {
         let userState = getState().authState.userState;
         let access_token = userState && userState.userData && userState.userData.access_token
@@ -77,4 +103,3 @@ export const checkUserData = () => {
         }
     }
 }
-

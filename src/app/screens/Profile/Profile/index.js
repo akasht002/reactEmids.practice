@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { ProfileHeader } from '../../../components'
+import { ProfileHeader, ScreenCover } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
@@ -18,9 +18,14 @@ import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 import './styles.css';
 
 class Profile extends Component {
+
+    componentDidMount() {
+        this.props.getProfilePercentage();
+      }
+      
     render() {
         return (
-            <section className="d-flex">
+            <section>
                 <div className="container-fluid p-0">
                     <ProfileHeader />
                     <div className="width100 mainWidgetProfile mainWidgetOverflow">

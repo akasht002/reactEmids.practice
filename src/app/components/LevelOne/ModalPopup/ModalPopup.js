@@ -11,20 +11,20 @@ import './styles.css';
                     <ModalBody>
                         <p className="text-center lead pt-4">{this.props.ModalBody}</p>
                         <p className="text-right mt-5">
-                            <Button
+                            {this.props.btn1 && <Button
                                 type="button"
                                 classname="btn outline btn-primary mx-2 float-right"
                                 label={this.props.btn1}
                                 disable={false}
                                 onClick={this.props.onConfirm}
-                            />
-                            <Button
+                            />}
+                            {this.props.btn2 && <Button
                                 type="button"
                                 classname="btn outline btn-outline-primary mx-2 float-right"
                                 label={this.props.btn2}
                                 disable={false}
                                 onClick={this.props.onCancel}
-                            />
+                            />}
                         </p>
                     </ModalBody>
                     <ModalFooter className={this.props.headerFooter}>
