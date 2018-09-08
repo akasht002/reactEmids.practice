@@ -12,7 +12,8 @@ import {
   TextArea,
   SelectBox,
   ProfileModalPopup,
-  ModalPopup,ScreenCover
+  ModalPopup,ScreenCover,
+  ProfileImage
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import { OrganizationData } from '../../../data/OrganizationData';
@@ -343,7 +344,7 @@ class PersonalDetail extends React.PureComponent {
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
-        <div className={'SPDetailsContainer SPdpWidget'}>
+        {/* <div className={'SPDetailsContainer SPdpWidget'}>
           <div className={'SPdpContainer'}>
             <svg viewBox='0 0 36 36' className='circular-chart'>
               <path
@@ -362,10 +363,23 @@ class PersonalDetail extends React.PureComponent {
               }
             />
           </div>
-          {/* <span className={'SPRating'}>
+          <span className={'SPRating'}>
             <i className={'Icon iconFilledStar'} />4.2
-          </span> */}
-        </div>
+          </span>
+        </div> */}
+        <ProfileImage
+          src={
+            this.state.imageProfile
+              ? this.state.imageProfile
+              : require('../../../assets/images/Blank_Profile_icon.png')
+          }
+          profilePercentage={this.props.profilePercentage}
+          profileImageWidget='SPDetailsContainer SPdpWidget'
+          profileImageContainer='SPdpContainer'
+          cicularChart='SPdpCircularChart'
+          circle='SPdpCircle'
+          profileImage='SPdpImage'
+        />
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>
             <div className={'col-md-7 p-0'}>

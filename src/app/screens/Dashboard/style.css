@@ -354,6 +354,8 @@ li div.dropdown-menu{
 .BlockProfileDetailsStatus{
     width: 65px;
     text-align: right;
+    right: 18px;
+    position: relative;
 }
 
 .btn-hired{

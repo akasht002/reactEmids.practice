@@ -4,9 +4,10 @@ import { Link } from "react-router-dom"
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage } from '../../../components';
+import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
-import {Path} from '../../../routes/';
+import { Path } from '../../../routes/';
 
 import './style.css'
 
@@ -27,6 +28,7 @@ class AsideScreenCover extends React.Component {
 
     componentDidMount() {
         this.props.getProfilePercentage();
+        this.props.getImage();
     }
 
     render() {
@@ -38,14 +40,20 @@ class AsideScreenCover extends React.Component {
                             <Link className='BrandLink' to='/'>Coreo Home</Link>
                         </div>
                     </div>
-                   <ProfileImage
-                        src={this.props.patientImage}
+                    <ProfileImage
+                        src={this.props.profileImgData.image ? this.props.profileImgData.image
+                            : require('../../../assets/images/Blank_Profile_icon.png')}
                         profilePercentage={this.props.profilePercentage}
-                    /> 
-                    
+                        profileImageWidget='ProfileImageWidget'
+                        profileImageContainer='ProfileImageContainer'
+                        cicularChart='circular-chart'
+                        circle='SPdpCircle'
+                        profileImage='ProfileImage'
+                    />
+
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
-                        <Link className='BrandLink' to={Path.profile}> <p>John Smith</p></Link>
+                            <Link className='BrandLink' to={Path.profile}> <p>John Smith</p></Link>
                         </div>
                     </div>
                     <AsideMenu menuData={MenuData} />
@@ -65,12 +73,14 @@ class AsideScreenCover extends React.Component {
 function mapDispatchToProps(dispatch) {
     return {
         getProfilePercentage: () => dispatch(getProfilePercentage()),
+        getImage: () => dispatch(action.getImage()),
     }
 };
 
 function mapStateToProps(state) {
     return {
-        profilePercentage: state.profileState.progressIndicatorState.profilePercentage
+        profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
+        profileImgData: state.profileState.PersonalDetailState.imageData
     };
 };
 

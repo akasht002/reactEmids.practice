@@ -1,17 +1,17 @@
 import React from 'react';
-// import './style.css';
+import './style.css';
 
 function ProfileImage(props) {
     return (
-        <div className='ProfileImageWidget'>
-            <div className='ProfileImageContainer'>
-                <svg viewBox="1.55 1.55 33 33" className="circular-chart">
-                    <path className="circle"
+        <div className={props.profileImageWidget}>
+            <div className={props.profileImageContainer}>
+                <svg viewBox="1.55 1.55 33 33" className={props.cicularChart}>
+                    <path className={props.circle}
                         strokeDasharray={`${props.profilePercentage},100`}
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
                 </svg>
-                <img className="ProfileImage" src={props.src} alt="user"/>
+                <img className={props.profileImage} src={props.src} alt="user"/>
             </div>
         </div>
 
