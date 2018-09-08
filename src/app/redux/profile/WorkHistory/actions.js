@@ -1,6 +1,8 @@
 import { API } from '../../../services/api';
 import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
+import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const WorkHistory = {
     getWorkhistorySuccess: 'get_workhistory_success/workhistory',
@@ -62,6 +64,7 @@ export function addWorkHistory(data) {
         Post(API.WorkHistory+`${serviceProviderId}/WorkHistory`, modal).then((resp) => {
             dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory())
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -80,6 +83,7 @@ export function editWorkHistory(data) {
         dispatch(startLoading());
         Get(API.WorkHistory + `${serviceProviderId}/WorkHistory/${workHistoryId}`, modal).then((resp) => {
             dispatch(getWorkhistoryFieldDetails(resp.data))
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -106,6 +110,7 @@ export function updateWorkHistory(data) {
         Put(API.WorkHistory + `${serviceProviderId}'/WorkHistory`, modal).then((resp) => {
             dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -120,6 +125,7 @@ export function deleteWorkHistory(data) {
         let id =data;
         Delete(API.WorkHistory + `${serviceProviderId}/WorkHistory/${id}`, data).then((resp) => {
             dispatch(getWorkHistory());
+            dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

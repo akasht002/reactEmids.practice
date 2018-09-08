@@ -6,6 +6,7 @@ import LanguagesState from './Languages/reducer';
 import WorkHistoryState from './WorkHistory/reducer';
 import PersonalDetailState from './PersonalDetail/reducer'
 import serviceOfferedState from './ServiceOffered/reducer';
+import progressIndicatorState from './ProgressIndicator/reducer';
 import AvailabilityState from './Availability/reducer';
 
 export const profileState = combineReducers({
@@ -16,5 +17,6 @@ export const profileState = combineReducers({
     SkillsState,
     PersonalDetailState,
     serviceOfferedState,
+    progressIndicatorState,
     AvailabilityState
 });

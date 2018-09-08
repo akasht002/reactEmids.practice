@@ -122,18 +122,8 @@ class WorkHistory extends Component {
                 fromDate: this.state.fromDate,
                 toDate: this.state.toDate,
                 isWorking: this.state.isWorking,
-                description: this.state.description.trim()
+                description: this.state.description && this.state.description.trim()
             };
-            if (data.isWorking) {
-                const data = {
-                    fromDate: ""
-                }
-            } else {
-                const data = {
-                    fromDate: this.state.fromDate
-                }
-            }
-
             this.props.addWorkHistory(data);
             this.reset();
         } else {
@@ -261,7 +251,8 @@ class WorkHistory extends Component {
                         value={this.state.location}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
-                            location: e.target.value
+                            location: e.target.value,
+                            disabledSaveBtn: false
                         })}
                     />
                 </div>
@@ -302,7 +293,7 @@ class WorkHistory extends Component {
                     <div className="form-check">
                         <label className="form-check-label">
                             <input className="form-check-input" type="checkbox" value={this.state.isWorking} id="defaultCheck1"
-                                onChange={(e) => this.setState({ isWorking: e.target.checked })}
+                                onChange={(e) => this.setState({ isWorking: e.target.checked, disabledSaveBtn: false })}
                             />
                             I am currently working here
                             <span className="CheckboxIcon" />
@@ -320,7 +311,8 @@ class WorkHistory extends Component {
                         value={this.state.description}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
-                            description: e.target.value
+                            description: e.target.value,
+                            disabledSaveBtn: false
                         })}
                     />
                 </div>

@@ -10,6 +10,8 @@ import wizardState from '../wizard/reducer';
 import { reducer as reduxFormReducer } from 'redux-form';
 import { reducer as oidcReducer } from 'redux-oidc';
 import authUser from '../auth/login/reducer'
+import {visitHistoryState} from '../visitHistory/reducer'
+import { DashboardState } from '../dashboard/reducer';
 
 export default combineReducers({
     authState,
@@ -22,5 +24,7 @@ export default combineReducers({
     wizardState,
     loadingState,
     oidc:oidcReducer,
-    authUser
+    authUser,
+    visitHistoryState,
+    dashboardState:DashboardState,
 });

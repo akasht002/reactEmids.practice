@@ -1,12 +1,15 @@
 import axios from 'axios';
 
-export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
+// export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 
-//export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
-export const baseURLServiceRequest = "http://localhost:5615/api/";
-
+export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
+//export const baseURLServiceRequest = "http://localhost:5615/api/";
+export const baseURL = "http://localhost:63633/api/";
+//export const baseURLServiceRequest = "http://localhost:5615/api/";
+//export const authURL = "http://52.172.45.185:9005/";
 export const authURL = "http://52.172.45.185:9005/";
-//export const authURL = "http://localhost:5000/";
+
+export const messageURL = 'http://52.172.45.185:9002/api/'
 
 export const Api = axios.create({
     baseURL: baseURL,
@@ -36,9 +39,9 @@ export const API = {
     savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/',
     saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
     startOrStopService: 'VisitProcessing/ServiceRequestVisit/',
-    SendResetPasswordLink: 'api/User/',
-    getEmailIdByUserId: 'api/user/verifypasswordlink/',
-    resetPassword: 'api/user',
+    SendResetPasswordLink: 'User/',
+    getEmailIdByUserId: 'user/verifypasswordlink/',
+    resetPassword: 'user',
     getPersonalDetail:'ServiceProvider/',
     updatePersonalDetail:'ServiceProvider/',
     getCity:'ServiceProviderLookUp/GetState',
@@ -50,10 +53,23 @@ export const API = {
     getServiceProviderID:'ServiceProviderOnBoarding/',
     getGender: 'ServiceProviderLookUp/gender',
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
-    saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
+    saveSummaryDetails: 'VisitProcessing/',
+    getVisitHistoryList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
+    getConversation: 'conversation/user/',
+    getUnreadCount: 'Conversation/Unread/User/',
+    getServiceProviders: 'Patient/FavouriteServiceProvider/',
+    getServiceProviderRequests: 'ServiceRequest/ServiceRequests/ServiceProvider/',
+    getServiceProviderVists: 'VisitProcessing/ServiceProviderVisit/',
+    getServiceRequestStatus:'Servicerequest/LookUp/ServiceRequestStatus',
+    getServiceVisitsCount : 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
+    getServiceVisitsHistoryById:'ServiceRequest/VisitSummary/',
+    getProfilePercentage: 'ServiceProvider/ProgressIndicator/',
     getBlackOutDays: 'ServiceProvider/',
     addBlackOutDay: 'ServiceProvider/',
     getAvailableDays: 'ServiceProvider/',
     updateAvailabilityDays: 'ServiceProvider/',
-    getTimeoutMilliseconds: 'ServiceProviderLookup/AutoLogout'
+    getTimeoutMilliseconds: 'ServiceProviderLookup/AutoLogout',
+    getLoginInfo: 'connect/userinfo',
+    getEulaContent: 'api/user/config/EulaContent',
+    updateEula: 'api/User/Eula'
 }

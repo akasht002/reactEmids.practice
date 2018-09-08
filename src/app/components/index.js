@@ -1,14 +1,15 @@
 import {
-    FloatLabelInput, 
-    SearchInput, 
-    TextArea, 
-    CheckBox, 
-    SelectBox, 
-    Button, 
-    Input,
-    Preloader,
-    Scrollbars
-} from './Base';
+  FloatLabelInput,
+  SearchInput,
+  TextArea,
+  CheckBox,
+  SelectBox,
+  Button,
+  Input,
+  Preloader,
+  Scrollbars,
+  ToggleSwitch
+} from './Base'
 import {
     Calendar, 
     CoreoWizFooter, 
@@ -73,5 +74,6 @@ export {
     LoginCover,
     ProfileImage,
     StopWatch,
-    UserInactivityView
+    UserInactivityView,
+    ToggleSwitch
 };

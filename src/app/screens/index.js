@@ -13,6 +13,7 @@ import Feedback from './VisitSelection/VisitServiceProcessing/Feedback';
 import Summary from './VisitSelection/VisitServiceProcessing/Summary';
 import { LoginCallBack } from './Authentication/Login/LoginCallBack';
 import { AsideScreenCover } from './ScreenCover/AsideScreenCover';
+import Dashboard from './Dashboard'
 
 import {    
     ForgetPassword,
@@ -40,5 +41,6 @@ export {
     ResetPassword,
     ResetPasswordSuccess,
     ResetPasswordConfirmation,
-    AsideScreenCover
+    AsideScreenCover,
+    Dashboard
 };

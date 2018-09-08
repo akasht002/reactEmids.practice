@@ -68,7 +68,7 @@ export function getLength(data) {
 
 
 export function checkTextNotStartWithNumber(data) {
-    return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*?~`/\,;:".'()><-=+]+$/.test(data)
+    return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*?~`/,;:".'()><-=+]+$/.test(data)
 }
 
 export function isDecimal(data) {
@@ -87,6 +87,53 @@ export const getDataValueArray = (data, split) => {
     return _.split(data, split)
 }
 
+export const getValueOfArray =(data,split)=>{
+    if(_.isArray(data)){
+        // console.log(getDataValueArray(data.value,'-'))
+        return getDataValueArray(data.value,'-');        
+    }else{
+        return getDataValueArray(data,'-');
+    }
+}
+
 export const getGenderID = (data) => {
     return genderID[data]
+}
+
+
+export const getFields = (input, field)=> {
+    let output = []
+    for (let i = 0; i < input.length; ++i) { output.push(input[i][field] + ', ') }
+    return output
+  }
+
+  export const convertStringToDate = data => {
+    let date_string = data.toString()
+    let month = date_string.substring(2, 4)
+    let date = date_string.substring(0, 2)
+    let year = date_string.substring(4, 8)
+    return year + '-' + month + '-' + date
+  } 
+
+
+  export const formatDate =(date)=> {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+  
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+  
+    return [year, month, day].join('-');
+  }
+
+
+  export const partialCompare = (value,array) =>{
+    array.filter(obj => { 
+         return value === obj.visitDate.substring(0, 10) ? obj.visits : 0
+      })
+  }
+export function checkhourlyRate(data) {
+    return /^\d*\.?\d{0,2}$/.test(data);
 }

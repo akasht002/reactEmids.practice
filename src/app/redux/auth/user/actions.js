@@ -68,7 +68,7 @@ export function setServiceProviderDetails(emailID){
     return (dispatch, getState) => {
         Get(API.getServiceProviderID + emailID )
           .then(resp => {
-            let userData = {
+          let userData = {
                 ...getState().oidc.user,
                 serviceData: {
                     serviceProviderID: resp.data.serviceProviderId,

@@ -101,11 +101,6 @@ class VisitServiceList extends Component {
                                             serviceList.matchPercentage : serviceList.statusName
                                     }</a>
                                 }
-                                {serviceList.statusName === VISIT_SERVICE_STATUS_HIRED ?
-                                    <a className='btn btn-outline-primary btn-hired' to='/'>{serviceList.statusName}</a>
-                                    :
-                                    ''
-                                }
                             </div>
                         </div>
                     </div>
@@ -114,7 +109,9 @@ class VisitServiceList extends Component {
         })
 
         return (
-            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}
+                patientImage={this.props.profileImgData.image ? this.props.profileImgData.image
+                    : require('./avatar/user-5.jpg')}>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests</h5>
@@ -145,6 +142,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
+        profileImgData: state.profileState.PersonalDetailState.imageData
     };
 };
 

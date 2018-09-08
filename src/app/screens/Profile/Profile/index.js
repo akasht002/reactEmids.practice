@@ -8,15 +8,23 @@ import PersonalDetail from "../PersonalDetail";
 import Organization from "../Organization"
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
+import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from "../Availability/index";
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
+import { ModalUserAgreement } from '../../../components';
 
 import './styles.css';
 
 class Profile extends Component {
-
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    
+    componentDidMount() {
+        this.props.getUserInfo();
+        this.props.getProfilePercentage();
+    }
+    
+    onClickOk = () => {
+        this.props.onClickOk();
     }
 
     render() {
@@ -35,7 +43,11 @@ class Profile extends Component {
                                     </h4>
                                 </div>
                                 {/* Added for story number CH-302 */}
-                                {SERVICE_PROVIDER_TYPE_ID === 1 ? <PersonalDetail /> : <Organization/> }
+                                {SERVICE_PROVIDER_TYPE_ID === 1 ?
+                                    <PersonalDetail
+                                        profilePercentage={this.props.profilePercentage} /> :
+                                    <Organization
+                                        profilePercentage={this.props.profilePercentage} />}
                                 <div className="col-md-12 card CardWidget SPCertificate">
                                     <ServiceOffered />
                                 </div>
@@ -53,16 +65,40 @@ class Profile extends Component {
                                 <Education />
 
                                 <div className="col-md-12 card CardWidget SPCertificate">
-                                  <Availability />
+                                    <Availability />
                                 </div>
 
                             </div>
                         </div>
                     </div>
                 </div>
+                <ModalUserAgreement
+                    isOpen={this.props.isEulaUpdated}
+                    ModalBody={<div dangerouslySetInnerHTML={{ __html: this.props.eulaContent }} />}
+                    className="modal-lg"
+                    modalTitle="User Agreement has been updated, please accept to proceed."
+                    onClick={this.onClickOk}
+                />
             </ScreenCover>
         )
     }
 }
 
-export default Profile;
+function mapDispatchToProps(dispatch) {
+    return {
+        getUserInfo: () => dispatch(getUserInfo()),
+        onClickOk: () => dispatch(updateEula()),
+        getProfilePercentage: () => dispatch(getProfilePercentage()),
+    }
+};
+
+function mapStateToProps(state) {
+    return {
+        isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
+        eulaContent: state.authState.userAgreementState.eulaContent,
+        profilePercentage: state.profileState.progressIndicatorState.profilePercentage
+    };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
+

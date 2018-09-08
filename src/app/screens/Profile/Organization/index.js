@@ -161,7 +161,6 @@ class Organization extends React.PureComponent {
 
   onCroppeds = e => {
     let image = e.image
-    let image_data = e.data
     this.setState({
       croppedImage: image
     })
@@ -303,7 +302,6 @@ class Organization extends React.PureComponent {
     )
   }
   renderDetails = () => {
-    let text = ''
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
         <div className={'SPDetailsContainer SPdpWidget'}>
@@ -311,12 +309,12 @@ class Organization extends React.PureComponent {
             <svg viewBox='0 0 36 36' className='circular-chart'>
               <path
                 className='circle'
-                strokeDasharray='80, 100'
+                strokeDasharray={`${this.props.profilePercentage},100`}
                 d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
               />
             </svg>
 
-            <img
+            <img alt="profile_image"
               className={'SPdpImage'}
               src={
                 this.state.imageProfile
@@ -406,7 +404,7 @@ class Organization extends React.PureComponent {
         </div>
         <div className='col-md-4 mb-2 editProfileImageContainer'>
           <div className='profileImage'>
-            <img
+            <img alt="profile_image"
               className={'SPdpImage'}
               src={
                 this.state.imageProfile
