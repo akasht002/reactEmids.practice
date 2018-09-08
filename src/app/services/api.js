@@ -53,7 +53,7 @@ export const API = {
     getServiceProviderID:'ServiceProviderOnBoarding/',
     getGender: 'ServiceProviderLookUp/gender',
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
-    saveSummaryDetails: 'VisitProcessing/',
+    saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
     getVisitHistoryList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
     getConversation: 'conversation/user/',
     getUnreadCount: 'Conversation/Unread/User/',
@@ -72,3 +72,5 @@ export const API = {
     getEulaContent: 'api/user/config/EulaContent',
     updateEula: 'api/User/Eula'
 }
+
+

@@ -681,10 +681,11 @@ class PersonalDetail extends React.PureComponent {
             className='form-control'
             rows='5'
             value={this.state.description}
+            maxlength={'500'}
             textChange={e => {
-              if (getLength(e.target.value) <= 500) {
+              // if (getLength(e.target.value) <= 500) {
                 this.setState({ description: e.target.value })
-              }
+              // }
             }}
           />
         </div>
