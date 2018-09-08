@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 // import { ACTIVE, VISITED } from "../../../../constants/constants";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { AsideMenu, ProfileHeader, ProfileImage } from '../../../components';
+import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover } from '../../../components';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
 import { Path } from '../../../routes/';
+import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
+import { ModalUserAgreement } from '../../../components';
 
 import './style.css'
 
@@ -28,16 +30,16 @@ class AsideScreenCover extends React.Component {
   componentDidMount () {
     this.props.getProfilePercentage()
     this.props.getImage()
+    this.props.getUserInfo();
   }
 
-    componentDidMount() {
-        this.props.getProfilePercentage();
-        this.props.getImage();
+  onClickOk = () => {
+    this.props.onClickOk();
     }
 
     render() {
         return (
-            <section className="d-flex">
+            <ScreenCover>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
                     <div className='BrandNameWidget'>
                         <div className='BrandName'>
@@ -69,7 +71,14 @@ class AsideScreenCover extends React.Component {
                         {this.props.children}
                     </div>
                 </div>
-            </section>
+                <ModalUserAgreement
+                    isOpen={this.props.isEulaUpdated}
+                    ModalBody={<div dangerouslySetInnerHTML={{ __html: this.props.eulaContent }} />}
+                    className="modal-lg"
+                    modalTitle="User Agreement has been updated, please accept to proceed."
+                    onClick={this.onClickOk}
+                />
+            </ScreenCover>
         )
     }
 }
@@ -78,13 +87,17 @@ function mapDispatchToProps(dispatch) {
     return {
         getProfilePercentage: () => dispatch(getProfilePercentage()),
         getImage: () => dispatch(action.getImage()),
+        getUserInfo: () => dispatch(getUserInfo()),
+        onClickOk: () => dispatch(updateEula())
     }
 };
 
 function mapStateToProps(state) {
     return {
         profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
-        profileImgData: state.profileState.PersonalDetailState.imageData
+        profileImgData: state.profileState.PersonalDetailState.imageData,
+        isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
+        eulaContent: state.authState.userAgreementState.eulaContent,
     };
 };
 
