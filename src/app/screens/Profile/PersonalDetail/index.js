@@ -160,9 +160,9 @@ class PersonalDetail extends React.PureComponent {
     if (
       getLength(this.state.firstName) === 0 ||
       getLength(this.state.lastName) === 0 ||
-      getLength(this.state.phoneNumber) !==10
+      getLength(this.state.phoneNumber) <10
     ) {
-      console.log( getLength(this.state.phoneNumber) >10)
+      
       this.setState({ isValid: false})
     } else {
       this.props.updatePersonalDetail(this.state)
@@ -832,13 +832,13 @@ class PersonalDetail extends React.PureComponent {
                     {
                       const onlyNums = e.target.value.replace(/[^0-9]/g, '')
                       if (onlyNums.length < 10) {
-                        this.setState({ phoneNumber: onlyNums })
+                        this.setState({ phoneNumber: onlyNums,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10) })
                       } else if (onlyNums.length === 10) {
                         const number = onlyNums.replace(
                           /(\d{3})(\d{3})(\d{4})/,
                           '$1-$2-$3'
                         )
-                        this.setState({ phoneNumber: number })
+                        this.setState({ phoneNumber: number ,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10)})
                       }
                     }
                   }
@@ -849,7 +849,11 @@ class PersonalDetail extends React.PureComponent {
                       Please enter
                       {' '}
                       {this.state.phoneNumber === '' && ' Phone Number'}
-                    </span>}                   
+                    </span>}  
+                    {!this.state.isValidPhoneNumber &&
+                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                  Please enter vaild last name
+                </span>}                 
                 </div>
               </div>
             </div>
