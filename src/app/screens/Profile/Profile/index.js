@@ -98,9 +98,10 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
+        profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
+        SERVICE_PROVIDER_TYPE_ID: state.authState.userState.userData.userInfo.serviceProviderTypeId,
         isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
-        eulaContent: state.authState.userAgreementState.eulaContent,
-        profilePercentage: state.profileState.progressIndicatorState.profilePercentage
+        eulaContent: state.authState.userAgreementState.eulaContent
     };
 };
 
