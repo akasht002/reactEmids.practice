@@ -124,7 +124,7 @@ export const AuthPut = (url, data) => {
 
 export const AuthGet = url => {
   return axios
-    .get(authURL + url)
+    .get(authURL + url, getHeader())
     .then(resp => {
       return resp
     })

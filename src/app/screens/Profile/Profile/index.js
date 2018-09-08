@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
 import { ProfileHeader } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
@@ -10,16 +10,24 @@ import PersonalDetail from "../PersonalDetail";
 import Organization from "../Organization"
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
+import {Path} from '../../../routes';
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from "../Availability/index";
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
+import { ModalUserAgreement } from '../../../components';
 
 import './styles.css';
 
 class Profile extends Component {
     
     componentDidMount() {
+        this.props.getUserInfo();
         this.props.getProfilePercentage();
+    }
+    
+    onClickOk = () => {
+        this.props.onClickOk();
     }
 
     render() {
@@ -33,7 +41,8 @@ class Profile extends Component {
                             <div className="row d-flex justify-content-center m-auto">
                                 <div className="col-md-12">
                                     <h4 className="my-3 text-white SPTitleText">
-                                        <a><i className="Icon icon-back" /></a>
+                                    <Link className='BrandLink' to={Path.dashboard}>
+                                    <i className="Icon icon-back" /></Link>
                                         Profile
                                     </h4>
                                 </div>
@@ -60,13 +69,20 @@ class Profile extends Component {
                                 <Education />
 
                                 <div className="col-md-12 card CardWidget SPCertificate">
-                                  <Availability />
+                                    <Availability />
                                 </div>
 
                             </div>
                         </div>
                     </div>
                 </div>
+                <ModalUserAgreement
+                    isOpen={this.props.isEulaUpdated}
+                    ModalBody={<div dangerouslySetInnerHTML={{ __html: this.props.eulaContent }} />}
+                    className="modal-lg"
+                    modalTitle="User Agreement has been updated, please accept to proceed."
+                    onClick={this.onClickOk}
+                />
             </section>
         )
     }
@@ -74,6 +90,8 @@ class Profile extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
+        getUserInfo: () => dispatch(getUserInfo()),
+        onClickOk: () => dispatch(updateEula()),
         getProfilePercentage: () => dispatch(getProfilePercentage()),
     }
 };
@@ -81,7 +99,9 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
-        SERVICE_PROVIDER_TYPE_ID: state.authState.userState.userData.userInfo.serviceProviderTypeId
+        SERVICE_PROVIDER_TYPE_ID: state.authState.userState.userData.userInfo.serviceProviderTypeId,
+        isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
+        eulaContent: state.authState.userAgreementState.eulaContent
     };
 };
 

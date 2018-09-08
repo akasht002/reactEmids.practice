@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage } from '../../../components';
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
+import {Path} from '../../../routes/';
 
 import './style.css'
 
@@ -44,7 +45,7 @@ class AsideScreenCover extends React.Component {
                     
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
-                            <p>John Smith</p>
+                        <Link className='BrandLink' to={Path.profile}> <p>John Smith</p></Link>
                         </div>
                     </div>
                     <AsideMenu menuData={MenuData} />

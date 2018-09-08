@@ -101,11 +101,6 @@ class VisitServiceList extends Component {
                                             serviceList.matchPercentage : serviceList.statusName
                                     }</a>
                                 }
-                                {serviceList.statusName === VISIT_SERVICE_STATUS_HIRED ?
-                                    <a className='btn btn-outline-primary btn-hired' to='/'>{serviceList.statusName}</a>
-                                    :
-                                    ''
-                                }
                             </div>
                         </div>
                     </div>

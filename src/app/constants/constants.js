@@ -29,3 +29,4 @@ export const RESPONSE_STATUS = {
     LINK_EXPIRED: "Link Expired"
 }
 
+export const STATUS = 0;

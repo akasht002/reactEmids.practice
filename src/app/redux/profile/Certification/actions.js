@@ -1,7 +1,7 @@
 import { API } from '../../../services/api';
 import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Certification = {
@@ -33,7 +33,7 @@ export const getCertificationFieldDetails = (data) => {
 
 export function getCertification() {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId =  getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Get(API.certification + serviceProviderId + '/Certification').then((resp) => {
             dispatch(getCertificationSuccess(resp.data))
@@ -46,7 +46,7 @@ export function getCertification() {
 
 export function addCertification(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId =  getUserInfo().serviceProviderId;
         let modal = {
             serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
@@ -68,7 +68,7 @@ export function addCertification(data) {
 
 export function editCertification(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId =  getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Get(API.certification + serviceProviderId + '/Certification/' + data).then((resp) => {
             dispatch(getCertificationFieldDetails(resp.data))
@@ -81,7 +81,7 @@ export function editCertification(data) {
 
 export function updateCertification(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId =  getUserInfo().serviceProviderId;
         let modal = {
             serviceProviderId: serviceProviderId,
             certificationName: data.certificationName,
@@ -104,7 +104,7 @@ export function updateCertification(data) {
 
 export function deleteCertification(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Delete(API.certification + serviceProviderId + '/' + data).then((resp) => {
             dispatch(getCertification());

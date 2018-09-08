@@ -7,11 +7,13 @@ import {
 import { startLoading, endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
 import {
-  SERVICE_PROVIDER,
+  PAGE_NO,
+  PAGE_SIZE,
   MSG_SERVICE_PROVIDER,
   MSG_TYPE,
   DEFAULT_SERVICE_STATUS
 } from '../../constants/constants'
+import { getUserInfo } from '../../../services/http';
 
 export const DashboardDetail = {
   get_conversation_detail_success: 'get_conversation_detail_success/dashboard',
@@ -68,7 +70,7 @@ export function getServiceVisitCount (data) {
     dispatch(startLoading())
     ServiceRequestGet(
       API.getServiceVisitsCount +
-        SERVICE_PROVIDER +
+      getUserInfo().serviceProviderId +
         '/' +
         formatDate(data.start_date) +
         '/' +
@@ -88,7 +90,7 @@ export function getServiceProviderVists (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestGet(
-      API.getServiceProviderVists + SERVICE_PROVIDER + '/' + data
+      API.getServiceProviderVists +  getUserInfo().serviceProviderId + '/' + data
     )
       .then(resp => {
         dispatch(getPatientVisitDetailSuccess(resp.data))
@@ -113,7 +115,7 @@ export function getPatientServiceRequestDetail (data) {
     dispatch(startLoading())
     ServiceRequestGet(
           API.getServiceProviderRequests +
-          SERVICE_PROVIDER
+          getUserInfo().serviceProviderId
           + '/' + id
       )
       .then(resp => {
@@ -137,7 +139,7 @@ export function getServiceProviderDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestGet(
-        API.getServiceProviders + SERVICE_PROVIDER + '/1/2/' + data
+        API.getServiceProviders +  getUserInfo().serviceProviderId + '/'+PAGE_NO+'/'+PAGE_SIZE+'/'+ data
       )
       .then(resp => {
         dispatch(getServiceProviderDetailSuccess(resp.data))
@@ -183,7 +185,7 @@ export function getUnreadMessageCounts (userId) {
       .get(
         messageURL +
           API.getUnreadCount +
-          SERVICE_PROVIDER +
+          getUserInfo().serviceProviderId +
           '?participantType=i'
       )
       .then(resp => {

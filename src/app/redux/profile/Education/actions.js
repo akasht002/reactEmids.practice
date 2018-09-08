@@ -1,7 +1,7 @@
 import { API } from '../../../services/api';
 import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Education = {
@@ -33,7 +33,7 @@ export const getEducationFieldDetails = (data) => {
 
 export function getEducation() {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Get(API.education + serviceProviderId+'/Education').then((resp) => {
             dispatch(getEducationSuccess(resp.data))
@@ -47,7 +47,7 @@ export function getEducation() {
 
 export function addEducation(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let modal = {
             ServiceProviderId: serviceProviderId,
             school: data.school,
@@ -72,7 +72,7 @@ export function addEducation(data) {
 
 export function editEducation(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let educationId =data;
         let modal = {
             ServiceProviderId: serviceProviderId,
@@ -92,7 +92,7 @@ export function editEducation(data) {
 
 export function updateEducation(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let modal = {
             serviceProviderId: serviceProviderId,
             educationId: data.educationId,
@@ -119,7 +119,7 @@ export function updateEducation(data) {
 export function deleteEducation(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let id = data;
         Delete(API.education + `${serviceProviderId}/Education/${id}`, data).then((resp) => {
             dispatch(getEducation());

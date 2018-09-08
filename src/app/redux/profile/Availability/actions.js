@@ -1,6 +1,6 @@
 import { API } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
-import { Get, Post } from '../../../services/http';
+import { Get, Post} from '../../../services/http';
 import { getUserInfo } from '../../../services/http';
 
 export const AvailabilityActions = {
