@@ -1,10 +1,12 @@
 import _ from 'lodash'
 import { getUserInfo } from '../../../services/http'
 import { getDataValueArray } from '../../../utils/validations'
+import { PROFILE_SERVICE_PROVIDER_TYPE_ID, ORG_SERVICE_PROVIDER_TYPE_ID} from '../../../constants/constants';
 export const PERSONAL_DETAIL = {
   UPDATE_PERSONAL_DETAIL: 'UPDATE_PERSONAL_DETAIL',
   UPDATE_ORGANIZATION_DETAIL: 'UPDATE_ORGANIZATION_DETAIL'
-}
+};
+
 
 export const getModal = (data, action) => {
   let states = getDataValueArray(
@@ -13,8 +15,6 @@ export const getModal = (data, action) => {
   )
   
   let organization = _.split(data.organization, '-')
-  console.log(data.selectedState)
-  console.log(states)
   switch (action) {
     case PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL:
     let gender = getDataValueArray(
@@ -22,10 +22,8 @@ export const getModal = (data, action) => {
       '-'
     )
     return {
-        serviceProviderId: localStorage.getItem('serviceProviderID')
-          ? localStorage.getItem('serviceProviderID')
-          : 1,
-        serviceProviderTypeId: 1,
+        serviceProviderId: getUserInfo().serviceProviderId,
+        serviceProviderTypeId: PROFILE_SERVICE_PROVIDER_TYPE_ID,
         individual: {
           firstName: data.firstName,
           middleName: 'M',
@@ -48,7 +46,7 @@ export const getModal = (data, action) => {
         addresses: [
           {
             addressId: 1,
-            serviceProviderId: 1,
+            serviceProviderId: getUserInfo().serviceProviderId,
             addressTypeId: 2,
             streetAddress: data.streetAddress,
             city: data.city,
@@ -64,10 +62,9 @@ export const getModal = (data, action) => {
         isActive: true
       }
     case PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL:
-    console.log('getUserInfo', getUserInfo());
       return {
         serviceProviderId: getUserInfo().serviceProviderId,
-        serviceProviderTypeId: 2,
+        serviceProviderTypeId: ORG_SERVICE_PROVIDER_TYPE_ID,
         individual: {
           firstName: '',
           middleName: '',
@@ -93,7 +90,7 @@ export const getModal = (data, action) => {
         addresses: [
           {
             addressId: 1,
-            serviceProviderId: getUserInfo().serviceProviderID,
+            serviceProviderId: getUserInfo().serviceProviderId,
             addressTypeId: 2,
             streetAddress: data.streetAddress,
             city: data.city,
