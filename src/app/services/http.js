@@ -5,6 +5,7 @@ export const baseURL = process.env.REACT_APP_API_URL
 export const authURL = process.env.REACT_APP_AUTH_URL
 export const serviceRequestURL = process.env.REACT_APP_SR_URL
 export const messageURL = process.env.REACT_APP_MSG_URL
+export const elasticSearchURL = process.env.REACT_APP_ES_URL;
 
 export const AuthLogin = (url, data) => {
   var bodyFormData = new FormData()
@@ -175,4 +176,12 @@ export const getServiceProviderId = () => {
     store.getState().authState.userState.userData &&
     store.getState().authState.userState.userData.serviceProviderId
   )
+}
+
+export const elasticSearchPost = (url, data) => {
+  return axios.post(elasticSearchURL + url, data, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
 }

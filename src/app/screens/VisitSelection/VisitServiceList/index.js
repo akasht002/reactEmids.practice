@@ -14,13 +14,28 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
+import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
+import Filter from "./ServiceRequestFilters";
+
 import './style.css'
 
 class VisitServiceList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { serviceRequestId: '', isOpen: false };
+        this.state = { 
+            serviceRequestId: '', 
+            isOpen: false,
+            filterOpen: false,
+            startDate:'',
+            endDate:'',
+            serviceStatus:[],
+            isValid:true,
+            selectedOption: null,
+            ServiceCategoryId:'',
+            serviceTypes:[] 
+        };
     };
 
     toggle() {
@@ -31,6 +46,8 @@ class VisitServiceList extends Component {
 
     componentDidMount() {
         this.props.getVisitServiceList();
+        this.props.getServiceCategory();
+        this.props.ServiceRequestStatus()
     }
 
     handleClick = (requestId) => {
@@ -58,7 +75,188 @@ class VisitServiceList extends Component {
             return null;
         }
     }
+        /* filter code */ 
+    toggleFilter=()=>{
+        this.setState({
+            filterOpen: !this.state.filterOpen
+        })
+    }
+        
+    dateChanged = (date) => {
+        const formattedDate = formattedDateMoment(date);
+        this.setState({  
+            startDate: formattedDate
+           
+        });
+
+    }
     
+    dateChangedRaw = (event) => {
+        const formattedDate = formattedDateChange(event);
+        this.setState({  
+            startDate: formattedDate
+        });
+ 
+    }
+    todateChanged = (date) => {
+        const formattedDate = formattedDateMoment(date);
+        this.setState({  
+            endDate: formattedDate
+        });
+
+    }
+
+    todateChangedRaw = (event) => {
+        const formattedDate = formattedDateChange(event);
+        this.setState({  
+            endDate: formattedDate
+        });
+    }
+
+    applyFilter =() =>{
+        if ((this.state.serviceTypes) && (this.state.ServiceCategoryId)) {
+            let data = {
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                serviceStatus: this.state.serviceStatus,
+                ServiceCategoryId:this.state.ServiceCategoryId,
+                serviceTypes:this.state.serviceTypes
+            };
+            this.props.getFilter(data)
+            this.setState({
+                filterOpen: !this.state.filterOpen
+            })
+        } else {
+            this.setState({ isValid: false });
+        }
+    }
+
+    applyReset =() =>{
+        this.setState({
+            startDate:'',
+            endDate:'',
+            serviceStatus:[],
+            ServiceCategoryId:'',
+            serviceTypes:[],
+            isValid: true
+        })
+    
+    }
+   
+    handleChangeServiceCategory=(selectedOption)=>{
+        this.setState({ 
+            ServiceCategoryId:selectedOption.label,
+            selectedOption:selectedOption  
+        });
+        this.props.getServiceType(selectedOption.value)
+    }
+
+    handleserviceType =(item) =>{
+        let serviceType = this.state.serviceTypes
+        serviceType.push(item.serviceTypeDescription)
+        this.setState({
+            serviceTypes:serviceType
+        })
+    }
+
+    handleChangeserviceStatus =(item) =>{
+        let service = this.state.serviceStatus
+        service.push(item.keyValue)
+        this.setState({
+            serviceStatus:service
+        })
+    }
+    /* filter code */ 
+    toggleFilter=()=>{
+        this.setState({
+            filterOpen: !this.state.filterOpen
+        })
+    }
+        
+    dateChanged = (date) => {
+        const formattedDate = formattedDateMoment(date);
+        this.setState({  
+            startDate: formattedDate
+            
+        });
+
+    }
+    
+    dateChangedRaw = (event) => {
+        const formattedDate = formattedDateChange(event);
+        this.setState({  
+            startDate: formattedDate
+        });
+    
+    }
+    todateChanged = (date) => {
+        const formattedDate = formattedDateMoment(date);
+        this.setState({  
+            endDate: formattedDate
+        });
+
+    }
+
+    todateChangedRaw = (event) => {
+        const formattedDate = formattedDateChange(event);
+        this.setState({  
+            endDate: formattedDate
+        });
+    }
+
+    applyFilter =() =>{
+        if ((this.state.serviceTypes) && (this.state.ServiceCategoryId)) {
+            let data = {
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                serviceStatus: this.state.serviceStatus,
+                ServiceCategoryId:this.state.ServiceCategoryId,
+                serviceTypes:this.state.serviceTypes
+            };
+            this.props.getFilter(data)
+            this.setState({
+                filterOpen: !this.state.filterOpen
+            })
+        } else {
+            this.setState({ isValid: false });
+        }
+    }
+
+    applyReset =() =>{
+        this.setState({
+            startDate:'',
+            endDate:'',
+            serviceStatus:[],
+            ServiceCategoryId:'',
+            serviceTypes:[],
+            isValid: true
+        })
+    
+    }
+    
+    handleChangeServiceCategory=(selectedOption)=>{
+        this.setState({ 
+            ServiceCategoryId:selectedOption.label,
+            selectedOption:selectedOption  
+        });
+        this.props.getServiceType(selectedOption.value)
+    }
+
+    handleserviceType =(item) =>{
+        let serviceType = this.state.serviceTypes
+        serviceType.push(item.serviceTypeDescription)
+        this.setState({
+            serviceTypes:serviceType
+        })
+    }
+
+    handleChangeserviceStatus =(item) =>{
+        let service = this.state.serviceStatus
+        service.push(item.keyValue)
+        this.setState({
+            serviceStatus:service
+        })
+    }
     render() {
 
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -118,7 +316,7 @@ class VisitServiceList extends Component {
                     </div>
                     <div className='ProfileHeaderOptions'>
                         <a className='primaryColor ProfileHeaderSort' to=''>Sort</a>
-                        <a className='primaryColor' to=''>Filters</a>
+                        <span className='primaryColor' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
@@ -126,6 +324,30 @@ class VisitServiceList extends Component {
                         {visitList}
                     </div>
                 </Scrollbars>
+                <Filter 
+                    isOpen={this.state.filterOpen} 
+                    toggle={this.toggleFilter} 
+                    applyFilter={this.applyFilter}
+                    applyReset={this.applyReset}
+                    startDate={this.state.startDate}
+                    dateChanged={this.dateChanged}
+                    dateChangedRaw={this.dateChangedRaw}
+                    todateChanged={this.todateChanged}
+                    todateChangedRaw={this.todateChangedRaw}
+                    endDate={this.state.endDate}
+                    serviceStatus={this.state.serviceStatus}
+                    isValid={this.state.isValid}
+                    serviceStatus={this.state.serviceStatus}
+                    ServiceCategory={this.props.ServiceCategory}
+                    handleChangeServiceCategory={this.handleChangeServiceCategory}
+                    ServiceCategoryId={this.state.ServiceCategoryId}
+                    selectedOption={this.state.selectedOption}
+                    ServiceType={this.props.ServiceType}
+                    handleserviceType={this.handleserviceType}
+                    ServiceStatus={this.props.ServiceStatus}
+                    handleChangeserviceStatus={this.handleChangeserviceStatus}
+                    serviceStatus={this.state.serviceStatus}
+                />
             </AsideScreenCover>
         )
     }
@@ -135,14 +357,21 @@ function mapDispatchToProps(dispatch) {
     return {
         getVisitServiceList: () => dispatch(getVisitServiceList()),
         getVisitServiceDetails: (data) => dispatch(getVisitServiceDetails(data)),
-        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data))
+        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data)),
+        getServiceCategory: () => dispatch(getServiceCategory()),
+        ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
+        getServiceType: (data) => dispatch(getServiceType(data)),
+        getFilter:(data)  => dispatch(getFilter(data))
     }
 };
 
 function mapStateToProps(state) {
     return {
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
-        profileImgData: state.profileState.PersonalDetailState.imageData
+        profileImgData: state.profileState.PersonalDetailState.imageData,
+        ServiceCategory:state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
+        ServiceStatus:state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
+        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType
     };
 };
 
