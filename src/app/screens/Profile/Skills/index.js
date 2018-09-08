@@ -60,7 +60,7 @@ class Skills extends Component {
         
         const fieldDifference = compare(previousValue, staeSelectValue);
 
-        if (fieldDifference === true || previousValue == NaN) {
+        if (fieldDifference === true || previousValue === isNaN) {
             this.setState({ isSkillsModalOpen: false, isDiscardModalOpen: false })
         } else {
             this.setState({ isSkillsModalOpen: true, isDiscardModalOpen: true })

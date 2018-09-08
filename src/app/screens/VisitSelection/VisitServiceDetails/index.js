@@ -57,7 +57,7 @@ class VisitServiceDetails extends Component {
     }
 
     selectedServiceType = (e) => {
-        this.setState({ serviceType: parseInt(e.target.id) })
+        this.setState({ serviceType: parseInt(e.target.id, 0) })
     }
 
     getSlotName = (slot) => {
@@ -96,6 +96,7 @@ class VisitServiceDetails extends Component {
                                 <li><i>{i + 1}</i>{taskDetails.serviceTaskDescription}</li>
                             )
                         }
+                        return description
                     })}
                 </div>
             )

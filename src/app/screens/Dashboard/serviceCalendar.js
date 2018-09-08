@@ -7,8 +7,7 @@ import { Scrollbars } from '../../components'
 import './ProfileMainPanel.css'
 import {
   convertStringToDate,
-  partialCompare,
-  getLength
+  partialCompare
 } from '../../utils/validations'
 import {
   getServiceProviderVists,
