@@ -1,7 +1,6 @@
 import React from 'react'
 import {
-  Scrollbars,
-  ToggleSwitch
+  Scrollbars
 } from '../../components'
 import ServiceCalendar from './serviceCalendar'
 import ServiceRequest from './serviceRequest'

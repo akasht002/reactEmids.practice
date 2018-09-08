@@ -1,7 +1,7 @@
 import { API } from '../../../services/api';
 import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Skills = {
@@ -37,10 +37,10 @@ export function getSkills() {
 
 export function addSkills(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let skills = data ? data.split(/\s*,\s*/).map((val) => {
             return {
-                id: Number.parseInt(val,0),
+                id: Number.parseInt(val,10),
                 name: ""
             }
         }) : [];
@@ -62,7 +62,7 @@ export function addSkills(data) {
 
 export function getSelectedSkills() {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Get(API.addSkills + serviceProviderId + '/Skills').then((resp) => {
             dispatch(getSelectedSkillsDetails(resp.data))

@@ -12,12 +12,12 @@ import {
   TextArea,
   SelectBox,
   ProfileModalPopup,
-  ModalPopup
+  ModalPopup,ScreenCover,
+  ProfileImage
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import { OrganizationData } from '../../../data/OrganizationData';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
-import { ProfileImage } from '../../../components';
 import {
   checkTextNotStartWithNumber,
   getArrayLength,
@@ -34,6 +34,8 @@ class PersonalDetail extends React.PureComponent {
       useEllipsis: true,
       EducationModal: false,
       isDiscardModalOpen: false,
+      isAlertModalOpen:false,
+      isValidPhoneNumber:true,
       ModalOrg: true,
       src: null,
       crop: {
@@ -89,7 +91,11 @@ class PersonalDetail extends React.PureComponent {
         ? nextProps.personalDetail.address[0].state.id
         : '' + '-' +getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
         ? nextProps.personalDetail.address[0].state.name:''
-      }
+      },
+      addressId:getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressId != null
+      ? nextProps.personalDetail.address[0].addressId:0,
+      addressTypeId:getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressTypeId != null
+      ? nextProps.personalDetail.address[0].addressTypeId:2
     })
     this.styles = {
       height: 100,
@@ -106,7 +112,7 @@ class PersonalDetail extends React.PureComponent {
       : ''
     this.states = getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
       ? nextProps.personalDetail.address[0].state.name
-      : ''
+      : ''      
   }
 
   handleChange = () => {
@@ -114,12 +120,24 @@ class PersonalDetail extends React.PureComponent {
   }
 
   reUpload = e => {
-    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE) {
+    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE && e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
       this.setState({
         uploadedImageFile: URL.createObjectURL(e.target.files[0])
-      })
+      }) 
+      const reader = new FileReader()
+      reader.addEventListener(
+        'load',
+        () =>
+          this.setState({
+            src: reader.result
+          }),
+        false
+      )
+      reader.readAsDataURL(e.target.files[0])
     } else {
-      alert('Please insert a image less than 2 MB')
+      this.setState({
+        isAlertModalOpen: !this.state.isAlertModalOpen
+      })  
     }
   }
 
@@ -135,6 +153,7 @@ class PersonalDetail extends React.PureComponent {
         false
       )
       reader.readAsDataURL(e.target.files[0])
+    
     }
   }
 
@@ -142,9 +161,10 @@ class PersonalDetail extends React.PureComponent {
     if (
       getLength(this.state.firstName) === 0 ||
       getLength(this.state.lastName) === 0 ||
-      getLength(this.state.phoneNumber) === 0
+      getLength(this.state.phoneNumber) <10
     ) {
-      this.setState({ isValid: false })
+      
+      this.setState({ isValid: false})
     } else {
       this.props.updatePersonalDetail(this.state)
       this.setState({
@@ -158,12 +178,12 @@ class PersonalDetail extends React.PureComponent {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
-    console.log(this.state.croppedImage)
-    this.props.uploadImg(this.state.croppedImage)
+    this.props.uploadImg(this.state.src)
   }
 
   onCroppeds = e => {
     let image = e.image
+    console.log( e.image)
     this.setState({
       croppedImage: image
     })
@@ -198,7 +218,7 @@ class PersonalDetail extends React.PureComponent {
 
     const ProfileDetail = this.renderDetails()
     return (
-      <React.Fragment>
+      <ScreenCover isLoading={this.props.isLoading}>
         {ProfileDetail}
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
@@ -225,7 +245,25 @@ class PersonalDetail extends React.PureComponent {
               isDiscardModalOpen: false
             })}
         />
-      </React.Fragment>
+        <ModalPopup
+          isOpen={this.state.isAlertModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)</span>}
+          btn1='OK'
+          // btn2='OK'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() =>
+            this.setState({
+              isAlertModalOpen: false
+            })}
+          onCancel={() =>
+            this.setState({
+              isDiscardModalOpen: false
+            })}
+        />
+       </ScreenCover>
     )
   }
 
@@ -308,7 +346,7 @@ class PersonalDetail extends React.PureComponent {
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
-        <div className={'SPDetailsContainer SPdpWidget'}>
+        {/* <div className={'SPDetailsContainer SPdpWidget'}>
           <div className={'SPdpContainer'}>
             <svg viewBox='0 0 36 36' className='circular-chart'>
               <path
@@ -327,10 +365,23 @@ class PersonalDetail extends React.PureComponent {
               }
             />
           </div>
-          {/* <span className={'SPRating'}>
+          <span className={'SPRating'}>
             <i className={'Icon iconFilledStar'} />4.2
-          </span> */}
-        </div>
+          </span>
+        </div> */}
+        <ProfileImage
+          src={
+            this.state.imageProfile
+              ? this.state.imageProfile
+              : require('../../../assets/images/Blank_Profile_icon.png')
+          }
+          profilePercentage={this.props.profilePercentage}
+          profileImageWidget='SPDetailsContainer SPdpWidget'
+          profileImageContainer='SPdpContainer'
+          cicularChart='SPdpCircularChart'
+          circle='SPdpCircle'
+          profileImage='SPdpImage'
+        />
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>
             <div className={'col-md-7 p-0'}>
@@ -561,7 +612,7 @@ class PersonalDetail extends React.PureComponent {
                   const re = /^[0-9\b]+$/
                   if (
                     (e.target.value === '' || re.test(e.target.value)) &&
-                    getLength(e.target.value) <= 3
+                    getLength(e.target.value) <= 3 && (e.target.value)<=100
                   ) {
                     this.setState({ age: e.target.value })
                   }
@@ -636,10 +687,11 @@ class PersonalDetail extends React.PureComponent {
             className='form-control'
             rows='5'
             value={this.state.description}
+            maxlength={'500'}
             textChange={e => {
-              if (getLength(e.target.value) <= 500) {
+              // if (getLength(e.target.value) <= 500) {
                 this.setState({ description: e.target.value })
-              }
+              // }
             }}
           />
         </div>
@@ -652,7 +704,7 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.hourlyRate}
             maxlength='7'
             textChange={e => {
-              const re = /^\d*\.?\d{0,2}$/
+              // const re = /^\d*\.?\d{0,2}$/
               if (e.target.value === '' || checkhourlyRate(e.target.value)) {
                 this.setState({ hourlyRate: e.target.value })
               }
@@ -774,24 +826,41 @@ class PersonalDetail extends React.PureComponent {
                         !this.state.phoneNumber &&
                         'inputFailure')
                     }
-                    textChange={e => {
-                      const re = /^[0-9\b]+$/
-                      if (
-                        (e.target.value === '' || re.test(e.target.value)) &&
-                        getLength(e.target.value) <= 10
-                      ) {
-                        this.setState({ phoneNumber: e.target.value })
+                    textChange={e =>
+                    //    {
+                    //   const re = /^[0-9\b]+$/
+                    //   if (
+                    //     (e.target.value === '' || re.test(e.target.value)) &&
+                    //     getLength(e.target.value) <= 10
+                    //   ) {
+                    //     this.setState({ phoneNumber: e.target.value })
+                    //   }
+                    // }
+                    {
+                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+                      if (onlyNums.length < 10) {
+                        this.setState({ phoneNumber: onlyNums,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10) })
+                      } else if (onlyNums.length === 10) {
+                        const number = onlyNums.replace(
+                          /(\d{3})(\d{3})(\d{4})/,
+                          '$1-$2-$3'
+                        )
+                        this.setState({ phoneNumber: number ,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10)})
                       }
-                    }}
+                    }
+                  }
                   />
                   {!this.state.isValid &&
-                    !this.state.phoneNumber &&
+                    !getLength(this.state.phoneNumber) >10 &&
                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                       Please enter
                       {' '}
                       {this.state.phoneNumber === '' && ' Phone Number'}
-                    </span>}
-
+                    </span>}  
+                    {!this.state.isValidPhoneNumber &&
+                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                  Please enter vaild last name
+                </span>}                 
                 </div>
               </div>
             </div>
@@ -830,7 +899,6 @@ class PersonalDetail extends React.PureComponent {
     }
 
     const fieldDifference = _.isEqual(old_data, updated_data)
-    console.log(_.isEqual(old_data, updated_data))
 
     if (fieldDifference === true) {
       this.setState({ certificationModal: false, isDiscardModalOpen: false })
@@ -873,6 +941,7 @@ function mapStateToProps(state) {
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
     profileImgData: state.profileState.PersonalDetailState.imageData,
     genderList: state.profileState.PersonalDetailState.genderList,
+    isLoading:state.loadingState.isLoading
   }
 }
 export default withRouter(

@@ -2,8 +2,8 @@ import {PERSONAL_DETAIL ,getModal} from './modal'
 import { API } from '../../../services/api';
 import { Get, Post, Put } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions'
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
+import { getUserInfo } from '../../../services/http';
 
 export const PersonalDetails = {
   GET_PERSONAL_DETAIL_SUCCESS: 'GET_PERSONAL_DETAIL_SUCCESS',
@@ -84,7 +84,7 @@ export const updatePersonalDetailSuccess = isSuccess => {
 
 export function uploadImg (data) {
   return (dispatch, getState) => {
-    let serviceProviderId = localStorage.getItem('serviceProviderID');    
+    let serviceProviderId = getUserInfo().serviceProviderId;    
     let modal = {
       serviceProviderId: serviceProviderId,
       image: data
@@ -104,7 +104,7 @@ export function uploadImg (data) {
 
 export function getImage () {
   return (dispatch, getState) => {
-    let serviceProviderId = localStorage.getItem('serviceProviderID');
+    let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
     Get(API.getImage + serviceProviderId)
       .then(resp => {
@@ -119,7 +119,7 @@ export function getImage () {
 
 export function getPersonalDetail () {
   return (dispatch, getState) => {
-    let serviceProviderId = localStorage.getItem('serviceProviderID')?localStorage.getItem('serviceProviderID'):1;
+    let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
     Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
       .then(resp => {
@@ -132,9 +132,9 @@ export function getPersonalDetail () {
   }
 }
 
-export function updatePersonalDetail (data) {
+export function updatePersonalDetail (data) { 
   let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL)
-  let serviceProviderId = localStorage.getItem('serviceProviderID')?localStorage.getItem('serviceProviderID'):1;
+  let serviceProviderId = getUserInfo().serviceProviderId;
   return (dispatch, getState) => {    
     dispatch(startLoading())
     Put(API.updatePersonalDetail + serviceProviderId, modelData)
@@ -153,7 +153,7 @@ export function updatePersonalDetail (data) {
 
 export function updateOrganizationDetail (data) {
   let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL)
-  let serviceProviderId = localStorage.getItem('serviceProviderID');  
+  let serviceProviderId = getUserInfo().serviceProviderId;
   return (dispatch, getState) => {    
     dispatch(startLoading())
     Put(API.updatePersonalDetail + serviceProviderId, modelData)

@@ -1,7 +1,7 @@
 import { API } from '../../../services/api';
 import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const Languages = {
@@ -37,10 +37,10 @@ export function getLanguages() {
 
 export function addLanguages(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let languages = data ? data.split(/\s*,\s*/).map((val) => {
             return {
-                id: Number.parseInt(val, 0),
+                id: Number.parseInt(val,10),
                 name: ""
             }
         }) : [];
@@ -62,7 +62,7 @@ export function addLanguages(data) {
 
 export function getSelectedLanguages() {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Get(API.addLanguages + serviceProviderId + '/Language').then((resp) => {
             dispatch(getSelectedLanguageDetails(resp.data))

@@ -231,6 +231,11 @@ li div.dropdown-menu{
     width: 265px;
 }
 
+.ServiceRequestBoard .BlockImageDetails
+{
+    margin: 0 auto;
+}
+
 .BlockImageDetailsName{
     font-size: 16px;
     line-height: 16px;
@@ -299,6 +304,8 @@ li div.dropdown-menu{
 
 .BlockProfileDetailsStatus{
     float: right;
+    right: 18px;
+    position: relative;
 }
 
 .btn-hired{

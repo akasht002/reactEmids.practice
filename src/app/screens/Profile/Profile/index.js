@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 import { ProfileHeader, ScreenCover } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
@@ -8,28 +10,22 @@ import PersonalDetail from "../PersonalDetail";
 import Organization from "../Organization"
 import WorkHistory from "../WorkHistory";
 import Skills from "../Skills/index";
+import { Path } from '../../../routes';
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from "../Availability/index";
 import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
-import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
-import { ModalUserAgreement } from '../../../components';
 
 import './styles.css';
 
 class Profile extends Component {
-    
-    componentDidMount() {
-        this.props.getUserInfo();
-        this.props.getProfilePercentage();
-    }
-    
-    onClickOk = () => {
-        this.props.onClickOk();
-    }
 
+    componentDidMount() {
+        this.props.getProfilePercentage();
+      }
+      
     render() {
         return (
-            <ScreenCover>
+            <section>
                 <div className="container-fluid p-0">
                     <ProfileHeader />
                     <div className="width100 mainWidgetProfile mainWidgetOverflow">
@@ -38,7 +34,8 @@ class Profile extends Component {
                             <div className="row d-flex justify-content-center m-auto">
                                 <div className="col-md-12">
                                     <h4 className="my-3 text-white SPTitleText">
-                                        <a><i className="Icon icon-back" /></a>
+                                        <Link className='BrandLink' to={Path.dashboard}>
+                                            <i className="Icon icon-back" /></Link>
                                         Profile
                                     </h4>
                                 </div>
@@ -72,33 +69,22 @@ class Profile extends Component {
                         </div>
                     </div>
                 </div>
-                <ModalUserAgreement
-                    isOpen={this.props.isEulaUpdated}
-                    ModalBody={<div dangerouslySetInnerHTML={{ __html: this.props.eulaContent }} />}
-                    className="modal-lg"
-                    modalTitle="User Agreement has been updated, please accept to proceed."
-                    onClick={this.onClickOk}
-                />
-            </ScreenCover>
+            </section>
         )
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getUserInfo: () => dispatch(getUserInfo()),
-        onClickOk: () => dispatch(updateEula()),
         getProfilePercentage: () => dispatch(getProfilePercentage()),
     }
 };
 
 function mapStateToProps(state) {
     return {
-        isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
-        eulaContent: state.authState.userAgreementState.eulaContent,
+        SERVICE_PROVIDER_TYPE_ID: state.authState.userState.userData.userInfo.serviceProviderTypeId,
         profilePercentage: state.profileState.progressIndicatorState.profilePercentage
     };
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
-

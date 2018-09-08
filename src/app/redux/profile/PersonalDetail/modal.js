@@ -1,30 +1,31 @@
 import _ from 'lodash'
-import { getServiceProviderId } from '../../../services/http'
-import { getDataValueArray } from '../../../utils/validations'
+import { getUserInfo } from '../../../services/http'
+import { getDataValueArray, getValueOfArray } from '../../../utils/validations'
+import {
+  PROFILE_SERVICE_PROVIDER_TYPE_ID,
+  ORG_SERVICE_PROVIDER_TYPE_ID
+} from '../../../constants/constants'
 export const PERSONAL_DETAIL = {
   UPDATE_PERSONAL_DETAIL: 'UPDATE_PERSONAL_DETAIL',
   UPDATE_ORGANIZATION_DETAIL: 'UPDATE_ORGANIZATION_DETAIL'
 }
 
 export const getModal = (data, action) => {
-  let states = getDataValueArray(
-    data.selectedState.value ? data.selectedState.value : data.selectedState,
-    '-'
-  )
-  let gender = getDataValueArray(
-    data.selectedGender.value ? data.selectedGender.value : data.selectedGender,
-    '-'
-  )
+  let states = data.selectedState.value
+    ? getDataValueArray(data.selectedState.value, '-')
+    : getValueOfArray(data.selectedState, '-')
   let organization = _.split(data.organization, '-')
-  console.log(data.selectedState)
-  console.log(states)
   switch (action) {
     case PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL:
+      let gender = getDataValueArray(
+        data.selectedGender.value
+          ? data.selectedGender.value
+          : data.selectedGender,
+        '-'
+      )
       return {
-        serviceProviderId: localStorage.getItem('serviceProviderID')
-          ? localStorage.getItem('serviceProviderID')
-          : 1,
-        serviceProviderTypeId: 1,
+        serviceProviderId: getUserInfo().serviceProviderId,
+        serviceProviderTypeId: PROFILE_SERVICE_PROVIDER_TYPE_ID,
         individual: {
           firstName: data.firstName,
           middleName: 'M',
@@ -46,14 +47,14 @@ export const getModal = (data, action) => {
         hourlyRate: data.hourlyRate ? data.hourlyRate : 0,
         addresses: [
           {
-            addressId: 1,
-            serviceProviderId: 1,
-            addressTypeId: 2,
+            addressId: data.addressId,
+            serviceProviderId: getUserInfo().serviceProviderId,
+            addressTypeId: data.addressTypeId,
             streetAddress: data.streetAddress,
             city: data.city,
             state: {
               id: states[0],
-              name: states[1]?states[1]:''
+              name: states[1] ? states[1] : ''
             },
             zipCode: data.zipCode ? data.zipCode : 0,
             isActive: true
@@ -64,16 +65,16 @@ export const getModal = (data, action) => {
       }
     case PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL:
       return {
-        serviceProviderId: getServiceProviderId(),
-        serviceProviderTypeId: 2,
+        serviceProviderId: getUserInfo().serviceProviderId,
+        serviceProviderTypeId: ORG_SERVICE_PROVIDER_TYPE_ID,
         individual: {
           firstName: '',
           middleName: '',
-          lastName: data.lastName,
-          age: data.age ? data.age : 0,
+          lastName: '',
+          age: '',
           gender: {
-            genderId: gender ? gender[0] : 0,
-            name: gender ? gender[1] : ''
+            genderId: 0,
+            name: ''
           },
           yearOfExperience: data.yearOfExperience ? data.yearOfExperience : 0,
           affiliation: {
@@ -83,7 +84,7 @@ export const getModal = (data, action) => {
         },
         entity: {
           organization: data.organizationName ? data.organizationName : '',
-          entityId: '',
+          entityId: 0,
           hourlyRate: ''
         },
         description: data.description,
@@ -91,7 +92,7 @@ export const getModal = (data, action) => {
         addresses: [
           {
             addressId: 1,
-            serviceProviderId: getServiceProviderId(),
+            serviceProviderId: getUserInfo().serviceProviderId,
             addressTypeId: 2,
             streetAddress: data.streetAddress,
             city: data.city,

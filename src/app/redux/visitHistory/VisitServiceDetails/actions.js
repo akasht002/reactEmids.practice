@@ -2,8 +2,6 @@ import axios from 'axios';
 import { API, baseURLServiceRequest } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
 import {SERVICE_PROVIDER} from '../../../redux/constants/constants'
-import { push } from '../../navigation/actions';
-import { Path } from '../../../routes';
 
 export const vistServiceHistoryDetails = {
     getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
