@@ -23,7 +23,13 @@ class VisitServiceList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { serviceRequestId: '', isOpen: false };
+        this.state = { 
+            serviceRequestId: '',
+            isOpen: false,
+            isSortOpen: false,
+            newest: true,
+            posted: true 
+        };
     };
 
     toggle() {
