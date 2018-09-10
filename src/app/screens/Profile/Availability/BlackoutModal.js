@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { ModalPopup } from "../../../components";
-import { formattedDateMoment } from "../../../utils/validations";
 import { TextArea } from "../../../components";
 import { Calendar } from "../../../components";
 import { compare } from "../../../utils/comparerUtility";
-import { newDate, newDateValue } from '../../../utils/validations';
+import { formattedDateMoment, newDate, newDateValue } from '../../../utils/validations';
 
 class BlackoutModal extends Component {
   constructor(props) {
@@ -39,6 +38,7 @@ class BlackoutModal extends Component {
         }
       }));
      } else {
+      this.fromMaxDate  = newDateValue(date);
       this.setState(prevState => ({
         blackoutData: {
           ...prevState.blackoutData,
@@ -70,6 +70,7 @@ class BlackoutModal extends Component {
     const serviceProviderBlackoutDayId = nextProps.itemData.serviceProviderBlackoutDayId;
     this.fromDateProps = formattedDateMoment(nextProps.itemData.startDate);
     this.toDateProps = formattedDateMoment(nextProps.itemData.endDate);
+    this.fromMaxDate  = newDateValue(this.toDateProps);
     this.remarksProps = nextProps.itemData.remarks;
     this.setState(prevState => ({
       blackoutData: {
@@ -146,6 +147,7 @@ class BlackoutModal extends Component {
                     value={fromDate}
                     disabled={this.props.disabledStartDate}
                     minDate={this.fromMinDate}
+                    maxDate={this.fromMaxDate}
                     className={
                       "form-control datePicker " +
                       (!this.state.isValid &&
