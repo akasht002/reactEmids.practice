@@ -218,7 +218,7 @@ class Certification extends Component {
         return (
             <div>
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Certification</h4>
+                    <h4 className="primaryColor">Certification and Licence</h4>
                     <i className="SPIconLarge SPIconAdd"
                         onClick={() => this.setState({ certificationModal: true, isAdd: true })} />
                 </div>
