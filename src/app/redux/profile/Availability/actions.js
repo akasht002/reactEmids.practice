@@ -96,6 +96,25 @@ export const updateBlackOutDay = (data) => {
     }
 }
 
+export const deleteBlackoutDay = (data) => {
+    return dispatch => {
+       let modal = {
+            serviceProviderId: getUserInfo().serviceProviderId,
+            serviceProviderBlackoutDayId: data.serviceProviderBlackoutDayId,
+            startDate: data.fromDate,
+            endDate: data.toDate,
+            remarks: data.remarks,
+            isActive: false
+        };
+        dispatch(startLoading());
+        Post(API.addBlackOutDay + getUserInfo().serviceProviderId + '/BlockOutDay', modal).then(resp => {
+            dispatch(getBlackOutDays())
+        }).catch(err => {
+            dispatch(endLoading());
+        })
+    }
+}
+
 export const addBlackOutDaySuccess = (isSuccess) => {
     return {
         type: AvailabilityActions.setBlackoutDays,
