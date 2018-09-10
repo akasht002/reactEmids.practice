@@ -149,17 +149,6 @@ export const handleError = err => {
   throw err
 }
 
-export const getHeader = ()=>  {
-    let userState = store.getState().oidc.user;
-    let token = userState && userState.access_token;
-    let authHeader = token ? {
-        Authorization: 'Bearer ' + token
-    } : {}
-  return {
-    headers: authHeader
-  }
-}
-
 export const MessageURLGet = (url, data) => {
   return axios
     .get(messageURL + url)
@@ -184,4 +173,20 @@ export const elasticSearchPost = (url, data) => {
   }).catch((error) => {
       handleError(error);
   })
+}
+export const getHeader = ()=> {
+  let userState = store.getState().authState.userState;
+  let token = userState && userState.userData && userState.userData.access_token;
+  let authHeader = token ? {
+  Authorization: 'Bearer ' + token
+  } : {}
+  return {
+  headers: authHeader
+  }
+}
+  
+  
+export const getUserInfo = () => {
+  let userState = store && store.getState().authState.userState;
+  return userState && userState.userData && userState.userData.userInfo;
 }

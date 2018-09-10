@@ -1,8 +1,95 @@
 import React, { Fragment } from 'react'
 import Select from 'react-select'
 import Moment from 'react-moment'
+import _ from 'lodash'
 import TimeAgo from 'timeago-react'
 import { getFields } from '../../utils/validations'
+
+export const splitSlots = (data, type) => {
+  let newData = _.reduce(
+    data,
+    function (arr, el) {
+      if (el.slotDescription === type) {
+        arr.push(el)
+      }
+      return arr
+    },
+    []
+  )
+
+  return serviceCalendar(newData)
+}
+
+export const serviceCalendar = newData => {
+  if (newData.length > 0) {
+    return newData.slice(0, 3).map((conversations, index) => {
+      return (
+        <Fragment>
+          <li
+            key={index}
+            className='list-group-item ProfileServicesVisitContent'
+          >
+            <div className='ServicesTimeContainer'>
+              <i className={'ServicesTime ' + conversations.slotDescription} />
+            </div>
+            <div className='ProfileServices'>
+              <span className='ServicesTitle'>
+                {conversations.serviceTypes &&
+                  conversations.serviceTypes.toString()}
+              </span>
+              <span className='ServicesDesc'>
+                {conversations.serviceCategory && conversations.serviceCategory}
+              </span>
+            </div>
+            <div className='ProfileCardImageContainer'>
+              <img
+                alt={'NO_IMAGE'}
+                key={index}
+                className='avatarImage avatarImageBorder'
+                src={
+                  conversations.patientImage
+                    ? conversations.patientImage
+                    : require('../../assets/images/Blank_Profile_icon.png')
+                }
+              />
+            </div>
+            <div className='ProfileCardNameContainer'>
+              <span>
+                {conversations.patientFirstName &&
+                  conversations.patientFirstName}
+                {' '}
+                {conversations.patientLastName && conversations.patientLastName}
+              </span>
+            </div>
+            <Select
+              id='ProfileMonth'
+              onBlurResetsInput={false}
+              multiple={false}
+              className='ProfileSubOptions ProfileMonthList'
+              searchable={false}
+              options={[
+                { label: 'Call', value: '1' },
+                { label: 'Message', value: '2' },
+                { label: 'Video', value: '3' }
+              ]}
+              // value={this.state.selectedValue}
+            />
+          </li>
+        </Fragment>
+      )
+    })
+  } else {
+    return (
+      <Fragment>
+        <li className='list-group-item ProfileServicesVisitContent'>
+          <div className='NoProfileServices'>
+            <i className='NoInformationIcon' /><span>No Visits</span>
+          </div>
+        </li>
+      </Fragment>
+    )
+  }
+}
 
 export const ServiceCalendarInfo = props => {
   return props.Servicelist.slice(0, 3).map((conversations, index) => {
@@ -59,90 +146,22 @@ export const ServiceCalendarInfo = props => {
   })
 }
 
+export const calendarData = data => {}
+
 export const ServiceCalendarDefault = props => {
   return (
     <React.Fragment>
-       <h6 className='VisitScheduleTitle'>Morning</h6>
+      <h6 className='VisitScheduleTitle'>Morning</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        <li className='list-group-item ProfileServicesVisitContent'>
-        <div className='NoProfileServices'>
-            <i className='NoInformationIcon' /><span>No Visits</span>
-          </div>
-          {/* <div className='ServicesTimeContainer'>
-                                    <i className='ServicesTime Morning'/>
-                                </div> */}
-          {/* <div className='ProfileServices'>
-            <span className='ServicesTitle'>Bathing, Grooming, Nursing</span>
-            <span className='ServicesDesc'>Activity of Daily Living</span>
-          </div>
-          <div className='ProfileCardImageContainer'>
-            <img alt="NO"
-              className='ProfileImage'
-              src={ require('../assets/images/Morning.png')}
-            />
-          </div>
-          <div className='ProfileCardNameContainer'>
-            <span>Anya Lee</span>
-          </div>
-          <Select
-            id='ProfileMonth'
-            onBlurResetsInput={false}
-            multiple={false}
-            className='ProfileSubOptions ProfileMonthList'
-            searchable={false}
-            options={[
-              { label: 'Hired', value: '1' },
-              { label: 'Alaska', value: '2' },
-              { label: 'Arizona', value: '3' }
-            ]}
-            value={this.state.selectedValue}
-          /> */}
-        </li>
+        {splitSlots(props.Servicelist, 'Morning')}
       </ul>
       <h6 className='VisitScheduleTitle'>Afternoon</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        <li className='list-group-item ProfileServicesVisitContent'>
-        <div className='NoProfileServices'>
-            <i className='NoInformationIcon' /><span>No Visits</span>
-          </div>
-          {/* <div className='ServicesTimeContainer'>
-                                    <i className='ServicesTime Afternoon'/>
-                                </div> */}
-          {/* <div className='ProfileServices'>
-            <span className='ServicesTitle'>Bathing, Grooming, Nursing</span>
-            <span className='ServicesDesc'>Activity of Daily Living</span>
-          </div>
-          <div className='ProfileCardImageContainer'>
-            <img
-              className='ProfileImage'
-              src={ require('../assets/images/Morning.png')}
-            />
-          </div>
-          <div className='ProfileCardNameContainer'>
-            <span>Anya Lee</span>
-          </div>
-          <Select
-            id='ProfileMonth'
-            onBlurResetsInput={false}
-            multiple={false}
-            className='ProfileSubOptions ProfileMonthList'
-            searchable={false}
-            options={[
-              { label: 'Hired', value: '1' },
-              { label: 'Alaska', value: '2' },
-              { label: 'Arizona', value: '3' }
-            ]}
-            value={this.state.selectedValue}
-          /> */}
-        </li>
+        {splitSlots(props.Servicelist, 'Afternoon')}
       </ul>
       <h6 className='VisitScheduleTitle'>Evening</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        <li className='list-group-item ProfileServicesVisitContent'>
-          <div className='NoProfileServices'>
-            <i className='NoInformationIcon' /><span>No Visits</span>
-          </div>
-        </li>
+        {splitSlots(props.Servicelist, 'Evening')}
       </ul>
     </React.Fragment>
   )

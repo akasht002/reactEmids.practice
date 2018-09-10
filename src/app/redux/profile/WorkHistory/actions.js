@@ -1,7 +1,7 @@
 import { API } from '../../../services/api';
 import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 
 export const WorkHistory = {
@@ -33,7 +33,7 @@ export const getWorkhistoryFieldDetails = (data) => {
 
 export function getWorkHistory() {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Get(API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
             dispatch(getWorkhistorySuccess(resp.data))
@@ -47,7 +47,7 @@ export function getWorkHistory() {
 
 export function addWorkHistory(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let modal = {
             ServiceProviderId: serviceProviderId,
             workHistoryId:data.workHistoryId,
@@ -74,7 +74,7 @@ export function addWorkHistory(data) {
 
 export function editWorkHistory(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let workHistoryId=data;
         let modal = {
             serviceProviderId: serviceProviderId,
@@ -93,7 +93,7 @@ export function editWorkHistory(data) {
 
 export function updateWorkHistory(data) {
     return (dispatch) => {
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let modal = {
             serviceProviderId: serviceProviderId,
             workHistoryId: data.workHistoryId,
@@ -121,7 +121,7 @@ export function updateWorkHistory(data) {
 export function deleteWorkHistory(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        let serviceProviderId = localStorage.getItem('serviceProviderID');
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let id =data;
         Delete(API.WorkHistory + `${serviceProviderId}/WorkHistory/${id}`, data).then((resp) => {
             dispatch(getWorkHistory());

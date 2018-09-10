@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-// export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
+export const baseURL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 
-export const baseURLServiceRequest = "http://52.172.45.185:9007/api/";
+export const baseURLServiceRequest = "http://52.172.45.185:9008/api/";
 //export const baseURLServiceRequest = "http://localhost:5615/api/";
-export const baseURL = "http://localhost:63633/api/";
+
 //export const baseURLServiceRequest = "http://localhost:5615/api/";
 //export const authURL = "http://52.172.45.185:9005/";
-export const authURL = "http://52.172.45.185:9005/";
+export const authURL = "http://localhost:5000/";
 
 export const messageURL = 'http://52.172.45.185:9002/api/'
 
@@ -53,7 +53,7 @@ export const API = {
     getServiceProviderID:'ServiceProviderOnBoarding/',
     getGender: 'ServiceProviderLookUp/gender',
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
-    saveSummaryDetails: 'VisitProcessing/',
+    saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
     getVisitHistoryList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
     getConversation: 'conversation/user/',
     getUnreadCount: 'Conversation/Unread/User/',
@@ -76,3 +76,5 @@ export const API = {
     getServiceType: 'ServiceRequest/ServiceType/',
     PostSearchServiceRequest:'Search/PostSearchServiceRequest'
 }
+
+

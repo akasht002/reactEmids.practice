@@ -7,14 +7,13 @@ import { Scrollbars } from '../../components'
 import './ProfileMainPanel.css'
 import {
   convertStringToDate,
-  partialCompare,
-  getLength
+  partialCompare
 } from '../../utils/validations'
 import {
   getServiceProviderVists,
   getServiceVisitCount
 } from '../../redux/dashboard/Dashboard/actions'
-import { ServiceCalendarInfo, ServiceRequestDefault,ServiceCalendarDefault } from './ServiceInfo'
+import { ServiceCalendarDefault } from './ServiceInfo'
 
 const today = new Date()
 
@@ -273,9 +272,7 @@ class serviceCalendar extends React.Component {
     })
 
     let serviceVist = this.props.serviceVist
-    let visitData = getLength(serviceVist) > 0
-      ? <ServiceCalendarInfo Servicelist={serviceVist} />
-      : <ServiceCalendarDefault />
+    let visitData = <ServiceCalendarDefault Servicelist={serviceVist} />
 
     return (
       <div

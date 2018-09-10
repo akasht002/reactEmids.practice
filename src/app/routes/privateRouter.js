@@ -13,11 +13,11 @@ import {getServiceProviderId} from '../services/http';
 class PrivateRoute extends Component  {
 
   checkUserData = () => {
-    if (!getServiceProviderId()) {
+    if (!this.props.access_token) {
       this.props.checkUserData();
     }
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
-    return getServiceProviderId() || (localStorageData && localStorageData.serviceData && localStorageData.serviceData.serviceProviderID);
+    return (this.props.access_token) || (localStorageData && localStorageData.data && localStorageData.data.access_token);
   }
 
   renderMethod = () => {
@@ -43,12 +43,17 @@ class PrivateRoute extends Component  {
     }
 };
 
+const mapStateToProps = state => {
+  let userState = state.authState.userState; 
+  return {
+    access_token: userState && userState.userData && userState.userData.access_token
+  }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
       checkUserData: () => dispatch(checkUserData())
     }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(PrivateRoute));
-
-  
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PrivateRoute));

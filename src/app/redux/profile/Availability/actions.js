@@ -1,7 +1,7 @@
 import { API } from '../../../services/api';
 import { startLoading, endLoading } from '../../loading/actions';
 import { Get, Post} from '../../../services/http';
-import { getServiceProviderId } from '../../../services/http';
+import { getUserInfo } from '../../../services/http';
 
 export const AvailabilityActions = {
    setAvailabilityDays : 'set_available_days',
@@ -11,7 +11,7 @@ export const AvailabilityActions = {
 
 export const getAvailableDays = () => {
     return dispatch => {
-        Get(API.getAvailableDays + getServiceProviderId() + '/Available').then(resp => {   
+        Get(API.getAvailableDays + getUserInfo().serviceProviderId + '/Available').then(resp => {   
             dispatch(getAvailableDaysSuccess(resp.data[0]))
         }).catch(err => {
             dispatch(endLoading());
@@ -32,7 +32,7 @@ export const updateAvailabilityDays = (data) => {
             availableKeys: data
          };
         dispatch(startLoading());
-        Post(API.addBlackOutDay + getServiceProviderId() + '/Available', modal).then(resp => {
+        Post(API.addBlackOutDay + getUserInfo().serviceProviderId + '/Available', modal).then(resp => {
             dispatch(getAvailableDays());
         }).catch(err => {
             dispatch(endLoading());
@@ -42,7 +42,7 @@ export const updateAvailabilityDays = (data) => {
 
 export const getBlackOutDays = () => { 
     return(dispatch, getState) => {
-            Get(API.getBlackOutDays + getServiceProviderId() + '/BlockOutDay').then((resp) => {
+            Get(API.getBlackOutDays + getUserInfo().serviceProviderId + '/BlockOutDay').then((resp) => {
             dispatch(getBlackOutDaysSuccess(resp.data));
         }).catch( err => {
             dispatch(endLoading());
@@ -61,7 +61,7 @@ export const addBlackOutDay = (data) => {
     return (dispatch, getState) => {
        let serviceProviderBlackoutDayId = 0;
        let modal = {
-            serviceProviderId: getServiceProviderId(),
+            serviceProviderId: getUserInfo().serviceProviderId,
             serviceProviderBlackoutDayId: serviceProviderBlackoutDayId,
             startDate: data.fromDate,
             endDate: data.toDate,
@@ -69,7 +69,7 @@ export const addBlackOutDay = (data) => {
             isActive: true
         };
         dispatch(startLoading());
-        Post(API.addBlackOutDay + getServiceProviderId() + '/BlockOutDay', modal).then(resp => {
+        Post(API.addBlackOutDay + getUserInfo().serviceProviderId + '/BlockOutDay', modal).then(resp => {
             dispatch(getBlackOutDays())
         }).catch(err => {
             dispatch(endLoading());
@@ -80,7 +80,7 @@ export const addBlackOutDay = (data) => {
 export const updateBlackOutDay = (data) => {
     return dispatch => {
        let modal = {
-            serviceProviderId: getServiceProviderId(),
+            serviceProviderId: getUserInfo().serviceProviderId,
             serviceProviderBlackoutDayId: data.serviceProviderBlackoutDayId,
             startDate: data.fromDate,
             endDate: data.toDate,
@@ -88,7 +88,7 @@ export const updateBlackOutDay = (data) => {
             isActive: true
         };
         dispatch(startLoading());
-        Post(API.addBlackOutDay + getServiceProviderId() + '/BlockOutDay', modal).then(resp => {
+        Post(API.addBlackOutDay + getUserInfo().serviceProviderId + '/BlockOutDay', modal).then(resp => {
             dispatch(getBlackOutDays())
         }).catch(err => {
             dispatch(endLoading());

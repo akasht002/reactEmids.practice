@@ -36,7 +36,7 @@ export const clearData = () => {
 
 export function onSetUserSuccess(data){
     return (dispatch, getState) => {
-        dispatch(setUserSuccess(data));
+        // dispatch(setUserSuccess(data));
         dispatch(setServiceProviderDetails(getState().oidc.user.profile.sub));
         dispatch(getUserInactiveTimeout()); 
     }
@@ -65,21 +65,18 @@ export function onClear(){
 }
 
 export function setServiceProviderDetails(emailID){ 
-    return (dispatch, getState) => {
+    return (dispatch, getState) => {           
         Get(API.getServiceProviderID + emailID )
           .then(resp => {
-          let userData = {
+            let userData = {
                 ...getState().oidc.user,
-                serviceData: {
-                    serviceProviderID: resp.data.serviceProviderId,
-                    serviceProviderTypeID: resp.data.serviceProviderTypeId,
-                }
+                userInfo: resp.data
             };
             localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
             localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
             save(USER_LOCALSTORAGE, userData);
             dispatch(setUserSuccess(userData))
-            dispatch(push(Path.profile));   
+            dispatch(push(Path.dashboard));   
           })
           .catch(err => {
             console.log(err);
@@ -98,12 +95,11 @@ export function getUserInactiveTimeout() {
 
 export const checkUserData = () => {
     return (dispatch, getState) => {
-        let userData = getState().userData;
-        if (userData) {
-            dispatch(onSetUserSuccess(userData));
-        } else {
-            let userData = localStorage.getItem(USER_LOCALSTORAGE);
+        let userState = getState().authState.userState;
+        let access_token = userState && userState.userData && userState.userData.access_token
+        if (!access_token) {
+            let userData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)).data;
             dispatch(setUserSuccess(userData));
         }
-      }
+    }
 }

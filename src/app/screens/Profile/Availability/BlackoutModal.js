@@ -68,8 +68,8 @@ class BlackoutModal extends Component {
     const toDate = formattedDateMoment(nextProps.itemData.endDate);
     const remarks = nextProps.itemData.remarks;
     const serviceProviderBlackoutDayId = nextProps.itemData.serviceProviderBlackoutDayId;
-    this.fromDateProps = nextProps.itemData.startDate;
-    this.toDateProps = nextProps.itemData.endDate;
+    this.fromDateProps = formattedDateMoment(nextProps.itemData.startDate);
+    this.toDateProps = formattedDateMoment(nextProps.itemData.endDate);
     this.remarksProps = nextProps.itemData.remarks;
     this.setState(prevState => ({
       blackoutData: {
