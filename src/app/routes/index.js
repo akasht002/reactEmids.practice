@@ -80,12 +80,7 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
-            <PrivateRoute path={Path.profile} component={Profile} />
-            <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
-            <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
-            <PrivateRoute path={Path.performTasks} component={PerformTasks} />
-            <PrivateRoute path={Path.feedback} component={Feedback} />
-            <PrivateRoute path={Path.summary} component={Summary} />            
+            <PrivateRoute path={Path.profile} component={Profile} />          
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
 
           </Switch>

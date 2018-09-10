@@ -71,7 +71,8 @@ export const API = {
     getTimeoutMilliseconds: 'ServiceProviderLookup/AutoLogout',
     getLoginInfo: 'connect/userinfo',
     getEulaContent: 'api/user/config/EulaContent',
-    updateEula: 'api/User/Eula'
+    updateEula: 'api/User/Eula',
+    getPatientServiceRequests:'ServiceRequest/ServiceProvider/'
 }
 
 
