@@ -242,7 +242,7 @@ class Summary extends Component {
                                             <p className="SummaryContentTitle">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
                                             <div className="SignatureColumn" onClick={this.onClickSignaturePad}>
-                                <SignaturePad width={360} height={320} ref={ref => this.signaturePad = ref} />
+                                            <SignaturePad ref={ref => this.signaturePad = ref} />
                                             </div>
                                             <div className="width100 text-right">
                                                 <button className="btn btn-outline-primary CancelSignature" onClick={this.resetSignature}>Reset Signature</button>
