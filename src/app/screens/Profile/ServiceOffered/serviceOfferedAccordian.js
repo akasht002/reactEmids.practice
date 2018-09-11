@@ -22,8 +22,8 @@ class ServiceOfferedAccordian extends React.Component {
 
         return (
             <div>
-                <div className={'SPTabHeader'} id={'toggle' + this.props.category.serviceCategoryId} onClick={this.toggleCollapse}>
-                    <div className={'SPTabTitle'}>
+                <div className={'SPTabHeader ' + this.props.category.isOpen} id={'toggle' + this.props.category.serviceCategoryId} onClick={() => {this.props.toggleCollapse()}}>
+                    <div className={'SPTabTitle ' + this.props.category.isOpen}>
                         <h5 className={'SPTabTitleContent'}>{this.props.category.serviceCategoryDescription}</h5>
                         {this.props.type === 'view' ?
                             <span className={'SPServiceCount'}>{this.props.category.serviceTypeModel.length}</span>
@@ -32,7 +32,7 @@ class ServiceOfferedAccordian extends React.Component {
                         }
                     </div>
                 </div>
-                <Collapse isOpen={this.state.isOpen} toggler={'#toggle' + this.props.category.serviceCategoryId} className={contentClassName + " SPTabContent " + showFirstContentDefault}>
+                <Collapse isOpen={this.props.category.isOpen} toggler={'#toggle' + this.props.category.serviceCategoryId} className={contentClassName + " SPTabContent " + showFirstContentDefault}>
                     {this.props.type === 'edit' && <div className={'width100 selectServiceTypes d-flex'}>
                         <p className={'mr-auto'}>Select the Service Types</p>
                         <div className='form-check ml-auto'>
