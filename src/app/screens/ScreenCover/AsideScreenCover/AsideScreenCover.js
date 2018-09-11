@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import { ACTIVE, VISITED } from "../../../../constants/constants";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover } from '../../../components';
@@ -10,7 +9,7 @@ import { MenuData } from '../../../data/MenuData';
 import { Path } from '../../../routes/';
 import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
 import { ModalUserAgreement } from '../../../components';
-
+import { push } from '../../../redux/navigation/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -31,6 +30,7 @@ class AsideScreenCover extends React.Component {
     this.props.getProfilePercentage()
     this.props.getImage()
     this.props.getUserInfo();
+    this.props.getPersonalDetail();
   }
 
   onClickOk = () => {
@@ -55,11 +55,12 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
+                        onClick={this.props.goToProfile}
                     />
 
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
-                            <Link className='BrandLink' to={Path.profile}> <p>John Smith</p></Link>
+                            <Link className='BrandLink' to={Path.profile}> <p> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''} </p></Link>
                         </div>
                     </div>
                     <AsideMenu menuData={MenuData} />
@@ -88,7 +89,9 @@ function mapDispatchToProps(dispatch) {
         getProfilePercentage: () => dispatch(getProfilePercentage()),
         getImage: () => dispatch(action.getImage()),
         getUserInfo: () => dispatch(getUserInfo()),
-        onClickOk: () => dispatch(updateEula())
+        onClickOk: () => dispatch(updateEula()),
+        goToProfile: () => dispatch(push(Path.profile)),
+        getPersonalDetail:()=>dispatch(action.getPersonalDetail())
     }
 };
 
@@ -98,6 +101,7 @@ function mapStateToProps(state) {
         profileImgData: state.profileState.PersonalDetailState.imageData,
         isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
         eulaContent: state.authState.userAgreementState.eulaContent,
+        personalDetail: state.profileState.PersonalDetailState.personalDetail,
     };
 };
 

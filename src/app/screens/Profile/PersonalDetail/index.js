@@ -466,7 +466,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail &&
-                  this.props.personalDetail.phoneNumber}
+                '+1 ' + this.props.personalDetail.phoneNumber}
               </span>
             </div>
           </div>

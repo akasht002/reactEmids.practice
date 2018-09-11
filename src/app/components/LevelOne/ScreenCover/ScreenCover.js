@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
@@ -26,10 +26,10 @@ class ScreenCover extends Component {
                         {this.props.children}
                         {this.props.isLoading && <Preloader/>}
                     </UserInactivityView> :
-                    <div>
+                    <Fragment>
                         {this.props.children}
                         {this.props.isLoading && <Preloader/>}
-                    </div>
+                    </Fragment>
                 }
             </section>
         );

@@ -22,6 +22,9 @@ class ServiceOfferedContent extends React.Component {
                         return service.isActive === true;
                     })}
                     isOpen={false}
+                    toggleCollapse={() => {
+                        this.props.toggleCollapse(category)
+                    }}
                     handleClick={(serviceType) => {
                         let selectedServiceType = [...this.state.selectedServiceTypes];
                         const index = selectedServiceType.findIndex((service) => {
