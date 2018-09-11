@@ -172,3 +172,10 @@ a.onBoardSuccessBtn{
     }
 }
 /* indicators */
+
+/* new changes doing on login button */
+
+.btn .btn-primary .text-uppercase .change-f {
+    font-family: 'Open sans';
+    
+}
