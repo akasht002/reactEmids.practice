@@ -17,6 +17,8 @@ import {
 import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
+import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
+import Sorting from "../ServiceRequestSorting"
 
 import './style.css'
 
@@ -34,7 +36,10 @@ class VisitServiceList extends Component {
             isValid:true,
             selectedOption: null,
             ServiceCategoryId:'',
-            serviceTypes:[] 
+            serviceTypes:[],
+            isSortOpen: false,
+            newest: true,
+            posted: true 
         };
     };
 
@@ -231,8 +236,25 @@ class VisitServiceList extends Component {
             serviceTypes:[],
             isValid: true
         })
-    
     }
+    /* sorting */
+    onSortChange = (posted, newest) =>{
+        var data={
+            sortByOrder : newest ? "ASC" : "DESC",
+            sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
+            fromDate: null,
+            toDate: null,
+            status: 0
+        }
+        this.props.getSort(data);
+        this.setState({
+            newest: (newest !== null ? newest : this.state.newest),
+            posted: (posted !== null ? posted : this.state.posted),
+            isSortOpen: false
+        });
+    }
+    
+    
     
     handleChangeServiceCategory=(selectedOption)=>{
         this.setState({ 
@@ -315,8 +337,12 @@ class VisitServiceList extends Component {
                         <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
-                        <a className='primaryColor ProfileHeaderSort' to=''>Sort</a>
-                        <span className='primaryColor' onClick={this.toggleFilter}>Filters</span>
+                    <Sorting
+                        onSortChange={this.onSortChange}
+                        newest={this.state.newest}
+                        posted={this.state.posted}
+                    />
+                    <span className='primaryColor' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
@@ -361,7 +387,8 @@ function mapDispatchToProps(dispatch) {
         getServiceCategory: () => dispatch(getServiceCategory()),
         ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
         getServiceType: (data) => dispatch(getServiceType(data)),
-        getFilter:(data)  => dispatch(getFilter(data))
+        getFilter:(data)  => dispatch(getFilter(data)),
+        getSort:(data)  => dispatch(getSort(data))
     }
 };
 

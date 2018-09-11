@@ -74,7 +74,8 @@ export const API = {
     updateEula: 'api/User/Eula',
     getServiceCategory:'ServiceRequest/ServiceCategory',
     getServiceType: 'ServiceRequest/ServiceType/',
-    PostSearchServiceRequest:'Search/PostSearchServiceRequest'
+    PostSearchServiceRequest:'Search/PostSearchServiceRequest',
+    getPatientServiceRequests:'ServiceRequest/ServiceProvider/'
 }
 
 
