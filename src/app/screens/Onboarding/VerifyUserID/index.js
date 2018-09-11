@@ -12,6 +12,7 @@ import {
 } from '../../../redux/onboarding/VerifyUserID/actions';
 import { setWorkflowDirty } from '../../../redux/wizard/actions';
 import { checkEmail, checkSpace } from '../../../utils/validations'
+import '../styles.css';
 
 class VerifyUserID extends React.Component {
     constructor() {

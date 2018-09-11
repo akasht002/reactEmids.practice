@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { ProfileHeader, ScreenCover } from '../../../components'
+import { Header, ScreenCover } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
@@ -13,7 +13,7 @@ import Skills from "../Skills/index";
 import { Path } from '../../../routes';
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from "../Availability/index";
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
+import {getUserInfo} from '../../../services/http';
 
 import './styles.css';
 
@@ -25,13 +25,13 @@ class Profile extends Component {
       
     render() {
         return (
-            <section>
+            <ScreenCover> 
                 <div className="container-fluid p-0">
-                    <ProfileHeader />
+                    <Header menuArray={['contact', 'videoChat', 'messages', 'notification', 'logout']}/>
                     <div className="width100 mainWidgetProfile mainWidgetOverflow">
                         <div className="width100 topWidgetBG" />
                         <div className="container mainProfileContent bgWhite">
-                            <div className="row d-flex justify-content-center m-auto">
+                            <div className="row d-flex-view justify-content-center m-auto">
                                 <div className="col-md-12">
                                     <h4 className="my-3 text-white SPTitleText">
                                         <Link className='BrandLink' to={Path.dashboard}>
@@ -40,7 +40,7 @@ class Profile extends Component {
                                     </h4>
                                 </div>
                                 {/* Added for story number CH-302 */}
-                                {SERVICE_PROVIDER_TYPE_ID === 1 ?
+                                {getUserInfo().serviceProviderTypeId === 1 ?
                                     <PersonalDetail
                                         profilePercentage={this.props.profilePercentage} /> :
                                     <Organization
@@ -60,16 +60,13 @@ class Profile extends Component {
 
                                 <WorkHistory />
                                 <Education />
-
-                                <div className="col-md-12 card CardWidget SPCertificate">
-                                    <Availability />
-                                </div>
+                                <Availability />
 
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </ScreenCover>
         )
     }
 }
@@ -82,7 +79,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        SERVICE_PROVIDER_TYPE_ID: state.authState.userState.userData.userInfo.serviceProviderTypeId,
+        SERVICE_PROVIDER_TYPE_ID: 1,
         profilePercentage: state.profileState.progressIndicatorState.profilePercentage
     };
 };

@@ -4,9 +4,9 @@
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
-process.env.REACT_APP_API_URL = "http://localhost:63633/api/";
+process.env.REACT_APP_API_URL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
-process.env.REACT_APP_SR_URL = "http://localhost:5615/api/";
+process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
 process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
 process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
 

@@ -7,6 +7,7 @@ import { ContactMenu } from '../../../data/HeaderMenu';
 import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalUserAgreement, ModalPopup } from '../../../components';
 import { checkPassword } from '../../../utils/validations'
 import { endUserAgreement } from '../../../assets/templates/EndUserAgreement';
+import '../styles.css';
 
 class SetPassword extends React.Component {
 
