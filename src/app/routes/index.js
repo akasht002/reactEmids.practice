@@ -19,8 +19,8 @@ import {
   ResetPassword,
   ResetPasswordSuccess,
   ResetPasswordConfirmation,
-  Dashboard
-
+  Dashboard,
+  Welcome
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -48,7 +48,6 @@ export const Path = {
   visitServiceDetails: '/visitservicedetails',
   performTasks: '/performtasks',
   feedback: '/feedback',
-  home: '/home',
   loginCallBack: '/loginCallBack',
   summary: '/summary',
   forgetPassword: '/forgetPassword',
@@ -64,7 +63,7 @@ class AppStackRoot extends Component {
       <ConnectedRouter history={this.props.history}>
         <HashRouter>
           <Switch>
-            <Route exact path={Path.root} component={Home} />
+            <Route exact path={Path.root} component={Welcome} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
@@ -75,7 +74,6 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.feedback} component={Feedback} />
             <PrivateRoute path={Path.summary} component={Summary} />
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
-            <Route path={Path.loginCallBack} component={LoginCallBack} />
             <Route path={Path.forgetPassword} component={ForgetPassword} />
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />

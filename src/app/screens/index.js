@@ -1,5 +1,4 @@
 import Welcome from './Welcome';
-import Home from './Home';
 import VerifyContact from './Onboarding/VerifyContact';
 import SetPassword from './Onboarding/SetPassword';
 import VerifyUserID from './Onboarding/VerifyUserID';
@@ -34,7 +33,6 @@ export {
     VisitServiceProcessing,
     PerformTasks,
     Feedback,
-    Home,
     LoginCallBack,
     Summary,
     ForgetPassword,
