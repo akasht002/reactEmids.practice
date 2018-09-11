@@ -153,8 +153,8 @@ class Availability extends Component {
                             </ul>
                         }
                      </div>
+                     <BlackoutDays showBalckout={'true'}/>
                 </div>
-                <BlackoutDays showBalckout={'true'}/>
                 <ProfileModalPopup
                     isOpen={this.state.availabilityModal}
                     toggle={this.toggleAvailability.bind('close', 'closeButton')}

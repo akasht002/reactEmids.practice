@@ -32,9 +32,10 @@
 .bDayListLiContent>.SPIconEdit{
   float:right;
 }
-.SPBlackoutItems .SPIconEdit {
+.SPBlackoutItems>i {
     top: -5px!important;
 }
+
 li.SPBlackoutItems:last-child>.bDayListLiContent{
     border-bottom: 1px solid rgba(225,225,225,.4);
     }

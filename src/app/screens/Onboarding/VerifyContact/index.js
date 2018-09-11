@@ -6,6 +6,7 @@ import { ContactMenu } from '../../../data/HeaderMenu';
 import { getUserData, sendTemporaryPasscode, verifyTempPasscode, formDirty, onCancelClick } from '../../../redux/onboarding/VerifyContact/actions';
 import { Input, Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalPopup } from '../../../components';
 import { checkSpace } from '../../../utils/validations'
+import '../styles.css';
 
 class VerifyContact extends React.Component {
 

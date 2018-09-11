@@ -47,6 +47,12 @@ div.mainProfileContent{
     z-index: 2;
 }
 
+.d-flex-view
+{
+display: block !important;
+width: 100%;
+}
+
 /* .SPdpContainer{
     display: block;
     position: relative;
@@ -364,7 +370,7 @@ i.SPIconEditPersonalDetails{
     transition: all linear .2s;
 }
 
-.SPTabHeader:hover{
+.SPTabHeader:hover, .SPTabHeader.true{
     cursor: pointer;
     background-color: #e9d9f9;
 }
@@ -394,6 +400,12 @@ i.SPIconEditPersonalDetails{
     -moz-transition: all linear .3s;
     -o-transition: all linear .3s;
     transition: all linear .3s;
+}
+
+.SPTabTitle.true:after{
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .SPTabTitleContent{
@@ -1107,3 +1119,4 @@ div.CertificationModal{
 .LanguagesModal .modal-body{
     min-height: 350px
 }
+

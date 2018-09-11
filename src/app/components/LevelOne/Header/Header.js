@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from 'react';
 import {
     Collapse,
     Navbar,
@@ -6,10 +6,11 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-} from 'reactstrap';
+    NavLink, } from 'reactstrap';
+import { PropTypes } from 'prop-types';
+import './styles.css';
 
-class Header extends React.Component {
+class CoreoWizHeader extends Component {
     constructor(props) {
         super(props);
 
@@ -19,50 +20,49 @@ class Header extends React.Component {
             dBlock: "",
             menus: [
                 {
-                    name: "Home",
-                    label: "Home",
-                    role: "link",
-                    status: false
+                    name: "search",
+                    link: "/",
+                    status: true,
                 },
                 {
-                    name: "Login",
-                    label: "Login",
+                    name: "contact",
+                    link: "/",
+                    status: true,
+                },
+                {
+                    name: "videoChat",
+                    link: "about",
+                    status: true,
+                },
+                {
+                    name: "messages",
                     link: "login",
-                    role: "button",
-                    status: false
+                    status: true,
                 },
                 {
-                    name: "Contact",
-                    label: "icon-contact",
-                    role: "Outerlink",
-                    status: false
+                    name: "notification",
+                    link: "login",
+                    status: true,
+                },
+                {
+                    name: "logout",
+                    link: "logout",
+                    status: true,
                 }
             ]
         };
     }
 
-    componentDidMount() {
-        if (this.props.menuArray) {
-            this.props.menuArray.map((menu) => {
-                return this.onMenu(menu);
-            });
-        }
+    componentDidMount(){
+        this.onMenu();
     }
 
-    onMenu(menuVal) {
-        let menus = this.state.menus.map((menu) => {
-            if (menu.name.toLowerCase() === menuVal.toLowerCase()) {
-                menu.status = true;
-                if (menu.role === 'Outerlink') {
-                    this.setState({
-                        dBlock: "d-none"
-                    });
-                }
-            }
-            return menu;
+    onMenu = () =>{
+        let menus = this.state.menus.filter((menu) => {
+            return this.props.menuArray.includes(menu.name);
         });
         this.setState({
-            menus: menus
+            menus:menus
         });
     }
 
@@ -75,62 +75,39 @@ class Header extends React.Component {
     render() {
 
         const menuList = this.state.menus.map((menu) => {
-            if (menu.status && menu.role !== "Outerlink") {
-                console.log(menu.role);
-                let clsName = "btn btn-primary";
-                let menuName = menu.label;
-                if (menu.role === "link") {
-                    clsName = ""
-                }
-                if (menu.label !== menu.name) {
-                    clsName += "icon " + menu.label;
-                    menuName = "";
+            let menuName = menu.name;
+            let Separator = "";
+            if(menu.status) {
+                let clsName = "navIcon icon" + menuName.charAt(0).toUpperCase() + menuName.slice(1);
+                if(menuName === "notification"){
+                    Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem key={menu.id}>
+                    <NavItem className={menuName+"Widget navIconWidget "+Separator}>
                         <NavLink className={clsName}
-                            href={menu.link}> {menuName}</NavLink>
+                                 href={menu.link} />
                     </NavItem>
                 )
             }
             return true;
         });
 
-        const OuterLink = this.state.menus.map((menu) => {
-            if (menu.status) {
-                if (menu.role === "Outerlink") {
-                    let clsName = "";
-                    let menuName = menu.label;
-                    if (menu.label !== menu.name) {
-                        clsName += "menuRightIcon icon " + menu.label;
-                        menuName = "";
-                    }
-                    return (
-                        <Nav key={menu.role} className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink className={clsName}
-                                    href={menu.link}> {menuName}</NavLink>
-                            </NavItem>
-                        </Nav>
-                    )
-                }
-            }
-            return true;
-        });
-
         return (
-            <Navbar className="navbar-light boxShadowBottom" expand="md">
-                <NavbarBrand className="text-uppercase px-3">Coreo Home</NavbarBrand>
-                <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
-                <Collapse isOpen={this.state.isOpen} navbar>
-                    <Nav className="ml-auto" navbar>
-                        {menuList}
-                    </Nav>
-                </Collapse>
-                {OuterLink}
-            </Navbar>
+                <Navbar className="navbar-light boxShadowBottom" expand="md">
+                    <NavbarBrand className="text-uppercase px-3 onboardingLogo">Coreo Home</NavbarBrand>
+                    <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
+                    <Collapse isOpen={this.state.isOpen} navbar>
+                        <Nav className="ml-auto" navbar>
+                            {menuList}
+                        </Nav>
+                    </Collapse>
+                </Navbar>
         );
     }
 }
 
-export default Header;
+CoreoWizHeader.propTypes = {
+    menuArray: PropTypes.array
+}
+
+export default CoreoWizHeader;

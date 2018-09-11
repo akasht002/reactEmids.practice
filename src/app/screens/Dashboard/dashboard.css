@@ -1634,3 +1634,8 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         margin: 0 0 15px !important;
     }
 }
+
+.scrollarea {
+    position: relative;
+    overflow: hidden;
+}
