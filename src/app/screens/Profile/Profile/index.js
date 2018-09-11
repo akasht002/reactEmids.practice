@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { ProfileHeader, ScreenCover } from '../../../components'
+import { Header, ScreenCover } from '../../../components'
 import ServiceOffered from "../ServiceOffered/index";
 import Languages from "../Languages/index";
 import Certification from "../Certification/index";
@@ -13,7 +13,6 @@ import Skills from "../Skills/index";
 import { Path } from '../../../routes';
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from "../Availability/index";
-import { SERVICE_PROVIDER_TYPE_ID } from '../../../redux/constants/constants'
 
 import './styles.css';
 
@@ -25,9 +24,9 @@ class Profile extends Component {
       
     render() {
         return (
-            <section className="d-flex-view"> 
+            <ScreenCover> 
                 <div className="container-fluid p-0">
-                    <ProfileHeader />
+                    <Header menuArray={['contact', 'videoChat', 'messages', 'notification', 'logout']}/>
                     <div className="width100 mainWidgetProfile mainWidgetOverflow">
                         <div className="width100 topWidgetBG" />
                         <div className="container mainProfileContent bgWhite">
@@ -69,7 +68,7 @@ class Profile extends Component {
                         </div>
                     </div>
                 </div>
-            </section>
+            </ScreenCover>
         )
     }
 }
@@ -82,7 +81,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        SERVICE_PROVIDER_TYPE_ID: state.authState.userState.userData.userInfo.serviceProviderTypeId,
+        SERVICE_PROVIDER_TYPE_ID: 1,
         profilePercentage: state.profileState.progressIndicatorState.profilePercentage
     };
 };
