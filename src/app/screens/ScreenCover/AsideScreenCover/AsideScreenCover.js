@@ -31,6 +31,7 @@ class AsideScreenCover extends React.Component {
     this.props.getProfilePercentage()
     this.props.getImage()
     this.props.getUserInfo();
+    this.props.getPersonalDetail();
   }
 
   onClickOk = () => {
@@ -59,7 +60,7 @@ class AsideScreenCover extends React.Component {
 
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
-                            <Link className='BrandLink' to={Path.profile}> <p>John Smith</p></Link>
+                            <Link className='BrandLink' to={Path.profile}> <p> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''} </p></Link>
                         </div>
                     </div>
                     <AsideMenu menuData={MenuData} />
@@ -88,7 +89,8 @@ function mapDispatchToProps(dispatch) {
         getProfilePercentage: () => dispatch(getProfilePercentage()),
         getImage: () => dispatch(action.getImage()),
         getUserInfo: () => dispatch(getUserInfo()),
-        onClickOk: () => dispatch(updateEula())
+        onClickOk: () => dispatch(updateEula()),
+        getPersonalDetail:()=>dispatch(action.getPersonalDetail())
     }
 };
 
@@ -98,6 +100,7 @@ function mapStateToProps(state) {
         profileImgData: state.profileState.PersonalDetailState.imageData,
         isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
         eulaContent: state.authState.userAgreementState.eulaContent,
+        personalDetail: state.profileState.PersonalDetailState.personalDetail,
     };
 };
 

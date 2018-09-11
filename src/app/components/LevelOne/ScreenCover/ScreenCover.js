@@ -30,7 +30,7 @@ class ScreenCover extends Component {
                         {this.props.children}
                         {this.props.isLoading && <Preloader/>}
                     </div>
-                }
+                } 
             </section>
         );
     }

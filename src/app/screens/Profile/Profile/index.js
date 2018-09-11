@@ -25,13 +25,13 @@ class Profile extends Component {
       
     render() {
         return (
-            <section>
+            <section className="d-flex-view"> 
                 <div className="container-fluid p-0">
                     <ProfileHeader />
                     <div className="width100 mainWidgetProfile mainWidgetOverflow">
                         <div className="width100 topWidgetBG" />
                         <div className="container mainProfileContent bgWhite">
-                            <div className="row d-flex justify-content-center m-auto">
+                            <div className="row d-flex-view justify-content-center m-auto">
                                 <div className="col-md-12">
                                     <h4 className="my-3 text-white SPTitleText">
                                         <Link className='BrandLink' to={Path.dashboard}>

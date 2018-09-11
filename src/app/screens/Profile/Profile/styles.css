@@ -47,6 +47,12 @@ div.mainProfileContent{
     z-index: 2;
 }
 
+.d-flex-view
+{
+display: block !important;
+width: 100%;
+}
+
 /* .SPdpContainer{
     display: block;
     position: relative;
@@ -1107,3 +1113,4 @@ div.CertificationModal{
 .LanguagesModal .modal-body{
     min-height: 350px
 }
+
