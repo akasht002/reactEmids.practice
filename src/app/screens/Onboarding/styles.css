@@ -1,0 +1,124 @@
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    div.sideContent {
+        width: 380px !important;
+    }
+
+    div.mainWidgetOnboarding{
+        width: calc(100% - 380px) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    div.mainWidgetOnboarding {
+        width: 100% !important;
+    }
+}
+
+div.sideContent{
+    width: 490px;
+}
+
+div.mainWidgetOnboarding{
+    width: calc(100% - 490px);
+}
+
+.SuccessMessage{
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+div.onBoarding {
+    background-color: #fff;
+    width: calc(100% - 490px);
+}
+
+div.row.emptyGuardianRow{
+    height: 100%;
+}
+
+.onBoarding .mainWidget {
+    height: calc(100% - 60px);
+    min-height: calc(100% - 60px);
+}
+
+.onBoarding .mainWidget .mainContent {
+    height: calc(100% - 70px) !important;
+    position: relative;
+}
+
+.onBoardingPageTitle {
+    font-size: 24px;
+    color: #7a329f;
+    margin-bottom: 30px;
+}
+
+.onBoardingPageTitle i{
+    font-size: 18px;
+    font-style: italic;
+}
+
+.onBoardingInfo {
+    color: rgba(68, 68, 68, 0.7);
+}
+
+.onBoardingInputWidget {
+    margin-bottom: 30px;
+}
+
+.btn.onBoardingBtn{
+    padding: 10px 20px !important;
+}
+
+.onBoardingSelect {
+
+}
+
+.onBoardingInputWidget label, .onBoardingSelectWidget label{
+    margin: 0;
+}
+
+.onBoardingSelect .Select-control {
+    border: 0;
+    border-bottom: 1px solid #acacac;
+    height: 36px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.inputFailure.onBoardingSelect .Select-control {
+    border-color: red;
+}
+
+.onBoardingSelect .Select-menu-outer {
+    max-height: 200px;
+}
+
+.onBoardingSelect .Select-menu-outer .Select-menu {
+    max-height: 160px;
+}
+
+.onBoardingUserId {
+
+}
+
+.onBoardingRadio .form-radio:first-child {
+    padding: 0 15px 0 0;
+}
+
+.emptyGuardianWidget{
+
+}
+
+@media (max-width: 1024px) {
+    div.onBoarding {
+        width: calc(100% - 380px);
+    }
+}
+
+@media (max-width: 768px) {
+    div.onBoarding {
+        width: 100%;
+    }
+}

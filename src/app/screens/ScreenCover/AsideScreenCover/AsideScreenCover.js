@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import { ACTIVE, VISITED } from "../../../../constants/constants";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover } from '../../../components';
@@ -10,7 +9,7 @@ import { MenuData } from '../../../data/MenuData';
 import { Path } from '../../../routes/';
 import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
 import { ModalUserAgreement } from '../../../components';
-
+import { push } from '../../../redux/navigation/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -55,6 +54,7 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
+                        onClick={this.props.goToProfile}
                     />
 
                     <div className='ProfileNameWidget'>
@@ -88,7 +88,8 @@ function mapDispatchToProps(dispatch) {
         getProfilePercentage: () => dispatch(getProfilePercentage()),
         getImage: () => dispatch(action.getImage()),
         getUserInfo: () => dispatch(getUserInfo()),
-        onClickOk: () => dispatch(updateEula())
+        onClickOk: () => dispatch(updateEula()),
+        goToProfile: () => dispatch(push(Path.profile))
     }
 };
 
