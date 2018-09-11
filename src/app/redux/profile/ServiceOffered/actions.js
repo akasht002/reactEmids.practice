@@ -69,3 +69,34 @@ export function editServiceOffered (data) {
       })
   }
 }
+
+export function toggleCollapseCategory (data) {
+  return (dispatch, getState) => {
+    let serviceOfferedDetails = getState().profileState.serviceOfferedState.serviceOfferedList;
+    let serviceOfferedDetailsModified = serviceOfferedDetails.map((category) => {
+      if (category.serviceCategoryId === data.serviceCategoryId) {
+        category.isOpen = !category.isOpen;
+      } else {
+        category.isOpen = false;
+      }
+      return category;
+    })
+    dispatch(getServicesOfferedSuccess(serviceOfferedDetailsModified));
+  }
+}
+
+
+export function toggleCollapseDetails (data) {
+  return (dispatch, getState) => {
+    let serviceOfferedDetails = getState().profileState.serviceOfferedState.serviceOfferedDetails;
+    let serviceOfferedDetailsModified = serviceOfferedDetails.map((category) => {
+      if (category.serviceCategoryId === data.serviceCategoryId) {
+        category.isOpen = !category.isOpen;
+      } else {
+        category.isOpen = false;
+      }
+      return category;
+    })
+    dispatch(getServiceOfferedDetails(serviceOfferedDetailsModified));
+  }
+}

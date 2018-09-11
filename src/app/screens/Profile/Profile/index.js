@@ -60,10 +60,7 @@ class Profile extends Component {
 
                                 <WorkHistory />
                                 <Education />
-
-                                <div className="col-md-12 card CardWidget SPCertificate">
-                                    <Availability />
-                                </div>
+                                <Availability />
 
                             </div>
                         </div>
