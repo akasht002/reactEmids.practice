@@ -13,6 +13,7 @@ import Skills from "../Skills/index";
 import { Path } from '../../../routes';
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from "../Availability/index";
+import {getUserInfo} from '../../../services/http';
 
 import './styles.css';
 
@@ -39,7 +40,7 @@ class Profile extends Component {
                                     </h4>
                                 </div>
                                 {/* Added for story number CH-302 */}
-                                {this.props.SERVICE_PROVIDER_TYPE_ID === 1 ?
+                                {getUserInfo().serviceProviderTypeId === 1 ?
                                     <PersonalDetail
                                         profilePercentage={this.props.profilePercentage} /> :
                                     <Organization
