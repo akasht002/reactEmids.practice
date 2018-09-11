@@ -3,7 +3,7 @@ import './style.css';
 
 function ProfileImage(props) {
     return (
-        <div className={props.profileImageWidget}>
+        <div className={props.profileImageWidget} onClick={props.onClick}>
             <div className={props.profileImageContainer}>
                 <svg viewBox="1.55 1.55 33 33" className={props.cicularChart}>
                     <path className={props.circle}

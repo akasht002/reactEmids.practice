@@ -50,6 +50,10 @@ export function formateDate(date, format) {
     return date ? moment(date).format(format) : null;
 }
 
+export function dateDifference(startDate, endDate) {
+    return moment(endDate).diff(moment(startDate), 'days') + 1;
+}
+
 export function newDate() {
     return moment(new Date());
 }

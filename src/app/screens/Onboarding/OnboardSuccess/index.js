@@ -4,6 +4,7 @@ import { Link,withRouter } from 'react-router-dom';
 import { ScreenCover } from '../../../components'
 import { continueToProfile } from '../../../redux/onboarding/OnboardSuccess/actions';
 import './styles.css';
+import '../styles.css';
 
 class OnboardSuccess extends React.Component {
 
@@ -16,7 +17,7 @@ class OnboardSuccess extends React.Component {
         return (
             <ScreenCover menus={menus}>
             
-                <div className="container-fluid p-0">
+                <div className="container-fluid p-0 mainWidgetOnboarding onBoarding">
                     <div className="width100 onBoardingWidget">
                         <div className="container-fluid onBoardingContent">
                             <div className="row">
