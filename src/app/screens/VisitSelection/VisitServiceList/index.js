@@ -14,13 +14,22 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
+import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
+import Sorting from "../ServiceRequestSorting"
+
 import './style.css'
 
 class VisitServiceList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { serviceRequestId: '', isOpen: false };
+        this.state = { 
+            serviceRequestId: '',
+            isOpen: false,
+            isSortOpen: false,
+            newest: true,
+            posted: true 
+        };
     };
 
     toggle() {
@@ -57,6 +66,22 @@ class VisitServiceList extends Component {
         else {
             return null;
         }
+    }
+    /* sorting */
+    onSortChange = (posted, newest) =>{
+        var data={
+            sortByOrder : newest ? "ASC" : "DESC",
+            sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
+            fromDate: null,
+            toDate: null,
+            status: 0
+        }
+        this.props.getSort(data);
+        this.setState({
+            newest: (newest !== null ? newest : this.state.newest),
+            posted: (posted !== null ? posted : this.state.posted),
+            isSortOpen: false
+        });
     }
     
     render() {
@@ -117,8 +142,12 @@ class VisitServiceList extends Component {
                         <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
-                        <a className='primaryColor ProfileHeaderSort' to=''>Sort</a>
-                        <a className='primaryColor' to=''>Filters</a>
+                    <Sorting
+                        onSortChange={this.onSortChange}
+                        newest={this.state.newest}
+                        posted={this.state.posted}
+                    />
+                    <a className='primaryColor' to=''>Filters</a>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
@@ -135,7 +164,8 @@ function mapDispatchToProps(dispatch) {
     return {
         getVisitServiceList: () => dispatch(getVisitServiceList()),
         getVisitServiceDetails: (data) => dispatch(getVisitServiceDetails(data)),
-        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data))
+        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data)),
+        getSort:(data)  => dispatch(getSort(data))
     }
 };
 
