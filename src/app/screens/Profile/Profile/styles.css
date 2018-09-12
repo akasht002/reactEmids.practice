@@ -402,6 +402,12 @@ i.SPIconEditPersonalDetails{
     transition: all linear .3s;
 }
 
+
+.SPTabTitle .SPTabTitleContent
+{
+font-weight: 600;
+}
+
 .SPTabTitleContent{
     width: 100%;
     font-size: 18px;
