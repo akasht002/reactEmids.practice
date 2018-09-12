@@ -210,7 +210,7 @@ class BlackoutDays extends Component {
         <ModalPopup
                 isOpen={this.state.isDeleteModalOpen}
                 toggle={this.toggleCheck}
-                ModalBody={<span>Do you want to discard the changes?</span>}
+                ModalBody={<span>Do you want to delete the blackout days?</span>}
                 btn1='YES'
                 btn2='NO'
                 className='modal-sm'

@@ -149,10 +149,7 @@ class BlackoutModal extends Component {
                     minDate={this.fromMinDate}
                     maxDate={this.fromMaxDate}
                     className={
-                      "form-control datePicker " +
-                      (!this.state.isValid &&
-                        !this.state.toDate &&
-                        "inputFailure")
+                      "form-control datePicker " 
                     }
                   />
                 </div>
@@ -164,17 +161,14 @@ class BlackoutModal extends Component {
                     value={toDate}
                     minDate={this.toMinDate}
                     className={
-                      "form-control datePicker " +
-                      (!this.state.isValid &&
-                        !this.state.toDate &&
-                        "inputFailure")
+                      "form-control datePicker "
                     }
                   />
                 </div>
                 <div className="col-md-12 mb-2">
                   <div className="form-group">
                     <TextArea
-                      name="remarks"
+                      name="Remarks"
                       placeholder="Remarks"
                       className="form-control"
                       rows="5"
