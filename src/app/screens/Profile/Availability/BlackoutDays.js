@@ -166,10 +166,10 @@ class BlackoutDays extends Component {
     let modalTitle = "";
     let modalType = "";
     if (this.state.IsBlackoutModalOpen) {
-      if (this.state.add) {
+      if (this.state.modalTypeValue === 'add') {
         modalTitle = "Add Blackout Days";
         modalType = "add";
-      } else if (this.state.edit) {
+      } else {
         modalTitle = "Edit Blackout Days";
         modalType = "edit";
       }
