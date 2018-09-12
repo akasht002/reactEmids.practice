@@ -121,7 +121,7 @@ class Welcome extends Component {
                             <div className="row">
                                 <div className="onBoardingHeader">
                                     <Link className="brandName text-uppercase" to="/">Coreo Home</Link>
-                                    <Button type="button" onClick={this.props.user ? this.onLogOutPress : this.onLoginPress} classname="btn btn-primary text-uppercase" label={this.props.user ? "Logout" : "Login"}/>
+                                    <Button type="button" onClick={this.props.user ? this.onLogOutPress : this.onLoginPress} classname="btn btn-primary text-uppercase change-f" label={this.props.user ? "Logout" : "Login"}/>
                                 </div>
                                 <div className="sliderWrapper" style={style3}>
                                     <div className="sliderContainer">

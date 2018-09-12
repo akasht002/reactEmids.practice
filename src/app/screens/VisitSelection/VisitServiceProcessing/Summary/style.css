@@ -172,9 +172,7 @@ div.EstimatedCostWidget{
     border-width: 4px 5px 0 !important;
 }
 
-.NumericInput{
 
-}
 
 .NumericInput:focus, .NumericInput:hover{
     -webkit-box-shadow: none;
