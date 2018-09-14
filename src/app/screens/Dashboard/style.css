@@ -652,11 +652,11 @@ li div.dropdown-menu{
 }
 
 .TabBody .SPAvailWidget div:first-child{
-    margin-left: 0;
+    /* margin-left: 0; */
 }
 
 .TabBody .SPAvailWidget div:last-child{
-    margin-right: 0;
+    /* margin-right: 0; */
 }
 
 a.ProfileCardHeaderLink:hover{
