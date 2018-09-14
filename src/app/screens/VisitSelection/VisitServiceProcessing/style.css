@@ -1022,9 +1022,9 @@ div.AddressCardWidget {
     display: none;
 }
 
-.ServiceTypesSlider.Summary .ServiceTypeLink {
+/* .ServiceTypesSlider.Summary .ServiceTypeLink {
     border-color: #7a329f;
-}
+} */
 
 .ServiceTasks.Summary {
     padding: 0;
