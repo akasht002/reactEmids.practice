@@ -14,7 +14,7 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
-import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -53,6 +53,7 @@ class VisitServiceList extends Component {
         this.props.getVisitServiceList();
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
+        this.props.getServiceArea()
     }
 
     handleClick = (requestId) => {
@@ -388,7 +389,8 @@ function mapDispatchToProps(dispatch) {
         ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
         getServiceType: (data) => dispatch(getServiceType(data)),
         getFilter:(data)  => dispatch(getFilter(data)),
-        getSort:(data)  => dispatch(getSort(data))
+        getSort:(data)  => dispatch(getSort(data)),
+        getServiceArea:()  => dispatch(getServiceArea()),
     }
 };
 
