@@ -288,19 +288,16 @@ class VisitServiceList extends Component {
     }
     handleServiceArea =(item) =>{
 
-        var tempData = {};
-        for ( var index in item ) {
-            
-             //tempData.push(index["lon"])
-            
-            
+        var locations = {
+            'lat':item.lat,
+            'lon':item.lon,
         }
-        item = tempData;
-        this.setState({
-            // lat:item.lat,
-            // lon:item.lon,
-            // coverageArea:item.coverageArea
-            ServiceAreas:tempData
+        var serviceAreaObj = {
+            'CoverageArea'  : item.coverageArea,
+            'Locations':locations  
+        };          
+        this.setState({            
+            ServiceAreas:serviceAreaObj
         })
     }
     render() {
