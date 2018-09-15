@@ -7,7 +7,7 @@ import {formateStateDate,formattedDateMoment,formattedDateChange } from "../../.
 import ServiceCategory from "./ServiceCategory";
 import ServiceTypeList from "./ServiceTyplist";
 import ServiceRequestsStatus from "./Status";
-
+import ServiceArea from "./ServiceArea";
 import "./style.css";
 
 class Filter extends Component {
@@ -98,14 +98,13 @@ class Filter extends Component {
                                         <label className="mb-3">Select Service Area</label>
                                     </div>
 
-                                    <div className="form-radio AddressCardWidget All mb-2">
-                                        <input className="form-radio-input" name="AddressPOS" id="AddressPOS1"
-                                               type="radio"
-                                               value="1"/>
-                                        <label className="form-radio-label AddressPOS" htmlFor="AddressPOS1">All</label>
-                                        <span className="RadioBoxIcon"/>
-                                    </div>
-
+                                    
+                                    <ServiceArea 
+                                        ServiceAreaList={this.props.ServiceAreaList}
+                                        handleServiceArea={this.props.handleServiceArea}
+                                        serviceArea={this.props.serviceArea}
+                                    />
+{/*
                                     <div className="form-radio AddressCardWidget mb-2">
                                         <input className="form-radio-input" name="AddressPOS" id="AddressPOS2"
                                                type="radio"
@@ -118,7 +117,7 @@ class Filter extends Component {
                                             <span className='POSAddress'><i>Zip</i>26571</span>
                                         </label>
                                         <span className="RadioBoxIcon"/>
-                                    </div>
+</div>*/}       
                                 </TabPane>
                                 <TabPane tabId="3">
                                     <div className="form-group">

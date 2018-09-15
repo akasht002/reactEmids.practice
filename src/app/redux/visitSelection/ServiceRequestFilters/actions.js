@@ -83,8 +83,8 @@ export function getServiceArea() {
     return (dispatch) => {
       
         dispatch(startLoading());
-        let patientId=133;
-        elasticSearchGet(API.getServiceareaList+`/${patientId}`).then((resp) => {
+        let serviceProviderId=1;
+        Get(API.getServiceareaList+`${serviceProviderId}`).then((resp) => {
            dispatch(getServiceAreaSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

@@ -39,7 +39,12 @@ class VisitServiceList extends Component {
             serviceTypes:[],
             isSortOpen: false,
             newest: true,
-            posted: true 
+            posted: true,
+            serviceArea:'',
+            coverageArea:'',
+            lat:'',
+            lon:'',
+            ServiceAreas:{}
         };
     };
 
@@ -217,7 +222,8 @@ class VisitServiceList extends Component {
                 endDate: this.state.endDate,
                 serviceStatus: this.state.serviceStatus,
                 ServiceCategoryId:this.state.ServiceCategoryId,
-                serviceTypes:this.state.serviceTypes
+                serviceTypes:this.state.serviceTypes,
+                ServiceAreas:this.state.ServiceAreas
             };
             this.props.getFilter(data)
             this.setState({
@@ -278,6 +284,23 @@ class VisitServiceList extends Component {
         service.push(item.keyValue)
         this.setState({
             serviceStatus:service
+        })
+    }
+    handleServiceArea =(item) =>{
+
+        var tempData = {};
+        for ( var index in item ) {
+            
+             //tempData.push(index["lon"])
+            
+            
+        }
+        item = tempData;
+        this.setState({
+            // lat:item.lat,
+            // lon:item.lon,
+            // coverageArea:item.coverageArea
+            ServiceAreas:tempData
         })
     }
     render() {
@@ -374,6 +397,9 @@ class VisitServiceList extends Component {
                     ServiceStatus={this.props.ServiceStatus}
                     handleChangeserviceStatus={this.handleChangeserviceStatus}
                     serviceStatus={this.state.serviceStatus}
+                    ServiceAreaList ={this.props.ServiceAreaList}
+                    handleServiceArea={this.handleServiceArea}
+                    serviceArea={this.state.serviceArea}
                 />
             </AsideScreenCover>
         )
@@ -395,12 +421,15 @@ function mapDispatchToProps(dispatch) {
 };
 
 function mapStateToProps(state) {
+
     return {
+      
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
         profileImgData: state.profileState.PersonalDetailState.imageData,
         ServiceCategory:state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
         ServiceStatus:state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
-        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType
+        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType,
+        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.getServiceArea
     };
 };
 

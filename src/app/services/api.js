@@ -76,7 +76,7 @@ export const API = {
     getServiceType: 'ServiceRequest/ServiceType/',
     PostSearchServiceRequest:'Search/PostSearchServiceRequest',
     getPatientServiceRequests:'ServiceRequest/ServiceProvider/',
-    getServiceareaList:'VisitProcessing/PatientAddress/'
+    getServiceareaList:'ServiceProvider/'
 }
 
 
