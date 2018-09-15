@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { Get,elasticSearchPost } from '../../../services/http';
+import { Get,elasticSearchPost,elasticSearchGet } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import {getVisitServiceListSuccess} from '../VisitServiceList/actions';
 
@@ -32,7 +32,7 @@ export function getServiceCategory() {
     return (dispatch) => {
       
         dispatch(startLoading());
-        Get(API.getServiceCategory).then((resp) => {
+        elasticSearchGet(API.getServiceCategory).then((resp) => {
            dispatch(getServiceCategoryListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -47,7 +47,7 @@ export function getServiceType(data) {
       
         dispatch(startLoading());
         let serviceCategoryId= data;
-        Get(API.getServiceType+`${serviceCategoryId}`).then((resp) => {
+        elasticSearchGet(API.getServiceType+`${serviceCategoryId}`).then((resp) => {
            dispatch(getServiceTypeSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -61,7 +61,7 @@ export function ServiceRequestStatus() {
     return (dispatch) => {
       
         dispatch(startLoading());
-        Get(API.getServiceRequestStatus).then((resp) => {
+        elasticSearchGet(API.getServiceRequestStatus).then((resp) => {
            dispatch(getServiceRequestStatusSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
