@@ -15,7 +15,7 @@ export const MenuData = [
         id: 2,
         title: 'Visit History',        
         iconName: 'iconProfile iconProfileServiceVisits',
-        link:'/'
+        link:'/visitHistory'
     },
     {
         id: 3,

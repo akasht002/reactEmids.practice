@@ -13,14 +13,15 @@ import {
   VisitServiceDetails,
   PerformTasks,
   Feedback,
-  Home,
   Summary,
   ForgetPassword,
   ResetPassword,
   ResetPasswordSuccess,
   ResetPasswordConfirmation,
   Dashboard,
-  Welcome
+  Welcome,  
+  VisitHistory,
+  VistSummary,
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -54,7 +55,9 @@ export const Path = {
   resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
-  dashboard:'/dashboard'
+  dashboard:'/dashboard',  
+  visitHistory: '/visitHistory',
+  visitSummaryDetail: '/visitSummary',
 };
 
 class AppStackRoot extends Component {
@@ -80,6 +83,10 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
             <PrivateRoute path={Path.profile} component={Profile} />          
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
+             {/*Want Change before commit */}
+             <Route path={Path.visitHistory} component={VisitHistory}/>            
+            <Route path={Path.visitSummaryDetail} component={VistSummary} />
+            {/*Want Change before commit */}
 
           </Switch>
         </HashRouter>

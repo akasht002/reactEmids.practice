@@ -54,7 +54,7 @@ export const API = {
     getGender: 'ServiceProviderLookUp/gender',
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
-    getVisitHistoryList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
+    getVisitHistoryList: 'ServiceRequest/Visits/ServiceProvider/',
     getConversation: 'conversation/user/',
     getUnreadCount: 'Conversation/Unread/User/',
     getServiceProviders: 'Patient/FavouriteServiceProvider/',
@@ -62,7 +62,7 @@ export const API = {
     getServiceProviderVists: 'VisitProcessing/ServiceProviderVisit/',
     getServiceRequestStatus:'Servicerequest/LookUp/ServiceRequestStatus',
     getServiceVisitsCount : 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
-    getServiceVisitsHistoryById:'ServiceRequest/VisitSummary/',
+    getServiceVisitsHistoryById:'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     getProfilePercentage: 'ServiceProvider/ProgressIndicator/',
     getBlackOutDays: 'ServiceProvider/',
     addBlackOutDay: 'ServiceProvider/',
@@ -75,7 +75,9 @@ export const API = {
     getServiceCategory:'ServiceRequest/ServiceCategory',
     getServiceType: 'ServiceRequest/ServiceType/',
     PostSearchServiceRequest:'Search/PostSearchServiceRequest',
-    getPatientServiceRequests:'ServiceRequest/ServiceProvider/'
+    getPatientServiceRequests:'ServiceRequest/ServiceProvider/',
+    getAllServiceProviders: 'ServiceRequest/GetAllServiceProviders',    
+    getSortedVisitHistory: "VisitProcessing/Visits/ServiceProviderSorting/",
 }
 
 

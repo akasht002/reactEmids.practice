@@ -187,6 +187,8 @@ export const getHeader = ()=> {
   
   
 export const getUserInfo = () => {
-  let userState = store && store.getState().authState.userState;
-  return userState && userState.userData && userState.userData.userInfo;
+  // let userState = store && store.getState().authState.userState;
+  // return userState && userState.userData && userState.userData.userInfo;
+  let userInfo = {serviceProviderId:1,serviceProviderTypeId:1}
+  return  userInfo
 }
