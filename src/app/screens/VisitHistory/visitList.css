@@ -96,6 +96,7 @@
 }
 
 div.SelectDropDown{
+    position: relative;
     background-color: rgba(0,0,0,0);
     font-size: 0;
     border: 0;
@@ -104,7 +105,7 @@ div.SelectDropDown{
 }
 
 div.SelectDropDown:before{
-    top: 4px;
+    top: 4px !important;
 }
 
 div.SelectDropDown:after{

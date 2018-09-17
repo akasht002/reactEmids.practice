@@ -5,6 +5,7 @@ import { ThemeProvider } from '@zendeskgarden/react-theming'
 import { SelectField, Select, Item } from '@zendeskgarden/react-select'
 import '../Dashboard/styles/ServiceTasks.css'
 import './visitList.css'
+import '../../styles/SelectDropdown.css'
 import { Scrollbars } from '../../components'
 import {
   getVisitServiceLists,
