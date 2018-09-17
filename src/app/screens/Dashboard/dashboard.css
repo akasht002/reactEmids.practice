@@ -17,7 +17,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    /*height: 100%;*/
+    height: 100%;
 }
 
 .dropdown.nav-item{
@@ -536,9 +536,6 @@ li div.dropdown-menu{
     clear: both;
 }
 
-.ScheduleTableRow > div, .ScheduleTableHeader > div{
-}
-
 .ScheduleTableRow > div > span, .ScheduleTableHeader > div > span{
     padding: 20px;
     display: block;
@@ -570,14 +567,6 @@ li div.dropdown-menu{
 
 .TabBody .ServiceTasks.Summary{
     margin: 52px 0;
-}
-
-.TabBody .SPAvailWidget div:first-child{
-    /* margin-left: 0; */
-}
-
-.TabBody .SPAvailWidget div:last-child{
-    /* margin-right: 0; */
 }
 
 a.ProfileCardHeaderLink:hover{
@@ -1458,10 +1447,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         left: 0;
     }
 
-    .ProfileServicesVisitContent{
-
-    }
-
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
         display: inline-block;
         height: auto;
@@ -1592,10 +1577,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         display: block;
         margin: 0 auto;
         bottom: 0;
-    }
-
-    .SPCount .SPRate{
-
     }
 
     .ProfileConversationWidget.ServiceProvider {
