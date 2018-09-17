@@ -141,6 +141,7 @@ class BlackoutModal extends Component {
               <div className="row">
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
+                    label="From Date"
                     dateFormat="LL"
                     placeholder="MM DD, YYYY"
                     onDateChange={this.dateChanged.bind(this, 'fromDate')}
@@ -155,6 +156,7 @@ class BlackoutModal extends Component {
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
+                    label="To Date"
                     dateFormat="LL"
                     placeholder="MM DD, YYYY"
                     onDateChange={this.dateChanged.bind(this, 'toDate')}

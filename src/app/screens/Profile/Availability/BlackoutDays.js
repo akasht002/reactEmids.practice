@@ -13,6 +13,7 @@ import {
 import "./AvailabilityStyles.css";
 import { dateDifference, formattedDateMoment } from '../../../utils/validations';
 
+
 class BlackoutDays extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +27,6 @@ class BlackoutDays extends Component {
   }
 
   toggleBlackout(action, data, disabledEdit, e) {
-    console.log('toggleBlackout....', data);
     if (disabledEdit === "disabled") {
       e.stopPropagation();
     } else {
@@ -102,6 +102,7 @@ class BlackoutDays extends Component {
       let dateEnd = formateDate(endDate, 'MMM DD');
       let dateEqual = false;
       let numberOfDays = dateDifference(dateStart,dateEnd);
+      console.log('numberOfDays.....', numberOfDays);
       if (startDate === endDate) {
         dateEqual = true;
       }
