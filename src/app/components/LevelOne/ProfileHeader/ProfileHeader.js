@@ -51,7 +51,7 @@ class ProfileHeader extends Component {
                 return (
                     <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
                         <NavLink className={clsName}
-                            href={menu.link} 
+                            onClick={() => {this.props.onClick(menu.link)}}
                             key={menu.id}
                             />
                     </NavItem>
