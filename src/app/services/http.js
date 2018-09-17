@@ -190,3 +190,11 @@ export const getUserInfo = () => {
   let userState = store && store.getState().authState.userState;
   return userState && userState.userData && userState.userData.userInfo;
 }
+
+export const elasticSearchGet = (url) => {
+  return axios.get(elasticSearchURL + url, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
+}

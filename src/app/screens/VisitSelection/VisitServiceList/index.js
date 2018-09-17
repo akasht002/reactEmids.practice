@@ -14,7 +14,7 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
-import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -39,7 +39,12 @@ class VisitServiceList extends Component {
             serviceTypes:[],
             isSortOpen: false,
             newest: true,
-            posted: true 
+            posted: true,
+            serviceArea:'',
+            coverageArea:'',
+            lat:'',
+            lon:'',
+            ServiceAreas:{}
         };
     };
 
@@ -53,6 +58,7 @@ class VisitServiceList extends Component {
         this.props.getVisitServiceList();
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
+        this.props.getServiceArea()
     }
 
     handleClick = (requestId) => {
@@ -216,7 +222,8 @@ class VisitServiceList extends Component {
                 endDate: this.state.endDate,
                 serviceStatus: this.state.serviceStatus,
                 ServiceCategoryId:this.state.ServiceCategoryId,
-                serviceTypes:this.state.serviceTypes
+                serviceTypes:this.state.serviceTypes,
+                ServiceAreas:this.state.ServiceAreas
             };
             this.props.getFilter(data)
             this.setState({
@@ -277,6 +284,20 @@ class VisitServiceList extends Component {
         service.push(item.keyValue)
         this.setState({
             serviceStatus:service
+        })
+    }
+    handleServiceArea =(item) =>{
+
+        var locations = {
+            'lat':item.lat,
+            'lon':item.lon,
+        }
+        var serviceAreaObj = {
+            'CoverageArea'  : item.coverageArea,
+            'Locations':locations  
+        };          
+        this.setState({            
+            ServiceAreas:serviceAreaObj
         })
     }
     render() {
@@ -373,6 +394,9 @@ class VisitServiceList extends Component {
                     ServiceStatus={this.props.ServiceStatus}
                     handleChangeserviceStatus={this.handleChangeserviceStatus}
                     serviceStatus={this.state.serviceStatus}
+                    ServiceAreaList ={this.props.ServiceAreaList}
+                    handleServiceArea={this.handleServiceArea}
+                    serviceArea={this.state.serviceArea}
                 />
             </AsideScreenCover>
         )
@@ -388,17 +412,21 @@ function mapDispatchToProps(dispatch) {
         ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
         getServiceType: (data) => dispatch(getServiceType(data)),
         getFilter:(data)  => dispatch(getFilter(data)),
-        getSort:(data)  => dispatch(getSort(data))
+        getSort:(data)  => dispatch(getSort(data)),
+        getServiceArea:()  => dispatch(getServiceArea()),
     }
 };
 
 function mapStateToProps(state) {
+
     return {
+      
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
         profileImgData: state.profileState.PersonalDetailState.imageData,
         ServiceCategory:state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
         ServiceStatus:state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
-        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType
+        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType,
+        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.getServiceArea
     };
 };
 
