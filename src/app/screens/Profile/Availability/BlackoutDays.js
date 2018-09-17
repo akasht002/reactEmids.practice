@@ -102,7 +102,6 @@ class BlackoutDays extends Component {
       let dateEnd = formateDate(endDate, 'MMM DD');
       let dateEqual = false;
       let numberOfDays = dateDifference(dateStart,dateEnd);
-      console.log('numberOfDays.....', numberOfDays);
       if (startDate === endDate) {
         dateEqual = true;
       }

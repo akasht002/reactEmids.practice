@@ -51,7 +51,7 @@ export function formateDate(date, format) {
 }
 
 export function dateDifference(startDate, endDate) {
-    return moment(endDate).diff(moment(startDate), 'days') + 1;
+    return moment(endDate, 'MMM DD').diff(moment(startDate, 'MMM DD'), 'days') + 1;
 }
 
 export function newDate() {
