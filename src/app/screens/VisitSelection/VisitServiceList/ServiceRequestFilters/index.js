@@ -104,20 +104,7 @@ class Filter extends Component {
                                         handleServiceArea={this.props.handleServiceArea}
                                         serviceArea={this.props.serviceArea}
                                     />
-{/*
-                                    <div className="form-radio AddressCardWidget mb-2">
-                                        <input className="form-radio-input" name="AddressPOS" id="AddressPOS2"
-                                               type="radio"
-                                               value='2'/>
-                                        <label className="form-radio-label AddressPOS" htmlFor="AddressPOS2">
-                                            <span className='POSTitle'>Home</span>
-                                            <span className='POSAddress'><i>Street</i>3343 Kooter Lane, 59 College Avenue</span>
-                                            <span className='POSAddress'><i>City</i>Farmington</span>
-                                            <span className='POSAddress'><i>State</i>West Virginia</span>
-                                            <span className='POSAddress'><i>Zip</i>26571</span>
-                                        </label>
-                                        <span className="RadioBoxIcon"/>
-</div>*/}       
+       
                                 </TabPane>
                                 <TabPane tabId="3">
                                     <div className="form-group">
