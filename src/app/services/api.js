@@ -78,6 +78,7 @@ export const API = {
     getPatientServiceRequests:'ServiceRequest/ServiceProvider/',
     getAllServiceProviders: 'ServiceRequest/GetAllServiceProviders',    
     getSortedVisitHistory: "VisitProcessing/Visits/ServiceProviderSorting/",
+    getServiceareaList:'ServiceProvider/'
 }
 
 
