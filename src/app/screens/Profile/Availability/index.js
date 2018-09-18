@@ -20,11 +20,12 @@ class Availability extends Component {
             add: false,
             edit: false, 
             updatedData: [],
-            availableDays: [],
-            isDiscardModalOpen: false          
+            isDiscardModalOpen: false,
+            activeSlots: []          
         }
         this.disabled = "disabled";
         this.slotList = 0;
+        this.availableDays = '';
     };
 
     toggleAvailability = (modalType, data) => {
@@ -120,9 +121,16 @@ class Availability extends Component {
     };
 
     render() {
-        let availableDays = '', modalContent, modalTitle;
+        let availableDays = [], modalContent, modalTitle, availableSlot= '';
         if (this.props.availableDays.days && this.props.availableDays.days.length > 0) {
             availableDays = this.getAvailableDays();
+            availableSlot = availableDays.every(slot => {
+                     if (slot === "") {
+                         return true;
+                     } else {
+                         return false;
+                     }
+                }); 
         }
 
         if (this.state.availabilityModal && this.props.availableDays.days && this.props.availableDays.days.length > 0) {
@@ -131,18 +139,19 @@ class Availability extends Component {
             modalTitle = 'Add Availability';
         }
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
+        console.log('this.props.availableDays.days.....', this.props.availableDays.days);
         return (
             <React.Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
                     <div className={"SPCardTitle d-flex"}>
                         <h4 className={"primaryColor"}>Availability</h4>
-                        {this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
-                          <i className="SPIconMedium SPIconEdit" onClick={this.toggleAvailability.bind('edit', 'editButton')} />
+                        {!availableSlot && this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
+                        <i className="SPIconMedium SPIconEdit" onClick={this.toggleAvailability.bind('edit', 'editButton')} />
                         :
                         <i className={"SPIconLarge SPIconAdd"} onClick={this.toggleAvailability.bind('add', 'addButton')} />}
                     </div>
                      <div className={'width100 SPAvailWidget'}>
-                        { availableDays ? availableDays : 
+                        { availableDays && !availableSlot ? availableDays : 
                             <ul className="SPEducationList width100">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
