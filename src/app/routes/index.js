@@ -80,7 +80,6 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
-            
             <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
             <PrivateRoute path={Path.performTasks} component={PerformTasks} />
@@ -90,11 +89,8 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.teleHealth} component={TeleHealth} />
             <PrivateRoute path={Path.profile} component={Profile} />          
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
-             {/*Want Change before commit */}
-             <Route path={Path.visitHistory} component={VisitHistory}/>            
-            <Route path={Path.visitSummaryDetail} component={VistSummary} />
-            {/*Want Change before commit */}
-
+             <PrivateRoute path={Path.visitHistory} component={VisitHistory}/>            
+            <PrivateRoute path={Path.visitSummaryDetail} component={VistSummary} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>
