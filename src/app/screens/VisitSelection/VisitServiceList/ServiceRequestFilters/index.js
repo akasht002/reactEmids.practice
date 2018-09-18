@@ -7,7 +7,7 @@ import {formateStateDate,formattedDateMoment,formattedDateChange } from "../../.
 import ServiceCategory from "./ServiceCategory";
 import ServiceTypeList from "./ServiceTyplist";
 import ServiceRequestsStatus from "./Status";
-
+import ServiceArea from "./ServiceArea";
 import "./style.css";
 
 class Filter extends Component {
@@ -98,27 +98,13 @@ class Filter extends Component {
                                         <label className="mb-3">Select Service Area</label>
                                     </div>
 
-                                    <div className="form-radio AddressCardWidget All mb-2">
-                                        <input className="form-radio-input" name="AddressPOS" id="AddressPOS1"
-                                               type="radio"
-                                               value="1"/>
-                                        <label className="form-radio-label AddressPOS" htmlFor="AddressPOS1">All</label>
-                                        <span className="RadioBoxIcon"/>
-                                    </div>
-
-                                    <div className="form-radio AddressCardWidget mb-2">
-                                        <input className="form-radio-input" name="AddressPOS" id="AddressPOS2"
-                                               type="radio"
-                                               value='2'/>
-                                        <label className="form-radio-label AddressPOS" htmlFor="AddressPOS2">
-                                            <span className='POSTitle'>Home</span>
-                                            <span className='POSAddress'><i>Street</i>3343 Kooter Lane, 59 College Avenue</span>
-                                            <span className='POSAddress'><i>City</i>Farmington</span>
-                                            <span className='POSAddress'><i>State</i>West Virginia</span>
-                                            <span className='POSAddress'><i>Zip</i>26571</span>
-                                        </label>
-                                        <span className="RadioBoxIcon"/>
-                                    </div>
+                                    
+                                    <ServiceArea 
+                                        ServiceAreaList={this.props.ServiceAreaList}
+                                        handleServiceArea={this.props.handleServiceArea}
+                                        serviceArea={this.props.serviceArea}
+                                    />
+       
                                 </TabPane>
                                 <TabPane tabId="3">
                                     <div className="form-group">

@@ -5,7 +5,8 @@ import {
 const defaultState = {
     ServiceCategory: [],
     ServiceType:[],
-    ServiceStatus:[]
+    ServiceStatus:[],
+    getServiceArea:[]
 };
 
 const ServiceRequestFilterState = (state = defaultState, action) => {
@@ -26,6 +27,11 @@ const ServiceRequestFilterState = (state = defaultState, action) => {
                 ...state,
                 ServiceStatus: action.data
             };
+        case ServiceRequestFiltersList.getServiceAreaSuccess:
+        return {
+            ...state,
+            getServiceArea: action.data.addresses
+        };
 
         default:
             return state;

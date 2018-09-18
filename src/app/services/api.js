@@ -75,7 +75,18 @@ export const API = {
     getServiceCategory:'ServiceRequest/ServiceCategory',
     getServiceType: 'ServiceRequest/ServiceType/',
     PostSearchServiceRequest:'Search/PostSearchServiceRequest',
-    getPatientServiceRequests:'ServiceRequest/ServiceProvider/'
+    getPatientServiceRequests:'ServiceRequest/ServiceProvider/',
+    getServiceareaList:'ServiceProvider/',
+    generateToken: 'VideoConferencing/',
+    getContext: 'conversation/context/',
+    createRoomId: 'VideoConferencing',
+    getLinkedParticipants: 'GetParticipants/',
+    joinVideoConference: 'VideoConferencing/JoinConference/',
+    leaveVideoConference: 'VideoConferencing/LeaveConference/',
+    getParticipantByConferenceId:'VideoConferencing/GetParticipantByConferenceId/',
+    getAllParticipants: 'VideoConferencing/GetAllParticipants/',
+    addParticipants: 'VideoConferencing/AddParticipant',
+    getParticipantsByContext: 'conversation/ParticipantByContext/'
 }
 
 
