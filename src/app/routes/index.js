@@ -22,6 +22,8 @@ import {
   Welcome,  
   VisitHistory,
   VistSummary,
+  TeleHealth,
+  InvitationAlert
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -58,6 +60,8 @@ export const Path = {
   dashboard:'/dashboard',  
   visitHistory: '/visitHistory',
   visitSummaryDetail: '/visitSummary',
+  teleHealth: '/teleHealth',
+  telehealthConfirm: '/teleHealth/:id'
 };
 
 class AppStackRoot extends Component {
@@ -71,16 +75,19 @@ class AppStackRoot extends Component {
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-            <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
-            <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
-            <PrivateRoute path={Path.performTasks} component={PerformTasks} />
-            <PrivateRoute path={Path.feedback} component={Feedback} />
-            <PrivateRoute path={Path.summary} component={Summary} />
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
             <Route path={Path.forgetPassword} component={ForgetPassword} />
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
+            
+            <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
+            <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
+            <PrivateRoute path={Path.performTasks} component={PerformTasks} />
+            <PrivateRoute path={Path.feedback} component={Feedback} />
+            <PrivateRoute path={Path.summary} component={Summary} />
+            <PrivateRoute path={Path.telehealthConfirm} component={InvitationAlert} />
+            <PrivateRoute path={Path.teleHealth} component={TeleHealth} />
             <PrivateRoute path={Path.profile} component={Profile} />          
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
              {/*Want Change before commit */}

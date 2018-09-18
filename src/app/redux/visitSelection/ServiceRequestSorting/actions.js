@@ -7,9 +7,8 @@ export function getSort(data) {
     return (dispatch) => {
       
         dispatch(startLoading());
-        //let serviceProviderId = getUserInfo().serviceProviderId;
-        //let serviceProviderId = localStorage.getItem('serviceProviderID');
-        let serviceProviderId =0;
+        let serviceProviderId = getUserInfo().serviceProviderId;
+     
          let Reqdata={
              status:0,
              fromDate:null,

@@ -44,7 +44,8 @@ class VisitServiceList extends Component {
             coverageArea:'',
             lat:'',
             lon:'',
-            ServiceAreas:{}
+            ServiceAreas:{},
+            isChecked:false
         };
     };
 
@@ -245,6 +246,12 @@ class VisitServiceList extends Component {
         })
     }
     /* sorting */
+    toggleclass =(e) =>{
+        var element = document.getElementsByClassName("dropdown-menu")[0];
+        element.classList.add("show");
+        var element1 = document.getElementsByClassName("dropdown-item")[0];
+        element1.classList.add("dropdown-item-checked");
+    }
     onSortChange = (posted, newest) =>{
         var data={
             sortByOrder : newest ? "ASC" : "DESC",
@@ -254,6 +261,9 @@ class VisitServiceList extends Component {
             status: 0
         }
         this.props.getSort(data);
+            var element = document.getElementsByClassName("dropdown-menu")[0];
+            element.classList.remove("show");
+            element.classList.add("hide");
         this.setState({
             newest: (newest !== null ? newest : this.state.newest),
             posted: (posted !== null ? posted : this.state.posted),
@@ -279,20 +289,29 @@ class VisitServiceList extends Component {
         })
     }
 
-    handleChangeserviceStatus =(item) =>{
+    handleChangeserviceStatus =(item,e) =>{
         let service = this.state.serviceStatus
-        service.push(item.keyValue)
+        if (e.target.checked) {
+            service.push(item.keyValue)
+        }else {
+            let index = service.indexOf(item.keyValue);
+            if (index > -1) {
+                service.splice(index, 1);
+            }
+        }
+       
         this.setState({
-            serviceStatus:service
-        })
+            serviceStatus: service,
+        });
+    
     }
     handleServiceArea =(item) =>{
 
-        var locations = {
+        const locations = {
             'lat':item.lat,
             'lon':item.lon,
         }
-        var serviceAreaObj = {
+        const serviceAreaObj = {
             'CoverageArea'  : item.coverageArea,
             'Locations':locations  
         };          
@@ -362,6 +381,7 @@ class VisitServiceList extends Component {
                         onSortChange={this.onSortChange}
                         newest={this.state.newest}
                         posted={this.state.posted}
+                        toggleclass={this.toggleclass}
                     />
                     <span className='primaryColor' onClick={this.toggleFilter}>Filters</span>
                     </div>
@@ -397,6 +417,7 @@ class VisitServiceList extends Component {
                     ServiceAreaList ={this.props.ServiceAreaList}
                     handleServiceArea={this.handleServiceArea}
                     serviceArea={this.state.serviceArea}
+                    checked={this.state.isChecked}
                 />
             </AsideScreenCover>
         )

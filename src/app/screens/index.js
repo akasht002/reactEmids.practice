@@ -13,6 +13,8 @@ import Summary from './VisitSelection/VisitServiceProcessing/Summary'
 import { LoginCallBack } from './Authentication/Login/LoginCallBack'
 import { AsideScreenCover } from './ScreenCover/AsideScreenCover'
 import Dashboard from './Dashboard'
+import TeleHealth from './TeleHealth'
+import InvitationAlert from './TeleHealth/InvitationAlert'
 import VisitHistory from './VisitHistory'
 import VistSummary from './VisitHistory/VisitSummary'
 
@@ -43,6 +45,8 @@ export {
   ResetPasswordConfirmation,
   AsideScreenCover,
   Dashboard,
+  TeleHealth,
+  InvitationAlert,
   VisitHistory,
   VistSummary
 }

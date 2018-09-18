@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { Get,elasticSearchPost,elasticSearchGet } from '../../../services/http';
+import { Get,elasticSearchPost,elasticSearchGet,getUserInfo } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import {getVisitServiceListSuccess} from '../VisitServiceList/actions';
 
@@ -83,7 +83,7 @@ export function getServiceArea() {
     return (dispatch) => {
       
         dispatch(startLoading());
-        let serviceProviderId=1;
+        let serviceProviderId =  getUserInfo().serviceProviderId
         Get(API.getServiceareaList+`${serviceProviderId}`).then((resp) => {
            dispatch(getServiceAreaSuccess(resp.data))
             dispatch(endLoading());

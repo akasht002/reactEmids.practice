@@ -1,0 +1,13 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90">
+    <defs>
+        <style>
+            .cls-1,.cls-2{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:4px;}.cls-1{stroke-linecap:round;}
+        </style>
+    </defs>
+    <title>Icons_Navvis</title>
+    <path class="cls-1" d="M52.79,12.14h21a4,4,0,0,1,4,4V37.35"/>
+    <line class="cls-1" x1="49.82" y1="40.17" x2="76.68" y2="13.33"/>
+    <path class="cls-1" d="M36.87,78h-21a4,4,0,0,1-4-4V52.77"/>
+    <line class="cls-1" x1="38.84" y1="51.16" x2="13.09" y2="76.9"/>
+    <rect class="cls-2" x="1.8" y="2.14" width="85.83" height="85.83" rx="4" ry="4"/>
+</svg>

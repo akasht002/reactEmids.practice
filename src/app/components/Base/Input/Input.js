@@ -20,7 +20,7 @@ class Input extends React.Component {
                 onCopy={this.props.onCopy}
                 onPaste={this.props.onPaste}
             />
-                <small id={this.props.name+"Help"} className="form-text text-muted">{this.props.help}</small>
+                <small id={this.props.name+"Help"} className={"form-text text-muted " + this.props.iconStyle}>{this.props.help}</small>
         </div>
         );
     }
