@@ -52,20 +52,28 @@ class BlackoutModal extends Component {
      }
   }
 
-dateChangedRaw = (event) => {
+dateChangedRaw = (dateType, event) => {
     if (event.target.value && (!checkDateFormatNumber(event.target.value))) {
         event.preventDefault();
     } else {
      let fromDateVal = changeDateFormat(event.target.value);
-     this.toMinDate = newDateValue(fromDateVal);
-     let checkValue = checkFormatDate(fromDateVal);
-     if (checkValue) {
-          const formattedDate = fromDateVal ? formatDate(fromDateVal, DATE_FORMAT) : null;
-          this.setState({ blackoutData: { ...this.state.blackoutData, fromDate: formattedDate } });
-        }
-    }
+     if (dateType === 'fromDate') {
+          this.toMinDate = newDateValue(fromDateVal);
+          let checkValue = checkFormatDate(fromDateVal);
+          if (checkValue) {
+              const formattedDate = fromDateVal ? formatDate(fromDateVal, DATE_FORMAT) : null;
+              this.setState({ blackoutData: { ...this.state.blackoutData, fromDate: formattedDate } });
+          }
+        } else {
+          this.fromMaxDate = newDateValue(fromDateVal);
+          let checkValue = checkFormatDate(fromDateVal);
+          if (checkValue) {
+              const formattedDate = fromDateVal ? formatDate(fromDateVal, DATE_FORMAT) : null;
+              this.setState({ blackoutData: { ...this.state.blackoutData, toDate: formattedDate } });
+          }
+     }
+  }
 }
-
 
   remarksChange = e => {
     let value = e.target.value;
@@ -160,11 +168,10 @@ dateChangedRaw = (event) => {
               <div className="row">
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
-                    id="fromDateId"
                     label="From Date"
-                    startDate={this.state.blackoutData.fromDate && moment(this.state.blackoutData.fromDate)}
+                    startDate={fromDate && moment(fromDate)}
                     onDateChange={this.dateChanged.bind(this, 'fromDate')}
-                    onDateChangeRaw={this.dateChangedRaw}
+                    onDateChangeRaw={this.dateChangedRaw.bind(this, 'fromDate')}
                     value={fromDate}
                     disabled={this.props.disabledStartDate}
                     minDate={this.fromMinDate}
@@ -178,8 +185,9 @@ dateChangedRaw = (event) => {
                   <Calendar
                     label="To Date"
                     dateFormat="LL"
-                    placeholder="MM DD, YYYY"
+                    startDate={toDate && moment(toDate)}
                     onDateChange={this.dateChanged.bind(this, 'toDate')}
+                    onDateChangeRaw={this.dateChangedRaw.bind(this, 'toDate')}
                     value={toDate}
                     minDate={this.toMinDate}
                     className={

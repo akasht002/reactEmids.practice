@@ -139,7 +139,6 @@ class Availability extends Component {
             modalTitle = 'Add Availability';
         }
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
-        console.log('this.props.availableDays.days.....', this.props.availableDays.days);
         return (
             <React.Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
