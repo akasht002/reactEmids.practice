@@ -66,7 +66,7 @@ class AsideScreenCover extends React.Component {
                     <AsideMenu menuData={MenuData} />
                 </div>
                 <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.props.toggle} />
+                    <ProfileHeader toggle={this.props.toggle} onClick={(link) => this.props.navigateProfileHeader(link)}/>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
                     <div className='ProfileRightContainer'>
                         {this.props.children}
@@ -91,7 +91,8 @@ function mapDispatchToProps(dispatch) {
         getUserInfo: () => dispatch(getUserInfo()),
         onClickOk: () => dispatch(updateEula()),
         goToProfile: () => dispatch(push(Path.profile)),
-        getPersonalDetail:()=>dispatch(action.getPersonalDetail())
+        getPersonalDetail:()=>dispatch(action.getPersonalDetail()),
+        navigateProfileHeader: (link) => dispatch(push(link))
     }
 };
 

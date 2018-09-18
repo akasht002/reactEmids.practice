@@ -20,7 +20,9 @@ import {
   ResetPasswordSuccess,
   ResetPasswordConfirmation,
   Dashboard,
-  Welcome
+  Welcome,
+  ConversationSummary,
+  Conversation
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -54,7 +56,10 @@ export const Path = {
   resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
-  dashboard:'/dashboard'
+  dashboard:'/dashboard',
+  messageSummary: '/messagesummary',
+  conversations: '/conversation/:id',
+  conversation : '/conversation/'
 };
 
 class AppStackRoot extends Component {
@@ -62,26 +67,29 @@ class AppStackRoot extends Component {
     return (
       <ConnectedRouter history={this.props.history}>
         <HashRouter>
+          <div>
           <Switch>
             <Route exact path={Path.root} component={Welcome} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-            <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
-            <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
-            <PrivateRoute path={Path.performTasks} component={PerformTasks} />
-            <PrivateRoute path={Path.feedback} component={Feedback} />
-            <PrivateRoute path={Path.summary} component={Summary} />
             <Route path={Path.loginCallBack} component={LoginCallBack}/>
             <Route path={Path.forgetPassword} component={ForgetPassword} />
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
-            <PrivateRoute path={Path.profile} component={Profile} />          
-            <PrivateRoute path={Path.dashboard} component={Dashboard} />
-
+            <PrivateRoute exact path={Path.visitServiceList} component={VisitServiceList} />
+            <PrivateRoute  exact path={Path.visitServiceDetails} component={VisitServiceDetails} />
+            <PrivateRoute exact path={Path.performTasks} component={PerformTasks} />
+            <PrivateRoute exact path={Path.feedback} component={Feedback} />
+            <PrivateRoute exact path={Path.summary} component={Summary} />
+            <PrivateRoute exact path={Path.dashboard} component={Dashboard} />
+            <PrivateRoute  path={Path.conversations} component={Conversation} />
+            <PrivateRoute  path={Path.messageSummary} component={ConversationSummary} />
+            <PrivateRoute exact path={Path.profile} component={Profile} />                     
           </Switch>
+          </div>
         </HashRouter>
       </ConnectedRouter>
     );

@@ -13,6 +13,7 @@ import { SearchInput } from "../../../components";
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { makeProperCase } from '../../../utils/stringHelper';
+import { navigateProfileHeader } from '../../../redux/appNavigation/actions';
 
 class ProfileHeader extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class ProfileHeader extends Component {
         });
     }
 
-    handleNavigation = (event) =>{
+    handleNavigation = (event) => {
         switch (event.target.title) {
             case "logout":
                 this.props.onLogout();
@@ -42,18 +43,22 @@ class ProfileHeader extends Component {
     render() {
         const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
-            let Separator = "";
+            let separator = "";
             if (menu.status) {
                 let clsName = "navIcon icon" + makeProperCase(menuName);
                 if (menuName === "notification") {
-                    Separator = "NavIconSeparator"
+                    separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
+                    /*<NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
                         <NavLink className={clsName}
                             href={menu.link} 
                             key={menu.id}
                             />
+                    </NavItem>*/
+                    // <a className={clsName} onClick={() => this.props.navigateProfileHeader(menu.link)}/>
+                    <NavItem className={menuName + "Widget navIconWidget " + separator} key={menu.id}>
+                        <NavLink className={clsName} key={menu.id} onClick={() => { this.props.onClick(menu.link) }} />
                     </NavItem>
                 )
             }
@@ -86,8 +91,9 @@ class ProfileHeader extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onLogout: () => dispatch(onLogout())
+        onLogout: () => dispatch(onLogout()),
+        navigateProfileHeader: (url) => dispatch(navigateProfileHeader(url))
     }
-  }
-  
+}
+
 export default connect(null, mapDispatchToProps)(ProfileHeader);

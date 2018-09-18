@@ -16,7 +16,7 @@ export const Api = axios.create({
 });
 
 export const SETTING = {
-    FILE_UPLOAD_SIZE : 2097152 
+    FILE_UPLOAD_SIZE: 2097152
 }
 
 export const API = {
@@ -26,7 +26,7 @@ export const API = {
     setPassword: 'ServiceProviderOnBoarding/SetPassword',
     certification: 'ServiceProvider/',
     education: 'ServiceProvider/',
-    WorkHistory:'ServiceProvider/',
+    WorkHistory: 'ServiceProvider/',
     getSkills: 'ServiceProvider/Skill',
     addSkills: 'ServiceProvider/',
     getLanguages: 'ServiceProvider/Language',
@@ -42,27 +42,25 @@ export const API = {
     SendResetPasswordLink: 'User/',
     getEmailIdByUserId: 'user/verifypasswordlink/',
     resetPassword: 'user',
-    getPersonalDetail:'ServiceProvider/',
-    updatePersonalDetail:'ServiceProvider/',
-    getCity:'ServiceProviderLookUp/GetState',
-    uploadImage:'ServiceProvider/Image',
-    getImage:'ServiceProvider/Image/',
+    getPersonalDetail: 'ServiceProvider/',
+    updatePersonalDetail: 'ServiceProvider/',
+    getCity: 'ServiceProviderLookUp/GetState',
+    uploadImage: 'ServiceProvider/Image',
+    getImage: 'ServiceProvider/Image/',
     getServiceOffered: 'ServiceProvider/',
     editServiceOffered: 'ServiceProvider/',
     addServiceOffered: 'ServiceProvider/',
-    getServiceProviderID:'ServiceProviderOnBoarding/',
+    getServiceProviderID: 'ServiceProviderOnBoarding/',
     getGender: 'ServiceProviderLookUp/gender',
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
     getVisitHistoryList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
-    getConversation: 'conversation/user/',
-    getUnreadCount: 'Conversation/Unread/User/',
     getServiceProviders: 'Patient/FavouriteServiceProvider/',
     getServiceProviderRequests: 'ServiceRequest/ServiceRequests/ServiceProvider/',
     getServiceProviderVists: 'VisitProcessing/ServiceProviderVisit/',
-    getServiceRequestStatus:'Servicerequest/LookUp/ServiceRequestStatus',
-    getServiceVisitsCount : 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
-    getServiceVisitsHistoryById:'ServiceRequest/VisitSummary/',
+    getServiceRequestStatus: 'Servicerequest/LookUp/ServiceRequestStatus',
+    getServiceVisitsCount: 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
+    getServiceVisitsHistoryById: 'ServiceRequest/VisitSummary/',
     getProfilePercentage: 'ServiceProvider/ProgressIndicator/',
     getBlackOutDays: 'ServiceProvider/',
     addBlackOutDay: 'ServiceProvider/',
@@ -72,10 +70,26 @@ export const API = {
     getLoginInfo: 'connect/userinfo',
     getEulaContent: 'api/user/config/EulaContent',
     updateEula: 'api/User/Eula',
-    getServiceCategory:'ServiceRequest/ServiceCategory',
+    getServiceCategory: 'ServiceRequest/ServiceCategory',
     getServiceType: 'ServiceRequest/ServiceType/',
-    PostSearchServiceRequest:'Search/PostSearchServiceRequest',
-    getPatientServiceRequests:'ServiceRequest/ServiceProvider/'
+    PostSearchServiceRequest: 'Search/PostSearchServiceRequest',
+    getPatientServiceRequests: 'ServiceRequest/ServiceProvider/',
+
+    //Asyncmessages
+    getConversationSummary: 'conversation/user/',
+    getConversation: 'conversation/',
+    createNewConversation: 'conversation',
+    saveTitle: 'conversation/title',
+    sendMessage: 'conversation/message',
+    addParticipant: 'conversation/participant/add',
+    removeParticipant: 'conversation/participant/remove',
+    getUnreadCount: 'Conversation/Unread/User/',
+    updateReadStatus: 'Conversation/UpdateRead/',
+    leaveConversation: 'Conversation/leave/',
+    getContext: 'conversation/context/',
+    getParticipantsByContext: 'conversation/ParticipantByContext/',
+    getDashboardMessageCount: 'Conversation/Dashboard/ConversationCount/',
+    getConversationImage: 'api/Conversation/Message/'
 }
 
 

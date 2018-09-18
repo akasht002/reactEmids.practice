@@ -8,185 +8,219 @@ export const messageURL = process.env.REACT_APP_MSG_URL
 export const elasticSearchURL = process.env.REACT_APP_ES_URL;
 
 export const AuthLogin = (url, data) => {
-  var bodyFormData = new FormData()
-  bodyFormData.append('client_id', 'roclient')
-  bodyFormData.append('client_secret', 'coreohomesecret')
-  bodyFormData.append('grant_type', 'password')
-  bodyFormData.append('username', data.username)
-  bodyFormData.append('password', data.password)
-  return axios
-    .post(authURL + url, bodyFormData, {
-      headers: { Authorization: 'Basic Og==' }
-    })
-    .then(response => {
-      return response
-    })
-    .catch(error => handleError(error))
+    var bodyFormData = new FormData()
+    bodyFormData.append('client_id', 'roclient')
+    bodyFormData.append('client_secret', 'coreohomesecret')
+    bodyFormData.append('grant_type', 'password')
+    bodyFormData.append('username', data.username)
+    bodyFormData.append('password', data.password)
+    return axios
+        .post(authURL + url, bodyFormData, {
+            headers: { Authorization: 'Basic Og==' }
+        })
+        .then(response => {
+            return response
+        })
+        .catch(error => handleError(error))
 }
 
 export const Post = (url, data) => {
-  return axios
-    .post(baseURL + url, data, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .post(baseURL + url, data, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const Put = (url, data) => {
-  return axios
-    .put(baseURL + url, data, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .put(baseURL + url, data, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const Get = url => {
-  return axios
-    .get(baseURL + url, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .get(baseURL + url, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const Delete = url => {
-  return axios
-    .delete(baseURL + url, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .delete(baseURL + url, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const ServiceRequestGet = url => {
-  return axios
-    .get(serviceRequestURL + url, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .get(serviceRequestURL + url, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const ServiceRequestPut = (url, data) => {
-  return axios
-    .put(serviceRequestURL + url, data, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .put(serviceRequestURL + url, data, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const ServiceRequestPost = (url, data) => {
-  return axios
-    .post(serviceRequestURL + url, data, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .post(serviceRequestURL + url, data, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const AuthPost = (url, data) => {
-  return axios
-    .post(authURL + url, data, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .post(authURL + url, data, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const AuthPut = (url, data) => {
-  return axios
-    .put(authURL + url, data)
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .put(authURL + url, data)
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const AuthGet = url => {
-  return axios
-    .get(authURL + url, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .get(authURL + url, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const AuthDelete = url => {
-  return axios
-    .delete(authURL + url)
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .delete(authURL + url)
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const handleError = err => {
-  throw err
+    throw err
 }
 
 export const MessageURLGet = (url, data) => {
-  return axios
-    .get(messageURL + url)
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .get(messageURL + url)
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const getServiceProviderId = () => {
-  return (
-    store.getState().authState.userState.userData &&
-    store.getState().authState.userState.userData.serviceProviderId
-  )
+    return (
+        store.getState().authState.userState.userData &&
+        store.getState().authState.userState.userData.serviceProviderId
+    )
 }
 
 export const elasticSearchPost = (url, data) => {
-  return axios.post(elasticSearchURL + url, data, getHeader()).then((resp) => {
-      return resp;
-  }).catch((error) => {
-      handleError(error);
-  })
+    return axios.post(elasticSearchURL + url, data, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
 }
-export const getHeader = ()=> {
-  let userState = store.getState().authState.userState;
-  let token = userState && userState.userData && userState.userData.access_token;
-  let authHeader = token ? {
-  Authorization: 'Bearer ' + token
-  } : {}
-  return {
-  headers: authHeader
-  }
+export const getHeader = () => {
+    let userState = store.getState().authState.userState;
+    let token = userState && userState.userData && userState.userData.access_token;
+    let authHeader = token ? {
+        Authorization: 'Bearer ' + token
+    } : {}
+    return {
+        headers: authHeader
+    }
 }
-  
-  
+
+
 export const getUserInfo = () => {
-  let userState = store && store.getState().authState.userState;
-  return userState && userState.userData && userState.userData.userInfo;
+      let userState = store && store.getState().authState.userState;
+      return userState && userState.userData && userState.userData.userInfo;
 }
+
+//Asyncmessages
+
+export const AsyncGet = (url) => {
+     return axios.get(messageURL + url, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
+};
+
+export const AsyncPost = (url, data) => {
+    return axios.post(messageURL + url, data, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
+};
+
+export const AsyncPut = (url, data) => {
+    return axios.put(messageURL + url, data, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
+};
+
+export const AsyncPutWithUrl = (url) => {
+    return axios.put(messageURL + url, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
+};

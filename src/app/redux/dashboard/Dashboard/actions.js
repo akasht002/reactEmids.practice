@@ -162,7 +162,7 @@ export function getConversationDetail () {
   return (dispatch, getState) => {
     dispatch(startLoading())
     axios
-      .get(messageURL + API.getConversation + MSG_SERVICE_PROVIDER + MSG_TYPE)
+      .get(messageURL + API.getConversationSummary + MSG_SERVICE_PROVIDER + MSG_TYPE)
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
         dispatch(endLoading())
