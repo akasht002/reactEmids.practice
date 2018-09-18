@@ -5,11 +5,6 @@ export const ProfileHeaderMenu = [
         id:1
     },
     {
-        name: "videoChat",
-        status: true,
-        id:2
-    },
-    {
         name: "messages",
         status: true,
         id:3,

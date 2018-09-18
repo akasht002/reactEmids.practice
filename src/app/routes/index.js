@@ -13,7 +13,6 @@ import {
   VisitServiceDetails,
   PerformTasks,
   Feedback,
-  Home,
   Summary,
   ForgetPassword,
   ResetPassword,
@@ -21,6 +20,8 @@ import {
   ResetPasswordConfirmation,
   Dashboard,
   Welcome,
+  TeleHealth,
+  InvitationAlert,
   ConversationSummary,
   Conversation
 } from '../screens';
@@ -57,6 +58,8 @@ export const Path = {
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
   dashboard:'/dashboard',
+  teleHealth: '/teleHealth',
+  telehealthConfirm: '/teleHealth/:id',
   messageSummary: '/messagesummary',
   conversations: '/conversation/:id',
   conversation : '/conversation/'
@@ -79,11 +82,14 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
-            <PrivateRoute exact path={Path.visitServiceList} component={VisitServiceList} />
-            <PrivateRoute  exact path={Path.visitServiceDetails} component={VisitServiceDetails} />
-            <PrivateRoute exact path={Path.performTasks} component={PerformTasks} />
-            <PrivateRoute exact path={Path.feedback} component={Feedback} />
-            <PrivateRoute exact path={Path.summary} component={Summary} />
+            
+            <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
+            <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
+            <PrivateRoute path={Path.performTasks} component={PerformTasks} />
+            <PrivateRoute path={Path.feedback} component={Feedback} />
+            <PrivateRoute path={Path.summary} component={Summary} />
+            <PrivateRoute path={Path.telehealthConfirm} component={InvitationAlert} />
+            <PrivateRoute path={Path.teleHealth} component={TeleHealth} />
             <PrivateRoute exact path={Path.dashboard} component={Dashboard} />
             <PrivateRoute  path={Path.conversations} component={Conversation} />
             <PrivateRoute  path={Path.messageSummary} component={ConversationSummary} />

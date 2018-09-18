@@ -16,7 +16,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    /*height: 100%;*/
+    height: 100%;
 }
 
 .dropdown.nav-item{
@@ -522,14 +522,6 @@ li div.dropdown-menu{
     padding-left: 0;
 }
 
-.TabBody .SPAvailWidget div:first-child{
-    margin-left: 0;
-}
-
-.TabBody .SPAvailWidget div:last-child{
-    margin-right: 0;
-}
-
 a.ProfileCardHeaderLink:hover{
     text-decoration: none;
 }
@@ -973,10 +965,6 @@ div.scrollarea .scrollbar-container.vertical {
         visibility: visible;
     }
 
-    .ProfileServicesVisitContent{
-
-    }
-
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
         display: inline-block;
         height: auto;
@@ -1095,10 +1083,6 @@ div.scrollarea .scrollbar-container.vertical {
         display: block;
         margin: 0 auto;
         bottom: 0;
-    }
-
-    .SPCount .SPRate{
-
     }
 
     .SPAvailItems {

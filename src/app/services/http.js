@@ -6,6 +6,7 @@ export const authURL = process.env.REACT_APP_AUTH_URL
 export const serviceRequestURL = process.env.REACT_APP_SR_URL
 export const messageURL = process.env.REACT_APP_MSG_URL
 export const elasticSearchURL = process.env.REACT_APP_ES_URL;
+export const asyncURL = process.env.REACT_APP_MSG_URL;
 
 export const AuthLogin = (url, data) => {
     var bodyFormData = new FormData()
@@ -67,6 +68,30 @@ export const Delete = url => {
             handleError(error)
         })
 }
+
+export const AsyncGet = (url) => {
+  return axios.get(asyncURL + url, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
+};
+
+export const AsyncPutWithUrl = (url) => {
+  return axios.put(asyncURL + url, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
+};
+
+export const AsyncPost = (url, data) => {
+  return axios.post(asyncURL + url, data, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
+};
 
 export const ServiceRequestGet = url => {
     return axios
@@ -187,38 +212,20 @@ export const getHeader = () => {
 
 
 export const getUserInfo = () => {
-      let userState = store && store.getState().authState.userState;
-      return userState && userState.userData && userState.userData.userInfo;
+  let userState = store && store.getState().authState.userState;
+  return userState && userState.userData && userState.userData.userInfo;
 }
 
-//Asyncmessages
-
-export const AsyncGet = (url) => {
-     return axios.get(messageURL + url, getHeader()).then((resp) => {
-        return resp;
-    }).catch((error) => {
-        handleError(error);
-    })
-};
-
-export const AsyncPost = (url, data) => {
-    return axios.post(messageURL + url, data, getHeader()).then((resp) => {
-        return resp;
-    }).catch((error) => {
-        handleError(error);
-    })
-};
+export const elasticSearchGet = (url) => {
+  return axios.get(elasticSearchURL + url, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
+}
 
 export const AsyncPut = (url, data) => {
     return axios.put(messageURL + url, data, getHeader()).then((resp) => {
-        return resp;
-    }).catch((error) => {
-        handleError(error);
-    })
-};
-
-export const AsyncPutWithUrl = (url) => {
-    return axios.put(messageURL + url, getHeader()).then((resp) => {
         return resp;
     }).catch((error) => {
         handleError(error);

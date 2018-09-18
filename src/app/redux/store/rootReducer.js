@@ -13,6 +13,7 @@ import authUser from '../auth/login/reducer'
 import {visitHistoryState} from '../visitHistory/reducer'
 import { DashboardState } from '../dashboard/reducer';
 import asyncMessageState from '../asyncMessages/reducer';
+import telehealthState from '../telehealth/reducer';
 
 export default combineReducers({
     authState,
@@ -28,5 +29,6 @@ export default combineReducers({
     authUser,
     visitHistoryState,
     dashboardState:DashboardState,
+    telehealthState,
 	asyncMessageState
 });

@@ -10,6 +10,7 @@ import { Path } from '../../../routes/';
 import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
 import { ModalUserAgreement } from '../../../components';
 import { push } from '../../../redux/navigation/actions';
+import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -36,6 +37,15 @@ class AsideScreenCover extends React.Component {
   onClickOk = () => {
     this.props.onClickOk();
     }
+
+    navigateProfileHeader = (link) =>{
+        if(link === 'messagesummary'){
+            this.props.navigateProfileHeader(link);
+        }else{
+            this.setState({selectedLink: link})
+        }
+    };
+
 
     render() {
         return (
@@ -66,9 +76,9 @@ class AsideScreenCover extends React.Component {
                     <AsideMenu menuData={MenuData} />
                 </div>
                 <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.props.toggle} onClick={(link) => this.props.navigateProfileHeader(link)}/>
+					<ProfileHeader toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
-                    <div className='ProfileRightContainer'>
+                    <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '')}>
                         {this.props.children}
                     </div>
                 </div>
@@ -78,6 +88,12 @@ class AsideScreenCover extends React.Component {
                     className="modal-lg"
                     modalTitle="User Agreement has been updated, please accept to proceed."
                     onClick={this.onClickOk}
+                />
+                <ParticipantContainer
+                    onRef={ref => (this.participantComponent = ref)}
+                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth}
+                    onSetDisplayParticipantModal={() => {this.setState({selectedLink: null})}}
+                    createConversation={() => {this.setState({selectedLink: null})}}
                 />
             </ScreenCover>
         )
