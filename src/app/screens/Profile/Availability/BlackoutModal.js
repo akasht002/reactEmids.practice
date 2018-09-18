@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import moment from 'moment';
 import { ModalPopup } from "../../../components";
 import { TextArea } from "../../../components";
 import { Calendar } from "../../../components";
 import { compare } from "../../../utils/comparerUtility";
-import { formattedDateMoment, newDate, newDateValue } from '../../../utils/validations';
+import { changeDateFormat, formatDate } from '../../../utils/dateUtility';
+import { DATE_FORMAT } from '../../../constants/constants';
+import { formattedDateMoment, newDate, newDateValue, checkDateFormatNumber, checkFormatDate } from '../../../utils/validations';
 
 class BlackoutModal extends Component {
   constructor(props) {
@@ -26,6 +29,7 @@ class BlackoutModal extends Component {
   }
 
   dateChanged = (dateType, date) => {
+    debugger;
      const formattedDate = formattedDateMoment(date);
      this.stateChange = true;
 
@@ -47,6 +51,21 @@ class BlackoutModal extends Component {
       }));
      }
   }
+
+dateChangedRaw = (event) => {
+    if (event.target.value && (!checkDateFormatNumber(event.target.value))) {
+        event.preventDefault();
+    } else {
+     let fromDateVal = changeDateFormat(event.target.value);
+     this.toMinDate = newDateValue(fromDateVal);
+     let checkValue = checkFormatDate(fromDateVal);
+     if (checkValue) {
+          const formattedDate = fromDateVal ? formatDate(fromDateVal, DATE_FORMAT) : null;
+          this.setState({ blackoutData: { ...this.state.blackoutData, fromDate: formattedDate } });
+        }
+    }
+}
+
 
   remarksChange = e => {
     let value = e.target.value;
@@ -141,10 +160,11 @@ class BlackoutModal extends Component {
               <div className="row">
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
+                    id="fromDateId"
                     label="From Date"
-                    dateFormat="LL"
-                    placeholder="MM DD, YYYY"
+                    startDate={this.state.blackoutData.fromDate && moment(this.state.blackoutData.fromDate)}
                     onDateChange={this.dateChanged.bind(this, 'fromDate')}
+                    onDateChangeRaw={this.dateChangedRaw}
                     value={fromDate}
                     disabled={this.props.disabledStartDate}
                     minDate={this.fromMinDate}
