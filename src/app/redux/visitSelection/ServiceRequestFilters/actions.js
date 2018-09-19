@@ -97,9 +97,9 @@ export function getServiceArea() {
 export function getFilter(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        let ReqObj;
+        let reqObj;
         if(data.startDate==="" && data.endDate===""){
-             ReqObj={
+            reqObj={
                 "Category": data.ServiceCategoryId,
                 "ServiceTypes": data.serviceTypes,
                 "Status":data.serviceStatus,
@@ -108,7 +108,7 @@ export function getFilter(data) {
                 "ServiceAreas":data.ServiceAreas
               }
         } else {
-              ReqObj ={
+            reqObj ={
                 "Category": data.ServiceCategoryId,
                 "ServiceTypes": data.serviceTypes,
                 "Status":data.serviceStatus,
@@ -120,7 +120,7 @@ export function getFilter(data) {
             }
         }
      
-        elasticSearchPost(API.PostSearchServiceRequest,ReqObj).then((resp) => {
+        elasticSearchPost(API.PostSearchServiceRequest,reqObj).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

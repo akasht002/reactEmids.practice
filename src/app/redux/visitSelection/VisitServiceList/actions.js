@@ -18,7 +18,6 @@ export const getVisitServiceListSuccess = (data) => {
 export function getVisitServiceList() {
     return (dispatch) => {
         let serviceProviderId =  getUserInfo().serviceProviderId 
-        //let serviceProviderId = 1 
         dispatch(startLoading());
         elasticSearchGet(API.getServiceRequestList+`${serviceProviderId}`).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
