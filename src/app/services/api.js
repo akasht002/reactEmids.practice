@@ -31,7 +31,7 @@ export const API = {
     addSkills: 'ServiceProvider/',
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/',
-    getServiceRequestList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
+    getServiceRequestList: 'Search/SearchServiceRequestbyId/',
     getServiceRequestDetails: 'ServiceRequest/ServiceRequestDetails/',
     getServiceRequestSchedule: 'VisitProcessing/ServiceRequestVisit/',
     getServiceRequestPerformTasks: 'VisitProcessing/ServiceRequestVisitDetails/',

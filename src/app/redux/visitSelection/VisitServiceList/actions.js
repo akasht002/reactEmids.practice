@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { ServiceRequestGet } from '../../../services/http';
+import { elasticSearchGet } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { STATUS } from '../../../constants/constants';
@@ -17,9 +17,10 @@ export const getVisitServiceListSuccess = (data) => {
 
 export function getVisitServiceList() {
     return (dispatch) => {
-        let serviceProviderId =  getUserInfo().serviceProviderId
+        let serviceProviderId =  getUserInfo().serviceProviderId 
+        //let serviceProviderId = 1 
         dispatch(startLoading());
-        ServiceRequestGet(API.getServiceRequestList + serviceProviderId + '/' + STATUS ).then((resp) => {
+        elasticSearchGet(API.getServiceRequestList+`${serviceProviderId}`).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
