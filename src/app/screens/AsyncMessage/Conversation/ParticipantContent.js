@@ -289,7 +289,7 @@ class ParticipantContent extends Component {
             participants = <td className="participantsList">
                 <div className="Content">
                     <form className="participantsSearchForm">
-                        <div className="participantsSearchList">
+                        <div className="participantsSearchList outer-blocklist">
                             {this.getNewParticipantList()}
                         </div>
                     </form>

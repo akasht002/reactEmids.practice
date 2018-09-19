@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import {
     onFetchConversationSummary,
     onCreateNewConversation,
     goToConversation,
     getUnreadMessageCounts,
+    CanServiceProviderCreateMessage
 } from '../../../redux/asyncMessages/actions';
 import MessageList from './MessageList';
 import ParticipantsContainer from './ParticipantsContainer';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
+import ModalTemplate from '../Modals/Modal';
 import '../styles.css';
 import './index.css';
 
@@ -19,6 +21,7 @@ class ConversationSummary extends Component {
         this.state = {
             isDisplayParticipantModal: false,
             isOpen: false,
+            noPermission: false
         };
     };
 
@@ -26,6 +29,7 @@ class ConversationSummary extends Component {
     componentDidMount() {
         this.props.fetchConversationSummary();
         this.props.getUnreadMsgCounts();
+        this.props.canServiceProviderCreateMessage();
     };
 
 
@@ -35,7 +39,12 @@ class ConversationSummary extends Component {
     };
 
     onSetDisplayParticipantModal = () => {
-        this.setState({ isDisplayParticipantModal: !this.state.isDisplayParticipantModal });
+        
+        if(this.props.canCreateConversation){
+            this.setState({ isDisplayParticipantModal: !this.state.isDisplayParticipantModal });
+        }else{
+            this.setState({noPermission: true})
+        }
         this.participantComponent.onClearParticipantContainer();
     };
 
@@ -60,15 +69,26 @@ class ConversationSummary extends Component {
         })
     }
 
+    onConfirmCreateConversationPermission = () =>{
+        this.setState({noPermission : !this.state.noPermission})
+    };
+
     render() {
+        let modalContent = <div>
+                <p className="text-center lead p-4 m-0">
+                     You cannot initiate conversation as you have no current service request.
+                </p>
+                <p className="text-right m-2">
+                    <Link className="btn btn-outline-primary mx-3" to="#" onClick={this.onConfirmCreateConversationPermission}>Ok</Link>
+                </p>
+            </div>
         return (
             <AsideScreenCover >
-                <div className="d-flex msgSectionWrapper">
                     <div className="container-fluid p-0">
                         <div className="width100 mainWidgetProfile">
                             <div className="container mainProfileContent">
                                 <div className="row d-flex justify-content-center">
-                                    <div className="col-md-12 d-flex p-0 my-3">
+                                    <div className="col-md-12 d-flex p-0 my-4 slightTopview">
                                         <h5 className="font-weight-semi-bold mr-auto pageTitle">Conversation Summary</h5>
                                         {this.props.loggedInUser.userType !== 'S' && <button
                                             className="btn btn-primary ml-auto font-size-sm newConversationBtn"
@@ -83,13 +103,39 @@ class ConversationSummary extends Component {
                         </div>
                     </div>
 
+
+
+                   {/*<div className='ProfileHeaderWidget'>
+              <div className='ProfileHeaderTitle'>
+                <h5 className='primaryColor m-0'>Conversation Summary</h5>
+              </div>
+              <div className='ProfileHeaderButton'>
+                 {this.props.loggedInUser.userType !== 'S' && <button
+                                            className="btn btn-primary ml-auto font-size-sm newConversationBtn"
+                                            onClick={this.onSetDisplayParticipantModal}>+ New Conversation</button>}
+              </div>
+            </div>
+
+
+              <MessageList
+                                        conversation={this.props.conversation}
+                                        gotoConversations={this.onClickConversation}
+                                        getUnreadMsgCounts={this.props.unreadMsgCounts} />*/}
+
                     <ParticipantsContainer
                         onRef={ref => (this.participantComponent = ref)}
                         isDisplayParticipantModal={this.state.isDisplayParticipantModal}
                         onSetDisplayParticipantModal={this.onSetDisplayParticipantModal}
                         createConversation={this.onCreateConversation}
                     />
-                </div>
+
+                    <ModalTemplate
+                        isOpen={this.state.noPermission}
+                        ModalBody={modalContent}
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                    />
             </AsideScreenCover>
         )
     }
@@ -101,6 +147,7 @@ function mapDispatchToProps(dispatch) {
         createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
         gotoConversation: (data, userId) => dispatch(goToConversation(data, userId)),
         getUnreadMsgCounts: () => dispatch(getUnreadMessageCounts()),
+        canServiceProviderCreateMessage : () => dispatch(CanServiceProviderCreateMessage()),
     }
 };
 
@@ -110,7 +157,9 @@ function mapStateToProps(state) {
         conversation: state.asyncMessageState.conversationSummary,
         isLoading: state.loadingState.isLoading,
         unreadMsgCounts: state.asyncMessageState.unreadCounts,
-        loggedInUser: state.authState.userState.userData.userInfo
+        loggedInUser: state.authState.userState.userData.userInfo,
+        canCreateConversation : state.asyncMessageState.canCreateConversation
+
     }
 };
 

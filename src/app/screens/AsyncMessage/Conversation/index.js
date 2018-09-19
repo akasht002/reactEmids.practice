@@ -9,7 +9,8 @@ import {
     onSendNewMessage,
     leaveConversation,
     pushConversation,
-    updateReadStatus
+    updateReadStatus,
+    ClearCurrentOpenConversation
 } from '../../../redux/asyncMessages/actions';
 import ModalTemplate from '../Modals/Modal';
 import { Preloader } from '../../../components';
@@ -41,6 +42,10 @@ class Conversation extends Component {
 
     }
 
+     componentWillUnmount(){
+      this.props.clearCurrentOpenConversation();
+  };
+
     static getDerivedStateFromProps(props, state) {
         if (!state.editTitle)
             return {
@@ -58,11 +63,12 @@ class Conversation extends Component {
 
     componentDidMount() {
         let userId = this.props.loggedInUser.serviceProviderId;
-        this.props.getConversations(this.props.match.params.id);
+        let conversationId = this.props.currentConversation.conversationId;
+        this.props.getConversations(conversationId);
         this.setState({ isGotoParticipantView: false, title: this.props.conversation.title });
         let data = {
             userId: userId,
-            conversationId: this.props.match.params.id
+            conversationId: conversationId
         };
         this.props.updateUnreadCount(data);
     };
@@ -267,7 +273,7 @@ class Conversation extends Component {
                         <div className="width100 mainWidgetProfile">
                             <div className="container mainProfileContent">
                                 <div className="row d-flex justify-content-center">
-                                    <div className="col-md-12 d-flex p-0 my-3">
+                                    <div className="col-md-12 d-flex p-0 my-4 slightTopview">
                                         <h5 className="font-weight-semi-bold mr-auto pageTitle detailsview-title">My Conversations</h5>
                                     </div>
                                     <div className="col-md-12 card chatContainerWrapper">
@@ -343,7 +349,8 @@ function mapDispatchToProps(dispatch) {
         sendMessage: (data) => dispatch(onSendNewMessage(data)),
         leaveConversation: (data) => dispatch(leaveConversation(data)),
         pushConversation: (data) => dispatch(pushConversation(data)),
-        updateUnreadCount: (data) => dispatch(updateReadStatus(data))
+        updateUnreadCount: (data) => dispatch(updateReadStatus(data)),
+        clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation())
     }
 };
 
@@ -353,6 +360,7 @@ function mapStateToProps(state) {
         isLoading: state.asyncMessageState.isLoading,
         currentConversation: state.asyncMessageState.currentConversation,
         loggedInUser: state.authState.userState.userData.userInfo,
+        
 
     }
 };

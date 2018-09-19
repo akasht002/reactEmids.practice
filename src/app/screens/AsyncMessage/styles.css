@@ -48,6 +48,7 @@ a:hover {
 .list-group-item{
     border-right: none !important;
     border-left: none !important;
+   
 }
 
 .list-group-item:first-child{
@@ -197,6 +198,7 @@ a:hover {
 
 .readMsgs{
     background-color: #fbf7f7 !important;
+    border-bottom:1px solid rgba(0,0,0,.125);
 }
 
 .count{
@@ -669,6 +671,8 @@ li.ProfileOptionItems:hover{
 .bubbleImageMsg img{
     max-height: 200px;
     max-width: 100%;
+    margin: 0 auto;
+    display: block; 
 }
 
 .bubbleImageMsg:hover{
@@ -698,6 +702,7 @@ li.ProfileOptionItems:hover{
     border: 0;
     background-color: rgba(0,0,0,0);
 }
+
 
 .ParticipantAddRemove:before, .ParticipantslistButton:before, .addParticipantsButton:before, .chatBackButton:before, .editButton:before, .addAttachmentBtn:before{
     content: '';
@@ -800,6 +805,10 @@ li.ProfileOptionItems:hover{
     overflow-x: hidden;
 }
 
+.outer-blocklist{
+    overflow-y: hidden !important;
+}
+
 .participantsSearchList .form-check{
     padding-top: 20px;
     padding-left: 0;
@@ -808,7 +817,6 @@ li.ProfileOptionItems:hover{
 textarea.msgTextArea{
     resize: none;
     border: 1px solid #e0e0e0 !important;
-    /* max-height: 72px; */
     height: 36px;
 }
 
@@ -1402,6 +1410,7 @@ height: 80px;
 
 .readMsgs{
     background-color: #fbf7f7 !important;
+    border-bottom:1px solid rgba(0,0,0,.125);
 }
 
 .count{
@@ -1588,3 +1597,79 @@ margin-bottom: 0px !important;
 
 
 }
+
+/*** Adding button style */
+
+.btn{
+    display: block;
+    padding: 6px 30px !important;
+}
+
+.btn-primary, .btn-outline-primary{
+    border-color: #3b1a53 !important;
+}
+
+.btn-primary{
+    font-weight: 600 !important;
+    background-color: #7a329f !important;
+    border: #7a329f !important;
+}
+
+.btn-outline-primary{
+    color:#7a329f !important;
+    border:1px solid #7a329f !important;
+}
+
+.close:focus, .close:hover{
+    outline: 0;
+}
+
+
+.btn-primary:hover, .btn-outline-primary:hover, .btn-outline-primary:active{
+    color: #ffffff !important;
+    /*background-color: #633F75 !important;*/
+    background-color: #3b1a53 !important;
+}
+
+.btn-primary.disabled, .btn-primary:disabled{
+    color: #ffffff !important;
+    opacity: .5 !important;
+    /*background-color: #633F75 !important;*/
+    background-color: #7a329f !important;
+}
+
+.btn-primary:focus{
+    background-color: #3b1a53 !important;
+}
+
+.btn-outline-primary:focus{
+    background-color: #f0e6f2 !important;
+}
+
+input.form-control::placeholder {
+    color: #8c8c8c;
+}
+
+label{
+    color: #444444;
+}
+
+.hrLine{
+    width: 100%;
+    border: .5px solid #e1e1e1;
+    margin: 22px 0;
+}
+
+
+a.btn.nav-link{
+    padding: .375rem .75rem !important;
+    color: #ffffff !important;
+}
+
+a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.btn:not([href]):not([tabindex]):hover{
+    color: #ffffff;
+}
+
+
+
+/*** end of button styles ***/

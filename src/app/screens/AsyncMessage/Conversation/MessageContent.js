@@ -199,11 +199,10 @@ class MessageContent extends Component {
                                             <span className="MsgIndiTitle chatHeaderText">
                                                 {this.props.title ? this.props.title : "Add Title"}
                                             </span>
-                                            {this.props.loggedInUser.userType !== 'S' && <button
-                                                disabled={!this.props.conversation.isActive}
+                                            <button
+                                                disabled={!this.props.conversation.isActive || !this.props.canCreateConversation || this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId}
                                                 className="editButton"
                                                 onClick={this.props.onToggleEditTitle} />
-                                            }
 
                                             <button disabled={!this.props.conversation.isActive}
                                                 className="ParticipantslistButton showParticipantList"
@@ -316,7 +315,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        messageUrl: state.asyncMessageState.conversationImageUrl
+        messageUrl: state.asyncMessageState.conversationImageUrl,
+        canCreateConversation : state.asyncMessageState.canCreateConversation
     }
 };
 

@@ -637,7 +637,7 @@ input.searchParticipants ~ small:before {
     content: '';
     position: absolute;
     display: block;
-    top: -30px;
+    top:34px;
     left: 18px;
     height: 17px;
     width: 17px;

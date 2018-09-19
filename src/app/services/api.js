@@ -93,10 +93,12 @@ export const API = {
     getUnreadCount: 'Conversation/Unread/User/',
     updateReadStatus: 'Conversation/UpdateRead/',
     leaveConversation: 'Conversation/leave/',
-    getContext: 'conversation/context/',
+    getContext: 'Conversation/ServiceProvider/Context/',
     getParticipantsByContext: 'conversation/ParticipantByContext/',
     getDashboardMessageCount: 'Conversation/Dashboard/ConversationCount/',
-    getConversationImage: 'api/Conversation/Message/'
+    getConversationImage: 'Conversation/Message/',
+    canCreateMessage: 'Conversation/CanServiceProviderCreate/',
+
 }
 
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Input } from '../../../components';
 import ParticipantsListModal from '../Modals/ParticipantsListModal';
@@ -97,7 +96,10 @@ class ParticipantsContainer extends Component {
     };
 
     onSelectPatient = (patientId) => {
-        let patientData = {
+        if(patientId === null){
+            this.props.clearLinkedParticipants();
+        }else{
+            let patientData = {
             userId: patientId,
             participantType: 'I'
         };
@@ -111,6 +113,7 @@ class ParticipantsContainer extends Component {
             conversationId: conversationId
         };
         this.props.getLinkedParticipantsByPatients(data);
+        }
     };
 
     render() {
@@ -160,7 +163,7 @@ function mapDispatchToProps(dispatch) {
         createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
         getLinkedPatients: () => dispatch(getLinkedPatients()),
         getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
-        clearLinkedParticipants: () => dispatch(clearLinkedParticipants())
+        clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
     }
 };
 

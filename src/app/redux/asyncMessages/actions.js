@@ -26,7 +26,9 @@ export const AsyncMessageActions = {
     pushConversationSummary: 'push_conversation_summary/asyncMessage',
     pushUnreadCount: 'push_unread_count/asyncMessage',
     setConversationImage: 'set_conversation_image/asyncMessage',
-    clearConversationImageUrl: 'clear_conversation_image_url',
+    clearConversationImageUrl: 'clear_conversation_image_url/asyncMessage',
+    setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
+    clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage'
 };
 
 export const setConversationSummary = (data) => {
@@ -73,9 +75,12 @@ export function onFetchConversationSummary() {
     }
 };
 
-export function onFetchConversation(conversationId) {
-    return (dispatch) => {
+
+export function onFetchConversation(id) {
+    return (dispatch, getState) => {
         dispatch(startLoading());
+        let state = getState();
+        let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = 'S';
         AsyncGet(API.getConversation + conversationId + '/' + USER_ID + '/' + USER_TYPE)
@@ -260,21 +265,6 @@ export function leaveConversation(data) {
     }
 };
 
-export function getLinkedPatients(data) {
-    return (dispatch) => {
-        dispatch(startLoading())
-        let USER_ID = getUserInfo().serviceProviderId;
-        AsyncGet(API.getContext + USER_ID)
-            .then(resp => {
-                dispatch(getLinkedPatientsSuccess(resp.data));
-                dispatch(endLoading())
-            })
-            .catch(err => {
-                dispatch(endLoading())
-            })
-    }
-};
-
 const getLinkedPatientsSuccess = data => {
     return {
         type: AsyncMessageActions.setLinkedPatients,
@@ -375,5 +365,57 @@ export function clearConversationImageUrl() {
 const onClearConversationImageUrl = () => {
     return {
         type: AsyncMessageActions.clearConversationImageUrl
+    }
+};
+
+
+
+export function CanServiceProviderCreateMessage() {
+    
+    return (dispatch, getState) => {
+        let USER_ID = getUserInfo().serviceProviderId;
+        dispatch(startLoading());
+        AsyncGet(API.canCreateMessage + USER_ID).then(resp => {
+            dispatch(CanServiceProviderCreateMessageSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch(err => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+const CanServiceProviderCreateMessageSuccess = (data) =>{
+    return{
+        type: AsyncMessageActions.setCanCreateConversation,
+        data
+    }
+};
+
+
+export function getLinkedPatients() {
+        return (dispatch) => {
+        dispatch(startLoading())
+        let USER_ID = getUserInfo().serviceProviderId;
+        AsyncGet(API.getContext + USER_ID)
+            .then(resp => {
+                dispatch(getLinkedPatientsSuccess(resp.data));
+                dispatch(endLoading())
+            })
+            .catch(err => {
+                dispatch(endLoading())
+            })
+    }
+};
+
+
+export function ClearCurrentOpenConversation() {
+    return (dispatch, getState) => {
+        dispatch(onClearCurrentOpenConversation());
+    }
+};
+
+const onClearCurrentOpenConversation = () => {
+    return {
+        type: AsyncMessageActions.clearCurrentOpenConversation
     }
 };

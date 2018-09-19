@@ -11,7 +11,8 @@ const defaultState = {
     linkedPatients: [],
     linkedParticipants: [],
     dashboardMessageCount: null,
-    conversationImageUrl: ''
+    conversationImageUrl: '',
+    canCreateConversation : false,
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -35,6 +36,11 @@ const asyncMessageState = (state = defaultState, action) => {
             return {
                 ...state,
                 currentConversation: action.data
+            };
+        case AsyncMessageActions.clearCurrentOpenConversation:
+            return {
+                ...state,
+                currentConversation: {}
             };
         case AsyncMessageActions.pushUnreadCount:
             return {
@@ -91,6 +97,11 @@ const asyncMessageState = (state = defaultState, action) => {
             return {
                 ...state,
                 conversationImageUrl: ''
+            };
+        case AsyncMessageActions.setCanCreateConversation:
+            return {
+                ...state,
+                canCreateConversation: action.data
             };
         default:
             return state;
