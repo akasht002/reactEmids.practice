@@ -75,7 +75,12 @@ export const API = {
     getServiceCategory:'ServiceRequest/ServiceCategory',
     getServiceType: 'ServiceRequest/ServiceType/',
     PostSearchServiceRequest:'Search/PostSearchServiceRequest',
-    getPatientServiceRequests:'ServiceRequest/ServiceProvider/'
+    getPatientServiceRequests:'ServiceRequest/ServiceProvider/',
+    getPaymentCardList: 'Account/GetByStripeCustomer/',
+    createCharge: 'Account/Charge',
+    chargeByCustomerId: 'Account/ChargeByCustomerId',
+    savePaymentCards: 'Account/SaveCard',
+    deleteCard: 'Account/DeleteCard'
 }
 
 

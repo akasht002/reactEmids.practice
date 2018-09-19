@@ -27,7 +27,7 @@ export const MenuData = [
         id: 4,
         title: 'Payments',        
         iconName: 'iconProfile iconProfilePayments',
-        link:'/'
+        link:'/paymentsettings'
     },
     {
         id: 5,

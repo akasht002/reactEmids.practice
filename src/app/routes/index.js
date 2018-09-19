@@ -20,7 +20,11 @@ import {
   ResetPasswordSuccess,
   ResetPasswordConfirmation,
   Dashboard,
-  Welcome
+  Welcome,
+  Payments,
+  PaymentSuccess,
+  PaymentFailure,
+  PaymentSettings
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -54,7 +58,11 @@ export const Path = {
   resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
-  dashboard:'/dashboard'
+  dashboard:'/dashboard',
+  payments:'/payments',
+  paymentsuccess:'/paymentsuccess',
+  paymentfailure:'/paymentfailure',
+  paymentsettings:'/paymentsettings'
 };
 
 class AppStackRoot extends Component {
@@ -80,7 +88,10 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
             <PrivateRoute path={Path.profile} component={Profile} />          
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
-
+            <PrivateRoute path={Path.payments} component={Payments} />
+            <PrivateRoute path={Path.paymentsuccess} component={PaymentSuccess} />
+            <PrivateRoute path={Path.paymentfailure} component={PaymentFailure} />
+            <PrivateRoute path={Path.paymentsettings} component={PaymentSettings} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>
