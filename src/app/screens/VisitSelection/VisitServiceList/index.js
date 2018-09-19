@@ -250,12 +250,12 @@ class VisitServiceList extends Component {
                                     {serviceList.serviceCategoryDescription}
                                 </div>
                                 <div className='BlockImageDetailsDate'>
-                                    {serviceList.recurringPatternDescription} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
+                                    {serviceList.recurring} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
                                 </div>
                             </div>
                         </div>
                         <div className="BlockProfileContainer">
-                            <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
+                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="patientImage" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
