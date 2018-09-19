@@ -26,7 +26,7 @@ class BlackoutDays extends Component {
     };
   }
 
-  toggleBlackout(action, data, disabledEdit, e) {
+  toggleBlackout = (action, data, disabledEdit, e) => {
     if (disabledEdit === "disabled") {
       e.stopPropagation();
     } else {
