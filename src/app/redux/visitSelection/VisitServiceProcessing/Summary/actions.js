@@ -2,6 +2,9 @@ import { API } from '../../../../services/api';
 import { ServiceRequestGet, ServiceRequestPut } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import moment from 'moment'
+import { push } from '../../../navigation/actions';
+import { Path } from '../../../../routes';
+
 
 export const SummaryDetails = {
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
@@ -115,6 +118,7 @@ export function saveSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestPut(API.saveSummaryDetails + data.serviceRequestVisitId, data).then((resp) => {
+            dispatch(push(Path.payments))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

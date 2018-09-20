@@ -62,7 +62,7 @@ div.headingLoginCover{
   box-shadow:none;
   border-color: #d5a0f1;
 }
-.form-group{
+.login-body .form-group{
   margin:20px 0 20px 0!important;
 }
 .login-body .form-control::-webkit-input-placeholder {
