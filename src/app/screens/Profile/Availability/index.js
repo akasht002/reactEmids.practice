@@ -8,7 +8,8 @@ import { ModalPopup } from '../../../components';
 import './AvailabilityStyles.css';
 import {
     getAvailableDays,
-    updateAvailabilityDays
+    updateAvailabilityDays,
+    getBlackOutDays
  } from '../../../redux/profile/Availability/actions';
 
 class Availability extends Component {
@@ -27,6 +28,7 @@ class Availability extends Component {
         this.disabled = "disabled";
         this.slotList = 0;
         this.availableDays = '';
+        this.props.blackoutDays.blockOutDates = [];
     };
 
     toggleAvailability = (modalType, data) => {
@@ -57,6 +59,7 @@ class Availability extends Component {
 
     componentDidMount(){
         this.props.getAvailableDays();
+        this.props.getBlackOutDays();
     };
 
     componentWillReceiveProps(nextProps) {
@@ -147,6 +150,8 @@ class Availability extends Component {
         }
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
         blackoutModalContent = <BlackoutDays showBalckout="true"/>
+        console.log('this.props.blackoutDays........', this.props.blackoutDays);
+        console.log('this.props.blackoutDays.blockOutDates........', this.props.blackoutDays.blockOutDates.length);
         return (
             <React.Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
@@ -169,7 +174,11 @@ class Availability extends Component {
                             </ul>
                         }
                      </div>
-                     <p className={"primaryColor"} onClick={this.toggleBlackoutModal}>Show Bloackout Days</p>
+                     {
+                         this.props.blackoutDays && this.props.blackoutDays.blockOutDates.length > 0 ? 
+                         <p className={"primaryColor indexColor"} onClick={this.toggleBlackoutModal}>Show Bloackout Days</p> : ''
+                     }
+   
                 </div>
                 <ProfileModalPopup
                     isOpen={this.state.availabilityModal}
@@ -222,7 +231,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         updateAvailabilityDays: data => dispatch(updateAvailabilityDays(data)),
-        getAvailableDays: () => dispatch(getAvailableDays())
+        getAvailableDays: () => dispatch(getAvailableDays()),
+        getBlackOutDays: () => dispatch(getBlackOutDays()),
     }
 };
 
