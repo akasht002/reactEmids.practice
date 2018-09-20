@@ -17,7 +17,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    /*height: 100%;*/
+    height: 100%;
 }
 
 .hiddenScreen, .ProfileLeftWidget {
@@ -460,10 +460,6 @@ section .ProfileRightWidget {
         visibility: visible;
     }
 
-    .ProfileServicesVisitContent{
-
-    }
-
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
         display: inline-block;
         height: auto;
@@ -583,30 +579,4 @@ section .ProfileRightWidget {
         margin: 0 auto;
         bottom: 0;
     }
-
-    .SPCount .SPRate{
-
-    }
-
-    /*.ProfileLeftWidget {
-        position: absolute;
-        z-index: 99;
-        background: transparent;
-        width: 0;
-        height: 0;
-    }
-    .ProfileSideNavigation{
-        display: flex;
-        display: -moz-flex;
-        position: fixed;
-        margin: 0;
-        bottom: 0;
-        background: #7a329f;
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .profileSideNavigationLink span{
-        display: none;
-    }*/
 }

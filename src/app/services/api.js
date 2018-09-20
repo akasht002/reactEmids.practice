@@ -31,7 +31,7 @@ export const API = {
     addSkills: 'ServiceProvider/',
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/',
-    getServiceRequestList: 'ServiceRequest/ServiceRequests/ServiceProvider/',
+    getServiceRequestList: 'Search/SearchServiceRequestbyId/',
     getServiceRequestDetails: 'ServiceRequest/ServiceRequestDetails/',
     getServiceRequestSchedule: 'VisitProcessing/ServiceRequestVisit/',
     getServiceRequestPerformTasks: 'VisitProcessing/ServiceRequestVisitDetails/',
@@ -78,7 +78,18 @@ export const API = {
     getPatientServiceRequests:'ServiceRequest/ServiceProvider/',
     getPaymentCardList: 'Account/GetByStripeCustomer/',
     createCharge: 'Account/Charge',
-    chargeByCustomerId: 'Account/ChargeByCustomerId'
+    chargeByCustomerId: 'Account/ChargeByCustomerId',
+    getServiceareaList:'ServiceProvider/',
+    generateToken: 'VideoConferencing/',
+    getContext: 'conversation/context/',
+    createRoomId: 'VideoConferencing',
+    getLinkedParticipants: 'GetParticipants/',
+    joinVideoConference: 'VideoConferencing/JoinConference/',
+    leaveVideoConference: 'VideoConferencing/LeaveConference/',
+    getParticipantByConferenceId:'VideoConferencing/GetParticipantByConferenceId/',
+    getAllParticipants: 'VideoConferencing/GetAllParticipants/',
+    addParticipants: 'VideoConferencing/AddParticipant',
+    getParticipantsByContext: 'conversation/ParticipantByContext/'
 }
 
 

@@ -71,7 +71,11 @@
     "react-select": "^1.2.1",
     "react-signature-pad": "0.0.6",
     "react-signature-pad-wrapper": "^1.2.2",
+<<<<<<< HEAD
     "react-stripe-elements": "^2.0.1",
+=======
+    "react-slick": "^0.23.1",
+>>>>>>> 01c890c146293ed0f2a7d24d535e21c6f657ba26
     "react-test-renderer": "^16.4.2",
     "reactstrap": "^6.3.1",
     "redux": "^4.0.0",
@@ -87,6 +91,7 @@
     "styled-components": "^3.4.5",
     "sw-precache-webpack-plugin": "0.11.4",
     "timeago-react": "^2.0.0",
+    "twilio-video": "^1.14.0",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",

@@ -14,7 +14,7 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
-import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -39,7 +39,13 @@ class VisitServiceList extends Component {
             serviceTypes:[],
             isSortOpen: false,
             newest: true,
-            posted: true 
+            posted: true,
+            serviceArea:'',
+            coverageArea:'',
+            lat:'',
+            lon:'',
+            ServiceAreas:{},
+            isChecked:false
         };
     };
 
@@ -53,6 +59,7 @@ class VisitServiceList extends Component {
         this.props.getVisitServiceList();
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
+        this.props.getServiceArea()
     }
 
     handleClick = (requestId) => {
@@ -80,97 +87,7 @@ class VisitServiceList extends Component {
             return null;
         }
     }
-        /* filter code */ 
-    toggleFilter=()=>{
-        this.setState({
-            filterOpen: !this.state.filterOpen
-        })
-    }
-        
-    dateChanged = (date) => {
-        const formattedDate = formattedDateMoment(date);
-        this.setState({  
-            startDate: formattedDate
-           
-        });
-
-    }
     
-    dateChangedRaw = (event) => {
-        const formattedDate = formattedDateChange(event);
-        this.setState({  
-            startDate: formattedDate
-        });
- 
-    }
-    todateChanged = (date) => {
-        const formattedDate = formattedDateMoment(date);
-        this.setState({  
-            endDate: formattedDate
-        });
-
-    }
-
-    todateChangedRaw = (event) => {
-        const formattedDate = formattedDateChange(event);
-        this.setState({  
-            endDate: formattedDate
-        });
-    }
-
-    applyFilter =() =>{
-        if ((this.state.serviceTypes) && (this.state.ServiceCategoryId)) {
-            let data = {
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                serviceStatus: this.state.serviceStatus,
-                ServiceCategoryId:this.state.ServiceCategoryId,
-                serviceTypes:this.state.serviceTypes
-            };
-            this.props.getFilter(data)
-            this.setState({
-                filterOpen: !this.state.filterOpen
-            })
-        } else {
-            this.setState({ isValid: false });
-        }
-    }
-
-    applyReset =() =>{
-        this.setState({
-            startDate:'',
-            endDate:'',
-            serviceStatus:[],
-            ServiceCategoryId:'',
-            serviceTypes:[],
-            isValid: true
-        })
-    
-    }
-   
-    handleChangeServiceCategory=(selectedOption)=>{
-        this.setState({ 
-            ServiceCategoryId:selectedOption.label,
-            selectedOption:selectedOption  
-        });
-        this.props.getServiceType(selectedOption.value)
-    }
-
-    handleserviceType =(item) =>{
-        let serviceType = this.state.serviceTypes
-        serviceType.push(item.serviceTypeDescription)
-        this.setState({
-            serviceTypes:serviceType
-        })
-    }
-
-    handleChangeserviceStatus =(item) =>{
-        let service = this.state.serviceStatus
-        service.push(item.keyValue)
-        this.setState({
-            serviceStatus:service
-        })
-    }
     /* filter code */ 
     toggleFilter=()=>{
         this.setState({
@@ -216,7 +133,8 @@ class VisitServiceList extends Component {
                 endDate: this.state.endDate,
                 serviceStatus: this.state.serviceStatus,
                 ServiceCategoryId:this.state.ServiceCategoryId,
-                serviceTypes:this.state.serviceTypes
+                serviceTypes:this.state.serviceTypes,
+                ServiceAreas:this.state.ServiceAreas
             };
             this.props.getFilter(data)
             this.setState({
@@ -237,25 +155,7 @@ class VisitServiceList extends Component {
             isValid: true
         })
     }
-    /* sorting */
-    onSortChange = (posted, newest) =>{
-        var data={
-            sortByOrder : newest ? "ASC" : "DESC",
-            sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
-            fromDate: null,
-            toDate: null,
-            status: 0
-        }
-        this.props.getSort(data);
-        this.setState({
-            newest: (newest !== null ? newest : this.state.newest),
-            posted: (posted !== null ? posted : this.state.posted),
-            isSortOpen: false
-        });
-    }
-    
-    
-    
+
     handleChangeServiceCategory=(selectedOption)=>{
         this.setState({ 
             ServiceCategoryId:selectedOption.label,
@@ -272,13 +172,63 @@ class VisitServiceList extends Component {
         })
     }
 
-    handleChangeserviceStatus =(item) =>{
+    handleChangeserviceStatus =(item,e) =>{
         let service = this.state.serviceStatus
-        service.push(item.keyValue)
+        if (e.target.checked) {
+            service.push(item.keyValue)
+        }else {
+            let index = service.indexOf(item.keyValue);
+            if (index > -1) {
+                service.splice(index, 1);
+            }
+        }
+       
         this.setState({
-            serviceStatus:service
+            serviceStatus: service,
+        });
+    
+    }
+    handleServiceArea =(item) =>{
+
+        const locations = {
+            'lat':item.lat,
+            'lon':item.lon,
+        }
+        const serviceAreaObj = {
+            'CoverageArea'  : item.coverageArea,
+            'Locations':locations  
+        };          
+        this.setState({            
+            ServiceAreas:serviceAreaObj
         })
     }
+
+    /* sorting */
+    toggleclass =(e) =>{
+        var element = document.getElementsByClassName("dropdown-menu")[0];
+        element.classList.add("show");
+        var element1 = document.getElementsByClassName("dropdown-item")[0];
+        element1.classList.add("dropdown-item-checked");
+    }
+    onSortChange = (posted, newest) =>{
+        var data={
+            sortByOrder : newest ? "ASC" : "DESC",
+            sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
+            fromDate: null,
+            toDate: null,
+            status: 0
+        }
+        this.props.getSort(data);
+            var element = document.getElementsByClassName("dropdown-menu")[0];
+            element.classList.remove("show");
+            element.classList.add("hide");
+        this.setState({
+            newest: (newest !== null ? newest : this.state.newest),
+            posted: (posted !== null ? posted : this.state.posted),
+            isSortOpen: false
+        });
+    }
+    
     render() {
 
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -300,12 +250,12 @@ class VisitServiceList extends Component {
                                     {serviceList.serviceCategoryDescription}
                                 </div>
                                 <div className='BlockImageDetailsDate'>
-                                    {serviceList.recurringPatternDescription} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
+                                    {serviceList.recurring} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
                                 </div>
                             </div>
                         </div>
                         <div className="BlockProfileContainer">
-                            <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
+                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="patientImage" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
@@ -341,6 +291,7 @@ class VisitServiceList extends Component {
                         onSortChange={this.onSortChange}
                         newest={this.state.newest}
                         posted={this.state.posted}
+                        toggleclass={this.toggleclass}
                     />
                     <span className='primaryColor' onClick={this.toggleFilter}>Filters</span>
                     </div>
@@ -373,6 +324,10 @@ class VisitServiceList extends Component {
                     ServiceStatus={this.props.ServiceStatus}
                     handleChangeserviceStatus={this.handleChangeserviceStatus}
                     serviceStatus={this.state.serviceStatus}
+                    ServiceAreaList ={this.props.ServiceAreaList}
+                    handleServiceArea={this.handleServiceArea}
+                    serviceArea={this.state.serviceArea}
+                    checked={this.state.isChecked}
                 />
             </AsideScreenCover>
         )
@@ -388,17 +343,21 @@ function mapDispatchToProps(dispatch) {
         ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
         getServiceType: (data) => dispatch(getServiceType(data)),
         getFilter:(data)  => dispatch(getFilter(data)),
-        getSort:(data)  => dispatch(getSort(data))
+        getSort:(data)  => dispatch(getSort(data)),
+        getServiceArea:()  => dispatch(getServiceArea()),
     }
 };
 
 function mapStateToProps(state) {
+
     return {
+      
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
         profileImgData: state.profileState.PersonalDetailState.imageData,
         ServiceCategory:state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
         ServiceStatus:state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
-        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType
+        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType,
+        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.getServiceArea
     };
 };
 

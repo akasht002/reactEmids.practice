@@ -1,0 +1,78 @@
+.sort-block .dropdown-item-checked::before {
+    position: absolute;
+    right: .4rem;
+    content: '✓';
+    font-weight: 600;
+    width:16px;
+    height:13px;
+    color:#7a329f;
+    font-size: 19px;
+      /* background: url('../../../assets/images/checked.svg') no-repeat right; */
+  }
+  .sort-block .dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #007bff;
+}
+
+.sort-block .dropdown-menu
+{
+    width: 200px !important;
+    height: 179px !important;
+    border-radius: 4px !important;
+    -moz-border-radius:4px !important;
+    -webkit-border-radius:4px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 11.5px 0.5px rgba(0, 0, 0, 0.08) !important;
+    -moz-box-shadow: 0 0 11.5px 0.5px rgba(0, 0, 0, 0.08) !important;
+    -webkit-box-shadow: 0 0 11.5px 0.5px rgba(0, 0, 0, 0.08) !important;
+    border:none !important;
+    left: -130px !important;
+    padding: 10px 0px !important;
+}
+.sort-block div.dropdown-item
+{
+    font-family: 'Open Sans', sans-serif;
+   font-size: 14px;
+   color: #444444;
+   line-height: 20px !important;
+    padding-bottom: 11px !important;
+    background: none !important;
+}
+
+.sort-block div.dropdown-item:focus, .sort-block a.dropdown-item:hover {
+    color: #7a329f !important;
+    text-decoration: none !important;
+    background-color: #f8f9fa !important;
+}
+
+.sort-block div.dropdown-item.active, a.dropdown-item:active {
+    color: #7a329f !important;
+    text-decoration: none !important;
+    background-color: #fff !important;
+}
+
+  .sort-block .btn-secondary
+  {
+    color: #7a329f !important;
+    background-color:transparent !important;
+    border-color:transparent !important;
+    font-size:14px !important;
+    font-family: 'Open Sans', sans-serif;
+  }
+  .sort-block .btn-secondary:not(:disabled):not(.disabled):active:focus
+  {
+    -webkit-box-shadow:none !important;
+    box-shadow: none !important;
+  }
+  .sort-block .btn-secondary:focus
+  {
+    -webkit-box-shadow:none !important;
+    box-shadow: none !important;
+    outline: transparent !important;
+  }
+
+  .sort-block hr
+  {
+margin: 10px 0px;
+  }

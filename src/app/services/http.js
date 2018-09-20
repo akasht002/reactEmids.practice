@@ -7,7 +7,7 @@ export const serviceRequestURL = process.env.REACT_APP_SR_URL
 export const messageURL = process.env.REACT_APP_MSG_URL
 export const elasticSearchURL = process.env.REACT_APP_ES_URL;
 export const thirdPartyURL = process.env.REACT_APP_TP_URL;
-
+export const asyncURL = process.env.REACT_APP_MSG_URL;
 
 export const AuthLogin = (url, data) => {
   var bodyFormData = new FormData()
@@ -69,6 +69,30 @@ export const Delete = url => {
       handleError(error)
     })
 }
+
+export const AsyncGet = (url) => {
+  return axios.get(asyncURL + url, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
+};
+
+export const AsyncPutWithUrl = (url) => {
+  return axios.put(asyncURL + url, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
+};
+
+export const AsyncPost = (url, data) => {
+  return axios.post(asyncURL + url, data, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
+};
 
 export const ServiceRequestGet = url => {
   return axios
@@ -213,4 +237,11 @@ export const ThirdPartyPost = (url, data) => {
     .catch(error => {
       handleError(error)
     })
+}
+export const elasticSearchGet = (url) => {
+  return axios.get(elasticSearchURL + url, getHeader()).then((resp) => {
+      return resp;
+  }).catch((error) => {
+      handleError(error);
+  })
 }

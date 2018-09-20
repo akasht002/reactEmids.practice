@@ -13,9 +13,11 @@ import Summary from './VisitSelection/VisitServiceProcessing/Summary';
 import Payments from './VisitSelection/VisitServiceProcessing/Payments';
 import { LoginCallBack } from './Authentication/Login/LoginCallBack';
 import { AsideScreenCover } from './ScreenCover/AsideScreenCover';
-import Dashboard from './Dashboard'
 import PaymentSuccess from './VisitSelection/VisitServiceProcessing/Payments/paymentSuccess'
 import PaymentFailure from './VisitSelection/VisitServiceProcessing/Payments/paymentFailure'
+import Dashboard from './Dashboard';
+import TeleHealth from './TeleHealth';
+import InvitationAlert from './TeleHealth/InvitationAlert';
 
 import {    
     ForgetPassword,
@@ -46,5 +48,7 @@ export {
     Dashboard,
     Payments,
     PaymentSuccess,
-    PaymentFailure
+    PaymentFailure,
+    TeleHealth,
+    InvitationAlert
 };
