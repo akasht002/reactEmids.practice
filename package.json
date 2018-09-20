@@ -71,11 +71,8 @@
     "react-select": "^1.2.1",
     "react-signature-pad": "0.0.6",
     "react-signature-pad-wrapper": "^1.2.2",
-<<<<<<< HEAD
     "react-stripe-elements": "^2.0.1",
-=======
     "react-slick": "^0.23.1",
->>>>>>> 01c890c146293ed0f2a7d24d535e21c6f657ba26
     "react-test-renderer": "^16.4.2",
     "reactstrap": "^6.3.1",
     "redux": "^4.0.0",
