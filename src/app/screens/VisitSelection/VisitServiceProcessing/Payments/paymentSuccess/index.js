@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { VisitProcessingNavigationData } from '../../../../../data/VisitProcessingWizNavigationData'
 import { getFirstCharOfString } from '../../../../../utils/stringHelper'
-// import { getpaymentsCardList, chargeByCustomerId } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 import { Scrollbars, DashboardWizFlow } from '../../../../../components';
 import { AsideScreenCover } from '../../../../ScreenCover/AsideScreenCover';
 
@@ -98,7 +97,7 @@ class PaymentSuccess extends Component {
 
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <a className='btn btn-primary' to='/'>Exit</a>
+                                        <Link className='btn btn-primary' to='/visitservicelist'>Done</Link>
                                     </div>
                                 </div>
                             </form>

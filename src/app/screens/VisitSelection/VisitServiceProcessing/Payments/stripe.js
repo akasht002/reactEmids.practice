@@ -57,7 +57,6 @@ class _CardForm extends Component {
                     "cardNumberChanged": payload.token.card.last4,
                     "amount": this.props.data.CalculationsData.grandTotalAmount,
                     "cardType": payload.token.card.brand,
-                    "isSaveCard": false
                 }
                 this.props.token(data);
             } else {

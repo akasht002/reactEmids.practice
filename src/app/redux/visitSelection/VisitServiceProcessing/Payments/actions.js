@@ -15,10 +15,10 @@ export const getPaymentsCardListSuccess = (data) => {
     }
 }
 
-export function getpaymentsCardList() {
+export function getpaymentsCardList(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        ThirdPartyGet(API.getPaymentCardList + '191').then((resp) => {
+        ThirdPartyGet(API.getPaymentCardList + data).then((resp) => {
             dispatch(getPaymentsCardListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

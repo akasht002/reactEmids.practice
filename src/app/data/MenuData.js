@@ -24,12 +24,6 @@ export const MenuData = [
         link:'/'
     },
     {
-        id: 4,
-        title: 'Payments',        
-        iconName: 'iconProfile iconProfilePayments',
-        link:'/paymentsettings'
-    },
-    {
         id: 5,
         title: 'My Settings',        
         iconName: 'iconProfile iconProfileMySettings',

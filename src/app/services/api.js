@@ -78,9 +78,7 @@ export const API = {
     getPatientServiceRequests:'ServiceRequest/ServiceProvider/',
     getPaymentCardList: 'Account/GetByStripeCustomer/',
     createCharge: 'Account/Charge',
-    chargeByCustomerId: 'Account/ChargeByCustomerId',
-    savePaymentCards: 'Account/SaveCard',
-    deleteCard: 'Account/DeleteCard'
+    chargeByCustomerId: 'Account/ChargeByCustomerId'
 }
 
 

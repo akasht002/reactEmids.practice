@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
+import { StripeProvider } from 'react-stripe-elements';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getpaymentsCardList, chargeByCustomerId } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 import { Scrollbars, DashboardWizFlow } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import CheckoutForm from './stripe';
-import { StripeProvider } from 'react-stripe-elements';
-
 import './style.css'
 
 class Payments extends Component {
@@ -101,77 +100,76 @@ class Payments extends Component {
                         </div>
 
                         <div className='CardContainers ServiceCategoryWidget'>
-                        <div className='VisitPaymentContainer'>
-                            <div className="VisitPaymentWidget">
-                                <p className="VisitPaymentContentTitle">Make Payment</p>
-                                <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
-                                <div className="FeedbackQuestionWidget form-group">
-                                    <label className="FeedbackQuestion">Select the method of Payment</label>
-                                    <div className='FeedbackAnswerWidget'>
-                                        <div className="form-radio col-md-6">
-                                            <input className="form-radio-input" name="CardSelect" id="CardSelect11" type="radio"
-                                                value="1" onClick={this.toggleCardSelection} checked={this.state.SelectedCard === '1' ? 'checked' : ''} />
-                                            <label className="form-radio-label" htmlFor="CardSelect11">Saved Card
+                            <div className='VisitPaymentContainer'>
+                                <div className="VisitPaymentWidget">
+                                    <p className="VisitPaymentContentTitle">Make Payment</p>
+                                    <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
+                                    <div className="FeedbackQuestionWidget form-group">
+                                        <label className="FeedbackQuestion">Select the method of Payment</label>
+                                        <div className='FeedbackAnswerWidget'>
+                                            <div className="form-radio col-md-6">
+                                                <input className="form-radio-input" name="CardSelect" id="CardSelect11" type="radio"
+                                                    value="1" onClick={this.toggleCardSelection} checked={this.state.SelectedCard === '1' ? 'checked' : ''} />
+                                                <label className="form-radio-label" htmlFor="CardSelect11">Saved Card
                                     <span className="RadioBoxIcon" /></label>
-                                        </div>
-                                        <div className="form-radio col-md-6">
-                                            <input className="form-radio-input" name="CardSelect" id="CardSelect12" type="radio"
-                                                value="2" onClick={this.toggleCardSelection} checked={this.state.SelectedCard === '2' ? 'checked' : ''} />
-                                            <label className="form-radio-label" htmlFor="CardSelect12">New Card
+                                            </div>
+                                            <div className="form-radio col-md-6">
+                                                <input className="form-radio-input" name="CardSelect" id="CardSelect12" type="radio"
+                                                    value="2" onClick={this.toggleCardSelection} checked={this.state.SelectedCard === '2' ? 'checked' : ''} />
+                                                <label className="form-radio-label" htmlFor="CardSelect12">New Card
                                     <span className="RadioBoxIcon" /></label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                {this.state.SelectedCard === '1' ? (
-                                    <div className="FeedbackQuestionWidget form-group m-0">
-                                        <label className="FeedbackQuestion">Select the method of Payment</label>
-                                        <div className='FeedbackAnswerWidget CardTypeContent'>
-                                            {this.props.CardList && this.props.CardList.map((cardDetails) => {
-                                                return (
-                                                    <div className="form-radio col-md-6">
-                                                        <input
-                                                            className="form-radio-input"
-                                                            name="CardType"
-                                                            id={cardDetails.coreoHomeStripeCustomerId}
-                                                            type="radio"
-                                                            value={cardDetails.coreoHomeStripeCustomerId}
-                                                            onChange={(e) => this.handleChange(e)}
-                                                        />
-                                                        <label className="form-radio-label" htmlFor={cardDetails.coreoHomeStripeCustomerId}>
-                                                            <div className="CardTypeContainer">
-                                                                <div className="CardTypeContainerLeft">
-                                                                    <span>{cardDetails.ccNumber}</span>
-                                                                    {/* <span className="ExpireDate">Expires on <i>08 - 2025</i></span> */}
+                                    {this.state.SelectedCard === '1' ? (
+                                        <div className="FeedbackQuestionWidget form-group m-0">
+                                            <label className="FeedbackQuestion">Choose the card</label>
+                                            <div className='FeedbackAnswerWidget CardTypeContent'>
+                                                {this.props.CardList && this.props.CardList.map((cardDetails) => {
+                                                    return (
+                                                        <div className="form-radio col-md-6">
+                                                            <input
+                                                                className="form-radio-input"
+                                                                name="CardType"
+                                                                id={cardDetails.coreoHomeStripeCustomerId}
+                                                                type="radio"
+                                                                value={cardDetails.coreoHomeStripeCustomerId}
+                                                                onChange={(e) => this.handleChange(e)}
+                                                            />
+                                                            <label className="form-radio-label" htmlFor={cardDetails.coreoHomeStripeCustomerId}>
+                                                                <div className="CardTypeContainer">
+                                                                    <div className="CardTypeContainerLeft">
+                                                                        <span>{cardDetails.ccNumber}</span>
+                                                                    </div>
+                                                                    <div className="CardTypeContainerRight">
+                                                                        <img alt="card_image" src={require("../../../../assets/images/creditCards/" + cardDetails.ccType + ".png")} />
+                                                                    </div>
                                                                 </div>
-                                                                <div className="CardTypeContainerRight">
-                                                                    <img alt='card_mage' src={require("../../../../assets/images/creditCards/Mastercard.png")} />
-                                                                </div>
-                                                            </div>
-                                                            <span className="RadioBoxIcon" /></label>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
+                                                                <span className="RadioBoxIcon" /></label>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
                                             <div className='text-right width100'>
                                                 <a className='btn btn-primary' onClick={this.handleClick}>Pay</a>
                                             </div>
-                                    </div>
-                                )
-                                    : (
-                                        <div className="CardDetailsWidget m-0">
-                                            <div className="row">
-                                                <div className="form-group col-md-12">
-                                                    <label className="m-0">Enter the card details</label>
-                                                </div>
-                                                <StripeProvider apiKey="pk_test_n70bkOns9PqUMG4go5E77356">
-                                                    <CheckoutForm />
-                                                </StripeProvider>
-                                            </div>
                                         </div>
-                                    )}
+                                    )
+                                        : (
+                                            <div className="CardDetailsWidget m-0">
+                                                <div className="row">
+                                                    <div className="form-group col-md-12">
+                                                        <label className="m-0">Enter the card details</label>
+                                                    </div>
+                                                    <StripeProvider apiKey="pk_test_n70bkOns9PqUMG4go5E77356">
+                                                        <CheckoutForm />
+                                                    </StripeProvider>
+                                                </div>
+                                            </div>
+                                        )}
 
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                     <div className='cardBottom' />
@@ -183,7 +181,7 @@ class Payments extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getpaymentsCardList: () => dispatch(getpaymentsCardList()),
+        getpaymentsCardList: (data) => dispatch(getpaymentsCardList(data)),
         chargeByCustomerId: (data) => dispatch(chargeByCustomerId(data))
     }
 };
