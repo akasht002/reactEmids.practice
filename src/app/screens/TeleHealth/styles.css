@@ -125,11 +125,11 @@ div.TeleHealthWidget{
 
 .memberType{
     position: absolute;
-    bottom: -4px;
-    right: -14px;
+    bottom: 0px;
+    right: -12px;
     width: 22px;
     height: 22px;
-    line-height: 12px;
+    line-height: 11px;
     color: #fff;
     font-size: 14px;
     border-radius: 50%;
