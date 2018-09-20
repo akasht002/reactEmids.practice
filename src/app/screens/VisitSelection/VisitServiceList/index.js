@@ -239,12 +239,7 @@ class VisitServiceList extends Component {
                             <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ProfileImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
-                                    {serviceList.serviceRequestTypeDetails && serviceList.serviceRequestTypeDetails.map((serviceType) => {
-                                        return (
-                                            <span key={serviceType.serviceTypeId}>{serviceType.serviceTypeDescription}, </span>
-                                        )
-                                    })
-                                    }
+                                    <span>{serviceList.type}</span>
                                 </div>
                                 <div className='BlockImageDetailsActivity'>
                                     {serviceList.serviceCategoryDescription}
@@ -266,9 +261,9 @@ class VisitServiceList extends Component {
                             </div>
                             <div class='BlockProfileDetailsStatus'>
                                 {
-                                    <a className={`${this.renderStatusClassName(serviceList.statusName)}`} to='/'>{
-                                        serviceList.statusName === VISIT_SERVICE_STATUS_NOT_HIRED ?
-                                            serviceList.matchPercentage : serviceList.statusName
+                                    <a className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`} to='/'>{
+                                        serviceList.serviceRequestStatus === VISIT_SERVICE_STATUS_NOT_HIRED ?
+                                            serviceList.matchPercentage : serviceList.serviceRequestStatus
                                     }</a>
                                 }
                             </div>
