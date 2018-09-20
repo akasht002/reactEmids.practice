@@ -28,53 +28,78 @@ const createOptions = () => {
 class _CardForm extends Component {
     constructor(props) {
         super(props);
-        this.card_name = ''
+        this.state = {
+            cardErrorMessage: '',
+            expErrorMessage: '',
+            cvcErrorMessage: '',
+        };
     }
+
+    handleChangeCardNumber = () => {
+        this.setState({ cardErrorMessage: '' })
+    }
+
+    handleChangeExpDate = () => {
+        this.setState({ expErrorMessage: '' })
+    }
+
+    handleChangeCVC = () => {
+        this.setState({ cvcErrorMessage: '' })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.stripe.createToken().then(payload => {
+            if (payload.token) {
+                const data = {
+                    "patientId": this.props.data.SummaryDetails.patient.patientId,
+                    "token": payload.token.id,
+                    "cardNumberChanged": payload.token.card.last4,
+                    "amount": this.props.data.CalculationsData.grandTotalAmount,
+                    "cardType": payload.token.card.brand,
+                    "isSaveCard": false
+                }
+                this.props.token(data);
+            } else {
+                if (payload.error.code === 'incomplete_number') {
+                    this.setState({ cardErrorMessage: payload.error.message, expErrorMessage: '', cvcErrorMessage: '' })
+                } else if (payload.error.code === 'incomplete_expiry') {
+                    this.setState({ expErrorMessage: payload.error.message, cardErrorMessage: '', cvcErrorMessage: '' })
+                } else if (payload.error.code === 'incomplete_cvc') {
+                    this.setState({ cvcErrorMessage: payload.error.message, cardErrorMessage: '', expErrorMessage: '' })
+                }
+            }
+        })
+    }
+
     render() {
         return (
-            <form className="row" onSubmit={(e) => {
-                e.preventDefault();
-                this.props.stripe.createToken({ name: this.card_name }).then(payload => {
-                    if (payload) {
-                        const data = {
-                            "patientId": 1,
-                            "token": payload.token.id,
-                            "cardNumberChanged": payload.token.card.last4,
-                            "amount": 500,
-                            "cardType": payload.token.card.brand,
-                            "isSaveCard": false
-                        }
-                        this.props.token(data)
-                    }
-                })
-            }}>
+            <form className="row" onSubmit={this.handleSubmit}>
                 <div className="col-md-6">
                     <div className="form-group">
                         <label className="m-0">Card Number</label>
-                        <CardNumberElement {...createOptions()} />
-                    </div>
-                </div>
-                <div className="col-md-6">
-                    <div className="form-group">
-                        <label className="m-0">Cardholder Name</label>
-                        <input
-                            id="card-name"
-                            onChange={(e) => this.card_name = e.target.value}
-                            className="form-control"
-                            placeholder="Dan Wilson"
-                            autocomplete="off" />
+                        <CardNumberElement onChange={this.handleChangeCardNumber} {...createOptions()} />
+                        <small className="text-danger d-block OnboardingAlert mt-2">
+                            {this.state.cardErrorMessage}
+                        </small>
                     </div>
                 </div>
                 <div className="col-md-6">
                     <div className="form-group">
                         <label className="m-0">Expiry Date</label>
-                        <CardExpiryElement {...createOptions()} />
+                        <CardExpiryElement onChange={this.handleChangeExpDate} {...createOptions()} />
+                        <small className="text-danger d-block OnboardingAlert mt-2">
+                            {this.state.expErrorMessage}
+                        </small>
                     </div>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-6">
                     <div className="form-group mt-0">
                         <label className="m-0">CVC</label>
-                        <CardCVCElement {...createOptions()} />
+                        <CardCVCElement onChange={this.handleChangeCVC} {...createOptions()} />
+                        <small className="text-danger d-block OnboardingAlert mt-2">
+                            {this.state.cvcErrorMessage}
+                        </small>
                     </div>
                 </div>
                 <div id="card-errors" role="alert"></div>
@@ -99,7 +124,7 @@ class CheckoutForm extends React.Component {
         return (
             <div className="col-md-12">
                 <Elements>
-                    <CardForm token={this.chargeData} />
+                    <CardForm token={this.chargeData} data={this.props.summaryAmount}/>
                 </Elements>
             </div>
         )
@@ -114,7 +139,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-
+        summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState
     };
 };
 

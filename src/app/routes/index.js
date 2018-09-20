@@ -24,7 +24,6 @@ import {
   Payments,
   PaymentSuccess,
   PaymentFailure,
-  PaymentSettings
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -61,8 +60,7 @@ export const Path = {
   dashboard:'/dashboard',
   payments:'/payments',
   paymentsuccess:'/paymentsuccess',
-  paymentfailure:'/paymentfailure',
-  paymentsettings:'/paymentsettings'
+  paymentfailure:'/paymentfailure'
 };
 
 class AppStackRoot extends Component {
@@ -91,7 +89,6 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.payments} component={Payments} />
             <PrivateRoute path={Path.paymentsuccess} component={PaymentSuccess} />
             <PrivateRoute path={Path.paymentfailure} component={PaymentFailure} />
-            <PrivateRoute path={Path.paymentsettings} component={PaymentSettings} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

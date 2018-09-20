@@ -33,7 +33,7 @@ class Payments extends Component {
     }
 
     componentDidMount() {
-        this.props.getpaymentsCardList();
+        this.props.getpaymentsCardList(this.props.summaryAmount.SummaryDetails.patient.patientId);
     }
 
     handleChange = (e) => {
@@ -42,8 +42,8 @@ class Payments extends Component {
 
     handleClick = () => {
         const data = {
-            "paymentAmount": 500,
-            "coreoHomeUSerID": 0,
+            "paymentAmount": this.props.summaryAmount.CalculationsData.grandTotalAmount,
+            "patientId": this.props.summaryAmount.SummaryDetails.patient.patientId,
             "coreoHomeStripeCustomerId": this.state.selectedCard
         }
         this.props.chargeByCustomerId(data);
@@ -104,7 +104,7 @@ class Payments extends Component {
                         <div className='VisitPaymentContainer'>
                             <div className="VisitPaymentWidget">
                                 <p className="VisitPaymentContentTitle">Make Payment</p>
-                                <p className="VisitPaymentAmountPaid">Amount to be paid <i>$6.50</i></p>
+                                <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
                                 <div className="FeedbackQuestionWidget form-group">
                                     <label className="FeedbackQuestion">Select the method of Payment</label>
                                     <div className='FeedbackAnswerWidget'>
@@ -193,6 +193,7 @@ function mapStateToProps(state) {
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
+        summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState,
         CardList: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.CardList,
     };
 };

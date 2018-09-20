@@ -16,7 +16,6 @@ import { AsideScreenCover } from './ScreenCover/AsideScreenCover';
 import Dashboard from './Dashboard'
 import PaymentSuccess from './VisitSelection/VisitServiceProcessing/Payments/paymentSuccess'
 import PaymentFailure from './VisitSelection/VisitServiceProcessing/Payments/paymentFailure'
-import PaymentSettings from './PaymentSettings'
 
 import {    
     ForgetPassword,
@@ -47,6 +46,5 @@ export {
     Dashboard,
     Payments,
     PaymentSuccess,
-    PaymentFailure,
-    PaymentSettings
+    PaymentFailure
 };
