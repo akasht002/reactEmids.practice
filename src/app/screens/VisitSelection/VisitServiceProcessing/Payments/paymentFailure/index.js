@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 import Moment from 'react-moment';
 import { VisitProcessingNavigationData } from '../../../../../data/VisitProcessingWizNavigationData'
 import { getFirstCharOfString } from '../../../../../utils/stringHelper'
-// import { getpaymentsCardList, chargeByCustomerId } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 import { Scrollbars, DashboardWizFlow } from '../../../../../components';
 import { AsideScreenCover } from '../../../../ScreenCover/AsideScreenCover';
 
@@ -30,11 +29,6 @@ class PaymentFailure extends Component {
     toggle = () => {
         this.setState({ collapse: !this.state.collapse });
     }
-
-    componentDidMount() {
-    }
-
-
 
     render() {
 

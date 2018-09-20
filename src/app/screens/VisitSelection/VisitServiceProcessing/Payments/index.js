@@ -8,6 +8,8 @@ import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getpaymentsCardList, chargeByCustomerId } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 import { Scrollbars, DashboardWizFlow } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
+import { SAVEDCARDS, NEWCARDS } from '../../../../constants/constants'
+import { STRIPE_KEY } from "../../../../constants/config"
 import CheckoutForm from './stripe';
 import './style.css'
 
@@ -17,13 +19,15 @@ class Payments extends Component {
         super(props);
         this.state = {
             SelectedCard: '1',
-            selectedCard: ''
+            selectedCard: '',
+            disabled: true
         };
     };
 
     toggleCardSelection = (e) => {
         this.setState({
-            SelectedCard: e.target.value
+            SelectedCard: e.target.value,
+            disabled: true
         })
     }
 
@@ -36,7 +40,7 @@ class Payments extends Component {
     }
 
     handleChange = (e) => {
-        this.setState({ selectedCard: e.target.id })
+        this.setState({ selectedCard: e.target.id, disabled: false })
     }
 
     handleClick = () => {
@@ -109,13 +113,13 @@ class Payments extends Component {
                                         <div className='FeedbackAnswerWidget'>
                                             <div className="form-radio col-md-6">
                                                 <input className="form-radio-input" name="CardSelect" id="CardSelect11" type="radio"
-                                                    value="1" onClick={this.toggleCardSelection} checked={this.state.SelectedCard === '1' ? 'checked' : ''} />
+                                                    value={1} onClick={this.toggleCardSelection} checked={this.state.SelectedCard === SAVEDCARDS ? 'checked' : ''} />
                                                 <label className="form-radio-label" htmlFor="CardSelect11">Saved Card
                                     <span className="RadioBoxIcon" /></label>
                                             </div>
                                             <div className="form-radio col-md-6">
                                                 <input className="form-radio-input" name="CardSelect" id="CardSelect12" type="radio"
-                                                    value="2" onClick={this.toggleCardSelection} checked={this.state.SelectedCard === '2' ? 'checked' : ''} />
+                                                    value={2} onClick={this.toggleCardSelection} checked={this.state.SelectedCard === NEWCARDS ? 'checked' : ''} />
                                                 <label className="form-radio-label" htmlFor="CardSelect12">New Card
                                     <span className="RadioBoxIcon" /></label>
                                             </div>
@@ -151,7 +155,7 @@ class Payments extends Component {
                                                 })}
                                             </div>
                                             <div className='text-right width100'>
-                                                <a className='btn btn-primary' onClick={this.handleClick}>Pay</a>
+                                                <button disabled={this.state.disabled} className='btn btn-primary' onClick={this.handleClick}>Pay</button>
                                             </div>
                                         </div>
                                     )
@@ -161,7 +165,7 @@ class Payments extends Component {
                                                     <div className="form-group col-md-12">
                                                         <label className="m-0">Enter the card details</label>
                                                     </div>
-                                                    <StripeProvider apiKey="pk_test_n70bkOns9PqUMG4go5E77356">
+                                                    <StripeProvider apiKey={STRIPE_KEY}>
                                                         <CheckoutForm />
                                                     </StripeProvider>
                                                 </div>
