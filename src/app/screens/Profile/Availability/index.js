@@ -21,6 +21,7 @@ class Availability extends Component {
             edit: false, 
             updatedData: [],
             isDiscardModalOpen: false,
+            isBlackoutModalOpen: false,
             activeSlots: []          
         }
         this.disabled = "disabled";
@@ -120,8 +121,14 @@ class Availability extends Component {
         })
     };
 
+    toggleBlackoutModal = () => {
+        this.setState({
+            isBlackoutModalOpen: !this.state.isBlackoutModalOpen
+        })
+    }
+
     render() {
-        let availableDays = [], modalContent, modalTitle, availableSlot= '';
+        let availableDays = [], modalContent, modalTitle, availableSlot= '', blackoutModalContent='';
         if (this.props.availableDays.days && this.props.availableDays.days.length > 0) {
             availableDays = this.getAvailableDays();
             availableSlot = availableDays.every(slot => {
@@ -139,6 +146,7 @@ class Availability extends Component {
             modalTitle = 'Add Availability';
         }
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
+        blackoutModalContent = <BlackoutDays showBalckout="true"/>
         return (
             <React.Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
@@ -161,7 +169,7 @@ class Availability extends Component {
                             </ul>
                         }
                      </div>
-                     <BlackoutDays showBalckout={'true'}/>
+                     <p className={"primaryColor"} onClick={this.toggleBlackoutModal}>Show Bloackout Days</p>
                 </div>
                 <ProfileModalPopup
                     isOpen={this.state.availabilityModal}
@@ -189,6 +197,15 @@ class Availability extends Component {
                 this.setState({
                     isDiscardModalOpen: false
                 })}
+              />
+              <ProfileModalPopup
+                isOpen={this.state.isBlackoutModalOpen}
+                toggle={this.toggleBlackoutModal}
+                ModalBody={blackoutModalContent}
+                className='modal-lg asyncModal availabilityModal'
+                headerFooter='d-none'
+                centered='centered'
+                modalTitle={"Blackout Days"}
               />
             </React.Fragment>
         )
