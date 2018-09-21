@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import _ from 'lodash';
 import { ProfileModalPopup, ModalPopup } from "../../../components";
 import ServiceOfferedContent from '../ServiceOffered/serviceOfferedContent'
 import { getServiceOffered, addServiceOfferd, editServiceOffered, toggleCollapseCategory, toggleCollapseDetails } from '../../../redux/profile/ServiceOffered/actions';
@@ -15,7 +16,9 @@ class ServiceOffered extends React.Component {
             disabledSaveBtn: true,
             isAdd: false,
             serviceType: [],
+            categoryId: ''
         };
+        this.offeredSelected = [];
     };
 
     componentDidMount() {
@@ -40,11 +43,33 @@ class ServiceOffered extends React.Component {
     }
 
     oncheckedServices = (serviceType, category) => {
+        // const data = serviceType.map((item,i) => {
+        //     return {categoryId:item.categoryId,serviceType:delete item.categoryId}
+
+        // })
         this.setState({
-            serviceType: serviceType,
+            serviceType: _.omit(serviceType, ['categoryId']),
+            //serviceType: serviceType,
+            categoryId: category,
             disabledSaveBtn: false,
         })
     }
+
+    // addServiceOfferd = () => {
+    //     const data = [
+    //         {
+    //             categoryId: this.state.categoryId.serviceCategoryId,
+    //             serviceType: this.state.serviceType
+    //         }
+    //     ]
+    //     this.offeredSelected.push(data)
+    //     console.log(this.offeredSelected)
+    //     //this.props.addServiceOfferd(this.offeredSelected);
+    //     this.setState({
+    //         isModalOpen: false,
+    //         disabledSaveBtn: true
+    //     });
+    // }
 
     addServiceOfferd = () => {
         const data = [
@@ -52,6 +77,7 @@ class ServiceOffered extends React.Component {
                 serviceType: this.state.serviceType
             }
         ]
+        console.log(data)
         this.props.addServiceOfferd(data);
         this.setState({
             isModalOpen: false,
@@ -95,7 +121,7 @@ class ServiceOffered extends React.Component {
                     handleClick={this.oncheckedServices}
                     name={this.props.serviceOfferedDetails}
                     type={'edit'}
-                    toggleCollapse={(category) => {this.props.toggleCollapseDetails(category)}}
+                    toggleCollapse={(category) => { this.props.toggleCollapseDetails(category) }}
                 />
                 :
                 ''
@@ -125,7 +151,7 @@ class ServiceOffered extends React.Component {
                             <ServiceOfferedContent
                                 name={this.props.serviceOfferedList}
                                 type={'view'}
-                                toggleCollapse={(category) => {this.props.toggleCollapseCategory(category)}}
+                                toggleCollapse={(category) => { this.props.toggleCollapseCategory(category) }}
                             />
                         </div>
                         :
