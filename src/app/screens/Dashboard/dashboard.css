@@ -171,7 +171,7 @@ li div.dropdown-menu{
     position: relative;
     width: 100%;
     height: calc(100vh - 120px);
-    overflow: auto;
+    /* overflow: auto; */
     padding: 0 20px;
 }
 
@@ -326,7 +326,7 @@ li div.dropdown-menu{
 
 .BlockProfileDetails{
     display: inline-block;
-    padding: 0 20px;
+    padding: 0 20px 0 0;
     vertical-align: middle;
     width: calc(100% - 125px);
 }
@@ -706,7 +706,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ServiceRequestBoard{
-    width: 33%;
+    width: 25%;
     height: 197px;
     margin-bottom: 15px;
     padding: 0 10px;
@@ -868,7 +868,7 @@ div.scrollarea .scrollbar-container.vertical {
 }
 
 .slick-initialized .slick-slide{
-    margin-left: 15px;
+    margin-left: 6px;
 }
 
 .ProfileIconEye{
@@ -1614,9 +1614,4 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     .AvailabilityWidget .SPAvailWidget .Available, .AvailabilityWidget .SPAvailWidget .trueAvailable{
         margin: 0 0 15px !important;
     }
-}
-
-.scrollarea {
-    position: relative;
-    overflow: hidden;
 }
