@@ -97,27 +97,30 @@ export function getServiceArea() {
 export function getFilter(data) {
     return (dispatch) => {
         dispatch(startLoading());
+        let reqObj;
         if(data.startDate==="" && data.endDate===""){
-            var ReqObje={
+            reqObj={
                 "Category": data.ServiceCategoryId,
                 "ServiceTypes": data.serviceTypes,
                 "Status":data.serviceStatus,
                 "FromPage": 0,
-                "ToPage": 10
+                "ToPage": 10,
+                "ServiceAreas":data.ServiceAreas
               }
         } else {
-            var  ReqObje ={
+            reqObj ={
                 "Category": data.ServiceCategoryId,
                 "ServiceTypes": data.serviceTypes,
                 "Status":data.serviceStatus,
                 "FromPage": 0,
                 "ToPage": 10,
                 "FromDate":data.startDate,
-                "ToDate":data.endDate
+                "ToDate":data.endDate,
+                "ServiceAreas":data.ServiceAreas
             }
         }
      
-        elasticSearchPost(API.PostSearchServiceRequest,ReqObje).then((resp) => {
+        elasticSearchPost(API.PostSearchServiceRequest,reqObj).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
