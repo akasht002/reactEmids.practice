@@ -257,6 +257,7 @@ li div.dropdown-menu{
     color: #8c8c8c;
     margin-bottom: 10px;
     word-wrap: break-word;
+    text-transform: capitalize;
 }
 
 .BlockImageDetailsDate{
