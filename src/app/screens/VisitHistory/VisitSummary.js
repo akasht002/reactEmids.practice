@@ -107,15 +107,7 @@ class VisitSummary extends React.Component {
               </div>
             </div>
             <div className='cardBottom' />
-          </Scrollbars>
-          {/* <ServiceProviderModalTemplate
-                    isOpen={this.state.modal}
-                    toggle={this.FeedbackModal}
-                    ModalBody={ModalContent}
-                    className="modal-lg FeedbackModal"
-                    modalTitle="Feedback"
-                    centered="centered"
-                /> */}
+          </Scrollbars>         
         </div>
       </AsideScreenCover>
     )

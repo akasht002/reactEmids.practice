@@ -3,9 +3,6 @@ import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import { ThemeProvider } from '@zendeskgarden/react-theming'
 import { SelectField, Select, Item } from '@zendeskgarden/react-select'
-import '../Dashboard/styles/ServiceTasks.css'
-import './visitList.css'
-import '../../styles/SelectDropdown.css'
 import { Scrollbars } from '../../components'
 import {
   getVisitServiceLists,
@@ -17,6 +14,10 @@ import {
 import { VisitList } from './VisitList'
 import VisitFilter from '../VisitHistoryFilter'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
+
+import '../Dashboard/styles/ServiceTasks.css'
+import './visitList.css'
+import '../../styles/SelectDropdown.css'
 
 class VisitHistory extends Component {
   constructor (props) {
@@ -73,7 +74,6 @@ class VisitHistory extends Component {
                     placement='auto'
                     onChange={selectedKey => {
                       this.setState({ selectedKey })
-                      console.log(this.state.selectedKey)
                       this.props.getVisitServiceListSort({sortByOrder:this.state.selectedKey,sortByColumn:'modifieddate'});
                     }}
                     options={[

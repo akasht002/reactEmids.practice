@@ -7,6 +7,7 @@ import {
 } from 'react-accessible-accordion'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import {Progressbar} from '../../components'
 import moment from 'moment'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import { getFields, getLength } from '../../utils/validations'
@@ -34,8 +35,7 @@ class VistSummary extends React.Component {
   }
 
   componentDidMount () {
-    this.props.getQuestionsList()
-    console.log(this.props.ServiceRequestId)
+    this.props.getQuestionsList()    
   }
 
   toggle = () => {
@@ -52,7 +52,6 @@ class VistSummary extends React.Component {
   toggleFilter = () => {
     this.setState({
       filterOpen: !this.state.filterOpen
-      /* isOpen: !this.state.isOpen */
     })
   }
 
@@ -78,7 +77,6 @@ class VistSummary extends React.Component {
   }
 
   getServiceDetails = lists => {
-    console.log(lists)
     if (lists) {
       return lists.map((list, index) => {
         return (
@@ -294,6 +292,7 @@ class VistSummary extends React.Component {
     let modalTitle = 'Feedback'
     let modalType = ''
     let feedbackContent = []
+    let progress_bar  = summaryDetail.totalTask !== 0 ?(this.props.taskCompleted/this.props.totaltask) * 100:0
     return (
       <React.Fragment>
         <form className='ServiceContent'>
@@ -328,11 +327,11 @@ class VistSummary extends React.Component {
                       <span className='bottomTaskName'>Tasks</span>
                       <span className='bottomTaskRange'>
                         <i
-                          style={{ width: '83.3%' }}
+                          style={{ width: progress_bar }}
                           className='bottomTaskCompletedRange'
                         />
                       </span>
-                      <span className='bottomTaskPercentage'>83.3%</span>
+                      <span className='bottomTaskPercentage'>{progress_bar}%</span>
                     </div>
                   </div>
                 </div>
@@ -368,13 +367,13 @@ class VistSummary extends React.Component {
                       <span>${summaryDetail.hourlyRate}/hr</span>
                     </p>
                     <p className='TaxCost'>
-                      <span>$23.00</span>
-                      <span>$9.50</span>
+                      <span>${summaryDetail.totalCost}</span>
+                      <span>${summaryDetail.taxAmount}</span>
                     </p>
                   </div>
                   <div className='col-md-12 CostTableContainer Total'>
                     <p className='TotalLabel'><span>Total Cost </span></p>
-                    <p className='TotalCost'><span>$32.50</span></p>
+                    <p className='TotalCost'><span>${summaryDetail.totalCost}</span></p>
                   </div>
                 </div>
 
@@ -387,7 +386,8 @@ class VistSummary extends React.Component {
                   </div>
                   <div className='col-md-4 EstimatedCostContainer Cost'>
                     <p>
-                      <span>$20.00</span>
+                      <span>$ {summaryDetail.estimatedClaim&&
+                          summaryDetail.estimatedClaim}</span>
                       <span>
                         {summaryDetail.outOfPocketAmount &&
                           summaryDetail.outOfPocketAmount}

@@ -22,7 +22,7 @@ import {StopWatch} from './StopWatch';
 import {ModalTemplate} from './ModalTemplate';
 import {MultiSelectAvatar, GravatarOption, GravatarValue} from './AvatarMultiSelect';
 import {Gravatar} from './Gravatar';
-
+import {Progressbar} from './Progressbar'
 export {
     Calendar,
     CoreoWizFooter,
@@ -49,5 +49,6 @@ export {
     MultiSelectAvatar, 
     GravatarOption, 
     GravatarValue,
-    Gravatar
+    Gravatar,
+    Progressbar
 };

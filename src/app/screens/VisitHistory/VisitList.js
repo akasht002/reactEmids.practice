@@ -1,10 +1,10 @@
 import React from 'react'
 import { getFields } from '../../utils/validations'
 import Moment from 'react-moment';
+import {Progressbar} from '../../components'
 
 
 export const VisitList = (props) => {
-  let workcompleted = '82.2'
   let visitHistoryList = props.visitHistoryList
     let visitHistoryListItem = ''
     if (visitHistoryList) {
@@ -36,16 +36,7 @@ export const VisitList = (props) => {
                 <div className='visitListCategory'>
                   {vistList.serviceCategory}
                 </div>
-                <div className='visitListTask'>
-                  <span className='bottomTaskName'>Tasks</span>
-                  <span className='bottomTaskRange'>
-                    <i
-                      style={{ width: {workcompleted} }}
-                      className='bottomTaskCompletedRange'
-                    />
-                  </span>
-                  <span className='bottomTaskPercentage'>{workcompleted}%</span>
-                </div>
+                <Progressbar totaltask={vistList.totalTask} taskCompleted={vistList.totalTaskCompleted}/>               
               </div>
             </div>
           </div>
