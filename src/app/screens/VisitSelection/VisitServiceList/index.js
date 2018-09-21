@@ -152,7 +152,8 @@ class VisitServiceList extends Component {
             serviceStatus:[],
             ServiceCategoryId:'',
             serviceTypes:[],
-            isValid: true
+            isValid: true,
+            selectedOption:''
         })
     }
 

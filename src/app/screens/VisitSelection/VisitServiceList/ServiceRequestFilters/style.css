@@ -75,7 +75,7 @@
 .FilterMiddle{
     display: flex;
     height: 100%;
-    max-height: calc(100% - 136px);
+    max-height: calc(100% - 193px);
     overflow: auto;
 }
 

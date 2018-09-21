@@ -38,6 +38,15 @@ class AsideScreenCover extends React.Component {
     this.props.onClickOk();
     }
 
+    navigateProfileHeader = (link) =>{
+        if(link === 'messagesummary'){
+            this.props.navigateProfileHeader(link);
+        }else{
+            this.setState({selectedLink: link})
+        }
+    };
+
+
     render() {
         return (
             <ScreenCover>
@@ -67,7 +76,7 @@ class AsideScreenCover extends React.Component {
                     <AsideMenu menuData={MenuData} />
                 </div>
                 <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.props.toggle} onClick={(link) => {this.setState({selectedLink: link})}}/>
+					<ProfileHeader toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
                     <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '')}>
                         {this.props.children}
@@ -98,7 +107,8 @@ function mapDispatchToProps(dispatch) {
         getUserInfo: () => dispatch(getUserInfo()),
         onClickOk: () => dispatch(updateEula()),
         goToProfile: () => dispatch(push(Path.profile)),
-        getPersonalDetail:()=>dispatch(action.getPersonalDetail())
+        getPersonalDetail:()=>dispatch(action.getPersonalDetail()),
+        navigateProfileHeader: (link) => dispatch(push(link))
     }
 };
 

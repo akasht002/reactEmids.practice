@@ -1,0 +1,259 @@
+.MessageCard {
+position: relative;
+display: -ms-flexbox;
+display: flex;
+min-width: 0;
+word-wrap: break-word;
+background-color: #fff;
+background-clip: border-box;
+border: 1px solid rgba(0, 0, 0, .125);
+border-radius: .25rem
+}
+
+.MessageCard>hr {
+margin-right: 0;
+margin-left: 0
+}
+
+.MessageCard>.list-group:first-child .list-group-item:first-child {
+border-top-left-radius: .25rem;
+border-top-right-radius: .25rem
+}
+
+.MessageCard>.list-group:last-child .list-group-item:last-child {
+border-bottom-right-radius: .25rem;
+border-bottom-left-radius: .25rem
+}
+
+.MessageCard-body {
+-ms-flex: 1 1 auto;
+flex: 1 1 auto;
+padding: 1.25rem
+}
+
+.MessageCard-title {
+margin-bottom: .75rem
+}
+
+.MessageCard-subtitle {
+margin-top: -.375rem;
+margin-bottom: 0
+}
+
+.MessageCard-text:last-child {
+margin-bottom: 0
+}
+
+.MessageCard-link:hover {
+text-decoration: none
+}
+
+.MessageCard-link+.MessageCard-link {
+margin-left: 1.25rem
+}
+
+.MessageCard-header {
+padding: .75rem 1.25rem;
+margin-bottom: 0;
+background-color: rgba(0, 0, 0, .03);
+border-bottom: 1px solid rgba(0, 0, 0, .125)
+}
+
+.MessageCard-header:first-child {
+border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0
+}
+
+.MessageCard-header+.list-group .list-group-item:first-child {
+border-top: 0
+}
+
+.MessageCard-footer {
+padding: .75rem 1.25rem;
+background-color: rgba(0, 0, 0, .03);
+border-top: 1px solid rgba(0, 0, 0, .125)
+}
+
+.MessageCard-footer:last-child {
+border-radius: 0 0 calc(.25rem - 1px) calc(.25rem - 1px)
+}
+
+.MessageCard-header-tabs {
+margin-right: -.625rem;
+margin-bottom: -.75rem;
+margin-left: -.625rem;
+border-bottom: 0
+}
+
+.MessageCard-header-pills {
+margin-right: -.625rem;
+margin-left: -.625rem
+}
+
+.MessageCard-img-overlay {
+position: absolute;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+padding: 1.25rem
+}
+
+.MessageCard-img {
+width: 100%;
+border-radius: calc(.25rem - 1px)
+}
+
+.MessageCard-img-top {
+width: 100%;
+border-top-left-radius: calc(.25rem - 1px);
+border-top-right-radius: calc(.25rem - 1px)
+}
+
+.MessageCard-img-bottom {
+width: 100%;
+border-bottom-right-radius: calc(.25rem - 1px);
+border-bottom-left-radius: calc(.25rem - 1px)
+}
+
+.MessageCard-deck {
+display: -ms-flexbox;
+display: flex;
+-ms-flex-direction: column;
+flex-direction: column
+}
+
+.MessageCard-deck .MessageCard {
+margin-bottom: 15px
+}
+
+@media (min-width:576px) {
+.MessageCard-deck {
+-ms-flex-flow: row wrap;
+flex-flow: row wrap;
+margin-right: -15px;
+margin-left: -15px
+}
+.MessageCard-deck .MessageCard {
+display: -ms-flexbox;
+display: flex;
+-ms-flex: 1 0 0%;
+flex: 1 0;
+-ms-flex-direction: column;
+flex-direction: column;
+margin-right: 15px;
+margin-bottom: 0;
+margin-left: 15px
+}
+}
+.MessageCard-group {
+display: -ms-flexbox;
+display: flex;
+-ms-flex-direction: column;
+flex-direction: column
+}
+
+.MessageCard-group>.MessageCard {
+margin-bottom: 15px
+}
+
+@media (min-width:576px) {
+.MessageCard-group {
+-ms-flex-flow: row wrap;
+flex-flow: row wrap
+}
+.MessageCard-group>.MessageCard {
+-ms-flex: 1 0 0%;
+flex: 1 0;
+margin-bottom: 0
+}
+.MessageCard-group>.MessageCard+.MessageCard {
+margin-left: 0;
+border-left: 0
+}
+.MessageCard-group>.MessageCard:first-child {
+border-top-right-radius: 0;
+border-bottom-right-radius: 0
+}
+.MessageCard-group>.MessageCard:first-child .MessageCard-header,
+.MessageCard-group>.MessageCard:first-child .MessageCard-img-top {
+border-top-right-radius: 0
+}
+.MessageCard-group>.MessageCard:first-child .MessageCard-footer,
+.MessageCard-group>.MessageCard:first-child .MessageCard-img-bottom {
+border-bottom-right-radius: 0
+}
+.MessageCard-group>.MessageCard:last-child {
+border-top-left-radius: 0;
+border-bottom-left-radius: 0
+}
+.MessageCard-group>.MessageCard:last-child .MessageCard-header,
+.MessageCard-group>.MessageCard:last-child .MessageCard-img-top {
+border-top-left-radius: 0
+}
+.MessageCard-group>.MessageCard:last-child .MessageCard-footer,
+.MessageCard-group>.MessageCard:last-child .MessageCard-img-bottom {
+border-bottom-left-radius: 0
+}
+.MessageCard-group>.MessageCard:only-child {
+border-radius: .25rem
+}
+.MessageCard-group>.MessageCard:only-child .MessageCard-header,
+.MessageCard-group>.MessageCard:only-child .MessageCard-img-top {
+border-top-left-radius: .25rem;
+border-top-right-radius: .25rem
+}
+.MessageCard-group>.MessageCard:only-child .MessageCard-footer,
+.MessageCard-group>.MessageCard:only-child .MessageCard-img-bottom {
+border-bottom-right-radius: .25rem;
+border-bottom-left-radius: .25rem
+}
+.MessageCard-group>.MessageCard:not(:first-child):not(:last-child):not(:only-child) {
+border-radius: 0
+}
+.MessageCard-group>.MessageCard:not(:first-child):not(:last-child):not(:only-child) .MessageCard-footer,
+.MessageCard-group>.MessageCard:not(:first-child):not(:last-child):not(:only-child) .MessageCard-header,
+.MessageCard-group>.MessageCard:not(:first-child):not(:last-child):not(:only-child) .MessageCard-img-bottom,
+.MessageCard-group>.MessageCard:not(:first-child):not(:last-child):not(:only-child) .MessageCard-img-top {
+border-radius: 0
+}
+}
+
+.MessageCard-columns .MessageCard {
+margin-bottom: .75rem
+}
+
+@media (min-width:576px) {
+.MessageCard-columns {
+-webkit-column-count: 3;
+column-count: 3;
+-webkit-column-gap: 1.25rem;
+column-gap: 1.25rem;
+orphans: 1;
+widows: 1
+}
+.MessageCard-columns .MessageCard {
+display: inline-block;
+width: 100%
+}
+}
+
+
+.accordion .MessageCard:not(:first-of-type):not(:last-of-type) {
+border-bottom: 0;
+border-radius: 0
+}
+
+.accordion .MessageCard:not(:first-of-type) .MessageCard-header:first-child {
+border-radius: 0
+}
+
+.accordion .MessageCard:first-of-type {
+border-bottom: 0;
+border-bottom-right-radius: 0;
+border-bottom-left-radius: 0
+}
+
+.accordion .MessageCard:last-of-type {
+border-top-left-radius: 0;
+border-top-right-radius: 0
+}
