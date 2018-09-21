@@ -175,6 +175,19 @@ export function GetAllParticipants(data) {
     };
 };
 
+export function endConference() {
+    return (dispatch, getState) => {
+          let state = getState().telehealthState;
+          dispatch(startLoading());
+          AsyncGet(API.endConference +  state.token + '/' + state.roomId).then((resp) => {
+                dispatch(push(Path.dashboard));
+              dispatch(endLoading());
+          }).catch((err) => {
+              dispatch(endLoading());
+          })
+      }
+  };
+
 export function getLinkedPatients() {
     return (dispatch) => {
           dispatch(startLoading());

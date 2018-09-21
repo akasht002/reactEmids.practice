@@ -86,6 +86,7 @@ export const API = {
     getParticipantByConferenceId:'VideoConferencing/GetParticipantByConferenceId/',
     getAllParticipants: 'VideoConferencing/GetAllParticipants/',
     addParticipants: 'VideoConferencing/AddParticipant',
+    endConference: 'VideoConferencing/EndConference/',
     getConversationSummary: 'conversation/user/',
     getConversation: 'conversation/',
     createNewConversation: 'conversation',
@@ -100,8 +101,7 @@ export const API = {
     getParticipantsByContext: 'conversation/ParticipantByContext/',
     getDashboardMessageCount: 'Conversation/Dashboard/ConversationCount/',
     getConversationImage: 'Conversation/Message/',
-    canCreateMessage: 'Conversation/CanServiceProviderCreate/',
-
+    canCreateMessage: 'Conversation/CanServiceProviderCreate/'
 }
 
 

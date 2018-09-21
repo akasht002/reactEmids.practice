@@ -87,7 +87,7 @@ export default class TeleHealthInviteParticipants extends Component {
                         onSearchTextChange={this.onSearchTextChange}
                         searchText={this.state.searchText} />
                     <div className="TeleHealthAddBottom">
-                        <button type="button" onClick={this.AddParticipantsToConference}
+                        <button disabled={this.state.selectedParticipants.length<=0} type="button" onClick={this.AddParticipantsToConference}
                         className="btn btn-primary TeleHealthAddDoneButton">Done</button>
                     </div >
                 </form >
