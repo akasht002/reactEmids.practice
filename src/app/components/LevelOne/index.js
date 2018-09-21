@@ -23,6 +23,8 @@ import {ModalTemplate} from './ModalTemplate';
 import {MultiSelectAvatar, GravatarOption, GravatarValue} from './AvatarMultiSelect';
 import {Gravatar} from './Gravatar';
 import {Progressbar} from './Progressbar'
+import {UserAvatarMultiSelect} from './UserAvatarMultiSelect';
+
 export {
     Calendar,
     CoreoWizFooter,
@@ -50,5 +52,6 @@ export {
     GravatarOption, 
     GravatarValue,
     Gravatar,
-    Progressbar
+    Progressbar,
+    UserAvatarMultiSelect
 };

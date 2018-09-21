@@ -36,8 +36,8 @@ import {
     GravatarOption, 
     GravatarValue,
     Gravatar,
-    Progressbar
-
+    Progressbar,
+    UserAvatarMultiSelect
 } from './LevelOne';
 import {
     CarouselComp,
@@ -88,5 +88,6 @@ export {
     GravatarOption, 
     GravatarValue,
     Gravatar,
-    Progressbar
+    Progressbar,
+    UserAvatarMultiSelect
 };

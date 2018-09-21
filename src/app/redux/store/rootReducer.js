@@ -12,6 +12,7 @@ import { reducer as oidcReducer } from 'redux-oidc';
 import authUser from '../auth/login/reducer'
 import { visitHistoryState } from '../visitHistory/reducer'
 import { DashboardState } from '../dashboard/reducer';
+import asyncMessageState from '../asyncMessages/reducer';
 import telehealthState from '../telehealth/reducer';
 
 export default combineReducers({
@@ -28,5 +29,6 @@ export default combineReducers({
     authUser,
     visitHistoryState,
     dashboardState:DashboardState,
-    telehealthState
+    telehealthState,
+	asyncMessageState
 });

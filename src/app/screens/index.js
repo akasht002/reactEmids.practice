@@ -20,6 +20,8 @@ import PaymentFailure
 import Dashboard from './Dashboard'
 import TeleHealth from './TeleHealth'
 import InvitationAlert from './TeleHealth/InvitationAlert'
+import Conversation from './AsyncMessage/Conversation'
+import ConversationSummary from './AsyncMessage/ConversationSummary'
 import VisitHistory from './VisitHistory'
 import VistSummary from './VisitHistory/VisitSummary'
 
@@ -55,6 +57,8 @@ export {
   PaymentFailure,
   TeleHealth,
   InvitationAlert,
+  Conversation,
+  ConversationSummary,
   VisitHistory,
   VistSummary
 }

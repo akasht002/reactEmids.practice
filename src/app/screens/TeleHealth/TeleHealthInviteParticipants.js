@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ParticipantList from './ParticipantList';
 import './styles.css';
-
+import { USERTYPES  } from '../../constants/constants';
 const images = require.context('../../assets', true);
 const imagePath = (name) => images(name, true);
+
 
 export default class TeleHealthInviteParticipants extends Component {
 
@@ -48,7 +49,7 @@ export default class TeleHealthInviteParticipants extends Component {
     onSelectPatient = (patientId) => {
         let patientData = {
             userId: patientId,
-            participantType: 'I'
+            participantType: USERTYPES.PATIENT
         };
         this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
         let data = {

@@ -32,4 +32,15 @@ export const RESPONSE_STATUS = {
 export const STATUS = 0;
 export const SAVEDCARDS = "1";
 export const NEWCARDS = "2";
+export const USERTYPES = {
+    PATIENT : 'I',
+    GUARDIAN : 'G',
+    SERVICE_PROVIDER: 'S'
+};
 
+export const ImageFormats = {
+    JPG: 'image/jpg',
+    JPEG : 'image/jpeg',
+    PNG : 'image/png',
+    GIF : 'image/gif'
+}
