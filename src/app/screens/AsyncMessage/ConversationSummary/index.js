@@ -14,6 +14,7 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import ModalTemplate from '../Modals/Modal';
 import '../styles.css';
 import './index.css';
+import { USERTYPES } from '../../../constants/constants';
 
 class ConversationSummary extends Component {
     constructor(props) {
@@ -54,7 +55,7 @@ class ConversationSummary extends Component {
             participants: this.state.participants.toString(),
             createdBy: userId,
             title: this.state.converationTitle,
-            createdByType: 'S',
+            createdByType: USERTYPES.SERVICE_PROVIDER,
         }
         this.props.createNewConversation(data);
     };
@@ -90,7 +91,7 @@ class ConversationSummary extends Component {
                             <div className="row d-flex justify-content-center">
                                 <div className="col-md-12 d-flex p-0 my-4 slightTopview">
                                     <h5 className="font-weight-semi-bold mr-auto pageTitle">Conversation Summary</h5>
-                                    {this.props.loggedInUser.userType !== 'S' && <button
+                                    {this.props.loggedInUser.userType !== USERTYPES.SERVICE_PROVIDER && <button
                                         className="btn btn-primary ml-auto font-size-sm newConversationBtn"
                                         onClick={this.onSetDisplayParticipantModal}>+ New Conversation</button>}
                                 </div>

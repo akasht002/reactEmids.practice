@@ -16,6 +16,7 @@ import ModalTemplate from '../Modals/Modal';
 import { Preloader } from '../../../components';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
+import { USERTYPES } from '../../../constants/constants';
 import '../styles.css';
 
 class Conversation extends Component {
@@ -89,7 +90,7 @@ class Conversation extends Component {
                 title: this.state.title.trim(),
                 modifiedBy: userId,
                 oldTitle: this.props.currentConversation.title,
-                modifiedByType: 'S'
+                modifiedByType: USERTYPES.SERVICE_PROVIDER
             }
             this.props.onSaveTitle(data);
         } else {
@@ -125,7 +126,7 @@ class Conversation extends Component {
                 messageText: this.state.messageText.trim(),
                 participants: participants.toString(),
                 createdBy: userId,
-                createdByType: 'S'
+                createdByType: USERTYPES.SERVICE_PROVIDER
             };
 
             if (picture) {

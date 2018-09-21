@@ -2,7 +2,7 @@ import React from 'react';
 import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import Gravatar from './SelectBoxGravatar';
+import Gravatar from '../UserSelectBoxGravatar';
 
 const stringOrNode = PropTypes.oneOfType([
     PropTypes.string,
@@ -74,7 +74,7 @@ const GravatarValue = createClass({
     }
 });
 
-const MultiSelectAvatar = createClass({
+const UserAvatarMultiSelect = createClass({
     propTypes: {
         hint: PropTypes.string,
         label: PropTypes.string,
@@ -115,4 +115,4 @@ const MultiSelectAvatar = createClass({
     }
 });
 
-export default MultiSelectAvatar;
+export default UserAvatarMultiSelect;

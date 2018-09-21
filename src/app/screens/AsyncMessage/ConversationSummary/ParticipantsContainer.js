@@ -11,6 +11,7 @@ import {
 } from '../../../redux/asyncMessages/actions';
 import SelectPatient from './SelectPatient';
 import '../styles.css';
+import { USERTYPES } from '../../../constants/constants';
 
 const conversationId = 0;
 
@@ -60,7 +61,7 @@ class ParticipantsContainer extends Component {
         let userId = this.props.loggedInUser.serviceProviderId;
         let loggedInUserData = {
             userId: userId,
-            participantType: 'S'
+            participantType: USERTYPES.SERVICE_PROVIDER
         };
         selectedParticipants = [...this.state.selectedParticipants];
         selectedParticipants.push(this.state.selectedPatientDetails);
@@ -68,7 +69,7 @@ class ParticipantsContainer extends Component {
         data = {
             participantList: selectedParticipants,
             createdBy: userId,
-            createdByType: 'S',
+            createdByType: USERTYPES.SERVICE_PROVIDER,
             title: this.state.title.trim(),
             context: this.state.selectedPatientDetails.userId
         };
@@ -89,7 +90,7 @@ class ParticipantsContainer extends Component {
                 patientId: this.state.selectedPatientDetails.userId,
                 conversationId: conversationId,
                 userId: userId,
-                participantType: 'S'
+                participantType: USERTYPES.SERVICE_PROVIDER
             };
             this.props.getLinkedParticipantsByPatients(data);
         }
@@ -101,13 +102,13 @@ class ParticipantsContainer extends Component {
         }else{
             let patientData = {
             userId: patientId,
-            participantType: 'I'
+            participantType: USERTYPES.PATIENT
         };
         let userId = this.props.loggedInUser.serviceProviderId;
         this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
         let data = {
             userId: userId,
-            participantType: 'S',
+            participantType: USERTYPES.SERVICE_PROVIDER,
             searchText: this.state.searchText,
             patientId: patientId ? patientId : 0,
             conversationId: conversationId

@@ -7,15 +7,14 @@ import {
     getLinkedParticipantsByPatients
 } from '../../../redux/asyncMessages/actions';
 import { Button } from '../../../components';
+import { USERTYPES } from '../../../constants/constants';
+
 
 
 class ParticipantContent extends Component {
 
     constructor() {
         super();
-
-        this.openProfileOptions = this.openProfileOptions.bind(this);
-        this.handleOutsideClick = this.handleOutsideClick.bind(this);
 
         this.state = {
             addParticipantView: false,
@@ -107,7 +106,7 @@ class ParticipantContent extends Component {
         }
     };
 
-    handleOutsideClick(e) {
+    handleOutsideClick = (e) => {
         if (this.node && this.node.contains(e.target)) {
             return;
         }
@@ -145,7 +144,7 @@ class ParticipantContent extends Component {
             participants: this.state.selectedParticipants.toString(),
             createdBy: userId,
             participantList: this.state.selectedParticipantsList,
-            participantType: 'S'
+            participantType: USERTYPES.SERVICE_PROVIDER
         };
         this.props.addParticipants(data);
         this.props.setDisplayGreyedOut();
@@ -169,7 +168,7 @@ class ParticipantContent extends Component {
             conversationId: parseInt(this.props.conversationId),
             participants: this.state.selectedRemovableParticipant.userId,
             modifiedBy: userId,
-            modifiedByType: 'S',
+            modifiedByType: USERTYPES.SERVICE_PROVIDER,
             participantList: participanList,
             participantType: this.state.selectedRemovableParticipant.participantType
         };

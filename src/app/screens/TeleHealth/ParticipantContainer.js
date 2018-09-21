@@ -13,8 +13,7 @@ import {
 import SelectPatient from './SelectPatient';
 import {getUserInfo} from '../../services/http';
 import './styles.css';
-
-const conversationId = 0;
+import { USERTYPES  } from '../../constants/constants';
 
 class ParticipantsContainer extends Component {
     state = {
@@ -79,7 +78,7 @@ class ParticipantsContainer extends Component {
     onSelectPatient = (patientId) => {
         let patientData = {
             userId: patientId,
-            participantType: 'I'
+            participantType: USERTYPES.PATIENT
         };
         this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
         let data = {
