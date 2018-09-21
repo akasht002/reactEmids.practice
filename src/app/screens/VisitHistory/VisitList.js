@@ -4,6 +4,7 @@ import Moment from 'react-moment';
 
 
 export const VisitList = (props) => {
+  let workcompleted = '82.2'
   let visitHistoryList = props.visitHistoryList
     let visitHistoryListItem = ''
     if (visitHistoryList) {
@@ -18,9 +19,7 @@ export const VisitList = (props) => {
             <span>
               <Moment format="ddd, DD MMM">
               {vistList.visitDate}
-            </Moment>  {vistList.slotDescription} </span>
-              {/*
-              <span>01:45 hrs</span> */}
+            </Moment>  {vistList.slotDescription} </span>              
             </div>
           </div>
           <div className='visitListBottom'>
@@ -41,11 +40,11 @@ export const VisitList = (props) => {
                   <span className='bottomTaskName'>Tasks</span>
                   <span className='bottomTaskRange'>
                     <i
-                      style={{ width: '83.3%' }}
+                      style={{ width: {workcompleted} }}
                       className='bottomTaskCompletedRange'
                     />
                   </span>
-                  <span className='bottomTaskPercentage'>83.3%</span>
+                  <span className='bottomTaskPercentage'>{workcompleted}%</span>
                 </div>
               </div>
             </div>

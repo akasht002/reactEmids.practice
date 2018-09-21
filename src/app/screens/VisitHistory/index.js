@@ -34,19 +34,19 @@ class VisitHistory extends Component {
 
   componentWillReceiveProps (nextProps) {}
 
-  toggle () {
+  toggle = () =>{
     this.setState({
       isOpen: !this.state.isOpen
     })
   }
 
-  toggleFilter () {
+  toggleFilter  = () => {
     this.setState({
       filterOpen: !this.state.filterOpen
     })
   }
 
-  toggleHiddenScreen () {
+  toggleHiddenScreen  = () => {
     this.setState({
       isOpen: false,
       filterOpen: false

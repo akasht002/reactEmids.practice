@@ -87,97 +87,7 @@ class VisitServiceList extends Component {
             return null;
         }
     }
-        /* filter code */ 
-    toggleFilter=()=>{
-        this.setState({
-            filterOpen: !this.state.filterOpen
-        })
-    }
-        
-    dateChanged = (date) => {
-        const formattedDate = formattedDateMoment(date);
-        this.setState({  
-            startDate: formattedDate
-           
-        });
-
-    }
     
-    dateChangedRaw = (event) => {
-        const formattedDate = formattedDateChange(event);
-        this.setState({  
-            startDate: formattedDate
-        });
- 
-    }
-    todateChanged = (date) => {
-        const formattedDate = formattedDateMoment(date);
-        this.setState({  
-            endDate: formattedDate
-        });
-
-    }
-
-    todateChangedRaw = (event) => {
-        const formattedDate = formattedDateChange(event);
-        this.setState({  
-            endDate: formattedDate
-        });
-    }
-
-    applyFilter =() =>{
-        if ((this.state.serviceTypes) && (this.state.ServiceCategoryId)) {
-            let data = {
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                serviceStatus: this.state.serviceStatus,
-                ServiceCategoryId:this.state.ServiceCategoryId,
-                serviceTypes:this.state.serviceTypes
-            };
-            this.props.getFilter(data)
-            this.setState({
-                filterOpen: !this.state.filterOpen
-            })
-        } else {
-            this.setState({ isValid: false });
-        }
-    }
-
-    applyReset =() =>{
-        this.setState({
-            startDate:'',
-            endDate:'',
-            serviceStatus:[],
-            ServiceCategoryId:'',
-            serviceTypes:[],
-            isValid: true
-        })
-    
-    }
-   
-    handleChangeServiceCategory=(selectedOption)=>{
-        this.setState({ 
-            ServiceCategoryId:selectedOption.label,
-            selectedOption:selectedOption  
-        });
-        this.props.getServiceType(selectedOption.value)
-    }
-
-    handleserviceType =(item) =>{
-        let serviceType = this.state.serviceTypes
-        serviceType.push(item.serviceTypeDescription)
-        this.setState({
-            serviceTypes:serviceType
-        })
-    }
-
-    handleChangeserviceStatus =(item) =>{
-        let service = this.state.serviceStatus
-        service.push(item.keyValue)
-        this.setState({
-            serviceStatus:service
-        })
-    }
     /* filter code */ 
     toggleFilter=()=>{
         this.setState({
@@ -245,34 +155,7 @@ class VisitServiceList extends Component {
             isValid: true
         })
     }
-    /* sorting */
-    toggleclass =(e) =>{
-        var element = document.getElementsByClassName("dropdown-menu")[0];
-        element.classList.add("show");
-        var element1 = document.getElementsByClassName("dropdown-item")[0];
-        element1.classList.add("dropdown-item-checked");
-    }
-    onSortChange = (posted, newest) =>{
-        var data={
-            sortByOrder : newest ? "ASC" : "DESC",
-            sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
-            fromDate: null,
-            toDate: null,
-            status: 0
-        }
-        this.props.getSort(data);
-            var element = document.getElementsByClassName("dropdown-menu")[0];
-            element.classList.remove("show");
-            element.classList.add("hide");
-        this.setState({
-            newest: (newest !== null ? newest : this.state.newest),
-            posted: (posted !== null ? posted : this.state.posted),
-            isSortOpen: false
-        });
-    }
-    
-    
-    
+
     handleChangeServiceCategory=(selectedOption)=>{
         this.setState({ 
             ServiceCategoryId:selectedOption.label,
@@ -319,6 +202,33 @@ class VisitServiceList extends Component {
             ServiceAreas:serviceAreaObj
         })
     }
+
+    /* sorting */
+    toggleclass =(e) =>{
+        var element = document.getElementsByClassName("dropdown-menu")[0];
+        element.classList.add("show");
+        var element1 = document.getElementsByClassName("dropdown-item")[0];
+        element1.classList.add("dropdown-item-checked");
+    }
+    onSortChange = (posted, newest) =>{
+        var data={
+            sortByOrder : newest ? "ASC" : "DESC",
+            sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
+            fromDate: null,
+            toDate: null,
+            status: 0
+        }
+        this.props.getSort(data);
+            var element = document.getElementsByClassName("dropdown-menu")[0];
+            element.classList.remove("show");
+            element.classList.add("hide");
+        this.setState({
+            newest: (newest !== null ? newest : this.state.newest),
+            posted: (posted !== null ? posted : this.state.posted),
+            isSortOpen: false
+        });
+    }
+    
     render() {
 
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -329,23 +239,18 @@ class VisitServiceList extends Component {
                             <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ProfileImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
-                                    {serviceList.serviceRequestTypeDetails && serviceList.serviceRequestTypeDetails.map((serviceType) => {
-                                        return (
-                                            <span key={serviceType.serviceTypeId}>{serviceType.serviceTypeDescription}, </span>
-                                        )
-                                    })
-                                    }
+                                    <span>{serviceList.type}</span>
                                 </div>
                                 <div className='BlockImageDetailsActivity'>
                                     {serviceList.serviceCategoryDescription}
                                 </div>
                                 <div className='BlockImageDetailsDate'>
-                                    {serviceList.recurringPatternDescription} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
+                                    {serviceList.recurring} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
                                 </div>
                             </div>
                         </div>
                         <div className="BlockProfileContainer">
-                            <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
+                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="patientImage" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
@@ -356,9 +261,9 @@ class VisitServiceList extends Component {
                             </div>
                             <div class='BlockProfileDetailsStatus'>
                                 {
-                                    <a className={`${this.renderStatusClassName(serviceList.statusName)}`} to='/'>{
-                                        serviceList.statusName === VISIT_SERVICE_STATUS_NOT_HIRED ?
-                                            serviceList.matchPercentage : serviceList.statusName
+                                    <a className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`} to='/'>{
+                                        serviceList.serviceRequestStatus === VISIT_SERVICE_STATUS_NOT_HIRED ?
+                                            serviceList.matchPercentage : serviceList.serviceRequestStatus
                                     }</a>
                                 }
                             </div>

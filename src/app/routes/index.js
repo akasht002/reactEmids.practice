@@ -19,9 +19,12 @@ import {
   ResetPasswordSuccess,
   ResetPasswordConfirmation,
   Dashboard,
-  Welcome,  
   VisitHistory,
   VistSummary,
+  Welcome,
+  Payments,
+  PaymentSuccess,
+  PaymentFailure,
   TeleHealth,
   InvitationAlert
 } from '../screens';
@@ -60,6 +63,9 @@ export const Path = {
   dashboard:'/dashboard',  
   visitHistory: '/visitHistory',
   visitSummaryDetail: '/visitSummary',
+  payments:'/payments',
+  paymentsuccess:'/paymentsuccess',
+  paymentfailure:'/paymentfailure',
   teleHealth: '/teleHealth',
   telehealthConfirm: '/teleHealth/:id'
 };
@@ -91,6 +97,9 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
              <PrivateRoute path={Path.visitHistory} component={VisitHistory}/>            
             <PrivateRoute path={Path.visitSummaryDetail} component={VistSummary} />
+            <PrivateRoute path={Path.payments} component={Payments} />
+            <PrivateRoute path={Path.paymentsuccess} component={PaymentSuccess} />
+            <PrivateRoute path={Path.paymentfailure} component={PaymentFailure} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>
