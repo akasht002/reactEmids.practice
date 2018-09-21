@@ -23,7 +23,7 @@ export const getServiceOfferedDetails = data => {
   }
 }
 
-export function getServiceOffered () {
+export function getServiceOffered() {
   return dispatch => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
@@ -38,11 +38,31 @@ export function getServiceOffered () {
   }
 }
 
-export function addServiceOfferd (data) {
+export function addServiceOfferd(data) {
+  
+  let result = data.map((item) => {
+    return item.categoryId
+  });
+  
+  let categoryId = result.filter(function (item, i) {
+    return result.indexOf(item) === i;
+  })
+
+  let modelData = categoryId.map((category) =>{
+     return ({
+      "categoryId": category,
+      "serviceType": data.filter((obj) => {
+        if(obj.categoryId === category){
+          return delete obj.categoryId;
+        }
+      })
+     })
+  })
+
   return dispatch => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
-    Post(API.addServiceOffered + serviceProviderId + '/Offer', data)
+    Post(API.addServiceOffered + serviceProviderId + '/Offer', modelData)
       .then(resp => {
         dispatch(getServiceOffered())
         dispatch(editServiceOffered())
@@ -55,7 +75,7 @@ export function addServiceOfferd (data) {
   }
 }
 
-export function editServiceOffered (data) {
+export function editServiceOffered(data) {
   return dispatch => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
@@ -70,7 +90,7 @@ export function editServiceOffered (data) {
   }
 }
 
-export function toggleCollapseCategory (data) {
+export function toggleCollapseCategory(data) {
   return (dispatch, getState) => {
     let serviceOfferedDetails = getState().profileState.serviceOfferedState.serviceOfferedList;
     let serviceOfferedDetailsModified = serviceOfferedDetails.map((category) => {
@@ -86,7 +106,7 @@ export function toggleCollapseCategory (data) {
 }
 
 
-export function toggleCollapseDetails (data) {
+export function toggleCollapseDetails(data) {
   return (dispatch, getState) => {
     let serviceOfferedDetails = getState().profileState.serviceOfferedState.serviceOfferedDetails;
     let serviceOfferedDetailsModified = serviceOfferedDetails.map((category) => {

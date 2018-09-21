@@ -47,11 +47,7 @@ class ServiceOffered extends React.Component {
     }
 
     addServiceOfferd = () => {
-        const data = [
-            {
-                serviceType: this.state.serviceType
-            }
-        ]
+        const data =  this.state.serviceType
         this.props.addServiceOfferd(data);
         this.setState({
             isModalOpen: false,
@@ -95,7 +91,7 @@ class ServiceOffered extends React.Component {
                     handleClick={this.oncheckedServices}
                     name={this.props.serviceOfferedDetails}
                     type={'edit'}
-                    toggleCollapse={(category) => {this.props.toggleCollapseDetails(category)}}
+                    toggleCollapse={(category) => { this.props.toggleCollapseDetails(category) }}
                 />
                 :
                 ''
@@ -103,9 +99,9 @@ class ServiceOffered extends React.Component {
 
         {
             this.state.isModalOpen && this.state.isAdd ?
-                modalTitle = 'Add Skills and Experience'
+                modalTitle = 'Add Services Offered'
                 :
-                modalTitle = 'Edit Skills and Experience'
+                modalTitle = 'Edit Services Offered'
         }
 
         return (
@@ -125,7 +121,7 @@ class ServiceOffered extends React.Component {
                             <ServiceOfferedContent
                                 name={this.props.serviceOfferedList}
                                 type={'view'}
-                                toggleCollapse={(category) => {this.props.toggleCollapseCategory(category)}}
+                                toggleCollapse={(category) => { this.props.toggleCollapseCategory(category) }}
                             />
                         </div>
                         :

@@ -38,6 +38,17 @@ export function formattedDateChange(event) {
     }
 }
 
+export function checkDateFormatNumber(data) {
+    return /^[0-9-]+$/.test(data)
+}
+
+export function checkFormatDate(value){
+    return value.length === 10
+      && checkDate(value)
+      && new Date(value)
+      && moment(new Date()).isSameOrBefore(value);
+}
+
 export function formateStateDate(date) {
     return date ? moment(date) : null;
 }
@@ -51,7 +62,7 @@ export function formateDate(date, format) {
 }
 
 export function dateDifference(startDate, endDate) {
-    return moment(endDate).diff(moment(startDate), 'days') + 1;
+    return moment(endDate, 'MMM DD').diff(moment(startDate, 'MMM DD'), 'days') + 1;
 }
 
 export function newDate() {
