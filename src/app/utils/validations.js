@@ -152,3 +152,8 @@ export const getFields = (input, field)=> {
 export function checkhourlyRate(data) {
     return /^\d*\.?\d{0,2}$/.test(data);
 }
+
+
+export const serviceTypeImages = {
+    "Bathing":"../../assets/images/Bathing_Purple.svg"
+}
