@@ -7,7 +7,8 @@ export const ProfileHeaderMenu = [
     {
         name: "messages",
         status: true,
-        id:3
+        id:3,
+        link:'messagesummary'
     },
     {
         name: "notification",

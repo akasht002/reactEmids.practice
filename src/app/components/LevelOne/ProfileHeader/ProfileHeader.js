@@ -29,7 +29,7 @@ class ProfileHeader extends Component {
         });
     }
 
-    handleNavigation = (event) =>{
+    handleNavigation = (event) => {
         switch (event.target.title) {
             case "logout":
                 this.props.onLogout();
@@ -42,18 +42,15 @@ class ProfileHeader extends Component {
     render() {
         const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
-            let Separator = "";
+            let separator = "";
             if (menu.status) {
                 let clsName = "navIcon icon" + makeProperCase(menuName);
                 if (menuName === "notification") {
-                    Separator = "NavIconSeparator"
+                    separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
-                        <NavLink className={clsName}
-                            onClick={() => {this.props.onClick(menu.link)}}
-                            key={menu.id}
-                            />
+                    <NavItem className={menuName + "Widget navIconWidget " + separator} key={menu.id}>
+                        <NavLink className={clsName} key={menu.id} onClick={() => { this.props.onClick(menu.link) }} />
                     </NavItem>
                 )
             }
@@ -88,6 +85,6 @@ function mapDispatchToProps(dispatch) {
     return {
         onLogout: () => dispatch(onLogout())
     }
-  }
-  
+}
+
 export default connect(null, mapDispatchToProps)(ProfileHeader);

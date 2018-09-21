@@ -24,7 +24,9 @@ import {
   PaymentSuccess,
   PaymentFailure,
   TeleHealth,
-  InvitationAlert
+  InvitationAlert,
+  ConversationSummary,
+  Conversation
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -58,12 +60,15 @@ export const Path = {
   resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
-  dashboard:'/dashboard',
-  payments:'/payments',
-  paymentsuccess:'/paymentsuccess',
-  paymentfailure:'/paymentfailure',
+  dashboard: '/dashboard',
+  payments: '/payments',
+  paymentsuccess: '/paymentsuccess',
+  paymentfailure: '/paymentfailure',
   teleHealth: '/teleHealth',
-  telehealthConfirm: '/teleHealth/:id'
+  telehealthConfirm: '/teleHealth/:id',
+  messageSummary: '/messagesummary',
+  conversations: '/conversation/:id',
+  conversation: '/conversation/'
 };
 
 class AppStackRoot extends Component {
@@ -77,12 +82,12 @@ class AppStackRoot extends Component {
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-            <Route path={Path.loginCallBack} component={LoginCallBack}/>
+            <Route path={Path.loginCallBack} component={LoginCallBack} />
             <Route path={Path.forgetPassword} component={ForgetPassword} />
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
-            
+
             <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
             <PrivateRoute path={Path.performTasks} component={PerformTasks} />
@@ -90,7 +95,9 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.summary} component={Summary} />
             <PrivateRoute path={Path.telehealthConfirm} component={InvitationAlert} />
             <PrivateRoute path={Path.teleHealth} component={TeleHealth} />
-            <PrivateRoute path={Path.profile} component={Profile} />          
+            <PrivateRoute path={Path.conversations} component={Conversation} />
+            <PrivateRoute path={Path.messageSummary} component={ConversationSummary} />
+            <PrivateRoute path={Path.profile} component={Profile} />
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
             <PrivateRoute path={Path.payments} component={Payments} />
             <PrivateRoute path={Path.paymentsuccess} component={PaymentSuccess} />

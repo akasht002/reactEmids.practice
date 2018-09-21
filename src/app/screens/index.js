@@ -18,6 +18,8 @@ import PaymentFailure from './VisitSelection/VisitServiceProcessing/Payments/pay
 import Dashboard from './Dashboard';
 import TeleHealth from './TeleHealth';
 import InvitationAlert from './TeleHealth/InvitationAlert';
+import Conversation from './AsyncMessage/Conversation';
+import ConversationSummary from './AsyncMessage/ConversationSummary';
 
 import {    
     ForgetPassword,
@@ -50,5 +52,7 @@ export {
     PaymentSuccess,
     PaymentFailure,
     TeleHealth,
-    InvitationAlert
+    InvitationAlert,
+	Conversation,
+	ConversationSummary
 };
