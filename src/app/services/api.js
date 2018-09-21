@@ -89,7 +89,8 @@ export const API = {
     getParticipantByConferenceId:'VideoConferencing/GetParticipantByConferenceId/',
     getAllParticipants: 'VideoConferencing/GetAllParticipants/',
     addParticipants: 'VideoConferencing/AddParticipant',
-    getParticipantsByContext: 'conversation/ParticipantByContext/'
+    getParticipantsByContext: 'conversation/ParticipantByContext/',
+    endConference: 'VideoConferencing/EndConference/'
 }
 
 
