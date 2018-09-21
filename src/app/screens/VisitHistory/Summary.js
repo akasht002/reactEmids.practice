@@ -292,7 +292,7 @@ class VistSummary extends React.Component {
     let modalTitle = 'Feedback'
     let modalType = ''
     let feedbackContent = []
-    let progress_bar  = summaryDetail.totalTask !== 0 ?(this.props.taskCompleted/this.props.totaltask) * 100:0
+    let progress_bar  = summaryDetail.totalTask !== 0 && summaryDetail.totalTask !==0 ?(this.props.taskCompleted/this.props.totaltask) * 100:0
     return (
       <React.Fragment>
         <form className='ServiceContent'>
