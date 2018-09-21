@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 import { ProfileModalPopup, ModalPopup } from "../../../components";
 import ServiceOfferedContent from '../ServiceOffered/serviceOfferedContent'
 import { getServiceOffered, addServiceOfferd, editServiceOffered, toggleCollapseCategory, toggleCollapseDetails } from '../../../redux/profile/ServiceOffered/actions';
@@ -16,9 +15,7 @@ class ServiceOffered extends React.Component {
             disabledSaveBtn: true,
             isAdd: false,
             serviceType: [],
-            categoryId: ''
         };
-        this.offeredSelected = [];
     };
 
     componentDidMount() {
@@ -43,41 +40,19 @@ class ServiceOffered extends React.Component {
     }
 
     oncheckedServices = (serviceType, category) => {
-        // const data = serviceType.map((item,i) => {
-        //     return {categoryId:item.categoryId,serviceType:delete item.categoryId}
-
-        // })
         this.setState({
-            serviceType: _.omit(serviceType, ['categoryId']),
-            //serviceType: serviceType,
-            categoryId: category,
+            serviceType: serviceType,
             disabledSaveBtn: false,
         })
     }
 
-    // addServiceOfferd = () => {
-    //     const data = [
-    //         {
-    //             categoryId: this.state.categoryId.serviceCategoryId,
-    //             serviceType: this.state.serviceType
-    //         }
-    //     ]
-    //     this.offeredSelected.push(data)
-    //     console.log(this.offeredSelected)
-    //     //this.props.addServiceOfferd(this.offeredSelected);
-    //     this.setState({
-    //         isModalOpen: false,
-    //         disabledSaveBtn: true
-    //     });
-    // }
-
     addServiceOfferd = () => {
         const data = [
             {
+                categoryId: this.state.serviceType.serviceCategoryId,
                 serviceType: this.state.serviceType
             }
         ]
-        console.log(data)
         this.props.addServiceOfferd(data);
         this.setState({
             isModalOpen: false,
@@ -129,9 +104,9 @@ class ServiceOffered extends React.Component {
 
         {
             this.state.isModalOpen && this.state.isAdd ?
-                modalTitle = 'Add Skills and Experience'
+                modalTitle = 'Add Services Offered'
                 :
-                modalTitle = 'Edit Skills and Experience'
+                modalTitle = 'Edit Services Offered'
         }
 
         return (
