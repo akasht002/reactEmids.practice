@@ -47,12 +47,7 @@ class ServiceOffered extends React.Component {
     }
 
     addServiceOfferd = () => {
-        const data = [
-            {
-                categoryId: this.state.serviceType.serviceCategoryId,
-                serviceType: this.state.serviceType
-            }
-        ]
+        const data =  this.state.serviceType
         this.props.addServiceOfferd(data);
         this.setState({
             isModalOpen: false,
