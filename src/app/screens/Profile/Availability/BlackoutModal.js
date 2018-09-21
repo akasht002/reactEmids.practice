@@ -4,7 +4,9 @@ import { ModalPopup } from "../../../components";
 import { TextArea } from "../../../components";
 import { Calendar } from "../../../components";
 import { compare } from "../../../utils/comparerUtility";
-import { formattedDateMoment, newDate, newDateValue } from '../../../utils/validations';
+import { changeDateFormat, formatDate } from '../../../utils/dateUtility';
+import { DATE_FORMAT } from '../../../constants/constants';
+import { formattedDateMoment, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDate } from '../../../utils/validations';
 
 class BlackoutModal extends Component {
   constructor(props) {
@@ -47,6 +49,27 @@ class BlackoutModal extends Component {
       }));
      }
   }
+
+dateChangedRaw = (dateType, event) => {
+    if (event.target.value && (!checkDateFormatNumber(event.target.value))) {
+        event.preventDefault();
+    } else {
+     let fromDateVal = changeDateFormat(event.target.value);
+     let checkValue = checkFormatDate(fromDateVal);
+     const formattedDate = fromDateVal ? formatDate(fromDateVal, DATE_FORMAT) : null;
+     if (dateType === 'fromDate') {
+          this.toMinDate = newDateValue(fromDateVal);
+          if (checkValue) {
+              this.setState({ blackoutData: { ...this.state.blackoutData, fromDate: formattedDate } });
+          }
+        } else {
+          this.fromMaxDate = newDateValue(fromDateVal);
+          if (checkValue) {
+              this.setState({ blackoutData: { ...this.state.blackoutData, toDate: formattedDate } });
+          }
+     }
+  }
+}
 
   remarksChange = e => {
     let value = e.target.value;
@@ -141,9 +164,10 @@ class BlackoutModal extends Component {
               <div className="row">
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
-                    dateFormat="LL"
-                    placeholder="MM DD, YYYY"
+                    label="From Date"
+                    startDate={fromDate && formateStateDate(fromDate)}
                     onDateChange={this.dateChanged.bind(this, 'fromDate')}
+                    onDateChangeRaw={this.dateChangedRaw.bind(this, 'fromDate')}
                     value={fromDate}
                     disabled={this.props.disabledStartDate}
                     minDate={this.fromMinDate}
@@ -155,9 +179,11 @@ class BlackoutModal extends Component {
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
+                    label="To Date"
                     dateFormat="LL"
-                    placeholder="MM DD, YYYY"
+                    startDate={toDate && formateStateDate(toDate)}
                     onDateChange={this.dateChanged.bind(this, 'toDate')}
+                    onDateChangeRaw={this.dateChangedRaw.bind(this, 'toDate')}
                     value={toDate}
                     minDate={this.toMinDate}
                     className={
