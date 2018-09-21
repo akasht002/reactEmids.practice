@@ -30,8 +30,6 @@ class VisitHistory extends Component {
 
   componentDidMount () {
     this.props.getVisitServiceLists()
-    // this.props.getAllServiceProviders()
-    // this.props.getServiceCategories()
   }
 
   componentWillReceiveProps (nextProps) {}
@@ -45,7 +43,6 @@ class VisitHistory extends Component {
   toggleFilter () {
     this.setState({
       filterOpen: !this.state.filterOpen
-      /* isOpen: !this.state.isOpen */
     })
   }
 
@@ -92,12 +89,7 @@ class VisitHistory extends Component {
                   </Select>
                 </SelectField>
               </ThemeProvider>
-              {/* <span
-                className='primaryColor'
-                onClick={this.toggleFilter.bind(this)}
-              >
-                Filters
-              </span> */}
+             
             </div>
           </div>
           <Scrollbars
@@ -111,13 +103,7 @@ class VisitHistory extends Component {
               handleClicks={this.handleClick}
             />
             <div className='cardBottom' />
-          </Scrollbars>
-          {/* <VisitFilter
-            serviceProviders={this.props.serviceProviders}
-            serviceCategories={this.props.serviceCategories}
-            isOpen={this.state.filterOpen}
-            toggle={this.toggleFilter.bind(this)}
-          /> */}
+          </Scrollbars>         
         </div>
       </AsideScreenCover>
     )

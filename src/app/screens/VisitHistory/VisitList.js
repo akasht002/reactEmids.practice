@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { getFields } from '../../utils/validations'
 import Moment from 'react-moment';
 
@@ -54,7 +53,6 @@ export const VisitList = (props) => {
         </div>
         <div className='visitListContainerRight'>
         <i className='visitListNavigation'onClick={() => props.handleClicks(vistList.serviceRequestVisitId)}/>
-          {/* <Link className='visitListNavigation' to={'/visitSummary/'+vistList.serviceRequestVisitId} /> */}
         </div>
       </div>
       

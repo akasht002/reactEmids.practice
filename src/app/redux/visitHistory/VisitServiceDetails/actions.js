@@ -12,7 +12,7 @@ export const vistServiceHistoryDetails = {
     updateVisitHistoryFilter: 'updateVisitHistoryFilter/visitHistory',
     getServiceCategoriesSuccess: "getServiceCategoriesSuccess/VisitHistory/Filter",
     getSubmittedResponse: "getSubmittedResponse/visitHistory",
-    getAllServiceProviders: "getServiceProviders",    
+    getAllServiceProviders: "getServiceProviders/visitHistory",    
     getServiceRequestId:'getServiceRequestId/visitHistory',
 
 };

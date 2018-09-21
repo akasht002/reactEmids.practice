@@ -35,7 +35,6 @@ class VistSummary extends React.Component {
 
   componentDidMount () {
     this.props.getQuestionsList()
-    // this.props.getVisitFeedBack(this.props.ServiceRequestId)
     console.log(this.props.ServiceRequestId)
   }
 
@@ -121,12 +120,7 @@ class VistSummary extends React.Component {
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal
     })
   }
-
-  // onClose = () => {
-  //   this.setState({
-  //     EditPersonalDetailModal: !this.state.EditPersonalDetailModal
-  //   })
-  // }
+ 
 
   handleSelected = (answer, id) => {
     let answers = { feedbackQuestionnaireId: id, answerName: answer, id: 0 }
