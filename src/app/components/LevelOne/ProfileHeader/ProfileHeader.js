@@ -13,7 +13,6 @@ import { SearchInput } from "../../../components";
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { makeProperCase } from '../../../utils/stringHelper';
-import { navigateProfileHeader } from '../../../redux/appNavigation/actions';
 
 class ProfileHeader extends Component {
     constructor(props) {
@@ -50,13 +49,6 @@ class ProfileHeader extends Component {
                     separator = "NavIconSeparator"
                 }
                 return (
-                    /*<NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
-                        <NavLink className={clsName}
-                            onClick={() => {this.props.onClick(menu.link)}}
-                            key={menu.id}
-                            />
-                    </NavItem>*/
-                    // <a className={clsName} onClick={() => this.props.navigateProfileHeader(menu.link)}/>
                     <NavItem className={menuName + "Widget navIconWidget " + separator} key={menu.id}>
                         <NavLink className={clsName} key={menu.id} onClick={() => { this.props.onClick(menu.link) }} />
                     </NavItem>
@@ -91,8 +83,7 @@ class ProfileHeader extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onLogout: () => dispatch(onLogout()),
-        navigateProfileHeader: (url) => dispatch(navigateProfileHeader(url))
+        onLogout: () => dispatch(onLogout())
     }
 }
 
