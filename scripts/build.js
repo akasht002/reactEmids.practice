@@ -25,9 +25,9 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = "https://chqa-sp-api.coreoflowsandbox.com/api/";
   process.env.REACT_APP_AUTH_URL = 'https://chqa-oauth-api.coreoflowsandbox.com/';
   process.env.REACT_APP_SR_URL = "https://chqa-ui.coreoflowsandbox.com/api/";
-  process.env.REACT_APP_UI_URL = 'https://chqa-sp-ui.coreoflowsandbox.com/#/';
+  process.env.REACT_APP_UI_URL = '"https://chqa-vp-api.coreoflowsandbox.com/#/';
   process.env.REACT_APP_MSG_URL = "https://chqa-vp-ui.coreoflowsandbox.com/api/";
-  process.env.REACT_APP_ES_URL = 'https://chqa-vp-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_ES_URL = 'https://chqa-ui.coreoflowsandbox.com/api/';
   process.env.REACT_APP_TP_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/api/';
 } else if (argv.includes('--dev')) {
   process.env.REACT_APP_API_URL = 'http://ch-api.coreoflowsandbox.com:9008/api/';
