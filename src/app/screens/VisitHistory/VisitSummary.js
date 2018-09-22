@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { Scrollbars } from '../../components'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
+import {Path } from '../../routes'
 import {
   getVisitServiceHistoryByIdDetail
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
@@ -34,12 +35,14 @@ class VisitSummary extends React.Component {
   }
 
   componentWillMount () {
-    this.props.getVisitServiceHistoryByIdDetail(this.props.ServiceRequestId)
+    this.props.ServiceRequestId
+      ? this.props.getVisitServiceHistoryByIdDetail(this.props.ServiceRequestId)
+      : this.props.history.push(Path.visitHistory)
   }
 
   componentDidMount () {}
 
-  render () {    
+  render () {
     let visitSummary = this.props.Visits.VisitServiceDetails
 
     console.log(visitSummary)
@@ -107,7 +110,7 @@ class VisitSummary extends React.Component {
               </div>
             </div>
             <div className='cardBottom' />
-          </Scrollbars>         
+          </Scrollbars>
         </div>
       </AsideScreenCover>
     )

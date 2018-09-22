@@ -104,7 +104,9 @@ export const API = {
     getParticipantsByContext: 'conversation/ParticipantByContext/',
     getDashboardMessageCount: 'Conversation/Dashboard/ConversationCount/',
     getConversationImage: 'Conversation/Message/',
-    canCreateMessage: 'Conversation/CanServiceProviderCreate/'
+    canCreateMessage: 'Conversation/CanServiceProviderCreate/',
+    putHireServiceRequestByServiceProvider:'ServiceRequest/Hire/',
+    cancelServiceRequestByServiceProvider:'ServiceRequest/Cancel'
 }
 
 

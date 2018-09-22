@@ -28,7 +28,7 @@ export const VisitList = props => {
                       alt={'NO_IMAGE'}
                       key={index}
                       className='visitListImage'
-                      src={ vistList.serviceTypes && require(serviceTypeImages.Bathing)}
+                      src={ vistList.serviceTypes && require('../../assets/images/Bathing_Purple.svg')}
                     />
                   </div>
                   <div className='visitListNameContainer'>
