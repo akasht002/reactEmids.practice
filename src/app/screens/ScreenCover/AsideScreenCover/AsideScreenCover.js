@@ -11,6 +11,7 @@ import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actio
 import { ModalUserAgreement } from '../../../components';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
+import Help from '../../../assets/HelpDoc/Help.pdf';
 import { getAboutUsContent } from '../../../redux/aboutUs/actions';
 import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
@@ -45,8 +46,10 @@ class AsideScreenCover extends React.Component {
     navigateProfileHeader = (link) => {
         if (link === 'messagesummary') {
             this.props.navigateProfileHeader(link);
+        } else if (link === "contact") {
+            this.helpDocEl.click();
         } else {
-            this.setState({ selectedLink: link })
+            this.setState({selectedLink: link})
         }
     };
 
@@ -81,7 +84,8 @@ class AsideScreenCover extends React.Component {
                     <AsideMenu menuData={MenuData} />
                 </div>
                 <div className="container-fluid ProfileRightWidget">
-                    <ProfileHeader toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)} />
+                  <ProfileHeader toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
+                    <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
                     <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '')}>
                         {this.props.children}

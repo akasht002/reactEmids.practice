@@ -3,7 +3,8 @@ export const ProfileHeaderMenu = [
         name: "about",
         link: "aboutUs",
         status: true,
-        id:1
+        id:1,
+        link:'contact'
     },
     {
         name: "contact",
