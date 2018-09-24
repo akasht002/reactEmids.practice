@@ -1,4 +1,4 @@
-import { AboutUsGet } from '../../services/http';
+import { ThirdPartyGet } from '../../services/http';
 import { API } from '../../services/api';
 
 export const AboutUs = {
@@ -14,7 +14,7 @@ export const getAboutUsContentSuccess = (data) => {
 
 export function getAboutUsContent() { 
     return (dispatch, getState) => {
-        AboutUsGet(API.getAboutUsContent )          
+        ThirdPartyGet(API.getAboutUsContent )          
           .then(resp => {
             dispatch(getAboutUsContentSuccess(resp.data[0]));
           })
