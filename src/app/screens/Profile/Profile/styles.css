@@ -334,6 +334,10 @@ i.SPIconEditPersonalDetails{
     font-weight: 600;
 }
 
+.SPAddressContent div.d-flex span{
+    width: calc(100% - 60px);
+}
+
 .AddressContentLabel{
     font-weight: 600;
     width: 56px;
