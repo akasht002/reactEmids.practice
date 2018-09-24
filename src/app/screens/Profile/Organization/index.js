@@ -681,7 +681,7 @@ class Organization extends React.PureComponent {
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: false
+     disabledSaveBtn: !this.state.disabledSaveBtn
     })
     let old_data = {
       description: this.props.personalDetail.description,

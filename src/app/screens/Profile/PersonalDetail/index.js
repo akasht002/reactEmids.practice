@@ -43,7 +43,8 @@ class PersonalDetail extends React.PureComponent {
         y: 10,
         width: 80,
         height: 80
-      }      
+      },
+       disabledSaveBtn: true     
     }
   }
 
