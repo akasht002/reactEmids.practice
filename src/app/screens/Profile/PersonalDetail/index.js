@@ -43,8 +43,7 @@ class PersonalDetail extends React.PureComponent {
         y: 10,
         width: 80,
         height: 80
-      },
-       disabledSaveBtn: true     
+      }     
     }
   }
 
@@ -877,7 +876,7 @@ class PersonalDetail extends React.PureComponent {
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: false
+      disabledSaveBtn: !this.state.disabledSaveBtn
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,

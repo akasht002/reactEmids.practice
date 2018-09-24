@@ -483,7 +483,7 @@ class Organization extends React.PureComponent {
                   } else {
                     this.setState({
                       organizationNameInvaild: false,
-                      disabledSaveBtn: false
+                     disabledSaveBtn: false
                     })
                   }
                 }}
