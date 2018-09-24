@@ -1670,6 +1670,11 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
     color: #ffffff;
 }
 
+.height-auto
+{
+    height: 100% !important;
+}
+
 
 
 /*** end of button styles ***/
