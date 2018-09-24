@@ -6,6 +6,7 @@ export const authURL = process.env.REACT_APP_AUTH_URL
 export const serviceRequestURL = process.env.REACT_APP_SR_URL
 export const messageURL = process.env.REACT_APP_MSG_URL
 export const elasticSearchURL = process.env.REACT_APP_ES_URL;
+export const thirdPartyURL = process.env.REACT_APP_TP_URL;
 export const asyncURL = process.env.REACT_APP_MSG_URL;
 
 export const AuthLogin = (url, data) => {
@@ -216,6 +217,27 @@ export const getUserInfo = () => {
   return userState && userState.userData && userState.userData.userInfo;
 }
 
+export const ThirdPartyGet = url => {
+  return axios
+    .get(thirdPartyURL + url, getHeader())
+    .then(resp => {
+      return resp
+    })
+    .catch(error => {
+      handleError(error)
+    })
+}
+
+export const ThirdPartyPost = (url, data) => {
+  return axios
+    .post(thirdPartyURL + url, data, getHeader())
+    .then(resp => {
+      return resp
+    })
+    .catch(error => {
+      handleError(error)
+    })
+}
 export const elasticSearchGet = (url) => {
   return axios.get(elasticSearchURL + url, getHeader()).then((resp) => {
       return resp;

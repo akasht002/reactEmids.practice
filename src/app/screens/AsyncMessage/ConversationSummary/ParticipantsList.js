@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Checkbox from '../Components/checkbox';
 import { Input } from '../../../components';
 import { getLinkedParticipantsByPatients } from '../../../redux/asyncMessages/actions';
+import { USERTYPES } from '../../../constants/constants';
 
 class ParticipantsList extends Component {
 
@@ -14,7 +15,7 @@ class ParticipantsList extends Component {
                 patientId: this.props.context,
                 conversationId: this.props.conversationId,
                 searchText: this.props.searchText,
-                participantType: 'S',
+                participantType: USERTYPES.SERVICE_PROVIDER,
                 userId: userId
             };
             this.props.getLinkedParticipantsByPatients(data);

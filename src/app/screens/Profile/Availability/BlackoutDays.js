@@ -13,6 +13,7 @@ import {
 import "./AvailabilityStyles.css";
 import { dateDifference, formattedDateMoment } from '../../../utils/validations';
 
+
 class BlackoutDays extends Component {
   constructor(props) {
     super(props);
@@ -25,8 +26,7 @@ class BlackoutDays extends Component {
     };
   }
 
-  toggleBlackout(action, data, disabledEdit, e) {
-    console.log('toggleBlackout....', data);
+  toggleBlackout = (action, data, disabledEdit, e) => {
     if (disabledEdit === "disabled") {
       e.stopPropagation();
     } else {
@@ -180,7 +180,7 @@ class BlackoutDays extends Component {
         <div className={"SPAvailBlackOutWidget"}>
           <div className="col-md-12 card CardWidget SPBlackoutDays">
             <div className={"SPCardTitle d-flex"}>
-              <h4 className={"primaryColor"}>Blackout Days</h4>
+            { !this.props.showBalckout && <h4 className={"primaryColor"}>Blackout Days</h4>} 
               {
                 !this.props.showBalckout && (
                   <i

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
 import autosize from "autosize";
 import { connect } from 'react-redux';
@@ -10,6 +9,7 @@ import {
     clearConversationImageUrl
 } from '../../../redux/asyncMessages/actions';
 import AsyncImgModalTemplate from "../Modals/ImageModal";
+import { USERTYPES, ImageFormats } from '../../../constants/constants';
 
 class MessageContent extends Component {
 
@@ -46,10 +46,10 @@ class MessageContent extends Component {
         });
         let picture = e.target.files[0];
         e.target.value = null;
-        if (picture.size <= 2097152 && (picture.type === 'image/jpg' ||
-            picture.type === 'image/png' ||
-            picture.type === 'image/jpeg' ||
-            picture.type === 'image/gif')) {
+        if (picture.size <= 2097152 && (picture.type === ImageFormats.JPG ||
+            picture.type === ImageFormats.PNG ||
+            picture.type === ImageFormats.JPEG ||
+            picture.type === ImageFormats.GIF)) {
             let reader = new FileReader();
             reader.readAsDataURL(picture);
             setTimeout(() => {
@@ -99,15 +99,9 @@ class MessageContent extends Component {
     };
 
     static getDerivedStateFromProps(props, state) {
-        if (props.messageUrl && props.messageUrl.length > 0) {
-            return {
-                asyncImgModal: true
-            };
-        } else {
-            return {
-                asyncImgModal: false
-            };
-        }
+        return {
+            asyncImgModal: props.messageUrl && props.messageUrl.length > 0 ? true : false
+        };
     };
 
 
@@ -144,7 +138,7 @@ class MessageContent extends Component {
                 let imageClass = "";
                 let ordering = "";
                 let userId = this.props.loggedInUser.serviceProviderId;
-                if (conversation.createdBy === userId && conversation.createdByType === 'S') {
+                if (conversation.createdBy === userId && conversation.createdByType === USERTYPES.SERVICE_PROVIDER) {
                     messageClass = "ml-auto yourChat";
                     ordering = "order-12"
                 } else {

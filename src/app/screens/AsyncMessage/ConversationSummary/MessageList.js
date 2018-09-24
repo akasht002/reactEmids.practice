@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TimeAgo from 'timeago-react';
 import './MessageCard.css';
 import { MessageTypes } from '../../../data/AsyncMessage';
+import { formatName } from '../../../utils/formatName';
 
 class MessageList extends Component {
 
@@ -53,7 +54,7 @@ class MessageList extends Component {
         let header = "";
         if (participants && participants.length > 0) {
             participants.map(participant => {
-                header += participant.firstName.charAt(0).toUpperCase() + participant.firstName.slice(1) + ', ';
+                header += formatName(participant.firstName)
             });
             header = header.slice(0, -2);
         }
@@ -79,13 +80,7 @@ class MessageList extends Component {
                         }
                     });
                 };
-
-                if (!msgThread.title) {
-                    msgHeader = this.getPartcipitantHeader(msgThread.participantList);
-
-                } else {
-                    msgHeader = msgThread.title;
-                };
+                !msgThread.title ? msgHeader = this.getPartcipitantHeader(msgThread.participantList) : msgHeader = msgThread.title;
                 return (
                     <li key={index} className="list-group-item">
                         <table className={"table " + msgClass} onClick={this.props.gotoConversations.bind(this, msgThread)}>

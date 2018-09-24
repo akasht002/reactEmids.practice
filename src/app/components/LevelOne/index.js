@@ -22,6 +22,7 @@ import {StopWatch} from './StopWatch';
 import {ModalTemplate} from './ModalTemplate';
 import {MultiSelectAvatar, GravatarOption, GravatarValue} from './AvatarMultiSelect';
 import {Gravatar} from './Gravatar';
+import UserAvatarMultiSelect from './UserAvatarMultiSelect';
 
 export {
     Calendar,
@@ -49,5 +50,6 @@ export {
     MultiSelectAvatar, 
     GravatarOption, 
     GravatarValue,
-    Gravatar
+    Gravatar,
+    UserAvatarMultiSelect
 };

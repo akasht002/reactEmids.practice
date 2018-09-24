@@ -3,7 +3,7 @@ import isRetina from 'is-retina'
 import createClass from 'create-react-class';
 import PropTypes from 'prop-types'
 
-const Gravatar = createClass({
+const UserSelectBoxGravatar = createClass({
     propTypes: {
         base: PropTypes.string,
         value: PropTypes.string,
@@ -75,4 +75,4 @@ const Gravatar = createClass({
     }
 });
 
-export default Gravatar;
+export default UserSelectBoxGravatar;

@@ -8,6 +8,7 @@ import {
     AsyncPut,
     AsyncPutWithUrl
 } from '../../services/http';
+import { USERTYPES } from '../../constants/constants';
 import { startLoading, endLoading } from '../loading/actions';
 
 
@@ -63,7 +64,7 @@ export function onFetchConversationSummary() {
     return (dispatch) => {
         dispatch(startLoading());
         let USER_ID = getUserInfo().serviceProviderId;
-        let USER_TYPE = 'S';
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversationSummary + USER_ID + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(setConversationSummary(resp.data));
@@ -82,7 +83,7 @@ export function onFetchConversation(id) {
         let state = getState();
         let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
         let USER_ID = getUserInfo().serviceProviderId;
-        let USER_TYPE = 'S';
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversation + conversationId + '/' + USER_ID + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(setConversationData(resp.data));
@@ -204,7 +205,7 @@ export function getUnreadMessageCounts() {
     return (dispatch) => {
         dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
-        let USER_TYPE = 'S';
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getUnreadCount + USER_ID + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(onUnreadCountSuccess(resp.data))
@@ -221,7 +222,7 @@ export function updateReadStatus(data) {
     return (dispatch) => {
         dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
-        let USER_TYPE = 'S';
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncPutWithUrl(API.updateReadStatus + USER_ID + '/' + data.conversationId
             + '/' + USER_TYPE)
             .then(resp => {
@@ -250,7 +251,7 @@ export function leaveConversation(data) {
     return (dispatch) => {
         dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
-        let USER_TYPE = 'S';
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncPutWithUrl(API.leaveConversation 
             + USER_ID + '/' 
             + data.conversationId + '/'
