@@ -958,7 +958,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 512px;
+        height: 326px;
     }
 
     .bottomProfile.ServiceProvider .innerWidget:first-child, .ProfileContainer.topProfile {

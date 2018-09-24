@@ -81,7 +81,7 @@ class AsideScreenCover extends React.Component {
                             <Link className='BrandLink' to={Path.profile}> <p> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''} </p></Link>
                         </div>
                     </div>
-                    <AsideMenu menuData={MenuData} />
+                    <AsideMenu menuData={MenuData} url={this.props}/>
                 </div>
                 <div className="container-fluid ProfileRightWidget">
                   <ProfileHeader toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>

@@ -661,6 +661,7 @@ li div.dropdown-menu{
 
 a.ProfileCardHeaderLink:hover{
     text-decoration: none;
+    color: #7a329f;
 }
 
 .ProfileCard {
@@ -700,6 +701,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileCardBody {
     padding: 20px 0 0 0;
+    transform: translateY(2%);
 }
 
 .ProfileCardBody > div {
@@ -1048,7 +1050,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 512px;
+        height: 326px;
     }
 
     .bottomProfile.ServiceProvider .innerWidget:first-child, .ProfileContainer.topProfile {
@@ -1354,6 +1356,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .ProfileServicesVisitList {
         padding: 15px 0;
+      
     }
 
     .ProfileCard {
@@ -1696,6 +1699,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         display: -moz-flex;
         justify-content: center;
     }
+
 
     div.ServiceTypesSlider.Summary {
         flex-direction: inherit;
