@@ -17,7 +17,8 @@ class AsideScreenCover extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedValue: { label: 'Brett Smith', value: '2' }
+      selectedValue: { label: 'Brett Smith', value: '2' },
+      a: ''
     }
   }
 
@@ -28,6 +29,7 @@ class AsideScreenCover extends React.Component {
   }
 
   componentDidMount () {
+    this.setState({a:this.props.match.params})
     this.props.getProfilePercentage()
     this.props.getImage()
     this.props.getUserInfo();
@@ -73,7 +75,7 @@ class AsideScreenCover extends React.Component {
                             <Link className='BrandLink' to={Path.profile}> <p> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''} </p></Link>
                         </div>
                     </div>
-                    <AsideMenu menuData={MenuData} />
+                    <AsideMenu menuData={MenuData} url={this.props}/>
                 </div>
                 <div className="container-fluid ProfileRightWidget">
 					<ProfileHeader toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
