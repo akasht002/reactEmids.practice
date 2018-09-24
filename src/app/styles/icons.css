@@ -89,6 +89,10 @@
     background-image: url("../assets/images/call.png");
 }
 
+.iconAbout:before{
+    background-image: url("../assets/images/AboutIcon.png");    
+}
+
 .searchInputIcon{
 }
 

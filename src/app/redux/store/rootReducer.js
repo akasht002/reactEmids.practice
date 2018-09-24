@@ -14,6 +14,7 @@ import { visitHistoryState } from '../visitHistory/reducer'
 import { DashboardState } from '../dashboard/reducer';
 import asyncMessageState from '../asyncMessages/reducer';
 import telehealthState from '../telehealth/reducer';
+import aboutUsState from '../aboutUs/reducer';
 
 export default combineReducers({
     authState,
@@ -30,5 +31,6 @@ export default combineReducers({
     visitHistoryState,
     dashboardState:DashboardState,
     telehealthState,
-	asyncMessageState
+    asyncMessageState,
+    aboutUsState
 });

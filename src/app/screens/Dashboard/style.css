@@ -6,7 +6,7 @@ body {
 }
 
 .navbar-brand {
-    display: none !important;
+    /* display: none !important; */
 }
 
 section .ProfileRightWidget {
