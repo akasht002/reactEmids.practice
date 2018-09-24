@@ -43,7 +43,7 @@ class PersonalDetail extends React.PureComponent {
         y: 10,
         width: 80,
         height: 80
-      }      
+      }     
     }
   }
 
@@ -442,21 +442,21 @@ class PersonalDetail extends React.PureComponent {
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
-              <span>
+              <span className='AddressContentText'>
                 {this.props.personalDetail && this.streetAddress}
               </span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>City</span>
-              <span>{this.props.personalDetail && this.city}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.city}</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>State</span>
-              <span>{this.props.personalDetail && this.states}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.states}</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>ZIP</span>
-              <span>{this.props.personalDetail && this.zipCode}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.zipCode}</span>
             </div>
           </div>
           <div className={'SPAddressContent'}>
@@ -876,7 +876,7 @@ class PersonalDetail extends React.PureComponent {
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: false
+      disabledSaveBtn: !this.state.disabledSaveBtn
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,
