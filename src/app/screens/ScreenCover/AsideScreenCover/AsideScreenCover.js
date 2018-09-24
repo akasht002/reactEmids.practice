@@ -29,7 +29,6 @@ class AsideScreenCover extends React.Component {
   }
 
   componentDidMount () {
-    this.setState({a:this.props.match.params})
     this.props.getProfilePercentage()
     this.props.getImage()
     this.props.getUserInfo();
