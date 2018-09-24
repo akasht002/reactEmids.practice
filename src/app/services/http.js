@@ -8,6 +8,7 @@ export const messageURL = process.env.REACT_APP_MSG_URL
 export const elasticSearchURL = process.env.REACT_APP_ES_URL;
 export const thirdPartyURL = process.env.REACT_APP_TP_URL;
 export const asyncURL = process.env.REACT_APP_MSG_URL;
+export const aboutUsUrl = 'http://52.172.45.185:9002/api/';
 
 export const AuthLogin = (url, data) => {
     var bodyFormData = new FormData()
@@ -248,6 +249,14 @@ export const elasticSearchGet = (url) => {
 
 export const AsyncPut = (url, data) => {
     return axios.put(messageURL + url, data, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
+};
+
+export const AboutUsGet = (url) => {
+    return axios.get(aboutUsUrl + url, getHeader()).then((resp) => {
         return resp;
     }).catch((error) => {
         handleError(error);
