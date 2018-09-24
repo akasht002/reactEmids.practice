@@ -59,7 +59,6 @@ class ProfileHeader extends Component {
 
         return (
             <Navbar className="navbar-light navbarProfile boxShadowBottom bgWhite" expand="md">
-                <NavbarBrand className="text-uppercase">Coreo Home</NavbarBrand>
                 <NavbarToggler className={this.state.dBlock} onClick={this.props.toggle} />
                 <Collapse isOpen={false} navbar>
                     <Nav navbar className="SearchWidget width100">

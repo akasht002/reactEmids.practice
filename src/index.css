@@ -221,6 +221,30 @@ a:focus, a:hover{
     height: 60px;
 }
 
+.navbar-brand{
+    height: 30px;
+    }
+    
+    
+    
+    .BrandLink{
+    height: 16px;
+    }
+    
+    
+    
+    .brandName {
+    height: 26px;
+    }
+    
+    
+    
+    .navbar-brand img, .BrandLink img, .brandName img {
+    display: block;
+    height: 100%;
+    margin: 0 auto;
+    }
+
 .mainWidget{
     position: relative;
     width: 100%;
