@@ -6,7 +6,8 @@ process.env.NODE_ENV = 'development';
 
 process.env.REACT_APP_API_URL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
 process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
-process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
+// process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
+process.env.REACT_APP_SR_URL = "http://localhost:6698/api/";
 process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
 process.env.REACT_APP_MSG_URL = 'http://52.172.45.185:9002/api/';
 process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';
@@ -24,7 +25,8 @@ let argv = process.argv.slice(2);
 if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
   process.env.REACT_APP_AUTH_URL = 'http://52.172.45.185:9005/';
-  process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
+  // process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
+  process.env.REACT_APP_SR_URL = "http://localhost:6698/api/";
   process.env.REACT_APP_UI_URL = 'http://52.172.45.185:9009/#/';
   process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
   process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';

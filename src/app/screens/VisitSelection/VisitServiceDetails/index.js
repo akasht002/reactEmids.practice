@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 import Moment from 'react-moment'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import { Scrollbars } from '../../../components'
+import { Scrollbars, ModalPopup } from '../../../components'
 import { push } from '../../../redux/navigation/actions'
 import { Path } from '../../../routes'
 import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
-  hireServiceRequestByServiceProvider
+  hireServiceRequestByServiceProvider,
+  cancelServiceRequestByServiceProvider
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
   getPerformTasksList
@@ -31,9 +32,12 @@ class VisitServiceDetails extends Component {
       activeTab: '1',
       visitServiceDetails: '',
       visitServiceSchedule: '',
+      isAlertModalOpen: false,
+      patientId: '',
       serviceType: '',
       isOpen: false
     }
+    this.status = {}
   }
 
   componentDidMount () {
@@ -46,8 +50,12 @@ class VisitServiceDetails extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.setState({ visitServiceDetails: nextProps.VisitServiceDetails })
-    this.setState({ visitServiceSchedule: nextProps.VisitServiceSchedule })
+    this.setState({
+      visitServiceDetails: nextProps.VisitServiceDetails,
+      visitServiceSchedule: nextProps.VisitServiceSchedule,
+      patientId: nextProps.VisitServiceDetails.patient &&
+        nextProps.VisitServiceDetails.patientId
+    })
   }
 
   visitService = () => {
@@ -77,11 +85,25 @@ class VisitServiceDetails extends Component {
   }
 
   postServiceRequest = status => {
-    let model = {
-      serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
-      type: status
+    this.setState({ isAlertModalOpen: true })
+    this.status = status
+  }
+
+  onConfirmSerivceRequest = status => {
+    if (!status.isCancel) {
+      let model = {
+        serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
+        type: status.isInterested ? 1 : 0
+      }
+      this.props.hireServiceRequestByServiceProvider(model)
+    } else {
+      let model = {
+        serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
+        patientId: this.state.patientId,
+        cancelledDescription: 'Canceled'
+      }
+      this.props.cancelServiceRequestByServiceProvider(model)
     }
-    this.props.hireServiceRequestByServiceProvider(model)
   }
 
   render () {
@@ -376,34 +398,34 @@ class VisitServiceDetails extends Component {
                                 <p>
                                   <span>Street</span>
                                   {' '}
-                                  {
+                                  {this.state.visitServiceDetails.patient
+                                      .patientAddresses &&
                                       this.state.visitServiceDetails.patient
-                                        .patientAddresses[0].streetAddress
-                                    }
+                                        .patientAddresses.streetAddress}
                                 </p>
                                 <p>
                                   <span>City</span>
                                   {' '}
-                                  {
+                                  {this.state.visitServiceDetails.patient
+                                      .patientAddresses &&
                                       this.state.visitServiceDetails.patient
-                                        .patientAddresses[0].city
-                                    }
+                                        .patientAddresses.city}
                                 </p>
                                 <p>
                                   <span>State</span>
                                   {' '}
-                                  {
+                                  {this.state.visitServiceDetails.patient
+                                      .patientAddresses &&
                                       this.state.visitServiceDetails.patient
-                                        .patientAddresses[0].stateName
-                                    }
+                                        .patientAddresses.stateName}
                                 </p>
                                 <p>
                                   <span>ZIP</span>
                                   {' '}
-                                  {
+                                  {this.state.visitServiceDetails.patient
+                                      .patientAddresses &&
                                       this.state.visitServiceDetails.patient
-                                        .patientAddresses[0].zipCode
-                                    }
+                                        .patientAddresses.zipCode}
                                 </p>
                               </span>
                               : ''}
@@ -486,6 +508,26 @@ class VisitServiceDetails extends Component {
               </section>
             </div>
           </div>
+          <ModalPopup
+            isOpen={this.state.isAlertModalOpen}
+            toggle={this.reset}
+            ModalBody={<span>Confirmation</span>}
+            btn1='YES'
+            btn2='NO'
+            className='modal-sm'
+            headerFooter='d-none'
+            centered='centered'
+            onConfirm={() => {
+              this.onConfirmSerivceRequest(this.status)
+              this.setState({
+                isAlertModalOpen: false
+              })
+            }}
+            onCancel={() =>
+              this.setState({
+                isAlertModalOpen: false
+              })}
+          />
         </Scrollbars>
       </AsideScreenCover>
     )
@@ -499,7 +541,9 @@ function mapDispatchToProps (dispatch) {
     visitService: () => dispatch(push(Path.visitServiceList)),
     getPerformTasksList: data => dispatch(getPerformTasksList(data)),
     hireServiceRequestByServiceProvider: data =>
-      dispatch(hireServiceRequestByServiceProvider(data))
+      dispatch(hireServiceRequestByServiceProvider(data)),
+    cancelServiceRequestByServiceProvider: data =>
+      dispatch(cancelServiceRequestByServiceProvider(data))
   }
 }
 

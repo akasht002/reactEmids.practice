@@ -41,8 +41,8 @@ export function hireServiceRequestByServiceProvider (data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return dispatch => {
     dispatch(startLoading())
-    ServiceRequestGet(
-      API.putHireServiceRequestByServiceProvider +
+    ServiceRequestPost(
+      API.applyServiceRequestByServiceProvider +
         data.serviceRequestId +
         '/' +
         serviceProviderId +
