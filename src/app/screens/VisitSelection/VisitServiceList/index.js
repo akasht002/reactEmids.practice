@@ -262,10 +262,10 @@ class VisitServiceList extends Component {
                             </div>
                             <div class='BlockProfileDetailsStatus'>
                                 {
-                                    <a className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`} to='/'>{
+                                    <span className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`}>{
                                         serviceList.serviceRequestStatus === VISIT_SERVICE_STATUS_NOT_HIRED ?
                                             serviceList.matchPercentage : serviceList.serviceRequestStatus
-                                    }</a>
+                                    }</span>
                                 }
                             </div>
                         </div>
