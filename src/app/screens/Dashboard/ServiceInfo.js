@@ -170,9 +170,9 @@ export const ServiceCalendarDefault = props => {
 export const ServiceRequestDefault = () => {
   return (
     <div className='NoInformationServiceProvider'>
-      <span><i className='SPNoInfoDashboard' /></span>
-      <span className='NoInfoText'>
-        Click HERE to add a new Service Request
+      <span><i className='SPNoSRDashboard' /></span>
+      <span className='NoSRText'>
+        Browse Service Request
       </span>
     </div>
   )
@@ -239,7 +239,7 @@ export const MyConversionDetail = props => {
     return (
       <Fragment>
         <li key={index} className='list-group-item myConversationContainer'>
-          <div className={'myConversationContent ' + MsgClass}>
+          <div className='myConversationContent'>
             <div className='avatarWidget'>
               {conversations.participantList.map((chatMem, index) => {
                 let zIndex = conversations.participantList.length - index

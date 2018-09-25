@@ -106,7 +106,8 @@ export const API = {
     getConversationImage: 'Conversation/Message/',
     canCreateMessage: 'Conversation/CanServiceProviderCreate/',
     putHireServiceRequestByServiceProvider:'ServiceRequest/Hire/',
-    cancelServiceRequestByServiceProvider:'ServiceRequest/Cancel'
+    cancelServiceRequestByServiceProvider:'ServiceRequest/Cancel',
+    getAboutUsContent: 'Common/LookupConfig/AboutUsWeb'
 }
 
 

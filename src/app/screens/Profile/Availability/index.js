@@ -176,7 +176,7 @@ class Availability extends Component {
                      </div>
                      {
                          this.props.blackoutDays && this.props.blackoutDays.blockOutDates.length > 0 ? 
-                         <p className={"primaryColor indexColor"} onClick={this.toggleBlackoutModal}>Show Bloackout Days</p> : ''
+                         <p className={"primaryColor indexColor"} onClick={this.toggleBlackoutModal}>Show Blackout Days</p> : ''
                      }
    
                 </div>

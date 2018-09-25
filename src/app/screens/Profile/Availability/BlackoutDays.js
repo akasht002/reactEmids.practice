@@ -179,7 +179,7 @@ class BlackoutDays extends Component {
       <React.Fragment>
         <div className={"SPAvailBlackOutWidget"}>
           <div className="col-md-12 card CardWidget SPBlackoutDays">
-            <div className={"SPCardTitle d-flex"}>
+          { !this.props.showBalckout ? '' : <div className={"SPCardTitle d-flex"}> 
             { !this.props.showBalckout && <h4 className={"primaryColor"}>Blackout Days</h4>} 
               {
                 !this.props.showBalckout && (
@@ -189,7 +189,7 @@ class BlackoutDays extends Component {
                   />
                 )
               }
-            </div>
+            </div> }
             <div className={"SPCertificateContainer width100"}>
               <ul className={"SPCertificateList"}>{blackoutData}</ul>
             </div>

@@ -18,19 +18,19 @@ import { ServiceCalendarDefault } from './ServiceInfo'
 const today = new Date()
 
 class serviceCalendar extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       startDate: moment(today).format(),
-      startMonth: moment(today).format('MMMM'),
+      startMonth: moment(today).format('MMM'),
       startYear: moment(today).format('YYYY'),
       changedDate: '',
       DateDisable: false,
       DateLabelClass: 'DatePickerDisabled',
       reportDay: moment(today).format(),
       selectedMonth: {
-        label: moment(today).format('MMMM'),
-        value: moment(today).format('MMMM')
+        label: moment(today).format('MMM'),
+        value: moment(today).format('MMM')
       },
       showMore: false,
       verticalScroll: false,
@@ -59,10 +59,10 @@ class serviceCalendar extends React.Component {
       startDate: updatedDay.format(),
       startYear: updatedDay.format('YYYY'),
       reportDay: updatedDay.format(),
-      startMonth: updatedDay.format('MMMM'),
+      startMonth: updatedDay.format('MMM'),
       selectedMonth: {
-        label: updatedDay.format('MMMM'),
-        value: updatedDay.format('MMMM')
+        label: updatedDay.format('MMM'),
+        value: updatedDay.format('MMM')
       }
     })
   }
@@ -78,10 +78,10 @@ class serviceCalendar extends React.Component {
       startDate: updatedDay.format(),
       startYear: updatedDay.format('YYYY'),
       reportDay: updatedDay.format(),
-      startMonth: updatedDay.format('MMMM'),
+      startMonth: updatedDay.format('MMM'),
       selectedMonth: {
-        label: updatedDay.format('MMMM'),
-        value: updatedDay.format('MMMM')
+        label: updatedDay.format('MMM'),
+        value: updatedDay.format('MMM')
       }
     })
   }
@@ -91,7 +91,7 @@ class serviceCalendar extends React.Component {
       startYear: moment(today).format('YYYY'),
       startDate: moment(today).format(),
       reportDay: moment(today).format(),
-      startMonth: moment(today).format('MMMM')
+      startMonth: moment(today).format('MMM')
     })
   }
 
@@ -100,10 +100,10 @@ class serviceCalendar extends React.Component {
     this.setState({
       reportDay: e.target.getAttribute('data-date'),
       startYear: getDate.format('YYYY'),
-      startMonth: getDate.format('MMMM'),
+      startMonth: getDate.format('MMM'),
       selectedMonth: {
-        label: getDate.format('MMMM'),
-        value: getDate.format('MMMM')
+        label: getDate.format('MMM'),
+        value: getDate.format('MMM')
       }
     })
   }
@@ -121,7 +121,7 @@ class serviceCalendar extends React.Component {
     })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     let utc = new Date().toJSON().slice(0, 10).replace(/-/g, '-')
     this.props.getServiceProviderVists(utc)
     let d = new Date(utc)
@@ -139,7 +139,7 @@ class serviceCalendar extends React.Component {
     window.addEventListener('resize', this.updateWindowDimensions)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
@@ -147,7 +147,7 @@ class serviceCalendar extends React.Component {
     this.setState({ width: window.innerWidth })
   }
 
-  SelectOnBlur (e) {}
+  SelectOnBlur(e) { }
 
   optionClicked = e => {
     console.log(this.offset)
@@ -160,7 +160,7 @@ class serviceCalendar extends React.Component {
     this.props.getServiceProviderVists(date)
   }
 
-  render () {
+  render() {
     let selectedDate = this.state.startDate
 
     const visitCount = this.props.serviceVistCount
@@ -223,14 +223,14 @@ class serviceCalendar extends React.Component {
 
     let optionChecked = this.state.reportDay
 
-    let current_month = new Date().getMonth()
+    let current_month = new Date().getMonth();
     let pervious_month = moment.months().splice(current_month - 3, 3)
     let next_month_list = moment.months().splice(current_month, 3)
 
     let monthLists = pervious_month.concat(next_month_list)
 
     let monthList = monthLists.map(month => {
-      return { label: month, value: month }
+      return { label: month.substring(0,3), value: month.substring(0,3) }
     })
 
     let dateList = dates.map((daysMapping, i) => {
@@ -285,7 +285,11 @@ class serviceCalendar extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               My Services Visits
             </span>
-            <Link className='ProfileCardHeaderLink' to='/visitHistory'>View all</Link>
+            {(this.props.serviceVistCount).length > 0 ?
+              <Link className='ProfileCardHeaderLink' to='/visitHistory'>View all</Link>
+              :
+              ''
+            }
           </div>
           <div className='topPalette'>
             <div className='monthPalette Center'>
@@ -302,7 +306,7 @@ class serviceCalendar extends React.Component {
             </div>
             <div className='todayPalette'>
               <span
-                className='btn btn-outline-primary ProfileCardTodayLink'
+                className='btn ProfileCardTodayLink'
                 onClick={this.todayDate}
               >
                 Today
@@ -349,14 +353,14 @@ class serviceCalendar extends React.Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getServiceProviderVists: data => dispatch(getServiceProviderVists(data)),
     getServiceVisitCount: data => dispatch(getServiceVisitCount(data))
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     serviceVist: state.dashboardState.dashboardState.serviceVist,
     serviceVistCount: state.dashboardState.dashboardState.serviceVistCount

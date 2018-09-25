@@ -9,7 +9,7 @@ export const ServiceStatus = props => {
         label='Not Interested'
         onClick={() => {
           console.log('Not Interested')
-          props.postServiceRequest('Not Interested')
+          props.postServiceRequest(false)
         }}
       />
       <Button
@@ -17,7 +17,7 @@ export const ServiceStatus = props => {
         label='Apply'
         onClick={() => {
           console.log('Apply')
-          props.postServiceRequest('Apply')
+          props.postServiceRequest(true)
         }}
       />
     </React.Fragment>

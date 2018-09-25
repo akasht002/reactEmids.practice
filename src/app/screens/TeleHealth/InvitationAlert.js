@@ -11,7 +11,7 @@ import './styles.css';
 class InvitationAlert extends Component { 
 
     joinVideoConference = () =>{
-        let roomNumber = this.props.match.params.id;
+        let roomNumber = this.props.computedMatch.params.id;
         this.props.joinVideoConference(roomNumber);
     }
 

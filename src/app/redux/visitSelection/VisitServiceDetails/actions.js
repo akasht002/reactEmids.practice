@@ -41,11 +41,13 @@ export function hireServiceRequestByServiceProvider (data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return dispatch => {
     dispatch(startLoading())
-    ServiceRequestPut(
+    ServiceRequestGet(
       API.putHireServiceRequestByServiceProvider +
         data.serviceRequestId +
         '/' +
-        serviceProviderId
+        serviceProviderId +
+        '/'+
+        data.type
     )
       .then(resp => {
         dispatch(endLoading())

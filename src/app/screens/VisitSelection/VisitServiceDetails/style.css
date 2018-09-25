@@ -5,7 +5,7 @@ body {
 }
 
 .navbar-brand {
-    display: none !important;
+    /* display: none !important; */
 }
 
 section .ProfileRightWidget {
@@ -524,6 +524,7 @@ li div.dropdown-menu{
 
 a.ProfileCardHeaderLink:hover{
     text-decoration: none;
+    color: #7a329f;
 }
 
 .ProfileCard {
@@ -563,6 +564,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileCardBody {
     padding: 20px 0 0 0;
+    transform: translateY(2%);
 }
 
 .ProfileCardBody > div {
@@ -719,7 +721,7 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 480px;
+        height: 326px;
     }
 
     .ProfileCardBody .ServiceRequestPalette {

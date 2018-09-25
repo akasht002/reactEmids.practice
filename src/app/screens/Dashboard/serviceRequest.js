@@ -17,7 +17,7 @@ import {
 import { getLength } from '../../utils/validations'
 
 class ServiceRequest extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       showMore: true,
@@ -25,12 +25,12 @@ class ServiceRequest extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getPatientServiceRequestDetail(this.state.selectedValue.value)
     this.props.getServiceStatusDetail()
   }
 
-  componentWillReceiveProps (nextProps) {}
+  componentWillReceiveProps(nextProps) { }
 
   clickShowMore = () => {
     this.setState({
@@ -38,14 +38,14 @@ class ServiceRequest extends React.Component {
     })
   }
 
-  optionChanged = (e)=> {
+  optionChanged = (e) => {
     this.setState({
       selectedValue: e
     })
     this.props.getPatientServiceRequestDetail(e.id)
   }
 
-  menuRenderer =(params)=> {
+  menuRenderer = (params) => {
     const menu = Select.defaultProps.menuRenderer(params)
 
     const scrollBarProps = {
@@ -61,21 +61,21 @@ class ServiceRequest extends React.Component {
     )
   }
 
-  render () {
+  render() {
     const serviceStatusLookUp = this.props.serviceStatusLookUp.map(
       (data, i) => {
         data.label = data.keyValue
         data.value = data.id
         return data
       }
-    )  
+    )
 
     let serviceRequest = this.props.patientServiceRequest
     let serviceRequestItem = ''
     serviceRequestItem = getLength(serviceRequest) > 0
       ? <ServiceProviderRequestDetails
         serviceRequest={this.props.patientServiceRequest}
-        />
+      />
       : <ServiceRequestDefault />
     return (
       <div
@@ -90,20 +90,25 @@ class ServiceRequest extends React.Component {
             </span>
             <Link className='ProfileCardHeaderLink' to='/visitServiceList'>View all</Link>
           </div>
-          <div className='topPalette'>
-            <div className='monthPalette'>
-              <Select
-                menuRenderer={this.menuRenderer}
-                id='ProfileMonth'
-                multiple={false}
-                className='ProfileMonthList'
-                searchable={false}
-                onChange={this.optionChanged}
-                options={serviceStatusLookUp}
-                value={this.state.selectedValue}
-              />
+          {(this.props.patientServiceRequest).length > 0 ?
+            <div className='topPalette'>
+              <div className='monthPalette'>
+                <Select
+                  menuRenderer={this.menuRenderer}
+                  id='ProfileMonth'
+                  multiple={false}
+                  className='ProfileMonthList'
+                  searchable={false}
+                  onChange={this.optionChanged}
+                  options={serviceStatusLookUp}
+                  value={this.state.selectedValue}
+                />
+              </div>
             </div>
-          </div>
+            :
+            ''
+          }
+
           <Scrollbars
             speed={2}
             smoothScrolling
@@ -111,27 +116,27 @@ class ServiceRequest extends React.Component {
             stopScrollPropagation
             className='bottomPalette ServiceRequestPalette ServiceProvider'
           >
-            <ul className='list-group ProfileServicesVisitList'>
+            <ul className='list-group ProfileServicesVisitList addList'>
               {serviceRequestItem}
             </ul>
           </Scrollbars>
         </div>
-        { getLength(serviceRequest) > 3 && 
-           <ul className='list-group list-group-flush'>
-          <li
-            className='list-group-item ProfileShowMore'
-            onClick={this.clickShowMore}
-          >
-            Show more <i className='ProfileIconShowMore' />
-          </li>
-        </ul>
+        {getLength(serviceRequest) > 3 &&
+          <ul className='list-group list-group-flush'>
+            <li
+              className='list-group-item ProfileShowMore'
+              onClick={this.clickShowMore}
+            >
+              Show more <i className='ProfileIconShowMore' />
+            </li>
+          </ul>
         }
       </div>
     )
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getPatientServiceRequestDetail: data =>
       dispatch(getPatientServiceRequestDetail(data)),
@@ -139,7 +144,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     conversationDetail: state.dashboardState.dashboardState.conversationDetail,
     patientServiceRequest: state.dashboardState.dashboardState
