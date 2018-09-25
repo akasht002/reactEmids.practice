@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '../../../components'
 
 export const ServiceStatus = props => {
-  if (props.status.id === 36) {
+  if (props.status.id !== 36) {
     return (
       <React.Fragment>
         <Button

@@ -17,6 +17,7 @@ import {
 import {
   getPerformTasksList
 } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
+import { serviceRequestMessages } from '../../../utils/messageUtility'
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
@@ -37,7 +38,7 @@ class VisitServiceDetails extends Component {
       serviceType: '',
       isOpen: false
     }
-    this.status = {}
+    ;(this.status = {}), (this.alertModalMsg = '')
   }
 
   componentDidMount () {
@@ -85,6 +86,9 @@ class VisitServiceDetails extends Component {
   }
 
   postServiceRequest = status => {
+    this.alertModalMsg = status.isInterested
+      ? serviceRequestMessages.applyServiceProvider
+      : serviceRequestMessages.notInterestedServiceProvider
     this.setState({ isAlertModalOpen: true })
     this.status = status
   }
@@ -511,7 +515,7 @@ class VisitServiceDetails extends Component {
           <ModalPopup
             isOpen={this.state.isAlertModalOpen}
             toggle={this.reset}
-            ModalBody={<span>Confirmation</span>}
+            ModalBody={<span>{this.alertModalMsg}</span>}
             btn1='YES'
             btn2='NO'
             className='modal-sm'
