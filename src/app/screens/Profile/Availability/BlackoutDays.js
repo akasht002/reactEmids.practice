@@ -174,7 +174,6 @@ class BlackoutDays extends Component {
         modalType = "edit";
       }
     }
-    console.log('this.props.showBalckout......', this.props.showBalckout);
     return (
       <React.Fragment>
         <div className={"SPAvailBlackOutWidget"}>

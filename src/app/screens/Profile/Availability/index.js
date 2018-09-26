@@ -150,8 +150,6 @@ class Availability extends Component {
         }
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
         blackoutModalContent = <BlackoutDays showBalckout="true"/>
-        console.log('this.props.blackoutDays........', this.props.blackoutDays);
-        console.log('this.props.blackoutDays.blockOutDates........', this.props.blackoutDays.blockOutDates.length);
         return (
             <React.Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
