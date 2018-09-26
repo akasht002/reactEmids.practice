@@ -1,5 +1,5 @@
 import React from 'react'
-import { getFields,serviceTypeImages } from '../../utils/validations'
+import { getFields, serviceTypeImages } from '../../utils/validations'
 import Moment from 'react-moment'
 import { Progressbar } from '../../components'
 
@@ -28,7 +28,11 @@ export const VisitList = props => {
                       alt={'NO_IMAGE'}
                       key={index}
                       className='visitListImage'
-                      src={ vistList.serviceTypes && require('../../assets/images/Bathing_Purple.svg')}
+                      src={
+                        serviceTypeImages.Bathing
+                          ? require(serviceTypeImages.Bathing)
+                          : require('../../assets/images/Bathing_Purple.svg')
+                      }
                     />
                   </div>
                   <div className='visitListNameContainer'>
