@@ -90,7 +90,6 @@ class ServiceRequest extends React.Component {
             </span>
             <Link className='ProfileCardHeaderLink' to='/visitServiceList'>View all</Link>
           </div>
-          {(this.props.patientServiceRequest).length > 0 ?
             <div className='topPalette'>
               <div className='monthPalette'>
                 <Select
@@ -104,11 +103,7 @@ class ServiceRequest extends React.Component {
                   value={this.state.selectedValue}
                 />
               </div>
-            </div>
-            :
-            ''
-          }
-
+            </div>           
           <Scrollbars
             speed={2}
             smoothScrolling
