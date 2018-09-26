@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import Pagination from 'react-js-pagination';
 import {
     onFetchConversationSummary,
     onCreateNewConversation,
@@ -16,19 +17,21 @@ import '../styles.css';
 import './index.css';
 import { USERTYPES } from '../../../constants/constants';
 
+
 class ConversationSummary extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isDisplayParticipantModal: false,
             isOpen: false,
-            noPermission: false
+            noPermission: false,
+            activePage: 1
         };
     };
 
 
     componentDidMount() {
-        this.props.fetchConversationSummary();
+        this.props.fetchConversationSummary(1);
         this.props.getUnreadMsgCounts();
         this.props.canServiceProviderCreateMessage();
     };
@@ -74,6 +77,12 @@ class ConversationSummary extends Component {
         this.setState({ noPermission: !this.state.noPermission })
     };
 
+
+    handlePageChange = (pageNumber) =>{
+        this.props.fetchConversationSummary(pageNumber);
+        this.setState({activePage: pageNumber});
+      }
+
     render() {
         let modalContent = <div>
             <p className="text-center lead p-4 m-0">
@@ -104,6 +113,13 @@ class ConversationSummary extends Component {
                     </div>
                 </div>
 
+                <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={10}
+                    totalItemsCount={450}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}/>
+
                 <ParticipantsContainer
                     onRef={ref => (this.participantComponent = ref)}
                     isDisplayParticipantModal={this.state.isDisplayParticipantModal}
@@ -125,7 +141,7 @@ class ConversationSummary extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchConversationSummary: () => dispatch(onFetchConversationSummary()),
+        fetchConversationSummary: (pageNumber) => dispatch(onFetchConversationSummary(pageNumber)),
         createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
         gotoConversation: (data, userId) => dispatch(goToConversation(data, userId)),
         getUnreadMsgCounts: () => dispatch(getUnreadMessageCounts()),
