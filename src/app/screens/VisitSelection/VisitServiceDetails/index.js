@@ -518,8 +518,8 @@ class VisitServiceDetails extends Component {
             isOpen={this.state.isAlertModalOpen}
             toggle={this.reset}
             ModalBody={<span>{this.alertModalMsg}</span>}
-            btn1='YES'
-            btn2='NO'
+            btn1='Yes'
+            btn2='No'
             className='modal-sm'
             headerFooter='d-none'
             centered='centered'
