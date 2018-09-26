@@ -13,7 +13,7 @@ export const VisitServiceDetails = {
   getVisitServiceDetailsSuccess: 'get_visit_service_details_success/visitservicedetails',
   getVisitServiceScheduleSuccess: 'get_visit_service_schedule_success/visitservicedetails',
   getServiceRequestId: 'get_service_requestId/visitservicedetails',
-  putHireServiceRequestByServiceProvider: 'putHireServiceRequestByServiceProvider/visitservicedetails'
+  updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -37,7 +37,7 @@ export const getServiceRequestId = data => {
   }
 }
 
-export function hireServiceRequestByServiceProvider (data) {
+export function updateServiceRequestByServiceProvider (data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return dispatch => {
     dispatch(startLoading())

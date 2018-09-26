@@ -11,7 +11,7 @@ import { Path } from '../../../routes'
 import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
-  hireServiceRequestByServiceProvider,
+  updateServiceRequestByServiceProvider,
   cancelServiceRequestByServiceProvider
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
@@ -25,6 +25,7 @@ import { MORNING, AFTERNOON, EVENING } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
 
 class VisitServiceDetails extends Component {
+  
   constructor (props) {
     super(props)
     this.state = {
@@ -37,8 +38,9 @@ class VisitServiceDetails extends Component {
       patientId: '',
       serviceType: '',
       isOpen: false
-    }
-    ;(this.status = {}), (this.alertModalMsg = '')
+    },
+     this.alertModalMsg = '',
+     this.status ={}
   }
 
   componentDidMount () {
@@ -99,7 +101,7 @@ class VisitServiceDetails extends Component {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
         type: status.isInterested ? 1 : 0
       }
-      this.props.hireServiceRequestByServiceProvider(model)
+      this.props.updateServiceRequestByServiceProvider(model)
     } else {
       let model = {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
@@ -544,8 +546,8 @@ function mapDispatchToProps (dispatch) {
     getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
     visitService: () => dispatch(push(Path.visitServiceList)),
     getPerformTasksList: data => dispatch(getPerformTasksList(data)),
-    hireServiceRequestByServiceProvider: data =>
-      dispatch(hireServiceRequestByServiceProvider(data)),
+    updateServiceRequestByServiceProvider: data =>
+      dispatch(updateServiceRequestByServiceProvider(data)),
     cancelServiceRequestByServiceProvider: data =>
       dispatch(cancelServiceRequestByServiceProvider(data))
   }
