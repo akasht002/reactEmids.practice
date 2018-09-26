@@ -7,7 +7,8 @@ export const VisitList = props => {
   let visitHistoryList = props.visitHistoryList
   let visitHistoryListItem = ''
   if (visitHistoryList) {
-    visitHistoryListItem = visitHistoryList.map((vistList, index) => {
+    visitHistoryListItem = visitHistoryList.map((vistList, index) => { 
+      let filename = serviceTypeImages.Bathing
       return (
         <div className='card mainProfileCard' key={index}>
           <div className='visitListWidget' key={index}>
@@ -29,10 +30,9 @@ export const VisitList = props => {
                       key={index}
                       className='visitListImage'
                       src={
-                        serviceTypeImages.Bathing
-                          ? require(serviceTypeImages.Bathing)
-                          : require('../../assets/images/Bathing_Purple.svg')
+                        require(`../../assets/images/${filename}.svg`)
                       }
+                       
                     />
                   </div>
                   <div className='visitListNameContainer'>

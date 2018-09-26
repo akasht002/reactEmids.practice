@@ -21,7 +21,6 @@ class VisitSummary extends React.Component {
       modal: false
     }
     this.FeedbackModal = () => {
-      console.log('HI')
       this.setState({
         modal: !this.state.modal
       })
@@ -44,8 +43,6 @@ class VisitSummary extends React.Component {
 
   render () {
     let visitSummary = this.props.Visits.VisitServiceDetails
-
-    console.log(visitSummary)
 
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>

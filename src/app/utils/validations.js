@@ -156,5 +156,5 @@ export function checkhourlyRate (data) {
 }
 
 export const serviceTypeImages = {
-  Bathing: '../../assets/images/Bathing_Purple.svg'
+  Bathing: 'Bathing_Purple'
 }
