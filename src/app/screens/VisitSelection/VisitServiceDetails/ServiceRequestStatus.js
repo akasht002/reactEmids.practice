@@ -1,22 +1,25 @@
 import React from 'react'
 import { Button } from '../../../components'
+import {
+  DEFAULT_SERVICE_REQUIEST_STATUS
+} from '../../../redux/constants/constants'
 
 export const ServiceStatus = props => {
-  if (props.status.id !== 36) {
+  if (props.status.id !== DEFAULT_SERVICE_REQUIEST_STATUS) {
     return (
       <React.Fragment>
         <Button
           classname='btn btn-outline-primary mx-2 float-right'
           label='Not Interested'
           onClick={() => {
-            props.postServiceRequest({isInterested:false,isCancel:false})
+            props.postServiceRequest({ isInterested: false, isCancel: false })
           }}
         />
         <Button
           classname='btn outline btn-primary'
           label='Apply'
           onClick={() => {
-            props.postServiceRequest({isInterested:true,isCancel:false})
+            props.postServiceRequest({ isInterested: true, isCancel: false })
           }}
         />
       </React.Fragment>
@@ -28,8 +31,7 @@ export const ServiceStatus = props => {
           classname='btn btn-outline-primary mx-2 float-right'
           label='Cancel Service'
           onClick={() => {
-            console.log('Cancel')
-            props.postServiceRequest({isInterested:false,isCancel:true})
+            props.postServiceRequest({ isInterested: false, isCancel: true })
           }}
         />
       </React.Fragment>

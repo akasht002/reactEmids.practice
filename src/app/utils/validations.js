@@ -107,7 +107,6 @@ export const getDataValueArray = (data, split) => {
 
 export const getValueOfArray = (data, split) => {
   if (_.isArray(data)) {
-    // console.log(getDataValueArray(data.value,'-'))
     return getDataValueArray(data.value, '-')
   } else {
     return getDataValueArray(data, '-')
