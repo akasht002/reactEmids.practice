@@ -7,7 +7,8 @@ import {
     onCreateNewConversation,
     goToConversation,
     getUnreadMessageCounts,
-    CanServiceProviderCreateMessage
+    CanServiceProviderCreateMessage,
+    getConversationCount
 } from '../../../redux/asyncMessages/actions';
 import MessageList from './MessageList';
 import ParticipantsContainer from './ParticipantsContainer';
@@ -31,9 +32,11 @@ class ConversationSummary extends Component {
 
 
     componentDidMount() {
+        this.props.getConversationCount();
         this.props.fetchConversationSummary(1);
         this.props.getUnreadMsgCounts();
         this.props.canServiceProviderCreateMessage();
+        
     };
 
 
@@ -112,13 +115,14 @@ class ConversationSummary extends Component {
                         </div>
                     </div>
                 </div>
-
-                <Pagination
-                    activePage={this.state.activePage}
-                    itemsCountPerPage={10}
-                    totalItemsCount={450}
-                    pageRangeDisplayed={5}
-                    onChange={this.handlePageChange}/>
+                {this.props.conversation.length > 0 && 
+                 <Pagination
+                 activePage={this.state.activePage}
+                 itemsCountPerPage={20}
+                 totalItemsCount={this.props.conversationCount}
+                 pageRangeDisplayed={5}
+                 onChange={this.handlePageChange}/>}
+               
 
                 <ParticipantsContainer
                     onRef={ref => (this.participantComponent = ref)}
@@ -146,6 +150,7 @@ function mapDispatchToProps(dispatch) {
         gotoConversation: (data, userId) => dispatch(goToConversation(data, userId)),
         getUnreadMsgCounts: () => dispatch(getUnreadMessageCounts()),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
+        getConversationCount: () => dispatch(getConversationCount())
     }
 };
 
@@ -156,8 +161,8 @@ function mapStateToProps(state) {
         isLoading: state.loadingState.isLoading,
         unreadMsgCounts: state.asyncMessageState.unreadCounts,
         loggedInUser: state.authState.userState.userData.userInfo,
-        canCreateConversation: state.asyncMessageState.canCreateConversation
-
+        canCreateConversation: state.asyncMessageState.canCreateConversation,
+        conversationCount: state.asyncMessageState.conversationCount
     }
 };
 

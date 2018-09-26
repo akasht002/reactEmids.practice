@@ -101,7 +101,7 @@ export const API = {
     getDashboardMessageCount: 'Conversation/Dashboard/ConversationCount/',
     getConversationImage: 'Conversation/Message/',
     canCreateMessage: 'Conversation/CanServiceProviderCreate/',
-
+    getConverstionCountByUserId: 'Conversation/Count/'
 }
 
 
