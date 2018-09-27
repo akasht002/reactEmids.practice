@@ -285,11 +285,7 @@ class serviceCalendar extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               My Services Visits
             </span>
-            {(this.props.serviceVistCount).length > 0 ?
-              <Link className='ProfileCardHeaderLink' to='/visitHistory'>View all</Link>
-              :
-              ''
-            }
+           
           </div>
           <div className='topPalette'>
             <div className='monthPalette Center'>

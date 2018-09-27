@@ -16,7 +16,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    height: 100%;
+    height: calc(100% - 60px);
 }
 
 .dropdown.nav-item{
@@ -394,6 +394,7 @@ li div.dropdown-menu{
     width: 40px;
     height: 40px;
     display: inline-block;
+    background-color: #f4ecfc;
 }
 
 .PostedByProfileDetails{
@@ -733,7 +734,7 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
-        margin-top: 12px;
+        margin-top: 0;
     }
 }
 

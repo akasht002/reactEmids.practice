@@ -17,7 +17,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    height: 100%;
+    height: calc(100% - 60px);
 }
 
 .hiddenScreen, .ProfileLeftWidget {
@@ -67,7 +67,7 @@ section .ProfileRightWidget {
     margin-top: 10px;
 }
 
-.ProfileNameContent{
+.ProfileNameContent, .ProfileNameContent .BrandLink{
     text-align: center;
     color: #ffffff;
 }
@@ -546,6 +546,9 @@ section .ProfileRightWidget {
     .MsgThreadContent {
         max-width: calc(100% - 152px);
         padding: 15px 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .ProfileConversation .ProfileConversationWidget li.myConversationContainer, .ProfileConversation .ProfileConversationWidget li.mySPContainer {
