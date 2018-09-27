@@ -59,4 +59,5 @@ li.SPAvailItems.disabled:hover{
 
 .indexColor {
     margin-left: 25px;
+    cursor: pointer;
 }
