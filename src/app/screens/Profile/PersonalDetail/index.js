@@ -690,9 +690,7 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-              // if (getLength(e.target.value) <= 500) {
                 this.setState({ description: e.target.value,disabledSaveBtn: false })
-              // }
             }}
           />
         </div>
@@ -705,7 +703,6 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.hourlyRate}
             maxlength='7'
             textChange={e => {
-              // const re = /^\d*\.?\d{0,2}$/
               if (e.target.value === '' || checkhourlyRate(e.target.value)) {
                 this.setState({ hourlyRate: e.target.value,disabledSaveBtn: false })
               }
