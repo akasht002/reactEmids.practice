@@ -56,7 +56,7 @@ class AsideScreenCover extends React.Component {
 
     render() {
         return (
-            <ScreenCover>
+            <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
                     <div className='BrandNameWidget'>
                         <div className='BrandName'>
@@ -78,7 +78,7 @@ class AsideScreenCover extends React.Component {
 
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
-                            <Link className='BrandLink' to={Path.profile}> <p> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''} </p></Link>
+                            <Link className='BrandLink' to={Path.profile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</Link>
                         </div>
                     </div>
                     <AsideMenu menuData={MenuData} url={this.props}/>
@@ -139,7 +139,8 @@ function mapStateToProps(state) {
         isEulaUpdated: state.authState.userAgreementState.isEulaUpdated,
         eulaContent: state.authState.userAgreementState.eulaContent,
         personalDetail: state.profileState.PersonalDetailState.personalDetail,
-        aboutUsContent: state.aboutUsState.aboutUsContent
+        aboutUsContent: state.aboutUsState.aboutUsContent,
+        isLoading: state.loadingState.isLoading
     };
 };
 
