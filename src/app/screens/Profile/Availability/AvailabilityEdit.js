@@ -157,7 +157,7 @@ class AvailabilityEdit extends Component {
                     {availableDays}
                 </div>
                 <div className={'SPAvailBlackOutWidget'}>
-                    <BlackoutDays />
+                    <BlackoutDays/>
                 </div>
              </div>
            </React.Fragment>     

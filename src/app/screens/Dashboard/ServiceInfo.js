@@ -72,7 +72,7 @@ export const serviceCalendar = newData => {
                 { label: 'Message', value: '2' },
                 { label: 'Video', value: '3' }
               ]}
-              // value={this.state.selectedValue}
+            // value={this.state.selectedValue}
             />
           </li>
         </Fragment>
@@ -138,7 +138,7 @@ export const ServiceCalendarInfo = props => {
               { label: 'Message', value: '2' },
               { label: 'Video', value: '3' }
             ]}
-            // value={this.state.selectedValue}
+          // value={this.state.selectedValue}
           />
         </li>
       </Fragment>
@@ -146,7 +146,7 @@ export const ServiceCalendarInfo = props => {
   })
 }
 
-export const calendarData = data => {}
+export const calendarData = data => { }
 
 export const ServiceCalendarDefault = props => {
   return (
@@ -179,7 +179,7 @@ export const ServiceRequestDefault = () => {
 }
 
 export const ServiceProviderRequestDetails = props => {
-  return props.serviceRequest.slice(0, 3).map((sp, index) => {
+  return props.serviceRequest.slice(0, 2).map((sp, index) => {
     return (
       <Fragment>
         <li key={index} className='list-group-item ProfileServicesVisitContent'>
@@ -208,20 +208,22 @@ export const ServiceProviderRequestDetails = props => {
             </span>
           </div>
 
-          <div className='ProfileApplicationNumbers'>
-            <img
-              alt='NO'
-              className='avatarImage avatarImageBorder'
-              src={
-                sp.image
-                  ? sp.image
-                  : require('../../assets/images/Blank_Profile_icon.png')
-              }
-            />
-            {' '}
-            <span>
+          <div className='ProfileApplicationNumbers Avatar'>
+            <div className="ProfileApplicationWidget">
+              <div className="avatarContainer">
+                <img
+                  alt='NO'
+                  className="avatarImage avatarImageBorder"
+                  src={
+                    sp.image
+                      ? sp.image
+                      : require('../../assets/images/Blank_Profile_icon.png')
+                  }
+                />
+              </div>
+            </div>
+            <span className="AvatarName">
               {sp.patientFirstName && sp.patientFirstName}
-              {' '}
               {sp.patientLastName && sp.patientLastName}
             </span>
           </div>
@@ -293,12 +295,42 @@ export const MyConversionDetail = props => {
 export const MyConversionDefault = () => {
   return (
     <Fragment>
-      <div className='NoInformationServiceProvider'>
-        <span><i className='SPNoInfo' /></span>
-        <span className='NoInfoText'>
-          Click HERE to add a new Service Request
-        </span>
-      </div>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer" />
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon" /><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer" />
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon" /><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer" />
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon" /><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
     </Fragment>
   )
 }

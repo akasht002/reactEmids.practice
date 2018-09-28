@@ -4,7 +4,6 @@ import './style.css'
 
 function AsideMenu(props) {
     let path = props.url.location.pathname;
-    console.log(path)
     const menuList = props.menuData.map(
         (menu) => {
             return (

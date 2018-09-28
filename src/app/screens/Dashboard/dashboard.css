@@ -17,7 +17,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    height: 100%;
+    height: calc(100% - 60px);
 }
 
 .dropdown.nav-item{
@@ -706,7 +706,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ServiceRequestBoard{
-    width: 25%;
+    width: 33.33%;
     height: 197px;
     margin-bottom: 15px;
     padding: 0 10px;
@@ -948,6 +948,34 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     background-image: url("../../assets/images/remove.png");
 }
 
+.NoInformation .myConversationContent{
+    justify-content: center;
+    align-items: center;
+}
+
+.NoInformation .myConversationContent .avatarContainer{
+    position: relative;
+}
+
+.NoInformation .myConversationContent .avatarContainer:before, .NoInformation .myConversationContent .avatarContainer:after{
+    content: '';
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    background-color: #e8e8e8;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.NoInformation .myConversationContent .avatarContainer:before{
+    left: 30px;
+}
+
+.NoInformation .myConversationContent .avatarContainer:after{
+    right: 0;
+}
+
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
         height: calc(100vh - 143px);
@@ -990,7 +1018,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
-        margin-top: 12px;
+        margin-top: 0;
     }
 }
 
@@ -1022,7 +1050,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .ServiceRequestBoard{
-        width: 33.33%;
+        /* width: 33.33%; */
     }
 }
 

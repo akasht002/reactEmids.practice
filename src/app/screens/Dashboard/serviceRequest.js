@@ -21,7 +21,7 @@ class ServiceRequest extends React.Component {
     super(props)
     this.state = {
       showMore: true,
-      selectedValue: { label: 'Select', value: '0' }
+      selectedValue: { label: 'Hired', value: '38' }
     }
   }
 
@@ -80,7 +80,7 @@ class ServiceRequest extends React.Component {
     return (
       <div
         className={
-          this.state.showMore ? 'card ProfileCard extended' : 'card ProfileCard'
+          this.state.showMore ? 'card ProfileCard' : 'card ProfileCard extended'
         }
       >
         <div className='ProfileCardBody'>
@@ -90,25 +90,20 @@ class ServiceRequest extends React.Component {
             </span>
             <Link className='ProfileCardHeaderLink' to='/visitServiceList'>View all</Link>
           </div>
-          {(this.props.patientServiceRequest).length > 0 ?
-            <div className='topPalette'>
-              <div className='monthPalette'>
-                <Select
-                  menuRenderer={this.menuRenderer}
-                  id='ProfileMonth'
-                  multiple={false}
-                  className='ProfileMonthList'
-                  searchable={false}
-                  onChange={this.optionChanged}
-                  options={serviceStatusLookUp}
-                  value={this.state.selectedValue}
-                />
-              </div>
+          <div className='topPalette'>
+            <div className='monthPalette'>
+              <Select
+                menuRenderer={this.menuRenderer}
+                id='ProfileMonth'
+                multiple={false}
+                className='ProfileMonthList'
+                searchable={false}
+                onChange={this.optionChanged}
+                options={serviceStatusLookUp}
+                value={this.state.selectedValue}
+              />
             </div>
-            :
-            ''
-          }
-
+          </div>
           <Scrollbars
             speed={2}
             smoothScrolling
@@ -116,12 +111,12 @@ class ServiceRequest extends React.Component {
             stopScrollPropagation
             className='bottomPalette ServiceRequestPalette ServiceProvider'
           >
-            <ul className='list-group ProfileServicesVisitList addList'>
+            <ul className='list-group ProfileServicesVisitList'>
               {serviceRequestItem}
             </ul>
           </Scrollbars>
         </div>
-        {getLength(serviceRequest) > 3 &&
+        {getLength(serviceRequest) > 2 &&
           <ul className='list-group list-group-flush'>
             <li
               className='list-group-item ProfileShowMore'

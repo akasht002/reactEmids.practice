@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { Scrollbars } from '../../components'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
+import {Path } from '../../routes'
 import {
   getVisitServiceHistoryByIdDetail
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
@@ -20,7 +21,6 @@ class VisitSummary extends React.Component {
       modal: false
     }
     this.FeedbackModal = () => {
-      console.log('HI')
       this.setState({
         modal: !this.state.modal
       })
@@ -34,15 +34,15 @@ class VisitSummary extends React.Component {
   }
 
   componentWillMount () {
-    this.props.getVisitServiceHistoryByIdDetail(this.props.ServiceRequestId)
+    this.props.ServiceRequestId
+      ? this.props.getVisitServiceHistoryByIdDetail(this.props.ServiceRequestId)
+      : this.props.history.push(Path.visitHistory)
   }
 
   componentDidMount () {}
 
-  render () {    
+  render () {
     let visitSummary = this.props.Visits.VisitServiceDetails
-
-    console.log(visitSummary)
 
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -107,7 +107,7 @@ class VisitSummary extends React.Component {
               </div>
             </div>
             <div className='cardBottom' />
-          </Scrollbars>         
+          </Scrollbars>
         </div>
       </AsideScreenCover>
     )
