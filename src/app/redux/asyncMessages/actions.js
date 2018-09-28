@@ -64,7 +64,7 @@ export const pushUnreadCount = (data) => {
 export function onFetchConversationSummary(pageNumber) {
     return (dispatch) => {
         let pageNum = pageNumber ? pageNumber : 1;
-        let pageSize = 20;
+        let pageSize = 200;
         dispatch(startLoading());
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;

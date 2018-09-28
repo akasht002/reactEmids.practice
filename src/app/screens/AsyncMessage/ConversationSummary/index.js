@@ -115,14 +115,7 @@ class ConversationSummary extends Component {
                         </div>
                     </div>
                 </div>
-                {this.props.conversation.length > 0 && 
-                 <Pagination
-                 activePage={this.state.activePage}
-                 itemsCountPerPage={20}
-                 totalItemsCount={this.props.conversationCount}
-                 pageRangeDisplayed={5}
-                 onChange={this.handlePageChange}/>}
-               
+                              
 
                 <ParticipantsContainer
                     onRef={ref => (this.participantComponent = ref)}
