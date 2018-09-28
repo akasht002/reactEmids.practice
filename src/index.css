@@ -669,9 +669,9 @@ body > div:nth-child(4) > div > div.modal.fade.show{display:flex!important;}
     margin-left: 15px!important;
 }
 .mainContent.px-5 > div:nth-child(1){
-    position: absolute!important;
+    position: absolute;
     top: 0px!important;
-    left: 15px!important;
+    left: 0px!important;
     right: 15px!important;
     bottom: 0px!important;
     overflow: scroll;
@@ -702,4 +702,9 @@ body > div:nth-child(4) > div > div.modal.fade.show{display:flex!important;}
 
 .form-group label{
     font-weight: 600;
+}
+
+.onBoardingWidget .mainContent .row
+{
+position: relative !important;
 }
