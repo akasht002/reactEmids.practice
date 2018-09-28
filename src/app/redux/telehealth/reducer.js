@@ -9,7 +9,8 @@ const defaultState = {
     linkedPatients: [],
     conferenceId: '',
     allParticipants: [],
-    participantsByConferenceId: []
+    participantsByConferenceId: [],
+    initiator: false
 };
 
 const telehealthState = (state = defaultState, action) => {
@@ -38,7 +39,8 @@ const telehealthState = (state = defaultState, action) => {
             return {
                 ...state,
                 roomId: action.data.roomNumber,
-                conferenceId: action.data.conferenceId
+                conferenceId: action.data.conferenceId,
+                initiator: true
             };
         case TeleHealth.getParticipantByConfernceIdSuccess:
             return {

@@ -152,7 +152,8 @@ class VisitServiceList extends Component {
             serviceStatus:[],
             ServiceCategoryId:'',
             serviceTypes:[],
-            isValid: true
+            isValid: true,
+            selectedOption:''
         })
     }
 
@@ -236,7 +237,7 @@ class VisitServiceList extends Component {
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card' onClick={() => this.handleClick(serviceList.serviceRequestId)}>
                         <div className="BlockImageContainer">
-                            <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ProfileImage" alt="categoryImage" />
+                            <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ServiceImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
                                     <span>{serviceList.type}</span>
@@ -250,7 +251,7 @@ class VisitServiceList extends Component {
                             </div>
                         </div>
                         <div className="BlockProfileContainer">
-                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="patientImage" />
+                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
@@ -261,10 +262,10 @@ class VisitServiceList extends Component {
                             </div>
                             <div class='BlockProfileDetailsStatus'>
                                 {
-                                    <a className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`} to='/'>{
+                                    <span className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`}>{
                                         serviceList.serviceRequestStatus === VISIT_SERVICE_STATUS_NOT_HIRED ?
                                             serviceList.matchPercentage : serviceList.serviceRequestStatus
-                                    }</a>
+                                    }</span>
                                 }
                             </div>
                         </div>

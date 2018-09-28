@@ -143,15 +143,13 @@ class Availability extends Component {
                 }); 
         }
 
-        if (this.state.availabilityModal && this.props.availableDays.days && this.props.availableDays.days.length > 0) {
+        if (!availableSlot && this.state.availabilityModal && this.props.availableDays.days && this.props.availableDays.days.length > 0) {
             modalTitle = 'Edit Availability';
         } else {
             modalTitle = 'Add Availability';
         }
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
         blackoutModalContent = <BlackoutDays showBalckout="true"/>
-        console.log('this.props.blackoutDays........', this.props.blackoutDays);
-        console.log('this.props.blackoutDays.blockOutDates........', this.props.blackoutDays.blockOutDates.length);
         return (
             <React.Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
@@ -176,7 +174,7 @@ class Availability extends Component {
                      </div>
                      {
                          this.props.blackoutDays && this.props.blackoutDays.blockOutDates.length > 0 ? 
-                         <p className={"primaryColor indexColor"} onClick={this.toggleBlackoutModal}>Show Bloackout Days</p> : ''
+                         <p className={"primaryColor indexColor"} onClick={this.toggleBlackoutModal}>Show Blackout Days</p> : ''
                      }
    
                 </div>

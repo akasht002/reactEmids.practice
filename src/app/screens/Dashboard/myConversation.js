@@ -11,15 +11,15 @@ import {
 } from '../../redux/dashboard/Dashboard/actions'
 
 class MyConversation extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.getConversationDetail()
     this.props.getUnreadMessageCounts()
   }
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({ conversationDetail: nextProps.conversationDetail })
   }
 
-  render () {
+  render() {
     let conversation_data = this.props.conversationDetail
     let conversation_item = getLength(conversation_data) > 0
       ? <MyConversionDetail conversation={conversation_data} />
@@ -31,7 +31,7 @@ class MyConversation extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               My Conversations
             </span>
-            <Link className='ProfileCardHeaderLink' to='/'>View all</Link>
+            <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>
           </div>
           <div className='topPalette ProfileConversation'>
             <ul className='list-group ProfileConversationWidget'>
@@ -44,14 +44,14 @@ class MyConversation extends React.Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getConversationDetail: () => dispatch(getConversationDetail()),
     getUnreadMessageCounts: () => dispatch(getUnreadMessageCounts())
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     conversationDetail: state.dashboardState.dashboardState.conversationDetail
   }

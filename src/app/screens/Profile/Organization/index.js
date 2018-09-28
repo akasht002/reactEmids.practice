@@ -396,21 +396,21 @@ class Organization extends React.PureComponent {
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
-              <span>
+              <span className='AddressContentText'>
                 {this.props.personalDetail && this.streetAddress}
               </span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>City</span>
-              <span>{this.props.personalDetail && this.city}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.city}</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>State</span>
-              <span>{this.props.personalDetail && this.states}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.states}</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>ZIP</span>
-              <span>{this.props.personalDetail && this.zipCode}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.zipCode}</span>
             </div>
           </div>
           <div className={'SPAddressContent'}>
@@ -483,7 +483,7 @@ class Organization extends React.PureComponent {
                   } else {
                     this.setState({
                       organizationNameInvaild: false,
-                      disabledSaveBtn: false
+                     disabledSaveBtn: false
                     })
                   }
                 }}
@@ -509,7 +509,7 @@ class Organization extends React.PureComponent {
                 textChange={e => {
                   const re = /^\d*\.?\d{0,2}$/
                   if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({ hourlyRate: e.target.value })
+                    this.setState({ hourlyRate: e.target.value,disabledSaveBtn: false })
                   }
                 }}
                 className='form-control'
@@ -529,7 +529,7 @@ class Organization extends React.PureComponent {
             value={this.state.description}
             textChange={e => {
               if (getLength(e.target.value) <= 500) {
-                this.setState({ description: e.target.value })
+                this.setState({ description: e.target.value,disabledSaveBtn: false })
               }
             }}
           />
@@ -553,8 +553,7 @@ class Organization extends React.PureComponent {
                       simpleValue
                       placeholder='Select the state'
                       onChange={value => {
-                        this.setState({ selectedState: value })
-                        console.log(value);
+                        this.setState({ selectedState: value,disabledSaveBtn: false })
                       }}
                       selectedValue={this.state.selectedState}
                       className={'inputFailure'}
@@ -572,7 +571,8 @@ class Organization extends React.PureComponent {
                       value={this.state.city}
                       textChange={e =>
                         this.setState({
-                          city: e.target.value
+                          city: e.target.value,
+                          disabledSaveBtn: false
                         })}
                       className='form-control'
                     />
@@ -591,7 +591,8 @@ class Organization extends React.PureComponent {
                           value={this.state.streetAddress}
                           textChange={e =>
                             this.setState({
-                              streetAddress: e.target.value
+                              streetAddress: e.target.value,
+                              disabledSaveBtn: false
                             })}
                           className='form-control'
                         />
@@ -612,7 +613,7 @@ class Organization extends React.PureComponent {
                               re.test(e.target.value)) &&
                             getLength(e.target.value) <= 5
                           ) {
-                            this.setState({ zipCode: e.target.value })
+                            this.setState({ zipCode: e.target.value,disabledSaveBtn: false })
                           }
                         }}
                         className='form-control'
@@ -654,7 +655,7 @@ class Organization extends React.PureComponent {
                         (e.target.value === '' || re.test(e.target.value)) &&
                         getLength(e.target.value) <= 15
                       ) {
-                        this.setState({ phoneNumber: e.target.value })
+                        this.setState({ phoneNumber: e.target.value,disabledSaveBtn: false })
                       }
                     }}
                   />
@@ -681,7 +682,7 @@ class Organization extends React.PureComponent {
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: false
+     disabledSaveBtn: !this.state.disabledSaveBtn
     })
     let old_data = {
       description: this.props.personalDetail.description,

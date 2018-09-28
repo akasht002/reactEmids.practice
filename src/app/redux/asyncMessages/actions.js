@@ -29,7 +29,8 @@ export const AsyncMessageActions = {
     setConversationImage: 'set_conversation_image/asyncMessage',
     clearConversationImageUrl: 'clear_conversation_image_url/asyncMessage',
     setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
-    clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage'
+    clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage',
+    setConversationCount: 'set_conversation_count'
 };
 
 export const setConversationSummary = (data) => {
@@ -60,12 +61,18 @@ export const pushUnreadCount = (data) => {
     }
 };
 
-export function onFetchConversationSummary() {
+export function onFetchConversationSummary(pageNumber) {
     return (dispatch) => {
+        let pageNum = pageNumber ? pageNumber : 1;
+        let pageSize = 200;
         dispatch(startLoading());
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-        AsyncGet(API.getConversationSummary + USER_ID + '/' + USER_TYPE)
+        AsyncGet(API.getConversationSummary 
+            + USER_ID + '/'
+            + USER_TYPE + '/'
+            + pageNum + '/'
+            + pageSize)
             .then(resp => {
                 dispatch(setConversationSummary(resp.data));
                 dispatch(endLoading());
@@ -82,9 +89,16 @@ export function onFetchConversation(id) {
         dispatch(startLoading());
         let state = getState();
         let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
+        let pageNumber = 1;
+        let pageSize = 500;
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-        AsyncGet(API.getConversation + conversationId + '/' + USER_ID + '/' + USER_TYPE)
+        AsyncGet(API.getConversation 
+            + conversationId + '/' 
+            + USER_ID + '/' 
+            + USER_TYPE + '/'
+            + pageNumber + '/'
+            + pageSize)
             .then(resp => {
                 dispatch(setConversationData(resp.data));
                 dispatch(endLoading());
@@ -372,7 +386,6 @@ const onClearConversationImageUrl = () => {
 
 
 export function CanServiceProviderCreateMessage() {
-    
     return (dispatch, getState) => {
         let USER_ID = getUserInfo().serviceProviderId;
         dispatch(startLoading());
@@ -420,3 +433,28 @@ const onClearCurrentOpenConversation = () => {
         type: AsyncMessageActions.clearCurrentOpenConversation
     }
 };
+
+export function getConversationCount() {
+    return (dispatch) => {
+    dispatch(startLoading())
+    let USER_ID = getUserInfo().serviceProviderId;
+    let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+    AsyncGet(API.getConverstionCountByUserId 
+        + USER_ID + '/'
+        + USER_TYPE)
+        .then(resp => {
+            dispatch(getConversationCountSuccess(resp.data));
+            dispatch(endLoading())
+        })
+        .catch(err => {
+            dispatch(endLoading())
+        })
+}
+};
+
+const getConversationCountSuccess = (data) =>{
+    return{
+        type: AsyncMessageActions.setConversationCount,
+        data
+    }
+}

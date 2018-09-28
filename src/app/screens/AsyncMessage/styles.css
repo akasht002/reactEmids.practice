@@ -130,12 +130,8 @@ a:hover {
 }
 
 .MsgCount{
-    width: 120px;
+    width: 110px;
     padding: 16px 20px 16px 5px!important
-}
-
-.list-group-item{
-    padding: 0 !important;
 }
 
 .list-group-item table{
@@ -603,7 +599,7 @@ li.ProfileOptionItems:hover{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width:161px;
+    max-width:75%;
 }
 
 .participantDetailRight{
@@ -816,7 +812,7 @@ li.ProfileOptionItems:hover{
 textarea.msgTextArea{
     resize: none;
     border: 1px solid #e0e0e0 !important;
-    height: 36px;
+    max-height: 72px;
 }
 
 textarea.msgTextArea:focus{
@@ -1072,6 +1068,7 @@ input.form-control{
     height: 100px;
     display: block;
     margin: auto;
+    margin-top: 100px;
 }
 
 button:focus{
@@ -1375,10 +1372,6 @@ height: 80px;
 .MsgCount{
     width: 120px;
     padding: 16px 24px 16px 5px!important
-}
-
-.list-group-item{
-    padding: 0 !important;
 }
 
 .list-group-item table{

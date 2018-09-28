@@ -86,6 +86,7 @@ class SetPassword extends React.Component {
                                                 autoComplete="off"                                               
                                                 type="password"
                                                 label="Enter New Password"
+                                                maxlength={25}
                                                 className="form-control"
                                                 value={this.state.password}
                                                 textChange={(e) => this.setState({
@@ -108,6 +109,7 @@ class SetPassword extends React.Component {
                                                 autoComplete="off"                                                
                                                 type="password"
                                                 label="Confirm New password"
+                                                maxlength={25}
                                                 className="form-control"
                                                 value={this.state.confirmPassword}                                                                                          
                                                 textChange={(e) => this.setState({ 

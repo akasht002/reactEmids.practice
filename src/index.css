@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');@i
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 
 html, body{
     font-family: 'Open Sans', sans-serif !important;
@@ -220,6 +220,30 @@ a:focus, a:hover{
 .navbar{
     height: 60px;
 }
+
+.navbar-brand{
+    height: 30px;
+    }
+    
+    
+    
+    .BrandLink{
+    height: 16px;
+    }
+    
+    
+    
+    .brandName {
+    height: 26px;
+    }
+    
+    
+    
+    .navbar-brand img, .BrandLink img, .brandName img {
+    display: block;
+    height: 100%;
+    margin: 0 auto;
+    }
 
 .mainWidget{
     position: relative;

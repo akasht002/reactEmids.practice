@@ -36,6 +36,7 @@ import {
     GravatarOption, 
     GravatarValue,
     Gravatar,
+    Progressbar,
     UserAvatarMultiSelect
 } from './LevelOne';
 import {
@@ -87,5 +88,6 @@ export {
     GravatarOption, 
     GravatarValue,
     Gravatar,
+    Progressbar,
     UserAvatarMultiSelect
 };

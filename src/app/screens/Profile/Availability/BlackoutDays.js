@@ -174,22 +174,19 @@ class BlackoutDays extends Component {
         modalType = "edit";
       }
     }
-
     return (
       <React.Fragment>
         <div className={"SPAvailBlackOutWidget"}>
           <div className="col-md-12 card CardWidget SPBlackoutDays">
-            <div className={"SPCardTitle d-flex"}>
-            { !this.props.showBalckout && <h4 className={"primaryColor"}>Blackout Days</h4>} 
-              {
-                !this.props.showBalckout && (
+          { !this.props.showBalckout ? 
+            <div className="SPCardTitle d-flex">
+                 <h4 className={"primaryColor"}>Blackout Days</h4>
                   <i
                     className={"SPIconLarge SPIconAdd"}
                     onClick={this.toggleBlackout.bind(this, "add")}
                   />
-                )
-              }
-            </div>
+            </div> :  ""
+          }
             <div className={"SPCertificateContainer width100"}>
               <ul className={"SPCertificateList"}>{blackoutData}</ul>
             </div>
@@ -208,21 +205,20 @@ class BlackoutDays extends Component {
           closeBlackoutModal={this.closeBlackoutModal}
         />
         <ModalPopup
-                isOpen={this.state.isDeleteModalOpen}
-                toggle={this.toggleCheck}
-                ModalBody={<span>Do you want to delete the blackout days?</span>}
-                btn1='YES'
-                btn2='NO'
-                className='modal-sm'
-                headerFooter='d-none'
-                centered='centered'
-                onConfirm={() => this.delete()}
-                onCancel={() =>
-                this.setState({
-                  isDeleteModalOpen: false
-                })}
-              />
-
+          isOpen={this.state.isDeleteModalOpen}
+          toggle={this.toggleCheck}
+          ModalBody={<span>Do you want to delete the blackout days?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() => this.delete()}
+          onCancel={() =>
+          this.setState({
+            isDeleteModalOpen: false
+          })}
+        />
       </React.Fragment>
     );
   }

@@ -320,13 +320,13 @@ class WorkHistory extends Component {
         </form>
 
 
-        const workhistoryList = this.props.workhistoryList && this.props.workhistoryList.map((WorkHistoryList, i) => {
+        const workhistoryList = this.props.workhistoryList && this.props.workhistoryList.map((WorkHistoryList) => {
             return (
                 <li className="SPWorkHistoryItems" key={WorkHistoryList.company}>
                     <div className="SPCertificateContent">
                         <div className="width100 d-flex">
                             <h5 className="SPCertificateHeader">
-                                {WorkHistoryList.description} - <span>{WorkHistoryList.company}</span>
+                                {WorkHistoryList.designation} - <span>{WorkHistoryList.company}</span>
                             </h5>
                             <span className="ml-auto SPWorkYear">{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
 
