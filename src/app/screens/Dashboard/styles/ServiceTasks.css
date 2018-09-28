@@ -1,0 +1,190 @@
+.TabContainer{
+    display: flex;
+    display: -moz-flex;
+    position: relative;
+    height: 100px;
+    padding: 30px 50px 30px 20px;
+}
+
+.TabContainer:hover, .ServicesLink:hover{
+    cursor: pointer;
+}
+
+.TabContainer:after{
+    content: '';
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    top: 42%;
+    right: 30px;
+    background-image: url("../../../assets/images/Caret_Dropdown.svg");
+    background-position: center;
+    background-size: 16px;
+    background-repeat: no-repeat;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
+}
+
+.TabContainerWidget .accordion{
+    border: 0;
+}
+
+.accordion__item:focus, .TabContainer:focus{
+    outline: 0;
+}
+
+.TabContainerWidget .accordion .accordion__item .accordion__body{
+    display: block;
+    opacity: 1;
+    padding: 0;
+    height: auto;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
+}
+
+.TabContainerWidget .accordion .accordion__item .accordion__body--hidden{
+    display: block;
+    opacity: 1;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
+}
+
+.TabContainerWidget .card .card-body{
+    padding: 0;
+}
+
+.TabContainerWidget .card{
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.TabContainer.true:after{
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.TabContainer .ServiceTasksImg{
+    height: 40px;
+    margin-right: 20px;
+}
+
+.TabHeaderContent{
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.TabHeaderContent span{
+    color: #8c8c8c;
+    font-size: 14px;
+}
+
+.TabHeaderContent span.TabHeaderText{
+    font-weight: 600;
+    color: #444444;
+}
+
+.TabHeaderContent span i{
+    font-style: normal;
+    color: #444444;
+}
+
+.TabHeaderContent span .SelectedTask{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.TabHeaderContent span .TotalTasks{
+    font-size: 16px;
+}
+
+.ServiceList{
+    position: relative;
+    width: 100%;
+}
+
+.ServiceList input.ServicesInput{
+    position: absolute;
+    opacity: 0;
+}
+
+.ServicesLink{
+    position: relative;
+    display: block;
+    font-size: 14px;
+    color: #8c8c8c;
+    margin: 0 20px 0 80px;
+    padding: 20px 40px 20px 0;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.ServicesLink:after{
+    content: "";
+    height: 32px;
+    position: absolute;
+    width: 32px;
+    top: 15px;
+    right: 0;
+    border: 1px solid #d7d7d7;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    background-position: center;
+    background-size: 15px;
+    background-repeat: no-repeat;
+}
+
+.ServicesLink:before{
+    content: '';
+    display: block;
+    position: absolute;
+    left: -40px;
+    top: 26px;
+    height: 9px;
+    width: 9px;
+    background-color: #ba85d6;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.ServiceList:before{
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    top: -6px;
+    left: 44px;
+    background-image: linear-gradient(#f0e6f2 70%,hsla(0,0%,100%,0) 0);
+    background-position: 100%;
+    background-size: 1px 10px;
+    background-repeat: repeat-y
+}
+
+.card-body .ServiceList:last-child label{
+    border: 0;
+}
+
+.ServicesInput:checked ~ .ServicesLink{
+    color: #444444;
+}
+
+.ServicesInput:checked ~ .ServicesLink:after{
+    background-color: #7a329f;
+    border-color: #7a329f;
+    background-image: url("../../../assets/images/checked.svg");
+}

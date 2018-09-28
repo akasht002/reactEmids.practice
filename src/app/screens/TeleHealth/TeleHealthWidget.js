@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 import TeleHealthVideoControls from './TeleHealthVideoControls';
 import TeleHealthParticipants from './TeleHealthParticipants';
 import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
-import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference } from '../../redux/telehealth/actions';
+import {TeleHealthSettings} from '../../constants/config';
+import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference } from '../../redux/telehealth/actions';
 import './styles.css';
 
 class TeleHealthWidget extends Component {
@@ -30,6 +31,9 @@ class TeleHealthWidget extends Component {
             timeStarted: '',
             currentDateTime: moment().format('MM/DD/YYYY HH:mm')
         };
+        this.interval = null;
+        this.leaveTimeout = null;
+        this.inactiveSession = null;
     }
 
     componentDidMount() {
@@ -37,7 +41,12 @@ class TeleHealthWidget extends Component {
     }
 
     componentWillUnmount() {
-        this.leaveRoom(true);
+        clearInterval(this.interval);
+        clearTimeout(this.leaveTimeout);
+        clearTimeout(this.inactiveSession);
+        if (this.state.hasJoinedRoom) {
+            this.leaveRoom(true);
+        }
     }
 
     joinRoom = () => {
@@ -100,23 +109,23 @@ class TeleHealthWidget extends Component {
             hasJoinedRoom: false,
             localMediaAvailable: false
         });
-        this.props.leaveVideoConference();
+        this.props.endConference();
     }
 
     checkSessionInactive = () => {
-       setTimeout(() => {
+       this.inactiveSession = setTimeout(() => {
         this.setState({sessionInactivePopup: true});
-       }, 1800000);
+       }, TeleHealthSettings.sessionInactiveInMs);
     }
 
     checkMaxVideoCallHour = () => {
-        setTimeout(() => {
+        this.leaveTimeout = setTimeout(() => {
             this.leaveRoom();
-        }, 7200000);
+        }, TeleHealthSettings.maxVideoCallHourInMs);
     }
 
     checkTimeStarted = () => {
-        setInterval(() => {
+        this.interval = setInterval(() => {
             let timeStarted = moment("2015-01-01").startOf('day')
             .seconds(this.state.timeStartedSeconds + 1)
             .format('HH:mm:ss');
@@ -195,7 +204,6 @@ class TeleHealthWidget extends Component {
     }
 
     controlAudio = () => {
-        console.log(this.state.activeRoom);
         this.state.activeRoom.localParticipant.audioTracks.forEach((audioTrack) => {
             this.state.isMuteAudio ? audioTrack.enable() : audioTrack.disable();
         });
@@ -247,12 +255,7 @@ class TeleHealthWidget extends Component {
 
         let sliderCategory = [];
         this.state.activeRoom && this.state.activeRoom.participants.forEach((participant) => {
-            const finaldiv = document.createElement('div');
-            finaldiv.id = participant.sid;
             var tracks = Array.from(participant.tracks.values());
-            tracks.forEach(track => {
-                finaldiv.appendChild(track.attach());
-            });
             let cat = <div className='TeleHealthParticipants' onClick={() => { this.participantClick(participant) }}>
                 <input id={'Participants' + participant.sid} type='radio' name='Participants' value={participant.sid} />
                 <label className='ParticipantsLinkLabel' htmlFor={'Participants' + participant.sid}>
@@ -262,6 +265,9 @@ class TeleHealthWidget extends Component {
                 </label>
             </div>
             sliderCategory.push(cat);
+            tracks.forEach(track => {
+                this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+            });
         })
 
         return (
@@ -296,8 +302,9 @@ class TeleHealthWidget extends Component {
                         isMuteAudio={this.state.isMuteAudio}
                         isHiddenVideo={this.state.isHiddenVideo}
                         controlVideo={this.controlVideo}
-                        leaveRoom={this.leaveRoom}
+                        leaveRoom={() => {this.leaveRoom(false)}}
                         endConference={this.endConference}
+                        initiator={this.props.initiator}
                     />
                 </div>
                 <div className="TeleHealthItem Right">
@@ -343,14 +350,16 @@ function mapDispatchToProps(dispatch) {
     return {
         leaveVideoConference: (checkRoute) => dispatch(leaveVideoConference(checkRoute)),
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
-        addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data))
+        addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
+        endConference: () => dispatch(endConference())
     }
 };
 
 function mapStateToProps(state) {
     return {
         existingParticipantList: state.telehealthState.participantsByConferenceId,
-        conferenceParticipants: state.telehealthState.linkedPatients
+        conferenceParticipants: state.telehealthState.linkedPatients,
+        initiator: state.telehealthState.initiator
     }
 };
 

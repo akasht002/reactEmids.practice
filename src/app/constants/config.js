@@ -21,3 +21,8 @@ export const PUBLIC_KEY =
       '-----END PUBLIC KEY-----';
 
 export const STRIPE_KEY = "pk_test_n70bkOns9PqUMG4go5E77356"
+
+export const TeleHealthSettings = {
+    maxVideoCallHourInMs: 7200000,
+    sessionInactiveInMs: 1800000
+}

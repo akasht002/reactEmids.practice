@@ -6,7 +6,7 @@ body {
 }
 
 .navbar-brand {
-    display: none !important;
+    /* display: none !important; */
 }
 
 section .ProfileRightWidget {
@@ -17,7 +17,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    height: 100%;
+    height: calc(100% - 60px);
 }
 
 .dropdown.nav-item{
@@ -171,7 +171,7 @@ li div.dropdown-menu{
     position: relative;
     width: 100%;
     height: calc(100vh - 120px);
-    overflow: auto;
+    /* overflow: auto; */
     padding: 0 20px;
 }
 
@@ -326,7 +326,7 @@ li div.dropdown-menu{
 
 .BlockProfileDetails{
     display: inline-block;
-    padding: 0 20px;
+    padding: 0 20px 0 0;
     vertical-align: middle;
     width: calc(100% - 125px);
 }
@@ -706,7 +706,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ServiceRequestBoard{
-    width: 33%;
+    width: 33.33%;
     height: 197px;
     margin-bottom: 15px;
     padding: 0 10px;
@@ -868,7 +868,7 @@ div.scrollarea .scrollbar-container.vertical {
 }
 
 .slick-initialized .slick-slide{
-    margin-left: 15px;
+    margin-left: 6px;
 }
 
 .ProfileIconEye{
@@ -948,6 +948,34 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     background-image: url("../../assets/images/remove.png");
 }
 
+.NoInformation .myConversationContent{
+    justify-content: center;
+    align-items: center;
+}
+
+.NoInformation .myConversationContent .avatarContainer{
+    position: relative;
+}
+
+.NoInformation .myConversationContent .avatarContainer:before, .NoInformation .myConversationContent .avatarContainer:after{
+    content: '';
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    background-color: #e8e8e8;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.NoInformation .myConversationContent .avatarContainer:before{
+    left: 30px;
+}
+
+.NoInformation .myConversationContent .avatarContainer:after{
+    right: 0;
+}
+
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
         height: calc(100vh - 143px);
@@ -958,7 +986,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 512px;
+        height: 326px;
     }
 
     .bottomProfile.ServiceProvider .innerWidget:first-child, .ProfileContainer.topProfile {
@@ -990,7 +1018,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
-        margin-top: 12px;
+        margin-top: 0;
     }
 }
 
@@ -1022,7 +1050,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .ServiceRequestBoard{
-        width: 33.33%;
+        /* width: 33.33%; */
     }
 }
 
@@ -1614,9 +1642,4 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     .AvailabilityWidget .SPAvailWidget .Available, .AvailabilityWidget .SPAvailWidget .trueAvailable{
         margin: 0 0 15px !important;
     }
-}
-
-.scrollarea {
-    position: relative;
-    overflow: hidden;
 }

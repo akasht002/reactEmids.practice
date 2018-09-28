@@ -19,6 +19,8 @@ import {
   ResetPasswordSuccess,
   ResetPasswordConfirmation,
   Dashboard,
+  VisitHistory,
+  VistSummary,
   Welcome,
   Payments,
   PaymentSuccess,
@@ -68,7 +70,9 @@ export const Path = {
   telehealthConfirm: '/teleHealth/:id',
   messageSummary: '/messagesummary',
   conversations: '/conversation/:id',
-  conversation: '/conversation/'
+  conversation: '/conversation/',
+  visitHistory: '/visitHistory',
+  visitSummaryDetail: '/visitSummary',
 };
 
 class AppStackRoot extends Component {
@@ -87,7 +91,6 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
-
             <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
             <PrivateRoute path={Path.performTasks} component={PerformTasks} />
@@ -99,6 +102,8 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.messageSummary} component={ConversationSummary} />
             <PrivateRoute path={Path.profile} component={Profile} />
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
+             <PrivateRoute path={Path.visitHistory} component={VisitHistory}/>            
+            <PrivateRoute path={Path.visitSummaryDetail} component={VistSummary} />
             <PrivateRoute path={Path.payments} component={Payments} />
             <PrivateRoute path={Path.paymentsuccess} component={PaymentSuccess} />
             <PrivateRoute path={Path.paymentfailure} component={PaymentFailure} />
