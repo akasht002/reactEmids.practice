@@ -85,6 +85,7 @@ class ConversationSummary extends Component {
         </div>
         return (
             <AsideScreenCover >
+                <div className="mobile-view-title">
                 <div className="container-fluid p-0">
                     <div className="width100 mainWidgetProfile">
                         <div className="container mainProfileContent">
@@ -103,7 +104,7 @@ class ConversationSummary extends Component {
                         </div>
                     </div>
                 </div>
-
+                  </div>
                 <ParticipantsContainer
                     onRef={ref => (this.participantComponent = ref)}
                     isDisplayParticipantModal={this.state.isDisplayParticipantModal}
