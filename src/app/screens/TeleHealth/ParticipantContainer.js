@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ParticipantListModal from './Modals/ParticipantListModal';
 import ParticipantList from './ParticipantList';
@@ -10,15 +10,16 @@ import {
     GetAllParticipants,
     getLinkedPatients
 } from '../../redux/telehealth/actions';
+import {ModalTemplate} from '../../components';
+import {CanServiceProviderCreateMessage} from '../../redux/asyncMessages/actions';
 import SelectPatient from './SelectPatient';
 import {getUserInfo} from '../../services/http';
-import './styles.css';
 import { USERTYPES  } from '../../constants/constants';
+import './styles.css';
 
 class ParticipantsContainer extends Component {
     state = {
         selectedParticipants: [],
-        title: '',
         searchText: '',
         selectedPatientDetails: {}
     };
@@ -29,13 +30,12 @@ class ParticipantsContainer extends Component {
 
     componentDidMount() {
         this.props.onRef(this);
-        if (getUserInfo().userType === 'G') {
-            this.props.getLinkedPatients();
-        };
+        this.props.canServiceProviderCreateMessage();
+        this.props.getLinkedPatients();
     };
 
     onClearParticipantContainer = () => {
-        this.setState({ selectedParticipants: [], title: '', searchText: '', selectedPatientDetails: {} });
+        this.setState({ selectedParticipants: [], searchText: '', selectedPatientDetails: {} });
         this.props.clearLinkedParticipants();
         this.props.onSetDisplayParticipantModal();
     };
@@ -62,41 +62,17 @@ class ParticipantsContainer extends Component {
         this.props.createVideoConference(this.state.selectedParticipants);
     };
 
-    onTitleChange = (e) => {
-        this.setState({ title: e.target.value });
-    };
-
     onSearchTextChange = (e) => {
         this.setState({ searchText: e.target.value });
         let data = {
-                searchText: e.target.value,
-                contextId: this.state.selectedPatientDetails.length > 0 ? this.state.selectedPatientDetails.userId : null
-            };
-           this.props.getAllParticipants(data);
-    };
-
-    onSelectPatient = (patientId) => {
-        let patientData = {
-            userId: patientId,
-            participantType: USERTYPES.PATIENT
+            searchText: e.target.value,
+            contextId: this.state.selectedPatientDetails.length > 0 ? this.state.selectedPatientDetails.userId : null
         };
-        this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
-        let data = {
-            userId: getUserInfo().userId,
-            participantType: getUserInfo().userType,
-            searchText: this.state.searchText,
-            patientId: patientId ? patientId : 0,
-            conversationId: 0
-        };
-        this.props.getLinkedParticipantsByPatients(data);
+        this.props.getAllParticipants(data);
     };
 
     render() {
-        let participantModalData = <form className="participantsSearchForm">
-            {this.props.loggedInUser.userType === 'G' && <SelectPatient
-                onSelect={this.onSelectPatient}
-                patients={this.props.patients} />}
-
+        let participantModalData = this.props.canCreateConversation && <form className="participantsSearchForm">
             <p className="primaryColor mb-0 mt-4">Invite Participants</p>
             <ParticipantList
                 selectedParticipants={this.state.selectedParticipants}
@@ -104,19 +80,40 @@ class ParticipantsContainer extends Component {
                 onSearchTextChange={this.onSearchTextChange}
                 selectedContext={this.state.selectedContext}
                 searchText={this.state.searchText} />
-
         </form>
+
+        let participantListModal = this.props.canCreateConversation && <ParticipantListModal
+            isOpen={this.props.isDisplayParticipantModal}
+            toggle={this.onClearParticipantContainer}
+            ModalBody={participantModalData}
+            className="modal-lg asyncModal box-modelnewsearch"
+            modalTitle="Video Conference"
+            centered="centered"
+            isEnable={this.state.selectedParticipants.length > 0}
+            createConversation={this.onCreateConversation}
+        />
+
+        let modalContent = <div>
+            <p className="text-center lead p-4 m-0">
+                You cannot initiate conversation as you have no current service request.
+                </p>
+            <p className="text-right m-2">
+                <Link className="btn btn-outline-primary mx-3" to="#" onClick={this.onConfirmCreateConversationPermission}>Ok</Link>
+            </p>
+        </div>
+
+        let errorRequest = <ModalTemplate
+            isOpen={!this.props.canCreateConversation}
+            ModalBody={modalContent}
+            className="modal-sm"
+            headerFooter="d-none"
+            centered={true}
+        />
+
+        let modalData = this.props.canCreateConversation ? participantListModal : errorRequest;
+
         return (
-            <ParticipantListModal
-                isOpen={this.props.isDisplayParticipantModal}
-                toggle={this.onClearParticipantContainer}
-                ModalBody={participantModalData}
-                className="modal-lg asyncModal box-modelnewsearch"
-                modalTitle="Video Conference"
-                centered="centered"
-                isEnable={this.state.selectedParticipants.length > 0}
-                createConversation={this.onCreateConversation}
-            />
+            {modalData}
         )
     }
 };
@@ -128,15 +125,15 @@ function mapDispatchToProps(dispatch) {
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
         createVideoConference: (data) => dispatch(createVideoConference(data)),
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
-        getLinkedPatients: () => dispatch(getLinkedPatients())
+        getLinkedPatients: () => dispatch(getLinkedPatients()),
+        canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage())
     }
 };
-
 
 function mapStateToProps(state) {
     return {
         patients: state.telehealthState.linkedPatients,
-        loggedInUser: getUserInfo()
+        canCreateConversation: state.asyncMessageState.canCreateConversation
     }
 };
 
