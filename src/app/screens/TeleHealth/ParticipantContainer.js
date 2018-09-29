@@ -10,11 +10,6 @@ import {
     GetAllParticipants,
     getLinkedPatients
 } from '../../redux/telehealth/actions';
-import {ModalTemplate} from '../../components';
-import {CanServiceProviderCreateMessage} from '../../redux/asyncMessages/actions';
-import SelectPatient from './SelectPatient';
-import {getUserInfo} from '../../services/http';
-import { USERTYPES  } from '../../constants/constants';
 import './styles.css';
 
 class ParticipantsContainer extends Component {
@@ -30,7 +25,6 @@ class ParticipantsContainer extends Component {
 
     componentDidMount() {
         this.props.onRef(this);
-        this.props.canServiceProviderCreateMessage();
         this.props.getLinkedPatients();
     };
 
@@ -82,38 +76,17 @@ class ParticipantsContainer extends Component {
                 searchText={this.state.searchText} />
         </form>
 
-        let participantListModal = this.props.canCreateConversation && <ParticipantListModal
-            isOpen={this.props.isDisplayParticipantModal}
-            toggle={this.onClearParticipantContainer}
-            ModalBody={participantModalData}
-            className="modal-lg asyncModal box-modelnewsearch"
-            modalTitle="Video Conference"
-            centered="centered"
-            isEnable={this.state.selectedParticipants.length > 0}
-            createConversation={this.onCreateConversation}
-        />
-
-        let modalContent = <div>
-            <p className="text-center lead p-4 m-0">
-                You cannot initiate conversation as you have no current service request.
-                </p>
-            <p className="text-right m-2">
-                <Link className="btn btn-outline-primary mx-3" to="#" onClick={this.onConfirmCreateConversationPermission}>Ok</Link>
-            </p>
-        </div>
-
-        let errorRequest = <ModalTemplate
-            isOpen={!this.props.canCreateConversation}
-            ModalBody={modalContent}
-            className="modal-sm"
-            headerFooter="d-none"
-            centered={true}
-        />
-
-        let modalData = this.props.canCreateConversation ? participantListModal : errorRequest;
-
         return (
-            {modalData}
+            <ParticipantListModal
+                isOpen={this.props.isDisplayParticipantModal}
+                toggle={this.onClearParticipantContainer}
+                ModalBody={participantModalData}
+                className="modal-lg asyncModal box-modelnewsearch"
+                modalTitle="Video Conference"
+                centered="centered"
+                isEnable={this.state.selectedParticipants.length > 0}
+                createConversation={this.onCreateConversation}
+            />
         )
     }
 };
@@ -125,15 +98,13 @@ function mapDispatchToProps(dispatch) {
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
         createVideoConference: (data) => dispatch(createVideoConference(data)),
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
-        getLinkedPatients: () => dispatch(getLinkedPatients()),
-        canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage())
+        getLinkedPatients: () => dispatch(getLinkedPatients())
     }
 };
 
 function mapStateToProps(state) {
     return {
-        patients: state.telehealthState.linkedPatients,
-        canCreateConversation: state.asyncMessageState.canCreateConversation
+        patients: state.telehealthState.linkedPatients
     }
 };
 
