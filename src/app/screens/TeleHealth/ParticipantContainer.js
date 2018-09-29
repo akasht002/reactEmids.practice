@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ParticipantListModal from './Modals/ParticipantListModal';
 import ParticipantList from './ParticipantList';
@@ -10,6 +10,9 @@ import {
     GetAllParticipants,
     getLinkedPatients
 } from '../../redux/telehealth/actions';
+import SelectPatient from './SelectPatient';
+import {USERTYPES} from '../../constants/constants';
+import {getUserInfo} from '../../services/http'
 import './styles.css';
 
 class ParticipantsContainer extends Component {
@@ -65,9 +68,34 @@ class ParticipantsContainer extends Component {
         this.props.getAllParticipants(data);
     };
 
+    onSelectPatient = (patientId) => {
+        if (patientId === null){
+            this.props.clearLinkedParticipants();
+        } else {
+            let patientData = {
+                userId: patientId,
+                participantType: USERTYPES.PATIENT
+            };
+            let userId = getUserInfo().serviceProviderId;
+            this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
+            let data = {
+                userId: userId,
+                participantType: USERTYPES.SERVICE_PROVIDER,
+                searchText: this.state.searchText,
+                patientId: patientId ? patientId : 0,
+                conversationId: 0
+            };
+            this.props.getLinkedParticipantsByPatients(data);
+        }
+    };
+
     render() {
         let participantModalData = this.props.canCreateConversation && <form className="participantsSearchForm">
             <p className="primaryColor mb-0 mt-4">Invite Participants</p>
+            <SelectPatient
+                onSelect={this.onSelectPatient}
+                patients={this.props.patients} />
+
             <ParticipantList
                 selectedParticipants={this.state.selectedParticipants}
                 onCheckParticipant={this.onCheckParticipant}
