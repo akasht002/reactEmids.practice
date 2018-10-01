@@ -16,7 +16,6 @@ a:hover {
 
 .msgSectionWrapper{
     background-color: #f8f8f8;
-    height: 100vh;
     overflow: hidden;
     scroll-behavior: unset;
 }
@@ -600,7 +599,7 @@ li.ProfileOptionItems:hover{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width:161px;
+    max-width:75%;
 }
 
 .participantDetailRight{
@@ -813,7 +812,7 @@ li.ProfileOptionItems:hover{
 textarea.msgTextArea{
     resize: none;
     border: 1px solid #e0e0e0 !important;
-    height: 36px;
+    max-height: 72px;
 }
 
 textarea.msgTextArea:focus{
@@ -890,9 +889,30 @@ button.CloseMsgModal span{
 
 .msgImgPreview{
     margin: 0 auto;
-    max-height: calc( 100vh - 220px );
+    /* max-height: calc( 100vh - 220px ); */
     max-width: 100%;
     width: auto;
+}
+
+.block-picview
+{
+    width: 300px;
+    height: 300px;
+    background:#ddd;
+    padding: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.block-picview .msgImgPreview
+{
+display: block;
+max-width: 100%;
+max-height: 100%;
+height: auto;
+margin: 0 auto;
 }
 
 .leaveConversation{
@@ -1048,6 +1068,7 @@ input.form-control{
     height: 100px;
     display: block;
     margin: auto;
+    margin-top: 100px;
 }
 
 button:focus{
@@ -1241,7 +1262,6 @@ height: 80px;
 /*AsynMessages*/
 .msgSectionWrapper{
     background-color: #f8f8f8;
-    height: 100vh;
 }
 
 .btn{
@@ -1458,6 +1478,60 @@ height: 80px;
     width: 18px;
 }
 
+
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper
+{
+ display: block;
+ height: 100%;
+}
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper:focus
+{
+outline:none;
+pointer-events: none;
+-webkit-user-select: none; 
+user-select: none;
+}
+
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input
+{
+outline:none !important;
+display: block !important;
+padding-left: 0;
+height: auto;
+}
+
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input
+{
+display: block !important;
+width:100% !important;
+box-sizing:content-box;
+-webkit-box-sizing: border-box;
+line-height:40px;
+}
+
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input:focus
+{
+    box-shadow: none !important; 
+    outline:none !important;
+    pointer-events: none;
+    -webkit-user-select: none; 
+user-select: none;
+}
+
+.messageTypeWidget textarea.msgTextArea
+{
+margin-top: 8px;
+margin-bottom: 8px;
+resize:vertical;
+overflow: auto;
+}
+
+.messageTypeWidget textarea.msgTextArea:focus
+{
+    overflow:scroll !important;
+}
+
+
 /*microsoft-edge-detection*/
 @supports (-ms-ime-align: auto) {
     .table td.addAttachmentWidget, .table td.messageTypeWidget, .table td.sendButtonWidget {
@@ -1662,6 +1736,49 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
     color: #ffffff;
 }
 
+.height-auto
+{
+    height: 100% !important;
+}
+
 
 
 /*** end of button styles ***/
+
+
+.mainWidgetProfile .mainProfileContent
+{
+    padding: 0px 20px;
+}
+
+/*responsive-code-for-devices*/
+@media only screen and (max-width:1024px)
+{
+    .mainWidgetProfile .mainProfileContent {
+        padding: 0px 40px;
+    }
+}
+@media only screen and (max-width:767px)
+{
+    .mainWidgetProfile .mainProfileContent {
+        padding: 0px 15px;
+    }
+    .mainProfileContent .slightTopview
+    {
+        margin: 0px 20px 20px 0px;  
+    }
+    .slightTopview .pageTitle
+    {
+     padding-left:0px;
+    }
+    .mobile-view-title .mainWidgetProfile
+    {
+        margin-top: 0px !important;
+        max-height: 100%;
+        display: block;
+        clear: both;
+        padding: 0px 20px;
+    } 
+}
+
+/*--/responsive-code-for-devices*/

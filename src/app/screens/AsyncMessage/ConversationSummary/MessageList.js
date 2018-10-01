@@ -54,7 +54,7 @@ class MessageList extends Component {
         let header = "";
         if (participants && participants.length > 0) {
             participants.map(participant => {
-                header += formatName(participant.firstName)
+                header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
             });
             header = header.slice(0, -2);
         }

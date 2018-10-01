@@ -1643,3 +1643,23 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         margin: 0 0 15px !important;
     }
 }
+
+.scrollarea {
+    position: relative;
+    overflow: hidden;
+}
+
+/*Ui-bugs-issue-fixed*/
+.ProfileRightWidget .navbarProfile
+{
+    width:inherit;
+    position: absolute;
+}
+
+.ProfileRightContainer
+{
+    clear: both;
+    width: auto;
+    margin-top: 60px;
+    height: calc(100% - 120px)
+}

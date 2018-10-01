@@ -12,7 +12,8 @@ const defaultState = {
     linkedParticipants: [],
     dashboardMessageCount: null,
     conversationImageUrl: '',
-    canCreateConversation : false,
+    canCreateConversation: false,
+    conversationCount: 20
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -102,6 +103,11 @@ const asyncMessageState = (state = defaultState, action) => {
             return {
                 ...state,
                 canCreateConversation: action.data
+            };
+        case AsyncMessageActions.setConversationCount:
+            return {
+                ...state,
+                conversationCount: action.data
             };
         default:
             return state;
