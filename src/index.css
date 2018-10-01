@@ -669,7 +669,7 @@ body > div:nth-child(4) > div > div.modal.fade.show{display:flex!important;}
     margin-left: 15px!important;
 }
 .mainContent.px-5 > div:nth-child(1){
-    position: absolute!important;
+    position: absolute !important;
     top: 0px!important;
     left: 15px!important;
     right: 15px!important;
