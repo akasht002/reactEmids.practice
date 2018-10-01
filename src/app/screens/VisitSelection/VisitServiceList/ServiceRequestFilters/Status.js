@@ -15,7 +15,7 @@ function ServiceRequestsStatus(props){
                             className="ServiceCheckbox" 
                             name={"ServiceStatus"} 
                             id={"ServiceStatus"+catNum} 
-                            checked={props.checked}
+                            checked={item.isChecked}
                             type="checkbox"
                             value={props.serviceStatus}
                             onChange={(e)=>{

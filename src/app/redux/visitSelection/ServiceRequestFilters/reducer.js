@@ -6,7 +6,7 @@ const defaultState = {
     ServiceCategory: [],
     ServiceType:[],
     ServiceStatus:[],
-    getServiceArea:[]
+    ServiceAreaList:[]
 };
 
 const ServiceRequestFilterState = (state = defaultState, action) => {
@@ -30,8 +30,23 @@ const ServiceRequestFilterState = (state = defaultState, action) => {
         case ServiceRequestFiltersList.getServiceAreaSuccess:
         return {
             ...state,
-            getServiceArea: action.data.addresses
+            ServiceAreaList: action.data.addresses
         };
+        case ServiceRequestFiltersList.clearServiceCategory:
+        return {
+            ...state,
+            ServiceType: action.data
+        };
+        case ServiceRequestFiltersList.clearServiceArea:
+        return {
+            ...state,
+            ServiceAreaList: action.data
+        };
+        case ServiceRequestFiltersList.clearServiceRequestStatus:
+            return {
+                ...state,
+                ServiceStatus: action.data
+            };
 
         default:
             return state;

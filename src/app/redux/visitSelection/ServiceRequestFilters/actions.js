@@ -7,8 +7,43 @@ export const ServiceRequestFiltersList = {
     getServiceCategoryListSuccess: 'get_service_request_filters_list_success/servicerequestfilters',
     getServiceTypeSuccess: 'get_service_type_success/servicerequestfilters',
     getServiceRequestStatusSuccess: 'get_servicerequest_status_success/servicerequestfilters',
-    getServiceAreaSuccess: 'get_servicearea_status_success/servicerequestfilters'
+    getServiceAreaSuccess: 'get_servicearea_status_success/servicerequestfilters',
+    clearServiceCategory: 'clear_service_category/servicerequestfilters',
+    clearServiceArea: 'clear_service_area/servicerequestfilters',
+    clearServiceRequestStatus: 'clear_servicerequest_status_success/servicerequestfilters'
 };
+
+export const clearServiceRequestStatus = (data) => {
+    data.map((item)=>{
+        return item.isChecked =false;
+    })
+     return {
+        type: ServiceRequestFiltersList.clearServiceRequestStatus,
+        data
+    }
+} 
+
+
+export const clearServiceCategory = (data) => {
+    data.map((item)=>{
+        return item.isChecked =false;
+    })
+     return {
+        type: ServiceRequestFiltersList.clearServiceCategory,
+        data
+    }
+}
+
+export const clearServiceArea = (data) => {
+    
+    data.map((item)=>{
+        return item.isChecked =false;
+    })
+     return {
+        type: ServiceRequestFiltersList.clearServiceArea,
+        data
+    }
+}
 
 export const getServiceCategoryListSuccess = (data) => {
     return {
@@ -37,6 +72,7 @@ export const getServiceAreaSuccess = (data) => {
 }
 
 export function getServiceCategory() {
+    
     return (dispatch) => {
       
         dispatch(startLoading());
@@ -51,10 +87,12 @@ export function getServiceCategory() {
 };
 
 export function getServiceType(data) {
+   //debugger;
+   data.isChecked = false;
     return (dispatch) => {
       
         dispatch(startLoading());
-        let serviceCategoryId= data;
+        let serviceCategoryId= data.value;
         elasticSearchGet(API.getServiceType+`${serviceCategoryId}`).then((resp) => {
            dispatch(getServiceTypeSuccess(resp.data))
             dispatch(endLoading());
@@ -79,11 +117,13 @@ export function ServiceRequestStatus() {
     }
 };
 
-export function getServiceArea() {
+export function getServiceArea(data) {
+   // data.isChecked = false;
     return (dispatch) => {
       
         dispatch(startLoading());
-        let serviceProviderId =  getUserInfo().serviceProviderId
+       // let serviceProviderId = getUserInfo().serviceProviderId;
+       let serviceProviderId = 1;
         Get(API.getServiceareaList+`${serviceProviderId}`).then((resp) => {
            dispatch(getServiceAreaSuccess(resp.data))
             dispatch(endLoading());

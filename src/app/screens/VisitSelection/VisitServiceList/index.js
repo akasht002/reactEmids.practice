@@ -14,7 +14,7 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
-import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea,clearServiceCategory,clearServiceArea,clearServiceRequestStatus} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -155,6 +155,9 @@ class VisitServiceList extends Component {
             isValid: true,
             selectedOption:''
         })
+        this.props.clearServiceCategory(this.props.ServiceType); 
+        this.props.clearServiceArea(this.props.ServiceAreaList); 
+        this.props.clearServiceRequestStatus(this.props.ServiceAreaList)
     }
 
     handleChangeServiceCategory=(selectedOption)=>{
@@ -162,7 +165,7 @@ class VisitServiceList extends Component {
             ServiceCategoryId:selectedOption.label,
             selectedOption:selectedOption  
         });
-        this.props.getServiceType(selectedOption.value)
+        this.props.getServiceType(selectedOption)
     }
 
     handleserviceType =(item) =>{
@@ -340,7 +343,10 @@ function mapDispatchToProps(dispatch) {
         getServiceType: (data) => dispatch(getServiceType(data)),
         getFilter:(data)  => dispatch(getFilter(data)),
         getSort:(data)  => dispatch(getSort(data)),
-        getServiceArea:()  => dispatch(getServiceArea()),
+        getServiceArea:(data)  => dispatch(getServiceArea(data)),
+        clearServiceCategory:(data) => dispatch(clearServiceCategory(data)),
+        clearServiceArea:(data) => dispatch(clearServiceArea(data)),
+        clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data))
     }
 };
 
@@ -353,7 +359,7 @@ function mapStateToProps(state) {
         ServiceCategory:state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
         ServiceStatus:state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
         ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType,
-        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.getServiceArea
+        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList
     };
 };
 
