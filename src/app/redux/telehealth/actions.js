@@ -191,7 +191,7 @@ export function endConference() {
 export function getLinkedPatients() {
     return (dispatch) => {
           dispatch(startLoading());
-          AsyncGet(API.getContext +  getUserInfo().userId).then((resp) => {
+          AsyncGet(API.getContext +  getUserInfo().serviceProviderId).then((resp) => {
               dispatch(getLinkedPatientsSuccess(resp.data));
               dispatch(endLoading());
           }).catch((err) => {
