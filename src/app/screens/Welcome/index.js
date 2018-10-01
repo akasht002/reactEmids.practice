@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ScreenCover, Button } from '../../components';
 import { onLogin } from '../../redux/auth/login/actions';
-import { onLogout } from '../../redux/auth/logout/actions';
 import './styles.css';
 
 const images = require.context('../../assets/images/home', true);
@@ -101,10 +100,6 @@ class Welcome extends Component {
         this.props.onLogin();
     }
 
-    onLogOutPress = () => {
-        this.props.onLogout();
-    }
-
     render() {
         const menus = ["login"];
         const style2 = {
@@ -123,7 +118,7 @@ class Welcome extends Component {
                                     <Link className="brandName text-uppercase" to="/">
                                         <img src={require('../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
                                     </Link>
-                                    <Button type="button" onClick={this.props.user ? this.onLogOutPress : this.onLoginPress} classname="btn btn-primary text-uppercase change-f" label={this.props.user ? "Logout" : "Login"} />
+                                    <Button type="button" onClick={this.onLoginPress} classname="btn btn-primary text-uppercase change-f" label={"Login"} />
                                 </div>
                                 <div className="sliderWrapper" style={style3}>
                                     <div className="sliderContainer">
@@ -173,15 +168,8 @@ class Welcome extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onLogin: () => dispatch(onLogin()),
-        onLogout: () => dispatch(onLogout())
+        onLogin: () => dispatch(onLogin())
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        user: state.oidc.user,
-    }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Welcome));
+export default withRouter(connect(null, mapDispatchToProps)(Welcome));
