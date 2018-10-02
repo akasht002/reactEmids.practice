@@ -10,7 +10,7 @@ function ServiceArea (props) {
                 name="AddressPOS" id={'Address' + catNum}
                 type="radio"
                 value={props.serviceArea}
-                defaultchecked={address.isChecked}
+                checked={address.isChecked}
                 onChange={(e)=>{
                     address.isChecked = e.target.checked;
                     props.handleServiceArea(address)}

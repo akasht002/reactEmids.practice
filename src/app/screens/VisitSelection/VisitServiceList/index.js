@@ -127,22 +127,20 @@ class VisitServiceList extends Component {
     }
 
     applyFilter =() =>{
-        if ((this.state.serviceTypes) && (this.state.ServiceCategoryId)) {
-            let data = {
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                serviceStatus: this.state.serviceStatus,
-                ServiceCategoryId:this.state.ServiceCategoryId,
-                serviceTypes:this.state.serviceTypes,
-                ServiceAreas:this.state.ServiceAreas
-            };
-            this.props.getFilter(data)
-            this.setState({
-                filterOpen: !this.state.filterOpen
-            })
-        } else {
-            this.setState({ isValid: false });
-        }
+     
+        let data = {
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
+            serviceStatus: this.state.serviceStatus,
+            ServiceCategoryId:this.state.ServiceCategoryId,
+            serviceTypes:this.state.serviceTypes,
+            ServiceAreas:this.state.ServiceAreas
+        };
+        this.props.getFilter(data)
+        this.setState({
+            filterOpen: !this.state.filterOpen
+        })
+        
     }
 
     applyReset =() =>{
@@ -157,7 +155,7 @@ class VisitServiceList extends Component {
         })
         this.props.clearServiceCategory(this.props.ServiceType); 
         this.props.clearServiceArea(this.props.ServiceAreaList); 
-        this.props.clearServiceRequestStatus(this.props.ServiceAreaList)
+        this.props.clearServiceRequestStatus(this.props.ServiceStatus)
     }
 
     handleChangeServiceCategory=(selectedOption)=>{
@@ -193,7 +191,7 @@ class VisitServiceList extends Component {
     
     }
     handleServiceArea =(item) =>{
-
+        
         const locations = {
             'lat':item.lat,
             'lon':item.lon,
@@ -311,9 +309,7 @@ class VisitServiceList extends Component {
                     todateChanged={this.todateChanged}
                     todateChangedRaw={this.todateChangedRaw}
                     endDate={this.state.endDate}
-                    serviceStatus={this.state.serviceStatus}
                     isValid={this.state.isValid}
-                    serviceStatus={this.state.serviceStatus}
                     ServiceCategory={this.props.ServiceCategory}
                     handleChangeServiceCategory={this.handleChangeServiceCategory}
                     ServiceCategoryId={this.state.ServiceCategoryId}
