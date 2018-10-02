@@ -87,7 +87,6 @@ export function getServiceCategory() {
 };
 
 export function getServiceType(data) {
-   //debugger;
    data.isChecked = false;
     return (dispatch) => {
       
@@ -118,12 +117,10 @@ export function ServiceRequestStatus() {
 };
 
 export function getServiceArea(data) {
-   // data.isChecked = false;
     return (dispatch) => {
       
         dispatch(startLoading());
-       // let serviceProviderId = getUserInfo().serviceProviderId;
-       let serviceProviderId = 1;
+        let serviceProviderId = getUserInfo().serviceProviderId;
         Get(API.getServiceareaList+`${serviceProviderId}`).then((resp) => {
            dispatch(getServiceAreaSuccess(resp.data))
             dispatch(endLoading());
