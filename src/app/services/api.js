@@ -55,7 +55,7 @@ export const API = {
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
     getVisitHistoryList: 'ServiceRequest/Visits/ServiceProvider/',
-    getConversation: 'conversation/user/',
+    getConversation: 'conversation/',
     getUnreadCount: 'Conversation/Unread/User/',
     getServiceProviders: 'Patient/FavouriteServiceProvider/',
     getServiceProviderRequests: 'ServiceRequest/ServiceRequests/ServiceProvider/',
