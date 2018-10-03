@@ -48,6 +48,8 @@ export function getLinkedParticipantsByPatients(data) {
     return (dispatch) => {
         dispatch(startLoading());
         let searchText = data.searchText === "" ? null : data.searchText;
+        const userInfo = getUserInfo();
+        data.userId = userInfo.serviceProviderId;
         AsyncGet(API.getParticipantsByContext + data.conversationId +
             '/' + data.userId +
             '/' + data.patientId +
@@ -66,7 +68,7 @@ export function createVideoConference(data) {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         let twilioData = {
-            createdBy: userInfo.userId,
+            createdBy: userInfo.serviceProviderId,
             createdByType: userInfo.userType,
             participantList: data
         };
@@ -160,7 +162,7 @@ export function GetAllParticipants(data) {
         let state = getState();
         let searchText = data.searchText ? data.searchText : null;
         let roomId = state.telehealthState.roomId ? state.telehealthState.roomId : 0;
-        let contextId = data.contextId ? data.contextId : userInfo.userId;
+        let contextId = data.contextId ? data.contextId : userInfo.serviceProviderId;
         dispatch(startLoading());
         AsyncGet(API.getAllParticipants
             + userInfo.serviceProviderId + '/S/'

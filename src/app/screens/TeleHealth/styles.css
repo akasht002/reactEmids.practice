@@ -673,6 +673,18 @@ input.searchParticipants ~ small:before {
     align-items: center;
 }
 
+@media (max-width: 1920px) {
+    div.modal-lg {
+        max-width: 800px !important;
+    }
+}
+
+@media (max-width: 1366px) {
+    div.modal-lg {
+        max-width: 800px !important;
+    }
+}
+
 @media (max-width: 1024px) {
     .TeleHealthItem.Right {
         width: 250px;
@@ -764,11 +776,8 @@ input.searchParticipants ~ small:before {
         top: 18px;
     }
 }
+
 .itsMe{
     width: 140px!important;
-    height: 102px!important;
-    /* top: 50px;
-    left: 15px; */
-    
-        
+    height: 102px!important;        
 }

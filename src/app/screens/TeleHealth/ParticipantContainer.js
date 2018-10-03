@@ -7,7 +7,6 @@ import {
     getLinkedParticipantsByPatients,
     clearLinkedParticipants,
     createVideoConference,
-    GetAllParticipants,
     getLinkedPatients
 } from '../../redux/telehealth/actions';
 import SelectPatient from './SelectPatient';
@@ -61,11 +60,16 @@ class ParticipantsContainer extends Component {
 
     onSearchTextChange = (e) => {
         this.setState({ searchText: e.target.value });
-        let data = {
-            searchText: e.target.value,
-            contextId: this.state.selectedPatientDetails.length > 0 ? this.state.selectedPatientDetails.userId : null
-        };
-        this.props.getAllParticipants(data);
+        if (this.state.selectedPatientDetails && this.state.selectedPatientDetails.userId) {
+            let data = {
+                searchText: e.target.value,
+                patientId: this.state.selectedPatientDetails.userId,
+                conversationId: 0,
+                userId: 0,
+                participantType: USERTYPES.SERVICE_PROVIDER
+            };
+            this.props.getLinkedParticipantsByPatients(data);
+        }
     };
 
     onSelectPatient = (patientId) => {
@@ -91,17 +95,17 @@ class ParticipantsContainer extends Component {
 
     render() {
         let participantModalData = <form className="participantsSearchForm">
-            <p className="primaryColor mb-0 mt-4">Invite Participants</p>
             <SelectPatient
                 onSelect={this.onSelectPatient}
                 patients={this.props.patients} />
-
+            <p className="primaryColor mb-0 mt-4">Invite Participants</p>
             <ParticipantList
                 selectedParticipants={this.state.selectedParticipants}
                 onCheckParticipant={this.onCheckParticipant}
                 onSearchTextChange={this.onSearchTextChange}
                 selectedContext={this.state.selectedContext}
-                searchText={this.state.searchText} />
+                searchText={this.state.searchText}
+                participantList={this.props.linkedParticipants} />
         </form>
 
         return (
@@ -125,14 +129,14 @@ function mapDispatchToProps(dispatch) {
         getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
         createVideoConference: (data) => dispatch(createVideoConference(data)),
-        getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         getLinkedPatients: () => dispatch(getLinkedPatients())
     }
 };
 
 function mapStateToProps(state) {
     return {
-        patients: state.telehealthState.linkedPatients
+        patients: state.telehealthState.linkedPatients,
+        participants: state.telehealthState.linkedParticipants
     }
 };
 
