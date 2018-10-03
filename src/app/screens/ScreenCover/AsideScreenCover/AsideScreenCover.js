@@ -55,7 +55,7 @@ class AsideScreenCover extends React.Component {
                 this.helpDocEl.click();
                 break;
             case 'logout':
-                this.props.logout();
+                this.props.onLogout();
                 break;
             default: 
                 this.setState({selectedLink: link})
