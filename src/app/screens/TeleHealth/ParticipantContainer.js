@@ -90,7 +90,7 @@ class ParticipantsContainer extends Component {
     };
 
     render() {
-        let participantModalData = this.props.canCreateConversation && <form className="participantsSearchForm">
+        let participantModalData = <form className="participantsSearchForm">
             <p className="primaryColor mb-0 mt-4">Invite Participants</p>
             <SelectPatient
                 onSelect={this.onSelectPatient}
