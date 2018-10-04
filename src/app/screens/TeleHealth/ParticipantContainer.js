@@ -105,7 +105,7 @@ class ParticipantsContainer extends Component {
                 onSearchTextChange={this.onSearchTextChange}
                 selectedContext={this.state.selectedContext}
                 searchText={this.state.searchText}
-                participantList={this.props.linkedParticipants} />
+                participantList={this.props.participants} />
         </form>
 
         return (

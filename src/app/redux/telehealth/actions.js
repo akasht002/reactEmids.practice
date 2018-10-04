@@ -69,7 +69,7 @@ export function createVideoConference(data) {
         const userInfo = getUserInfo();
         let twilioData = {
             createdBy: userInfo.serviceProviderId,
-            createdByType: userInfo.userType,
+            createdByType: 'S',
             participantList: data
         };
         dispatch(startLoading());
@@ -179,16 +179,19 @@ export function GetAllParticipants(data) {
 
 export function endConference() {
     return (dispatch, getState) => {
-          let state = getState().telehealthState;
-          dispatch(startLoading());
-          AsyncGet(API.endConference +  state.token + '/' + state.roomId).then((resp) => {
-                dispatch(push(Path.dashboard));
-              dispatch(endLoading());
-          }).catch((err) => {
-              dispatch(endLoading());
-          })
-      }
-  };
+        let state = getState().telehealthState;
+        let token = {
+            authToken: state.token
+        }
+        dispatch(startLoading());
+        AsyncPost(API.endConference + state.roomId, token).then((resp) => {
+            dispatch(push(Path.dashboard));
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
 
 export function getLinkedPatients() {
     return (dispatch) => {
