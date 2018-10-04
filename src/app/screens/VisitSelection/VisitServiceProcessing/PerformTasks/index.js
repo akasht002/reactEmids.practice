@@ -55,13 +55,13 @@ class PerformTasks extends Component {
         let percentageCalculation
         if (e.target.checked) {
             this.checkedTask.push(taskList)
-            percentageCalculation = ((this.checkedTask).length / this.state.taskList.totalTask) * 100;
+            percentageCalculation = Math.round(((this.checkedTask).length / this.state.taskList.totalTask) * 100);
         }
         else {
             this.checkedTask.splice(this.checkedTask.findIndex(function (item, index) {
                 return item.serviceRequestTypeTaskVisitId === parseInt(e.target.value, 0);
             }), 1);
-            percentageCalculation = ((this.checkedTask).length / this.state.taskList.totalTask) * 100;
+            percentageCalculation = Math.round(((this.checkedTask).length / this.state.taskList.totalTask) * 100);
         }
         this.setState({
             checkedData: this.checkedTask,

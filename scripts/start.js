@@ -13,7 +13,7 @@ process.env.NODE_ENV = 'development';
 // process.env.REACT_APP_TP_URL = 'http://localhost:63633/api/';
 
 process.env.REACT_APP_API_URL = "https://chqa-sp-api.coreoflowsandbox.com/api/";
-process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
+process.env.REACT_APP_AUTH_URL = 'http://localhost:5001/';
 process.env.REACT_APP_SR_URL = "https://chqa-ui.coreoflowsandbox.com/api/";
 process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
 process.env.REACT_APP_MSG_URL = "https://chqa-vp-ui.coreoflowsandbox.com/api/";

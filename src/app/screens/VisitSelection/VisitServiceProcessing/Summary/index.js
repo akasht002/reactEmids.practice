@@ -96,7 +96,7 @@ class Summary extends Component {
     render() {
 
         let modalContent = '';
-        let completedTaskPercent = (this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100;
+        let completedTaskPercent = Math.round((this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100);
 
         if (this.state.isModalOpen) {
             modalContent = <form className="AdjustTimeForm">

@@ -56,7 +56,9 @@ class _CardForm extends Component {
                     "token": payload.token.id,
                     "cardNumberChanged": payload.token.card.last4,
                     "amount": Math.round(this.props.data.CalculationsData.grandTotalAmount),
-                    "cardType": payload.token.card.brand
+                    "cardType": payload.token.card.brand,
+                    "serviceRequestId": this.props.data.SummaryDetails.serviceRequestId,
+                    "serviceRequestVisitId": this.props.data.SummaryDetails.serviceRequestVisitId,
                 }
                 this.props.token(data);
             } else {
@@ -146,7 +148,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState
+        summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState,
+        SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails
     };
 };
 
