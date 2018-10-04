@@ -15,6 +15,8 @@ export const USER_LOCALSTORAGE = "userData";
 export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
 export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
 
+export const PHONE_NUMBER_CONST = '+1 ';
+
 export const RESPONSE_STATUS = {
     VALID: "Valid",
     INVALID: "Invalid",

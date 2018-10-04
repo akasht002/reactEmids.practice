@@ -19,6 +19,7 @@ import {
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
+import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 import {
   checkTextNotStartWithNumber,
   getArrayLength,
@@ -420,7 +421,7 @@ class Organization extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail &&
-                  this.props.personalDetail.phoneNumber}
+                 PHONE_NUMBER_CONST + this.props.personalDetail.phoneNumber}
               </span>
             </div>
           </div>

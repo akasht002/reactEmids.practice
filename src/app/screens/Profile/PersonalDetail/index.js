@@ -24,6 +24,7 @@ import {
   getLength,
   checkhourlyRate
 } from '../../../utils/validations'
+import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 
 import { SETTING } from '../../../services/api'
 
@@ -466,7 +467,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail &&
-                '+1 ' + this.props.personalDetail.phoneNumber}
+                PHONE_NUMBER_CONST + this.props.personalDetail.phoneNumber}
               </span>
             </div>
           </div>
