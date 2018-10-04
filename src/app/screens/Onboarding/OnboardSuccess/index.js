@@ -2,14 +2,14 @@ import React from "react";
 import { connect } from 'react-redux';
 import { Link,withRouter } from 'react-router-dom';
 import { ScreenCover } from '../../../components'
-import { continueToProfile } from '../../../redux/onboarding/OnboardSuccess/actions';
+import { onLogin } from '../../../redux/auth/login/actions';
 import './styles.css';
 import '../styles.css';
 
 class OnboardSuccess extends React.Component {
 
-    continueToProfile = () => {
-        this.props.continueToProfile();
+    onLoginPress = () => {
+        this.props.onLogin();
     }
 
     render() {
@@ -29,7 +29,7 @@ class OnboardSuccess extends React.Component {
                                     <div className="onBoardSuccessContainer">
                                         <span className="onBoardSuccessIcon"/>
                                         <span className="onBoardSuccessText my-3 mb-4">You are Successfully onboarded!</span>
-                                        <button type="button" class="onBoardSuccessBtn btn btn-primary" onClick={this.continueToProfile}>CONTINUE</button>
+                                        <button type="button" class="onBoardSuccessBtn btn btn-primary" onClick={this.onLoginPress}>Login</button>
                                     </div>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@ class OnboardSuccess extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        continueToProfile: () => dispatch(continueToProfile())
+        onLogin: () => dispatch(onLogin())
     }
 };
 
