@@ -44,3 +44,13 @@ export const ImageFormats = {
     PNG : 'image/png',
     GIF : 'image/gif'
 }
+
+export const SERVICE_STATUS = {
+    "CLOSED":"Closed",
+    "INPROGRESS":"InProgress",
+    "CANCELLED":"Cancelled",
+    "INPROGRESS":"InProgress",
+    "COMPLETED":"Completed",
+    "NOT INTERESTED":"Not Interested"
+
+}

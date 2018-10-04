@@ -14,7 +14,7 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
-import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea,clearServiceCategory,clearServiceArea,clearServiceRequestStatus} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -127,22 +127,20 @@ class VisitServiceList extends Component {
     }
 
     applyFilter =() =>{
-        if ((this.state.serviceTypes) && (this.state.ServiceCategoryId)) {
-            let data = {
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                serviceStatus: this.state.serviceStatus,
-                ServiceCategoryId:this.state.ServiceCategoryId,
-                serviceTypes:this.state.serviceTypes,
-                ServiceAreas:this.state.ServiceAreas
-            };
-            this.props.getFilter(data)
-            this.setState({
-                filterOpen: !this.state.filterOpen
-            })
-        } else {
-            this.setState({ isValid: false });
-        }
+     
+        let data = {
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
+            serviceStatus: this.state.serviceStatus,
+            ServiceCategoryId:this.state.ServiceCategoryId,
+            serviceTypes:this.state.serviceTypes,
+            ServiceAreas:this.state.ServiceAreas
+        };
+        this.props.getFilter(data)
+        this.setState({
+            filterOpen: !this.state.filterOpen
+        })
+        
     }
 
     applyReset =() =>{
@@ -155,6 +153,9 @@ class VisitServiceList extends Component {
             isValid: true,
             selectedOption:''
         })
+        this.props.clearServiceCategory(this.props.ServiceType); 
+        this.props.clearServiceArea(this.props.ServiceAreaList); 
+        this.props.clearServiceRequestStatus(this.props.ServiceStatus)
     }
 
     handleChangeServiceCategory=(selectedOption)=>{
@@ -162,7 +163,7 @@ class VisitServiceList extends Component {
             ServiceCategoryId:selectedOption.label,
             selectedOption:selectedOption  
         });
-        this.props.getServiceType(selectedOption.value)
+        this.props.getServiceType(selectedOption)
     }
 
     handleserviceType =(item) =>{
@@ -190,7 +191,7 @@ class VisitServiceList extends Component {
     
     }
     handleServiceArea =(item) =>{
-
+        
         const locations = {
             'lat':item.lat,
             'lon':item.lon,
@@ -308,9 +309,7 @@ class VisitServiceList extends Component {
                     todateChanged={this.todateChanged}
                     todateChangedRaw={this.todateChangedRaw}
                     endDate={this.state.endDate}
-                    serviceStatus={this.state.serviceStatus}
                     isValid={this.state.isValid}
-                    serviceStatus={this.state.serviceStatus}
                     ServiceCategory={this.props.ServiceCategory}
                     handleChangeServiceCategory={this.handleChangeServiceCategory}
                     ServiceCategoryId={this.state.ServiceCategoryId}
@@ -340,7 +339,10 @@ function mapDispatchToProps(dispatch) {
         getServiceType: (data) => dispatch(getServiceType(data)),
         getFilter:(data)  => dispatch(getFilter(data)),
         getSort:(data)  => dispatch(getSort(data)),
-        getServiceArea:()  => dispatch(getServiceArea()),
+        getServiceArea:(data)  => dispatch(getServiceArea(data)),
+        clearServiceCategory:(data) => dispatch(clearServiceCategory(data)),
+        clearServiceArea:(data) => dispatch(clearServiceArea(data)),
+        clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data))
     }
 };
 
@@ -353,7 +355,7 @@ function mapStateToProps(state) {
         ServiceCategory:state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
         ServiceStatus:state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
         ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType,
-        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.getServiceArea
+        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList
     };
 };
 
