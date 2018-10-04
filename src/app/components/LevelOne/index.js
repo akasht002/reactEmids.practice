@@ -19,6 +19,11 @@ import { GeneralModalPopup } from './GeneralModalPopup';
 import {LoginCover} from './LoginCover';
 import {ProfileImage} from './ProfileImage';
 import {StopWatch} from './StopWatch';
+import {ModalTemplate} from './ModalTemplate';
+import {MultiSelectAvatar, GravatarOption, GravatarValue} from './AvatarMultiSelect';
+import {Gravatar} from './Gravatar';
+import {Progressbar} from './Progressbar'
+import {UserAvatarMultiSelect} from './UserAvatarMultiSelect';
 
 export {
     Calendar,
@@ -41,5 +46,12 @@ export {
     GeneralModalPopup,
     LoginCover,
     ProfileImage,
-    StopWatch
+    StopWatch,
+    ModalTemplate,
+    MultiSelectAvatar, 
+    GravatarOption, 
+    GravatarValue,
+    Gravatar,
+    Progressbar,
+    UserAvatarMultiSelect
 };

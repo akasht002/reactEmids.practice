@@ -1,1 +1,1 @@
-export const ContactMenu = ["Contact"]
+export const ContactMenu = ["contact"]

@@ -42,7 +42,7 @@ export function getServiceStatusDetail () {
     dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestStatus)
       .then(resp => {
-        dispatch(getServiceStatusSuccess(resp.data))
+        dispatch(getServiceStatusSuccess(resp.data.slice(0,5)))
         dispatch(endLoading())
       })
       .catch(err => {
@@ -162,7 +162,7 @@ export function getConversationDetail () {
   return (dispatch, getState) => {
     dispatch(startLoading())
     axios
-      .get(messageURL + API.getConversation + MSG_SERVICE_PROVIDER + MSG_TYPE)
+      .get(messageURL + API.getConversationSummary +  getUserInfo().serviceProviderId  + MSG_TYPE)
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -186,7 +186,7 @@ export function getUnreadMessageCounts (userId) {
         messageURL +
           API.getUnreadCount +
           getUserInfo().serviceProviderId +
-          '?participantType=i'
+          '?participantType=' + MSG_TYPE
       )
       .then(resp => {
         dispatch(onUnreadCountSuccess(resp.data))

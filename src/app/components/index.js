@@ -30,7 +30,14 @@ import {
     StarRating,
     GeneralModalPopup,
     ProfileImage,
-    StopWatch
+    StopWatch,
+    ModalTemplate,
+    MultiSelectAvatar, 
+    GravatarOption, 
+    GravatarValue,
+    Gravatar,
+    Progressbar,
+    UserAvatarMultiSelect
 } from './LevelOne';
 import {
     CarouselComp,
@@ -75,5 +82,12 @@ export {
     ProfileImage,
     StopWatch,
     UserInactivityView,
-    ToggleSwitch
+    ToggleSwitch,
+    ModalTemplate,
+    MultiSelectAvatar, 
+    GravatarOption, 
+    GravatarValue,
+    Gravatar,
+    Progressbar,
+    UserAvatarMultiSelect
 };

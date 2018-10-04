@@ -15,18 +15,12 @@ export const MenuData = [
         id: 2,
         title: 'Visit History',        
         iconName: 'iconProfile iconProfileServiceVisits',
-        link:'/'
+        link:'/visitHistory'
     },
     {
         id: 3,
         title: 'Service Providers',        
         iconName: 'iconProfile iconProfileServiceProviders',
-        link:'/'
-    },
-    {
-        id: 4,
-        title: 'Payments',        
-        iconName: 'iconProfile iconProfilePayments',
         link:'/'
     },
     {

@@ -13,14 +13,22 @@ import {
   VisitServiceDetails,
   PerformTasks,
   Feedback,
-  Home,
   Summary,
   ForgetPassword,
   ResetPassword,
   ResetPasswordSuccess,
   ResetPasswordConfirmation,
-  Dashboard
-
+  Dashboard,
+  VisitHistory,
+  VistSummary,
+  Welcome,
+  Payments,
+  PaymentSuccess,
+  PaymentFailure,
+  TeleHealth,
+  InvitationAlert,
+  ConversationSummary,
+  Conversation
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -48,14 +56,23 @@ export const Path = {
   visitServiceDetails: '/visitservicedetails',
   performTasks: '/performtasks',
   feedback: '/feedback',
-  home: '/home',
   loginCallBack: '/loginCallBack',
   summary: '/summary',
   forgetPassword: '/forgetPassword',
   resetPassword: '/resetPassword/:uid/:token',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
-  dashboard:'/dashboard'
+  dashboard: '/dashboard',
+  payments: '/payments',
+  paymentsuccess: '/paymentsuccess',
+  paymentfailure: '/paymentfailure',
+  teleHealth: '/teleHealth',
+  telehealthConfirm: '/teleHealth/:id',
+  messageSummary: '/messagesummary',
+  conversations: '/conversation/:id',
+  conversation: '/conversation/',
+  visitHistory: '/visitHistory',
+  visitSummaryDetail: '/visitSummary',
 };
 
 class AppStackRoot extends Component {
@@ -64,30 +81,32 @@ class AppStackRoot extends Component {
       <ConnectedRouter history={this.props.history}>
         <HashRouter>
           <Switch>
-            <Route exact path={Path.root} component={Home} />
+            <Route exact path={Path.root} component={Welcome} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
-            <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
-            <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
-            <PrivateRoute path={Path.performTasks} component={PerformTasks} />
-            <PrivateRoute path={Path.feedback} component={Feedback} />
-            <PrivateRoute path={Path.summary} component={Summary} />
-            <Route path={Path.loginCallBack} component={LoginCallBack}/>
             <Route path={Path.loginCallBack} component={LoginCallBack} />
             <Route path={Path.forgetPassword} component={ForgetPassword} />
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
-            <PrivateRoute path={Path.profile} component={Profile} />
             <PrivateRoute path={Path.visitServiceList} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} component={VisitServiceDetails} />
             <PrivateRoute path={Path.performTasks} component={PerformTasks} />
             <PrivateRoute path={Path.feedback} component={Feedback} />
-            <PrivateRoute path={Path.summary} component={Summary} />            
+            <PrivateRoute path={Path.summary} component={Summary} />
+            <PrivateRoute path={Path.telehealthConfirm} component={InvitationAlert} />
+            <PrivateRoute path={Path.teleHealth} component={TeleHealth} />
+            <PrivateRoute path={Path.conversations} component={Conversation} />
+            <PrivateRoute path={Path.messageSummary} component={ConversationSummary} />
+            <PrivateRoute path={Path.profile} component={Profile} />
             <PrivateRoute path={Path.dashboard} component={Dashboard} />
-
+             <PrivateRoute path={Path.visitHistory} component={VisitHistory}/>            
+            <PrivateRoute path={Path.visitSummaryDetail} component={VistSummary} />
+            <PrivateRoute path={Path.payments} component={Payments} />
+            <PrivateRoute path={Path.paymentsuccess} component={PaymentSuccess} />
+            <PrivateRoute path={Path.paymentfailure} component={PaymentFailure} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

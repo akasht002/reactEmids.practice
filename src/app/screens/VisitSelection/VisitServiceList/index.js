@@ -14,13 +14,39 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
+import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea,clearServiceCategory,clearServiceArea,clearServiceRequestStatus} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
+import Filter from "./ServiceRequestFilters";
+import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
+import Sorting from "../ServiceRequestSorting"
+
 import './style.css'
 
 class VisitServiceList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { serviceRequestId: '', isOpen: false };
+        this.state = { 
+            serviceRequestId: '', 
+            isOpen: false,
+            filterOpen: false,
+            startDate:'',
+            endDate:'',
+            serviceStatus:[],
+            isValid:true,
+            selectedOption: null,
+            ServiceCategoryId:'',
+            serviceTypes:[],
+            isSortOpen: false,
+            newest: true,
+            posted: true,
+            serviceArea:'',
+            coverageArea:'',
+            lat:'',
+            lon:'',
+            ServiceAreas:{},
+            isChecked:false
+        };
     };
 
     toggle() {
@@ -31,6 +57,9 @@ class VisitServiceList extends Component {
 
     componentDidMount() {
         this.props.getVisitServiceList();
+        this.props.getServiceCategory();
+        this.props.ServiceRequestStatus()
+        this.props.getServiceArea()
     }
 
     handleClick = (requestId) => {
@@ -59,6 +88,149 @@ class VisitServiceList extends Component {
         }
     }
     
+    /* filter code */ 
+    toggleFilter=()=>{
+        this.setState({
+            filterOpen: !this.state.filterOpen
+        })
+    }
+        
+    dateChanged = (date) => {
+        const formattedDate = formattedDateMoment(date);
+        this.setState({  
+            startDate: formattedDate
+            
+        });
+
+    }
+    
+    dateChangedRaw = (event) => {
+        const formattedDate = formattedDateChange(event);
+        this.setState({  
+            startDate: formattedDate
+        });
+    
+    }
+    todateChanged = (date) => {
+        const formattedDate = formattedDateMoment(date);
+        this.setState({  
+            endDate: formattedDate
+        });
+
+    }
+
+    todateChangedRaw = (event) => {
+        const formattedDate = formattedDateChange(event);
+        this.setState({  
+            endDate: formattedDate
+        });
+    }
+
+    applyFilter =() =>{
+     
+        let data = {
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
+            serviceStatus: this.state.serviceStatus,
+            ServiceCategoryId:this.state.ServiceCategoryId,
+            serviceTypes:this.state.serviceTypes,
+            ServiceAreas:this.state.ServiceAreas
+        };
+        this.props.getFilter(data)
+        this.setState({
+            filterOpen: !this.state.filterOpen
+        })
+        
+    }
+
+    applyReset =() =>{
+        this.setState({
+            startDate:'',
+            endDate:'',
+            serviceStatus:[],
+            ServiceCategoryId:'',
+            serviceTypes:[],
+            isValid: true,
+            selectedOption:''
+        })
+        this.props.clearServiceCategory(this.props.ServiceType); 
+        this.props.clearServiceArea(this.props.ServiceAreaList); 
+        this.props.clearServiceRequestStatus(this.props.ServiceStatus)
+    }
+
+    handleChangeServiceCategory=(selectedOption)=>{
+        this.setState({ 
+            ServiceCategoryId:selectedOption.label,
+            selectedOption:selectedOption  
+        });
+        this.props.getServiceType(selectedOption)
+    }
+
+    handleserviceType =(item) =>{
+        let serviceType = this.state.serviceTypes
+        serviceType.push(item.serviceTypeDescription)
+        this.setState({
+            serviceTypes:serviceType
+        })
+    }
+
+    handleChangeserviceStatus =(item,e) =>{
+        let service = this.state.serviceStatus
+        if (e.target.checked) {
+            service.push(item.keyValue)
+        }else {
+            let index = service.indexOf(item.keyValue);
+            if (index > -1) {
+                service.splice(index, 1);
+            }
+        }
+       
+        this.setState({
+            serviceStatus: service,
+        });
+    
+    }
+    handleServiceArea =(item) =>{
+        
+        const locations = {
+            'lat':item.lat,
+            'lon':item.lon,
+        }
+        const serviceAreaObj = {
+            'CoverageArea'  : item.coverageArea,
+            'Locations':locations  
+        };          
+        this.setState({            
+            ServiceAreas:serviceAreaObj
+        })
+    }
+
+    /* sorting */
+    toggleclass =(e) =>{
+        var element = document.getElementsByClassName("dropdown-menu")[0];
+        element.classList.add("show");
+        var element1 = document.getElementsByClassName("dropdown-item")[0];
+        element1.classList.add("dropdown-item-checked");
+    }
+    onSortChange = (posted, newest) =>{
+        var data={
+            sortByOrder : newest ? "ASC" : "DESC",
+            sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
+            fromDate: null,
+            toDate: null,
+            status: 0
+        }
+        this.props.getSort(data);
+            var element = document.getElementsByClassName("dropdown-menu")[0];
+            element.classList.remove("show");
+            element.classList.add("hide");
+        this.setState({
+            newest: (newest !== null ? newest : this.state.newest),
+            posted: (posted !== null ? posted : this.state.posted),
+            isSortOpen: false
+        });
+    }
+    
     render() {
 
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -66,26 +238,21 @@ class VisitServiceList extends Component {
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card' onClick={() => this.handleClick(serviceList.serviceRequestId)}>
                         <div className="BlockImageContainer">
-                            <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ProfileImage" alt="categoryImage" />
+                            <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ServiceImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
-                                    {serviceList.serviceRequestTypeDetails && serviceList.serviceRequestTypeDetails.map((serviceType) => {
-                                        return (
-                                            <span key={serviceType.serviceTypeId}>{serviceType.serviceTypeDescription}, </span>
-                                        )
-                                    })
-                                    }
+                                    <span>{serviceList.type}</span>
                                 </div>
                                 <div className='BlockImageDetailsActivity'>
                                     {serviceList.serviceCategoryDescription}
                                 </div>
                                 <div className='BlockImageDetailsDate'>
-                                    {serviceList.recurringPatternDescription} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
+                                    {serviceList.recurring} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
                                 </div>
                             </div>
                         </div>
                         <div className="BlockProfileContainer">
-                            <img className="ProfileImage" src={serviceList.image} alt="patientImage" />
+                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
@@ -96,10 +263,10 @@ class VisitServiceList extends Component {
                             </div>
                             <div class='BlockProfileDetailsStatus'>
                                 {
-                                    <a className={`${this.renderStatusClassName(serviceList.statusName)}`} to='/'>{
-                                        serviceList.statusName === VISIT_SERVICE_STATUS_NOT_HIRED ?
-                                            serviceList.matchPercentage : serviceList.statusName
-                                    }</a>
+                                    <span className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`}>{
+                                        serviceList.serviceRequestStatus === VISIT_SERVICE_STATUS_NOT_HIRED ?
+                                            serviceList.matchPercentage : serviceList.serviceRequestStatus
+                                    }</span>
                                 }
                             </div>
                         </div>
@@ -117,8 +284,13 @@ class VisitServiceList extends Component {
                         <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
-                        <a className='primaryColor ProfileHeaderSort' to=''>Sort</a>
-                        <a className='primaryColor' to=''>Filters</a>
+                    <Sorting
+                        onSortChange={this.onSortChange}
+                        newest={this.state.newest}
+                        posted={this.state.posted}
+                        toggleclass={this.toggleclass}
+                    />
+                    <span className='primaryColor' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
@@ -126,6 +298,32 @@ class VisitServiceList extends Component {
                         {visitList}
                     </div>
                 </Scrollbars>
+                <Filter 
+                    isOpen={this.state.filterOpen} 
+                    toggle={this.toggleFilter} 
+                    applyFilter={this.applyFilter}
+                    applyReset={this.applyReset}
+                    startDate={this.state.startDate}
+                    dateChanged={this.dateChanged}
+                    dateChangedRaw={this.dateChangedRaw}
+                    todateChanged={this.todateChanged}
+                    todateChangedRaw={this.todateChangedRaw}
+                    endDate={this.state.endDate}
+                    isValid={this.state.isValid}
+                    ServiceCategory={this.props.ServiceCategory}
+                    handleChangeServiceCategory={this.handleChangeServiceCategory}
+                    ServiceCategoryId={this.state.ServiceCategoryId}
+                    selectedOption={this.state.selectedOption}
+                    ServiceType={this.props.ServiceType}
+                    handleserviceType={this.handleserviceType}
+                    ServiceStatus={this.props.ServiceStatus}
+                    handleChangeserviceStatus={this.handleChangeserviceStatus}
+                    serviceStatus={this.state.serviceStatus}
+                    ServiceAreaList ={this.props.ServiceAreaList}
+                    handleServiceArea={this.handleServiceArea}
+                    serviceArea={this.state.serviceArea}
+                    checked={this.state.isChecked}
+                />
             </AsideScreenCover>
         )
     }
@@ -135,14 +333,29 @@ function mapDispatchToProps(dispatch) {
     return {
         getVisitServiceList: () => dispatch(getVisitServiceList()),
         getVisitServiceDetails: (data) => dispatch(getVisitServiceDetails(data)),
-        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data))
+        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data)),
+        getServiceCategory: () => dispatch(getServiceCategory()),
+        ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
+        getServiceType: (data) => dispatch(getServiceType(data)),
+        getFilter:(data)  => dispatch(getFilter(data)),
+        getSort:(data)  => dispatch(getSort(data)),
+        getServiceArea:(data)  => dispatch(getServiceArea(data)),
+        clearServiceCategory:(data) => dispatch(clearServiceCategory(data)),
+        clearServiceArea:(data) => dispatch(clearServiceArea(data)),
+        clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data))
     }
 };
 
 function mapStateToProps(state) {
+
     return {
+      
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
-        profileImgData: state.profileState.PersonalDetailState.imageData
+        profileImgData: state.profileState.PersonalDetailState.imageData,
+        ServiceCategory:state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
+        ServiceStatus:state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
+        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType,
+        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList
     };
 };
 

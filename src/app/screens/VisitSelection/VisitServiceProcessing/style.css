@@ -860,6 +860,7 @@ label.form-check-label {
 
 .SPAvailContainer.trueAvailable {
     border: 1px solid #7a329f;
+    margin-left:0px;
 }
 
 .SPAvailContainer {
@@ -1021,9 +1022,9 @@ div.AddressCardWidget {
     display: none;
 }
 
-.ServiceTypesSlider.Summary .ServiceTypeLink {
+/* .ServiceTypesSlider.Summary .ServiceTypeLink {
     border-color: #7a329f;
-}
+} */
 
 .ServiceTasks.Summary {
     padding: 0;

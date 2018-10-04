@@ -8,6 +8,9 @@ import {
     Nav,
     NavItem,
     NavLink,
+    Dropdown,
+    DropdownToggle,
+    DropdownMenu
 } from 'reactstrap';
 import { SearchInput } from "../../../components";
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
@@ -29,7 +32,7 @@ class ProfileHeader extends Component {
         });
     }
 
-    handleNavigation = (event) =>{
+    handleNavigation = (event) => {
         switch (event.target.title) {
             case "logout":
                 this.props.onLogout();
@@ -42,18 +45,15 @@ class ProfileHeader extends Component {
     render() {
         const menuList = ProfileHeaderMenu.map((menu) => {
             let menuName = menu.name;
-            let Separator = "";
+            let separator = "";
             if (menu.status) {
                 let clsName = "navIcon icon" + makeProperCase(menuName);
                 if (menuName === "notification") {
-                    Separator = "NavIconSeparator"
+                    separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem key={menu.name} className={menuName + "Widget navIconWidget " + Separator}>
-                        <NavLink className={clsName}
-                            href={menu.link} 
-                            key={menu.id}
-                            />
+                    <NavItem className={menuName + "Widget navIconWidget " + separator} key={menu.id}>
+                        <NavLink className={clsName} key={menu.id} onClick={() => { this.props.onClick(menu.link) }} />
                     </NavItem>
                 )
             }
@@ -62,7 +62,6 @@ class ProfileHeader extends Component {
 
         return (
             <Navbar className="navbar-light navbarProfile boxShadowBottom bgWhite" expand="md">
-                <NavbarBrand className="text-uppercase">Coreo Home</NavbarBrand>
                 <NavbarToggler className={this.state.dBlock} onClick={this.props.toggle} />
                 <Collapse isOpen={false} navbar>
                     <Nav navbar className="SearchWidget width100">
@@ -79,6 +78,14 @@ class ProfileHeader extends Component {
                         {menuList}
                     </Nav>
                 </Collapse>
+                <Dropdown nav isOpen={this.state.dropdownOpen} toggle={() => {this.setState({dropdownOpen: !this.state.dropdownOpen})}}>
+                    <DropdownToggle nav className="ProfileIcon"><img className="ProfileImage" src={this.props.profilePic}/></DropdownToggle>
+                    <DropdownMenu right>
+                        <NavLink href='#/profile'>My Profile</NavLink>
+                        <NavLink href='#/settings'>Settings</NavLink>
+                        <NavLink onClick={() => this.props.onClick('logout')}>Logout</NavLink>
+                    </DropdownMenu>
+                </Dropdown>
             </Navbar>
         );
     }
@@ -88,6 +95,6 @@ function mapDispatchToProps(dispatch) {
     return {
         onLogout: () => dispatch(onLogout())
     }
-  }
-  
+}
+
 export default connect(null, mapDispatchToProps)(ProfileHeader);

@@ -2,6 +2,10 @@
     opacity: 0;
 }
 
+.form-check-label:hover{
+    cursor: pointer;
+}
+
 .form-check-label{
     margin-left: 8px;
 }

@@ -19,3 +19,10 @@ export const PUBLIC_KEY =
       '+BMQ6CCTZlwW3HFWJPpbxmo0iV+cmUr6N+/HYKJ5ibKpgrhUSZtY4dPj/CbDZryw' +
       'gwIDAQAB' +
       '-----END PUBLIC KEY-----';
+
+export const STRIPE_KEY = "pk_test_n70bkOns9PqUMG4go5E77356"
+
+export const TeleHealthSettings = {
+    maxVideoCallHourInMs: 7200000,
+    sessionInactiveInMs: 1800000
+}

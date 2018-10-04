@@ -95,11 +95,18 @@ class AvailabilityEdit extends Component {
         })
     };
 
+    checkBoxValue = (day) => {
+      let slots = day.slots;
+      let value =  slots.some((slot) => slot.isActive === true);
+      return value;
+    }
+
     getAllAvailableDays = () => {
         if (this.state.updatedAvailableDays && this.state.updatedAvailableDays.length > 0) {
             return this.state.updatedAvailableDays.map((day, i) => {
+               let value = this.checkBoxValue(day);
                 return (
-                    <div className={'SPAvailContainer'}>
+                    <div className={'SPAvailContainer ' + value + 'Available'}>
                         <div className={'SPAvailTitle'}>
                             <span className={'SPAvailTitleText'}>{day.dayName}</span>
                         </div>
@@ -150,7 +157,7 @@ class AvailabilityEdit extends Component {
                     {availableDays}
                 </div>
                 <div className={'SPAvailBlackOutWidget'}>
-                    <BlackoutDays />
+                    <BlackoutDays/>
                 </div>
              </div>
            </React.Fragment>     

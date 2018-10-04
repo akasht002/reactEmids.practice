@@ -1,20 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
 import {Preloader, UserInactivityView} from '../../';
 import { onLogout } from '../../../redux/auth/logout/actions';
-import {getUserInactiveTimeout} from '../../../redux/auth/user/actions';
 import './styles.css';
 
 class ScreenCover extends Component {
-
-    componentDidMount() {
-        if (!this.props.timeForInactivity) {
-            this.props.getUserInactiveTimeout();
-        }
-    }
-
     render() {
         return(
             <section className="d-flex">
@@ -26,10 +18,10 @@ class ScreenCover extends Component {
                         {this.props.children}
                         {this.props.isLoading && <Preloader/>}
                     </UserInactivityView> :
-                    <div>
+                    <Fragment>
                         {this.props.children}
                         {this.props.isLoading && <Preloader/>}
-                    </div>
+                    </Fragment>
                 }
             </section>
         );
@@ -43,15 +35,14 @@ ScreenCover.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        timeForInactivity: state.authState.userState.autoLogoutTime,
+        timeForInactivity: state.authState.userState.userData && state.authState.userState.userData.autoLogoutTime,
         accessToken: state.oidc.user && state.oidc.user.access_token
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        inactiveUser: () => dispatch(onLogout()),
-        getUserInactiveTimeout: () => dispatch(getUserInactiveTimeout())
+        inactiveUser: () => dispatch(onLogout())
     }
 }
 

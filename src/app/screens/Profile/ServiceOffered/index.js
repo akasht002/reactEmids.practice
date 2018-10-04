@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileModalPopup, ModalPopup } from "../../../components";
 import ServiceOfferedContent from '../ServiceOffered/serviceOfferedContent'
-import { getServiceOffered, addServiceOfferd, editServiceOffered } from '../../../redux/profile/ServiceOffered/actions';
+import { getServiceOffered, addServiceOfferd, editServiceOffered, toggleCollapseCategory, toggleCollapseDetails } from '../../../redux/profile/ServiceOffered/actions';
 
 class ServiceOffered extends React.Component {
 
@@ -47,11 +47,7 @@ class ServiceOffered extends React.Component {
     }
 
     addServiceOfferd = () => {
-        const data = [
-            {
-                serviceType: this.state.serviceType
-            }
-        ]
+        const data =  this.state.serviceType
         this.props.addServiceOfferd(data);
         this.setState({
             isModalOpen: false,
@@ -95,6 +91,7 @@ class ServiceOffered extends React.Component {
                     handleClick={this.oncheckedServices}
                     name={this.props.serviceOfferedDetails}
                     type={'edit'}
+                    toggleCollapse={(category) => { this.props.toggleCollapseDetails(category) }}
                 />
                 :
                 ''
@@ -102,9 +99,9 @@ class ServiceOffered extends React.Component {
 
         {
             this.state.isModalOpen && this.state.isAdd ?
-                modalTitle = 'Add Skills and Experience'
+                modalTitle = 'Add Services Offered'
                 :
-                modalTitle = 'Edit Skills and Experience'
+                modalTitle = 'Edit Services Offered'
         }
 
         return (
@@ -124,6 +121,7 @@ class ServiceOffered extends React.Component {
                             <ServiceOfferedContent
                                 name={this.props.serviceOfferedList}
                                 type={'view'}
+                                toggleCollapse={(category) => { this.props.toggleCollapseCategory(category) }}
                             />
                         </div>
                         :
@@ -171,7 +169,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getServiceOffered: () => dispatch(getServiceOffered()),
         addServiceOfferd: (data) => dispatch(addServiceOfferd(data)),
-        editServiceOffered: () => dispatch(editServiceOffered())
+        editServiceOffered: () => dispatch(editServiceOffered()),
+        toggleCollapseCategory: (data) => dispatch(toggleCollapseCategory(data)),
+        toggleCollapseDetails: (data) => dispatch(toggleCollapseDetails(data))
     }
 };
 

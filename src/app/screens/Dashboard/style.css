@@ -6,7 +6,7 @@ body {
 }
 
 .navbar-brand {
-    display: none !important;
+    /* display: none !important; */
 }
 
 section .ProfileRightWidget {
@@ -383,7 +383,7 @@ li div.dropdown-menu{
     color: #ffffff !important
 }
 
-.btn-open{
+a.btn-open, span.btn-open{
     color: #ef6f48 !important;
     border-color: #ef6f48 !important;
     font-size: 12px !important;
@@ -391,7 +391,7 @@ li div.dropdown-menu{
     line-height: 12px !important;
 }
 
-.btn-open:hover{
+a.btn-open:hover, span.btn-open:hover{
     background-color: #ef6f48 !important;
     color: #ffffff !important
 }
@@ -652,15 +652,16 @@ li div.dropdown-menu{
 }
 
 .TabBody .SPAvailWidget div:first-child{
-    margin-left: 0;
+    /* margin-left: 0; */
 }
 
 .TabBody .SPAvailWidget div:last-child{
-    margin-right: 0;
+    /* margin-right: 0; */
 }
 
 a.ProfileCardHeaderLink:hover{
     text-decoration: none;
+    color: #7a329f;
 }
 
 .ProfileCard {
@@ -700,6 +701,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileCardBody {
     padding: 20px 0 0 0;
+    transform: translateY(2%);
 }
 
 .ProfileCardBody > div {
@@ -796,7 +798,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ServiceRequestBoard{
-    width: 25%;
+    width: 33.33%;
     height: 197px;
     margin-bottom: 15px;
     padding: 0 10px;
@@ -1048,7 +1050,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 512px;
+        height: 326px;
     }
 
     .bottomProfile.ServiceProvider .innerWidget:first-child, .ProfileContainer.topProfile {
@@ -1056,11 +1058,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-        padding: 22px 20px;
+        padding: 16px 20px;
     }
 
     div.ServiceProvider div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
-        padding: 14px 20px;
+        padding: 22px 20px;
     }
 
     .ProfileCardBody .ServiceRequestPalette {
@@ -1080,11 +1082,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
-        margin-top: 12px;
+        margin-top: 0;
     }
 }
 
-@media (max-width: 1366px) {
+@media (min-width: 1366px) {
 
     .innerWidget .card.extended {
         height: calc(100vh - 140px);
@@ -1354,6 +1356,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .ProfileServicesVisitList {
         padding: 15px 0;
+      
     }
 
     .ProfileCard {
@@ -1696,6 +1699,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         display: -moz-flex;
         justify-content: center;
     }
+
 
     div.ServiceTypesSlider.Summary {
         flex-direction: inherit;

@@ -1,0 +1,366 @@
+.FilterWidget {
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 100%;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 9999;
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #eaeaea;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
+}
+
+.FilterWidget.true{
+    width: 660px;
+}
+
+.FilterWidgetForm{
+    height: 100%;
+}
+
+.FilterContainer{
+    width: 100%;
+}
+
+.FilterTop{
+    display: flex;
+    display: -moz-flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 76px;
+    background-color: #f4ecfc;
+    padding: 20px;
+    font-size: 20px;
+    color: #7a329f;
+    font-weight: 600;
+}
+
+.FilterCloseIcon{
+    position: relative;
+    height: 16px;
+    width: 16px;
+}
+
+.FilterMiddleLeft span:hover, .FilterCloseIcon:hover, .CheckboxSet label:hover{
+    cursor: pointer;
+}
+
+.FilterCloseIcon:before{
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    top: 0;
+    background-image: url("../../../../assets/images/removeBlack.svg");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.FilterMiddle{
+    display: flex;
+    height: 100%;
+    max-height: calc(100% - 193px);
+    overflow: auto;
+}
+
+.FilterMiddle .scrollarea-content{
+    display: flex;
+    display: -moz-flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.FilterMiddleContent{
+
+}
+
+.FilterMiddleLeft{
+    width: 230px;
+    -webkit-box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
+    -moz-box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
+    box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
+}
+
+.FilterMiddleRight{
+    width: calc(100% - 230px);
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.FilterMiddleRight .tab-content{
+    width: 100%;
+    padding: 30px;
+}
+
+.FilterBottom{
+    display: flex;
+    display: -moz-flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 60px;
+    padding: 10px 20px;
+    -webkit-box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
+    -moz-box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
+    box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
+}
+
+.FilterMiddleLeft span{
+    display: block;
+    padding: 20px;
+    color: #444444;
+    border: 1px solid transparent;
+}
+
+.FilterMiddleLeft span:hover{
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.FilterMiddleLeft span:hover, .FilterMiddleLeft span.active{
+    background-color: #f9f7fb;
+}
+
+.tab-pane .form-group > label{
+    font-size: 14px;
+}
+
+.CheckSet{
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 8px;
+}
+
+.CheckboxSet input, .CheckSet input{
+    position: absolute;
+    opacity: 0;
+}
+
+.CheckSet label{
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
+    padding: 5px 15px;
+    border: 1px solid #b7b7b7;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.CheckSet label:hover{
+    cursor: pointer;
+}
+
+.CheckSet input:checked ~ label{
+    background-color: #f4ecfc;
+    border: 1px solid #7a329f;
+}
+
+.CheckboxSet{
+    display: block;
+    position: relative;
+}
+
+.CheckboxSet label{
+    position: relative;
+    font-weight: 400;
+    padding-left: 24px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.CheckboxSet label:before{
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    top: 4px;
+    left: 0;
+    border: 1px solid #b7b7b7;
+    background-color: #ffffff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.CheckboxSet:hover label:before{
+    background-color: #7a329f;
+    border-color: #7a329f;
+}
+
+.CheckboxSet:focus label:before{
+    border-color: #7a329f;
+}
+
+.CheckboxSet input:checked ~ label:before{
+    background-color: #7a329f;
+    border-color: #7a329f;
+    background-repeat: no-repeat;
+    background-image: url("../../../../assets/images/checked.svg");
+    background-size: 11px;
+    background-position: center;
+}
+
+.AddressCardWidget.All, .AddressCardWidget.All .AddressPOS{
+    min-height: auto;
+    height: auto;
+}
+
+.CheckboxSetImage label:before{
+    top: 12px;
+}
+
+.ServiceCheckboxLabel{
+    display: flex;
+    display: -moz-flex;
+    align-items: center;
+}
+
+.ServiceCheckboxImage{
+    height: 40px;
+    width: 40px;
+    margin: 0 15px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.form-group label{
+    font-weight: 600;
+}
+
+
+div.vMpca {
+    z-index: 9999!important;
+}
+
+@media (max-width: 768px){
+
+    .FilterWidget.true{
+        width: 100%;
+    }
+
+    div.visitListTop, div.visitListBottom .visitListContent {
+        padding: 10px 20px;
+    }
+
+    img.visitListImage{
+        top: 6px;
+        position: relative;
+    }
+}
+
+@media (max-width: 480px){
+
+    .FilterTop{
+        height: 50px;
+        padding: 15px;
+    }
+
+    .FilterBottom{
+        padding: 10px 15px;
+    }
+
+    .FilterMiddle{
+        max-height: calc(100% - 110px);
+    }
+
+    .FilterMiddleLeft span{
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    .FilterMiddleLeft{
+        width: 120px;
+    }
+
+    .FilterMiddleRight{
+        width: calc(100% - 120px);
+    }
+
+    .FilterMiddleRight .tab-content{
+        padding: 15px;
+    }
+
+    .form-group div.ServiceRequestSelect{
+        padding: 0 !important;
+    }
+
+    .tab-pane .form-group > label{
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .Select--single>.Select-control .Select-value, .Select-placeholder{
+        font-size: 14px;
+    }
+
+    .CheckSet label{
+        font-size: 12px;
+    }
+
+    .tab-pane .AddressCardWidget .AddressPOS{
+        padding: 15px 15px 15px 35px;
+        height: auto;
+    }
+
+    .tab-pane .AddressCardWidget.form-radio .RadioBoxIcon{
+        left: 12px;
+    }
+
+    .CheckboxSet label {
+        font-size: 14px;
+    }
+
+    .CheckboxSet label:before {
+        height: 14px;
+        width: 14px;
+    }
+
+    .CheckboxSet input:checked~label:before {
+        background-size: 8px;
+    }
+
+    .visitListNameContainer{
+        display: flex;
+        display: -moz-flex;
+        flex-direction: column;
+        position: relative;
+        width: calc(100% - 60px);
+    }
+
+    div.visitListTop span {
+        padding: 0 8px;
+    }
+
+    div.ProfileHeaderRight span {
+        margin-left: 10px;
+    }
+
+    .ServiceCheckboxImage {
+        margin: 0 10px;
+    }
+}

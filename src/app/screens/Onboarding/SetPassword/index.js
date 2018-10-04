@@ -7,6 +7,7 @@ import { ContactMenu } from '../../../data/HeaderMenu';
 import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalUserAgreement, ModalPopup } from '../../../components';
 import { checkPassword } from '../../../utils/validations'
 import { endUserAgreement } from '../../../assets/templates/EndUserAgreement';
+import '../styles.css';
 
 class SetPassword extends React.Component {
 
@@ -85,6 +86,7 @@ class SetPassword extends React.Component {
                                                 autoComplete="off"                                               
                                                 type="password"
                                                 label="Enter New Password"
+                                                maxlength={25}
                                                 className="form-control"
                                                 value={this.state.password}
                                                 textChange={(e) => this.setState({
@@ -107,6 +109,7 @@ class SetPassword extends React.Component {
                                                 autoComplete="off"                                                
                                                 type="password"
                                                 label="Confirm New password"
+                                                maxlength={25}
                                                 className="form-control"
                                                 value={this.state.confirmPassword}                                                                                          
                                                 textChange={(e) => this.setState({ 

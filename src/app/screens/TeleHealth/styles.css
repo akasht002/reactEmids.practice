@@ -1,0 +1,774 @@
+.TeleHealth{
+    height: calc(100% - 60px);
+}
+
+.ProfileHeaderWidget {
+    display: flex;
+    display: -moz-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 30px;
+    height: 60px;
+    align-items: center;
+}
+
+.ProfileHeaderTitle h5 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.ProfileHeaderTitle h5 span {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.TeleHealthIcons, .TeleHealthViewParticipants{
+    position: relative;
+    height: 24px;
+    width: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.TeleHealthViewParticipants{
+    display: none;
+}
+
+.TeleHealthIcons.MuteAudio{
+    background-image: url("../../assets/images/telehealth/MuteAudio.svg");
+}
+
+.TeleHealthIcons.HideVideo{
+    background-image: url("../../assets/images/telehealth/HideVideo.svg");
+}
+
+.TeleHealthIcons.FullScreen{
+    background-image: url("../../assets/images/telehealth/FullScreen.svg");
+}
+
+.TeleHealthIcons.NormalScreen{
+    background-image: url("../../assets/images/telehealth/NormalScreen.svg");
+}
+
+.TeleHealthIcons.LeaveConference{
+    background-image: url("../../assets/images/telehealth/LeaveCall.svg");
+}
+
+.TeleHealthIcons.EndConference{
+    background-image: url("../../assets/images/telehealth/EndCall.svg");
+}
+
+.TeleHealthViewParticipants{
+    background-image: url("../../assets/images/telehealth/THParticipants.svg");
+}
+
+div.TeleHealthWidget{
+    padding: 0 30px;
+    height: calc(100% - 150px);
+}
+
+.TeleHealthParticipantsListContent .TeleHealthParticipants{
+    background-color: #ffffff;
+}
+
+.TeleHealthDate{
+    height: 30px;
+}
+
+.TeleHealthDate .TeleHealthParticipants{
+    height: 90px;
+    width: 140px;
+    margin-top: 10px;
+}
+
+.TeleHealthDate span.RoomId i{
+    margin-left: 15px;
+    font-style: normal;
+}
+
+.TeleHealthParticipantSlider{
+    bottom: 0;
+    padding: 20px 10px;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+
+.TeleHealthParticipantsList li.list-group-item{
+    border: 0;
+}
+
+.TeleHealthParticipantsList{
+    padding: 10px 0;
+}
+
+.TeleHealthParticipantsList.self{
+    border-bottom: 1px solid #dcdcdc;
+    padding-top: 0;
+}
+
+.TeleHealthParticipantAvatar{
+    display: flex;
+    display: -moz-flex;
+    align-items: center;
+}
+
+.TeleHealthAvatarContainer{
+    position: relative;
+    margin-right: 20px;
+}
+
+.TeleHealthAvatarContainer img{
+    border: 0;
+}
+
+.memberType{
+    position: absolute;
+    bottom: 0px;
+    right: -12px;
+    width: 22px;
+    height: 22px;
+    line-height: 11px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 50%;
+    text-align: center;
+    padding: 4px;
+    border: 1px solid #ffffff;
+}
+
+.memT-G{
+    background-color: #ef6f48;
+}
+
+.memT-S{
+    background-color: #892abb;
+}
+
+.memT-I{
+    background-color: #3089d7;
+}
+
+.TeleHealthAvatarContainer .memberType{
+    right: -8px;
+}
+
+.TeleHealthParticipantNameContainer{
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+}
+
+.TeleHealthParticipantNameContainer .Name{
+    font-size: 14px;
+    color: #2b2b2b;
+}
+
+.TeleHealthParticipantNameContainer .Status{
+    font-size: 12px;
+    color: #8c8c8c;
+}
+
+.TeleHealthParticipantSlider .slick-slide > div, .TeleHealthParticipants, .ParticipantsLinkLabel{
+    height: 100%;
+}
+
+.TeleHealthParticipantSlider .slick-slide:hover{
+    cursor: pointer;
+}
+
+.TeleHealthParticipants input{
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.TeleHealthParticipants input:checked ~ label{
+    border: 2px solid #7a329f;
+}
+
+.TeleHealthParticipantSlider .slick-list:before{
+    display: none;
+}
+
+.TeleHealthParticipantSlider .slick-next:before, .TeleHealthParticipantSlider .slick-prev:before{
+    background-image: url('../../assets/images/telehealth/CaretWhite.svg');
+}
+
+.TeleHealthParticipantSlider .slick-slide{
+    display: block;
+    height: 90px;
+    width: 140px;
+    overflow: hidden;
+}
+
+.TeleHealthVideo{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.TeleHealthVideo video, .ParticipantsLinkLabel video{
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: 0 auto;
+    background-image: linear-gradient(to bottom, #000000, rgba(0,0,0,0));
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    -moz-transform: translateY(-50%) translateX(-50%);
+    -ms-transform: translateY(-50%) translateX(-50%);
+    -o-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.ParticipantsLinkLabel{
+    display: block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.VideoBackground{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    background-image: linear-gradient(to bottom, #000000, #000000, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.5), #000000, #000000);
+    top: 0;
+    left: 0;
+}
+
+.ParticipantSliderName{
+    position: absolute;
+    font-size: 12px;
+    width: 96%;
+    bottom: 0;
+    color: #fff;
+    z-index: 2;
+    padding: 5px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card.TeleHealthContent{
+    display: flex;
+    display: -moz-flex;
+    flex-direction: row;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.TeleHealthItem{
+    height: 100%;
+}
+
+.TeleHealthItem.Left{
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: calc(100% - 300px);
+    background-color: #ffffff;
+    z-index: 1;
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -ms-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    transition: all linear 0.3s;
+}
+
+.TeleHealthItem.true{
+    position: fixed;
+    width: 100% !important;
+    z-index: 99999;
+}
+
+.TeleHealthItem.Right{
+    position: relative;
+    width: 300px;
+    background-color: #ffffff;
+    border-left: 1px solid #dcdcdc;
+}
+
+.TeleHealthControlsItem{
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 115px;
+    font-size: 12px;
+    padding: 0 5px;
+    color: #495057;
+}
+
+.TeleHealthControlsItem span.TeleHealthOptionLink{
+    display: flex;
+    display: -moz-flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 48px;
+    margin-bottom: 8px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    -webkit-transition: all linear 0.2s;
+    -moz-transition: all linear 0.2s;
+    -ms-transition: all linear 0.2s;
+    -o-transition: all linear 0.2s;
+    transition: all linear 0.2s;
+}
+
+.TeleHealthControlsItem span.TeleHealthOptionLink{
+    background-color: #495057 !important;
+}
+
+.TeleHealthControlsItem span.TeleHealthOptionLink:hover{
+    cursor: pointer;
+}
+
+.TeleHealthControlsItem span.TeleHealthOptionLink.off, .TeleHealthControlsItem span.TeleHealthOptionLink:hover{
+    background-color: #7a329f !important;
+}
+
+.TeleHealthControlsItem span.TeleHealthOptionLink.end{
+    background-color: #c04e59 !important;
+}
+
+.TeleHealthControlsItem span.TeleHealthOptionLink.end:hover{
+    background-color: #c96972 !important;
+}
+
+.TeleHealthHeader{
+    position: absolute;
+    display: flex;
+    display: -moz-flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    z-index: 2;
+    color: #ffffff;
+    width: 100%;
+}
+
+.TeleHealthHeader span{
+    font-size: 14px;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}
+
+.TeleHealthHeader span.TeleHealthTime{
+    font-size: 20px;
+    text-align: right;
+    line-height: 20px;
+}
+
+.TeleHealthHeader span.TeleHealthTime i{
+    display: block;
+    font-size: 12px;
+    font-style: normal;
+}
+
+.TeleHealthVideoControls{
+    display: flex;
+    display: -moz-flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.TeleHealthParticipantsListContent{
+    height: calc(100% - 65px);
+    overflow: hidden;
+}
+
+.TeleHealthParticipantList{
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.TeleHealthParticipantList .scrollarea-content{
+    position: absolute;
+    width: 100%;
+}
+
+.TeleHealthParticipantList .scrollarea-content{
+    position: absolute;
+    width: 100%;
+}
+
+.sideParticipantsTitle{
+    font-weight: 600;
+}
+
+.addParticipantsButton:hover, .upload-btn-wrapper:hover, .ParticipantAddRemove:hover, .chatBackButton:hover, .editButton:hover, .addAttachmentBtn:hover, .list-group-item table:hover{
+    cursor: pointer !important;
+}
+
+.addParticipantsButton, .ParticipantAddRemove, .chatBackButton, .editButton, .addAttachmentBtn{
+    display: block;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border: 0;
+    background-color: rgba(0,0,0,0);
+}
+
+.ParticipantAddRemove:before, .addParticipantsButton:before, .chatBackButton:before, .editButton:before, .addAttachmentBtn:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.addParticipantsButton:before{
+    background-image: url("../../assets/images/telehealth/add_action_button.svg");
+}
+
+.ParticipantClose{
+    display: none;
+    position: relative;
+    padding: 2px;
+    height: 18px;
+    width: 18px;
+    margin: 0 5px 0 15px;
+}
+
+.ParticipantClose:before{
+    content: '';
+    position: absolute;
+    top: 6px;
+    color: #676565;
+    height: 13px;
+    width: 13px;
+    right: 0px;
+    background-image: url("../../assets/images/telehealth/remove.png");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.participantsCheckboxIcon:before{
+    content: '';
+    position: absolute;
+    display: block;
+    right: 0;
+    height: 25px;
+    width: 25px;
+    top: 28px;
+    background-image: url("../../assets/images/telehealth/add.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.form-check-input:checked ~ .participantsCheckboxIcon:before {
+    background-image: url("../../assets/images/telehealth/added_tick.svg");
+}
+
+i.ParticipantClose{
+    display: inline;
+}
+
+i.ParticipantClose:hover, .TeleHealthParticipantAvatar.add .participantsCheckboxIcon:hover{
+    cursor: pointer;
+}
+
+.TeleHealthParticipantAvatar.add .TeleHealthParticipantNameContainer{
+    display: block;
+    width: calc(100% - 85px);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.TeleHealthParticipantAvatar.add .participantsCheckboxIcon{
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.TeleHealthParticipantAvatar.add .participantsCheckboxIcon:before{
+    top: 0;
+}
+
+.avatarImage{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #f1e7f7;
+}
+
+.TeleHealthParticipantInvite{
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #ffffff;
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -ms-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    transition: all linear 0.3s;
+}
+
+.TeleHealthParticipantInvite.true{
+    right: 0;
+}
+
+.TeleHealthParticipantInvite > form{
+    position: relative;
+    height: calc(100% - 64px);
+    overflow: hidden;
+}
+
+.TeleHealthParticipantListHeader{
+    display: flex;
+    display: -moz-flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.TeleHealthParticipantListSearch{
+    display: flex;
+    display: -moz-flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f8f8f8;
+}
+
+.TeleHealthIcon{
+    display: inline-block;
+    position: relative;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.TeleHealthIcon.IconSearch{
+    height: 16px;
+    width: 16px;
+    background-image: url("../../assets/images/telehealth/Search.svg");
+}
+
+.TeleHealthSearchInput{
+    width: calc(100% - 16px);
+    padding: 0 0 0 15px;
+    margin: 0;
+    border: 0;
+    font-size: 14px;
+    background-color: #f8f8f8;
+}
+
+.TeleHealthSearchInput::placeholder{
+    color: rgba(43, 43, 43, 0.5);
+}
+
+.TeleHealthSearchInput:hover, .TeleHealthSearchInput:focus{
+    outline: 0;
+}
+
+.TeleHealthParticipantsAddContent{
+    height: calc(100% - 127px);
+    overflow: hidden;
+}
+
+.TeleHealthAddBottom{
+    padding: 20px;
+    text-align: right;
+}
+
+.TeleHealthAddDoneButton{
+    padding: 6px 15px !important;
+}
+
+.TeleHealthVideoContainer{
+    display: flex;
+    display: -moz-flex;
+    position: relative;
+    overflow: hidden;
+    height: calc(100% - 100px);
+}
+
+.TeleHealthVideoContainer, .TeleHealthParticipants{
+    background-color: #444444;
+}
+
+.ProfileRightContainer.TeleHealth {
+    height: calc(100% - 60px);
+}
+
+input.searchParticipants, input.searchParticipants:focus{
+    border: 0 !important;
+    background-color: #f9f9f9 !important;
+    padding: 14px 15px 14px 50px !important; 
+}
+
+input.searchParticipants ~ small:before {
+    content: '';
+    position: absolute;
+    display: block;
+    top:34px;
+    left: 18px;
+    height: 17px;
+    width: 17px;
+    background-image: url("../../assets/images/search.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.participantsSearchList{
+    height: calc(100vh - 380px);
+    padding: 0 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.participantsSearchList .form-check{
+    padding-top: 20px;
+    padding-left: 0;
+}
+
+.icon-search {
+    position:  relative;
+}
+
+.participantSearchName{
+    padding: 8px 30px 8px 34px !important;
+}
+
+.checkBoxCenter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+@media (max-width: 1024px) {
+    .TeleHealthItem.Right {
+        width: 250px;
+    }
+
+    .TeleHealthItem.Left {
+        width: calc(100% - 250px);
+    }
+}
+
+@media (max-width: 768px) {
+    .TeleHealthWidget .TeleHealthItem.Right {
+        position: absolute;
+        width: 300px;
+        right: -100%;
+        -webkit-transition: all linear 0.3s;
+        -moz-transition: all linear 0.3s;
+        -ms-transition: all linear 0.3s;
+        -o-transition: all linear 0.3s;
+        transition: all linear 0.3s;
+    }
+    .TeleHealthItem.Left {
+        width: 100%;
+    }
+
+    .ProfileHeaderWidget {
+        margin: 0 20px;
+    }
+
+    .ProfileHeaderTitle{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .TeleHealthViewParticipants{
+        display: block;
+    }
+
+    div.TeleHealthWidget {
+        padding: 0 20px;
+    }
+
+    .TeleHealthWidget.true .TeleHealthItem.Right{
+        right: 0;
+        z-index: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .TeleHealthWidget .TeleHealthItem.Right {
+        width: 100%;
+    }
+
+    .TeleHealthControlsItem {
+        font-size: 0;
+    }
+
+    div.TeleHealthWidget{
+        padding: 0;
+    }
+
+    .TeleHealthVideoControls{
+        padding: 15px;
+    }
+
+    .TeleHealthDate .TeleHealthParticipants {
+        height: 90px;
+        width: 100px;
+        margin: 0;
+    }
+
+    .FullScreenBtn{
+        display: none;
+    }
+
+    .TeleHealthParticipantSlider .slick-slide {
+        height: 90px;
+        width: 100px;
+    }
+
+    .TeleHealthDate {
+        top: 14px;
+        position: relative;
+    }
+
+    .TeleHealthProfileName{
+        position: absolute;
+        top: 18px;
+    }
+}
+.itsMe{
+    width: 140px!important;
+    height: 102px!important;
+    /* top: 50px;
+    left: 15px; */
+    
+        
+}

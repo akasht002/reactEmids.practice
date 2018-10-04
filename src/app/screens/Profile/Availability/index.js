@@ -8,7 +8,8 @@ import { ModalPopup } from '../../../components';
 import './AvailabilityStyles.css';
 import {
     getAvailableDays,
-    updateAvailabilityDays
+    updateAvailabilityDays,
+    getBlackOutDays
  } from '../../../redux/profile/Availability/actions';
 
 class Availability extends Component {
@@ -20,11 +21,14 @@ class Availability extends Component {
             add: false,
             edit: false, 
             updatedData: [],
-            availableDays: [],
-            isDiscardModalOpen: false          
+            isDiscardModalOpen: false,
+            isBlackoutModalOpen: false,
+            activeSlots: []          
         }
         this.disabled = "disabled";
         this.slotList = 0;
+        this.availableDays = '';
+        this.props.blackoutDays.blockOutDates = [];
     };
 
     toggleAvailability = (modalType, data) => {
@@ -55,6 +59,7 @@ class Availability extends Component {
 
     componentDidMount(){
         this.props.getAvailableDays();
+        this.props.getBlackOutDays();
     };
 
     componentWillReceiveProps(nextProps) {
@@ -119,30 +124,44 @@ class Availability extends Component {
         })
     };
 
+    toggleBlackoutModal = () => {
+        this.setState({
+            isBlackoutModalOpen: !this.state.isBlackoutModalOpen
+        })
+    }
+
     render() {
-        let availableDays = '', modalContent, modalTitle;
+        let availableDays = [], modalContent, modalTitle, availableSlot= '', blackoutModalContent='';
         if (this.props.availableDays.days && this.props.availableDays.days.length > 0) {
             availableDays = this.getAvailableDays();
+            availableSlot = availableDays.every(slot => {
+                     if (slot === "") {
+                         return true;
+                     } else {
+                         return false;
+                     }
+                }); 
         }
 
-        if (this.state.availabilityModal && this.props.availableDays.days && this.props.availableDays.days.length > 0) {
+        if (!availableSlot && this.state.availabilityModal && this.props.availableDays.days && this.props.availableDays.days.length > 0) {
             modalTitle = 'Edit Availability';
         } else {
             modalTitle = 'Add Availability';
         }
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
+        blackoutModalContent = <BlackoutDays showBalckout="true"/>
         return (
             <React.Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
                     <div className={"SPCardTitle d-flex"}>
                         <h4 className={"primaryColor"}>Availability</h4>
-                        {this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
-                          <i className="SPIconMedium SPIconEdit" onClick={this.toggleAvailability.bind('edit', 'editButton')} />
+                        {!availableSlot && this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
+                        <i className="SPIconMedium SPIconEdit" onClick={this.toggleAvailability.bind('edit', 'editButton')} />
                         :
                         <i className={"SPIconLarge SPIconAdd"} onClick={this.toggleAvailability.bind('add', 'addButton')} />}
                     </div>
                      <div className={'width100 SPAvailWidget'}>
-                        { availableDays ? availableDays : 
+                        { availableDays && !availableSlot ? availableDays : 
                             <ul className="SPEducationList width100">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
@@ -153,8 +172,12 @@ class Availability extends Component {
                             </ul>
                         }
                      </div>
+                     {
+                         this.props.blackoutDays && this.props.blackoutDays.blockOutDates.length > 0 ? 
+                         <p className={"primaryColor indexColor"} onClick={this.toggleBlackoutModal}>Show Blackout Days</p> : ''
+                     }
+   
                 </div>
-                <BlackoutDays showBalckout={'true'}/>
                 <ProfileModalPopup
                     isOpen={this.state.availabilityModal}
                     toggle={this.toggleAvailability.bind('close', 'closeButton')}
@@ -182,6 +205,15 @@ class Availability extends Component {
                     isDiscardModalOpen: false
                 })}
               />
+              <ProfileModalPopup
+                isOpen={this.state.isBlackoutModalOpen}
+                toggle={this.toggleBlackoutModal}
+                ModalBody={blackoutModalContent}
+                className='modal-lg asyncModal availabilityModal'
+                headerFooter='d-none'
+                centered='centered'
+                modalTitle={"Blackout Days"}
+              />
             </React.Fragment>
         )
     }
@@ -197,7 +229,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         updateAvailabilityDays: data => dispatch(updateAvailabilityDays(data)),
-        getAvailableDays: () => dispatch(getAvailableDays())
+        getAvailableDays: () => dispatch(getAvailableDays()),
+        getBlackOutDays: () => dispatch(getBlackOutDays()),
     }
 };
 

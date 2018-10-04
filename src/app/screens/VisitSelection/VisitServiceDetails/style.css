@@ -5,7 +5,7 @@ body {
 }
 
 .navbar-brand {
-    display: none !important;
+    /* display: none !important; */
 }
 
 section .ProfileRightWidget {
@@ -16,7 +16,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    /*height: 100%;*/
+    height: calc(100% - 60px);
 }
 
 .dropdown.nav-item{
@@ -249,6 +249,7 @@ li div.dropdown-menu{
     color: #8c8c8c;
     margin-bottom: 10px;
     word-wrap: break-word;
+    text-transform: capitalize;
 }
 
 .BlockImageDetailsDate{
@@ -394,6 +395,7 @@ li div.dropdown-menu{
     width: 40px;
     height: 40px;
     display: inline-block;
+    background-color: #f4ecfc;
 }
 
 .PostedByProfileDetails{
@@ -522,16 +524,9 @@ li div.dropdown-menu{
     padding-left: 0;
 }
 
-.TabBody .SPAvailWidget div:first-child{
-    margin-left: 0;
-}
-
-.TabBody .SPAvailWidget div:last-child{
-    margin-right: 0;
-}
-
 a.ProfileCardHeaderLink:hover{
     text-decoration: none;
+    color: #7a329f;
 }
 
 .ProfileCard {
@@ -571,6 +566,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileCardBody {
     padding: 20px 0 0 0;
+    transform: translateY(2%);
 }
 
 .ProfileCardBody > div {
@@ -727,7 +723,7 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 480px;
+        height: 326px;
     }
 
     .ProfileCardBody .ServiceRequestPalette {
@@ -739,7 +735,7 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
-        margin-top: 12px;
+        margin-top: 0;
     }
 }
 
@@ -973,10 +969,6 @@ div.scrollarea .scrollbar-container.vertical {
         visibility: visible;
     }
 
-    .ProfileServicesVisitContent{
-
-    }
-
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
         display: inline-block;
         height: auto;
@@ -1095,10 +1087,6 @@ div.scrollarea .scrollbar-container.vertical {
         display: block;
         margin: 0 auto;
         bottom: 0;
-    }
-
-    .SPCount .SPRate{
-
     }
 
     .SPAvailItems {

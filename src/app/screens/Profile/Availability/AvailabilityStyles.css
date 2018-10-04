@@ -11,9 +11,14 @@
     display: -ms-flexbox;
     display: flex;
     position: relative;
-    width: 200px!important;
+    width: 200px;
     flex-direction: row !important;
 }
+
+.SPBlackoutDesc{
+    width: calc(100% - 120px);
+}
+
 .date.last{
     margin-left:30px;
 }
@@ -32,9 +37,10 @@
 .bDayListLiContent>.SPIconEdit{
   float:right;
 }
-.SPBlackoutItems .SPIconEdit {
+.SPBlackoutItems>i {
     top: -5px!important;
 }
+
 li.SPBlackoutItems:last-child>.bDayListLiContent{
     border-bottom: 1px solid rgba(225,225,225,.4);
     }
@@ -49,4 +55,9 @@ li.SPAvailItems.disabled:hover{
     list-style: none;
     padding: 0 30px;
     margin: 0;
+}
+
+.indexColor {
+    margin-left: 25px;
+    cursor: pointer;
 }

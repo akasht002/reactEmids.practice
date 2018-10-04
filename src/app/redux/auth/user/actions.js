@@ -10,7 +10,6 @@ import userManager from '../../../utils/userManager';
 export const USER = {
     setUser: 'fetch_success/user',
     deleteUser: 'delete_user/user',
-    setAutoLogout: 'set_auto_logout/user',
     clearData: 'clear_data/user'
 };
 
@@ -18,13 +17,6 @@ export const setUserSuccess = (userData) => {
     return {
         type: USER.setUser,
         userData
-    }
-}
-
-export const setAutoLogout = (data) => {
-    return {
-        type: USER.setAutoLogout,
-        data
     }
 }
 
@@ -36,9 +28,7 @@ export const clearData = () => {
 
 export function onSetUserSuccess(data){
     return (dispatch, getState) => {
-        // dispatch(setUserSuccess(data));
-        dispatch(setServiceProviderDetails(getState().oidc.user.profile.sub));
-        dispatch(getUserInactiveTimeout()); 
+        dispatch(getUserInactiveTimeout(getState().oidc.user.profile.sub));
     }
 }
 
@@ -64,13 +54,14 @@ export function onClear(){
     }
 }
 
-export function setServiceProviderDetails(emailID){ 
+export function setServiceProviderDetails(emailID, autoLogoutTime){ 
     return (dispatch, getState) => {           
         Get(API.getServiceProviderID + emailID )
           .then(resp => {
             let userData = {
                 ...getState().oidc.user,
-                userInfo: resp.data
+                userInfo: resp.data,
+                autoLogoutTime: autoLogoutTime
             };
             localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
             localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
@@ -84,10 +75,10 @@ export function setServiceProviderDetails(emailID){
       }
 }
 
-export function getUserInactiveTimeout() {
+export function getUserInactiveTimeout(emailID) {
     return (dispatch) => {
         Get(API.getTimeoutMilliseconds).then((response) => {
-            dispatch(setAutoLogout(parseInt(response.data[0].name)));
+            dispatch(setServiceProviderDetails(emailID, parseInt(response.data[0].name, 10)));
         })
         .catch((error) => { });
     }

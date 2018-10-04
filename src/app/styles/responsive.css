@@ -11,6 +11,12 @@
     }
 
 }
+@media (max-width: 992px) {
+    td.chatMsgContent .Content{
+        max-width: 475px;
+    }
+}
+
 
 @media (max-width: 990px) {
     td.chatMsgContent .Content {
@@ -111,6 +117,7 @@
 
 }
 
+
 @media (max-width: 768px) {
 
     div.mainWidgetOnboarding {
@@ -120,6 +127,14 @@
     span.chatHeaderText{
         max-width: 180px;
     }
+
+/** added the margin for the conversation **/
+
+.slightTopview {
+margin: 0 20px;
+}
+
+    /** End **/
 
     .navbar {
         position: fixed !important;
@@ -226,6 +241,55 @@
     .navbar-toggler:focus {
         outline: 0;
     }
+    /** responsive css**/
+
+   button.newConversationBtn {
+        position: relative;
+        border-radius: 50% !important;
+        color: #7a329f  !important;
+        height: 32px;
+        width: 32px;
+        padding: 0 !important;
+        margin-right: 20px;
+        overflow: hidden;
+    }
+
+    button.newConversationBtn:hover{
+        color: #7a329f  !important;
+    }
+
+    a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.btn:not([href]):not([tabindex]):hover{
+    color: #ffffff;
+}
+
+a.btn.nav-link{
+    padding: .375rem .75rem !important;
+    color: #ffffff !important;
+}
+
+    button.newConversationBtn:before {
+        content: "+";
+        position: absolute;
+        color: #fff !important;
+        height: 100%;
+        width: 100%;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        font-size: 32px;
+        top: 1px;
+        line-height: 22px;
+    }
+
+    .btn-primary.disabled, .btn-primary:disabled{
+    color: #ffffff !important;
+    opacity: .5 !important;
+    /*background-color: #633F75 !important;*/
+    background-color: #7a329f !important;
+}
+
+
+/**  end of responsive css */
 
     .btn {
         padding: 5px 14px !important;
@@ -304,6 +368,11 @@
         display: block !important;
     }
 
+    button.showParticipantList{
+        display: block !important;
+        margin: 0 0 0 auto;
+    }
+
     .chatContainerWrapper {
         height: calc(100vh - 128px) !important;
     }
@@ -312,6 +381,12 @@
         height: calc(100vh - 245px) !important;
         padding: 0 !important;
     }
+
+    
+    .participantsList{
+        width: 100%;
+    }
+
 
     .table td.leaveConversation, .table td.AddParticipantsBtn {
         height: 64px;
@@ -361,8 +436,8 @@
         padding: 0 15px 0 0 !important;
     }
 
-    td.participantsTitle .Content {
-    }
+    /*td.participantsTitle .Content {
+    }*/
 
     div.chatHeaderText {
         font-size: 15px
@@ -375,6 +450,11 @@
     a.ParticipantClose {
         display: block;
     }
+
+    button.ParticipantClose{
+        display: block;
+    }
+
 
     .table td.addAttachmentWidget, .table td.messageTypeWidget, .table td.sendButtonWidget {
         height: 72px !important;
@@ -393,6 +473,10 @@
     }
 
     a.chatBackButton {
+        margin: 0 38px 0 0;
+    }
+
+      span.chatBackButton{
         margin: 0 38px 0 0;
     }
 
@@ -695,7 +779,17 @@
         height: 18px;
     }
 
+
+
 }
+
+/*** added the button style **/
+
+.newConversationBtn {
+    color:#fff!important;
+}
+
+/** End **/
 
 @media (max-height: 768px) {
     .nav-item p{
@@ -708,3 +802,22 @@
     }
 
 }
+
+@media only screen 
+and (min-height: 320px) 
+and (max-width: 812px) 
+
+and (orientation: landscape) { 
+  td.chatMsgContent .Content{
+      width:100%;
+      height: calc( 100vh - 245px );
+      
+  } 
+  
+}
+
+
+
+
+
+

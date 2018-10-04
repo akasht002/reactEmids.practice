@@ -334,6 +334,10 @@ i.SPIconEditPersonalDetails{
     font-weight: 600;
 }
 
+.SPAddressContent div.d-flex span.AddressContentText{
+    width: calc(100% - 60px);
+}
+
 .AddressContentLabel{
     font-weight: 600;
     width: 56px;
@@ -370,7 +374,7 @@ i.SPIconEditPersonalDetails{
     transition: all linear .2s;
 }
 
-.SPTabHeader:hover{
+.SPTabHeader:hover, .SPTabHeader.true{
     cursor: pointer;
     background-color: #e9d9f9;
 }
@@ -402,10 +406,15 @@ i.SPIconEditPersonalDetails{
     transition: all linear .3s;
 }
 
-
 .SPTabTitle .SPTabTitleContent
 {
-font-weight: 600;
+  font-weight: 600;
+}
+
+.SPTabTitle.true:after{
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .SPTabTitleContent{

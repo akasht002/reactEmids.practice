@@ -17,20 +17,20 @@ import {
 import { getLength } from '../../utils/validations'
 
 class ServiceRequest extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       showMore: true,
-      selectedValue: { label: 'Select', value: '0' }
+      selectedValue: { label: 'Hired', value: '38' }
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getPatientServiceRequestDetail(this.state.selectedValue.value)
     this.props.getServiceStatusDetail()
   }
 
-  componentWillReceiveProps (nextProps) {}
+  componentWillReceiveProps(nextProps) { }
 
   clickShowMore = () => {
     this.setState({
@@ -38,14 +38,14 @@ class ServiceRequest extends React.Component {
     })
   }
 
-  optionChanged = (e)=> {
+  optionChanged = (e) => {
     this.setState({
       selectedValue: e
     })
     this.props.getPatientServiceRequestDetail(e.id)
   }
 
-  menuRenderer =(params)=> {
+  menuRenderer = (params) => {
     const menu = Select.defaultProps.menuRenderer(params)
 
     const scrollBarProps = {
@@ -61,26 +61,26 @@ class ServiceRequest extends React.Component {
     )
   }
 
-  render () {
+  render() {
     const serviceStatusLookUp = this.props.serviceStatusLookUp.map(
       (data, i) => {
         data.label = data.keyValue
         data.value = data.id
         return data
       }
-    )  
+    )
 
     let serviceRequest = this.props.patientServiceRequest
     let serviceRequestItem = ''
     serviceRequestItem = getLength(serviceRequest) > 0
       ? <ServiceProviderRequestDetails
         serviceRequest={this.props.patientServiceRequest}
-        />
+      />
       : <ServiceRequestDefault />
     return (
       <div
         className={
-          this.state.showMore ? 'card ProfileCard extended' : 'card ProfileCard'
+          this.state.showMore ? 'card ProfileCard' : 'card ProfileCard extended'
         }
       >
         <div className='ProfileCardBody'>
@@ -116,20 +116,22 @@ class ServiceRequest extends React.Component {
             </ul>
           </Scrollbars>
         </div>
-        <ul className='list-group list-group-flush'>
-          <li
-            className='list-group-item ProfileShowMore'
-            onClick={this.clickShowMore}
-          >
-            Show more <i className='ProfileIconShowMore' />
-          </li>
-        </ul>
+        {getLength(serviceRequest) > 2 &&
+          <ul className='list-group list-group-flush'>
+            <li
+              className='list-group-item ProfileShowMore'
+              onClick={this.clickShowMore}
+            >
+              Show more <i className='ProfileIconShowMore' />
+            </li>
+          </ul>
+        }
       </div>
     )
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getPatientServiceRequestDetail: data =>
       dispatch(getPatientServiceRequestDetail(data)),
@@ -137,7 +139,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     conversationDetail: state.dashboardState.dashboardState.conversationDetail,
     patientServiceRequest: state.dashboardState.dashboardState
