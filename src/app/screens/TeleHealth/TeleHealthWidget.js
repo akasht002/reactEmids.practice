@@ -262,13 +262,15 @@ class TeleHealthWidget extends Component {
                 <label className='ParticipantsLinkLabel' htmlFor={'Participants' + participant.sid}>
                     <div className="VideoBackground" />
                     <span className="ParticipantSliderName">{participant.identity}</span>
-                    <div></div>
+                    <div ref={"remoteVideo" + participant.sid}></div>
                 </label>
             </div>
             sliderCategory.push(cat);
-            tracks.forEach(track => {
-                this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
-            });
+            setTimeout(() => {
+                tracks.forEach(track => {
+                    this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+                });
+            }, 1000)
         })
 
         return (
