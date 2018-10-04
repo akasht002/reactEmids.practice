@@ -10,7 +10,7 @@
 
 @media (max-width: 768px) {
     div.mainWidgetOnboarding {
-        width: 100% !important;
+        width: 100%;
     }
 }
 
@@ -43,7 +43,7 @@ div.row.emptyGuardianRow{
 }
 
 .onBoarding .mainWidget .mainContent {
-    height: calc(100% - 70px) !important;
+    height: calc(100% - 70px);
     position: relative;
 }
 

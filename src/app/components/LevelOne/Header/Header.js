@@ -84,7 +84,7 @@ class CoreoWizHeader extends Component {
                     Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem className={menuName + "Widget navIconWidget " + Separator}>
+                    <NavItem className={menuName + "Widget " + Separator}>
                         <NavLink className={clsName}
                             href={menu.link} />
                     </NavItem>
@@ -95,7 +95,7 @@ class CoreoWizHeader extends Component {
 
         return (
             <Navbar className="navbar-light boxShadowBottom" expand="md">
-                <NavbarBrand className="text-uppercase"><img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" /></NavbarBrand>
+                <NavbarBrand className="text-uppercase px-3"><img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" /></NavbarBrand>
                 <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>

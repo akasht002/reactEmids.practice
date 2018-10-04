@@ -107,7 +107,7 @@
         margin: 5px 0 !important;
     }
 
-    .sideContent {
+    div.sideContent {
         width: 380px;
     }
 
@@ -128,11 +128,11 @@
         max-width: 180px;
     }
 
-/** added the margin for the conversation **/
+    /** added the margin for the conversation **/
 
-.slightTopview {
-margin: 0 20px;
-}
+    .slightTopview {
+        margin: 0 20px;
+    }
 
     /** End **/
 
@@ -152,18 +152,19 @@ margin: 0 20px;
         z-index: 2;
     }
 
-    .mainWidget {
+    .onBoarding .mainWidget {
         min-height: calc(100vh - 140px);
     }
 
-    .mainContent {
+    .onBoarding .mainWidget .mainContent {
         margin-top: 140px;
         height: calc(100vh - 210px);
+        min-height: calc(100vh - 210px);
     }
 
-    .sideContent {
+    div.sideContent {
         position: absolute;
-        top: 58px;
+        top: 50px;
         height: 80px;
         width: 100%;
         z-index: 1;
@@ -292,7 +293,7 @@ a.btn.nav-link{
 /**  end of responsive css */
 
     .btn {
-        padding: 5px 14px !important;
+        padding: 5px 10px !important;
     }
 
     .mainWidgetProfile {
