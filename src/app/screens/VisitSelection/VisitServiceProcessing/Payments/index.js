@@ -36,7 +36,7 @@ class Payments extends Component {
     }
 
     componentDidMount() {
-        this.props.getpaymentsCardList(1);
+        this.props.getpaymentsCardList(this.props.summaryAmount.SummaryDetails.patient.patientId);
     }
 
     handleChange = (e) => {
