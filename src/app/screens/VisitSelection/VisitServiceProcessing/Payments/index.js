@@ -36,7 +36,7 @@ class Payments extends Component {
     }
 
     componentDidMount() {
-        this.props.getpaymentsCardList(this.props.summaryAmount.SummaryDetails.patient.patientId);
+        this.props.getpaymentsCardList(1);
     }
 
     handleChange = (e) => {
@@ -87,10 +87,10 @@ class Payments extends Component {
                         </div>
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
-                                <div className="col col-md-9 WizardContent">
+                                <div className="col col-md-8 WizardContent">
                                     <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={3} />
                                 </div>
-                                <div className="col col-md-3 rightTimerWidget running">
+                                <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>

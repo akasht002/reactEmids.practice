@@ -146,14 +146,14 @@ class PerformTasks extends Component {
                         </div>
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
-                                <div className="col col-md-9 WizardContent">
+                                <div className="col col-md-8 WizardContent">
                                     <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={0} />
                                 </div>
 
                                 {this.state.stopTime ?
-                                    <div className="col col-md-3 rightTimerWidget running">
+                                    <div className="col col-md-4 rightTimerWidget running">
                                         <div className="row rightTimerContainer">
-                                            <div className="col-md-6 rightTimerContent FeedbackTimer">
+                                            <div className="col-md-7 rightTimerContent FeedbackTimer">
                                                 <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                             </div>
                                             <div className="col-md-5 rightTimerContent FeedbackTimer">
@@ -162,9 +162,9 @@ class PerformTasks extends Component {
                                         </div>
                                     </div>
                                     :
-                                    <div className="col col-md-3 rightTimerWidget">
+                                    <div className="col col-md-4 rightTimerWidget">
                                         <div className="row rightTimerContainer">
-                                            <div className="col-md-6 rightTimerContent">
+                                            <div className="col-md-7 rightTimerContent">
                                                 <span className="TimerContent">
                                                     <StopWatch ref={instance => { this.child = instance; }} />
                                                 </span>
@@ -186,7 +186,7 @@ class PerformTasks extends Component {
                                 }
                             </div>
                         </div>
-                        <div className='CardContainers ServiceCategoryWidget'>
+                        <div className='CardContainers'>
                             <div className='ServiceContent'>
                                 {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
                                     return (

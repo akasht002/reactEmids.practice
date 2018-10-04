@@ -4,13 +4,21 @@
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
-process.env.REACT_APP_API_URL = "http://localhost:65362/api/";
+// process.env.REACT_APP_API_URL = "http://localhost:65362/api/";
+// process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
+// process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
+// process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
+// process.env.REACT_APP_MSG_URL = 'http://localhost:63633/api/';
+// process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';
+// process.env.REACT_APP_TP_URL = 'http://localhost:63633/api/';
+
+process.env.REACT_APP_API_URL = "https://chqa-sp-api.coreoflowsandbox.com/api/";
 process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
-process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
+process.env.REACT_APP_SR_URL = "https://chqa-ui.coreoflowsandbox.com/api/";
 process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
-process.env.REACT_APP_MSG_URL = 'http://localhost:63633/api/';
-process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';
-process.env.REACT_APP_TP_URL = 'http://localhost:63633/api/';
+process.env.REACT_APP_MSG_URL = "https://chqa-vp-ui.coreoflowsandbox.com/api/";
+process.env.REACT_APP_ES_URL = 'https://chqa-ui.coreoflowsandbox.com/api/';
+process.env.REACT_APP_TP_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/api/';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will

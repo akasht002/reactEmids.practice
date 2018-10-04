@@ -49,9 +49,9 @@ class VisitServiceProcessing extends Component {
                         </div>
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
-                                <div className="col col-md-9 WizardContent">
+                                <div className="col col-md-8 WizardContent">
                                 </div>
-                                <div className="col col-md-3 rightTimerWidget">
+                                <div className="col col-md-4 rightTimerWidget">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-5 rightTimerContent">
                                             <span className="TimerContent">01<i>:</i>45</span>
