@@ -237,10 +237,11 @@ export function AddParticipantsToVideoConference(data) {
         let state = getState();
         let twilioData = {
             roomNumber: state.telehealthState.roomId,
+            conferenceId: state.telehealthState.conferenceId,
             participants: data
         };
         dispatch(startLoading());
-        AsyncPost(API.addParticipants, data).then((resp) => {
+        AsyncPost(API.addParticipants, twilioData).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

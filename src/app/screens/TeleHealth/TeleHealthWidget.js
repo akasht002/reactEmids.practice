@@ -9,7 +9,7 @@ import TeleHealthVideoControls from './TeleHealthVideoControls';
 import TeleHealthParticipants from './TeleHealthParticipants';
 import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
 import {TeleHealthSettings} from '../../constants/config';
-import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference } from '../../redux/telehealth/actions';
+import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
 import './styles.css';
 
 class TeleHealthWidget extends Component {
@@ -195,6 +195,7 @@ class TeleHealthWidget extends Component {
         this.setState({
             AddParticipants: !this.state.AddParticipants
         });
+        this.props.getParticipantByConferenceId();
     };
 
     ToggleFullScreen() {
@@ -351,14 +352,15 @@ function mapDispatchToProps(dispatch) {
         leaveVideoConference: (checkRoute) => dispatch(leaveVideoConference(checkRoute)),
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
-        endConference: () => dispatch(endConference())
+        endConference: () => dispatch(endConference()),
+        getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId())
     }
 };
 
 function mapStateToProps(state) {
     return {
         existingParticipantList: state.telehealthState.participantsByConferenceId,
-        conferenceParticipants: state.telehealthState.linkedPatients,
+        conferenceParticipants: state.telehealthState.linkedParticipants,
         initiator: state.telehealthState.initiator
     }
 };
