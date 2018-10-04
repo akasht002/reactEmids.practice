@@ -117,13 +117,15 @@ export const getGenderID = data => {
   return genderID[data]
 }
 
-export const getFields = (input, field) => {
-  let output = []
-  for (let i = 0; i < input.length; ++i) {
-    output.push(input[i][field] + ', ')
+export function getFields(input, field) {
+  var output = []
+  for (var i = 0; i < input.length; ++i) {
+    if (i === input.length - 1) output.push(input[i][field] + '')
+    else output.push(input[i][field] + ', ')
   }
   return output
 }
+
 
 export const convertStringToDate = data => {
   let date_string = data.toString()

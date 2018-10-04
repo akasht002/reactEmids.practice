@@ -45,7 +45,7 @@ class Payments extends Component {
 
     handleClick = () => {
         const data = {
-            "paymentAmount": this.props.summaryAmount.CalculationsData.grandTotalAmount,
+            "paymentAmount": Math.round(this.props.summaryAmount.CalculationsData.grandTotalAmount),
             "patientId": this.props.summaryAmount.SummaryDetails.patient.patientId,
             "coreoHomeStripeCustomerId": this.state.selectedCard
         }
