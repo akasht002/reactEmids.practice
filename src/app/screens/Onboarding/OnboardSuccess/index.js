@@ -16,13 +16,14 @@ class OnboardSuccess extends React.Component {
         const menus = ["login"];
         return (
             <ScreenCover menus={menus}>
-            
-                <div className="container-fluid p-0 mainWidgetOnboarding onBoarding">
+                <div className="container-fluid p-0">
                     <div className="width100 onBoardingWidget">
                         <div className="container-fluid onBoardingContent">
                             <div className="row">
-                            <div className="onBoardingHeader onBoardSuccessHeader">
-                                    <Link className="brandName text-uppercase" to="/">Coreo Home</Link>
+                                <div className="onBoardingHeader">
+                                    <Link className="brandName text-uppercase" to="/">
+                                        <img src={require('../../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
+                                    </Link>
                                 </div>
                                 <div className="onBoardSuccessWidget">
                                     <div className="onBoardSuccessContainer">

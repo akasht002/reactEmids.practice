@@ -1220,7 +1220,7 @@ width: 500px;
 
 
 .modal-header{
-height: 80px;
+height: auto;
 }
 
 
@@ -1242,10 +1242,6 @@ height: 80px;
 .msgSectionWrapper{
     background-color: #f8f8f8;
     height: 100vh;
-}
-
-.btn{
-    padding: 6px 20px!important;
 }
 
 .msgContainerWrapper, .chatContainerWrapper {
@@ -1594,7 +1590,7 @@ margin-bottom: 0px !important;
 
 .btn{
     display: block;
-    padding: 6px 30px !important;
+    padding: 6px 15px !important;
 }
 
 .btn-primary, .btn-outline-primary{

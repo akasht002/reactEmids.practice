@@ -123,7 +123,7 @@ class Welcome extends Component {
                                     <Link className="brandName text-uppercase" to="/">
                                         <img src={require('../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
                                     </Link>
-                                    <Button type="button" onClick={this.props.user ? this.onLogOutPress : this.onLoginPress} classname="btn btn-primary text-uppercase change-f" label={this.props.user ? "Logout" : "Login"} />
+                                    <Button type="button" onClick={this.props.user ? this.onLogOutPress : this.onLoginPress} classname="btn btn-outline-primary LoginButton text-uppercase change-f" label={this.props.user ? "Logout" : "Login"} />
                                 </div>
                                 <div className="sliderWrapper" style={style3}>
                                     <div className="sliderContainer">

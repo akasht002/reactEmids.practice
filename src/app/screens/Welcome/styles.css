@@ -27,16 +27,16 @@
     text-decoration: none;
 }
 
-.onBoardingHeader a.btn, .GetStartedBtnContainer .btn{
+.onBoardingHeader a.btn, .GetStartedBtnContainer .btn, .LoginButton.btn{
     padding: 8px 20px;
 }
 
-.GetStartedBtnContainer .btn:hover{
+.GetStartedBtnContainer .btn:hover, .LoginButton.btn:hover{
     background-color: #ffffff !important;
     color: #3c1053 !important;
 }
 
-.GetStartedBtnContainer .btn:focus{
+.GetStartedBtnContainer .btn:focus, .LoginButton.btn:focus{
     background-color: rgba(255,255,255,.2) !important;
     color: #ffffff !important;
 }
@@ -110,7 +110,7 @@
     z-index: 2;
 }
 
-.GetStartedBtnContainer .btn{
+.GetStartedBtnContainer .btn, .LoginButton.btn{
     border-color: #fff !important;
     color: #ffffff !important;
 }
@@ -208,7 +208,7 @@ li.activeIndicator {
         text-align: center;
     }
 
-    .GetStartedBtnContainer .btn{
+    .GetStartedBtnContainer .btn, .LoginButton.btn{
         width: 80%;
     }
 
