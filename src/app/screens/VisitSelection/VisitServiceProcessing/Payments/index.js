@@ -45,7 +45,7 @@ class Payments extends Component {
 
     handleClick = () => {
         const data = {
-            "paymentAmount": Math.round(this.props.summaryAmount.CalculationsData.grandTotalAmount),
+            "paymentAmount": Math.ceil(this.props.summaryAmount.CalculationsData.grandTotalAmount),
             "patientId": this.props.summaryAmount.SummaryDetails.patient.patientId,
             "coreoHomeStripeCustomerId": this.state.selectedCard,
             "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
@@ -109,7 +109,7 @@ class Payments extends Component {
                             <div className='VisitPaymentContainer'>
                                 <div className="VisitPaymentWidget">
                                     <p className="VisitPaymentContentTitle">Make Payment</p>
-                                    <p className="VisitPaymentAmountPaid">Amount to be paid <i>${Math.round(this.props.summaryAmount.CalculationsData.grandTotalAmount)}</i></p>
+                                    <p className="VisitPaymentAmountPaid">Amount to be paid <i>${Math.ceil(this.props.summaryAmount.CalculationsData.grandTotalAmount)}</i></p>
                                     <div className="FeedbackQuestionWidget form-group">
                                         <label className="FeedbackQuestion">Select the method of Payment</label>
                                         <div className='FeedbackAnswerWidget'>

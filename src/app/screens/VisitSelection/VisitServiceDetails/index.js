@@ -406,7 +406,6 @@ class VisitServiceDetails extends Component {
                           </div>
                           <h2 className='ServicesTitle'>Point of Service</h2>
                           <div className='SummaryContent POS mt-3 mb-5'>
-                            <p className='ContentTitle Summary'>Home</p>
 
                             {this.state.visitServiceDetails.patient
                               && this.state.visitServiceDetails.patient ?

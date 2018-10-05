@@ -55,7 +55,7 @@ class _CardForm extends Component {
                     "patientId": this.props.data.SummaryDetails.patient.patientId,
                     "token": payload.token.id,
                     "cardNumberChanged": payload.token.card.last4,
-                    "amount": Math.round(this.props.data.CalculationsData.grandTotalAmount),
+                    "amount": Math.ceil(this.props.data.CalculationsData.grandTotalAmount),
                     "cardType": payload.token.card.brand,
                     "serviceRequestId": this.props.data.SummaryDetails.serviceRequestId,
                     "serviceRequestVisitId": this.props.data.SummaryDetails.serviceRequestVisitId,

@@ -224,7 +224,7 @@ class Summary extends Component {
                                                 </div>
                                             </div>
 
-                                            <div className="row EstimatedCostWidget">
+                                            {/* <div className="row EstimatedCostWidget">
                                                 <div className="col-md-8 EstimatedCostContainer Label">
                                                     <p><span>Estimated Claim</span>
                                                         <span>Out of Pocket Amount</span></p>
@@ -233,7 +233,7 @@ class Summary extends Component {
                                                     <p><span>${this.props.SummaryDetails.estimatedClaim && this.props.SummaryDetails.estimatedClaim}</span>
                                                         <span>${this.props.SummaryDetails.outOfPocketAmount && this.props.SummaryDetails.outOfPocketAmount}</span></p>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that this claim is an estimate pending the claim process</p>
                                         </div>
                                     </div>
