@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -411,7 +411,7 @@ class VisitServiceDetails extends Component {
                               && this.state.visitServiceDetails.patient ?
                               address.map((pointofservice) => {
                                 return (
-                                  <span>
+                                  <Fragment>
                                     <p>
                                       <span>Street</span>
                                       {pointofservice.streetAddress}
@@ -431,7 +431,7 @@ class VisitServiceDetails extends Component {
                                       <span>ZIP</span>
                                       {pointofservice.zipCode}
                                     </p>
-                                  </span>
+                                  </Fragment>
                                 )
                               })
                               : ''}
