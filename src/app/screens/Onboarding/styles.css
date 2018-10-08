@@ -74,6 +74,10 @@ div.row.emptyGuardianRow{
 
 }
 
+.OnboardingAlert{
+    height: 25px;
+}
+
 .onBoardingInputWidget label, .onBoardingSelectWidget label{
     margin: 0;
 }
