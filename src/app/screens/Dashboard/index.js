@@ -6,7 +6,7 @@ import ServiceCalendar from './serviceCalendar'
 import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
-
+import { USERTYPES } from '../../constants/constants';
 import './dashboard.css'
 import './styles/toggleSwitch.css'
 
@@ -26,6 +26,9 @@ class Dashboard extends React.Component {
   }
 
   render() {
+     /* Entity */
+     let EntityUser = USERTYPES.Entity;
+     alert(EntityUser)
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} active={'active'}>
         <div className='ProfileHeaderWidget'>

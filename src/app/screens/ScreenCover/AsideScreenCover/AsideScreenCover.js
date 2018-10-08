@@ -17,6 +17,12 @@ import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
 import {CanServiceProviderCreateMessage} from '../../../redux/asyncMessages/actions';
 import { onLogout } from '../../../redux/auth/logout/actions';
+import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
+/* Entity  */
+import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
+/* Entity */
+import { USERTYPES } from '../../../constants/constants';
+import { EntityMenuData } from '../../../data/EntityMenuData';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -65,6 +71,7 @@ class AsideScreenCover extends React.Component {
 
 
     render() {
+        let EntityUser = USERTYPES.Entity;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
@@ -91,11 +98,19 @@ class AsideScreenCover extends React.Component {
                             <Link className='BrandLink' to={Path.profile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</Link>
                         </div>
                     </div>
-                    <AsideMenu menuData={MenuData} url={this.props}/>
+                    {EntityUser ?
+                        <AsideMenu menuData={EntityMenuData} url={this.props}/>
+                        :
+                         <AsideMenu menuData={MenuData} url={this.props}/> 
+                    }
+                     
                 </div>
                 <div className="container-fluid ProfileRightWidget">
-                  <ProfileHeader profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
-                            : require('../../../assets/images/Blank_Profile_icon.png')} toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
+                  <ProfileHeader 
+                    headerMenu={ProfileHeaderMenu}
+                    profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
+                            : require('../../../assets/images/Blank_Profile_icon.png')} 
+                    toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
                     <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
                     <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '')}>
