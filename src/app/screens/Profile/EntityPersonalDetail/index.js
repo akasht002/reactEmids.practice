@@ -177,7 +177,7 @@ class EntityPersonalDetail extends React.PureComponent {
     ) {
       this.setState({ isValid: false })
     } else {
-      this.props.updatePersonalDetail(this.state)
+      this.props.updateEntityDetail(this.state)
       this.setState({
         EditPersonalDetailModal: !this.state.EditPersonalDetailModal
       })
@@ -724,7 +724,7 @@ class EntityPersonalDetail extends React.PureComponent {
 function mapDispatchToProps (dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
-    updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
+    updateEntityDetail: data => dispatch(action.updateEntityDetail(data)),
     getCityDetail: () => dispatch(action.getCityDetail()),
     uploadImg: data => dispatch(action.uploadImg(data)),
     getImage: () => dispatch(action.getImage()),
