@@ -1613,6 +1613,53 @@ height: 80px;
     width: 18px;
 } */
 
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper	
+{	
+ display: block;	
+ height: 100%;	
+}	
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper:focus	
+{	
+outline:none;	
+pointer-events: none;	
+-webkit-user-select: none; 	
+user-select: none;	
+}	
+ .participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input	
+{	
+outline:none !important;	
+display: block !important;	
+padding-left: 0;	
+height: auto;	
+}	
+ .participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input	
+{	
+display: block !important;	
+width:100% !important;	
+box-sizing:content-box;	
+-webkit-box-sizing: border-box;	
+line-height:40px;	
+}	
+ .participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input:focus	
+{	
+    box-shadow: none !important; 	
+    outline:none !important;	
+    pointer-events: none;	
+    -webkit-user-select: none; 	
+user-select: none;	
+}	
+ .messageTypeWidget textarea.msgTextArea	
+{	
+margin-top: 8px;	
+margin-bottom: 8px;	
+resize:vertical;	
+overflow: auto;	
+}	
+ .messageTypeWidget textarea.msgTextArea:focus	
+{	
+    overflow:scroll !important;	
+}
+
 /*microsoft-edge-detection*/
 @supports (-ms-ime-align: auto) {
     .table td.addAttachmentWidget, .table td.messageTypeWidget, .table td.sendButtonWidget {
