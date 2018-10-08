@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -25,8 +25,8 @@ import { MORNING, AFTERNOON, EVENING } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
 
 class VisitServiceDetails extends Component {
-  
-  constructor (props) {
+
+  constructor(props) {
     super(props)
     this.state = {
       verticalScroll: false,
@@ -39,11 +39,11 @@ class VisitServiceDetails extends Component {
       serviceType: '',
       isOpen: false
     },
-     this.alertModalMsg = '',
-     this.status ={}
+      this.alertModalMsg = '',
+      this.status = {}
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId)
       this.props.getVisitServiceSchedule(this.props.ServiceRequestId)
@@ -52,7 +52,7 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       visitServiceDetails: nextProps.VisitServiceDetails,
       visitServiceSchedule: nextProps.VisitServiceSchedule,
@@ -65,7 +65,7 @@ class VisitServiceDetails extends Component {
     this.props.visitService()
   }
 
-  toggle (tab) {
+  toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab
@@ -112,7 +112,7 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  render () {
+  render() {
     let sliderTypes =
       this.state.visitServiceDetails.serviceRequestTypeDetails &&
       this.state.visitServiceDetails.serviceRequestTypeDetails.map(
@@ -156,7 +156,7 @@ class VisitServiceDetails extends Component {
                   if (
                     this.state.serviceType &&
                     this.state.serviceType ===
-                      taskDetails.serviceRequestTypeDetailsId
+                    taskDetails.serviceRequestTypeDetailsId
                   ) {
                     return (
                       <li>
@@ -209,6 +209,15 @@ class VisitServiceDetails extends Component {
           </div>
         )
       })
+
+
+    let address = this.state.visitServiceDetails.patient &&
+      this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
+        return obj.isPrimaryAddress === true
+      })
+
+    console.log(address)
+
 
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -397,45 +406,35 @@ class VisitServiceDetails extends Component {
                           </div>
                           <h2 className='ServicesTitle'>Point of Service</h2>
                           <div className='SummaryContent POS mt-3 mb-5'>
-                            <p className='ContentTitle Summary'>Home</p>
 
                             {this.state.visitServiceDetails.patient
-                              ? <span>
-                                <p>
-                                  <span>Street</span>
-                                  {' '}
-                                  {this.state.visitServiceDetails.patient
-                                      .patientAddresses &&
-                                      this.state.visitServiceDetails.patient
-                                        .patientAddresses.streetAddress}
-                                </p>
-                                <p>
-                                  <span>City</span>
-                                  {' '}
-                                  {this.state.visitServiceDetails.patient
-                                      .patientAddresses &&
-                                      this.state.visitServiceDetails.patient
-                                        .patientAddresses.city}
-                                </p>
-                                <p>
-                                  <span>State</span>
-                                  {' '}
-                                  {this.state.visitServiceDetails.patient
-                                      .patientAddresses &&
-                                      this.state.visitServiceDetails.patient
-                                        .patientAddresses.stateName}
-                                </p>
-                                <p>
-                                  <span>ZIP</span>
-                                  {' '}
-                                  {this.state.visitServiceDetails.patient
-                                      .patientAddresses &&
-                                      this.state.visitServiceDetails.patient
-                                        .patientAddresses.zipCode}
-                                </p>
-                              </span>
-                              : ''}
+                              && this.state.visitServiceDetails.patient ?
+                              address.map((pointofservice) => {
+                                return (
+                                  <Fragment>
+                                    <p>
+                                      <span>Street</span>
+                                      {pointofservice.streetAddress}
+                                    </p>
 
+                                    <p>
+                                      <span>State</span>
+                                      {pointofservice.stateName}
+                                    </p>
+
+                                    <p>
+                                      <span>City</span>
+                                      {pointofservice.city}
+                                    </p>
+
+                                    <p>
+                                      <span>ZIP</span>
+                                      {pointofservice.zipCode}
+                                    </p>
+                                  </Fragment>
+                                )
+                              })
+                              : ''}
                           </div>
                         </div>
                       </form>
@@ -488,7 +487,7 @@ class VisitServiceDetails extends Component {
                                     ? <a
                                       className='btn btn-outline-primary'
                                       to='/'
-                                      >
+                                    >
                                       <i className='ProfileIconEye' />Summary
                                       </a>
                                     : ''}
@@ -496,11 +495,22 @@ class VisitServiceDetails extends Component {
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
-                                          this.visitProcessing(
-                                            ScheduleList.serviceRequestVisitId
-                                          )}
-                                      >
-                                        Start Visit
+                                        this.visitProcessing(
+                                          ScheduleList.serviceRequestVisitId
+                                        )}
+                                    >
+                                      Start Visit
+                                      </a>
+                                    : ''}
+                                  {ScheduleList.visitStatusName === 'InProgress'
+                                    ? <a
+                                      className='btn btn-outline-primary'
+                                      onClick={() =>
+                                        this.visitProcessing(
+                                          ScheduleList.serviceRequestVisitId
+                                        )}
+                                    >
+                                      In Progress
                                       </a>
                                     : ''}
                                 </div>
@@ -540,7 +550,7 @@ class VisitServiceDetails extends Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
     getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
@@ -553,7 +563,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     VisitServiceDetails: state.visitSelectionState.VisitServiceDetailsState
       .VisitServiceDetails,

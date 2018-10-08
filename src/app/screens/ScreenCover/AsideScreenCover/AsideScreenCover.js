@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover } from '../../../components';
+import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover, ModalPopup } from '../../../components';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
@@ -15,6 +15,8 @@ import Help from '../../../assets/HelpDoc/Help.pdf';
 import { getAboutUsContent } from '../../../redux/aboutUs/actions';
 import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
+import {CanServiceProviderCreateMessage} from '../../../redux/asyncMessages/actions';
+import { onLogout } from '../../../redux/auth/logout/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -37,6 +39,7 @@ class AsideScreenCover extends React.Component {
         this.props.getUserInfo();
         this.props.getPersonalDetail();
         this.props.getAboutUsContent();
+        this.props.canServiceProviderCreateMessage();
     }
 
     onClickOk = () => {
@@ -44,12 +47,19 @@ class AsideScreenCover extends React.Component {
     }
 
     navigateProfileHeader = (link) => {
-        if (link === 'messagesummary') {
-            this.props.navigateProfileHeader(link);
-        } else if (link === "contact") {
-            this.helpDocEl.click();
-        } else {
-            this.setState({selectedLink: link})
+        switch (link) {
+            case 'messagesummary':
+                this.props.navigateProfileHeader(link);
+                break;
+            case 'contact':
+                this.helpDocEl.click();
+                break;
+            case 'logout':
+                this.props.onLogout();
+                break;
+            default: 
+                this.setState({selectedLink: link})
+                break;
         }
     };
 
@@ -84,7 +94,8 @@ class AsideScreenCover extends React.Component {
                     <AsideMenu menuData={MenuData} url={this.props}/>
                 </div>
                 <div className="container-fluid ProfileRightWidget">
-                  <ProfileHeader toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
+                  <ProfileHeader profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
+                            : require('../../../assets/images/Blank_Profile_icon.png')} toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
                     <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
                     <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '') + ' ' + (this.props.async === 'active' ? 'async' : '')}>
@@ -100,7 +111,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ParticipantContainer
                     onRef={ref => (this.participantComponent = ref)}
-                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth}
+                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation}
                     onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
                     createConversation={() => { this.setState({ selectedLink: null }) }}
                 />
@@ -113,6 +124,15 @@ class AsideScreenCover extends React.Component {
                     className="modal-lg AboutModal"
                     headerFooter='d-none'
                     centered="centered"
+                />
+                <ModalPopup
+                    isOpen={this.state.selectedLink === 'telehealth' && !this.props.canCreateConversation}
+                    ModalBody={<span>You cannot initiate video call as you have no current service request.</span>}
+                    btn1="OK"
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
+                    onConfirm={() => { this.setState({ selectedLink: null }) }}
                 />
             </ScreenCover>
         )
@@ -128,7 +148,9 @@ function mapDispatchToProps(dispatch) {
         goToProfile: () => dispatch(push(Path.profile)),
         getPersonalDetail: () => dispatch(action.getPersonalDetail()),
         navigateProfileHeader: (link) => dispatch(push(link)),
-        getAboutUsContent: () => dispatch(getAboutUsContent())
+        getAboutUsContent: () => dispatch(getAboutUsContent()),
+        canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
+        onLogout: () => dispatch(onLogout())
     }
 };
 
@@ -140,7 +162,8 @@ function mapStateToProps(state) {
         eulaContent: state.authState.userAgreementState.eulaContent,
         personalDetail: state.profileState.PersonalDetailState.personalDetail,
         aboutUsContent: state.aboutUsState.aboutUsContent,
-        isLoading: state.loadingState.isLoading
+        isLoading: state.loadingState.isLoading,
+        canCreateConversation: state.asyncMessageState.canCreateConversation
     };
 };
 

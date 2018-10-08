@@ -1263,7 +1263,7 @@ width: 500px;
 
 
 .modal-header{
-height: 80px;
+height: auto;
 }
 
 
@@ -1749,7 +1749,7 @@ margin-bottom: 0px !important;
 
 .btn{
     display: block;
-    padding: 6px 30px !important;
+    padding: 6px 15px !important;
 }
 
 .btn-primary, .btn-outline-primary{
