@@ -128,6 +128,10 @@
         max-width: 180px;
     }
 
+    .newConvText{
+        display: none !important
+    }
+
 /** added the margin for the conversation **/
 
 .slightTopview {
