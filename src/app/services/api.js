@@ -55,7 +55,7 @@ export const API = {
     getSummaryDetails: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     saveSummaryDetails: 'VisitProcessing/SubmitBillingForVisit/',
     getVisitHistoryList: 'ServiceRequest/Visits/ServiceProvider/',
-    getConversation: 'conversation/user/',
+    getConversation: 'conversation/',
     getUnreadCount: 'Conversation/Unread/User/',
     getServiceProviders: 'Patient/FavouriteServiceProvider/',
     getServiceProviderRequests: 'ServiceRequest/ServiceRequests/ServiceProvider/',
@@ -107,7 +107,8 @@ export const API = {
     canCreateMessage: 'Conversation/CanServiceProviderCreate/',
     applyServiceRequestByServiceProvider:'ServiceRequest/ServiceRequestResponse/',
     cancelServiceRequestByServiceProvider:'ServiceRequest/Cancel',
-    getAboutUsContent: 'Common/LookupConfig/AboutUsWeb'
+    getAboutUsContent: 'Common/LookupConfig/AboutUsWeb',
+    getConverstionCountByUserId: 'Conversation/Count/'
 }
 
 

@@ -66,10 +66,10 @@ class PaymentFailure extends Component {
                         </div>
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
-                                <div className="col col-md-9 WizardContent">
+                                <div className="col col-md-8 WizardContent">
                                     <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={3} />
                                 </div>
-                                <div className="col col-md-3 rightTimerWidget running">
+                                <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
@@ -82,7 +82,7 @@ class PaymentFailure extends Component {
                             </div>
                         </div>
 
-                        <div className='CardContainers ServiceCategoryWidget'>
+                        <div className='CardContainers'>
                             <form className='VisitPaymentContainer'>
                                 <div className="VisitPaymentSuccess">
                                     <div className="VisitPaymentFailureMsg">

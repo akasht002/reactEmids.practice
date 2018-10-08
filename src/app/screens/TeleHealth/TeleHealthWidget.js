@@ -9,7 +9,7 @@ import TeleHealthVideoControls from './TeleHealthVideoControls';
 import TeleHealthParticipants from './TeleHealthParticipants';
 import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
 import {TeleHealthSettings} from '../../constants/config';
-import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference } from '../../redux/telehealth/actions';
+import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
 import './styles.css';
 
 class TeleHealthWidget extends Component {
@@ -195,6 +195,7 @@ class TeleHealthWidget extends Component {
         this.setState({
             AddParticipants: !this.state.AddParticipants
         });
+        this.props.getParticipantByConferenceId();
     };
 
     ToggleFullScreen() {
@@ -261,13 +262,15 @@ class TeleHealthWidget extends Component {
                 <label className='ParticipantsLinkLabel' htmlFor={'Participants' + participant.sid}>
                     <div className="VideoBackground" />
                     <span className="ParticipantSliderName">{participant.identity}</span>
-                    <div></div>
+                    <div ref={"remoteVideo" + participant.sid}></div>
                 </label>
             </div>
             sliderCategory.push(cat);
-            tracks.forEach(track => {
-                this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
-            });
+            setTimeout(() => {
+                tracks.forEach(track => {
+                    this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+                });
+            }, 1000)
         })
 
         return (
@@ -351,14 +354,15 @@ function mapDispatchToProps(dispatch) {
         leaveVideoConference: (checkRoute) => dispatch(leaveVideoConference(checkRoute)),
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
-        endConference: () => dispatch(endConference())
+        endConference: () => dispatch(endConference()),
+        getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId())
     }
 };
 
 function mapStateToProps(state) {
     return {
         existingParticipantList: state.telehealthState.participantsByConferenceId,
-        conferenceParticipants: state.telehealthState.linkedPatients,
+        conferenceParticipants: state.telehealthState.linkedParticipants,
         initiator: state.telehealthState.initiator
     }
 };

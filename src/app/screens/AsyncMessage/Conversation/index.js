@@ -268,7 +268,7 @@ class Conversation extends Component {
 
         return (
             <AsideScreenCover>
-                <div className="d-flex msgSectionWrapper">
+                <div className="d-flex msgSectionWrapper mobile-view-title">
                     {this.props.isLoading && <Preloader />}
                     <div className="container-fluid p-0">
                         <div className="width100 mainWidgetProfile">

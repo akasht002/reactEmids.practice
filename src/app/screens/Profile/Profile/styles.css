@@ -412,10 +412,15 @@ i.SPIconEditPersonalDetails{
     transform: rotate(180deg);
 }
 
+.SPTabTitle .SPTabTitleContent
+{
+font-weight: 600;
+}
+
 .SPTabTitleContent{
     width: 100%;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 600;
     margin: 0;
     -webkit-transition: all linear .2s;
     -moz-transition: all linear .2s;

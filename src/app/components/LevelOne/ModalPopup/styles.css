@@ -24,7 +24,7 @@
 }
 
 .modal-header{
-    height: 80px;
+    height: auto;
 }
 
 .modal-lg .modal-body{

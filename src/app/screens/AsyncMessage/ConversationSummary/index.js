@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import Pagination from 'react-js-pagination';
 import {
     onFetchConversationSummary,
     onCreateNewConversation,
     goToConversation,
     getUnreadMessageCounts,
-    CanServiceProviderCreateMessage
+    CanServiceProviderCreateMessage,
+    getConversationCount
 } from '../../../redux/asyncMessages/actions';
 import MessageList from './MessageList';
 import ParticipantsContainer from './ParticipantsContainer';
@@ -16,21 +18,25 @@ import '../styles.css';
 import './index.css';
 import { USERTYPES } from '../../../constants/constants';
 
+
 class ConversationSummary extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isDisplayParticipantModal: false,
             isOpen: false,
-            noPermission: false
+            noPermission: false,
+            activePage: 1
         };
     };
 
 
     componentDidMount() {
-        this.props.fetchConversationSummary();
+        this.props.getConversationCount();
+        this.props.fetchConversationSummary(1);
         this.props.getUnreadMsgCounts();
         this.props.canServiceProviderCreateMessage();
+        
     };
 
 
@@ -74,6 +80,12 @@ class ConversationSummary extends Component {
         this.setState({ noPermission: !this.state.noPermission })
     };
 
+
+    handlePageChange = (pageNumber) =>{
+        this.props.fetchConversationSummary(pageNumber);
+        this.setState({activePage: pageNumber});
+      }
+
     render() {
         let modalContent = <div>
             <p className="text-center lead p-4 m-0">
@@ -85,6 +97,7 @@ class ConversationSummary extends Component {
         </div>
         return (
             <AsideScreenCover >
+                <div className="mobile-view-title">
                 <div className="container-fluid p-0">
                     <div className="width100 mainWidgetProfile">
                         <div className="container mainProfileContent">
@@ -103,7 +116,7 @@ class ConversationSummary extends Component {
                         </div>
                     </div>
                 </div>
-
+                </div>
                 <ParticipantsContainer
                     onRef={ref => (this.participantComponent = ref)}
                     isDisplayParticipantModal={this.state.isDisplayParticipantModal}
@@ -125,11 +138,12 @@ class ConversationSummary extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchConversationSummary: () => dispatch(onFetchConversationSummary()),
+        fetchConversationSummary: (pageNumber) => dispatch(onFetchConversationSummary(pageNumber)),
         createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
         gotoConversation: (data, userId) => dispatch(goToConversation(data, userId)),
         getUnreadMsgCounts: () => dispatch(getUnreadMessageCounts()),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
+        getConversationCount: () => dispatch(getConversationCount())
     }
 };
 
@@ -140,8 +154,8 @@ function mapStateToProps(state) {
         isLoading: state.loadingState.isLoading,
         unreadMsgCounts: state.asyncMessageState.unreadCounts,
         loggedInUser: state.authState.userState.userData.userInfo,
-        canCreateConversation: state.asyncMessageState.canCreateConversation
-
+        canCreateConversation: state.asyncMessageState.canCreateConversation,
+        conversationCount: state.asyncMessageState.conversationCount
     }
 };
 

@@ -39,7 +39,7 @@ const telehealthState = (state = defaultState, action) => {
             return {
                 ...state,
                 roomId: action.data.roomNumber,
-                conferenceId: action.data.conferenceId,
+                conferenceId: action.data.videoConferenceId,
                 initiator: true
             };
         case TeleHealth.getParticipantByConfernceIdSuccess:

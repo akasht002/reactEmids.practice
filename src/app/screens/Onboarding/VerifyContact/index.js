@@ -102,9 +102,7 @@ class VerifyContact extends React.Component {
                         </div>
                         <div className="row mt-auto">
                             {this.state.passCodeSentMsg && <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been sent to your registered Contact Number.</span>}
-                            <div className={"tempPassForm " + this.state.invisible}>
-                                <span className="d-block mb-3 width100 receivePass">Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
-                            </div>
+                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
                         </div>
                     </div>
                 </CoreoWizScreen>

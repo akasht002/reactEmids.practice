@@ -45,9 +45,11 @@ class Payments extends Component {
 
     handleClick = () => {
         const data = {
-            "paymentAmount": this.props.summaryAmount.CalculationsData.grandTotalAmount,
+            "paymentAmount": Math.ceil(this.props.summaryAmount.CalculationsData.grandTotalAmount),
             "patientId": this.props.summaryAmount.SummaryDetails.patient.patientId,
-            "coreoHomeStripeCustomerId": this.state.selectedCard
+            "coreoHomeStripeCustomerId": this.state.selectedCard,
+            "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
+            "serviceRequestVisitId": this.props.summaryAmount.SummaryDetails.serviceRequestVisitId
         }
         this.props.chargeByCustomerId(data);
     }
@@ -87,10 +89,10 @@ class Payments extends Component {
                         </div>
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
-                                <div className="col col-md-9 WizardContent">
+                                <div className="col col-md-8 WizardContent">
                                     <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={3} />
                                 </div>
-                                <div className="col col-md-3 rightTimerWidget running">
+                                <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
@@ -107,7 +109,7 @@ class Payments extends Component {
                             <div className='VisitPaymentContainer'>
                                 <div className="VisitPaymentWidget">
                                     <p className="VisitPaymentContentTitle">Make Payment</p>
-                                    <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
+                                    <p className="VisitPaymentAmountPaid">Amount to be paid <i>${Math.ceil(this.props.summaryAmount.CalculationsData.grandTotalAmount)}</i></p>
                                     <div className="FeedbackQuestionWidget form-group">
                                         <label className="FeedbackQuestion">Select the method of Payment</label>
                                         <div className='FeedbackAnswerWidget'>

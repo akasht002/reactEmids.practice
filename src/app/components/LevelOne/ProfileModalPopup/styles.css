@@ -1,11 +1,11 @@
 .profileModalHeader {
-    height: 60px;
+    height: 60px !important;
     background-color: #f4ecfc;
     padding: 14px 30px !important;
 }
 
 .profileModalHeader{
-    height: 60px;
+    height: 60px !important;
     background-color: #f4ecfc;
     padding: 14px 30px !important;
 }

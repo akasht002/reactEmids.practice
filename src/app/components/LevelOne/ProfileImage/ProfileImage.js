@@ -11,7 +11,7 @@ function ProfileImage(props) {
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
                 </svg>
-                <img className={props.profileImage} src={props.src} alt="user"/>
+                <img className={props.profileImage} src={props.src ? props.src : require('../../../assets/images/Blank_Profile_icon.png')} alt="user"/>
             </div>
         </div>
 

@@ -119,16 +119,16 @@ class VerifyUserID extends React.Component {
                                         />}
                                 </form>
                                 {this.props.isEmailExist && <div className="MsgWithIcon MsgSuccessIcon">
-                                    <span className="text-success d-block mt-4 mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
+                                    <span className="text-success d-block mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
                                 </div>}
                                 {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
-                                    <span className="text-danger d-block mt-4 mb-2">We did not find your Email ID. Please retry or contact <Link to={this.props.match.url} className="primaryColor px-1">Support</Link>.</span>
+                                    <span className="text-danger d-block mb-2">We did not find your Email ID. Please retry or contact <Link to={this.props.match.url} className="primaryColor px-1">Support</Link>.</span>
                                 </div>}
                                 {!this.state.emailValid && <div className="MsgWithIcon MsgWrongIcon">
-                                    <span className="text-danger d-block mt-4 mb-2">Please enter a valid email address. e.g. abc@xyz.com</span>
+                                    <span className="text-danger d-block mb-2">Please enter a valid email address. e.g. abc@xyz.com</span>
                                 </div>}
                                 {this.state.isAlreadyOnboarded && <div className={"MsgWithIcon MsgWrongIcon"}>
-                                    <span className="text-danger d-block mt-4 mb-2">Sorry, you are already onboarded for this registered userId.</span>
+                                    <span className="text-danger d-block mb-2">Sorry, you are already onboarded for this registered userId.</span>
                                 </div>}
                             </div>
                         </div>

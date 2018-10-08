@@ -20,7 +20,7 @@
     top: 4px;
     background-position: center;
     background-repeat: no-repeat;
-    border: 1px solid #3c1053;
+    border: 1px solid #d4d4d4;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -28,6 +28,7 @@
 
 .form-check-input:checked ~ .CheckboxIcon:before {
     background-image: url("../../../assets/images/checked.svg");
-    background-color: #3c1053;
+    background-color: #7a329f;
     background-size: 10px;
+    border-color: #7a329f;
 }
