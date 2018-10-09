@@ -6,7 +6,8 @@ const defaultState = {
     error: {
         message: '',
         code: ''
-    }
+    },
+    roles: {}
 };
 
 export default (state = defaultState, action) => {
@@ -22,6 +23,11 @@ export default (state = defaultState, action) => {
                 ...state,
                 userData: null,
             };
+        case USER.setUserRoles:
+            return {
+                ...state,
+                roles: action.data
+            }
         case USER.clearData:
             return defaultState;
 

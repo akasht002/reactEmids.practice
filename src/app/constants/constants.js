@@ -57,10 +57,24 @@ export const SERVICE_STATUS = {
     "NOT INTERESTED": "Not Interested"
 }
 
-export const ELIBILITY_STATUS = {
-    "AuthorizationRequired": "Coverage Copay Authorization Required",
-    "Amount": "Coverage Copay Authorization Amount",
-    "BenefitPercent": "Coverage Coinsurance Benefit Percentage",
-    "CoInAuthorizationRequired": "Coverage Coinsurance Authorization Required",
-    "Active": "Coverage Active"
+export const SCREENS = {
+    PROFILE: 'Profile',
+    DASHBOARD: 'Dashboard',
+    SERVICE_REQUEST: 'Service_Request',
+    MANAGE_CONNECTION: 'Manage_Connections',
+    VISIT_PROCESSING: 'Visit_Processing',
+    PAYMENT_PROCESSING: 'Payment_Processing',
+    VISIT_HISTORY: 'Visit_History',
+    SEARCH: 'Search',
+    ASYNC_MESSAGE: 'Async_Messages',
+    TELEHEALTH: 'Telehealth',
+    GEO_MAP: 'Geo_Map',
+    NOTIFICATIONS: 'Notifications'
+}
+
+export const PERMISSIONS = {
+    CREATE: 'Create',
+    READ: 'Read',
+    UPDATE: 'Update',
+    DELETE: 'Delete'
 }

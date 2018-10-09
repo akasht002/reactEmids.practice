@@ -23,6 +23,7 @@ import {
 } from '../../../utils/validations'
 import { Details, ProfileImageDetail } from './Details'
 import { SETTING } from '../../../services/api'
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 class EntityPersonalDetail extends React.PureComponent {
   constructor (props) {
@@ -315,7 +316,7 @@ class EntityPersonalDetail extends React.PureComponent {
               }
             />
             <span className='editDpImage' />
-            <div className='uploadWidget'>
+            <div className='uploadWidget' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>
               <i className='addImageBtn' onClick={this.handleChange} />
             </div>
           </div>
