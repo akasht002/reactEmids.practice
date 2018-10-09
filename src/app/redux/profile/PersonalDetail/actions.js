@@ -13,7 +13,8 @@ export const PersonalDetails = {
   GET_CITY_DETAIL: 'GET_CITY_DETAIL',
   UPLOAD_IMG_SUCCESS: 'UPLOAD_IMG_SUCCESS',
   UPLOAD_IMG: 'UPLOAD_IMG_SUCCESS',
-  GET_GENDER_SUCCESS:'GET_GENDER_SUCCESS,'
+  GET_GENDER_SUCCESS:'GET_GENDER_SUCCESS,',
+  GET_AFFILIATION_DETAIL_SUCCESS:'GET_AFFILIATION_DETAIL_SUCCESS'
 }
 
 export { getDataValueArray } from '../../../utils/validations'
@@ -21,6 +22,13 @@ export { getDataValueArray } from '../../../utils/validations'
 export const getPersonalDetailSuccess = data => {
   return {
     type: PersonalDetails.GET_PERSONAL_DETAIL_SUCCESS,
+    data
+  }
+}
+
+export const getAffiliationDetailSuccess = data => {
+  return {
+    type: PersonalDetails.GET_AFFILIATION_DETAIL_SUCCESS,
     data
   }
 }
@@ -164,6 +172,21 @@ export function updateOrganizationDetail (data) {
       })
       .catch(err => {
         dispatch(getPersonalDetail())
+        dispatch(endLoading())
+      })
+  }
+}
+
+
+export function getAffiliationDetail () {
+  return (dispatch, getState) => {
+    dispatch(startLoading())
+    Get(API.getAffiliationDetail)
+      .then(resp => {
+        dispatch(getAffiliationDetailSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
         dispatch(endLoading())
       })
   }
