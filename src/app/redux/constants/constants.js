@@ -10,6 +10,9 @@ export const SERVICE_PROVIDER_TYPE_ID = 1
 export const PAGE_NO = 1
 export const PAGE_SIZE = 2
 export const SLASH = '/'
+export const MORNING =  'Morning'
+export const AFTERNOON =  'Afternoon'
+export const EVENING =  'Evening'
 
 export const STATUS  = 0
 
