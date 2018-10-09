@@ -13,7 +13,7 @@ import {
     DropdownMenu
 } from 'reactstrap';
 import { SearchInput } from "../../../components";
-import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
+
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { makeProperCase } from '../../../utils/stringHelper';
 
@@ -43,7 +43,8 @@ class ProfileHeader extends Component {
     }
 
     render() {
-        const menuList = ProfileHeaderMenu.map((menu) => {
+        let {headerMenu} = this.props;
+        const menuList =headerMenu.map((menu) => {
             let menuName = menu.name;
             let separator = "";
             if (menu.status) {

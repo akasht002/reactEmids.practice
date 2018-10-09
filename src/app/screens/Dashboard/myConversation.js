@@ -4,12 +4,14 @@ import { connect } from 'react-redux'
 import './ProfileMainPanel.css'
 import { getLength } from '../../utils/validations'
 import { MyConversionDetail, MyConversionDefault } from './ServiceInfo'
+import  EntityUserMyConversionDefault from  "./EntitySP/MyConversation";
 import {goToConversation} from '../../redux/asyncMessages/actions';
 
 import {
   getConversationDetail,
   getUnreadMessageCounts
 } from '../../redux/dashboard/Dashboard/actions'
+import { getUserInfo } from '../../services/http';
 
 class MyConversation extends React.Component {
   componentDidMount() {
@@ -26,13 +28,16 @@ class MyConversation extends React.Component {
   };
 
   render() {
+    let entityUser = getUserInfo().isEntityServiceProvider;
     let conversation_data = this.props.conversationDetail
+    let conversionDefault = entityUser ? <EntityUserMyConversionDefault />  : <MyConversionDefault />;
+
     let conversation_item = getLength(conversation_data) > 0
       ? <MyConversionDetail 
       gotoConversations={this.onClickConversation}
       conversation={conversation_data}
       getUnreadMsgCounts={this.props.unreadMsgCounts}/>
-      : <MyConversionDefault />
+      : conversionDefault
     return (
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
@@ -42,6 +47,7 @@ class MyConversation extends React.Component {
             </span>
             <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>
           </div>
+          
           <div className='topPalette ProfileConversation'>
             <ul className='list-group ProfileConversationWidget'>
               {conversation_item}
