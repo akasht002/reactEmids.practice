@@ -106,17 +106,34 @@ class ConversationSummary extends Component {
                                     <h5 className="font-weight-semi-bold mr-auto pageTitle">Conversation Summary</h5>
                                     {this.props.loggedInUser.userType !== USERTYPES.SERVICE_PROVIDER && <button
                                         className="btn btn-primary ml-auto font-size-sm newConversationBtn"
-                                        onClick={this.onSetDisplayParticipantModal}>+ New Conversation</button>}
+                                        onClick={this.onSetDisplayParticipantModal}><span class="newConvText">+ New Conversation</span></button>}
                                 </div>
                                 <MessageList
                                     conversation={this.props.conversation}
                                     gotoConversations={this.onClickConversation}
                                     getUnreadMsgCounts={this.props.unreadMsgCounts} />
+                                 <div className="col-md-12 p-0 AsyncConversationPagination">
+                                        {this.props.conversation.length > 0 && 
+                                            <Pagination
+                                                activePage={this.state.activePage}
+                                                itemsCountPerPage={10}
+                                                totalItemsCount={this.props.conversationCount}
+                                                pageRangeDisplayed={5}
+                                                onChange={this.handlePageChange}
+                                                itemClass="PaginationItem"
+                                                itemClassFirst="PaginationIcon First"
+                                                itemClassPrev="PaginationIcon Prev"
+                                                itemClassNext="PaginationIcon Next"
+                                                itemClassLast="PaginationIcon Last"
+                                            />
+                                        }
+                                    </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 </div>
+                 
                 <ParticipantsContainer
                     onRef={ref => (this.participantComponent = ref)}
                     isDisplayParticipantModal={this.state.isDisplayParticipantModal}

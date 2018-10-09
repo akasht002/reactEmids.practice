@@ -99,7 +99,6 @@ const UserAvatarMultiSelect = createClass({
             <div className="section SelectWithFlag">
                 <Select
                     simpleValue
-                    searchable={false}
                     removeSelected={true}
                     closeOnSelect={this.props.closeOnSelect}
                     multi={this.props.multi}

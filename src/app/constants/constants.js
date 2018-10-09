@@ -35,9 +35,10 @@ export const STATUS = 0;
 export const SAVEDCARDS = "1";
 export const NEWCARDS = "2";
 export const USERTYPES = {
-    PATIENT: 'I',
-    GUARDIAN: 'G',
-    SERVICE_PROVIDER: 'S'
+    PATIENT : 'I',
+    GUARDIAN : 'G',
+    SERVICE_PROVIDER: 'S',
+    DESIGNATED_SERVICE_PROVIDER: 2
 };
 
 export const ImageFormats = {
