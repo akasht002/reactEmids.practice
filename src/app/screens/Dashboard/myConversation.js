@@ -9,6 +9,7 @@ import {
   getConversationDetail,
   getUnreadMessageCounts
 } from '../../redux/dashboard/Dashboard/actions'
+import { getUserInfo } from '../../services/http';
 
 class MyConversation extends React.Component {
   componentDidMount() {
@@ -20,7 +21,7 @@ class MyConversation extends React.Component {
   }
 
   render() {
-    let {entityUser} = this.props;
+    let entityUser = getUserInfo().isEntityServiceProvider;
     let conversation_data = this.props.conversationDetail
     let ConversionDefault="";
     if(entityUser){
@@ -64,8 +65,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    conversationDetail: state.dashboardState.dashboardState.conversationDetail,
-    entityUser: state.authState.userState.userData.userInfo.isEntityServiceProvider
+    conversationDetail: state.dashboardState.dashboardState.conversationDetail
   }
 }
 export default withRouter(

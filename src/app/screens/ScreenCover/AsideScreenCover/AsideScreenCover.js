@@ -7,7 +7,7 @@ import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
 import { Path } from '../../../routes/';
-import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
+import { getUserInformation, updateEula } from '../../../redux/auth/UserAgreement/actions';
 import { ModalUserAgreement } from '../../../components';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
@@ -20,6 +20,7 @@ import { onLogout } from '../../../redux/auth/logout/actions';
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
+import { getUserInfo } from '../../../services/http';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -39,7 +40,7 @@ class AsideScreenCover extends React.Component {
     componentDidMount() {
         this.props.getProfilePercentage()
         this.props.getImage()
-        this.props.getUserInfo();
+        this.props.getUserInformation();
         this.props.getPersonalDetail();
         this.props.getAboutUsContent();
         this.props.canServiceProviderCreateMessage();
@@ -68,7 +69,7 @@ class AsideScreenCover extends React.Component {
 
 
     render() {
-        let {entityUser} = this.props;
+        let entityUser = getUserInfo().isEntityServiceProvider;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
@@ -170,7 +171,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getProfilePercentage: () => dispatch(getProfilePercentage()),
         getImage: () => dispatch(action.getImage()),
-        getUserInfo: () => dispatch(getUserInfo()),
+        getUserInformation: () => dispatch(getUserInformation()),
         onClickOk: () => dispatch(updateEula()),
         goToProfile: () => dispatch(push(Path.profile)),
         getPersonalDetail: () => dispatch(action.getPersonalDetail()),
@@ -190,8 +191,7 @@ function mapStateToProps(state) {
         personalDetail: state.profileState.PersonalDetailState.personalDetail,
         aboutUsContent: state.aboutUsState.aboutUsContent,
         isLoading: state.loadingState.isLoading,
-        canCreateConversation: state.asyncMessageState.canCreateConversation,
-        entityUser: state.authState.userState.userData.userInfo.isEntityServiceProvider
+        canCreateConversation: state.asyncMessageState.canCreateConversation
     };
 };
 

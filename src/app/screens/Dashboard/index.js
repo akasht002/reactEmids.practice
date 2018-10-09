@@ -7,7 +7,7 @@ import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
-
+import { getUserInfo } from '../../services/http'
 import './dashboard.css'
 import './styles/toggleSwitch.css'
 import './EntitySP/EntitySPDashboard.css';
@@ -34,12 +34,7 @@ class Dashboard extends React.Component {
   }
   
   render() {
-     /* Entity */
-     
-
-     let {entityUser} = this.props;
-     //let EntityUser = isEntityServiceProvider;
-     alert(entityUser)
+    let entityUser = getUserInfo().isEntityServiceProvider;
     return (
       <AsideScreenCover
         isOpen={this.state.isOpen}
@@ -88,7 +83,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    entityUser: state.authState.userState.userData.userInfo.isEntityServiceProvider
   }
 }
 export default withRouter(
