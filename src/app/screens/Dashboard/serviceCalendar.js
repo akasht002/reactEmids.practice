@@ -3,17 +3,17 @@ import moment from 'moment'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import { Scrollbars } from '../../components'
+import { Scrollbars, ProfileModalPopup } from '../../components'
 import './ProfileMainPanel.css'
-import {
-  convertStringToDate,
-  partialCompare
-} from '../../utils/validations'
+import { convertStringToDate, partialCompare } from '../../utils/validations'
 import {
   getServiceProviderVists,
-  getServiceVisitCount
+  getServiceVisitCount,
+  getEntityServiceProviderList,
+  updateEntityServiceVisit
 } from '../../redux/dashboard/Dashboard/actions'
 import { ServiceCalendarDefault } from './ServiceInfo'
+import { getUserInfo } from '../../services/http'
 
 const today = new Date()
 
@@ -22,20 +22,49 @@ class serviceCalendar extends React.Component {
     super(props)
     this.state = {
       startDate: moment(today).format(),
-      startMonth: moment(today).format('MMMM'),
+      startMonth: moment(today).format('MMM'),
       startYear: moment(today).format('YYYY'),
       changedDate: '',
       DateDisable: false,
+      selectedServiceProviderId: '',
       DateLabelClass: 'DatePickerDisabled',
+      EditPersonalDetailModal: false,
       reportDay: moment(today).format(),
       selectedMonth: {
-        label: moment(today).format('MMMM'),
-        value: moment(today).format('MMMM')
+        label: moment(today).format('MMM'),
+        value: moment(today).format('MMM')
       },
       showMore: false,
       verticalScroll: false,
       width: window.innerWidth
     }
+    this.data = ''
+  }
+
+  togglePersonalDetails = (action, e) => {
+    this.data = action
+    console.log(this.data)
+    this.setState({
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal
+    })
+  }
+
+  onSubmit = () => {
+    this.setState({
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal
+    })
+    let model = {
+      ServiceRequestid: this.data.serviceRequestId,
+      PatientId: this.data.patientId,
+      EntityId: getUserInfo().entityId,
+      VisitAssignment: [
+        {
+          ServiceVisitId: this.data.serviceRequestVisitid,
+          ServiceProviderId: this.state.selectedServiceProviderId
+        }
+      ]
+    }
+    this.props.updateEntityServiceVisit(model)
   }
 
   MonthChange = e => {
@@ -59,10 +88,10 @@ class serviceCalendar extends React.Component {
       startDate: updatedDay.format(),
       startYear: updatedDay.format('YYYY'),
       reportDay: updatedDay.format(),
-      startMonth: updatedDay.format('MMMM'),
+      startMonth: updatedDay.format('MMM'),
       selectedMonth: {
-        label: updatedDay.format('MMMM'),
-        value: updatedDay.format('MMMM')
+        label: updatedDay.format('MMM'),
+        value: updatedDay.format('MMM')
       }
     })
   }
@@ -78,10 +107,10 @@ class serviceCalendar extends React.Component {
       startDate: updatedDay.format(),
       startYear: updatedDay.format('YYYY'),
       reportDay: updatedDay.format(),
-      startMonth: updatedDay.format('MMMM'),
+      startMonth: updatedDay.format('MMM'),
       selectedMonth: {
-        label: updatedDay.format('MMMM'),
-        value: updatedDay.format('MMMM')
+        label: updatedDay.format('MMM'),
+        value: updatedDay.format('MMM')
       }
     })
   }
@@ -91,7 +120,7 @@ class serviceCalendar extends React.Component {
       startYear: moment(today).format('YYYY'),
       startDate: moment(today).format(),
       reportDay: moment(today).format(),
-      startMonth: moment(today).format('MMMM')
+      startMonth: moment(today).format('MMM')
     })
   }
 
@@ -100,10 +129,10 @@ class serviceCalendar extends React.Component {
     this.setState({
       reportDay: e.target.getAttribute('data-date'),
       startYear: getDate.format('YYYY'),
-      startMonth: getDate.format('MMMM'),
+      startMonth: getDate.format('MMM'),
       selectedMonth: {
-        label: getDate.format('MMMM'),
-        value: getDate.format('MMMM')
+        label: getDate.format('MMM'),
+        value: getDate.format('MMM')
       }
     })
   }
@@ -135,6 +164,7 @@ class serviceCalendar extends React.Component {
       end_date: end_date
     }
     this.props.getServiceVisitCount(date_range)
+    this.props.getEntityServiceProviderList()
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
   }
@@ -158,6 +188,13 @@ class serviceCalendar extends React.Component {
   showServiceProviderList = data => {
     let date = convertStringToDate(data.target.value)
     this.props.getServiceProviderVists(date)
+  }
+
+  handleserviceType = (item, e) => {
+    console.log(323333333333333333)
+    if (e.target.checked) {
+      this.setState({ selectedServiceProviderId: item.serviceProviderId })
+    }
   }
 
   render () {
@@ -230,7 +267,7 @@ class serviceCalendar extends React.Component {
     let monthLists = pervious_month.concat(next_month_list)
 
     let monthList = monthLists.map(month => {
-      return { label: month, value: month }
+      return { label: month.substring(0, 3), value: month.substring(0, 3) }
     })
 
     let dateList = dates.map((daysMapping, i) => {
@@ -272,7 +309,36 @@ class serviceCalendar extends React.Component {
     })
 
     let serviceVist = this.props.serviceVist
-    let visitData = <ServiceCalendarDefault Servicelist={serviceVist} />
+    let visitData = (
+      <ServiceCalendarDefault
+        Servicelist={serviceVist}
+        togglePersonalDetails={this.togglePersonalDetails}
+      />
+    )
+
+    let modalTitle = 'Assign Service Provider'
+    let modalType = ''
+    let modalContent = this.props.serviceProviderList.map((item, index) => {
+      let catNum = index + 1
+      return (
+        <fieldset>
+          <div className='CheckboxSet' key={item.id}>
+            <input
+              className='ServiceCheckbox'
+              name={'ServiceStatus'}
+              id={item.serviceProviderId}
+              // checked={item.isChecked}
+              type='radio'
+              value={item.serviceProviderId}
+              onChange={e => this.handleserviceType(item, e)}
+            />
+            <label htmlFor={'ServiceList' + catNum}>
+              {item.firstName + ' ' + item.lastName}
+            </label>
+          </div>
+        </fieldset>
+      )
+    })
 
     return (
       <div
@@ -285,7 +351,7 @@ class serviceCalendar extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               My Services Visits
             </span>
-            <Link className='ProfileCardHeaderLink' to='/'>View all</Link>
+
           </div>
           <div className='topPalette'>
             <div className='monthPalette Center'>
@@ -302,7 +368,7 @@ class serviceCalendar extends React.Component {
             </div>
             <div className='todayPalette'>
               <span
-                className='btn btn-outline-primary ProfileCardTodayLink'
+                className='btn ProfileCardTodayLink'
                 onClick={this.todayDate}
               >
                 Today
@@ -344,6 +410,16 @@ class serviceCalendar extends React.Component {
             Show more <i className='ProfileIconShowMore' />
           </li>
         </ul>
+        <ProfileModalPopup
+          isOpen={this.state.EditPersonalDetailModal}
+          toggle={() => this.togglePersonalDetails(this, modalType)}
+          ModalBody={modalContent}
+          className='modal-lg asyncModal CertificationModal'
+          modalTitle={modalTitle}
+          centered='centered'
+          onClick={this.onSubmit}
+          disabled={this.state.disabledSaveBtn}
+        />
       </div>
     )
   }
@@ -352,14 +428,19 @@ class serviceCalendar extends React.Component {
 function mapDispatchToProps (dispatch) {
   return {
     getServiceProviderVists: data => dispatch(getServiceProviderVists(data)),
-    getServiceVisitCount: data => dispatch(getServiceVisitCount(data))
+    getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
+    getEntityServiceProviderList: () =>
+      dispatch(getEntityServiceProviderList()),
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data))
   }
 }
 
 function mapStateToProps (state) {
   return {
     serviceVist: state.dashboardState.dashboardState.serviceVist,
-    serviceVistCount: state.dashboardState.dashboardState.serviceVistCount
+    serviceVistCount: state.dashboardState.dashboardState.serviceVistCount,
+    serviceProviderList: state.dashboardState.dashboardState
+      .serviceProviderList
   }
 }
 export default withRouter(

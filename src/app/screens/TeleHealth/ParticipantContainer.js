@@ -7,18 +7,16 @@ import {
     getLinkedParticipantsByPatients,
     clearLinkedParticipants,
     createVideoConference,
-    GetAllParticipants,
     getLinkedPatients
 } from '../../redux/telehealth/actions';
 import SelectPatient from './SelectPatient';
-import {getUserInfo} from '../../services/http';
+import {USERTYPES} from '../../constants/constants';
+import {getUserInfo} from '../../services/http'
 import './styles.css';
-import { USERTYPES  } from '../../constants/constants';
 
 class ParticipantsContainer extends Component {
     state = {
         selectedParticipants: [],
-        title: '',
         searchText: '',
         selectedPatientDetails: {}
     };
@@ -29,13 +27,11 @@ class ParticipantsContainer extends Component {
 
     componentDidMount() {
         this.props.onRef(this);
-        if (getUserInfo().userType === 'G') {
-            this.props.getLinkedPatients();
-        };
+        this.props.getLinkedPatients();
     };
 
     onClearParticipantContainer = () => {
-        this.setState({ selectedParticipants: [], title: '', searchText: '', selectedPatientDetails: {} });
+        this.setState({ selectedParticipants: [], searchText: '', selectedPatientDetails: {} });
         this.props.clearLinkedParticipants();
         this.props.onSetDisplayParticipantModal();
     };
@@ -62,50 +58,56 @@ class ParticipantsContainer extends Component {
         this.props.createVideoConference(this.state.selectedParticipants);
     };
 
-    onTitleChange = (e) => {
-        this.setState({ title: e.target.value });
-    };
-
     onSearchTextChange = (e) => {
         this.setState({ searchText: e.target.value });
-        let data = {
+        if (this.state.selectedPatientDetails && this.state.selectedPatientDetails.userId) {
+            let data = {
                 searchText: e.target.value,
-                contextId: this.state.selectedPatientDetails.length > 0 ? this.state.selectedPatientDetails.userId : null
+                patientId: this.state.selectedPatientDetails.userId,
+                conversationId: 0,
+                userId: 0,
+                participantType: USERTYPES.SERVICE_PROVIDER
             };
-           this.props.getAllParticipants(data);
+            this.props.getLinkedParticipantsByPatients(data);
+        }
     };
 
     onSelectPatient = (patientId) => {
-        let patientData = {
-            userId: patientId,
-            participantType: USERTYPES.PATIENT
-        };
-        this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
-        let data = {
-            userId: getUserInfo().userId,
-            participantType: getUserInfo().userType,
-            searchText: this.state.searchText,
-            patientId: patientId ? patientId : 0,
-            conversationId: 0
-        };
-        this.props.getLinkedParticipantsByPatients(data);
+        if (patientId === null){
+            this.props.clearLinkedParticipants();
+        } else {
+            let patientData = {
+                userId: patientId,
+                participantType: USERTYPES.PATIENT
+            };
+            let userId = getUserInfo().serviceProviderId;
+            this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
+            let data = {
+                userId: userId,
+                participantType: USERTYPES.SERVICE_PROVIDER,
+                searchText: this.state.searchText,
+                patientId: patientId ? patientId : 0,
+                conversationId: 0
+            };
+            this.props.getLinkedParticipantsByPatients(data);
+        }
     };
 
     render() {
         let participantModalData = <form className="participantsSearchForm">
-            {this.props.loggedInUser.userType === 'G' && <SelectPatient
+            <SelectPatient
                 onSelect={this.onSelectPatient}
-                patients={this.props.patients} />}
-
+                patients={this.props.patients} />
             <p className="primaryColor mb-0 mt-4">Invite Participants</p>
             <ParticipantList
                 selectedParticipants={this.state.selectedParticipants}
                 onCheckParticipant={this.onCheckParticipant}
                 onSearchTextChange={this.onSearchTextChange}
                 selectedContext={this.state.selectedContext}
-                searchText={this.state.searchText} />
-
+                searchText={this.state.searchText}
+                participantList={this.props.participants} />
         </form>
+
         return (
             <ParticipantListModal
                 isOpen={this.props.isDisplayParticipantModal}
@@ -127,16 +129,14 @@ function mapDispatchToProps(dispatch) {
         getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
         createVideoConference: (data) => dispatch(createVideoConference(data)),
-        getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         getLinkedPatients: () => dispatch(getLinkedPatients())
     }
 };
 
-
 function mapStateToProps(state) {
     return {
         patients: state.telehealthState.linkedPatients,
-        loggedInUser: getUserInfo()
+        participants: state.telehealthState.linkedParticipants
     }
 };
 

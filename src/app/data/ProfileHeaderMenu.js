@@ -1,23 +1,36 @@
 export const ProfileHeaderMenu = [
     {
-        name: "contact",
+        name: "about",
+        link: "aboutUs",
         status: true,
-        id:1
+        id: 1
+    },
+    {
+        name: "contact",
+        link: "contact",
+        status: true,
+        id: 2
+    },
+    {
+        name: "videoChat",
+        link: 'telehealth',
+        status: true,
+        id: 3
     },
     {
         name: "messages",
         status: true,
-        id:3,
+        id: 4,
         link:'messagesummary'
     },
     {
         name: "notification",
         status: true,
-        id:4
+        id: 5
     },
     {
         name: "logout",
         status: true,
-        id:5
+        id: 6
     }
 ];

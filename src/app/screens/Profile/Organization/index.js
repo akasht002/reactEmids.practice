@@ -13,28 +13,31 @@ import {
   TextArea,
   SelectBox,
   ProfileModalPopup,
-  ModalPopup, 
+  ModalPopup,
   ScreenCover,
   ProfileImage
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
+import { PHONE_NUMBER_CONST } from '../../../constants/constants'
 import {
   checkTextNotStartWithNumber,
   getArrayLength,
-  getLength
+  getLength,
+  isUrlValid
 } from '../../../utils/validations'
 
 import { SETTING } from '../../../services/api'
 
 class Organization extends React.PureComponent {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       useEllipsis: true,
       EducationModal: false,
       isDiscardModalOpen: false,
       isAlertModalOpen: false,
+      urlInvaild:false,
       ModalOrg: true,
       src: null,
       crop: {
@@ -46,13 +49,13 @@ class Organization extends React.PureComponent {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
     this.props.getImage()
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       organizationName: nextProps.personalDetail.organization,
@@ -68,18 +71,23 @@ class Organization extends React.PureComponent {
         ? nextProps.personalDetail.address[0].zipCode
         : '',
       phoneNumber: nextProps.personalDetail.phoneNumber,
-      state_id: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+      state_id: getArrayLength(nextProps.personalDetail.address) > 0 &&
+        nextProps.personalDetail.address[0].state != null
         ? nextProps.personalDetail.address[0].state.id
         : '',
       isActive: false,
       selectedState: {
-        label: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+        label: getArrayLength(nextProps.personalDetail.address) > 0 &&
+          nextProps.personalDetail.address[0].state != null
           ? nextProps.personalDetail.address[0].state.name
           : '',
-        value: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+        value: getArrayLength(nextProps.personalDetail.address) > 0 &&
+          nextProps.personalDetail.address[0].state != null
           ? nextProps.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
-            ? nextProps.personalDetail.address[0].state.name : ''
+          : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
+              nextProps.personalDetail.address[0].state != null
+              ? nextProps.personalDetail.address[0].state.name
+              : ''
       }
     })
     this.styles = {
@@ -95,7 +103,8 @@ class Organization extends React.PureComponent {
     this.zipCode = getArrayLength(nextProps.personalDetail.address) > 0
       ? nextProps.personalDetail.address[0].zipCode
       : ''
-    this.states = getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+    this.states = getArrayLength(nextProps.personalDetail.address) > 0 &&
+      nextProps.personalDetail.address[0].state != null
       ? nextProps.personalDetail.address[0].state.name
       : ''
   }
@@ -105,7 +114,10 @@ class Organization extends React.PureComponent {
   }
 
   reUpload = e => {
-    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE && e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
+    if (
+      e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE &&
+      e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)
+    ) {
       this.setState({
         uploadedImageFile: URL.createObjectURL(e.target.files[0])
       })
@@ -153,11 +165,7 @@ class Organization extends React.PureComponent {
         EditPersonalDetailModal: !this.state.EditPersonalDetailModal
       })
     }
-  }
-
-  //   street = this.props.personalDetail.map((person, i) => (
-  //     <span key={i}>{person}</span>
-  //   ))
+  } 
 
   closeImageUpload = () => {
     this.setState({
@@ -173,16 +181,15 @@ class Organization extends React.PureComponent {
     })
   }
 
-  render() {
+  render () {
     let modalContent
-    let modalTitle = 'Edit Organization Detials'
+    let modalTitle = 'Edit Entity Detials'
     let modalType = ''
     const cityDetail = this.props.cityDetail.map((city, i) => {
       city.label = city.name
       city.value = city.id + '-' + city.name
       return city
-    }
-    )
+    })
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
@@ -231,7 +238,11 @@ class Organization extends React.PureComponent {
         <ModalPopup
           isOpen={this.state.isAlertModalOpen}
           toggle={this.reset}
-          ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)</span>}
+          ModalBody={
+            <span>
+              Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)
+            </span>
+          }
           btn1='OK'
           // btn2='OK'
           className='modal-sm'
@@ -328,30 +339,7 @@ class Organization extends React.PureComponent {
   }
   renderDetails = () => {
     return (
-      <div className='col-md-12 card CardWidget SPDetails'>
-        {/* <div className={'SPDetailsContainer SPdpWidget'}>
-          <div className={'SPdpContainer'}>
-            <svg viewBox='0 0 36 36' className='circular-chart'>
-              <path
-                className='circle'
-                strokeDasharray={`${this.props.profilePercentage},100`}
-                d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
-              />
-            </svg>
-
-            <img alt="profile_image"
-              className={'SPdpImage'}
-              src={
-                this.state.imageProfile
-                  ? this.state.imageProfile
-                  : require('../../../assets/images/Blank_Profile_icon.png')
-              }
-            />
-          </div>
-          <span className={'SPRating'}>
-            <i className={'Icon iconFilledStar'} />4.2
-          </span>
-        </div> */}
+      <div className='col-md-12 card CardWidget SPDetails'>       
         <ProfileImage
           src={
             this.state.imageProfile
@@ -385,8 +373,15 @@ class Organization extends React.PureComponent {
           </div>
 
           <div className={'width100'}>
-            {(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
-              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails.bind(this)}>Edit your profile here</span>}
+            {this.props.personalDetail &&
+              this.props.personalDetail.description !== ''
+              ? this.props.personalDetail.description
+              : <span
+                className={'SPDescriptionNone'}
+                onClick={this.togglePersonalDetails.bind(this)}
+                >
+                  Edit your profile here
+                </span>}
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
@@ -396,21 +391,27 @@ class Organization extends React.PureComponent {
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
-              <span>
+              <span className='AddressContentText'>
                 {this.props.personalDetail && this.streetAddress}
               </span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>City</span>
-              <span>{this.props.personalDetail && this.city}</span>
+              <span className='AddressContentText'>
+                {this.props.personalDetail && this.city}
+              </span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>State</span>
-              <span>{this.props.personalDetail && this.states}</span>
+              <span className='AddressContentText'>
+                {this.props.personalDetail && this.states}
+              </span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>ZIP</span>
-              <span>{this.props.personalDetail && this.zipCode}</span>
+              <span className='AddressContentText'>
+                {this.props.personalDetail && this.zipCode}
+              </span>
             </div>
           </div>
           <div className={'SPAddressContent'}>
@@ -419,8 +420,8 @@ class Organization extends React.PureComponent {
             </div>
             <div className={'width100 d-flex'}>
               <span>
-                {this.props.personalDetail &&
-                  this.props.personalDetail.phoneNumber}
+                {this.props.personalDetail.phoneNumber &&
+                  PHONE_NUMBER_CONST + this.props.personalDetail.phoneNumber}
               </span>
             </div>
           </div>
@@ -432,7 +433,7 @@ class Organization extends React.PureComponent {
       </div>
     )
   }
-  getModalContent = (stateDetail) => {
+  getModalContent = stateDetail => {
     return (
       <div className='row'>
         <div className='col-md-12'>
@@ -442,7 +443,8 @@ class Organization extends React.PureComponent {
         </div>
         <div className='col-md-4 mb-2 editProfileImageContainer'>
           <div className='profileImage'>
-            <img alt="profile_image"
+            <img
+              alt='profile_image'
               className={'SPdpImage'}
               src={
                 this.state.imageProfile
@@ -461,7 +463,7 @@ class Organization extends React.PureComponent {
             <div className='col-md-6 mb-2'>
               <Input
                 name='organizationName'
-                label='Organization Name'
+                label='Entity Name'
                 autoComplete='off'
                 required='required'
                 type='text'
@@ -469,13 +471,15 @@ class Organization extends React.PureComponent {
                 value={this.state.organizationName}
                 className={
                   'form-control ' +
-                  (!this.state.isValid &&
-                    !this.state.organizationName &&
-                    'inputFailure')
+                    (!this.state.isValid &&
+                      !this.state.organizationName &&
+                      'inputFailure')
                 }
                 textChange={e => {
                   this.setState({ organizationName: e.target.value })
-                  if (!checkTextNotStartWithNumber(this.state.organizationName)) {
+                  if (
+                    !checkTextNotStartWithNumber(this.state.organizationName)
+                  ) {
                     this.setState({
                       organizationNameInvaild: true,
                       disabledSaveBtn: true
@@ -491,7 +495,9 @@ class Organization extends React.PureComponent {
               {!this.state.isValid &&
                 !this.state.organizationName &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter  {this.state.organizationName === '' && ' First Name'}
+                  Please enter
+                  {' '}
+                  {this.state.organizationName === '' && ' First Name'}
                 </span>}
               {this.state.organizationNameInvaild &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -509,17 +515,43 @@ class Organization extends React.PureComponent {
                 textChange={e => {
                   const re = /^\d*\.?\d{0,2}$/
                   if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({ hourlyRate: e.target.value })
+                    this.setState({
+                      hourlyRate: e.target.value,
+                      disabledSaveBtn: false
+                    })
                   }
                 }}
                 className='form-control'
               />
             </div>
 
-
           </div>
         </div>
 
+        <div className='col-md-12 mb-2'>
+          <Input
+            name='url'
+            label='URL'
+            autoComplete='off'
+            required='required'
+            type='text'
+            maxlength='60'
+            value={this.state.url}
+            textChange={e => {
+              this.setState({ url: e.target.value, disabledSaveBtn: false })
+            }}
+            onBlur={(e) => {
+              if (!isUrlValid(e.target.value)) {
+                  this.setState({urlInvaild: true});
+              }
+          }}
+            className='form-control'
+          />
+           <small className="text-danger d-block OnboardingAlert">
+                {this.state.urlInvaild && 'Please enter valid url'}
+                </small>
+
+        </div>
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
@@ -529,7 +561,10 @@ class Organization extends React.PureComponent {
             value={this.state.description}
             textChange={e => {
               if (getLength(e.target.value) <= 500) {
-                this.setState({ description: e.target.value })
+                this.setState({
+                  description: e.target.value,
+                  disabledSaveBtn: false
+                })
               }
             }}
           />
@@ -553,8 +588,10 @@ class Organization extends React.PureComponent {
                       simpleValue
                       placeholder='Select the state'
                       onChange={value => {
-                        this.setState({ selectedState: value })
-                        console.log(value);
+                        this.setState({
+                          selectedState: value,
+                          disabledSaveBtn: false
+                        })
                       }}
                       selectedValue={this.state.selectedState}
                       className={'inputFailure'}
@@ -572,7 +609,8 @@ class Organization extends React.PureComponent {
                       value={this.state.city}
                       textChange={e =>
                         this.setState({
-                          city: e.target.value
+                          city: e.target.value,
+                          disabledSaveBtn: false
                         })}
                       className='form-control'
                     />
@@ -591,7 +629,8 @@ class Organization extends React.PureComponent {
                           value={this.state.streetAddress}
                           textChange={e =>
                             this.setState({
-                              streetAddress: e.target.value
+                              streetAddress: e.target.value,
+                              disabledSaveBtn: false
                             })}
                           className='form-control'
                         />
@@ -612,7 +651,10 @@ class Organization extends React.PureComponent {
                               re.test(e.target.value)) &&
                             getLength(e.target.value) <= 5
                           ) {
-                            this.setState({ zipCode: e.target.value })
+                            this.setState({
+                              zipCode: e.target.value,
+                              disabledSaveBtn: false
+                            })
                           }
                         }}
                         className='form-control'
@@ -644,19 +686,25 @@ class Organization extends React.PureComponent {
                     value={this.state.phoneNumber}
                     className={
                       'form-control ' +
-                      (!this.state.isValid &&
-                        !this.state.phoneNumber &&
-                        'inputFailure')
+                        (!this.state.isValid &&
+                          !this.state.phoneNumber &&
+                          'inputFailure')
                     }
                     textChange={e => {
-                      const re = /^[0-9\b]+$/
-                      if (
-                        (e.target.value === '' || re.test(e.target.value)) &&
-                        getLength(e.target.value) <= 15
-                      ) {
-                        this.setState({ phoneNumber: e.target.value })
+                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+                      if (onlyNums.length < 10) {
+                        this.setState({ phoneNumber: onlyNums })
+                      } else if (onlyNums.length === 10) {
+                        const number = onlyNums.replace(
+                          /(\d{3})(\d{3})(\d{4})/,
+                          '$1-$2-$3'
+                        )
+                        this.setState({ phoneNumber: number,
+                          phoneNumberInvalid: false,
+                          disabledSaveBtn:false })
                       }
-                    }}
+                    }
+                  }                    
                   />
                   {!this.state.isValid &&
                     !this.state.phoneNumber &&
@@ -675,23 +723,26 @@ class Organization extends React.PureComponent {
     )
   }
 
-
-  togglePersonalDetails(action, e) {
+  togglePersonalDetails (action, e) {
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: false
+      disabledSaveBtn: !this.state.disabledSaveBtn
     })
     let old_data = {
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      organizationName: this.props.personalDetail.organizationName ? this.props.personalDetail.organizationName : '',
+      organizationName: this.props.personalDetail.organizationName
+        ? this.props.personalDetail.organizationName
+        : '',
       phoneNumber: this.props.personalDetail.phoneNumber
     }
 
     let updated_data = {
-      organizationName: this.state.organizationName ? this.state.organizationName : '',
+      organizationName: this.state.organizationName
+        ? this.state.organizationName
+        : '',
       description: this.state.description,
       hourlyRate: this.state.hourlyRate,
       phoneNumber: this.state.phoneNumber
@@ -718,17 +769,18 @@ class Organization extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
-    updateOrganizationDetail: data => dispatch(action.updateOrganizationDetail(data)),
+    updateOrganizationDetail: data =>
+      dispatch(action.updateOrganizationDetail(data)),
     getCityDetail: () => dispatch(action.getCityDetail()),
     uploadImg: data => dispatch(action.uploadImg(data)),
     getImage: () => dispatch(action.getImage())
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

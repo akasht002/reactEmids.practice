@@ -10,7 +10,7 @@
 
 @media (max-width: 768px) {
     div.mainWidgetOnboarding {
-        width: 100% !important;
+        width: 100%;
     }
 }
 
@@ -43,7 +43,7 @@ div.row.emptyGuardianRow{
 }
 
 .onBoarding .mainWidget .mainContent {
-    height: calc(100% - 70px) !important;
+    height: calc(100% - 70px);
     position: relative;
 }
 
@@ -72,6 +72,10 @@ div.row.emptyGuardianRow{
 
 .onBoardingSelect {
 
+}
+
+.OnboardingAlert{
+    height: 25px;
 }
 
 .onBoardingInputWidget label, .onBoardingSelectWidget label{
@@ -121,4 +125,34 @@ div.row.emptyGuardianRow{
     div.onBoarding {
         width: 100%;
     }
+}
+
+
+/*bug-fixing-for-tab-&-mobile*/
+@media only screen and (max-width: 820px)
+{
+    div.sideContent {
+        width:100%;
+     }
+}
+
+@media only screen and (max-width: 767px) {
+
+     .onBoarding .mainWidget
+     {
+        height: calc(100% - 43px);
+        min-height: calc(100% - 43px);
+     }
+
+
+     .onBoarding .mainWidget .mainContent {
+         margin-top: 0px;
+         overflow-y: auto;
+     }
+     .onBoarding .mainWidget .mainContent .col-md-12
+     {
+        margin-top: 120px; 
+     }
+
+     
 }

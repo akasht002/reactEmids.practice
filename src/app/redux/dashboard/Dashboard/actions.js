@@ -1,9 +1,11 @@
 import axios from 'axios'
-import { ServiceRequestGet } from '../../../services/http'
 import {
-  API,
-  messageURL
-} from '../../../services/api'
+  ServiceRequestGet,
+  Put,
+  Get,
+  ServiceRequestPost
+} from '../../../services/http'
+import { API, messageURL } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
 import {
@@ -13,7 +15,7 @@ import {
   MSG_TYPE,
   DEFAULT_SERVICE_STATUS
 } from '../../constants/constants'
-import { getUserInfo } from '../../../services/http';
+import { getUserInfo } from '../../../services/http'
 
 export const DashboardDetail = {
   get_conversation_detail_success: 'get_conversation_detail_success/dashboard',
@@ -27,7 +29,8 @@ export const DashboardDetail = {
   get_patient_visit_detail_success: 'get_patient_visit_detail_success/dashboard',
   get_service_request_success: 'get_service_request_success/dashboard',
   get_service_request: 'get_service_request/dashboard',
-  get_service_visit_count: 'get_service_visit_count'
+  get_service_visit_count: 'get_service_visit_count',
+  get_entity_service_provider_list: 'get_entity_service_provider_list'
 }
 
 export const getServiceStatusSuccess = data => {
@@ -42,7 +45,7 @@ export function getServiceStatusDetail () {
     dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestStatus)
       .then(resp => {
-        dispatch(getServiceStatusSuccess(resp.data))
+        dispatch(getServiceStatusSuccess(resp.data.slice(0, 5)))
         dispatch(endLoading())
       })
       .catch(err => {
@@ -50,6 +53,8 @@ export function getServiceStatusDetail () {
       })
   }
 }
+
+export const updateStandByModeSuccess = () => {}
 
 export const getPatientVisitDetailSuccess = data => {
   return {
@@ -70,7 +75,7 @@ export function getServiceVisitCount (data) {
     dispatch(startLoading())
     ServiceRequestGet(
       API.getServiceVisitsCount +
-      getUserInfo().serviceProviderId +
+        getUserInfo().serviceProviderId +
         '/' +
         formatDate(data.start_date) +
         '/' +
@@ -86,11 +91,32 @@ export function getServiceVisitCount (data) {
   }
 }
 
+export const getEntityServiceProviderListSuccess = data => {
+  return {
+    type: DashboardDetail.get_entity_service_provider_list,
+    data
+  }
+}
+
+export function getEntityServiceProviderList () {
+  return (dispatch, getState) => {
+    dispatch(startLoading())
+    Get(API.getEntityServiceProviderList + getUserInfo().entityId)
+      .then(resp => {
+        dispatch(getEntityServiceProviderListSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
 export function getServiceProviderVists (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestGet(
-      API.getServiceProviderVists +  getUserInfo().serviceProviderId + '/' + data
+      API.getServiceProviderVists + getUserInfo().serviceProviderId + '/' + data
     )
       .then(resp => {
         dispatch(getPatientVisitDetailSuccess(resp.data))
@@ -110,14 +136,15 @@ export const getPatientServiceRequestDetailSuccess = data => {
 }
 
 export function getPatientServiceRequestDetail (data) {
-  let id = data ? data : DEFAULT_SERVICE_STATUS;
+  let id = data || DEFAULT_SERVICE_STATUS
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestGet(
-          API.getServiceProviderRequests +
-          getUserInfo().serviceProviderId
-          + '/' + id
-      )
+      API.getServiceProviderRequests +
+        getUserInfo().serviceProviderId +
+        '/' +
+        id
+    )
       .then(resp => {
         dispatch(getPatientServiceRequestDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -134,13 +161,31 @@ export const getServiceProviderDetailSuccess = data => {
     data
   }
 }
-
+export function updateEntityServiceVisit (data) {
+  return (dispatch, getState) => {
+    dispatch(startLoading())
+    ServiceRequestPost(API.assignServiceVisit, data)
+      .then(resp => {
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
 export function getServiceProviderDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestGet(
-        API.getServiceProviders +  getUserInfo().serviceProviderId + '/'+PAGE_NO+'/'+PAGE_SIZE+'/'+ data
-      )
+      API.getServiceProviders +
+        getUserInfo().serviceProviderId +
+        '/' +
+        PAGE_NO +
+        '/' +
+        PAGE_SIZE +
+        '/' +
+        data
+    )
       .then(resp => {
         dispatch(getServiceProviderDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -162,7 +207,12 @@ export function getConversationDetail () {
   return (dispatch, getState) => {
     dispatch(startLoading())
     axios
-      .get(messageURL + API.getConversationSummary + MSG_SERVICE_PROVIDER + MSG_TYPE)
+      .get(
+        messageURL +
+          API.getConversationSummary +
+          getUserInfo().serviceProviderId +
+          MSG_TYPE
+      )
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -186,10 +236,25 @@ export function getUnreadMessageCounts (userId) {
         messageURL +
           API.getUnreadCount +
           getUserInfo().serviceProviderId +
-          '?participantType=i'
+          '?participantType=' +
+          MSG_TYPE
       )
       .then(resp => {
         dispatch(onUnreadCountSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
+export function updateStandByMode (data) {
+  return (dispatch, getState) => {
+    dispatch(startLoading())
+    Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
+      .then(resp => {
+        dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
       })
       .catch(err => {

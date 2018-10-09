@@ -1,20 +1,23 @@
 import React from 'react'
-import {
-  Scrollbars
-} from '../../components'
+import {  withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Scrollbars } from '../../components'
 import ServiceCalendar from './serviceCalendar'
 import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
-import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
+import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
+import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
 
 import './dashboard.css'
+import './styles/toggleSwitch.css'
 
 class Dashboard extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       isOpen: false,
-      conversationDetail: []
+      conversationDetail: [],
+      isChecked: false
     }
   }
 
@@ -24,39 +27,64 @@ class Dashboard extends React.Component {
     })
   }
 
+  handleChecked = ()=> {
+    this.setState({isChecked: !this.state.isChecked});
+    this.props.updateStandByMode(this.state.isChecked)
+  }
+
   render () {
-    return (    
-    <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-             <div className='ProfileHeaderWidget'>
-              <div className='ProfileHeaderTitle'>
-                <h5 className='primaryColor m-0'>Dashboard</h5>
-              </div>
-              <div className='ProfileHeaderButton'>
-                <span className='standBy'>Stand by mode </span>
-                {/* <ToggleSwitch/> */}
-              </div>
+    return (
+      <AsideScreenCover
+        isOpen={this.state.isOpen}
+        toggle={this.toggle}
+        active={'active'}
+      >
+        <div className='ProfileHeaderWidget'>
+          <div className='ProfileHeaderTitle'>
+            <h5 className='primaryColor m-0'>Dashboard</h5>
+          </div>
+          <div className='ProfileHeaderButton'>
+            <span className='standBy'>Stand-by mode </span>
+            <label className='switch'>
+              <input type='checkbox' checked={this.state.isChecked} onChange={ this.handleChecked } />
+              <span className='sliderSwitch round' />
+            </label>
+          </div>
+        </div>
+        <Scrollbars
+          speed={2}
+          smoothScrolling
+          horizontal={false}
+          className='SPContentWidget'
+        >
+          <div className='ProfileContainer topProfile'>
+            <ServiceCalendar />
+          </div>
+          <div className='ProfileContainer bottomProfile'>
+            <div className='innerWidget'>
+              <ServiceRequest />
             </div>
-            <Scrollbars
-              speed={2}
-              smoothScrolling
-              horizontal={false}
-              className='SPContentWidget'
-            >
-              <div className='ProfileContainer topProfile'>
-                <ServiceCalendar />
-              </div>
-              <div className='ProfileContainer bottomProfile'>
-                <div className='innerWidget'>
-                  <ServiceRequest />
-                </div>
-                <div className='innerWidget'>
-                  <MyConversation />
-                </div>
-              </div>
-            </Scrollbars>
-    </AsideScreenCover>
+            <div className='innerWidget'>
+              <MyConversation />
+            </div>
+          </div>
+        </Scrollbars>
+      </AsideScreenCover>
     )
   }
 }
+function mapDispatchToProps(dispatch) {
+  return {
+    updateStandByMode:data => dispatch(updateStandByMode(data))
+  }
+}
 
-export default Dashboard
+function mapStateToProps(state) {
+  return {
+   
+  }
+}
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+)
+

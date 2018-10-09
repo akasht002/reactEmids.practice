@@ -11,6 +11,7 @@ process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
 process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
 process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';
 process.env.REACT_APP_TP_URL = 'http://localhost:63633/api/';
+process.env.REACT_APP_SIGNALR_URL = 'http://52.172.45.185:9002/signalr';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -22,13 +23,14 @@ process.on('unhandledRejection', err => {
 let argv = process.argv.slice(2);
 
 if (argv.includes('--qa')) {
-  process.env.REACT_APP_API_URL = "http://ch-sp-api.coreoflowsandbox.com:9008/api/";
-  process.env.REACT_APP_AUTH_URL = 'http://52.172.45.185:9005/';
-  process.env.REACT_APP_SR_URL = "http://52.172.45.185:9007/api/";
-  process.env.REACT_APP_UI_URL = 'http://52.172.45.185:9009/#/';
-  process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
-  process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';
-  process.env.REACT_APP_TP_URL = 'http://localhost:63633/api/';
+  process.env.REACT_APP_API_URL = "https://chqa-sp-api.coreoflowsandbox.com/api/";
+  process.env.REACT_APP_AUTH_URL = 'https://chqa-oauth-api.coreoflowsandbox.com/';
+  process.env.REACT_APP_SR_URL = "https://chqa-ui.coreoflowsandbox.com/api/";
+  process.env.REACT_APP_UI_URL = 'https://chqa-vp-api.coreoflowsandbox.com/#/';
+  process.env.REACT_APP_MSG_URL = "https://chqa-vp-ui.coreoflowsandbox.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://chqa-ui.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/signalr';
 } else if (argv.includes('--dev')) {
   process.env.REACT_APP_API_URL = 'http://ch-api.coreoflowsandbox.com:9008/api/';
   process.env.REACT_APP_AUTH_URL = 'http://52.172.45.185:9005/';
@@ -37,6 +39,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
   process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';
   process.env.REACT_APP_TP_URL = 'http://localhost:63633/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'http://52.172.45.185:9002/signalr';
 }
 
 // Ensure environment variables are read.

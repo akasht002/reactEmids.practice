@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ScreenCover, Button } from '../../components';
 import { onLogin } from '../../redux/auth/login/actions';
-import { onLogout } from '../../redux/auth/logout/actions';
 import './styles.css';
 
 const images = require.context('../../assets/images/home', true);
@@ -94,18 +93,14 @@ class Welcome extends Component {
     }
 
     updateWindowDimensions() {
-        this.setState({sliderWidth: window.innerWidth, sliderHeight: window.innerHeight});
+        this.setState({ sliderWidth: window.innerWidth, sliderHeight: window.innerHeight });
     }
-    
+
     onLoginPress = () => {
         this.props.onLogin();
     }
 
-    onLogOutPress = () => {
-        this.props.onLogout();
-    }
-    
-    render(){
+    render() {
         const menus = ["login"];
         const style2 = {
             width: (this.state.sliderWidth * this.state.slider.length) + 'px',
@@ -120,29 +115,31 @@ class Welcome extends Component {
                         <div className="container-fluid onBoardingContent">
                             <div className="row">
                                 <div className="onBoardingHeader">
-                                    <Link className="brandName text-uppercase" to="/">Coreo Home</Link>
-                                    <Button type="button" onClick={this.props.user ? this.onLogOutPress : this.onLoginPress} classname="btn btn-primary text-uppercase change-f" label={this.props.user ? "Logout" : "Login"}/>
+                                    <Link className="brandName text-uppercase" to="/">
+                                        <img src={require('../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
+                                    </Link>
+                                    <Button type="button" onClick={this.onLoginPress} classname="btn btn-outline-primary LoginButton text-uppercase change-f" label={"Login"} />
                                 </div>
                                 <div className="sliderWrapper" style={style3}>
                                     <div className="sliderContainer">
                                         <div className="slider" style={style2}>
-                                        {this.state.slider.map((item, index) => {
-                                            const style1 = {
-                                                width: this.state.sliderWidth + 'px',
-                                                height: this.state.sliderHeight + 'px',
-                                                backgroundImage: 'linear-gradient(rgba(60, 16, 83, .35), rgba(102, 48, 127, .35)), url(' + imagePath("./coverImg" + this.state.activeIndex + ".jpg") + ')'
-                                            };
-                                            return (
-                                                <div style={style1}
-                                                    className={index + 1 === this.state.activeIndex ? 'sliderItem slide1' : 'hide slide1'}>
-                                                    <div className="sliderInnerContent">
-                                                        <h1 className="sliderTitleText">{item.title}</h1>
-                                                        <span className="sliderLabelText">{item.label}</span>
+                                            {this.state.slider.map((item, index) => {
+                                                const style1 = {
+                                                    width: this.state.sliderWidth + 'px',
+                                                    height: this.state.sliderHeight + 'px',
+                                                    backgroundImage: 'linear-gradient(rgba(60, 16, 83, .35), rgba(102, 48, 127, .35)), url(' + imagePath("./coverImg" + this.state.activeIndex + ".jpg") + ')'
+                                                };
+                                                return (
+                                                    <div style={style1}
+                                                        className={index + 1 === this.state.activeIndex ? 'sliderItem slide1' : 'hide slide1'}>
+                                                        <div className="sliderInnerContent">
+                                                            <h1 className="sliderTitleText">{item.title}</h1>
+                                                            <span className="sliderLabelText">{item.label}</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )
-                                        })
-                                        }
+                                                )
+                                            })
+                                            }
                                         </div>
                                     </div>
                                     <div className="indicatorsWrapper">
@@ -171,16 +168,8 @@ class Welcome extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onLogin: () => dispatch(onLogin()),
-        onLogout: () => dispatch(onLogout())
+        onLogin: () => dispatch(onLogin())
     }
 }
-  
-function mapStateToProps(state) {
-    return {
-        user: state.oidc.user,
-    }
-}
-  
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Welcome));
-  
+
+export default withRouter(connect(null, mapDispatchToProps)(Welcome));

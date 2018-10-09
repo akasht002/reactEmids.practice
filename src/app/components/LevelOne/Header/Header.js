@@ -6,7 +6,8 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink, } from 'reactstrap';
+    NavLink,
+} from 'reactstrap';
 import { PropTypes } from 'prop-types';
 import './styles.css';
 
@@ -53,16 +54,16 @@ class CoreoWizHeader extends Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.onMenu();
     }
 
-    onMenu = () =>{
+    onMenu = () => {
         let menus = this.state.menus.filter((menu) => {
             return this.props.menuArray.includes(menu.name);
         });
         this.setState({
-            menus:menus
+            menus: menus
         });
     }
 
@@ -77,15 +78,15 @@ class CoreoWizHeader extends Component {
         const menuList = this.state.menus.map((menu) => {
             let menuName = menu.name;
             let Separator = "";
-            if(menu.status) {
+            if (menu.status) {
                 let clsName = "navIcon icon" + menuName.charAt(0).toUpperCase() + menuName.slice(1);
-                if(menuName === "notification"){
+                if (menuName === "notification") {
                     Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem className={menuName+"Widget navIconWidget "+Separator}>
+                    <NavItem className={menuName + "Widget " + Separator}>
                         <NavLink className={clsName}
-                                 href={menu.link} />
+                            href={menu.link} />
                     </NavItem>
                 )
             }
@@ -93,15 +94,15 @@ class CoreoWizHeader extends Component {
         });
 
         return (
-                <Navbar className="navbar-light boxShadowBottom" expand="md">
-                    <NavbarBrand className="text-uppercase px-3 onboardingLogo">Coreo Home</NavbarBrand>
-                    <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            {menuList}
-                        </Nav>
-                    </Collapse>
-                </Navbar>
+            <Navbar className="navbar-light boxShadowBottom" expand="md">
+                <NavbarBrand className="text-uppercase px-3"><img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" /></NavbarBrand>
+                <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
+                <Collapse isOpen={this.state.isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        {menuList}
+                    </Nav>
+                </Collapse>
+            </Navbar>
         );
     }
 }

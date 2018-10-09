@@ -55,8 +55,10 @@ class _CardForm extends Component {
                     "patientId": this.props.data.SummaryDetails.patient.patientId,
                     "token": payload.token.id,
                     "cardNumberChanged": payload.token.card.last4,
-                    "amount": this.props.data.CalculationsData.grandTotalAmount,
-                    "cardType": payload.token.card.brand
+                    "amount": Math.ceil(this.props.data.CalculationsData.grandTotalAmount),
+                    "cardType": payload.token.card.brand,
+                    "serviceRequestId": this.props.data.SummaryDetails.serviceRequestId,
+                    "serviceRequestVisitId": this.props.data.SummaryDetails.serviceRequestVisitId,
                 }
                 this.props.token(data);
             } else {
@@ -77,7 +79,11 @@ class _CardForm extends Component {
                 <div className="col-md-6">
                     <div className="form-group">
                         <label className="m-0">Card Number</label>
-                        <CardNumberElement onChange={this.handleChangeCardNumber} {...createOptions()} />
+                        <CardNumberElement
+                            onChange={this.handleChangeCardNumber}
+                            placeholder={'Enter Card Number'}
+                            {...createOptions()}
+                        />
                         <small className="text-danger d-block OnboardingAlert mt-2">
                             {this.state.cardErrorMessage}
                         </small>
@@ -94,8 +100,12 @@ class _CardForm extends Component {
                 </div>
                 <div className="col-md-6">
                     <div className="form-group mt-0">
-                        <label className="m-0">CVC</label>
-                        <CardCVCElement onChange={this.handleChangeCVC} {...createOptions()} />
+                        <label className="m-0">CVC / CVV</label>
+                        <CardCVCElement
+                            onChange={this.handleChangeCVC}
+                            placeholder={'Enter CVC / CVV'}
+                            {...createOptions()}
+                        />
                         <small className="text-danger d-block OnboardingAlert mt-2">
                             {this.state.cvcErrorMessage}
                         </small>
@@ -123,7 +133,7 @@ class CheckoutForm extends React.Component {
         return (
             <div className="col-md-12">
                 <Elements>
-                    <CardForm token={this.chargeData} data={this.props.summaryAmount}/>
+                    <CardForm token={this.chargeData} data={this.props.summaryAmount} />
                 </Elements>
             </div>
         )
@@ -138,7 +148,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState
+        summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState,
+        SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails
     };
 };
 

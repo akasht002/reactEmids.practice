@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ScreenCover } from "../../../components";
+import { withRouter, Link } from 'react-router-dom';
 
 import './loginCover.css';
 
@@ -8,7 +9,11 @@ class LoginCover extends Component {
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className="loginCover-body">
-                    <div className="col-md-12 headingLoginCover"><h2>COREO HOME</h2></div>
+                    <div className="onBoardingHeader">
+                        <Link className="brandName text-uppercase" to="/">
+                            <img src={require('../../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
+                        </Link>
+                    </div>
                     <div className="login-boxLoginCover">
                         <div className="login-bgLoginCover">
                             <div className="login-body text-center">

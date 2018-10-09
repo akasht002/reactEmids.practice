@@ -24,6 +24,7 @@ import {
   getLength,
   checkhourlyRate
 } from '../../../utils/validations'
+import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 
 import { SETTING } from '../../../services/api'
 
@@ -43,7 +44,7 @@ class PersonalDetail extends React.PureComponent {
         y: 10,
         width: 80,
         height: 80
-      }      
+      }     
     }
   }
 
@@ -442,21 +443,21 @@ class PersonalDetail extends React.PureComponent {
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
-              <span>
+              <span className='AddressContentText'>
                 {this.props.personalDetail && this.streetAddress}
               </span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>City</span>
-              <span>{this.props.personalDetail && this.city}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.city}</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>State</span>
-              <span>{this.props.personalDetail && this.states}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.states}</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>ZIP</span>
-              <span>{this.props.personalDetail && this.zipCode}</span>
+              <span className='AddressContentText'>{this.props.personalDetail && this.zipCode}</span>
             </div>
           </div>
           <div className={'SPAddressContent'}>
@@ -466,7 +467,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail &&
-                '+1 ' + this.props.personalDetail.phoneNumber}
+                PHONE_NUMBER_CONST + this.props.personalDetail.phoneNumber}
               </span>
             </div>
           </div>
@@ -592,7 +593,8 @@ class PersonalDetail extends React.PureComponent {
                   placeholder='Select Gender'
                   onChange={value  => {
                     this.setState({
-                      selectedGender: value 
+                      selectedGender: value,
+                      disabledSaveBtn: false 
                     })
                   }}
                   selectedValue={this.state.selectedGender}
@@ -614,7 +616,7 @@ class PersonalDetail extends React.PureComponent {
                     (e.target.value === '' || re.test(e.target.value)) &&
                     getLength(e.target.value) <= 3 && (e.target.value)<=100
                   ) {
-                    this.setState({ age: e.target.value })
+                    this.setState({ age: e.target.value,  disabledSaveBtn: false })
                   }
                 }}
                 className='form-control'
@@ -632,7 +634,7 @@ class PersonalDetail extends React.PureComponent {
                 textChange={e => {
                   const re = /^[0-9\b]+$/
                   if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({ yearOfExperience: e.target.value })
+                    this.setState({ yearOfExperience: e.target.value, disabledSaveBtn: false })
                   }
                 }}
                 className='form-control'
@@ -652,7 +654,7 @@ class PersonalDetail extends React.PureComponent {
                 type='checkbox'
                 maxLength='100'
                 onClick={e => {
-                  this.setState({ isActive: e.target.checked })
+                  this.setState({ isActive: e.target.checked, disabledSaveBtn: false })
                 }}
                 defaultChecked={this.state.isActive}
               />
@@ -671,7 +673,7 @@ class PersonalDetail extends React.PureComponent {
               simpleValue
               placeholder='Select the Organization'
               onChange={value => {
-                this.setState({ organization: value })
+                this.setState({ organization: value,disabledSaveBtn: false })
               }}
               selectedValue={this.state.organization}
               className={'inputFailure'}
@@ -689,9 +691,7 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-              // if (getLength(e.target.value) <= 500) {
-                this.setState({ description: e.target.value })
-              // }
+                this.setState({ description: e.target.value,disabledSaveBtn: false })
             }}
           />
         </div>
@@ -704,9 +704,8 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.hourlyRate}
             maxlength='7'
             textChange={e => {
-              // const re = /^\d*\.?\d{0,2}$/
               if (e.target.value === '' || checkhourlyRate(e.target.value)) {
-                this.setState({ hourlyRate: e.target.value })
+                this.setState({ hourlyRate: e.target.value,disabledSaveBtn: false })
               }
             }}
             className='form-control'
@@ -730,8 +729,7 @@ class PersonalDetail extends React.PureComponent {
                       simpleValue
                       placeholder='Select the state'
                       onChange={value => {
-                        this.setState({ selectedState: value })
-                        console.log(this.state.selectedState)
+                        this.setState({ selectedState: value,disabledSaveBtn: false })
                       }                      
                     }                      
                       selectedValue={this.state.selectedState}
@@ -750,7 +748,8 @@ class PersonalDetail extends React.PureComponent {
                       value={this.state.city}
                       textChange={e =>
                         this.setState({
-                          city: e.target.value
+                          city: e.target.value,
+                          disabledSaveBtn: false
                         })}
                       className='form-control'
                     />
@@ -769,7 +768,8 @@ class PersonalDetail extends React.PureComponent {
                           value={this.state.streetAddress}
                           textChange={e =>
                             this.setState({
-                              streetAddress: e.target.value
+                              streetAddress: e.target.value,
+                              disabledSaveBtn: false
                             })}
                           className='form-control'
                         />
@@ -790,7 +790,7 @@ class PersonalDetail extends React.PureComponent {
                               re.test(e.target.value)) &&
                             getLength(e.target.value) <= 5
                           ) {
-                            this.setState({ zipCode: e.target.value })
+                            this.setState({ zipCode: e.target.value ,disabledSaveBtn: false})
                           }
                         }}
                         className='form-control'
@@ -839,13 +839,13 @@ class PersonalDetail extends React.PureComponent {
                     {
                       const onlyNums = e.target.value.replace(/[^0-9]/g, '')
                       if (onlyNums.length < 10) {
-                        this.setState({ phoneNumber: onlyNums,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10) })
+                        this.setState({ phoneNumber: onlyNums,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10),disabledSaveBtn: false })
                       } else if (onlyNums.length === 10) {
                         const number = onlyNums.replace(
                           /(\d{3})(\d{3})(\d{4})/,
                           '$1-$2-$3'
                         )
-                        this.setState({ phoneNumber: number ,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10)})
+                        this.setState({ phoneNumber: number ,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10),disabledSaveBtn: false})
                       }
                     }
                   }
@@ -876,7 +876,7 @@ class PersonalDetail extends React.PureComponent {
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: false
+      disabledSaveBtn: !this.state.disabledSaveBtn
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,

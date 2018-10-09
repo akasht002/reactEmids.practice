@@ -19,7 +19,7 @@ export default class TeleHealthParticipants extends Component {
                         </div>
                         <div className="TeleHealthParticipantNameContainer">
                             <span className="Name">{participant.firstName + ' ' + participant.lastName}</span>
-                            <span className="Status">Joined</span>
+                            <span className="Status"></span>
                         </div>
                     </div>
                 </li>

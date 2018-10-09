@@ -1,0 +1,90 @@
+.AboutModal .modal-content .modal-header{
+    display: none;
+}
+
+.closeAboutModal:hover{
+    cursor: pointer;
+}
+
+.closeAboutModal{
+    display: block;
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    top: 15px;
+    right: 15px;
+    opacity: .4;
+    background-image: url("../../assets/images/removeBlack.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+}
+
+.AboutModalWidget, .AboutModalTitle, .AboutModalFooter{
+    position: relative;
+    display: flex;
+    display: -moz-flex;
+}
+
+.AboutModalWidget{
+    padding: 40px;
+    flex-direction: column;
+}
+
+.AboutModalTitle, .AboutModalFooter{
+    justify-content: space-between;
+}
+
+.AboutModalTitle{
+    border-bottom: 1px solid #acacac;
+    padding: 0 0 15px 0;
+    font-size: 14px;
+}
+
+.AboutModalTitle div.AboutModalImg{
+    display: block;
+    height: 30px;
+}
+
+.AboutModalTitle div.AboutModalImg img{
+    display: block;
+    height: 100%;
+}
+
+.AboutModalContent{
+    padding: 30px 0 20px 0;
+}
+
+.AboutContentContainer:first-child{
+    margin-bottom: 30px;
+}
+
+.AboutModalContent h4{
+    color: #7a329f;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.AboutModalContent p{
+    font-size: 14px;
+}
+
+.AboutModalFooter{
+    color: #7a329f;
+    font-size: 14px;
+    border-top: 1px solid #acacac;
+    padding: 10px 0 0 0;
+}
+
+.AboutModal .modal-body{
+    padding: 0;
+}
+
+.AboutVersionName{
+    position: absolute;
+    display: block;
+    font-size: 14px;
+    right: 40px;
+    top: 50px;
+    color: #444444;
+}

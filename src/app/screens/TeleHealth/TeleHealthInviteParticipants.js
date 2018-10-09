@@ -14,6 +14,14 @@ export default class TeleHealthInviteParticipants extends Component {
         selectedPatientDetails: {}
     };
 
+    componentDidMount() {
+        let data = {
+            searchText: null,
+            contextId: this.state.selectedPatientDetails.length > 0 ? this.state.selectedPatientDetails.userId : null
+        };
+        this.props.getAllParticipants(data)
+    }
+
     onClearParticipantContainer = () => {
         this.setState({ selectedParticipants: [], title: '', searchText: '', selectedPatientDetails: {} });
         this.props.clearLinkedParticipants();
@@ -85,9 +93,10 @@ export default class TeleHealthInviteParticipants extends Component {
                         selectedParticipants={this.state.selectedParticipants}
                         onCheckParticipant={this.onCheckParticipant}
                         onSearchTextChange={this.onSearchTextChange}
-                        searchText={this.state.searchText} />
+                        searchText={this.state.searchText} 
+                        participantList={this.props.participantList}/>
                     <div className="TeleHealthAddBottom">
-                        <button type="button" onClick={this.AddParticipantsToConference}
+                        <button disabled={this.state.selectedParticipants.length<=0} type="button" onClick={this.AddParticipantsToConference}
                         className="btn btn-primary TeleHealthAddDoneButton">Done</button>
                     </div >
                 </form >

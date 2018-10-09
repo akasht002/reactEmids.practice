@@ -15,6 +15,8 @@ export const USER_LOCALSTORAGE = "userData";
 export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
 export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
 
+export const PHONE_NUMBER_CONST = '+1 ';
+
 export const RESPONSE_STATUS = {
     VALID: "Valid",
     INVALID: "Invalid",
@@ -43,4 +45,14 @@ export const ImageFormats = {
     JPEG : 'image/jpeg',
     PNG : 'image/png',
     GIF : 'image/gif'
+}
+
+export const SERVICE_STATUS = {
+    "CLOSED":"Closed",
+    "INPROGRESS":"InProgress",
+    "CANCELLED":"Cancelled",
+    "INPROGRESS":"InProgress",
+    "COMPLETED":"Completed",
+    "NOT INTERESTED":"Not Interested"
+
 }

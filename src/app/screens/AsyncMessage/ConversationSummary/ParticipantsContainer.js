@@ -99,6 +99,7 @@ class ParticipantsContainer extends Component {
     onSelectPatient = (patientId) => {
         if(patientId === null){
             this.props.clearLinkedParticipants();
+            this.onClearSelectedParticipants();
         }else{
             let patientData = {
             userId: patientId,
@@ -115,6 +116,10 @@ class ParticipantsContainer extends Component {
         };
         this.props.getLinkedParticipantsByPatients(data);
         }
+    };
+
+    onClearSelectedParticipants = () => {
+        this.setState({ selectedParticipants: [], selectedPatientDetails: {} });
     };
 
     render() {
