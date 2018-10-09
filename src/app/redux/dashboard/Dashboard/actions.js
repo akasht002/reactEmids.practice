@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { ServiceRequestGet, Put } from '../../../services/http'
+import {
+  ServiceRequestGet,
+  Put,
+  Get,
+  ServiceRequestPost
+} from '../../../services/http'
 import { API, messageURL } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
@@ -24,7 +29,8 @@ export const DashboardDetail = {
   get_patient_visit_detail_success: 'get_patient_visit_detail_success/dashboard',
   get_service_request_success: 'get_service_request_success/dashboard',
   get_service_request: 'get_service_request/dashboard',
-  get_service_visit_count: 'get_service_visit_count'
+  get_service_visit_count: 'get_service_visit_count/dashboard',
+  get_entity_service_provider_list: 'get_entity_service_provider_list/dashboard'
 }
 
 export const getServiceStatusSuccess = data => {
@@ -85,6 +91,27 @@ export function getServiceVisitCount (data) {
   }
 }
 
+export const getEntityServiceProviderListSuccess = data => {
+  return {
+    type: DashboardDetail.get_entity_service_provider_list,
+    data
+  }
+}
+
+export function getEntityServiceProviderList () {
+  return (dispatch, getState) => {
+    dispatch(startLoading())
+    Get(API.getEntityServiceProviderList + getUserInfo().entityId)
+      .then(resp => {
+        dispatch(getEntityServiceProviderListSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
 export function getServiceProviderVists (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
@@ -134,7 +161,18 @@ export const getServiceProviderDetailSuccess = data => {
     data
   }
 }
-
+export function updateEntityServiceVisit (data) {
+  return (dispatch, getState) => {
+    dispatch(startLoading())
+    ServiceRequestPost(API.assignServiceVisit, data)
+      .then(resp => {
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
 export function getServiceProviderDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())

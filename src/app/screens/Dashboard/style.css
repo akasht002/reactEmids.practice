@@ -881,7 +881,7 @@ div.scrollarea .scrollbar-container.vertical {
 }
 
 .hiddenScreen {
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: calc(100% - 180px);
     background: rgba(0, 0, 0, .4);

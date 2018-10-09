@@ -43,16 +43,16 @@ class ParticipantsList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="ParticipantsListContainer">
                 <Input
                     id='participantsSearch'
                     autoComplete='false'
                     type='text'
                     placeholder='search'
-                    className='form-control searchParticipants'
+                    className='form-control searchParticipants ChatContainer'
                     textChange={this.props.onSearchTextChange}
                 />
-                <div className="participantsSearchList">
+               <div className="participantsSearchList ChatContainer">
                     {this.participants()}
                 </div>
             </div>

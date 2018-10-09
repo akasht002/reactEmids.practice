@@ -7,7 +7,7 @@ import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
 import { Path } from '../../../routes/';
-import { getUserInfo, updateEula } from '../../../redux/auth/UserAgreement/actions';
+import { getUserInformation, updateEula } from '../../../redux/auth/UserAgreement/actions';
 import { ModalUserAgreement } from '../../../components';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
@@ -19,6 +19,10 @@ import {CanServiceProviderCreateMessage} from '../../../redux/asyncMessages/acti
 import { onLogout } from '../../../redux/auth/logout/actions';
 import {extractRole, authorizePermission} from '../../../utils/roleUtility';
 import {SCREENS} from '../../../constants/constants';
+import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
+import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
+import { EntityMenuData } from '../../../data/EntityMenuData';
+import { getUserInfo } from '../../../services/http';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -38,7 +42,7 @@ class AsideScreenCover extends React.Component {
     componentDidMount() {
         this.props.getProfilePercentage()
         this.props.getImage()
-        this.props.getUserInfo();
+        this.props.getUserInformation();
         this.props.getPersonalDetail();
         this.props.getAboutUsContent();
         this.props.canServiceProviderCreateMessage();
@@ -73,6 +77,9 @@ class AsideScreenCover extends React.Component {
 
 
     render() {
+        let entityUser = getUserInfo().isEntityServiceProvider;
+        let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
+        let menuData = entityUser ? EntityMenuData : MenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
@@ -99,14 +106,20 @@ class AsideScreenCover extends React.Component {
                             <Link className='BrandLink' to={Path.profile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</Link>
                         </div>
                     </div>
-                    <AsideMenu menuData={MenuData} url={this.props}/>
+                        <AsideMenu menuData={menuData} url={this.props}/>
                 </div>
                 <div className="container-fluid ProfileRightWidget">
-                  <ProfileHeader profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
-                            : require('../../../assets/images/Blank_Profile_icon.png')} toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
+                        <ProfileHeader 
+                            headerMenu={headerMenu}
+                            profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
+                                    : require('../../../assets/images/Blank_Profile_icon.png')} 
+                            toggle={this.props.toggle} 
+                            onClick={(link) => this.navigateProfileHeader(link)}
+                        />
+                
                     <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
-                    <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '')}>
+                    <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '') + ' ' + (this.props.async === 'active' ? 'async' : '')}>
                         {this.props.children}
                     </div>
                 </div>
@@ -151,7 +164,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getProfilePercentage: () => dispatch(getProfilePercentage()),
         getImage: () => dispatch(action.getImage()),
-        getUserInfo: () => dispatch(getUserInfo()),
+        getUserInformation: () => dispatch(getUserInformation()),
         onClickOk: () => dispatch(updateEula()),
         goToProfile: () => dispatch(push(Path.profile)),
         getPersonalDetail: () => dispatch(action.getPersonalDetail()),

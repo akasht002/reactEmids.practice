@@ -30,7 +30,7 @@ button.CloseMsgModal:focus, button.CloseMsgModal span:focus{
 button.CloseMsgModal span{
     position: relative;
     background-color: #d44950;
-    line-height: 17px;
+    line-height: 22px;
     font-size: 20px;
     height: 22px;
     width: 22px;

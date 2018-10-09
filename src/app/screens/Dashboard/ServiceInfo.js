@@ -4,8 +4,10 @@ import Moment from 'react-moment'
 import _ from 'lodash'
 import TimeAgo from 'timeago-react'
 import { getFields } from '../../utils/validations'
+import { getUserInfo } from '../../services/http'
+import {MORNING,AFTERNOON,EVENING} from '../../redux/constants/constants'
 
-export const splitSlots = (data, type) => {
+export const splitSlots = (togglePersonalDetails, data, type) => {
   let newData = _.reduce(
     data,
     function (arr, el) {
@@ -17,10 +19,10 @@ export const splitSlots = (data, type) => {
     []
   )
 
-  return serviceCalendar(newData)
+  return serviceCalendar(togglePersonalDetails, newData)
 }
 
-export const serviceCalendar = newData => {
+export const serviceCalendar = (togglePersonalDetails, newData) => {
   if (newData.length > 0) {
     return newData.slice(0, 3).map((conversations, index) => {
       return (
@@ -40,6 +42,17 @@ export const serviceCalendar = newData => {
               <span className='ServicesDesc'>
                 {conversations.serviceCategory && conversations.serviceCategory}
               </span>
+              {getUserInfo().isEntityServiceProvider &&
+                <span
+                  onClick={e =>
+                    togglePersonalDetails({
+                      serviceRequestId: conversations.serviceRequestId,
+                      serviceRequestVisitid: conversations.serviceRequestVisitid,
+                      patientId: conversations.patientId
+                    })}
+                >
+                  Assign Service Provider
+                </span>}
             </div>
             <div className='ProfileCardImageContainer'>
               <img
@@ -72,7 +85,6 @@ export const serviceCalendar = newData => {
                 { label: 'Message', value: '2' },
                 { label: 'Video', value: '3' }
               ]}
-            // value={this.state.selectedValue}
             />
           </li>
         </Fragment>
@@ -138,7 +150,6 @@ export const ServiceCalendarInfo = props => {
               { label: 'Message', value: '2' },
               { label: 'Video', value: '3' }
             ]}
-          // value={this.state.selectedValue}
           />
         </li>
       </Fragment>
@@ -146,22 +157,26 @@ export const ServiceCalendarInfo = props => {
   })
 }
 
-export const calendarData = data => { }
+export const calendarData = data => {}
 
 export const ServiceCalendarDefault = props => {
   return (
     <React.Fragment>
       <h6 className='VisitScheduleTitle'>Morning</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.Servicelist, 'Morning')}
+        {splitSlots(props.togglePersonalDetails, props.Servicelist, MORNING)}
       </ul>
       <h6 className='VisitScheduleTitle'>Afternoon</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.Servicelist, 'Afternoon')}
+        {splitSlots(
+          props.togglePersonalDetails,
+          props.Servicelist,
+          AFTERNOON
+        )}
       </ul>
       <h6 className='VisitScheduleTitle'>Evening</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.Servicelist, 'Evening')}
+        {splitSlots(props.togglePersonalDetails, props.Servicelist, EVENING)}
       </ul>
     </React.Fragment>
   )
@@ -209,11 +224,11 @@ export const ServiceProviderRequestDetails = props => {
           </div>
 
           <div className='ProfileApplicationNumbers Avatar'>
-            <div className="ProfileApplicationWidget">
-              <div className="avatarContainer">
+            <div className='ProfileApplicationWidget'>
+              <div className='avatarContainer'>
                 <img
                   alt='NO'
-                  className="avatarImage avatarImageBorder"
+                  className='avatarImage avatarImageBorder'
                   src={
                     sp.image
                       ? sp.image
@@ -222,7 +237,7 @@ export const ServiceProviderRequestDetails = props => {
                 />
               </div>
             </div>
-            <span className="AvatarName">
+            <span className='AvatarName'>
               {sp.patientFirstName && sp.patientFirstName}
               {sp.patientLastName && sp.patientLastName}
             </span>
@@ -237,11 +252,23 @@ export const MyConversionDetail = props => {
   let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
+  let unreadMessages = "";
+  let msgClass = "";
   return conversation.slice(0, 3).map((conversations, index) => {
+    if (props.getUnreadMsgCounts.length > 0) {
+      unreadMessages = "";
+      msgClass = "readMsgs";
+      props.getUnreadMsgCounts.map(unreadMsgCount => {
+          if (conversations.conversationId === unreadMsgCount.conversationId) {
+              msgClass = "";
+              return unreadMessages = <span className={"float-right count" + msgClass}>{unreadMsgCount.unreadMessageCount}</span>
+          }
+      });
+  };
     return (
       <Fragment>
         <li key={index} className='list-group-item myConversationContainer'>
-          <div className='myConversationContent'>
+          <div className='myConversationContent' onClick={props.gotoConversations.bind(this, conversations)}>
             <div className='avatarWidget'>
               {conversations.participantList.map((chatMem, index) => {
                 let zIndex = conversations.participantList.length - index
@@ -280,7 +307,7 @@ export const MyConversionDetail = props => {
               </p>
             </div>
             <div className='MsgCount ml-auto'>
-              <span className={'float-right count' + MsgClass}>{1}</span>
+              <span className={'float-right count' + MsgClass}>{unreadMessages}</span>
               <span className='width100 d-block float-right MsgTime'>
                 <TimeAgo datetime={conversations.createdDate} />
               </span>
@@ -295,38 +322,38 @@ export const MyConversionDetail = props => {
 export const MyConversionDefault = () => {
   return (
     <Fragment>
-      <li className="list-group-item NoInformation myConversationContainer">
-        <div className="myConversationContent">
-          <div className="avatarWidget">
-            <div className="avatarContainer" />
+      <li className='list-group-item NoInformation myConversationContainer'>
+        <div className='myConversationContent'>
+          <div className='avatarWidget'>
+            <div className='avatarContainer' />
           </div>
-          <div className="MsgThreadContent m-auto">
-            <div className="NoProfileServices">
-              <i className="NoInformationIcon" /><span>No Conversations</span>
+          <div className='MsgThreadContent m-auto'>
+            <div className='NoProfileServices'>
+              <i className='NoInformationIcon' /><span>No Conversations</span>
             </div>
           </div>
         </div>
       </li>
-      <li className="list-group-item NoInformation myConversationContainer">
-        <div className="myConversationContent">
-          <div className="avatarWidget">
-            <div className="avatarContainer" />
+      <li className='list-group-item NoInformation myConversationContainer'>
+        <div className='myConversationContent'>
+          <div className='avatarWidget'>
+            <div className='avatarContainer' />
           </div>
-          <div className="MsgThreadContent m-auto">
-            <div className="NoProfileServices">
-              <i className="NoInformationIcon" /><span>No Conversations</span>
+          <div className='MsgThreadContent m-auto'>
+            <div className='NoProfileServices'>
+              <i className='NoInformationIcon' /><span>No Conversations</span>
             </div>
           </div>
         </div>
       </li>
-      <li className="list-group-item NoInformation myConversationContainer">
-        <div className="myConversationContent">
-          <div className="avatarWidget">
-            <div className="avatarContainer" />
+      <li className='list-group-item NoInformation myConversationContainer'>
+        <div className='myConversationContent'>
+          <div className='avatarWidget'>
+            <div className='avatarContainer' />
           </div>
-          <div className="MsgThreadContent m-auto">
-            <div className="NoProfileServices">
-              <i className="NoInformationIcon" /><span>No Conversations</span>
+          <div className='MsgThreadContent m-auto'>
+            <div className='NoProfileServices'>
+              <i className='NoInformationIcon' /><span>No Conversations</span>
             </div>
           </div>
         </div>

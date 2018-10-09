@@ -3,22 +3,22 @@ import moment from 'moment'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import { Scrollbars } from '../../components'
+import { Scrollbars, ProfileModalPopup } from '../../components'
 import './ProfileMainPanel.css'
-import {
-  convertStringToDate,
-  partialCompare
-} from '../../utils/validations'
+import { convertStringToDate, partialCompare } from '../../utils/validations'
 import {
   getServiceProviderVists,
-  getServiceVisitCount
+  getServiceVisitCount,
+  getEntityServiceProviderList,
+  updateEntityServiceVisit
 } from '../../redux/dashboard/Dashboard/actions'
 import { ServiceCalendarDefault } from './ServiceInfo'
+import { getUserInfo } from '../../services/http'
 
 const today = new Date()
 
 class serviceCalendar extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       startDate: moment(today).format(),
@@ -26,7 +26,9 @@ class serviceCalendar extends React.Component {
       startYear: moment(today).format('YYYY'),
       changedDate: '',
       DateDisable: false,
+      selectedServiceProviderId: '',
       DateLabelClass: 'DatePickerDisabled',
+      EditPersonalDetailModal: false,
       reportDay: moment(today).format(),
       selectedMonth: {
         label: moment(today).format('MMM'),
@@ -36,6 +38,32 @@ class serviceCalendar extends React.Component {
       verticalScroll: false,
       width: window.innerWidth
     }
+    this.data = ''
+  }
+
+  togglePersonalDetails = (action, e) => {
+    this.data = action
+    this.setState({
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal
+    })
+  }
+
+  onSubmit = () => {
+    this.setState({
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal
+    })
+    let model = {
+      ServiceRequestid: this.data.serviceRequestId,
+      PatientId: this.data.patientId,
+      EntityId: getUserInfo().entityId,
+      VisitAssignment: [
+        {
+          ServiceVisitId: this.data.serviceRequestVisitid,
+          ServiceProviderId: this.state.selectedServiceProviderId
+        }
+      ]
+    }
+    this.props.updateEntityServiceVisit(model)
   }
 
   MonthChange = e => {
@@ -121,7 +149,7 @@ class serviceCalendar extends React.Component {
     })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let utc = new Date().toJSON().slice(0, 10).replace(/-/g, '-')
     this.props.getServiceProviderVists(utc)
     let d = new Date(utc)
@@ -135,11 +163,12 @@ class serviceCalendar extends React.Component {
       end_date: end_date
     }
     this.props.getServiceVisitCount(date_range)
+    this.props.getEntityServiceProviderList()
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
@@ -147,10 +176,9 @@ class serviceCalendar extends React.Component {
     this.setState({ width: window.innerWidth })
   }
 
-  SelectOnBlur(e) { }
+  SelectOnBlur (e) {}
 
   optionClicked = e => {
-    console.log(this.offset)
     let testDiv = document.getElementsByClassName('Select-menu-outer')
     testDiv.offsetBottom = testDiv.offsetTop + testDiv.offsetHeight
   }
@@ -160,7 +188,13 @@ class serviceCalendar extends React.Component {
     this.props.getServiceProviderVists(date)
   }
 
-  render() {
+  handleserviceType = (item, e) => {
+    if (e.target.checked) {
+      this.setState({ selectedServiceProviderId: item.serviceProviderId })
+    }
+  }
+
+  render () {
     let selectedDate = this.state.startDate
 
     const visitCount = this.props.serviceVistCount
@@ -223,14 +257,14 @@ class serviceCalendar extends React.Component {
 
     let optionChecked = this.state.reportDay
 
-    let current_month = new Date().getMonth();
+    let current_month = new Date().getMonth()
     let pervious_month = moment.months().splice(current_month - 3, 3)
     let next_month_list = moment.months().splice(current_month, 3)
 
     let monthLists = pervious_month.concat(next_month_list)
 
     let monthList = monthLists.map(month => {
-      return { label: month.substring(0,3), value: month.substring(0,3) }
+      return { label: month.substring(0, 3), value: month.substring(0, 3) }
     })
 
     let dateList = dates.map((daysMapping, i) => {
@@ -272,7 +306,35 @@ class serviceCalendar extends React.Component {
     })
 
     let serviceVist = this.props.serviceVist
-    let visitData = <ServiceCalendarDefault Servicelist={serviceVist} />
+    let visitData = (
+      <ServiceCalendarDefault
+        Servicelist={serviceVist}
+        togglePersonalDetails={this.togglePersonalDetails}
+      />
+    )
+
+    let modalTitle = 'Assign Service Provider'
+    let modalType = ''
+    let modalContent = this.props.serviceProviderList.map((item, index) => {
+      let catNum = index + 1
+      return (
+        <fieldset>
+          <div className='CheckboxSet' key={item.id}>
+            <input
+              className='ServiceCheckbox'
+              name={'ServiceStatus'}
+              id={item.serviceProviderId}
+              type='radio'
+              value={item.serviceProviderId}
+              onChange={e => this.handleserviceType(item, e)}
+            />
+            <label htmlFor={'ServiceList' + catNum}>
+              {item.firstName + ' ' + item.lastName}
+            </label>
+          </div>
+        </fieldset>
+      )
+    })
 
     return (
       <div
@@ -285,7 +347,7 @@ class serviceCalendar extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               My Services Visits
             </span>
-           
+
           </div>
           <div className='topPalette'>
             <div className='monthPalette Center'>
@@ -344,22 +406,37 @@ class serviceCalendar extends React.Component {
             Show more <i className='ProfileIconShowMore' />
           </li>
         </ul>
+        <ProfileModalPopup
+          isOpen={this.state.EditPersonalDetailModal}
+          toggle={() => this.togglePersonalDetails(this, modalType)}
+          ModalBody={modalContent}
+          className='modal-lg asyncModal CertificationModal'
+          modalTitle={modalTitle}
+          centered='centered'
+          onClick={this.onSubmit}
+          disabled={this.state.disabledSaveBtn}
+        />
       </div>
     )
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     getServiceProviderVists: data => dispatch(getServiceProviderVists(data)),
-    getServiceVisitCount: data => dispatch(getServiceVisitCount(data))
+    getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
+    getEntityServiceProviderList: () =>
+      dispatch(getEntityServiceProviderList()),
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data))
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     serviceVist: state.dashboardState.dashboardState.serviceVist,
-    serviceVistCount: state.dashboardState.dashboardState.serviceVistCount
+    serviceVistCount: state.dashboardState.dashboardState.serviceVistCount,
+    serviceProviderList: state.dashboardState.dashboardState
+      .serviceProviderList
   }
 }
 export default withRouter(
