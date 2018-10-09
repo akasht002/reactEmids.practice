@@ -5,6 +5,7 @@ import _ from 'lodash'
 import TimeAgo from 'timeago-react'
 import { getFields } from '../../utils/validations'
 import { getUserInfo } from '../../services/http'
+import {MORNING,AFTERNOON,EVENING} from '../../redux/constants/constants'
 
 export const splitSlots = (togglePersonalDetails, data, type) => {
   let newData = _.reduce(
@@ -84,7 +85,6 @@ export const serviceCalendar = (togglePersonalDetails, newData) => {
                 { label: 'Message', value: '2' },
                 { label: 'Video', value: '3' }
               ]}
-              // value={this.state.selectedValue}
             />
           </li>
         </Fragment>
@@ -150,7 +150,6 @@ export const ServiceCalendarInfo = props => {
               { label: 'Message', value: '2' },
               { label: 'Video', value: '3' }
             ]}
-            // value={this.state.selectedValue}
           />
         </li>
       </Fragment>
@@ -165,19 +164,19 @@ export const ServiceCalendarDefault = props => {
     <React.Fragment>
       <h6 className='VisitScheduleTitle'>Morning</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.togglePersonalDetails, props.Servicelist, 'Morning')}
+        {splitSlots(props.togglePersonalDetails, props.Servicelist, MORNING)}
       </ul>
       <h6 className='VisitScheduleTitle'>Afternoon</h6>
       <ul className='list-group ProfileServicesVisitList'>
         {splitSlots(
           props.togglePersonalDetails,
           props.Servicelist,
-          'Afternoon'
+          AFTERNOON
         )}
       </ul>
       <h6 className='VisitScheduleTitle'>Evening</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.togglePersonalDetails, props.Servicelist, 'Evening')}
+        {splitSlots(props.togglePersonalDetails, props.Servicelist, EVENING)}
       </ul>
     </React.Fragment>
   )

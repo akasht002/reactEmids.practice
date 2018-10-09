@@ -29,8 +29,8 @@ export const DashboardDetail = {
   get_patient_visit_detail_success: 'get_patient_visit_detail_success/dashboard',
   get_service_request_success: 'get_service_request_success/dashboard',
   get_service_request: 'get_service_request/dashboard',
-  get_service_visit_count: 'get_service_visit_count',
-  get_entity_service_provider_list: 'get_entity_service_provider_list'
+  get_service_visit_count: 'get_service_visit_count/dashboard',
+  get_entity_service_provider_list: 'get_entity_service_provider_list/dashboard'
 }
 
 export const getServiceStatusSuccess = data => {

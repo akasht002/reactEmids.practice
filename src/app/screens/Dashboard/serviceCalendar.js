@@ -43,7 +43,6 @@ class serviceCalendar extends React.Component {
 
   togglePersonalDetails = (action, e) => {
     this.data = action
-    console.log(this.data)
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
     })
@@ -180,7 +179,6 @@ class serviceCalendar extends React.Component {
   SelectOnBlur (e) {}
 
   optionClicked = e => {
-    console.log(this.offset)
     let testDiv = document.getElementsByClassName('Select-menu-outer')
     testDiv.offsetBottom = testDiv.offsetTop + testDiv.offsetHeight
   }
@@ -191,7 +189,6 @@ class serviceCalendar extends React.Component {
   }
 
   handleserviceType = (item, e) => {
-    console.log(323333333333333333)
     if (e.target.checked) {
       this.setState({ selectedServiceProviderId: item.serviceProviderId })
     }
@@ -327,7 +324,6 @@ class serviceCalendar extends React.Component {
               className='ServiceCheckbox'
               name={'ServiceStatus'}
               id={item.serviceProviderId}
-              // checked={item.isChecked}
               type='radio'
               value={item.serviceProviderId}
               onChange={e => this.handleserviceType(item, e)}
