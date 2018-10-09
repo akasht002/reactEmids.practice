@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { SkillsMultiSelect, ModalPopup, ProfileModalPopup } from "../../../components"
 import { getSkills, addSkills, getSelectedSkills } from '../../../redux/profile/Skills/actions';
 import {compare,difference} from "../../../utils/comparerUtility";
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 class Skills extends Component {
     
@@ -154,9 +155,9 @@ class Skills extends Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Skills and Experience</h4>
                     {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
-                        <i className="SPIconMedium SPIconEdit" onClick={this.editSkills} />
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editSkills} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({isSkillsModalOpen: true,isAdd:true})} />
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className="SPIconLarge SPIconAdd" onClick={() => this.setState({isSkillsModalOpen: true,isAdd:true})} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -168,7 +169,7 @@ class Skills extends Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isSkillsModalOpen: true,isAdd: true})} /> to add Skills and Experience</span>
+                                <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({isSkillsModalOpen: true,isAdd: true})} /> to add Skills and Experience</span>
                             </div>
                         </div>
                     }

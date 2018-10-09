@@ -17,6 +17,8 @@ import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
 import {CanServiceProviderCreateMessage} from '../../../redux/asyncMessages/actions';
 import { onLogout } from '../../../redux/auth/logout/actions';
+import {extractRole, authorizePermission} from '../../../utils/roleUtility';
+import {SCREENS} from '../../../constants/constants';
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
@@ -44,6 +46,12 @@ class AsideScreenCover extends React.Component {
         this.props.getPersonalDetail();
         this.props.getAboutUsContent();
         this.props.canServiceProviderCreateMessage();
+        this.profilePermission = extractRole(SCREENS.PROFILE);
+        authorizePermission(SCREENS.DASHBOARD);
+        authorizePermission(SCREENS.SERVICE_REQUEST);
+        authorizePermission(SCREENS.VISIT_HISTORY);
+        authorizePermission(SCREENS.TELEHEALTH);
+        authorizePermission(SCREENS.ASYNC_MESSAGE);
     }
 
     onClickOk = () => {
@@ -90,7 +98,7 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
-                        onClick={this.props.goToProfile}
+                        onClick={this.profilePermission.read && this.props.goToProfile}
                     />
 
                     <div className='ProfileNameWidget'>

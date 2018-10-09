@@ -1,17 +1,27 @@
 import { API } from '../../../services/api';
-import { Get } from '../../../services/http';
+import { Get, CareTeamGet } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { save } from '../../../utils/storage';
 import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
 import { USER_LOCALSTORAGE } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
+import {objectCreationRoles} from '../../../utils/roleUtility';
+import {startLoading, endLoading} from '../../loading/actions';
 
 export const USER = {
     setUser: 'fetch_success/user',
     deleteUser: 'delete_user/user',
-    clearData: 'clear_data/user'
+    clearData: 'clear_data/user',
+    setUserRoles: 'set_user_roles/user'
 };
+
+export const setUserRoles = (data) => {
+    return {
+        type: USER.setUserRoles,
+        data
+    }
+}
 
 export const setUserSuccess = (userData) => {
     return {
@@ -67,12 +77,26 @@ export function setServiceProviderDetails(emailID, autoLogoutTime){
             localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
             save(USER_LOCALSTORAGE, userData);
             dispatch(setUserSuccess(userData))
-            dispatch(push(Path.dashboard));   
+            dispatch(getUserRoles())
           })
           .catch(err => {
             console.log(err);
           })
       }
+}
+
+export function getUserRoles() {
+    return (dispatch) => {
+        dispatch(startLoading());
+        CareTeamGet(API.getUserRoles).then((response) => {
+            dispatch(setUserRoles(objectCreationRoles(response.data)));
+            dispatch(push(Path.dashboard));
+            dispatch(endLoading());
+        })
+        .catch((error) => {
+            dispatch(endLoading());
+        });
+    }
 }
 
 export function getUserInactiveTimeout(emailID) {
