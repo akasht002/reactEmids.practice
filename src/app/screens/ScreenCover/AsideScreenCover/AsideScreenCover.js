@@ -98,7 +98,7 @@ class AsideScreenCover extends React.Component {
                             : require('../../../assets/images/Blank_Profile_icon.png')} toggle={this.props.toggle} onClick={(link) => this.navigateProfileHeader(link)}/>
                     <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
-                    <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '')}>
+                    <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '') + ' ' + (this.props.async === 'active' ? 'async' : '')}>
                         {this.props.children}
                     </div>
                 </div>
