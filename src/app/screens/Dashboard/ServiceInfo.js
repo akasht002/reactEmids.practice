@@ -334,3 +334,97 @@ export const MyConversionDefault = () => {
     </Fragment>
   )
 }
+
+
+
+export const EntityUserMyConversionDefault = () => {
+  return (
+    <Fragment>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer"/>
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon"/><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer"/>
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon"/><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer"/>
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon"/><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer"/>
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon"/><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer"/>
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon"/><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer"/>
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon"/><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li className="list-group-item NoInformation myConversationContainer">
+        <div className="myConversationContent">
+          <div className="avatarWidget">
+            <div className="avatarContainer"/>
+          </div>
+          <div className="MsgThreadContent m-auto">
+            <div className="NoProfileServices">
+              <i className="NoInformationIcon"/><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+    </Fragment>
+  )
+}

@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './ProfileMainPanel.css'
 import { getLength } from '../../utils/validations'
-import { MyConversionDetail, MyConversionDefault } from './ServiceInfo'
+import { MyConversionDetail, MyConversionDefault ,EntityUserMyConversionDefault} from './ServiceInfo'
 
 import {
   getConversationDetail,
@@ -20,10 +20,20 @@ class MyConversation extends React.Component {
   }
 
   render() {
+    let {entityUser} = this.props;
     let conversation_data = this.props.conversationDetail
+    let ConversionDefault="";
+    if(entityUser){
+      ConversionDefault = <EntityUserMyConversionDefault /> 
+    } else {
+      ConversionDefault = <MyConversionDefault />
+    }
+  
+
+
     let conversation_item = getLength(conversation_data) > 0
       ? <MyConversionDetail conversation={conversation_data} />
-      : <MyConversionDefault />
+      : ConversionDefault
     return (
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
@@ -33,6 +43,7 @@ class MyConversation extends React.Component {
             </span>
             <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>
           </div>
+          
           <div className='topPalette ProfileConversation'>
             <ul className='list-group ProfileConversationWidget'>
               {conversation_item}
@@ -53,7 +64,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    conversationDetail: state.dashboardState.dashboardState.conversationDetail
+    conversationDetail: state.dashboardState.dashboardState.conversationDetail,
+    entityUser: state.authState.userState.userData.userInfo.isEntityServiceProvider
   }
 }
 export default withRouter(

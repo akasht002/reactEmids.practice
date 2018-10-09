@@ -21,10 +21,5 @@ export const EntityProfileHeaderMenu = [
         name: "notification",
         status: true,
         id: 4
-    },
-    {
-        name: "logout",
-        status: true,
-        id: 5
     }
 ];

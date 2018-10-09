@@ -6,11 +6,11 @@ import ServiceCalendar from './serviceCalendar'
 import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
-import { USERTYPES } from '../../constants/constants';
 import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
 
 import './dashboard.css'
 import './styles/toggleSwitch.css'
+import './EntitySP/EntitySPDashboard.css';
 
 class Dashboard extends React.Component {
   constructor (props) {
@@ -35,8 +35,11 @@ class Dashboard extends React.Component {
   
   render() {
      /* Entity */
-     let EntityUser = USERTYPES.Entity;
-     alert(EntityUser)
+     
+
+     let {entityUser} = this.props;
+     //let EntityUser = isEntityServiceProvider;
+     alert(entityUser)
     return (
       <AsideScreenCover
         isOpen={this.state.isOpen}
@@ -66,7 +69,7 @@ class Dashboard extends React.Component {
           </div>
           <div className='ProfileContainer bottomProfile'>
             <div className='innerWidget'>
-              <ServiceRequest />
+              {entityUser ?  '' :<ServiceRequest /> }
             </div>
             <div className='innerWidget'>
               <MyConversation />
@@ -85,7 +88,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-   
+    entityUser: state.authState.userState.userData.userInfo.isEntityServiceProvider
   }
 }
 export default withRouter(
