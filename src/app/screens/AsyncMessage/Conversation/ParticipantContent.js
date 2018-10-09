@@ -255,6 +255,7 @@ class ParticipantContent extends Component {
                     <div className="Content d-flex">
                         <span className="mr-auto primaryColor sideParticipantsTitle">Participants</span>
                         <span className="ml-auto d-flex">
+                            { this.props.loggedInUser.serviceProviderTypeId === USERTYPES.DESIGNATED_SERVICE_PROVIDER && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
                             <button className="ParticipantClose" onClick={this.props.toggleParticipantList} />
                         </span>
 
