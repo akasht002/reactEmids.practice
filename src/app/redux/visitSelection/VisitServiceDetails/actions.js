@@ -1,7 +1,7 @@
 import { API } from '../../../services/api'
 import {
   ServiceRequestGet,
-  ServiceRequestPut,
+  ThirdPartyGet,
   ServiceRequestPost
 } from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
@@ -13,7 +13,8 @@ export const VisitServiceDetails = {
   getVisitServiceDetailsSuccess: 'get_visit_service_details_success/visitservicedetails',
   getVisitServiceScheduleSuccess: 'get_visit_service_schedule_success/visitservicedetails',
   getServiceRequestId: 'get_service_requestId/visitservicedetails',
-  updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails'
+  updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails',
+  getVisitServiceEligibilityStatusSuccess: 'getVisitServiceEligibilityStatusSuccess/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -37,17 +38,24 @@ export const getServiceRequestId = data => {
   }
 }
 
-export function updateServiceRequestByServiceProvider (data) {
+export const getVisitServiceEligibityStatusSuccess = data => {
+  return {
+    type: VisitServiceDetails.getVisitServiceEligibityStatusSuccess,
+    data
+  }
+}
+
+export function updateServiceRequestByServiceProvider(data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return dispatch => {
     dispatch(startLoading())
     ServiceRequestPost(
       API.applyServiceRequestByServiceProvider +
-        data.serviceRequestId +
-        '/' +
-        serviceProviderId +
-        '/'+
-        data.type
+      data.serviceRequestId +
+      '/' +
+      serviceProviderId +
+      '/' +
+      data.type
     )
       .then(resp => {
         dispatch(endLoading())
@@ -60,7 +68,7 @@ export function updateServiceRequestByServiceProvider (data) {
   }
 }
 
-export function cancelServiceRequestByServiceProvider (data) {
+export function cancelServiceRequestByServiceProvider(data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   let model = {
     serviceRequestId: data.serviceRequestId,
@@ -82,7 +90,7 @@ export function cancelServiceRequestByServiceProvider (data) {
   }
 }
 
-export function getVisitServiceDetails (data) {
+export function getVisitServiceDetails(data) {
   return dispatch => {
     dispatch(getServiceRequestId(data))
     dispatch(startLoading())
@@ -98,7 +106,7 @@ export function getVisitServiceDetails (data) {
   }
 }
 
-export function getVisitServiceSchedule (data) {
+export function getVisitServiceSchedule(data) {
   return dispatch => {
     dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestSchedule + data)
@@ -111,3 +119,15 @@ export function getVisitServiceSchedule (data) {
       })
   }
 }
+
+export function getVisitServiceEligibilityStatus(data) {
+  return (dispatch) => {
+    dispatch(startLoading());
+    ThirdPartyGet(API.getServiceRequestEligibilityStatus + data).then((resp) => {
+      dispatch(getVisitServiceEligibityStatusSuccess(resp.data))
+      dispatch(endLoading());
+    }).catch((err) => {
+      dispatch(endLoading());
+    })
+  }
+};
