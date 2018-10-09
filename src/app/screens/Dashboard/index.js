@@ -34,16 +34,11 @@ class Dashboard extends React.Component {
   }
   
   render() {
-    let serviceRequestTemplate;
+
     let entityUser = getUserInfo().isEntityServiceProvider;
-    if(entityUser){
-        serviceRequestTemplate = ""
-    }else {
-      serviceRequestTemplate = <div className='innerWidget'>
-        <ServiceRequest />
-      </div>
-    }
-    
+
+    let serviceRequestTemplate = entityUser ? "" :
+      <div className='innerWidget'><ServiceRequest /></div>;
     return (
       <AsideScreenCover
         isOpen={this.state.isOpen}
@@ -88,11 +83,8 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-  }
-}
+
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+  connect(null, mapDispatchToProps)(Dashboard)
 )
 
