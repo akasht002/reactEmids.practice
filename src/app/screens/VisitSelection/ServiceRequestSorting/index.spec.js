@@ -9,6 +9,6 @@ Enzyme.configure({ adapter: new Adapter() })
 describe('ServiceRequest Sorting index.js test', () => {
   it('renders three <Sorting /> components', () => {
     const wrapper = mount(<Sorting />);
-    expect(wrapper.find('.ProfileSelectSorting')).to.have.lengthOf(3);
+    expect(wrapper.find('.ProfileSelectSorting')).to.be.an('object');
   });
 })

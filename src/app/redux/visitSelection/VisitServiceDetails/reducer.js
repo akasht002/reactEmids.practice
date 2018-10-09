@@ -5,7 +5,7 @@ import {
 const defaultState = {
     VisitServiceDetails: [],
     VisitServiceSchedule: [],
-    ServiceRequestId: ''
+    ServiceRequestId: '',
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
