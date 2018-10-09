@@ -34,7 +34,16 @@ class Dashboard extends React.Component {
   }
   
   render() {
+    let serviceRequestTemplate;
     let entityUser = getUserInfo().isEntityServiceProvider;
+    if(entityUser){
+        serviceRequestTemplate = ""
+    }else {
+      serviceRequestTemplate = <div className='innerWidget'>
+        <ServiceRequest />
+      </div>
+    }
+    
     return (
       <AsideScreenCover
         isOpen={this.state.isOpen}
@@ -63,9 +72,7 @@ class Dashboard extends React.Component {
             <ServiceCalendar />
           </div>
           <div className='ProfileContainer bottomProfile'>
-            <div className='innerWidget'>
-              {entityUser ?  '' :<ServiceRequest /> }
-            </div>
+            {serviceRequestTemplate}
             <div className='innerWidget'>
               <MyConversation />
             </div>
