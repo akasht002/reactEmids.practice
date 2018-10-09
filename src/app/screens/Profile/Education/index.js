@@ -5,6 +5,7 @@ import { Input ,ProfileModalPopup, ModalPopup } from "../../../components";
 import {formateYearDate} from "../../../utils/validations";
 import {compare} from "../../../utils/comparerUtility";
 import { getEducation, addEducation, editEducation, updateEducation, deleteEducation } from '../../../redux/profile/Education/actions';
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 import "./styles.css";
 class Education extends React.Component {
@@ -269,9 +270,9 @@ class Education extends React.Component {
                     </div>
                     <span className={'SPEducationDesc'}>{EducationList.degree} {EducationList.fieldOfStudy}</span>
                     </div>
-                    <i className="SPIconMedium SPIconDelete mr-3" id={EducationList.educationId}
+                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={EducationList.educationId}
                         onClick={(e) => this.showModalOnDelete(e)} />
-                    <i className="SPIconMedium SPIconEdit" id={EducationList.educationId}
+                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={EducationList.educationId}
                         onClick={(e) => this.editEducation(e)} />
                 </li>
             )
@@ -290,7 +291,7 @@ class Education extends React.Component {
             <div className="col-md-12 card CardWidget SPCertificate">
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Education</h4>
-                    <i className="SPIconLarge SPIconAdd"
+                    <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                         onClick={() => this.setState({IsEducationModalOpen: true,isAdd: true})} />
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -300,7 +301,7 @@ class Education extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>  Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ EducationModal: true ,isAdd: true})}/> to add Education</span>
+                                    <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>  Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ EducationModal: true ,isAdd: true})}/> to add Education</span>
                                 </div>
                             </div>
                             </ul>

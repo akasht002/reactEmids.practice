@@ -6,6 +6,7 @@ import { Calendar } from "../../../components/LevelOne/index";
 import { checkSpace, formattedDateMoment, formattedDateChange, formateStateDate } from "../../../utils/validations";
 import { compare } from "../../../utils/comparerUtility";
 import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, deleteWorkHistory } from "../../../redux/profile/WorkHistory/actions";
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 import "./styles.css";
 
 class WorkHistory extends Component {
@@ -334,9 +335,9 @@ class WorkHistory extends Component {
                         <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
                         <span className="SPCertificateDesc">{WorkHistoryList.description}</span>
                     </div>
-                    <i className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
+                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.isOnDeleteModalOpen(e)} />
-                    <i className="SPIconMedium SPIconEdit" id={WorkHistoryList.workHistoryId}
+                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.editWorkHistory(e)} />
                 </li>
             )
@@ -356,7 +357,7 @@ class WorkHistory extends Component {
             <div className="col-md-12 card CardWidget SPWorkHistory">
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Work History</h4>
-                    <i className="SPIconLarge SPIconAdd"
+                    <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                         onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} />
                 </div>
 
@@ -367,7 +368,7 @@ class WorkHistory extends Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'> Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} /> to add Work History</span>
+                                    <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}> Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} /> to add Work History</span>
                                 </div>
                             </div>
                         </ul>

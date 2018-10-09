@@ -5,6 +5,7 @@ import { LanguagesMultiSelect, ProfileModalPopup, ModalPopup } from "../../../co
 import { getLanguages, getSelectedLanguages, addLanguages } from '../../../redux/profile/Languages/actions';
 import { compare, difference } from "../../../utils/comparerUtility";
 import { stringConcat } from "../../../utils/stringHelper"; 
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 class Languages extends React.Component {
 
@@ -158,9 +159,9 @@ class Languages extends React.Component {
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Languages Spoken</h4>
                     {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
-                        <i className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} />
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className="SPIconLarge SPIconAdd" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -172,7 +173,7 @@ class Languages extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} /> to add Languages Spoken</span>
+                                <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} /> to add Languages Spoken</span>
                             </div>
                         </div>
                     }
