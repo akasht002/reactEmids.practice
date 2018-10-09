@@ -3,7 +3,8 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './ProfileMainPanel.css'
 import { getLength } from '../../utils/validations'
-import { MyConversionDetail, MyConversionDefault ,EntityUserMyConversionDefault} from './ServiceInfo'
+import { MyConversionDetail, MyConversionDefault } from './ServiceInfo'
+import  EntityUserMyConversionDefault from  "./EntitySP/MyConversation";
 
 import {
   getConversationDetail,
