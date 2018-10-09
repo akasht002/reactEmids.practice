@@ -37,7 +37,8 @@ export const NEWCARDS = "2";
 export const USERTYPES = {
     PATIENT : 'I',
     GUARDIAN : 'G',
-    SERVICE_PROVIDER: 'S'
+    SERVICE_PROVIDER: 'S',
+    DESIGNATED_SERVICE_PROVIDER: 2
 };
 
 export const ImageFormats = {

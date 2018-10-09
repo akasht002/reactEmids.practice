@@ -5,6 +5,7 @@ import './ProfileMainPanel.css'
 import { getLength } from '../../utils/validations'
 import { MyConversionDetail, MyConversionDefault } from './ServiceInfo'
 import  EntityUserMyConversionDefault from  "./EntitySP/MyConversation";
+import {goToConversation} from '../../redux/asyncMessages/actions';
 
 import {
   getConversationDetail,
@@ -21,21 +22,22 @@ class MyConversation extends React.Component {
     this.setState({ conversationDetail: nextProps.conversationDetail })
   }
 
+  onClickConversation = (msgThread, event) => {
+    let userId = this.props.loggedInUser.serviceProviderId;
+    this.props.gotoConversation(msgThread, userId);
+  };
+
   render() {
     let entityUser = getUserInfo().isEntityServiceProvider;
     let conversation_data = this.props.conversationDetail
-    let ConversionDefault="";
-    if(entityUser){
-      ConversionDefault = <EntityUserMyConversionDefault /> 
-    } else {
-      ConversionDefault = <MyConversionDefault />
-    }
-  
-
+    let conversionDefault = entityUser ? <EntityUserMyConversionDefault />  : <MyConversionDefault />;
 
     let conversation_item = getLength(conversation_data) > 0
-      ? <MyConversionDetail conversation={conversation_data} />
-      : ConversionDefault
+      ? <MyConversionDetail 
+      gotoConversations={this.onClickConversation}
+      conversation={conversation_data}
+      getUnreadMsgCounts={this.props.unreadMsgCounts}/>
+      : conversionDefault
     return (
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
@@ -60,13 +62,16 @@ class MyConversation extends React.Component {
 function mapDispatchToProps(dispatch) {
   return {
     getConversationDetail: () => dispatch(getConversationDetail()),
-    getUnreadMessageCounts: () => dispatch(getUnreadMessageCounts())
+    getUnreadMessageCounts: () => dispatch(getUnreadMessageCounts()),
+    gotoConversation: (data, userId) => dispatch(goToConversation(data, userId)),
   }
 }
 
 function mapStateToProps(state) {
   return {
-    conversationDetail: state.dashboardState.dashboardState.conversationDetail
+    conversationDetail: state.dashboardState.dashboardState.conversationDetail,
+    loggedInUser: state.authState.userState.userData.userInfo,
+    unreadMsgCounts: state.asyncMessageState.unreadCounts,
   }
 }
 export default withRouter(

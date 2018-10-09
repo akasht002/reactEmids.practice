@@ -267,7 +267,7 @@ class Conversation extends Component {
         };
 
         return (
-            <AsideScreenCover>
+            <AsideScreenCover async='active'>
                 <div className="d-flex msgSectionWrapper mobile-view-title">
                     {this.props.isLoading && <Preloader />}
                     <div className="container-fluid p-0">
