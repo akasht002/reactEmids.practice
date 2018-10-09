@@ -6,7 +6,6 @@ const defaultState = {
     VisitServiceDetails: [],
     VisitServiceSchedule: [],
     ServiceRequestId: '',
-    VisitServiceElibilityStatus: ''
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -28,12 +27,6 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 ServiceRequestId: action.data
-            };
-
-        case VisitServiceDetails.getVisitServiceEligibityStatusSuccess:
-            return {
-                ...state,
-                VisitServiceElibilityStatus: action.data
             };
 
         default:

@@ -110,7 +110,6 @@ export const API = {
     getAboutUsContent: 'Common/LookupConfig/AboutUsWeb',
     getConverstionCountByUserId: 'Conversation/Count/',
     updateStandByMode:'api/ServiceProvider/UpdateStandByMode/',
-    getServiceRequestEligibilityStatus: 'BenifitProcess/CheckEligibility/',
 }
 
 
