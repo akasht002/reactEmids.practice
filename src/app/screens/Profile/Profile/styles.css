@@ -406,6 +406,11 @@ i.SPIconEditPersonalDetails{
     transition: all linear .3s;
 }
 
+.SPTabTitle .SPTabTitleContent
+{
+  font-weight: 600;
+}
+
 .SPTabTitle.true:after{
     -webkit-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
