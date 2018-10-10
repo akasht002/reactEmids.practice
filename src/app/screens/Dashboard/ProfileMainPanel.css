@@ -149,6 +149,13 @@
     color: #7a329f;
 }
 
+.datePalette .dateRow input:checked+label 
+{
+    background: #7a329f;
+    color: #fff;
+}
+
+
 .ProfileCalendarCaret{
     display: block;
     position: relative;
