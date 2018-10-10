@@ -1,42 +1,53 @@
 import React from 'react'
-import {
-  Scrollbars
-} from '../../components'
+import {  withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Scrollbars } from '../../components'
 import ServiceCalendar from './serviceCalendar'
 import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
-import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
+import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
+import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
 
 import './dashboard.css'
 import './styles/toggleSwitch.css'
 
 class Dashboard extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isOpen: false,
-      conversationDetail: []
+      conversationDetail: [],
+      isChecked: false
     }
   }
 
-  toggle() {
+  toggle () {
     this.setState({
       isOpen: !this.state.isOpen
     })
   }
 
-  render() {
+  handleChecked = ()=> {
+    this.setState({isChecked: !this.state.isChecked});
+    this.props.updateStandByMode(this.state.isChecked)
+  }
+
+  render () {
     return (
-      <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} active={'active'}>
+      <AsideScreenCover
+        isOpen={this.state.isOpen}
+        toggle={this.toggle}
+        active={'active'}
+      >
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>Dashboard</h5>
           </div>
           <div className='ProfileHeaderButton'>
             <span className='standBy'>Stand-by mode </span>
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="sliderSwitch round" />
+            <label className='switch'>
+              <input type='checkbox' checked={this.state.isChecked} onChange={ this.handleChecked } />
+              <span className='sliderSwitch round' />
             </label>
           </div>
         </div>
@@ -62,5 +73,18 @@ class Dashboard extends React.Component {
     )
   }
 }
+function mapDispatchToProps(dispatch) {
+  return {
+    updateStandByMode:data => dispatch(updateStandByMode(data))
+  }
+}
 
-export default Dashboard
+function mapStateToProps(state) {
+  return {
+   
+  }
+}
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+)
+

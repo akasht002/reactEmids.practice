@@ -109,7 +109,8 @@ export const API = {
     cancelServiceRequestByServiceProvider:'ServiceRequest/Cancel',
     getAboutUsContent: 'Common/LookupConfig/AboutUsWeb',
     getConverstionCountByUserId: 'Conversation/Count/',
-    getAffiliationDetail:'ServiceProviderLookUp/Affiliation'
+    getAffiliationDetail:'ServiceProviderLookUp/Affiliation',
+    updateStandByMode:'api/ServiceProvider/UpdateStandByMode/',
 }
 
 

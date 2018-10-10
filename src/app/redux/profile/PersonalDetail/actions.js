@@ -177,6 +177,24 @@ export function updateOrganizationDetail (data) {
   }
 }
 
+export function updateEntityDetail (data) {
+  let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_ENTITY_DETAIL)
+  let serviceProviderId = getUserInfo().serviceProviderId;
+  return (dispatch, getState) => {    
+    dispatch(startLoading())
+    Put(API.updatePersonalDetail + serviceProviderId, modelData)
+      .then(resp => {
+        dispatch(getPersonalDetail())
+        dispatch(getProfilePercentage())
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(getPersonalDetail())
+        dispatch(endLoading())
+      })
+  }
+}
+
 
 export function getAffiliationDetail () {
   return (dispatch, getState) => {

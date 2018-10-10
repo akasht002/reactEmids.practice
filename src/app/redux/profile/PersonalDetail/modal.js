@@ -7,10 +7,14 @@ import {
 } from '../../../constants/constants'
 export const PERSONAL_DETAIL = {
   UPDATE_PERSONAL_DETAIL: 'UPDATE_PERSONAL_DETAIL',
-  UPDATE_ORGANIZATION_DETAIL: 'UPDATE_ORGANIZATION_DETAIL'
+  UPDATE_ORGANIZATION_DETAIL: 'UPDATE_ORGANIZATION_DETAIL',
+  UPDATE_ENTITY_DETAIL: 'UPDATE_ENTITY_DETAIL'
 }
 
 export const getModal = (data, action) => {
+  let affiliation = data.selectedAffiliation.value
+    ? getDataValueArray(data.selectedAffiliation.value, '-')
+    : getValueOfArray(data.selectedAffiliation, '-')
   let states = data.selectedState.value
     ? getDataValueArray(data.selectedState.value, '-')
     : getValueOfArray(data.selectedState, '-')
@@ -28,7 +32,7 @@ export const getModal = (data, action) => {
         serviceProviderTypeId: PROFILE_SERVICE_PROVIDER_TYPE_ID,
         individual: {
           firstName: data.firstName,
-          middleName: 'M',
+          middleName: '',
           lastName: data.lastName,
           age: data.age ? data.age : 0,
           gender: {
@@ -37,12 +41,11 @@ export const getModal = (data, action) => {
           },
           yearOfExperience: data.yearOfExperience ? data.yearOfExperience : 0,
           affiliation: {
-            affiliationId: data.organization ? organization[0] : '1'
+            affiliationId: affiliation[0] ? parseInt(affiliation[0],10) : 0,
+            name:  affiliation[1] ? affiliation[1] : ''
           }
         },
-        entity: {
-          organization: data.organization ? organization[1] : 'AOM'
-        },
+        entity: null,
         description: data.description,
         hourlyRate: data.hourlyRate ? data.hourlyRate : 0,
         addresses: [
@@ -91,7 +94,7 @@ export const getModal = (data, action) => {
         hourlyRate: data.hourlyRate ? data.hourlyRate : 0,
         addresses: [
           {
-            addressId: 1,
+            addressId: data.addressId,
             serviceProviderId: getUserInfo().serviceProviderId,
             addressTypeId: 2,
             streetAddress: data.streetAddress,
@@ -103,6 +106,54 @@ export const getModal = (data, action) => {
             zipCode: data.zipCode ? data.zipCode : 0,
             isActive: true,
             rowversionId: ''
+          }
+        ],
+        phoneNumber: data.phoneNumber,
+        isActive: true,
+        rowversionId: ''
+      }
+    case PERSONAL_DETAIL.UPDATE_ENTITY_DETAIL:
+      return {
+        serviceProviderId: getUserInfo().serviceProviderId,
+        serviceProviderTypeId: PROFILE_SERVICE_PROVIDER_TYPE_ID,
+        individual: {
+          firstName: data.firstName,
+          middleName: '',
+          lastName: data.lastName,
+          age: data.age ? data.age : 0,
+          gender: {
+            genderId: gender ? gender[0] : 0,
+            name: gender ? gender[1] : ''
+          },
+          yearOfExperience: data.yearOfExperience ? data.yearOfExperience : 0,
+          affiliation: {
+            affiliationId: data.organization ? organization[0] : '1'
+          }
+        },
+        entity: {
+          entityId: 1,
+          name: '',
+          phoneNumber: data.phoneNumber,
+          websiteUrl: data.url,
+          logoByte: null,
+          logo: '',
+          hourlyRate: data.hourlyRate ? data.hourlyRate : 0
+        },
+        description: data.description,
+        hourlyRate: data.hourlyRate ? data.hourlyRate : 0,
+        addresses: [
+          {
+            addressId: data.addressId,
+            serviceProviderId: getUserInfo().serviceProviderId,
+            addressTypeId: data.addressTypeId,
+            streetAddress: data.streetAddress,
+            city: data.city,
+            state: {
+              id: states[0],
+              name: states[1] ? states[1] : ''
+            },
+            zipCode: data.zipCode ? data.zipCode : 0,
+            isActive: true
           }
         ],
         phoneNumber: data.phoneNumber,
