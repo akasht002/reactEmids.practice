@@ -1,0 +1,27 @@
+.NoInformation .myConversationContent{
+    justify-content: center;
+    align-items: center;
+}
+
+.NoInformation .myConversationContent .avatarContainer{
+    position: relative;
+}
+
+.NoInformation .myConversationContent .avatarContainer:before, .NoInformation .myConversationContent .avatarContainer:after{
+    content: '';
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    background-color: #e8e8e8;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.NoInformation .myConversationContent .avatarContainer:before{
+    left: 30px;
+}
+
+.NoInformation .myConversationContent .avatarContainer:after{
+    right: 0;
+}

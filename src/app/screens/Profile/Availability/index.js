@@ -11,6 +11,7 @@ import {
     updateAvailabilityDays,
     getBlackOutDays
  } from '../../../redux/profile/Availability/actions';
+ import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 class Availability extends Component {
     constructor(props) {
@@ -156,9 +157,9 @@ class Availability extends Component {
                     <div className={"SPCardTitle d-flex"}>
                         <h4 className={"primaryColor"}>Availability</h4>
                         {!availableSlot && this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
-                        <i className="SPIconMedium SPIconEdit" onClick={this.toggleAvailability.bind('edit', 'editButton')} />
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.toggleAvailability.bind('edit', 'editButton')} />
                         :
-                        <i className={"SPIconLarge SPIconAdd"} onClick={this.toggleAvailability.bind('add', 'addButton')} />}
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className={"SPIconLarge SPIconAdd"} onClick={this.toggleAvailability.bind('add', 'addButton')} />}
                     </div>
                      <div className={'width100 SPAvailWidget'}>
                         { availableDays && !availableSlot ? availableDays : 
@@ -166,7 +167,7 @@ class Availability extends Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>  Click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleAvailability.bind('add')}/> to add Availability</span>
+                                    <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>  Click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.toggleAvailability.bind('add')}/> to add Availability</span>
                                 </div>
                             </div>
                             </ul>

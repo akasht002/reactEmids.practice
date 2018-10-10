@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, GeneralModalPopup } from '../../../../components';
 import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import { getFirstCharOfString } from '../../../../utils/stringHelper'
+import { getFirstCharOfString } from '../../../../utils/stringHelper';
+import { getUserInfo } from '../../../../services/http';
 import './style.css'
 
 class Summary extends Component {
@@ -223,17 +223,22 @@ class Summary extends Component {
                                                     <p className="TotalCost"><span>${parseFloat(this.props.CalculationsData.grandTotalAmount).toFixed(2)}</span></p>
                                                 </div>
                                             </div>
+                                            
+                                            {getUserInfo().isEntityServiceProvider ?
+                                                ''
+                                                :
+                                                <div className="row EstimatedCostWidget">
+                                                    <div className="col-md-8 EstimatedCostContainer Label">
+                                                        <p><span>Estimated Claim</span>
+                                                            <span>Out of Pocket Amount</span></p>
+                                                    </div>
+                                                    <div className="col-md-4 EstimatedCostContainer Cost">
+                                                        <p><span>${this.props.SummaryDetails.estimatedClaim && this.props.SummaryDetails.estimatedClaim}</span>
+                                                            <span>${this.props.SummaryDetails.outOfPocketAmount && this.props.SummaryDetails.outOfPocketAmount}</span></p>
+                                                    </div>
+                                                </div>
+                                            }
 
-                                            {/* <div className="row EstimatedCostWidget">
-                                                <div className="col-md-8 EstimatedCostContainer Label">
-                                                    <p><span>Estimated Claim</span>
-                                                        <span>Out of Pocket Amount</span></p>
-                                                </div>
-                                                <div className="col-md-4 EstimatedCostContainer Cost">
-                                                    <p><span>${this.props.SummaryDetails.estimatedClaim && this.props.SummaryDetails.estimatedClaim}</span>
-                                                        <span>${this.props.SummaryDetails.outOfPocketAmount && this.props.SummaryDetails.outOfPocketAmount}</span></p>
-                                                </div>
-                                            </div> */}
                                             <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that this claim is an estimate pending the claim process</p>
                                         </div>
                                     </div>
@@ -242,7 +247,7 @@ class Summary extends Component {
                                             <p className="SummaryContentTitle">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
                                             <div className="SignatureColumn" onClick={this.onClickSignaturePad}>
-                                            <SignaturePad ref={ref => this.signaturePad = ref} />
+                                                <SignaturePad ref={ref => this.signaturePad = ref} />
                                             </div>
                                             <div className="width100 text-right">
                                                 <button className="btn btn-outline-primary CancelSignature" onClick={this.resetSignature}>Reset Signature</button>

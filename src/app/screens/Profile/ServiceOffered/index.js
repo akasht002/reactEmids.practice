@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { ProfileModalPopup, ModalPopup } from "../../../components";
 import ServiceOfferedContent from '../ServiceOffered/serviceOfferedContent'
 import { getServiceOffered, addServiceOfferd, editServiceOffered, toggleCollapseCategory, toggleCollapseDetails } from '../../../redux/profile/ServiceOffered/actions';
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 class ServiceOffered extends React.Component {
 
@@ -110,9 +111,9 @@ class ServiceOffered extends React.Component {
                 <div className={"SPCardTitle d-flex"}>
                     <h4 className={"primaryColor"}>Services Offered</h4>
                     {this.props.serviceOfferedList && this.props.serviceOfferedList.length > 0 ?
-                        <i className="SPIconMedium SPIconEdit" onClick={this.editServiceOffered} />
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editServiceOffered} />
                         :
-                        < i className="SPIconLarge SPIconAdd" onClick={this.addIconServiceOffered} />
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className="SPIconLarge SPIconAdd" onClick={this.addIconServiceOffered} />
                     }
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -128,7 +129,7 @@ class ServiceOffered extends React.Component {
                         <div className='SPNoInfo'>
                             <div className='SPNoInfoContent'>
                                 <div className='SPInfoContentImage' />
-                                <span className='SPNoInfoDesc'>click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.addIconServiceOffered} /> to Services Offered</span>
+                                <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={this.addIconServiceOffered} /> to Services Offered</span>
                             </div>
                         </div>
                     }

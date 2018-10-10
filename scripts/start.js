@@ -12,6 +12,7 @@ process.env.REACT_APP_MSG_URL = 'http://52.172.45.185:9002/api/'
 process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/'
 process.env.REACT_APP_TP_URL = 'http://52.172.52.128:9007/api/'
 process.env.REACT_APP_SIGNALR_URL =  'https://chqa-vp-ui.coreoflowsandbox.com/signalr'
+process.env.REACT_APP_CARETEAM_URL = 'https://localhost:60366/api/';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will

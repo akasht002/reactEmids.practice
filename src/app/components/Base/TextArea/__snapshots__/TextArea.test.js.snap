@@ -4,20 +4,12 @@ exports[`TextArea Component Jest 1`] = `
 <div
   className="form-group"
 >
-  <label
-    htmlFor={undefined}
-  />
+  <label />
    
-  <i
-    className={undefined}
-  >
-    *
-  </i>
+  <i />
   <textarea
     className="textarea"
-    id={undefined}
     placeholder="Write Some Thing"
-    required={true}
     rows="5"
   />
 </div>

@@ -12,7 +12,7 @@ import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
   updateServiceRequestByServiceProvider,
-  cancelServiceRequestByServiceProvider
+  cancelServiceRequestByServiceProvider,
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
   getPerformTasksList
@@ -23,6 +23,7 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 import { MORNING, AFTERNOON, EVENING } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
+import { ELIBILITY_STATUS } from '../../../constants/constants'
 
 class VisitServiceDetails extends Component {
 
@@ -215,9 +216,6 @@ class VisitServiceDetails extends Component {
       this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
         return obj.isPrimaryAddress === true
       })
-
-    console.log(address)
-
 
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -559,7 +557,8 @@ function mapDispatchToProps(dispatch) {
     updateServiceRequestByServiceProvider: data =>
       dispatch(updateServiceRequestByServiceProvider(data)),
     cancelServiceRequestByServiceProvider: data =>
-      dispatch(cancelServiceRequestByServiceProvider(data))
+      dispatch(cancelServiceRequestByServiceProvider(data)),
+
   }
 }
 

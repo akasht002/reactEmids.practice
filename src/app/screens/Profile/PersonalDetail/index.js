@@ -26,8 +26,8 @@ import {
   checkPhoneNumber
 } from '../../../utils/validations'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants';
-
 import { SETTING } from '../../../services/api'
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -483,6 +483,7 @@ class PersonalDetail extends React.PureComponent {
           </div>
         </div>
         <i
+          name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
           className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
           onClick={this.togglePersonalDetails}
         />
@@ -508,7 +509,7 @@ class PersonalDetail extends React.PureComponent {
               }
             />
             <span className='editDpImage' />
-            <div className='uploadWidget'>
+            <div className='uploadWidget' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>
               <i className='addImageBtn' onClick={this.handleChange} />             
             </div>
           </div>

@@ -1,25 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProfileImage Component testing 1`] = `
-<div
-  className="ProfileImageWidget"
->
-  <div
-    className="ProfileImageContainer"
-  >
+<div>
+  <div>
     <svg
-      className="circular-chart"
       viewBox="1.55 1.55 33 33"
     >
       <path
-        className="circle"
         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
         strokeDasharray="undefined,100"
       />
     </svg>
     <img
       alt="user"
-      className="ProfileImage"
+      src="Blank_Profile_icon.png"
     />
   </div>
 </div>

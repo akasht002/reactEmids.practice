@@ -26,7 +26,7 @@ import {
   getLength,
   isUrlValid
 } from '../../../utils/validations'
-
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
 
 class Organization extends React.PureComponent {
@@ -377,6 +377,7 @@ class Organization extends React.PureComponent {
               this.props.personalDetail.description !== ''
               ? this.props.personalDetail.description
               : <span
+                name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
                 className={'SPDescriptionNone'}
                 onClick={this.togglePersonalDetails.bind(this)}
                 >
@@ -427,6 +428,7 @@ class Organization extends React.PureComponent {
           </div>
         </div>
         <i
+          name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
           className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
           onClick={this.togglePersonalDetails.bind(this)}
         />

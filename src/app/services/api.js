@@ -111,6 +111,10 @@ export const API = {
     getConverstionCountByUserId: 'Conversation/Count/',
     getAffiliationDetail:'ServiceProviderLookUp/Affiliation',
     updateStandByMode:'api/ServiceProvider/UpdateStandByMode/',
+    getUserRoles: "User/GetUserRoles",
+    updateStandByMode:'ServiceProvider/UpdateStandByMode/',
+    getEntityServiceProviderList:'ServiceProvider/ByEntity/',
+    assignServiceVisit:'ServiceRequest/AssignServiceVisit'
 }
 
 

@@ -8,6 +8,7 @@ const defaultState = {
   serviceVist:[],
   serviceStatusLookUp:[],
   serviceVistCount:[],
+  serviceProviderList:[]
 }
 
 const DashboardState = (state = defaultState, action) => {
@@ -46,6 +47,11 @@ const DashboardState = (state = defaultState, action) => {
       return{
         ...state,
         serviceVistCount:action.data
+      }
+      case DashboardDetail.get_entity_service_provider_list:
+      return{
+        ...state,
+        serviceProviderList:action.data
       }
     default:
       return state
