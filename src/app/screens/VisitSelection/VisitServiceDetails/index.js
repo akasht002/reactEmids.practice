@@ -13,6 +13,7 @@ import {
   getVisitServiceSchedule,
   updateServiceRequestByServiceProvider,
   cancelServiceRequestByServiceProvider,
+  getVisitServiceEligibilityStatus
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
   getPerformTasksList
@@ -48,6 +49,7 @@ class VisitServiceDetails extends Component {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId)
       this.props.getVisitServiceSchedule(this.props.ServiceRequestId)
+      this.props.getVisitServiceEligibilityStatus(this.props.ServiceRequestId)
     } else {
       this.props.history.push(Path.visitServiceList)
     }
@@ -217,6 +219,19 @@ class VisitServiceDetails extends Component {
         return obj.isPrimaryAddress === true
       })
 
+    let eligibilityComponent = Object.keys(ELIBILITY_STATUS).map(item => (
+      <li class="list-group-item EligibilityList">
+        <div className="EligibilityStatus">
+          {ELIBILITY_STATUS[item]}
+        </div>
+        <div className="EligibilityItem">
+          {this.props.VisitServiceElibilityStatus[item] === false ? 'false' :
+            this.props.VisitServiceElibilityStatus[item] === true ?
+              'true' : this.props.VisitServiceElibilityStatus[item]}
+        </div>
+        </li>
+    ))
+
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
@@ -334,6 +349,18 @@ class VisitServiceDetails extends Component {
                         }}
                       >
                         Schedule
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeTab === '3'
+                        })}
+                        onClick={() => {
+                          this.toggle('3')
+                        }}
+                      >
+                        Eligibility Status
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -517,6 +544,13 @@ class VisitServiceDetails extends Component {
                           )
                         })}
                     </TabPane>
+                    <TabPane tabId='3' className='TabBody'>
+                      <div className='ScheduleTableHeader EligibilityWidget'>
+                        <ul class="list-group width100">
+                          {eligibilityComponent}
+                        </ul>
+                      </div>
+                    </TabPane>
                   </TabContent>
                 </div>
               </section>
@@ -558,6 +592,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(updateServiceRequestByServiceProvider(data)),
     cancelServiceRequestByServiceProvider: data =>
       dispatch(cancelServiceRequestByServiceProvider(data)),
+    getVisitServiceEligibilityStatus: data =>
+      dispatch(getVisitServiceEligibilityStatus(data))
 
   }
 }
@@ -569,7 +605,9 @@ function mapStateToProps(state) {
     VisitServiceSchedule: state.visitSelectionState.VisitServiceDetailsState
       .VisitServiceSchedule,
     ServiceRequestId: state.visitSelectionState.VisitServiceDetailsState
-      .ServiceRequestId
+      .ServiceRequestId,
+    VisitServiceElibilityStatus: state.visitSelectionState.VisitServiceDetailsState
+      .VisitServiceElibilityStatus
   }
 }
 

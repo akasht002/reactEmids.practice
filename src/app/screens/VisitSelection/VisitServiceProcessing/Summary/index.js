@@ -9,6 +9,9 @@ import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingW
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
+import {
+    getVisitServiceEligibilityStatus
+} from '../../../../redux/visitSelection/VisitServiceDetails/actions';
 import './style.css'
 
 class Summary extends Component {
@@ -21,16 +24,19 @@ class Summary extends Component {
             summaryDetails: {},
             updatedHour: '',
             updatedMin: '',
+            updatedSec: '',
             originalEstimation: '',
             actualEstimation: '',
             signatureImage: '',
             completedTaskPercent: '',
-            disableTimeAdjust: true
+            disableTimeAdjust: true,
+            isAlertModalOpen: false
         };
     };
 
     componentDidMount() {
         this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
+        this.props.getVisitServiceEligibilityStatus(this.props.patientDetails.ServiceRequestId)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -38,6 +44,7 @@ class Summary extends Component {
             summaryDetails: nextProps.SummaryDetails,
             updatedHour: nextProps.CalculationsData.totalHours,
             updatedMin: nextProps.CalculationsData.totalMinutes,
+            updatedSec: nextProps.CalculationsData.totalSeconds
         })
     }
 
@@ -53,9 +60,7 @@ class Summary extends Component {
 
     saveSignature = () => {
         const data = this.signaturePad.toDataURL();
-        console.log(data)
         this.setState({ signatureImage: data })
-
     }
 
     resetSignature = () => {
@@ -67,22 +72,26 @@ class Summary extends Component {
     }
 
     onClickNext = () => {
-        this.saveSignature();
-        const data = {
-            serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
-            ServiceProviderId: this.state.summaryDetails.serviceProviderId,
-            ServiceRequestId: this.state.summaryDetails.serviceRequestId,
-            EstimatedClaim: this.state.summaryDetails.estimatedClaim,
-            OutOfPocketAmount: this.state.summaryDetails.outOfPocketAmount,
-            HourlyRate: this.state.summaryDetails.hourlyRate,
-            OriginalTotalDuration: parseInt(this.state.summaryDetails.originalTotalDuration, 0),
-            BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
-            TaxPaid: this.props.CalculationsData.taxes,
-            BilledPerService: this.props.CalculationsData.totalVisitCost,
-            TotalCost: this.props.CalculationsData.grandTotalAmount,
-            Image: this.state.signatureImage
+        if (this.state.signatureImage) {
+            this.saveSignature();
+            const data = {
+                serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
+                ServiceProviderId: this.state.summaryDetails.serviceProviderId,
+                ServiceRequestId: this.state.summaryDetails.serviceRequestId,
+                EstimatedClaim: this.state.summaryDetails.estimatedClaim,
+                OutOfPocketAmount: this.state.summaryDetails.outOfPocketAmount,
+                HourlyRate: this.state.summaryDetails.hourlyRate,
+                OriginalTotalDuration: parseInt(this.state.summaryDetails.originalTotalDuration, 0),
+                BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
+                TaxPaid: this.props.CalculationsData.taxes,
+                BilledPerService: this.props.CalculationsData.totalVisitCost,
+                TotalCost: this.props.CalculationsData.grandTotalAmount,
+                Image: this.state.signatureImage,
+            }
+            this.props.saveSummaryDetails(data);
+        } else {
+
         }
-        this.props.saveSummaryDetails(data);
     }
 
     updateTime = () => {
@@ -110,6 +119,7 @@ class Summary extends Component {
                         onChange={(e) => this.setState({ updatedHour: e.target.value })}
                         style={{ width: 10 + '%' }}
                         min={0}
+                        max={this.props.CalculationsData.totalHours}
                     />
                     MM <input
                         type="number"
@@ -117,10 +127,29 @@ class Summary extends Component {
                         onChange={(e) => this.setState({ updatedMin: e.target.value })}
                         style={{ width: 10 + '%' }}
                         min={0}
+                        max={this.props.CalculationsData.totalMinutes}
                     />
+                    SS <input
+                        type="number"
+                        value={this.state.updatedSec}
+                        onChange={(e) => this.setState({ updatedSec: e.target.value })}
+                        style={{ width: 10 + '%' }}
+                        min={0}
+                        max={this.props.CalculationsData.totalSeconds}
+                    />
+                </p>
+                <p className="AdjustTimeText">
+                    Note: Maximum adjustable time is
+                    <span>{this.props.CalculationsData.totalHours} hr</span>
+                    <span>{this.props.CalculationsData.totalMinutes} min</span>
+                    <span>{this.props.CalculationsData.totalSeconds} sec</span>
                 </p>
             </form>
         }
+
+        let estimatedClaim = this.props.VisitServiceElibilityStatus.amount;
+
+        let CopayAmount = (this.props.CalculationsData.grandTotalAmount - estimatedClaim);
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -223,18 +252,18 @@ class Summary extends Component {
                                                     <p className="TotalCost"><span>${parseFloat(this.props.CalculationsData.grandTotalAmount).toFixed(2)}</span></p>
                                                 </div>
                                             </div>
-                                            
+
                                             {getUserInfo().isEntityServiceProvider ?
                                                 ''
                                                 :
                                                 <div className="row EstimatedCostWidget">
                                                     <div className="col-md-8 EstimatedCostContainer Label">
                                                         <p><span>Estimated Claim</span>
-                                                            <span>Out of Pocket Amount</span></p>
+                                                            <span>Copay On Credit Card</span></p>
                                                     </div>
                                                     <div className="col-md-4 EstimatedCostContainer Cost">
-                                                        <p><span>${this.props.SummaryDetails.estimatedClaim && this.props.SummaryDetails.estimatedClaim}</span>
-                                                            <span>${this.props.SummaryDetails.outOfPocketAmount && this.props.SummaryDetails.outOfPocketAmount}</span></p>
+                                                        <p><span>${estimatedClaim}</span>
+                                                            <span>${CopayAmount}</span></p>
                                                     </div>
                                                 </div>
                                             }
@@ -248,6 +277,9 @@ class Summary extends Component {
                                             <p>Put your signature inside the box</p>
                                             <div className="SignatureColumn" onClick={this.onClickSignaturePad}>
                                                 <SignaturePad ref={ref => this.signaturePad = ref} />
+                                            </div>
+                                            <div className="width100 text-right">
+                                                <button className="btn btn-outline-primary CancelSignature" onClick={this.saveSignature}>Save</button>
                                             </div>
                                             <div className="width100 text-right">
                                                 <button className="btn btn-outline-primary CancelSignature" onClick={this.resetSignature}>Reset Signature</button>
@@ -286,7 +318,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         onUpdateTime: (data) => dispatch(onUpdateTime(data)),
-        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data))
+        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
+        getVisitServiceEligibilityStatus: data =>
+            dispatch(getVisitServiceEligibilityStatus(data))
     }
 };
 
@@ -297,6 +331,7 @@ function mapStateToProps(state) {
         actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
+        VisitServiceElibilityStatus: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus
     };
 };
 

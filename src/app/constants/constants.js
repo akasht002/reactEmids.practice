@@ -78,3 +78,11 @@ export const PERMISSIONS = {
     UPDATE: 'Update',
     DELETE: 'Delete'
 }
+
+export const ELIBILITY_STATUS = {
+    "authorizationRequired": "Coverage Copay Authorization Required",
+    "amount": "Coverage Copay Authorization Amount",
+    "benefitPercent": "Coverage Coinsurance Benefit Percentage",
+    "coInAuthorizationRequired": "Coverage Coinsurance Authorization Required",
+    "active": "Coverage Active"
+}

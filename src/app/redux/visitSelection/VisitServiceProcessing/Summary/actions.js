@@ -64,7 +64,9 @@ export function calculationActualData() {
 
         let min = duration.minutes();
 
-        let totalChargableTime = hours + ":" + min;
+        let sec = duration.seconds();
+
+        let totalChargableTime = hours + ":" + min + ":" + sec;
 
         let hoursinMin = duration.asMinutes();
 
@@ -80,7 +82,8 @@ export function calculationActualData() {
             taxes: taxes,
             grandTotalAmount: grandTotalAmount,
             totalHours: hours,
-            totalMinutes: min
+            totalMinutes: min,
+            totalSeconds: sec
         }
         dispatch(getCalculationsData(calculationdata));
     }

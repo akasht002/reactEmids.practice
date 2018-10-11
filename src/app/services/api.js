@@ -111,9 +111,9 @@ export const API = {
     getConverstionCountByUserId: 'Conversation/Count/',
     updateStandByMode:'api/ServiceProvider/UpdateStandByMode/',
     getUserRoles: "User/GetUserRoles",
-    updateStandByMode:'ServiceProvider/UpdateStandByMode/',
     getEntityServiceProviderList:'ServiceProvider/ByEntity/',
-    assignServiceVisit:'ServiceRequest/AssignServiceVisit'
+    assignServiceVisit:'ServiceRequest/AssignServiceVisit',
+    getServiceRequestEligibilityStatus: 'BenefitProcess/CheckEligibility'
 }
 
 
