@@ -390,10 +390,9 @@ class EntityPersonalDetail extends React.PureComponent {
             </div>
             <div className='col-md-6 mb-2'>
               <div className='form-group'>
-                <label> Gender</label>
+                <label className="m-0">Gender</label>
                 <SelectBox
                   options={genderDetail}
-                  simpleValue
                   placeholder='Select Gender'
                   onChange={value => {
                     this.setState({
@@ -402,7 +401,8 @@ class EntityPersonalDetail extends React.PureComponent {
                     })
                   }}
                   selectedValue={this.state.selectedGender}
-                  className={'inputFailure'}
+                  className='ServiceRequestSelect inputFailure'
+                  searchable={false}
                 />
               </div>
             </div>
@@ -518,7 +518,7 @@ class EntityPersonalDetail extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label>State</label>
+                    <label className="m-0">State</label>
                     <SelectBox
                       options={stateDetail}
                       simpleValue
@@ -626,6 +626,7 @@ class EntityPersonalDetail extends React.PureComponent {
                           !this.state.phoneNumber &&
                           'inputFailure')
                     }
+                    PhoneInput="PhoneInput"
                     textChange={e => {
                       const onlyNums = e.target.value.replace(/[^0-9]/g, '')
                       if (onlyNums.length < 10) {

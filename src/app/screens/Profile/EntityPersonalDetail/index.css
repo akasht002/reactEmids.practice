@@ -33,3 +33,7 @@
 .SPDescriptionNone{
     color:#989892;
 }
+
+div.Select--single > .Select-control .Select-value, div.Select-placeholder, span.Select-value-label {
+    padding: 0;
+}
