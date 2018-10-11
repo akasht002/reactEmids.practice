@@ -192,7 +192,6 @@ li div.dropdown-menu{
 
 .LeftPalette{
     width: 274px;
-    min-height: 375px;
     border-radius: 8px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -222,6 +221,7 @@ li div.dropdown-menu{
     width: 40px;
     height: 40px;
     display: inline-block;
+    overflow: hidden;
 }
 
 .BlockImageDetails{
@@ -241,6 +241,9 @@ li div.dropdown-menu{
     line-height: 16px;
     color: #444444;
     margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .BlockImageDetailsActivity{
@@ -250,6 +253,9 @@ li div.dropdown-menu{
     margin-bottom: 10px;
     word-wrap: break-word;
     text-transform: capitalize;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .BlockImageDetailsDate{
@@ -309,32 +315,22 @@ li div.dropdown-menu{
     position: relative;
 }
 
-.btn-hired{
+span.btn-hired, span.btn-hired:hover{
     color: #007f84 !important;
     border-color: #007f84 !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-    margin: 10px 28px 5px 0;
+    cursor: auto;
 }
 
-.btn-hired:hover{
-    background-color: #007f84 !important;
-    color: #fff !important;
-}
-
-.btn-applied{
+span.btn-applied, span.btn-applied:hover{
     color: #3089df !important;
     border-color: #3089df !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-    margin: 10px 28px 5px 0;
-}
-
-.btn-applied:hover{
-    background-color: #3089df !important;
-    color: #fff !important
+    cursor: auto;
 }
 
 .btn-invited{
@@ -566,7 +562,6 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileCardBody {
     padding: 20px 0 0 0;
-    transform: translateY(2%);
 }
 
 .ProfileCardBody > div {
@@ -599,7 +594,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content {
-    height: 224px;
+    height: 100%;
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
@@ -611,7 +606,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-    max-height: calc(100vh - 270px);
+    max-height: calc(100vh - 276px);
 }
 
 .ProfileCard.extended .ProfileCardBody, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
@@ -653,7 +648,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
-    height: 378px;
+    height: calc(100vh - 430px);
 }
 
 .BoardContainer{
@@ -723,11 +718,11 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 326px;
+        height: calc(100vh - 465px);
     }
 
     .ProfileCardBody .ServiceRequestPalette {
-        height: 326px;
+        height: calc(100vh - 623px);
     }
 
     .bottomPalette {
@@ -748,6 +743,10 @@ div.scrollarea .scrollbar-container.vertical {
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
         max-height: calc(100vh - 200px);
         height: 100vh;
+    }
+
+    .ProfileCardBody .ServiceRequestPalette {
+        height: calc(100vh - 590px);
     }
 }
 

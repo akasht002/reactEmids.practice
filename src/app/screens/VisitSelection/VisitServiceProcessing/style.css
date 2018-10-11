@@ -919,10 +919,6 @@ label.form-check-label {
     padding: 15px 0;
 }
 
-.Available .SPAvailContent, .trueAvailable .SPAvailContent {
-    padding: 0;
-}
-
 .SPAvailItems {
     display: block;
     position: relative;

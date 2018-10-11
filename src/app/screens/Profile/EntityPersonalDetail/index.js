@@ -530,7 +530,7 @@ class EntityPersonalDetail extends React.PureComponent {
                         })
                       }}
                       selectedValue={this.state.selectedState}
-                      className={'inputFailure'}
+                      className='inputFailure ServiceRequestSelect'
                     />
                   </div>
                 </div>
