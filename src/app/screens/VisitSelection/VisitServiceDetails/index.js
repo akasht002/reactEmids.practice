@@ -260,11 +260,18 @@ class VisitServiceDetails extends Component {
                 </div>
                 <div class='LeftPostedBy'>
                   <div class='PostedByImageContainer'>
-                    <img
-                      className='ProfileImage'
-                      src={this.state.visitServiceDetails.image}
-                      alt='patientImage'
-                    />
+                  {
+                    this.state.visitServiceDetails.image ?  <img
+                        className='ProfileImage'
+                        src={this.state.visitServiceDetails.image}
+                        alt='patientImage'
+                       /> :  <img
+                          className='ProfileImage'
+                          src={'../../../assets/images/Blank_Profile_icon.png'}
+                          alt='patientImage'
+                        />
+                  }
+                   
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileDetailsName'>
                         {this.state.visitServiceDetails.patientFirstName}
