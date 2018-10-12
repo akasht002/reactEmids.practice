@@ -195,7 +195,7 @@ class ParticipantContent extends Component {
                                     <tr>
                                         <td className="ParticipantAvatar align-middle">
                                             <div className="avatarContainer">
-                                                <img key={index} alt="participant" src={require("../../../assets/images/Blank_Profile_icon.png")}
+                                                <img key={index} alt="i" src={ participant.thumbNail ? participant.thumbNail : require("../../../assets/images/Blank_Profile_icon.png")}
                                                     className="avatarImage" />
                                                 <div className={"memberType memT-" + participant.participantType}>{participant.participantType}</div>
                                             </div>
@@ -230,8 +230,8 @@ class ParticipantContent extends Component {
                                     <tr>
                                         <td className="ParticipantAvatar align-middle">
                                             <div className="avatarContainer">
-                                                <img alt=""
-                                                    src={require("../../../assets/images/Blank_Profile_icon.png")}
+                                                <img alt="i"
+                                                    src={participant.thumbNail ? participant.thumbNail : require("../../../assets/images/Blank_Profile_icon.png")}
                                                     className="avatarImage" />
                                             </div>
                                         </td>
