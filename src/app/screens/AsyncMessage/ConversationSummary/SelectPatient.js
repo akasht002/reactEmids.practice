@@ -13,7 +13,7 @@ export default class SelectPatient extends Component {
                 let data = {
                     value: patient.userId,
                     label: patient.firstName + ' ' + patient.lastName,
-                    src: '',
+                    src: patient.thumbNail,
                     participantType: patient.participantType
                 };
                 patients.push(data);
