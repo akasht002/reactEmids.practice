@@ -109,6 +109,7 @@
 
 .VisitPaymentSuccess{
     height: calc(100vh - 410px);
+    min-height: 170px;
     display: flex;
     justify-content: center;
     align-items: center;

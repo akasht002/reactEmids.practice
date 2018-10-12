@@ -116,7 +116,7 @@ class ServiceRequest extends React.Component {
             </ul>
           </Scrollbars>
         </div>
-        {/*getLength(serviceRequest) > 2 &&
+        {getLength(serviceRequest) > 2 &&
           <ul className='list-group list-group-flush'>
             <li
               className='list-group-item ProfileShowMore'
@@ -124,17 +124,8 @@ class ServiceRequest extends React.Component {
             >
               Show more <i className='ProfileIconShowMore' />
             </li>
-          </ul>*/
-        }
-
-        <ul className='list-group list-group-flush'>
-            <li
-              className='list-group-item ProfileShowMore'
-              onClick={this.clickShowMore}
-            >
-              Show more <i className='ProfileIconShowMore' />
-            </li>
           </ul>
+        }
       </div>
     )
   }

@@ -67,7 +67,7 @@ const UserSelectBoxGravatar = createClass({
                 style={this.props.style}
                 height={this.props.size}
                 width={this.props.size}
-                src={require('../../../assets/images/Blank_Profile_icon.png')}
+                src={ this.props.thumbNail ? this.props.thumbNail : require('../../../assets/images/Blank_Profile_icon.png')}
                 {...rest}
                 className={className}
             />

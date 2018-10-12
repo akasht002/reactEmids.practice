@@ -36,13 +36,14 @@ const GravatarOption = createClass({
         this.props.onFocus(this.props.option, event);
     },
     render() {
+       
         return (
             <div className={this.props.className}
                  onMouseDown={this.handleMouseDown}
                  onMouseEnter={this.handleMouseEnter}
                  onMouseMove={this.handleMouseMove}
                  title={this.props.option.title}>
-                <Gravatar value={this.props.option.value} size={AvatarSize} base={this.props.option.src} extension={this.props.option.extension}/>
+                <Gravatar thumbNail={this.props.option.src} value={this.props.option.value} size={AvatarSize} base={this.props.option.src} extension={this.props.option.extension}/>
                 {this.props.children}
             </div>
         );
@@ -59,7 +60,7 @@ const GravatarValue = createClass({
         return (
             <div className={"Select-value"} title={this.props.value.title}>
 				<span className="Select-value-label">
-					<Gravatar value={this.props.value.value} size={AvatarSize} base={this.props.value.src} extension={this.props.value.extension}/>
+					<Gravatar thumbNail={this.props.value.src} value={this.props.value.value} size={AvatarSize} base={this.props.value.src} extension={this.props.value.extension}/>
                     {this.props.children}
 				</span>
                 <span className="Select-value-icon" onMouseDown={e => {

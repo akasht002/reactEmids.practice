@@ -234,7 +234,7 @@ li div.dropdown-menu{
 }
 
 .ServiceRequestsWidget .ProfileHeaderButton{
-    padding-right: 16px;
+    margin-right: 16px;
 }
 
 .HeaderRequestLabelID{
@@ -272,7 +272,7 @@ li div.dropdown-menu{
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border: solid 1px #b7b7b7;
-    margin: 30px 15px 0 30px;
+    margin: 30px 15px 30px 30px;
     padding: 30px;
     float: left;
 }
@@ -491,7 +491,6 @@ span.btn-invited, span.btn-invited:hover{
     position: relative;
     height: 24px;
     width: 24px;
-    margin-right: 24px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
@@ -552,7 +551,7 @@ span.btn-invited, span.btn-invited:hover{
 }
 
 .TabBody{
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .ScheduleTableRow {
@@ -1372,10 +1371,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .ProfileConversationWidget {
         height: auto;
-    }
-
-    .ScheduleTableHeader{
-        display: none;
     }
 
     .tab-content > .TabBody{

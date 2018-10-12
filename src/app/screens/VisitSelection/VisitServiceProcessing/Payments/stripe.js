@@ -61,6 +61,7 @@ class _CardForm extends Component {
                     "serviceRequestVisitId": this.props.data.SummaryDetails.serviceRequestVisitId,
                 }
                 this.props.token(data);
+                this.props.claimSubmission();
             } else {
                 if (payload.error.code === 'incomplete_number') {
                     this.setState({ cardErrorMessage: payload.error.message, expErrorMessage: '', cvcErrorMessage: '' })
@@ -134,7 +135,11 @@ class CheckoutForm extends React.Component {
         return (
             <div className="col-md-12">
                 <Elements>
-                    <CardForm token={this.chargeData} data={this.props.summaryAmount} />
+                    <CardForm
+                        token={this.chargeData}
+                        data={this.props.summaryAmount}
+                        claimSubmission={this.props.claimSubmission}
+                    />
                 </Elements>
             </div>
         )
