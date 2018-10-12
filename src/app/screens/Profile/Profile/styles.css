@@ -563,10 +563,6 @@ font-weight: 600;
     padding: 15px 0;
 }
 
-.Available .SPAvailContent, .trueAvailable .SPAvailContent{
-    padding: 0;
-}
-
 .SPAvailItems{
     display: block;
     position: relative;
@@ -768,7 +764,7 @@ div.SPTabContentEdit{
 
 .AvailabilityWidget .SPAvailWidget .SPAvailContainer{
     width: 30.67%;
-    height: 180px;
+    height: 190px;
     margin: 0 10px 20px;
 }
 

@@ -1,11 +1,5 @@
 export const ProfileHeaderMenu = [
     {
-        name: "about",
-        link: "aboutUs",
-        status: true,
-        id: 1
-    },
-    {
         name: "contact",
         link: "contact",
         status: true,
@@ -28,9 +22,4 @@ export const ProfileHeaderMenu = [
         status: true,
         id: 5
     },
-    {
-        name: "logout",
-        status: true,
-        id: 6
-    }
 ];
