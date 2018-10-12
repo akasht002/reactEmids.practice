@@ -1068,7 +1068,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        height: calc(100vh - 590px);
+        height: calc(100vh - 276px);
     }
 
     .ProfileCardBody .ServiceRequestPalette {

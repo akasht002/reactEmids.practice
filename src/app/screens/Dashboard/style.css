@@ -1092,7 +1092,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        max-height: calc(100vh - 277px);
+        max-height: calc(100vh - 276px);
         height: 100vh;
     }
 
