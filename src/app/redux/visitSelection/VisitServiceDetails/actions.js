@@ -2,7 +2,8 @@ import { API } from '../../../services/api'
 import {
   ServiceRequestGet,
   ThirdPartyGet,
-  ServiceRequestPost
+  ServiceRequestPost,
+  ThirdPartyPost
 } from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
 import { push } from '../../navigation/actions'
@@ -14,6 +15,7 @@ export const VisitServiceDetails = {
   getVisitServiceScheduleSuccess: 'get_visit_service_schedule_success/visitservicedetails',
   getServiceRequestId: 'get_service_requestId/visitservicedetails',
   updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails',
+  getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -33,6 +35,13 @@ export const getVisitServiceScheduleSuccess = data => {
 export const getServiceRequestId = data => {
   return {
     type: VisitServiceDetails.getServiceRequestId,
+    data
+  }
+}
+
+export const getVisitServiceEligibityStatusSuccess = data => {
+  return {
+    type: VisitServiceDetails.getVisitServiceEligibityStatusSuccess,
     data
   }
 }
@@ -111,3 +120,16 @@ export function getVisitServiceSchedule(data) {
       })
   }
 }
+
+export function getVisitServiceEligibilityStatus(data) {
+  return (dispatch) => {
+    dispatch(startLoading());
+    ThirdPartyPost(API.getServiceRequestEligibilityStatus, data).then((resp) => {
+      console.log(resp.data)
+      dispatch(getVisitServiceEligibityStatusSuccess(resp.data))
+      dispatch(endLoading());
+    }).catch((err) => {
+      dispatch(endLoading());
+    })
+  }
+};

@@ -159,9 +159,7 @@ li div.dropdown-menu{
 }
 
 .ServiceRequestsWidget .ProfileHeaderButton{
-    margin-top: 18px;
     margin-right: 16px;
-    float: right;
 }
 
 .HeaderRequestLabelID{
@@ -196,7 +194,7 @@ li div.dropdown-menu{
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border: solid 1px #b7b7b7;
-    margin: 40px 29px;
+    margin: 30px 15px 30px 30px;
     padding: 30px;
     float: left;
 }
@@ -459,7 +457,7 @@ span.btn-applied, span.btn-applied:hover{
 }
 
 .TabBody{
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .ScheduleTableRow {
@@ -476,6 +474,22 @@ span.btn-applied, span.btn-applied:hover{
     height: 60px;
     border-bottom: 2px solid #dcdcdc;
     clear: both;
+}
+
+.ScheduleTableHeader.EligibilityWidget{
+    flex-direction: column;
+}
+
+ul li.list-group-item.EligibilityList{
+    display: flex;
+    font-size: 14px;
+    padding: 10px 15px 10px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    justify-content: space-between;
+}
+
+.EligibilityItem{
+    text-transform: uppercase;
 }
 
 .ScheduleTableRow > div, .ScheduleTableHeader > div{

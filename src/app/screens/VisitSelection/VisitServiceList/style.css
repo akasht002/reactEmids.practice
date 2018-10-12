@@ -166,9 +166,7 @@ li div.dropdown-menu{
 }
 
 .ServiceRequestsWidget .ProfileHeaderButton{
-    margin-top: 18px;
     margin-right: 16px;
-    float: right;
 }
 
 .HeaderRequestLabelID{
@@ -203,7 +201,7 @@ li div.dropdown-menu{
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border: solid 1px #b7b7b7;
-    margin: 40px 29px;
+    margin: 30px 15px 30px 30px;
     padding: 20px;
     float: left;
 }
@@ -467,7 +465,7 @@ span.btn-applied, span.btn-applied:hover{
 }
 
 .TabBody{
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .ScheduleTableRow {
