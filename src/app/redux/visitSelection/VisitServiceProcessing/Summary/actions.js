@@ -56,35 +56,46 @@ export function getSummaryDetails(data) {
 
 export function calculationActualData() {
     return (dispatch, getState) => {
-
-        const currState = getState().visitSelectionState.VisitServiceProcessingState.SummaryState;
-        let duration = moment.duration(currState.actualTimeDiff);
-
-        let hours = duration.days() * 24 + duration.hours();
-
-        let min = duration.minutes();
-
-        let totalChargableTime = hours + ":" + min;
-
-        let hoursinMin = duration.asMinutes();
-
-        let totalVisitCost = (currState.hourlyRate / 60) * hoursinMin;
-
-        let taxes = (totalVisitCost * currState.taxPaid) / 100;
-
-        let grandTotalAmount = totalVisitCost + taxes;
-
-        const calculationdata = {
-            totalChargableTime: totalChargableTime,
-            totalVisitCost: totalVisitCost,
-            taxes: taxes,
-            grandTotalAmount: grandTotalAmount,
-            totalHours: hours,
-            totalMinutes: min
-        }
-        dispatch(getCalculationsData(calculationdata));
-    }
-}
+      const currState = getState().visitSelectionState.VisitServiceProcessingState
+        .SummaryState;
+  
+      let duration = moment.duration(currState.actualTimeDiff);
+  
+      let hours = duration.days() * 24 + duration.hours();
+  
+      let min = duration.minutes();
+  
+      let sec = duration.seconds();
+  
+      let totalChargableTime = hours + ":" + min + ":" + sec;
+  
+      let hoursinMin = duration.asMinutes();
+  
+      let totalVisitCost = (currState.hourlyRate / 60) * hoursinMin;
+  
+      let taxes = (totalVisitCost * currState.taxPaid) / 100;
+  
+      let grandTotalAmount = totalVisitCost + taxes;
+  
+      const calculationdata = {
+        totalChargableTime: totalChargableTime,
+  
+        totalVisitCost: totalVisitCost,
+  
+        taxes: taxes,
+  
+        grandTotalAmount: grandTotalAmount,
+  
+        totalHours: hours,
+  
+        totalMinutes: min,
+  
+        totalSeconds: sec
+      };
+  
+      dispatch(getCalculationsData(calculationdata));
+    };
+  }
 
 export function calculationsFirstTime(data) {
     return (dispatch) => {
