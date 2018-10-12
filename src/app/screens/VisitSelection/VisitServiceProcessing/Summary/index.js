@@ -152,7 +152,9 @@ class Summary extends Component {
                 </p>
             </form>
         }
-        const SignWidth = 400//document.getElementById("signatureWidget").style.width;
+
+        const SignWidth = 400;
+
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileHeaderWidget'>

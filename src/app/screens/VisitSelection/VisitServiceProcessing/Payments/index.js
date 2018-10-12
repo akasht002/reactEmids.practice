@@ -36,7 +36,7 @@ class Payments extends Component {
     }
 
     componentDidMount() {
-        this.props.getpaymentsCardList(1);
+        this.props.getpaymentsCardList(this.props.summaryAmount.SummaryDetails.patient.patientId);
     }
 
     handleChange = (e) => {
@@ -52,7 +52,7 @@ class Payments extends Component {
             "serviceRequestVisitId": this.props.summaryAmount.SummaryDetails.serviceRequestVisitId
         }
         this.props.chargeByCustomerId(data);
-        this.props.payByAuthorizedCard();
+        this.payByAuthorizedCard();
     }
 
     payByAuthorizedCardOption = () => {
