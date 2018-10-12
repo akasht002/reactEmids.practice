@@ -30,7 +30,7 @@ export function getServiceOffered() {
     Get(API.getServiceOffered + serviceProviderId + '/Offer/Selected')
       .then(resp => {
         if(resp.data) {
-          resp.data[0].isOpen = 'true';
+          resp.data[0].isOpen = true;
         }
         dispatch(getServicesOfferedSuccess(resp.data));
         dispatch(endLoading())
@@ -85,7 +85,7 @@ export function editServiceOffered(data) {
     Get(API.editServiceOffered + serviceProviderId + '/Offer')
       .then(resp => {
         if(resp.data) {
-          resp.data[0].isOpen = 'true';
+          resp.data[0].isOpen = true;
         }
         dispatch(getServiceOfferedDetails(resp.data))
         dispatch(endLoading())
