@@ -29,14 +29,8 @@ class AsideScreenCover extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            selectedValue: { label: 'Brett Smith', value: '2' }
+            profilePermission: extractRole(SCREENS.PROFILE)
         }
-    }
-
-    optionChanged(e) {
-        this.setState({
-            selectedValue: e
-        })
     }
 
     componentDidMount() {
@@ -46,7 +40,6 @@ class AsideScreenCover extends React.Component {
         this.props.getPersonalDetail();
         this.props.getAboutUsContent();
         this.props.canServiceProviderCreateMessage();
-        this.profilePermission = extractRole(SCREENS.PROFILE);
         authorizePermission(SCREENS.DASHBOARD);
         authorizePermission(SCREENS.SERVICE_REQUEST);
         authorizePermission(SCREENS.VISIT_HISTORY);
@@ -98,7 +91,7 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
-                        onClick={this.profilePermission.read && this.props.goToProfile}
+                        onClick={this.state.profilePermission.Read && this.props.goToProfile}
                     />
 
                     <div className='ProfileNameWidget'>
