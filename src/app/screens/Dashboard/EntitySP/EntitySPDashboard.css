@@ -5,6 +5,7 @@
 
 .NoInformation .myConversationContent .avatarContainer{
     position: relative;
+    width: 32px !important;
 }
 
 .NoInformation .myConversationContent .avatarContainer:before, .NoInformation .myConversationContent .avatarContainer:after{

@@ -190,7 +190,6 @@ li div.dropdown-menu{
 .SPContentWidget .ProfileContainer .card {
     width: 100%;
     margin: 0 0 20px 0;
-    height: calc(100% - 20px);
 }
 
 .SPContentWidget .bottomProfile {
@@ -275,6 +274,7 @@ li div.dropdown-menu{
     width: 40px;
     height: 40px;
     display: inline-block;
+    overflow: hidden;
 }
 
 .BlockImageDetails{
@@ -287,14 +287,24 @@ li div.dropdown-menu{
 
 .BlockImageDetailsName{
     font-size: 16px;
+    line-height: 16px;
     color: #444444;
     margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .BlockImageDetailsActivity{
     font-size: 14px;
+    line-height: 14px;
     color: #8c8c8c;
     margin-bottom: 10px;
+    word-wrap: break-word;
+    text-transform: capitalize;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .BlockImageDetailsDate{
@@ -351,30 +361,22 @@ li div.dropdown-menu{
     text-align: right;
 }
 
-.btn-hired{
+span.btn-hired, span.btn-hired:hover{
     color: #007f84 !important;
     border-color: #007f84 !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
+    cursor: auto;
 }
 
-.btn-hired:hover{
-    background-color: #007f84 !important;
-    color: #ffffff !important;
-}
-
-.btn-applied{
+span.btn-applied, span.btn-applied:hover{
     color: #3089df !important;
     border-color: #3089df !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-}
-
-.btn-applied:hover{
-    background-color: #3089df !important;
-    color: #ffffff !important
+    cursor: auto;
 }
 
 .btn-invited{
@@ -644,7 +646,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content {
-    height: 180px;
+    height: 100%;
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
@@ -656,7 +658,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-    max-height: calc(100vh - 270px);
+    max-height: calc(100vh - 276px);
 }
 
 .ProfileCard.extended .ProfileCardBody, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
@@ -698,7 +700,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
-    height: 339px;
+    height: calc(100vh - 430px);
 }
 
 .BoardContainer{
@@ -957,6 +959,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
 .NoInformation .myConversationContent .avatarContainer{
     position: relative;
+    width: 32px !important;
 }
 
 .NoInformation .myConversationContent .avatarContainer:before, .NoInformation .myConversationContent .avatarContainer:after{
@@ -988,7 +991,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 326px;
+        height: calc(100vh - 465px);
     }
 
     .bottomProfile.ServiceProvider .innerWidget:first-child, .ProfileContainer.topProfile {
@@ -1004,7 +1007,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .ProfileCardBody .ServiceRequestPalette {
-        height: 350px;
+        height: calc(100vh - 623px);
     }
 
     .ServiceProvider .ProfileCardBody .ServiceRequestPalette {
@@ -1031,8 +1034,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        max-height: calc(100vh - 277px);
-        height: 100vh;
+        height: calc(100vh - 590px);
+    }
+
+    .ProfileCardBody .ServiceRequestPalette {
+        height: calc(100vh - 590px);
     }
 
     .ProfileSkillServices.ServiceRequest .ServicesDesc{
@@ -1083,7 +1089,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile{
-        height: 359px;
+        height: calc(100vh - 410px);
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
@@ -1091,7 +1097,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content{
-        height: 170px;
+        height: 100%;
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {

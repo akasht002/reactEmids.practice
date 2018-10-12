@@ -61,7 +61,6 @@ class VisitHistory extends Component {
   render () {
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-        <div className='ProfileRightContainer'>
           <div className='ProfileHeaderWidget'>
             <div className='ProfileHeaderTitle'>
               <h5 className='primaryColor m-0'>Visit History</h5>
@@ -103,8 +102,7 @@ class VisitHistory extends Component {
               handleClicks={this.handleClick}
             />
             <div className='cardBottom' />
-          </Scrollbars>         
-        </div>
+          </Scrollbars>
       </AsideScreenCover>
     )
   }
