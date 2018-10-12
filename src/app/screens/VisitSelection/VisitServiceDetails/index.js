@@ -49,7 +49,6 @@ class VisitServiceDetails extends Component {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId)
       this.props.getVisitServiceSchedule(this.props.ServiceRequestId)
-      this.props.getVisitServiceEligibilityStatus(this.props.ServiceRequestId)
     } else {
       this.props.history.push(Path.visitServiceList)
     }
@@ -62,6 +61,15 @@ class VisitServiceDetails extends Component {
       patientId: nextProps.VisitServiceDetails.patient &&
         nextProps.VisitServiceDetails.patientId
     })
+  }
+
+  checkEligibility = () => {
+    const data = {
+      "patientId": this.state.patientId,
+      "serviceRequestId": this.props.ServiceRequestId,
+      "serviceProviderId": this.state.visitServiceDetails.serviceProviderId
+    }
+    this.props.getVisitServiceEligibilityStatus(data)
   }
 
   visitService = () => {
@@ -229,7 +237,7 @@ class VisitServiceDetails extends Component {
             this.props.VisitServiceElibilityStatus[item] === true ?
               'true' : this.props.VisitServiceElibilityStatus[item]}
         </div>
-        </li>
+      </li>
     ))
 
     return (
@@ -345,7 +353,8 @@ class VisitServiceDetails extends Component {
                           active: this.state.activeTab === '2'
                         })}
                         onClick={() => {
-                          this.toggle('2')
+                          this.toggle('2'),
+                          this.checkEligibility();
                         }}
                       >
                         Schedule
@@ -357,7 +366,8 @@ class VisitServiceDetails extends Component {
                           active: this.state.activeTab === '3'
                         })}
                         onClick={() => {
-                          this.toggle('3')
+                          this.toggle('3'),
+                          this.checkEligibility();
                         }}
                       >
                         Eligibility Status

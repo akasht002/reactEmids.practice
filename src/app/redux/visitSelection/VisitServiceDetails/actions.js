@@ -121,12 +121,7 @@ export function getVisitServiceSchedule(data) {
   }
 }
 
-export function getVisitServiceEligibilityStatus() {
-  const data = {
-    "patientId": 54,
-    "serviceRequestId": 12,
-    "serviceProviderId": 1
-  }
+export function getVisitServiceEligibilityStatus(data) {
   return (dispatch) => {
     dispatch(startLoading());
     ThirdPartyPost(API.getServiceRequestEligibilityStatus, data).then((resp) => {

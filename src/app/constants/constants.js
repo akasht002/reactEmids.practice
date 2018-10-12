@@ -34,6 +34,8 @@ export const RESPONSE_STATUS = {
 export const STATUS = 0;
 export const SAVEDCARDS = "1";
 export const NEWCARDS = "2";
+export const AUTHORIZEDCARD = "3";
+
 export const USERTYPES = {
     PATIENT : 'I',
     GUARDIAN : 'G',

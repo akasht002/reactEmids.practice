@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import SignaturePad from 'react-signature-pad-wrapper'
-import { Scrollbars, DashboardWizFlow, GeneralModalPopup } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, GeneralModalPopup, ModalPopup } from '../../../../components';
 import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
@@ -30,7 +30,9 @@ class Summary extends Component {
             signatureImage: '',
             completedTaskPercent: '',
             disableTimeAdjust: true,
-            isAlertModalOpen: false
+            isAlertModalOpen: false,
+            isSignatureModalOpen: false,
+            isSaveBtnShown: true
         };
     };
 
@@ -60,6 +62,9 @@ class Summary extends Component {
 
     saveSignature = () => {
         const data = this.signaturePad.toDataURL();
+        if (data !== '') {
+            this.setState({ isSaveBtnShown: false })
+        }
         this.setState({ signatureImage: data })
     }
 
@@ -90,7 +95,7 @@ class Summary extends Component {
             }
             this.props.saveSummaryDetails(data);
         } else {
-
+            this.setState({ isSignatureModalOpen: true })
         }
     }
 
@@ -105,6 +110,7 @@ class Summary extends Component {
     render() {
 
         let modalContent = '';
+
         let completedTaskPercent = Math.round((this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100);
 
         if (this.state.isModalOpen) {
@@ -146,11 +152,7 @@ class Summary extends Component {
                 </p>
             </form>
         }
-
-        let estimatedClaim = this.props.VisitServiceElibilityStatus.amount;
-
-        let CopayAmount = (this.props.CalculationsData.grandTotalAmount - estimatedClaim);
-
+        const SignWidth = 400//document.getElementById("signatureWidget").style.width;
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileHeaderWidget'>
@@ -259,15 +261,25 @@ class Summary extends Component {
                                                 <div className="row EstimatedCostWidget">
                                                     <div className="col-md-8 EstimatedCostContainer Label">
                                                         <p><span>Estimated Claim</span>
-                                                            <span>Copay On Credit Card</span></p>
+                                                        </p>
+                                                        <p><span>Copay On Credit Card</span></p>
+                                                        <p className="m-0"><span>Round off amount to be paid</span></p>
+
                                                     </div>
                                                     <div className="col-md-4 EstimatedCostContainer Cost">
-                                                        <p><span>${estimatedClaim}</span>
-                                                            <span>${CopayAmount}</span></p>
+                                                        <p><span>${this.props.CalculationsData.estimatedClaim}</span></p>
+                                                        <p><span>${this.props.CalculationsData.copayAmount}</span></p>
+                                                        <p className="m-0"><span>$
+                                                        {(this.props.CalculationsData.copayAmount % 1) >= 0.5 ?
+                                                                Math.ceil(this.props.CalculationsData.copayAmount)
+                                                                :
+                                                                Math.floor(this.props.CalculationsData.copayAmount)
+                                                            }
+                                                        </span>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             }
-
                                             <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that this claim is an estimate pending the claim process</p>
                                         </div>
                                     </div>
@@ -275,15 +287,17 @@ class Summary extends Component {
                                         <div className="RightContent">
                                             <p className="SummaryContentTitle">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
-                                            <div className="SignatureColumn" onClick={this.onClickSignaturePad}>
-                                                <SignaturePad ref={ref => this.signaturePad = ref} />
+                                            <div id="signatureWidget" className="SignatureColumn" onClick={this.onClickSignaturePad}>
+                                                <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
                                             </div>
-                                            <div className="width100 text-right">
-                                                <button className="btn btn-outline-primary CancelSignature" onClick={this.saveSignature}>Save</button>
-                                            </div>
-                                            <div className="width100 text-right">
-                                                <button className="btn btn-outline-primary CancelSignature" onClick={this.resetSignature}>Reset Signature</button>
-                                            </div>
+                                            {this.state.isSaveBtnShown ?
+                                                <div className="SignatureButtons">
+                                                    <button className="btn btn-outline-primary CancelSignature" onClick={this.saveSignature}>Save</button>
+                                                    <button className="btn btn-outline-primary ResetSignature" onClick={this.resetSignature}>Reset Signature</button>
+                                                </div>
+                                                :
+                                                ''
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -307,6 +321,18 @@ class Summary extends Component {
                             this.updateTime()
                             this.setState({ isModalOpen: !this.state.isModalOpen })
                         }}
+                    />
+
+                    <ModalPopup
+                        isOpen={this.state.isSignatureModalOpen}
+                        ModalBody={<span>Please provide the customer signature.</span>}
+                        btn1="OK"
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                        onConfirm={() => this.setState({
+                            isSignatureModalOpen: !this.state.isSignatureModalOpen,
+                        })}
                     />
                 </Scrollbars>
             </AsideScreenCover>

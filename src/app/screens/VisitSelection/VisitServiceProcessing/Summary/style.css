@@ -194,8 +194,17 @@ div.EstimatedCostWidget{
     margin-bottom: 60px;
 }
 
-button.btn.ResetSignature{
-    padding: 10px
+button.btn.ResetSignature, button.btn.CancelSignature{
+    padding: 7px 8px !important;
+    font-size: 14px;
+    margin-top: 15px;
+    line-height: 0;
+    height: 30px;
+}
+
+.SignatureButtons{
+    display: flex;
+    justify-content: space-between;
 }
 
 @media (max-width: 768px){
@@ -267,10 +276,4 @@ button.btn.ResetSignature{
     .SignatureColumn {
         height: 200px;
     }
-}
-
-button.btn.CancelSignature{
-    padding: 5px 8px !important;
-    font-size: 14px;
-    margin-top: 15px;
 }
