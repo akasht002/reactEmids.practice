@@ -9,7 +9,7 @@ export default class ModalTemplate extends React.Component {
                     <ModalHeader className={"text-uppercase font-weight-light " + this.props.headerFooter}>{this.props.modalTitle}</ModalHeader>
                     <ModalBody>{this.props.ModalBody}</ModalBody>
                     <ModalFooter className={this.props.headerFooter}>
-                        <Button className="text-uppercase" color="primary" onClick={this.props.toggle}>Okay</Button>
+                        <Button className="text-uppercase" color="primary" onClick={this.props.toggle}>OK</Button>
                     </ModalFooter>
                 </Modal>
         );

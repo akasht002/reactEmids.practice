@@ -78,7 +78,7 @@ class VisitServiceList extends Component {
             return 'btn btn-hired';
         }
         else if (status === VISIT_SERVICE_STATUS_INVITED) {
-            return 'btn btn-outline-primary btn-invited';
+            return 'btn btn-invited';
         }
         else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
             return 'BlockProfileMatching';

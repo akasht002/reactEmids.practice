@@ -9,7 +9,7 @@ body {
 }
 
 section .ProfileRightWidget {
-    width: calc(100% - 180px);
+    width: calc(100% - 170px);
     padding: 0;
 }
 
@@ -240,7 +240,8 @@ li div.dropdown-menu{
     font-size: 16px;
     line-height: 16px;
     color: #444444;
-    margin-bottom: 10px;
+    margin: 0;
+    padding-bottom: 10px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -339,11 +340,13 @@ span.btn-applied, span.btn-applied:hover{
     cursor: auto;
 }
 
-.btn-invited{
+span.btn-invited, span.btn-invited:hover{
+    color: #7a329f !important;
+    border-color: #7a329f !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-    margin: 10px 28px 5px 0;
+    cursor: auto;
 }
 
 .BlockProfileMatching{
@@ -664,7 +667,7 @@ a.ProfileCardHeaderLink:hover{
 .BoardContainer{
     display: flex !important;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
 }
 
@@ -672,6 +675,9 @@ a.ProfileCardHeaderLink:hover{
     width: 370px;
     min-height: 197px;
     margin-bottom: 22px;
+}
+
+.ServiceRequestBoard .card:hover{
     cursor: pointer;
 }
 
@@ -752,7 +758,7 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        max-height: calc(100vh - 200px);
+        max-height: calc(100vh - 276px);
         height: 100vh;
     }
 

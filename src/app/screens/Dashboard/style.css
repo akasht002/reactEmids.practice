@@ -10,7 +10,7 @@ body {
 }
 
 section .ProfileRightWidget {
-    width: calc(100% - 180px);
+    width: calc(100% - 170px);
     padding: 0;
 }
 
@@ -290,7 +290,8 @@ li div.dropdown-menu{
     font-size: 16px;
     line-height: 16px;
     color: #444444;
-    margin-bottom: 10px;
+    margin: 0;
+    padding-bottom: 10px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -401,10 +402,13 @@ a.btn-open, span.btn-open, a.btn-open:hover, span.btn-open:hover{
     line-height: 12px !important;
 }
 
-.btn-invited{
+span.btn-invited, span.btn-invited:hover{
+    color: #7a329f !important;
+    border-color: #7a329f !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
+    cursor: auto;
 }
 
 .BlockProfileMatching{
@@ -794,6 +798,10 @@ a.ProfileCardHeaderLink:hover{
     padding: 0 10px;
 }
 
+.ServiceRequestBoard .card:hover{
+    cursor: pointer;
+}
+
 .NewBoard {
     border-width:2px 0;
     position:absolute;
@@ -1083,7 +1091,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        max-height: calc(100vh - 277px);
+        max-height: calc(100vh - 276px);
         height: 100vh;
     }
 

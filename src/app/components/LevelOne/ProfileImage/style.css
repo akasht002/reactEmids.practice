@@ -67,6 +67,7 @@
     padding: 0;
     margin: 0 auto;
     top: 10px;
+    overflow: hidden;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;

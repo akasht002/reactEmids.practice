@@ -648,6 +648,15 @@ div.ProfileConversation{
     width: 100%;
     display: flex;
     display: -moz-flex;
+    transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -webkit-transition: all linear .2s;
+}
+
+.myConversationContainer .myConversationContent:hover{
+    cursor: pointer;
+    background-color: #f9f8f8;
 }
 
 .myConversationContent .avatarWidget{

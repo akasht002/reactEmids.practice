@@ -111,6 +111,7 @@ class _CardForm extends Component {
                             {this.state.cvcErrorMessage}
                         </small>
                     </div>
+                    <p><strong>Note:</strong> Information provided above is secure</p> 
                 </div>
                 <div id="card-errors" role="alert"></div>
                 <div className='col-md-12 mt-3'>
