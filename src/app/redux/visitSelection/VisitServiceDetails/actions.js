@@ -47,16 +47,16 @@ export const getVisitServiceEligibityStatusSuccess = data => {
 }
 
 export function updateServiceRequestByServiceProvider(data) {
-  let serviceProviderId = getUserInfo().serviceProviderId
+  let modelData = {
+    serviceRequestId: data.serviceRequestId,
+    serviceProviderId: getUserInfo().serviceProviderId,
+    applyOrNotInterested: data.type
+  }
   return dispatch => {
     dispatch(startLoading())
     ServiceRequestPost(
-      API.applyServiceRequestByServiceProvider +
-      data.serviceRequestId +
-      '/' +
-      serviceProviderId +
-      '/' +
-      data.type
+      API.applyServiceRequestByServiceProvider,
+      modelData
     )
       .then(resp => {
         dispatch(endLoading())
