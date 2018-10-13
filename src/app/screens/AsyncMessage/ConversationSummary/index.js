@@ -112,14 +112,6 @@ class ConversationSummary extends Component {
                         <div className="width100 mainWidgetProfile">
                             <div className="container mainProfileContent">
                                 <div className="row d-flex justify-content-center">
-
-                                    {/*<div className="col-md-12 d-flex p-0 my-4 slightTopview">
-                                        <h5 className="font-weight-semi-bold mr-auto pageTitle">Conversation Summary</h5>
-                                        {this.props.loggedInUser.userType !== USERTYPES.SERVICE_PROVIDER && <button
-                                            className="btn btn-primary ml-auto font-size-sm newConversationBtn"
-                                            onClick={this.onSetDisplayParticipantModal}><span class="newConvText">+ New Conversation</span></button>}
-                                        </div>*/}
-
                                     <MessageList
                                         conversation={this.props.conversation}
                                         gotoConversations={this.onClickConversation}
