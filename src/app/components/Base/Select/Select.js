@@ -6,6 +6,7 @@ class SelectBox extends React.Component {
     render() {
         return (
             <Select
+                className={this.props.className}
                 options={this.props.options}
                 simpleValue
                 placeholder={this.props.placeholder}

@@ -1,0 +1,40 @@
+.InputInDeWidget{
+    display: flex;
+    color: #7a329f;
+}
+
+.InputInDeWidget input{
+    text-align: center;
+    width: 50px;
+    margin: 0 10px;
+    opacity: 1;
+    position: relative;
+}
+
+.InputInDeWidget span{
+    font-size: 26px;
+    height: 25px;
+    width: 25px;
+    padding: 3px;
+    border: 1px solid #7a329f;
+    line-height: 14px;
+    text-align: center;
+    top: 10px;
+    position: relative;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.InputInDeWidget span:first-child{
+    padding: 1px;
+}
+
+.InputInDeWidget span:hover{
+    cursor: pointer;
+    background-color: #f4ecfc;
+}

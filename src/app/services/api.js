@@ -113,7 +113,10 @@ export const API = {
     getUserRoles: "User/GetUserRoles",
     updateStandByMode:'ServiceProvider/UpdateStandByMode/',
     getEntityServiceProviderList:'ServiceProvider/ByEntity/',
-    assignServiceVisit:'ServiceRequest/AssignServiceVisit'
+    assignServiceVisit:'ServiceRequest/AssignServiceVisit',
+    getServiceArea:'ServiceProvider/GetServiceProviderServiceAreaView/',
+    addServiceArea:'ServiceProvider/ServiceProviderServiceArea',
+    deletServiceArea:'ServiceProvider/InActiveServiceProviderServiceArea/'
 }
 
 
