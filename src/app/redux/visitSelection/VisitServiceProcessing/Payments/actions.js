@@ -1,5 +1,5 @@
 import { API } from '../../../../services/api';
-import { ThirdPartyGet, ThirdPartyPost } from '../../../../services/http';
+import { ThirdPartyGet, ThirdPartyPost, ThirdPartyPut } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
@@ -56,6 +56,33 @@ export function chargeByCustomerId(data) {
         })
     }
 };
+
+export function claimsSubmission(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ThirdPartyPost(API.claimsSubmission, data).then((resp) => {
+            dispatch(endLoading());
+            dispatch(push(Path.paymentsuccess))
+        }).catch((err) => {
+            dispatch(push(Path.paymentfailure))
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function captureAmount(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ThirdPartyPut(API.captureAmount, data).then((resp) => {
+            dispatch(endLoading());
+            dispatch(push(Path.paymentsuccess))
+        }).catch((err) => {
+            dispatch(push(Path.paymentfailure))
+            dispatch(endLoading());
+        })
+    }
+};
+
 
 
 

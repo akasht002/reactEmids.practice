@@ -2,7 +2,8 @@ import { API } from '../../../services/api'
 import {
   ServiceRequestGet,
   ThirdPartyGet,
-  ServiceRequestPost
+  ServiceRequestPost,
+  ThirdPartyPost
 } from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
 import { push } from '../../navigation/actions'
@@ -14,6 +15,7 @@ export const VisitServiceDetails = {
   getVisitServiceScheduleSuccess: 'get_visit_service_schedule_success/visitservicedetails',
   getServiceRequestId: 'get_service_requestId/visitservicedetails',
   updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails',
+  getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -37,17 +39,24 @@ export const getServiceRequestId = data => {
   }
 }
 
+export const getVisitServiceEligibityStatusSuccess = data => {
+  return {
+    type: VisitServiceDetails.getVisitServiceEligibityStatusSuccess,
+    data
+  }
+}
+
 export function updateServiceRequestByServiceProvider(data) {
-  let serviceProviderId = getUserInfo().serviceProviderId
+  let modelData = {
+    serviceRequestId: data.serviceRequestId,
+    serviceProviderId: getUserInfo().serviceProviderId,
+    applyOrNotInterested: data.type
+  }
   return dispatch => {
     dispatch(startLoading())
     ServiceRequestPost(
-      API.applyServiceRequestByServiceProvider +
-      data.serviceRequestId +
-      '/' +
-      serviceProviderId +
-      '/' +
-      data.type
+      API.applyServiceRequestByServiceProvider,
+      modelData
     )
       .then(resp => {
         dispatch(endLoading())
@@ -111,3 +120,16 @@ export function getVisitServiceSchedule(data) {
       })
   }
 }
+
+export function getVisitServiceEligibilityStatus(data) {
+  return (dispatch) => {
+    dispatch(startLoading());
+    ThirdPartyPost(API.getServiceRequestEligibilityStatus, data).then((resp) => {
+      console.log(resp.data)
+      dispatch(getVisitServiceEligibityStatusSuccess(resp.data))
+      dispatch(endLoading());
+    }).catch((err) => {
+      dispatch(endLoading());
+    })
+  }
+};

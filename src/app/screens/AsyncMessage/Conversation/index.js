@@ -239,7 +239,7 @@ class Conversation extends Component {
                     Please select a valid image. Image format should be JPEG / GIF / PNG and file should be less than 2 MB.
                 </p>
                 <p className="text-right m-2">
-                    <Link className="btn btn-outline-primary mx-3" to="#" onClick={this.onConfirmInvalidImageSelection}>Ok</Link>
+                    <Link className="btn btn-outline-primary mx-3" to="#" onClick={this.onConfirmInvalidImageSelection}>OK</Link>
                 </p>
             </div>
         }

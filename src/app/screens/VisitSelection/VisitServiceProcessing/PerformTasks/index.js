@@ -275,14 +275,10 @@ class PerformTasks extends Component {
                         isOpen={this.state.isStopModalOpen}
                         ModalBody={<span>Please stop the service to proceed</span>}
                         btn1="OK"
-                        btn2="Cancel"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
                         onConfirm={() => this.setState({
-                            isStopModalOpen: !this.state.isStopModalOpen,
-                        })}
-                        onCancel={() => this.setState({
                             isStopModalOpen: !this.state.isStopModalOpen,
                         })}
                     />

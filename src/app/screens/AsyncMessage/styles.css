@@ -615,7 +615,7 @@ li.participants{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width:75%;
+    max-width:160px;
 }
 
 .participantDetailRight{

@@ -28,7 +28,7 @@ import './styles.css';
                         </p>
                     </ModalBody>
                     <ModalFooter className={this.props.headerFooter}>
-                        <Button className="text-uppercase" color="primary" onClick={this.props.toggle}>Okay</Button>
+                        <Button className="text-uppercase" color="primary" onClick={this.props.toggle}>OK</Button>
                     </ModalFooter>
                 </Modal>
         );

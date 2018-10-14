@@ -185,7 +185,9 @@ export const ServiceCalendarDefault = props => {
 export const ServiceRequestDefault = () => {
   return (
     <div className='NoInformationServiceProvider'>
-      <span><i className='SPNoSRDashboard' /></span>
+      <span>
+        <img src={require("../../assets/images/NoServiceRequest.svg")}/>
+      </span>
       <span className='NoSRText'>
         Browse Service Request
       </span>

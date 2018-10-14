@@ -9,7 +9,7 @@ body {
 }
 
 section .ProfileRightWidget {
-    width: calc(100% - 180px);
+    width: calc(100% - 170px);
     padding: 0;
 }
 
@@ -159,9 +159,7 @@ li div.dropdown-menu{
 }
 
 .ServiceRequestsWidget .ProfileHeaderButton{
-    margin-top: 18px;
     margin-right: 16px;
-    float: right;
 }
 
 .HeaderRequestLabelID{
@@ -192,12 +190,11 @@ li div.dropdown-menu{
 
 .LeftPalette{
     width: 274px;
-    min-height: 375px;
     border-radius: 8px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border: solid 1px #b7b7b7;
-    margin: 40px 29px;
+    margin: 30px 15px 30px 30px;
     padding: 30px;
     float: left;
 }
@@ -222,6 +219,7 @@ li div.dropdown-menu{
     width: 40px;
     height: 40px;
     display: inline-block;
+    overflow: hidden;
 }
 
 .BlockImageDetails{
@@ -240,7 +238,11 @@ li div.dropdown-menu{
     font-size: 16px;
     line-height: 16px;
     color: #444444;
-    margin-bottom: 10px;
+    margin: 0;
+    padding-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .BlockImageDetailsActivity{
@@ -250,6 +252,9 @@ li div.dropdown-menu{
     margin-bottom: 10px;
     word-wrap: break-word;
     text-transform: capitalize;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .BlockImageDetailsDate{
@@ -309,39 +314,31 @@ li div.dropdown-menu{
     position: relative;
 }
 
-.btn-hired{
+span.btn-hired, span.btn-hired:hover{
     color: #007f84 !important;
     border-color: #007f84 !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-    margin: 10px 28px 5px 0;
+    cursor: auto;
 }
 
-.btn-hired:hover{
-    background-color: #007f84 !important;
-    color: #fff !important;
-}
-
-.btn-applied{
+span.btn-applied, span.btn-applied:hover{
     color: #3089df !important;
     border-color: #3089df !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-    margin: 10px 28px 5px 0;
+    cursor: auto;
 }
 
-.btn-applied:hover{
-    background-color: #3089df !important;
-    color: #fff !important
-}
-
-.btn-invited{
+span.btn-invited, span.btn-invited:hover{
+    color: #7a329f !important;
+    border-color: #7a329f !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-    margin: 10px 28px 5px 0;
+    cursor: auto;
 }
 
 .BlockProfileMatching{
@@ -463,7 +460,7 @@ li div.dropdown-menu{
 }
 
 .TabBody{
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .ScheduleTableRow {
@@ -480,6 +477,22 @@ li div.dropdown-menu{
     height: 60px;
     border-bottom: 2px solid #dcdcdc;
     clear: both;
+}
+
+.ScheduleTableHeader.EligibilityWidget{
+    flex-direction: column;
+}
+
+ul li.list-group-item.EligibilityList{
+    display: flex;
+    font-size: 14px;
+    padding: 10px 15px 10px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    justify-content: space-between;
+}
+
+.EligibilityItem{
+    text-transform: uppercase;
 }
 
 .ScheduleTableRow > div, .ScheduleTableHeader > div{
@@ -566,7 +579,6 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileCardBody {
     padding: 20px 0 0 0;
-    transform: translateY(2%);
 }
 
 .ProfileCardBody > div {
@@ -599,7 +611,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content {
-    height: 224px;
+    height: 100%;
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
@@ -611,7 +623,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-    max-height: calc(100vh - 270px);
+    max-height: calc(100vh - 276px);
 }
 
 .ProfileCard.extended .ProfileCardBody, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
@@ -653,13 +665,13 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
-    height: 378px;
+    height: calc(100vh - 430px);
 }
 
 .BoardContainer{
     display: flex !important;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
 }
 
@@ -667,6 +679,10 @@ a.ProfileCardHeaderLink:hover{
     width: 370px;
     min-height: 197px;
     margin-bottom: 22px;
+}
+
+.ServiceRequestBoard .card:hover{
+    cursor: pointer;
 }
 
 .ServiceRequestBoard .NewBoard:after{
@@ -723,11 +739,11 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: 326px;
+        height: calc(100vh - 465px);
     }
 
     .ProfileCardBody .ServiceRequestPalette {
-        height: 326px;
+        height: calc(100vh - 623px);
     }
 
     .bottomPalette {
@@ -746,8 +762,12 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        max-height: calc(100vh - 200px);
+        max-height: calc(100vh - 276px);
         height: 100vh;
+    }
+
+    .ProfileCardBody .ServiceRequestPalette {
+        height: calc(100vh - 590px);
     }
 }
 

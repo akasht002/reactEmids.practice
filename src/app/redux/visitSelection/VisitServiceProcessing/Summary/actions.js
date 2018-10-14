@@ -58,13 +58,18 @@ export function calculationActualData() {
     return (dispatch, getState) => {
 
         const currState = getState().visitSelectionState.VisitServiceProcessingState.SummaryState;
+
+        const ClaimState = getState().visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus.amount
+
         let duration = moment.duration(currState.actualTimeDiff);
 
         let hours = duration.days() * 24 + duration.hours();
 
         let min = duration.minutes();
 
-        let totalChargableTime = hours + ":" + min;
+        let sec = duration.seconds();
+
+        let totalChargableTime = hours + ":" + min + ":" + sec;
 
         let hoursinMin = duration.asMinutes();
 
@@ -74,13 +79,20 @@ export function calculationActualData() {
 
         let grandTotalAmount = totalVisitCost + taxes;
 
+        let estimatedClaim = (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
+
+        let copayAmount = (((grandTotalAmount * ClaimState) / 100)).toFixed(2);
+
         const calculationdata = {
             totalChargableTime: totalChargableTime,
             totalVisitCost: totalVisitCost,
             taxes: taxes,
             grandTotalAmount: grandTotalAmount,
             totalHours: hours,
-            totalMinutes: min
+            totalMinutes: min,
+            totalSeconds: sec,
+            estimatedClaim: estimatedClaim,
+            copayAmount: copayAmount
         }
         dispatch(getCalculationsData(calculationdata));
     }

@@ -78,7 +78,7 @@ class VisitServiceList extends Component {
             return 'btn btn-hired';
         }
         else if (status === VISIT_SERVICE_STATUS_INVITED) {
-            return 'btn btn-outline-primary btn-invited';
+            return 'btn btn-invited';
         }
         else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
             return 'BlockProfileMatching';
@@ -290,7 +290,7 @@ class VisitServiceList extends Component {
                         posted={this.state.posted}
                         toggleclass={this.toggleclass}
                     />
-                    <span className='primaryColor' onClick={this.toggleFilter}>Filters</span>
+                    <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>

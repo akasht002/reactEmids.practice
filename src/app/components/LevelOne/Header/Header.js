@@ -44,11 +44,6 @@ class CoreoWizHeader extends Component {
                     name: "notification",
                     link: "login",
                     status: true,
-                },
-                {
-                    name: "logout",
-                    link: "logout",
-                    status: true,
                 }
             ]
         };
@@ -84,7 +79,7 @@ class CoreoWizHeader extends Component {
                     Separator = "NavIconSeparator"
                 }
                 return (
-                    <NavItem className={menuName + "Widget " + Separator}>
+                    <NavItem className={menuName + "Widget navIconWidget " + Separator}>
                         <NavLink className={clsName}
                             href={menu.link} />
                     </NavItem>
@@ -94,7 +89,7 @@ class CoreoWizHeader extends Component {
         });
 
         return (
-            <Navbar className="navbar-light boxShadowBottom" expand="md">
+            <Navbar className="navbar-light boxShadowBottom bgWhite" expand="md">
                 <NavbarBrand className="text-uppercase px-3"><img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" /></NavbarBrand>
                 <NavbarToggler className={this.state.dBlock} onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>

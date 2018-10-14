@@ -36,7 +36,7 @@ class ConversationSummary extends Component {
         this.props.fetchConversationSummary(1);
         this.props.getUnreadMsgCounts();
         this.props.canServiceProviderCreateMessage();
-        
+
     };
 
 
@@ -81,10 +81,10 @@ class ConversationSummary extends Component {
     };
 
 
-    handlePageChange = (pageNumber) =>{
+    handlePageChange = (pageNumber) => {
         this.props.fetchConversationSummary(pageNumber);
-        this.setState({activePage: pageNumber});
-      }
+        this.setState({ activePage: pageNumber });
+    }
 
     render() {
         let modalContent = <div>
@@ -92,28 +92,32 @@ class ConversationSummary extends Component {
                 You cannot initiate conversation as you have no current service request.
                 </p>
             <p className="text-right m-2">
-                <Link className="btn btn-outline-primary mx-3" to="#" onClick={this.onConfirmCreateConversationPermission}>Ok</Link>
+                <Link className="btn btn-outline-primary mx-3" to="#" onClick={this.onConfirmCreateConversationPermission}>OK</Link>
             </p>
         </div>
         return (
             <AsideScreenCover >
+                <div class="ProfileHeaderWidget">
+                    <div class="ProfileHeaderTitle">
+                        <h5 class="primaryColor m-0">Conversation Summary</h5>
+                    </div>
+                    {this.props.loggedInUser.userType !== USERTYPES.SERVICE_PROVIDER &&
+                        <div class="ProfileHeaderButton">
+                            <span class="btn btn-outline-primary" onClick={this.onSetDisplayParticipantModal}>+ New Conversation</span>
+                        </div>
+                    }
+                </div>
                 <div className="mobile-view-title">
-                <div className="container-fluid p-0">
-                    <div className="width100 mainWidgetProfile">
-                        <div className="container mainProfileContent">
-                            <div className="row d-flex justify-content-center">
-                                <div className="col-md-12 d-flex p-0 my-4 slightTopview">
-                                    <h5 className="font-weight-semi-bold mr-auto pageTitle">Conversation Summary</h5>
-                                    {this.props.loggedInUser.userType !== USERTYPES.SERVICE_PROVIDER && <button
-                                        className="btn btn-primary ml-auto font-size-sm newConversationBtn"
-                                        onClick={this.onSetDisplayParticipantModal}><span class="newConvText">+ New Conversation</span></button>}
-                                </div>
-                                <MessageList
-                                    conversation={this.props.conversation}
-                                    gotoConversations={this.onClickConversation}
-                                    getUnreadMsgCounts={this.props.unreadMsgCounts} />
-                                 <div className="col-md-12 p-0 AsyncConversationPagination">
-                                        {this.props.conversation.length > 0 && 
+                    <div className="container-fluid p-0">
+                        <div className="width100 mainWidgetProfile">
+                            <div className="container mainProfileContent">
+                                <div className="row d-flex justify-content-center">
+                                    <MessageList
+                                        conversation={this.props.conversation}
+                                        gotoConversations={this.onClickConversation}
+                                        getUnreadMsgCounts={this.props.unreadMsgCounts} />
+                                    <div className="col-md-12 p-0 AsyncConversationPagination">
+                                        {this.props.conversation.length > 0 &&
                                             <Pagination
                                                 activePage={this.state.activePage}
                                                 itemsCountPerPage={10}
@@ -128,12 +132,12 @@ class ConversationSummary extends Component {
                                             />
                                         }
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
-                 
+
                 <ParticipantsContainer
                     onRef={ref => (this.participantComponent = ref)}
                     isDisplayParticipantModal={this.state.isDisplayParticipantModal}

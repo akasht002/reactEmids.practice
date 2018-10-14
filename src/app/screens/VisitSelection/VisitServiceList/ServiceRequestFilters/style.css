@@ -207,7 +207,6 @@
 }
 
 .CheckboxSet:hover label:before{
-    background-color: #7a329f;
     border-color: #7a329f;
 }
 
