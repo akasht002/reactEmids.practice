@@ -2,7 +2,8 @@ import { ServiceArea } from './action'
 
 const defaultState = {
   ServiceAreaList: [],
-  getServiceAreaFieldDetails:[]
+  ServiceAreaFieldDetails:{},
+  addServiceAreaSuccess:false
 }
 
 const ServiceAreaState = (state = defaultState, action) => {
@@ -15,11 +16,11 @@ const ServiceAreaState = (state = defaultState, action) => {
       case ServiceArea.getServiceAreaFieldDetails:
       console.log({
         ...state,
-        getServiceAreaFieldDetails: action.data
+        ServiceAreaFieldDetails: action.data
       })
         return {
           ...state,
-          getServiceAreaFieldDetails: action.data
+          ServiceAreaFieldDetails: action.data
         }
 
       case ServiceArea.addServiceAreaSuccess:

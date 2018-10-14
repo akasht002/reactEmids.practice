@@ -9,7 +9,7 @@ export const Details = (props) => {
                   <div className={'width100 d-flex'}>
                     <span className={'AddressContentLabel'}>Street</span>
                     <span className={'SPCertificateDesc'}>
-                      {serviceArea.street}
+                      {serviceArea.streetAddress}
                     </span>
                   </div>
                   <div className={'width100 d-flex'}>
@@ -24,7 +24,7 @@ export const Details = (props) => {
                   </div>
                   <div className={'width100 d-flex'}>
                     <span className={'AddressContentLabel'}>ZIP</span>
-                    <span className={'SPCertificateDesc'}>{serviceArea.zip}</span>
+                    <span className={'SPCertificateDesc'}>{serviceArea.zipCode}</span>
                   </div>
                 </div>
     
@@ -36,7 +36,7 @@ export const Details = (props) => {
                 <i
                   className='SPIconMedium SPIconEdit'
                   id={serviceArea.addressId}
-                  onClick={e => props.editPointService(e)}
+                  onClick={e => props.editServiceArea(e)}
                 />
               </li>
             )

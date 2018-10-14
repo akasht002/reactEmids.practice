@@ -116,6 +116,7 @@ export const API = {
     assignServiceVisit:'ServiceRequest/AssignServiceVisit',
     getServiceArea:'ServiceProvider/GetServiceProviderServiceAreaView/',
     addServiceArea:'ServiceProvider/ServiceProviderServiceArea',
+    editServiceArea: 'ServiceProvider/GetServiceProviderServiceArea/',
     deletServiceArea:'ServiceProvider/InActiveServiceProviderServiceArea/',
     getEntityServiceProviderList: 'ServiceProvider/ByEntity/',
     assignServiceVisit: 'ServiceRequest/AssignServiceVisit',
@@ -123,5 +124,3 @@ export const API = {
     claimsSubmission: 'BenefitProcess/ClaimsSubmission',
     captureAmount:'Account/CardCaputreAmount'
 }
-
-

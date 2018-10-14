@@ -26,14 +26,13 @@ class ServiceArea extends React.Component {
       city: '',
       state_id: '',
       zip: '',
-      serviceAreaId: '',
+      serviceAreaId: 0,
       showModalOnDelete: false,
       isAdd: false,
       isValid: true,
       disabledSaveBtn: true,
       isDiscardModalOpen: false,
       isPrimaryAddress: false,
-
     }
   }
 
@@ -44,14 +43,14 @@ class ServiceArea extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     this.setState({
-      addressType: nextProps.PointServiceFieldDetails.addressTypeId,
-      street: nextProps.PointServiceFieldDetails.street,
-      state_id: nextProps.PointServiceFieldDetails.stateId +
+      //addressType: nextProps.PointServiceFieldDetails.addressTypeId,
+      street: nextProps.ServiceAreaFieldDetails.streetAddress,
+      state_id: nextProps.ServiceAreaFieldDetails.stateId +
         '-' +
-        nextProps.PointServiceFieldDetails.stateName,
-      city: nextProps.PointServiceFieldDetails.city,
-      zip: nextProps.PointServiceFieldDetails.zip,
-      pointServiceId: nextProps.PointServiceFieldDetails.pointServiceId
+        nextProps.ServiceAreaFieldDetails.stateName,
+      city: nextProps.ServiceAreaFieldDetails.city,
+      zip: nextProps.ServiceAreaFieldDetails.zipCode,
+      serviceAreaId: nextProps.ServiceAreaFieldDetails.addressId
     })
   }
 
@@ -102,11 +101,11 @@ class ServiceArea extends React.Component {
       this.state.street === '' ||
       this.state.city === '' ||
       this.state.state_id === '' ||
-      this.state.zip === '' || this.state.zipInvalid) {
+      this.state.zip === '' ) 
       this.setState({
         isValid: false
       })
-    } else {
+  else {
       this.props.addServiceArea(this.state)
       this.reset()
     }
@@ -172,6 +171,7 @@ class ServiceArea extends React.Component {
   }
 
   render() {
+    console.log(this.props.ServiceAreaList)
     authorizePermission(SCREENS.PROFILE);
     let modalContent
     let modalTitle
@@ -381,7 +381,7 @@ class ServiceArea extends React.Component {
           disabled={!this.checkFiledLengths()}
           centered
           onClick={
-            this.state.isAdd ? this.addServiceArea : this.updatePointService
+            this.state.isAdd ? this.addServiceArea : this.updateServiceArea
           }
         />
 
@@ -437,10 +437,10 @@ function mapStateToProps(state) {
   return {
     ServiceAreaList: state.profileState.ServiceAreaState.ServiceAreaList,
     stateDetail: state.profileState.PersonalDetailState.cityDetail,
-    addPointServiceSuccess: state.profileState.PointServiceState
-    .addPointServiceSuccess,
-  PointServiceFieldDetails: state.profileState.PointServiceState
-    .PointServiceFieldDetails,
+    addServiceAreaSuccess: state.profileState.ServiceAreaState
+    .addServiceAreaSuccess,
+    ServiceAreaFieldDetails: state.profileState.ServiceAreaState
+    .ServiceAreaFieldDetails,
   }
 }
 

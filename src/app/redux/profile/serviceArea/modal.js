@@ -13,7 +13,7 @@ export const getModal = (data, action) => {
   switch (action) {
     case ACTION_MODEL.ADD_DATA:
       return {
-        "addressId": 0,
+        "addressId": data.serviceAreaId,
         "serviceProviderId": getUserInfo().serviceProviderId,
         "addressTypeId": 0,
         "streetAddress": data.street,

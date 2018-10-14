@@ -7,12 +7,12 @@ import {getPatientData, isPatientGuardian} from '../../../utils/userUtility';
 
 
 export const ServiceArea = {
-  getServiceAreaSuccess: 'get_ServiceArea_Success/ServiceArea',
-  addServiceAreaSuccess: 'add_ServiceArea_Success/ServiceArea',
+  getServiceAreaSuccess: 'get_ServiceArea_success/ServiceArea',
+   addServiceAreaSuccess: 'add_ServiceArea_success/ServiceArea',
   getServiceAreaFieldDetails: 'get_ServiceArea_Field_Details/ServiceArea',
 }
 
-export const getServiceAreaSuccess = data => {
+export const getServiceAreaSuccess = data => {  
   return {
     type: ServiceArea.getServiceAreaSuccess,
     data
@@ -24,7 +24,7 @@ export const addServiceAreaSuccess = data => {
     data
   }
 }
-export const getServiceAreaFieldDetails = data => {
+export const getServiceAreaFieldDetails = data => { 
   return {
     type: ServiceArea.getServiceAreaFieldDetails,
     data
@@ -67,7 +67,7 @@ export function addServiceArea(data) {
 export function editServiceArea (data){
   return (dispatch) => {   
     dispatch(startLoading())
-    Get(API.getServiceArea + getUserInfo().serviceProviderId +'/'+ data)
+    Get(API.editServiceArea + getUserInfo().serviceProviderId +'/'+ data)
       .then(resp => {
         dispatch(getServiceAreaFieldDetails(resp.data))
         dispatch(endLoading())
@@ -100,7 +100,7 @@ export function updateServiceArea(data) {
 export function deletePointService(data) {
   return (dispatch) => {
     dispatch(startLoading())
-    Delete(API.deletServiceArea )
+    Delete(API.deletServiceArea + getUserInfo().serviceProviderId, data)
       .then(resp => {
         dispatch(getServiceArea())
 
