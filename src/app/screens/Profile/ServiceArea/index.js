@@ -21,12 +21,11 @@ class ServiceArea extends React.Component {
     super(props)
     this.state = {
       serviceAreaModal: false,
-      addressType: '',
       street: '',
       city: '',
       state_id: '',
       zip: '',
-      serviceAreaId: 0,
+      addressId: 0,
       showModalOnDelete: false,
       isAdd: false,
       isValid: true,
@@ -43,26 +42,25 @@ class ServiceArea extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     this.setState({
-      //addressType: nextProps.PointServiceFieldDetails.addressTypeId,
       street: nextProps.ServiceAreaFieldDetails.streetAddress,
       state_id: nextProps.ServiceAreaFieldDetails.stateId +
         '-' +
         nextProps.ServiceAreaFieldDetails.stateName,
       city: nextProps.ServiceAreaFieldDetails.city,
       zip: nextProps.ServiceAreaFieldDetails.zipCode,
-      serviceAreaId: nextProps.ServiceAreaFieldDetails.addressId
+      addressId: nextProps.ServiceAreaFieldDetails.addressId ?
+      nextProps.ServiceAreaFieldDetails.addressId : 0
     })
   }
 
   reset = () => {
     this.setState({
       serviceAreaModal: false,
-      addressType: '',
       street: '',
       state_id: '',
       city: '',
       zip: '',
-      serviceAreaId: '',
+      addressId: 0,
       disabledSaveBtn: true,
       isDiscardModalOpen: false,
       addressTypeInvalid: false,
@@ -114,7 +112,7 @@ class ServiceArea extends React.Component {
   showModalOnDelete = e => {
     this.setState({
       showModalOnDelete: !this.state.showModalOnDelete,
-      addressTypeId: e.target.id
+      addressId: e.target.id
     })
   }
 
@@ -122,7 +120,7 @@ class ServiceArea extends React.Component {
     this.setState({
       serviceAreaModal: true,
       isAdd: false,
-      addressTypeId: e.target.id
+      addressId: e.target.id
 
     })
     this.props.editServiceArea(e.target.id)
@@ -133,7 +131,7 @@ class ServiceArea extends React.Component {
   }
 
   deletePointService = () => {
-    this.props.deletePointService(this.state.addressTypeId)
+    this.props.deletePointService(this.state.addressId)
     this.setState({ showModalOnDelete: !this.state.showModalOnDelete })
   }
 

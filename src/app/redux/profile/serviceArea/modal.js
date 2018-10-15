@@ -7,13 +7,11 @@ export const ACTION_MODEL = {
 }
 
 export const getModal = (data, action) => {
-  console.log(11111111111111)
-  console.log(data)
   let states = getDataValueArray(data.state_id, '-')  
   switch (action) {
     case ACTION_MODEL.ADD_DATA:
       return {
-        "addressId": data.serviceAreaId,
+        "addressId": data.addressId,
         "serviceProviderId": getUserInfo().serviceProviderId,
         "addressTypeId": 0,
         "streetAddress": data.street,
