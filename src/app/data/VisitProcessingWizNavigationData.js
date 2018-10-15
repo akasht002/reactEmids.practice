@@ -5,10 +5,14 @@ export const VisitProcessingNavigationData = [
     },
     {
         id: 1,
-        title: 'Summary',        
+        title: 'Feedback',        
     },
     {
         id: 2,
+        title: 'Summary',        
+    },
+    {
+        id: 3,
         title: 'Payment',        
     }
 ];

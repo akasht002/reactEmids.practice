@@ -77,6 +77,11 @@ class Summary extends Component {
     }
 
     onClickNext = () => {
+        let time = this.state.summaryDetails.originalTotalDuration; 
+        let duration = time.split(':');
+        let seconds = (+duration[0]) * 60 * 60 + (+duration[1]) * 60 + (+duration[2]);
+        let originalTotalDuration = (seconds / 60);
+
         if (this.state.signatureImage) {
             this.saveSignature();
             const data = {
@@ -86,7 +91,7 @@ class Summary extends Component {
                 EstimatedClaim: this.state.summaryDetails.estimatedClaim,
                 OutOfPocketAmount: this.state.summaryDetails.outOfPocketAmount,
                 HourlyRate: this.state.summaryDetails.hourlyRate,
-                OriginalTotalDuration: parseInt(this.state.summaryDetails.originalTotalDuration, 0),
+                OriginalTotalDuration: originalTotalDuration,
                 BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
                 TaxPaid: this.props.CalculationsData.taxes,
                 BilledPerService: this.props.CalculationsData.totalVisitCost,

@@ -16,7 +16,6 @@ class Feedback extends Component {
         this.state = {
             collapse: false,
             isModalOpen: false,
-            rating: '',
             answerList: '',
             textareaValue: '',
             textareaData: ''
@@ -52,10 +51,6 @@ class Feedback extends Component {
         });
     }
 
-    handleSelectedRating = (e) => {
-        this.setState({ rating: e.target.value })
-    }
-
     onClickNext = () => {
         if (this.state.textareaData) {
             this.selectedAnswers.push(this.state.textareaData);
@@ -72,7 +67,6 @@ class Feedback extends Component {
             serviceRequestVisitId: this.props.patientDetails.serviceRequestVisitId,
             serviceRequestId: this.props.patientDetails.serviceRequestId,
             serviceProviderId: this.props.patientDetails.serviceProviderId,
-            rating: this.state.rating,
             answers: this.selectedAnswers
         }
         this.props.saveAnswers(data);
@@ -130,15 +124,7 @@ class Feedback extends Component {
                         </div>
                         <div className='CardContainers ServiceCategoryWidget'>
                             <form className='ServiceContent'>
-                                <div className="FeedbackWidget">
-                                    <div className="FeedbackRating">
-                                        {this.props.patientDetails.patient ?
-                                            <p>Rate {this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</p>
-                                            :
-                                            ''
-                                        }
-                                        <StarRating handleSelectedRating={(e) => this.handleSelectedRating(e)} />
-                                    </div>
+                                <div className="FeedbackWidget mt-4">
                                     {this.props.QuestionsList.length > 0 ?
                                         <div>
                                             {this.props.QuestionsList && this.props.QuestionsList.map((questionList, i) => {
