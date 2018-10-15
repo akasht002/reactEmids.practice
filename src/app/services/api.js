@@ -115,7 +115,9 @@ export const API = {
     assignServiceVisit: 'ServiceRequest/AssignServiceVisit',
     getServiceRequestEligibilityStatus: 'BenefitProcess/CheckEligibility',
     claimsSubmission: 'BenefitProcess/ClaimsSubmission',
-    captureAmount:'Account/CardCaputreAmount'
+    captureAmount:'Account/CardCaputreAmount',
+    servicerequest: 'ServiceRequest/',
+    getFilteredVisitHistory: 'VisitProcessing/ServiceProviderVisit'
 }
 
 
