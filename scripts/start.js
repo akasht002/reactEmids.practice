@@ -4,7 +4,7 @@
 process.env.BABEL_ENV = 'development'
 process.env.NODE_ENV = 'development'
 
-process.env.REACT_APP_API_URL = "http://localhost:65362/api/";
+process.env.REACT_APP_API_URL = "http://localhost:63633/api/";
 
 process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
 
