@@ -1071,7 +1071,7 @@ input.form-control{
 }
 
 .noMessage{
-    /* height: calc(100vh - 350px); */
+    height: calc(100vh - 420px);
     overflow-y: hidden;
 }
 
