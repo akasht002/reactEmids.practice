@@ -96,18 +96,18 @@ export function updateWorkHistory(data) {
         let serviceProviderId = getUserInfo().serviceProviderId;
         let modal = {
             serviceProviderId: serviceProviderId,
-            workHistoryId: data.workHistoryId,
+            workHistoryId: parseInt(data.workHistoryId),
             designation: data.designation,
             company: data.company,
             isActive: "true",
             location: data.location,
             fromDate:data.fromDate,
             toDate:data.toDate,
-            description:data.description
-
+            description:data.description,
+            isWorking:data.isWorking
         };
         dispatch(startLoading());
-        Put(API.WorkHistory + `${serviceProviderId}'/WorkHistory`, modal).then((resp) => {
+        Put(API.WorkHistory + `${serviceProviderId}/WorkHistory`, modal).then((resp) => {
             dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory());
             dispatch(getProfilePercentage());
