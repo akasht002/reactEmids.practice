@@ -10,7 +10,8 @@ import { getPerformTasksList, addPerformedTask, startOrStopService } from '../..
 import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
-import './style.css'
+import {getUTCFormatedDate}  from '../../../../utils/dateUtility';
+import './style.css';
 class PerformTasks extends Component {
 
     constructor(props) {
@@ -166,7 +167,12 @@ class PerformTasks extends Component {
                                         <div className="row rightTimerContainer">
                                             <div className="col-md-7 rightTimerContent">
                                                 <span className="TimerContent">
-                                                    <StopWatch ref={instance => { this.child = instance; }} />
+                                                    {/* <StopWatch ref={instance => { this.child = instance; }} /> */}
+                                                    <StopWatch
+                                                        stopTimer={this.props.PerformTasksList.visitEndTime}
+                                                        startTime={this.props.PerformTasksList.visitStartTime}
+                                                        ref={instance => { this.child = instance; }}
+                                                    />
                                                 </span>
                                             </div>
                                             <div className="col-md-5 rightTimerContent">
@@ -176,7 +182,7 @@ class PerformTasks extends Component {
                                                     <a className="btn btn-primary" onClick={() => { this.startService(stopService, this.state.taskList.serviceRequestVisitId); this.child.handleStopClick(); }}>Stop Service</a>
                                                 }
                                                 {this.state.startedTime ?
-                                                    <span className="TimerStarted">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                                    <span className="TimerStarted">Started at  {getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "HH:MM A")} {this.props.startedTime && this.props.startedTime}</span>
                                                     :
                                                     ''
                                                 }

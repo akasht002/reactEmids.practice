@@ -54,10 +54,17 @@ export const SERVICE_STATUS = {
     "CLOSED": "Closed",
     "INPROGRESS": "InProgress",
     "CANCELLED": "Cancelled",
-    "INPROGRESS": "InProgress",
     "COMPLETED": "Completed",
     "NOT INTERESTED": "Not Interested"
 }
+
+export const SERVICE_VISIT_STATUS = {
+    COMPLETED: 'Completed',
+    SCHEDULED: 'Scheduled',
+    INPROGRESS: 'InProgress',
+    PAYMENTPENDING: 'PaymentPending'
+}
+
 
 export const SCREENS = {
     PROFILE: 'Profile',

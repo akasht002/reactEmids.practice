@@ -53,17 +53,17 @@ const asyncMessageState = (state = defaultState, action) => {
                 ...state,
                 conversationSummary: action.data
             };
-        case AsyncMessageActions.pushConversation:
-            return {
-                ...state,
-                conversation: {
-                    ...state.conversation,
-                    messages: [
-                        ...state.conversation.messages,
-                        action.data
-                    ]
-                }
-            };
+        // case AsyncMessageActions.pushConversation:
+        //     return {
+        //         ...state,
+        //         conversation: {
+        //             ...state.conversation,
+        //             messages: [
+        //                 ...state.conversation.messages,
+        //                 action.data
+        //             ]
+        //         }
+        //     };
         case AsyncMessageActions.setUnreadCountDetails:
             return {
                 ...state,
