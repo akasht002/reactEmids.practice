@@ -41,8 +41,8 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = 'http://52.172.45.185:9002/api/'
   process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/'
   process.env.REACT_APP_TP_URL = 'http://52.172.52.128:9007/api/'
-  process.env.REACT_APP_SIGNALR_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/signalr'
-  process.env.REACT_APP_CARETEAM_URL = 'https://chqa-ct-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_SIGNALR_URL =
+    'https://chqa-vp-ui.coreoflowsandbox.com/signalr'
 } else if (argv.includes('--dev')) {
   process.env.REACT_APP_API_URL = 'http://ch-sp-api.coreoflowsandbox.com:9008/api/'
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/'
@@ -52,7 +52,6 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/'
   process.env.REACT_APP_TP_URL = 'http://52.172.45.185:9002/api/'
   process.env.REACT_APP_SIGNALR_URL = 'http://52.172.45.185:9002/signalr'
-  process.env.REACT_APP_CARETEAM_URL = 'https://chqa-ct-api.coreoflowsandbox.com/api/';
 }
 
 // Ensure environment variables are read.
@@ -134,12 +133,12 @@ choosePort(HOST, DEFAULT_PORT)
       openBrowser(urls.localUrlForBrowser)
     })
 
-      ;['SIGINT', 'SIGTERM'].forEach(function (sig) {
-        process.on(sig, function () {
-          devServer.close()
-          process.exit()
-        })
+    ;['SIGINT', 'SIGTERM'].forEach(function (sig) {
+      process.on(sig, function () {
+        devServer.close()
+        process.exit()
       })
+    })
   })
   .catch(err => {
     if (err && err.message) {

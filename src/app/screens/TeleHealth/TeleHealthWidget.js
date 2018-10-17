@@ -11,6 +11,7 @@ import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
 import {TeleHealthSettings} from '../../constants/config';
 import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
 import './styles.css';
+import _ from 'lodash'
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -64,7 +65,7 @@ class TeleHealthWidget extends Component {
     }
 
     attachTracks(tracks, container) {
-        tracks.forEach(track => {
+        _.forEach(tracks,track => {
             container.appendChild(track.attach());
         });
     }
@@ -76,13 +77,13 @@ class TeleHealthWidget extends Component {
 
     detachTracks = (tracks) => {
         let isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-        tracks.forEach(track => {
+        _.forEach(tracks,track => {
             if (isSafari) {
-                track._attachments.forEach(function (element) {
+                _.forEach(track._attachments, function (element) {
                     element.remove();
                 });
             } else {
-                track.detach().forEach(detachedElement => {
+                _.forEach(track.detach(),detachedElement => {
                     detachedElement.remove();
                 });
             }
@@ -157,7 +158,7 @@ class TeleHealthWidget extends Component {
 
         this.setState({ activeParticipantIdentity: room.localParticipant.identity });
 
-        room.participants.forEach(participant => {
+        _.forEach(room.participants,participant => {
             this.setState({ videoAdded: true });
         });
 
@@ -181,12 +182,12 @@ class TeleHealthWidget extends Component {
 
         room.on('disconnected', () => {
             if (this.state.previewTracks) {
-                this.state.previewTracks.forEach(track => {
+                _.forEach(this.state.previewTracks,track => {
                     track.stop();
                 });
             }
             this.detachParticipantTracks(room.localParticipant);
-            room.participants.forEach(this.detachParticipantTracks);
+            _.forEach(room.participants,this.detachParticipantTracks);
             this.setState({ hasJoinedRoom: false, localMediaAvailable: false });
         });
     }
@@ -205,14 +206,14 @@ class TeleHealthWidget extends Component {
     }
 
     controlAudio = () => {
-        this.state.activeRoom.localParticipant.audioTracks.forEach((audioTrack) => {
+        _.forEach(this.state.activeRoom.localParticipant.audioTracks,(audioTrack) => {
             this.state.isMuteAudio ? audioTrack.enable() : audioTrack.disable();
         });
         this.setState({ isMuteAudio: !this.state.isMuteAudio });
     }
 
     controlVideo = () => {
-        this.state.activeRoom.localParticipant.videoTracks.forEach((videoTrack) => {
+        _.forEach(this.state.activeRoom.localParticipant.videoTracks,(videoTrack) => {
             this.state.isHiddenVideo ? videoTrack.enable() : videoTrack.disable();
         });
         this.setState({ isHiddenVideo: !this.state.isHiddenVideo });
@@ -255,7 +256,7 @@ class TeleHealthWidget extends Component {
         };
 
         let sliderCategory = [];
-        this.state.activeRoom && this.state.activeRoom.participants.forEach((participant) => {
+        this.state.activeRoom && _.forEach(this.state.activeRoom.participants,(participant) => {
             var tracks = Array.from(participant.tracks.values());
             let cat = <div className='TeleHealthParticipants' onClick={() => { this.participantClick(participant) }}>
                 <input id={'Participants' + participant.sid} type='radio' name='Participants' value={participant.sid} />
@@ -267,7 +268,7 @@ class TeleHealthWidget extends Component {
             </div>
             sliderCategory.push(cat);
             setTimeout(() => {
-                tracks.forEach(track => {
+                _.forEach(tracks,track => {
                     this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
                 });
             }, 1000)

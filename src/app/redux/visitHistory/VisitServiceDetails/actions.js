@@ -4,6 +4,7 @@ import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
+import _ from 'lodash';
 
 export const vistServiceHistoryDetails = {
     getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
@@ -48,7 +49,7 @@ export const getServiceCategorySuccess = (data) => {
 }
 
 export const getServiceProviders = (data) => {
-    data.forEach(function(obj) { obj.isChecked = false; });
+    _.forEach(data, function(obj) { obj.isChecked = false; });
     return {
         type: vistServiceHistoryDetails.getAllServiceProviders,
         data
@@ -211,7 +212,7 @@ export function getServiceType(data) {
 }
 
 export const clearServiceProviders = (data) => {
-    data.forEach(function(obj) { obj.isChecked = false; });
+    _.forEach(data, function(obj) { obj.isChecked = false; });
     return {
         type: vistServiceHistoryDetails.clearServiceProviders,
         data

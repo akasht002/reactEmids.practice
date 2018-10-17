@@ -155,8 +155,8 @@ class Organization extends React.PureComponent {
 
   onSubmit = () => {
     if (
-      getLength(this.state.organizationName) === 0 ||
-      getLength(this.state.phoneNumber) === 0
+     this.state.organizationNameInvaild ||
+     this.state.phoneNumberInvalid
     ) {
       this.setState({ isValid: false })
     } else {
@@ -471,40 +471,25 @@ class Organization extends React.PureComponent {
                 type='text'
                 maxlength='100'
                 value={this.state.organizationName}
-                className={
-                  'form-control ' +
-                    (!this.state.isValid &&
-                      !this.state.organizationName &&
-                      'inputFailure')
-                }
-                textChange={e => {
-                  this.setState({ organizationName: e.target.value })
-                  if (
-                    !checkTextNotStartWithNumber(this.state.organizationName)
-                  ) {
-                    this.setState({
-                      organizationNameInvaild: true,
-                      disabledSaveBtn: true
-                    })
-                  } else {
-                    this.setState({
-                      organizationNameInvaild: false,
-                      disabledSaveBtn: false
-                    })
-                  }
+                className={"form-control custome-placeholder " + (this.state.organizationNameInvaild && 'inputFailure')}
+
+                textChange={(e)=>{
+                  this.setState({
+                    organizationName:e.target.value,
+                    organizationNameInvaild: false,
+                    disabledSaveBtn:false
+
+                  })
                 }}
-              />
-              {!this.state.isValid &&
-                !this.state.organizationName &&
-                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter
-                  {' '}
-                  {this.state.organizationName === '' && ' First Name'}
-                </span>}
-              {this.state.organizationNameInvaild &&
-                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter vaild Organization name
-                </span>}
+               onBlur={(e) => {
+                   if (!checkTextNotStartWithNumber(e.target.value)) {
+                       this.setState({organizationNameInvaild: true});
+                   }
+               }}
+           />
+           <small className="text-danger d-block OnboardingAlert">
+               {this.state.organizationNameInvaild && 'Please enter valid organization name'}
+           </small>
             </div>
             <div className='col-md-4'>
               <Input
@@ -513,16 +498,21 @@ class Organization extends React.PureComponent {
                 autoComplete='off'
                 type='text'
                 value={this.state.hourlyRate}
-                maxlength='7'
-                textChange={e => {
-                  const re = /^\d*\.?\d{0,2}$/
-                  if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({
-                      hourlyRate: e.target.value,
-                      disabledSaveBtn: false
-                    })
-                  }
-                }}
+                maxlength='6'
+            textChange={e => {
+              const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+              if (onlyNums.length < 5) {
+                this.setState({ hourlyRate: onlyNums })
+              } else if (onlyNums.length === 5) {
+                const number = onlyNums.replace(
+                  /(\d{3})(\d{2})/,
+                  '$1.$2'
+                )
+                this.setState({ hourlyRate: number,
+                 disabledSaveBtn:false })
+              }
+            }
+          }
                 className='form-control'
               />
             </div>
@@ -686,35 +676,33 @@ class Organization extends React.PureComponent {
                     maxlength='15'
                     type='text'
                     value={this.state.phoneNumber}
-                    className={
-                      'form-control ' +
-                        (!this.state.isValid &&
-                          !this.state.phoneNumber &&
-                          'inputFailure')
-                    }
+                    className={"form-control custome-placeholder " + (this.state.phoneNumberInvalid && 'inputFailure')}
+
                     textChange={e => {
-                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-                      if (onlyNums.length < 10) {
-                        this.setState({ phoneNumber: onlyNums })
-                      } else if (onlyNums.length === 10) {
-                        const number = onlyNums.replace(
-                          /(\d{3})(\d{3})(\d{4})/,
-                          '$1-$2-$3'
-                        )
-                        this.setState({ phoneNumber: number,
-                          phoneNumberInvalid: false,
-                          disabledSaveBtn:false })
-                      }
-                    }
-                  }                    
+                  const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+                  if (onlyNums.length < 10) {
+                    this.setState({ phoneNumber: onlyNums })
+                  } else if (onlyNums.length === 10) {
+                    const number = onlyNums.replace(                             
+                      /(\d{3})(\d{3})(\d{4})/,
+                      '$1-$2-$3'
+                    )
+                    this.setState({ phoneNumber: number,
+                      phoneNumberInvalid: false,
+                      disabledSaveBtn:false })
+                  }
+                }
+              }
+    
+              onBlur={(e) => {
+                if (getLength(e.target.value) < 10 ) {
+                    this.setState({phoneNumberInvalid: true});
+                }
+            }}
                   />
-                  {!this.state.isValid &&
-                    !this.state.phoneNumber &&
-                    <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                      Please enter
-                      {' '}
-                      {this.state.phoneNumber === '' && ' Phone Number'}
-                    </span>}
+                    <small className="text-danger d-block OnboardingAlert">
+                    {this.state.phoneNumberInvalid && 'Please enter valid phone number'}
+                </small>
 
                 </div>
               </div>
@@ -766,7 +754,9 @@ class Organization extends React.PureComponent {
       organizationName: this.props.personalDetail.organization,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber
+      phoneNumber: this.props.personalDetail.phoneNumber,
+      organizationNameInvaild:false,
+      phoneNumberInvalid:false
     })
   }
 }

@@ -22,7 +22,8 @@ import {
   checkTextNotStartWithNumber,
   getArrayLength,
   getLength,
-  checkhourlyRate
+  checkhourlyRate,
+  checkPhoneNumber
 } from '../../../utils/validations'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
@@ -50,6 +51,7 @@ class PersonalDetail extends React.PureComponent {
 
   componentDidMount() {
     this.props.getPersonalDetail()
+    this.props.getAffiliationDetail()
     this.props.getCityDetail()
     this.props.getImage()
     this.props.getGender()
@@ -62,6 +64,7 @@ class PersonalDetail extends React.PureComponent {
       lastName: nextProps.personalDetail.lastName,
       age: nextProps.personalDetail.age,
       genderName: nextProps.personalDetail.genderName,
+      affiliationName:nextProps.personalDetail.affiliationName,
       organization: nextProps.personalDetail.organization,
       yearOfExperience: nextProps.personalDetail.yearOfExperience,
       description: nextProps.personalDetail.description,
@@ -83,6 +86,10 @@ class PersonalDetail extends React.PureComponent {
       selectedGender: {
         label: nextProps.personalDetail.genderName,
         value: nextProps.personalDetail.genderId + '-'+nextProps.personalDetail.genderName
+      },
+      selectedAffiliation: {
+        label: nextProps.personalDetail.affiliationName,
+        value: nextProps.personalDetail.affiliationId + '-'+nextProps.personalDetail.affiliationName
       },
       selectedState: {
         label: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
@@ -160,9 +167,9 @@ class PersonalDetail extends React.PureComponent {
 
   onSubmit = () => {
     if (
-      getLength(this.state.firstName) === 0 ||
-      getLength(this.state.lastName) === 0 ||
-      getLength(this.state.phoneNumber) <10
+     this.state.firstNameInvaild ||
+     this.state.lastNameInvaild ||
+     this.state.phoneNumberInvalid
     ) {
       
       this.setState({ isValid: false})
@@ -184,13 +191,12 @@ class PersonalDetail extends React.PureComponent {
 
   onCroppeds = e => {
     let image = e.image
-    console.log( e.image)
     this.setState({
       croppedImage: image
     })
   }
 
-  render() {
+  render() {    
     let modalContent
     let modalTitle = 'Edit Personal Detials'
     let modalType = ''
@@ -200,11 +206,14 @@ class PersonalDetail extends React.PureComponent {
     const genderDetail = this.props.genderList.map((gender, i) => {
       return {label :  gender.name ,value:gender.id + '-' + gender.name}
     })
+    const affiliationDetail = this.props.affiliationList.map((affiliation, i) => {
+      return {label :  affiliation.name ,value:affiliation.affiliationId + '-' + affiliation.name}
+    })
    
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
-        {this.getModalContent(cityDetail, genderDetail)}
+        {this.getModalContent(cityDetail, genderDetail,affiliationDetail)}
         <BlackoutModal
           isOpen={this.state.uploadImage}
           toggle={this.closeImageUpload}
@@ -251,7 +260,6 @@ class PersonalDetail extends React.PureComponent {
           toggle={this.reset}
           ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)</span>}
           btn1='OK'
-          // btn2='OK'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -346,30 +354,7 @@ class PersonalDetail extends React.PureComponent {
   }
   renderDetails = () => {
     return (
-      <div className='col-md-12 card CardWidget SPDetails'>
-        {/* <div className={'SPDetailsContainer SPdpWidget'}>
-          <div className={'SPdpContainer'}>
-            <svg viewBox='0 0 36 36' className='circular-chart'>
-              <path
-                className='circle'
-                strokeDasharray='80, 100'
-                d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
-              />
-            </svg>
-
-            <img alt ="NO"
-              className={'SPdpImage'}
-              src={
-                this.state.imageProfile
-                  ? this.state.imageProfile
-                  : require('../../../assets/images/Blank_Profile_icon.png')
-              }
-            />
-          </div>
-          <span className={'SPRating'}>
-            <i className={'Icon iconFilledStar'} />4.2
-          </span>
-        </div> */}
+      <div className='col-md-12 card CardWidget SPDetails'>       
         <ProfileImage
           src={
             this.state.imageProfile
@@ -480,7 +465,7 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
-  getModalContent = (stateDetail, genderDetail) => {
+  getModalContent = (stateDetail, genderDetail,affiliationDetail) => {
     return (
       <div className='row'>
         <div className='col-md-12'>
@@ -515,35 +500,27 @@ class PersonalDetail extends React.PureComponent {
                 type='text'
                 maxlength='100'
                 value={this.state.firstName}
-                className={
-                  'form-control ' +
-                  (!this.state.isValid &&
-                    !this.state.firstName &&
-                    'inputFailure')
-                }
+                className={"form-control custome-placeholder " + (this.state.firstNameInvaild && 'inputFailure')}
                 textChange={e => {
-                  this.setState({ firstName: e.target.value })
-                  if (!checkTextNotStartWithNumber(this.state.firstName)) {
                     this.setState({
-                      firstNameInvaild: true,
-                      disabledSaveBtn: true
-                    })
-                  } else {
-                    this.setState({
+                      firstName:e.target.value,
                       firstNameInvaild: false,
                       disabledSaveBtn: false
                     })
+                  }}
+          
+                onBlur={(e)=>{
+                  if(!checkTextNotStartWithNumber(e.target.value)){
+                    this.setState({
+                      firstNameInvaild:true
+                    })
                   }
+
                 }}
               />
-              {this.state.firstName === '' && !this.state.isValid &&
-                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter  the firstName
-                </span>}
-              {this.state.firstNameInvaild  &&
-                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter vaild first name
-                </span>}
+              <small className="text-danger d-block OnboardingAlert">
+                {this.state.firstNameInvaild && 'Please enter valid first name'}
+                </small>
             </div>
             <div className='col-md-6 mb-2'>
               <Input
@@ -553,37 +530,28 @@ class PersonalDetail extends React.PureComponent {
                 type='text'
                 maxlength='100'
                 value={this.state.lastName}
-                className={
-                  'form-control ' +
-                  (!this.state.isValid &&
-                    !this.state.lastName &&
-                    'inputFailure')
-                }
+                className={"form-control custome-placeholder " + (this.state.lastNameInvaild && 'inputFailure')}
                 textChange={e => {
-                  this.setState({ lastName: e.target.value })
-                  if (!checkTextNotStartWithNumber(this.state.lastName)) {
+                  this.setState({
+                    lastName:e.target.value,
+                    lastNameInvaild: false,
+                    disabledSaveBtn: false
+                  })
+                }}
+        
+                onBlur={(e)=>{
+                  if(!checkTextNotStartWithNumber(e.target.value)){
                     this.setState({
-                      lastNameInvaild: true,
-                      disabledSaveBtn: true
-                    })
-                  } else {
-                    this.setState({
-                      lastNameInvaild: false,
-                      disabledSaveBtn: false
+                      lastNameInvaild:true
                     })
                   }
+
                 }}
               />
-              {!this.state.isValid &&
-                !this.state.lastName &&
-                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter {this.state.lastName === '' && ' Last Name'}
-                </span>}
-              {this.state.lastNameInvaild &&
-                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter vaild last name
-                </span>}
-
+            
+                <small className="text-danger d-block OnboardingAlert">
+                {this.state.lastNameInvaild && 'Please enter valid last name'}
+            </small>
             </div>
             <div className='col-md-6 mb-2'>
               <div className='form-group'>
@@ -670,13 +638,13 @@ class PersonalDetail extends React.PureComponent {
         >
           <div className='form-group'>
             <SelectBox
-              options={OrganizationData}
+              options={affiliationDetail}
               simpleValue
               placeholder='Select the Organization'
               onChange={value => {
-                this.setState({ organization: value,disabledSaveBtn: false })
+                this.setState({ selectedAffiliation: value,disabledSaveBtn: false })
               }}
-              selectedValue={this.state.organization}
+              selectedValue={this.state.selectedAffiliation}
               className={'inputFailure'}
             />
           </div>
@@ -703,12 +671,21 @@ class PersonalDetail extends React.PureComponent {
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
-            maxlength='7'
+            maxlength='6'
             textChange={e => {
-              if (e.target.value === '' || checkhourlyRate(e.target.value)) {
-                this.setState({ hourlyRate: e.target.value,disabledSaveBtn: false })
+              const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+              if (onlyNums.length < 5) {
+                this.setState({ hourlyRate: onlyNums })
+              } else if (onlyNums.length === 5) {
+                const number = onlyNums.replace(
+                  /(\d{3})(\d{2})/,
+                  '$1.$2'
+                )
+                this.setState({ hourlyRate: number,
+                 disabledSaveBtn:false })
               }
-            }}
+            }
+          }
             className='form-control'
           />
         </div>
@@ -818,50 +795,35 @@ class PersonalDetail extends React.PureComponent {
                     name='PhoneNumber'
                     label='Phone Number'
                     autoComplete='off'
-                    maxlength='15'
+                    maxlength='10'
                     type='text'
                     value={this.state.phoneNumber}
-                    className={
-                      'form-control ' +
-                      (!this.state.isValid &&
-                        !this.state.phoneNumber &&
-                        'inputFailure')
-                    }
-                    textChange={e =>
-                    //    {
-                    //   const re = /^[0-9\b]+$/
-                    //   if (
-                    //     (e.target.value === '' || re.test(e.target.value)) &&
-                    //     getLength(e.target.value) <= 10
-                    //   ) {
-                    //     this.setState({ phoneNumber: e.target.value })
-                    //   }
-                    // }
-                    {
-                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+                    className={"form-control custome-placeholder " + (this.state.phoneNumberInvalid && 'inputFailure')}
+
+                    textChange={e =>{
+                    const onlyNums = e.target.value.replace(/[^0-9]/g, '')
                       if (onlyNums.length < 10) {
-                        this.setState({ phoneNumber: onlyNums,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10),disabledSaveBtn: false })
+                        this.setState({ phoneNumber: onlyNums })
                       } else if (onlyNums.length === 10) {
                         const number = onlyNums.replace(
                           /(\d{3})(\d{3})(\d{4})/,
                           '$1-$2-$3'
                         )
-                        this.setState({ phoneNumber: number ,isValidPhoneNumber:(getArrayLength(this.state.phoneNumber)<10),disabledSaveBtn: false})
+                        this.setState({ phoneNumber: number,
+                          phoneNumberInvalid: false,
+                          disabledSaveBtn:false })
                       }
                     }
                   }
-                  />
-                  {!this.state.isValid &&
-                    !getLength(this.state.phoneNumber) >10 &&
-                    <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                      Please enter
-                      {' '}
-                      {this.state.phoneNumber === '' && ' Phone Number'}
-                    </span>}  
-                    {!this.state.isValidPhoneNumber &&
-                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                  Please enter vaild last name
-                </span>}                 
+                  onBlur={(e) => {
+                    if (getLength(e.target.value) < 10 ) {
+                        this.setState({phoneNumberInvalid: true});
+                    }
+                }}
+                      />
+                        <small className="text-danger d-block OnboardingAlert">
+                        {this.state.phoneNumberInvalid && 'Please enter valid phone number'}
+                    </small>
                 </div>
               </div>
             </div>
@@ -918,7 +880,10 @@ class PersonalDetail extends React.PureComponent {
       yearOfExperience: this.props.personalDetail.yearOfExperience,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber
+      phoneNumber: this.props.personalDetail.phoneNumber,
+      firstNameInvaild:false,
+      lastNameInvaild:false,
+      phoneNumberInvalid:false
     })
   }
 }
@@ -926,6 +891,7 @@ class PersonalDetail extends React.PureComponent {
 function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
+    getAffiliationDetail:()=>dispatch(action.getAffiliationDetail()),
     updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
     getCityDetail: () => dispatch(action.getCityDetail()),
     uploadImg: data => dispatch(action.uploadImg(data)),
@@ -942,6 +908,7 @@ function mapStateToProps(state) {
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
     profileImgData: state.profileState.PersonalDetailState.imageData,
     genderList: state.profileState.PersonalDetailState.genderList,
+    affiliationList:state.profileState.PersonalDetailState.affiliationList,
     isLoading:state.loadingState.isLoading
   }
 }

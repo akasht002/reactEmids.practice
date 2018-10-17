@@ -108,6 +108,7 @@ export function updateWorkHistory(data) {
         };
         dispatch(startLoading());
         Put(API.WorkHistory + `${serviceProviderId}'/WorkHistory`, modal).then((resp) => {
+
             dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory());
             dispatch(getProfilePercentage());
