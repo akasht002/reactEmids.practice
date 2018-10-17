@@ -191,7 +191,6 @@ class PersonalDetail extends React.PureComponent {
 
   onCroppeds = e => {
     let image = e.image
-    console.log( e.image)
     this.setState({
       croppedImage: image
     })
@@ -261,7 +260,6 @@ class PersonalDetail extends React.PureComponent {
           toggle={this.reset}
           ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)</span>}
           btn1='OK'
-          // btn2='OK'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -356,30 +354,7 @@ class PersonalDetail extends React.PureComponent {
   }
   renderDetails = () => {
     return (
-      <div className='col-md-12 card CardWidget SPDetails'>
-        {/* <div className={'SPDetailsContainer SPdpWidget'}>
-          <div className={'SPdpContainer'}>
-            <svg viewBox='0 0 36 36' className='circular-chart'>
-              <path
-                className='circle'
-                strokeDasharray='80, 100'
-                d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
-              />
-            </svg>
-
-            <img alt ="NO"
-              className={'SPdpImage'}
-              src={
-                this.state.imageProfile
-                  ? this.state.imageProfile
-                  : require('../../../assets/images/Blank_Profile_icon.png')
-              }
-            />
-          </div>
-          <span className={'SPRating'}>
-            <i className={'Icon iconFilledStar'} />4.2
-          </span>
-        </div> */}
+      <div className='col-md-12 card CardWidget SPDetails'>       
         <ProfileImage
           src={
             this.state.imageProfile

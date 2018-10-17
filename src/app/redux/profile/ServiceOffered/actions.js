@@ -29,7 +29,10 @@ export function getServiceOffered() {
     dispatch(startLoading())
     Get(API.getServiceOffered + serviceProviderId + '/Offer/Selected')
       .then(resp => {
-        dispatch(getServicesOfferedSuccess(resp.data))
+        if(resp.data) {
+          resp.data[0].isOpen = true;
+        }
+        dispatch(getServicesOfferedSuccess(resp.data));
         dispatch(endLoading())
       })
       .catch(err => {
@@ -81,6 +84,9 @@ export function editServiceOffered(data) {
     dispatch(startLoading())
     Get(API.editServiceOffered + serviceProviderId + '/Offer')
       .then(resp => {
+        if(resp.data) {
+          resp.data[0].isOpen = true;
+        }
         dispatch(getServiceOfferedDetails(resp.data))
         dispatch(endLoading())
       })
@@ -104,7 +110,6 @@ export function toggleCollapseCategory(data) {
     dispatch(getServicesOfferedSuccess(serviceOfferedDetailsModified));
   }
 }
-
 
 export function toggleCollapseDetails(data) {
   return (dispatch, getState) => {

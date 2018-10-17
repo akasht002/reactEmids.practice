@@ -145,9 +145,22 @@
 }
 
 .dateRow input:checked+label{
-    border: 1px solid #7a329f;
+    border: 1px solid rgba(0,0,0,0);
     color: #7a329f;
+    background-color: #FAF4FF;
 }
+
+.dateRow.toDay input:checked+label{
+    border: 1px solid #7a329f;
+    background-color: #ffffff;
+}
+
+.datePalette .dateRow input:checked+label 
+{
+    background: #7a329f;
+    color: #fff;
+}
+
 
 .ProfileCalendarCaret{
     display: block;
@@ -198,6 +211,11 @@
 .ProfileServicesVisitList .NoInformationServiceProvider .NoSRText{
     font-size: 16px;
     margin-top: 20px;
+}
+
+.NoInformationServiceProvider span img{
+    height: 40px;
+    width: 40px;
 }
 
 .NoRequestServiceProvider{
@@ -543,7 +561,6 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
 }
 
 .ProfileCardBody .ServiceRequestPalette{
-    height: 180px;
     padding: 0;
 }
 
@@ -631,6 +648,15 @@ div.ProfileConversation{
     width: 100%;
     display: flex;
     display: -moz-flex;
+    transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -webkit-transition: all linear .2s;
+}
+
+.myConversationContainer .myConversationContent:hover{
+    cursor: pointer;
+    background-color: #f9f8f8;
 }
 
 .myConversationContent .avatarWidget{

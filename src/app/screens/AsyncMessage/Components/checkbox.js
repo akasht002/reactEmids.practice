@@ -16,7 +16,7 @@ class CheckBox extends Component {
                         onChange={this.props.onCheckParticipant.bind(this, this.props.participant)} />
 
                     <div className={"avatarContainer"}>
-                        <img alt="" src={require("../../../assets/images/Blank_Profile_icon.png")}
+                        <img alt="i" src={this.props.participant.thumbNail ? this.props.participant.thumbNail : require("../../../assets/images/Blank_Profile_icon.png")}
                             className="avatarImage" />
                         <div className={"memberType memT-"+ this.props.participant.participantType }>{this.props.participant.participantType}</div>
                     </div>
