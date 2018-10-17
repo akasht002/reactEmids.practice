@@ -103,7 +103,6 @@ export function deletePointService(data) {
     Delete(API.deletServiceArea + getUserInfo().serviceProviderId, data)
       .then(resp => {
         dispatch(getServiceArea())
-
         dispatch(endLoading())
       })
       .catch(err => {

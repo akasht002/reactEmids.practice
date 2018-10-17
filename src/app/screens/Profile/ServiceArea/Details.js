@@ -26,6 +26,10 @@ export const Details = (props) => {
                     <span className={'AddressContentLabel'}>ZIP</span>
                     <span className={'SPCertificateDesc'}>{serviceArea.zipCode}</span>
                   </div>
+                  <div className={'width100 d-flex'}>
+                    <span className={'AddressContentLabel'}>Range</span>
+                    <span className={'SPCertificateDesc'}>{serviceArea.coverageArea}</span>
+                  </div>
                 </div>
     
                 <i

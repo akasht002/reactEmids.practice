@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {
@@ -7,16 +7,15 @@ import {
   ModalPopup,
   SelectBox
 } from '../../../components'
-import { compare } from '../../../utils/comparerUtility'
 import { getCityDetail } from '../../../redux/profile/PersonalDetail/actions'
 import * as action from '../../../redux/profile/serviceArea/action'
 import { getLength } from '../../../utils/validations'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { authorizePermission } from '../../../utils/roleUtility';
-import {Details} from './Details'
+import { Details } from './Details'
 import './style.css'
 
-class ServiceArea extends React.Component {
+class ServiceArea extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,7 +30,7 @@ class ServiceArea extends React.Component {
       isValid: true,
       disabledSaveBtn: true,
       isDiscardModalOpen: false,
-      isPrimaryAddress: false,
+      count: 0,
     }
   }
 
@@ -40,13 +39,14 @@ class ServiceArea extends React.Component {
     this.props.getCityDetail()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       street: nextProps.ServiceAreaFieldDetails.streetAddress,
       state_id: nextProps.ServiceAreaFieldDetails.stateId +
         '-' +
         nextProps.ServiceAreaFieldDetails.stateName,
       city: nextProps.ServiceAreaFieldDetails.city,
+      //count:nextProps.ServiceAreaFieldDetails.coverageArea,
       zip: nextProps.ServiceAreaFieldDetails.zipCode,
       addressId: nextProps.ServiceAreaFieldDetails.addressId ?
       nextProps.ServiceAreaFieldDetails.addressId : 0
@@ -60,10 +60,10 @@ class ServiceArea extends React.Component {
       state_id: '',
       city: '',
       zip: '',
+      count:'',
       addressId: 0,
       disabledSaveBtn: true,
       isDiscardModalOpen: false,
-      addressTypeInvalid: false,
       streetInvalid: false,
       cityInvalid: false,
       state_idInvalid: false,
@@ -99,11 +99,11 @@ class ServiceArea extends React.Component {
       this.state.street === '' ||
       this.state.city === '' ||
       this.state.state_id === '' ||
-      this.state.zip === '' ) 
+      this.state.zip === '')
       this.setState({
         isValid: false
       })
-  else {
+    else {
       this.props.addServiceArea(this.state)
       this.reset()
     }
@@ -117,10 +117,11 @@ class ServiceArea extends React.Component {
   }
 
   editServiceArea = e => {
-    this.setState({
+      this.setState({
       serviceAreaModal: true,
       isAdd: false,
-      addressId: e.target.id
+      addressId: e.target.id,
+
 
     })
     this.props.editServiceArea(e.target.id)
@@ -145,12 +146,24 @@ class ServiceArea extends React.Component {
       })
     }
   }
-  HandleIncreDecre(IncDec) {
-    let IncreDecre = this.state.IncreDecreVal;
-    if (IncDec === 'I') { IncreDecre++ } else if (IncDec === 'D') { IncreDecre-- }
-    if (IncreDecre < this.state.LowRange) { IncreDecre = this.state.LowRange }
-    else if (IncreDecre > this.state.HighRange) { IncreDecre = this.state.HighRange }
-    this.setState({ IncreDecreVal: IncreDecre });
+
+  onClickHandleIncr = () => {
+   
+    if (this.state.count >= 0) {
+      this.setState({
+        count: this.state.count + 1
+      })
+    }
+   
+  }
+
+
+  onClickHandleDecr = () => {
+    if (this.state.count > 0) {
+      this.setState({
+        count: this.state.count - 1
+      })
+    }
   }
 
   checkLength = (value) => {
@@ -164,12 +177,10 @@ class ServiceArea extends React.Component {
       state_idValidation = this.checkLength(state_id),
       streetValidation = this.checkLength(street),
       zipValidation = this.checkLength(zip)
-
     return cityValidation && state_idValidation && streetValidation && zipValidation
   }
 
   render() {
-    console.log(this.props.ServiceAreaList)
     authorizePermission(SCREENS.PROFILE);
     let modalContent
     let modalTitle
@@ -191,15 +202,12 @@ class ServiceArea extends React.Component {
               type='text'
               placeholder=''
               className={"form-control custome-placeholder " + (this.state.streetInvalid && 'inputFailure')}
-
               value={this.state.street}
               maxlength={'500'}
               textChange={e =>
                 this.setState({
                   street: e.target.value,
                   streetInvalid: false
-
-
                 })}
               onBlur={(e) => {
                 if (e.target.value === '') {
@@ -207,10 +215,8 @@ class ServiceArea extends React.Component {
                     streetInvalid: true
                   })
                 }
-
               }}
             />
-
             <small className="text-danger d-block OnboardingAlert">
               {this.state.streetInvalid && 'Please enter street'}
             </small>
@@ -223,15 +229,12 @@ class ServiceArea extends React.Component {
               type='text'
               placeholder=''
               className={"form-control custome-placeholder " + (this.state.cityInvalid && 'inputFailure')}
-
               value={this.state.city}
               maxlength={'500'}
               textChange={e =>
                 this.setState({
                   city: e.target.value,
                   cityInvalid: false
-
-
                 })}
               onBlur={(e) => {
                 if (e.target.value === '') {
@@ -239,7 +242,6 @@ class ServiceArea extends React.Component {
                     cityInvalid: true
                   })
                 }
-
               }}
             />
             <small className="text-danger d-block OnboardingAlert">
@@ -257,11 +259,9 @@ class ServiceArea extends React.Component {
                   this.setState({
                     state_id: value,
                     stateInvalid: false
-
                   })
                 }}
                 selectedValue={this.state.state_id}
-
                 onBlur={(e) => {
                   if (e.target.value === '') {
                     this.setState({
@@ -280,48 +280,41 @@ class ServiceArea extends React.Component {
               name='zip'
               label='Zip'
               className={"form-control custome-placeholder " + (this.state.zipInvalid && 'inputFailure')}
-
               autoComplete='off'
               type='text'
               placeholder=''
-
               value={this.state.zip}
               textChange={this.textChangeValue}
-
               onBlur={(e) => {
                 if (getLength(e.target.value) < 5) {
                   this.setState({
                     zipInvalid: true
                   })
                 }
-
               }}
             />
             <small className="text-danger d-block OnboardingAlert">
               {this.state.zipInvalid && 'Please enter zip code'}
             </small>
           </div>
-
           <div className='col-md-6'>
             <div className="form-group">
               <label className="m-0">Range (in miles)</label>
               <div className='InputInDeWidget'>
                 <span className='IncreDecreBTN'
-                  onClick={this.HandleIncreDecre.bind(this, 'D')}>-</span>
-                <input className="form-control" placeholder='4'
-                  value={this.state.IncreDecreVal} />
+                  onClick={this.onClickHandleIncr}>+</span>
+                <input className="form-control" placeholder='0'
+                  value={this.state.count} />
                 <span className='IncreDecreBTN'
-                  onClick={this.HandleIncreDecre.bind(this, 'I')}>+</span>
+                  onClick={this.onClickHandleDecr}>-</span>
               </div>
             </div>
           </div>
         </div>
       </form>
     )
-
     const ServiceAreaList = <Details ServiceAreaList={this.props.ServiceAreaList}
-    editServiceArea={this.editServiceArea} showModalOnDelete={this.showModalOnDelete}/>
-    
+      editServiceArea={this.editServiceArea} showModalOnDelete={this.showModalOnDelete} />
     if (this.state.serviceAreaModal) {
       if (this.state.isAdd) {
         modalTitle = 'Add Service Area'
@@ -330,7 +323,6 @@ class ServiceArea extends React.Component {
       }
       modalContent = serviceAreaModalContent
     }
-
     return (
       <div className='col-md-12 card CardWidget SPCertificate'>
         <div className='SPCardTitle d-flex'>
@@ -382,7 +374,6 @@ class ServiceArea extends React.Component {
             this.state.isAdd ? this.addServiceArea : this.updateServiceArea
           }
         />
-
         <ModalPopup
           isOpen={this.state.isDiscardModalOpen}
           toggle={this.reset}
@@ -436,9 +427,9 @@ function mapStateToProps(state) {
     ServiceAreaList: state.profileState.ServiceAreaState.ServiceAreaList,
     stateDetail: state.profileState.PersonalDetailState.cityDetail,
     addServiceAreaSuccess: state.profileState.ServiceAreaState
-    .addServiceAreaSuccess,
+      .addServiceAreaSuccess,
     ServiceAreaFieldDetails: state.profileState.ServiceAreaState
-    .ServiceAreaFieldDetails,
+      .ServiceAreaFieldDetails,
   }
 }
 
