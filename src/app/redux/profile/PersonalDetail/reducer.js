@@ -5,36 +5,43 @@ const defaultState = {
   updatePersonalDetailSuccess: false,
   cityDetail: [],
   imageData: '',
-  genderList:[]
+  genderList:[],
+  affiliationList:[]
 }
 
 const PersonalDetailState = (state = defaultState, action) => {
   switch (action.type) {
-    case PersonalDetails.GET_PERSONAL_DETAIL_SUCCESS:
+    case PersonalDetails.get_personal_detail_success:
       return {
         ...state,
         personalDetail: action.data
       }
 
-      case PersonalDetails.GET_GENDER_SUCCESS:
+      case PersonalDetails.get_gender_success:
       return {
         ...state,
         genderList: action.data
       }
 
-    case PersonalDetails.UPDATE_PERSONAL_DETAIL_SUCCESS:
+      case PersonalDetails.get_affiliation_detail_success:
+      return {
+        ...state,
+        affiliationList: action.data
+      }
+
+    case PersonalDetails.update_personal_detail_success:
       return {
         ...state,
         updatePersonalDetailSuccess: action.isSuccess
       }
 
-    case PersonalDetails.GET_CITY_SUCCESS:
+    case PersonalDetails.get_city_success:
       return {
         ...state,
         cityDetail: action.data
       }
 
-    case PersonalDetails.UPLOAD_IMG_SUCCESS:
+    case PersonalDetails.upload_img_success:
       return {
         ...state,
         imageData: action.data
