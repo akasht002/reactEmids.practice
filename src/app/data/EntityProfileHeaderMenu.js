@@ -1,25 +1,25 @@
-export const ProfileHeaderMenu = [
+export const EntityProfileHeaderMenu = [
     {
         name: "contact",
         link: "contact",
         status: true,
-        id: 2
+        id: 1
     },
     {
         name: "videoChat",
         link: 'telehealth',
         status: true,
-        id: 3
+        id: 2
     },
     {
         name: "messages",
         status: true,
-        id: 4,
+        id: 3,
         link:'messagesummary'
     },
     {
         name: "notification",
         status: true,
-        id: 5
-    },
+        id: 4
+    }
 ];

@@ -12,7 +12,8 @@ import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
   updateServiceRequestByServiceProvider,
-  cancelServiceRequestByServiceProvider
+  cancelServiceRequestByServiceProvider,
+  getVisitServiceEligibilityStatus
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
   getPerformTasksList
@@ -23,6 +24,7 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 import { MORNING, AFTERNOON, EVENING } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
+import { ELIBILITY_STATUS } from '../../../constants/constants'
 
 class VisitServiceDetails extends Component {
 
@@ -59,6 +61,15 @@ class VisitServiceDetails extends Component {
       patientId: nextProps.VisitServiceDetails.patient &&
         nextProps.VisitServiceDetails.patientId
     })
+  }
+
+  checkEligibility = () => {
+    const data = {
+      "patientId": this.state.patientId,
+      "serviceRequestId": this.props.ServiceRequestId,
+      "serviceProviderId": this.state.visitServiceDetails.serviceProviderId
+    }
+    this.props.getVisitServiceEligibilityStatus(data)
   }
 
   visitService = () => {
@@ -216,8 +227,18 @@ class VisitServiceDetails extends Component {
         return obj.isPrimaryAddress === true
       })
 
-    console.log(address)
-
+    let eligibilityComponent = Object.keys(ELIBILITY_STATUS).map(item => (
+      <li class="list-group-item EligibilityList">
+        <div className="EligibilityStatus">
+          {ELIBILITY_STATUS[item]}
+        </div>
+        <div className="EligibilityItem">
+          {this.props.VisitServiceElibilityStatus[item] === false ? 'false' :
+            this.props.VisitServiceElibilityStatus[item] === true ?
+              'true' : this.props.VisitServiceElibilityStatus[item]}
+        </div>
+      </li>
+    ))
 
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -262,11 +283,18 @@ class VisitServiceDetails extends Component {
                 </div>
                 <div class='LeftPostedBy'>
                   <div class='PostedByImageContainer'>
-                    <img
-                      className='ProfileImage'
-                      src={this.state.visitServiceDetails.image}
-                      alt='patientImage'
-                    />
+                  {
+                    this.state.visitServiceDetails.image ?  <img
+                        className='ProfileImage'
+                        src={this.state.visitServiceDetails.image}
+                        alt='patientImage'
+                       /> :  <img
+                          className='ProfileImage'
+                          src={'../../../assets/images/Blank_Profile_icon.png'}
+                          alt='patientImage'
+                        />
+                  }
+                   
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileDetailsName'>
                         {this.state.visitServiceDetails.patientFirstName}
@@ -332,10 +360,24 @@ class VisitServiceDetails extends Component {
                           active: this.state.activeTab === '2'
                         })}
                         onClick={() => {
-                          this.toggle('2')
+                          this.toggle('2'),
+                          this.checkEligibility();
                         }}
                       >
                         Schedule
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeTab === '3'
+                        })}
+                        onClick={() => {
+                          this.toggle('3'),
+                          this.checkEligibility();
+                        }}
+                      >
+                        Eligibility Status
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -519,6 +561,13 @@ class VisitServiceDetails extends Component {
                           )
                         })}
                     </TabPane>
+                    <TabPane tabId='3' className='TabBody'>
+                      <div className='ScheduleTableHeader EligibilityWidget'>
+                        <ul class="list-group width100">
+                          {eligibilityComponent}
+                        </ul>
+                      </div>
+                    </TabPane>
                   </TabContent>
                 </div>
               </section>
@@ -559,7 +608,10 @@ function mapDispatchToProps(dispatch) {
     updateServiceRequestByServiceProvider: data =>
       dispatch(updateServiceRequestByServiceProvider(data)),
     cancelServiceRequestByServiceProvider: data =>
-      dispatch(cancelServiceRequestByServiceProvider(data))
+      dispatch(cancelServiceRequestByServiceProvider(data)),
+    getVisitServiceEligibilityStatus: data =>
+      dispatch(getVisitServiceEligibilityStatus(data))
+
   }
 }
 
@@ -570,7 +622,9 @@ function mapStateToProps(state) {
     VisitServiceSchedule: state.visitSelectionState.VisitServiceDetailsState
       .VisitServiceSchedule,
     ServiceRequestId: state.visitSelectionState.VisitServiceDetailsState
-      .ServiceRequestId
+      .ServiceRequestId,
+    VisitServiceElibilityStatus: state.visitSelectionState.VisitServiceDetailsState
+      .VisitServiceElibilityStatus
   }
 }
 

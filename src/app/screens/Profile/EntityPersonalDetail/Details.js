@@ -5,6 +5,7 @@ import 'react-image-crop/dist/ReactCrop.css'
 import 'react-image-crop/lib/ReactCrop.scss'
 import { ProfileImage } from '../../../components'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants'
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 export const Details = props => {
   return (
@@ -71,6 +72,7 @@ export const Details = props => {
             props.personalDetail.description !== ''
             ? props.personalDetail.description
             : <span
+              name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
               className={'SPDescriptionNone'}
               onClick={props.togglePersonalDetails}
               >
@@ -121,6 +123,7 @@ export const Details = props => {
         </div>
       </div>
       <i
+        name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
         className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
         onClick={props.togglePersonalDetails}
       />

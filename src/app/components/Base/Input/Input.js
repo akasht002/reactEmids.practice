@@ -4,6 +4,7 @@ class Input extends React.Component {
     render() {
         return(<div className="form-group">
             <label className="m-0" htmlFor={this.props.name}>{this.props.label}</label>
+            <span className={this.props.PhoneInput}>
             <input 
                 id={this.props.name}
                 autoComplete={this.props.autoComplete}
@@ -20,6 +21,7 @@ class Input extends React.Component {
                 onCopy={this.props.onCopy}
                 onPaste={this.props.onPaste}
             />
+            </span>
                 <small id={this.props.name+"Help"} className={"form-text text-muted " + this.props.iconStyle}>{this.props.help}</small>
         </div>
         );

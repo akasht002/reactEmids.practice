@@ -8,6 +8,7 @@ export const messageURL = process.env.REACT_APP_MSG_URL
 export const elasticSearchURL = process.env.REACT_APP_ES_URL;
 export const thirdPartyURL = process.env.REACT_APP_TP_URL;
 export const asyncURL = process.env.REACT_APP_MSG_URL;
+export const careTeamURL = process.env.REACT_APP_CARETEAM_URL;
 
 export const AuthLogin = (url, data) => {
     var bodyFormData = new FormData()
@@ -71,27 +72,27 @@ export const Delete = url => {
 }
 
 export const AsyncGet = (url) => {
-  return axios.get(asyncURL + url, getHeader()).then((resp) => {
-      return resp;
-  }).catch((error) => {
-      handleError(error);
-  })
+    return axios.get(asyncURL + url, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
 };
 
 export const AsyncPutWithUrl = (url) => {
-  return axios.put(asyncURL + url, getHeader()).then((resp) => {
-      return resp;
-  }).catch((error) => {
-      handleError(error);
-  })
+    return axios.put(asyncURL + url, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
 };
 
 export const AsyncPost = (url, data) => {
-  return axios.post(asyncURL + url, data, getHeader()).then((resp) => {
-      return resp;
-  }).catch((error) => {
-      handleError(error);
-  })
+    return axios.post(asyncURL + url, data, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
 };
 
 export const ServiceRequestGet = url => {
@@ -213,37 +214,49 @@ export const getHeader = () => {
 
 
 export const getUserInfo = () => {
-  let userState = store && store.getState().authState.userState;
-  return userState && userState.userData && userState.userData.userInfo;
+    let userState = store && store.getState().authState.userState;
+    return userState && userState.userData && userState.userData.userInfo;
 }
 
 export const ThirdPartyGet = url => {
-  return axios
-    .get(thirdPartyURL + url, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .get(thirdPartyURL + url, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const ThirdPartyPost = (url, data) => {
-  return axios
-    .post(thirdPartyURL + url, data, getHeader())
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      handleError(error)
-    })
+    return axios
+        .post(thirdPartyURL + url, data, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
+
+export const ThirdPartyPut = (url, data) => {
+    return axios
+        .put(thirdPartyURL + url, data, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
+}
+
 export const elasticSearchGet = (url) => {
-  return axios.get(elasticSearchURL + url, getHeader()).then((resp) => {
-      return resp;
-  }).catch((error) => {
-      handleError(error);
-  })
+    return axios.get(elasticSearchURL + url, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
 }
 
 export const AsyncPut = (url, data) => {
@@ -253,3 +266,11 @@ export const AsyncPut = (url, data) => {
         handleError(error);
     })
 };
+
+export const CareTeamGet = (url) => {
+    return axios.get(careTeamURL + url, getHeader()).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
+}

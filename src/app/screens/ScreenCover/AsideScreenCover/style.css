@@ -1,11 +1,11 @@
 
 section .ProfileRightWidget {
-    width: calc(100% - 180px);
+    width: calc(100% - 170px);
     padding: 0;
 }
 
 .hiddenScreen {
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, .4);
@@ -17,7 +17,7 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    height: calc(100% - 60px);
+    height: calc(100% - 60px) !important;
 }
 
 .hiddenScreen, .ProfileLeftWidget {
@@ -36,7 +36,7 @@ section .ProfileRightWidget {
 .ProfileLeftWidget{
     position: relative;
     height: 100vh;
-    width: 180px;
+    width: 170px;
     background-image: linear-gradient(to top, #67307f, #3b1a53);
 }
 

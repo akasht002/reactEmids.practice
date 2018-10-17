@@ -5,11 +5,12 @@ import { Scrollbars } from '../../components'
 import ServiceCalendar from './serviceCalendar'
 import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
-import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
+import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
-
+import { getUserInfo } from '../../services/http'
 import './dashboard.css'
 import './styles/toggleSwitch.css'
+import './EntitySP/EntitySPDashboard.css';
 
 class Dashboard extends React.Component {
   constructor (props) {
@@ -31,8 +32,13 @@ class Dashboard extends React.Component {
     this.setState({isChecked: !this.state.isChecked});
     this.props.updateStandByMode(this.state.isChecked)
   }
+  
+  render() {
 
-  render () {
+    let entityUser = getUserInfo().isEntityServiceProvider;
+
+    let serviceRequestTemplate = entityUser ? "" :
+      <div className='innerWidget'><ServiceRequest /></div>;
     return (
       <AsideScreenCover
         isOpen={this.state.isOpen}
@@ -61,9 +67,7 @@ class Dashboard extends React.Component {
             <ServiceCalendar />
           </div>
           <div className='ProfileContainer bottomProfile'>
-            <div className='innerWidget'>
-              <ServiceRequest />
-            </div>
+            {serviceRequestTemplate}
             <div className='innerWidget'>
               <MyConversation />
             </div>
@@ -79,12 +83,8 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-   
-  }
-}
+
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+  connect(null, mapDispatchToProps)(Dashboard)
 )
 

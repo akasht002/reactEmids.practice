@@ -57,11 +57,11 @@ export function addPerformedTask(data) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
-            dispatch(push(Path.feedback))
+            dispatch(push(Path.summary))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
-            dispatch(push(Path.feedback))
+            dispatch(push(Path.summary))
         })
     }
 };

@@ -185,7 +185,9 @@ export const ServiceCalendarDefault = props => {
 export const ServiceRequestDefault = () => {
   return (
     <div className='NoInformationServiceProvider'>
-      <span><i className='SPNoSRDashboard' /></span>
+      <span>
+        <img src={require("../../assets/images/NoServiceRequest.svg")}/>
+      </span>
       <span className='NoSRText'>
         Browse Service Request
       </span>
@@ -252,11 +254,23 @@ export const MyConversionDetail = props => {
   let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
+  let unreadMessages = "";
+  let msgClass = "";
   return conversation.slice(0, 3).map((conversations, index) => {
+    if (props.getUnreadMsgCounts.length > 0) {
+      unreadMessages = "";
+      msgClass = "readMsgs";
+      props.getUnreadMsgCounts.map(unreadMsgCount => {
+          if (conversations.conversationId === unreadMsgCount.conversationId) {
+              msgClass = "";
+              return unreadMessages = <span className={"float-right count" + msgClass}>{unreadMsgCount.unreadMessageCount}</span>
+          }
+      });
+  };
     return (
       <Fragment>
         <li key={index} className='list-group-item myConversationContainer'>
-          <div className='myConversationContent'>
+          <div className='myConversationContent' onClick={props.gotoConversations.bind(this, conversations)}>
             <div className='avatarWidget'>
               {conversations.participantList.map((chatMem, index) => {
                 let zIndex = conversations.participantList.length - index
@@ -295,7 +309,7 @@ export const MyConversionDetail = props => {
               </p>
             </div>
             <div className='MsgCount ml-auto'>
-              <span className={'float-right count' + MsgClass}>{1}</span>
+              <span className={'float-right count' + MsgClass}>{unreadMessages}</span>
               <span className='width100 d-block float-right MsgTime'>
                 <TimeAgo datetime={conversations.createdDate} />
               </span>

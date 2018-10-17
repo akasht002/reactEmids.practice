@@ -1,7 +1,7 @@
 export const ACTIVE = "active";
 export const VISITED = "visited";
-export const DATE_FORMAT ="MM-DD-YYYY";
-export const DATE_YEAR ="YYYY";
+export const DATE_FORMAT = "MM-DD-YYYY";
+export const DATE_YEAR = "YYYY";
 export const VISIT_SERVICE_STATUS_OPEN = "Open";
 export const VISIT_SERVICE_STATUS_APPLIED = "Applied";
 export const VISIT_SERVICE_STATUS_INVITED = "Invited";
@@ -34,25 +34,57 @@ export const RESPONSE_STATUS = {
 export const STATUS = 0;
 export const SAVEDCARDS = "1";
 export const NEWCARDS = "2";
+export const AUTHORIZEDCARD = "3";
+
 export const USERTYPES = {
     PATIENT : 'I',
     GUARDIAN : 'G',
-    SERVICE_PROVIDER: 'S'
+    SERVICE_PROVIDER: 'S',
+    DESIGNATED_SERVICE_PROVIDER: 2
 };
 
 export const ImageFormats = {
     JPG: 'image/jpg',
-    JPEG : 'image/jpeg',
-    PNG : 'image/png',
-    GIF : 'image/gif'
+    JPEG: 'image/jpeg',
+    PNG: 'image/png',
+    GIF: 'image/gif'
 }
 
 export const SERVICE_STATUS = {
-    "CLOSED":"Closed",
-    "INPROGRESS":"InProgress",
-    "CANCELLED":"Cancelled",
-    "INPROGRESS":"InProgress",
-    "COMPLETED":"Completed",
-    "NOT INTERESTED":"Not Interested"
+    "CLOSED": "Closed",
+    "INPROGRESS": "InProgress",
+    "CANCELLED": "Cancelled",
+    "INPROGRESS": "InProgress",
+    "COMPLETED": "Completed",
+    "NOT INTERESTED": "Not Interested"
+}
 
+export const SCREENS = {
+    PROFILE: 'Profile',
+    DASHBOARD: 'Dashboard',
+    SERVICE_REQUEST: 'Service_Request',
+    MANAGE_CONNECTION: 'Manage_Connections',
+    VISIT_PROCESSING: 'Visit_Processing',
+    PAYMENT_PROCESSING: 'Payment_Processing',
+    VISIT_HISTORY: 'Visit_History',
+    SEARCH: 'Search',
+    ASYNC_MESSAGE: 'Async_Messages',
+    TELEHEALTH: 'Telehealth',
+    GEO_MAP: 'Geo_Map',
+    NOTIFICATIONS: 'Notifications'
+}
+
+export const PERMISSIONS = {
+    CREATE: 'Create',
+    READ: 'Read',
+    UPDATE: 'Update',
+    DELETE: 'Delete'
+}
+
+export const ELIBILITY_STATUS = {
+    "authorizationRequired": "Coverage Copay Authorization Required",
+    "amount": "Coverage Copay Authorization Amount",
+    "benefitPercent": "Coverage Coinsurance Benefit Percentage",
+    "coInAuthorizationRequired": "Coverage Coinsurance Authorization Required",
+    "active": "Coverage Active"
 }

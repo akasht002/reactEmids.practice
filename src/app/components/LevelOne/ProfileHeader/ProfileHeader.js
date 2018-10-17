@@ -13,7 +13,7 @@ import {
     DropdownMenu
 } from 'reactstrap';
 import { SearchInput } from "../../../components";
-import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
+
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { makeProperCase } from '../../../utils/stringHelper';
 
@@ -43,7 +43,8 @@ class ProfileHeader extends Component {
     }
 
     render() {
-        const menuList = ProfileHeaderMenu.map((menu) => {
+        let {headerMenu} = this.props;
+        const menuList =headerMenu.map((menu) => {
             let menuName = menu.name;
             let separator = "";
             if (menu.status) {
@@ -81,6 +82,7 @@ class ProfileHeader extends Component {
                 <Dropdown nav isOpen={this.state.dropdownOpen} toggle={() => {this.setState({dropdownOpen: !this.state.dropdownOpen})}}>
                     <DropdownToggle nav className="ProfileIcon"><img className="ProfileImage" src={this.props.profilePic}/></DropdownToggle>
                     <DropdownMenu right>
+                        <NavLink onClick={() => this.props.onClick('aboutUs')}>About Us</NavLink>
                         <NavLink href='#/profile'>My Profile</NavLink>
                         <NavLink href='#/settings'>Settings</NavLink>
                         <NavLink onClick={() => this.props.onClick('logout')}>Logout</NavLink>

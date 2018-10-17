@@ -18,12 +18,15 @@ import {
 import Availability from '../Availability/index'
 import { getUserInfo } from '../../../services/http'
 import { PROFILE_SERVICE_PROVIDER_TYPE_ID } from '../../../constants/constants'
+import {SCREENS} from '../../../constants/constants';
+import {authorizePermission} from '../../../utils/roleUtility';
 
 import './styles.css'
 
 class Profile extends Component {
   componentDidMount () {
     this.props.getProfilePercentage()
+    authorizePermission(SCREENS.PROFILE);
   }
 
   getPersonalDetail = () => {

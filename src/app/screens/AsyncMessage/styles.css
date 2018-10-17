@@ -16,6 +16,8 @@ a:hover {
 
 .msgSectionWrapper{
     background-color: #f8f8f8;
+    height: calc(100vh - 60px);
+    padding: 0 30px;
     overflow: hidden;
     scroll-behavior: unset;
 }
@@ -30,7 +32,7 @@ a:hover {
 }
 
 .msgContainerWrapper{
-    max-height: calc(100vh - 128px);
+    max-height: calc(100vh - 190px);
     overflow-y: auto;
     height: 100%;
 }
@@ -42,6 +44,10 @@ a:hover {
 
 .msgContent{
     padding: 0 !important;
+}
+
+.msgContent .list-group-item{
+    padding: 0;
 }
 
 .list-group-item{
@@ -193,7 +199,6 @@ a:hover {
 
 .readMsgs{
     background-color: #fbf7f7 !important;
-    border-bottom:1px solid rgba(0,0,0,.125);
 }
 
 .count{
@@ -333,6 +338,12 @@ table{
     margin: 0 auto;
 }
 
+.chatHeaderText .addAttachmentBtn, .chatHeaderText .addAttachmentBtn:before{
+    top: 1px;
+    height: 16px;
+    width: 16px;
+}
+
 .upload-btn-wrapper input[type=file] {
     position: absolute;
     left: 0;
@@ -463,6 +474,10 @@ li.ProfileOptionItems:hover{
     background-repeat: no-repeat;
 }
 
+.ParticipantOptionOpen:hover:before{
+    cursor: pointer;
+}
+
 .chatFooter, .chatFooter table{
     height: 100px;
     padding: 0;
@@ -547,11 +562,12 @@ li.ProfileOptionItems:hover{
     padding: 0;
 }
 
-.participants{
+li.participants{
     border: 0 !important;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    padding: 0;
 }
 
 .participants.myChat {
@@ -599,7 +615,7 @@ li.ProfileOptionItems:hover{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width:75%;
+    max-width:160px;
 }
 
 .participantDetailRight{
@@ -686,7 +702,7 @@ li.ProfileOptionItems:hover{
     background-image: url("../../assets/images/expand.svg");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 48px;
+    background-size: 24px;
 }
 
 .addParticipantsButton, .ParticipantAddRemove, .chatBackButton, .editButton, .addAttachmentBtn,.ParticipantslistButton{
@@ -761,7 +777,7 @@ li.ProfileOptionItems:hover{
 }
 
 .participantsSearchForm{
-    padding: 20px 50px 0px 50px;
+    padding: 10px 30px 0px 30px;
 }
 
 .participantsCheckboxIcon:before{
@@ -794,10 +810,13 @@ li.ProfileOptionItems:hover{
 }
 
 .participantsSearchList{
-    height: calc(100vh - 335px);
     padding: 0 24px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.participantsSearchList.ChatContainer{
+    height: calc(100vh - 377px);
 }
 
 .outer-blocklist{
@@ -826,11 +845,11 @@ input.searchParticipants, input.searchParticipants:focus{
     padding: 14px 15px 14px 50px !important; 
 }
 
-input.searchParticipants ~ small:before {
+input.searchParticipants.ChatContainer ~ small:before {
     content: '';
     position: absolute;
     display: block;
-    top: -31px;
+    top: 12px;
     left: 18px;
     height: 17px;
     width: 17px;
@@ -866,7 +885,7 @@ button.CloseMsgModal:focus, button.CloseMsgModal span:focus{
 button.CloseMsgModal span{
     position: relative;
     background-color: #d44950;
-    line-height: 17px;
+    line-height: 22px;
     font-size: 20px;
     height: 22px;
     width: 22px;
@@ -1027,12 +1046,16 @@ input.form-control{
     margin: 0;
 }
 
-.Content .participantsSearchForm .form-group label{
+.ParticipantsListContainer{
+    margin-top: 15px;
+}
+
+.Content .participantsSearchForm .form-group label, .ParticipantsListContainer .form-group label{
     display: none;
 }
 
 .noConversation{
-    height: calc(100vh - 160px);
+    height: calc(100vh - 195px);
 }
 
 .noConversationWidget button.newConversationBtn{
@@ -1068,7 +1091,6 @@ input.form-control{
     height: 100px;
     display: block;
     margin: auto;
-    margin-top: 100px;
 }
 
 button:focus{
@@ -1258,10 +1280,123 @@ overflow-y: auto;
 height: 80px;
 }
 
+.ProfileRightContainer.async{
+    height: calc(100% - 60px);
+}
+
+.AsyncConversationPagination{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 40px;
+}
+
+.AsyncConversationPagination .pagination{
+    width: auto;
+    margin: 0;
+    user-select: none;
+}
+
+.AsyncConversationPagination .pagination li.PaginationItem{
+    margin: 0 8px;
+    font-size: 14px;
+    display: block;
+    position: relative;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    color: #444;
+}
+
+.AsyncConversationPagination .pagination li.PaginationIcon:before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-position: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.pagination li.PaginationItem:hover{
+    cursor: pointer;
+}
+
+.pagination li.PaginationItem.PaginationIcon {
+    font-size: 0;
+    width: 12px;
+}
+
+.pagination li.PaginationItem.PaginationIcon.disabled{
+    opacity: .3;
+}
+
+.pagination li.PaginationItem.PaginationIcon.disabled:hover{
+    cursor: auto;
+}
+
+.pagination li.PaginationItem a{
+    display: block;
+    line-height: 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    background-color: #ffffff;
+    color: #444444;
+}
+
+.pagination li.PaginationItem.active a, .pagination li.PaginationItem a:hover{
+    background-color: #3b1a53;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.pagination li.PaginationItem.PaginationIcon a {
+    font-size: 0;
+    width: 12px;
+}
+
+.pagination li.PaginationItem.PaginationIcon a:hover {
+    background: rgba(0,0,0,0);
+}
+
+.pagination li.PaginationItem.First:before{
+    background-image: url('../../assets/images/FirstLast.svg');
+}
+
+.pagination li.PaginationItem.Prev:before{
+    background-image: url('../../assets/images/Caret.svg');
+}
+
+.pagination li.PaginationItem.Next:before{
+    background-image: url('../../assets/images/Caret.svg');
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.pagination li.PaginationItem.Last:before{
+    background-image: url('../../assets/images/FirstLast.svg');
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
 
 /*AsynMessages*/
-.msgSectionWrapper{
+/* .msgSectionWrapper{
     background-color: #f8f8f8;
+    height: 100vh;
+}
+
+.btn{
+     display: block;
+    padding: 6px 20px!important;
 }
 
 .msgContainerWrapper, .chatContainerWrapper {
@@ -1273,14 +1408,14 @@ height: 80px;
     max-height: calc(100vh - 145px);
     overflow-y: auto;
     height: 100%;
-}
+}*/
 
 .chatContainerWrapper{
     height: calc(100vh - 175px);
     overflow: hidden;
 }
 
-.msgContent{
+/*.msgContent{
     padding: 0 !important;
 }
 
@@ -1331,11 +1466,11 @@ height: 80px;
 
 .memberType{
     position: absolute;
-    bottom: 0px;
-    right: -12px;
-    width: 22px;
-    height: 22px;
-    line-height: 11px;
+    bottom: 10px;
+    right: -21px;
+    width: 20px;
+    height: 20px;
+    line-height: 12px;
     color: #fff;
     font-size: 14px;
     border-radius: 50%;
@@ -1368,6 +1503,10 @@ height: 80px;
 .MsgCount{
     width: 120px;
     padding: 16px 24px 16px 5px!important
+}
+
+.list-group-item{
+    padding: 0;
 }
 
 .list-group-item table{
@@ -1436,7 +1575,7 @@ height: 80px;
     width: fit-content;
     font-weight: 600;
     margin-bottom: 10px;
-}
+}*/
 
 .MsgTime{
     font-size: 12px;
@@ -1468,65 +1607,58 @@ height: 80px;
 .chatHeaderText .addAttachmentBtn{
     height: 14px;
 }
-
+/*
 .chatHeaderText .addAttachmentBtn:before{
     height: 18px;
     width: 18px;
-}
+} */
 
-
-.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper
-{
- display: block;
- height: 100%;
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper	
+{	
+ display: block;	
+ height: 100%;	
+}	
+.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper:focus	
+{	
+outline:none;	
+pointer-events: none;	
+-webkit-user-select: none; 	
+user-select: none;	
+}	
+ .participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input	
+{	
+outline:none !important;	
+display: block !important;	
+padding-left: 0;	
+height: auto;	
+}	
+ .participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input	
+{	
+display: block !important;	
+width:100% !important;	
+box-sizing:content-box;	
+-webkit-box-sizing: border-box;	
+line-height:40px;	
+}	
+ .participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input:focus	
+{	
+    box-shadow: none !important; 	
+    outline:none !important;	
+    pointer-events: none;	
+    -webkit-user-select: none; 	
+user-select: none;	
+}	
+ .messageTypeWidget textarea.msgTextArea	
+{	
+margin-top: 8px;	
+margin-bottom: 8px;	
+resize:vertical;	
+overflow: auto;	
+}	
+ .messageTypeWidget textarea.msgTextArea:focus	
+{	
+    overflow:scroll !important;	
 }
-.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper:focus
-{
-outline:none;
-pointer-events: none;
--webkit-user-select: none; 
-user-select: none;
-}
-
-.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input
-{
-outline:none !important;
-display: block !important;
-padding-left: 0;
-height: auto;
-}
-
-.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input
-{
-display: block !important;
-width:100% !important;
-box-sizing:content-box;
--webkit-box-sizing: border-box;
-line-height:40px;
-}
-
-.participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input:focus
-{
-    box-shadow: none !important; 
-    outline:none !important;
-    pointer-events: none;
-    -webkit-user-select: none; 
-user-select: none;
-}
-
-.messageTypeWidget textarea.msgTextArea
-{
-margin-top: 8px;
-margin-bottom: 8px;
-resize:vertical;
-overflow: auto;
-}
-
-.messageTypeWidget textarea.msgTextArea:focus
-{
-    overflow:scroll !important;
-}
-
 
 /*microsoft-edge-detection*/
 @supports (-ms-ime-align: auto) {

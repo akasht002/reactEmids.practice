@@ -29,7 +29,7 @@ export const updateEulaSuccess = (data) => {
 }
 
 
-export function getUserInfo() { 
+export function getUserInformation() { 
     return (dispatch, getState) => { 
         AuthGet(API.getLoginInfo)          
           .then(resp => {

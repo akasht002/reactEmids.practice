@@ -5,6 +5,7 @@ import { Input, ProfileModalPopup, ModalPopup } from "../../../components";
 import { checkSpace } from "../../../utils/validations";
 import {compare} from "../../../utils/comparerUtility";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
+import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 class Certification extends Component {
 
@@ -198,9 +199,9 @@ class Certification extends Component {
                         <h5 className='SPCertificateHeader'>{certificateList.certificationName}</h5>
                         <span className='SPCertificateDesc'>{certificateList.authority}</span>
                     </div>
-                    <i className="SPIconMedium SPIconDelete mr-3" id={certificateList.certificationId}
+                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={certificateList.certificationId}
                         onClick={(e) => this.showModalOnDelete(e)} />
-                    <i className="SPIconMedium SPIconEdit" id={certificateList.certificationId}
+                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={certificateList.certificationId}
                         onClick={(e) => this.editCertification(e)} />
                 </li>
             )
@@ -219,7 +220,7 @@ class Certification extends Component {
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification and Licence</h4>
-                    <i className="SPIconLarge SPIconAdd"
+                    <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                         onClick={() => this.setState({ certificationModal: true, isAdd: true })} />
                 </div>
                 <div className="SPCertificateContainer width100">
@@ -232,7 +233,7 @@ class Certification extends Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc'>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
+                                    <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
                                 </div>
                             </div>
                         }
