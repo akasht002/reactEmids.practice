@@ -132,7 +132,7 @@
         display: none !important
     }
 
-/** added the margin for the conversation **/
+    /** added the margin for the conversation **/
 
     .slightTopview {
         margin: 0 20px;
@@ -248,7 +248,7 @@
     }
     /** responsive css**/
 
-   button.newConversationBtn {
+    button.newConversationBtn {
         position: relative;
         border-radius: 50% !important;
         color: #7a329f  !important;
@@ -264,13 +264,13 @@
     }
 
     a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.btn:not([href]):not([tabindex]):hover{
-    color: #ffffff;
-}
+        color: #ffffff;
+    }
 
-a.btn.nav-link{
-    padding: .375rem .75rem !important;
-    color: #ffffff !important;
-}
+    a.btn.nav-link{
+        padding: .375rem .75rem !important;
+        color: #ffffff !important;
+    }
 
     button.newConversationBtn:before {
         content: "+";
@@ -379,11 +379,11 @@ a.btn.nav-link{
     }
 
     .chatContainerWrapper {
-        height: calc(100vh - 128px) !important;
+        height: calc(100vh - 128px);
     }
 
     .participantsList .Content {
-        height: calc(100vh - 245px) !important;
+        height: calc(100vh - 245px);
         padding: 0 !important;
     }
 
@@ -451,8 +451,7 @@ a.btn.nav-link{
     td.chatFooter, td.chatFooter table {
         height: 72px;
     }
-
-    a.ParticipantClose {
+a.ParticipantClose {
         display: block;
     }
 
@@ -784,8 +783,16 @@ a.btn.nav-link{
         height: 18px;
     }
 
+}
 
+@media (max-width: 480px) {
+    td.chatMsgContent .Content {
+        height: calc(100vh - 304px);
+    }
 
+    .chatContainerWrapper {
+        height: calc(100vh - 160px);
+    }
 }
 
 /*** added the button style **/
@@ -796,7 +803,7 @@ a.btn.nav-link{
 
 /** End **/
 
-@media (max-height: 768px) {
+@media (max-height: 480px) {
     .nav-item p{
         margin-bottom: 5px;
         font-size: 14px;
@@ -804,6 +811,19 @@ a.btn.nav-link{
 
     .nav-item h5{
         font-size: 18px;
+    }
+
+    .noMessage {
+        height: calc(100vh - 315px);
+    }
+
+    .participantsList .Content {
+        height: calc(100vh - 275px);
+        padding: 0 !important;
+    }
+
+    .msgSectionWrapper .mainWidgetProfile{
+        padding: 0;
     }
 
 }
@@ -820,9 +840,3 @@ and (orientation: landscape) {
   } 
   
 }
-
-
-
-
-
-

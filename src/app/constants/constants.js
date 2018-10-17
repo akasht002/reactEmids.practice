@@ -88,3 +88,7 @@ export const ELIBILITY_STATUS = {
     "coInAuthorizationRequired": "Coverage Coinsurance Authorization Required",
     "active": "Coverage Active"
 }
+
+export const Pagination = {
+    pageSize : 10
+};
