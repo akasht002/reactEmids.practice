@@ -125,7 +125,6 @@ export function getVisitServiceEligibilityStatus(data) {
   return (dispatch) => {
     dispatch(startLoading());
     ThirdPartyPost(API.getServiceRequestEligibilityStatus, data).then((resp) => {
-      console.log(resp.data)
       dispatch(getVisitServiceEligibityStatusSuccess(resp.data))
       dispatch(endLoading());
     }).catch((err) => {

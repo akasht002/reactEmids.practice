@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Moment from 'react-moment'
 import { Input, TextArea, ProfileModalPopup, ModalPopup } from "../../../components";
 import { Calendar } from "../../../components/LevelOne/index";
 import { checkSpace, formattedDateMoment, formattedDateChange, formateStateDate } from "../../../utils/validations";
 import { compare } from "../../../utils/comparerUtility";
 import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, deleteWorkHistory } from "../../../redux/profile/WorkHistory/actions";
-import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import "./styles.css";
 
 class WorkHistory extends Component {
@@ -36,6 +37,11 @@ class WorkHistory extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.workhistoyFieldDetails.isWorking === '') {
+            this.setState({ isWorking: false })
+        } else {
+            this.setState({ isWorking: nextProps.workhistoyFieldDetails.isWorking })
+        }
         this.setState({
             designation: nextProps.workhistoyFieldDetails.designation,
             company: nextProps.workhistoyFieldDetails.company,
@@ -45,7 +51,6 @@ class WorkHistory extends Component {
             description: nextProps.workhistoyFieldDetails.description,
             isWorking: nextProps.workhistoyFieldDetails.isWorking,
             workHistoryId: nextProps.workhistoyFieldDetails.workHistoryId
-
         })
     }
 
@@ -62,7 +67,8 @@ class WorkHistory extends Component {
             disabledSaveBtn: true,
             isDiscardModalOpen: false,
             isAdd: true,
-            isValid: true
+            isValid: true,
+            workHistoryId: ''
         })
     }
 
@@ -112,11 +118,13 @@ class WorkHistory extends Component {
         }
         this.reset();
     }
+
     addWorkhistory = () => {
+        this.setState({ workHistoryId: 0 })
         if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate)) {
 
             const data = {
-                workHistoryId: this.state.workHistoryId,
+                workHistoryId: 0,
                 company: this.state.company.trim(),
                 designation: this.state.designation.trim(),
                 location: this.state.location.trim(),
@@ -131,6 +139,7 @@ class WorkHistory extends Component {
             this.setState({ isValid: false });
         }
     }
+
     isOnDeleteModalOpen = (e) => {
         this.setState({ isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen, workHistoryId: e.target.id });
     }
@@ -142,6 +151,12 @@ class WorkHistory extends Component {
 
     updateWorkHistory = () => {
         if (this.state.designation && this.state.company && this.state.fromDate && this.state.toDate) {
+            {
+                this.state.isWorking ?
+                this.setState({ toDate: '' })
+                :
+                this.setState({ toDate: this.state.toDate })
+            }
             const data = {
                 designation: this.state.designation,
                 company: this.state.company,
@@ -149,7 +164,8 @@ class WorkHistory extends Component {
                 fromDate: this.state.fromDate,
                 toDate: this.state.toDate,
                 description: this.state.description,
-                workHistoryId: this.state.workHistoryId
+                workHistoryId: this.state.workHistoryId,
+                isWorking: this.state.isWorking
             };
             this.props.updateWorkHistory(data);
             this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen, disabledSaveBtn: true });
@@ -329,8 +345,19 @@ class WorkHistory extends Component {
                             <h5 className="SPCertificateHeader">
                                 {WorkHistoryList.designation} - <span>{WorkHistoryList.company}</span>
                             </h5>
-                            <span className="ml-auto SPWorkYear">{WorkHistoryList.fromDate} - {WorkHistoryList.toDate}</span>
-
+                            <span className="ml-auto SPWorkYear">
+                                <Moment format='MMM YYYY' className="mr-2">
+                                    {WorkHistoryList.fromDate}
+                                </Moment>
+                                -
+                                 {WorkHistoryList.toDate === '01-01-1900' ?
+                                    <span className="ml-2">Present</span>
+                                    :
+                                    <Moment format='MMM YYYY' className="ml-2">
+                                        {WorkHistoryList.toDate}
+                                    </Moment>
+                                }
+                            </span>
                         </div>
                         <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
                         <span className="SPCertificateDesc">{WorkHistoryList.description}</span>

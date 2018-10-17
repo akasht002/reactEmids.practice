@@ -1,6 +1,7 @@
 import {
     PerformTasks
 } from './actions'
+import {SERVICE_STATES} from '../../../../constants/constants'
 
 const defaultState = {
     PerformTasksList: {},
@@ -13,9 +14,17 @@ const PerformTasksState = (state = defaultState, action) => {
     switch (action.type) {
 
         case PerformTasks.getPerformTasksListSuccess:
+        let visitStatus = SERVICE_STATES.YET_TO_START
+            if(action.data.visitStatusId === 44){
+                visitStatus = SERVICE_STATES.IN_PROGRESS
+            }else if(action.data.visitStatusId === 45){
+                visitStatus = SERVICE_STATES.COMPLETED
+            }else if(action.data.visitStatusId === 90){
+                visitStatus = SERVICE_STATES.PAYMENT_PENDING
+            }
             return {
                 ...state,
-                PerformTasksList: action.data
+                PerformTasksList: {...action.data, visitStatus},
             };
 
         case PerformTasks.getServiceRequestVisitId:

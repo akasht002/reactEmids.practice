@@ -11,6 +11,8 @@ import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { SAVEDCARDS, NEWCARDS, AUTHORIZEDCARD } from '../../../../constants/constants'
 import { STRIPE_KEY } from "../../../../constants/config"
 import CheckoutForm from './stripe';
+import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { Path } from '../../../../routes'
 import './style.css'
 
 class Payments extends Component {
@@ -24,6 +26,14 @@ class Payments extends Component {
         };
     };
 
+    componentDidMount() {
+        if (this.props.ServiceRequestVisitId) {
+            this.props.getpaymentsCardList(this.props.summaryAmount.SummaryDetails.patient.patientId);
+        } else {
+            this.props.history.push(Path.visitServiceList)
+        }
+    }
+
     toggleCardSelection = (e) => {
         this.setState({
             SelectedCard: e.target.value,
@@ -35,36 +45,45 @@ class Payments extends Component {
         this.setState({ collapse: !this.state.collapse });
     }
 
-    componentDidMount() {
-        this.props.getpaymentsCardList(this.props.summaryAmount.SummaryDetails.patient.patientId);
-    }
-
     handleChange = (e) => {
         this.setState({ selectedCard: e.target.id, disabled: false })
     }
 
     handleClick = () => {
-        const data = {
-            "paymentAmount": Math.ceil(this.props.summaryAmount.CalculationsData.copayAmount),
+        let data = {
             "patientId": this.props.summaryAmount.SummaryDetails.patient.patientId,
             "coreoHomeStripeCustomerId": this.state.selectedCard,
             "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
             "serviceRequestVisitId": this.props.summaryAmount.SummaryDetails.serviceRequestVisitId
         }
-        this.props.chargeByCustomerId(data);
-        this.payByAuthorizedCard();
+
+        this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
+            data.paymentAmount = this.props.summaryAmount.CalculationsData.copayAmount
+            :
+            data.paymentAmount = this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2);
+
+        if (this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false) {
+            this.props.chargeByCustomerId(data)
+            this.payByAuthorizedCard();
+        } else {
+            this.props.chargeByCustomerId(data)
+        }
     }
 
     payByAuthorizedCardOption = () => {
-        this.payByAuthorizedCard();
-        this.captureAmount();
+        if (this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false) {
+            this.payByAuthorizedCard();
+            this.captureAmount();
+        } else {
+            this.captureAmount();
+        }
     }
 
     payByAuthorizedCard = () => {
         const data = {
             "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
             "claimOnsetDate": this.props.summaryAmount.SummaryDetails.visitDate,
-            "claimServiceLinesChargeAmount": Math.ceil(this.props.summaryAmount.CalculationsData.estimatedClaim),
+            "claimServiceLinesChargeAmount": this.props.summaryAmount.CalculationsData.estimatedClaim,
             "claimServiceLinesProcedureCode": "",
             "claimServiceLinesProcedureModifierCodes": "",
             "claimServiceLinesDiagnosisCodes": "",
@@ -72,8 +91,8 @@ class Payments extends Component {
             "qualifier": "",
             "claimServiceLinesPlaceOfService": "",
             "claimServiceLinesUnitCount": "",
-            "claimTotalChargeAmount": Math.ceil(this.props.summaryAmount.CalculationsData.grandTotalAmount),
-            "claimPatientPaidAmount": Math.ceil(this.props.summaryAmount.CalculationsData.copayAmount),
+            "claimTotalChargeAmount": this.props.summaryAmount.CalculationsData.grandTotalAmount,
+            "claimPatientPaidAmount": this.props.summaryAmount.CalculationsData.copayAmount,
             "billingProviderNPI": "",
             "billingProviderAddress": "",
             "billingProviderLastName": "",
@@ -88,10 +107,15 @@ class Payments extends Component {
             "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
             "serviceRequestVisitId": this.props.summaryAmount.SummaryDetails.serviceRequestVisitId,
             "patientId": this.props.summaryAmount.SummaryDetails.patient.patientId,
-            "amount": Math.ceil(this.props.summaryAmount.CalculationsData.copayAmount),
             "customerId": "",
             "chargeId": 0,
         }
+
+        this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
+            data.amount = this.props.summaryAmount.CalculationsData.copayAmount
+            :
+            data.amount = this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2);
+
         this.props.captureAmount(data)
     }
 
@@ -193,11 +217,11 @@ class Payments extends Component {
                                 </div>
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
-                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
-                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +232,12 @@ class Payments extends Component {
                             <div className='VisitPaymentContainer'>
                                 <div className="VisitPaymentWidget">
                                     <p className="VisitPaymentContentTitle">Make Payment</p>
-                                    <p className="VisitPaymentAmountPaid">Amount to be paid <i>${Math.ceil(this.props.summaryAmount.CalculationsData.copayAmount)}</i></p>
+                                    {this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
+                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.copayAmount}</i></p>
+                                        :
+                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2)}</i></p>
+                                    }
+
                                     <div className="FeedbackQuestionWidget form-group">
                                         <label className="FeedbackQuestion">Select the method of Payment</label>
                                         <div className='FeedbackAnswerWidget'>
@@ -262,6 +291,8 @@ function mapStateToProps(state) {
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
         summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState,
         CardList: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.CardList,
+        ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
+        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus
     };
 };
 

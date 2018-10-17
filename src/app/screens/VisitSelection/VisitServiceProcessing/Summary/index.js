@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
+import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, GeneralModalPopup, ModalPopup } from '../../../../components';
 import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
@@ -9,9 +10,8 @@ import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingW
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
-import {
-    getVisitServiceEligibilityStatus
-} from '../../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { Path } from '../../../../routes'
 import './style.css'
 
 class Summary extends Component {
@@ -32,13 +32,17 @@ class Summary extends Component {
             disableTimeAdjust: true,
             isAlertModalOpen: false,
             isSignatureModalOpen: false,
-            isSaveBtnShown: true
+            isSaveBtnShown: true,
+            timeErrMessage: ''
         };
     };
 
     componentDidMount() {
-        this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
-        this.props.getVisitServiceEligibilityStatus(this.props.patientDetails.ServiceRequestId)
+        if (this.props.ServiceRequestVisitId) {
+            this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
+        } else {
+            this.props.history.push(Path.visitServiceList)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -64,6 +68,7 @@ class Summary extends Component {
         const data = this.signaturePad.toDataURL();
         if (data !== '') {
             this.setState({ isSaveBtnShown: false })
+            this.signaturePad.off();
         }
         this.setState({ signatureImage: data })
     }
@@ -77,6 +82,11 @@ class Summary extends Component {
     }
 
     onClickNext = () => {
+        let time = this.state.summaryDetails.originalTotalDuration;
+        let duration = time.split(':');
+        let seconds = (+duration[0]) * 60 * 60 + (+duration[1]) * 60 + (+duration[2]);
+        let originalTotalDuration = (seconds / 60);
+
         if (this.state.signatureImage) {
             this.saveSignature();
             const data = {
@@ -86,7 +96,7 @@ class Summary extends Component {
                 EstimatedClaim: this.state.summaryDetails.estimatedClaim,
                 OutOfPocketAmount: this.state.summaryDetails.outOfPocketAmount,
                 HourlyRate: this.state.summaryDetails.hourlyRate,
-                OriginalTotalDuration: parseInt(this.state.summaryDetails.originalTotalDuration, 0),
+                OriginalTotalDuration: originalTotalDuration,
                 BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
                 TaxPaid: this.props.CalculationsData.taxes,
                 BilledPerService: this.props.CalculationsData.totalVisitCost,
@@ -99,13 +109,27 @@ class Summary extends Component {
         }
     }
 
+    timerErrMessage = () => {
+        if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
+            this.state.updatedMin > this.props.CalculationsData.totalMinutes ||
+            this.state.updatedSec > this.props.CalculationsData.totalSeconds) {
+            this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
+        }else{
+            this.updateTime();
+        }
+    }
+
     updateTime = () => {
         const data = {
             hour: parseInt(this.state.updatedHour, 0),
-            min: parseInt(this.state.updatedMin, 0)
+            min: parseInt(this.state.updatedMin, 0),
+            sec: parseInt(this.state.updatedMin, 0)
         }
+        this.setState({ isModalOpen: !this.state.isModalOpen })
         this.props.onUpdateTime(data)
     }
+
+    
 
     render() {
 
@@ -119,36 +143,43 @@ class Summary extends Component {
                     Time taken to complete the service
                 </p>
                 <p className="AdjustTimeContent">
-                    HH <input
-                        type="number"
-                        value={this.state.updatedHour}
-                        onChange={(e) => this.setState({ updatedHour: e.target.value })}
-                        style={{ width: 10 + '%' }}
-                        min={0}
-                        max={this.props.CalculationsData.totalHours}
-                    />
-                    MM <input
-                        type="number"
-                        value={this.state.updatedMin}
-                        onChange={(e) => this.setState({ updatedMin: e.target.value })}
-                        style={{ width: 10 + '%' }}
-                        min={0}
-                        max={this.props.CalculationsData.totalMinutes}
-                    />
-                    SS <input
-                        type="number"
-                        value={this.state.updatedSec}
-                        onChange={(e) => this.setState({ updatedSec: e.target.value })}
-                        style={{ width: 10 + '%' }}
-                        min={0}
-                        max={this.props.CalculationsData.totalSeconds}
-                    />
+                    <span className="mr-3">
+                        HH <input
+                            type="number"
+                            value={this.state.updatedHour}
+                            onChange={(e) => this.setState({ updatedHour: e.target.value, timeErrMessage: '' })}
+                            style={{ width: 10 + '%' }}
+                            min={0}
+                            max={this.props.CalculationsData.totalHours}
+                        />
+                    </span>
+                    <span className="mr-3">
+                        MM <input
+                            type="number"
+                            value={this.state.updatedMin}
+                            onChange={(e) => this.setState({ updatedMin: e.target.value, timeErrMessage: '' })}
+                            style={{ width: 10 + '%' }}
+                            min={0}
+                            max={this.props.CalculationsData.totalMinutes}
+                        />
+                    </span>
+                    <span>
+                        SS <input
+                            type="number"
+                            value={this.state.updatedSec}
+                            onChange={(e) => this.setState({ updatedSec: e.target.value, timeErrMessage: '' })}
+                            style={{ width: 10 + '%' }}
+                            min={0}
+                            max={this.props.CalculationsData.totalSeconds}
+                        />
+                    </span>
                 </p>
+                {/* <p>{this.state.timeErrMessage}</p> */}
                 <p className="AdjustTimeText">
                     Note: Maximum adjustable time is
-                    <span>{this.props.CalculationsData.totalHours} hr</span>
-                    <span>{this.props.CalculationsData.totalMinutes} min</span>
-                    <span>{this.props.CalculationsData.totalSeconds} sec</span>
+                    <span> {this.props.CalculationsData.totalHours} hr</span>
+                    <span> {this.props.CalculationsData.totalMinutes} min</span>
+                    <span> {this.props.CalculationsData.totalSeconds} sec</span>
                 </p>
             </form>
         }
@@ -167,7 +198,7 @@ class Summary extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <i className="TitleContent backProfileIcon" />
+                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
@@ -196,11 +227,11 @@ class Summary extends Component {
                                 </div>
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
-                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
-                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -265,20 +296,10 @@ class Summary extends Component {
                                                         <p><span>Estimated Claim</span>
                                                         </p>
                                                         <p><span>Copay On Credit Card</span></p>
-                                                        <p className="m-0"><span>Round off amount to be paid</span></p>
-
                                                     </div>
                                                     <div className="col-md-4 EstimatedCostContainer Cost">
                                                         <p><span>${this.props.CalculationsData.estimatedClaim}</span></p>
                                                         <p><span>${this.props.CalculationsData.copayAmount}</span></p>
-                                                        <p className="m-0"><span>$
-                                                        {(this.props.CalculationsData.copayAmount % 1) >= 0.5 ?
-                                                                Math.ceil(this.props.CalculationsData.copayAmount)
-                                                                :
-                                                                Math.floor(this.props.CalculationsData.copayAmount)
-                                                            }
-                                                        </span>
-                                                        </p>
                                                     </div>
                                                 </div>
                                             }
@@ -346,9 +367,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         onUpdateTime: (data) => dispatch(onUpdateTime(data)),
-        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
-        getVisitServiceEligibilityStatus: data =>
-            dispatch(getVisitServiceEligibilityStatus(data))
+        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data))
     }
 };
 
@@ -359,7 +378,8 @@ function mapStateToProps(state) {
         actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
-        VisitServiceElibilityStatus: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus
+        ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
+        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus
     };
 };
 
