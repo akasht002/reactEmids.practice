@@ -6,50 +6,50 @@ import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 import { getUserInfo } from '../../../services/http';
 
 export const PersonalDetails = {
-  GET_PERSONAL_DETAIL_SUCCESS: 'GET_PERSONAL_DETAIL_SUCCESS',
-  UPDATE_PERSONAL_DETAIL_SUCCESS: 'UPDATE_PERSONAL_DETAIL_SUCCESS',
-  GET_PERSONAL_DETAIL: 'GET_PERSONAL_DETAIL',
-  GET_CITY_SUCCESS: 'GET_CITY_SUCCESS',
-  GET_CITY_DETAIL: 'GET_CITY_DETAIL',
-  UPLOAD_IMG_SUCCESS: 'UPLOAD_IMG_SUCCESS',
-  UPLOAD_IMG: 'UPLOAD_IMG_SUCCESS',
-  GET_GENDER_SUCCESS:'GET_GENDER_SUCCESS,',
-  GET_AFFILIATION_DETAIL_SUCCESS:'GET_AFFILIATION_DETAIL_SUCCESS'
+  get_personal_detail_success : "profile/get_personal_detail_success",
+  update_personal_detail_success:"profile/update_personal_detail_success",
+  get_personal_detail : "profile/get_personal_detail",
+  get_city_success: 'profile/get_city_success',
+  get_city_detail: 'profile/get_city_detail',
+  upload_img_success: 'profile/upload_img_success',
+  upload_img: 'profile/upload_img',
+  get_gender_success:'profile/get_gender_success,',
+  get_affiliation_detail_success:'profile/get_affiliation_detail_success'
 }
 
 export { getDataValueArray } from '../../../utils/validations'
 
 export const getPersonalDetailSuccess = data => {
   return {
-    type: PersonalDetails.GET_PERSONAL_DETAIL_SUCCESS,
+    type: PersonalDetails.get_personal_detail_success,
     data
   }
 }
 
 export const getAffiliationDetailSuccess = data => {
   return {
-    type: PersonalDetails.GET_AFFILIATION_DETAIL_SUCCESS,
+    type: PersonalDetails.get_affiliation_detail_success,
     data
   }
 }
 
 export const uploadImgSuccess = data => {
   return {
-    type: PersonalDetails.UPLOAD_IMG_SUCCESS,
+    type: PersonalDetails.upload_img_success,
     data
   }
 }
 
 export const getCitySuccess = data => {
   return {
-    type: PersonalDetails.GET_CITY_SUCCESS,
+    type: PersonalDetails.get_city_success,
     data
   }
 }
 
 export const getGenderSuccess = data => {
   return {
-    type: PersonalDetails.GET_GENDER_SUCCESS,
+    type: PersonalDetails.get_gender_success,
     data
   }
 }
@@ -85,7 +85,7 @@ export function getCityDetail () {
 
 export const updatePersonalDetailSuccess = isSuccess => {
   return {
-    type: PersonalDetails.UPDATE_PERSONAL_DETAIL_SUCCESS,
+    type: PersonalDetails.update_personal_detail_success,
     isSuccess
   }
 }
