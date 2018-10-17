@@ -96,3 +96,14 @@ export const SERVICE_STATES = {
   COMPLETED: "COMPLETED",
   PAYMENT_PENDING: "PAYMENT_PENDING"
 }
+export const ELIBILITY_STATUS = {
+    "authorizationRequired": "Coverage Copay Authorization Required",
+    "amount": "Coverage Copay Authorization Amount",
+    "benefitPercent": "Coverage Coinsurance Benefit Percentage",
+    "coInAuthorizationRequired": "Coverage Coinsurance Authorization Required",
+    "active": "Coverage Active"
+}
+
+export const Pagination = {
+    pageSize : 10
+};

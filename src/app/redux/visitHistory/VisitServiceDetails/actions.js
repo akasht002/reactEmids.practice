@@ -1,20 +1,23 @@
 import { API, baseURLServiceRequest } from '../../../services/api';
-import {ServiceRequestGet,Get, Post} from '../../../services/http'
+import {ServiceRequestGet,Get, ServiceRequestPost} from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
+import _ from 'lodash';
 
 export const vistServiceHistoryDetails = {
     getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
     getVisitServiceHistoryDetailsSuccess: 'getVisitServiceHistoryDetailsSuccess/visitHistory',
     getVisitServiceHistoryByIdDetailSuccess: 'getVisitServiceHistoryByIdDetailSuccess/visitHistory',
     updateVisitHistoryFilter: 'updateVisitHistoryFilter/visitHistory',
-    getServiceCategoriesSuccess: "getServiceCategoriesSuccess/VisitHistory/Filter",
+    getServiceCategorySuccess: "getServiceCategorySuccess/VisitHistory",
     getSubmittedResponse: "getSubmittedResponse/visitHistory",
     getAllServiceProviders: "getServiceProviders/visitHistory",    
     getServiceRequestId:'getServiceRequestId/visitHistory',
-
+    getServiceTypeSuccess: 'get_type_success/visitHistory',
+    clearServiceTypes: 'clearServiceTypes/visitHistory',
+    clearServiceProviders: 'clearServiceProviders/visitHistory'
 };
 
 export const getVisitServiceHistoryDetailsSuccess = (data) => {
@@ -38,14 +41,15 @@ export const updateVisitHistoryFilterState = (data) => {
     }
 }
 
-export const getServiceCategoriesSuccess = (data) => {
+export const getServiceCategorySuccess = (data) => {
     return {
-        type: vistServiceHistoryDetails.getServiceCategoriesSuccess,
+        type: vistServiceHistoryDetails.getServiceCategorySuccess,
         data
     }
 }
 
 export const getServiceProviders = (data) => {
+    _.forEach(data, function(obj) { obj.isChecked = false; });
     return {
         type: vistServiceHistoryDetails.getAllServiceProviders,
         data
@@ -115,10 +119,10 @@ export function getVisitServiceHistoryByIdDetail(data) {
 };
 
 export function getFilteredData(data){
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading());
         let serviceProviderId =   getUserInfo().serviceProviderId;
-        Post(API.getFilteredVisitHistory, {...data, serviceProviderId}, baseURLServiceRequest).then((resp) => {           
+        ServiceRequestPost(API.getFilteredVisitHistory, {...data, serviceProviderId}).then((resp) => {           
             dispatch(getVisitServiceHistoryDetailsSuccess(resp.data)) 
             dispatch(endLoading());
         }).catch((err) => {
@@ -156,7 +160,7 @@ export function getServiceProviderRating(data){
 export function getAllServiceProviders(){
     return (dispatch, getState) => {
         dispatch(startLoading())
-        Get(API.getAllServiceProviders, baseURLServiceRequest).then((resp) => {
+        ServiceRequestGet(API.getAllServiceProviders).then((resp) => {
             dispatch(getServiceProviders(resp.data))
             dispatch(endLoading())
         }).catch((err) => {
@@ -165,40 +169,58 @@ export function getAllServiceProviders(){
     }
 }
 
-function  getAllServiceCategories(data){
-    return async (dispatch) => {
-        let serviceCategories = []
-       await data.map((service, index) => {
-            dispatch(startLoading())
-            Get(API.getServiceTasks + service.serviceCategoryId, baseURLServiceRequest).then((payload) => {
-                let serviceCategoryResponse = {
-                    ...service,
-                    serviceTypeTasks: payload.data
-                }
-                serviceCategories.push(serviceCategoryResponse)
-                if(index === data.length - 1){
-                    dispatch(getServiceCategoriesSuccess(serviceCategories))
-                }
-            }).catch((error) => {
-                dispatch(endLoading())
+export function getServiceCategory() {
+    return (dispatch, getState) => {
+            dispatch(startLoading());
+            ServiceRequestGet(API.getServiceCategory).then((resp) => {
+                dispatch(getServiceCategorySuccess(resp.data));
+                dispatch(endLoading());
+            }).catch((err) => {
+                dispatch(endLoading());
             })
-        })
-        dispatch(startLoading())
     }
 }
 
-export function getServiceCategories(){
-    return (dispatch, getState) => {
-        dispatch(startLoading())
-        Get(API.getServiceCategories, baseURLServiceRequest).then((resp) => {
-            dispatch(getAllServiceCategories(resp.data))
-            dispatch(endLoading())
+export const getServiceTypeSuccess = (data) => {
+    return {
+        type: vistServiceHistoryDetails.getServiceTypeSuccess,
+        data
+    }
+}
+
+export function getServiceType(data) {
+    return (dispatch) => {
+        let serviceCategoryId = data;
+        dispatch(startLoading());
+        ServiceRequestGet(API.servicerequest + `ServiceType/${serviceCategoryId}`).then((resp) => {
+            let data = resp.data.map((type, index) => {
+                if (index === 0) {
+                    return {
+                        ...type,
+                        selected: true
+                    }
+                }
+                return type;
+            });
+            dispatch(getServiceTypeSuccess(data))
+            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
+
     }
 }
 
+export const clearServiceProviders = (data) => {
+    _.forEach(data, function(obj) { obj.isChecked = false; });
+    return {
+        type: vistServiceHistoryDetails.clearServiceProviders,
+        data
+    }
+}
 
-
-
+export function clearServiceTypes() {
+    return {
+        type: vistServiceHistoryDetails.clearServiceTypes
+    }
+}

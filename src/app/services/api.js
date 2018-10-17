@@ -109,13 +109,16 @@ export const API = {
     cancelServiceRequestByServiceProvider: 'ServiceRequest/Cancel',
     getAboutUsContent: 'Common/LookupConfig/AboutUsWeb',
     getConverstionCountByUserId: 'Conversation/Count/',
-    updateStandByMode: 'api/ServiceProvider/UpdateStandByMode/',
+    getAffiliationDetail:'ServiceProviderLookUp/Affiliation',
+    updateStandByMode:'api/ServiceProvider/UpdateStandByMode/',
     getUserRoles: "User/GetUserRoles",
     getEntityServiceProviderList: 'ServiceProvider/ByEntity/',
     assignServiceVisit: 'ServiceRequest/AssignServiceVisit',
     getServiceRequestEligibilityStatus: 'BenefitProcess/CheckEligibility',
     claimsSubmission: 'BenefitProcess/ClaimsSubmission',
-    captureAmount:'Account/CardCaputreAmount'
+    captureAmount:'Account/CardCaputreAmount',
+    servicerequest: 'ServiceRequest/',
+    getFilteredVisitHistory: 'VisitProcessing/ServiceProviderVisit'
 }
 
 

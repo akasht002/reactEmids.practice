@@ -86,7 +86,7 @@ export function getLength (data) {
 }
 
 export function checkTextNotStartWithNumber (data) {
-  return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*?~`/,;:".'()><-=+]+$/.test(data)
+  return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*?~`/,;:".'()><-=+]*$/.test(data)
 }
 
 export function isDecimal (data) {

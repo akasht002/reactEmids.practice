@@ -5,7 +5,7 @@ export const OrganizationData = [
     },
     {
       label: 'Academy of International Business (AIB)',
-      value: '2-AABB'
+      value: '2-AIB'
     },
     { label: 'Academy of Management (AOM)', value: '3-AOM' },
     {
