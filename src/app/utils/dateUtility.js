@@ -18,16 +18,22 @@ export function changeDateFormat(value) {
     return `${onlyNums.slice(0, 2)}-${onlyNums.slice(2, 4)}-${onlyNums.slice(4, 8)}`;
 }
 
-export function getUTCFormatedDate(date, dateFormat = "HH:MM A") {
+export function getUTCFormatedDate(date, dateFormat = "hh:mm a") {
     var gmtDateTime = moment.utc(date)
     var local = gmtDateTime.local().format(dateFormat);
     return local
 }
 
+export function getUTCTimeInLocal(startTime, endTime){
+    var gmtDateTime = moment.utc(startTime)
+    var localStartDate = gmtDateTime.local();
+    var endDateTime = moment.utc(endTime)
+    var localEndDate = endDateTime.local();
+    return localEndDate.diff(localStartDate, "seconds")
+}
+
 export function convertUTCTime(date, dateFormat = "HH:MM a") {
     var gmtDateTime = moment.utc(date)
-    console.log("CONVERTED TIME IS", gmtDateTime)
     var local = gmtDateTime.local().format();
-    console.log("local TIME IS", local, gmtDateTime.local().format(dateFormat), moment().diff(local, "seconds"))
     return moment().diff(local, "seconds")
 }

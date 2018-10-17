@@ -88,10 +88,11 @@ export const PERMISSIONS = {
     DELETE: 'Delete'
 }
 
-export const ELIBILITY_STATUS = {
-    "authorizationRequired": "Coverage Copay Authorization Required",
-    "amount": "Coverage Copay Authorization Amount",
-    "benefitPercent": "Coverage Coinsurance Benefit Percentage",
-    "coInAuthorizationRequired": "Coverage Coinsurance Authorization Required",
-    "active": "Coverage Active"
+export const COMPLETED_TASK_STATUS_ID =45
+export const PAYMENT_PENDING_STATUS = 90
+export const SERVICE_STATES = {
+  YET_TO_START: "YET_TO_START",
+  IN_PROGRESS: "IN_PROGRESS",
+  COMPLETED: "COMPLETED",
+  PAYMENT_PENDING: "PAYMENT_PENDING"
 }

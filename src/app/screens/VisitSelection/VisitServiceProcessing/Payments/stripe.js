@@ -55,7 +55,7 @@ class _CardForm extends Component {
                     "patientId": this.props.data.SummaryDetails.patient.patientId,
                     "token": payload.token.id,
                     "cardNumberChanged": payload.token.card.last4,
-                    "amount": Math.ceil(this.props.data.CalculationsData.grandTotalAmount),
+                    "amount": this.props.data.CalculationsData.grandTotalAmount.toFixed(2),
                     "cardType": payload.token.card.brand,
                     "serviceRequestId": this.props.data.SummaryDetails.serviceRequestId,
                     "serviceRequestVisitId": this.props.data.SummaryDetails.serviceRequestVisitId,
@@ -111,7 +111,7 @@ class _CardForm extends Component {
                             {this.state.cvcErrorMessage}
                         </small>
                     </div>
-                    <p><strong>Note:</strong> Information provided above is secure</p> 
+                    <p><strong>Note:</strong> Information provided above is secure.</p> 
                 </div>
                 <div id="card-errors" role="alert"></div>
                 <div className='col-md-12 mt-3'>

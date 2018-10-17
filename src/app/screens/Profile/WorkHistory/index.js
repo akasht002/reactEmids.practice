@@ -37,10 +37,10 @@ class WorkHistory extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.workhistoyFieldDetails.isWorking === ''){
-            this.setState({isWorking: false})
-        }else{
-            this.setState({isWorking: nextProps.workhistoyFieldDetails.isWorking})
+        if (nextProps.workhistoyFieldDetails.isWorking === '') {
+            this.setState({ isWorking: false })
+        } else {
+            this.setState({ isWorking: nextProps.workhistoyFieldDetails.isWorking })
         }
         this.setState({
             designation: nextProps.workhistoyFieldDetails.designation,
@@ -49,9 +49,8 @@ class WorkHistory extends Component {
             fromDate: nextProps.workhistoyFieldDetails.fromDate,
             toDate: nextProps.workhistoyFieldDetails.toDate,
             description: nextProps.workhistoyFieldDetails.description,
-            isWorking: this.state.isWorking,
+            isWorking: nextProps.workhistoyFieldDetails.isWorking,
             workHistoryId: nextProps.workhistoyFieldDetails.workHistoryId
-
         })
     }
 
@@ -121,7 +120,7 @@ class WorkHistory extends Component {
     }
 
     addWorkhistory = () => {
-        this.setState({workHistoryId: 0})
+        this.setState({ workHistoryId: 0 })
         if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate)) {
 
             const data = {
@@ -152,6 +151,12 @@ class WorkHistory extends Component {
 
     updateWorkHistory = () => {
         if (this.state.designation && this.state.company && this.state.fromDate && this.state.toDate) {
+            {
+                this.state.isWorking ?
+                this.setState({ toDate: '' })
+                :
+                this.setState({ toDate: this.state.toDate })
+            }
             const data = {
                 designation: this.state.designation,
                 company: this.state.company,
@@ -344,10 +349,14 @@ class WorkHistory extends Component {
                                 <Moment format='MMM YYYY' className="mr-2">
                                     {WorkHistoryList.fromDate}
                                 </Moment>
-                                - 
-                                <Moment format='MMM YYYY' className="ml-2">
-                                    {WorkHistoryList.toDate}
-                                </Moment>
+                                -
+                                 {WorkHistoryList.toDate === '01-01-1900' ?
+                                    <span className="ml-2">Present</span>
+                                    :
+                                    <Moment format='MMM YYYY' className="ml-2">
+                                        {WorkHistoryList.toDate}
+                                    </Moment>
+                                }
                             </span>
                         </div>
                         <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>

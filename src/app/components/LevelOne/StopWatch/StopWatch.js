@@ -1,34 +1,47 @@
 
 import React, { Component } from "react";
+import { convertUTCTime, getUTCTimeInLocal } from '../../../utils/dateUtility'
 
 function pad(num) {
     return ("0" + num).slice(-2);
 }
 
 export const formattedSeconds = (secs) => {
-
     var minutes = Math.floor(secs / 60);
-
     secs = secs % 60;
-
     var hours = Math.floor(minutes / 60)
-
     minutes = minutes % 60;
-
     return pad(hours) + ":" + pad(minutes) + ":" + pad(secs);
-
 }
 class StopWatch extends Component {
 
     constructor(props) {
         super(props);
+        let timer  = props.startTime ? convertUTCTime(props.startTime) : 0
+        if(props.stopTimer){
+            timer  = getUTCTimeInLocal(props.startTime, props.endTime)
+        }
         this.state = {
-            secondsElapsed: 0,
+            secondsElapsed: timer,
             laps: [],
             lastClearedIncrementer: null,
             startTimer: false
         };
         this.incrementer = null;
+    }
+
+    componentDidMount() {
+        if (!this.props.stopTimer) {
+            this.handleStartClick()
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.stopTimer !== nextProps.stopTimer) {
+            if (this.props.stopTimer) {
+                this.handleStopClick()
+            }
+        }
     }
 
     handleStartClick() {
@@ -64,11 +77,12 @@ class StopWatch extends Component {
     render() {
         return (
             <div className="stopwatch">
-                {this.state.startTimer ?
+                {/* {this.state.startTimer ?
                     <span className="TimerContent running">{formattedSeconds(this.state.secondsElapsed)}</span>
                     :
                     <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
-                }
+                } */}
+                <span className="TimerContent running">{formattedSeconds(this.state.secondsElapsed)}</span>
             </div>
         );
     }

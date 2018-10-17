@@ -74,6 +74,7 @@ export function startOrStopService(data, visitId, startedTime) {
         dispatch(startLoading());
         ServiceRequestPut(API.startOrStopService + visitId + '/' + data).then((resp) => {
             dispatch(saveStartedTime(startedTime))
+            dispatch(getPerformTasksList(visitId))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

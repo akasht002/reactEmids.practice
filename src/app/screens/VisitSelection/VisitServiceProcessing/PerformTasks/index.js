@@ -6,10 +6,13 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
-import { getPerformTasksList, addPerformedTask, startOrStopService } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { getPerformTasksList, addPerformedTask, startOrStopService, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
+import { SERVICE_STATES } from '../../../../constants/constants';
+import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { Path } from '../../../../routes'
 import './style.css'
 class PerformTasks extends Component {
 
@@ -32,7 +35,8 @@ class PerformTasks extends Component {
             disableCheckbox: true,
             caret: false,
             percentageCompletion: 0,
-            backDisabled: false
+            backDisabled: false,
+            stopTimer: false
         };
         this.checkedTask = [];
     };
@@ -44,7 +48,16 @@ class PerformTasks extends Component {
     }
 
     componentDidMount() {
-        this.props.getPerformTasksList(this.props.ServiceRequestVisitId);
+        if (this.props.ServiceRequestVisitId) {
+            this.props.getPerformTasksList(this.props.ServiceRequestVisitId);
+            this.props.getSummaryDetails(this.props.ServiceRequestVisitId);
+        } else {
+            this.props.history.push(Path.visitServiceList)
+        }
+
+        if (this.props.PerformTasksList.visitStatus === SERVICE_STATES.COMPLETED || this.props.PerformTasksList.visitStatus === SERVICE_STATES.PAYMENT_PENDING) {
+            this.setState({ stopTimer: true, disableCheckbox: false })
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -80,7 +93,7 @@ class PerformTasks extends Component {
             current_time = this.state.startedTime;
             this.setState({ stopTime: true })
         }
-        this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true })
+        this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
         this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
     }
 
@@ -112,8 +125,28 @@ class PerformTasks extends Component {
     render() {
         let startService = 1;
         let stopService = 0;
+        let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
+        let timerBtn;
+        const { visitStatus, visitStartTime, visitEndTime } = this.props.PerformTasksList
+
+        if (visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING) {
+            time = <StopWatch
+                stopTimer={visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING}
+                startTime={visitStartTime}
+                endTime={visitEndTime}
+            />
+        }
+
+        if (visitStatus === SERVICE_STATES.YET_TO_START) {
+            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, this.state.taskList.serviceRequestVisitId) }}>Start Service</a>
+        }
+
+        if (visitStatus === SERVICE_STATES.IN_PROGRESS) {
+            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(stopService, this.state.taskList.serviceRequestVisitId) }}>Stop Service</a>
+        }
+
         return (
-            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} >
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ {this.state.taskList.serviceRequestId}</span></h5>
@@ -124,12 +157,7 @@ class PerformTasks extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                {!this.state.backDisabled ?
-                                    <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
-                                    :
-                                    <i className="TitleContent backProfileIcon" />
-                                }
-
+                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestId}</span>
@@ -150,14 +178,14 @@ class PerformTasks extends Component {
                                     <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={0} />
                                 </div>
 
-                                {this.state.stopTime ?
+                                {visitStatus === SERVICE_STATES.PAYMENT_PENDING || visitStatus === SERVICE_STATES.COMPLETED ?
                                     <div className="col col-md-4 rightTimerWidget running">
                                         <div className="row rightTimerContainer">
                                             <div className="col-md-7 rightTimerContent FeedbackTimer">
                                                 <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                             </div>
                                             <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                                <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                                <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "HH:MM A")}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -166,17 +194,13 @@ class PerformTasks extends Component {
                                         <div className="row rightTimerContainer">
                                             <div className="col-md-7 rightTimerContent">
                                                 <span className="TimerContent">
-                                                    <StopWatch ref={instance => { this.child = instance; }} />
+                                                    {time}
                                                 </span>
                                             </div>
                                             <div className="col-md-5 rightTimerContent">
-                                                {this.state.startService ?
-                                                    <a className="btn btn-primary" onClick={() => { this.startService(startService, this.state.taskList.serviceRequestVisitId); this.child.handleStartClick(); }}>Start Service</a>
-                                                    :
-                                                    <a className="btn btn-primary" onClick={() => { this.startService(stopService, this.state.taskList.serviceRequestVisitId); this.child.handleStopClick(); }}>Stop Service</a>
-                                                }
-                                                {this.state.startedTime ?
-                                                    <span className="TimerStarted">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                                {timerBtn}
+                                                {visitStatus === SERVICE_STATES.IN_PROGRESS ?
+                                                    <span className="TimerStarted">Started at {getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "HH:MM A")}</span>
                                                     :
                                                     ''
                                                 }
@@ -247,11 +271,18 @@ class PerformTasks extends Component {
                                         </span>
                                         <span className="bottomTaskPercentage">{this.state.percentageCompletion}%</span>
                                     </div>
-                                    <Button
-                                        classname='btn btn-primary ml-auto'
-                                        onClick={this.onClickNext}
-                                        disable={this.state.disabled}
-                                        label={'Next'} />
+                                    {visitStatus === SERVICE_STATES.PAYMENT_PENDING || visitStatus === SERVICE_STATES.COMPLETED ?
+                                        <Button
+                                            classname='btn btn-primary ml-auto'
+                                            onClick={this.onClickNext}
+                                            label={'Next'} />
+                                        :
+                                        <Button
+                                            classname='btn btn-primary ml-auto'
+                                            onClick={this.onClickNext}
+                                            disable={this.state.disabled}
+                                            label={'Next'} />
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -273,7 +304,7 @@ class PerformTasks extends Component {
 
                     <ModalPopup
                         isOpen={this.state.isStopModalOpen}
-                        ModalBody={<span>Please stop the service to proceed</span>}
+                        ModalBody={<span>Please stop the service to proceed.</span>}
                         btn1="OK"
                         className="modal-sm"
                         headerFooter="d-none"
@@ -292,6 +323,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data)),
         addPerformedTask: (data) => dispatch(addPerformedTask(data)),
+        getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime))
     }
 };

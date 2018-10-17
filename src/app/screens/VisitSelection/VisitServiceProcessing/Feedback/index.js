@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
+import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
-import { Scrollbars, DashboardWizFlow, ModalPopup, StarRating } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components';
+import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
+import { Path } from '../../../../routes'
 import './style.css'
 
 class Feedback extends Component {
@@ -28,7 +31,11 @@ class Feedback extends Component {
     }
 
     componentDidMount() {
-        this.props.getQuestionsList();
+        if (this.props.ServiceRequestVisitId) {
+            this.props.getQuestionsList();
+        } else {
+            this.props.history.push(Path.visitServiceList)
+        }
     }
 
     handleSelected = (answer, id) => {
@@ -86,7 +93,7 @@ class Feedback extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <i className="TitleContent backProfileIcon"/>
+                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
@@ -112,19 +119,19 @@ class Feedback extends Component {
                                 </div>
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
-                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
-                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "HH:MM A")}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='CardContainers ServiceCategoryWidget'>
+                        <div className='CardContainers'>
                             <form className='ServiceContent'>
-                                <div className="FeedbackWidget mt-4">
+                                <div className="FeedbackWidget mt-5">
                                     {this.props.QuestionsList.length > 0 ?
                                         <div>
                                             {this.props.QuestionsList && this.props.QuestionsList.map((questionList, i) => {
@@ -228,6 +235,7 @@ function mapStateToProps(state) {
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
+        ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId
     };
 };
 
