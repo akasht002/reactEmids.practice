@@ -16,8 +16,9 @@ const defaultState = {
     },
     serviceCategories: null,
     submittedResponse: null,
-    serviceProviders: null,    
+    serviceProviders: null,
     ServiceRequestId: '',
+    typeList: []
 };
 
 const vistServiceHistoryState = (state = defaultState, action) => {
@@ -30,19 +31,19 @@ const vistServiceHistoryState = (state = defaultState, action) => {
         case vistServiceHistoryDetails.getVisitServiceHistoryDetailsSuccess:
             return {
                 ...state,
-                VisitServiceDetails: action.data
+                VisitServiceHistory: action.data
             };
-            case vistServiceHistoryDetails.updateVisitHistoryFilter:
+        case vistServiceHistoryDetails.updateVisitHistoryFilter:
             return {
                 ...state,
                 selectedFilterState: action.data
             }
-            case vistServiceHistoryDetails.getServiceRequestId:
+        case vistServiceHistoryDetails.getServiceRequestId:
             return {
                 ...state,
                 ServiceRequestId: action.data
             };
-        case vistServiceHistoryDetails.getServiceCategoriesSuccess:
+        case vistServiceHistoryDetails.getServiceCategorySuccess:
             return {
                 ...state,
                 serviceCategories: action.data
@@ -57,11 +58,26 @@ const vistServiceHistoryState = (state = defaultState, action) => {
                 ...state,
                 serviceProviders: action.data
             }
-            case vistServiceHistoryDetails.getVisitServiceHistoryByIdDetailSuccess:
+        case vistServiceHistoryDetails.getVisitServiceHistoryByIdDetailSuccess:
             return {
                 ...state,
                 VisitServiceDetails: action.data
             };
+        case vistServiceHistoryDetails.clearServiceTypes:
+            return {
+                ...state,
+                typeList: []
+            };
+        case vistServiceHistoryDetails.clearServiceProviders:
+            return {
+                ...state,
+                serviceProviders: action.data
+            }
+        case vistServiceHistoryDetails.getServiceTypeSuccess:
+            return {
+                ...state,
+                typeList: action.data
+            }
         default:
             return state;
     }
