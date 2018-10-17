@@ -64,7 +64,6 @@ class ParticipantsContainer extends Component {
             participantType: USERTYPES.SERVICE_PROVIDER
         };
         selectedParticipants = [...this.state.selectedParticipants];
-        selectedParticipants.push(this.state.selectedPatientDetails);
         selectedParticipants.push(loggedInUserData);
         data = {
             participantList: selectedParticipants,
@@ -97,16 +96,15 @@ class ParticipantsContainer extends Component {
     };
 
     onSelectPatient = (patientId) => {
-        if(patientId === null){
-            this.props.clearLinkedParticipants();
-            this.onClearSelectedParticipants();
-        }else{
+        this.props.clearLinkedParticipants();
+        this.onClearSelectedParticipants();
+        if(patientId !== null){
             let patientData = {
             userId: patientId,
             participantType: USERTYPES.PATIENT
         };
         let userId = this.props.loggedInUser.serviceProviderId;
-        this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
+        this.setState({ selectedPatientDetails: patientData, selectedParticipants: [...this.state.selectedParticipants, patientData] });
         let data = {
             userId: userId,
             participantType: USERTYPES.SERVICE_PROVIDER,

@@ -8,7 +8,7 @@ import {
     AsyncPut,
     AsyncPutWithUrl
 } from '../../services/http';
-import { USERTYPES } from '../../constants/constants';
+import { USERTYPES, Pagination } from '../../constants/constants';
 import { startLoading, endLoading } from '../loading/actions';
 
 
@@ -63,16 +63,14 @@ export const pushUnreadCount = (data) => {
 
 export function onFetchConversationSummary(pageNumber) {
     return (dispatch) => {
-        let pageNum = pageNumber ? pageNumber : 1;
-        let pageSize = 400;
         dispatch(startLoading());
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversationSummary 
             + USER_ID + '/'
             + USER_TYPE + '/'
-            + pageNum + '/'
-            + pageSize)
+            + pageNumber + '/'
+            + Pagination.pageSize)
             .then(resp => {
                 dispatch(setConversationSummary(resp.data));
                 dispatch(endLoading());
