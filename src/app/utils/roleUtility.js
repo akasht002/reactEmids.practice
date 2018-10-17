@@ -1,5 +1,6 @@
 
 import { store } from '../redux/store';
+import _ from 'lodash'
 
 export const extractRole = (screen) => {
     const userState =  store && store.getState().authState.userState;
@@ -23,7 +24,7 @@ export const extractRole = (screen) => {
 export const authorizePermission = (screen) => {
     let roles = extractRole(screen);
     Object.keys(roles).map((key) => {
-        document.getElementsByName(screen + '_' + key).forEach((dom) => {
+        _.forEach(document.getElementsByName(screen + '_' + key),(dom) => {
             dom.style.display = roles[key] ? 'inline-block' : 'none';
         });
     });
