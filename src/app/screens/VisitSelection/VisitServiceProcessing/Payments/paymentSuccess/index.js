@@ -6,6 +6,7 @@ import { VisitProcessingNavigationData } from '../../../../../data/VisitProcessi
 import { getFirstCharOfString } from '../../../../../utils/stringHelper'
 import { Scrollbars, DashboardWizFlow } from '../../../../../components';
 import { AsideScreenCover } from '../../../../ScreenCover/AsideScreenCover';
+import { getUTCFormatedDate } from "../../../../../utils/dateUtility";
 
 import '../style.css'
 
@@ -75,11 +76,11 @@ class PaymentSuccess extends Component {
                                 </div>
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
-                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
-                                        <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {this.props.startedTime && this.props.startedTime}</span>
+                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
                                         </div>
                                     </div>
                                 </div>

@@ -10,9 +10,6 @@ import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingW
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
-import {
-    getVisitServiceEligibilityStatus
-} from '../../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes'
 import './style.css'
@@ -40,19 +37,12 @@ class Summary extends Component {
         };
     };
 
-    // componentDidMount() {
-    //     if (this.props.ServiceRequestVisitId) {
-    //         this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
-    //         // this.props.getVisitServiceEligibilityStatus(this.props.patientDetails.ServiceRequestId)
-    //     } else {
-    //         this.props.history.push(Path.visitServiceList)
-    //     }
-    // }
-
     componentDidMount() {
-
+        if (this.props.ServiceRequestVisitId) {
             this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
-
+        } else {
+            this.props.history.push(Path.visitServiceList)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -241,7 +231,7 @@ class Summary extends Component {
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "HH:MM A")}</span>
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -377,9 +367,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         onUpdateTime: (data) => dispatch(onUpdateTime(data)),
-        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
-        // getVisitServiceEligibilityStatus: data =>
-        //     dispatch(getVisitServiceEligibilityStatus(data))
+        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data))
     }
 };
 

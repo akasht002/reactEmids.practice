@@ -123,7 +123,7 @@ class Feedback extends Component {
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "HH:MM A")}</span>
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
                                         </div>
                                     </div>
                                 </div>
