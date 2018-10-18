@@ -17,7 +17,7 @@ class App extends Component {
     .build();
 
     connection.on("UpdateChat", data => {
-     this.props.pushConversation(data.result);
+        this.props.pushConversation(data.result);
     });
 
     connection.on("UpdateConversation", data => {
@@ -38,14 +38,15 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    navigationState: state.navigationState
+    navigationState: state.navigationState,
+    currentConversationPage: state.asyncMessageState.openedAsyncPage
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     pushConversation: (data) => dispatch(pushConversation(data)),
-    pushConversationSummary: (data) => dispatch(pushConversationSummary(data))
+    pushConversationSummary: (data) => dispatch(pushConversationSummary(data)),
   }
 }
 

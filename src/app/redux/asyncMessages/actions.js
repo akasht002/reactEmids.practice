@@ -30,7 +30,8 @@ export const AsyncMessageActions = {
     clearConversationImageUrl: 'clear_conversation_image_url/asyncMessage',
     setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
     clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage',
-    setConversationCount: 'set_conversation_count'
+    setConversationCount: 'set_conversation_count/asyncMessage',
+    openedAsyncPage: 'set_opened_async_page/asynMessage'
 };
 
 export const setConversationSummary = (data) => {
@@ -59,6 +60,13 @@ export const pushUnreadCount = (data) => {
         type: AsyncMessageActions.pushUnreadCount,
         data
     }
+};
+
+export const openedAsyncPage = (data) =>{
+    return{
+        type: AsyncMessageActions.openedAsyncPage,
+        data
+    };
 };
 
 export function onFetchConversationSummary(pageNumber) {

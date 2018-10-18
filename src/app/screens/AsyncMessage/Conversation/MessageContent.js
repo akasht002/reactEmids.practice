@@ -151,7 +151,7 @@ class MessageContent extends Component {
                 return (
                     <div className={"chatMessage " + messageClass}>
                         <div className={"avatarContainer " + ordering}>
-                            <img key={index} alt="i" src={conversation.images ? conversation.images : require("../../../assets/images/Blank_Profile_icon.png")}
+                            <img key={index} alt="i" src={require("../../../assets/images/Blank_Profile_icon.png")}
                                 className="avatarImage" />
                         </div>
                         <div className="ChatBubble">

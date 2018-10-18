@@ -13,7 +13,8 @@ const defaultState = {
     dashboardMessageCount: null,
     conversationImageUrl: '',
     canCreateConversation: false,
-    conversationCount: 20
+    conversationCount: 20,
+    openedAsyncPage : null
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -109,6 +110,12 @@ const asyncMessageState = (state = defaultState, action) => {
                 ...state,
                 conversationCount: action.data
             };
+        case AsyncMessageActions.setopenedAsyncPage:{
+            return{
+                ...state,
+                openedAsyncPage: action.data
+            }
+        }
         default:
             return state;
     }

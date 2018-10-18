@@ -33,7 +33,7 @@ class MyConversation extends React.Component {
 
   render() {
     let entityUser = getUserInfo().isEntityServiceProvider;
-    let conversation_data = this.props.conversationDetail
+    let conversation_data = this.props.conversationDetail;
     let conversionDefault = entityUser ? <EntityUserMyConversionDefault />  : <MyConversionDefault />;
 
     let conversation_item = getLength(conversation_data) > 0

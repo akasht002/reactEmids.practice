@@ -15,8 +15,9 @@ import {
   PAGE_NO,
   PAGE_SIZE,
   MSG_TYPE,
-  DEFAULT_SERVICE_STATUS
+  DEFAULT_SERVICE_STATUS,
 } from '../../constants/constants'
+import { DashboardConversationPagination, USERTYPES } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http'
 
 export const DashboardDetail = {
@@ -210,9 +211,15 @@ export const getConversationDetailSuccess = data => {
 export function getConversationDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    MessageURLGet(API.getConversationSummary +
-      getUserInfo().serviceProviderId +
-      MSG_TYPE + `/${data.page_no}/${data.pae_size}`)
+    axios
+      .get(
+        messageURL +
+          API.getConversationSummary +
+          getUserInfo().serviceProviderId + '/' +
+          USERTYPES.SERVICE_PROVIDER + '/' +
+          DashboardConversationPagination.pageNumber + '/' +
+          DashboardConversationPagination.pageSize
+      )
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -237,9 +244,8 @@ export function getUnreadMessageCounts (userId) {
       .get(
         messageURL +
           API.getUnreadCount +
-          getUserInfo().serviceProviderId +
-          '?participantType=' +
-          MSG_TYPE
+          getUserInfo().serviceProviderId + '/' +
+          USERTYPES.SERVICE_PROVIDER
       )
       .then(resp => {
         dispatch(onUnreadCountSuccess(resp.data))
