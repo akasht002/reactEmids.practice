@@ -15,7 +15,11 @@ import { getUserInfo } from '../../services/http';
 
 class MyConversation extends React.Component {
   componentDidMount() {
-    this.props.getConversationDetail()
+    let data = {
+      page_no: '1',
+      pae_size: '10'
+    };
+    this.props.getConversationDetail(data)
     this.props.getUnreadMessageCounts()
   }
   componentWillReceiveProps(nextProps) {
@@ -29,7 +33,7 @@ class MyConversation extends React.Component {
 
   render() {
     let entityUser = getUserInfo().isEntityServiceProvider;
-    let conversation_data = this.props.conversationDetail
+    let conversation_data = this.props.conversationDetail;
     let conversionDefault = entityUser ? <EntityUserMyConversionDefault />  : <MyConversionDefault />;
 
     let conversation_item = getLength(conversation_data) > 0
@@ -61,7 +65,7 @@ class MyConversation extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getConversationDetail: () => dispatch(getConversationDetail()),
+    getConversationDetail: (data) => dispatch(getConversationDetail(data)),
     getUnreadMessageCounts: () => dispatch(getUnreadMessageCounts()),
     gotoConversation: (data, userId) => dispatch(goToConversation(data, userId)),
   }

@@ -1,11 +1,15 @@
 import React from 'react'
 import { Button } from '../../../components'
-import {
-  DEFAULT_SERVICE_REQUIEST_STATUS
-} from '../../../redux/constants/constants'
+import _ from 'lodash'
+
+export const isStatusInArray = (data) => {
+  let statusArray = [37,38];
+  if(_.indexOf(statusArray,data) !==-1) return true
+  return false
+}
 
 export const ServiceStatus = props => {
-  if (props.status.id !== DEFAULT_SERVICE_REQUIEST_STATUS) {
+  if (!isStatusInArray(props.status.id)) {    
     return (
       <React.Fragment>
         <Button

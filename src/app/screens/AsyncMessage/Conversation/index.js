@@ -10,7 +10,8 @@ import {
     leaveConversation,
     pushConversation,
     updateReadStatus,
-    ClearCurrentOpenConversation
+    ClearCurrentOpenConversation,
+    openedAsyncPage
 } from '../../../redux/asyncMessages/actions';
 import ModalTemplate from '../Modals/Modal';
 import { Preloader } from '../../../components';
@@ -45,6 +46,7 @@ class Conversation extends Component {
 
      componentWillUnmount(){
       this.props.clearCurrentOpenConversation();
+      this.props.openedAsyncPage(null);
   };
 
     static getDerivedStateFromProps(props, state) {
@@ -72,6 +74,7 @@ class Conversation extends Component {
             conversationId: conversationId
         };
         this.props.updateUnreadCount(data);
+        this.props.openedAsyncPage('conversation');
     };
 
     onChangeTitle = (e) => {
@@ -351,7 +354,8 @@ function mapDispatchToProps(dispatch) {
         leaveConversation: (data) => dispatch(leaveConversation(data)),
         pushConversation: (data) => dispatch(pushConversation(data)),
         updateUnreadCount: (data) => dispatch(updateReadStatus(data)),
-        clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation())
+        clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation()),
+        openedAsyncPage: (data) => dispatch(openedAsyncPage(data))
     }
 };
 

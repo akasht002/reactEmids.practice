@@ -107,3 +107,8 @@ export const ELIBILITY_STATUS = {
 export const Pagination = {
     pageSize : 10
 };
+
+export const DashboardConversationPagination = {
+    pageNumber : 1,
+    pageSize : 3
+};

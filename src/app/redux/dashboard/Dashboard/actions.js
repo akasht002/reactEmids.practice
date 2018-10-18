@@ -3,18 +3,21 @@ import {
   ServiceRequestGet,
   Put,
   Get,
-  ServiceRequestPost
+  ServiceRequestPost,
+  baseURL,
+  MessageURLGet
 } from '../../../services/http'
 import { API, messageURL } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
+import { getPersonalDetail } from '../../profile/PersonalDetail/actions'
 import {
   PAGE_NO,
   PAGE_SIZE,
-  MSG_SERVICE_PROVIDER,
   MSG_TYPE,
-  DEFAULT_SERVICE_STATUS
+  DEFAULT_SERVICE_STATUS,
 } from '../../constants/constants'
+import { DashboardConversationPagination, USERTYPES } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http'
 
 export const DashboardDetail = {
@@ -173,6 +176,8 @@ export function updateEntityServiceVisit (data) {
       })
   }
 }
+
+
 export function getServiceProviderDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
@@ -203,15 +208,17 @@ export const getConversationDetailSuccess = data => {
   }
 }
 
-export function getConversationDetail () {
+export function getConversationDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
     axios
       .get(
         messageURL +
           API.getConversationSummary +
-          getUserInfo().serviceProviderId +
-          MSG_TYPE
+          getUserInfo().serviceProviderId + '/' +
+          USERTYPES.SERVICE_PROVIDER + '/' +
+          DashboardConversationPagination.pageNumber + '/' +
+          DashboardConversationPagination.pageSize
       )
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
@@ -222,6 +229,8 @@ export function getConversationDetail () {
       })
   }
 }
+
+
 export const onUnreadCountSuccess = data => {
   return {
     type: DashboardDetail.set_unread_conversation_count_detail,
@@ -235,9 +244,8 @@ export function getUnreadMessageCounts (userId) {
       .get(
         messageURL +
           API.getUnreadCount +
-          getUserInfo().serviceProviderId +
-          '?participantType=' +
-          MSG_TYPE
+          getUserInfo().serviceProviderId + '/' +
+          USERTYPES.SERVICE_PROVIDER
       )
       .then(resp => {
         dispatch(onUnreadCountSuccess(resp.data))
@@ -249,16 +257,34 @@ export function getUnreadMessageCounts (userId) {
   }
 }
 
-export function updateStandByMode (data) {
-  return (dispatch, getState) => {
+export function updateStandByMode (data) { 
+  
+  return (dispatch) => {
     dispatch(startLoading())
+    
     Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
         dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        try{
+
+        }catch(e){
+          if (e instanceof TypeError) {
+            dispatch(endLoading())
+        } else if (e instanceof RangeError) {
+          dispatch(endLoading())
+        } else if (e instanceof EvalError) {
+          dispatch(endLoading())
+        } else {
+           
+        }
+        }
+        console.log(err)
+        
       })
   }
+
+
 }

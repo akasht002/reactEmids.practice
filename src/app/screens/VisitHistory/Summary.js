@@ -16,7 +16,7 @@ import { getFirstCharOfString } from '../../utils/stringHelper'
 import { getUserInfo } from '../../services/http'
 import {
   getQuestionsList,
-  saveAnswers
+  saveAnswerFeedback
 } from '../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
 
 
@@ -164,7 +164,7 @@ class VistSummary extends React.Component {
       answers: this.selectedAnswers,
       path:'visitHistory'
     }
-    this.props.saveAnswers(data)
+    this.props.saveAnswerFeedback(data)
     this.setState({
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
       isModalOpen: false
@@ -205,7 +205,7 @@ class VistSummary extends React.Component {
                           {i + 1}. {questionList.question}
                         </p>
                         <div className='FeedbackAnswerWidget'>
-                          {questionList.answers.map((answer, i) => {
+                          {questionList.answers.map((answer, j) => {
                             return (
                               <div
                                 className='form-radio col-md-3'
@@ -216,7 +216,7 @@ class VistSummary extends React.Component {
                                   id={answer.id}
                                   type='radio'
                                   value={answer.answerName}
-                                  name={questionList.feedbackQuestionnaireId}
+                                  name={'text'+i}
                                   onChange={e =>
                                     this.handleSelected(
                                       answer.answerName,
@@ -282,6 +282,16 @@ class VistSummary extends React.Component {
     
   }
 
+  calculate = (totalTaskCompleted, totalTask)=>{
+    if (totalTaskCompleted !== 0 && totalTask !== 0) {
+      return Math.floor(totalTaskCompleted / totalTask * 100)
+    } else if (totalTask === 0) {
+      return 0
+    } else {
+      return 0
+    }
+  }
+
   render () {
     let summaryDetail = this.props.SummaryDetails
     let startdate = moment(summaryDetail.visitStartTime)
@@ -291,7 +301,6 @@ class VistSummary extends React.Component {
     let modalContent = this.getFeedback()
     let modalTitle = 'Feedback'
     let modalType = ''
-    let feedbackContent = []
     let progress_bar  = summaryDetail.totalTask !== 0 && summaryDetail.totalTask !==0 ?(this.props.taskCompleted/this.props.totaltask) * 100:0
     return (
       <React.Fragment>
@@ -327,11 +336,11 @@ class VistSummary extends React.Component {
                       <span className='bottomTaskName'>Tasks</span>
                       <span className='bottomTaskRange'>
                         <i
-                          style={{ width: progress_bar }}
+                          style={{ width: this.calculate(summaryDetail.totalTaskCompleted,summaryDetail.totalTask) }}
                           className='bottomTaskCompletedRange'
                         />
                       </span>
-                      <span className='bottomTaskPercentage'>{progress_bar}%</span>
+                      <span className='bottomTaskPercentage'>{this.calculate(summaryDetail.totalTaskCompleted,summaryDetail.totalTask)}%</span>
                     </div>
                   </div>
                 </div>
@@ -457,7 +466,7 @@ class VistSummary extends React.Component {
 function mapDispatchToProps (dispatch) {
   return {
     getQuestionsList: () => dispatch(getQuestionsList()),
-    saveAnswers: data => dispatch(saveAnswers(data))
+    saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data))
   }
 }
 

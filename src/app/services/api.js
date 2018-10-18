@@ -9,7 +9,7 @@ export const baseURLServiceRequest = "http://52.172.45.185:9008/api/";
 //export const authURL = "http://52.172.45.185:9005/";
 export const authURL = "http://localhost:5000/";
 
-export const messageURL = 'http://52.172.45.185:9002/api/'
+export const messageURL = 'https://chqa-vp-ui.coreoflowsandbox.com/api/';
 
 export const Api = axios.create({
     baseURL: baseURL,
@@ -110,7 +110,7 @@ export const API = {
     getAboutUsContent: 'Common/LookupConfig/AboutUsWeb',
     getConverstionCountByUserId: 'Conversation/Count/',
     getAffiliationDetail:'ServiceProviderLookUp/Affiliation',
-    updateStandByMode:'api/ServiceProvider/UpdateStandByMode/',
+    updateStandByMode:'ServiceProvider/UpdateStandByMode/',
     getUserRoles: "User/GetUserRoles",
     getEntityServiceProviderList: 'ServiceProvider/ByEntity/',
     assignServiceVisit: 'ServiceRequest/AssignServiceVisit',

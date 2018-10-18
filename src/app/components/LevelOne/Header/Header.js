@@ -32,12 +32,12 @@ class CoreoWizHeader extends Component {
                 },
                 {
                     name: "videoChat",
-                    link: "about",
+                    link: 'telehealth',
                     status: true,
                 },
                 {
                     name: "messages",
-                    link: "login",
+                    link: "messagesummary",
                     status: true,
                 },
                 {
@@ -81,7 +81,7 @@ class CoreoWizHeader extends Component {
                 return (
                     <NavItem className={menuName + "Widget navIconWidget " + Separator}>
                         <NavLink className={clsName}
-                            href={menu.link} />
+                            onClick={() => { this.props.onClick(menu.link) }} />
                     </NavItem>
                 )
             }
