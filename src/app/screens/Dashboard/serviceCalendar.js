@@ -67,13 +67,14 @@ class serviceCalendar extends React.Component {
   }
 
   MonthChange = e => {
-    let curDate = this.state.startYear + ',' + e.value + ',01'
+    let curDate = this.state.startYear + ',' + e.value + ',' + this.state.currentDate
     curDate = new Date(curDate)
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
       selectedMonth: e
     })
+    this.props.getServiceProviderVists(moment(curDate).format('YYYY-MM-DD'))
   }
 
   clickNextWeek = () => {
@@ -119,8 +120,10 @@ class serviceCalendar extends React.Component {
       startYear: moment(today).format('YYYY'),
       startDate: moment(today).format(),
       reportDay: moment(today).format(),
-      startMonth: moment(today).format('MMM')
+      startMonth: moment(today).format('MMM'),
+      currentDate: moment().format('DD')
     })
+    this.props.getServiceProviderVists(moment().format('YYYY-MM-DD'))
   }
 
   handleDayChange = e => {
@@ -132,7 +135,8 @@ class serviceCalendar extends React.Component {
       selectedMonth: {
         label: getDate.format('MMM'),
         value: getDate.format('MMM')
-      }
+      },
+      currentDate: getDate.format('DD')
     })
   }
 
