@@ -4,7 +4,8 @@ import {
   Put,
   Get,
   ServiceRequestPost,
-  baseURL
+  baseURL,
+  MessageURLGet
 } from '../../../services/http'
 import { API, messageURL } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
@@ -174,6 +175,8 @@ export function updateEntityServiceVisit (data) {
       })
   }
 }
+
+
 export function getServiceProviderDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
@@ -204,16 +207,12 @@ export const getConversationDetailSuccess = data => {
   }
 }
 
-export function getConversationDetail () {
+export function getConversationDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    axios
-      .get(
-        messageURL +
-          API.getConversationSummary +
-          getUserInfo().serviceProviderId +
-          MSG_TYPE
-      )
+    MessageURLGet(API.getConversationSummary +
+      getUserInfo().serviceProviderId +
+      MSG_TYPE + `/${data.page_no}/${data.pae_size}`)
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
         dispatch(endLoading())
@@ -223,6 +222,8 @@ export function getConversationDetail () {
       })
   }
 }
+
+
 export const onUnreadCountSuccess = data => {
   return {
     type: DashboardDetail.set_unread_conversation_count_detail,
