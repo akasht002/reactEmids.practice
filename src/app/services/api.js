@@ -110,7 +110,7 @@ export const API = {
     getAboutUsContent: 'Common/LookupConfig/AboutUsWeb',
     getConverstionCountByUserId: 'Conversation/Count/',
     getAffiliationDetail:'ServiceProviderLookUp/Affiliation',
-    updateStandByMode:'api/ServiceProvider/UpdateStandByMode/',
+    updateStandByMode:'ServiceProvider/UpdateStandByMode/',
     getUserRoles: "User/GetUserRoles",
     getEntityServiceProviderList: 'ServiceProvider/ByEntity/',
     assignServiceVisit: 'ServiceRequest/AssignServiceVisit',
