@@ -58,7 +58,8 @@ class VisitServiceDetails extends Component {
       visitServiceDetails: nextProps.VisitServiceDetails,
       visitServiceSchedule: nextProps.VisitServiceSchedule,
       patientId: nextProps.VisitServiceDetails.patient &&
-        nextProps.VisitServiceDetails.patientId
+        nextProps.VisitServiceDetails.patientId,
+        serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails && nextProps.VisitServiceDetails.serviceRequestTypeDetails[0].serviceRequestTypeDetailsId
     })
   }
 
@@ -123,16 +124,19 @@ class VisitServiceDetails extends Component {
   }
 
   render() {
+    let defaultCheck = '';
     let sliderTypes =
       this.state.visitServiceDetails.serviceRequestTypeDetails &&
       this.state.visitServiceDetails.serviceRequestTypeDetails.map(
         (serviceTypes, index) => {
+          index === 0 ? defaultCheck = true : defaultCheck = false;
           let catNum = index + 1
           return (
             <div className='ServiceTypeList'>
               <input
                 id={serviceTypes.serviceRequestTypeDetailsId}
                 type='radio'
+                defaultChecked = {defaultCheck}
                 className='ServiceTypeInput'
                 name='serviceType'
                 value={catNum}
