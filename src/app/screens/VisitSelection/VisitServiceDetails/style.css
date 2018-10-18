@@ -527,7 +527,7 @@ ul li.list-group-item.EligibilityList{
 }
 
 .TabBody .ServiceTypeList{
-    height: 158px;
+    height: 184px;
 }
 
 .TabBody .ServiceTasks.Summary{
@@ -535,7 +535,7 @@ ul li.list-group-item.EligibilityList{
 }
 
 .TabBody .SPAvailWidget{
-    padding-left: 0;
+    margin: 0 -22px;
 }
 
 a.ProfileCardHeaderLink:hover{
