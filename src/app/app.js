@@ -17,15 +17,11 @@ class App extends Component {
     .build();
 
     connection.on("UpdateChat", data => {
-      if(this.props.currentConversationPage === 'conversation'){
         this.props.pushConversation(data.result);
-      }
     });
 
     connection.on("UpdateConversation", data => {
-      if(this.props.currentConversationPage === 'conversationSummary'){
        this.props.pushConversationSummary(data.result);
-      }
     });
 
     connection.start()
