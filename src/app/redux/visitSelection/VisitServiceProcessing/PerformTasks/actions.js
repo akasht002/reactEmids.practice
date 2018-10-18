@@ -57,11 +57,11 @@ export function addPerformedTask(data) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
-            dispatch(push(Path.summary))
+            dispatch(push(Path.feedback))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
-            dispatch(push(Path.summary))
+            dispatch(push(Path.feedback))
         })
     }
 };
@@ -74,6 +74,7 @@ export function startOrStopService(data, visitId, startedTime) {
         dispatch(startLoading());
         ServiceRequestPut(API.startOrStopService + visitId + '/' + data).then((resp) => {
             dispatch(saveStartedTime(startedTime))
+            dispatch(getPerformTasksList(visitId))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

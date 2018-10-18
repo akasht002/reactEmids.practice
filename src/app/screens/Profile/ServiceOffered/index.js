@@ -5,6 +5,8 @@ import { ProfileModalPopup, ModalPopup } from "../../../components";
 import ServiceOfferedContent from '../ServiceOffered/serviceOfferedContent'
 import { getServiceOffered, addServiceOfferd, editServiceOffered, toggleCollapseCategory, toggleCollapseDetails } from '../../../redux/profile/ServiceOffered/actions';
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import _ from 'lodash'
+
 
 class ServiceOffered extends React.Component {
 
@@ -71,7 +73,7 @@ class ServiceOffered extends React.Component {
 
         let listOfServicesOffered = this.props.serviceOfferedList && this.props.serviceOfferedList.map((serviceList) => {
             const services = [];
-            serviceList.serviceTypeModel && serviceList.serviceTypeModel.forEach(element => {
+            serviceList.serviceTypeModel && _.forEach(serviceList.serviceTypeModel, element => {
                 services.push(element.serviceTypeDescription);
             });
 

@@ -55,13 +55,23 @@ class _CardForm extends Component {
                     "patientId": this.props.data.SummaryDetails.patient.patientId,
                     "token": payload.token.id,
                     "cardNumberChanged": payload.token.card.last4,
-                    "amount": Math.ceil(this.props.data.CalculationsData.grandTotalAmount),
                     "cardType": payload.token.card.brand,
                     "serviceRequestId": this.props.data.SummaryDetails.serviceRequestId,
                     "serviceRequestVisitId": this.props.data.SummaryDetails.serviceRequestVisitId,
                 }
-                this.props.token(data);
-                this.props.claimSubmission();
+
+                this.props.eligibilityData.active === true && this.props.eligibilityData.authorizationRequired === false ?
+                    data.amount = this.props.data.CalculationsData.copayAmount
+                    :
+                    data.amount = this.props.data.CalculationsData.grandTotalAmount.toFixed(2);
+
+                if (this.props.eligibilityData.active === true && this.props.eligibilityData.authorizationRequired === false) {
+                    this.props.token(data)
+                    this.props.claimSubmission()
+                } else {
+                    this.props.token(data)
+                }
+
             } else {
                 if (payload.error.code === 'incomplete_number') {
                     this.setState({ cardErrorMessage: payload.error.message, expErrorMessage: '', cvcErrorMessage: '' })
@@ -111,7 +121,7 @@ class _CardForm extends Component {
                             {this.state.cvcErrorMessage}
                         </small>
                     </div>
-                    <p><strong>Note:</strong> Information provided above is secure</p> 
+                    <p><strong>Note:</strong> Information provided above is secure.</p>
                 </div>
                 <div id="card-errors" role="alert"></div>
                 <div className='col-md-12 mt-3'>
@@ -138,6 +148,7 @@ class CheckoutForm extends React.Component {
                     <CardForm
                         token={this.chargeData}
                         data={this.props.summaryAmount}
+                        eligibilityData={this.props.eligibilityCheck}
                         claimSubmission={this.props.claimSubmission}
                     />
                 </Elements>
@@ -155,7 +166,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState,
-        SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails
+        SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
+        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus
     };
 };
 

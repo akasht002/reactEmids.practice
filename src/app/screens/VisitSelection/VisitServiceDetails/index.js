@@ -24,8 +24,7 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 import { MORNING, AFTERNOON, EVENING } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
-import { ELIBILITY_STATUS } from '../../../constants/constants'
-
+import { SERVICE_VISIT_STATUS } from '../../../constants/constants'
 class VisitServiceDetails extends Component {
 
   constructor(props) {
@@ -227,19 +226,6 @@ class VisitServiceDetails extends Component {
         return obj.isPrimaryAddress === true
       })
 
-    let eligibilityComponent = Object.keys(ELIBILITY_STATUS).map(item => (
-      <li class="list-group-item EligibilityList">
-        <div className="EligibilityStatus">
-          {ELIBILITY_STATUS[item]}
-        </div>
-        <div className="EligibilityItem">
-          {this.props.VisitServiceElibilityStatus[item] === false ? 'false' :
-            this.props.VisitServiceElibilityStatus[item] === true ?
-              'true' : this.props.VisitServiceElibilityStatus[item]}
-        </div>
-      </li>
-    ))
-
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
@@ -365,19 +351,6 @@ class VisitServiceDetails extends Component {
                         }}
                       >
                         Schedule
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: this.state.activeTab === '3'
-                        })}
-                        onClick={() => {
-                          this.toggle('3'),
-                          this.checkEligibility();
-                        }}
-                      >
-                        Eligibility Status
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -525,7 +498,7 @@ class VisitServiceDetails extends Component {
                               </div>
                               <div>
                                 <div class='ScheduleRowButton'>
-                                  {ScheduleList.visitStatusName === 'Completed'
+                                  {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.COMPLETED
                                     ? <a
                                       className='btn btn-outline-primary'
                                       to='/'
@@ -533,7 +506,7 @@ class VisitServiceDetails extends Component {
                                       <i className='ProfileIconEye' />Summary
                                       </a>
                                     : ''}
-                                  {ScheduleList.visitStatusName === 'Scheduled'
+                                  {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.SCHEDULED
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
@@ -544,7 +517,7 @@ class VisitServiceDetails extends Component {
                                       Start Visit
                                       </a>
                                     : ''}
-                                  {ScheduleList.visitStatusName === 'InProgress'
+                                  {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.INPROGRESS
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
@@ -555,18 +528,22 @@ class VisitServiceDetails extends Component {
                                       In Progress
                                       </a>
                                     : ''}
+                                    {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.PAYMENTPENDING
+                                    ? <a
+                                      className='btn btn-outline-primary'
+                                      onClick={() =>
+                                        this.visitProcessing(
+                                          ScheduleList.serviceRequestVisitId
+                                        )}
+                                    >
+                                      Payment Pending
+                                      </a>
+                                    : ''}
                                 </div>
                               </div>
                             </div>
                           )
                         })}
-                    </TabPane>
-                    <TabPane tabId='3' className='TabBody'>
-                      <div className='ScheduleTableHeader EligibilityWidget'>
-                        <ul class="list-group width100">
-                          {eligibilityComponent}
-                        </ul>
-                      </div>
                     </TabPane>
                   </TabContent>
                 </div>

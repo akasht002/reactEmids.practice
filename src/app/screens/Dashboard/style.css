@@ -301,12 +301,13 @@ li div.dropdown-menu{
     font-size: 14px;
     line-height: 14px;
     color: #8c8c8c;
-    margin-bottom: 10px;
+    margin: 0;
     word-wrap: break-word;
     text-transform: capitalize;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding: 0 0 8px 0;
 }
 
 .BlockImageDetailsDate{

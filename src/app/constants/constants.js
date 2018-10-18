@@ -54,10 +54,17 @@ export const SERVICE_STATUS = {
     "CLOSED": "Closed",
     "INPROGRESS": "InProgress",
     "CANCELLED": "Cancelled",
-    "INPROGRESS": "InProgress",
     "COMPLETED": "Completed",
     "NOT INTERESTED": "Not Interested"
 }
+
+export const SERVICE_VISIT_STATUS = {
+    COMPLETED: 'Completed',
+    SCHEDULED: 'Scheduled',
+    INPROGRESS: 'InProgress',
+    PAYMENTPENDING: 'PaymentPending'
+}
+
 
 export const SCREENS = {
     PROFILE: 'Profile',
@@ -81,6 +88,14 @@ export const PERMISSIONS = {
     DELETE: 'Delete'
 }
 
+export const COMPLETED_TASK_STATUS_ID =45
+export const PAYMENT_PENDING_STATUS = 90
+export const SERVICE_STATES = {
+  YET_TO_START: "YET_TO_START",
+  IN_PROGRESS: "IN_PROGRESS",
+  COMPLETED: "COMPLETED",
+  PAYMENT_PENDING: "PAYMENT_PENDING"
+}
 export const ELIBILITY_STATUS = {
     "authorizationRequired": "Coverage Copay Authorization Required",
     "amount": "Coverage Copay Authorization Amount",
