@@ -13,8 +13,9 @@ import {
   PAGE_SIZE,
   MSG_SERVICE_PROVIDER,
   MSG_TYPE,
-  DEFAULT_SERVICE_STATUS
+  DEFAULT_SERVICE_STATUS,
 } from '../../constants/constants'
+import { DashboardConversationPagination, USERTYPES } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http'
 
 export const DashboardDetail = {
@@ -210,8 +211,10 @@ export function getConversationDetail () {
       .get(
         messageURL +
           API.getConversationSummary +
-          getUserInfo().serviceProviderId +
-          MSG_TYPE
+          getUserInfo().serviceProviderId + '/' +
+          USERTYPES.SERVICE_PROVIDER + '/' +
+          DashboardConversationPagination.pageNumber + '/' +
+          DashboardConversationPagination.pageSize
       )
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
@@ -235,9 +238,8 @@ export function getUnreadMessageCounts (userId) {
       .get(
         messageURL +
           API.getUnreadCount +
-          getUserInfo().serviceProviderId +
-          '?participantType=' +
-          MSG_TYPE
+          getUserInfo().serviceProviderId + '/' +
+          USERTYPES.SERVICE_PROVIDER
       )
       .then(resp => {
         dispatch(onUnreadCountSuccess(resp.data))

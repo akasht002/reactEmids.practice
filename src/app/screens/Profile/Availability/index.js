@@ -95,7 +95,7 @@ class Availability extends Component {
     }
 
     getAvailableDays = () => {
-        return this.state.availableDays.days && this.state.availableDays.days.map(day => {
+        return this.state.availableDays && this.state.availableDays.days && this.state.availableDays.days.map(day => {
            let slots = this.getSlots(day.slots);
            return (
                this.slotList < 1 ? '' :
@@ -135,7 +135,7 @@ class Availability extends Component {
         let availableDays = [], modalContent, modalTitle, availableSlot= '', blackoutModalContent='';
         if (this.props.availableDays.days && this.props.availableDays.days.length > 0) {
             availableDays = this.getAvailableDays();
-            availableSlot = availableDays.every(slot => {
+            availableSlot = availableDays && availableDays.every(slot => {
                      if (slot === "") {
                          return true;
                      } else {
