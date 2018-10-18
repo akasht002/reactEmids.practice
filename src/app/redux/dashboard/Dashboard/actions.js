@@ -3,15 +3,16 @@ import {
   ServiceRequestGet,
   Put,
   Get,
-  ServiceRequestPost
+  ServiceRequestPost,
+  baseURL
 } from '../../../services/http'
 import { API, messageURL } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
+import { getPersonalDetail } from '../../profile/PersonalDetail/actions'
 import {
   PAGE_NO,
   PAGE_SIZE,
-  MSG_SERVICE_PROVIDER,
   MSG_TYPE,
   DEFAULT_SERVICE_STATUS
 } from '../../constants/constants'
@@ -249,16 +250,34 @@ export function getUnreadMessageCounts (userId) {
   }
 }
 
-export function updateStandByMode (data) {
-  return (dispatch, getState) => {
+export function updateStandByMode (data) { 
+  
+  return (dispatch) => {
     dispatch(startLoading())
+    
     Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
         dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        try{
+
+        }catch(e){
+          if (e instanceof TypeError) {
+            dispatch(endLoading())
+        } else if (e instanceof RangeError) {
+          dispatch(endLoading())
+        } else if (e instanceof EvalError) {
+          dispatch(endLoading())
+        } else {
+           
+        }
+        }
+        console.log(err)
+        
       })
   }
+
+
 }

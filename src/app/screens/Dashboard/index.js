@@ -7,6 +7,7 @@ import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
+import {getPersonalDetail} from '../../redux/profile/PersonalDetail/actions'
 import { getUserInfo } from '../../services/http'
 import './dashboard.css'
 import './styles/toggleSwitch.css'
@@ -21,20 +22,20 @@ class Dashboard extends React.Component {
       isChecked: false
     }
   }
+  componentDidMount() {
+    this.props.getPersonalDetail()
+  }
+  componentWillReceiveProps(nextProps) {
+   this.setState({ isChecked: nextProps.profileState.standByMode })
+  }
 
   toggle () {
     this.setState({
       isOpen: !this.state.isOpen
     })
   }
-
-  handleChecked = ()=> {
-    this.setState({isChecked: !this.state.isChecked});
-    this.props.updateStandByMode(this.state.isChecked)
-  }
   
   render() {
-
     let entityUser = getUserInfo().isEntityServiceProvider;
 
     let serviceRequestTemplate = entityUser ? "" :
@@ -52,7 +53,10 @@ class Dashboard extends React.Component {
           <div className='ProfileHeaderButton'>
             <span className='standBy'>Stand-by mode </span>
             <label className='switch'>
-              <input type='checkbox' checked={this.state.isChecked} onChange={ this.handleChecked } />
+              <input type='checkbox' checked={this.state.isChecked} onChange={ e => {
+                this.setState({isChecked: !e.target.checked})
+                this.props.updateStandByMode(this.state.isChecked)
+               }} />
               <span className='sliderSwitch round' />
             </label>
           </div>
@@ -79,12 +83,19 @@ class Dashboard extends React.Component {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    updateStandByMode:data => dispatch(updateStandByMode(data))
+    updateStandByMode:data => dispatch(updateStandByMode(data)),
+    getPersonalDetail:() => dispatch(getPersonalDetail())
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    profileState: state.profileState.PersonalDetailState.personalDetail
   }
 }
 
 
 export default withRouter(
-  connect(null, mapDispatchToProps)(Dashboard)
+  connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 )
 
