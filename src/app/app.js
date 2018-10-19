@@ -55,8 +55,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    pushConversation: (data) => dispatch(pushConversation(data)),
-    pushConversationSummary: (data) => dispatch(pushConversationSummary(data)),
     getConversationItemSignalR: (conversationId) => dispatch(getConversationItemSignalR(conversationId)),
     getConversationSummaryItemSignalR: (conversationId, messageId) => dispatch(getConversationSummaryItemSignalR(conversationId, messageId))
   }
