@@ -48,10 +48,74 @@ export const pushConversation = (data) => {
     }
 };
 
-export const pushConversationSummary = (data) => {
-    return {
-        type: AsyncMessageActions.pushConversationSummary,
-        data
+// export const pushConversationSummary = (data) => {
+//     return {
+//         type: AsyncMessageActions.pushConversationSummary,
+//         data
+//     }
+// };
+
+export function getConversationSummaryItemSignalR(conversationId){
+    return (dispatch, getState) => {
+        let state = getState();
+        if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
+            let userId = getUserInfo().serviceProviderId;
+            let userType = USERTYPES.SERVICE_PROVIDER;
+            dispatch(startLoading());
+            AsyncGet(API.getConversationSummary 
+                + conversationId + '/'
+                + userId + '/' 
+                + userType
+            )
+            .then(resp => {
+                dispatch(getConversationSummaryItemSignalRSuceess(resp.data));
+                dispatch(endLoading());
+            })
+            .catch(err => {
+                dispatch(endLoading())
+            })
+        }
+    };
+};
+
+const getConversationSummaryItemSignalRSuceess = (data) => {
+    return(dispatch, getState) => {
+        let state = getState();
+        let conversationSummaryData = [...state.asyncMessageState.conversationSummary];
+        const index = conversationSummaryData.indexOf(
+            conversationSummaryData.filter(el => el.conversationId === data.conversationId)[0]
+        );
+        if(index !== -1){
+            conversationSummaryData.splice(index, 1);
+        }
+        conversationSummaryData = [data, ...conversationSummaryData];
+        dispatch(setConversationSummary(conversationSummaryData));
+        dispatch(getUnreadMessageCounts());
+    };
+};
+
+
+export function getConversationItemSignalR(conversationId, messageId){
+    return (dispatch, getState) => {
+        let state = getState();
+        if(state.asyncMessageState.openedAsyncPage === 'conversation'){
+            let userId = getUserInfo().serviceProviderId;
+            let userType = USERTYPES.SERVICE_PROVIDER;
+            dispatch(startLoading());
+            AsyncGet(API.getConversationMessage 
+                + messageId + '/'
+                + conversationId + '/'
+                + userId + '/' 
+                + userType
+            )
+            .then(resp => {
+                dispatch(pushConversation(resp.data));
+                dispatch(endLoading());
+            })
+            .catch(err => {
+                dispatch(endLoading())
+            })
+        };
     }
 };
 

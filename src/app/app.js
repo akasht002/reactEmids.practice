@@ -5,7 +5,9 @@ import * as SignalR from '@aspnet/signalr';
 import {
   pushConversation,
   pushUnreadCount,
-  pushConversationSummary
+  pushConversationSummary,
+  getConversationItemSignalR,
+  getConversationSummaryItemSignalR
 } from './redux/asyncMessages/actions';
 
 class App extends Component {
@@ -16,12 +18,20 @@ class App extends Component {
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
-    connection.on("UpdateChat", data => {
-        this.props.pushConversation(data.result);
-    });
+    // connection.on("UpdateChat", data => {
+    //     this.props.pushConversation(data.result);
+    // });
 
-    connection.on("UpdateConversation", data => {
-       this.props.pushConversationSummary(data.result);
+    // connection.on("UpdateConversation", data => {
+    //    this.props.pushConversationSummary(data.result);
+    // });
+
+    connection.on("UpdateChat", data => {
+      const index = data.ParticipantList.indexOf(this.props.loggedInUser.userId);
+      if(index !== -1){
+        this.props.getConversationSummaryItemSignalR(data.conversationId);
+        this.props.getConversationItemSignalR(data.conversationId, data.messageId)
+      };
     });
 
     connection.start()
@@ -47,6 +57,8 @@ function mapDispatchToProps(dispatch) {
   return {
     pushConversation: (data) => dispatch(pushConversation(data)),
     pushConversationSummary: (data) => dispatch(pushConversationSummary(data)),
+    getConversationItemSignalR: (conversationId) => dispatch(getConversationItemSignalR(conversationId)),
+    getConversationSummaryItemSignalR: (conversationId, messageId) => dispatch(getConversationSummaryItemSignalR(conversationId, messageId))
   }
 }
 

@@ -61,7 +61,11 @@ const asyncMessageState = (state = defaultState, action) => {
                     ...state.conversation,
                     messages: [
                         ...state.conversation.messages,
-                        action.data
+                        action.data.messages[0]
+                    ],
+                    participantList: [
+                        ...state.conversation.participantList,
+                        action.data.participantList
                     ]
                 }
             };
