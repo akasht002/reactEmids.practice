@@ -274,9 +274,9 @@ class VisitServiceDetails extends Component {
                 <div class='LeftPostedBy'>
                   <div class='PostedByImageContainer'>
                   {
-                    this.state.visitServiceDetails.image ?  <img
+                    this.state.visitServiceDetails.patient ?  <img
                         className='ProfileImage'
-                        src={this.state.visitServiceDetails.image}
+                        src={this.state.visitServiceDetails.patient.imageString}
                         alt='patientImage'
                        /> :  <img
                           className='ProfileImage'

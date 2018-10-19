@@ -26,3 +26,5 @@ export const TeleHealthSettings = {
     maxVideoCallHourInMs: 7200000,
     sessionInactiveInMs: 1800000
 }
+
+export const DEMO = 'false'

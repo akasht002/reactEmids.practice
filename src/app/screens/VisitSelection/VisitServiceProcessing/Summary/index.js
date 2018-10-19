@@ -228,7 +228,7 @@ class Summary extends Component {
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
+                                            <span className="TimerContent running">{this.props.CalculationsData.totalChargableTime}</span>
                                         </div>
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
