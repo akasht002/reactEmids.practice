@@ -110,7 +110,7 @@ export function getVisitServiceDetails(data) {
 export function getVisitServiceSchedule(data) {
   return dispatch => {
     dispatch(startLoading())
-    ServiceRequestGet(API.getServiceRequestSchedule + data)
+    ServiceRequestGet(API.getServiceRequestSchedule + `${data}/${getUserInfo().serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceScheduleSuccess(resp.data))
         dispatch(endLoading())
