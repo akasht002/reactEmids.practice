@@ -89,7 +89,9 @@ export function getUserRoles() {
     return (dispatch) => {
         dispatch(startLoading());
         CareTeamGet(API.getUserRoles).then((response) => {
-            dispatch(setUserRoles(objectCreationRoles(response.data)));
+            if (response.data.length > 0) {
+                dispatch(setUserRoles(objectCreationRoles(response.data)));
+            }
             dispatch(push(Path.dashboard));
             dispatch(endLoading());
         })

@@ -60,6 +60,9 @@ class PersonalDetail extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     this.setState({
       imageProfile: nextProps.profileImgData.image,
+      uploadedImageFile: nextProps.profileImgData.image
+        ? nextProps.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png'),
       firstName: nextProps.personalDetail.firstName,
       lastName: nextProps.personalDetail.lastName,
       age: nextProps.personalDetail.age,
@@ -334,8 +337,12 @@ class PersonalDetail extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
+              <li>Click on Change Photo</li>
+              <li>Select the image from your desktop/gallery</li>
               <li>The image should not exceed beyond 2MB.</li>
               <li>The image should be either of PNG or JPEG/JPG type only.</li>
+              <li>Once select you can crop the image by dragging the cursor the image</li>
+              <li>Click on Save</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>

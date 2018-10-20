@@ -83,8 +83,7 @@ class VerifyContact extends React.Component {
                                     <span className="d-block my-3 text-muted">A temporary passcode will be sent to your registered Contact Number</span>
                                 </div>
                                 <div className={"tempPassForm " + this.state.invisible}>
-
-                                    <form className="form my-2 my-lg-0">
+                                    <div className="form my-2 my-lg-0">
                                         <Input
                                             id="passcode"
                                             autoComplete="off"
@@ -94,7 +93,7 @@ class VerifyContact extends React.Component {
                                             value={checkSpace(this.state.temporaryPassCode)}
                                             textChange={(e) => this.onChangePassword(e)}
                                         />
-                                    </form>
+                                    </div>
                                 </div>
                                 {this.props.isPasscodeNotMatch && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Please enter valid Passcode.</span>}
                                 {this.props.isPasscodeExpired && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Your passcode is been expired, please regenerate the passcode</span>}

@@ -27,7 +27,7 @@ class CoreoWizHeader extends Component {
                 },
                 {
                     name: "contact",
-                    link: "/",
+                    link: "contact",
                     status: true,
                 },
                 {
