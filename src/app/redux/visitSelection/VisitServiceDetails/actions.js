@@ -95,7 +95,7 @@ export function getVisitServiceDetails(data) {
   return dispatch => {
     dispatch(getServiceRequestId(data))
     dispatch(startLoading())
-    ServiceRequestGet(API.getServiceRequestDetails + data)
+    ServiceRequestGet(API.getServiceRequestDetails +`${data}/${getUserInfo().serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data))
         dispatch(push(Path.visitServiceDetails))
@@ -110,7 +110,7 @@ export function getVisitServiceDetails(data) {
 export function getVisitServiceSchedule(data) {
   return dispatch => {
     dispatch(startLoading())
-    ServiceRequestGet(API.getServiceRequestSchedule + `${data}/${getUserInfo().serviceProviderId}`)
+    ServiceRequestGet(API.getServiceRequestSchedule + `${data}`)
       .then(resp => {
         dispatch(getVisitServiceScheduleSuccess(resp.data))
         dispatch(endLoading())
