@@ -14,6 +14,7 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
+import {uniqElementOfArray} from '../../../utils/arrayUtility'
 import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea,clearServiceCategory,clearServiceArea,clearServiceRequestStatus} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
@@ -131,9 +132,9 @@ class VisitServiceList extends Component {
         let data = {
             startDate: this.state.startDate,
             endDate: this.state.endDate,
-            serviceStatus: this.state.serviceStatus,
+            serviceStatus: uniqElementOfArray(this.state.serviceStatus),
             ServiceCategoryId:this.state.ServiceCategoryId,
-            serviceTypes:this.state.serviceTypes,
+            serviceTypes:uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas:this.state.ServiceAreas
         };
         this.props.getFilter(data)
