@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TimeAgo from 'timeago-react';
+import moment from 'moment';
 import './MessageCard.css';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import { formatName } from '../../../utils/formatName';
@@ -102,7 +103,7 @@ class MessageList extends Component {
                                     <td className="MsgCount align-middle">
                                         {unreadMessages}
                                         <span className="width100 d-block float-right MsgTime">
-                                            <TimeAgo datetime={msgThread.createdDate} />
+                                            <TimeAgo datetime={moment.utc(msgThread.createdDate).local().format()} />
                                         </span>
                                     </td>
                                 </tr>
