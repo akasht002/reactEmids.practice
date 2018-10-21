@@ -75,6 +75,8 @@ export function setServiceProviderDetails(emailID, autoLogoutTime){
             };
             localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
             localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
+            save(USER_LOCALSTORAGE, userData);
+            dispatch(setUserSuccess(userData))
             dispatch(getUserRoles(userData))
           })
           .catch(err => {
