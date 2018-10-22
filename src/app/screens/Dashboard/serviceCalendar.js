@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import Select from 'react-select'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Scrollbars, ProfileModalPopup } from '../../components'
 import './ProfileMainPanel.css'
 import { convertStringToDate, partialCompare } from '../../utils/validations'
@@ -12,6 +12,10 @@ import {
   getEntityServiceProviderList,
   updateEntityServiceVisit
 } from '../../redux/dashboard/Dashboard/actions'
+import {
+  getVisitServiceDetails,
+  getVisitServiceSchedule
+} from '../../redux/visitSelection/VisitServiceDetails/actions'
 import { ServiceCalendarDefault } from './ServiceInfo'
 import { getUserInfo } from '../../services/http'
 
@@ -24,6 +28,7 @@ class serviceCalendar extends React.Component {
       startDate: moment(today).format(),
       startMonth: moment(today).format('MMM'),
       startYear: moment(today).format('YYYY'),
+      currentDate: moment().format('DD'),
       changedDate: '',
       DateDisable: false,
       selectedServiceProviderId: '',
@@ -41,6 +46,7 @@ class serviceCalendar extends React.Component {
     this.data = ''
   }
 
+ 
   togglePersonalDetails = (action, e) => {
     this.data = action
     this.setState({
@@ -69,10 +75,11 @@ class serviceCalendar extends React.Component {
   MonthChange = e => {
     let curDate = this.state.startYear + ',' + e.value + ',' + this.state.currentDate
     curDate = new Date(curDate)
+   
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
-      selectedMonth: e
+      selectedMonth: e.value
     })
     this.props.getServiceProviderVists(moment(curDate).format('YYYY-MM-DD'))
   }
@@ -198,9 +205,13 @@ class serviceCalendar extends React.Component {
     }
   }
 
+  handleClick = requestId => {
+    this.props.getVisitServiceDetails(requestId)
+    this.props.getVisitServiceSchedule(requestId)
+  }
+
   render () {
     let selectedDate = this.state.startDate
-
     const visitCount = this.props.serviceVistCount
 
     let dates = [
@@ -268,9 +279,8 @@ class serviceCalendar extends React.Component {
     let monthLists = pervious_month.concat(next_month_list)
 
     let monthList = monthLists.map(month => {
-      return { label: month.substring(0, 3), value: month.substring(0, 3) }
+      return { label: month.substring(0, 3), value: month }
     })
-
     let dateList = dates.map((daysMapping, i) => {
       let className = ''
       if (daysMapping.date.format() === moment(today).format()) {
@@ -314,6 +324,7 @@ class serviceCalendar extends React.Component {
       <ServiceCalendarDefault
         Servicelist={serviceVist}
         togglePersonalDetails={this.togglePersonalDetails}
+        handleClick={requestId => this.handleClick(requestId)}
       />
     )
 
@@ -431,7 +442,9 @@ function mapDispatchToProps (dispatch) {
     getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
     getEntityServiceProviderList: () =>
       dispatch(getEntityServiceProviderList()),
-    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data))
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
+    getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
+    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
   }
 }
 

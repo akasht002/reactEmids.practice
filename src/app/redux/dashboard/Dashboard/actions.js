@@ -260,7 +260,7 @@ export function getUnreadMessageCounts (userId) {
 export function updateStandByMode (data) { 
   
   return (dispatch) => {
-    dispatch(startLoading())
+    // dispatch(startLoading())
     
     Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
@@ -269,10 +269,9 @@ export function updateStandByMode (data) {
       })
       .catch(err => {
         try{
-
         }catch(e){
           if (e instanceof TypeError) {
-            dispatch(endLoading())
+            
         } else if (e instanceof RangeError) {
           dispatch(endLoading())
         } else if (e instanceof EvalError) {
