@@ -119,7 +119,5 @@ export const API = {
     captureAmount:'Account/CardCaputreAmount',
     servicerequest: 'ServiceRequest/',
     getFilteredVisitHistory: 'VisitProcessing/ServiceProviderVisit',
-    getConversationMessage: 'Conversation/ConversationMessage'
+    getConversationMessage: 'Conversation/ConversationMessage/'
 }
-
-

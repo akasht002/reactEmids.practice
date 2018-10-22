@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import AppStackRoot from './routes';
 import * as SignalR from '@aspnet/signalr';
 import {
-  pushConversation,
-  pushUnreadCount,
-  pushConversationSummary,
   getConversationItemSignalR,
   getConversationSummaryItemSignalR
 } from './redux/asyncMessages/actions';
+import {getUserInfo} from './services/http';
+import { USERTYPES } from './constants/constants';
 
 class App extends Component {
 
@@ -18,19 +17,16 @@ class App extends Component {
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
-    // connection.on("UpdateChat", data => {
-    //     this.props.pushConversation(data.result);
-    // });
-
-    // connection.on("UpdateConversation", data => {
-    //    this.props.pushConversationSummary(data.result);
-    // });
-
     connection.on("UpdateChat", data => {
-      const index = data.ParticipantList.indexOf(this.props.loggedInUser.userId);
-      if(index !== -1){
-        this.props.getConversationSummaryItemSignalR(data.conversationId);
-        this.props.getConversationItemSignalR(data.conversationId, data.messageId)
+      if(data && data.result){
+        let ParticipantList = [...data.result.participantList];
+        const index = ParticipantList.indexOf(
+          ParticipantList.filter(el => el.userId === getUserInfo().serviceProviderId && el.participantType === USERTYPES.SERVICE_PROVIDER)[0]
+        );
+        if(index !== -1){
+          this.props.getConversationSummaryItemSignalR(data.result.conversationId);
+          this.props.getConversationItemSignalR(data.result.conversationId, data.result.conversationMessageId)
+        };
       };
     });
 
@@ -55,8 +51,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getConversationItemSignalR: (conversationId) => dispatch(getConversationItemSignalR(conversationId)),
-    getConversationSummaryItemSignalR: (conversationId, messageId) => dispatch(getConversationSummaryItemSignalR(conversationId, messageId))
+    getConversationItemSignalR: (conversationId, messageId) => dispatch(getConversationItemSignalR(conversationId, messageId)),
+    getConversationSummaryItemSignalR: (conversationId) => dispatch(getConversationSummaryItemSignalR(conversationId))
   }
 }
 

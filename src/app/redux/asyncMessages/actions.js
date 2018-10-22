@@ -31,7 +31,7 @@ export const AsyncMessageActions = {
     setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
     clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage',
     setConversationCount: 'set_conversation_count/asyncMessage',
-    openedAsyncPage: 'set_opened_async_page/asynMessage'
+    setopenedAsyncPage: 'set_opened_async_page/asynMessage'
 };
 
 export const setConversationSummary = (data) => {
@@ -47,13 +47,6 @@ export const pushConversation = (data) => {
         data
     }
 };
-
-// export const pushConversationSummary = (data) => {
-//     return {
-//         type: AsyncMessageActions.pushConversationSummary,
-//         data
-//     }
-// };
 
 export function getConversationSummaryItemSignalR(conversationId){
     return (dispatch, getState) => {
@@ -128,7 +121,7 @@ export const pushUnreadCount = (data) => {
 
 export const openedAsyncPage = (data) =>{
     return{
-        type: AsyncMessageActions.openedAsyncPage,
+        type: AsyncMessageActions.setopenedAsyncPage,
         data
     };
 };
