@@ -25,6 +25,7 @@ import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 import { MORNING, AFTERNOON, EVENING } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
 import { SERVICE_VISIT_STATUS } from '../../../constants/constants'
+import {getLength} from '../../../utils/validations'
 class VisitServiceDetails extends Component {
 
   constructor(props) {
@@ -287,11 +288,11 @@ class VisitServiceDetails extends Component {
                    
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileDetailsName'>
-                        {this.state.visitServiceDetails.patientFirstName}
+                        {getLength(this.state.visitServiceDetails.patient)>0 &&this.state.visitServiceDetails.patient.firstName}
                         {' '}
-                        {this.state.visitServiceDetails.patientLastName &&
+                        {getLength(this.state.visitServiceDetails.patient)>0 &&
                           getFirstCharOfString(
-                            this.state.visitServiceDetails.patientLastName
+                            this.state.visitServiceDetails.patient.lastName
                           )}
                       </div>
                       <div class='ProfileDetailsDate'>
