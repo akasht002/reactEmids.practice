@@ -678,7 +678,6 @@ a.ProfileCardHeaderLink:hover{
 
 .ServiceRequestBoard{
     width: 370px;
-    min-height: 197px;
     margin-bottom: 22px;
 }
 
@@ -743,8 +742,12 @@ div.scrollarea .scrollbar-container.vertical {
         height: calc(100vh - 465px);
     }
 
-    .ProfileCardBody .ServiceRequestPalette {
+    div.ProfileCardBody .ServiceRequestPalette {
         height: calc(100vh - 623px);
+    }
+
+    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
+        height: calc(100vh - 585px);
     }
 
     .bottomPalette {
@@ -767,8 +770,12 @@ div.scrollarea .scrollbar-container.vertical {
         height: 100vh;
     }
 
-    .ProfileCardBody .ServiceRequestPalette {
+    div.ProfileCardBody .ServiceRequestPalette {
         height: calc(100vh - 590px);
+    }
+
+    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
+        height: calc(100vh - 550px);
     }
 }
 
@@ -796,6 +803,23 @@ div.scrollarea .scrollbar-container.vertical {
 
     .ProfileCardNameContainer {
         width: 80px;
+    }
+
+    div.ProfileCardBody .ServiceRequestPalette{
+        height: calc(100vh - 575px);
+    }
+
+    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
+        height: calc(100vh - 530px);
+    }
+
+    .ProfileSkillServices {
+        max-width: calc(100% - 210px);
+    }
+
+    .ProfileApplicationNumbers.Avatar {
+        max-width: 140px;
+        min-width: 120px;
     }
 
     .ProfileServices {

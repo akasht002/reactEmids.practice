@@ -312,6 +312,10 @@ section .ProfileRightWidget {
     .dateRow label {
         margin: 0;
     }
+
+    .BrandLink{
+        height: 16px;
+    }
 }
 
 @media (max-width: 768px) {
