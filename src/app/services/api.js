@@ -119,7 +119,6 @@ export const API = {
     claimsSubmission: 'BenefitProcess/ClaimsSubmission',
     captureAmount:'Account/CardCaputreAmount',
     servicerequest: 'ServiceRequest/',
-    getFilteredVisitHistory: 'VisitProcessing/ServiceProviderVisit'
+    getFilteredVisitHistory: 'VisitProcessing/ServiceProviderVisit',
+    getConversationMessage: 'Conversation/ConversationMessage/'
 }
-
-

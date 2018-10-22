@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import AppStackRoot from './routes';
 import * as SignalR from '@aspnet/signalr';
 import {
-  pushConversation,
-  pushUnreadCount,
-  pushConversationSummary
+  getConversationItemSignalR,
+  getConversationSummaryItemSignalR
 } from './redux/asyncMessages/actions';
 import {
   checkTeleHealth
 } from './redux/telehealth/actions'
+import {getUserInfo} from './services/http';
+import { USERTYPES } from './constants/constants';
 
 class App extends Component {
 
@@ -20,11 +21,16 @@ class App extends Component {
     .build();
 
     connection.on("UpdateChat", data => {
-        this.props.pushConversation(data.result);
-    });
-
-    connection.on("UpdateConversation", data => {
-       this.props.pushConversationSummary(data.result);
+      if(data && data.result){
+        let ParticipantList = [...data.result.participantList];
+        const index = ParticipantList.indexOf(
+          ParticipantList.filter(el => el.userId === getUserInfo().serviceProviderId && el.participantType === USERTYPES.SERVICE_PROVIDER)[0]
+        );
+        if(index !== -1){
+          this.props.getConversationSummaryItemSignalR(data.result.conversationId);
+          this.props.getConversationItemSignalR(data.result.conversationId, data.result.conversationMessageId)
+        };
+      };
     });
 
     connection.on("TeleHealth", data => {
@@ -52,8 +58,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    pushConversation: (data) => dispatch(pushConversation(data)),
-    pushConversationSummary: (data) => dispatch(pushConversationSummary(data)),
+    getConversationItemSignalR: (conversationId, messageId) => dispatch(getConversationItemSignalR(conversationId, messageId)),
+    getConversationSummaryItemSignalR: (conversationId) => dispatch(getConversationSummaryItemSignalR(conversationId)),
     checkTeleHealth: (data) => dispatch(checkTeleHealth(data))
   }
 }
