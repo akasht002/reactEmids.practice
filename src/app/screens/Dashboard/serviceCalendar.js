@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Scrollbars, ProfileModalPopup } from '../../components'
 import './ProfileMainPanel.css'
-import { convertStringToDate, partialCompare } from '../../utils/validations'
+import { convertStringToDate} from '../../utils/validations'
 import {
   getServiceProviderVists,
   getServiceVisitCount,
@@ -16,7 +16,7 @@ import {
   getVisitServiceDetails,
   getVisitServiceSchedule
 } from '../../redux/visitSelection/VisitServiceDetails/actions'
-import { ServiceCalendarDefault } from './ServiceInfo'
+import { ServiceCalendarDefault,ShowIndicator } from './ServiceInfo'
 import { getUserInfo } from '../../services/http'
 
 const today = new Date()
@@ -46,7 +46,6 @@ class serviceCalendar extends React.Component {
     this.data = ''
   }
 
- 
   togglePersonalDetails = (action, e) => {
     this.data = action
     this.setState({
@@ -73,9 +72,10 @@ class serviceCalendar extends React.Component {
   }
 
   MonthChange = e => {
-    let curDate = this.state.startYear + ',' + e.value + ',' + this.state.currentDate
+    let curDate =
+      this.state.startYear + ',' + e.value + ',' + this.state.currentDate
     curDate = new Date(curDate)
-   
+
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
@@ -128,8 +128,13 @@ class serviceCalendar extends React.Component {
       startDate: moment(today).format(),
       reportDay: moment(today).format(),
       startMonth: moment(today).format('MMM'),
-      currentDate: moment().format('DD')
+      currentDate: moment().format('DD'),
+      selectedMonth: {
+        label: moment(today).format('MMM'),
+        value: moment(today).format('MMM')
+      }
     })
+
     this.props.getServiceProviderVists(moment().format('YYYY-MM-DD'))
   }
 
@@ -210,6 +215,18 @@ class serviceCalendar extends React.Component {
     this.props.getVisitServiceSchedule(requestId)
   }
 
+  navigateProfileHeader = (link) => {
+    switch (link) {
+      case 'conversationsummary':
+        this.props.navigateProfileHeader(link);
+        break;
+      default:
+        this.setState({ selectedLink: link })
+        break;
+    }
+  };
+
+
   render () {
     let selectedDate = this.state.startDate
     const visitCount = this.props.serviceVistCount
@@ -286,6 +303,16 @@ class serviceCalendar extends React.Component {
       if (daysMapping.date.format() === moment(today).format()) {
         className = ' toDay'
       }
+      let data = visitCount.find(
+        obj =>
+          obj.visitDate === daysMapping.date.format('YYYY-MM-DD') + 'T00:00:00'
+      )
+        ? visitCount.find(
+            obj =>
+              obj.visitDate ===
+              daysMapping.date.format('YYYY-MM-DD') + 'T00:00:00'
+          ).visits
+        : 0
       return (
         <div className={'dateRow' + className}>
           <input
@@ -306,14 +333,7 @@ class serviceCalendar extends React.Component {
             <span className='dateElement'>{daysMapping.day.format('D')}</span>
           </label>
           <div className='eventIndicator'>
-
-            {partialCompare(
-              daysMapping.date.format('YYYY-MM-DD'),
-              visitCount
-            ) && <i className='indicator' />}
-
-            {/* <i className='indicator' />
-            <i className='indicator' /> */}
+            <ShowIndicator count={data}/>
           </div>
         </div>
       )
@@ -325,6 +345,7 @@ class serviceCalendar extends React.Component {
         Servicelist={serviceVist}
         togglePersonalDetails={this.togglePersonalDetails}
         handleClick={requestId => this.handleClick(requestId)}
+        onClick={(link) => this.navigateProfileHeader(link)}
       />
     )
 
@@ -360,7 +381,7 @@ class serviceCalendar extends React.Component {
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
             <span className='ProfileCardHeaderTitle primaryColor'>
-              My Services Visits
+              My Service Visits
             </span>
 
           </div>
@@ -444,7 +465,7 @@ function mapDispatchToProps (dispatch) {
       dispatch(getEntityServiceProviderList()),
     updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
-    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
+    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data))
   }
 }
 

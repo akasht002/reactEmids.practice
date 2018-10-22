@@ -1,13 +1,36 @@
 import React, { Fragment } from 'react'
-import Select from 'react-select'
 import Moment from 'react-moment'
+import { ThemeProvider } from '@zendeskgarden/react-theming'
+import { SelectField, Select, Item } from '@zendeskgarden/react-select'
 import _ from 'lodash'
 import TimeAgo from 'timeago-react'
 import { getFields } from '../../utils/validations'
 import { getUserInfo } from '../../services/http'
-import {MORNING,AFTERNOON,EVENING} from '../../redux/constants/constants'
+import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
 
-export const splitSlots = (togglePersonalDetails, data, type,handleClick) => {
+export const ShowIndicator = props => {
+  if (props.count === 1) {
+    return <i className='indicator' />
+  } else if (props.count === 2) {
+    return (
+      <React.Fragment>
+        <i className='indicator' /><i className='indicator' />
+      </React.Fragment>
+    )
+  } else if (props.count > 3) {
+    return (
+      <React.Fragment>
+        <i className='indicator' />
+        <i className='indicator' />
+        <i className='indicator' />
+      </React.Fragment>
+    )
+  }else {
+    return ' '
+  }
+}
+
+export const splitSlots = (togglePersonalDetails, data, type, handleClick) => {
   let newData = _.reduce(
     data,
     function (arr, el) {
@@ -19,10 +42,14 @@ export const splitSlots = (togglePersonalDetails, data, type,handleClick) => {
     []
   )
 
-  return serviceCalendar(togglePersonalDetails, newData,handleClick)
+  return serviceCalendar(togglePersonalDetails, newData, handleClick)
 }
 
-export const serviceCalendar = (togglePersonalDetails, newData,handleClick) => {
+export const serviceCalendar = (
+  togglePersonalDetails,
+  newData,
+  handleClick
+) => {
   if (newData.length > 0) {
     return newData.slice(0, 3).map((conversations, index) => {
       return (
@@ -31,10 +58,15 @@ export const serviceCalendar = (togglePersonalDetails, newData,handleClick) => {
             key={index}
             className='list-group-item ProfileServicesVisitContent'
           >
-            <div className='ServicesTimeContainer'>
+            {/* <div className='ServicesTimeContainer'>
               <i className={'ServicesTime ' + conversations.slotDescription} />
-            </div>
-            <div className='ProfileServices' onClick={() => {handleClick(conversations.serviceRequestId)}}>
+            </div> */}
+            <div
+              className='ProfileServices'
+              onClick={() => {
+                handleClick(conversations.serviceRequestId)
+              }}
+            >
               <span className='ServicesTitle'>
                 {conversations.serviceTypes &&
                   conversations.serviceTypes.toString()}
@@ -68,24 +100,38 @@ export const serviceCalendar = (togglePersonalDetails, newData,handleClick) => {
             </div>
             <div className='ProfileCardNameContainer'>
               <span>
-                {conversations.patientFirstName && 
-                  conversations.patientFirstName.slice(0,1).toUpperCase()+" "}
+                {conversations.patientFirstName &&
+                  conversations.patientFirstName.slice(0, 1).toUpperCase() +
+                    ' '}
                 {' '}
                 {conversations.patientLastName && conversations.patientLastName}
               </span>
             </div>
-            <Select
-              id='ProfileMonth'
-              onBlurResetsInput={false}
-              multiple={false}
-              className='ProfileSubOptions ProfileMonthList'
-              searchable={false}
-              options={[
-                { label: 'Call', value: '1' },
-                { label: 'Message', value: '2' },
-                { label: 'Video', value: '3' }
-              ]}
-            />
+            <div className="options">
+            <ThemeProvider>
+            <SelectField>
+                <Select                  
+                  placement='auto'
+                  options={[
+                    <Item className='ListItem CTDashboard' key='item-1'>
+                      <i className='iconPhone' /> Phone Call
+                    </Item>,
+                    <Item className='ListItem CTDashboard' key='item-2'
+                    //  onClick={() => {props.onClick('conversationsummary')}}
+                     >
+                      <i className='iconConversation' /> Conversation
+                    </Item>,
+                    <Item className='ListItem CTDashboard' key='item-3'
+                    //  onClick={() => {props.onClick('telehealth')}}
+                     >
+                      <i className='iconVideoCon' /> Video Conference
+                    </Item>
+                  ]}
+                  className='SelectDropDown CTDashboard'
+                />
+              </SelectField>
+              </ThemeProvider>
+              </div>
           </li>
         </Fragment>
       )
@@ -164,7 +210,12 @@ export const ServiceCalendarDefault = props => {
     <React.Fragment>
       <h6 className='VisitScheduleTitle'>Morning</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.togglePersonalDetails, props.Servicelist, MORNING,props.handleClick)}
+        {splitSlots(
+          props.togglePersonalDetails,
+          props.Servicelist,
+          MORNING,
+          props.handleClick
+        )}
       </ul>
       <h6 className='VisitScheduleTitle'>Afternoon</h6>
       <ul className='list-group ProfileServicesVisitList'>
@@ -177,7 +228,12 @@ export const ServiceCalendarDefault = props => {
       </ul>
       <h6 className='VisitScheduleTitle'>Evening</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.togglePersonalDetails, props.Servicelist, EVENING,props.handleClick)}
+        {splitSlots(
+          props.togglePersonalDetails,
+          props.Servicelist,
+          EVENING,
+          props.handleClick
+        )}
       </ul>
     </React.Fragment>
   )
@@ -187,7 +243,10 @@ export const ServiceRequestDefault = () => {
   return (
     <div className='NoInformationServiceProvider'>
       <span>
-        <img alt={'N'} src={require("../../assets/images/NoServiceRequest.svg")}/>
+        <img
+          alt={'N'}
+          src={require('../../assets/images/NoServiceRequest.svg')}
+        />
       </span>
       <span className='NoSRText'>
         Browse Service Request
@@ -197,81 +256,99 @@ export const ServiceRequestDefault = () => {
 }
 
 export const ServiceProviderRequestDetails = props => {
-  return props.serviceRequest.slice(props.minVal, props.maxVal).map((sp, index) => {
-    return (
-      <Fragment>
-        <li key={index} className='list-group-item ProfileServicesVisitContent'>
-          <div className='ServicesTypeContainer'>
-            <i className='ServicesType Bathing' />
-          </div>
-          <div className='ProfileSkillServices' onClick={() => {props.handleClick(sp.serviceRequestId)}}>
-            <span className='ServicesTitle'>
-              {sp.serviceRequestTypeDetails &&
-                getFields(
-                  sp.serviceRequestTypeDetails,
-                  'serviceTypeDescription'
-                )}
-            </span>
-            <span className='ServicesDesc'>
-              {sp.serviceCategoryDescription}
-            </span>
-            <span>
-              {sp.recurringPattern === 0 ? 'One Time' : 'Recurring'}
-              {' '}
-              |
-              {' '}
-              <Moment format='DD MMM'>
-                {sp.startDate}
-              </Moment>
-            </span>
-          </div>
-
-          <div className='ProfileApplicationNumbers Avatar'>
-            <div className='ProfileApplicationWidget'>
-              <div className='avatarContainer'>
-                <img
-                  alt='NO'
-                  className='avatarImage avatarImageBorder'
-                  src={
-                    sp.image
-                      ? sp.image
-                      : require('../../assets/images/Blank_Profile_icon.png')
-                  }
-                />
-              </div>
+  return props.serviceRequest
+    .slice(props.minVal, props.maxVal)
+    .map((sp, index) => {
+      return (
+        <Fragment>
+          <li
+            key={index}
+            className='list-group-item ProfileServicesVisitContent'
+          >
+            <div className='ServicesTypeContainer'>
+              <i className='ServicesType Bathing' />
             </div>
-            <span className='AvatarName'>
-              {sp.patientFirstName && sp.patientFirstName.slice(0,1).toUpperCase()+" "}
-              {sp.patientLastName && sp.patientLastName}
-            </span>
-          </div>
-        </li>
-      </Fragment>
-    )
-  })
+            <div
+              className='ProfileSkillServices'
+              onClick={() => {
+                props.handleClick(sp.serviceRequestId)
+              }}
+            >
+              <span className='ServicesTitle'>
+                {sp.serviceRequestTypeDetails &&
+                  getFields(
+                    sp.serviceRequestTypeDetails,
+                    'serviceTypeDescription'
+                  )}
+              </span>
+              <span className='ServicesDesc'>
+                {sp.serviceCategoryDescription}
+              </span>
+              <span>
+                {sp.recurringPattern === 0 ? 'One Time' : 'Recurring'}
+                {' '}
+                |
+                {' '}
+                <Moment format='DD MMM'>
+                  {sp.startDate}
+                </Moment>
+              </span>
+            </div>
+
+            <div className='ProfileApplicationNumbers Avatar'>
+              <div className='ProfileApplicationWidget'>
+                <div className='avatarContainer'>
+                  <img
+                    alt='NO'
+                    className='avatarImage avatarImageBorder'
+                    src={
+                      sp.image
+                        ? sp.image
+                        : require('../../assets/images/Blank_Profile_icon.png')
+                    }
+                  />
+                </div>
+              </div>
+              <span className='AvatarName'>
+                {sp.patientFirstName &&
+                  sp.patientFirstName.slice(0, 1).toUpperCase() + ' '}
+                {sp.patientLastName && sp.patientLastName}
+              </span>
+            </div>
+          </li>
+        </Fragment>
+      )
+    })
 }
 
 export const MyConversionDetail = props => {
   let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
-  let unreadMessages = "";
-  let msgClass = "";
+  let unreadMessages = ''
+  let msgClass = ''
   return conversation.slice(0, 3).map((conversations, index) => {
     if (props.getUnreadMsgCounts.length > 0) {
-      unreadMessages = "";
-      msgClass = "readMsgs";
+      unreadMessages = ''
+      msgClass = 'readMsgs'
       props.getUnreadMsgCounts.map(unreadMsgCount => {
-          if (conversations.conversationId === unreadMsgCount.conversationId) {
-              msgClass = "";
-              return unreadMessages = <span className={"float-right count" + msgClass}>{unreadMsgCount.unreadMessageCount}</span>
-          }
-      });
-  };
+        if (conversations.conversationId === unreadMsgCount.conversationId) {
+          msgClass = ''
+          return (unreadMessages = (
+            <span className={'float-right count' + msgClass}>
+              {unreadMsgCount.unreadMessageCount}
+            </span>
+          ))
+        }
+      })
+    }
     return (
       <Fragment>
         <li key={index} className='list-group-item myConversationContainer'>
-          <div className='myConversationContent' onClick={props.gotoConversations.bind(this, conversations)}>
+          <div
+            className='myConversationContent'
+            onClick={props.gotoConversations.bind(this, conversations)}
+          >
             <div className='avatarWidget'>
               {conversations.participantList.map((chatMem, index) => {
                 let zIndex = conversations.participantList.length - index
@@ -310,7 +387,9 @@ export const MyConversionDetail = props => {
               </p>
             </div>
             <div className='MsgCount ml-auto'>
-              <span className={'float-right count' + MsgClass}>{unreadMessages}</span>
+              <span className={'float-right count' + MsgClass}>
+                {unreadMessages}
+              </span>
               <span className='width100 d-block float-right MsgTime'>
                 <TimeAgo datetime={conversations.createdDate} />
               </span>
