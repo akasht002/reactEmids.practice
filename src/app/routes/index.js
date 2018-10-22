@@ -27,7 +27,6 @@ import {
   PaymentSuccess,
   PaymentFailure,
   TeleHealth,
-  InvitationAlert,
   ConversationSummary,
   Conversation
 } from '../screens';
@@ -68,7 +67,6 @@ export const Path = {
   paymentsuccess: '/paymentsuccess',
   paymentfailure: '/paymentfailure',
   teleHealth: '/teleHealth',
-  telehealthConfirm: '/teleHealth/:id',
   messageSummary: '/messagesummary',
   conversations: '/conversation/:id',
   conversation: '/conversation/',
@@ -92,18 +90,18 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
+
             <PrivateRoute path={Path.visitServiceList} permission={SCREENS.VISIT_PROCESSING} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} permission={SCREENS.VISIT_PROCESSING} component={VisitServiceDetails} />
             <PrivateRoute path={Path.performTasks} permission={SCREENS.SERVICE_REQUEST} component={PerformTasks} />
             <PrivateRoute path={Path.feedback} permission={SCREENS.SERVICE_REQUEST} component={Feedback} />
             <PrivateRoute path={Path.summary} permission={SCREENS.SERVICE_REQUEST} component={Summary} />
-            <PrivateRoute path={Path.telehealthConfirm} permission={SCREENS.TELEHEALTH} component={InvitationAlert} />
             <PrivateRoute path={Path.teleHealth} permission={SCREENS.TELEHEALTH} component={TeleHealth} />
             <PrivateRoute path={Path.conversations} permission={SCREENS.ASYNC_MESSAGE} component={Conversation} />
             <PrivateRoute path={Path.messageSummary} permission={SCREENS.ASYNC_MESSAGE} component={ConversationSummary} />
             <PrivateRoute path={Path.profile} permission={SCREENS.PROFILE} component={Profile} />
             <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />
-             <PrivateRoute path={Path.visitHistory} permission={SCREENS.VISIT_HISTORY} component={VisitHistory}/>            
+            <PrivateRoute path={Path.visitHistory} permission={SCREENS.VISIT_HISTORY} component={VisitHistory}/>            
             <PrivateRoute path={Path.visitSummaryDetail} permission={SCREENS.VISIT_HISTORY} component={VistSummary} />
             <PrivateRoute path={Path.payments} permission={SCREENS.PAYMENT_PROCESSING} component={Payments} />
             <PrivateRoute path={Path.paymentsuccess} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentSuccess} />
