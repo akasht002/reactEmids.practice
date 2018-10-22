@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { Header, ScreenCover } from '../../../components'
+import { Header, ScreenCover, ModalPopup } from '../../../components'
 import ServiceOffered from '../ServiceOffered/index'
 import Languages from '../Languages/index'
 import Certification from '../Certification/index'
@@ -22,7 +22,7 @@ import {SCREENS} from '../../../constants/constants';
 import {authorizePermission} from '../../../utils/roleUtility';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
-
+import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
 import './styles.css'
 
 class Profile extends Component {
@@ -124,7 +124,17 @@ class Profile extends Component {
               onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
               createConversation={() => { this.setState({ selectedLink: null }) }}
           />
-
+        <ModalPopup
+            isOpen={this.props.showTelehealthInvite}
+            ModalBody={<span>You have a new video conference invite.</span>}
+            btn1="Accept"
+            btn2="Decline"
+            className="zh"
+            headerFooter="d-none"
+            centered={true}
+            onConfirm={this.props.joinVideoConference}
+            onCancel={this.props.clearInvitaion}
+        />
           
       </ScreenCover>
     )
@@ -135,14 +145,16 @@ function mapDispatchToProps (dispatch) {
   return {
     getProfilePercentage: () => dispatch(getProfilePercentage()),
     navigateProfileHeader: (link) => dispatch(push(link)),
+    clearInvitaion: () => dispatch(clearInvitaion()),
+    joinVideoConference: () => dispatch(joinVideoConference())
   }
 }
 
 function mapStateToProps (state) {
   return {
-    SERVICE_PROVIDER_TYPE_ID: 1,
     profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
-    canCreateConversation: state.asyncMessageState.canCreateConversation
+    canCreateConversation: state.asyncMessageState.canCreateConversation,
+    showTelehealthInvite: state.telehealthState.isInvitationCame
   }
 }
 

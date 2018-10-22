@@ -7,6 +7,9 @@ import {
   pushUnreadCount,
   pushConversationSummary
 } from './redux/asyncMessages/actions';
+import {
+  checkTeleHealth
+} from './redux/telehealth/actions'
 
 class App extends Component {
 
@@ -22,6 +25,10 @@ class App extends Component {
 
     connection.on("UpdateConversation", data => {
        this.props.pushConversationSummary(data.result);
+    });
+
+    connection.on("TeleHealth", data => {
+      this.props.checkTeleHealth(data);
     });
 
     connection.start()
@@ -47,6 +54,7 @@ function mapDispatchToProps(dispatch) {
   return {
     pushConversation: (data) => dispatch(pushConversation(data)),
     pushConversationSummary: (data) => dispatch(pushConversationSummary(data)),
+    checkTeleHealth: (data) => dispatch(checkTeleHealth(data))
   }
 }
 

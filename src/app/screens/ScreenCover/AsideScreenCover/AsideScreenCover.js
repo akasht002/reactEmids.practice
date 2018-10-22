@@ -23,6 +23,7 @@ import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
+import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -148,6 +149,17 @@ class AsideScreenCover extends React.Component {
                     centered={true}
                     onConfirm={() => { this.setState({ selectedLink: null }) }}
                 />
+                <ModalPopup
+                    isOpen={this.props.showTelehealthInvite}
+                    ModalBody={<span>You have a new video conference invite.</span>}
+                    btn1="Accept"
+                    btn2="Decline"
+                    className="zh"
+                    headerFooter="d-none"
+                    centered={true}
+                    onConfirm={this.props.joinVideoConference}
+                    onCancel={this.props.clearInvitaion}
+                />
             </ScreenCover>
         )
     }
@@ -164,7 +176,9 @@ function mapDispatchToProps(dispatch) {
         navigateProfileHeader: (link) => dispatch(push(link)),
         getAboutUsContent: () => dispatch(getAboutUsContent()),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
-        onLogout: () => dispatch(onLogout())
+        onLogout: () => dispatch(onLogout()),
+        clearInvitaion: () => dispatch(clearInvitaion()),
+        joinVideoConference: () => dispatch(joinVideoConference())
     }
 };
 
@@ -177,7 +191,8 @@ function mapStateToProps(state) {
         personalDetail: state.profileState.PersonalDetailState.personalDetail,
         aboutUsContent: state.aboutUsState.aboutUsContent,
         isLoading: state.loadingState.isLoading,
-        canCreateConversation: state.asyncMessageState.canCreateConversation
+        canCreateConversation: state.asyncMessageState.canCreateConversation,
+        showTelehealthInvite: state.telehealthState.isInvitationCame
     };
 };
 
