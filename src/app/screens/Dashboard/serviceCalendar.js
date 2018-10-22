@@ -18,6 +18,7 @@ import {
 } from '../../redux/visitSelection/VisitServiceDetails/actions'
 import { ServiceCalendarDefault,ShowIndicator } from './ServiceInfo'
 import { getUserInfo } from '../../services/http'
+import { Path } from '../../routes';
 
 const today = new Date()
 
@@ -40,7 +41,7 @@ class serviceCalendar extends React.Component {
         value: moment(today).format('MMM')
       },
       showMore: false,
-      verticalScroll: false,
+      verticalScroll: true,
       width: window.innerWidth
     }
     this.data = ''

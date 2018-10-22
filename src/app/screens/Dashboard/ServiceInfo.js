@@ -101,10 +101,10 @@ export const serviceCalendar = (
             <div className='ProfileCardNameContainer'>
               <span>
                 {conversations.patientFirstName &&
-                  conversations.patientFirstName.slice(0, 1).toUpperCase() +
+                  conversations.patientFirstName +
                     ' '}
                 {' '}
-                {conversations.patientLastName && conversations.patientLastName}
+                {conversations.patientLastName && conversations.patientLastName.slice(0, 1).toUpperCase()}
               </span>
             </div>
             <div className="options">
@@ -311,8 +311,8 @@ export const ServiceProviderRequestDetails = props => {
               </div>
               <span className='AvatarName'>
                 {sp.patientFirstName &&
-                  sp.patientFirstName.slice(0, 1).toUpperCase() + ' '}
-                {sp.patientLastName && sp.patientLastName}
+                  sp.patientFirstName + ' '}
+                {sp.patientLastName && sp.patientLastName.slice(0, 1).toUpperCase()}
               </span>
             </div>
           </li>
