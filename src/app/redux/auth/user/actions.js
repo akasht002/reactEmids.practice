@@ -77,7 +77,7 @@ export function setServiceProviderDetails(emailID, autoLogoutTime){
             localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
             save(USER_LOCALSTORAGE, userData);
             dispatch(setUserSuccess(userData))
-            dispatch(getUserRoles())
+            dispatch(getUserRoles(userData))
           })
           .catch(err => {
             console.log(err);
@@ -85,13 +85,16 @@ export function setServiceProviderDetails(emailID, autoLogoutTime){
       }
 }
 
-export function getUserRoles() {
+export function getUserRoles(userData) {
     return (dispatch) => {
         dispatch(startLoading());
         CareTeamGet(API.getUserRoles).then((response) => {
             if (response.data.length > 0) {
                 dispatch(setUserRoles(objectCreationRoles(response.data)));
+                userData.roles = objectCreationRoles(response.data);
             }
+            save(USER_LOCALSTORAGE, userData);
+            dispatch(setUserSuccess(userData))
             dispatch(push(Path.dashboard));
             dispatch(endLoading());
         })
