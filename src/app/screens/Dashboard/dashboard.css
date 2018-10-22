@@ -1462,6 +1462,14 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         justify-content: center;
     }
 
+    .LeftPostedBy .PostedByImageContainer:first-child .PostedByProfileDetails{
+        display: inline-block;
+    }
+
+    .LeftPostedBy .PostedByImageContainer .PostedByProfileDetails{
+        display: none;
+    }
+
     .PostedByImageContainer .ProfileIconDetails{
         font-size: 0;
     }
