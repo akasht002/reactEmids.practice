@@ -196,7 +196,7 @@ class PersonalDetail extends React.PureComponent {
     })
   }
 
-  render() {    
+  render() {   
     let modalContent
     let modalTitle = 'Edit Personal Detials'
     let modalType = ''

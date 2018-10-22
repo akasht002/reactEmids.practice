@@ -62,6 +62,16 @@ class Profile extends Component {
     }
   }
 
+  getServiceOffered = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+      return <ServiceOffered />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+       return <ServiceOffered />
+     } else {
+       return '';
+     }
+  }
+
   navigateProfileHeader = (link) => {
     switch (link) {
         case 'messagesummary':
@@ -107,7 +117,7 @@ class Profile extends Component {
                 </div>
                 {this.getPersonalDetail()}
                 <div className='col-md-12 card CardWidget SPCertificate'>
-                  <ServiceOffered />
+                {this.getServiceOffered()}
                 </div>
                 <div className='col-md-12 card CardWidget SPCertificate'>
                   <Skills />
