@@ -598,7 +598,6 @@ a.ProfileCardHeaderLink:hover{
 
 .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
     height: calc(100vh - 216px);
-    overflow-y: hidden;
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette {

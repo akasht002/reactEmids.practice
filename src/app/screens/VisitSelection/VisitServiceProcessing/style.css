@@ -885,8 +885,17 @@ label.form-check-label {
     position: relative;
 }
 
-.SPAvailTitle:after {
+/* .SPAvailTitle:after{
     content: '___';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    color: #7a329f;
+} */
+
+.SPAvailTitle:after{
+    content: '';
     display: block;
     position: absolute;
     bottom: 0;
@@ -894,7 +903,7 @@ label.form-check-label {
     color: #7a329f;
 }
 
-.SPAvailTitleText {
+/* .SPAvailTitleText{
     position: relative;
     font-size: 16px;
     color: #494949;
@@ -902,6 +911,17 @@ label.form-check-label {
     display: block;
     width: 100%;
     padding: 15px;
+} */
+
+.SPAvailTitleText{
+    position: relative;
+    font-size: 16px;
+    color: #494949;
+    font-weight: 600;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 0;
 }
 
 .SPAvailTitleText:after {
@@ -921,22 +941,30 @@ label.form-check-label {
 .SPAvailContent {
     display: block;
     position: relative;
-    padding: 15px 0;
+    /* padding: 15px 0; */
+    padding: 0;
 }
 
-.SPAvailItems {
+.SPAvailItems{
     display: block;
     position: relative;
     padding: 5px 15px 5px 40px;
     list-style: none;
     font-size: 16px;
-    margin: 1px 0;
-    color: rgba(79, 79, 79, 0.5);
+    /* margin: 1px 0; */
+    margin: 0;
+    color: #444444;
+    /* border-bottom: 1px solid #eaeaea; */
+    border-top: 1px solid #eaeaea;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.SPAvailItems:last-child{
+    /* border: 0; */
 }
 
 .availabilityCheck:checked ~ label, .SPAvailItems.active {
@@ -964,6 +992,17 @@ label.form-check-label {
 .availabilityCheck {
     position: absolute;
     opacity: 0;
+}
+
+.availabilityCheck~label:before, .SPAvailItems:before {
+    content: "";
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    left: 16px;
+    top: 12px;
+    border-radius: 50%;
+    background-color: #eaeaea;
 }
 
 .AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText:hover, .addImageBtn:hover, .UploadImageBtn:hover, .addImageInput:hover {
@@ -1078,6 +1117,7 @@ div.AddressCardWidget {
 
 .SPAvailWidget.Summary .SPAvailContainer {
     border-color: #7a329f;
+    height: auto;
 }
 
 .SummaryContent p {
@@ -1085,7 +1125,8 @@ div.AddressCardWidget {
 }
 
 .SummaryContent.POS p {
-    font-size: 14px;
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
 .SummaryContent p.ContentTitle.Summary {
@@ -1096,7 +1137,7 @@ div.AddressCardWidget {
 
 .SummaryContent > p > span {
     display: inline-block;
-    width: 52px;
+    width: 80px;
     font-weight: 600;
 }
 
