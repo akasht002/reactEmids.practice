@@ -20,6 +20,11 @@
     height: 100%;
 }
 
+.visitListNavigation:hover {
+    background-color: #f0e6f2;
+    cursor: pointer;
+}
+
 .visitListNavigation:before{
     content: '';
     position: absolute;

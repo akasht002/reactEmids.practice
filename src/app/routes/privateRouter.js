@@ -8,7 +8,7 @@ import {
 import { Path } from './';
 import { checkUserData } from '../redux/auth/user/actions';
 import { USER_LOCALSTORAGE } from '../constants/constants'; 
-import {getServiceProviderId} from '../services/http';
+import {extractRole} from '../utils/roleUtility';
 
 class PrivateRoute extends Component  {
 
@@ -22,9 +22,11 @@ class PrivateRoute extends Component  {
 
   renderMethod = () => {
     let authData = this.checkUserData();
+    let permission = this.props.permission ? extractRole(this.props.permission).Read : true;
     let Component = this.props.component;
     return ((
-      authData ? (
+      // && permission
+      (authData) ? (
         <Component {...this.props} /> ) : (
           <Redirect
           to={{

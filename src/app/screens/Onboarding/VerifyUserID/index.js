@@ -12,6 +12,7 @@ import {
 } from '../../../redux/onboarding/VerifyUserID/actions';
 import { setWorkflowDirty } from '../../../redux/wizard/actions';
 import { checkEmail, checkSpace } from '../../../utils/validations'
+import Help from '../../../assets/HelpDoc/Help.pdf';
 import '../styles.css';
 
 class VerifyUserID extends React.Component {
@@ -91,7 +92,14 @@ class VerifyUserID extends React.Component {
 
         return (
             <ScreenCover isLoading={this.props.isLoading}>
-                <CoreoWizScreen menus={ContactMenu} activeCoreoWiz={0} displayPrevButton={false} displayNextButton={true} isNextDisabled={!this.props.isEmailExist} onNextClick={this.onClickButtonNext} onCancelClick={this.onClickButtonCancel}>
+                <CoreoWizScreen 
+                    menus={ContactMenu} 
+                    activeCoreoWiz={0} 
+                    displayPrevButton={false} 
+                    displayNextButton={true} 
+                    isNextDisabled={!this.props.isEmailExist} 
+                    onNextClick={this.onClickButtonNext} 
+                    onCancelClick={this.onClickButtonCancel}>
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
@@ -101,7 +109,7 @@ class VerifyUserID extends React.Component {
                                         id="userId"
                                         autoComplete="off"
                                         type="text"
-                                        placeholder="eg. smith@gmail.com"
+                                        placeholder="e.g. johndoe@xyz.com"
                                         label="Enter Email ID"
                                         className={"form-control " + (this.props.isEmailExist ? 'inputSuccess' : (!this.state.emailValid || this.state.isEmailNotExist) && 'inputFailure')}
                                         disabled={this.props.isEmailExist}
@@ -122,7 +130,7 @@ class VerifyUserID extends React.Component {
                                     <span className="text-success d-block mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
                                 </div>}
                                 {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
-                                    <span className="text-danger d-block mb-2">We did not find your Email ID. Please retry or contact <Link to={this.props.match.url} className="primaryColor px-1">Support</Link>.</span>
+                                    <span className="text-danger d-block mb-2">We did not find your Email ID. Please retry or contact <a className="primaryColor px-1" href = {Help} target = "_blank">Support</a>.</span>
                                 </div>}
                                 {!this.state.emailValid && <div className="MsgWithIcon MsgWrongIcon">
                                     <span className="text-danger d-block mb-2">Please enter a valid email address. e.g. abc@xyz.com</span>

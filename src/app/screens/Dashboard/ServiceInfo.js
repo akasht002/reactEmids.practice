@@ -7,7 +7,7 @@ import { getFields } from '../../utils/validations'
 import { getUserInfo } from '../../services/http'
 import {MORNING,AFTERNOON,EVENING} from '../../redux/constants/constants'
 
-export const splitSlots = (togglePersonalDetails, data, type) => {
+export const splitSlots = (togglePersonalDetails, data, type,handleClick) => {
   let newData = _.reduce(
     data,
     function (arr, el) {
@@ -19,10 +19,10 @@ export const splitSlots = (togglePersonalDetails, data, type) => {
     []
   )
 
-  return serviceCalendar(togglePersonalDetails, newData)
+  return serviceCalendar(togglePersonalDetails, newData,handleClick)
 }
 
-export const serviceCalendar = (togglePersonalDetails, newData) => {
+export const serviceCalendar = (togglePersonalDetails, newData,handleClick) => {
   if (newData.length > 0) {
     return newData.slice(0, 3).map((conversations, index) => {
       return (
@@ -34,7 +34,7 @@ export const serviceCalendar = (togglePersonalDetails, newData) => {
             <div className='ServicesTimeContainer'>
               <i className={'ServicesTime ' + conversations.slotDescription} />
             </div>
-            <div className='ProfileServices'>
+            <div className='ProfileServices' onClick={() => {handleClick(conversations.serviceRequestId)}}>
               <span className='ServicesTitle'>
                 {conversations.serviceTypes &&
                   conversations.serviceTypes.toString()}
@@ -68,8 +68,8 @@ export const serviceCalendar = (togglePersonalDetails, newData) => {
             </div>
             <div className='ProfileCardNameContainer'>
               <span>
-                {conversations.patientFirstName &&
-                  conversations.patientFirstName}
+                {conversations.patientFirstName && 
+                  conversations.patientFirstName.slice(0,1).toUpperCase()+" "}
                 {' '}
                 {conversations.patientLastName && conversations.patientLastName}
               </span>
@@ -164,19 +164,20 @@ export const ServiceCalendarDefault = props => {
     <React.Fragment>
       <h6 className='VisitScheduleTitle'>Morning</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.togglePersonalDetails, props.Servicelist, MORNING)}
+        {splitSlots(props.togglePersonalDetails, props.Servicelist, MORNING,props.handleClick)}
       </ul>
       <h6 className='VisitScheduleTitle'>Afternoon</h6>
       <ul className='list-group ProfileServicesVisitList'>
         {splitSlots(
           props.togglePersonalDetails,
           props.Servicelist,
-          AFTERNOON
+          AFTERNOON,
+          props.handleClick
         )}
       </ul>
       <h6 className='VisitScheduleTitle'>Evening</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.togglePersonalDetails, props.Servicelist, EVENING)}
+        {splitSlots(props.togglePersonalDetails, props.Servicelist, EVENING,props.handleClick)}
       </ul>
     </React.Fragment>
   )
@@ -186,7 +187,7 @@ export const ServiceRequestDefault = () => {
   return (
     <div className='NoInformationServiceProvider'>
       <span>
-        <img src={require("../../assets/images/NoServiceRequest.svg")}/>
+        <img alt={'N'} src={require("../../assets/images/NoServiceRequest.svg")}/>
       </span>
       <span className='NoSRText'>
         Browse Service Request
@@ -196,14 +197,14 @@ export const ServiceRequestDefault = () => {
 }
 
 export const ServiceProviderRequestDetails = props => {
-  return props.serviceRequest.slice(0, 2).map((sp, index) => {
+  return props.serviceRequest.slice(props.minVal, props.maxVal).map((sp, index) => {
     return (
       <Fragment>
         <li key={index} className='list-group-item ProfileServicesVisitContent'>
           <div className='ServicesTypeContainer'>
             <i className='ServicesType Bathing' />
           </div>
-          <div className='ProfileSkillServices'>
+          <div className='ProfileSkillServices' onClick={() => {props.handleClick(sp.serviceRequestId)}}>
             <span className='ServicesTitle'>
               {sp.serviceRequestTypeDetails &&
                 getFields(
@@ -240,7 +241,7 @@ export const ServiceProviderRequestDetails = props => {
               </div>
             </div>
             <span className='AvatarName'>
-              {sp.patientFirstName && sp.patientFirstName}
+              {sp.patientFirstName && sp.patientFirstName.slice(0,1).toUpperCase()+" "}
               {sp.patientLastName && sp.patientLastName}
             </span>
           </div>
