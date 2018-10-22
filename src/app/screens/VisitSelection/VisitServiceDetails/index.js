@@ -39,8 +39,8 @@ class VisitServiceDetails extends Component {
       patientId: '',
       serviceType: '',
       isOpen: false
-    },
-      this.alertModalMsg = '',
+    }
+      this.alertModalMsg = ''
       this.status = {}
   }
 
@@ -315,7 +315,7 @@ class VisitServiceDetails extends Component {
                     <i class='ProfileIcon IconConversations' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                        Conversations
+                       Conversations
                       </div>
                     </div>
                   </div>
@@ -323,7 +323,7 @@ class VisitServiceDetails extends Component {
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                        Video Call
+                      <Link to="/teleHealth/">Video Call </Link>
                       </div>
                     </div>
                   </div>

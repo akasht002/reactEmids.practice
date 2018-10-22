@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-
+import { CSS_PROPS } from './css-data-props'
 import { Scrollbars } from '../../components'
 import {
   ServiceProviderRequestDetails,
@@ -29,6 +29,7 @@ class ServiceRequest extends React.Component {
       max:2,
       selectedValue: { label: 'Hired', value: '38' }
     }
+    this.toggleName = 'Show more'
   }
 
   componentDidMount() {
@@ -131,7 +132,11 @@ class ServiceRequest extends React.Component {
             smoothScrolling
             horizontal={false}
             stopScrollPropagation
-            className='bottomPalette ServiceRequestPalette ServiceProvider'
+            className={
+              getLength(this.props.patientServiceRequest) >2
+                ? CSS_PROPS.Scrollbars_With_No_Length
+                : CSS_PROPS.Scrollbars_With_Length
+            }
           >
             <ul className='list-group ProfileServicesVisitList'>
               {serviceRequestItem}

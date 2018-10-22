@@ -435,7 +435,7 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
     background: none;
 }
 
-.ProfileServicesVisitContent .options:before, .mySPContainer .options:before, .ProfileSubOptions .Select-control .Select-arrow-zone .Select-arrow:before{
+.mySPContainer .options:before, .ProfileSubOptions .Select-control .Select-arrow-zone .Select-arrow:before{
     content: '...';
     position: absolute;
     color: #9f9f9f;
