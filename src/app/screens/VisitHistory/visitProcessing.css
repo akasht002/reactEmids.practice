@@ -30,6 +30,11 @@
     border-right: 1px solid #d7d7d7;
 }
 
+.TitleContent:hover {
+    cursor: pointer;
+    background-color: #f0e6f2;
+}
+
 .requestNameContent, .requestImageContent{
     position: relative;
     display: flex;
