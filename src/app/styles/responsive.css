@@ -142,7 +142,6 @@
 
     .navbar {
         position: fixed !important;
-        height: auto !important;
         width: 100%;
         z-index: 99;
         background-color: #ffffff;
@@ -210,10 +209,6 @@
 
     .sideNavigation li p {
         display: none;
-    }
-
-    .modal-sm {
-        min-width: 90%;
     }
 
     .participantsSearchForm {
@@ -536,9 +531,7 @@ a.ParticipantClose {
     }
 
     .SPTitleText .icon-back:before{
-        height: 18px;
-        width: 18px;
-        bottom: 15px;
+        bottom: 2px;
     }
 
     .card.SPDetails {

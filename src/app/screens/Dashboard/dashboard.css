@@ -741,7 +741,6 @@ a.ProfileCardHeaderLink:hover{
 
 .ServiceRequestBoard{
     width: 33.33%;
-    height: 197px;
     margin-bottom: 15px;
     padding: 0 10px;
 }
@@ -1040,8 +1039,12 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         padding: 14px 20px;
     }
 
-    .ProfileCardBody .ServiceRequestPalette {
+    div.ProfileCardBody .ServiceRequestPalette {
         height: calc(100vh - 623px);
+    }
+
+    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
+        height: calc(100vh - 585px);
     }
 
     .ServiceProvider .ProfileCardBody .ServiceRequestPalette {
@@ -1071,8 +1074,12 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         height: calc(100vh - 276px);
     }
 
-    .ProfileCardBody .ServiceRequestPalette {
+    div.ProfileCardBody .ServiceRequestPalette {
         height: calc(100vh - 590px);
+    }
+
+    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
+        height: calc(100vh - 550px);
     }
 
     .ProfileSkillServices.ServiceRequest .ServicesDesc{
@@ -1118,8 +1125,21 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         height: calc(100vh - 295px);
     }
 
-    .ProfileCardBody .ServiceRequestPalette{
-        height: 200px;
+    div.ProfileCardBody .ServiceRequestPalette{
+        height: calc(100vh - 575px);
+    }
+
+    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
+        height: calc(100vh - 530px);
+    }
+
+    .ProfileSkillServices {
+        max-width: calc(100% - 210px);
+    }
+
+    .ProfileApplicationNumbers.Avatar {
+        max-width: 140px;
+        min-width: 120px;
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile{
@@ -1692,6 +1712,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 {
     width:inherit;
     position: absolute;
+    padding: 15px 30px;
 }
 
 .ProfileRightContainer

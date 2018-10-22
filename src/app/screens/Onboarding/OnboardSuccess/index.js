@@ -28,7 +28,7 @@ class OnboardSuccess extends React.Component {
                                 <div className="onBoardSuccessWidget">
                                     <div className="onBoardSuccessContainer">
                                         <span className="onBoardSuccessIcon"/>
-                                        <span className="onBoardSuccessText my-3 mb-4">You are Successfully onboarded!</span>
+                                        <span className="onBoardSuccessText my-3 mb-4">You are successfully onboarded!</span>
                                         <button type="button" class="onBoardSuccessBtn btn btn-primary" onClick={this.onLoginPress}>Login</button>
                                     </div>
                                 </div>
