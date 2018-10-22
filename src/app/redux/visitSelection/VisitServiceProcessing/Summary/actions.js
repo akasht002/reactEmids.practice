@@ -4,6 +4,7 @@ import { startLoading, endLoading } from '../../../loading/actions';
 import moment from 'moment'
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
+import { DEMO } from '../../../../constants/config';
 
 
 export const SummaryDetails = {
@@ -59,9 +60,9 @@ export function calculationActualData() {
 
         const currState = getState().visitSelectionState.VisitServiceProcessingState.SummaryState;
 
-        const ClaimState = getState().visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus.amount
+        const ClaimState = DEMO === 'true' ? 20 : getState().visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus.amount
 
-        let duration = moment.duration(currState.actualTimeDiff);
+        let duration = DEMO === 'true' ? moment.duration(3600000) : moment.duration(currState.actualTimeDiff);
 
         let hours = duration.days() * 24 + duration.hours();
 
