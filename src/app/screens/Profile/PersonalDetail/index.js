@@ -60,6 +60,9 @@ class PersonalDetail extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     this.setState({
       imageProfile: nextProps.profileImgData.image,
+      uploadedImageFile: nextProps.profileImgData.image
+        ? nextProps.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png'),
       firstName: nextProps.personalDetail.firstName,
       lastName: nextProps.personalDetail.lastName,
       age: nextProps.personalDetail.age,
@@ -334,8 +337,12 @@ class PersonalDetail extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
+              <li>Click on Change Photo</li>
+              <li>Select the image from your desktop/gallery</li>
               <li>The image should not exceed beyond 2MB.</li>
               <li>The image should be either of PNG or JPEG/JPG type only.</li>
+              <li>Once select you can crop the image by dragging the cursor the image</li>
+              <li>Click on Save</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>
@@ -654,7 +661,8 @@ class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
-            placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+           // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            placeholder='Tell us about yourself'
             className='form-control'
             rows='5'
             value={this.state.description}

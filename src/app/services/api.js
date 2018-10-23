@@ -32,7 +32,8 @@ export const API = {
     getLanguages: 'ServiceProvider/Language',
     addLanguages: 'ServiceProvider/',
     getServiceRequestList: 'Search/SearchServiceRequestbyId/',
-    getServiceRequestDetails: 'ServiceRequest/ServiceRequestDetails/',
+    // getServiceRequestDetails: 'ServiceRequest/ServiceRequestDetails/',
+    getServiceRequestDetails: 'ServiceRequest/GetDetailsByserviceProviderAndRequestId/',
     getServiceRequestSchedule: 'VisitProcessing/ServiceRequestVisit/',
     getServiceRequestPerformTasks: 'VisitProcessing/ServiceRequestVisitDetails/',
     getQuestionsList: 'VisitProcessing/ServiceRequestVisitFeedback/49',
@@ -118,7 +119,13 @@ export const API = {
     claimsSubmission: 'BenefitProcess/ClaimsSubmission',
     captureAmount:'Account/CardCaputreAmount',
     servicerequest: 'ServiceRequest/',
-    getFilteredVisitHistory: 'VisitProcessing/ServiceProviderVisit'
+    getFilteredVisitHistory: 'VisitProcessing/ServiceProviderVisit',
+    getConversationMessage: 'Conversation/ConversationMessage/',
+    getPatientProfilePercentage: 'Patient/get-patient-progress/',
+    getPatientPersonalDetail: 'Patient/',
+    getPatientImage: 'Patient/Image/',
+    getPatientAddress: 'Patient/',
+    getPatientConnections: 'ManageConnections/',
+    getPatientLanguages: 'PatientLanguage/',
+    getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
 }
-
-

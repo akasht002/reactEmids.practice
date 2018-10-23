@@ -3,6 +3,7 @@ import { AsyncPutWithUrl, AsyncGet, AsyncPost, getUserInfo } from '../../service
 import { startLoading, endLoading } from '../loading/actions';
 import { push } from '../navigation/actions';
 import { Path } from '../../routes';
+import { USERTYPES } from '../../constants/constants';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
@@ -12,7 +13,10 @@ export const TeleHealth = {
     getRoomIdSuccess: 'getRoomIdSuccess/telehealth',
     getParticipantByConfernceIdSuccess: 'get_participant_by_confernceId_success/telehealth',
     getAllParticipantsSuccess: 'get_all_participants_success/telehealth',
-    setRoomId : 'set_roomId/telehealth'
+    setRoomId : 'set_roomId/telehealth',
+    clearRoom: 'clear_room/telehealth',
+    invitaionCame: 'invitaion_came/telehealth',
+    clearInvitaion: 'clear_invitaion/telehealth'
 };
 
 export const generateTokenSuccess = (data) => {
@@ -21,6 +25,25 @@ export const generateTokenSuccess = (data) => {
         data
     }
 };
+
+export const clearRoom = () =>{
+    return{
+        type: TeleHealth.clearRoom
+    }
+};
+
+export const invitaionCame = () => {
+    return {
+        type: TeleHealth.invitaionCame
+    }
+};
+
+export const clearInvitaion = () => {
+    return {
+        type: TeleHealth.clearInvitaion
+    }
+};
+
 
 export function generateToken() {
     return (dispatch, getState) => {
@@ -45,18 +68,30 @@ const getLinkedParticipantsByPatientsSuccess = data => {
 };
 
 export function getLinkedParticipantsByPatients(data) {
-    return (dispatch) => {
-        dispatch(startLoading());
+    return (dispatch, getState) => {
         let searchText = data.searchText === "" ? null : data.searchText;
         const userInfo = getUserInfo();
-        data.userId = userInfo.serviceProviderId;
+        let patients = getState().telehealthState.linkedPatients;
+        let patient = patients.find((e) => {
+            return e.userId === data.patientId
+        });
+        data.firstName = patient.firstName;
+        data.lastName = patient.lastName;
+        data.participantType = USERTYPES.PATIENT;
+        data.image = patient.image;
+        data.userId = data.userId;
+        dispatch(startLoading());
         AsyncGet(API.getParticipantsByContext + data.conversationId +
             '/' + data.userId +
             '/' + data.patientId +
             '/' + data.participantType +
             '/' + searchText
         ).then((resp) => {
-            dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
+            let modifiedData = [
+                data,
+                ...resp.data
+            ];
+            dispatch(getLinkedParticipantsByPatientsSuccess(modifiedData));
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -105,10 +140,10 @@ const getLinkedPatientsSuccess = data => {
 };
 
 
-export function joinVideoConference(roomNumber) {
+export function joinVideoConference() {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
-        dispatch(setRoomId(roomNumber));
+        const roomNumber = getState().telehealthState.roomId;
         dispatch(startLoading());
         AsyncPutWithUrl(API.joinVideoConference 
             + userInfo.serviceProviderId + '/S/'
@@ -231,7 +266,6 @@ const onGetAllParticipantsSuccess = (data) => {
     }
 };
 
-
 export function AddParticipantsToVideoConference(data) {
     return (dispatch, getState) => {
         let state = getState();
@@ -248,3 +282,18 @@ export function AddParticipantsToVideoConference(data) {
         })
     }
 };
+
+export function checkTeleHealth(data) {
+    return (dispatch) => {
+        const userInfo = getUserInfo();
+        const userId = userInfo.serviceProviderId;
+        data.participantList && data.participantList.map((participant) => {
+            if (userInfo.userType === participant.participantType && userId === participant.userId) {
+                if (data.messageType === 'Invited') {
+                    dispatch(setRoomId(data.roomID));
+                    dispatch(invitaionCame());
+                }
+            }
+        })
+    }
+}

@@ -13,6 +13,7 @@ process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';
 process.env.REACT_APP_TP_URL = 'http://localhost:63633/api/';
 process.env.REACT_APP_SIGNALR_URL = 'http://52.172.45.185:9002/signalr';
 process.env.REACT_APP_CARETEAM_URL = 'https://chqa-ct-api.coreoflowsandbox.com/api/';
+process.env.REACT_APP_PATIENT_URL = 'https://chqa-gen-api.coreoflowsandbox.com/api/';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -33,16 +34,29 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_TP_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/api/';
   process.env.REACT_APP_SIGNALR_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://chqa-ct-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://chqa-gen-api.coreoflowsandbox.com/api/';
 } else if (argv.includes('--dev')) {
-  process.env.REACT_APP_API_URL = 'http://ch-api.coreoflowsandbox.com:9008/api/';
-  process.env.REACT_APP_AUTH_URL = 'http://52.172.45.185:9005/';
-  process.env.REACT_APP_SR_URL = 'http://ch-api.coreoflowsandbox.com:9007/api/';
-  process.env.REACT_APP_UI_URL = 'http://52.172.45.185:9009/#/';
-  process.env.REACT_APP_MSG_URL = "http://52.172.45.185:9002/api/";
-  process.env.REACT_APP_ES_URL = 'http://52.172.45.185:9015/api/';
-  process.env.REACT_APP_TP_URL = 'http://localhost:63633/api/';
-  process.env.REACT_APP_SIGNALR_URL = 'http://52.172.45.185:9002/signalr';
-  process.env.REACT_APP_CARETEAM_URL = 'https://chqa-ct-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_API_URL = 'https://chdevdemo-sp-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'https://chdevdemo-oauth-api.coreoflowsandbox.com/';
+  process.env.REACT_APP_SR_URL = 'https://chdevdemo-sr-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_UI_URL = 'https://chdevdemo-sp.coreoflowsandbox.com/#/';
+  process.env.REACT_APP_MSG_URL = "https://chdevdemo-tp-api.coreoflowsandbox.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://chdevdemo-sr-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://chdevdemo-ct-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://chdevdemo-gen-api.coreoflowsandbox.com/api/';
+} else if (argv.includes('--demo')) {
+  process.env.REACT_APP_API_URL = 'https://chdemo-sp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'https://chdemo-oauth-api.coreodevserver.com/';
+  process.env.REACT_APP_SR_URL = 'https://chdemo-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_UI_URL = 'https://chdemo-sp-ui.CoreoDevServer.com/#/';
+  process.env.REACT_APP_MSG_URL = "https://chdemo-tp-api.coreodevserver.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://chdemo-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://chdemo-tp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://chdemo-tp-api.coreodevserver.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://chdemo-vp-api.CoreoDevServer.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://chdemo-gen-api.coreodevserver.com/api/';
 }
 
 // Ensure environment variables are read.

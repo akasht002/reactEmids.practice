@@ -68,7 +68,7 @@
     box-shadow: none;
 }
 
-.TabContainer.true:after{
+.TabContainer[aria-selected="true"]:after{
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
@@ -187,4 +187,9 @@
     background-color: #7a329f;
     border-color: #7a329f;
     background-image: url("../../../assets/images/checked.svg");
+}
+
+.ServiceList.Individual input.ServicesInput, .ServiceList.Individual label.ServicesLink:after{
+    display: none;
+    pointer-events: none;
 }

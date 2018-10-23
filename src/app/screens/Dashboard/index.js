@@ -10,6 +10,7 @@ import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
 import {getPersonalDetail} from '../../redux/profile/PersonalDetail/actions'
 import { getUserInfo } from '../../services/http'
 import './dashboard.css'
+import './ctdashboard.css'
 import './styles/toggleSwitch.css'
 import './EntitySP/EntitySPDashboard.css';
 

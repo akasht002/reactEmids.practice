@@ -3,10 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 import TeleHealthWidget from './TeleHealthWidget';
-import { generateToken } from '../../redux/telehealth/actions';
+import { generateToken, GetParticipantByConferenceId, clearLinkedParticipants, clearRoom  } from '../../redux/telehealth/actions';
 import './styles.css';
-import { getUserInfo } from '../../services/http';
-import { GetParticipantByConferenceId, clearLinkedParticipants, leaveVideoConference } from '../../redux/telehealth/actions';
 
 class TeleHealth extends Component {
 
@@ -32,6 +30,7 @@ class TeleHealth extends Component {
 
     componentWillUnmount() {
         this.props.clearLinkedParticipants();
+        this.props.clearRoom();
     }
 
     updateHeight = () => {
@@ -82,7 +81,7 @@ function mapDispatchToProps(dispatch) {
         generateToken: () => dispatch(generateToken()),
         getParticipantByConferenceId: ()=> dispatch(GetParticipantByConferenceId()),
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
-        leaveRoom: () => dispatch(leaveVideoConference(false))
+        clearRoom: () => dispatch(clearRoom())
     }
 }
 
@@ -90,8 +89,7 @@ function mapStateToProps(state) {
     return {
         telehealthToken: state.telehealthState.token,
         roomId: state.telehealthState.roomId,
-        participantList: state.telehealthState.linkedParticipants,
-        loggedInUser: getUserInfo()
+        participantList: state.telehealthState.linkedParticipants
     }
 }
 
