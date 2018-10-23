@@ -3,6 +3,7 @@ import { ThirdPartyGet, ThirdPartyPost, ThirdPartyPut } from '../../../../servic
 import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
+import { DEMO } from '../../../../constants/config';
 
 export const paymentsCardList = {
     getPaymentsCardListSuccess: 'get_paymentsCardList_success/performtasks',
@@ -36,7 +37,11 @@ export function createCharge(data) {
             }
             dispatch(endLoading());
         }).catch((err) => {
-            dispatch(push(Path.paymentfailure))
+            if (DEMO === 'true') {
+                dispatch(push(Path.paymentsuccess))
+            } else {
+                dispatch(push(Path.paymentfailure))
+            }
             dispatch(endLoading());
         })
     }
@@ -51,7 +56,11 @@ export function chargeByCustomerId(data) {
             }
             dispatch(endLoading());
         }).catch((err) => {
-            dispatch(push(Path.paymentfailure))
+            if (DEMO === 'true') {
+                dispatch(push(Path.paymentsuccess))
+            } else {
+                dispatch(push(Path.paymentfailure))
+            }
             dispatch(endLoading());
         })
     }
@@ -64,7 +73,11 @@ export function claimsSubmission(data) {
             dispatch(endLoading());
             dispatch(push(Path.paymentsuccess))
         }).catch((err) => {
-            dispatch(push(Path.paymentfailure))
+            if (DEMO === 'true') {
+                dispatch(push(Path.paymentsuccess))
+            } else {
+                dispatch(push(Path.paymentfailure))
+            }
             dispatch(endLoading());
         })
     }
@@ -77,7 +90,11 @@ export function captureAmount(data) {
             dispatch(endLoading());
             dispatch(push(Path.paymentsuccess))
         }).catch((err) => {
-            dispatch(push(Path.paymentfailure))
+            if (DEMO === 'true') {
+                dispatch(push(Path.paymentsuccess))
+            } else {
+                dispatch(push(Path.paymentfailure))
+            }
             dispatch(endLoading());
         })
     }
