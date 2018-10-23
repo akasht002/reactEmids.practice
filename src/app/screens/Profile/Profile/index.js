@@ -17,7 +17,7 @@ import {
 } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from '../Availability/index'
 import { getUserInfo } from '../../../services/http'
-import { PROFILE_SERVICE_PROVIDER_TYPE_ID } from '../../../constants/constants'
+import { PROFILE_SERVICE_PROVIDER_TYPE_ID, ORG_SERVICE_PROVIDER_TYPE_ID } from '../../../constants/constants'
 import {SCREENS} from '../../../constants/constants';
 import {authorizePermission} from '../../../utils/roleUtility';
 import { push } from '../../../redux/navigation/actions';
@@ -50,6 +50,26 @@ class Profile extends Component {
         />
       )
     } else { return <Organization profilePercentage={this.props.profilePercentage} /> }
+  }
+
+  getAvailability = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+     return <Availability />
+    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+      return <Availability />
+    } else {
+      return '';
+    }
+  }
+
+  getServiceOffered = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+      return <ServiceOffered />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+       return <ServiceOffered />
+     } else {
+       return '';
+     }
   }
 
   navigateProfileHeader = (link) => {
@@ -97,7 +117,7 @@ class Profile extends Component {
                 </div>
                 {this.getPersonalDetail()}
                 <div className='col-md-12 card CardWidget SPCertificate'>
-                  <ServiceOffered />
+                {this.getServiceOffered()}
                 </div>
                 <div className='col-md-12 card CardWidget SPCertificate'>
                   <Skills />
@@ -111,7 +131,7 @@ class Profile extends Component {
 
                 <WorkHistory />
                 <Education />
-                <Availability />
+               {this.getAvailability()}
 
               </div>
             </div>

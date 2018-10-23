@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment'
 import { Input, TextArea, ProfileModalPopup, ModalPopup } from "../../../components";
 import { Calendar } from "../../../components/LevelOne/index";
-import { checkSpace, formattedDateMoment, formattedDateChange, formateStateDate } from "../../../utils/validations";
+import { checkSpace, formattedDateMoment, formattedDateChange, formateStateDate, newDate } from "../../../utils/validations";
 import { compare } from "../../../utils/comparerUtility";
 import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, deleteWorkHistory } from "../../../redux/profile/WorkHistory/actions";
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
@@ -281,7 +281,7 @@ class WorkHistory extends Component {
                             onDateChange={this.dateChanged}
                             onDateChangeRaw={this.dateChangedRaw}
                             mandatory={true}
-                            maxDate={this.state.toDate ? formateStateDate(this.state.toDate) : formateStateDate()}
+                            maxDate={newDate()}
                             value={this.state.fromDate}
                             className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate)) && 'inputFailure')}
                         />
@@ -298,7 +298,7 @@ class WorkHistory extends Component {
                             onDateChangeRaw={this.todateChangedRaw}
                             mandatory={true}
                             minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
-                            maxDate={formateStateDate()}
+                            maxDate={newDate()}
                             value={this.state.toDate}
                             className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
                         />

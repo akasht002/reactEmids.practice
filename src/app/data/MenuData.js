@@ -21,7 +21,7 @@ export const MenuData = [
         iconName: 'iconProfile iconProfileServiceVisits',
         link:'/visitHistory',
         name: SCREENS.VISIT_HISTORY
-    }
+    },
     // {
     //     id: 3,
     //     title: 'Service Providers',        
