@@ -317,7 +317,7 @@ li div.dropdown-menu{
 
 span.btn-hired, span.btn-hired:hover{
     color: #007f84 !important;
-    border-color: #007f84 !important;
+    /* border-color: #007f84 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -326,7 +326,7 @@ span.btn-hired, span.btn-hired:hover{
 
 span.btn-applied, span.btn-applied:hover{
     color: #3089df !important;
-    border-color: #3089df !important;
+    /* border-color: #3089df !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -335,7 +335,7 @@ span.btn-applied, span.btn-applied:hover{
 
 span.btn-invited, span.btn-invited:hover{
     color: #7a329f !important;
-    border-color: #7a329f !important;
+    /* border-color: #7a329f !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -536,6 +536,7 @@ ul li.list-group-item.EligibilityList{
 
 .TabBody .SPAvailWidget{
     margin: 0 -22px;
+    padding: 0 15px 15px 15px;
 }
 
 a.ProfileCardHeaderLink:hover{
@@ -602,7 +603,6 @@ a.ProfileCardHeaderLink:hover{
 
 .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
     height: calc(100vh - 216px);
-    overflow-y: hidden;
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette {
@@ -1134,19 +1134,26 @@ div.scrollarea .scrollbar-container.vertical {
         bottom: 0;
     }
 
-    .SPAvailItems {
+    .SPAvailItems{
         display: block;
         position: relative;
         padding: 5px 15px 5px 40px;
         list-style: none;
         font-size: 16px;
-        margin: 1px 0;
-        color: rgba(79, 79, 79, 0.5);
+        /* margin: 1px 0; */
+        margin: 0;
+        color: #444444;
+        /* border-bottom: 1px solid #eaeaea; */
+        border-top: 1px solid #eaeaea;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+    
+    .SPAvailItems:last-child{
+        /* border: 0; */
     }
 }
 

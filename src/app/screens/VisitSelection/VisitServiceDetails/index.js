@@ -268,11 +268,8 @@ class VisitServiceDetails extends Component {
                 </div>
               </section>
               <section class='LeftPalette'>
-                <div className='primaryColor LeftPaletteHeader'>
-                  Posted By
-                </div>
                 <div class='LeftPostedBy'>
-                  <div class='PostedByImageContainer'>
+                  <div class='PostedByImageContainer pt-0'>
                   {
                     this.state.visitServiceDetails.patient ?  <img
                         className='ProfileImage'
@@ -419,7 +416,7 @@ class VisitServiceDetails extends Component {
                             </span>
                           </div>
                           <div className='AvailabilityWidget'>
-                            <div className='SPAvailWidget Summary mb-4'>
+                            <div className='SPAvailWidget Summary'>
                               {AvailDays}
                             </div>
                           </div>
