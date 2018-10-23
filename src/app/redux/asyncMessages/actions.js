@@ -334,7 +334,7 @@ export function leaveConversation(data) {
             + data.conversationId + '/'
             + USER_TYPE)
             .then(resp => {
-                dispatch(onFetchConversation(resp.data));
+                dispatch(onFetchConversation(resp.data.conversationId));
                 dispatch(endLoading())
             })
             .catch(err => {

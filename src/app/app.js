@@ -18,14 +18,16 @@ class App extends Component {
     .build();
 
     connection.on("UpdateChat", data => {
-      if(data && data.result){
-        let ParticipantList = [...data.result.participantList];
+      if(data){
+        let ParticipantList = data.result ? [...data.result.participantList] : [...data.participantList];
         const index = ParticipantList.indexOf(
           ParticipantList.filter(el => el.userId === getUserInfo().serviceProviderId && el.participantType === USERTYPES.SERVICE_PROVIDER)[0]
         );
         if(index !== -1){
-          this.props.getConversationSummaryItemSignalR(data.result.conversationId);
-          this.props.getConversationItemSignalR(data.result.conversationId, data.result.conversationMessageId)
+          let conversationId = data.result ? data.result.conversationId : data.conversationId;
+          let messageId = data.result ? data.result.conversationMessageId : data.conversationMessageId;
+          this.props.getConversationSummaryItemSignalR(conversationId);
+          this.props.getConversationItemSignalR(conversationId, messageId);
         };
       };
     });
