@@ -512,6 +512,7 @@ ul li.list-group-item.EligibilityList{
     margin: 13px;
     padding: 5px 10px !important;
     float: right;
+    height: 33px;
 }
 
 .TabBody .ServiceCategoryContent{
@@ -678,7 +679,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ServiceRequestBoard{
     width: 370px;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
 }
 
 .ServiceRequestBoard .card:hover{

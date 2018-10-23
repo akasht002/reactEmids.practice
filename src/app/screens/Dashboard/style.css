@@ -625,6 +625,7 @@ span.btn-invited, span.btn-invited:hover{
     margin: 13px;
     padding: 5px 10px !important;
     float: right;
+    height: 33px;
 }
 
 .TabBody .ServiceCategoryContent{
@@ -793,7 +794,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ServiceRequestBoard{
     width: 33.33%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding: 0 10px;
 }
 
