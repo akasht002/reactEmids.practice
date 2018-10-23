@@ -79,7 +79,7 @@ export function getLinkedParticipantsByPatients(data) {
         data.lastName = patient.lastName;
         data.participantType = USERTYPES.PATIENT;
         data.image = patient.image;
-        data.userId = userInfo.serviceProviderId;
+        data.userId = data.userId;
         dispatch(startLoading());
         AsyncGet(API.getParticipantsByContext + data.conversationId +
             '/' + data.userId +

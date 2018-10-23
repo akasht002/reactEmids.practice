@@ -423,6 +423,10 @@ span.btn-invited, span.btn-invited:hover{
     color: #444444;
 }
 
+.BlockProfileContainer.noArrow:after{
+    display:none;
+}
+
 .BlockProfileContainer:after{
     opacity: 0.5;
     content: '';

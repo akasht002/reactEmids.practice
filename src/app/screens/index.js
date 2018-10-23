@@ -23,13 +23,13 @@ import Conversation from './AsyncMessage/Conversation'
 import ConversationSummary from './AsyncMessage/ConversationSummary'
 import VisitHistory from './VisitHistory'
 import VistSummary from './VisitHistory/VisitSummary'
-
 import {
   ForgetPassword,
   ResetPassword,
   ResetPasswordSuccess,
   ResetPasswordConfirmation
 } from './Authentication'
+import PatientProfile from '../screens/PatientProfile/Profile';
 
 export {
   Welcome,
@@ -58,5 +58,6 @@ export {
   Conversation,
   ConversationSummary,
   VisitHistory,
-  VistSummary
+  VistSummary,
+  PatientProfile
 }

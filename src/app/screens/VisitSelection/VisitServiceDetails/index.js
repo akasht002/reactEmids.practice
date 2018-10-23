@@ -403,7 +403,7 @@ class VisitServiceDetails extends Component {
                                 {this.state.visitServiceDetails.startDate}
                               </Moment>
                               {' '}
-                              - till
+                              - 
                               {' '}
                               {this.state.visitServiceDetails.recurringPattern}
                               {' '}

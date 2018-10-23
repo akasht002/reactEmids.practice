@@ -83,8 +83,8 @@ class ParticipantsContainer extends Component {
             let userId = getUserInfo().serviceProviderId;
             this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
             let data = {
-                userId: userId,
-                participantType: USERTYPES.SERVICE_PROVIDER,
+                userId: patientId,
+                participantType: USERTYPES.PATIENT,
                 searchText: this.state.searchText,
                 patientId: patientId ? patientId : 0,
                 conversationId: 0

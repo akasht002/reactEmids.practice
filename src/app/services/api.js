@@ -120,5 +120,12 @@ export const API = {
     captureAmount:'Account/CardCaputreAmount',
     servicerequest: 'ServiceRequest/',
     getFilteredVisitHistory: 'VisitProcessing/ServiceProviderVisit',
-    getConversationMessage: 'Conversation/ConversationMessage/'
+    getConversationMessage: 'Conversation/ConversationMessage/',
+    getPatientProfilePercentage: 'Patient/get-patient-progress/',
+    getPatientPersonalDetail: 'Patient/',
+    getPatientImage: 'Patient/Image/',
+    getPatientAddress: 'Patient/',
+    getPatientConnections: 'ManageConnections/',
+    getPatientLanguages: 'PatientLanguage/',
+    getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
 }
