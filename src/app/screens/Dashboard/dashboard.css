@@ -450,6 +450,16 @@ span.btn-invited, span.btn-invited:hover{
     transition: all linear .3s;
 }
 
+.BlockProfileContainer.noArrow .BlockProfileDetailsStatus{
+    right: 0;
+    width: 90px;
+}
+
+.BlockProfileContainer.noArrow .BlockProfileDetailsStatus .BlockProfileMatching{
+    padding: 0;
+    margin: 0;
+}
+
 .BlockImageContainer{
     padding: 25px 40px 25px 20px;
     border-bottom: 1px solid rgba(60,16,83,0.1);
@@ -744,7 +754,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ServiceRequestBoard{
     width: 33.33%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding: 0 10px;
 }
 
