@@ -9,9 +9,21 @@ import { ScreenCover, Header, ModalPopup } from '../../../components';
 import MyConnections from '../MyConnections';
 import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
 import {goBack} from '../../../redux/navigation/actions';
+import Help from '../../../assets/HelpDoc/Help.pdf';
 import './styles.css'
 
 class Profile extends Component {
+
+  navigateProfileHeader = (link) => {
+    switch (link) {
+        case 'contact':
+            this.helpDocEl.click();
+            break;
+        default: 
+            this.setState({selectedLink: link})
+            break;
+    };
+  };
 
   render() {
     return (
@@ -19,8 +31,9 @@ class Profile extends Component {
         <div className='container-fluid p-0'>
           <Header
            onClick = {(link) => this.navigateProfileHeader(link)}
-            menuArray={['contact']}
+           menuArray={['contact']}
           />
+          <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
             <div className='width100 topWidgetBG' />
             <div className='container mainProfileContent bgWhite'>
