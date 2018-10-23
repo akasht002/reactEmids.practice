@@ -225,7 +225,6 @@ class VisitServiceDetails extends Component {
         )
       })
 
-
     let address = this.state.visitServiceDetails.patient &&
       this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
         return obj.isPrimaryAddress === true
