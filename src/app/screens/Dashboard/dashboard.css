@@ -391,7 +391,7 @@ li div.dropdown-menu{
 
 span.btn-hired, span.btn-hired:hover{
     color: #007f84 !important;
-    border-color: #007f84 !important;
+    /* border-color: #007f84 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -400,7 +400,7 @@ span.btn-hired, span.btn-hired:hover{
 
 span.btn-applied, span.btn-applied:hover{
     color: #3089df !important;
-    border-color: #3089df !important;
+    /* border-color: #3089df !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -409,7 +409,7 @@ span.btn-applied, span.btn-applied:hover{
 
 span.btn-invited, span.btn-invited:hover{
     color: #7a329f !important;
-    border-color: #7a329f !important;
+    /* border-color: #7a329f !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
