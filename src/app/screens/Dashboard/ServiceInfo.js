@@ -30,7 +30,7 @@ export const ShowIndicator = props => {
   }
 }
 
-export const splitSlots = (togglePersonalDetails, data, type, handleClick) => {
+export const splitSlots = (togglePersonalDetails, data, type, handleClick, props) => {
   let newData = _.reduce(
     data,
     function (arr, el) {
@@ -42,13 +42,14 @@ export const splitSlots = (togglePersonalDetails, data, type, handleClick) => {
     []
   )
 
-  return serviceCalendar(togglePersonalDetails, newData, handleClick)
+  return serviceCalendar(togglePersonalDetails, newData, handleClick, props)
 }
 
 export const serviceCalendar = (
   togglePersonalDetails,
   newData,
-  handleClick
+  handleClick,
+  props
 ) => {
   if (newData.length > 0) {
     return newData.slice(0, 3).map((conversations, index) => {
@@ -86,7 +87,9 @@ export const serviceCalendar = (
                   Assign Service Provider
                 </span>}
             </div>
-            <div className='ProfileCardImageContainer'>
+            <div className='ProfileCardImageContainer' onClick={() => {
+              props.goToPatientProfile(conversations.patientId);
+            }}>
               <img
                 alt={'NO_IMAGE'}
                 key={index}
@@ -98,7 +101,9 @@ export const serviceCalendar = (
                 }
               />
             </div>
-            <div className='ProfileCardNameContainer'>
+            <div className='ProfileCardNameContainer' onClick={() => {
+              props.goToPatientProfile(conversations.patientId);
+            }}>
               <span>
                 {conversations.patientFirstName &&
                   conversations.patientFirstName +
@@ -214,7 +219,8 @@ export const ServiceCalendarDefault = props => {
           props.togglePersonalDetails,
           props.Servicelist,
           MORNING,
-          props.handleClick
+          props.handleClick,
+          props
         )}
       </ul>
       <h6 className='VisitScheduleTitle'>Afternoon</h6>
@@ -223,7 +229,8 @@ export const ServiceCalendarDefault = props => {
           props.togglePersonalDetails,
           props.Servicelist,
           AFTERNOON,
-          props.handleClick
+          props.handleClick,
+          props
         )}
       </ul>
       <h6 className='VisitScheduleTitle'>Evening</h6>
@@ -232,7 +239,8 @@ export const ServiceCalendarDefault = props => {
           props.togglePersonalDetails,
           props.Servicelist,
           EVENING,
-          props.handleClick
+          props.handleClick,
+          props
         )}
       </ul>
     </React.Fragment>
