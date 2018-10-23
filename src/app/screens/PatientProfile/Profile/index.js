@@ -8,11 +8,18 @@ import ClinicalCondition from '../ClinicalCondition'
 import { ScreenCover, Header, ModalPopup } from '../../../components';
 import MyConnections from '../MyConnections';
 import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
-import {goBack} from '../../../redux/navigation/actions';
+import {goBack, push} from '../../../redux/navigation/actions';
 import Help from '../../../assets/HelpDoc/Help.pdf';
 import './styles.css'
+import { Path } from '../../../routes';
 
 class Profile extends Component {
+
+  componentDidMount() {
+    if (!this.props.patientId) { 
+      this.props.goToDashboard();
+    }
+  }
 
   navigateProfileHeader = (link) => {
     switch (link) {
@@ -73,13 +80,15 @@ function mapDispatchToProps(dispatch) {
   return {
     clearInvitaion: () => dispatch(clearInvitaion()),
     joinVideoConference: () => dispatch(joinVideoConference()),
-    goBack: () => dispatch(goBack())
+    goBack: () => dispatch(goBack()),
+    goToDashboard: () => dispatch(push(Path.dashboard))
   }
 };
 
 function mapStateToProps(state) {
   return {
-    showTelehealthInvite: state.telehealthState.isInvitationCame
+    showTelehealthInvite: state.telehealthState.isInvitationCame,
+    patientId: state.patientProfileState.patientId
   };
 };
 
