@@ -346,9 +346,12 @@ class VisitServiceDetails extends Component {
                         className={classnames({
                           active: this.state.activeTab === '2'
                         })}
+                        // onClick={() => {
+                        //   this.toggle('2'),
+                        //   this.checkEligibility();
+                        // }}
                         onClick={() => {
-                          this.toggle('2'),
-                          this.checkEligibility();
+                          this.toggle('2')
                         }}
                       >
                         Schedule

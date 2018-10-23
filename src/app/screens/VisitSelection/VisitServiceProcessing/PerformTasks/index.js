@@ -91,7 +91,7 @@ class PerformTasks extends Component {
             this.setState({ startedTime: current_time, disabled: false, disableCheckbox: false, backDisabled: true })
         } else {
             current_time = this.state.startedTime;
-            this.setState({ stopTime: true })
+            this.setState({ stopTime: true, startService: true })
         }
         this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
         this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
@@ -99,9 +99,10 @@ class PerformTasks extends Component {
 
     onClickNext = () => {
         this.setState({ taskCount: (this.state.taskList.totalTask - (this.checkedTask).length) })
-        if (!this.state.startService) {
-            this.setState({ isStopModalOpen: true })
-        } else if (this.state.taskCount > 0) {
+        // if (!this.state.startService) {
+        //     this.setState({ isStopModalOpen: true })
+        // } else
+         if (this.state.taskCount > 0) {
             this.setState({ isModalOpen: true })
         } else if (this.state.taskCount === 0) {
             this.saveData();
@@ -245,7 +246,7 @@ class PerformTasks extends Component {
                                                                             taskList.checked = e.target.checked;
                                                                             this.handleChange(taskList, e);
                                                                         }}
-                                                                        disabled={this.state.disableCheckbox}
+                                                                        disabled={visitStatus === SERVICE_STATES.YET_TO_START}
                                                                     />
                                                                     <label className='ServicesLink' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
                                                                         <div className='servicesDesc'>

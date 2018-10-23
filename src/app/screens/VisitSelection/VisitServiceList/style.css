@@ -504,6 +504,7 @@ span.btn-invited, span.btn-invited:hover{
     margin: 13px;
     padding: 5px 10px !important;
     float: right;
+    height: 33px;
 }
 
 .TabBody .ServiceCategoryContent{
