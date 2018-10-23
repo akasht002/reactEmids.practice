@@ -84,7 +84,6 @@ class ProfileHeader extends Component {
                     <DropdownMenu right>
                         <NavLink onClick={() => this.props.onClick('aboutUs')}>About Us</NavLink>
                         <NavLink href='#/profile'>My Profile</NavLink>
-                        <NavLink href='#/settings'>Settings</NavLink>
                         <NavLink onClick={() => this.props.onClick('logout')}>Logout</NavLink>
                     </DropdownMenu>
                 </Dropdown>
