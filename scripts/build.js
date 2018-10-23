@@ -43,7 +43,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_TP_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_SIGNALR_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://chdevdemo-ct-api.coreoflowsandbox.com/api/';
-}else if (argv.includes('--demo')) {
+} else if (argv.includes('--demo')) {
   process.env.REACT_APP_API_URL = 'https://chdemo-sp-api.coreodevserver.com/api/';
   process.env.REACT_APP_AUTH_URL = 'https://chdemo-oauth-api.coreodevserver.com/';
   process.env.REACT_APP_SR_URL = 'https://chdemo-sr-api.coreodevserver.com/api/';
