@@ -18,7 +18,7 @@ class App extends Component {
     .build();
 
     connection.on("UpdateChat", data => {
-      if(data){
+      if(data && getUserInfo()){
         let ParticipantList = data.result ? [...data.result.participantList] : [...data.participantList];
         const index = ParticipantList.indexOf(
           ParticipantList.filter(el => el.userId === getUserInfo().serviceProviderId && el.participantType === USERTYPES.SERVICE_PROVIDER)[0]
