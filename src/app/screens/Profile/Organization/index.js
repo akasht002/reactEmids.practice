@@ -547,7 +547,8 @@ class Organization extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
-            placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            placeholder='Tell us about yourself'
             className='form-control'
             rows='5'
             value={this.state.description}
