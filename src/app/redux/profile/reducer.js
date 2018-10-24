@@ -8,6 +8,7 @@ import PersonalDetailState from './PersonalDetail/reducer'
 import serviceOfferedState from './ServiceOffered/reducer';
 import progressIndicatorState from './ProgressIndicator/reducer';
 import AvailabilityState from './Availability/reducer';
+import ServiceAreaState from './serviceArea/reducer'
 
 export const profileState = combineReducers({
     CertificationState,
@@ -18,5 +19,6 @@ export const profileState = combineReducers({
     PersonalDetailState,
     serviceOfferedState,
     progressIndicatorState,
-    AvailabilityState
+    AvailabilityState,
+    ServiceAreaState
 });

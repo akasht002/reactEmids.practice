@@ -11,6 +11,7 @@ import EntityPersonalDetail from '../EntityPersonalDetail'
 import Organization from '../Organization'
 import WorkHistory from '../WorkHistory'
 import Skills from '../Skills/index'
+import ServiceArea from '../ServiceArea/index'
 import { Path } from '../../../routes'
 import {
   getProfilePercentage
@@ -120,6 +121,9 @@ class Profile extends Component {
                 {this.getServiceOffered()}
                 </div>
                 <div className='col-md-12 card CardWidget SPCertificate'>
+                  <ServiceArea />
+                </div>
+                <div className='col-md-12 card CardWidget SPCertificate'>
                   <Skills />
                 </div>
                 <div className='col-md-12 card CardWidget SPLanguages'>
@@ -132,6 +136,8 @@ class Profile extends Component {
                 <WorkHistory />
                 <Education />
                {this.getAvailability()}
+              
+               
 
               </div>
             </div>
