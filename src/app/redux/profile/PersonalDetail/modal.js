@@ -12,10 +12,10 @@ export const PERSONAL_DETAIL = {
 }
 
 export const getModal = (data, action) => {
-  let affiliation = data.selectedAffiliation.value
+  let affiliation = data.selectedAffiliation && data.selectedAffiliation.value
     ? getDataValueArray(data.selectedAffiliation.value, '-')
     : getValueOfArray(data.selectedAffiliation, '-')
-  let states = data.selectedState.value
+  let states = data.selectedState && data.selectedState.value
     ? getDataValueArray(data.selectedState.value, '-')
     : getValueOfArray(data.selectedState, '-')
   let organization = _.split(data.organization, '-')
