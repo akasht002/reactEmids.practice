@@ -169,6 +169,7 @@ export function leaveVideoConference(checkRoute) {
                 }
             dispatch(endLoading());
         }).catch((err) => {
+            dispatch(push(Path.dashboard))
             dispatch(endLoading());
         })
     }

@@ -44,6 +44,10 @@ export function checkDateFormatNumber (data) {
   return /^[0-9-]+$/.test(data)
 }
 
+export function checkNumber(data) {
+  return /^[0-9]+$/.test(data) || data === ''
+}
+
 export function checkFormatDate (value) {
   return (
     value.length === 10 &&
