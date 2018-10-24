@@ -112,3 +112,22 @@ export const DashboardConversationPagination = {
     pageNumber : 1,
     pageSize : 3
 };
+
+export const serviceTypesImage = {
+    1: 'ADL Ambulation & Mobility.svg',
+    2: 'ADL Bathing.svg',
+    3: 'ADL Continence.svg',
+    6: 'ADL Eating.svg',
+    7: 'ADL Getting Dressed.svg',
+    8: 'ADL Toileting.svg',
+    9: 'ADL Transferring.svg',
+    10: 'G&N Grocery Delivery.svg',
+    11: 'G&N Meal Delivery.svg',
+    12: 'HAH - Companionship & Errands.svg',
+    13: 'HAH - Food Preparation.svg',
+    14: 'HAH - Housekeeping.svg',
+    16: 'HAH - Shopping.svg',
+    17: 'HAH - Shopping.svg',
+    15: 'HAH - Laundry.svg',
+    18: 'Transportation - General Transportation.svg' 
+}

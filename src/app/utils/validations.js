@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_YEAR } from '../constants/constants'
+import { DATE_FORMAT, DATE_YEAR, serviceTypesImage } from '../constants/constants'
 import _ from 'lodash'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
@@ -174,4 +174,8 @@ export const isUrlValid = (userInput) =>{
       return false;
   else
       return true;
+}
+
+export const getServiceTypeImage = (serviceTypeId) => {
+  return (serviceTypesImage[`${serviceTypeId}`]) ? serviceTypesImage[`${serviceTypeId}`] : 'ADL Ambulation & Mobility.svg';
 }
