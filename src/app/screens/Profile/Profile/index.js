@@ -53,9 +53,9 @@ class Profile extends Component {
   }
 
   getAvailability = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
      return <Availability />
-    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) {
       return <Availability />
     } else {
       return '';
@@ -63,9 +63,9 @@ class Profile extends Component {
   }
 
   getServiceOffered = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
       return <ServiceOffered />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) {
        return <ServiceOffered />
      } else {
        return '';

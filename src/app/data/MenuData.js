@@ -22,22 +22,16 @@ export const MenuData = [
         link:'/visitHistory',
         name: SCREENS.VISIT_HISTORY
     },
+    {
+        id: 3,
+        title: 'My Settings',        
+        iconName: 'iconProfile iconProfileMySettings',
+        link:'/'
+    },
     // {
     //     id: 3,
     //     title: 'Service Providers',        
     //     iconName: 'iconProfile iconProfileServiceProviders',
-    //     link:'/'
-    // },
-    // {
-    //     id: 5,
-    //     title: 'My Settings',        
-    //     iconName: 'iconProfile iconProfileMySettings',
-    //     link:'/'
-    // },
-    // {
-    //     id: 6,
-    //     title: 'My Connections',        
-    //     iconName: 'iconProfile iconProfileMyConnections',
     //     link:'/'
     // }
 ];
