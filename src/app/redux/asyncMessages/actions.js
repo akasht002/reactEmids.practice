@@ -95,6 +95,7 @@ export function getConversationItemSignalR(conversationId, messageId){
             let userId = getUserInfo().serviceProviderId;
             let userType = USERTYPES.SERVICE_PROVIDER;
             dispatch(startLoading());
+            let data = {conversationId: conversationId};
             AsyncGet(API.getConversationMessage 
                 + messageId + '/'
                 + conversationId + '/'
@@ -103,6 +104,7 @@ export function getConversationItemSignalR(conversationId, messageId){
             )
             .then(resp => {
                 dispatch(pushConversation(resp.data));
+                dispatch(updateReadStatus(data));
                 dispatch(endLoading());
             })
             .catch(err => {
