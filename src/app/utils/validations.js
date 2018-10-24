@@ -44,6 +44,10 @@ export function checkDateFormatNumber (data) {
   return /^[0-9-]+$/.test(data)
 }
 
+export function checkNumber(data) {
+  return /^[0-9]+$/.test(data) || data === ''
+}
+
 export function checkFormatDate (value) {
   return (
     value.length === 10 &&
@@ -148,8 +152,12 @@ export const formatDate = date => {
 }
 
 export const partialCompare = (value, array) => {
-  array.filter(obj => {
-    return value === obj.visitDate.substring(0, 10) ? obj.visits : 0
+  console.log(array)
+  array.find(obj => {
+    console.log(value)
+    console.log(obj.visitDate.substring(0, 10))
+    console.log( value === obj.visitDate.substring(0, 10) ? true : false)
+    return value === obj.visitDate.substring(0, 10) ? 1 : 2
   })
 }
 export function checkhourlyRate (data) {

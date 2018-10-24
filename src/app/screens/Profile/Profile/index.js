@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { Header, ScreenCover } from '../../../components'
+import { Header, ScreenCover, ModalPopup } from '../../../components'
 import ServiceOffered from '../ServiceOffered/index'
 import Languages from '../Languages/index'
 import Certification from '../Certification/index'
@@ -11,18 +11,19 @@ import EntityPersonalDetail from '../EntityPersonalDetail'
 import Organization from '../Organization'
 import WorkHistory from '../WorkHistory'
 import Skills from '../Skills/index'
+import ServiceArea from '../ServiceArea/index'
 import { Path } from '../../../routes'
 import {
   getProfilePercentage
 } from '../../../redux/profile/ProgressIndicator/actions'
 import Availability from '../Availability/index'
 import { getUserInfo } from '../../../services/http'
-import { PROFILE_SERVICE_PROVIDER_TYPE_ID } from '../../../constants/constants'
+import { PROFILE_SERVICE_PROVIDER_TYPE_ID, ORG_SERVICE_PROVIDER_TYPE_ID } from '../../../constants/constants'
 import {SCREENS} from '../../../constants/constants';
 import {authorizePermission} from '../../../utils/roleUtility';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
-
+import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
 import './styles.css'
 
 class Profile extends Component {
@@ -50,6 +51,26 @@ class Profile extends Component {
         />
       )
     } else { return <Organization profilePercentage={this.props.profilePercentage} /> }
+  }
+
+  getAvailability = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+     return <Availability />
+    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) {
+      return <Availability />
+    } else {
+      return '';
+    }
+  }
+
+  getServiceOffered = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+      return <ServiceOffered />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) {
+       return <ServiceOffered />
+     } else {
+       return '';
+     }
   }
 
   navigateProfileHeader = (link) => {
@@ -97,7 +118,10 @@ class Profile extends Component {
                 </div>
                 {this.getPersonalDetail()}
                 <div className='col-md-12 card CardWidget SPCertificate'>
-                  <ServiceOffered />
+                {this.getServiceOffered()}
+                </div>
+                <div className='col-md-12 card CardWidget SPCertificate'>
+                  <ServiceArea />
                 </div>
                 <div className='col-md-12 card CardWidget SPCertificate'>
                   <Skills />
@@ -111,7 +135,9 @@ class Profile extends Component {
 
                 <WorkHistory />
                 <Education />
-                <Availability />
+               {this.getAvailability()}
+              
+               
 
               </div>
             </div>
@@ -124,7 +150,17 @@ class Profile extends Component {
               onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
               createConversation={() => { this.setState({ selectedLink: null }) }}
           />
-
+        <ModalPopup
+            isOpen={this.props.showTelehealthInvite}
+            ModalBody={<span>You have a new video conference invite.</span>}
+            btn1="Accept"
+            btn2="Decline"
+            className="zh"
+            headerFooter="d-none"
+            centered={true}
+            onConfirm={this.props.joinVideoConference}
+            onCancel={this.props.clearInvitaion}
+        />
           
       </ScreenCover>
     )
@@ -135,14 +171,16 @@ function mapDispatchToProps (dispatch) {
   return {
     getProfilePercentage: () => dispatch(getProfilePercentage()),
     navigateProfileHeader: (link) => dispatch(push(link)),
+    clearInvitaion: () => dispatch(clearInvitaion()),
+    joinVideoConference: () => dispatch(joinVideoConference())
   }
 }
 
 function mapStateToProps (state) {
   return {
-    SERVICE_PROVIDER_TYPE_ID: 1,
     profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
-    canCreateConversation: state.asyncMessageState.canCreateConversation
+    canCreateConversation: state.asyncMessageState.canCreateConversation,
+    showTelehealthInvite: state.telehealthState.isInvitationCame
   }
 }
 

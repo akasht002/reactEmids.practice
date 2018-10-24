@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="90" height="90" style="">
+    <rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+    <defs>
+        <style>.cls-1{fill:none;stroke:#ffffff;stroke-linecap:round;stroke-miterlimit:10;stroke-width:4px;}</style>
+    </defs>
+    <title>Icons_Navvis</title>
+    <g class="currentLayer" style="">
+        <title>Layer 1</title>
+        <path fill="#ffffff" fill-opacity="1" stroke="#ffffff" stroke-opacity="1" stroke-width="8"
+              stroke-dasharray="none" stroke-linejoin="miter" stroke-linecap="butt" stroke-dashoffset=""
+              fill-rule="nonzero" opacity="1" marker-start="" marker-mid="" marker-end=""
+              d="M2.2549019326739597,2.039216458698146L88.13725380321263,88.18300623447436" id="svg_3" class=""/>
+        <path fill="#ffffff" fill-opacity="1" stroke="#ffffff" stroke-opacity="1" stroke-width="8"
+              stroke-dasharray="none" stroke-linejoin="miter" stroke-linecap="butt" stroke-dashoffset=""
+              fill-rule="nonzero" opacity="1" marker-start="" marker-mid="" marker-end=""
+              d="M2.1241829800551812,87.39869251876168L88.13725380321263,1.9084975060793639" id="svg_5" class=""/>
+    </g>
+</svg>

@@ -6,6 +6,9 @@ import {
   getConversationItemSignalR,
   getConversationSummaryItemSignalR
 } from './redux/asyncMessages/actions';
+import {
+  checkTeleHealth
+} from './redux/telehealth/actions'
 import {getUserInfo} from './services/http';
 import { USERTYPES } from './constants/constants';
 
@@ -32,6 +35,10 @@ class App extends Component {
       };
     });
 
+    connection.on("TeleHealth", data => {
+      this.props.checkTeleHealth(data);
+    });
+
     connection.start()
         .then(() => {
       }).catch(err => console.error(err.toString()));
@@ -54,7 +61,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getConversationItemSignalR: (conversationId, messageId) => dispatch(getConversationItemSignalR(conversationId, messageId)),
-    getConversationSummaryItemSignalR: (conversationId) => dispatch(getConversationSummaryItemSignalR(conversationId))
+    getConversationSummaryItemSignalR: (conversationId) => dispatch(getConversationSummaryItemSignalR(conversationId)),
+    checkTeleHealth: (data) => dispatch(checkTeleHealth(data))
   }
 }
 

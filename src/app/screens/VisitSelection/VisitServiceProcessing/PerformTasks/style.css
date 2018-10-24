@@ -37,7 +37,7 @@
     box-shadow: none;
 }
 
-.TabContainer.true:after{
+.TabContainer[aria-selected="true"]:after{
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);

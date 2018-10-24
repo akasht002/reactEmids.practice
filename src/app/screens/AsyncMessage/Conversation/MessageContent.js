@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TimeAgo from 'timeago-react';
 import autosize from "autosize";
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import {
     goToConversationSummary,
@@ -157,7 +158,7 @@ class MessageContent extends Component {
                         <div className="ChatBubble">
                             <div className="bubbleHeader d-flex">
                                 <span className="mr-auto memberName">{conversation.firstName + ' ' + conversation.lastName}</span>
-                                <span className="ml-auto messageTime"><TimeAgo datetime={conversation.createdDate} /></span>
+                                <span className="ml-auto messageTime"><TimeAgo datetime={moment.utc(conversation.createdDate).local().format()} /></span>
                             </div>
                             <div className="bubbleBody">
                                 <span className="bubbleMsg">{conversation.messageText}</span>

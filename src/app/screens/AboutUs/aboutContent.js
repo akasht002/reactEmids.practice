@@ -7,11 +7,19 @@ export default class AboutContent extends React.Component {
             <div className="AboutModalWidget">
                 <span className="closeAboutModal" onClick={this.props.toggle}/>
                 <div className='AboutModalTitle'>
-                    <div className="AboutModalImg">
-                        <img src={require('../../assets/images/logo/CoreoHomeGray.png')} alt="aboutUs" />
+                    <img className="bgImage" src={require('./images/about_us_header_bg.png')} alt="aboutUSHeader" />
+                    <div className="AboutTitleImage">
+                        <img src={require('../../assets/images/logo/CoreoHomeWhite.png')} alt="logo" />
                     </div>
                 </div>
-                {this.props.aboutUsContent}
+                <div className='AboutModalContent'>
+                    {this.props.aboutUsContent}
+                    <div className='AboutContentContainer Right'>
+                        <span className="LinkCard"><img src={require('./images/about_translation.svg')} alt="translation" />www.navvishealthcare.com</span>
+                        <span className="LinkCard"><img src={require('./images/about_email.svg')} alt="email" />help@coreohomesupport.com</span>
+                        <span className="LinkCard"><img src={require('./images/about_phone_call.svg')} alt="phoneCall" />+1 180 234 2300</span>
+                    </div>
+                </div>
             </div>
         )
     }

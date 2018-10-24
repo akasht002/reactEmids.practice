@@ -4,6 +4,7 @@ import { startLoading, endLoading } from '../../../loading/actions';
 import moment from 'moment'
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
+import { DEMO } from '../../../../constants/config';
 
 
 export const SummaryDetails = {
@@ -59,9 +60,9 @@ export function calculationActualData() {
 
         const currState = getState().visitSelectionState.VisitServiceProcessingState.SummaryState;
 
-        const ClaimState = getState().visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus.amount
+        const ClaimState = DEMO === 'true' ? 20 : getState().visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus.amount
 
-        let duration = moment.duration(currState.actualTimeDiff);
+        let duration = DEMO === 'true' ? moment.duration(3600000) : moment.duration(currState.actualTimeDiff);
 
         let hours = duration.days() * 24 + duration.hours();
 
@@ -79,9 +80,9 @@ export function calculationActualData() {
 
         let grandTotalAmount = totalVisitCost + taxes;
 
-        let estimatedClaim = (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
+        let estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
 
-        let copayAmount = (((grandTotalAmount * ClaimState) / 100)).toFixed(2);
+        let copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2);
 
         const calculationdata = {
             totalChargableTime: totalChargableTime,

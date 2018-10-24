@@ -17,27 +17,27 @@ class Welcome extends Component {
             slider: [
                 {
                     title: 'Your Caring Companion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
+                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
                 },
                 {
                     title: 'Your Caring Compassion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
+                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
                 },
                 {
                     title: 'Your Caring Companion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
+                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
                 },
                 {
                     title: 'Your Caring Compassion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
+                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
                 },
                 {
                     title: 'Your Caring Companion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
+                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
                 },
                 {
                     title: 'Your Caring Compassion',
-                    label: 'Instantly matching Service Providers which seamlessly fulfill your care needs',
+                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
                 }
             ],
             activeIndex: 1,
@@ -115,9 +115,9 @@ class Welcome extends Component {
                         <div className="container-fluid onBoardingContent">
                             <div className="row">
                                 <div className="onBoardingHeader">
-                                    <Link className="brandName text-uppercase" to="/">
+                                    <span className="brandName text-uppercase">
                                         <img src={require('../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
-                                    </Link>
+                                    </span>
                                     <Button type="button" onClick={this.onLoginPress} classname="btn btn-outline-primary LoginButton text-uppercase change-f" label={"Login"} />
                                 </div>
                                 <div className="sliderWrapper" style={style3}>

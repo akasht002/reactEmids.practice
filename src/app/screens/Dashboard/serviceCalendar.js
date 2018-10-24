@@ -2,18 +2,25 @@ import React from 'react'
 import moment from 'moment'
 import Select from 'react-select'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Scrollbars, ProfileModalPopup } from '../../components'
 import './ProfileMainPanel.css'
-import { convertStringToDate, partialCompare } from '../../utils/validations'
+import { convertStringToDate} from '../../utils/validations'
 import {
   getServiceProviderVists,
   getServiceVisitCount,
   getEntityServiceProviderList,
   updateEntityServiceVisit
 } from '../../redux/dashboard/Dashboard/actions'
-import { ServiceCalendarDefault } from './ServiceInfo'
+import {
+  getVisitServiceDetails,
+  getVisitServiceSchedule
+} from '../../redux/visitSelection/VisitServiceDetails/actions'
+import { ServiceCalendarDefault,ShowIndicator } from './ServiceInfo'
 import { getUserInfo } from '../../services/http'
+import { Path } from '../../routes';
+import { setPatient} from '../../redux/patientProfile/actions';
+import { push } from '../../redux/navigation/actions'
 
 const today = new Date()
 
@@ -24,6 +31,7 @@ class serviceCalendar extends React.Component {
       startDate: moment(today).format(),
       startMonth: moment(today).format('MMM'),
       startYear: moment(today).format('YYYY'),
+      currentDate: moment().format('DD'),
       changedDate: '',
       DateDisable: false,
       selectedServiceProviderId: '',
@@ -35,7 +43,7 @@ class serviceCalendar extends React.Component {
         value: moment(today).format('MMM')
       },
       showMore: false,
-      verticalScroll: false,
+      verticalScroll: true,
       width: window.innerWidth
     }
     this.data = ''
@@ -67,12 +75,14 @@ class serviceCalendar extends React.Component {
   }
 
   MonthChange = e => {
-    let curDate = this.state.startYear + ',' + e.value + ',' + this.state.currentDate
+    let curDate =
+      this.state.startYear + ',' + e.value + ',' + this.state.currentDate
     curDate = new Date(curDate)
+
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
-      selectedMonth: e
+      selectedMonth: e.value
     })
     this.props.getServiceProviderVists(moment(curDate).format('YYYY-MM-DD'))
   }
@@ -121,8 +131,13 @@ class serviceCalendar extends React.Component {
       startDate: moment(today).format(),
       reportDay: moment(today).format(),
       startMonth: moment(today).format('MMM'),
-      currentDate: moment().format('DD')
+      currentDate: moment().format('DD'),
+      selectedMonth: {
+        label: moment(today).format('MMM'),
+        value: moment(today).format('MMM')
+      }
     })
+
     this.props.getServiceProviderVists(moment().format('YYYY-MM-DD'))
   }
 
@@ -198,9 +213,25 @@ class serviceCalendar extends React.Component {
     }
   }
 
+  handleClick = requestId => {
+    this.props.getVisitServiceDetails(requestId)
+    this.props.getVisitServiceSchedule(requestId)
+  }
+
+  navigateProfileHeader = (link) => {
+    switch (link) {
+      case 'conversationsummary':
+        this.props.navigateProfileHeader(link);
+        break;
+      default:
+        this.setState({ selectedLink: link })
+        break;
+    }
+  };
+
+
   render () {
     let selectedDate = this.state.startDate
-
     const visitCount = this.props.serviceVistCount
 
     let dates = [
@@ -268,14 +299,23 @@ class serviceCalendar extends React.Component {
     let monthLists = pervious_month.concat(next_month_list)
 
     let monthList = monthLists.map(month => {
-      return { label: month.substring(0, 3), value: month.substring(0, 3) }
+      return { label: month.substring(0, 3), value: month }
     })
-
     let dateList = dates.map((daysMapping, i) => {
       let className = ''
       if (daysMapping.date.format() === moment(today).format()) {
         className = ' toDay'
       }
+      let data = visitCount.find(
+        obj =>
+          obj.visitDate === daysMapping.date.format('YYYY-MM-DD') + 'T00:00:00'
+      )
+        ? visitCount.find(
+            obj =>
+              obj.visitDate ===
+              daysMapping.date.format('YYYY-MM-DD') + 'T00:00:00'
+          ).visits
+        : 0
       return (
         <div className={'dateRow' + className}>
           <input
@@ -296,14 +336,7 @@ class serviceCalendar extends React.Component {
             <span className='dateElement'>{daysMapping.day.format('D')}</span>
           </label>
           <div className='eventIndicator'>
-
-            {partialCompare(
-              daysMapping.date.format('YYYY-MM-DD'),
-              visitCount
-            ) && <i className='indicator' />}
-
-            {/* <i className='indicator' />
-            <i className='indicator' /> */}
+            <ShowIndicator count={data}/>
           </div>
         </div>
       )
@@ -314,6 +347,12 @@ class serviceCalendar extends React.Component {
       <ServiceCalendarDefault
         Servicelist={serviceVist}
         togglePersonalDetails={this.togglePersonalDetails}
+        handleClick={requestId => this.handleClick(requestId)}
+        onClick={(link) => this.navigateProfileHeader(link)}
+        goToPatientProfile={(data) => {
+          this.props.setPatient(data);
+          this.props.goToPatientProfile();
+        }}
       />
     )
 
@@ -349,7 +388,7 @@ class serviceCalendar extends React.Component {
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
             <span className='ProfileCardHeaderTitle primaryColor'>
-              My Services Visits
+              My Service Visits
             </span>
 
           </div>
@@ -431,7 +470,11 @@ function mapDispatchToProps (dispatch) {
     getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
     getEntityServiceProviderList: () =>
       dispatch(getEntityServiceProviderList()),
-    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data))
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
+    getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
+    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
+    setPatient: data => dispatch(setPatient(data)),
+    goToPatientProfile: () => dispatch(push(Path.patientProfile))
   }
 }
 

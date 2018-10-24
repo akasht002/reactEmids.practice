@@ -3,9 +3,9 @@ import {SERVICE_STATUS} from "../../../../constants/constants"
 function ServiceRequestsStatus(props){
     let statusTempalte = props.ServiceStatus.map((item, index) =>{
     
-        if(item.keyValue != SERVICE_STATUS.CLOSED && item.keyValue != SERVICE_STATUS.CANCELLED 
-        && item.keyValue != SERVICE_STATUS.INPROGRESS && item.keyValue != SERVICE_STATUS.COMPLETED
-        && item.keyValue != SERVICE_STATUS["NOT INTERESTED"] ){
+        if(item.keyValue !== SERVICE_STATUS.CLOSED && item.keyValue !== SERVICE_STATUS.CANCELLED 
+        && item.keyValue !== SERVICE_STATUS.INPROGRESS && item.keyValue !== SERVICE_STATUS.COMPLETED
+        && item.keyValue !== SERVICE_STATUS["NOT INTERESTED"] ){
 
             let catNum = index + 1;
             return(
