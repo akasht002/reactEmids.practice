@@ -265,7 +265,7 @@
 }
 
 .react-datepicker__day:hover {
-    border-radius: 0.3rem;
+    border-radius: 100%;
     background-color: #f0f0f0;
 }
 
@@ -274,7 +274,7 @@
 }
 
 .react-datepicker__day--highlighted {
-    border-radius: 0.3rem;
+    border-radius:100%;
     background-color: #3dcc4a;
     color: #fff;
 }
