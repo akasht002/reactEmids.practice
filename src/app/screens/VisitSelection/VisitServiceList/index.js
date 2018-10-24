@@ -253,7 +253,7 @@ class VisitServiceList extends Component {
                             </div>
                         </div>
                         <div className="BlockProfileContainer">
-                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="" />
+                            <img className="ProfileImage" src={serviceList.patientImage?serviceList.patientImage:require('../../../assets/images/Blank_Profile_icon.png')} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}

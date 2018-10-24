@@ -255,7 +255,9 @@ class VisitServiceDetails extends Component {
                     Request ID
                   </span>
                   <span className='HeaderRequestLabelID'>
-                    {this.state.visitServiceDetails.serviceRequestId}
+                    {this.state.visitServiceDetails.serviceRequestId ?
+                    this.state.visitServiceDetails.serviceRequestId:
+                      this.state.visitServiceDetails.ServiceRequestId }
                   </span>
                 </div>
                 <div className='ProfileHeaderButton'>
@@ -274,18 +276,14 @@ class VisitServiceDetails extends Component {
                 </div>
                 <div class='LeftPostedBy'>
                   <div class='PostedByImageContainer'>
-                  {
-                    this.state.visitServiceDetails.patient ?  <img
-                        className='ProfileImage'
-                        src={this.state.visitServiceDetails.patient.imageString}
-                        alt='patientImage'
-                       /> :  <img
-                          className='ProfileImage'
-                          src={'../../../assets/images/Blank_Profile_icon.png'}
-                          alt='patientImage'
-                        />
-                  }
-                   
+                  <img
+                      className='ProfileImage'
+                      src={getLength(this.state.visitServiceDetails.patient)>0?
+                        this.state.visitServiceDetails.patient.imageString :
+                        require('../../../assets/images/Blank_Profile_icon.png')}
+                      alt='patientImage'
+                    />
+                 
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileDetailsName'>
                         {getLength(this.state.visitServiceDetails.patient)>0 &&this.state.visitServiceDetails.patient.firstName}
@@ -298,9 +296,9 @@ class VisitServiceDetails extends Component {
                       <div class='ProfileDetailsDate'>
                         Posted on
                         {' '}
-                        <Moment format='DD MMM'>
-                          {this.state.visitServiceDetails.requestDate}
-                        </Moment>
+                        {this.state.visitServiceDetails.postedDate && <Moment format='DD MMM'>
+                          {this.state.visitServiceDetails.postedDate}
+                        </Moment> }
                       </div>
                     </div>
                   </div>
@@ -351,7 +349,7 @@ class VisitServiceDetails extends Component {
                           active: this.state.activeTab === '2'
                         })}
                         onClick={() => {
-                          this.toggle('2'),
+                          this.toggle('2')
                           this.checkEligibility();
                         }}
                       >
@@ -396,18 +394,17 @@ class VisitServiceDetails extends Component {
                           </h2>
                           <div className='ContentTitle Summary mt-3 mb-4'>
                             <span className='ContentTitle Summary'>
-                              Recurring Schedule
+                              {this.state.visitServiceDetails.recurring && this.state.visitServiceDetails.recurring } 
+                              Schedule
                             </span>
                             <span>
-                              <Moment format='DD MMM YYYY'>
+                              {this.state.visitServiceDetails.startDate&& <Moment format='DD MMM YYYY'>
                                 {this.state.visitServiceDetails.startDate}
-                              </Moment>
-                              {' '}
-                              - till
-                              {' '}
-                              {this.state.visitServiceDetails.recurringPattern}
-                              {' '}
-                              occurences
+                              </Moment> }
+
+                              { this.state.visitServiceDetails.recurringPattern !== 0 &&
+                                '- till ' +  this.state.visitServiceDetails.recurringPattern + ' occurences'
+                              }                              
                             </span>
                             <span className='ContentTitle Summary'>
                               Recurring Pattern
