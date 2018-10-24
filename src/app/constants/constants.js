@@ -14,6 +14,7 @@ export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
 export const USER_LOCALSTORAGE = "userData";
 export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
 export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
+export const HIRED_STATUS_ID  = 38;
 
 export const PHONE_NUMBER_CONST = '+1 ';
 

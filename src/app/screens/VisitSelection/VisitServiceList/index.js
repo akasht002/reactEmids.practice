@@ -24,6 +24,7 @@ import {setPatient} from '../../../redux/patientProfile/actions';
 import {push} from '../../../redux/navigation/actions';
 import './style.css'
 import { Path } from "../../../routes";
+import { HIRED_STATUS_ID } from '../../../constants/constants';
 
 class VisitServiceList extends Component {
 
@@ -237,6 +238,12 @@ class VisitServiceList extends Component {
     render() {
 
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
+            let patientImage = '';
+            if(serviceList.statusId === HIRED_STATUS_ID) {
+                patientImage = serviceList.patientImage;
+            } else {
+                patientImage = require('../../../assets/images/Blank_Profile_icon.png');
+            }
             return (
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card'>
@@ -260,7 +267,7 @@ class VisitServiceList extends Component {
                                     this.props.goToPatientProfile()
                                 }
                             }}>
-                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="" />
+                            <img className="ProfileImage" src={patientImage} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
