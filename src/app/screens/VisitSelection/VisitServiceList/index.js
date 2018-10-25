@@ -273,7 +273,7 @@ class VisitServiceList extends Component {
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
                                 </div>
                                 <div className='BlockProfileDetailsActivity'>
-                                    Posted on <Moment format="DD MMM">{serviceList.requestDate}</Moment>
+                                    Posted on <Moment format="DD MMM">{serviceList.createDate}</Moment>
                                 </div>
                             </div>
                             <div class='BlockProfileDetailsStatus'>
