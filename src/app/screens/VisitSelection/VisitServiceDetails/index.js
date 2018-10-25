@@ -126,6 +126,21 @@ class VisitServiceDetails extends Component {
     }
   }
 
+  showData = (data)=>{
+    if(data.occurence !==0 ){
+      return  '- ' +  data.occurence + ' occurences'
+    }else{
+      return ( 
+        <React.Fragment>
+        -         
+      <Moment format='DD MMM YYYY'>
+      {data.endDate}
+    </Moment>
+    </React.Fragment>
+      )
+    }
+  }
+
   render() {
     let defaultCheck = '';
     let sliderTypes =
@@ -228,10 +243,15 @@ class VisitServiceDetails extends Component {
         return obj.isPrimaryAddress === true
       })
     let profileImage = null;
+    let patientLastName = '';
     if(this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
-      profileImage = this.state.visitServiceDetails.patient.imageString;
+      profileImage = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.imageString ? this.state.visitServiceDetails.patient.imageString 
+      : require('../../../assets/images/Blank_Profile_icon.png');
+      patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName;
+
     } else {
       profileImage = require('../../../assets/images/Blank_Profile_icon.png');
+      patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName.charAt(0);
     }
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -285,10 +305,7 @@ class VisitServiceDetails extends Component {
                       <div class='ProfileDetailsName'>
                         {getLength(this.state.visitServiceDetails.patient)>0 &&this.state.visitServiceDetails.patient.firstName}
                         {' '}
-                        {getLength(this.state.visitServiceDetails.patient)>0 &&
-                          getFirstCharOfString(
-                            this.state.visitServiceDetails.patient.lastName
-                          )}
+                        {patientLastName}
                       </div>
                       <div class='ProfileDetailsDate'>
                         Posted on
@@ -400,7 +417,8 @@ class VisitServiceDetails extends Component {
                               </Moment> }
 
                               { this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN &&
-                                '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
+                               this.showData(this.state.visitServiceDetails)
+                                // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
                               }                              
                             </span>
                             <span className='ContentTitle Summary'>
