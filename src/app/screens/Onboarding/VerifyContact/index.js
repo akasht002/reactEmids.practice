@@ -70,7 +70,7 @@ class VerifyContact extends React.Component {
                     <div className="container-fluid mainContent px-5 d-flex align-items-start flex-column">
                         <div className="row d-block">
                             <div className="col-md-12 py-5 px-0">
-                                <h4 className="font-weight-normal mb-4">Verify My Mobile Number</h4>
+                                <h4 className="font-weight-normal mb-4 verify-title">Verify My Mobile Number</h4>
                                 <p className="m-0">Your registered Contact Number</p>
                                 <p className="contactNumber"> XXX XXX {this.state.mobileNumber}</p>
                                 <div className={"my-5 tempPassword " + this.state.visible}>

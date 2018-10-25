@@ -103,7 +103,7 @@ class VerifyUserID extends React.Component {
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
-                                <h4 className="font-weight-normal mb-4">Verify My User ID</h4>
+                                <h4 className="font-weight-normal mb-4 verify-title">Verify My User ID</h4>
                                 <form className="form my-2 px-0 my-lg-0 col-md-6">
                                     <Input
                                         id="userId"

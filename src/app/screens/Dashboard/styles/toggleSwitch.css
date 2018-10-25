@@ -32,6 +32,11 @@
     -webkit-transition: .4s;
     transition: .4s;
 }
+.ProfileHeaderButton .sliderSwitch:before 
+{
+  background-color: #7a329f;  
+}
+
 
 input:checked + .sliderSwitch {
     /* background-color: #36af91; */
@@ -46,6 +51,8 @@ input:checked + .sliderSwitch:before {
     background-color: #36af91;
     border-color: #36af91;
 }
+
+
 
 .sliderSwitch.round {
     border-radius: 34px;

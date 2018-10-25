@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
             <h5 className='primaryColor m-0'>Dashboard</h5>
           </div>
           <div className='ProfileHeaderButton'>
-            <span className='standBy'>Stand-by mode </span>
+            <span className='standBy'>Stand-by</span>
             <label className='switch'>
               <input type='checkbox' checked={this.state.isChecked} onChange={ e => {
                 this.setState({isChecked: !e.target.checked})
