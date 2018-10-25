@@ -25,7 +25,7 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 import { MORNING, AFTERNOON, EVENING } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
-import { SERVICE_VISIT_STATUS } from '../../../constants/constants'
+import { SERVICE_VISIT_STATUS,RECURRING_PATTERN } from '../../../constants/constants'
 import {getLength} from '../../../utils/validations'
 class VisitServiceDetails extends Component {
 
@@ -400,8 +400,8 @@ class VisitServiceDetails extends Component {
                                 {this.state.visitServiceDetails.startDate}
                               </Moment> }
 
-                              { this.state.visitServiceDetails.recurringPattern !== 0 &&
-                                '- till ' +  this.state.visitServiceDetails.recurringPattern + ' occurences'
+                              { this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN &&
+                                '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
                               }                              
                             </span>
                             <span className='ContentTitle Summary'>
