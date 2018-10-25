@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
   Accordion,
   AccordionItem,
@@ -173,8 +173,8 @@ class VistSummary extends React.Component {
 
   getFeedback = () => {
     return (
-      <div className='FeedbackWidget'>
-        <div className='FeedbackRating'>
+      <div className='FeedbackWidget py-4'>
+        {/* <div className='FeedbackRating'>
           {this.props.patientDetails.serviceProvider
             ? <p>
               Rate
@@ -190,9 +190,9 @@ class VistSummary extends React.Component {
           <StarRating
             handleSelectedRating={e => this.handleSelectedRating(e)}
           />
-        </div>
+        </div> */}
         {this.props.QuestionsList.length > 0
-          ? <div>
+          ? <Fragment>
             {this.props.QuestionsList &&
               this.props.QuestionsList.map((questionList, i) => {
                 if (questionList.answerTypeDescription === 'ChoiceBased') {
@@ -208,7 +208,7 @@ class VistSummary extends React.Component {
                         {questionList.answers.map((answer, j) => {
                           return (
                             <div
-                              className='form-radio col-md-3'
+                              className='form-radio col-md-4'
                               key={answer.id}
                             >
                               <input
@@ -271,7 +271,7 @@ class VistSummary extends React.Component {
                 }
                 return questionList
               })}
-          </div>
+          </Fragment>
           : ''}
 
       </div>
