@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
       isOpen: false,
       conversationDetail: [],
       isChecked: false,
-      spBusyInVisit: null,
+      spBusyInVisit: false,
       showModalOnTurnOff: false,
       showVisitModal: false
     }
@@ -33,10 +33,21 @@ class Dashboard extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({ isChecked: nextProps.profileState.standByMode})
     if (nextProps.busyInVisit === true || nextProps.busyInVisit === false) {
-      this.setState({ spBusyInVisit: nextProps.busyInVisit})
-      this.props.clearVal();
+      this.setState({ spBusyInVisit: nextProps.busyInVisit}, () => {
+        if(this.state.spBusyInVisit  === true) {
+          this.setState({showVisitModal: true})
+        } else if (this.state.spBusyInVisit  === false) {
+          this.setState({isChecked: true}, () => {
+                this.props.updateStandByMode(this.state.isChecked);
+            })
+        }
+      })
+      
+     // this.props.clearVal();
     }
-   
+    console.log('componentWillReceiveProps...', nextProps);
+    // this.setState({ spBusyInVisit: nextProps.busyInVisit})
+
   }
 
   toggle () {
@@ -59,14 +70,14 @@ class Dashboard extends React.Component {
         // }, () => {
         //     this.props.updateStandByMode(this.state.isChecked);
         // }) }        
-    this.props.getSpBusyInVisit();
-    if(this.state.spBusyInVisit  === true) {
-      this.setState({showVisitModal: true})
-    } else if (this.state.spBusyInVisit  === false) {
-      this.setState({isChecked: true}, () => {
-            this.props.updateStandByMode(this.state.isChecked);
-        })
-    }
+   this.props.getSpBusyInVisit();   
+    // if(this.state.spBusyInVisit  === true) {
+    //   this.setState({showVisitModal: true})
+    // } else if (this.state.spBusyInVisit  === false) {
+    //   this.setState({isChecked: true}, () => {
+    //         this.props.updateStandByMode(this.state.isChecked);
+    //     })
+    // }
     
     } else if(this.state.isChecked === true) {        
         this.onClickTurnOff();
