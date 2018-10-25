@@ -21,6 +21,9 @@ import { getUserInfo } from '../../services/http'
 import { Path } from '../../routes';
 import { setPatient} from '../../redux/patientProfile/actions';
 import { push } from '../../redux/navigation/actions'
+import { USERTYPES } from '../../constants/constants';
+import { onCreateNewConversation } from '../../redux/asyncMessages/actions';
+import { createVideoConference } from '../../redux/telehealth/actions';
 
 const today = new Date()
 
@@ -229,6 +232,39 @@ class serviceCalendar extends React.Component {
     }
   };
 
+  onClickConversation = (item) =>{
+    if(item ){
+      let selectedParticipants = [{
+        userId: item.patientId,
+        participantType: USERTYPES.PATIENT
+      }];
+      let userId = this.props.loggedInUser.serviceProviderId;
+      let loggedInUser = {
+        userId: userId,
+        participantType: USERTYPES.SERVICE_PROVIDER
+      };
+      selectedParticipants.push(loggedInUser);
+        let data = {
+            participantList: selectedParticipants,
+            createdBy:  userId,
+            createdByType: USERTYPES.SERVICE_PROVIDER,
+            title: '',
+            context: item.patientId
+        };
+        this.props.createNewConversation(data);
+    }
+  };
+
+
+  onClickVideoConference = (item) =>{
+    if(item){
+      let selectedParticipants = [{
+        userId: item.patientId,
+        participantType: USERTYPES.PATIENT
+      }];
+      this.props.createVideoConference(selectedParticipants);
+    };
+  };
 
   render () {
     let selectedDate = this.state.startDate
@@ -345,6 +381,8 @@ class serviceCalendar extends React.Component {
     let serviceVist = this.props.serviceVist
     let visitData = (
       <ServiceCalendarDefault
+        onClickConversation = {data => this.onClickConversation(data)}
+        onClickVideoConference = {data => this.onClickVideoConference(data)}
         Servicelist={serviceVist}
         togglePersonalDetails={this.togglePersonalDetails}
         handleClick={requestId => this.handleClick(requestId)}
@@ -474,7 +512,9 @@ function mapDispatchToProps (dispatch) {
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
     getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
     setPatient: data => dispatch(setPatient(data)),
-    goToPatientProfile: () => dispatch(push(Path.patientProfile))
+    goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+    createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
+    createVideoConference: (data) => dispatch(createVideoConference(data)),
   }
 }
 
@@ -482,8 +522,8 @@ function mapStateToProps (state) {
   return {
     serviceVist: state.dashboardState.dashboardState.serviceVist,
     serviceVistCount: state.dashboardState.dashboardState.serviceVistCount,
-    serviceProviderList: state.dashboardState.dashboardState
-      .serviceProviderList
+    serviceProviderList: state.dashboardState.dashboardState.serviceProviderList,
+    loggedInUser: state.authState.userState.userData.userInfo,
   }
 }
 export default withRouter(
