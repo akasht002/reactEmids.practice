@@ -240,6 +240,12 @@ class VisitServiceList extends Component {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
             let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
             let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
+            let patientImage = '';
+            if(serviceList.statusId === HIRED_STATUS_ID) {
+                patientImage = serviceList.patientImage;
+            } else {
+                patientImage = require('../../../assets/images/Blank_Profile_icon.png');
+            }
 
             return (
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
@@ -264,7 +270,7 @@ class VisitServiceList extends Component {
                                 this.props.goToPatientProfile()
                             }
                         }}>
-                            <img className="ProfileImage" src={serviceList.patientImage} alt="" />
+                            <img className="ProfileImage" src={patientImage} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName}
