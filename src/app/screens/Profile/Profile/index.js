@@ -11,6 +11,7 @@ import EntityPersonalDetail from '../EntityPersonalDetail'
 import Organization from '../Organization'
 import WorkHistory from '../WorkHistory'
 import Skills from '../Skills/index'
+import ServiceArea from '../ServiceArea/index'
 import { Path } from '../../../routes'
 import {
   getProfilePercentage
@@ -53,9 +54,9 @@ class Profile extends Component {
   }
 
   getAvailability = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
      return <Availability />
-    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) {
       return <Availability />
     } else {
       return '';
@@ -63,9 +64,9 @@ class Profile extends Component {
   }
 
   getServiceOffered = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
       return <ServiceOffered />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) {
        return <ServiceOffered />
      } else {
        return '';
@@ -120,6 +121,9 @@ class Profile extends Component {
                 {this.getServiceOffered()}
                 </div>
                 <div className='col-md-12 card CardWidget SPCertificate'>
+                  <ServiceArea />
+                </div>
+                <div className='col-md-12 card CardWidget SPCertificate'>
                   <Skills />
                 </div>
                 <div className='col-md-12 card CardWidget SPLanguages'>
@@ -132,6 +136,8 @@ class Profile extends Component {
                 <WorkHistory />
                 <Education />
                {this.getAvailability()}
+              
+               
 
               </div>
             </div>

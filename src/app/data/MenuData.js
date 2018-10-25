@@ -1,43 +1,37 @@
-import {SCREENS} from '../constants/constants';
+import { SCREENS } from '../constants/constants';
 
 export const MenuData = [
     {
         id: 0,
-        title: 'Dashboard',     
+        title: 'Dashboard',
         iconName: 'iconProfile iconProfileDashboard',
-        link:'/dashboard',
+        link: '/dashboard',
         name: SCREENS.DASHBOARD
     },
     {
         id: 1,
-        title: 'Service Requests', 
+        title: 'Service Requests',
         iconName: 'iconProfile iconProfileServiceRequest',
-        link:'/visitServiceList',
+        link: '/visitServiceList',
         name: SCREENS.SERVICE_REQUEST
     },
     {
         id: 2,
-        title: 'Visit History',        
+        title: 'Visit History',
         iconName: 'iconProfile iconProfileServiceVisits',
-        link:'/visitHistory',
+        link: '/visitHistory',
         name: SCREENS.VISIT_HISTORY
+    },
+    {
+        id: 3,
+        title: 'My Settings',
+        iconName: 'iconProfile iconProfileMySettings',
+        link: SCREENS.DASHBOARD
     },
     // {
     //     id: 3,
     //     title: 'Service Providers',        
     //     iconName: 'iconProfile iconProfileServiceProviders',
-    //     link:'/'
-    // },
-    // {
-    //     id: 5,
-    //     title: 'My Settings',        
-    //     iconName: 'iconProfile iconProfileMySettings',
-    //     link:'/'
-    // },
-    // {
-    //     id: 6,
-    //     title: 'My Connections',        
-    //     iconName: 'iconProfile iconProfileMyConnections',
     //     link:'/'
     // }
 ];

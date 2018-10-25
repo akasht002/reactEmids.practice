@@ -14,41 +14,43 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
-import {uniqElementOfArray} from '../../../utils/arrayUtility'
-import {getServiceCategory,getServiceType,ServiceRequestStatus,getFilter,getServiceArea,clearServiceCategory,clearServiceArea,clearServiceRequestStatus} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
-import {formattedDateMoment,formattedDateChange } from "../../../utils/validations";
+import { uniqElementOfArray } from '../../../utils/arrayUtility'
+import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea, clearServiceCategory, clearServiceArea, clearServiceRequestStatus } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
-import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
+import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
 import Sorting from "../ServiceRequestSorting"
-import {setPatient} from '../../../redux/patientProfile/actions';
-import {push} from '../../../redux/navigation/actions';
+import { setPatient } from '../../../redux/patientProfile/actions';
+import { push } from '../../../redux/navigation/actions';
+
 import './style.css'
 import { Path } from "../../../routes";
+import { HIRED_STATUS_ID } from '../../../constants/constants';
 
 class VisitServiceList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { 
-            serviceRequestId: '', 
+        this.state = {
+            serviceRequestId: '',
             isOpen: false,
             filterOpen: false,
-            startDate:'',
-            endDate:'',
-            serviceStatus:[],
-            isValid:true,
+            startDate: '',
+            endDate: '',
+            serviceStatus: [],
+            isValid: true,
             selectedOption: null,
-            ServiceCategoryId:'',
-            serviceTypes:[],
+            ServiceCategoryId: '',
+            serviceTypes: [],
             isSortOpen: false,
             newest: true,
             posted: true,
-            serviceArea:'',
-            coverageArea:'',
-            lat:'',
-            lon:'',
-            ServiceAreas:{},
-            isChecked:false
+            serviceArea: '',
+            coverageArea: '',
+            lat: '',
+            lon: '',
+            ServiceAreas: {},
+            isChecked: false
         };
     };
 
@@ -90,33 +92,33 @@ class VisitServiceList extends Component {
             return 'BlockProfileMatching';
         }
     }
-    
-    /* filter code */ 
-    toggleFilter=()=>{
+
+    /* filter code */
+    toggleFilter = () => {
         this.setState({
             filterOpen: !this.state.filterOpen
         })
     }
-        
+
     dateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
-        this.setState({  
+        this.setState({
             startDate: formattedDate
-            
+
         });
 
     }
-    
+
     dateChangedRaw = (event) => {
         const formattedDate = formattedDateChange(event);
-        this.setState({  
+        this.setState({
             startDate: formattedDate
         });
-    
+
     }
     todateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
-        this.setState({  
+        this.setState({
             endDate: formattedDate
         });
 
@@ -124,124 +126,134 @@ class VisitServiceList extends Component {
 
     todateChangedRaw = (event) => {
         const formattedDate = formattedDateChange(event);
-        this.setState({  
+        this.setState({
             endDate: formattedDate
         });
     }
 
-    applyFilter =() =>{
-     
+    applyFilter = () => {
+
         let data = {
             startDate: this.state.startDate,
             endDate: this.state.endDate,
             serviceStatus: uniqElementOfArray(this.state.serviceStatus),
-            ServiceCategoryId:this.state.ServiceCategoryId,
-            serviceTypes:uniqElementOfArray(this.state.serviceTypes),
-            ServiceAreas:this.state.ServiceAreas
+            ServiceCategoryId: this.state.ServiceCategoryId,
+            serviceTypes: uniqElementOfArray(this.state.serviceTypes),
+            ServiceAreas: this.state.ServiceAreas
         };
         this.props.getFilter(data)
         this.setState({
             filterOpen: !this.state.filterOpen
         })
-        
+
     }
 
-    applyReset =() =>{
+    applyReset = () => {
         this.setState({
-            startDate:'',
-            endDate:'',
-            serviceStatus:[],
-            ServiceCategoryId:'',
-            serviceTypes:[],
+            startDate: '',
+            endDate: '',
+            serviceStatus: [],
+            ServiceCategoryId: '',
+            serviceTypes: [],
             isValid: true,
-            selectedOption:''
+            selectedOption: ''
         })
-        this.props.clearServiceCategory(this.props.ServiceType); 
-        this.props.clearServiceArea(this.props.ServiceAreaList); 
+        this.props.clearServiceCategory(this.props.ServiceType);
+        this.props.clearServiceArea(this.props.ServiceAreaList);
         this.props.clearServiceRequestStatus(this.props.ServiceStatus)
     }
 
-    handleChangeServiceCategory=(selectedOption)=>{
-        this.setState({ 
-            ServiceCategoryId:selectedOption.label,
-            selectedOption:selectedOption  
+    handleChangeServiceCategory = (selectedOption) => {
+        this.setState({
+            ServiceCategoryId: selectedOption.label,
+            selectedOption: selectedOption
         });
         this.props.getServiceType(selectedOption)
     }
 
-    handleserviceType =(item) =>{
+    handleserviceType = (item) => {
         let serviceType = this.state.serviceTypes
         serviceType.push(item.serviceTypeDescription)
         this.setState({
-            serviceTypes:serviceType
+            serviceTypes: serviceType
         })
     }
 
-    handleChangeserviceStatus =(item,e) =>{
+    handleChangeserviceStatus = (item, e) => {
         let service = this.state.serviceStatus
         if (e.target.checked) {
             service.push(item.keyValue)
-        }else {
+        } else {
             let index = service.indexOf(item.keyValue);
             if (index > -1) {
                 service.splice(index, 1);
             }
         }
-       
+
         this.setState({
             serviceStatus: service,
         });
-    
+
     }
-    handleServiceArea =(item) =>{
-        
+    handleServiceArea = (item) => {
+
         const locations = {
-            'lat':item.lat,
-            'lon':item.lon,
+            'lat': item.lat,
+            'lon': item.lon,
         }
         const serviceAreaObj = {
-            'CoverageArea'  : item.coverageArea,
-            'Locations':locations  
-        };          
-        this.setState({            
-            ServiceAreas:serviceAreaObj
+            'CoverageArea': item.coverageArea,
+            'Locations': locations
+        };
+        this.setState({
+            ServiceAreas: serviceAreaObj
         })
     }
 
     /* sorting */
-    toggleclass =(e) =>{
+    toggleclass = (e) => {
         var element = document.getElementsByClassName("dropdown-menu")[0];
         element.classList.add("show");
         var element1 = document.getElementsByClassName("dropdown-item")[0];
         element1.classList.add("dropdown-item-checked");
     }
-    onSortChange = (posted, newest) =>{
-        var data={
-            sortByOrder : newest ? "ASC" : "DESC",
+    onSortChange = (posted, newest) => {
+        var data = {
+            sortByOrder: newest ? "ASC" : "DESC",
             sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
             fromDate: null,
             toDate: null,
             status: 0
         }
         this.props.getSort(data);
-            var element = document.getElementsByClassName("dropdown-menu")[0];
-            element.classList.remove("show");
-            element.classList.add("hide");
+        var element = document.getElementsByClassName("dropdown-menu")[0];
+        element.classList.remove("show");
+        element.classList.add("hide");
         this.setState({
             newest: (newest !== null ? newest : this.state.newest),
             posted: (posted !== null ? posted : this.state.posted),
             isSortOpen: false
         });
     }
-    
-    render() {
 
+    render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
+            let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
+            let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
+            let patientImage = '';
+            let patientLastName = '';
+            if(serviceList.statusId === HIRED_STATUS_ID) {
+                patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
+                patientLastName = serviceList && serviceList.patientLastName;
+            } else {
+                patientLastName = serviceList && serviceList.patientLastName.charAt(0);
+                patientImage = require('../../../assets/images/Blank_Profile_icon.png');
+            }
             return (
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card'>
                         <div className="BlockImageContainer" onClick={() => this.handleClick(serviceList.serviceRequestId)}>
-                            <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ServiceImage" alt="categoryImage" />
+                            <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
                                     <span>{serviceList.type}</span>
@@ -255,15 +267,15 @@ class VisitServiceList extends Component {
                             </div>
                         </div>
                         <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Hired' ? '' : 'noArrow')} onClick={() => {
-                                if (serviceList.serviceRequestStatus === 'Hired') {
-                                    this.props.setPatient(serviceList.patientId)
-                                    this.props.goToPatientProfile()
-                                }
-                            }}>
-                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="" />
+                            if (serviceList.serviceRequestStatus === 'Hired') {
+                                this.props.setPatient(serviceList.patientId)
+                                this.props.goToPatientProfile()
+                            }
+                        }}>
+                            <img className="ProfileImage" src={patientImage} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
-                                    {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
+                                    {serviceList.patientFirstName} {patientLastName}
                                 </div>
                                 <div className='BlockProfileDetailsActivity'>
                                     Posted on <Moment format="DD MMM">{serviceList.requestDate}</Moment>
@@ -292,13 +304,13 @@ class VisitServiceList extends Component {
                         <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
-                    <Sorting
-                        onSortChange={this.onSortChange}
-                        newest={this.state.newest}
-                        posted={this.state.posted}
-                        toggleclass={this.toggleclass}
-                    />
-                    <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
+                        <Sorting
+                            onSortChange={this.onSortChange}
+                            newest={this.state.newest}
+                            posted={this.state.posted}
+                            toggleclass={this.toggleclass}
+                        />
+                        <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
@@ -306,9 +318,9 @@ class VisitServiceList extends Component {
                         {visitList}
                     </div>
                 </Scrollbars>
-                <Filter 
-                    isOpen={this.state.filterOpen} 
-                    toggle={this.toggleFilter} 
+                <Filter
+                    isOpen={this.state.filterOpen}
+                    toggle={this.toggleFilter}
                     applyFilter={this.applyFilter}
                     applyReset={this.applyReset}
                     startDate={this.state.startDate}
@@ -327,7 +339,7 @@ class VisitServiceList extends Component {
                     ServiceStatus={this.props.ServiceStatus}
                     handleChangeserviceStatus={this.handleChangeserviceStatus}
                     serviceStatus={this.state.serviceStatus}
-                    ServiceAreaList ={this.props.ServiceAreaList}
+                    ServiceAreaList={this.props.ServiceAreaList}
                     handleServiceArea={this.handleServiceArea}
                     serviceArea={this.state.serviceArea}
                     checked={this.state.isChecked}
@@ -345,11 +357,11 @@ function mapDispatchToProps(dispatch) {
         getServiceCategory: () => dispatch(getServiceCategory()),
         ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
         getServiceType: (data) => dispatch(getServiceType(data)),
-        getFilter:(data)  => dispatch(getFilter(data)),
-        getSort:(data)  => dispatch(getSort(data)),
-        getServiceArea:(data)  => dispatch(getServiceArea(data)),
-        clearServiceCategory:(data) => dispatch(clearServiceCategory(data)),
-        clearServiceArea:(data) => dispatch(clearServiceArea(data)),
+        getFilter: (data) => dispatch(getFilter(data)),
+        getSort: (data) => dispatch(getSort(data)),
+        getServiceArea: (data) => dispatch(getServiceArea(data)),
+        clearServiceCategory: (data) => dispatch(clearServiceCategory(data)),
+        clearServiceArea: (data) => dispatch(clearServiceArea(data)),
         clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile))
@@ -359,13 +371,13 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 
     return {
-      
+
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
         profileImgData: state.profileState.PersonalDetailState.imageData,
-        ServiceCategory:state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
-        ServiceStatus:state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
-        ServiceType:state.visitSelectionState.ServiceRequestFilterState.ServiceType,
-        ServiceAreaList:state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList
+        ServiceCategory: state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
+        ServiceStatus: state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
+        ServiceType: state.visitSelectionState.ServiceRequestFilterState.ServiceType,
+        ServiceAreaList: state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList
     };
 };
 

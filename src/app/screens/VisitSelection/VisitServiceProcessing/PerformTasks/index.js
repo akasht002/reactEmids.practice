@@ -102,7 +102,7 @@ class PerformTasks extends Component {
         // if (!this.state.startService) {
         //     this.setState({ isStopModalOpen: true })
         // } else
-         if (this.state.taskCount > 0) {
+        if (this.state.taskCount > 0) {
             this.setState({ isModalOpen: true })
         } else if (this.state.taskCount === 0) {
             this.saveData();
@@ -272,18 +272,11 @@ class PerformTasks extends Component {
                                         </span>
                                         <span className="bottomTaskPercentage">{this.state.percentageCompletion}%</span>
                                     </div>
-                                    {visitStatus === SERVICE_STATES.PAYMENT_PENDING || visitStatus === SERVICE_STATES.COMPLETED ?
-                                        <Button
-                                            classname='btn btn-primary ml-auto'
-                                            onClick={this.onClickNext}
-                                            label={'Next'} />
-                                        :
-                                        <Button
-                                            classname='btn btn-primary ml-auto'
-                                            onClick={this.onClickNext}
-                                            disable={this.state.disabled}
-                                            label={'Next'} />
-                                    }
+                                    <Button
+                                        classname='btn btn-primary ml-auto'
+                                        onClick={this.onClickNext}
+                                        disable={visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.YET_TO_START}
+                                        label={'Next'} />
                                 </div>
                             </div>
                         </div>
