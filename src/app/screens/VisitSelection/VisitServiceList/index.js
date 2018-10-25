@@ -25,6 +25,7 @@ import { push } from '../../../redux/navigation/actions';
 
 import './style.css'
 import { Path } from "../../../routes";
+import { HIRED_STATUS_ID } from '../../../constants/constants';
 
 class VisitServiceList extends Component {
 
