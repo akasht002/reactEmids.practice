@@ -196,7 +196,6 @@ export function onSaveTitle(data) {
         dispatch(startLoading());
         AsyncPut(API.saveTitle, data)
             .then(resp => {
-                dispatch(onFetchConversation(resp.data.conversationId));
                 dispatch(endLoading());
             })
             .catch(err => {
