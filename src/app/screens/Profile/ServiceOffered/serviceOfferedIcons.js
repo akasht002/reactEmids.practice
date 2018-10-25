@@ -6,7 +6,7 @@ class ServiceOfferedIcons extends React.Component {
 
         if (this.props.type === 'view') {
             return (
-                <li className={"SPIconServices SPIconServices" + (this.props.index + 1)}><span>{this.props.service.serviceTypeDescription}</span></li>
+                <li className={"SPIconServices SPIconServices" + (this.props.service.serviceTypeId)}><span>{this.props.service.serviceTypeDescription}</span></li>
             )
         } else if (this.props.type === 'edit') {
             return (
@@ -21,7 +21,7 @@ class ServiceOfferedIcons extends React.Component {
                         defaultChecked={this.props.service.isActive}
                     />
                     <label htmlFor={this.props.service.serviceTypeId}
-                        className={"form-check-label SPIconServices" + (this.props.index + 1)}>
+                        className={"form-check-label SPIconServices" + (this.props.service.serviceTypeId)}>
                         <span className="text-capitalize">
                             {this.props.service.serviceTypeDescription}
                         </span>
