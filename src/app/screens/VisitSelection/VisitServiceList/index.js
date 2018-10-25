@@ -241,12 +241,14 @@ class VisitServiceList extends Component {
             let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
             let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
             let patientImage = '';
+            let patientLastName = '';
             if(serviceList.statusId === HIRED_STATUS_ID) {
-                patientImage = serviceList.patientImage;
+                patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
+                patientLastName = serviceList && serviceList.patientLastName;
             } else {
+                patientLastName = serviceList && serviceList.patientLastName.charAt(0);
                 patientImage = require('../../../assets/images/Blank_Profile_icon.png');
             }
-
             return (
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card'>
@@ -273,7 +275,7 @@ class VisitServiceList extends Component {
                             <img className="ProfileImage" src={patientImage} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
-                                    {serviceList.patientFirstName} {serviceList.patientLastName}
+                                    {serviceList.patientFirstName} {patientLastName}
                                 </div>
                                 <div className='BlockProfileDetailsActivity'>
                                     Posted on <Moment format="DD MMM">{serviceList.requestDate}</Moment>
