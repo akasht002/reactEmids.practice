@@ -16,7 +16,7 @@ export const MenuData = [
         name: SCREENS.SERVICE_REQUEST
     },
     {
-        id: 2,
+        id: 2, 
         title: 'Visit History',
         iconName: 'iconProfile iconProfileServiceVisits',
         link: '/visitHistory',
