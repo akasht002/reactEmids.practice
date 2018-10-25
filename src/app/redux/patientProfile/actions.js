@@ -11,8 +11,15 @@ export const PatientProfile = {
     getPointServiceSuccess: 'getPointServiceSuccess/PatientProfile',
     getManageConnectionSuccess: 'getManageConnectionSuccess/PatientProfile',
     getSelectedLanguageDetails: 'getSelectedLanguageDetails/PatientProfile',
-    getSelectedClinicalConditionDetails: 'getSelectedClinicalConditionDetails/PatientProfile'
+    getSelectedClinicalConditionDetails: 'getSelectedClinicalConditionDetails/PatientProfile',
+    clearState: 'clearState/PatientProfile'
 };
+
+export const clearState = () => {
+    return {
+        type: PatientProfile.clearState
+    }
+}
 
 export const setPatient = (data) => {
     return {
