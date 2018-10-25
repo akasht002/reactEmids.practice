@@ -131,7 +131,7 @@ class Summary extends Component {
             min: parseInt(this.state.updatedMin, 0),
             sec: parseInt(this.state.updatedSec, 0)
         }
-        this.setState({ isModalOpen: !this.state.isModalOpen })
+        this.setState({ isModalOpen: false})
         this.props.onUpdateTime(data)
     }
 
