@@ -26,18 +26,6 @@ class Welcome extends Component {
                 {
                     title: 'Your Caring Companion',
                     label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
-                },
-                {
-                    title: 'Your Caring Compassion',
-                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
-                },
-                {
-                    title: 'Your Caring Companion',
-                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
-                },
-                {
-                    title: 'Your Caring Compassion',
-                    label: 'Instantly matching Service Providers to seamlessly fulfill your needs',
                 }
             ],
             activeIndex: 1,
