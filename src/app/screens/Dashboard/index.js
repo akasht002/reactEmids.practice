@@ -21,7 +21,6 @@ class Dashboard extends React.Component {
       isOpen: false,
       conversationDetail: [],
       isChecked: false,
-      spBusyInVisit: false,
       showModalOnTurnOff: false,
       showVisitModal: false
     }
@@ -49,35 +48,18 @@ class Dashboard extends React.Component {
 }
 
 onSuccessSpBusyInVisit = (visitProcess) => {
-  // this.setState({ spBusyInVisit: nextProps.busyInVisit}, () => {
-  //   if(this.state.spBusyInVisit  === true) {
-  //     this.setState({showVisitModal: true})
-  //   } else if (this.state.spBusyInVisit  === false) {
-  //     this.setState({isChecked: true}, () => {
     if(visitProcess === true){
       this.setState({showVisitModal: true})
   }
   else if(visitProcess === false) {
-     // let timeNow = new Date();
   this.setState({
     isChecked: true
-     // standByModeStartTime: timeNow
   }, () => {
             this.props.updateStandByMode(this.state.isChecked);
         })
     }
   
 }
-
-  checkVisitProcess = () => {
-    if(this.props.serviceVisit.length > 0) {
-        let currentTimeSlot = this.compareTimeSlots();
-        let currentVisit = this.props.serviceVisit.filter((visit)=> visit.slotDescription === currentTimeSlot)
-        if(currentVisit.length > 0){
-        return true
-    } }
-    return false
-} 
 
   onClickTurnOff= () => {
     this.setState({showModalOnTurnOff: true})
@@ -110,11 +92,7 @@ onSuccessSpBusyInVisit = (visitProcess) => {
           <div className='ProfileHeaderButton'>
             <span className='standBy'>Stand-by mode </span>
             <label className='switch'>
-              <input type='checkbox' checked={this.state.isChecked} 
-              // onChange={ e => {
-              //   this.setState({isChecked: e.target.checked})
-              //   this.props.updateStandByMode(this.state.isChecked)
-              //  }} 
+              <input type='checkbox' checked={this.state.isChecked}
               onChange={this.onValueChange}
                />
               <span className='sliderSwitch round' />
