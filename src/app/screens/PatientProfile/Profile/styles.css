@@ -1215,6 +1215,26 @@ div.CertificationModal{
     font-size: 14px;
 }
 
+
+/*UI_fixes_24_10*/
+
+.CertificationModal .modal-footer, .ModalPadding0 .modal-footer, .LanguagesModal .modal-footer, .availabilityModal .modal-footer
+{
+    padding: 20px 30px;
+    height: 60px;
+}
+
+
+.CertificationModal .modal-footer .btn.disabled
+{
+background-color:#dcd6df !important;
+opacity: initial !important;
+border-radius:4px;
+-webkit-border-radius:4px;
+-moz-webkit-border-radius:4px;
+}
+
+
 @media (max-width: 1024px) {
     .GuardianList .GuardianItems {
         width: 25%;
