@@ -31,9 +31,12 @@ class Dashboard extends React.Component {
   }
   
   componentWillReceiveProps(nextProps) {
-   this.setState({ isChecked: nextProps.profileState.isChecked,
-    spBusyInVisit: nextProps.busyInVisit
-  })
+    this.setState({ isChecked: nextProps.profileState.standByMode})
+    if (nextProps.busyInVisit === true || nextProps.busyInVisit === false) {
+      this.setState({ spBusyInVisit: nextProps.busyInVisit})
+      this.props.clearVal();
+    }
+   
   }
 
   toggle () {

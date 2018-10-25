@@ -148,6 +148,7 @@ export function getPersonalDetail () {
 }
 
 export function getSpBusyInVisit () {
+  debugger;
   return (dispatch, getState) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
@@ -231,6 +232,10 @@ export function getAffiliationDetail () {
       })
   }
 }
+
+// clearVal() {
+//   dispatch(getSpBusyInVisitSuccess(resp.data = null))
+// }
 
 
 

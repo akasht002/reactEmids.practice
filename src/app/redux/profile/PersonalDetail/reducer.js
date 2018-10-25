@@ -6,7 +6,8 @@ const defaultState = {
   cityDetail: [],
   imageData: '',
   genderList:[],
-  affiliationList:[]
+  affiliationList:[],
+  spBusyInVisit: null
 }
 
 const PersonalDetailState = (state = defaultState, action) => {
@@ -46,7 +47,11 @@ const PersonalDetailState = (state = defaultState, action) => {
         ...state,
         imageData: action.data
       }
-
+    case PersonalDetails.get_sp_busy_in_visit_success:
+      return {
+          ...state,
+          spBusyInVisit: action.data
+      }
     default:
       return state
   }
