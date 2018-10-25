@@ -10,7 +10,8 @@ const defaultState = {
     pointOfServiceList: [],
     myConnectionList: [],
     languageList: [],
-    clinicalConditionList: []
+    clinicalConditionList: [],
+    SpBusyInVisit: null
 };
 
 const patientProfileState = (state = defaultState, action) => {
@@ -49,6 +50,11 @@ const patientProfileState = (state = defaultState, action) => {
             return {
                 ...state,
                 clinicalConditionList: action.data
+            }
+        case PatientProfile.getSpBusyInVisitSuccess:
+            return {
+                ...state,
+                spBusyInVisit: action.data
             }
         default:
             return state;

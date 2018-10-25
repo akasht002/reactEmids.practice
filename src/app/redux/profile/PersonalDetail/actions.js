@@ -54,6 +54,13 @@ export const getGenderSuccess = data => {
   }
 }
 
+export const getSpBusyInVisitSuccess = data => {
+  return {
+    type: PersonalDetails.get_sp_busy_in_visit_success,
+    data
+  }
+}
+
 
 export function getGender () {
   return (dispatch) => {
@@ -132,6 +139,21 @@ export function getPersonalDetail () {
     Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
+export function getSpBusyInVisit () {
+  return (dispatch, getState) => {
+    let serviceProviderId = getUserInfo().serviceProviderId;
+    dispatch(startLoading())
+    Get(API.getSpBusyInVisit + serviceProviderId)
+      .then(resp => {
+        dispatch(getSpBusyInVisitSuccess(resp.data))
         dispatch(endLoading())
       })
       .catch(err => {
