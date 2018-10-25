@@ -72,7 +72,7 @@ export const VisitList = props => {
                           </div>
                         </div>
                         <div className="visitUserName">
-                          {vistList.providerFirstName && vistList.providerFirstName}
+                          {vistList.patientFirstName && vistList.patientFirstName}
                           {' '}
                           {vistList.patientLastName && vistList.patientLastName}
                         </div>
