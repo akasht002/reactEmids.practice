@@ -73,7 +73,7 @@ class AsideScreenCover extends React.Component {
     render() {
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
-        let menuData = entityUser ? EntityMenuData : MenuData;
+        let menuData = MenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
@@ -92,7 +92,7 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
-                        onClick={this.state.profilePermission.Read && this.props.goToProfile}
+                        //onClick={this.profilePermission.read && this.props.goToProfile}
                     />
 
                     <div className='ProfileNameWidget'>

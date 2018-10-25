@@ -60,6 +60,27 @@
     border: 0;
 }
 
+div.full-block {
+    width: 100%;
+    margin: 0;
+}
+
+.right-uservisit-view {
+    display: flex;
+    align-items: center;
+    width: auto;
+    right: 0;
+    top: 0;
+}
+
+.visitListTop .visitListTime span:last-child {
+    text-align: right;
+    right: 82px;
+    position: absolute;
+    border-left: 0;
+    padding: 0;
+}
+
 .visitListBottom .visitListContent{
     display: flex;
     display: -moz-flex;
@@ -91,6 +112,74 @@
 
 .visitListTask .bottomTaskRange, .visitListTask .bottomTaskCompletedRange{
     height: 5px;
+}
+
+{
+font-size:16px;
+color: #444444;
+}
+.right-uservisit-view .visitUserPic
+{
+    margin-right: 8px;
+}
+
+.visitUserPic .avatarContainer{
+    height: 40px;
+    width: 40px;
+}
+
+.less-margin
+{
+    margin-bottom: 0px;
+}
+
+.summary-view-right
+{
+position: relative;
+top:initial;
+margin-top: 0;
+}
+
+.rating-block
+{
+    width: 100%;
+    display: block;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.rating-block .rating-span-title
+{
+    display: flex;
+    width: 100%;
+    margin-bottom: 12px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rating-block .rating-span-title > p{
+    margin: 0;
+}
+
+.rating-span-title span {
+display: table-cell;
+width: 50%;
+vertical-align: middle;
+}
+
+.rating-span-title span .visitUserPic-block {
+    width: auto;
+    position: absolute;
+    margin-top: 0;
+    right: 36px;
+    margin-top: -22px;
+    vertical-align: middle;
+}
+
+.rating-span-title .SPRating.particular-rating {
+    display: inline-block;
+    width: auto;
+    margin: 0;
 }
 
 /*********************************************************************************************************************/
@@ -144,4 +233,102 @@ li.ListItem.disabled{
     padding: 15px;
 }
 
+.right-uservisit-view .visitUserName
+{
+font-size:16px;
+color: #444444;
+}
+.right-uservisit-view .visitUserPic
+{
+    margin-right: 8px;
+}
+
+.visitUserPic .avatarContainer{
+    height: 40px;
+    width: 40px;
+}
+
+.less-margin
+{
+    margin-bottom: 0px;
+}
+
+.summary-view-right
+{
+position: relative;
+top:initial;
+margin-top: 0;
+}
+
+.rating-block
+{
+    width: 100%;
+    display: block;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.rating-block .rating-span-title
+{
+    display: flex;
+    width: 100%;
+    margin-bottom: 12px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rating-block .rating-span-title > p{
+    margin: 0;
+}
+
+.rating-span-title span {
+display: table-cell;
+width: 50%;
+vertical-align: middle;
+}
+
+.rating-span-title span .visitUserPic-block {
+    width: auto;
+    position: absolute;
+    margin-top: 0;
+    right: 36px;
+    margin-top: -22px;
+    vertical-align: middle;
+}
+
+.rating-span-title .SPRating.particular-rating {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+}
+
+/*Responsive-for-mobile-devices*/
+@media only screen and (max-width: 767px) {
+    div.visitListBottom .visitListContent, div.visitListTop {
+        padding: 10px 10px;
+    }
+    .full-block .visitListNameContainer
+    {
+        width: 100%;
+        display: block;
+        font-size: 14px;
+    }
+
+    .right-uservisit-view .visitUserName {
+        font-size: 13px;
+        color: #444;
+    }
+    .right-uservisit-view .visitUserPic {
+        margin-right: 7px;
+    }
+    .visitUserName
+    {
+        margin-left: 20px;
+    }
+    .visitListNameContainer .visitListTask
+    {
+     font-size:13px;
+    }
+}
+/*-/End-Responsive-for-mobile-devices*/
 /*********************************************************************************************************************/

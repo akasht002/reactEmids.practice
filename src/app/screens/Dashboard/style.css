@@ -371,7 +371,7 @@ li div.dropdown-menu{
 
 span.btn-hired, span.btn-hired:hover{
     color: #007f84 !important;
-    border-color: #007f84 !important;
+    /* border-color: #007f84 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -380,7 +380,7 @@ span.btn-hired, span.btn-hired:hover{
 
 span.btn-applied, span.btn-applied:hover{
     color: #3089df !important;
-    border-color: #3089df !important;
+    /* border-color: #3089df !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -389,7 +389,7 @@ span.btn-applied, span.btn-applied:hover{
 
 a.btn-open, span.btn-open, a.btn-open:hover, span.btn-open:hover{
     color: #ef6f48 !important;
-    border-color: #ef6f48 !important;
+    /* border-color: #ef6f48 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -397,7 +397,7 @@ a.btn-open, span.btn-open, a.btn-open:hover, span.btn-open:hover{
 
 .btn-closed, .btn-closed:hover{
     color: #c80047 !important;
-    border-color: #c80047 !important;
+    /* border-color: #c80047 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -405,7 +405,7 @@ a.btn-open, span.btn-open, a.btn-open:hover, span.btn-open:hover{
 
 span.btn-invited, span.btn-invited:hover{
     color: #7a329f !important;
-    border-color: #7a329f !important;
+    /* border-color: #7a329f !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -625,6 +625,7 @@ span.btn-invited, span.btn-invited:hover{
     margin: 13px;
     padding: 5px 10px !important;
     float: right;
+    height: 33px;
 }
 
 .TabBody .ServiceCategoryContent{
@@ -719,7 +720,6 @@ a.ProfileCardHeaderLink:hover{
 
 .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
     height: calc(100vh - 292px);
-    overflow-y: hidden;
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette {
@@ -794,7 +794,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ServiceRequestBoard{
     width: 33.33%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding: 0 10px;
 }
 
@@ -1487,6 +1487,14 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         display: flex;
         display: -moz-flex;
         justify-content: center;
+    }
+
+    .LeftPostedBy .PostedByImageContainer:first-child .PostedByProfileDetails{
+        display: inline-block;
+    }
+
+    .LeftPostedBy .PostedByImageContainer .PostedByProfileDetails{
+        display: none;
     }
 
     .PostedByImageContainer .ProfileIconDetails{

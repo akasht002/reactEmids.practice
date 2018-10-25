@@ -9,6 +9,7 @@ export const elasticSearchURL = process.env.REACT_APP_ES_URL;
 export const thirdPartyURL = process.env.REACT_APP_TP_URL;
 export const asyncURL = process.env.REACT_APP_MSG_URL;
 export const careTeamURL = process.env.REACT_APP_CARETEAM_URL;
+export const patientURL = process.env.REACT_APP_PATIENT_URL;
 
 export const AuthLogin = (url, data) => {
     var bodyFormData = new FormData()
@@ -25,6 +26,17 @@ export const AuthLogin = (url, data) => {
             return response
         })
         .catch(error => handleError(error))
+}
+
+export const PatientGet = url => {
+    return axios
+        .get(patientURL + url, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
 }
 
 export const Post = (url, data) => {

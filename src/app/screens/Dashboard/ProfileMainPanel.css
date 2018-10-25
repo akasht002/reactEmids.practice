@@ -201,7 +201,7 @@
     width: 200px;
     margin: 0 auto;
     padding: 30px 0;
-    background-color: #ffffff;
+    background-color: #f0e6f2;
     border-radius: 5px;
     border: 1px solid #eaeaea;
     user-select: none;
@@ -706,7 +706,6 @@ div.ProfileConversation{
     height: 40px;
     border-radius: 50%;
     background-color: #f1e7f7;
-    border: 2px solid #eaeaea;
 }
 
 .SPAvatarWidget{

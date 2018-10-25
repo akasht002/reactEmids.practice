@@ -7,7 +7,7 @@ import {
 } from 'react-accessible-accordion'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import {Progressbar} from '../../components'
+import { Progressbar } from '../../components'
 import moment from 'moment'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import { getFields, getLength } from '../../utils/validations'
@@ -21,7 +21,7 @@ import {
 
 
 class VistSummary extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       collapse: false,
@@ -34,8 +34,8 @@ class VistSummary extends React.Component {
     this.selectedAnswers = []
   }
 
-  componentDidMount () {
-    this.props.getQuestionsList()    
+  componentDidMount() {
+    this.props.getQuestionsList()
   }
 
   toggle = () => {
@@ -113,12 +113,12 @@ class VistSummary extends React.Component {
     }
   }
 
-  togglePersonalDetails (action, e) {
+  togglePersonalDetails(action, e) {
     this.setState({
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal
     })
   }
- 
+
 
   handleSelected = (answer, id) => {
     let answers = { feedbackQuestionnaireId: id, answerName: answer, id: 0 }
@@ -162,7 +162,7 @@ class VistSummary extends React.Component {
       patientId: getUserInfo().serviceProviderId,
       rating: this.state.rating,
       answers: this.selectedAnswers,
-      path:'visitHistory'
+      path: 'visitHistory'
     }
     this.props.saveAnswerFeedback(data)
     this.setState({
@@ -177,14 +177,14 @@ class VistSummary extends React.Component {
         <div className='FeedbackRating'>
           {this.props.patientDetails.serviceProvider
             ? <p>
-                Rate
+              Rate
                 {' '}
               {this.props.patientDetails.serviceProvider.firstName}
               {' '}
               {this.props.patientDetails.serviceProvider.lastName &&
-                  getFirstCharOfString(
-                    this.props.patientDetails.serviceProvider.lastName
-                  )}
+                getFirstCharOfString(
+                  this.props.patientDetails.serviceProvider.lastName
+                )}
             </p>
             : ''}
           <StarRating
@@ -194,83 +194,83 @@ class VistSummary extends React.Component {
         {this.props.QuestionsList.length > 0
           ? <div>
             {this.props.QuestionsList &&
-                this.props.QuestionsList.map((questionList, i) => {
-                  if (questionList.answerTypeDescription === 'ChoiceBased') {
-                    return (
-                      <div
-                        key={questionList.feedbackQuestionnaireId}
-                        className='FeedbackQuestionWidget'
-                      >
-                        <p className='FeedbackQuestion'>
-                          {i + 1}. {questionList.question}
-                        </p>
-                        <div className='FeedbackAnswerWidget'>
-                          {questionList.answers.map((answer, j) => {
-                            return (
-                              <div
-                                className='form-radio col-md-3'
-                                key={answer.id}
+              this.props.QuestionsList.map((questionList, i) => {
+                if (questionList.answerTypeDescription === 'ChoiceBased') {
+                  return (
+                    <div
+                      key={questionList.feedbackQuestionnaireId}
+                      className='FeedbackQuestionWidget'
+                    >
+                      <p className='FeedbackQuestion'>
+                        {i + 1}. {questionList.question}
+                      </p>
+                      <div className='FeedbackAnswerWidget'>
+                        {questionList.answers.map((answer, j) => {
+                          return (
+                            <div
+                              className='form-radio col-md-3'
+                              key={answer.id}
+                            >
+                              <input
+                                className='form-radio-input'
+                                id={answer.id}
+                                type='radio'
+                                value={answer.answerName}
+                                name={'text' + i}
+                                onChange={e =>
+                                  this.handleSelected(
+                                    answer.answerName,
+                                    questionList.feedbackQuestionnaireId
+                                  )}
+                              />
+                              <label
+                                className='form-radio-label'
+                                htmlFor={answer.id}
                               >
-                                <input
-                                  className='form-radio-input'
-                                  id={answer.id}
-                                  type='radio'
-                                  value={answer.answerName}
-                                  name={'text'+i}
-                                  onChange={e =>
-                                    this.handleSelected(
-                                      answer.answerName,
-                                      questionList.feedbackQuestionnaireId
-                                    )}
-                                />
-                                <label
-                                  className='form-radio-label'
-                                  htmlFor={answer.id}
-                                >
-                                  {answer.answerName}
-                                </label>
+                                {answer.answerName}
                                 <span className='RadioBoxIcon' />
-                              </div>
-                            )
-                          })}
-                        </div>
+                              </label>
+                            </div>
+                          )
+                        })}
                       </div>
-                    )
-                  }
+                    </div>
+                  )
+                }
 
-                  if (questionList.answerTypeDescription === 'OpenText') {
-                    return (
-                      <div
-                        className='FeedbackQuestionWidget'
-                        key={questionList.feedbackQuestionnaireId}
-                      >
-                        <p className='FeedbackQuestion'>
-                          {i + 1}. {questionList.question}
-                        </p>
-                        <div className='FeedbackAnswerWidget'>
-                          {questionList.answers.map((answer, i) => {
-                            return (
-                              <div key={answer.id} className='feedbackForm'>
-                                <textarea
-                                  id={answer.id}
-                                  rows={4}
-                                  className='form-control'
-                                  value={this.state.textareaValue}
-                                  onChange={e =>
-                                    this.handleTextarea(
-                                      e,
-                                      questionList.feedbackQuestionnaireId
-                                    )}
-                                />
-                              </div>
-                            )
-                          })}
-                        </div>
+                if (questionList.answerTypeDescription === 'OpenText') {
+                  return (
+                    <div
+                      className='FeedbackQuestionWidget'
+                      key={questionList.feedbackQuestionnaireId}
+                    >
+                      <p className='FeedbackQuestion'>
+                        {i + 1}. {questionList.question}
+                      </p>
+                      <div className='FeedbackAnswerWidget'>
+                        {questionList.answers.map((answer, i) => {
+                          return (
+                            <div key={answer.id} className='feedbackForm'>
+                              <textarea
+                                id={answer.id}
+                                rows={4}
+                                className='form-control'
+                                value={this.state.textareaValue}
+                                onChange={e =>
+                                  this.handleTextarea(
+                                    e,
+                                    questionList.feedbackQuestionnaireId
+                                  )}
+                              />
+                            </div>
+                          )
+                        })}
                       </div>
-                    )
-                  }
-                  return questionList
-                })}
+                    </div>
+                  )
+                }
+                return questionList
+              })}
           </div>
           : ''}
 
@@ -279,10 +279,10 @@ class VistSummary extends React.Component {
   }
 
   getFeedbackContent = (data) => {
-    
+
   }
 
-  calculate = (totalTaskCompleted, totalTask)=>{
+  calculate = (totalTaskCompleted, totalTask) => {
     if (totalTaskCompleted !== 0 && totalTask !== 0) {
       return Math.floor(totalTaskCompleted / totalTask * 100)
     } else if (totalTask === 0) {
@@ -292,7 +292,7 @@ class VistSummary extends React.Component {
     }
   }
 
-  render () {
+  render() {
     let summaryDetail = this.props.SummaryDetails
     let startdate = moment(summaryDetail.visitStartTime)
     let enddate = moment(summaryDetail.visitEndTime)
@@ -301,7 +301,7 @@ class VistSummary extends React.Component {
     let modalContent = this.getFeedback()
     let modalTitle = 'Feedback'
     let modalType = ''
-    let progress_bar  = summaryDetail.totalTask !== 0 && summaryDetail.totalTask !==0 ?(this.props.taskCompleted/this.props.totaltask) * 100:0
+    let progress_bar = summaryDetail.totalTask !== 0 && summaryDetail.totalTask !== 0 ? (this.props.taskCompleted / this.props.totaltask) * 100 : 0
     return (
       <React.Fragment>
         <form className='ServiceContent'>
@@ -309,39 +309,26 @@ class VistSummary extends React.Component {
             <div className='LeftWidget'>
               <div className='LeftContent'>
                 <p className='SummaryContentTitle'>Service Visit Details</p>
-                <div className='row'>
-                  <div className='col-md-8'>
-                    <p className='CategoryName'>
-                      <span className='CategoryTitle'>
-                        {summaryDetail.serviceRequestTypeVisits &&
-                          getFields(
-                            summaryDetail.serviceRequestTypeVisits,
-                            'serviceTypeDescription'
-                          )}
+                <div className="row mb-3">
+                  <div className="col-md-12 SummaryContentTable">
+                    <p className="m-0"><span className="SummaryContentTableTitle">Service Type(s)</span>
+                      <span>{summaryDetail.serviceRequestTypeVisits &&
+                        getFields(
+                          summaryDetail.serviceRequestTypeVisits,
+                          'serviceTypeDescription'
+                        )}</span></p>
+                    <p><span className="SummaryContentTableTitle">Service Category</span>
+                      <span>{summaryDetail.serviceCategoryDescription &&
+                        summaryDetail.serviceCategoryDescription}</span></p>
+                    <p className="m-0"><span className="SummaryContentTableTitle">Visit Length</span>
+                      <span>{summaryDetail.originalTotalDuration} hrs</span></p>
+                    <p className="m-0"><span className="SummaryContentTableTitle">Tasks</span>
+                      <div className="SummaryRange SummaryRangeWidget"><span className="bottomTaskRange">
+                        <i style={{ width: this.calculate(summaryDetail.totalTaskCompleted, summaryDetail.totalTask) + '%' }} className="bottomTaskCompletedRange" />
                       </span>
-                      <span className='CategorySub'>
-                        {summaryDetail.serviceCategoryDescription &&
-                          summaryDetail.serviceCategoryDescription}
-                      </span>
+                        <span className="bottomTaskPercentage">{this.calculate(summaryDetail.totalTaskCompleted, summaryDetail.totalTask)}%</span>
+                      </div>
                     </p>
-                  </div>
-                  <div className='col-md-4'>
-                    <div className='SummaryTime'>
-                      <span>Visit Length</span>
-                      <span className='SummaryTotalTime'>
-                        {summaryDetail.originalTotalDuration} hrs
-                      </span>
-                    </div>
-                    <div className='SummaryRange'>
-                      <span className='bottomTaskName'>Tasks</span>
-                      <span className='bottomTaskRange'>
-                        <i
-                          style={{ width: this.calculate(summaryDetail.totalTaskCompleted,summaryDetail.totalTask) }}
-                          className='bottomTaskCompletedRange'
-                        />
-                      </span>
-                      <span className='bottomTaskPercentage'>{this.calculate(summaryDetail.totalTaskCompleted,summaryDetail.totalTask)}%</span>
-                    </div>
                   </div>
                 </div>
 
@@ -395,8 +382,8 @@ class VistSummary extends React.Component {
                   </div>
                   <div className='col-md-4 EstimatedCostContainer Cost'>
                     <p>
-                      <span>$ {summaryDetail.estimatedClaim&&
-                          summaryDetail.estimatedClaim}</span>
+                      <span>$ {summaryDetail.estimatedClaim &&
+                        summaryDetail.estimatedClaim}</span>
                       <span>
                         {summaryDetail.outOfPocketAmount &&
                           summaryDetail.outOfPocketAmount}
@@ -413,26 +400,26 @@ class VistSummary extends React.Component {
                       <i className='Icon iconFilledStar' />4.2
                     </span>
                   </p>
-                  {getLength(this.props.VisitFeedback)>0
-                  ? <span
-                  className='FeedbackLink'
-                  onClick={this.props.FeedbackModal}
-                >
-                  Show Feedback
-                </span> :  <p>
-                    Your feedback is pending. Click
-                    {' '}
-                    <span
+                  {getLength(this.props.VisitFeedback) > 0
+                    ? <span
                       className='FeedbackLink'
-                      onClick={this.togglePersonalDetails.bind(this)}
+                      onClick={this.props.FeedbackModal}
                     >
-                      Here
-                    </span>
+                      Show Feedback
+                </span> : <p>
+                      Your feedback is pending. Click
                     {' '}
-                    to submit feedback.
-                  </p> }
-                  
-                 
+                      <span
+                        className='FeedbackLink'
+                        onClick={this.togglePersonalDetails.bind(this)}
+                      >
+                        Here
+                    </span>
+                      {' '}
+                      to submit feedback.
+                  </p>}
+
+
                 </div>
               </div>
             </div>
@@ -443,17 +430,7 @@ class VistSummary extends React.Component {
           isOpen={this.state.EditFeedbackDetailModal}
           toggle={this.togglePersonalDetails.bind(this, modalType)}
           ModalBody={modalContent}
-          className='modal-lg asyncModal CertificationModal'
-          modalTitle={modalTitle}
-          centered='centered'
-          onClick={this.onSubmit}
-          disabled={this.state.disabledSaveBtn}
-        />
-         <ProfileModalPopup
-          isOpen={this.state.ViewFeedbackDetailModal}
-          toggle={this.togglePersonalDetails.bind(this, modalType)}
-          ModalBody={modalContent}
-          className='modal-lg asyncModal CertificationModal'
+          className='modal-lg FeedbackModal'
           modalTitle={modalTitle}
           centered='centered'
           onClick={this.onSubmit}
@@ -463,14 +440,14 @@ class VistSummary extends React.Component {
     )
   }
 }
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getQuestionsList: () => dispatch(getQuestionsList()),
     saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data))
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     QuestionsList: state.visitSelectionState.VisitServiceProcessingState
       .FeedbackState.QuestionsList,
@@ -478,9 +455,9 @@ function mapStateToProps (state) {
       .PerformTasksState.PerformTasksList,
     ServiceRequestId: state.visitHistoryState.vistServiceHistoryState
       .ServiceRequestId,
-      VisitFeedback:state.visitHistoryState.vistServiceHistoryState
+    VisitFeedback: state.visitHistoryState.vistServiceHistoryState
       .VisitFeedback
-    }
+  }
 }
 
 export default withRouter(

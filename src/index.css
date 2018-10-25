@@ -773,3 +773,24 @@ body > div:nth-child(4) > div > div.modal.fade.show{display:flex!important;}
 position: relative !important;
 left: 0px!important;
 }
+
+div.RICC{
+    position:relative!important;
+    width: 300px!important;
+    height: 300px!important;
+   
+ }
+ div.RICC > img.image {
+    
+    width: auto!important; 
+    height: 100%!important;
+}
+ div.RICC > div.crop{    
+    min-height:300px!important;
+    min-width:300px!important;    
+    display:block!important;
+}
+ img.crop{
+    width: 100%!important;
+    height: 100%!important;
+}

@@ -104,7 +104,7 @@ class ParticipantsContainer extends Component {
             participantType: USERTYPES.PATIENT
         };
         let userId = this.props.loggedInUser.serviceProviderId;
-        this.setState({ selectedPatientDetails: patientData, selectedParticipants: [...this.state.selectedParticipants, patientData] });
+        this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
         let data = {
             userId: userId,
             participantType: USERTYPES.SERVICE_PROVIDER,

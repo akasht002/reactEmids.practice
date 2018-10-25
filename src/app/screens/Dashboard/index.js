@@ -28,6 +28,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     this.props.getPersonalDetail()
   }
+  
   componentWillReceiveProps(nextProps) {
    this.setState({ standByMode: nextProps.profileState.standByMode })
   }
@@ -108,13 +109,10 @@ class Dashboard extends React.Component {
           <div className='ProfileHeaderButton'>
             <span className='standBy'>Stand-by mode </span>
             <label className='switch'>
-              <input type='checkbox' checked={this.state.standByMode} 
-              // onChange={ e => {
-              //   this.setState({standByMode: !e.target.checked})
-              //   this.props.updateStandByMode(this.state.standByMode)
-              //  }} 
-              onChange={this.onValueChange}
-               />
+              <input type='checkbox' checked={this.state.isChecked} onChange={ e => {
+                this.setState({isChecked: e.target.checked})
+                this.props.updateStandByMode(this.state.isChecked)
+               }} />
               <span className='sliderSwitch round' />
             </label>
           </div>

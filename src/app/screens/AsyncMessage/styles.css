@@ -1660,6 +1660,16 @@ overflow: auto;
     overflow:scroll !important;	
 }
 
+
+
+.participantsSearchForm .participantsSearchList .participantName
+{
+    -o-text-overflow: initial;
+    text-overflow: initial;
+    max-width: initial;
+}
+
+
 /*microsoft-edge-detection*/
 @supports (-ms-ime-align: auto) {
     .table td.addAttachmentWidget, .table td.messageTypeWidget, .table td.sendButtonWidget {

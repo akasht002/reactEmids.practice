@@ -28,7 +28,8 @@ import {
   PaymentFailure,
   TeleHealth,
   ConversationSummary,
-  Conversation
+  Conversation,
+  PatientProfile
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -72,6 +73,7 @@ export const Path = {
   conversation: '/conversation/',
   visitHistory: '/visitHistory',
   visitSummaryDetail: '/visitSummary',
+  patientProfile: '/patientProfile'
 };
 
 class AppStackRoot extends Component {
@@ -106,6 +108,7 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.payments} permission={SCREENS.PAYMENT_PROCESSING} component={Payments} />
             <PrivateRoute path={Path.paymentsuccess} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentSuccess} />
             <PrivateRoute path={Path.paymentfailure} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentFailure} />
+            <PrivateRoute path={Path.patientProfile} component={PatientProfile} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

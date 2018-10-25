@@ -275,6 +275,38 @@ div.EstimatedCostWidget{
     padding: 0;
 }
 
+button.btn.CancelSignature{
+    padding: 5px 8px !important;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.VisitSummaryWidget .LeftWidget.FullContainer{
+    width: 100% !important;
+    border: 0;
+}
+
+.SummaryContentTable p{
+    display: flex;
+    justify-content: space-between;
+}
+
+.SummaryRangeWidget{
+    width: 200px;
+    text-align: right;
+}
+
+.SummaryContentTable p span{
+    width: calc(100% - 130px);
+    text-align: right;
+}
+
+.SummaryContentTable p span.SummaryContentTableTitle{
+    width: 125px;
+    margin-right: 5px;
+    text-align: left;
+}
+
 /*********************************************************************************************************************/
 
 @media (max-width: 1920px){
@@ -312,6 +344,17 @@ div.EstimatedCostWidget{
     .DisclaimerText {
         margin-bottom: 0;
     }
+
+    .SummaryContentTable p span, .SummaryRangeWidget{
+        width: calc(100% - 130px);
+        text-align: right;
+    }
+
+    .SummaryContentTable p span.SummaryContentTableTitle{
+        width: 125px;
+        margin-right: 5px;
+        text-align: left;
+    }
 }
 
 @media (max-width: 480px) {
@@ -323,8 +366,19 @@ div.EstimatedCostWidget{
         margin: 20px 0 10px 0;
     }
 
-    .CostTableContainer{
+    .CostTableContainer, .SummaryContentTable p{
         font-size: 14px;
+    }
+
+    .SummaryContentTable p span, .SummaryRangeWidget{
+        width: calc(100% - 120px);
+        text-align: right;
+    }
+
+    .SummaryContentTable p span.SummaryContentTableTitle{
+        width: 115px;
+        margin-right: 5px;
+        text-align: left;
     }
 
     .CostTableContainer.Label, .EstimatedCostContainer.Label{

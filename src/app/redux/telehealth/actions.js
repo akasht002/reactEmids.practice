@@ -79,7 +79,7 @@ export function getLinkedParticipantsByPatients(data) {
         data.lastName = patient.lastName;
         data.participantType = USERTYPES.PATIENT;
         data.image = patient.image;
-        data.userId = userInfo.serviceProviderId;
+        data.userId = data.userId;
         dispatch(startLoading());
         AsyncGet(API.getParticipantsByContext + data.conversationId +
             '/' + data.userId +
@@ -169,6 +169,7 @@ export function leaveVideoConference(checkRoute) {
                 }
             dispatch(endLoading());
         }).catch((err) => {
+            dispatch(push(Path.dashboard))
             dispatch(endLoading());
         })
     }

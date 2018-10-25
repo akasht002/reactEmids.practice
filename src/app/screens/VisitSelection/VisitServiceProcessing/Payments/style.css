@@ -54,6 +54,7 @@
 .VisitPaymentWidget .FeedbackAnswerWidget .form-radio{
     padding: 0 0 0 30px;
     margin: 0;
+    margin-bottom: 14px;
 }
 
 .CardTypeContainer{

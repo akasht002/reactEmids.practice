@@ -8,8 +8,9 @@ import {
 } from '../../../redux/asyncMessages/actions';
 import { Button } from '../../../components';
 import { USERTYPES } from '../../../constants/constants';
-
-
+import { Path } from '../../../routes';
+import { setPatient} from '../../../redux/patientProfile/actions';
+import { push } from '../../../redux/navigation/actions'
 
 class ParticipantContent extends Component {
 
@@ -213,7 +214,10 @@ class ParticipantContent extends Component {
                             </table>
                             {this.state.popupVisible && (<ul ref={node => { this.node = node; }} className={"table profileBack " + profileOptionClass}>
                                 <li className="ProfileOptionItems align-middle">
-                                    <a>View Profile</a>
+                                    <a onClick={() => {
+                                        this.props.setPatient(participant.userId);
+                                        this.props.goToPatientProfile();
+                                    }}>View Profile</a>
                                 </li>
                             </ul>)}
                         </li>
@@ -326,7 +330,9 @@ function mapDispatchToProps(dispatch) {
     return {
         addParticipants: (data) => dispatch(onAddParticipant(data)),
         removeParticipant: (data) => dispatch(onRemoveParticipant(data)),
-        getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data))
+        getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
+        setPatient: data => dispatch(setPatient(data)),
+        goToPatientProfile: () => dispatch(push(Path.patientProfile))
     }
 };
 

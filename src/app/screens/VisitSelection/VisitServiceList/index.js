@@ -20,8 +20,10 @@ import {formattedDateMoment,formattedDateChange } from "../../../utils/validatio
 import Filter from "./ServiceRequestFilters";
 import {getSort} from "../../../redux/visitSelection/ServiceRequestSorting/actions";
 import Sorting from "../ServiceRequestSorting"
-
+import {setPatient} from '../../../redux/patientProfile/actions';
+import {push} from '../../../redux/navigation/actions';
 import './style.css'
+import { Path } from "../../../routes";
 
 class VisitServiceList extends Component {
 
@@ -81,11 +83,11 @@ class VisitServiceList extends Component {
         else if (status === VISIT_SERVICE_STATUS_INVITED) {
             return 'btn btn-invited';
         }
-        else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
+        /*else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
             return 'BlockProfileMatching';
-        }
+        }*/
         else {
-            return null;
+            return 'BlockProfileMatching';
         }
     }
     
@@ -237,8 +239,8 @@ class VisitServiceList extends Component {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
             return (
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
-                    <div className='card' onClick={() => this.handleClick(serviceList.serviceRequestId)}>
-                        <div className="BlockImageContainer">
+                    <div className='card'>
+                        <div className="BlockImageContainer" onClick={() => this.handleClick(serviceList.serviceRequestId)}>
                             <img src={require("../../../assets/images/Bathing_Purple.svg")} className="ServiceImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
@@ -252,8 +254,13 @@ class VisitServiceList extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="BlockProfileContainer">
-                            <img className="ProfileImage" src={serviceList.patientImage?serviceList.patientImage:require('../../../assets/images/Blank_Profile_icon.png')} alt="" />
+                        <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Hired' ? '' : 'noArrow')} onClick={() => {
+                                if (serviceList.serviceRequestStatus === 'Hired') {
+                                    this.props.setPatient(serviceList.patientId)
+                                    this.props.goToPatientProfile()
+                                }
+                            }}>
+                            <img className="ProfileImage" src={serviceList.patientThumbNail} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
                                     {serviceList.patientFirstName} {serviceList.patientLastName && getFirstCharOfString(serviceList.patientLastName)}
@@ -343,7 +350,9 @@ function mapDispatchToProps(dispatch) {
         getServiceArea:(data)  => dispatch(getServiceArea(data)),
         clearServiceCategory:(data) => dispatch(clearServiceCategory(data)),
         clearServiceArea:(data) => dispatch(clearServiceArea(data)),
-        clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data))
+        clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data)),
+        setPatient: (data) => dispatch(setPatient(data)),
+        goToPatientProfile: () => dispatch(push(Path.patientProfile))
     }
 };
 

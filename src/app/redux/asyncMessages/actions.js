@@ -95,6 +95,7 @@ export function getConversationItemSignalR(conversationId, messageId){
             let userId = getUserInfo().serviceProviderId;
             let userType = USERTYPES.SERVICE_PROVIDER;
             dispatch(startLoading());
+            let data = {conversationId: conversationId};
             AsyncGet(API.getConversationMessage 
                 + messageId + '/'
                 + conversationId + '/'
@@ -103,6 +104,7 @@ export function getConversationItemSignalR(conversationId, messageId){
             )
             .then(resp => {
                 dispatch(pushConversation(resp.data));
+                dispatch(updateReadStatus(data));
                 dispatch(endLoading());
             })
             .catch(err => {
@@ -334,7 +336,7 @@ export function leaveConversation(data) {
             + data.conversationId + '/'
             + USER_TYPE)
             .then(resp => {
-                dispatch(onFetchConversation(resp.data));
+                dispatch(onFetchConversation(resp.data.conversationId));
                 dispatch(endLoading())
             })
             .catch(err => {
@@ -352,16 +354,29 @@ const getLinkedPatientsSuccess = data => {
 
 
 export function getLinkedParticipantsByPatients(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(startLoading())
         let serchText = data.searchText === "" ? null : data.searchText;
+        let patients = getState().asyncMessageState.linkedPatients;
+        let patient = patients.find((e) => {
+            return e.userId === data.patientId
+        });
+        data.firstName = patient.firstName;
+        data.lastName = patient.lastName;
+        data.participantType = USERTYPES.PATIENT;
+        data.thumbNail = patient.thumbNail;
+        data.userId = data.patientId;
         AsyncGet(API.getParticipantsByContext + data.conversationId +
             '/' + data.userId +
             '/' + data.patientId +
             '/' + data.participantType +
             '/' + serchText)
             .then(resp => {
-                dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
+                let modifiedData = [
+                    data,
+                    ...resp.data
+                ];
+                dispatch(getLinkedParticipantsByPatientsSuccess(modifiedData));
                 dispatch(endLoading())
             })
             .catch(err => {

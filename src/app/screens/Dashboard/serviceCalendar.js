@@ -19,6 +19,8 @@ import {
 import { ServiceCalendarDefault,ShowIndicator } from './ServiceInfo'
 import { getUserInfo } from '../../services/http'
 import { Path } from '../../routes';
+import { setPatient} from '../../redux/patientProfile/actions';
+import { push } from '../../redux/navigation/actions'
 
 const today = new Date()
 
@@ -347,6 +349,10 @@ class serviceCalendar extends React.Component {
         togglePersonalDetails={this.togglePersonalDetails}
         handleClick={requestId => this.handleClick(requestId)}
         onClick={(link) => this.navigateProfileHeader(link)}
+        goToPatientProfile={(data) => {
+          this.props.setPatient(data);
+          this.props.goToPatientProfile();
+        }}
       />
     )
 
@@ -466,7 +472,9 @@ function mapDispatchToProps (dispatch) {
       dispatch(getEntityServiceProviderList()),
     updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
-    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data))
+    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
+    setPatient: data => dispatch(setPatient(data)),
+    goToPatientProfile: () => dispatch(push(Path.patientProfile))
   }
 }
 

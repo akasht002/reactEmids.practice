@@ -13,7 +13,8 @@ import {
   getVisitServiceSchedule,
   updateServiceRequestByServiceProvider,
   cancelServiceRequestByServiceProvider,
-  getVisitServiceEligibilityStatus
+  getVisitServiceEligibilityStatus,
+  getDays
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
   getPerformTasksList
@@ -49,6 +50,7 @@ class VisitServiceDetails extends Component {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId)
       this.props.getVisitServiceSchedule(this.props.ServiceRequestId)
+      this.props.getDays()
     } else {
       this.props.history.push(Path.visitServiceList)
     }
@@ -187,44 +189,39 @@ class VisitServiceDetails extends Component {
         }
       )
 
-    let AvailDays =
-      this.state.visitServiceDetails.serviceRequestSlot &&
-      this.state.visitServiceDetails.serviceRequestSlot.map((days, index) => {
-        let Count = ''
-        return (
-          <div className={'SPAvailContainer ' + Count + 'Available'}>
-            <div className={'SPAvailTitle'}>
-              <label className='SPAvailTitleText'>{days.day}</label>
-            </div>
-            <div className={'SPAvailContent'}>
-              <div>
-                {days.slotDescription === 'Morning'
-                  ? <div>
-                    <label className='SPAvailItems active'>Morning</label>
-                    <label className='SPAvailItems'>Afternoon</label>
-                    <label className='SPAvailItems'>Evening</label>
-                  </div>
-                  : ''}
-                {days.slotDescription === 'Afternoon'
-                  ? <div>
-                    <label className='SPAvailItems'>Morning</label>
-                    <label className='SPAvailItems active'>Afternoon</label>
-                    <label className='SPAvailItems'>Evening</label>
-                  </div>
-                  : ''}
-                {days.slotDescription === 'Evening'
-                  ? <div>
-                    <label className='SPAvailItems'>Morning</label>
-                    <label className='SPAvailItems'>Afternoon</label>
-                    <label className='SPAvailItems active'>Evening</label>
-                  </div>
-                  : ''}
-              </div>
-            </div>
-          </div>
-        )
-      })
+      let modifiedDays = [];
 
+      this.props.daysType && this.props.daysType.map((day) => {
+          let checkDay = {
+              day: day.keyValue,
+              slotDescription: []
+          }
+          this.state.visitServiceDetails.serviceRequestSlot &&
+          this.state.visitServiceDetails.serviceRequestSlot.map((slotDay) => {
+              if (day.id === slotDay.dayOfWeek) {
+                  checkDay.slotDescription.push(slotDay.slotDescription)
+              }
+          });
+          if (checkDay.slotDescription.length > 0) {
+              modifiedDays.push(checkDay)
+          }
+      });
+
+      let AvailDays = modifiedDays && modifiedDays.map((days, index) => {
+          let Count = ''
+          return (
+              <div className={'SPAvailContainer ' + Count + 'Available'}>
+                  <div className={'SPAvailTitle'}>
+                      <label className='SPAvailTitleText'>{days.day}</label>
+                  </div>
+                  <div className={'SPAvailContent'}>
+                          <label className={'SPAvailItems ' + (days.slotDescription.includes('Morning') ? 'active' : '')}>Morning</label>
+                          <label className={'SPAvailItems ' + (days.slotDescription.includes('Afternoon') ? 'active' : '')}>Afternoon</label>
+                          <label className={'SPAvailItems ' + (days.slotDescription.includes('Evening') ? 'active' : '')}>Evening</label>
+                  </div>
+              </div>
+          )
+      })
 
     let address = this.state.visitServiceDetails.patient &&
       this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
@@ -271,19 +268,20 @@ class VisitServiceDetails extends Component {
                 </div>
               </section>
               <section class='LeftPalette'>
-                <div className='primaryColor LeftPaletteHeader'>
-                  Posted By
-                </div>
                 <div class='LeftPostedBy'>
-                  <div class='PostedByImageContainer'>
-                  <img
-                      className='ProfileImage'
-                      src={getLength(this.state.visitServiceDetails.patient)>0?
-                        this.state.visitServiceDetails.patient.imageString :
-                        require('../../../assets/images/Blank_Profile_icon.png')}
-                      alt='patientImage'
-                    />
-                 
+                  <div class='PostedByImageContainer pt-0'>
+                  {
+                    this.state.visitServiceDetails.patient ?  <img
+                        className='ProfileImage'
+                        src={this.state.visitServiceDetails.patient.imageString}
+                        alt='patientImage'
+                       /> :  <img
+                          className='ProfileImage'
+                          src={'../../../assets/images/Blank_Profile_icon.png'}
+                          alt='patientImage'
+                        />
+                  }
+                   
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileDetailsName'>
                         {getLength(this.state.visitServiceDetails.patient)>0 &&this.state.visitServiceDetails.patient.firstName}
@@ -417,7 +415,7 @@ class VisitServiceDetails extends Component {
                             </span>
                           </div>
                           <div className='AvailabilityWidget'>
-                            <div className='SPAvailWidget Summary mb-4'>
+                            <div className='SPAvailWidget Summary'>
                               {AvailDays}
                             </div>
                           </div>
@@ -589,8 +587,8 @@ function mapDispatchToProps(dispatch) {
     cancelServiceRequestByServiceProvider: data =>
       dispatch(cancelServiceRequestByServiceProvider(data)),
     getVisitServiceEligibilityStatus: data =>
-      dispatch(getVisitServiceEligibilityStatus(data))
-
+      dispatch(getVisitServiceEligibilityStatus(data)),
+    getDays: () => dispatch(getDays())
   }
 }
 
@@ -603,7 +601,8 @@ function mapStateToProps(state) {
     ServiceRequestId: state.visitSelectionState.VisitServiceDetailsState
       .ServiceRequestId,
     VisitServiceElibilityStatus: state.visitSelectionState.VisitServiceDetailsState
-      .VisitServiceElibilityStatus
+      .VisitServiceElibilityStatus,
+    daysType: state.visitSelectionState.VisitServiceDetailsState.daysType
   }
 }
 
