@@ -16,6 +16,7 @@ export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
 export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
 export const HIRED_STATUS_ID  = 38;
 export const RECURRING_PATTERN = 'One Time'
+export const ENTITY_USER = 2
 
 export const PHONE_NUMBER_CONST = '+1 ';
 

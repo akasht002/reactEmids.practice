@@ -7,6 +7,7 @@ import TimeAgo from 'timeago-react'
 import { getFields } from '../../utils/validations'
 import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
+import {ENTITY_USER} from '../../constants/constants'
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -75,7 +76,7 @@ export const serviceCalendar = (
               <span className='ServicesDesc'>
                 {conversations.serviceCategory && conversations.serviceCategory}
               </span>
-              {getUserInfo().isEntityServiceProvider &&
+              {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
                 <span
                   onClick={e =>
                     togglePersonalDetails({
