@@ -336,8 +336,9 @@ class Organization extends React.PureComponent {
         </div>
       </div>
     )
-  }
+  } 
   renderDetails = () => {
+    console.log('this.props.personalDetail,,,,,,,,,,,,', this.props.personalDetail);
     return (
       <div className='col-md-12 card CardWidget SPDetails'>       
         <ProfileImage
@@ -360,8 +361,14 @@ class Organization extends React.PureComponent {
                 {this.props.personalDetail &&
                   `${this.props.personalDetail.organizationName || ''} `}
               </h3>
-
+              <div className={'col-md-7 p-0'}>
+              <h3 className={'SPName'}>
+                {this.props.personalDetail && this.props.personalDetail.entity &&
+                  `${this.props.personalDetail.entity.websiteUrl || ''} `}
+              </h3>
             </div>
+
+          </div>
             <div className={'col p-0'}>
               <h3 className={'ratePerHour primaryColor'}>
                 <span>

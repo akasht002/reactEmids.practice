@@ -23,7 +23,7 @@ import { serviceRequestMessages } from '../../../utils/messageUtility'
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
-import { MORNING, AFTERNOON, EVENING } from '../../../constants/constants'
+import { MORNING, AFTERNOON, EVENING, HIRED_STATUS_ID } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
 import { SERVICE_VISIT_STATUS,RECURRING_PATTERN } from '../../../constants/constants'
 import {getLength} from '../../../utils/validations'
@@ -227,7 +227,12 @@ class VisitServiceDetails extends Component {
       this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
         return obj.isPrimaryAddress === true
       })
-
+    let profileImage = null;
+    if(this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
+      profileImage = this.state.visitServiceDetails.patient.imageString;
+    } else {
+      profileImage = require('../../../assets/images/Blank_Profile_icon.png');
+    }
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
@@ -270,17 +275,11 @@ class VisitServiceDetails extends Component {
               <section class='LeftPalette'>
                 <div class='LeftPostedBy'>
                   <div class='PostedByImageContainer pt-0'>
-                  {
-                    this.state.visitServiceDetails.patient ?  <img
-                        className='ProfileImage'
-                        src={this.state.visitServiceDetails.patient.imageString}
-                        alt='patientImage'
-                       /> :  <img
-                          className='ProfileImage'
-                          src={'../../../assets/images/Blank_Profile_icon.png'}
-                          alt='patientImage'
-                        />
-                  }
+                  <img
+                  className='ProfileImage'
+                  src={profileImage}
+                  alt='patientImage'
+                />
                    
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileDetailsName'>
