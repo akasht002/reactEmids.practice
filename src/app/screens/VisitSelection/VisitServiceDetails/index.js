@@ -132,11 +132,12 @@ class VisitServiceDetails extends Component {
     }else{
       return ( 
         <React.Fragment>
-        -         
-      <Moment format='DD MMM YYYY'>
-      {data.endDate}
-    </Moment>
-    </React.Fragment>
+                -         
+                &nbsp;
+            <Moment format='DD MMM YYYY'>
+              {data.endDate}
+            </Moment>
+        </React.Fragment>
       )
     }
   }
@@ -408,7 +409,8 @@ class VisitServiceDetails extends Component {
                           </h2>
                           <div className='ContentTitle Summary mt-3 mb-4'>
                             <span className='ContentTitle Summary'>
-                              {this.state.visitServiceDetails.recurring && this.state.visitServiceDetails.recurring } 
+                              {this.state.visitServiceDetails.recurringPatternDescription === RECURRING_PATTERN ? 
+                                this.state.visitServiceDetails.recurringPatternDescription+' ' : 'Recurring ' } 
                               Schedule
                             </span>
                             <span>
@@ -421,15 +423,21 @@ class VisitServiceDetails extends Component {
                                 // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
                               }                              
                             </span>
-                            <span className='ContentTitle Summary'>
-                              Recurring Pattern
-                            </span>
-                            <span>
-                              {
-                                this.state.visitServiceDetails
-                                  .recurringPatternDescription
-                              }
-                            </span>
+                            { this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN && (
+                              <React.Fragment>
+                                  <span className='ContentTitle Summary'>
+                                    Recurring Pattern
+                                  </span>
+                                  <span>
+                                  {
+                                    this.state.visitServiceDetails
+                                      .recurringPatternDescription
+                                  }
+                                </span>
+                           </React.Fragment>
+                            )
+                            }
+                           
                           </div>
                           <div className='AvailabilityWidget'>
                             <div className='SPAvailWidget Summary'>
