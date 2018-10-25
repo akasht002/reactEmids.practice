@@ -15,7 +15,9 @@ export const PersonalDetails = {
   upload_img: 'profile/upload_img',
   get_gender_success:'profile/get_gender_success,',
   get_sp_busy_in_visit_success: 'profile/get_sp_busy_in_visit_success',
-  get_affiliation_detail_success:'profile/get_affiliation_detail_success'
+  get_affiliation_detail_success:'profile/get_affiliation_detail_success',
+  // get_sp_in_visit: 'get_sp_in_visit_process'
+
 }
 
 export { getDataValueArray } from '../../../utils/validations'
@@ -55,10 +57,10 @@ export const getGenderSuccess = data => {
   }
 }
 
-export const getSpBusyInVisitSuccess = data => {
+export const getSpBusyInVisitSuccess = isSuccess => {
   return {
     type: PersonalDetails.get_sp_busy_in_visit_success,
-    data
+    isSuccess
   }
 }
 
@@ -148,14 +150,13 @@ export function getPersonalDetail () {
   }
 }
 
-export function getSpBusyInVisit () {
-  debugger;
+export function getSpBusyInVisit (onSuccess) {
   return (dispatch, getState) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
     Get(API.getSpBusyInVisit + serviceProviderId)
       .then(resp => {
-        dispatch(getSpBusyInVisitSuccess(resp.data))
+        onSuccess && onSuccess(resp.data)
         dispatch(endLoading())
       })
       .catch(err => {

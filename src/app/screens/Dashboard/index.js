@@ -32,22 +32,6 @@ class Dashboard extends React.Component {
   
   componentWillReceiveProps(nextProps) {
     this.setState({ isChecked: nextProps.profileState.standByMode})
-    if (nextProps.busyInVisit === true || nextProps.busyInVisit === false) {
-      this.setState({ spBusyInVisit: nextProps.busyInVisit}, () => {
-        if(this.state.spBusyInVisit  === true) {
-          this.setState({showVisitModal: true})
-        } else if (this.state.spBusyInVisit  === false) {
-          this.setState({isChecked: true}, () => {
-                this.props.updateStandByMode(this.state.isChecked);
-            })
-        }
-      })
-      
-     // this.props.clearVal();
-    }
-    console.log('componentWillReceiveProps...', nextProps);
-    // this.setState({ spBusyInVisit: nextProps.busyInVisit})
-
   }
 
   toggle () {
@@ -57,32 +41,33 @@ class Dashboard extends React.Component {
   }
   
   onValueChange = () => {
-    if(this.state.isChecked === false) {
-        // let visitProcess = this.checkVisitProcess();
-        // if(visitProcess === true){
-        //     this.setState({showVisitModal: true})
-        // }
-        // else if(visitProcess === false) {
-        //     let timeNow = new Date();
-        // this.setState({
-        //   isChecked: true,
-        //     standByModeStartTime: timeNow
-        // }, () => {
-        //     this.props.updateStandByMode(this.state.isChecked);
-        // }) }        
-   this.props.getSpBusyInVisit();   
-    // if(this.state.spBusyInVisit  === true) {
-    //   this.setState({showVisitModal: true})
-    // } else if (this.state.spBusyInVisit  === false) {
-    //   this.setState({isChecked: true}, () => {
-    //         this.props.updateStandByMode(this.state.isChecked);
-    //     })
-    // }
-    
+    if(this.state.isChecked === false) {    
+    this.props.getSpBusyInVisit(this.onSuccessSpBusyInVisit);
     } else if(this.state.isChecked === true) {        
         this.onClickTurnOff();
     }
-}  
+}
+
+onSuccessSpBusyInVisit = (visitProcess) => {
+  // this.setState({ spBusyInVisit: nextProps.busyInVisit}, () => {
+  //   if(this.state.spBusyInVisit  === true) {
+  //     this.setState({showVisitModal: true})
+  //   } else if (this.state.spBusyInVisit  === false) {
+  //     this.setState({isChecked: true}, () => {
+    if(visitProcess === true){
+      this.setState({showVisitModal: true})
+  }
+  else if(visitProcess === false) {
+     // let timeNow = new Date();
+  this.setState({
+    isChecked: true
+     // standByModeStartTime: timeNow
+  }, () => {
+            this.props.updateStandByMode(this.state.isChecked);
+        })
+    }
+  
+}
 
   checkVisitProcess = () => {
     if(this.props.serviceVisit.length > 0) {
@@ -106,16 +91,6 @@ class Dashboard extends React.Component {
         this.props.updateStandByMode(this.state.isChecked);
     })
  }
-
-//  compareTimeSlots = () => {
-//   let currentTime = new Date();
-//   if((moment(currentTime, 'h:mm:ss a').isBetween(moment('06:00:00 am', 'h:mm:ss a'), moment('11:59:59 am', 'h:mm:ss a'), null, '[]')))    
-//       return 'Morning';
-//   else  if((moment(currentTime, 'h:mm:ss a').isBetween(moment('12:00:00 pm', 'h:mm:ss a'), moment('05:59:59 pm', 'h:mm:ss a'), null, '[]')))
-//       return 'Afternoon';
-//   else  if((moment(currentTime, 'h:mm:ss a').isBetween(moment('06:00:00 pm', 'h:mm:ss a'), moment('11:59:59 pm', 'h:mm:ss a'), null, '[]')))
-//       return 'Evening'
-// }
   
   render() {
     let entityUser = getUserInfo().isEntityServiceProvider;
@@ -196,7 +171,7 @@ function mapDispatchToProps(dispatch) {
   return {
     updateStandByMode:data => dispatch(updateStandByMode(data)),
     getPersonalDetail:() => dispatch(getPersonalDetail()),
-    getSpBusyInVisit:() => dispatch(getSpBusyInVisit())
+    getSpBusyInVisit:(onSuccess) => dispatch(getSpBusyInVisit(onSuccess))
   }
 }
 

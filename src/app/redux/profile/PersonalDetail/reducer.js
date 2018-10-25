@@ -50,7 +50,7 @@ const PersonalDetailState = (state = defaultState, action) => {
     case PersonalDetails.get_sp_busy_in_visit_success:
       return {
           ...state,
-          spBusyInVisit: action.data
+          spBusyInVisit: action.isSuccess
       }
     default:
       return state
