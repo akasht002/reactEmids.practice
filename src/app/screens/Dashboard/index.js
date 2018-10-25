@@ -21,12 +21,13 @@ class Dashboard extends React.Component {
       isOpen: false,
       conversationDetail: [],
       isChecked: false,
-      spBusyInVisit: null
+      spBusyInVisit: null,
+      showModalOnTurnOff: false,
+      showVisitModal: false
     }
   }
   componentDidMount() {
     this.props.getPersonalDetail();
-    this.props.getSpBusyInVisit();
   }
   
   componentWillReceiveProps(nextProps) {
@@ -43,18 +44,27 @@ class Dashboard extends React.Component {
   
   onValueChange = () => {
     if(this.state.isChecked === false) {
-        let visitProcess = this.checkVisitProcess();
-        if(visitProcess === true){
-            this.setState({showVisitModal: true})
-        }
-        else if(visitProcess === false) {
-            let timeNow = new Date();
-        this.setState({
-          isChecked: true,
-            standByModeStartTime: timeNow
-        }, () => {
+        // let visitProcess = this.checkVisitProcess();
+        // if(visitProcess === true){
+        //     this.setState({showVisitModal: true})
+        // }
+        // else if(visitProcess === false) {
+        //     let timeNow = new Date();
+        // this.setState({
+        //   isChecked: true,
+        //     standByModeStartTime: timeNow
+        // }, () => {
+        //     this.props.updateStandByMode(this.state.isChecked);
+        // }) }        
+    this.props.getSpBusyInVisit();
+    if(this.state.spBusyInVisit  === true) {
+      this.setState({showVisitModal: true})
+    } else if (this.state.spBusyInVisit  === false) {
+      this.setState({isChecked: true}, () => {
             this.props.updateStandByMode(this.state.isChecked);
-        }) }
+        })
+    }
+    
     } else if(this.state.isChecked === true) {        
         this.onClickTurnOff();
     }
