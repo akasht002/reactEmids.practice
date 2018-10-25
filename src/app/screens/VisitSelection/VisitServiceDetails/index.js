@@ -228,10 +228,15 @@ class VisitServiceDetails extends Component {
         return obj.isPrimaryAddress === true
       })
     let profileImage = null;
+    let patientLastName = '';
     if(this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
-      profileImage = this.state.visitServiceDetails.patient.imageString;
+      profileImage = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.imageString ? this.state.visitServiceDetails.patient.imageString 
+      : require('../../../assets/images/Blank_Profile_icon.png');
+      patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName;
+
     } else {
       profileImage = require('../../../assets/images/Blank_Profile_icon.png');
+      patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName.charAt(0);
     }
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -283,10 +288,7 @@ class VisitServiceDetails extends Component {
                       <div class='ProfileDetailsName'>
                         {getLength(this.state.visitServiceDetails.patient)>0 &&this.state.visitServiceDetails.patient.firstName}
                         {' '}
-                        {getLength(this.state.visitServiceDetails.patient)>0 &&
-                          getFirstCharOfString(
-                            this.state.visitServiceDetails.patient.lastName
-                          )}
+                        {patientLastName}
                       </div>
                       <div class='ProfileDetailsDate'>
                         Posted on
