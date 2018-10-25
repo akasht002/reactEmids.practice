@@ -283,9 +283,8 @@
 
     .btn-primary.disabled, .btn-primary:disabled{
     color: #ffffff !important;
-    opacity: .5 !important;
-    /*background-color: #633F75 !important;*/
-    background-color: #7a329f !important;
+    background-color:#dcd6df !important;
+    opacity: initial !important;
 }
 
 

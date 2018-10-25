@@ -25,7 +25,7 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 import { MORNING, AFTERNOON, EVENING, HIRED_STATUS_ID } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
-import { SERVICE_VISIT_STATUS } from '../../../constants/constants'
+import { SERVICE_VISIT_STATUS,RECURRING_PATTERN } from '../../../constants/constants'
 import {getLength} from '../../../utils/validations'
 class VisitServiceDetails extends Component {
 
@@ -123,6 +123,22 @@ class VisitServiceDetails extends Component {
         cancelledDescription: 'Canceled'
       }
       this.props.cancelServiceRequestByServiceProvider(model)
+    }
+  }
+
+  showData = (data)=>{
+    if(data.occurence !==0 ){
+      return  '- ' +  data.occurence + ' occurences'
+    }else{
+      return ( 
+        <React.Fragment>
+                -         
+                &nbsp;
+            <Moment format='DD MMM YYYY'>
+              {data.endDate}
+            </Moment>
+        </React.Fragment>
+      )
     }
   }
 
@@ -228,10 +244,15 @@ class VisitServiceDetails extends Component {
         return obj.isPrimaryAddress === true
       })
     let profileImage = null;
+    let patientLastName = '';
     if(this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
-      profileImage = this.state.visitServiceDetails.patient.imageString;
+      profileImage = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.imageString ? this.state.visitServiceDetails.patient.imageString 
+      : require('../../../assets/images/Blank_Profile_icon.png');
+      patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName;
+
     } else {
       profileImage = require('../../../assets/images/Blank_Profile_icon.png');
+      patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName.charAt(0);
     }
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -257,7 +278,9 @@ class VisitServiceDetails extends Component {
                     Request ID
                   </span>
                   <span className='HeaderRequestLabelID'>
-                    {this.state.visitServiceDetails.serviceRequestId}
+                    {this.state.visitServiceDetails.serviceRequestId ?
+                    this.state.visitServiceDetails.serviceRequestId:
+                      this.state.visitServiceDetails.ServiceRequestId }
                   </span>
                 </div>
                 <div className='ProfileHeaderButton'>
@@ -283,17 +306,14 @@ class VisitServiceDetails extends Component {
                       <div class='ProfileDetailsName'>
                         {getLength(this.state.visitServiceDetails.patient)>0 &&this.state.visitServiceDetails.patient.firstName}
                         {' '}
-                        {getLength(this.state.visitServiceDetails.patient)>0 &&
-                          getFirstCharOfString(
-                            this.state.visitServiceDetails.patient.lastName
-                          )}
+                        {patientLastName}
                       </div>
                       <div class='ProfileDetailsDate'>
                         Posted on
                         {' '}
-                        <Moment format='DD MMM'>
-                          {this.state.visitServiceDetails.requestDate}
-                        </Moment>
+                        {this.state.visitServiceDetails.postedDate && <Moment format='DD MMM'>
+                          {this.state.visitServiceDetails.postedDate}
+                        </Moment> }
                       </div>
                     </div>
                   </div>
@@ -344,7 +364,7 @@ class VisitServiceDetails extends Component {
                           active: this.state.activeTab === '2'
                         })}
                         onClick={() => {
-                          this.toggle('2'),
+                          this.toggle('2')
                           this.checkEligibility();
                         }}
                       >
@@ -389,28 +409,35 @@ class VisitServiceDetails extends Component {
                           </h2>
                           <div className='ContentTitle Summary mt-3 mb-4'>
                             <span className='ContentTitle Summary'>
-                              Recurring Schedule
+                              {this.state.visitServiceDetails.recurringPatternDescription === RECURRING_PATTERN ? 
+                                this.state.visitServiceDetails.recurringPatternDescription+' ' : 'Recurring ' } 
+                              Schedule
                             </span>
                             <span>
-                              <Moment format='DD MMM YYYY'>
+                              {this.state.visitServiceDetails.startDate&& <Moment format='DD MMM YYYY'>
                                 {this.state.visitServiceDetails.startDate}
-                              </Moment>
-                              {' '}
-                              - 
-                              {' '}
-                              {this.state.visitServiceDetails.recurringPattern}
-                              {' '}
-                              occurences
+                              </Moment> }
+
+                              { this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN &&
+                               this.showData(this.state.visitServiceDetails)
+                                // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
+                              }                              
                             </span>
-                            <span className='ContentTitle Summary'>
-                              Recurring Pattern
-                            </span>
-                            <span>
-                              {
-                                this.state.visitServiceDetails
-                                  .recurringPatternDescription
-                              }
-                            </span>
+                            { this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN && (
+                              <React.Fragment>
+                                  <span className='ContentTitle Summary'>
+                                    Recurring Pattern
+                                  </span>
+                                  <span>
+                                  {
+                                    this.state.visitServiceDetails
+                                      .recurringPatternDescription
+                                  }
+                                </span>
+                           </React.Fragment>
+                            )
+                            }
+                           
                           </div>
                           <div className='AvailabilityWidget'>
                             <div className='SPAvailWidget Summary'>

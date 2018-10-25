@@ -25,7 +25,7 @@ import { push } from '../../../redux/navigation/actions';
 
 import './style.css'
 import { Path } from "../../../routes";
-import { HIRED_STATUS_ID } from '../../../constants/constants';
+import { HIRED_STATUS_ID,RECURRING_PATTERN } from '../../../constants/constants';
 
 class VisitServiceList extends Component {
 
@@ -240,7 +240,15 @@ class VisitServiceList extends Component {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
             let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
             let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
-
+            let patientImage = '';
+            let patientLastName = '';
+            if(serviceList.statusId === HIRED_STATUS_ID) {
+                patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
+                patientLastName = serviceList && serviceList.patientLastName;
+            } else {
+                patientLastName = serviceList && serviceList.patientLastName.charAt(0);
+                patientImage = require('../../../assets/images/Blank_Profile_icon.png');
+            }
             return (
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card'>
@@ -254,7 +262,10 @@ class VisitServiceList extends Component {
                                     {serviceList.serviceCategoryDescription}
                                 </div>
                                 <div className='BlockImageDetailsDate'>
-                                    {serviceList.recurring} <span className='DetailsDateSeperator'>|</span> <Moment format="MMM DD">{serviceList.startDate}</Moment> - <Moment format="MMM DD">{serviceList.endDate}</Moment>
+                                    {serviceList.recurring} 
+                                    <span className='DetailsDateSeperator'>|</span> 
+                                    <Moment format="MMM DD">{serviceList.startDate}</Moment> 
+                                    {serviceList.recurring !== RECURRING_PATTERN && <React.Fragment>  - <Moment format="MMM DD">{serviceList.endDate}</Moment> </React.Fragment>}
                                 </div>
                             </div>
                         </div>
@@ -264,13 +275,13 @@ class VisitServiceList extends Component {
                                 this.props.goToPatientProfile()
                             }
                         }}>
-                            <img className="ProfileImage" src={serviceList.patientImage} alt="" />
+                            <img className="ProfileImage" src={patientImage} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
-                                    {serviceList.patientFirstName} {serviceList.patientLastName}
+                                    {serviceList.patientFirstName} {patientLastName}
                                 </div>
                                 <div className='BlockProfileDetailsActivity'>
-                                    Posted on <Moment format="DD MMM">{serviceList.requestDate}</Moment>
+                                    Posted on <Moment format="DD MMM">{serviceList.createDate}</Moment>
                                 </div>
                             </div>
                             <div class='BlockProfileDetailsStatus'>
