@@ -118,17 +118,15 @@ export const serviceCalendar = (
                 <Select                  
                   placement='auto'
                   options={[
-                    <Item className='ListItem CTDashboard' key='item-1'>
-                      <i className='iconPhone' /> Phone Call
-                    </Item>,
+                    // <Item className='ListItem CTDashboard' key='item-1'>
+                    //   <i className='iconPhone' /> Phone Call
+                    // </Item>,
                     <Item className='ListItem CTDashboard' key='item-2'
-                    //  onClick={() => {props.onClick('conversationsummary')}}
-                     >
+                      onClick={(e) => {props.onClickConversation(conversations)}}>
                       <i className='iconConversation' /> Conversation
                     </Item>,
                     <Item className='ListItem CTDashboard' key='item-3'
-                    //  onClick={() => {props.onClick('telehealth')}}
-                     >
+                     onClick={(e) => {props.onClickVideoConference(conversations)}}>
                       <i className='iconVideoCon' /> Video Conference
                     </Item>
                   ]}
