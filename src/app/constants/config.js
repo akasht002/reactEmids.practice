@@ -27,4 +27,4 @@ export const TeleHealthSettings = {
     sessionInactiveInMs: 1800000
 }
 
-export const DEMO = 'true'
+export const DEMO = 'false'
