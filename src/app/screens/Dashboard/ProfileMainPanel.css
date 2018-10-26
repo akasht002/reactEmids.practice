@@ -635,8 +635,72 @@ div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent
     background-repeat: no-repeat;
 }
 
-.Bathing{
-    background-image: url("../../assets/images/Bathing_Purple.svg");
+.DashboardSPIconServices1{
+    background-image: url("../../assets/ServiceTypes/ADL Ambulation & Mobility.svg");
+}
+
+.DashboardSPIconServices2{
+    background-image: url("../../assets/ServiceTypes/ADL Bathing.svg");
+}
+
+.DashboardSPIconServices3{
+    background-image: url("../../assets/ServiceTypes/ADL Continence.svg");
+}
+
+.DashboardSPIconServices4{
+    background-image: url("../../assets/ServiceTypes/HAH - Housekeeping.svg");
+}
+
+.DashboardSPIconServices6{
+    background-image: url("../../assets/ServiceTypes/ADL Eating.svg");
+}
+
+.DashboardSPIconServices7{
+    background-image: url("../../assets/ServiceTypes/ADL Getting Dressed.svg");
+}
+
+.DashboardSPIconServices8{
+    background-image: url("../../assets/ServiceTypes/ADL Toileting.svg");
+}
+
+.DashboardSPIconServices9{
+    background-image: url("../../assets/ServiceTypes/ADL Transferring.svg");
+}
+
+.DashboardSPIconServices10{
+    background-image: url("../../assets/ServiceTypes/G&N Grocery Delivery.svg");
+}
+
+.DashboardSPIconServices11{
+    background-image: url("../../assets/ServiceTypes/G&N Meal Delivery.svg");
+}
+
+.DashboardSPIconServices12{
+    background-image: url("../../assets/ServiceTypes/HAH - Companionship & Errands.svg");
+}
+
+.DashboardSPIconServices13{
+    background-image: url("../../assets/ServiceTypes/HAH - Food Preparation.svg");
+}
+
+.DashboardSPIconServices14{
+    background-image: url("../../assets/ServiceTypes/HAH - Housekeeping.svg");
+}
+
+.DashboardSPIconServices15{
+    background-image: url("../../assets/ServiceTypes/HAH - Laundry.svg");
+}
+
+.DashboardSPIconServices16{
+    background-image: url("../../assets/ServiceTypes/HAH - Shopping.svg");
+}
+
+.DashboardSPIconServices17{
+    background-image: url("../../assets/ServiceTypes/HAH - Help at Home.svg");
+}
+
+.DashboardSPIconServices18{
+    background-image: url("../../assets/ServiceTypes/Transportation - General Transportation.svg");
 }
 
 div.ProfileConversation{

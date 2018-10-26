@@ -5,9 +5,10 @@ import { SelectField, Select, Item } from '@zendeskgarden/react-select'
 import _ from 'lodash'
 import TimeAgo from 'timeago-react'
 import { getFields } from '../../utils/validations'
+import { formatName } from '../../utils/formatName';
 import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
-import {ENTITY_USER} from '../../constants/constants'
+import { ENTITY_USER } from '../../constants/constants'
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -26,7 +27,7 @@ export const ShowIndicator = props => {
         <i className='indicator' />
       </React.Fragment>
     )
-  }else {
+  } else {
     return ' '
   }
 }
@@ -108,34 +109,34 @@ export const serviceCalendar = (
               <span>
                 {conversations.patientFirstName &&
                   conversations.patientFirstName +
-                    ' '}
+                  ' '}
                 {' '}
                 {conversations.patientLastName && conversations.patientLastName}
               </span>
             </div>
             <div className="options">
-            <ThemeProvider>
-            <SelectField>
-                <Select                  
-                  placement='auto'
-                  options={[
-                    // <Item className='ListItem CTDashboard' key='item-1'>
-                    //   <i className='iconPhone' /> Phone Call
-                    // </Item>,
-                    <Item className='ListItem CTDashboard' key='item-2'
-                      onClick={(e) => {props.onClickConversation(conversations)}}>
-                      <i className='iconConversation' /> Conversation
+              <ThemeProvider>
+                <SelectField>
+                  <Select
+                    placement='auto'
+                    options={[
+                      // <Item className='ListItem CTDashboard' key='item-1'>
+                      //   <i className='iconPhone' /> Phone Call
+                      // </Item>,
+                      <Item className='ListItem CTDashboard' key='item-2'
+                        onClick={(e) => { props.onClickConversation(conversations) }}>
+                        <i className='iconConversation' /> Conversation
                     </Item>,
-                    <Item className='ListItem CTDashboard' key='item-3'
-                     onClick={(e) => {props.onClickVideoConference(conversations)}}>
-                      <i className='iconVideoCon' /> Video Conference
+                      <Item className='ListItem CTDashboard' key='item-3'
+                        onClick={(e) => { props.onClickVideoConference(conversations) }}>
+                        <i className='iconVideoCon' /> Video Conference
                     </Item>
-                  ]}
-                  className='SelectDropDown CTDashboard'
-                />
-              </SelectField>
+                    ]}
+                    className='SelectDropDown CTDashboard'
+                  />
+                </SelectField>
               </ThemeProvider>
-              </div>
+            </div>
           </li>
         </Fragment>
       )
@@ -207,7 +208,7 @@ export const ServiceCalendarInfo = props => {
   })
 }
 
-export const calendarData = data => {}
+export const calendarData = data => { }
 
 export const ServiceCalendarDefault = props => {
   return (
@@ -273,7 +274,8 @@ export const ServiceProviderRequestDetails = props => {
             className='list-group-item ProfileServicesVisitContent'
           >
             <div className='ServicesTypeContainer'>
-              <i className='ServicesType Bathing' />
+              <i className={`ServicesType DashboardSPIconServices${sp.serviceRequestTypeDetails && sp.serviceRequestTypeDetails.length > 0
+                && sp.serviceRequestTypeDetails[0].serviceTypeId}`} />
             </div>
             <div
               className='ProfileSkillServices'
@@ -328,12 +330,26 @@ export const ServiceProviderRequestDetails = props => {
     })
 }
 
+export const getPartcipitantHeader = (participants) => {
+  let header = "";
+  if (participants && participants.length > 0) {
+    participants.map(participant => {
+      // console.log("fname "+participant.firstName)
+      header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
+    });
+    header = header.slice(0, -2);
+  }
+  return header;
+};
+
 export const MyConversionDetail = props => {
   let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
   let unreadMessages = ''
   let msgClass = ''
+  let header = getPartcipitantHeader(conversation.participantList);
+
   return conversation.slice(0, 3).map((conversations, index) => {
     if (props.getUnreadMsgCounts.length > 0) {
       unreadMessages = ''
@@ -369,7 +385,7 @@ export const MyConversionDetail = props => {
                         className='avatarImage avatarImageBorder'
                         src={
                           chatMem.thumbNail &&
-                          chatMem.thumbNail !== ''
+                            chatMem.thumbNail !== ''
                             ? chatMem.thumbNail
                             : require('../../assets/images/Blank_Profile_icon.png')
                         }
@@ -389,7 +405,8 @@ export const MyConversionDetail = props => {
               })}
             </div>
             <div className='MsgThreadContent mr-auto'>
-              <span className='MsgIndiTitle'>{conversations.title}</span>
+              <span className='MsgIndiTitle'>{
+                conversations.title === null ? header : conversations.title}</span>
               <p className='m-0 MsgContent'>
                 {conversations.messageText}
               </p>

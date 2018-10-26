@@ -113,7 +113,7 @@ export const Pagination = {
 
 export const DashboardConversationPagination = {
     pageNumber : 1,
-    pageSize : 3
+    pageSize : 2
 };
 
 export const serviceTypesImage = {
