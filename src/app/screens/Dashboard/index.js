@@ -5,14 +5,13 @@ import { Scrollbars, ModalPopup } from '../../components'
 import ServiceCalendar from './serviceCalendar'
 import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
-import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
-// import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
+import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import {getPersonalDetail, getSpBusyInVisit, clearSbMode, updateStandByMode} from '../../redux/profile/PersonalDetail/actions'
 import { getUserInfo } from '../../services/http'
 import './dashboard.css'
 import './ctdashboard.css'
 import './styles/toggleSwitch.css'
-import './EntitySP/EntitySPDashboard.css';
+import './EntitySP/EntitySPDashboard.css'
 
 class Dashboard extends React.Component {
   constructor (props) {
@@ -34,7 +33,6 @@ class Dashboard extends React.Component {
     if (nextProps.sbModeClicked) {
       this.props.clearSbMode();
       this.onSuccessSpBusyInVisit(nextProps.busyInVisit)
-     // this.setState({ isChecked: nextProps.updateSbMode})
     }
   }
 
@@ -163,8 +161,7 @@ function mapStateToProps(state) {
   return {
     profileState: state.profileState.PersonalDetailState.personalDetail,
     busyInVisit: state.profileState.PersonalDetailState.spBusyInVisit,
-    sbModeClicked: state.profileState.PersonalDetailState.sbModeClicked,
-    updateSbMode: state.profileState.PersonalDetailState.updateStandMode
+    sbModeClicked: state.profileState.PersonalDetailState.sbModeClicked
   }
 }
 

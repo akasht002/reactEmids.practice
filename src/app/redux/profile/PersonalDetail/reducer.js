@@ -8,8 +8,7 @@ const defaultState = {
   genderList:[],
   affiliationList:[],
   spBusyInVisit: null,
-  sbModeClicked: false,
-  updateStandMode: null
+  sbModeClicked: false
 }
 
 const PersonalDetailState = (state = defaultState, action) => {
@@ -59,12 +58,6 @@ const PersonalDetailState = (state = defaultState, action) => {
       return {
           ...state,
           sbModeClicked: false
-      }
-      case PersonalDetails.update_stand_by_mode_success:
-      return {
-          ...state,
-          updateStandMode: action.data,
-          sbModeClicked: true
       }
     default:
       return state

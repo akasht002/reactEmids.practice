@@ -16,9 +16,7 @@ export const PersonalDetails = {
   get_gender_success:'profile/get_gender_success,',
   get_sp_busy_in_visit_success: 'profile/get_sp_busy_in_visit_success',
   get_affiliation_detail_success:'profile/get_affiliation_detail_success',
-  clearSbMode: 'clearSbMode/profile',
-  update_stand_by_mode_success: 'profile/update_stand_by_mode_success'
-  // get_sp_in_visit: 'get_sp_in_visit_process'
+  clearSbMode: 'clearSbMode/profile'
 
 }
 
@@ -62,13 +60,6 @@ export const getGenderSuccess = data => {
 export const getSpBusyInVisitSuccess = data => {
   return {
     type: PersonalDetails.get_sp_busy_in_visit_success,
-    data
-  }
-}
-
-export const updateStandByModeSuccess = data => {
-  return {
-    type: PersonalDetails.update_stand_by_mode_success,
     data
   }
 }
@@ -186,7 +177,7 @@ export function updateStandByMode (data) {
     dispatch(startLoading())    
     Put(API.updateStandByMode + serviceProviderId + '/' + data)
       .then(resp => {
-       dispatch(updateStandByModeSuccess(resp.data))
+       dispatch(getPersonalDetail())
         dispatch(endLoading())
       })
       .catch(err => {
@@ -264,11 +255,3 @@ export function getAffiliationDetail () {
       })
   }
 }
-
-// clearVal() {
-//   dispatch(getSpBusyInVisitSuccess(resp.data = null))
-// }
-
-
-
-
