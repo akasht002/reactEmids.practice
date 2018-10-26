@@ -17,7 +17,8 @@ export const vistServiceHistoryDetails = {
     getServiceRequestId: 'getServiceRequestId/visitHistory',
     getServiceTypeSuccess: 'get_type_success/visitHistory',
     clearServiceTypes: 'clearServiceTypes/visitHistory',
-    clearServiceProviders: 'clearServiceProviders/visitHistory'
+    clearServiceProviders: 'clearServiceProviders/visitHistory',
+    getHistoryListCountSuccess: 'getHistoryListCountSuccess/visitHistory'
 };
 
 export const getVisitServiceHistoryDetailsSuccess = (data) => {
@@ -71,14 +72,17 @@ export const getVisitServiceHistoryListSuccess = (data) => {
     }
 }
 
+export const getHistoryListCountSuccess = (data) => {
+    return {
+        type: vistServiceHistoryDetails.getHistoryListCountSuccess,
+        data
+    }
+}
+
 export function getVisitServiceLists(data) {
     return (dispatch) => {
         dispatch(startLoading());
         let serviceProviderId = getUserInfo().serviceProviderId;
-        // let pageNumber = 1;
-        // let pageSize = 10;
-        // let sortOrder = 'desc';
-        // let sortName = 'visitdate';
         ServiceRequestGet(API.getVisitHistoryList + serviceProviderId + '/' + data.pageNumber + '/' + data.pageSize + '/' + data.sortOrder + '/' + data.sortName).then((resp) => {
             dispatch(getVisitServiceHistoryListSuccess(resp.data))
             dispatch(endLoading());
@@ -226,5 +230,18 @@ export const clearServiceProviders = (data) => {
 export function clearServiceTypes() {
     return {
         type: vistServiceHistoryDetails.clearServiceTypes
+    }
+}
+
+export function getHistoryListCount() {
+    return (dispatch, getState) => {
+        let serviceProviderId = getUserInfo().serviceProviderId;
+        dispatch(startLoading());
+        ServiceRequestGet(API.getHistoryListCount + serviceProviderId).then((resp) => {
+            dispatch(getHistoryListCountSuccess(resp.data));
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
     }
 }

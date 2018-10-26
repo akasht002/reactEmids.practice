@@ -135,4 +135,5 @@ export const API = {
     getPatientConnections: 'ManageConnections/',
     getPatientLanguages: 'PatientLanguage/',
     getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
+    getHistoryListCount: 'ServiceRequest/GetServiceProviderVisitHistoryCount/'
 }

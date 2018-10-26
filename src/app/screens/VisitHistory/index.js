@@ -14,7 +14,8 @@ import {
   getServiceCategory,
   getServiceType,
   clearServiceTypes,
-  getFilteredData
+  getFilteredData,
+  getHistoryListCount
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { VisitList } from './VisitList'
 import Filter from './VisitHistoryFilter'
@@ -49,9 +50,8 @@ class VisitHistory extends Component {
     this.props.getVisitServiceLists(data)
     this.props.getAllServiceProviders()
     this.props.getServiceCategory()
+    this.props.getHistoryListCount()
   }
-
-  componentWillReceiveProps(nextProps) { }
 
   toggle = () => {
     this.setState({
@@ -160,7 +160,6 @@ class VisitHistory extends Component {
                   onChange={selectedKey => {
                     this.setState({ sortByOrder: selectedKey }),
                       this.selectedSort(selectedKey)
-                    // this.props.getVisitServiceLists({ sortByOrder: this.state.selectedKey, sortByColumn: 'modifieddate' });
                   }}
                   options={[
                     <Item disabled className='ListItem disabled' key='item-1'>
@@ -198,7 +197,7 @@ class VisitHistory extends Component {
             <Pagination
               activePage={this.state.activePage}
               itemsCountPerPage={10}
-              totalItemsCount={17}
+              totalItemsCount={this.props.historyListCount}
               pageRangeDisplayed={5}
               onChange={this.handlePageChange}
               itemClass="PaginationItem"
@@ -240,6 +239,7 @@ function mapDispatchToProps(dispatch) {
     clearServiceTypes: () => dispatch(clearServiceTypes()),
     clearServiceProviders: (data) => dispatch(clearServiceProviders(data)),
     getFilteredData: (data) => dispatch(getFilteredData(data)),
+    getHistoryListCount: () => dispatch(getHistoryListCount())
   }
 }
 
@@ -253,7 +253,9 @@ function mapStateToProps(state) {
       .serviceProviders,
     serviceCategories: state.visitHistoryState.vistServiceHistoryState
       .serviceCategories,
-    serviceType: state.visitHistoryState.vistServiceHistoryState.typeList
+    serviceType: state.visitHistoryState.vistServiceHistoryState.typeList,
+    historyListCount: state.visitHistoryState.vistServiceHistoryState
+      .historyListCount,
   }
 }
 
