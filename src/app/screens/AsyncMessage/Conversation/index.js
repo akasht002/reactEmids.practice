@@ -312,13 +312,14 @@ class Conversation extends Component {
                                                             displayWarningPopup={this.displayWarningPopup}
                                                             existingParticipants={this.props.conversation.participantList}
                                                             toggleParticipantList={this.toggleParticipantList}
-                                                            conversationId={this.state.conversationId}
+                                                            conversationId={this.props.conversation.conversationId}
                                                             isActive={this.props.conversation.isActive}
                                                             title={this.state.title}
                                                             context={this.props.conversation.context}
                                                             isDirty={this.setIsDirty}
                                                             setDisplayGreyedOut={this.setDisplayGreyedOut}
                                                             onCilckRemoveParticipant={this.onCilckRemoveParticipant}
+                                                            conversation={this.props.conversation}
                                                         />
                                                     </td>
                                                 </tr>
