@@ -110,7 +110,7 @@ export const serviceCalendar = (
                   conversations.patientFirstName +
                     ' '}
                 {' '}
-                {conversations.patientLastName && conversations.patientLastName.slice(0, 1).toUpperCase()}
+                {conversations.patientLastName && conversations.patientLastName}
               </span>
             </div>
             <div className="options">
@@ -273,7 +273,7 @@ export const ServiceProviderRequestDetails = props => {
             className='list-group-item ProfileServicesVisitContent'
           >
             <div className='ServicesTypeContainer'>
-              <i className='ServicesType Bathing' />
+              <img className='ServicesType' src={require('../../assets/images/Bathing_Purple.svg')}/>
             </div>
             <div
               className='ProfileSkillServices'
@@ -307,7 +307,7 @@ export const ServiceProviderRequestDetails = props => {
                 <div className='avatarContainer'>
                   <img
                     alt='NO'
-                    className='avatarImage avatarImageBorder'
+                    className='avatarImage'
                     src={
                       sp.image
                         ? sp.image
@@ -319,7 +319,7 @@ export const ServiceProviderRequestDetails = props => {
               <span className='AvatarName'>
                 {sp.patientFirstName &&
                   sp.patientFirstName + ' '}
-                {sp.patientLastName && sp.patientLastName.slice(0, 1).toUpperCase()}
+                {sp.patientLastName && sp.patientLastName}
               </span>
             </div>
           </li>
@@ -368,8 +368,9 @@ export const MyConversionDetail = props => {
                         key={index}
                         className='avatarImage avatarImageBorder'
                         src={
-                          chatMem.image
-                            ? chatMem.image
+                          chatMem.thumbNail &&
+                          chatMem.thumbNail !== ''
+                            ? chatMem.thumbNail
                             : require('../../assets/images/Blank_Profile_icon.png')
                         }
                       />

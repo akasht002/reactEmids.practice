@@ -57,7 +57,7 @@ export function getServiceStatusDetail () {
   }
 }
 
-export const updateStandByModeSuccess = () => {}
+// export const updateStandByModeSuccess = () => {}
 
 export const getPatientVisitDetailSuccess = data => {
   return {
@@ -260,11 +260,11 @@ export function getUnreadMessageCounts (userId) {
 export function updateStandByMode (data) { 
   
   return (dispatch) => {
-    // dispatch(startLoading())
+    dispatch(startLoading())
     
     Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
-        dispatch(updateStandByModeSuccess())
+       // dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
       })
       .catch(err => {
