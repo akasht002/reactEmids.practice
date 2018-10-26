@@ -4,11 +4,12 @@ import { ThemeProvider } from '@zendeskgarden/react-theming'
 import { SelectField, Select, Item } from '@zendeskgarden/react-select'
 import _ from 'lodash'
 import TimeAgo from 'timeago-react'
+import moment from 'moment';
 import { getFields } from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
 import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
-import { ENTITY_USER } from '../../constants/constants'
+import {ENTITY_USER} from '../../constants/constants';
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -330,27 +331,26 @@ export const ServiceProviderRequestDetails = props => {
     })
 }
 
-export const getPartcipitantHeader = (participants) => {
+ function getPartcipitantHeader (participants) {
   let header = "";
   if (participants && participants.length > 0) {
-    participants.map(participant => {
-      // console.log("fname "+participant.firstName)
-      header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
-    });
-    header = header.slice(0, -2);
+      participants.map(participant => {
+          header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
+      });
+      header = header.slice(0, -2);
   }
   return header;
 };
 
 export const MyConversionDetail = props => {
-  let MsgClass = ''
+   let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
   let unreadMessages = ''
   let msgClass = ''
-  let header = getPartcipitantHeader(conversation.participantList);
-
+  let msgHeader = '';
   return conversation.slice(0, 3).map((conversations, index) => {
+    !conversations.title ? msgHeader = getPartcipitantHeader(conversations.participantList) : msgHeader = conversations.title;
     if (props.getUnreadMsgCounts.length > 0) {
       unreadMessages = ''
       msgClass = 'readMsgs'
@@ -405,8 +405,7 @@ export const MyConversionDetail = props => {
               })}
             </div>
             <div className='MsgThreadContent mr-auto'>
-              <span className='MsgIndiTitle'>{
-                conversations.title === null ? header : conversations.title}</span>
+              <span className='MsgIndiTitle'>{msgHeader}</span>
               <p className='m-0 MsgContent'>
                 {conversations.messageText}
               </p>
@@ -416,7 +415,7 @@ export const MyConversionDetail = props => {
                 {unreadMessages}
               </span>
               <span className='width100 d-block float-right MsgTime'>
-                <TimeAgo datetime={conversations.createdDate} />
+                <TimeAgo datetime={moment.utc(conversations.createdDate).local().format()} />
               </span>
             </div>
           </div>
