@@ -132,9 +132,6 @@ export const API = {
     getPatientConnections: 'ManageConnections/',
     getPatientLanguages: 'PatientLanguage/',
     getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
-<<<<<<< HEAD
-    getSpBusyInVisit: 'ServiceProvider/IsServiceProviderBusyInVisit/'
-=======
+    getSpBusyInVisit: 'ServiceProvider/IsServiceProviderBusyInVisit/',
     getHistoryListCount: 'ServiceRequest/GetServiceProviderVisitHistoryCount/'
->>>>>>> efa0f60bf39abcfdcdd79f895baff81d19efcb8d
 }
