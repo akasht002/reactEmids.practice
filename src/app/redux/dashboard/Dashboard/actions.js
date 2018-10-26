@@ -264,7 +264,7 @@ export function updateStandByMode (data) {
     
     Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
-        // dispatch(updateStandByModeSuccess())
+       // dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
       })
       .catch(err => {

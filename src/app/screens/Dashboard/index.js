@@ -6,8 +6,8 @@ import ServiceCalendar from './serviceCalendar'
 import ServiceRequest from './serviceRequest'
 import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
-import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
-import {getPersonalDetail, getSpBusyInVisit} from '../../redux/profile/PersonalDetail/actions'
+// import {updateStandByMode} from '../../redux/dashboard/Dashboard/actions'
+import {getPersonalDetail, getSpBusyInVisit, clearSbMode, updateStandByMode} from '../../redux/profile/PersonalDetail/actions'
 import { getUserInfo } from '../../services/http'
 import './dashboard.css'
 import './ctdashboard.css'
@@ -31,6 +31,11 @@ class Dashboard extends React.Component {
   
   componentWillReceiveProps(nextProps) {
     this.setState({ isChecked: nextProps.profileState.standByMode})
+    if (nextProps.sbModeClicked) {
+      this.props.clearSbMode();
+      this.onSuccessSpBusyInVisit(nextProps.busyInVisit)
+     // this.setState({ isChecked: nextProps.updateSbMode})
+    }
   }
 
   toggle () {
@@ -41,7 +46,7 @@ class Dashboard extends React.Component {
   
   onValueChange = () => {
     if(this.state.isChecked === false) {    
-    this.props.getSpBusyInVisit(this.onSuccessSpBusyInVisit);
+    this.props.getSpBusyInVisit();
     } else if(this.state.isChecked === true) {        
         this.onClickTurnOff();
     }
@@ -149,14 +154,17 @@ function mapDispatchToProps(dispatch) {
   return {
     updateStandByMode:data => dispatch(updateStandByMode(data)),
     getPersonalDetail:() => dispatch(getPersonalDetail()),
-    getSpBusyInVisit:(onSuccess) => dispatch(getSpBusyInVisit(onSuccess))
+    getSpBusyInVisit:() => dispatch(getSpBusyInVisit()),
+    clearSbMode: () => dispatch(clearSbMode())
   }
 }
 
 function mapStateToProps(state) {
   return {
     profileState: state.profileState.PersonalDetailState.personalDetail,
-    busyInVisit: state.profileState.PersonalDetailState.spBusyInVisit
+    busyInVisit: state.profileState.PersonalDetailState.spBusyInVisit,
+    sbModeClicked: state.profileState.PersonalDetailState.sbModeClicked,
+    updateSbMode: state.profileState.PersonalDetailState.updateStandMode
   }
 }
 

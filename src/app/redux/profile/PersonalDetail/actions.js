@@ -16,6 +16,8 @@ export const PersonalDetails = {
   get_gender_success:'profile/get_gender_success,',
   get_sp_busy_in_visit_success: 'profile/get_sp_busy_in_visit_success',
   get_affiliation_detail_success:'profile/get_affiliation_detail_success',
+  clearSbMode: 'clearSbMode/profile',
+  update_stand_by_mode_success: 'profile/update_stand_by_mode_success'
   // get_sp_in_visit: 'get_sp_in_visit_process'
 
 }
@@ -57,10 +59,23 @@ export const getGenderSuccess = data => {
   }
 }
 
-export const getSpBusyInVisitSuccess = isSuccess => {
+export const getSpBusyInVisitSuccess = data => {
   return {
     type: PersonalDetails.get_sp_busy_in_visit_success,
-    isSuccess
+    data
+  }
+}
+
+export const updateStandByModeSuccess = data => {
+  return {
+    type: PersonalDetails.update_stand_by_mode_success,
+    data
+  }
+}
+
+export const clearSbMode = () => {
+  return {
+    type: PersonalDetails.clearSbMode
   }
 }
 
@@ -150,17 +165,32 @@ export function getPersonalDetail () {
   }
 }
 
-export function getSpBusyInVisit (onSuccess) {
+export function getSpBusyInVisit () {
   return (dispatch, getState) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
     Get(API.getSpBusyInVisit + serviceProviderId)
       .then(resp => {
-        onSuccess && onSuccess(resp.data)
+        dispatch(getSpBusyInVisitSuccess(resp.data))
         dispatch(endLoading())
       })
       .catch(err => {
         dispatch(endLoading())
+      })
+  }
+}
+
+export function updateStandByMode (data) {   
+  return (dispatch) => {
+    let serviceProviderId = getUserInfo().serviceProviderId;
+    dispatch(startLoading())    
+    Put(API.updateStandByMode + serviceProviderId + '/' + data)
+      .then(resp => {
+       dispatch(updateStandByModeSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+          dispatch(endLoading())    
       })
   }
 }
