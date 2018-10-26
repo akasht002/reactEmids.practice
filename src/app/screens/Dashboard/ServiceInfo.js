@@ -6,10 +6,10 @@ import _ from 'lodash'
 import TimeAgo from 'timeago-react'
 import moment from 'moment';
 import { getFields } from '../../utils/validations'
+import { formatName } from '../../utils/formatName';
 import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
-import {ENTITY_USER} from '../../constants/constants'
-import { formatName } from '../../utils/formatName';
+import {ENTITY_USER} from '../../constants/constants';
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -28,7 +28,7 @@ export const ShowIndicator = props => {
         <i className='indicator' />
       </React.Fragment>
     )
-  }else {
+  } else {
     return ' '
   }
 }
@@ -110,34 +110,34 @@ export const serviceCalendar = (
               <span>
                 {conversations.patientFirstName &&
                   conversations.patientFirstName +
-                    ' '}
+                  ' '}
                 {' '}
                 {conversations.patientLastName && conversations.patientLastName}
               </span>
             </div>
             <div className="options">
-            <ThemeProvider>
-            <SelectField>
-                <Select                  
-                  placement='auto'
-                  options={[
-                    // <Item className='ListItem CTDashboard' key='item-1'>
-                    //   <i className='iconPhone' /> Phone Call
-                    // </Item>,
-                    <Item className='ListItem CTDashboard' key='item-2'
-                      onClick={(e) => {props.onClickConversation(conversations)}}>
-                      <i className='iconConversation' /> Conversation
+              <ThemeProvider>
+                <SelectField>
+                  <Select
+                    placement='auto'
+                    options={[
+                      // <Item className='ListItem CTDashboard' key='item-1'>
+                      //   <i className='iconPhone' /> Phone Call
+                      // </Item>,
+                      <Item className='ListItem CTDashboard' key='item-2'
+                        onClick={(e) => { props.onClickConversation(conversations) }}>
+                        <i className='iconConversation' /> Conversation
                     </Item>,
-                    <Item className='ListItem CTDashboard' key='item-3'
-                     onClick={(e) => {props.onClickVideoConference(conversations)}}>
-                      <i className='iconVideoCon' /> Video Conference
+                      <Item className='ListItem CTDashboard' key='item-3'
+                        onClick={(e) => { props.onClickVideoConference(conversations) }}>
+                        <i className='iconVideoCon' /> Video Conference
                     </Item>
-                  ]}
-                  className='SelectDropDown CTDashboard'
-                />
-              </SelectField>
+                    ]}
+                    className='SelectDropDown CTDashboard'
+                  />
+                </SelectField>
               </ThemeProvider>
-              </div>
+            </div>
           </li>
         </Fragment>
       )
@@ -209,7 +209,7 @@ export const ServiceCalendarInfo = props => {
   })
 }
 
-export const calendarData = data => {}
+export const calendarData = data => { }
 
 export const ServiceCalendarDefault = props => {
   return (
@@ -275,7 +275,8 @@ export const ServiceProviderRequestDetails = props => {
             className='list-group-item ProfileServicesVisitContent'
           >
             <div className='ServicesTypeContainer'>
-              <img className='ServicesType' src={require('../../assets/images/Bathing_Purple.svg')}/>
+              <i className={`ServicesType DashboardSPIconServices${sp.serviceRequestTypeDetails && sp.serviceRequestTypeDetails.length > 0
+                && sp.serviceRequestTypeDetails[0].serviceTypeId}`} />
             </div>
             <div
               className='ProfileSkillServices'
@@ -341,7 +342,6 @@ export const ServiceProviderRequestDetails = props => {
   return header;
 };
 
-
 export const MyConversionDetail = props => {
    let MsgClass = ''
   MsgClass = 'readMsgs'
@@ -385,7 +385,7 @@ export const MyConversionDetail = props => {
                         className='avatarImage avatarImageBorder'
                         src={
                           chatMem.thumbNail &&
-                          chatMem.thumbNail !== ''
+                            chatMem.thumbNail !== ''
                             ? chatMem.thumbNail
                             : require('../../assets/images/Blank_Profile_icon.png')
                         }

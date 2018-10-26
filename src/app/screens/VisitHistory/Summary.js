@@ -302,6 +302,7 @@ class VistSummary extends React.Component {
     let modalTitle = 'Feedback'
     let modalType = ''
     let progress_bar = summaryDetail.totalTask !== 0 && summaryDetail.totalTask !== 0 ? (this.props.taskCompleted / this.props.totaltask) * 100 : 0
+
     return (
       <React.Fragment>
         <form className='ServiceContent'>
@@ -363,30 +364,30 @@ class VistSummary extends React.Component {
                       <span>${summaryDetail.hourlyRate}/hr</span>
                     </p>
                     <p className='TaxCost'>
-                      <span>${summaryDetail.totalCost}</span>
+                      <span>${(summaryDetail.totalCost && summaryDetail.totalCost).toFixed(2)}</span>
                       <span>${summaryDetail.taxAmount}</span>
                     </p>
                   </div>
                   <div className='col-md-12 CostTableContainer Total'>
                     <p className='TotalLabel'><span>Total Cost </span></p>
-                    <p className='TotalCost'><span>${summaryDetail.totalCost}</span></p>
+                    <p className='TotalCost'><span>${(summaryDetail.totalCost + summaryDetail.taxAmount)}</span></p>
                   </div>
                 </div>
 
                 <div className='row EstimatedCostWidget m-0 mb-4'>
                   <div className='col-md-8 EstimatedCostContainer Label'>
                     <p>
-                      <span>Submitted Claim</span>
-                      <span>Out of Pocket Amount</span>
+                      <span>Estimated Claim</span>
+                      <span>Copay On Credit Card</span>
                     </p>
                   </div>
                   <div className='col-md-4 EstimatedCostContainer Cost'>
                     <p>
                       <span>$ {summaryDetail.estimatedClaim &&
-                        summaryDetail.estimatedClaim}</span>
+                        summaryDetail.estimatedClaim.toFixed(2)}</span>
                       <span>
                         {summaryDetail.outOfPocketAmount &&
-                          summaryDetail.outOfPocketAmount}
+                          summaryDetail.outOfPocketAmount.toFixed(2)}
                       </span>
                     </p>
                   </div>
