@@ -1203,10 +1203,12 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .ProfileCardNameContainer {
         width: 80px;
+        cursor: pointer;
     }
 
     .ProfileServices {
         max-width: calc(100% - 155px);
+        cursor: pointer;
     }
 
     .ProfileServices .ServicesTitle, .ProfileSkillServices .ServicesTitle, .SPThreadContent .SPIndiTitle {
@@ -1381,6 +1383,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .ProfileCardNameContainer {
         width: 110px;
+        cursor: pointer;
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
@@ -1389,6 +1392,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .ProfileServices {
         max-width: calc(100% - 240px);
+        cursor: pointer;
     }
 
     .ProfileServicesVisitList {

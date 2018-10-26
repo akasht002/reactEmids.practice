@@ -11,6 +11,7 @@ import EntityPersonalDetail from '../EntityPersonalDetail'
 import Organization from '../Organization'
 import WorkHistory from '../WorkHistory'
 import Skills from '../Skills/index'
+import ServiceArea from '../ServiceArea/index'
 import { Path } from '../../../routes'
 import {
   getProfilePercentage
@@ -53,9 +54,10 @@ class Profile extends Component {
   }
 
   getAvailability = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+    !getUserInfo().isEntityServiceProvider) {
      return <Availability />
-    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) {
+    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
       return <Availability />
     } else {
       return '';
@@ -63,15 +65,71 @@ class Profile extends Component {
   }
 
   getServiceOffered = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && !getUserInfo().isEntityServiceProvider) {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) {
       return <ServiceOffered />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) {
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
        return <ServiceOffered />
      } else {
        return '';
      }
   }
 
+  getServiceArea = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) {
+      return <ServiceArea />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+       return <ServiceArea />
+     } else {
+       return '';
+     }
+  }
+
+  getSkills = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) {
+      return <Skills />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+       return <Skills />
+     } else {
+       return '';
+     }
+  }
+
+  getLanguages = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) {
+      return <Languages />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+       return <Languages />
+     } else {
+       return '';
+     }
+  }
+
+  getCertification = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) {
+      return <Certification />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+       return <Certification />
+     } else {
+       return '';
+     }
+  }
+
+  getWorkHistory = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) {
+      return <WorkHistory />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+       return <WorkHistory />
+     } else {
+       return '';
+     }
+  }
+  
   navigateProfileHeader = (link) => {
     switch (link) {
         case 'messagesummary':
@@ -120,18 +178,22 @@ class Profile extends Component {
                 {this.getServiceOffered()}
                 </div>
                 <div className='col-md-12 card CardWidget SPCertificate'>
-                  <Skills />
-                </div>
-                <div className='col-md-12 card CardWidget SPLanguages'>
-                  <Languages />
+                  {this.getServiceArea()}
                 </div>
                 <div className='col-md-12 card CardWidget SPCertificate'>
-                  <Certification />
+                  {this.getSkills()}
                 </div>
-
-                <WorkHistory />
+                <div className='col-md-12 card CardWidget SPLanguages'>
+                 {this.getLanguages()}
+                </div>
+                <div className='col-md-12 card CardWidget SPCertificate'>
+                  {this.getCertification()}
+                </div>
+                {this.getWorkHistory}
                 <Education />
                {this.getAvailability()}
+              
+               
 
               </div>
             </div>

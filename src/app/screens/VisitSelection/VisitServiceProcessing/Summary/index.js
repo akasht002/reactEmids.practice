@@ -12,6 +12,7 @@ import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes'
+import {checkNumber} from '../../../../utils/validations';
 import './style.css'
 
 class Summary extends Component {
@@ -130,7 +131,7 @@ class Summary extends Component {
             min: parseInt(this.state.updatedMin, 0),
             sec: parseInt(this.state.updatedSec, 0)
         }
-        this.setState({ isModalOpen: !this.state.isModalOpen })
+        this.setState({ isModalOpen: false})
         this.props.onUpdateTime(data)
     }
 
@@ -152,9 +153,13 @@ class Summary extends Component {
                 <p className="AdjustTimeContent">
                     <span className="mr-3">
                         HH <input
-                            type="number"
-                            value={this.state.updatedHour}
-                            onChange={(e) => this.setState({ updatedHour: e.target.value, timeErrMessage: '', emptyErrMessage: '' })}
+                            type="text"
+                            value={checkNumber(this.state.updatedHour) ? this.state.updatedHour : ''}
+                            onChange={(e) => {
+                                if (checkNumber(e.target.value)) {
+                                    this.setState({ updatedHour: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
+                                }
+                            }}
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={this.props.CalculationsData.totalHours}
@@ -162,9 +167,13 @@ class Summary extends Component {
                     </span>
                     <span className="mr-3">
                         MM <input
-                            type="number"
-                            value={this.state.updatedMin}
-                            onChange={(e) => this.setState({ updatedMin: e.target.value, timeErrMessage: '', emptyErrMessage: '' })}
+                            type="text"
+                            value={checkNumber(this.state.updatedMin) ? this.state.updatedMin : ''}
+                            onChange={(e) => {
+                                if (checkNumber(e.target.value)) {
+                                    this.setState({ updatedMin: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
+                                }
+                            }}
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={this.props.CalculationsData.totalMinutes}
@@ -172,9 +181,13 @@ class Summary extends Component {
                     </span>
                     <span>
                         SS <input
-                            type="number"
-                            value={this.state.updatedSec}
-                            onChange={(e) => this.setState({ updatedSec: e.target.value, timeErrMessage: '', emptyErrMessage: '' })}
+                            type="text"
+                            value={checkNumber(this.state.updatedSec) ? this.state.updatedSec : ''}
+                            onChange={(e) => {
+                                if (checkNumber(e.target.value)) {
+                                    this.setState({ updatedSec: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
+                                }
+                            }}
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={this.props.CalculationsData.totalSeconds}

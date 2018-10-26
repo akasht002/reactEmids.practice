@@ -20,9 +20,7 @@ export const VisitList = props => {
                       {vistList.visitDate}
                     </Moment>, {vistList.slotDescription}
                   </span>
-                  <span> <Moment format='HH:mm'>
-                    {vistList.billedTotalDuration}
-                  </Moment> hrs</span>                 
+                  <span>{vistList.billedTotalDuration} hrs</span>                 
                   <span>{vistList.serviceRequestId}</span>
                 </div>
               </div>
@@ -74,7 +72,7 @@ export const VisitList = props => {
                           </div>
                         </div>
                         <div className="visitUserName">
-                          {vistList.providerFirstName && vistList.providerFirstName}
+                          {vistList.patientFirstName && vistList.patientFirstName}
                           {' '}
                           {vistList.patientLastName && vistList.patientLastName}
                         </div>

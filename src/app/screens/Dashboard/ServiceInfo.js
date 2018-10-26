@@ -7,6 +7,7 @@ import TimeAgo from 'timeago-react'
 import { getFields } from '../../utils/validations'
 import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
+import {ENTITY_USER} from '../../constants/constants'
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -75,7 +76,7 @@ export const serviceCalendar = (
               <span className='ServicesDesc'>
                 {conversations.serviceCategory && conversations.serviceCategory}
               </span>
-              {getUserInfo().isEntityServiceProvider &&
+              {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
                 <span
                   onClick={e =>
                     togglePersonalDetails({
@@ -109,7 +110,7 @@ export const serviceCalendar = (
                   conversations.patientFirstName +
                     ' '}
                 {' '}
-                {conversations.patientLastName && conversations.patientLastName.slice(0, 1).toUpperCase()}
+                {conversations.patientLastName && conversations.patientLastName}
               </span>
             </div>
             <div className="options">
@@ -118,17 +119,15 @@ export const serviceCalendar = (
                 <Select                  
                   placement='auto'
                   options={[
-                    <Item className='ListItem CTDashboard' key='item-1'>
-                      <i className='iconPhone' /> Phone Call
-                    </Item>,
+                    // <Item className='ListItem CTDashboard' key='item-1'>
+                    //   <i className='iconPhone' /> Phone Call
+                    // </Item>,
                     <Item className='ListItem CTDashboard' key='item-2'
-                    //  onClick={() => {props.onClick('conversationsummary')}}
-                     >
+                      onClick={(e) => {props.onClickConversation(conversations)}}>
                       <i className='iconConversation' /> Conversation
                     </Item>,
                     <Item className='ListItem CTDashboard' key='item-3'
-                    //  onClick={() => {props.onClick('telehealth')}}
-                     >
+                     onClick={(e) => {props.onClickVideoConference(conversations)}}>
                       <i className='iconVideoCon' /> Video Conference
                     </Item>
                   ]}
@@ -320,7 +319,7 @@ export const ServiceProviderRequestDetails = props => {
               <span className='AvatarName'>
                 {sp.patientFirstName &&
                   sp.patientFirstName + ' '}
-                {sp.patientLastName && sp.patientLastName.slice(0, 1).toUpperCase()}
+                {sp.patientLastName && sp.patientLastName}
               </span>
             </div>
           </li>
@@ -369,8 +368,9 @@ export const MyConversionDetail = props => {
                         key={index}
                         className='avatarImage avatarImageBorder'
                         src={
-                          chatMem.image
-                            ? chatMem.image
+                          chatMem.thumbNail &&
+                          chatMem.thumbNail !== ''
+                            ? chatMem.thumbNail
                             : require('../../assets/images/Blank_Profile_icon.png')
                         }
                       />

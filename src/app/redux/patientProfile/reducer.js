@@ -50,6 +50,8 @@ const patientProfileState = (state = defaultState, action) => {
                 ...state,
                 clinicalConditionList: action.data
             }
+        case PatientProfile.clearState:
+            return defaultState;
         default:
             return state;
     }

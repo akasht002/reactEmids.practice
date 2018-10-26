@@ -92,7 +92,7 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
-                        onClick={this.state.profilePermission.Read && this.props.goToProfile}
+                        onClick={this.state.profilePermission.read && this.props.goToProfile}
                     />
 
                     <div className='ProfileNameWidget'>
