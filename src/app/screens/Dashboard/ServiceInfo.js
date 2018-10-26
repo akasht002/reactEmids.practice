@@ -330,25 +330,12 @@ export const ServiceProviderRequestDetails = props => {
     })
 }
 
-export const getPartcipitantHeader = (participants) => {
-  let header = "";
-  if (participants && participants.length > 0) {
-    participants.map(participant => {
-      // console.log("fname "+participant.firstName)
-      header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
-    });
-    header = header.slice(0, -2);
-  }
-  return header;
-};
-
 export const MyConversionDetail = props => {
   let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
   let unreadMessages = ''
   let msgClass = ''
-  let header = getPartcipitantHeader(conversation.participantList);
 
   return conversation.slice(0, 3).map((conversations, index) => {
     if (props.getUnreadMsgCounts.length > 0) {
@@ -405,8 +392,7 @@ export const MyConversionDetail = props => {
               })}
             </div>
             <div className='MsgThreadContent mr-auto'>
-              <span className='MsgIndiTitle'>{
-                conversations.title === null ? header : conversations.title}</span>
+              <span className='MsgIndiTitle'>{conversations.title}</span>
               <p className='m-0 MsgContent'>
                 {conversations.messageText}
               </p>
