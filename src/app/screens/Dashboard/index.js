@@ -155,48 +155,26 @@ onSuccessSpBusyInVisit = (visitProcess) => {
             </label>
           </div>
         </div>
-        <Scrollbars
+        {/* <Scrollbars
           speed={2}
           smoothScrolling
           horizontal={false}
           className='SPContentWidget'
-        >
-          <div className='ProfileContainer topProfile'>
-            <ServiceCalendar />
-          </div>
-          <div className='ProfileContainer bottomProfile'>
-            {serviceRequestTemplate}
-            <div className='innerWidget'>
-              <MyConversation />
+        > */}
+        <div className="scrollarea SPContentWidget">
+          <div className="scrollarea-content">
+            <div className='ProfileContainer topProfile'>
+              <ServiceCalendar />
+            </div>
+            <div className='ProfileContainer bottomProfile'>
+              {serviceRequestTemplate}
+              <div className='innerWidget'>
+                <MyConversation />
+              </div>
             </div>
           </div>
-        </Scrollbars>
-        <ModalPopup
-          isOpen={this.state.showVisitModal}
-          ModalBody={<span>Standby Mode cannot be switched on during a Visit processing, Click "Ok" in the pop up to close the popup.</span>}
-          btn1='OK'
-          className='modal-sm'
-          headerFooter='d-none'
-          centered='centered'
-          onConfirm={() =>
-            this.setState({
-              showVisitModal: false
-            })}
-        />
-        <ModalPopup
-          isOpen={this.state.showModalOnTurnOff}
-          ModalBody={<span>Are you sure, you want to turn off the Standby mode and start the Visit Processing?</span>}
-          btn1='YES'
-          btn2='NO'
-          className='modal-sm'
-          headerFooter='d-none'
-          centered='centered'
-          onConfirm={this.onClickYes}
-          onCancel={() =>
-            this.setState({
-              showModalOnTurnOff: !this.state.showModalOnTurnOff
-            })}
-        />
+        </div>
+        {/* </Scrollbars> */}
       </AsideScreenCover>
     )
   }
