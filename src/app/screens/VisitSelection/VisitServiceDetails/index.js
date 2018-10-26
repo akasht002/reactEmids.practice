@@ -272,7 +272,7 @@ class VisitServiceDetails extends Component {
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
                   <span className='HeaderBackWrapper'>
-                    <span className='HeaderBackButton' onClick={this.props.goBack()}/>
+                    <Link to='/visitServiceList' className='HeaderBackButton' />
                   </span>
                   <span className='HeaderRequestLabel'>
                     Request ID
