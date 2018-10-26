@@ -368,8 +368,9 @@ export const MyConversionDetail = props => {
                         key={index}
                         className='avatarImage avatarImageBorder'
                         src={
-                          chatMem.image
-                            ? chatMem.image
+                          chatMem.thumbNail &&
+                          chatMem.thumbNail !== ''
+                            ? chatMem.thumbNail
                             : require('../../assets/images/Blank_Profile_icon.png')
                         }
                       />
