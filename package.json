@@ -103,6 +103,7 @@
     "start": "node scripts/start.js",
     "start-qa": "node scripts/start.js --qa",
     "start-dev": "node scripts/start.js --dev",
+    "start-demo": "node scripts/start.js --demo",
     "build": "node scripts/build.js",
     "build-qa": "node scripts/build.js --qa",
     "build-dev": "node scripts/build.js --dev",
