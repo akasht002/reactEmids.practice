@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import { ThemeProvider } from '@zendeskgarden/react-theming'
 import { SelectField, Select, Item } from '@zendeskgarden/react-select'
+import Pagination from 'react-js-pagination';
 import { Scrollbars } from '../../components'
 import {
   getVisitServiceLists,
@@ -22,6 +23,7 @@ import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import '../Dashboard/styles/ServiceTasks.css'
 import './visitList.css'
 import '../../styles/SelectDropdown.css'
+import { getUserInfo } from '../../services/http';
 
 class VisitHistory extends Component {
   constructor(props) {
@@ -30,12 +32,19 @@ class VisitHistory extends Component {
       isOpen: false,
       filterOpen: false,
       selectedKey: 'item-1',
-      serviceTypeIds: []
+      serviceTypeIds: [],
+      activePage: 1
     }
   }
 
   componentDidMount() {
-    this.props.getVisitServiceLists()
+    let data = {
+      pageNumber : 1,
+      pageSize : 10,
+      sortOrder : 'asc',
+      sortName : 'visitdate'
+    }
+    this.props.getVisitServiceLists(data)
     this.props.getAllServiceProviders()
     this.props.getServiceCategory()
   }
@@ -111,6 +120,28 @@ class VisitHistory extends Component {
     this.props.getVisitServiceLists();
   }
 
+  handlePageChange = (pageNumber) => {
+    let data = {
+      pageNumber : pageNumber,
+      pageSize : 10,
+      sortOrder : 'desc',
+      sortName : 'visitdate'
+    }
+    this.props.getVisitServiceLists(data)
+    this.setState({ activePage: pageNumber });
+  }
+
+  selectedSort = (selectedKey) => {
+    let data = {
+      serviceProviderId : getUserInfo().serviceProviderId,
+      pageNumber : 1,
+      pageSize : 10,
+      sortOrder : selectedKey,
+      sortName : 'visitdate'
+    }
+    this.props.getVisitServiceLists(data);
+  }
+
   render() {
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -125,8 +156,9 @@ class VisitHistory extends Component {
                   selectedKey={this.state.selectedKey}
                   placement='auto'
                   onChange={selectedKey => {
-                    this.setState({ selectedKey })
-                    this.props.getVisitServiceListSort({ sortByOrder: this.state.selectedKey, sortByColumn: 'modifieddate' });
+                    this.setState({ sortByOrder: selectedKey }),
+                      this.selectedSort(selectedKey)
+                    // this.props.getVisitServiceLists({ sortByOrder: this.state.selectedKey, sortByColumn: 'modifieddate' });
                   }}
                   options={[
                     <Item disabled className='ListItem disabled' key='item-1'>
@@ -159,6 +191,20 @@ class VisitHistory extends Component {
             visitHistoryList={this.props.VisitServiceHistory}
             handleClicks={this.handleClick}
           />
+          {this.props.VisitServiceHistory.length > 0 &&
+            <Pagination
+              activePage={this.state.activePage}
+              itemsCountPerPage={10}
+              totalItemsCount={17}
+              pageRangeDisplayed={5}
+              onChange={this.handlePageChange}
+              itemClass="PaginationItem"
+              itemClassFirst="PaginationIcon First"
+              itemClassPrev="PaginationIcon Prev"
+              itemClassNext="PaginationIcon Next"
+              itemClassLast="PaginationIcon Last"
+            />
+          }
           <div className='cardBottom' />
         </Scrollbars>
         <Filter
@@ -180,7 +226,7 @@ class VisitHistory extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getVisitServiceLists: () => dispatch(getVisitServiceLists()),
+    getVisitServiceLists: (data) => dispatch(getVisitServiceLists(data)),
     getVisitServiceHistoryByIdDetail: data =>
       dispatch(getVisitServiceHistoryByIdDetail(data)),
     getAllServiceProviders: () => dispatch(getAllServiceProviders()),
