@@ -133,7 +133,7 @@ class ServiceRequest extends React.Component {
             horizontal={false}
             stopScrollPropagation
             className={
-              getLength(this.props.patientServiceRequest) >2
+              getLength(this.props.patientServiceRequest) < 2
                 ? CSS_PROPS.Scrollbars_With_No_Length
                 : CSS_PROPS.Scrollbars_With_Length
             }

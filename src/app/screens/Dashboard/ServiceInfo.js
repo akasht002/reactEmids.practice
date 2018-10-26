@@ -274,7 +274,7 @@ export const ServiceProviderRequestDetails = props => {
             className='list-group-item ProfileServicesVisitContent'
           >
             <div className='ServicesTypeContainer'>
-              <i className='ServicesType Bathing' />
+              <img className='ServicesType' src={require('../../assets/images/Bathing_Purple.svg')}/>
             </div>
             <div
               className='ProfileSkillServices'
@@ -308,7 +308,7 @@ export const ServiceProviderRequestDetails = props => {
                 <div className='avatarContainer'>
                   <img
                     alt='NO'
-                    className='avatarImage avatarImageBorder'
+                    className='avatarImage'
                     src={
                       sp.image
                         ? sp.image

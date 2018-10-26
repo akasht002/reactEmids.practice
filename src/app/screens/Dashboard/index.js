@@ -62,22 +62,26 @@ class Dashboard extends React.Component {
             </label>
           </div>
         </div>
-        <Scrollbars
+        {/* <Scrollbars
           speed={2}
           smoothScrolling
           horizontal={false}
           className='SPContentWidget'
-        >
-          <div className='ProfileContainer topProfile'>
-            <ServiceCalendar />
-          </div>
-          <div className='ProfileContainer bottomProfile'>
-            {serviceRequestTemplate}
-            <div className='innerWidget'>
-              <MyConversation />
+        > */}
+        <div className="scrollarea SPContentWidget">
+          <div className="scrollarea-content">
+            <div className='ProfileContainer topProfile'>
+              <ServiceCalendar />
+            </div>
+            <div className='ProfileContainer bottomProfile'>
+              {serviceRequestTemplate}
+              <div className='innerWidget'>
+                <MyConversation />
+              </div>
             </div>
           </div>
-        </Scrollbars>
+        </div>
+        {/* </Scrollbars> */}
       </AsideScreenCover>
     )
   }
