@@ -11,8 +11,15 @@ export const PatientProfile = {
     getPointServiceSuccess: 'getPointServiceSuccess/PatientProfile',
     getManageConnectionSuccess: 'getManageConnectionSuccess/PatientProfile',
     getSelectedLanguageDetails: 'getSelectedLanguageDetails/PatientProfile',
-    getSelectedClinicalConditionDetails: 'getSelectedClinicalConditionDetails/PatientProfile'
+    getSelectedClinicalConditionDetails: 'getSelectedClinicalConditionDetails/PatientProfile',
+    clearState: 'clearState/PatientProfile'
 };
+
+export const clearState = () => {
+    return {
+        type: PatientProfile.clearState
+    }
+}
 
 export const setPatient = (data) => {
     return {
@@ -31,13 +38,10 @@ export const getProfilePercentageSuccess = (data) => {
 export function getProfilePercentage() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        dispatch(startLoading());
         PatientGet(API.getPatientProfilePercentage + patientId)
         .then((resp) => {
             dispatch(getProfilePercentageSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
         })
     }
 };
@@ -74,14 +78,11 @@ export const getImgSuccess = data => {
 export function getImage() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        dispatch(startLoading())
         PatientGet(API.getPatientImage + patientId)
         .then(resp => {
             dispatch(getImgSuccess(resp.data))
-            dispatch(endLoading())
         })
         .catch(err => {
-            dispatch(endLoading())
         })
     }
 }
@@ -96,14 +97,11 @@ export const getPointServiceSuccess = data => {
 export function getPointService() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        dispatch(startLoading())
         PatientGet(API.getPatientAddress + patientId + '/PatientAddress')
         .then(resp => {
             dispatch(getPointServiceSuccess(resp.data))
-            dispatch(endLoading())
         })
         .catch(err => {
-            dispatch(endLoading())
         })
     }
 }
@@ -118,14 +116,11 @@ export const getManageConnectionSuccess = data => {
 export function getManageConnection () {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        dispatch(startLoading())
         PatientGet(API.getPatientConnections + patientId + '/' + USERTYPES.PATIENT)
         .then(resp => {
             dispatch(getManageConnectionSuccess(resp.data.users))
-            dispatch(endLoading())
         })
         .catch(err => {
-            dispatch(endLoading())
         })
     }
 }
@@ -140,12 +135,9 @@ export const getSelectedLanguageDetails = (data) => {
 export function getSelectedLanguages() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        dispatch(startLoading());
         PatientGet(API.getPatientLanguages + patientId + '/Languages').then((resp) => {
             dispatch(getSelectedLanguageDetails(resp.data))
-            dispatch(endLoading());
         }).catch(() => {
-            dispatch(endLoading());
         })
     }
 };
@@ -160,12 +152,9 @@ export const getSelectedClinicalConditionDetails = (data) => {
 export function getSelectedClinicalCondition() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        dispatch(startLoading());
         PatientGet(API.getPatientClinicalCondition + patientId).then((resp) => {
             dispatch(getSelectedClinicalConditionDetails(resp.data))
-            dispatch(endLoading());
         }).catch(() => {
-            dispatch(endLoading());
         })
     }
 };

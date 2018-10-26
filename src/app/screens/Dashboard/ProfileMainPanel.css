@@ -490,6 +490,7 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
 
 .ProfileServices{
     max-width: calc(100% - 240px);
+    cursor: pointer;
 }
 
 .VisitScheduleTitle{
@@ -556,6 +557,7 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
 
 .ProfileCardImageContainer{
     margin-left: auto;
+    cursor: pointer;
 }
 
 .ProfileCardImageContainer .ProfileImage{
@@ -570,6 +572,7 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
 
 .ProfileCardNameContainer{
     width: 115px;
+    cursor: pointer;
 }
 
 .ProfileCardBody .ServiceRequestPalette{

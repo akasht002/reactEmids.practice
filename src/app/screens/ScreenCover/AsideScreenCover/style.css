@@ -266,10 +266,12 @@ section .ProfileRightWidget {
 
     .ProfileCardNameContainer {
         width: 80px;
+        cursor: pointer;
     }
 
     .ProfileServices {
         max-width: calc(100% - 193px);
+        cursor: pointer;
     }
 
     .ProfileServices .ServicesTitle, .ProfileSkillServices .ServicesTitle, .SPThreadContent .SPIndiTitle {
@@ -369,6 +371,7 @@ section .ProfileRightWidget {
 
     .ProfileCardNameContainer {
         width: 110px;
+        cursor: pointer;
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
@@ -377,6 +380,7 @@ section .ProfileRightWidget {
 
     .ProfileServices {
         max-width: calc(100% - 240px);
+        cursor: pointer;
     }
 
     .ProfileServicesVisitList {

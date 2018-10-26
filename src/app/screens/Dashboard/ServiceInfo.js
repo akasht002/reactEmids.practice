@@ -7,6 +7,7 @@ import TimeAgo from 'timeago-react'
 import { getFields } from '../../utils/validations'
 import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
+import {ENTITY_USER} from '../../constants/constants'
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -75,7 +76,7 @@ export const serviceCalendar = (
               <span className='ServicesDesc'>
                 {conversations.serviceCategory && conversations.serviceCategory}
               </span>
-              {getUserInfo().isEntityServiceProvider &&
+              {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
                 <span
                   onClick={e =>
                     togglePersonalDetails({
@@ -118,17 +119,15 @@ export const serviceCalendar = (
                 <Select                  
                   placement='auto'
                   options={[
-                    <Item className='ListItem CTDashboard' key='item-1'>
-                      <i className='iconPhone' /> Phone Call
-                    </Item>,
+                    // <Item className='ListItem CTDashboard' key='item-1'>
+                    //   <i className='iconPhone' /> Phone Call
+                    // </Item>,
                     <Item className='ListItem CTDashboard' key='item-2'
-                    //  onClick={() => {props.onClick('conversationsummary')}}
-                     >
+                      onClick={(e) => {props.onClickConversation(conversations)}}>
                       <i className='iconConversation' /> Conversation
                     </Item>,
                     <Item className='ListItem CTDashboard' key='item-3'
-                    //  onClick={() => {props.onClick('telehealth')}}
-                     >
+                     onClick={(e) => {props.onClickVideoConference(conversations)}}>
                       <i className='iconVideoCon' /> Video Conference
                     </Item>
                   ]}

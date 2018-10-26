@@ -115,6 +115,20 @@ div.row.emptyGuardianRow{
 
 }
 
+.tempPassForm .form-group input.form-control:focus, .tempPassForm .form-group input.form-control:active
+{
+    border-color: #495057 !important;
+}
+.mainWidgetOnboarding  .mainContent .text-danger
+{
+    color: #c04e59 !important;
+}
+
+.mainWidgetOnboarding  .mainContent .verify-title
+{
+    color:#7a329f !important;
+}
+
 @media (max-width: 1024px) {
     div.onBoarding {
         width: calc(100% - 380px);

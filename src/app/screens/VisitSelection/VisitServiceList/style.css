@@ -799,6 +799,7 @@ div.scrollarea .scrollbar-container.vertical {
 
     .ProfileCardNameContainer {
         width: 80px;
+        cursor: pointer;
     }
 
     div.ProfileCardBody .ServiceRequestPalette{
@@ -820,6 +821,7 @@ div.scrollarea .scrollbar-container.vertical {
 
     .ProfileServices {
         max-width: calc(100% - 193px);
+        cursor: pointer;
     }
 
     .ProfileServices .ServicesTitle, .ProfileSkillServices .ServicesTitle, .SPThreadContent .SPIndiTitle {
@@ -915,6 +917,7 @@ div.scrollarea .scrollbar-container.vertical {
 
     .ProfileCardNameContainer {
         width: 110px;
+        cursor: pointer;
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
@@ -923,6 +926,7 @@ div.scrollarea .scrollbar-container.vertical {
 
     .ProfileServices {
         max-width: calc(100% - 240px);
+        cursor: pointer;
     }
 
     .ProfileServicesVisitList {

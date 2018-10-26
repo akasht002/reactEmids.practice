@@ -12,6 +12,7 @@ import './dashboard.css'
 import './ctdashboard.css'
 import './styles/toggleSwitch.css'
 import './EntitySP/EntitySPDashboard.css'
+import moment from 'moment'
 
 class Dashboard extends React.Component {
   constructor (props) {
@@ -41,6 +42,58 @@ class Dashboard extends React.Component {
       isOpen: !this.state.isOpen
     })
   }
+
+  onValueChange = () => {
+    if(this.state.standByMode === false) {
+        let visitProcess = this.checkVisitProcess();
+        if(visitProcess === true){
+            this.setState({showVisitModal: true})
+        }
+        else if(visitProcess === false) {
+            let timeNow = new Date();
+        this.setState({
+            standByMode: true,
+            standByModeStartTime: timeNow
+        }, () => {
+            this.props.updateStandByMode(this.state.standByMode, this.state.standByModeStartTime);
+        }) }
+    } else if(this.state.standByMode === true) {        
+        this.onClickTurnOff();
+    }
+}  
+
+  checkVisitProcess = () => {
+    if(this.props.serviceVisit.length > 0) {
+        let currentTimeSlot = this.compareTimeSlots();
+        let currentVisit = this.props.serviceVisit.filter((visit)=> visit.slotDescription === currentTimeSlot)
+        if(currentVisit.length > 0){
+        return true
+    } }
+    return false
+} 
+
+  onClickTurnOff= () => {
+    this.setState({showModalOnTurnOff: true})
+  }
+
+  onClickYes = () => {
+    this.setState({showModalOnTurnOff: false})
+    this.setState({
+        standByMode: false
+    }, () => {
+        this.props.updateStandByMode(this.state.standByMode);
+    })
+ }
+
+ compareTimeSlots = () => {
+  let currentTime = new Date();
+  if((moment(currentTime, 'h:mm:ss a').isBetween(moment('06:00:00 am', 'h:mm:ss a'), moment('11:59:59 am', 'h:mm:ss a'), null, '[]')))    
+      return 'Morning';
+  else  if((moment(currentTime, 'h:mm:ss a').isBetween(moment('12:00:00 pm', 'h:mm:ss a'), moment('05:59:59 pm', 'h:mm:ss a'), null, '[]')))
+      return 'Afternoon';
+  else  if((moment(currentTime, 'h:mm:ss a').isBetween(moment('06:00:00 pm', 'h:mm:ss a'), moment('11:59:59 pm', 'h:mm:ss a'), null, '[]')))
+      return 'Evening'
+}
   
   onValueChange = () => {
     if(this.state.isChecked === false) {    
@@ -93,7 +146,7 @@ onSuccessSpBusyInVisit = (visitProcess) => {
             <h5 className='primaryColor m-0'>Dashboard</h5>
           </div>
           <div className='ProfileHeaderButton'>
-            <span className='standBy'>Stand-by mode </span>
+            <span className='standBy'>Stand by</span>
             <label className='switch'>
               <input type='checkbox' checked={this.state.isChecked}
               onChange={this.onValueChange}
