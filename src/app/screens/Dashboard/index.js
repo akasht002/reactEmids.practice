@@ -32,6 +32,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     this.props.getPersonalDetail();
     this.props.getSpBusyInVisit();
+    this.props.clearSbMode();
   }
   
   componentWillReceiveProps(nextProps) {
@@ -39,11 +40,13 @@ class Dashboard extends React.Component {
     if (nextProps.sbModeClicked) {
       this.props.clearSbMode();
       this.onSuccessSpBusyInVisit(nextProps.busyInVisit)
-    }
+     }
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.intervalId);
+    if(this.clearInterval) {
+      clearInterval(this.clearInterval);
+    }
  }
 
   toggle () {
@@ -61,6 +64,9 @@ class Dashboard extends React.Component {
 }
 
 onSuccessSpBusyInVisit = (visitProcess) => {
+  if(this.clearInterval) {
+    clearInterval(this.clearInterval);
+  }
     if(visitProcess.isServiceProviderBusyInVisit === true){
       this.setState({showVisitModal: true})
   }
