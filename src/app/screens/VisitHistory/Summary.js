@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
   Accordion,
   AccordionItem,
@@ -173,8 +173,8 @@ class VistSummary extends React.Component {
 
   getFeedback = () => {
     return (
-      <div className='FeedbackWidget'>
-        <div className='FeedbackRating'>
+      <div className='FeedbackWidget py-4'>
+        {/* <div className='FeedbackRating'>
           {this.props.patientDetails.serviceProvider
             ? <p>
               Rate
@@ -190,9 +190,9 @@ class VistSummary extends React.Component {
           <StarRating
             handleSelectedRating={e => this.handleSelectedRating(e)}
           />
-        </div>
+        </div> */}
         {this.props.QuestionsList.length > 0
-          ? <div>
+          ? <Fragment>
             {this.props.QuestionsList &&
               this.props.QuestionsList.map((questionList, i) => {
                 if (questionList.answerTypeDescription === 'ChoiceBased') {
@@ -208,7 +208,7 @@ class VistSummary extends React.Component {
                         {questionList.answers.map((answer, j) => {
                           return (
                             <div
-                              className='form-radio col-md-3'
+                              className='form-radio col-md-4'
                               key={answer.id}
                             >
                               <input
@@ -271,7 +271,7 @@ class VistSummary extends React.Component {
                 }
                 return questionList
               })}
-          </div>
+          </Fragment>
           : ''}
 
       </div>
@@ -302,6 +302,7 @@ class VistSummary extends React.Component {
     let modalTitle = 'Feedback'
     let modalType = ''
     let progress_bar = summaryDetail.totalTask !== 0 && summaryDetail.totalTask !== 0 ? (this.props.taskCompleted / this.props.totaltask) * 100 : 0
+
     return (
       <React.Fragment>
         <form className='ServiceContent'>
@@ -363,30 +364,30 @@ class VistSummary extends React.Component {
                       <span>${summaryDetail.hourlyRate}/hr</span>
                     </p>
                     <p className='TaxCost'>
-                      <span>${summaryDetail.totalCost}</span>
+                      <span>${(summaryDetail.totalCost && summaryDetail.totalCost).toFixed(2)}</span>
                       <span>${summaryDetail.taxAmount}</span>
                     </p>
                   </div>
                   <div className='col-md-12 CostTableContainer Total'>
                     <p className='TotalLabel'><span>Total Cost </span></p>
-                    <p className='TotalCost'><span>${summaryDetail.totalCost}</span></p>
+                    <p className='TotalCost'><span>${(summaryDetail.totalCost + summaryDetail.taxAmount)}</span></p>
                   </div>
                 </div>
 
                 <div className='row EstimatedCostWidget m-0 mb-4'>
                   <div className='col-md-8 EstimatedCostContainer Label'>
                     <p>
-                      <span>Submitted Claim</span>
-                      <span>Out of Pocket Amount</span>
+                      <span>Estimated Claim</span>
+                      <span>Copay On Credit Card</span>
                     </p>
                   </div>
                   <div className='col-md-4 EstimatedCostContainer Cost'>
                     <p>
                       <span>$ {summaryDetail.estimatedClaim &&
-                        summaryDetail.estimatedClaim}</span>
+                        summaryDetail.estimatedClaim.toFixed(2)}</span>
                       <span>
                         {summaryDetail.outOfPocketAmount &&
-                          summaryDetail.outOfPocketAmount}
+                          summaryDetail.outOfPocketAmount.toFixed(2)}
                       </span>
                     </p>
                   </div>

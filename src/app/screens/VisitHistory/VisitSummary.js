@@ -51,7 +51,7 @@ class VisitSummary extends React.Component {
               <h5 className='primaryColor m-0'>
                 Service Request
                 {' '}
-                <span>/ {visitSummary.serviceRequestVisitId}</span>
+                <span>/ {visitSummary.serviceRequestId}</span>
               </h5>
             </div>
           </div>

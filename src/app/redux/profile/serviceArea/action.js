@@ -3,7 +3,6 @@ import { Get,Post,Delete} from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
 import { ACTION_MODEL, getModal } from './modal'
 import { getUserInfo } from '../../../services/http'
-import {getPatientData, isPatientGuardian} from '../../../utils/userUtility';
 
 
 export const ServiceArea = {
@@ -100,7 +99,7 @@ export function updateServiceArea(data) {
 export function deletePointService(data) {
   return (dispatch) => {
     dispatch(startLoading())
-    Delete(API.deletServiceArea + getUserInfo().serviceProviderId, data)
+    Delete(API.deletServiceArea + getUserInfo().serviceProviderId + '/'  + data, data)
       .then(resp => {
         dispatch(getServiceArea())
         dispatch(endLoading())

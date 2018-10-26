@@ -57,7 +57,7 @@ export function getServiceStatusDetail () {
   }
 }
 
-export const updateStandByModeSuccess = () => {}
+// export const updateStandByModeSuccess = () => {}
 
 export const getPatientVisitDetailSuccess = data => {
   return {
@@ -211,9 +211,7 @@ export const getConversationDetailSuccess = data => {
 export function getConversationDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    axios
-      .get(
-        messageURL +
+    MessageURLGet(
           API.getConversationSummary +
           getUserInfo().serviceProviderId + '/' +
           USERTYPES.SERVICE_PROVIDER + '/' +
@@ -240,9 +238,7 @@ export const onUnreadCountSuccess = data => {
 export function getUnreadMessageCounts (userId) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    axios
-      .get(
-        messageURL +
+    MessageURLGet(
           API.getUnreadCount +
           getUserInfo().serviceProviderId + '/' +
           USERTYPES.SERVICE_PROVIDER
@@ -260,11 +256,11 @@ export function getUnreadMessageCounts (userId) {
 export function updateStandByMode (data) { 
   
   return (dispatch) => {
-    // dispatch(startLoading())
+    dispatch(startLoading())
     
     Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
-        dispatch(updateStandByModeSuccess())
+       // dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
       })
       .catch(err => {

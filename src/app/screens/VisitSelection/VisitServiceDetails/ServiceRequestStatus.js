@@ -29,16 +29,18 @@ export const ServiceStatus = props => {
       </React.Fragment>
     )
   } else {
-    return (
-      <React.Fragment>
-        <Button
-          classname='btn btn-outline-primary mx-2 float-right'
-          label='Cancel Service'
-          onClick={() => {
-            props.postServiceRequest({ isInterested: false, isCancel: true })
-          }}
-        />
-      </React.Fragment>
-    )
+    return ''
+    /* Hide for demo */
+    // return (
+    //   <React.Fragment>
+    //     <Button
+    //       classname='btn btn-outline-primary mx-2 float-right'
+    //       label='Cancel Service'
+    //       onClick={() => {
+    //         props.postServiceRequest({ isInterested: false, isCancel: true })
+    //       }}
+    //     />
+    //   </React.Fragment>
+    // )
   }
 }

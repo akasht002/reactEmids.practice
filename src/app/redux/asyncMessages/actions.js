@@ -196,7 +196,6 @@ export function onSaveTitle(data) {
         dispatch(startLoading());
         AsyncPut(API.saveTitle, data)
             .then(resp => {
-                dispatch(onFetchConversation(resp.data.conversationId));
                 dispatch(endLoading());
             })
             .catch(err => {
@@ -363,15 +362,18 @@ export function getLinkedParticipantsByPatients(data) {
         let patient = patients.find((e) => {
             return e.userId === data.patientId
         });
+        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         data.firstName = patient.firstName;
         data.lastName = patient.lastName;
         data.participantType = USERTYPES.PATIENT;
         data.thumbNail = patient.thumbNail;
         data.userId = data.patientId;
-        AsyncGet(API.getParticipantsByContext + data.conversationId +
-            '/' + data.userId +
+        AsyncGet(API.getParticipantsByContext 
+                + data.conversationId +
+            '/' + USER_ID +
             '/' + data.patientId +
-            '/' + data.participantType +
+            '/' + USER_TYPE +
             '/' + serchText)
             .then(resp => {
                 let modifiedData = [
@@ -379,6 +381,29 @@ export function getLinkedParticipantsByPatients(data) {
                     ...resp.data
                 ];
                 dispatch(getLinkedParticipantsByPatientsSuccess(modifiedData));
+                dispatch(endLoading())
+            })
+            .catch(err => {
+                dispatch(endLoading())
+            })
+    }
+};
+
+
+export function getLinkedParticipantsList(data) {
+    return (dispatch, getState) => {
+        dispatch(startLoading())
+        let serchText = data.searchText === "" ? null : data.searchText;
+        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+        AsyncGet(API.getParticipantsByContext 
+                + data.conversationId +
+            '/' + USER_ID +
+            '/' + data.patientId +
+            '/' + USER_TYPE +
+            '/' + serchText)
+            .then(resp => {
+                dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
                 dispatch(endLoading())
             })
             .catch(err => {

@@ -12,6 +12,7 @@ import {goBack, push} from '../../../redux/navigation/actions';
 import Help from '../../../assets/HelpDoc/Help.pdf';
 import './styles.css'
 import { Path } from '../../../routes';
+import {clearState} from '../../../redux/patientProfile/actions'
 
 class Profile extends Component {
 
@@ -34,7 +35,7 @@ class Profile extends Component {
 
   render() {
     return (
-      <ScreenCover>
+      <ScreenCover isLoading={this.props.isLoading}>
         <div className='container-fluid p-0'>
           <Header
            onClick = {(link) => this.navigateProfileHeader(link)}
@@ -47,11 +48,14 @@ class Profile extends Component {
               <div className='row d-flex justify-content-center m-auto'>
                 <div className='col-md-12'>
                   <h4 className='my-3 text-white SPTitleText'>
-                    <span onClick={this.props.goBack}> <i className='Icon icon-back' /> </span>
+                    <span onClick={() => {
+                      this.props.goBack()
+                      this.props.clearState()
+                    }}> <i className='Icon icon-back' /> </span>
                     Profile
                   </h4>
                 </div>
-                <PersonalDetail profilePercentage={this.props.profilePercentage} />
+                <PersonalDetail />
                 <ClinicalCondition />
                 <PointService />
                 <Languages />
@@ -81,14 +85,16 @@ function mapDispatchToProps(dispatch) {
     clearInvitaion: () => dispatch(clearInvitaion()),
     joinVideoConference: () => dispatch(joinVideoConference()),
     goBack: () => dispatch(goBack()),
-    goToDashboard: () => dispatch(push(Path.dashboard))
+    goToDashboard: () => dispatch(push(Path.dashboard)),
+    clearState: () => dispatch(clearState())
   }
 };
 
 function mapStateToProps(state) {
   return {
     showTelehealthInvite: state.telehealthState.isInvitationCame,
-    patientId: state.patientProfileState.patientId
+    patientId: state.patientProfileState.patientId,
+    isLoading: state.loadingState.isLoading
   };
 };
 

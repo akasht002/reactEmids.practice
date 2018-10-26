@@ -413,14 +413,16 @@ class PersonalDetail extends React.PureComponent {
           </div>
           <div className={'width100'}>
             <div className={'SPAffiliatedList'}>
+            {this.props.personalDetail &&
+                    this.props.personalDetail.affiliationName &&
               <span className={'AffiliatedList'}>
                 Affiliated to In
-                {' '}0
+                {' '}
                 <bd>
                   {this.props.personalDetail &&
                     this.props.personalDetail.affiliationName}
                 </bd>
-              </span>
+              </span>}
             </div>
           </div>
           <div className={'width100'}>
