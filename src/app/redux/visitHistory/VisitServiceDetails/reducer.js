@@ -18,7 +18,8 @@ const defaultState = {
     submittedResponse: null,
     serviceProviders: null,
     ServiceRequestId: '',
-    typeList: []
+    typeList: [],
+    historyListCount: ''
 };
 
 const vistServiceHistoryState = (state = defaultState, action) => {
@@ -77,6 +78,11 @@ const vistServiceHistoryState = (state = defaultState, action) => {
             return {
                 ...state,
                 typeList: action.data
+            }
+        case vistServiceHistoryDetails.getHistoryListCountSuccess:
+            return {
+                ...state,
+                historyListCount: action.data
             }
         default:
             return state;

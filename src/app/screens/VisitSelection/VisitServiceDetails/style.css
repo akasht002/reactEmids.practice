@@ -130,7 +130,8 @@ li div.dropdown-menu{
 }
 
 .SPContentWidget .ProfileContainer.topProfile {
-    height: calc(100vh - 70px);
+    /* height: calc(100vh - 70px); */
+    height: 620px;
 }
 
 .SPContentWidget .ProfileContainer .card {
@@ -603,7 +604,8 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-    height: calc(100vh - 216px);
+    /* height: calc(100vh - 216px); */
+    height: 470px;
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette {
@@ -617,7 +619,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
-    height: auto;
+    height: auto !important;
 }
 
 .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
@@ -667,7 +669,8 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
-    height: calc(100vh - 430px);
+    /* height: calc(100vh - 430px); */
+    height: 330px;
 }
 
 .BoardContainer{
@@ -732,23 +735,28 @@ div.scrollarea .scrollbar-container.vertical {
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
-        height: calc(100vh - 143px);
+        /* height: calc(100vh - 143px); */
+        height: 683px;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-        height: calc(100vh - 290px);
+        /* height: calc(100vh - 290px); */
+        height: 533px;
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        height: calc(100vh - 465px);
+        /* height: calc(100vh - 465px); */
+        height: 360px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
-        height: calc(100vh - 623px);
+        /* height: calc(100vh - 623px); */
+        height: 200px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        height: calc(100vh - 585px);
+        /* height: calc(100vh - 585px); */
+        height: 240px;
     }
 
     .bottomPalette {
@@ -772,11 +780,13 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
-        height: calc(100vh - 590px);
+        /* height: calc(100vh - 590px); */
+        height: 170px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        height: calc(100vh - 550px);
+        /* height: calc(100vh - 550px); */
+        height: 210px;
     }
 }
 
@@ -795,7 +805,8 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     .SPContentWidget .ProfileContainer.topProfile {
-        height: calc(100vh - 88px);
+        /* height: calc(100vh - 88px); */
+        height: 620px;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
@@ -808,11 +819,13 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     div.ProfileCardBody .ServiceRequestPalette{
-        height: calc(100vh - 575px);
+        /* height: calc(100vh - 575px); */
+        height: 191px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        height: calc(100vh - 530px);
+        /* height: calc(100vh - 530px); */
+        height: 230px;
     }
 
     .ProfileSkillServices {
@@ -917,7 +930,7 @@ div.scrollarea .scrollbar-container.vertical {
     }
 
     .SPContentWidget .ProfileContainer.topProfile, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette, .bottomProfile .innerWidget:first-child, .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content, .ProfileCardBody .ServiceRequestPalette, .bottomPalette, .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
-        height: 100%;
+        height: auto !important;
     }
 
     .ProfileCardNameContainer {

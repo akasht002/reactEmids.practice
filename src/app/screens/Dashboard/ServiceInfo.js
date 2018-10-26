@@ -309,7 +309,7 @@ export const ServiceProviderRequestDetails = props => {
                 <div className='avatarContainer'>
                   <img
                     alt='NO'
-                    className='avatarImage avatarImageBorder'
+                    className='avatarImage'
                     src={
                       sp.image
                         ? sp.image
