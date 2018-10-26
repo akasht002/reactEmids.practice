@@ -33,7 +33,9 @@ class VisitHistory extends Component {
       filterOpen: false,
       selectedKey: 'item-1',
       serviceTypeIds: [],
-      activePage: 1
+      activePage: 1,
+      sortByOrder: 'asc',
+      pageNumber: 1
     }
   }
 
@@ -121,10 +123,11 @@ class VisitHistory extends Component {
   }
 
   handlePageChange = (pageNumber) => {
+    this.setState({pageNumber: pageNumber})
     let data = {
       pageNumber : pageNumber,
       pageSize : 10,
-      sortOrder : 'desc',
+      sortOrder : this.state.sortByOrder,
       sortName : 'visitdate'
     }
     this.props.getVisitServiceLists(data)
@@ -133,8 +136,7 @@ class VisitHistory extends Component {
 
   selectedSort = (selectedKey) => {
     let data = {
-      serviceProviderId : getUserInfo().serviceProviderId,
-      pageNumber : 1,
+      pageNumber : this.state.pageNumber,
       pageSize : 10,
       sortOrder : selectedKey,
       sortName : 'visitdate'
@@ -192,6 +194,7 @@ class VisitHistory extends Component {
             handleClicks={this.handleClick}
           />
           {this.props.VisitServiceHistory.length > 0 &&
+          <div class="col-md-12 p-0 AsyncConversationPagination">
             <Pagination
               activePage={this.state.activePage}
               itemsCountPerPage={10}
@@ -204,6 +207,7 @@ class VisitHistory extends Component {
               itemClassNext="PaginationIcon Next"
               itemClassLast="PaginationIcon Last"
             />
+            </div>
           }
           <div className='cardBottom' />
         </Scrollbars>
