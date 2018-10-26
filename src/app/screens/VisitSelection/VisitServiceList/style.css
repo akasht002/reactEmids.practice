@@ -388,6 +388,11 @@ span.btn-invited, span.btn-invited:hover{
     border-bottom: 1px solid rgb(60,16,83,0.1);
 }
 
+.ServiceRequestsWidget .ServiceRequestBoard .BlockImageContainer
+{
+    border-bottom: 1px solid #e0e0e0;
+}
+
 .BlockImageContainer .ProfileImage{
     width: 40px;
     height: 40px;
@@ -726,6 +731,11 @@ div.scrollarea .scrollbar-container.vertical {
     font-size: 14px;
     color: #444444;
     margin-right: 15px;
+}
+
+.default-444
+{
+color: #444;
 }
 
 @media (min-width: 1367px) {

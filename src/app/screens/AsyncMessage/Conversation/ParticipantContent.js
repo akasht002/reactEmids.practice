@@ -118,7 +118,7 @@ class ParticipantContent extends Component {
         this.setState({ searchText: e.target.value });
         
             let data = {
-                patientId: this.props.loggedInUser.serviceProviderId,
+                patientId: this.props.context,
                 conversationId: this.props.conversationId,
                 searchText: e.target.value
             }
@@ -254,12 +254,13 @@ class ParticipantContent extends Component {
         };
 
         if (!this.state.addParticipantView) {
+            let accesDenied = !this.props.isActive || this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId;
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
                         <span className="mr-auto primaryColor sideParticipantsTitle">Participants</span>
                         <span className="ml-auto d-flex">
-                            { this.props.loggedInUser.serviceProviderTypeId === USERTYPES.DESIGNATED_SERVICE_PROVIDER && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
+                            { !accesDenied && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
                             <button className="ParticipantClose" onClick={this.props.toggleParticipantList} />
                         </span>
 

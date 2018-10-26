@@ -133,6 +133,7 @@ class MessageContent extends Component {
         };
 
         let conversations = "";
+        let accesDenied = !this.props.conversation.isActive || this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId;
         if (this.props.conversation.messages && this.props.conversation.messages.length > 0) {
             conversations = this.props.conversation.messages.map((conversation, index) => {
                 let messageClass = "";
@@ -152,7 +153,7 @@ class MessageContent extends Component {
                 return (
                     <div className={"chatMessage " + messageClass}>
                         <div className={"avatarContainer " + ordering}>
-                            <img key={index} alt="i" src={require("../../../assets/images/Blank_Profile_icon.png")}
+                            <img key={index} alt="i" src={ conversation.createdByThumbnail ? conversation.createdByThumbnail : require("../../../assets/images/Blank_Profile_icon.png")}
                                 className="avatarImage" />
                         </div>
                         <div className="ChatBubble">
@@ -194,11 +195,13 @@ class MessageContent extends Component {
                                             <span className="MsgIndiTitle chatHeaderText">
                                                 {this.props.title ? this.props.title : "Add Title"}
                                             </span>
-                                            <button
-                                                disabled={!this.props.conversation.isActive || !this.props.canCreateConversation || this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId}
+                                            {!accesDenied &&
+                                                <button
+                                                disabled={!this.props.conversation.isActive || this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId}
                                                 className="editButton"
                                                 onClick={this.props.onToggleEditTitle} />
-
+                                            }
+                                            
                                             <button disabled={!this.props.conversation.isActive}
                                                 className="ParticipantslistButton showParticipantList"
                                                 onClick={this.props.toggleParticipantList} />

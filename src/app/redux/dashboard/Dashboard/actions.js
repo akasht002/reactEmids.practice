@@ -211,9 +211,7 @@ export const getConversationDetailSuccess = data => {
 export function getConversationDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    axios
-      .get(
-        messageURL +
+    MessageURLGet(
           API.getConversationSummary +
           getUserInfo().serviceProviderId + '/' +
           USERTYPES.SERVICE_PROVIDER + '/' +
@@ -240,9 +238,7 @@ export const onUnreadCountSuccess = data => {
 export function getUnreadMessageCounts (userId) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    axios
-      .get(
-        messageURL +
+    MessageURLGet(
           API.getUnreadCount +
           getUserInfo().serviceProviderId + '/' +
           USERTYPES.SERVICE_PROVIDER

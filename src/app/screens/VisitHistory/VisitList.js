@@ -21,7 +21,7 @@ export const VisitList = props => {
                     </Moment>, {vistList.slotDescription}
                   </span>
                   <span>{vistList.billedTotalDuration} hrs</span>                 
-                  <span>{vistList.serviceRequestId}</span>
+                  <span>{vistList.serviceRequestVisitId}</span>
                 </div>
               </div>
               <div className='visitListBottom'>
