@@ -28,6 +28,7 @@ class Dashboard extends React.Component {
     }
     this.remMin = 0;
     this.clearInterval = null;
+    this.CheckClickToggle = false;
   }
   componentDidMount() {
     this.props.getPersonalDetail();
@@ -56,6 +57,7 @@ class Dashboard extends React.Component {
   }
 
   onValueChange = () => {
+    this.CheckClickToggle = true;
     if(this.state.isChecked === false) {    
     this.props.getSpBusyInVisit();
     } else if(this.state.isChecked === true) {        
@@ -70,7 +72,7 @@ onSuccessSpBusyInVisit = (visitProcess) => {
     if(visitProcess.isServiceProviderBusyInVisit === true){
       this.setState({showVisitModal: true})
   }
-  else if(visitProcess.isServiceProviderBusyInVisit === false) {
+  else if(this.CheckClickToggle && visitProcess.isServiceProviderBusyInVisit === false) {
   this.setState({
     isChecked: true
   }, () => {
