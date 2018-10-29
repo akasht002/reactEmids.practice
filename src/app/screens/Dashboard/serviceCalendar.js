@@ -412,7 +412,7 @@ class serviceCalendar extends React.Component {
               value={item.serviceProviderId}
               onChange={e => this.handleserviceType(item, e)}
             />
-            <label htmlFor={'ServiceList' + catNum}>
+            <label htmlFor={item.serviceProviderId}>
               {item.firstName + ' ' + item.lastName}
             </label>
           </div>
