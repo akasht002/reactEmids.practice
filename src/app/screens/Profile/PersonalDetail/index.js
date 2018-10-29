@@ -15,7 +15,8 @@ import {
   ModalPopup,ScreenCover,
   ProfileImage
 } from '../../../components'
-import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
+import BlackoutModal from '../../../components/LevelOne/BlackoutModal';
+import ImageModal from './ImageModal';
 import { OrganizationData } from '../../../data/OrganizationData';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
@@ -184,8 +185,13 @@ class PersonalDetail extends React.PureComponent {
     }
   }
  
-
   closeImageUpload = () => {
+    this.setState({
+      uploadImage: !this.state.uploadImage
+    });
+  }
+
+  saveImageUpload = () => {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -203,13 +209,13 @@ class PersonalDetail extends React.PureComponent {
     let modalContent
     let modalTitle = 'Edit Personal Detials'
     let modalType = ''
-    const cityDetail = this.props.cityDetail.map((city, i) => {
+    const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
       return {label :  city.name ,value:city.id + '-' + city.name}
     })
-    const genderDetail = this.props.genderList.map((gender, i) => {
+    const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
       return {label :  gender.name ,value:gender.id + '-' + gender.name}
     })
-    const affiliationDetail = this.props.affiliationList.map((affiliation, i) => {
+    const affiliationDetail = this.props.affiliationList && this.props.affiliationList.map((affiliation, i) => {
       return {label :  affiliation.name ,value:affiliation.affiliationId + '-' + affiliation.name}
     })
    
@@ -217,13 +223,14 @@ class PersonalDetail extends React.PureComponent {
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
         {this.getModalContent(cityDetail, genderDetail,affiliationDetail)}
-        <BlackoutModal
+        <ImageModal
           isOpen={this.state.uploadImage}
           toggle={this.closeImageUpload}
           ModalBody={this.getBlackModalContent()}
           className='modal-lg asyncModal BlackoutModal'
           modalTitle='Edit Profile Image'
           centered='centered'
+          saveImage={this.saveImageUpload}
         />
       </form>
     )
@@ -386,8 +393,6 @@ class PersonalDetail extends React.PureComponent {
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.genderName}
-                  {' '}
-                  gender
                 </span>
                 <span>
                   {this.props.personalDetail && this.props.personalDetail.age}

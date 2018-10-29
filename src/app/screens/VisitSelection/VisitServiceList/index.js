@@ -257,7 +257,7 @@ class VisitServiceList extends Component {
                             <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
-                                    <span>{serviceList.type}</span>
+                                    <span className="default-444">{serviceList.type}</span>
                                 </div>
                                 <div className='BlockImageDetailsActivity'>
                                     {serviceList.serviceCategoryDescription}
