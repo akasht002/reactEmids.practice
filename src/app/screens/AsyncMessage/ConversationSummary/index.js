@@ -101,44 +101,36 @@ class ConversationSummary extends Component {
         </div>
         return (
             <AsideScreenCover >
-                <div class="ProfileHeaderWidget">
-                    <div class="ProfileHeaderTitle">
+                <div className='ProfileHeaderWidget'>
+                    <div className='ProfileHeaderTitle'>
                         <h5 class="primaryColor m-0">Conversation Summary</h5>
                     </div>
                     {this.props.loggedInUser.userType !== USERTYPES.SERVICE_PROVIDER &&
                         <div class="ProfileHeaderButton">
-                            <span class="btn btn-outline-primary" onClick={this.onSetDisplayParticipantModal}>+ New Conversation</span>
+                            <button class="btn btn-outline-primary" onClick={this.onSetDisplayParticipantModal}>+ New Conversation</button>
                         </div>
                     }
                 </div>
-                <div className="mobile-view-title">
-                    <div className="container-fluid p-0">
-                        <div className="width100 mainWidgetProfile">
-                            <div className="container mainProfileContent">
-                                <div className="row d-flex justify-content-center">
-                                    <MessageList
-                                        conversation={this.props.conversation}
-                                        gotoConversations={this.onClickConversation}
-                                        getUnreadMsgCounts={this.props.unreadMsgCounts} />
-                                    <div className="col-md-12 p-0 AsyncConversationPagination">
-                                        {this.props.conversation.length > 0 &&
-                                            <Pagination
-                                                activePage={this.state.activePage}
-                                                itemsCountPerPage={10}
-                                                totalItemsCount={this.props.conversationCount}
-                                                pageRangeDisplayed={5}
-                                                onChange={this.handlePageChange}
-                                                itemClass="PaginationItem"
-                                                itemClassFirst="PaginationIcon First"
-                                                itemClassPrev="PaginationIcon Prev"
-                                                itemClassNext="PaginationIcon Next"
-                                                itemClassLast="PaginationIcon Last"
-                                            />
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div className="SPContentWidget MessageCardWidget">
+                    <MessageList
+                        conversation={this.props.conversation}
+                        gotoConversations={this.onClickConversation}
+                        getUnreadMsgCounts={this.props.unreadMsgCounts} />
+                    <div className="col-md-12 p-0 AsyncConversationPagination">
+                        {this.props.conversation.length > 0 &&
+                            <Pagination
+                                activePage={this.state.activePage}
+                                itemsCountPerPage={10}
+                                totalItemsCount={this.props.conversationCount}
+                                pageRangeDisplayed={5}
+                                onChange={this.handlePageChange}
+                                itemClass="PaginationItem"
+                                itemClassFirst="PaginationIcon First"
+                                itemClassPrev="PaginationIcon Prev"
+                                itemClassNext="PaginationIcon Next"
+                                itemClassLast="PaginationIcon Last"
+                            />
+                        }
                     </div>
                 </div>
 
