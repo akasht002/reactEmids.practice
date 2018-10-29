@@ -14,7 +14,8 @@ import {
   updateServiceRequestByServiceProvider,
   cancelServiceRequestByServiceProvider,
   getVisitServiceEligibilityStatus,
-  getDays
+  getDays,
+  dispatchServiceRequestByServiceProvider
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
   getPerformTasksList
@@ -23,13 +24,20 @@ import { serviceRequestMessages } from '../../../utils/messageUtility'
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
-import { MORNING, AFTERNOON, EVENING, HIRED_STATUS_ID } from '../../../constants/constants'
+import {
+  MORNING,
+  AFTERNOON,
+  EVENING,
+  HIRED_STATUS_ID
+} from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
-import { SERVICE_VISIT_STATUS, RECURRING_PATTERN } from '../../../constants/constants'
+import {
+  SERVICE_VISIT_STATUS,
+  RECURRING_PATTERN
+} from '../../../constants/constants'
 import { getLength } from '../../../utils/validations'
 class VisitServiceDetails extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       verticalScroll: false,
@@ -40,13 +48,15 @@ class VisitServiceDetails extends Component {
       isAlertModalOpen: false,
       patientId: '',
       serviceType: '',
-      isOpen: false
+      isOpen: false,
+      isAlertModalopenConfirm:false
     }
     this.alertModalMsg = ''
     this.status = {}
+    this.alertModalMsgstatus=''
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId)
       this.props.getVisitServiceSchedule(this.props.ServiceRequestId)
@@ -56,21 +66,23 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     this.setState({
       visitServiceDetails: nextProps.VisitServiceDetails,
       visitServiceSchedule: nextProps.VisitServiceSchedule,
       patientId: nextProps.VisitServiceDetails.patient &&
         nextProps.VisitServiceDetails.patientId,
-      serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails && nextProps.VisitServiceDetails.serviceRequestTypeDetails[0].serviceRequestTypeDetailsId
+      serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
+        nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
+          .serviceRequestTypeDetailsId
     })
   }
 
   checkEligibility = () => {
     const data = {
-      "patientId": this.state.patientId,
-      "serviceRequestId": this.props.ServiceRequestId,
-      "serviceProviderId": this.state.visitServiceDetails.serviceProviderId
+      patientId: this.state.patientId,
+      serviceRequestId: this.props.ServiceRequestId,
+      serviceProviderId: this.state.visitServiceDetails.serviceProviderId
     }
     this.props.getVisitServiceEligibilityStatus(data)
   }
@@ -79,7 +91,7 @@ class VisitServiceDetails extends Component {
     this.props.visitService()
   }
 
-  toggle(tab) {
+  toggle (tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab
@@ -116,6 +128,13 @@ class VisitServiceDetails extends Component {
         type: status.isInterested ? 1 : 0
       }
       this.props.updateServiceRequestByServiceProvider(model)
+      console.log(this.props.updateServiceRequestMsgStatus)
+        if(this.props.updateServiceRequestMsgStatus===0){
+          this.setState({isAlertModalopenConfirm :true}) 
+        }else {
+          // this.props.history.push("/visitServiceList")
+        }
+      
     } else {
       let model = {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
@@ -126,7 +145,12 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  showData = (data) => {
+  onConfirmSerivceRequestMsg=()=>{
+    this.setState({isAlertModalopenConfirm :false}) 
+    this.props.history.push("/visitServiceList")
+  }
+
+  showData = data => {
     if (data.occurence !== 0) {
       return '- ' + data.occurence + ' occurences'
     } else {
@@ -134,7 +158,7 @@ class VisitServiceDetails extends Component {
         <React.Fragment>
           -
           &nbsp;
-            <Moment format='DD MMM YYYY'>
+          <Moment format='DD MMM YYYY'>
             {data.endDate}
           </Moment>
         </React.Fragment>
@@ -142,13 +166,13 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  render() {
-    let defaultCheck = '';
+  render () {
+    let defaultCheck = ''
     let sliderTypes =
       this.state.visitServiceDetails.serviceRequestTypeDetails &&
       this.state.visitServiceDetails.serviceRequestTypeDetails.map(
         (serviceTypes, index) => {
-          index === 0 ? defaultCheck = true : defaultCheck = false;
+          index === 0 ? (defaultCheck = true) : (defaultCheck = false)
           let catNum = index + 1
           return (
             <div className='ServiceTypeList'>
@@ -165,7 +189,9 @@ class VisitServiceDetails extends Component {
                 className='ServiceTypeLink'
                 htmlFor={serviceTypes.serviceRequestTypeDetailsId}
               >
-                <span className={`ServiceTypeIcon SPIconServices${serviceTypes.serviceTypeId}`} />
+                <span
+                  className={`ServiceTypeIcon SPIconServices${serviceTypes.serviceTypeId}`}
+                />
                 <div className='serviceTypeDesc'>
                   <span className='serviceName'>
                     {serviceTypes.serviceTypeDescription}
@@ -189,7 +215,7 @@ class VisitServiceDetails extends Component {
                   if (
                     this.state.serviceType &&
                     this.state.serviceType ===
-                    taskDetails.serviceRequestTypeDetailsId
+                      taskDetails.serviceRequestTypeDetailsId
                   ) {
                     return (
                       <li>
@@ -205,54 +231,84 @@ class VisitServiceDetails extends Component {
         }
       )
 
-    let modifiedDays = [];
+    let modifiedDays = []
 
-    this.props.daysType && this.props.daysType.map((day) => {
-      let checkDay = {
-        day: day.keyValue,
-        slotDescription: []
-      }
-      this.state.visitServiceDetails.serviceRequestSlot &&
-        this.state.visitServiceDetails.serviceRequestSlot.map((slotDay) => {
-          if (day.id === slotDay.dayOfWeek) {
-            checkDay.slotDescription.push(slotDay.slotDescription)
-          }
-        });
-      if (checkDay.slotDescription.length > 0) {
-        modifiedDays.push(checkDay)
-      }
-    });
+    this.props.daysType &&
+      this.props.daysType.map(day => {
+        let checkDay = {
+          day: day.keyValue,
+          slotDescription: []
+        }
+        this.state.visitServiceDetails.serviceRequestSlot &&
+          this.state.visitServiceDetails.serviceRequestSlot.map(slotDay => {
+            if (day.id === slotDay.dayOfWeek) {
+              checkDay.slotDescription.push(slotDay.slotDescription)
+            }
+          })
+        if (checkDay.slotDescription.length > 0) {
+          modifiedDays.push(checkDay)
+        }
+      })
 
-    let AvailDays = modifiedDays && modifiedDays.map((days, index) => {
-      let Count = ''
-      return (
-        <div className={'SPAvailContainer ' + Count + 'Available'}>
-          <div className={'SPAvailTitle'}>
-            <label className='SPAvailTitleText'>{days.day}</label>
+    let AvailDays =
+      modifiedDays &&
+      modifiedDays.map((days, index) => {
+        let Count = ''
+        return (
+          <div className={'SPAvailContainer ' + Count + 'Available'}>
+            <div className={'SPAvailTitle'}>
+              <label className='SPAvailTitleText'>{days.day}</label>
+            </div>
+            <div className={'SPAvailContent'}>
+              <label
+                className={
+                  'SPAvailItems ' +
+                    (days.slotDescription.includes('Morning') ? 'active' : '')
+                }
+              >
+                Morning
+              </label>
+              <label
+                className={
+                  'SPAvailItems ' +
+                    (days.slotDescription.includes('Afternoon') ? 'active' : '')
+                }
+              >
+                Afternoon
+              </label>
+              <label
+                className={
+                  'SPAvailItems ' +
+                    (days.slotDescription.includes('Evening') ? 'active' : '')
+                }
+              >
+                Evening
+              </label>
+            </div>
           </div>
-          <div className={'SPAvailContent'}>
-            <label className={'SPAvailItems ' + (days.slotDescription.includes('Morning') ? 'active' : '')}>Morning</label>
-            <label className={'SPAvailItems ' + (days.slotDescription.includes('Afternoon') ? 'active' : '')}>Afternoon</label>
-            <label className={'SPAvailItems ' + (days.slotDescription.includes('Evening') ? 'active' : '')}>Evening</label>
-          </div>
-        </div>
-      )
-    })
+        )
+      })
 
-    let address = this.state.visitServiceDetails.patient &&
+    let address =
+      this.state.visitServiceDetails.patient &&
       this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
         return obj.isPrimaryAddress === true
       })
-    let profileImage = null;
-    let patientLastName = '';
+    let profileImage = null
+    let patientLastName = ''
     if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
-      profileImage = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.imageString ? this.state.visitServiceDetails.patient.imageString
-        : require('../../../assets/images/Blank_Profile_icon.png');
-      patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName;
-
+      profileImage = this.state.visitServiceDetails.patient &&
+        this.state.visitServiceDetails.patient.imageString
+        ? this.state.visitServiceDetails.patient.imageString
+        : require('../../../assets/images/Blank_Profile_icon.png')
+      patientLastName =
+        this.state.visitServiceDetails.patient &&
+        this.state.visitServiceDetails.patient.lastName
     } else {
-      profileImage = require('../../../assets/images/Blank_Profile_icon.png');
-      patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName.charAt(0);
+      profileImage = require('../../../assets/images/Blank_Profile_icon.png')
+      patientLastName =
+        this.state.visitServiceDetails.patient &&
+        this.state.visitServiceDetails.patient.lastName.charAt(0)
     }
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -278,9 +334,9 @@ class VisitServiceDetails extends Component {
                     Request ID
                   </span>
                   <span className='HeaderRequestLabelID'>
-                    {this.state.visitServiceDetails.serviceRequestId ?
-                      this.state.visitServiceDetails.serviceRequestId :
-                      this.state.visitServiceDetails.ServiceRequestId}
+                    {this.state.visitServiceDetails.serviceRequestId
+                      ? this.state.visitServiceDetails.serviceRequestId
+                      : this.state.visitServiceDetails.ServiceRequestId}
                   </span>
                 </div>
                 <div className='ProfileHeaderButton'>
@@ -304,16 +360,18 @@ class VisitServiceDetails extends Component {
 
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileDetailsName'>
-                        {getLength(this.state.visitServiceDetails.patient) > 0 && this.state.visitServiceDetails.patient.firstName}
+                        {getLength(this.state.visitServiceDetails.patient) >
+                          0 && this.state.visitServiceDetails.patient.firstName}
                         {' '}
                         {patientLastName}
                       </div>
                       <div class='ProfileDetailsDate'>
                         Posted on
                         {' '}
-                        {this.state.visitServiceDetails.postedDate && <Moment format='DD MMM'>
-                          {this.state.visitServiceDetails.postedDate}
-                        </Moment>}
+                        {this.state.visitServiceDetails.postedDate &&
+                          <Moment format='DD MMM'>
+                            {this.state.visitServiceDetails.postedDate}
+                          </Moment>}
                       </div>
                     </div>
                   </div>
@@ -337,7 +395,7 @@ class VisitServiceDetails extends Component {
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                        <Link to="/teleHealth/">Video Call </Link>
+                        <Link to='/teleHealth/'>Video Call </Link>
                       </div>
                     </div>
                   </div>
@@ -365,7 +423,7 @@ class VisitServiceDetails extends Component {
                         })}
                         onClick={() => {
                           this.toggle('2')
-                          this.checkEligibility();
+                          this.checkEligibility()
                         }}
                       >
                         Schedule
@@ -409,34 +467,41 @@ class VisitServiceDetails extends Component {
                           </h2>
                           <div className='ContentTitle Summary mt-3 mb-4'>
                             <span className='ContentTitle Summary'>
-                              {this.state.visitServiceDetails.recurringPatternDescription === RECURRING_PATTERN ?
-                                this.state.visitServiceDetails.recurringPatternDescription + ' ' : 'Recurring '}
+                              {this.state.visitServiceDetails
+                                .recurringPatternDescription ===
+                                RECURRING_PATTERN
+                                ? this.state.visitServiceDetails
+                                    .recurringPatternDescription + ' '
+                                : 'Recurring '}
                               Schedule
                             </span>
                             <span>
-                              {this.state.visitServiceDetails.startDate && <Moment format='DD MMM YYYY'>
-                                {this.state.visitServiceDetails.startDate}
-                              </Moment>}
+                              {this.state.visitServiceDetails.startDate &&
+                                <Moment format='DD MMM YYYY'>
+                                  {this.state.visitServiceDetails.startDate}
+                                </Moment>}
 
-                              {this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN &&
+                              {this.state.visitServiceDetails
+                                .recurringPatternDescription !==
+                                RECURRING_PATTERN &&
                                 this.showData(this.state.visitServiceDetails)
-                                // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
+                              // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
                               }
                             </span>
-                            {this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN && (
+                            {this.state.visitServiceDetails
+                              .recurringPatternDescription !==
+                              RECURRING_PATTERN &&
                               <React.Fragment>
                                 <span className='ContentTitle Summary'>
                                   Recurring Pattern
-                                  </span>
+                                </span>
                                 <span>
                                   {
                                     this.state.visitServiceDetails
                                       .recurringPatternDescription
                                   }
                                 </span>
-                              </React.Fragment>
-                            )
-                            }
+                              </React.Fragment>}
 
                           </div>
                           <div className='AvailabilityWidget'>
@@ -447,9 +512,9 @@ class VisitServiceDetails extends Component {
                           <h2 className='ServicesTitle'>Point of Service</h2>
                           <div className='SummaryContent POS mt-3 mb-5'>
 
-                            {this.state.visitServiceDetails.patient
-                              && this.state.visitServiceDetails.patient ?
-                              address.map((pointofservice) => {
+                            {this.state.visitServiceDetails.patient &&
+                              this.state.visitServiceDetails.patient
+                              ? address.map(pointofservice => {
                                 return (
                                   <Fragment>
                                     <p>
@@ -523,45 +588,49 @@ class VisitServiceDetails extends Component {
                               </div>
                               <div>
                                 <div class='ScheduleRowButton'>
-                                  {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.COMPLETED
+                                  {ScheduleList.visitStatusName ===
+                                    SERVICE_VISIT_STATUS.COMPLETED
                                     ? <a
                                       className='btn btn-outline-primary'
                                       to='/'
-                                    >
+                                      >
                                       <i className='ProfileIconEye' />Summary
                                       </a>
                                     : ''}
-                                  {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.SCHEDULED
+                                  {ScheduleList.visitStatusName ===
+                                    SERVICE_VISIT_STATUS.SCHEDULED
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
-                                        this.visitProcessing(
-                                          ScheduleList.serviceRequestVisitId
-                                        )}
-                                    >
-                                      Start Visit
+                                          this.visitProcessing(
+                                            ScheduleList.serviceRequestVisitId
+                                          )}
+                                      >
+                                        Start Visit
                                       </a>
                                     : ''}
-                                  {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.INPROGRESS
+                                  {ScheduleList.visitStatusName ===
+                                    SERVICE_VISIT_STATUS.INPROGRESS
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
-                                        this.visitProcessing(
-                                          ScheduleList.serviceRequestVisitId
-                                        )}
-                                    >
-                                      In Progress
+                                          this.visitProcessing(
+                                            ScheduleList.serviceRequestVisitId
+                                          )}
+                                      >
+                                        In Progress
                                       </a>
                                     : ''}
-                                  {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.PAYMENTPENDING
+                                  {ScheduleList.visitStatusName ===
+                                    SERVICE_VISIT_STATUS.PAYMENTPENDING
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
-                                        this.visitProcessing(
-                                          ScheduleList.serviceRequestVisitId
-                                        )}
-                                    >
-                                      Payment Pending
+                                          this.visitProcessing(
+                                            ScheduleList.serviceRequestVisitId
+                                          )}
+                                      >
+                                        Payment Pending
                                       </a>
                                     : ''}
                                 </div>
@@ -595,13 +664,30 @@ class VisitServiceDetails extends Component {
                 isAlertModalOpen: false
               })}
           />
+           <ModalPopup
+            isOpen={this.state.isAlertModalopenConfirm}
+            toggle={this.reset1}
+            ModalBody={<span>{this.alertModalMsg}</span>}
+            btn1='Yes'
+            className='modal-sm'
+            headerFooter='d-none'
+            centered='centered'
+            onConfirm={() => {
+              this.onConfirmSerivceRequestMsg()
+              
+            }}
+            onCancel={() =>
+              this.setState({
+                isAlertModalopenConfirm: false
+              })}
+          />
         </Scrollbars>
       </AsideScreenCover>
     )
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
     getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
@@ -614,11 +700,12 @@ function mapDispatchToProps(dispatch) {
     getVisitServiceEligibilityStatus: data =>
       dispatch(getVisitServiceEligibilityStatus(data)),
     getDays: () => dispatch(getDays()),
-    goBack: () => dispatch(goBack())
+    goBack: () => dispatch(goBack()),
+    dispatchServiceRequestByServiceProvider:()=>dispatchServiceRequestByServiceProvider()
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     VisitServiceDetails: state.visitSelectionState.VisitServiceDetailsState
       .VisitServiceDetails,
@@ -626,8 +713,10 @@ function mapStateToProps(state) {
       .VisitServiceSchedule,
     ServiceRequestId: state.visitSelectionState.VisitServiceDetailsState
       .ServiceRequestId,
-    VisitServiceElibilityStatus: state.visitSelectionState.VisitServiceDetailsState
-      .VisitServiceElibilityStatus,
+    updateServiceRequestMsgStatus: state.visitSelectionState
+      .VisitServiceDetailsState.updateServiceRequestMsgStatus,
+    VisitServiceElibilityStatus: state.visitSelectionState
+      .VisitServiceDetailsState.VisitServiceElibilityStatus,
     daysType: state.visitSelectionState.VisitServiceDetailsState.daysType
   }
 }
