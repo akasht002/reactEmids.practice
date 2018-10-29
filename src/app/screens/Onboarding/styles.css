@@ -141,6 +141,10 @@ div.row.emptyGuardianRow{
 {
 color:#7a329f !important;
 }
+label.license-agreespan
+{
+margin-left: 5px !important;
+}
 
 /*cross-browser-bug-fixed-e11*/
 
