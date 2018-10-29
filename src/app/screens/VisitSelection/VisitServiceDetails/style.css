@@ -123,6 +123,10 @@ li div.dropdown-menu{
     padding: 0 20px;
 }
 
+.ProfileContentWidget.ScrollBar, .SPContentWidget.ScrollBar {
+    overflow: auto;
+}
+
 .SPContentWidget .ProfileContainer {
     width: calc(50% - 20px);
     float: left;
@@ -590,7 +594,8 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended {
-    height: calc(100vh - 140px);
+    /* height: calc(100vh - 140px); */
+    height: 683px;
     z-index: 9;
 }
 
@@ -627,7 +632,9 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-    max-height: calc(100vh - 276px);
+    /* max-height: calc(100vh - 276px); */
+    max-height: 547px;
+    height: 100%;
 }
 
 .ProfileCard.extended .ProfileCardBody, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
@@ -771,12 +778,14 @@ div.scrollarea .scrollbar-container.vertical {
 @media (max-width: 1366px) {
 
     .innerWidget .card.extended {
-        height: calc(100vh - 70px);
+        /* height: calc(100vh - 140px); */
+        height: 620px;
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        max-height: calc(100vh - 276px);
-        height: 100vh;
+        /* height: calc(100vh - 276px); */
+        max-height: 485px;
+        height: 100%;
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
