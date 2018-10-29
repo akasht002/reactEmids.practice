@@ -61,26 +61,28 @@ export const serviceCalendar = (
         <Fragment>
           <li
             key={index}
-            className='list-group-item ProfileServicesVisitContent'
+            className={'list-group-item ProfileServicesVisitContent ' + (getUserInfo().serviceProviderTypeId === ENTITY_USER && "EntityUDashboard") }
           >
             {/* <div className='ServicesTimeContainer'>
               <i className={'ServicesTime ' + conversations.slotDescription} />
             </div> */}
             <div
-              className='ProfileServices'
-              onClick={() => {
-                handleClick(conversations.serviceRequestId)
-              }}
+              className='ProfileServices'              
             >
+            <span className="ServicesCalendarWidget" onClick={() => {
+                handleClick(conversations.serviceRequestId)
+              }}>
               <span className='ServicesTitle'>
                 {conversations.serviceTypes &&
                   conversations.serviceTypes.toString()}
               </span>
-              <span className='ServicesDesc'>
+              <span className='ServicesDesc' >
                 {conversations.serviceCategory && conversations.serviceCategory}
               </span>
+              </span>
               {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
-                <span
+              <div className="EntityUServiceProf">
+                <span><i className="assignSPLink"
                   onClick={e =>
                     togglePersonalDetails({
                       serviceRequestId: conversations.serviceRequestId,
@@ -89,7 +91,10 @@ export const serviceCalendar = (
                     })}
                 >
                   Assign Service Provider
-                </span>}
+                  </i>
+                </span>
+              </div>
+                }
             </div>
             <div className='ProfileCardImageContainer' onClick={() => {
               props.goToPatientProfile(conversations.patientId);
