@@ -478,7 +478,7 @@ class EntityPersonalDetail extends React.PureComponent {
             autoComplete='off'
             required='required'
             type='text'
-            maxlength='2'
+            maxlength='40'
             value={this.state.url}
             textChange={e => {
               this.setState({

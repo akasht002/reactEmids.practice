@@ -17,7 +17,6 @@ import {
   ScreenCover,
   ProfileImage
 } from '../../../components'
-import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import ImageModal from '../PersonalDetail/ImageModal';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants'
@@ -59,7 +58,8 @@ class Organization extends React.PureComponent {
   componentWillReceiveProps (nextProps) {
     this.setState({
       imageProfile: nextProps.profileImgData.image,
-      organizationName: nextProps.personalDetail.organization,
+      organizationName:  nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.organization,
+      url: nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
       description: nextProps.personalDetail.description,
       hourlyRate: nextProps.personalDetail.hourlyRate,
       city: getArrayLength(nextProps.personalDetail.address) > 0
@@ -366,8 +366,8 @@ class Organization extends React.PureComponent {
           <div className={'d-flex'}>
             <div className={'col-md-7 p-0'}>
               <h3 className={'SPName'}>
-                {this.props.personalDetail &&
-                  `${this.props.personalDetail.organizationName || ''} `}
+                {this.props.personalDetail && this.props.personalDetail.entity &&
+                  `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
               <div className={'col-md-7 p-0'}>
               <h3 className={'SPName'}>
@@ -739,8 +739,8 @@ class Organization extends React.PureComponent {
     let old_data = {
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      organizationName: this.props.personalDetail.organizationName
-        ? this.props.personalDetail.organizationName
+      organizationName: this.props.personalDetail.entity.organization
+        ? this.props.personalDetail.entity.organization
         : '',
       phoneNumber: this.props.personalDetail.phoneNumber
     }
