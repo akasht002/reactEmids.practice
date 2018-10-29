@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import Moment from 'react-moment'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import { Scrollbars, ModalPopup } from '../../../components'
-import { push } from '../../../redux/navigation/actions'
+import { goBack, push } from '../../../redux/navigation/actions'
 import { Path } from '../../../routes'
 import {
   getVisitServiceDetails,
@@ -25,8 +25,8 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 import { MORNING, AFTERNOON, EVENING, HIRED_STATUS_ID } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
-import { SERVICE_VISIT_STATUS,RECURRING_PATTERN } from '../../../constants/constants'
-import {getLength} from '../../../utils/validations'
+import { SERVICE_VISIT_STATUS, RECURRING_PATTERN } from '../../../constants/constants'
+import { getLength } from '../../../utils/validations'
 class VisitServiceDetails extends Component {
 
   constructor(props) {
@@ -42,8 +42,8 @@ class VisitServiceDetails extends Component {
       serviceType: '',
       isOpen: false
     }
-      this.alertModalMsg = ''
-      this.status = {}
+    this.alertModalMsg = ''
+    this.status = {}
   }
 
   componentDidMount() {
@@ -62,7 +62,7 @@ class VisitServiceDetails extends Component {
       visitServiceSchedule: nextProps.VisitServiceSchedule,
       patientId: nextProps.VisitServiceDetails.patient &&
         nextProps.VisitServiceDetails.patientId,
-        serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails && nextProps.VisitServiceDetails.serviceRequestTypeDetails[0].serviceRequestTypeDetailsId
+      serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails && nextProps.VisitServiceDetails.serviceRequestTypeDetails[0].serviceRequestTypeDetailsId
     })
   }
 
@@ -126,17 +126,17 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  showData = (data)=>{
-    if(data.occurence !==0 ){
-      return  '- ' +  data.occurence + ' occurences'
-    }else{
-      return ( 
+  showData = (data) => {
+    if (data.occurence !== 0) {
+      return '- ' + data.occurence + ' occurences'
+    } else {
+      return (
         <React.Fragment>
-                -         
-                &nbsp;
+          -
+          &nbsp;
             <Moment format='DD MMM YYYY'>
-              {data.endDate}
-            </Moment>
+            {data.endDate}
+          </Moment>
         </React.Fragment>
       )
     }
@@ -155,7 +155,7 @@ class VisitServiceDetails extends Component {
               <input
                 id={serviceTypes.serviceRequestTypeDetailsId}
                 type='radio'
-                defaultChecked = {defaultCheck}
+                defaultChecked={defaultCheck}
                 className='ServiceTypeInput'
                 name='serviceType'
                 value={catNum}
@@ -165,7 +165,7 @@ class VisitServiceDetails extends Component {
                 className='ServiceTypeLink'
                 htmlFor={serviceTypes.serviceRequestTypeDetailsId}
               >
-                <span className={'ServiceTypeIcon SPIconServices' + catNum} />
+                <span className={`ServiceTypeIcon SPIconServices${serviceTypes.serviceTypeId}`} />
                 <div className='serviceTypeDesc'>
                   <span className='serviceName'>
                     {serviceTypes.serviceTypeDescription}
@@ -205,39 +205,39 @@ class VisitServiceDetails extends Component {
         }
       )
 
-      let modifiedDays = [];
+    let modifiedDays = [];
 
-      this.props.daysType && this.props.daysType.map((day) => {
-          let checkDay = {
-              day: day.keyValue,
-              slotDescription: []
+    this.props.daysType && this.props.daysType.map((day) => {
+      let checkDay = {
+        day: day.keyValue,
+        slotDescription: []
+      }
+      this.state.visitServiceDetails.serviceRequestSlot &&
+        this.state.visitServiceDetails.serviceRequestSlot.map((slotDay) => {
+          if (day.id === slotDay.dayOfWeek) {
+            checkDay.slotDescription.push(slotDay.slotDescription)
           }
-          this.state.visitServiceDetails.serviceRequestSlot &&
-          this.state.visitServiceDetails.serviceRequestSlot.map((slotDay) => {
-              if (day.id === slotDay.dayOfWeek) {
-                  checkDay.slotDescription.push(slotDay.slotDescription)
-              }
-          });
-          if (checkDay.slotDescription.length > 0) {
-              modifiedDays.push(checkDay)
-          }
-      });
+        });
+      if (checkDay.slotDescription.length > 0) {
+        modifiedDays.push(checkDay)
+      }
+    });
 
-      let AvailDays = modifiedDays && modifiedDays.map((days, index) => {
-          let Count = ''
-          return (
-              <div className={'SPAvailContainer ' + Count + 'Available'}>
-                  <div className={'SPAvailTitle'}>
-                      <label className='SPAvailTitleText'>{days.day}</label>
-                  </div>
-                  <div className={'SPAvailContent'}>
-                          <label className={'SPAvailItems ' + (days.slotDescription.includes('Morning') ? 'active' : '')}>Morning</label>
-                          <label className={'SPAvailItems ' + (days.slotDescription.includes('Afternoon') ? 'active' : '')}>Afternoon</label>
-                          <label className={'SPAvailItems ' + (days.slotDescription.includes('Evening') ? 'active' : '')}>Evening</label>
-                  </div>
-              </div>
-          )
-      })
+    let AvailDays = modifiedDays && modifiedDays.map((days, index) => {
+      let Count = ''
+      return (
+        <div className={'SPAvailContainer ' + Count + 'Available'}>
+          <div className={'SPAvailTitle'}>
+            <label className='SPAvailTitleText'>{days.day}</label>
+          </div>
+          <div className={'SPAvailContent'}>
+            <label className={'SPAvailItems ' + (days.slotDescription.includes('Morning') ? 'active' : '')}>Morning</label>
+            <label className={'SPAvailItems ' + (days.slotDescription.includes('Afternoon') ? 'active' : '')}>Afternoon</label>
+            <label className={'SPAvailItems ' + (days.slotDescription.includes('Evening') ? 'active' : '')}>Evening</label>
+          </div>
+        </div>
+      )
+    })
 
     let address = this.state.visitServiceDetails.patient &&
       this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
@@ -245,9 +245,9 @@ class VisitServiceDetails extends Component {
       })
     let profileImage = null;
     let patientLastName = '';
-    if(this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
-      profileImage = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.imageString ? this.state.visitServiceDetails.patient.imageString 
-      : require('../../../assets/images/Blank_Profile_icon.png');
+    if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
+      profileImage = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.imageString ? this.state.visitServiceDetails.patient.imageString
+        : require('../../../assets/images/Blank_Profile_icon.png');
       patientLastName = this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.lastName;
 
     } else {
@@ -279,8 +279,8 @@ class VisitServiceDetails extends Component {
                   </span>
                   <span className='HeaderRequestLabelID'>
                     {this.state.visitServiceDetails.serviceRequestId ?
-                    this.state.visitServiceDetails.serviceRequestId:
-                      this.state.visitServiceDetails.ServiceRequestId }
+                      this.state.visitServiceDetails.serviceRequestId :
+                      this.state.visitServiceDetails.ServiceRequestId}
                   </span>
                 </div>
                 <div className='ProfileHeaderButton'>
@@ -296,15 +296,15 @@ class VisitServiceDetails extends Component {
               <section class='LeftPalette'>
                 <div class='LeftPostedBy'>
                   <div class='PostedByImageContainer pt-0'>
-                  <img
-                  className='ProfileImage'
-                  src={profileImage}
-                  alt='patientImage'
-                />
-                   
+                    <img
+                      className='ProfileImage'
+                      src={profileImage}
+                      alt='patientImage'
+                    />
+
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileDetailsName'>
-                        {getLength(this.state.visitServiceDetails.patient)>0 &&this.state.visitServiceDetails.patient.firstName}
+                        {getLength(this.state.visitServiceDetails.patient) > 0 && this.state.visitServiceDetails.patient.firstName}
                         {' '}
                         {patientLastName}
                       </div>
@@ -313,7 +313,7 @@ class VisitServiceDetails extends Component {
                         {' '}
                         {this.state.visitServiceDetails.postedDate && <Moment format='DD MMM'>
                           {this.state.visitServiceDetails.postedDate}
-                        </Moment> }
+                        </Moment>}
                       </div>
                     </div>
                   </div>
@@ -329,7 +329,7 @@ class VisitServiceDetails extends Component {
                     <i class='ProfileIcon IconConversations' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                       Conversations
+                        Conversations
                       </div>
                     </div>
                   </div>
@@ -337,7 +337,7 @@ class VisitServiceDetails extends Component {
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                      <Link to="/teleHealth/">Video Call </Link>
+                        <Link to="/teleHealth/">Video Call </Link>
                       </div>
                     </div>
                   </div>
@@ -409,35 +409,35 @@ class VisitServiceDetails extends Component {
                           </h2>
                           <div className='ContentTitle Summary mt-3 mb-4'>
                             <span className='ContentTitle Summary'>
-                              {this.state.visitServiceDetails.recurringPatternDescription === RECURRING_PATTERN ? 
-                                this.state.visitServiceDetails.recurringPatternDescription+' ' : 'Recurring ' } 
+                              {this.state.visitServiceDetails.recurringPatternDescription === RECURRING_PATTERN ?
+                                this.state.visitServiceDetails.recurringPatternDescription + ' ' : 'Recurring '}
                               Schedule
                             </span>
                             <span>
-                              {this.state.visitServiceDetails.startDate&& <Moment format='DD MMM YYYY'>
+                              {this.state.visitServiceDetails.startDate && <Moment format='DD MMM YYYY'>
                                 {this.state.visitServiceDetails.startDate}
-                              </Moment> }
+                              </Moment>}
 
-                              { this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN &&
-                               this.showData(this.state.visitServiceDetails)
+                              {this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN &&
+                                this.showData(this.state.visitServiceDetails)
                                 // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
-                              }                              
+                              }
                             </span>
-                            { this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN && (
+                            {this.state.visitServiceDetails.recurringPatternDescription !== RECURRING_PATTERN && (
                               <React.Fragment>
-                                  <span className='ContentTitle Summary'>
-                                    Recurring Pattern
+                                <span className='ContentTitle Summary'>
+                                  Recurring Pattern
                                   </span>
-                                  <span>
+                                <span>
                                   {
                                     this.state.visitServiceDetails
                                       .recurringPatternDescription
                                   }
                                 </span>
-                           </React.Fragment>
+                              </React.Fragment>
                             )
                             }
-                           
+
                           </div>
                           <div className='AvailabilityWidget'>
                             <div className='SPAvailWidget Summary'>
@@ -553,7 +553,7 @@ class VisitServiceDetails extends Component {
                                       In Progress
                                       </a>
                                     : ''}
-                                    {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.PAYMENTPENDING
+                                  {ScheduleList.visitStatusName === SERVICE_VISIT_STATUS.PAYMENTPENDING
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
@@ -613,7 +613,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(cancelServiceRequestByServiceProvider(data)),
     getVisitServiceEligibilityStatus: data =>
       dispatch(getVisitServiceEligibilityStatus(data)),
-    getDays: () => dispatch(getDays())
+    getDays: () => dispatch(getDays()),
+    goBack: () => dispatch(goBack())
   }
 }
 

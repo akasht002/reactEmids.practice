@@ -75,7 +75,7 @@ class SetPassword extends React.Component {
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
-                                <h4 className="font-weight-normal mb-4">Set My Password</h4>
+                                <h4 className="font-weight-normal mb-4 defaualt-purple">Set My Password</h4>
                                 <form className="form my-2 my-lg-0">
                                     <div className="form-group my-4">
                                     </div>

@@ -110,14 +110,11 @@ export function getVisitServiceDetails(data) {
 
 export function getVisitServiceSchedule(data) {
   return dispatch => {
-    dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestSchedule + `${data}`)
       .then(resp => {
         dispatch(getVisitServiceScheduleSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
       })
   }
 }

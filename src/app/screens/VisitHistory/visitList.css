@@ -298,6 +298,109 @@ vertical-align: middle;
     margin: 0;
 }
 
+.AsyncConversationPagination{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 40px;
+}
+
+.AsyncConversationPagination .pagination{
+    width: auto;
+    margin: 0;
+    user-select: none;
+}
+
+.AsyncConversationPagination .pagination li.PaginationItem{
+    margin: 0 8px;
+    font-size: 14px;
+    display: block;
+    position: relative;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    color: #444;
+}
+
+.AsyncConversationPagination .pagination li.PaginationIcon:before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-position: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.pagination li.PaginationItem:hover{
+    cursor: pointer;
+}
+
+.pagination li.PaginationItem.PaginationIcon {
+    font-size: 0;
+    width: 12px;
+}
+
+.pagination li.PaginationItem.PaginationIcon.disabled{
+    opacity: .3;
+}
+
+.pagination li.PaginationItem.PaginationIcon.disabled:hover{
+    cursor: auto;
+}
+
+.pagination li.PaginationItem a{
+    display: block;
+    line-height: 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    background-color: #ffffff;
+    color: #444444;
+}
+
+.pagination li.PaginationItem.active a, .pagination li.PaginationItem a:hover{
+    background-color: #3b1a53;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.pagination li.PaginationItem.PaginationIcon a {
+    font-size: 0;
+    width: 12px;
+}
+
+.pagination li.PaginationItem.PaginationIcon a:hover {
+    background: rgba(0,0,0,0);
+}
+
+.pagination li.PaginationItem.First:before{
+    background-image: url('../../assets/images/FirstLast.svg');
+}
+
+.pagination li.PaginationItem.Prev:before{
+    background-image: url('../../assets/images/Caret.svg');
+}
+
+.pagination li.PaginationItem.Next:before{
+    background-image: url('../../assets/images/Caret.svg');
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.pagination li.PaginationItem.Last:before{
+    background-image: url('../../assets/images/FirstLast.svg');
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
 /*Responsive-for-mobile-devices*/
 @media only screen and (max-width: 767px) {
     div.visitListBottom .visitListContent, div.visitListTop {

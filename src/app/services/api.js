@@ -113,15 +113,12 @@ export const API = {
     getAffiliationDetail:'ServiceProviderLookUp/Affiliation',
     updateStandByMode:'ServiceProvider/UpdateStandByMode/',
     getUserRoles: "User/GetUserRoles",
-    updateStandByMode:'ServiceProvider/UpdateStandByMode/',
     getEntityServiceProviderList:'ServiceProvider/ByEntity/',
     assignServiceVisit:'ServiceRequest/AssignServiceVisit',
     getServiceArea:'ServiceProvider/GetServiceProviderServiceAreaView/',
     addServiceArea:'ServiceProvider/ServiceProviderServiceArea',
     editServiceArea: 'ServiceProvider/GetServiceProviderServiceArea/',
     deletServiceArea:'ServiceProvider/InActiveServiceProviderServiceArea/',
-    getEntityServiceProviderList: 'ServiceProvider/ByEntity/',
-    assignServiceVisit: 'ServiceRequest/AssignServiceVisit',
     getServiceRequestEligibilityStatus: 'BenefitProcess/CheckEligibility',
     claimsSubmission: 'BenefitProcess/ClaimsSubmission',
     captureAmount:'Account/CardCaputreAmount',
@@ -135,4 +132,6 @@ export const API = {
     getPatientConnections: 'ManageConnections/',
     getPatientLanguages: 'PatientLanguage/',
     getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
+    getSpBusyInVisit: 'ServiceProvider/IsServiceProviderBusyInVisit/',
+    getHistoryListCount: 'ServiceRequest/GetServiceProviderVisitHistoryCount/'
 }
