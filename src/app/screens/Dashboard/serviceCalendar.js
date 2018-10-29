@@ -13,8 +13,7 @@ import {
   updateEntityServiceVisit
 } from '../../redux/dashboard/Dashboard/actions'
 import {
-  getVisitServiceDetails,
-  getVisitServiceSchedule
+  getServiceRequestId
 } from '../../redux/visitSelection/VisitServiceDetails/actions'
 import { ServiceCalendarDefault,ShowIndicator } from './ServiceInfo'
 import { getUserInfo } from '../../services/http'
@@ -94,8 +93,10 @@ class serviceCalendar extends React.Component {
     let updatedDay = ''
     if (this.state.width > '1280') {
       updatedDay = moment(this.state.startDate).add(5, 'days')
+      this.props.getServiceProviderVists(updatedDay.format('YYYY-MM-DD'))
     } else {
       updatedDay = moment(this.state.startDate).add(7, 'days')
+      this.props.getServiceProviderVists(updatedDay.format('YYYY-MM-DD'))
     }
     this.setState({
       startDate: updatedDay.format(),
@@ -113,8 +114,10 @@ class serviceCalendar extends React.Component {
     let updatedDay = ''
     if (this.state.width > '1280') {
       updatedDay = moment(this.state.startDate).subtract(5, 'days')
+      this.props.getServiceProviderVists(updatedDay.format('YYYY-MM-DD'))
     } else {
       updatedDay = moment(this.state.startDate).subtract(7, 'days')
+      this.props.getServiceProviderVists(updatedDay.format('YYYY-MM-DD'))
     }
     this.setState({
       startDate: updatedDay.format(),
@@ -217,8 +220,8 @@ class serviceCalendar extends React.Component {
   }
 
   handleClick = requestId => {
-    this.props.getVisitServiceDetails(requestId)
-    this.props.getVisitServiceSchedule(requestId)
+    this.props.getServiceRequestId(requestId)
+    this.props.goToServiceRequestDetailsPage();
   }
 
   navigateProfileHeader = (link) => {
@@ -509,12 +512,12 @@ function mapDispatchToProps (dispatch) {
     getEntityServiceProviderList: () =>
       dispatch(getEntityServiceProviderList()),
     updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
-    getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
-    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
+    getServiceRequestId: data => dispatch(getServiceRequestId(data)),
     setPatient: data => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
     createVideoConference: (data) => dispatch(createVideoConference(data)),
+    goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails))
   }
 }
 
