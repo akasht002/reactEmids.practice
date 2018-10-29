@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import { getVisitServiceList } from '../../../redux/visitSelection/VisitServiceList/actions';
-import { getVisitServiceDetails, getVisitServiceSchedule } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../utils/stringHelper'
@@ -68,8 +68,8 @@ class VisitServiceList extends Component {
     }
 
     handleClick = (requestId) => {
-        this.props.getVisitServiceDetails(requestId);
-        this.props.getVisitServiceSchedule(requestId);
+        this.props.getServiceRequestId(requestId);
+        this.props.goToServiceRequestDetailsPage();
     }
 
     renderStatusClassName = (status) => {
@@ -252,7 +252,8 @@ class VisitServiceList extends Component {
             return (
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card'>
-                        <div className="BlockImageContainer" onClick={() => this.handleClick(serviceList.serviceRequestId)}>
+                        <div className="BlockImageContainer" onClick={() => 
+                            this.handleClick(serviceList.serviceRequestId)}>
                             <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
                                 <div className='BlockImageDetailsName'>
@@ -278,10 +279,10 @@ class VisitServiceList extends Component {
                             <img className="ProfileImage" src={patientImage} alt="" />
                             <div className='BlockProfileDetails'>
                                 <div className='BlockProfileDetailsName'>
-                                    {serviceList.patientFirstName} {patientLastName}
+                                    <span>{serviceList.patientFirstName} {patientLastName}</span>
                                 </div>
                                 <div className='BlockProfileDetailsActivity'>
-                                    Posted on <Moment format="DD MMM">{serviceList.createDate}</Moment>
+                                    <span>Posted on <Moment format="DD MMM">{serviceList.createDate}</Moment></span>
                                 </div>
                             </div>
                             <div class='BlockProfileDetailsStatus'>
@@ -355,8 +356,8 @@ class VisitServiceList extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getVisitServiceList: () => dispatch(getVisitServiceList()),
-        getVisitServiceDetails: (data) => dispatch(getVisitServiceDetails(data)),
-        getVisitServiceSchedule: (data) => dispatch(getVisitServiceSchedule(data)),
+        getServiceRequestId: (data) => dispatch(getServiceRequestId(data)),
+        goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
         getServiceCategory: () => dispatch(getServiceCategory()),
         ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
         getServiceType: (data) => dispatch(getServiceType(data)),
