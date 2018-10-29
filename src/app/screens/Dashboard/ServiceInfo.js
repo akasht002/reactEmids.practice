@@ -9,7 +9,8 @@ import { getFields } from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
 import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
-import {ENTITY_USER} from '../../constants/constants';
+import { HIRED_STATUS_ID } from '../../constants/constants';
+import { ENTITY_USER } from '../../constants/constants';
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -20,7 +21,7 @@ export const ShowIndicator = props => {
         <i className='indicator' /><i className='indicator' />
       </React.Fragment>
     )
-  } else if (props.count > 3) {
+  } else if (props.count >= 3) {
     return (
       <React.Fragment>
         <i className='indicator' />
@@ -60,26 +61,28 @@ export const serviceCalendar = (
         <Fragment>
           <li
             key={index}
-            className='list-group-item ProfileServicesVisitContent'
+            className={'list-group-item ProfileServicesVisitContent ' + (getUserInfo().serviceProviderTypeId === ENTITY_USER && "EntityUDashboard") }
           >
             {/* <div className='ServicesTimeContainer'>
               <i className={'ServicesTime ' + conversations.slotDescription} />
             </div> */}
             <div
-              className='ProfileServices'
-              onClick={() => {
-                handleClick(conversations.serviceRequestId)
-              }}
+              className='ProfileServices'              
             >
+            <span className="ServicesCalendarWidget" onClick={() => {
+                handleClick(conversations.serviceRequestId)
+              }}>
               <span className='ServicesTitle'>
                 {conversations.serviceTypes &&
                   conversations.serviceTypes.toString()}
               </span>
-              <span className='ServicesDesc'>
+              <span className='ServicesDesc' >
                 {conversations.serviceCategory && conversations.serviceCategory}
               </span>
+              </span>
               {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
-                <span
+              <div className="EntityUServiceProf">
+                <span><i className="assignSPLink"
                   onClick={e =>
                     togglePersonalDetails({
                       serviceRequestId: conversations.serviceRequestId,
@@ -88,7 +91,10 @@ export const serviceCalendar = (
                     })}
                 >
                   Assign Service Provider
-                </span>}
+                  </i>
+                </span>
+              </div>
+                }
             </div>
             <div className='ProfileCardImageContainer' onClick={() => {
               props.goToPatientProfile(conversations.patientId);
@@ -268,6 +274,15 @@ export const ServiceProviderRequestDetails = props => {
   return props.serviceRequest
     .slice(props.minVal, props.maxVal)
     .map((sp, index) => {
+      let patientImage = '';
+      let patientLastName = '';
+      if (sp.statusId === HIRED_STATUS_ID) {
+        patientImage = sp && sp.image ? sp.image : require('../../assets/images/Blank_Profile_icon.png');
+        patientLastName = sp && sp.patientLastName;
+      } else {
+        patientLastName = sp && sp.patientLastName.charAt(0);
+        patientImage = require('../../assets/images/Blank_Profile_icon.png');
+      }
       return (
         <Fragment>
           <li
@@ -312,9 +327,7 @@ export const ServiceProviderRequestDetails = props => {
                     alt='NO'
                     className='avatarImage'
                     src={
-                      sp.image
-                        ? sp.image
-                        : require('../../assets/images/Blank_Profile_icon.png')
+                      patientImage                        
                     }
                   />
                 </div>
@@ -322,7 +335,7 @@ export const ServiceProviderRequestDetails = props => {
               <span className='AvatarName'>
                 {sp.patientFirstName &&
                   sp.patientFirstName + ' '}
-                {sp.patientLastName && sp.patientLastName}
+                {patientLastName}
               </span>
             </div>
           </li>
@@ -331,19 +344,19 @@ export const ServiceProviderRequestDetails = props => {
     })
 }
 
- function getPartcipitantHeader (participants) {
+function getPartcipitantHeader(participants) {
   let header = "";
   if (participants && participants.length > 0) {
-      participants.map(participant => {
-          header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
-      });
-      header = header.slice(0, -2);
+    participants.map(participant => {
+      header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
+    });
+    header = header.slice(0, -2);
   }
   return header;
 };
 
 export const MyConversionDetail = props => {
-   let MsgClass = ''
+  let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
   let unreadMessages = ''

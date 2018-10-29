@@ -78,11 +78,9 @@ class Profile extends Component {
   getServiceArea = () => {
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
       !getUserInfo().isEntityServiceProvider) {
-      return ''
-      {/* <ServiceArea /> */}
+      return <ServiceArea /> 
      } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-       return ''
-       {/* <ServiceArea /> */}
+      return <ServiceArea /> 
      } else {
        return '';
      }
@@ -128,6 +126,14 @@ class Profile extends Component {
      } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
        return <WorkHistory />
      } else {
+       return '';
+     }
+  }
+
+  getEducation = () => {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+      return <Education />
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
        return '';
      }
   }
@@ -191,8 +197,8 @@ class Profile extends Component {
                 <div className='col-md-12 card CardWidget SPCertificate'>
                   {this.getCertification()}
                 </div>
-                {this.getWorkHistory}
-                <Education />
+                {this.getWorkHistory()}
+                {this.getEducation()}
                {this.getAvailability()}
               
                

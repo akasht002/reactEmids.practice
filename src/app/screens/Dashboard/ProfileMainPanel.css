@@ -412,6 +412,32 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
     justify-content: flex-start;
 }
 
+div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent.EntityUDashboard{
+    height: 120px;
+}
+
+.EntityUServiceProf{
+    display: flex;
+    align-items: center;
+    padding: 10px 0 0;
+}
+
+.EntityUServiceProf img{
+    height: 32px;
+    weight: 32px;
+    margin-right: 10px;
+}
+
+span i.assignSPLink{
+    font-style: normal;
+    color: #7a329f;
+}
+
+span i.assignSPLink:hover{
+    cursor: pointer;
+    color: #3c1053;
+}
+
 div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child{
     margin-top: 0;
 }
@@ -494,7 +520,7 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
     cursor: pointer;
 }
 
-.ProfileServices:hover span{
+.ServicesCalendarWidget:hover span{
     cursor: pointer;
     color: #7a329f;
 }

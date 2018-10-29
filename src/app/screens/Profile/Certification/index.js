@@ -186,6 +186,7 @@ class Certification extends Component {
                         maxlength={'50'}
                         textChange={(e) => this.setState({
                             certificateLicenceNumber: e.target.value,
+                            disabledSaveBtn: false
                         })}
                     />
                 </div>

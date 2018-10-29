@@ -88,6 +88,7 @@ export const getModal = (data, action) => {
         entity: {
           organization: data.organizationName ? data.organizationName : '',
           entityId: 0,
+          websiteUrl: data.url,
           hourlyRate: ''
         },
         description: data.description,
@@ -113,6 +114,12 @@ export const getModal = (data, action) => {
         rowversionId: ''
       }
     case PERSONAL_DETAIL.UPDATE_ENTITY_DETAIL:
+      let genderData = getDataValueArray(
+        data.selectedGender
+          ? data.selectedGender
+          : data.selectedGender,
+        '-'
+      )
       return {
         serviceProviderId: getUserInfo().serviceProviderId,
         serviceProviderTypeId: PROFILE_SERVICE_PROVIDER_TYPE_ID,
@@ -122,8 +129,8 @@ export const getModal = (data, action) => {
           lastName: data.lastName,
           age: data.age ? data.age : 0,
           gender: {
-            genderId: gender ? gender[0] : 0,
-            name: gender ? gender[1] : ''
+            genderId: genderData ? genderData[0] : 0,
+            name: genderData ? genderData[1] : ''
           },
           yearOfExperience: data.yearOfExperience ? data.yearOfExperience : 0,
           affiliation: {
@@ -134,6 +141,7 @@ export const getModal = (data, action) => {
           entityId: 1,
           name: '',
           phoneNumber: data.phoneNumber,
+          assignedBy: data.assigned_by,
           websiteUrl: data.url,
           logoByte: null,
           logo: '',
