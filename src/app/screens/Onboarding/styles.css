@@ -142,6 +142,15 @@ div.row.emptyGuardianRow{
 color:#7a329f !important;
 }
 
+/*cross-browser-bug-fixed-e11*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .verify-msgie11 { width: 100%; display: block !important; } /* IE10 */
+     *::-ms-backdrop, .verify-msgie11 { width: 100%; display: block !important; } /* IE11 */
+     }
+
+
 @media (max-width: 1024px) {
     div.onBoarding {
         width: calc(100% - 380px);
