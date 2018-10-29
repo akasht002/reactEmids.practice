@@ -18,6 +18,7 @@ import {
   ProfileImage
 } from '../../../components'
 import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
+import ImageModal from '../PersonalDetail/ImageModal';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants'
 import {
@@ -171,6 +172,12 @@ class Organization extends React.PureComponent {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
+  }
+
+  saveImageUpload = () => {
+    this.setState({
+      uploadImage: !this.state.uploadImage
+    })
     this.props.uploadImg(this.state.src)
   }
 
@@ -194,13 +201,14 @@ class Organization extends React.PureComponent {
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
         {this.getModalContent(cityDetail)}
-        <BlackoutModal
+        <ImageModal
           isOpen={this.state.uploadImage}
           toggle={this.closeImageUpload}
           ModalBody={this.getBlackModalContent()}
           className='modal-lg asyncModal BlackoutModal'
           modalTitle='Edit Profile Image'
           centered='centered'
+          saveImage={this.saveImageUpload}
         />
       </form>
     )

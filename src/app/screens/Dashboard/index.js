@@ -22,11 +22,18 @@ class Dashboard extends React.Component {
       conversationDetail: [],
       isChecked: false,
       showModalOnTurnOff: false,
-      showVisitModal: false
+      showVisitModal: false,
+      checkEightHour: false,
+      checkEveryHour: false
     }
+    this.remMin = 0;
+    this.clearInterval = null;
+    this.CheckClickToggle = false;
   }
   componentDidMount() {
     this.props.getPersonalDetail();
+    this.props.getSpBusyInVisit();
+    this.props.clearSbMode();
   }
   
   componentWillReceiveProps(nextProps) {
@@ -34,8 +41,14 @@ class Dashboard extends React.Component {
     if (nextProps.sbModeClicked) {
       this.props.clearSbMode();
       this.onSuccessSpBusyInVisit(nextProps.busyInVisit)
-    }
+     }
   }
+
+  componentWillUnmount() {
+    if(this.clearInterval) {
+      clearInterval(this.clearInterval);
+    }
+ }
 
   toggle () {
     this.setState({
@@ -44,58 +57,7 @@ class Dashboard extends React.Component {
   }
 
   onValueChange = () => {
-    if(this.state.standByMode === false) {
-        let visitProcess = this.checkVisitProcess();
-        if(visitProcess === true){
-            this.setState({showVisitModal: true})
-        }
-        else if(visitProcess === false) {
-            let timeNow = new Date();
-        this.setState({
-            standByMode: true,
-            standByModeStartTime: timeNow
-        }, () => {
-            this.props.updateStandByMode(this.state.standByMode, this.state.standByModeStartTime);
-        }) }
-    } else if(this.state.standByMode === true) {        
-        this.onClickTurnOff();
-    }
-}  
-
-  checkVisitProcess = () => {
-    if(this.props.serviceVisit.length > 0) {
-        let currentTimeSlot = this.compareTimeSlots();
-        let currentVisit = this.props.serviceVisit.filter((visit)=> visit.slotDescription === currentTimeSlot)
-        if(currentVisit.length > 0){
-        return true
-    } }
-    return false
-} 
-
-  onClickTurnOff= () => {
-    this.setState({showModalOnTurnOff: true})
-  }
-
-  onClickYes = () => {
-    this.setState({showModalOnTurnOff: false})
-    this.setState({
-        standByMode: false
-    }, () => {
-        this.props.updateStandByMode(this.state.standByMode);
-    })
- }
-
- compareTimeSlots = () => {
-  let currentTime = new Date();
-  if((moment(currentTime, 'h:mm:ss a').isBetween(moment('06:00:00 am', 'h:mm:ss a'), moment('11:59:59 am', 'h:mm:ss a'), null, '[]')))    
-      return 'Morning';
-  else  if((moment(currentTime, 'h:mm:ss a').isBetween(moment('12:00:00 pm', 'h:mm:ss a'), moment('05:59:59 pm', 'h:mm:ss a'), null, '[]')))
-      return 'Afternoon';
-  else  if((moment(currentTime, 'h:mm:ss a').isBetween(moment('06:00:00 pm', 'h:mm:ss a'), moment('11:59:59 pm', 'h:mm:ss a'), null, '[]')))
-      return 'Evening'
-}
-  
-  onValueChange = () => {
+    this.CheckClickToggle = true;
     if(this.state.isChecked === false) {    
     this.props.getSpBusyInVisit();
     } else if(this.state.isChecked === true) {        
@@ -104,15 +66,44 @@ class Dashboard extends React.Component {
 }
 
 onSuccessSpBusyInVisit = (visitProcess) => {
-    if(visitProcess === true){
+  if(this.clearInterval) {
+    clearInterval(this.clearInterval);
+  }
+    if(visitProcess.isServiceProviderBusyInVisit === true){
       this.setState({showVisitModal: true})
   }
-  else if(visitProcess === false) {
+  else if(this.CheckClickToggle && visitProcess.isServiceProviderBusyInVisit === false) {
   this.setState({
     isChecked: true
   }, () => {
             this.props.updateStandByMode(this.state.isChecked);
         })
+    }
+    if(visitProcess.isServiceProviderInStandBy === true) {
+      let startTime = moment(visitProcess.serviceProviderStandByStartDateTime);
+      let currentDateTime =  moment().format('MM/DD/YYYY HH:mm')
+     // let currentTime = new Date();
+      let duration = moment.duration(startTime.diff(currentDateTime))
+      let hours = duration.hours();
+      if (hours >= 8) {
+        this.setState({checkEightHour: true});
+        this.props.updateStandByMode(false);
+      } else {
+      let minutes = duration.minutes();
+      let remainMinutes = minutes % 60;
+      this.remMin = remainMinutes;
+      this.clearInterval = setInterval(() => {
+        this.remMin++;
+        if (remainMinutes === 60) {
+          this.setState({checkEveryHour: true})
+        }
+        if (remainMinutes === 65) {
+          this.checkEveryHourNo();
+        } 
+        }, 60000)
+      }
+      
+      // checkHours = 
     }
   
 }
@@ -128,6 +119,23 @@ onSuccessSpBusyInVisit = (visitProcess) => {
     }, () => {
         this.props.updateStandByMode(this.state.isChecked);
     })
+ }
+
+ checkEveryHourYes = () => {
+  this.setState({checkEveryHour: false});
+  this.remMin = 0;
+ }
+
+ checkEveryHourNo = () => {
+   if(this.clearInterval) {
+     clearInterval(this.clearInterval);
+   }
+  this.setState({checkEveryHour: false})
+  this.setState({
+    isChecked: false
+  }, () => {
+      this.props.updateStandByMode(this.state.isChecked);
+  })
  }
   
   render() {
@@ -155,26 +163,76 @@ onSuccessSpBusyInVisit = (visitProcess) => {
             </label>
           </div>
         </div>
-        {/* <Scrollbars
+        <Scrollbars
           speed={2}
           smoothScrolling
           horizontal={false}
           className='SPContentWidget'
-        > */}
-        <div className="scrollarea SPContentWidget">
-          <div className="scrollarea-content">
-            <div className='ProfileContainer topProfile'>
-              <ServiceCalendar />
-            </div>
-            <div className='ProfileContainer bottomProfile'>
-              {serviceRequestTemplate}
-              <div className='innerWidget'>
-                <MyConversation />
-              </div>
+        >
+          <div className='ProfileContainer topProfile'>
+            <ServiceCalendar />
+          </div>
+          <div className='ProfileContainer bottomProfile'>
+            {serviceRequestTemplate}
+            <div className='innerWidget'>
+              <MyConversation />
             </div>
           </div>
-        </div>
-        {/* </Scrollbars> */}
+        </Scrollbars>
+        <ModalPopup
+          isOpen={this.state.showVisitModal}
+          ModalBody={<span>Standby Mode cannot be switched on during a Visit processing.</span>}
+          btn1='OK'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() =>
+            this.setState({
+              showVisitModal: false
+            })}
+        />
+        <ModalPopup
+          isOpen={this.state.showModalOnTurnOff}
+          ModalBody={<span>Are you sure, you want to turn off the Standby mode and start the Visit Processing?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={this.onClickYes}
+          onCancel={() =>
+            this.setState({
+              showModalOnTurnOff: false
+            })}
+        />
+        <ModalPopup
+          isOpen={this.state.checkEveryHour}
+          ModalBody={<span>Do you want to continue to be on Standby?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={this.checkEveryHourYes}
+          onCancel={this.checkEveryHourNo}
+        />
+        <ModalPopup
+          isOpen={this.state.checkEightHour}
+          ModalBody={<span>You have reached the maximum time limit for Standby mode today. Standby mode will be enabled again tomorrow.</span>}
+          btn1='OK'
+          toggle={() =>
+            this.setState({
+              checkEightHour: false
+            })}
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() =>
+            this.setState({
+              checkEightHour: false
+            })}
+          
+        />
       </AsideScreenCover>
     )
   }

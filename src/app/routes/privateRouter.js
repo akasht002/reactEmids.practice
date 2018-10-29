@@ -26,7 +26,11 @@ class PrivateRoute extends Component  {
     let Component = this.props.component;
     return ((
       // && permission
+<<<<<<< HEAD
       (authData ) ? (
+=======
+      (authData && permission) ? (
+>>>>>>> c4c60070e90896f1839fdca1175563fa23886fb8
         <Component {...this.props} /> ) : (
           <Redirect
           to={{

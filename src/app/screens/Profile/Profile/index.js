@@ -78,9 +78,11 @@ class Profile extends Component {
   getServiceArea = () => {
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
       !getUserInfo().isEntityServiceProvider) {
-      return <ServiceArea />
+      return ''
+      {/* <ServiceArea /> */}
      } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-       return <ServiceArea />
+       return ''
+       {/* <ServiceArea /> */}
      } else {
        return '';
      }
