@@ -69,7 +69,7 @@ onSuccessSpBusyInVisit = (visitProcess) => {
   if(this.clearInterval) {
     clearInterval(this.clearInterval);
   }
-    if(visitProcess.isServiceProviderBusyInVisit === true){
+    if(this.CheckClickToggle && visitProcess.isServiceProviderBusyInVisit === true){
       this.setState({showVisitModal: true})
   }
   else if(this.CheckClickToggle && visitProcess.isServiceProviderBusyInVisit === false) {

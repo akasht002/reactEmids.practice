@@ -16,7 +16,8 @@ export const VisitServiceDetails = {
   getServiceRequestId: 'get_service_requestId/visitservicedetails',
   updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails',
   getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/visitservicedetails',
-  getDaysSuccess: 'getDaysSuccess/visitservicedetails'
+  getDaysSuccess: 'getDaysSuccess/visitservicedetails',
+  updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -47,6 +48,19 @@ export const getVisitServiceEligibityStatusSuccess = data => {
   }
 }
 
+export const updateServiceRequestByServiceProviderSuccess = data => {
+  return {
+    type :VisitServiceDetails.updateServiceRequestByServiceProviderSuccess,
+    data
+  }
+}
+
+export function dispatchServiceRequestByServiceProvider(){
+  return dispatch => {
+  dispatch(push(Path.dashboard))
+  }
+}
+
 export function updateServiceRequestByServiceProvider(data) {
   let modelData = {
     serviceRequestId: data.serviceRequestId,
@@ -61,11 +75,11 @@ export function updateServiceRequestByServiceProvider(data) {
     )
       .then(resp => {
         dispatch(endLoading())
-        dispatch(push(Path.visitServiceList))
+        // dispatch(push(Path.visitServiceList))
       })
       .catch(err => {
         dispatch(endLoading())
-        dispatch(push(Path.visitServiceList))
+        // dispatch(push(Path.visitServiceList))
       })
   }
 }
@@ -99,7 +113,7 @@ export function getVisitServiceDetails(data) {
     ServiceRequestGet(API.getServiceRequestDetails +`${data}/${getUserInfo().serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data))
-        dispatch(push(Path.visitServiceDetails))
+        //dispatch(push(Path.visitServiceDetails))
         dispatch(endLoading())
       })
       .catch(err => {

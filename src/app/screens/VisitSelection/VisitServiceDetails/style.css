@@ -302,9 +302,25 @@ li div.dropdown-menu{
 
 .BlockProfileDetailsName{
     font-size: 14px;
-    line-height: 14px;
     color: #444444;
-    margin-bottom: 10px;
+    margin: 0;
+    padding: 0 0 5px 0;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.BlockProfileContainer > img:hover, .BlockProfileDetailsActivity > span:hover, .BlockProfileDetailsName > span:hover{
+    cursor: pointer;
+}
+
+.BlockProfileContainer.noArrow > img:hover,
+.BlockProfileContainer.noArrow .BlockProfileDetailsActivity > span:hover,
+.BlockProfileContainer.noArrow .BlockProfileDetailsName > span:hover,
+.BlockProfileContainer.noArrow .BlockProfileDetailsStatus a.btn-open:hover,
+.BlockProfileContainer.noArrow .BlockProfileDetailsStatus span.btn-open:hover{
+    cursor: auto;
 }
 
 .BlockProfileDetailsActivity{
@@ -335,7 +351,7 @@ span.btn-applied, span.btn-applied:hover{
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-    cursor: auto;
+    cursor: auto !important;
 }
 
 span.btn-invited, span.btn-invited:hover{
@@ -344,7 +360,7 @@ span.btn-invited, span.btn-invited:hover{
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
-    cursor: auto;
+    cursor: auto !important;
 }
 
 .BlockProfileMatching{
@@ -692,7 +708,7 @@ a.ProfileCardHeaderLink:hover{
     margin-bottom: 20px;
 }
 
-.ServiceRequestBoard .card:hover{
+.BlockImageContainer:hover{
     cursor: pointer;
 }
 

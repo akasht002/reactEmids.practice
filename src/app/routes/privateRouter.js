@@ -25,7 +25,6 @@ class PrivateRoute extends Component  {
     let permission = this.props.permission ? extractRole(this.props.permission).Read : true;
     let Component = this.props.component;
     return ((
-      // && permission
       (authData && permission) ? (
         <Component {...this.props} /> ) : (
           <Redirect
