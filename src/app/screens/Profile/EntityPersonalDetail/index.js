@@ -194,7 +194,6 @@ class EntityPersonalDetail extends React.PureComponent {
 
   onCroppeds = e => {
     let image = e.image
-    console.log(e.image)
     this.setState({
       croppedImage: image
     })

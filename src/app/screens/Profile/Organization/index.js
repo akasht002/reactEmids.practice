@@ -346,7 +346,6 @@ class Organization extends React.PureComponent {
     )
   } 
   renderDetails = () => {
-    console.log('this.props.personalDetail,,,,,,,,,,,,', this.props.personalDetail);
     return (
       <div className='col-md-12 card CardWidget SPDetails'>       
         <ProfileImage

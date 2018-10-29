@@ -35,8 +35,6 @@ export const Details = props => {
               <span>
                 {props.personalDetail &&
                   props.personalDetail.genderName}
-                {' '}
-                gender
               </span>
               <span>
                 {props.personalDetail && props.personalDetail.age}
