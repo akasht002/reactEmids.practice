@@ -53,7 +53,7 @@ class VisitServiceDetails extends Component {
     }
     this.alertModalMsg = ''
     this.status = {}
-    this.alertModalMsgstatus=''
+    this.alertModalMsgstatus='Please apply for another service request.Service Provider is already been Hired for this request'
   }
 
   componentDidMount () {
@@ -129,10 +129,10 @@ class VisitServiceDetails extends Component {
       }
       this.props.updateServiceRequestByServiceProvider(model)
       console.log(this.props.updateServiceRequestMsgStatus)
-        if(this.props.updateServiceRequestMsgStatus===0){
+        if(this.props.updateServiceRequestMsgStatus === 1){
           this.setState({isAlertModalopenConfirm :true}) 
         }else {
-          // this.props.history.push("/visitServiceList")
+          this.props.history.push("/visitServiceList")
         }
       
     } else {
@@ -667,7 +667,7 @@ class VisitServiceDetails extends Component {
            <ModalPopup
             isOpen={this.state.isAlertModalopenConfirm}
             toggle={this.reset1}
-            ModalBody={<span>{this.alertModalMsg}</span>}
+            ModalBody={<span>{this.alertModalMsgstatus}</span>}
             btn1='Yes'
             className='modal-sm'
             headerFooter='d-none'
