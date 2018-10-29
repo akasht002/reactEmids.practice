@@ -163,22 +163,21 @@ onSuccessSpBusyInVisit = (visitProcess) => {
             </label>
           </div>
         </div>
-        <Scrollbars
-          speed={2}
-          smoothScrolling
-          horizontal={false}
-          className='SPContentWidget'
-        >
-          <div className='ProfileContainer topProfile'>
-            <ServiceCalendar />
-          </div>
-          <div className='ProfileContainer bottomProfile'>
-            {serviceRequestTemplate}
-            <div className='innerWidget'>
-              <MyConversation />
+        {/* <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='SPContentWidget'> */}
+        <div className="scrollarea SPContentWidget ScrollBar">
+          <div className="scrollarea-content">
+            <div className='ProfileContainer topProfile'>
+              <ServiceCalendar />
+            </div>
+            <div className='ProfileContainer bottomProfile'>
+              {serviceRequestTemplate}
+              <div className='innerWidget'>
+                <MyConversation />
+              </div>
             </div>
           </div>
-        </Scrollbars>
+        </div>
+        {/* </Scrollbars> */}
         <ModalPopup
           isOpen={this.state.showVisitModal}
           ModalBody={<span>Standby Mode cannot be switched on during a Visit processing.</span>}
