@@ -14,9 +14,10 @@ import {
   getServiceStatusDetail
 } from '../../redux/dashboard/Dashboard/actions'
 import {
-  getVisitServiceDetails,
-  getVisitServiceSchedule
+  getServiceRequestId
 } from '../../redux/visitSelection/VisitServiceDetails/actions'
+import { Path } from '../../routes';
+import { push } from '../../redux/navigation/actions'
 
 import { getLength } from '../../utils/validations'
 
@@ -59,8 +60,8 @@ class ServiceRequest extends React.Component {
     this.props.getPatientServiceRequestDetail(e.id)
   }
   handleClick = requestId => {
-    this.props.getVisitServiceDetails(requestId)
-    this.props.getVisitServiceSchedule(requestId)
+    this.props.getServiceRequestId(requestId)
+    this.props.goToServiceRequestDetailsPage();
   }
 
   menuRenderer = (params) => {
@@ -163,8 +164,8 @@ function mapDispatchToProps(dispatch) {
     getPatientServiceRequestDetail: data =>
       dispatch(getPatientServiceRequestDetail(data)),
     getServiceStatusDetail: () => dispatch(getServiceStatusDetail()),    
-    getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
-    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
+    getServiceRequestId: data => dispatch(getServiceRequestId(data)),
+    goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails))
   }
 }
 
