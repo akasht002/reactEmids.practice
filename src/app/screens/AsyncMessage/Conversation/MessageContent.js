@@ -183,8 +183,8 @@ class MessageContent extends Component {
         };
 
         return (
-            <div>
-                <table className="table">
+            <section>
+                <table className="table tableLayoutFixed">
                     <tbody>
                         <tr>
                             <td className="chatHeader align-middle" ref={this.setChatHeaderRef}>
@@ -297,7 +297,7 @@ class MessageContent extends Component {
                     modalTitle="New Conversation"
                     centered="centered"
                 />
-            </div>
+            </section>
         )
     }
 };
