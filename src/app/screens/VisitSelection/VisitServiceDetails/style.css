@@ -1203,3 +1203,20 @@ div.scrollarea .scrollbar-container.vertical {
     background-repeat: no-repeat;
     background-image: url("../../../assets/images/ViewEye.svg");
 }
+
+/*UI_bugs_fixes_29_10*/
+.ServiceRequestsWidget .CardContainers .LeftPalette
+{
+  width: 274px;
+  height: 315px;
+}
+
+.TabBody .ServiceCategoryContent .AvailabilityWidget .SPAvailWidget .SPAvailContainer
+{
+    width: 191px;
+    height: 199px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border: solid 1px #7a329f;
+}
