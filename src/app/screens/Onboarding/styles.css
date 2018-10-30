@@ -92,7 +92,7 @@ div.row.emptyGuardianRow{
 }
 
 .inputFailure.onBoardingSelect .Select-control {
-    border-color: red;
+    border-color: #c04e59;
 }
 
 .onBoardingSelect .Select-menu-outer {
@@ -124,6 +124,11 @@ div.row.emptyGuardianRow{
     color: #c04e59 !important;
 }
 
+.mainWidgetOnboarding  .mainContent .text-success
+{
+    color: #268240 !important;
+}
+
 .mainWidgetOnboarding  .mainContent .verify-title
 {
     color:#7a329f !important;
@@ -144,6 +149,11 @@ color:#7a329f !important;
 label.license-agreespan
 {
 margin-left: 5px !important;
+}
+
+.EULAModalContent h4, .EULAModalContent h5, .EULAModalContent p, .EULAModalContent .agreementList li
+{
+color: #444;
 }
 
 /*cross-browser-bug-fixed-e11*/
