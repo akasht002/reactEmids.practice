@@ -48,7 +48,7 @@ class PersonalDetail extends React.PureComponent {
                   <span>
                     {this.props.personalDetail && this.props.personalDetail.age}
                     {' '}
-                    years
+                    yrs
                   </span>
                 </p>
               </div>

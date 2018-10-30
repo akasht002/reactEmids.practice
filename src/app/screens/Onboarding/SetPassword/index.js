@@ -125,7 +125,7 @@ class SetPassword extends React.Component {
                                         </div>
                                     </div>
                                     <div className="form-check">
-                                        <label className="form-check-label">
+                                        <label className="form-check-label license-agreespan">
                                             <input className="form-check-input" type="checkbox" value={this.state.userAgreement} id="defaultCheck1" onChange={(e) => this.setState({ userAgreement: e.target.checked })} />
                                             <span className="CheckboxIcon"></span>
                                             By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} className="primaryColor" onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
