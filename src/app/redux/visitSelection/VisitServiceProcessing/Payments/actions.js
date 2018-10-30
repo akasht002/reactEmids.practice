@@ -28,12 +28,13 @@ export function getpaymentsCardList(data) {
     }
 };
 
-export function createCharge(data) {
+export function createCharge(data, claimData) {
     return (dispatch) => {
         dispatch(startLoading());
         ThirdPartyPost(API.createCharge, data).then((resp) => {
             if (resp.data === 'success') {
                 dispatch(push(Path.paymentsuccess))
+                dispatch(claimsSubmission(claimData))
             }
             dispatch(endLoading());
         }).catch((err) => {
@@ -47,12 +48,13 @@ export function createCharge(data) {
     }
 };
 
-export function chargeByCustomerId(data) {
+export function chargeByCustomerId(data,claimData) {
     return (dispatch) => {
         dispatch(startLoading());
         ThirdPartyPost(API.chargeByCustomerId, data).then((resp) => {
             if (resp.data === 'success') {
                 dispatch(push(Path.paymentsuccess))
+                dispatch(claimsSubmission(claimData))
             }
             dispatch(endLoading());
         }).catch((err) => {
