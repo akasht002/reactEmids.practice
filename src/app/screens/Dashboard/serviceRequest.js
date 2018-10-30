@@ -128,7 +128,7 @@ class ServiceRequest extends React.Component {
               />
             </div>
           </div>
-          <Scrollbars
+          {/* <Scrollbars
             speed={2}
             smoothScrolling
             horizontal={false}
@@ -138,11 +138,18 @@ class ServiceRequest extends React.Component {
                 ? CSS_PROPS.Scrollbars_With_No_Length
                 : CSS_PROPS.Scrollbars_With_Length
             }
-          >
+          > */}
+          <div className={
+              getLength(this.props.patientServiceRequest) < 2
+                ? CSS_PROPS.Scrollbars_With_No_Length
+                : CSS_PROPS.Scrollbars_With_Length
+            + " scrollarea ProfileContentWidget ScrollBar"}>
+            <div className="scrollarea-content">
             <ul className='list-group ProfileServicesVisitList'>
               {serviceRequestItem}
             </ul>
-          </Scrollbars>
+            </div></div>
+          {/* </Scrollbars> */}
         </div>
         {getLength(serviceRequest) > 2 &&
           <ul className='list-group list-group-flush'>
