@@ -1924,3 +1924,35 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
 }
 
 /*--/responsive-code-for-devices*/
+
+.previewImgHolder > div{background-color: transparent;
+    border: none;}
+
+
+.previewImg {display: flex;
+    position: relative;
+    justify-content: flex-start;
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    align-items: center;}
+
+    .block-picview {
+        width: auto;
+        height: auto;
+        padding: 10px;
+        position: absolute;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        margin: auto;
+    }
+
+.block-picview > button{    margin-right: 5px;
+    margin-top: 5px;}
+
+    .block-picview > img{    width: 300px;
+    height: auto;}

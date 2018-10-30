@@ -28,10 +28,18 @@ class MessageContent extends Component {
     };
 
     componentDidMount() {
+        this.scrollToBottom();
         this.textarea.focus();
         autosize(this.textarea);
         this.props.onRef(this);
+    };
+
+
+    componentDidUpdate() {
         this.scrollToBottom();
+        this.textarea.focus();
+        autosize(this.textarea);
+        this.props.onRef(this);
     };
 
     componentWillUnmount() {
