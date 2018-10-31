@@ -397,13 +397,13 @@ class PersonalDetail extends React.PureComponent {
                 <span>
                   {this.props.personalDetail && this.props.personalDetail.age}
                   {' '}
-                  years
+                  Yrs Old
                 </span>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.yearOfExperience}
                   {' '}
-                  years exp
+                  Yrs Exp
                 </span>
               </p>
             </div>
@@ -569,7 +569,7 @@ class PersonalDetail extends React.PureComponent {
             </div>
             <div className='col-md-6 mb-2'>
               <div className='form-group'>
-                <label> Gender</label>
+                <label className="m-0"> Gender</label>
                 <SelectBox
                   options={genderDetail}
                   simpleValue
@@ -581,7 +581,7 @@ class PersonalDetail extends React.PureComponent {
                     })
                   }}
                   selectedValue={this.state.selectedGender}
-                  className={'inputFailure'}
+                  className='inputFailure ServiceRequestSelect'
                 />
               </div>
             </div>
@@ -659,7 +659,7 @@ class PersonalDetail extends React.PureComponent {
                 this.setState({ selectedAffiliation: value,disabledSaveBtn: false })
               }}
               selectedValue={this.state.selectedAffiliation}
-              className={'inputFailure'}
+              className='inputFailure ServiceRequestSelect'
             />
           </div>
 
@@ -716,7 +716,7 @@ class PersonalDetail extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label>State</label>
+                    <label className="m-0">State</label>
                     <SelectBox
                       options={stateDetail}
                       simpleValue
@@ -726,7 +726,7 @@ class PersonalDetail extends React.PureComponent {
                       }                      
                     }                      
                       selectedValue={this.state.selectedState}
-                      className={'inputFailure'}
+                      className='inputFailure ServiceRequestSelect'
                     />
                   </div>
                 </div>

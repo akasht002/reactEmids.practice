@@ -308,7 +308,7 @@ a.onBoardSuccessBtn{
         text-align: center;
     }
 
-    .GetStartedBtnContainer .btn, .LoginButton.btn{
+    .GetStartedBtnContainer .btn{
         width: 80%;
     }
 

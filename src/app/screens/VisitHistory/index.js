@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import { ThemeProvider } from '@zendeskgarden/react-theming'
+import moment from 'moment'
 import { SelectField, Select, Item } from '@zendeskgarden/react-select'
 import Pagination from 'react-js-pagination';
 import { Scrollbars } from '../../components'
@@ -36,7 +37,8 @@ class VisitHistory extends Component {
       serviceTypeIds: [],
       activePage: 1,
       sortByOrder: 'asc',
-      pageNumber: 1
+      pageNumber: 1,
+      sort: 'true'
     }
   }
 
@@ -101,25 +103,34 @@ class VisitHistory extends Component {
 
   applyFilter = (selectedData) => {
     const data = {
-      fromDate: selectedData.searchData.startDate,
-      toDate: selectedData.searchData.endDate,
+      fromDate: selectedData.searchData.startDate ? selectedData.searchData.startDate : '1900-01-01',
+      toDate: selectedData.searchData.endDate ? selectedData.searchData.endDate : moment().toDate(),
       serviceCategory: this.state.serviceCategoryId,
       serviceTypeList: this.state.serviceTypeIds,
       status: [],
       serviceProviderList: selectedData.serviceProviderArray,
-      serviceProviderId: 0
+      serviceProviderId: 0,
+      pageNumber: 1,
+      pageSize: 10
     }
     this.props.getFilteredData(data)
     this.setState({
-      filterOpen: !this.state.filterOpen
+      filterOpen: !this.state.filterOpen,
+      sort: 'false'
     })
   }
 
   applyReset = () => {
-    this.setState({ selectedOption: '', serviceTypeIds: [] })
+    this.setState({ selectedOption: '', serviceTypeIds: [], sort:true })
     this.props.clearServiceTypes();
     this.props.clearServiceProviders(this.props.serviceProviders);
-    this.props.getVisitServiceLists();
+    let data = {
+      pageNumber: 1,
+      pageSize: 10,
+      sortOrder: "asc",
+      sortName: "visitdate"
+    };
+    this.props.getVisitServiceLists(data);
   }
 
   handlePageChange = (pageNumber) => {
@@ -192,22 +203,38 @@ class VisitHistory extends Component {
             visitHistoryList={this.props.VisitServiceHistory}
             handleClicks={this.handleClick}
           />
-          {this.props.VisitServiceHistory.length > 0 &&
-          <div class="col-md-12 p-0 AsyncConversationPagination">
-            <Pagination
-              activePage={this.state.activePage}
-              itemsCountPerPage={10}
-              totalItemsCount={this.props.historyListCount}
-              pageRangeDisplayed={5}
-              onChange={this.handlePageChange}
-              itemClass="PaginationItem"
-              itemClassFirst="PaginationIcon First"
-              itemClassPrev="PaginationIcon Prev"
-              itemClassNext="PaginationIcon Next"
-              itemClassLast="PaginationIcon Last"
-            />
-            </div>
-          }
+          {this.props.VisitServiceHistory.length > 0 && this.state.sort === 'true' && (
+              <div class="col-md-12 p-0 AsyncConversationPagination">
+                <Pagination
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={10}
+                  totalItemsCount={this.props.historyListCount}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange}
+                  itemClass="PaginationItem"
+                  itemClassFirst="PaginationIcon First"
+                  itemClassPrev="PaginationIcon Prev"
+                  itemClassNext="PaginationIcon Next"
+                  itemClassLast="PaginationIcon Last"
+                />
+              </div>
+            )}
+            {this.props.VisitServiceHistory.length > 0 && this.state.sort === 'false' && (
+              <div class="col-md-12 p-0 AsyncConversationPagination">
+                <Pagination
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={10}
+                  totalItemsCount={this.props.VisitServiceHistory[0].dataCount}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange}
+                  itemClass="PaginationItem"
+                  itemClassFirst="PaginationIcon First"
+                  itemClassPrev="PaginationIcon Prev"
+                  itemClassNext="PaginationIcon Next"
+                  itemClassLast="PaginationIcon Last"
+                />
+              </div>
+            )}
           <div className='cardBottom' />
         </Scrollbars>
         <Filter

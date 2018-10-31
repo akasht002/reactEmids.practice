@@ -65,13 +65,8 @@ class _CardForm extends Component {
                     :
                     data.amount = this.props.data.CalculationsData.grandTotalAmount.toFixed(2);
 
-                if (this.props.eligibilityData.active === true && this.props.eligibilityData.authorizationRequired === false) {
-                    this.props.token(data)
-                    this.props.claimSubmission()
-                } else {
-                    this.props.token(data)
-                }
-
+                this.props.token(data);
+                
             } else {
                 if (payload.error.code === 'incomplete_number') {
                     this.setState({ cardErrorMessage: payload.error.message, expErrorMessage: '', cvcErrorMessage: '' })
@@ -138,7 +133,11 @@ const CardForm = injectStripe(_CardForm)
 class CheckoutForm extends React.Component {
 
     chargeData = (data) => {
-        this.props.createCharge(data);
+        if (this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false) {
+            this.props.createCharge(data, this.props.claimData);
+        } else {
+            this.props.createCharge(data);
+        }
     }
 
     render() {
@@ -149,7 +148,6 @@ class CheckoutForm extends React.Component {
                         token={this.chargeData}
                         data={this.props.summaryAmount}
                         eligibilityData={this.props.eligibilityCheck}
-                        claimSubmission={this.props.claimSubmission}
                     />
                 </Elements>
             </div>
@@ -159,7 +157,7 @@ class CheckoutForm extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        createCharge: (data) => dispatch(createCharge(data)),
+        createCharge: (data, claimData) => dispatch(createCharge(data, claimData)),
     }
 };
 

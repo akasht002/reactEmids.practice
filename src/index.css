@@ -709,11 +709,11 @@ button.navbar-toggler{
 }
 
 .inputSuccess{
-    border-bottom-color: #28a745 !important;
+    border-bottom-color: #268240 !important;
 }
 
 .inputFailure{    
-    border-bottom-color: #dc3545 !important;
+    border-bottom-color: #c04e59 !important;
 }
 
 .inputDisabled{

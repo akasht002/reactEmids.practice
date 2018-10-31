@@ -24,6 +24,7 @@ class Payments extends Component {
             selectedCard: '',
             disabled: true
         };
+        this.Claimdata ={};
     };
 
     componentDidMount() {
@@ -57,14 +58,32 @@ class Payments extends Component {
             "serviceRequestVisitId": this.props.summaryAmount.SummaryDetails.serviceRequestVisitId
         }
 
+        this.Claimdata = {
+            "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
+            "claimOnsetDate": this.props.summaryAmount.SummaryDetails.visitDate,
+            "claimServiceLinesChargeAmount": this.props.summaryAmount.CalculationsData.estimatedClaim,
+            "claimServiceLinesProcedureCode": "",
+            "claimServiceLinesProcedureModifierCodes": "",
+            "claimServiceLinesDiagnosisCodes": "",
+            "claimServiceLinesServiceDate": this.props.summaryAmount.SummaryDetails.visitDate,
+            "qualifier": "",
+            "claimServiceLinesPlaceOfService": "",
+            "claimServiceLinesUnitCount": "",
+            "claimTotalChargeAmount": this.props.summaryAmount.CalculationsData.grandTotalAmount,
+            "claimPatientPaidAmount": this.props.summaryAmount.CalculationsData.copayAmount,
+            "billingProviderNPI": "",
+            "billingProviderAddress": "",
+            "billingProviderLastName": "",
+            "billingProviderFirstName": ""
+        }
+
         this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
             data.paymentAmount = this.props.summaryAmount.CalculationsData.copayAmount
             :
             data.paymentAmount = this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2);
 
         if (this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false) {
-            this.props.chargeByCustomerId(data)
-            this.payByAuthorizedCard();
+            this.props.chargeByCustomerId(data, this.Claimdata)
         } else {
             this.props.chargeByCustomerId(data)
         }
@@ -120,6 +139,24 @@ class Payments extends Component {
     }
 
     paymentsMethods = () => {
+         this.Claimdata = {
+            "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
+            "claimOnsetDate": this.props.summaryAmount.SummaryDetails.visitDate,
+            "claimServiceLinesChargeAmount": this.props.summaryAmount.CalculationsData.estimatedClaim,
+            "claimServiceLinesProcedureCode": "",
+            "claimServiceLinesProcedureModifierCodes": "",
+            "claimServiceLinesDiagnosisCodes": "",
+            "claimServiceLinesServiceDate": this.props.summaryAmount.SummaryDetails.visitDate,
+            "qualifier": "",
+            "claimServiceLinesPlaceOfService": "",
+            "claimServiceLinesUnitCount": "",
+            "claimTotalChargeAmount": this.props.summaryAmount.CalculationsData.grandTotalAmount,
+            "claimPatientPaidAmount": this.props.summaryAmount.CalculationsData.copayAmount,
+            "billingProviderNPI": "",
+            "billingProviderAddress": "",
+            "billingProviderLastName": "",
+            "billingProviderFirstName": ""
+        }
         if (this.state.SelectedCard === '1') {
             return (
                 <div className="FeedbackQuestionWidget form-group m-0">
@@ -163,7 +200,7 @@ class Payments extends Component {
                             <label className="m-0">Enter the card details</label>
                         </div>
                         <StripeProvider apiKey={STRIPE_KEY}>
-                            <CheckoutForm claimSubmission={this.payByAuthorizedCard} />
+                            <CheckoutForm claimSubmission={this.payByAuthorizedCard} claimData={this.Claimdata} />
                         </StripeProvider>
                     </div>
                 </div>
@@ -178,7 +215,6 @@ class Payments extends Component {
     }
 
     render() {
-
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileHeaderWidget'>
@@ -278,7 +314,7 @@ class Payments extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getpaymentsCardList: (data) => dispatch(getpaymentsCardList(data)),
-        chargeByCustomerId: (data) => dispatch(chargeByCustomerId(data)),
+        chargeByCustomerId: (data, Claimdata) => dispatch(chargeByCustomerId(data, Claimdata)),
         claimsSubmission: (data) => dispatch(claimsSubmission(data)),
         captureAmount: (data) => dispatch(captureAmount(data))
     }

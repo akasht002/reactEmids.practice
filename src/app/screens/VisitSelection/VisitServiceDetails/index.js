@@ -395,7 +395,7 @@ class VisitServiceDetails extends Component {
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                        <Link to='/teleHealth/'>Video Call </Link>
+                        <Link to="/teleHealth/">Video Conference </Link>
                       </div>
                     </div>
                   </div>

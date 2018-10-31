@@ -185,9 +185,7 @@ class Profile extends Component {
                 <div className='col-md-12 card CardWidget SPCertificate'>
                 {this.getServiceOffered()}
                 </div>
-                <div className='col-md-12 card CardWidget SPCertificate'>
                   {this.getServiceArea()}
-                </div>
                 <div className='col-md-12 card CardWidget SPCertificate'>
                   {this.getSkills()}
                 </div>

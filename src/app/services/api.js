@@ -113,7 +113,7 @@ export const API = {
     getAffiliationDetail:'ServiceProviderLookUp/Affiliation',
     updateStandByMode:'ServiceProvider/UpdateStandByMode/',
     getUserRoles: "User/GetUserRoles",
-    getEntityServiceProviderList:'ServiceProvider/ByEntity/',
+    getEntityServiceProviderList:'EntityServiceProvider/',
     assignServiceVisit:'ServiceRequest/AssignServiceVisit',
     getServiceArea:'ServiceProvider/GetServiceProviderServiceAreaView/',
     addServiceArea:'ServiceProvider/ServiceProviderServiceArea',

@@ -99,7 +99,7 @@ class VerifyContact extends React.Component {
                                 {this.props.isPasscodeExpired && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Your passcode is been expired, please regenerate the passcode</span>}
                             </div>
                         </div>
-                        <div className="row mt-auto">
+                        <div className="row mt-auto verify-msgie11">
                             {this.state.passCodeSentMsg && <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been sent to your registered Contact Number.</span>}
                             <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
                         </div>

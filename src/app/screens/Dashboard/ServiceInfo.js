@@ -86,7 +86,7 @@ export const serviceCalendar = (
                   onClick={e =>
                     togglePersonalDetails({
                       serviceRequestId: conversations.serviceRequestId,
-                      serviceRequestVisitid: conversations.serviceRequestVisitid,
+                      serviceRequestVisitid: conversations.serviceRequestVisitId,
                       patientId: conversations.patientId
                     })}
                 >
