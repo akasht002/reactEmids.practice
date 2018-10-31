@@ -1,103 +1,107 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from "react";
 import {
   Accordion,
   AccordionItem,
   AccordionItemTitle,
   AccordionItemBody
-} from 'react-accessible-accordion'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { Progressbar } from '../../components'
-import moment from 'moment'
-import 'react-accessible-accordion/dist/fancy-example.css'
-import { getFields, getLength } from '../../utils/validations'
-import { ProfileModalPopup, ModalPopup, StarRating } from '../../components'
-import { getFirstCharOfString } from '../../utils/stringHelper'
-import { getUserInfo } from '../../services/http'
+} from "react-accessible-accordion";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { Progressbar } from "../../components";
+import moment from "moment";
+import "react-accessible-accordion/dist/fancy-example.css";
+import { getFields, getLength, getStatus } from "../../utils/validations";
+import { ProfileModalPopup, ModalPopup, StarRating } from "../../components";
+import { getFirstCharOfString } from "../../utils/stringHelper";
+import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
   saveAnswerFeedback
-} from '../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
-
+} from "../../redux/visitSelection/VisitServiceProcessing/Feedback/actions";
 
 class VistSummary extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       collapse: false,
       EducationModal: false,
-      rating: '',
-      answerList: '',
-      textareaValue: '',
-      textareaData: ''
-    }
-    this.selectedAnswers = []
+      rating: "",
+      answerList: "",
+      textareaValue: "",
+      textareaData: ""
+    };
+    this.selectedAnswers = [];
   }
 
   componentDidMount() {
-    this.props.getQuestionsList()
+    this.props.getQuestionsList();
   }
 
   toggle = () => {
-    this.setState({ collapse: !this.state.collapse })
-  }
+    this.setState({ collapse: !this.state.collapse });
+  };
 
   toggleHiddenScreen = () => {
     this.setState({
       isOpen: false,
       filterOpen: false
-    })
-  }
+    });
+  };
 
   toggleFilter = () => {
     this.setState({
       filterOpen: !this.state.filterOpen
-    })
-  }
+    });
+  };
 
   getServiceList = datas => {
     if (getLength(datas) > 0) {
       return datas.map((list, index) => {
         return (
-          <div key={index} className='ServiceList Individual Summary'>
-            <label className='ServicesLink active' htmlFor='Services1'>
-              <div className='servicesDesc'>
-                <span className='serviceName'>
+          <div key={index} className="ServiceList Individual Summary">
+            <label className="ServicesLink active" htmlFor="Services1">
+              <div className="servicesDesc">
+                <span className="serviceName">
                   {list.serviceTaskDescription}
                 </span>
               </div>
             </label>
-            <span className='ServiceIndicatorBottom' />
+            <span className="ServiceIndicatorBottom" />
           </div>
-        )
-      })
+        );
+      });
     } else {
-      return <div>No Content</div>
+      return <div>No Content</div>;
     }
-  }
+  };
 
   getServiceDetails = lists => {
     if (lists) {
       return lists.map((list, index) => {
         return (
           <AccordionItem>
-            <AccordionItemTitle className='TabContainer'>
+            <AccordionItemTitle className="TabContainer">
               <img
-                alt={'NO_IMAGE'}
-                className='ServiceTasksImg'
-                src={require('../../assets/images/Bathing_Purple.svg')}
-              />
-              {' '}
-              <div className='TabHeaderContent'>
-                <span className='TabHeaderText'>
+                alt={"NO_IMAGE"}
+                className="ServiceTasksImg"
+                src={require("../../assets/images/Bathing_Purple.svg")}
+              />{" "}
+              <div className="TabHeaderContent">
+                <span className="TabHeaderText">
                   {list.serviceTypeDescription}
                 </span>
                 <span>
-                  <i className='SelectedTask'>0</i>
-                  <i className='TotalTasks'>
-                    /{getLength(list.serviceRequestTypeTaskVisits)}
+                  <i className="SelectedTask">
+                    {getLength(list.serviceRequestTypeTaskVisits) > 0 &&
+                      getStatus(
+                        list.serviceRequestTypeTaskVisits,
+                        "statusId",
+                        45
+                      )}
                   </i>
-                  {' '}
+                  <i className="TotalTasks">
+                    /{getLength(list.serviceRequestTypeTaskVisits)}
+                  </i>{" "}
                   tasks completed
                 </span>
               </div>
@@ -105,30 +109,28 @@ class VistSummary extends React.Component {
 
             <AccordionItemBody>
               {this.getServiceList(list.serviceRequestTypeTaskVisits)}
-
             </AccordionItemBody>
           </AccordionItem>
-        )
-      })
+        );
+      });
     }
-  }
+  };
 
   togglePersonalDetails(action, e) {
     this.setState({
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal
-    })
+    });
   }
-
 
   handleSelected = (answer, id) => {
-    let answers = { feedbackQuestionnaireId: id, answerName: answer, id: 0 }
+    let answers = { feedbackQuestionnaireId: id, answerName: answer, id: 0 };
     let filteredData = this.selectedAnswers.filter(answer => {
-      return answer.feedbackQuestionnaireId !== id
-    })
-    filteredData.push(answers)
-    this.selectedAnswers = filteredData
-    this.setState({ answerList: filteredData })
-  }
+      return answer.feedbackQuestionnaireId !== id;
+    });
+    filteredData.push(answers);
+    this.selectedAnswers = filteredData;
+    this.setState({ answerList: filteredData });
+  };
 
   handleTextarea = (e, id) => {
     this.setState({
@@ -137,23 +139,23 @@ class VistSummary extends React.Component {
         feedbackQuestionnaireId: id,
         answerName: this.state.textareaValue
       }
-    })
-  }
+    });
+  };
 
   handleSelectedRating = e => {
-    this.setState({ rating: e.target.value })
-  }
+    this.setState({ rating: e.target.value });
+  };
 
   onClickNext = () => {
     if (this.state.textareaData) {
-      this.selectedAnswers.push(this.state.textareaData)
+      this.selectedAnswers.push(this.state.textareaData);
     }
     if (this.props.QuestionsList.length === this.selectedAnswers.length) {
-      this.onSubmit()
+      this.onSubmit();
     } else {
-      this.setState({ isModalOpen: true })
+      this.setState({ isModalOpen: true });
     }
-  }
+  };
 
   onSubmit = () => {
     const data = {
@@ -162,18 +164,18 @@ class VistSummary extends React.Component {
       patientId: getUserInfo().serviceProviderId,
       rating: this.state.rating,
       answers: this.selectedAnswers,
-      path: 'visitHistory'
-    }
-    this.props.saveAnswerFeedback(data)
+      path: "visitHistory"
+    };
+    this.props.saveAnswerFeedback(data);
     this.setState({
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
       isModalOpen: false
-    })
-  }
+    });
+  };
 
   getFeedback = () => {
     return (
-      <div className='FeedbackWidget py-4'>
+      <div className="FeedbackWidget py-4">
         {/* <div className='FeedbackRating'>
           {this.props.patientDetails.serviceProvider
             ? <p>
@@ -191,200 +193,253 @@ class VistSummary extends React.Component {
             handleSelectedRating={e => this.handleSelectedRating(e)}
           />
         </div> */}
-        {this.props.QuestionsList.length > 0
-          ? <Fragment>
+        {this.props.QuestionsList.length > 0 ? (
+          <Fragment>
             {this.props.QuestionsList &&
               this.props.QuestionsList.map((questionList, i) => {
-                if (questionList.answerTypeDescription === 'ChoiceBased') {
+                if (questionList.answerTypeDescription === "ChoiceBased") {
                   return (
                     <div
                       key={questionList.feedbackQuestionnaireId}
-                      className='FeedbackQuestionWidget'
+                      className="FeedbackQuestionWidget"
                     >
-                      <p className='FeedbackQuestion'>
+                      <p className="FeedbackQuestion">
                         {i + 1}. {questionList.question}
                       </p>
-                      <div className='FeedbackAnswerWidget'>
+                      <div className="FeedbackAnswerWidget">
                         {questionList.answers.map((answer, j) => {
                           return (
                             <div
-                              className='form-radio col-md-4'
+                              className="form-radio col-md-4"
                               key={answer.id}
                             >
                               <input
-                                className='form-radio-input'
+                                className="form-radio-input"
                                 id={answer.id}
-                                type='radio'
+                                type="radio"
                                 value={answer.answerName}
-                                name={'text' + i}
+                                name={"text" + i}
                                 onChange={e =>
                                   this.handleSelected(
                                     answer.answerName,
                                     questionList.feedbackQuestionnaireId
-                                  )}
+                                  )
+                                }
                               />
                               <label
-                                className='form-radio-label'
+                                className="form-radio-label"
                                 htmlFor={answer.id}
                               >
                                 {answer.answerName}
-                                <span className='RadioBoxIcon' />
+                                <span className="RadioBoxIcon" />
                               </label>
                             </div>
-                          )
+                          );
                         })}
                       </div>
                     </div>
-                  )
+                  );
                 }
 
-                if (questionList.answerTypeDescription === 'OpenText') {
+                if (questionList.answerTypeDescription === "OpenText") {
                   return (
                     <div
-                      className='FeedbackQuestionWidget'
+                      className="FeedbackQuestionWidget"
                       key={questionList.feedbackQuestionnaireId}
                     >
-                      <p className='FeedbackQuestion'>
+                      <p className="FeedbackQuestion">
                         {i + 1}. {questionList.question}
                       </p>
-                      <div className='FeedbackAnswerWidget'>
+                      <div className="FeedbackAnswerWidget">
                         {questionList.answers.map((answer, i) => {
                           return (
-                            <div key={answer.id} className='feedbackForm'>
+                            <div key={answer.id} className="feedbackForm">
                               <textarea
                                 id={answer.id}
                                 rows={4}
-                                className='form-control'
+                                className="form-control"
                                 value={this.state.textareaValue}
                                 onChange={e =>
                                   this.handleTextarea(
                                     e,
                                     questionList.feedbackQuestionnaireId
-                                  )}
+                                  )
+                                }
                               />
                             </div>
-                          )
+                          );
                         })}
                       </div>
                     </div>
-                  )
+                  );
                 }
-                return questionList
+                return questionList;
               })}
           </Fragment>
-          : ''}
-
+        ) : (
+          ""
+        )}
       </div>
-    )
-  }
+    );
+  };
 
-  getFeedbackContent = (data) => {
-
-  }
+  getFeedbackContent = data => {};
 
   calculate = (totalTaskCompleted, totalTask) => {
     if (totalTaskCompleted !== 0 && totalTask !== 0) {
-      return Math.floor(totalTaskCompleted / totalTask * 100)
+      return Math.floor((totalTaskCompleted / totalTask) * 100);
     } else if (totalTask === 0) {
-      return 0
+      return 0;
     } else {
-      return 0
+      return 0;
     }
-  }
+  };
 
   render() {
-    let summaryDetail = this.props.SummaryDetails
-    let startdate = moment(summaryDetail.visitStartTime)
-    let enddate = moment(summaryDetail.visitEndTime)
-    let duration = moment.duration(enddate.diff(startdate))
-    let hours = duration.hours()
-    let modalContent = this.getFeedback()
-    let modalTitle = 'Feedback'
-    let modalType = ''
-    let progress_bar = summaryDetail.totalTask !== 0 && summaryDetail.totalTask !== 0 ? (this.props.taskCompleted / this.props.totaltask) * 100 : 0
+    let summaryDetail = this.props.SummaryDetails;
+    let startdate = moment(summaryDetail.visitStartTime);
+    let enddate = moment(summaryDetail.visitEndTime);
+    let duration = moment.duration(enddate.diff(startdate));
+    let hours = duration.hours();
+    let modalContent = this.getFeedback();
+    let modalTitle = "Feedback";
+    let modalType = "";
+    let progress_bar =
+      summaryDetail.totalTask !== 0 && summaryDetail.totalTask !== 0
+        ? (this.props.taskCompleted / this.props.totaltask) * 100
+        : 0;
 
     return (
       <React.Fragment>
-        <form className='ServiceContent'>
-          <div className='VisitSummaryWidget'>
-            <div className='LeftWidget'>
-              <div className='LeftContent'>
-                <p className='SummaryContentTitle'>Service Visit Details</p>
+        <form className="ServiceContent">
+          <div className="VisitSummaryWidget">
+            <div className="LeftWidget">
+              <div className="LeftContent">
+                <p className="SummaryContentTitle">Service Visit Details</p>
                 <div className="row mb-3">
                   <div className="col-md-12 SummaryContentTable">
-                    <p className="m-0"><span className="SummaryContentTableTitle">Service Type(s)</span>
-                      <span>{summaryDetail.serviceRequestTypeVisits &&
-                        getFields(
-                          summaryDetail.serviceRequestTypeVisits,
-                          'serviceTypeDescription'
-                        )}</span></p>
-                    <p><span className="SummaryContentTableTitle">Service Category</span>
-                      <span>{summaryDetail.serviceCategoryDescription &&
-                        summaryDetail.serviceCategoryDescription}</span></p>
-                    <p className="m-0"><span className="SummaryContentTableTitle">Visit Length</span>
-                      <span>{summaryDetail.originalTotalDuration} hrs</span></p>
-                    <p className="m-0"><span className="SummaryContentTableTitle">Tasks</span>
-                      <div className="SummaryRange SummaryRangeWidget"><span className="bottomTaskRange">
-                        <i style={{ width: this.calculate(summaryDetail.totalTaskCompleted, summaryDetail.totalTask) + '%' }} className="bottomTaskCompletedRange" />
+                    <p className="m-0">
+                      <span className="SummaryContentTableTitle">
+                        Service Type(s)
                       </span>
-                        <span className="bottomTaskPercentage">{this.calculate(summaryDetail.totalTaskCompleted, summaryDetail.totalTask)}%</span>
+                      <span>
+                        {summaryDetail.serviceRequestTypeVisits &&
+                          getFields(
+                            summaryDetail.serviceRequestTypeVisits,
+                            "serviceTypeDescription"
+                          )}
+                      </span>
+                    </p>
+                    <p>
+                      <span className="SummaryContentTableTitle">
+                        Service Category
+                      </span>
+                      <span>
+                        {summaryDetail.serviceCategoryDescription &&
+                          summaryDetail.serviceCategoryDescription}
+                      </span>
+                    </p>
+                    <p className="m-0">
+                      <span className="SummaryContentTableTitle">
+                        Visit Length
+                      </span>
+                      <span>{summaryDetail.originalTotalDuration} hrs</span>
+                    </p>
+                    <p className="m-0">
+                      <span className="SummaryContentTableTitle">Tasks</span>
+                      <div className="SummaryRange SummaryRangeWidget">
+                        <span className="bottomTaskRange">
+                          <i
+                            style={{
+                              width:
+                                this.calculate(
+                                  summaryDetail.totalTaskCompleted,
+                                  summaryDetail.totalTask
+                                ) + "%"
+                            }}
+                            className="bottomTaskCompletedRange"
+                          />
+                        </span>
+                        <span className="bottomTaskPercentage">
+                          {this.calculate(
+                            summaryDetail.totalTaskCompleted,
+                            summaryDetail.totalTask
+                          )}
+                          %
+                        </span>
                       </div>
                     </p>
                   </div>
                 </div>
 
-                <div className='TabContainerWidget Individual'>
+                <div className="TabContainerWidget Individual">
                   <Accordion>
                     {this.getServiceDetails(
                       summaryDetail.serviceRequestTypeVisits
                     )}
-
                   </Accordion>
                 </div>
               </div>
             </div>
-            <div className='RightWidget'>
-              <div className='RightContent'>
-                <p className='SummaryContentTitle'>Payment Details</p>
+            <div className="RightWidget">
+              <div className="RightContent">
+                <p className="SummaryContentTitle">Payment Details</p>
 
-                <div className='row CostTableWidget'>
-                  <div className='col-md-8 CostTableContainer Label'>
+                <div className="row CostTableWidget">
+                  <div className="col-md-8 CostTableContainer Label">
                     <p>
                       <span>Total Chargeable Time</span>
                       <span>Hourly Rate</span>
                     </p>
-                    <p className='TaxLabel'>
+                    <p className="TaxLabel">
                       <span>Total Visit Cost </span>
                       <span>Taxes and Fees</span>
                     </p>
                   </div>
-                  <div className='col-md-4 CostTableContainer Cost'>
+                  <div className="col-md-4 CostTableContainer Cost">
                     <p>
                       <span>{summaryDetail.originalTotalDuration} hrs</span>
-                      <span>${summaryDetail.hourlyRate}/hr</span>
+                      <span>
+                        ${summaryDetail.hourlyRate}
+                        /hr
+                      </span>
                     </p>
-                    <p className='TaxCost'>
-                      <span>${(summaryDetail.totalCost && summaryDetail.totalCost).toFixed(2)}</span>
+                    <p className="TaxCost">
+                      <span>
+                        $
+                        {(
+                          summaryDetail.totalCost && summaryDetail.totalCost
+                        ).toFixed(2)}
+                      </span>
                       <span>${summaryDetail.taxAmount}</span>
                     </p>
                   </div>
-                  <div className='col-md-12 CostTableContainer Total'>
-                    <p className='TotalLabel'><span>Total Cost </span></p>
-                    <p className='TotalCost'><span>${(summaryDetail.totalCost + summaryDetail.taxAmount)}</span></p>
+                  <div className="col-md-12 CostTableContainer Total">
+                    <p className="TotalLabel">
+                      <span>Total Cost </span>
+                    </p>
+                    <p className="TotalCost">
+                      <span>
+                        ${summaryDetail.totalCost + summaryDetail.taxAmount}
+                      </span>
+                    </p>
                   </div>
                 </div>
 
-                <div className='row EstimatedCostWidget m-0 mb-4'>
-                  <div className='col-md-8 EstimatedCostContainer Label'>
+                <div className="row EstimatedCostWidget m-0 mb-4">
+                  <div className="col-md-8 EstimatedCostContainer Label">
                     <p>
                       <span>Estimated Claim</span>
                       <span>Copay On Credit Card</span>
                     </p>
                   </div>
-                  <div className='col-md-4 EstimatedCostContainer Cost'>
+                  <div className="col-md-4 EstimatedCostContainer Cost">
                     <p>
-                      <span>$ {summaryDetail.estimatedClaim &&
-                        summaryDetail.estimatedClaim.toFixed(2)}</span>
+                      <span>
+                        ${" "}
+                        {summaryDetail.estimatedClaim &&
+                          summaryDetail.estimatedClaim.toFixed(2)}
+                      </span>
                       <span>
                         {summaryDetail.outOfPocketAmount &&
                           summaryDetail.outOfPocketAmount.toFixed(2)}
@@ -392,75 +447,77 @@ class VistSummary extends React.Component {
                     </p>
                   </div>
                 </div>
-                <p className='SummaryContentTitle mb-4'>Feedback</p>
-                <div className='feedbackContainer'>
+                <p className="SummaryContentTitle mb-4">Feedback</p>
+                <div className="feedbackContainer">
                   <p>
-                    Rating obtained
-                    {' '}
-                    <span className='SPRating'>
-                      <i className='Icon iconFilledStar' />4.2
+                    Rating obtained{" "}
+                    <span className="SPRating">
+                      <i className="Icon iconFilledStar" />
+                      4.2
                     </span>
                   </p>
-                  {getLength(this.props.VisitFeedback) > 0
-                    ? <span
-                      className='FeedbackLink'
+                  {getLength(this.props.VisitFeedback) > 0 ? (
+                    <span
+                      className="FeedbackLink"
                       onClick={this.props.FeedbackModal}
                     >
                       Show Feedback
-                </span> : <p>
-                      Your feedback is pending. Click
-                    {' '}
+                    </span>
+                  ) : (
+                    <p>
+                      Your feedback is pending. Click{" "}
                       <span
-                        className='FeedbackLink'
+                        className="FeedbackLink"
                         onClick={this.togglePersonalDetails.bind(this)}
                       >
                         Here
-                    </span>
-                      {' '}
+                      </span>{" "}
                       to submit feedback.
-                  </p>}
-
-
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
           </div>
-
         </form>
         <ProfileModalPopup
           isOpen={this.state.EditFeedbackDetailModal}
           toggle={this.togglePersonalDetails.bind(this, modalType)}
           ModalBody={modalContent}
-          className='modal-lg FeedbackModal'
+          className="modal-lg FeedbackModal"
           modalTitle={modalTitle}
-          centered='centered'
+          centered="centered"
           onClick={this.onSubmit}
           disabled={this.state.disabledSaveBtn}
         />
       </React.Fragment>
-    )
+    );
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
     getQuestionsList: () => dispatch(getQuestionsList()),
     saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data))
-  }
+  };
 }
 
 function mapStateToProps(state) {
   return {
-    QuestionsList: state.visitSelectionState.VisitServiceProcessingState
-      .FeedbackState.QuestionsList,
-    patientDetails: state.visitSelectionState.VisitServiceProcessingState
-      .PerformTasksState.PerformTasksList,
-    ServiceRequestId: state.visitHistoryState.vistServiceHistoryState
-      .ServiceRequestId,
-    VisitFeedback: state.visitHistoryState.vistServiceHistoryState
-      .VisitFeedback
-  }
+    QuestionsList:
+      state.visitSelectionState.VisitServiceProcessingState.FeedbackState
+        .QuestionsList,
+    patientDetails:
+      state.visitSelectionState.VisitServiceProcessingState.PerformTasksState
+        .PerformTasksList,
+    ServiceRequestId:
+      state.visitHistoryState.vistServiceHistoryState.ServiceRequestId,
+    VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback
+  };
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(VistSummary)
-)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(VistSummary)
+);

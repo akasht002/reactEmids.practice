@@ -179,3 +179,13 @@ export const isUrlValid = (userInput) =>{
 export const getServiceTypeImage = (serviceTypeId) => {
   return (serviceTypesImage[`${serviceTypeId}`]) ? serviceTypesImage[`${serviceTypeId}`] : 'ADL Ambulation & Mobility.svg';
 }
+
+export function getStatus(input, field, status) {
+  var output = 0
+  for (var i = 0; i < input.length; ++i) {
+    if (i === input.length - 1 && input[i][field] === status) {
+      output++
+    }
+  }
+  return output
+}
