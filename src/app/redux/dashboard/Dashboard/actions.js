@@ -104,7 +104,7 @@ export const getEntityServiceProviderListSuccess = data => {
 export function getEntityServiceProviderList () {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    Get(API.getEntityServiceProviderList + getUserInfo().entityId)
+    Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
       .then(resp => {
         dispatch(getEntityServiceProviderListSuccess(resp.data))
         dispatch(endLoading())
