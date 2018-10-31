@@ -18,7 +18,8 @@ export const vistServiceHistoryDetails = {
     getServiceTypeSuccess: 'get_type_success/visitHistory',
     clearServiceTypes: 'clearServiceTypes/visitHistory',
     clearServiceProviders: 'clearServiceProviders/visitHistory',
-    getHistoryListCountSuccess: 'getHistoryListCountSuccess/visitHistory'
+    getHistoryListCountSuccess: 'getHistoryListCountSuccess/visitHistory',
+    getVisitFeedBack: 'getVisitFeedBack/visit'
 };
 
 export const getVisitServiceHistoryDetailsSuccess = (data) => {
@@ -75,6 +76,13 @@ export const getVisitServiceHistoryListSuccess = (data) => {
 export const getHistoryListCountSuccess = (data) => {
     return {
         type: vistServiceHistoryDetails.getHistoryListCountSuccess,
+        data
+    }
+}
+
+export const getVisitFeedBackSuccess = (data) => {
+    return {
+        type: vistServiceHistoryDetails.getVisitFeedBack,
         data
     }
 }
@@ -156,7 +164,7 @@ export function getSort(data) {
 export function getServiceProviderRating(data) {
     return (dispatch, getState) => {
         dispatch(startLoading())
-        Get(API.getRatingAndFeedback + data.serviceVisitId, baseURLServiceRequest).then((resp) => {
+        ServiceRequestGet(API.getRatingAndFeedback + data).then((resp) => {
             dispatch(getSubmittedResponse(resp.data))
             dispatch(endLoading)
         }).catch((err) => {
@@ -245,3 +253,15 @@ export function getHistoryListCount() {
         })
     }
 }
+
+export function getVisitFeedBack(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ServiceRequestGet(API.getVisitFeedback + data).then((resp) => {
+            dispatch(getVisitFeedBackSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};

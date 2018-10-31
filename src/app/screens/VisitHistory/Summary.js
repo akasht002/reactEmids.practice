@@ -18,6 +18,10 @@ import {
   getQuestionsList,
   saveAnswerFeedback
 } from "../../redux/visitSelection/VisitServiceProcessing/Feedback/actions";
+import {
+  getServiceProviderRating, getVisitFeedBack
+} from '../../redux/visitHistory/VisitServiceDetails/actions'
+import { Path } from '../../routes'
 
 class VistSummary extends React.Component {
   constructor(props) {
@@ -28,14 +32,23 @@ class VistSummary extends React.Component {
       rating: "",
       answerList: "",
       textareaValue: "",
-      textareaData: ""
+      textareaData: "",
+      EditFeedbackDetailModal: false,
+      ViewFeedbackDetailModal: false
     };
     this.selectedAnswers = [];
   }
 
   componentDidMount() {
-    this.props.getQuestionsList();
+    if (this.props.SummaryDetails.serviceRequestVisitId) {
+      this.props.getQuestionsList();
+      this.props.getVisitFeedBack(this.props.SummaryDetails.serviceRequestVisitId)
+      this.props.getServiceProviderRating(this.props.SummaryDetails.serviceRequestVisitId)
+    } else {
+      this.props.history.push(Path.visitHistory)
+    }
   }
+
 
   toggle = () => {
     this.setState({ collapse: !this.state.collapse });
@@ -47,6 +60,10 @@ class VistSummary extends React.Component {
       filterOpen: false
     });
   };
+
+  onConfirm = () => {
+    this.setState({ ViewFeedbackDetailModal: false })
+  }
 
   toggleFilter = () => {
     this.setState({
@@ -122,6 +139,12 @@ class VistSummary extends React.Component {
     });
   }
 
+  toggleShowFeedbackDetails(action, e) {
+    this.setState({
+      ViewFeedbackDetailModal: !this.state.ViewFeedbackDetailModal
+    })
+  }
+
   handleSelected = (answer, id) => {
     let answers = { feedbackQuestionnaireId: id, answerName: answer, id: 0 };
     let filteredData = this.selectedAnswers.filter(answer => {
@@ -159,10 +182,9 @@ class VistSummary extends React.Component {
 
   onSubmit = () => {
     const data = {
-      serviceRequestVisitId: this.props.patientDetails.serviceRequestVisitId,
-      serviceRequestId: this.props.patientDetails.serviceRequestId,
+      serviceRequestVisitId: this.props.SummaryDetails.serviceRequestVisitId,
+      serviceRequestId: this.props.SummaryDetails.serviceRequestId,
       patientId: getUserInfo().serviceProviderId,
-      rating: this.state.rating,
       answers: this.selectedAnswers,
       path: "visitHistory"
     };
@@ -176,23 +198,6 @@ class VistSummary extends React.Component {
   getFeedback = () => {
     return (
       <div className="FeedbackWidget py-4">
-        {/* <div className='FeedbackRating'>
-          {this.props.patientDetails.serviceProvider
-            ? <p>
-              Rate
-                {' '}
-              {this.props.patientDetails.serviceProvider.firstName}
-              {' '}
-              {this.props.patientDetails.serviceProvider.lastName &&
-                getFirstCharOfString(
-                  this.props.patientDetails.serviceProvider.lastName
-                )}
-            </p>
-            : ''}
-          <StarRating
-            handleSelectedRating={e => this.handleSelectedRating(e)}
-          />
-        </div> */}
         {this.props.QuestionsList.length > 0 ? (
           <Fragment>
             {this.props.QuestionsList &&
@@ -277,13 +282,67 @@ class VistSummary extends React.Component {
               })}
           </Fragment>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     );
   };
 
-  getFeedbackContent = data => {};
+  getFeedbackContent = data => {
+    return (
+      <div className='FeedbackWidget'>
+        <div className='FeedbackRating'>
+        </div>
+        {this.props.VisitFeedback.length > 0
+          ? <div>
+            {this.props.VisitFeedback &&
+              this.props.VisitFeedback.map((questionList, i) => {
+                return (
+                  <div className='FeedbackQuestionWidget' key={i}>
+                    <p className='FeedbackQuestion'>
+                      {i + 1}. {questionList.question}
+                    </p>
+                    <div className='FeedbackAnswerWidget'>
+                      {questionList.answers.map((answer, i) => {
+                        return (
+                          <div
+                            className='form-radio col-md-4'
+                            key={answer.id}
+                          >
+                            <input
+                              className='form-radio-input'
+                              id={answer.id}
+                              type='radio'
+                              value={answer.answerName}
+                              name={questionList.feedbackQuestionnaireId}
+                              onChange={e =>
+                                this.handleSelected(
+                                  answer.answerName,
+                                  questionList.feedbackQuestionnaireId
+                                )}
+                              checked={questionList.selectedAnswer}
+                              disabled={true}
+                            />
+                            <label
+                              className='form-radio-label'
+                              htmlFor={answer.id}
+                            >
+                              {answer.answerName}
+                            </label>
+                            <span className='RadioBoxIcon' />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
+          </div>
+          : ''}
+
+      </div>
+    )
+  }
 
   calculate = (totalTaskCompleted, totalTask) => {
     if (totalTaskCompleted !== 0 && totalTask !== 0) {
@@ -297,17 +356,10 @@ class VistSummary extends React.Component {
 
   render() {
     let summaryDetail = this.props.SummaryDetails;
-    let startdate = moment(summaryDetail.visitStartTime);
-    let enddate = moment(summaryDetail.visitEndTime);
-    let duration = moment.duration(enddate.diff(startdate));
-    let hours = duration.hours();
     let modalContent = this.getFeedback();
     let modalTitle = "Feedback";
     let modalType = "";
-    let progress_bar =
-      summaryDetail.totalTask !== 0 && summaryDetail.totalTask !== 0
-        ? (this.props.taskCompleted / this.props.totaltask) * 100
-        : 0;
+    let feedbackContent = this.getFeedbackContent(this.props.VisitFeedback)
 
     return (
       <React.Fragment>
@@ -409,7 +461,7 @@ class VistSummary extends React.Component {
                         $
                         {(
                           summaryDetail.totalCost && summaryDetail.totalCost
-                        ).toFixed(2)}
+                        )}
                       </span>
                       <span>${summaryDetail.taxAmount}</span>
                     </p>
@@ -449,32 +501,25 @@ class VistSummary extends React.Component {
                 </div>
                 <p className="SummaryContentTitle mb-4">Feedback</p>
                 <div className="feedbackContainer">
-                  <p>
-                    Rating obtained{" "}
-                    <span className="SPRating">
-                      <i className="Icon iconFilledStar" />
-                      4.2
-                    </span>
-                  </p>
                   {getLength(this.props.VisitFeedback) > 0 ? (
                     <span
                       className="FeedbackLink"
-                      onClick={this.props.FeedbackModal}
+                      onClick={this.toggleShowFeedbackDetails.bind(this)}
                     >
                       Show Feedback
                     </span>
                   ) : (
-                    <p>
-                      Your feedback is pending. Click{" "}
-                      <span
-                        className="FeedbackLink"
-                        onClick={this.togglePersonalDetails.bind(this)}
-                      >
-                        Here
+                      <p>
+                        Your feedback is pending. Click{" "}
+                        <span
+                          className="FeedbackLink"
+                          onClick={this.togglePersonalDetails.bind(this)}
+                        >
+                          Here
                       </span>{" "}
-                      to submit feedback.
+                        to submit feedback.
                     </p>
-                  )}
+                    )}
                 </div>
               </div>
             </div>
@@ -488,6 +533,16 @@ class VistSummary extends React.Component {
           modalTitle={modalTitle}
           centered="centered"
           onClick={this.onSubmit}
+        />
+        <ProfileModalPopup
+          isOpen={this.state.ViewFeedbackDetailModal}
+          toggle={this.toggleShowFeedbackDetails.bind(this, modalType)}
+          ModalBody={feedbackContent}
+          className='modal-lg asyncModal CertificationModal'
+          modalTitle={modalTitle}
+          centered='centered'
+          onClick={this.onConfirm}
+          buttonLabel={'OK'}
           disabled={this.state.disabledSaveBtn}
         />
       </React.Fragment>
@@ -497,7 +552,9 @@ class VistSummary extends React.Component {
 function mapDispatchToProps(dispatch) {
   return {
     getQuestionsList: () => dispatch(getQuestionsList()),
-    saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data))
+    saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data)),
+    getServiceProviderRating: data => dispatch(getServiceProviderRating(data)),
+    getVisitFeedBack: data => dispatch(getVisitFeedBack(data))
   };
 }
 
@@ -511,7 +568,8 @@ function mapStateToProps(state) {
         .PerformTasksList,
     ServiceRequestId:
       state.visitHistoryState.vistServiceHistoryState.ServiceRequestId,
-    VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback
+    VisitFeedback: state.visitHistoryState.vistServiceHistoryState
+      .VisitFeedback,
   };
 }
 
