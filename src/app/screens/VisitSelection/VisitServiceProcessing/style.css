@@ -137,7 +137,7 @@ span.TimerContent{
 }
 
 span.TimerContent.running{
-    color: #8c8c8c;
+    color: #d1d1d1;
 }
 
 .rightTimerContent span.TimerStarted.running{
