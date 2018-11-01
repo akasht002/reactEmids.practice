@@ -77,6 +77,7 @@ class serviceCalendar extends React.Component {
   MonthChange = e => {
     let curDate =
       this.state.startYear + "," + e.value + "," + this.state.currentDate;
+    curDate = moment(this.state.startYear + '-' + e.value + '-' + this.state.currentDate,"YYYY-MM-DD")
     curDate = new Date(curDate);
 
     this.setState({
