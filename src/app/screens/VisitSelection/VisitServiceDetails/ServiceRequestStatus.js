@@ -28,7 +28,7 @@ export const ServiceStatus = props => {
         />
       </React.Fragment>
     )
-  } else {
+  } {/*else { // to do demo fix
     return (
       <React.Fragment>
         <Button
@@ -40,5 +40,5 @@ export const ServiceStatus = props => {
         />
       </React.Fragment>
     )
-  }
+  }*/}
 }

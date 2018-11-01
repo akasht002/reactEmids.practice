@@ -59,6 +59,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps.....', nextProps);
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       uploadedImageFile: nextProps.profileImgData.image
@@ -535,8 +536,8 @@ class PersonalDetail extends React.PureComponent {
                 }}
               />
               <small className="text-danger d-block OnboardingAlert">
-                {this.state.firstNameInvaild && 'Please enter valid first name'}
-                </small>
+                {this.state.firstNameInvaild && 'Please enter valid First Name'}
+              </small>
             </div>
             <div className='col-md-6 mb-2'>
               <Input
@@ -695,9 +696,19 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-                this.setState({ description: e.target.value,disabledSaveBtn: false })
+                if (e.target.value === '') {
+                  this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild:false })
+                } 
+            }}
+            onBlur={e => {
+              if(!e.target.value) {
+                this.setState({descriptionInvaild: true})
+              }
             }}
           />
+          <small className="text-danger d-block OnboardingAlert">
+             {this.state.descriptionInvaild && 'Please enter valid description'}
+          </small>
         </div>
         <div className='col-md-4'>
           <Input
@@ -717,12 +728,20 @@ class PersonalDetail extends React.PureComponent {
                   '$1.$2'
                 )
                 this.setState({ hourlyRate: number,
-                 disabledSaveBtn:false })
+                 disabledSaveBtn:false, hourlyRateInvalid: false })
               }
             }
           }
-            className='form-control'
+          onBlur={e => {
+            if(!e.target.value) {
+              this.setState({hourlyRateInvalid: true})
+            }
+          }}
+          className={"form-control " + (this.state.hourlyRateInvalid && 'inputFailure')}
           />
+          <small className="text-danger d-block OnboardingAlert">
+             {this.state.hourlyRateInvalid && 'Please enter valid hourlyRate'}
+          </small>
         </div>
         <div className='hrLine' />
         <div className='col-md-12 mb-2'>

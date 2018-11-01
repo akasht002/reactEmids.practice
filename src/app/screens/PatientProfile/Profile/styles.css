@@ -654,6 +654,7 @@ i.SPIconEditPersonalDetails{
     font-size: 16px;
     color: #444444;
     margin: 0 0 4px 0;
+    font-weight: 600;
 }
 
 .SPCertificateSubtle, .SPCertificateDesc{
@@ -669,6 +670,12 @@ i.SPIconEditPersonalDetails{
 
 .SPCertificateDesc{
     color: #444444;
+    font-weight: 400;
+}
+
+.pModalPadding0 .SPTabHeader.true, .SPTabHeader:hover
+{
+    background-color: #f2f5f7;
 }
 
 div.Select-menu-outer {
@@ -1235,6 +1242,17 @@ border-radius:4px;
 -moz-webkit-border-radius:4px;
 }
 
+
+
+.SPTabContent .SPIconServices span
+{
+color:#444;
+}
+
+.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitleText
+{
+color: #444;
+}
 
 @media (max-width: 1024px) {
     .GuardianList .GuardianItems {
