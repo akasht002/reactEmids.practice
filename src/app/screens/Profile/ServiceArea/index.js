@@ -30,8 +30,9 @@ class ServiceArea extends Component {
       isValid: true,
       disabledSaveBtn: true,
       isDiscardModalOpen: false,
-      count: 0,
-    }
+      coverageArea: 0
+    };
+    this.countValue = 0;
   }
 
   componentDidMount() {
@@ -46,7 +47,7 @@ class ServiceArea extends Component {
         '-' +
         nextProps.ServiceAreaFieldDetails.stateName,
       city: nextProps.ServiceAreaFieldDetails.city,
-      //count:nextProps.ServiceAreaFieldDetails.coverageArea,
+      coverageArea:nextProps.ServiceAreaFieldDetails.coverageArea ? nextProps.ServiceAreaFieldDetails.coverageArea: 0,
       zip: nextProps.ServiceAreaFieldDetails.zipCode,
       addressId: nextProps.ServiceAreaFieldDetails.addressId ?
       nextProps.ServiceAreaFieldDetails.addressId : 0
@@ -60,7 +61,7 @@ class ServiceArea extends Component {
       state_id: '',
       city: '',
       zip: '',
-      count:'',
+      coverageArea: 0,
       addressId: 0,
       disabledSaveBtn: true,
       isDiscardModalOpen: false,
@@ -74,11 +75,13 @@ class ServiceArea extends Component {
   }
 
   toggleServiceArea = () => {
+    let coverageArea = this.state.coverageArea ?  this.state.coverageArea : 0;
     this.setState({
       serviceAreaModal: !this.state.serviceAreaModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: true
+      disabledSaveBtn: true,
+      coverageArea: coverageArea
     })
     this.onClose()
   }
@@ -121,8 +124,6 @@ class ServiceArea extends Component {
       serviceAreaModal: true,
       isAdd: false,
       addressId: e.target.id,
-
-
     })
     this.props.editServiceArea(e.target.id)
   }
@@ -148,22 +149,31 @@ class ServiceArea extends Component {
   }
 
   onClickHandleIncr = () => {
-   
-    if (this.state.count >= 0) {
-      this.setState({
-        count: this.state.count + 1
-      })
+    if(this.state.coverageArea !== 0) {
+      this.countValue = this.state.coverageArea;
+    } else {
+      this.countValue = 0;
     }
-   
+    if(this.countValue >= 0) {
+      this.countValue = this.countValue + 1;
+    }
+    this.setState({
+      coverageArea: this.countValue
+    });   
   }
 
-
   onClickHandleDecr = () => {
-    if (this.state.count > 0) {
-      this.setState({
-        count: this.state.count - 1
-      })
+    if(this.state.coverageArea !== 0) {
+      this.countValue = this.state.coverageArea;
+    } else {
+      this.countValue = 0;
     }
+    if(this.countValue > 0) {
+      this.countValue = this.countValue - 1;
+    }
+    this.setState({
+      coverageArea: this.countValue
+    });
   }
 
   checkLength = (value) => {
@@ -303,8 +313,8 @@ class ServiceArea extends Component {
               <div className='InputInDeWidget'>
                 <span className='IncreDecreBTN'
                   onClick={this.onClickHandleIncr}>+</span>
-                <input className="form-control" placeholder='0'
-                  value={this.state.count} />
+                <input className="form-control" 
+                  value={this.state.coverageArea} />
                 <span className='IncreDecreBTN'
                   onClick={this.onClickHandleDecr}>-</span>
               </div>

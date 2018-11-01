@@ -535,7 +535,7 @@ class PersonalDetail extends React.PureComponent {
                 }}
               />
               <small className="text-danger d-block OnboardingAlert">
-                {this.state.firstNameInvaild && 'Please enter valid first name'}
+                {this.state.firstNameInvaild && 'Please enter valid First Name'}
               </small>
             </div>
             <div className='col-md-6 mb-2'>
