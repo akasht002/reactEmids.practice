@@ -84,14 +84,14 @@
 }
 
 .WizardItems.active:before{
-    background-color: #ba85d6;
+    background-color: #b286bc;
     top: 2px;
     border: 6px solid #fff;
     width: 34px;
     height: 34px;
-    -webkit-box-shadow: 0 0 0 2px #ba85d6;
-    -moz-box-shadow: 0 0 0 2px #ba85d6;
-    box-shadow: 0 0 0 2px #ba85d6;
+    -webkit-box-shadow: 0 0 0 2px #b286bc;
+    -moz-box-shadow: 0 0 0 2px #b286bc;
+    box-shadow: 0 0 0 2px #b286bc;
 }
 
 .WizardItems.active:after{
