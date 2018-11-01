@@ -280,7 +280,7 @@ export const ServiceProviderRequestDetails = props => {
         patientImage = sp && sp.image ? sp.image : require('../../assets/images/Blank_Profile_icon.png');
         patientLastName = sp && sp.patientLastName;
       } else {
-        patientLastName = sp && sp.patientLastName.charAt(0);
+        patientLastName = sp && sp.patientLastName && sp.patientLastName.charAt(0);
         patientImage = require('../../assets/images/Blank_Profile_icon.png');
       }
       return (
