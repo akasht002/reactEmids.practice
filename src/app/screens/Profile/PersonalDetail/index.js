@@ -173,7 +173,9 @@ class PersonalDetail extends React.PureComponent {
     if (
      this.state.firstNameInvaild ||
      this.state.lastNameInvaild ||
-     this.state.phoneNumberInvalid
+     this.state.phoneNumberInvalid ||
+     this.state.ageInvaild ||
+     this.state.yearOfExpInvaild
     ) {
       
       this.setState({ isValid: false})
@@ -534,7 +536,7 @@ class PersonalDetail extends React.PureComponent {
               />
               <small className="text-danger d-block OnboardingAlert">
                 {this.state.firstNameInvaild && 'Please enter valid first name'}
-                </small>
+              </small>
             </div>
             <div className='col-md-6 mb-2'>
               <Input
@@ -599,11 +601,21 @@ class PersonalDetail extends React.PureComponent {
                     (e.target.value === '' || re.test(e.target.value)) &&
                     getLength(e.target.value) <= 3 && (e.target.value)<=100
                   ) {
-                    this.setState({ age: e.target.value,  disabledSaveBtn: false })
+                    this.setState({ age:e.target.value,
+                      disabledSaveBtn: false,
+                      ageInvaild: false})
                   }
                 }}
-                className='form-control'
+                onBlur={e => {
+                  if(!e.target.value) {
+                    this.setState({ageInvaild: true})
+                  }
+                }}
+                className={"form-control " + (this.state.ageInvaild && 'inputFailure')}
               />
+                <small className="text-danger d-block OnboardingAlert">
+                {this.state.ageInvaild && 'Please enter valid age'}
+            </small>
             </div>
             <div className='col-md-6 mb-2'>
               <Input
@@ -615,13 +627,21 @@ class PersonalDetail extends React.PureComponent {
                 maxlength='2'
                 value={this.state.yearOfExperience}
                 textChange={e => {
-                  const re = /^[0-9\b]+$/
+                  const re = /^[0-9\b]+$/;
                   if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({ yearOfExperience: e.target.value, disabledSaveBtn: false })
+                    this.setState({ yearOfExperience: e.target.value, disabledSaveBtn: false, yearOfExpInvaild:false })
                   }
                 }}
-                className='form-control'
+                onBlur={e => {
+                  if(!e.target.value) {
+                    this.setState({yearOfExpInvaild: true})
+                  }
+                }}
+                className={"form-control " + (this.state.yearOfExpInvaild && 'inputFailure')}
               />
+              <small className="text-danger d-block OnboardingAlert">
+              {this.state.yearOfExpInvaild && 'Please enter valid year of experience'}
+          </small>
             </div>
           </div>
         </div>
@@ -675,9 +695,19 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-                this.setState({ description: e.target.value,disabledSaveBtn: false })
+                if (e.target.value === '') {
+                  this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild:false })
+                } 
+            }}
+            onBlur={e => {
+              if(!e.target.value) {
+                this.setState({descriptionInvaild: true})
+              }
             }}
           />
+          <small className="text-danger d-block OnboardingAlert">
+             {this.state.descriptionInvaild && 'Please enter valid description'}
+          </small>
         </div>
         <div className='col-md-4'>
           <Input
@@ -697,12 +727,20 @@ class PersonalDetail extends React.PureComponent {
                   '$1.$2'
                 )
                 this.setState({ hourlyRate: number,
-                 disabledSaveBtn:false })
+                 disabledSaveBtn:false, hourlyRateInvalid: false })
               }
             }
           }
-            className='form-control'
+          onBlur={e => {
+            if(!e.target.value) {
+              this.setState({hourlyRateInvalid: true})
+            }
+          }}
+          className={"form-control " + (this.state.hourlyRateInvalid && 'inputFailure')}
           />
+          <small className="text-danger d-block OnboardingAlert">
+             {this.state.hourlyRateInvalid && 'Please enter valid hourlyRate'}
+          </small>
         </div>
         <div className='hrLine' />
         <div className='col-md-12 mb-2'>

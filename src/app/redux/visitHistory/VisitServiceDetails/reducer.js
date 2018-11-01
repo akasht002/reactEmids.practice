@@ -19,7 +19,8 @@ const defaultState = {
     serviceProviders: null,
     ServiceRequestId: '',
     typeList: [],
-    historyListCount: ''
+    historyListCount: '',
+    VisitFeedback: []
 };
 
 const vistServiceHistoryState = (state = defaultState, action) => {
@@ -84,6 +85,11 @@ const vistServiceHistoryState = (state = defaultState, action) => {
                 ...state,
                 historyListCount: action.data
             }
+        case vistServiceHistoryDetails.getVisitFeedBack:
+            return {
+                ...state,
+                VisitFeedback: action.data
+            };
         default:
             return state;
     }

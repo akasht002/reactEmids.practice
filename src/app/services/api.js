@@ -133,5 +133,7 @@ export const API = {
     getPatientLanguages: 'PatientLanguage/',
     getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
     getSpBusyInVisit: 'ServiceProvider/IsServiceProviderBusyInVisit/',
-    getHistoryListCount: 'ServiceRequest/GetServiceProviderVisitHistoryCount/'
+    getHistoryListCount: 'ServiceRequest/GetServiceProviderVisitHistoryCount/',
+    getRatingAndFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/',
+    getVisitFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/'
 }
