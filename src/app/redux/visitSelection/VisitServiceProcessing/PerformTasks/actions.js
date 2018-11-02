@@ -9,6 +9,7 @@ export const PerformTasks = {
     getServiceRequestVisitId: 'get_service_request_visitId/performtasks',
     saveStartedTime: 'save_started_time/performtasks',
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
+    getVisitStatus: 'getVisitStatus/performtasks'
 };
 
 export const getPerformTasksListSuccess = (data) => {
@@ -39,12 +40,24 @@ export const saveStartedTime = (data) => {
     }
 }
 
-export function getPerformTasksList(data) {
+export const getVisitStatus = (data) => {
+    return {
+        type: PerformTasks.getVisitStatus,
+        data
+    }
+}
+
+export function getPerformTasksList(data, startOrStop) {
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))
         dispatch(startLoading());
         ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
-            dispatch(getPerformTasksListSuccess(resp.data))
+            if(startOrStop === false){
+                dispatch(getVisitStatus(resp.data))
+            }
+            else{
+                dispatch(getPerformTasksListSuccess(resp.data))
+            }
             dispatch(push(Path.performTasks))
             dispatch(endLoading());
         }).catch((err) => {
@@ -74,7 +87,7 @@ export function startOrStopService(data, visitId, startedTime) {
         dispatch(startLoading());
         ServiceRequestPut(API.startOrStopService + visitId + '/' + data).then((resp) => {
             dispatch(saveStartedTime(startedTime))
-            dispatch(getPerformTasksList(visitId))
+            dispatch(getPerformTasksList(visitId, false))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
