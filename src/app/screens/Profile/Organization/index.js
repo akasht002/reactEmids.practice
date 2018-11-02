@@ -502,7 +502,7 @@ class Organization extends React.PureComponent {
                }}
            />
            <small className="text-danger d-block OnboardingAlert">
-               {this.state.organizationNameInvaild && 'Please enter valid organization name'}
+               {this.state.organizationNameInvaild && 'Please enter valid Organization Name'}
            </small>
             </div>
             <div className='col-md-4'>
@@ -554,7 +554,7 @@ class Organization extends React.PureComponent {
             className='form-control'
           />
            <small className="text-danger d-block OnboardingAlert">
-                {this.state.urlInvaild && 'Please enter valid url'}
+                {this.state.urlInvaild && 'Please enter valid Url'}
                 </small>
 
         </div>
@@ -716,7 +716,7 @@ class Organization extends React.PureComponent {
             }}
                   />
                     <small className="text-danger d-block OnboardingAlert">
-                    {this.state.phoneNumberInvalid && 'Please enter valid phone number'}
+                    {this.state.phoneNumberInvalid && 'Please enter valid Phone Number'}
                 </small>
 
                 </div>

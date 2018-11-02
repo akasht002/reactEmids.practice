@@ -567,7 +567,7 @@ class PersonalDetail extends React.PureComponent {
               />
             
                 <small className="text-danger d-block OnboardingAlert">
-                {this.state.lastNameInvaild && 'Please enter valid last name'}
+                {this.state.lastNameInvaild && 'Please enter valid Last Name'}
             </small>
             </div>
             <div className='col-md-6 mb-2'>
@@ -615,7 +615,7 @@ class PersonalDetail extends React.PureComponent {
                 className={"form-control " + (this.state.ageInvaild && 'inputFailure')}
               />
                 <small className="text-danger d-block OnboardingAlert">
-                {this.state.ageInvaild && 'Please enter valid age'}
+                {this.state.ageInvaild && 'Please enter valid Age'}
             </small>
             </div>
             <div className='col-md-6 mb-2'>
@@ -641,7 +641,7 @@ class PersonalDetail extends React.PureComponent {
                 className={"form-control " + (this.state.yearOfExpInvaild && 'inputFailure')}
               />
               <small className="text-danger d-block OnboardingAlert">
-              {this.state.yearOfExpInvaild && 'Please enter valid year of experience'}
+              {this.state.yearOfExpInvaild && 'Please enter valid Year of Experience'}
           </small>
             </div>
           </div>
@@ -707,7 +707,7 @@ class PersonalDetail extends React.PureComponent {
             }}
           />
           <small className="text-danger d-block OnboardingAlert">
-             {this.state.descriptionInvaild && 'Please enter valid description'}
+             {this.state.descriptionInvaild && 'Please enter valid Description'}
           </small>
         </div>
         <div className='col-md-4'>
@@ -740,7 +740,7 @@ class PersonalDetail extends React.PureComponent {
           className={"form-control " + (this.state.hourlyRateInvalid && 'inputFailure')}
           />
           <small className="text-danger d-block OnboardingAlert">
-             {this.state.hourlyRateInvalid && 'Please enter valid hourlyRate'}
+             {this.state.hourlyRateInvalid && 'Please enter valid HourlyRate'}
           </small>
         </div>
         <div className='hrLine' />
@@ -876,7 +876,7 @@ class PersonalDetail extends React.PureComponent {
                 }}
                       />
                         <small className="text-danger d-block OnboardingAlert">
-                        {this.state.phoneNumberInvalid && 'Please enter valid phone number'}
+                        {this.state.phoneNumberInvalid && 'Please enter valid Phone Number'}
                     </small>
                 </div>
               </div>

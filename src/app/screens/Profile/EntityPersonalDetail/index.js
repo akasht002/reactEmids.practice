@@ -351,7 +351,7 @@ class EntityPersonalDetail extends React.PureComponent {
                 }}
               />
               <small className='text-danger d-block OnboardingAlert'>
-                {this.state.firstNameInvaild && 'Please enter valid first Name'}
+                {this.state.firstNameInvaild && 'Please enter valid First Name'}
               </small>
 
             </div>
@@ -661,7 +661,7 @@ class EntityPersonalDetail extends React.PureComponent {
                     </span>}
                   {!this.state.isValidPhoneNumber &&
                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                      Please enter vaild last name
+                      Please enter vaild Phone Number
                     </span>}
                 </div>
               </div>
