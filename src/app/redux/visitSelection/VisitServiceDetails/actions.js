@@ -112,7 +112,7 @@ export function getVisitServiceDetails(data) {
     dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestDetails +`${data}/${getUserInfo().serviceProviderId}`)
       .then(resp => {
-        dispatch(getVisitServiceDetailsSuccess(resp.data))
+        dispatch(getVisitServiceDetailsSuccess(resp))
         //dispatch(push(Path.visitServiceDetails))
         dispatch(endLoading())
       })
