@@ -76,3 +76,143 @@
   {
 margin: 10px 0px;
   }
+
+  .SortBlock{
+
+  }
+  
+  .SortBlock .btn-group{
+  
+  }
+  
+  .SortBlock .btn-group button.multiselect {
+    background-color: rgba(0,0,0,0);
+    padding: 8px 0 !important;
+    margin: 0 15px;
+  }
+  
+  .SortBlock .btn-group button:focus, .SortBlock .btn-group button:active{
+    box-shadow: none;
+  }
+  
+  .SortBlock .btn-group .multiselect-selected-text{
+    font-size: 0;
+  }
+  
+  .SortBlock .btn-group button.dropdown-toggle::after{
+    position: relative;
+    top: 2px;
+    border-top: 4px solid #7a329f;
+    border-right: 4px solid rgba(0,0,0,0);
+    border-bottom: 0;
+    border-left: 4px solid rgba(0,0,0,0);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: all .2s linear;
+    -moz-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    transition: all .2s linear;
+  }
+  
+  .SortBlock .btn-group button.dropdown-toggle[aria-expanded=true]::after{
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+  }
+  
+  .SortBlock .btn-group .multiselect-selected-text:before{
+    content: 'Sort';
+    position: relative;
+    font-size: 14px;
+    color: #7a329f;
+  }
+  
+  .SortBlock .btn-group .multiselect-container{
+    padding: 5px 0;
+  }
+  
+  .SortBlock .btn-group .multiselect-container .multiselect-item:first-child{
+    display: none;
+  }
+  
+  .SortBlock .btn-group .multiselect-container .multiselect-item{
+    border-bottom: 1px solid #eaeaea;
+    padding: 0;
+    height: 0;
+  }
+  
+  .SortBlock .btn-group .multiselect-container li a{
+    display: block;
+    position: relative;
+    padding: 6px 25px 6px 10px;;
+  }
+  
+  .SortBlock .btn-group .multiselect-container li label.checkbox{
+    width: 100%;
+    font-size: 14px;
+    padding: 0;
+  }
+  
+  .SortBlock .btn-group .multiselect-container li label.checkbox input{
+    position: absolute;
+    opacity: 0;
+  }
+  
+  .SortBlock .btn-group .multiselect-container li label.checkbox:hover, .SortBlock .btn-group .multiselect-container li.active label.checkbox{
+    color: #7a329f;
+  }
+  
+  div.SortDropDown button.btn{
+    padding: 0 !important;
+    border: 0;
+    margin-right: 15px;
+    margin-top: 3px;
+  }
+  
+  div.SortDropDown button.btn, div.SortDropDown button.btn:hover, div.SortDropDown button.btn:focus{
+    background-color: rgba(0,0,0,0) !important;
+    color: #7a329f !important;
+    outline: 0;
+    box-shadow: none !important;
+  }
+  
+  .SortBlock .SortMenu .SortItem{
+    position: relative;
+    font-size: 14px;
+    padding: 8px 30px 8px 10px;
+    color: #444444;
+  }
+  
+  .SortBlock .SortMenu .SortItem:hover{
+    cursor: pointer;
+  }
+  
+  .SortBlock .SortMenu .SortItem.active, .SortBlock .SortMenu .SortItem:focus, .SortBlock .SortMenu .SortItem:active{
+    background-color: rgba(0,0,0,0);
+    color: #7a329f;
+  }
+  
+  .SortBlock .SortMenu .SortItem.active:after{
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 12px;
+    height: 12px;
+    width: 12px;
+    background-image: url('../../../assets/images/checked_purple.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+  
+  .SortBlock .SortMenu hr{
+    margin: 5px 0;
+  }
+  
+  .SortBlock .btn-group .multiselect-container li label.checkbox:focus, .SortBlock .btn-group .multiselect-container li label.checkbox:active, .SortBlock .btn-group .multiselect-container li a:focus{
+    outline: 0;
+  }

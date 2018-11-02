@@ -43,8 +43,10 @@ class VisitServiceList extends Component {
             ServiceCategoryId: '',
             serviceTypes: [],
             isSortOpen: false,
-            newest: true,
-            posted: true,
+            PostedDate:false,
+            VisitDate:false,
+            Newest:false,
+            Oldest:false,
             serviceArea: '',
             coverageArea: '',
             lat: '',
@@ -212,27 +214,39 @@ class VisitServiceList extends Component {
 
     /* sorting */
     toggleclass = (e) => {
-        var element = document.getElementsByClassName("dropdown-menu")[0];
+        var element = document.getElementsByClassName("dropdown-menu")[1];
         element.classList.add("show");
         var element1 = document.getElementsByClassName("dropdown-item")[0];
         element1.classList.add("dropdown-item-checked");
     }
-    onSortChange = (posted, newest) => {
+
+    setStatusSort = (selectedElement) =>{
+        console.log(selectedElement)
+        if(selectedElement === 'PostedDate') { this.PostedDate = !this.PostedDate; this.VisitDate = !this.PostedDate }
+        if(selectedElement === 'VisitDate')  {this.VisitDate = !this.VisitDate; this.PostedDate = !this.VisitDate }
+        if(selectedElement === 'Newest')  {this.Newest = !this.Newest;this.Oldest = !this.Newest}
+        if(selectedElement === 'Oldest')  {this.Oldest = !this.Oldest;this.Newest = !this.Oldest}
+    }
+
+    onSortChange = (e,posted, newest) => {
+        let selectedElement = e.target.innerHTML.replace(/ /g,'');
+        this.setStatusSort(selectedElement)
         var data = {
-            sortByOrder: newest ? "ASC" : "DESC",
-            sortByColumn: posted ? "MODIFIEDDATE" : "VISITDATE",
+            sortByOrder: this.Newest ? "ASC" : "DESC",
+            sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "VISITDATE",
             fromDate: null,
             toDate: null,
             status: 0
         }
         this.props.getSort(data);
-        var element = document.getElementsByClassName("dropdown-menu")[0];
+        let element = document.getElementsByClassName("dropdown-menu")[1];
         element.classList.remove("show");
         element.classList.add("hide");
         this.setState({
-            newest: (newest !== null ? newest : this.state.newest),
-            posted: (posted !== null ? posted : this.state.posted),
-            isSortOpen: false
+            PostedDate: this.PostedDate,
+            VisitDate: this.VisitDate,
+            Newest: this.Newest,
+            Oldest: this.Oldest
         });
     }
 
@@ -310,8 +324,10 @@ class VisitServiceList extends Component {
                     <div className='ProfileHeaderOptions'>
                         <Sorting
                             onSortChange={this.onSortChange}
-                            newest={this.state.newest}
-                            posted={this.state.posted}
+                            PostedDate={this.state.PostedDate}
+                            VisitDate={this.state.VisitDate}
+                            Newest={this.state.Newest}
+                            Oldest={this.state.Oldest}
                             toggleclass={this.toggleclass}
                         />
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
