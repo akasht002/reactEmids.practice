@@ -12,7 +12,7 @@ import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes'
-import {checkNumber} from '../../../../utils/validations';
+import { checkNumber } from '../../../../utils/validations';
 import './style.css'
 
 class Summary extends Component {
@@ -36,7 +36,8 @@ class Summary extends Component {
             isSaveBtnShown: true,
             timeErrMessage: '',
             emptyErrMessage: '',
-            disableSignatureBtn: true
+            disableSignatureBtn: true,
+            isProccedModalOpen: false
         };
     };
 
@@ -62,7 +63,7 @@ class Summary extends Component {
     }
 
     togglePopup = () => {
-        this.setState({isModalOpen: !this.state.isModalOpen})
+        this.setState({ isModalOpen: !this.state.isModalOpen })
     }
 
     AdjustTime = () => {
@@ -117,6 +118,10 @@ class Summary extends Component {
         }
     }
 
+    onClickNextBtn = () => {
+        this.setState({ isProccedModalOpen: true })
+    }
+
     timerErrMessage = () => {
         if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
             this.state.updatedMin > this.props.CalculationsData.totalMinutes ||
@@ -135,7 +140,7 @@ class Summary extends Component {
             min: parseInt(this.state.updatedMin, 0),
             sec: parseInt(this.state.updatedSec, 0)
         }
-        this.setState({ isModalOpen: false})
+        this.setState({ isModalOpen: false })
         this.props.onUpdateTime(data)
     }
 
@@ -352,7 +357,7 @@ class Summary extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <a className='btn btn-primary' onClick={this.onClickNext}>Proceed to Payment</a>
+                                        <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
                                     </div>
                                 </div>
                             </div>
@@ -383,6 +388,21 @@ class Summary extends Component {
                         onConfirm={() => this.setState({
                             isSignatureModalOpen: !this.state.isSignatureModalOpen,
                         })}
+                    />
+
+                    <ModalPopup
+                        isOpen={this.state.isProccedModalOpen}
+                        ModalBody={<span>Do you want to proceed for payment.</span>}
+                        btn1="No"
+                        btn2="Yes"
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                        onCancel={() => {
+                            this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen }),
+                                this.onClickNext()
+                        }}
+                        onConfirm={() => this.setState({ isProccedModalOpen: false })}
                     />
                 </Scrollbars>
             </AsideScreenCover>
