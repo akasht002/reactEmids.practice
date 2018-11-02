@@ -29,7 +29,6 @@ class MessageContent extends Component {
 
     componentDidMount() {
         this.scrollToBottom();
-        this.textarea.focus();
         autosize(this.textarea);
         this.props.onRef(this);
     };
@@ -37,7 +36,6 @@ class MessageContent extends Component {
 
     componentDidUpdate() {
         this.scrollToBottom();
-        this.textarea.focus();
         autosize(this.textarea);
         this.props.onRef(this);
     };

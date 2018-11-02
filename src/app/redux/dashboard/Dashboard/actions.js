@@ -283,3 +283,42 @@ export function updateStandByMode (data) {
 
 
 }
+
+
+
+
+export function getConversationSummaryDashboardSignalR(conversationId){
+  return (dispatch, getState) => {
+          let userId = getUserInfo().serviceProviderId;
+          let userType = USERTYPES.SERVICE_PROVIDER;
+          dispatch(startLoading());
+          MessageURLGet(API.getConversationSummary 
+              + conversationId + '/'
+              + userId + '/' 
+              + userType
+          )
+          .then(resp => {
+              dispatch(getConversationSummaryItemSignalRSuceess(resp.data));
+              dispatch(endLoading());
+          })
+          .catch(err => {
+              dispatch(endLoading())
+          })
+    };
+};
+
+const getConversationSummaryItemSignalRSuceess = (data) => {
+  return(dispatch, getState) => {
+      let state = getState();
+      let conversationSummaryData = [...state.dashboardState.dashboardState.conversationDetail];
+      const index = conversationSummaryData.indexOf(
+          conversationSummaryData.filter(el => el.conversationId === data.conversationId)[0]
+      );
+      if(index !== -1){
+          conversationSummaryData.splice(index, 1);
+      }
+      conversationSummaryData = [data, ...conversationSummaryData];
+      dispatch(getConversationDetailSuccess(conversationSummaryData));
+      dispatch(getUnreadMessageCounts());
+  };
+};
