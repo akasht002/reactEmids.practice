@@ -18,7 +18,7 @@ export function getVisitServiceList() {
     return (dispatch) => {
         let serviceProviderId = getUserInfo().serviceProviderId
         dispatch(startLoading());
-        elasticSearchGet(API.getServiceRequestList + `${serviceProviderId}`).then((resp) => {
+        elasticSearchGet(API.getServiceRequestList + `${serviceProviderId}` + '/' + 1 + '/' + 10).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
