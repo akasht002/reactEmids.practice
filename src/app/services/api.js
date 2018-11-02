@@ -135,5 +135,6 @@ export const API = {
     getSpBusyInVisit: 'ServiceProvider/IsServiceProviderBusyInVisit/',
     getHistoryListCount: 'ServiceRequest/GetServiceProviderVisitHistoryCount/',
     getRatingAndFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/',
-    getVisitFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/'
+    getVisitFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/',
+    getServiceRequestCount: 'ServiceRequest/ServiceProvider/RequestCount/',
 }
