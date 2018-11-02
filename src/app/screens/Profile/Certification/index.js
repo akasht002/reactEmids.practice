@@ -186,6 +186,7 @@ class Certification extends Component {
                         maxlength={'50'}
                         textChange={(e) => this.setState({
                             certificateLicenceNumber: e.target.value,
+                            disabledSaveBtn: false
                         })}
                     />
                 </div>
@@ -219,7 +220,7 @@ class Certification extends Component {
         return (
             <div>
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Certification and Licence</h4>
+                    <h4 className="primaryColor">Certification and Licenses</h4>
                     <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                         onClick={() => this.setState({ certificationModal: true, isAdd: true })} />
                 </div>

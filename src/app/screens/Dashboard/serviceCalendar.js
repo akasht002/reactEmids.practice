@@ -1,364 +1,448 @@
-import React from 'react'
-import moment from 'moment'
-import Select from 'react-select'
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
-import { Scrollbars, ProfileModalPopup } from '../../components'
-import './ProfileMainPanel.css'
-import { convertStringToDate, partialCompare } from '../../utils/validations'
+import React from "react";
+import moment from "moment";
+import Select from "react-select";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { Scrollbars, ProfileModalPopup } from "../../components";
+import "./ProfileMainPanel.css";
+import { convertStringToDate } from "../../utils/validations";
 import {
   getServiceProviderVists,
   getServiceVisitCount,
   getEntityServiceProviderList,
   updateEntityServiceVisit
-} from '../../redux/dashboard/Dashboard/actions'
-import { ServiceCalendarDefault } from './ServiceInfo'
-import { getUserInfo } from '../../services/http'
+} from "../../redux/dashboard/Dashboard/actions";
+import { getServiceRequestId } from "../../redux/visitSelection/VisitServiceDetails/actions";
+import { ServiceCalendarDefault, ShowIndicator } from "./ServiceInfo";
+import { getUserInfo } from "../../services/http";
+import { Path } from "../../routes";
+import { setPatient } from "../../redux/patientProfile/actions";
+import { push } from "../../redux/navigation/actions";
+import { USERTYPES } from "../../constants/constants";
+import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
+import { createVideoConference } from "../../redux/telehealth/actions";
 
-const today = new Date()
+const today = new Date();
 
 class serviceCalendar extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       startDate: moment(today).format(),
-      startMonth: moment(today).format('MMM'),
-      startYear: moment(today).format('YYYY'),
-      changedDate: '',
+      startMonth: moment(today).format("MMM"),
+      startYear: moment(today).format("YYYY"),
+      currentDate: moment().format("DD"),
+      changedDate: "",
       DateDisable: false,
-      selectedServiceProviderId: '',
-      DateLabelClass: 'DatePickerDisabled',
+      selectedServiceProviderId: "",
+      DateLabelClass: "DatePickerDisabled",
       EditPersonalDetailModal: false,
       reportDay: moment(today).format(),
       selectedMonth: {
-        label: moment(today).format('MMM'),
-        value: moment(today).format('MMM')
+        label: moment(today).format("MMM"),
+        value: moment(today).format("MMM")
       },
       showMore: false,
-      verticalScroll: false,
+      verticalScroll: true,
       width: window.innerWidth
-    }
-    this.data = ''
+    };
+    this.data = "";
   }
 
   togglePersonalDetails = (action, e) => {
-    this.data = action
+    this.data = action;
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
-    })
-  }
+    });
+  };
 
   onSubmit = () => {
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
-    })
+    });
     let model = {
-      ServiceRequestid: this.data.serviceRequestId,
-      PatientId: this.data.patientId,
-      EntityId: getUserInfo().entityId,
-      VisitAssignment: [
+      serviceRequestId: this.data.serviceRequestId,
+      serviceRequestVisitId: this.data.serviceRequestVisitid,
+      entityId: getUserInfo().entityId,
+      patientId: this.data.patientId,
+      visitAssignment: [
         {
-          ServiceVisitId: this.data.serviceRequestVisitid,
-          ServiceProviderId: this.state.selectedServiceProviderId
+          serviceProviderId: this.state.selectedServiceProviderId
         }
       ]
-    }
-    this.props.updateEntityServiceVisit(model)
-  }
+    };
+    this.props.updateEntityServiceVisit(model);
+  };
 
   MonthChange = e => {
-    let curDate = this.state.startYear + ',' + e.value + ',' + this.state.currentDate
-    curDate = new Date(curDate)
+    let curDate =
+      this.state.startYear + "," + e.value + "," + this.state.currentDate;
+    curDate = moment(this.state.startYear + '-' + e.value + '-' + this.state.currentDate,"YYYY-MM-DD")
+    curDate = new Date(curDate);
+
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
-      selectedMonth: e
-    })
-    this.props.getServiceProviderVists(moment(curDate).format('YYYY-MM-DD'))
-  }
+      selectedMonth: e.value
+    });
+    this.props.getServiceProviderVists(moment(curDate).format("YYYY-MM-DD"));
+  };
 
   clickNextWeek = () => {
-    let updatedDay = ''
-    if (this.state.width > '1280') {
-      updatedDay = moment(this.state.startDate).add(5, 'days')
+    let updatedDay = "";
+    if (this.state.width > "1280") {
+      updatedDay = moment(this.state.startDate).add(5, "days");
+      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     } else {
-      updatedDay = moment(this.state.startDate).add(7, 'days')
+      updatedDay = moment(this.state.startDate).add(7, "days");
+      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     }
     this.setState({
       startDate: updatedDay.format(),
-      startYear: updatedDay.format('YYYY'),
+      startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
-      startMonth: updatedDay.format('MMM'),
+      startMonth: updatedDay.format("MMM"),
       selectedMonth: {
-        label: updatedDay.format('MMM'),
-        value: updatedDay.format('MMM')
+        label: updatedDay.format("MMM"),
+        value: updatedDay.format("MMM")
       }
-    })
-  }
+    });
+  };
 
   clickPrevWeek = () => {
-    let updatedDay = ''
-    if (this.state.width > '1280') {
-      updatedDay = moment(this.state.startDate).subtract(5, 'days')
+    let updatedDay = "";
+    if (this.state.width > "1280") {
+      updatedDay = moment(this.state.startDate).subtract(5, "days");
+      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     } else {
-      updatedDay = moment(this.state.startDate).subtract(7, 'days')
+      updatedDay = moment(this.state.startDate).subtract(7, "days");
+      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     }
     this.setState({
       startDate: updatedDay.format(),
-      startYear: updatedDay.format('YYYY'),
+      startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
-      startMonth: updatedDay.format('MMM'),
+      startMonth: updatedDay.format("MMM"),
       selectedMonth: {
-        label: updatedDay.format('MMM'),
-        value: updatedDay.format('MMM')
+        label: updatedDay.format("MMM"),
+        value: updatedDay.format("MMM")
       }
-    })
-  }
+    });
+  };
 
   todayDate = () => {
     this.setState({
-      startYear: moment(today).format('YYYY'),
+      startYear: moment(today).format("YYYY"),
       startDate: moment(today).format(),
       reportDay: moment(today).format(),
-      startMonth: moment(today).format('MMM'),
-      currentDate: moment().format('DD')
-    })
-    this.props.getServiceProviderVists(moment().format('YYYY-MM-DD'))
-  }
+      startMonth: moment(today).format("MMM"),
+      currentDate: moment().format("DD"),
+      selectedMonth: {
+        label: moment(today).format("MMM"),
+        value: moment(today).format("MMM")
+      }
+    });
+
+    this.props.getServiceProviderVists(moment().format("YYYY-MM-DD"));
+  };
 
   handleDayChange = e => {
-    let getDate = moment(e.target.getAttribute('data-date'))
+    let getDate = moment(e.target.getAttribute("data-date"));
     this.setState({
-      reportDay: e.target.getAttribute('data-date'),
-      startYear: getDate.format('YYYY'),
-      startMonth: getDate.format('MMM'),
+      reportDay: e.target.getAttribute("data-date"),
+      startYear: getDate.format("YYYY"),
+      startMonth: getDate.format("MMM"),
       selectedMonth: {
-        label: getDate.format('MMM'),
-        value: getDate.format('MMM')
+        label: getDate.format("MMM"),
+        value: getDate.format("MMM")
       },
-      currentDate: getDate.format('DD')
-    })
-  }
+      currentDate: getDate.format("DD")
+    });
+  };
 
   clickShowMore = () => {
     this.setState({
       showMore: !this.state.showMore,
       verticalScroll: !this.state.verticalScroll
-    })
-  }
+    });
+  };
 
   optionChanged = e => {
     this.setState({
       selectedValue: e
-    })
-  }
+    });
+  };
 
-  componentDidMount () {
-    let utc = new Date().toJSON().slice(0, 10).replace(/-/g, '-')
-    this.props.getServiceProviderVists(utc)
-    let d = new Date(utc)
-    d.setMonth(d.getMonth() - 3)
-    let start_date = d.toLocaleDateString()
-    let d2 = new Date(utc)
-    d2.setMonth(d2.getMonth() + 3)
-    let end_date = d2.toLocaleDateString()
+  componentDidMount() {
+    let utc = new Date()
+      .toJSON()
+      .slice(0, 10)
+      .replace(/-/g, "-");
+    this.props.getServiceProviderVists(utc);
+    let d = new Date(utc);
+    d.setMonth(d.getMonth() - 3);
+    let start_date = d.toLocaleDateString();
+    let d2 = new Date(utc);
+    d2.setMonth(d2.getMonth() + 3);
+    let end_date = d2.toLocaleDateString();
     const date_range = {
       start_date: start_date,
       end_date: end_date
-    }
-    this.props.getServiceVisitCount(date_range)
-    this.props.getEntityServiceProviderList()
-    this.updateWindowDimensions()
-    window.addEventListener('resize', this.updateWindowDimensions)
+    };
+    this.props.getServiceVisitCount(date_range);
+    this.props.getEntityServiceProviderList();
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
   }
 
-  componentWillUnmount () {
-    window.removeEventListener('resize', this.updateWindowDimensions)
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
   }
 
   updateWindowDimensions = () => {
-    this.setState({ width: window.innerWidth })
-  }
+    this.setState({ width: window.innerWidth });
+  };
 
-  SelectOnBlur (e) {}
+  SelectOnBlur(e) {}
 
   optionClicked = e => {
-    let testDiv = document.getElementsByClassName('Select-menu-outer')
-    testDiv.offsetBottom = testDiv.offsetTop + testDiv.offsetHeight
-  }
+    let testDiv = document.getElementsByClassName("Select-menu-outer");
+    testDiv.offsetBottom = testDiv.offsetTop + testDiv.offsetHeight;
+  };
 
   showServiceProviderList = data => {
-    let date = convertStringToDate(data.target.value)
-    this.props.getServiceProviderVists(date)
-  }
+    let date = convertStringToDate(data.target.value);
+    this.props.getServiceProviderVists(date);
+  };
 
   handleserviceType = (item, e) => {
     if (e.target.checked) {
-      this.setState({ selectedServiceProviderId: item.serviceProviderId })
+      this.setState({ selectedServiceProviderId: item.serviceProviderId });
     }
-  }
+  };
 
-  render () {
-    let selectedDate = this.state.startDate
+  handleClick = requestId => {
+    this.props.getServiceRequestId(requestId);
+    this.props.goToServiceRequestDetailsPage();
+  };
 
-    const visitCount = this.props.serviceVistCount
+  navigateProfileHeader = link => {
+    switch (link) {
+      case "conversationsummary":
+        this.props.navigateProfileHeader(link);
+        break;
+      default:
+        this.setState({ selectedLink: link });
+        break;
+    }
+  };
+
+  onClickConversation = item => {
+    if (item) {
+      let selectedParticipants = [
+        {
+          userId: item.patientId,
+          participantType: USERTYPES.PATIENT
+        }
+      ];
+      let userId = this.props.loggedInUser.serviceProviderId;
+      let loggedInUser = {
+        userId: userId,
+        participantType: USERTYPES.SERVICE_PROVIDER
+      };
+      selectedParticipants.push(loggedInUser);
+      let data = {
+        participantList: selectedParticipants,
+        createdBy: userId,
+        createdByType: USERTYPES.SERVICE_PROVIDER,
+        title: "",
+        context: item.patientId
+      };
+      this.props.createNewConversation(data);
+    }
+  };
+
+  onClickVideoConference = item => {
+    if (item) {
+      let selectedParticipants = [
+        {
+          userId: item.patientId,
+          participantType: USERTYPES.PATIENT
+        }
+      ];
+      this.props.createVideoConference(selectedParticipants);
+    }
+  };
+
+  render() {
+    let selectedDate = this.state.startDate;
+    const visitCount = this.props.serviceVistCount;
 
     let dates = [
       {
-        day: moment(selectedDate).subtract(2, 'days'),
-        date: moment(selectedDate).subtract(2, 'days')
+        day: moment(selectedDate).subtract(2, "days"),
+        date: moment(selectedDate).subtract(2, "days")
       },
       {
-        day: moment(selectedDate).subtract(1, 'days'),
-        date: moment(selectedDate).subtract(1, 'days')
+        day: moment(selectedDate).subtract(1, "days"),
+        date: moment(selectedDate).subtract(1, "days")
       },
       {
         day: moment(selectedDate),
         date: moment(selectedDate)
       },
       {
-        day: moment(selectedDate).add(1, 'days'),
-        date: moment(selectedDate).add(1, 'days')
+        day: moment(selectedDate).add(1, "days"),
+        date: moment(selectedDate).add(1, "days")
       },
       {
-        day: moment(selectedDate).add(2, 'days'),
-        date: moment(selectedDate).add(2, 'days')
+        day: moment(selectedDate).add(2, "days"),
+        date: moment(selectedDate).add(2, "days")
       }
-    ]
+    ];
 
-    if (this.state.width > '1280') {
+    if (this.state.width > "1280") {
       dates = [
         {
-          day: moment(selectedDate).subtract(3, 'days'),
-          date: moment(selectedDate).subtract(3, 'days')
+          day: moment(selectedDate).subtract(3, "days"),
+          date: moment(selectedDate).subtract(3, "days")
         },
         {
-          day: moment(selectedDate).subtract(2, 'days'),
-          date: moment(selectedDate).subtract(2, 'days')
+          day: moment(selectedDate).subtract(2, "days"),
+          date: moment(selectedDate).subtract(2, "days")
         },
         {
-          day: moment(selectedDate).subtract(1, 'days'),
-          date: moment(selectedDate).subtract(1, 'days')
+          day: moment(selectedDate).subtract(1, "days"),
+          date: moment(selectedDate).subtract(1, "days")
         },
         {
           day: moment(selectedDate),
           date: moment(selectedDate)
         },
         {
-          day: moment(selectedDate).add(1, 'days'),
-          date: moment(selectedDate).add(1, 'days')
+          day: moment(selectedDate).add(1, "days"),
+          date: moment(selectedDate).add(1, "days")
         },
         {
-          day: moment(selectedDate).add(2, 'days'),
-          date: moment(selectedDate).add(2, 'days')
+          day: moment(selectedDate).add(2, "days"),
+          date: moment(selectedDate).add(2, "days")
         },
         {
-          day: moment(selectedDate).add(3, 'days'),
-          date: moment(selectedDate).add(3, 'days')
+          day: moment(selectedDate).add(3, "days"),
+          date: moment(selectedDate).add(3, "days")
         }
-      ]
+      ];
     }
 
-    let optionChecked = this.state.reportDay
+    let optionChecked = this.state.reportDay;
 
-    let current_month = new Date().getMonth()
-    let pervious_month = moment.months().splice(current_month - 3, 3)
-    let next_month_list = moment.months().splice(current_month, 3)
+    let current_month = new Date().getMonth();
+    let pervious_month = moment.months().splice(current_month - 3, 3);
+    let next_month_list = moment.months().splice(current_month, 3);
 
-    let monthLists = pervious_month.concat(next_month_list)
+    let monthLists = pervious_month.concat(next_month_list);
 
     let monthList = monthLists.map(month => {
-      return { label: month.substring(0, 3), value: month.substring(0, 3) }
-    })
-
+      return { label: month.substring(0, 3), value: month };
+    });
     let dateList = dates.map((daysMapping, i) => {
-      let className = ''
+      let className = "";
       if (daysMapping.date.format() === moment(today).format()) {
-        className = ' toDay'
+        className = " toDay";
       }
+      let data = visitCount.find(
+        obj =>
+          obj.visitDate === daysMapping.date.format("YYYY-MM-DD") + "T00:00:00"
+      )
+        ? visitCount.find(
+            obj =>
+              obj.visitDate ===
+              daysMapping.date.format("YYYY-MM-DD") + "T00:00:00"
+          ).visits
+        : 0;
       return (
-        <div className={'dateRow' + className}>
+        <div className={"dateRow" + className}>
           <input
-            id={'date' + daysMapping.date.format('DD')}
+            id={"date" + daysMapping.date.format("DD")}
             data-date={daysMapping.date.format()}
-            className='form-control'
-            type='radio'
-            name='profileDate'
+            className="form-control"
+            type="radio"
+            name="profileDate"
             checked={optionChecked === daysMapping.date.format()}
-            value={daysMapping.date.format('DDMMYYYY')}
+            value={daysMapping.date.format("DDMMYYYY")}
             onClick={e => this.showServiceProviderList(e)}
           />
           <label
-            htmlFor={'date' + daysMapping.date.format('DD')}
-            className='dateLabel'
+            htmlFor={"date" + daysMapping.date.format("DD")}
+            className="dateLabel"
           >
-            <span className='dayElement'>{daysMapping.date.format('ddd')}</span>
-            <span className='dateElement'>{daysMapping.day.format('D')}</span>
+            <span className="dayElement">{daysMapping.date.format("ddd")}</span>
+            <span className="dateElement">{daysMapping.day.format("D")}</span>
           </label>
-          <div className='eventIndicator'>
-
-            {partialCompare(
-              daysMapping.date.format('YYYY-MM-DD'),
-              visitCount
-            ) && <i className='indicator' />}
-
-            {/* <i className='indicator' />
-            <i className='indicator' /> */}
+          <div className="eventIndicator">
+            <ShowIndicator count={data} />
           </div>
         </div>
-      )
-    })
+      );
+    });
 
-    let serviceVist = this.props.serviceVist
+    let serviceVist = this.props.serviceVist;
     let visitData = (
       <ServiceCalendarDefault
+        onClickConversation={data => this.onClickConversation(data)}
+        onClickVideoConference={data => this.onClickVideoConference(data)}
         Servicelist={serviceVist}
         togglePersonalDetails={this.togglePersonalDetails}
+        handleClick={requestId => this.handleClick(requestId)}
+        onClick={link => this.navigateProfileHeader(link)}
+        goToPatientProfile={data => {
+          this.props.setPatient(data);
+          this.props.goToPatientProfile();
+        }}
       />
-    )
+    );
 
-    let modalTitle = 'Assign Service Provider'
-    let modalType = ''
+    let modalTitle = "Assign Service Provider";
+    let modalType = "";
     let modalContent = this.props.serviceProviderList.map((item, index) => {
-      let catNum = index + 1
+      let catNum = index + 1;
       return (
         <fieldset>
-          <div className='CheckboxSet' key={item.id}>
+          <div className="CheckboxSet" key={item.id}>
             <input
-              className='ServiceCheckbox'
-              name={'ServiceStatus'}
+              className="ServiceCheckbox"
+              name={"ServiceStatus"}
               id={item.serviceProviderId}
-              type='radio'
+              type="radio"
               value={item.serviceProviderId}
               onChange={e => this.handleserviceType(item, e)}
             />
-            <label htmlFor={'ServiceList' + catNum}>
-              {item.firstName + ' ' + item.lastName}
+            <label htmlFor={item.serviceProviderId}>
+              {item.firstName + " " + item.lastName}
             </label>
           </div>
         </fieldset>
-      )
-    })
+      );
+    });
 
     return (
       <div
         className={
-          this.state.showMore ? 'card ProfileCard extended' : 'card ProfileCard'
+          this.state.showMore ? "card ProfileCard extended" : "card ProfileCard"
         }
       >
-        <div className='ProfileCardBody'>
-          <div className='ProfileCardHeader'>
-            <span className='ProfileCardHeaderTitle primaryColor'>
-              My Services Visits
+        <div className="ProfileCardBody">
+          <div className="ProfileCardHeader">
+            <span className="ProfileCardHeaderTitle primaryColor">
+              My Service Visits
             </span>
-
           </div>
-          <div className='topPalette'>
-            <div className='monthPalette Center'>
+          <div className="topPalette">
+            <div className="monthPalette Center">
               <Select
-                id='ProfileMonth'
+                id="ProfileMonth"
                 multiple={false}
-                className='ProfileMonthList MonthName'
+                className="ProfileMonthList MonthName"
                 searchable={false}
                 options={monthList}
                 onChange={this.MonthChange}
@@ -366,26 +450,26 @@ class serviceCalendar extends React.Component {
               />
               <span>{this.state.startYear}</span>
             </div>
-            <div className='todayPalette'>
+            <div className="todayPalette">
               <span
-                className='btn ProfileCardTodayLink'
+                className="btn ProfileCardTodayLink"
                 onClick={this.todayDate}
               >
                 Today
               </span>
             </div>
           </div>
-          <div className='middlePalette'>
-            <div className='datePalette'>
+          <div className="middlePalette">
+            <div className="datePalette">
               <span
-                className='ProfileCalendarCaret CaretPrev'
+                className="ProfileCalendarCaret CaretPrev"
                 onClick={this.clickPrevWeek}
               />
-              <div onChange={this.handleDayChange} className='datesList'>
+              <div onChange={this.handleDayChange} className="datesList">
                 {dateList}
               </div>
               <span
-                className='ProfileCalendarCaret CaretNext'
+                className="ProfileCalendarCaret CaretNext"
                 onClick={this.clickNextWeek}
               />
             </div>
@@ -395,54 +479,63 @@ class serviceCalendar extends React.Component {
             smoothScrolling
             horizontal={false}
             vertical={this.state.verticalScroll}
-            className='bottomPalette'
+            className="bottomPalette"
           >
-            <ul className='list-group ProfileServicesVisitList'>
-              {visitData}
-            </ul>
+            <ul className="list-group ProfileServicesVisitList">{visitData}</ul>
           </Scrollbars>
         </div>
-        <ul className='list-group list-group-flush'>
+        <ul className="list-group list-group-flush">
           <li
-            className='list-group-item ProfileShowMore'
+            className="list-group-item ProfileShowMore"
             onClick={this.clickShowMore}
           >
-            Show more <i className='ProfileIconShowMore' />
+            Show more <i className="ProfileIconShowMore" />
           </li>
         </ul>
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
           toggle={() => this.togglePersonalDetails(this, modalType)}
           ModalBody={modalContent}
-          className='modal-lg asyncModal CertificationModal'
+          className="modal-lg asyncModal CertificationModal"
           modalTitle={modalTitle}
-          centered='centered'
+          centered="centered"
           onClick={this.onSubmit}
           disabled={this.state.disabledSaveBtn}
         />
       </div>
-    )
+    );
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getServiceProviderVists: data => dispatch(getServiceProviderVists(data)),
     getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
     getEntityServiceProviderList: () =>
       dispatch(getEntityServiceProviderList()),
-    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data))
-  }
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
+    getServiceRequestId: data => dispatch(getServiceRequestId(data)),
+    setPatient: data => dispatch(setPatient(data)),
+    goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+    createNewConversation: data => dispatch(onCreateNewConversation(data)),
+    createVideoConference: data => dispatch(createVideoConference(data)),
+    goToServiceRequestDetailsPage: () =>
+      dispatch(push(Path.visitServiceDetails))
+  };
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     serviceVist: state.dashboardState.dashboardState.serviceVist,
     serviceVistCount: state.dashboardState.dashboardState.serviceVistCount,
-    serviceProviderList: state.dashboardState.dashboardState
-      .serviceProviderList
-  }
+    serviceProviderList:
+      state.dashboardState.dashboardState.serviceProviderList,
+    loggedInUser: state.authState.userState.userData.userInfo
+  };
 }
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(serviceCalendar)
-)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(serviceCalendar)
+);

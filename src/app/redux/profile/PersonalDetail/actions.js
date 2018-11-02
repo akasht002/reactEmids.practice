@@ -14,7 +14,10 @@ export const PersonalDetails = {
   upload_img_success: 'profile/upload_img_success',
   upload_img: 'profile/upload_img',
   get_gender_success:'profile/get_gender_success,',
-  get_affiliation_detail_success:'profile/get_affiliation_detail_success'
+  get_sp_busy_in_visit_success: 'profile/get_sp_busy_in_visit_success',
+  get_affiliation_detail_success:'profile/get_affiliation_detail_success',
+  clearSbMode: 'clearSbMode/profile'
+
 }
 
 export { getDataValueArray } from '../../../utils/validations'
@@ -51,6 +54,19 @@ export const getGenderSuccess = data => {
   return {
     type: PersonalDetails.get_gender_success,
     data
+  }
+}
+
+export const getSpBusyInVisitSuccess = data => {
+  return {
+    type: PersonalDetails.get_sp_busy_in_visit_success,
+    data
+  }
+}
+
+export const clearSbMode = () => {
+  return {
+    type: PersonalDetails.clearSbMode
   }
 }
 
@@ -140,6 +156,36 @@ export function getPersonalDetail () {
   }
 }
 
+export function getSpBusyInVisit () {
+  return (dispatch, getState) => {
+    let serviceProviderId = getUserInfo().serviceProviderId;
+    dispatch(startLoading())
+    Get(API.getSpBusyInVisit + serviceProviderId)
+      .then(resp => {
+        dispatch(getSpBusyInVisitSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
+export function updateStandByMode (data) {   
+  return (dispatch) => {
+    let serviceProviderId = getUserInfo().serviceProviderId;
+    dispatch(startLoading())    
+    Put(API.updateStandByMode + serviceProviderId + '/' + data)
+      .then(resp => {
+       dispatch(getPersonalDetail())
+        // dispatch(endLoading())
+      })
+      .catch(err => {
+          dispatch(endLoading())    
+      })
+  }
+}
+
 export function updatePersonalDetail (data) { 
   let modelData  = getModal(data,PERSONAL_DETAIL.UPDATE_PERSONAL_DETAIL)
   let serviceProviderId = getUserInfo().serviceProviderId;
@@ -149,7 +195,7 @@ export function updatePersonalDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
-        dispatch(endLoading())
+       // dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -168,7 +214,7 @@ export function updateOrganizationDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
-        dispatch(endLoading())
+        // dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -186,7 +232,7 @@ export function updateEntityDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
-        dispatch(endLoading())
+        // dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -209,7 +255,3 @@ export function getAffiliationDetail () {
       })
   }
 }
-
-
-
-

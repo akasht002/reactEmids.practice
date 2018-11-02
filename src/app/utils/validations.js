@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_YEAR } from '../constants/constants'
+import { DATE_FORMAT, DATE_YEAR, serviceTypesImage } from '../constants/constants'
 import _ from 'lodash'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
@@ -44,6 +44,10 @@ export function checkDateFormatNumber (data) {
   return /^[0-9-]+$/.test(data)
 }
 
+export function checkNumber(data) {
+  return /^[0-9]+$/.test(data) || data === ''
+}
+
 export function checkFormatDate (value) {
   return (
     value.length === 10 &&
@@ -86,7 +90,7 @@ export function getLength (data) {
 }
 
 export function checkTextNotStartWithNumber (data) {
-  return /^[a-zA-Z][A-Za-z0-9_!@#$%^&*?~`/,;:".'()><-=+]*$/.test(data)
+  return /^[a-zA-Z ][A-Za-z0-9_!@#$%^&*?~`/,;:".'()><-=+ ]*$/.test(data)
 }
 
 export function isDecimal (data) {
@@ -148,8 +152,12 @@ export const formatDate = date => {
 }
 
 export const partialCompare = (value, array) => {
-  array.filter(obj => {
-    return value === obj.visitDate.substring(0, 10) ? obj.visits : 0
+  console.log(array)
+  array.find(obj => {
+    console.log(value)
+    console.log(obj.visitDate.substring(0, 10))
+    console.log( value === obj.visitDate.substring(0, 10) ? true : false)
+    return value === obj.visitDate.substring(0, 10) ? 1 : 2
   })
 }
 export function checkhourlyRate (data) {
@@ -166,4 +174,18 @@ export const isUrlValid = (userInput) =>{
       return false;
   else
       return true;
+}
+
+export const getServiceTypeImage = (serviceTypeId) => {
+  return (serviceTypesImage[`${serviceTypeId}`]) ? serviceTypesImage[`${serviceTypeId}`] : 'ADL Ambulation & Mobility.svg';
+}
+
+export function getStatus(input, field, status) {
+  var output = 0
+  for (var i = 0; i < input.length; ++i) {
+    if (i === input.length - 1 && input[i][field] === status) {
+      output++
+    }
+  }
+  return output
 }

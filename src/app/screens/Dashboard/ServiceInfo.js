@@ -1,13 +1,41 @@
 import React, { Fragment } from 'react'
-import Select from 'react-select'
 import Moment from 'react-moment'
+import { ThemeProvider } from '@zendeskgarden/react-theming'
+import { SelectField, Select, Item } from '@zendeskgarden/react-select'
 import _ from 'lodash'
 import TimeAgo from 'timeago-react'
+import moment from 'moment';
 import { getFields } from '../../utils/validations'
+import { formatName } from '../../utils/formatName';
 import { getUserInfo } from '../../services/http'
-import {MORNING,AFTERNOON,EVENING} from '../../redux/constants/constants'
+import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
+import { HIRED_STATUS_ID } from '../../constants/constants';
+import { ENTITY_USER } from '../../constants/constants';
+import { MessageTypes } from '../../data/AsyncMessage';
 
-export const splitSlots = (togglePersonalDetails, data, type) => {
+export const ShowIndicator = props => {
+  if (props.count === 1) {
+    return <i className='indicator' />
+  } else if (props.count === 2) {
+    return (
+      <React.Fragment>
+        <i className='indicator' /><i className='indicator' />
+      </React.Fragment>
+    )
+  } else if (props.count >= 3) {
+    return (
+      <React.Fragment>
+        <i className='indicator' />
+        <i className='indicator' />
+        <i className='indicator' />
+      </React.Fragment>
+    )
+  } else {
+    return ' '
+  }
+}
+
+export const splitSlots = (togglePersonalDetails, data, type, handleClick, props) => {
   let newData = _.reduce(
     data,
     function (arr, el) {
@@ -19,42 +47,59 @@ export const splitSlots = (togglePersonalDetails, data, type) => {
     []
   )
 
-  return serviceCalendar(togglePersonalDetails, newData)
+  return serviceCalendar(togglePersonalDetails, newData, handleClick, props)
 }
 
-export const serviceCalendar = (togglePersonalDetails, newData) => {
+export const serviceCalendar = (
+  togglePersonalDetails,
+  newData,
+  handleClick,
+  props
+) => {
   if (newData.length > 0) {
     return newData.slice(0, 3).map((conversations, index) => {
       return (
         <Fragment>
           <li
             key={index}
-            className='list-group-item ProfileServicesVisitContent'
+            className={'list-group-item ProfileServicesVisitContent ' + (getUserInfo().serviceProviderTypeId === ENTITY_USER && "EntityUDashboard") }
           >
-            <div className='ServicesTimeContainer'>
+            {/* <div className='ServicesTimeContainer'>
               <i className={'ServicesTime ' + conversations.slotDescription} />
-            </div>
-            <div className='ProfileServices'>
+            </div> */}
+            <div
+              className='ProfileServices'              
+            >
+            <span className="ServicesCalendarWidget" onClick={() => {
+                handleClick(conversations.serviceRequestId)
+              }}>
               <span className='ServicesTitle'>
                 {conversations.serviceTypes &&
                   conversations.serviceTypes.toString()}
               </span>
-              <span className='ServicesDesc'>
+              <span className='ServicesDesc' >
                 {conversations.serviceCategory && conversations.serviceCategory}
               </span>
-              {getUserInfo().isEntityServiceProvider &&
-                <span
+              </span>
+              {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
+              <div className="EntityUServiceProf">
+                <span><i className="assignSPLink"
                   onClick={e =>
                     togglePersonalDetails({
                       serviceRequestId: conversations.serviceRequestId,
-                      serviceRequestVisitid: conversations.serviceRequestVisitid,
+                      serviceRequestVisitid: conversations.serviceRequestVisitId,
                       patientId: conversations.patientId
                     })}
                 >
                   Assign Service Provider
-                </span>}
+                  </i>
+                </span>
+              </div>
+                }
             </div>
-            <div className='ProfileCardImageContainer'>
+            <div className='ProfileCardImageContainer' onClick={() => {
+              props.goToPatientProfile(conversations.patientId);
+            }}>
               <img
                 alt={'NO_IMAGE'}
                 key={index}
@@ -66,26 +111,40 @@ export const serviceCalendar = (togglePersonalDetails, newData) => {
                 }
               />
             </div>
-            <div className='ProfileCardNameContainer'>
+            <div className='ProfileCardNameContainer' onClick={() => {
+              props.goToPatientProfile(conversations.patientId);
+            }}>
               <span>
                 {conversations.patientFirstName &&
-                  conversations.patientFirstName}
+                  conversations.patientFirstName +
+                  ' '}
                 {' '}
                 {conversations.patientLastName && conversations.patientLastName}
               </span>
             </div>
-            <Select
-              id='ProfileMonth'
-              onBlurResetsInput={false}
-              multiple={false}
-              className='ProfileSubOptions ProfileMonthList'
-              searchable={false}
-              options={[
-                { label: 'Call', value: '1' },
-                { label: 'Message', value: '2' },
-                { label: 'Video', value: '3' }
-              ]}
-            />
+            <div className="options">
+              <ThemeProvider>
+                <SelectField>
+                  <Select
+                    placement='auto'
+                    options={[
+                      // <Item className='ListItem CTDashboard' key='item-1'>
+                      //   <i className='iconPhone' /> Phone Call
+                      // </Item>,
+                      <Item className='ListItem CTDashboard' key='item-2'
+                        onClick={(e) => { props.onClickConversation(conversations) }}>
+                        <i className='iconConversation' /> Conversation
+                    </Item>,
+                      <Item className='ListItem CTDashboard' key='item-3'
+                        onClick={(e) => { props.onClickVideoConference(conversations) }}>
+                        <i className='iconVideoCon' /> Video Conference
+                    </Item>
+                    ]}
+                    className='SelectDropDown CTDashboard'
+                  />
+                </SelectField>
+              </ThemeProvider>
+            </div>
           </li>
         </Fragment>
       )
@@ -157,26 +216,40 @@ export const ServiceCalendarInfo = props => {
   })
 }
 
-export const calendarData = data => {}
+export const calendarData = data => { }
 
 export const ServiceCalendarDefault = props => {
   return (
     <React.Fragment>
       <h6 className='VisitScheduleTitle'>Morning</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.togglePersonalDetails, props.Servicelist, MORNING)}
+        {splitSlots(
+          props.togglePersonalDetails,
+          props.Servicelist,
+          MORNING,
+          props.handleClick,
+          props
+        )}
       </ul>
       <h6 className='VisitScheduleTitle'>Afternoon</h6>
       <ul className='list-group ProfileServicesVisitList'>
         {splitSlots(
           props.togglePersonalDetails,
           props.Servicelist,
-          AFTERNOON
+          AFTERNOON,
+          props.handleClick,
+          props
         )}
       </ul>
       <h6 className='VisitScheduleTitle'>Evening</h6>
       <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(props.togglePersonalDetails, props.Servicelist, EVENING)}
+        {splitSlots(
+          props.togglePersonalDetails,
+          props.Servicelist,
+          EVENING,
+          props.handleClick,
+          props
+        )}
       </ul>
     </React.Fragment>
   )
@@ -186,7 +259,10 @@ export const ServiceRequestDefault = () => {
   return (
     <div className='NoInformationServiceProvider'>
       <span>
-        <img src={require("../../assets/images/NoServiceRequest.svg")}/>
+        <img
+          alt={'N'}
+          src={require('../../assets/images/NoServiceRequest.svg')}
+        />
       </span>
       <span className='NoSRText'>
         Browse Service Request
@@ -196,81 +272,120 @@ export const ServiceRequestDefault = () => {
 }
 
 export const ServiceProviderRequestDetails = props => {
-  return props.serviceRequest.slice(0, 2).map((sp, index) => {
-    return (
-      <Fragment>
-        <li key={index} className='list-group-item ProfileServicesVisitContent'>
-          <div className='ServicesTypeContainer'>
-            <i className='ServicesType Bathing' />
-          </div>
-          <div className='ProfileSkillServices'>
-            <span className='ServicesTitle'>
-              {sp.serviceRequestTypeDetails &&
-                getFields(
-                  sp.serviceRequestTypeDetails,
-                  'serviceTypeDescription'
-                )}
-            </span>
-            <span className='ServicesDesc'>
-              {sp.serviceCategoryDescription}
-            </span>
-            <span>
-              {sp.recurringPattern === 0 ? 'One Time' : 'Recurring'}
-              {' '}
-              |
-              {' '}
-              <Moment format='DD MMM'>
-                {sp.startDate}
-              </Moment>
-            </span>
-          </div>
-
-          <div className='ProfileApplicationNumbers Avatar'>
-            <div className='ProfileApplicationWidget'>
-              <div className='avatarContainer'>
-                <img
-                  alt='NO'
-                  className='avatarImage avatarImageBorder'
-                  src={
-                    sp.image
-                      ? sp.image
-                      : require('../../assets/images/Blank_Profile_icon.png')
-                  }
-                />
-              </div>
+  return props.serviceRequest
+    .slice(props.minVal, props.maxVal)
+    .map((sp, index) => {
+      let patientImage = '';
+      let patientLastName = '';
+      if (sp.statusId === HIRED_STATUS_ID) {
+        patientImage = sp && sp.image ? sp.image : require('../../assets/images/Blank_Profile_icon.png');
+        patientLastName = sp && sp.patientLastName;
+      } else {
+        patientLastName = sp && sp.patientLastName && sp.patientLastName.charAt(0);
+        patientImage = require('../../assets/images/Blank_Profile_icon.png');
+      }
+      return (
+        <Fragment>
+          <li
+            key={index}
+            className='list-group-item ProfileServicesVisitContent'
+          >
+            <div className='ServicesTypeContainer'>
+              <i className={`ServicesType DashboardSPIconServices${sp.serviceRequestTypeDetails && sp.serviceRequestTypeDetails.length > 0
+                && sp.serviceRequestTypeDetails[0].serviceTypeId}`} />
             </div>
-            <span className='AvatarName'>
-              {sp.patientFirstName && sp.patientFirstName}
-              {sp.patientLastName && sp.patientLastName}
-            </span>
-          </div>
-        </li>
-      </Fragment>
-    )
-  })
+            <div
+              className='ProfileSkillServices'
+              onClick={() => {
+                props.handleClick(sp.serviceRequestId)
+              }}
+            >
+              <span className='ServicesTitle'>
+                {sp.serviceRequestTypeDetails &&
+                  getFields(
+                    sp.serviceRequestTypeDetails,
+                    'serviceTypeDescription'
+                  )}
+              </span>
+              <span className='ServicesDesc'>
+                {sp.serviceCategoryDescription}
+              </span>
+              <span>
+                {sp.recurringPattern === 0 ? 'One Time' : 'Recurring'}
+                {' '}
+                |
+                {' '}
+                <Moment format='DD MMM'>
+                  {sp.startDate}
+                </Moment>
+              </span>
+            </div>
+
+            <div className='ProfileApplicationNumbers Avatar'>
+              <div className='ProfileApplicationWidget'>
+                <div className='avatarContainer'>
+                  <img
+                    alt='NO'
+                    className='avatarImage'
+                    src={
+                      patientImage                        
+                    }
+                  />
+                </div>
+              </div>
+              <span className='AvatarName'>
+                {sp.patientFirstName &&
+                  sp.patientFirstName + ' '}
+                {patientLastName}
+              </span>
+            </div>
+          </li>
+        </Fragment>
+      )
+    })
 }
+
+function getPartcipitantHeader(participants) {
+  let header = "";
+  if (participants && participants.length > 0) {
+    participants.map(participant => {
+      header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
+    });
+    header = header.slice(0, -2);
+  }
+  return header;
+};
 
 export const MyConversionDetail = props => {
   let MsgClass = ''
   MsgClass = 'readMsgs'
   let conversation = props.conversation
-  let unreadMessages = "";
-  let msgClass = "";
+  let unreadMessages = ''
+  let msgClass = ''
+  let msgHeader = '';
   return conversation.slice(0, 3).map((conversations, index) => {
+    !conversations.title ? msgHeader = getPartcipitantHeader(conversations.participantList) : msgHeader = conversations.title;
     if (props.getUnreadMsgCounts.length > 0) {
-      unreadMessages = "";
-      msgClass = "readMsgs";
+      unreadMessages = ''
+      msgClass = 'readMsgs'
       props.getUnreadMsgCounts.map(unreadMsgCount => {
-          if (conversations.conversationId === unreadMsgCount.conversationId) {
-              msgClass = "";
-              return unreadMessages = <span className={"float-right count" + msgClass}>{unreadMsgCount.unreadMessageCount}</span>
-          }
-      });
-  };
+        if (conversations.conversationId === unreadMsgCount.conversationId) {
+          msgClass = ''
+          return (unreadMessages = (
+            <span className={'float-right count' + msgClass}>
+              {unreadMsgCount.unreadMessageCount}
+            </span>
+          ))
+        }
+      })
+    }
     return (
       <Fragment>
         <li key={index} className='list-group-item myConversationContainer'>
-          <div className='myConversationContent' onClick={props.gotoConversations.bind(this, conversations)}>
+          <div
+            className='myConversationContent'
+            onClick={props.gotoConversations.bind(this, conversations)}
+          >
             <div className='avatarWidget'>
               {conversations.participantList.map((chatMem, index) => {
                 let zIndex = conversations.participantList.length - index
@@ -283,8 +398,9 @@ export const MyConversionDetail = props => {
                         key={index}
                         className='avatarImage avatarImageBorder'
                         src={
-                          chatMem.image
-                            ? chatMem.image
+                          chatMem.thumbNail &&
+                            chatMem.thumbNail !== ''
+                            ? chatMem.thumbNail
                             : require('../../assets/images/Blank_Profile_icon.png')
                         }
                       />
@@ -303,15 +419,22 @@ export const MyConversionDetail = props => {
               })}
             </div>
             <div className='MsgThreadContent mr-auto'>
-              <span className='MsgIndiTitle'>{conversations.title}</span>
+              <span className='MsgIndiTitle'>{msgHeader}</span>
               <p className='m-0 MsgContent'>
-                {conversations.messageText}
+              {conversations.messageType === MessageTypes.image &&
+                  <span className="chatHeaderText"><i className='addAttachmentBtn d-inline-block' />
+                    Image
+                  </span>}
+              {conversations.messageType === MessageTypes.text &&
+                  <span className="chatHeaderText">{conversations.messageText}</span>}
               </p>
             </div>
             <div className='MsgCount ml-auto'>
-              <span className={'float-right count' + MsgClass}>{unreadMessages}</span>
+              <span className={'float-right count' + MsgClass}>
+                {unreadMessages}
+              </span>
               <span className='width100 d-block float-right MsgTime'>
-                <TimeAgo datetime={conversations.createdDate} />
+                <TimeAgo datetime={moment.utc(conversations.createdDate).local().format()} />
               </span>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Checkbox from '../Components/checkbox';
 import { Input } from '../../../components';
-import { getLinkedParticipantsByPatients } from '../../../redux/asyncMessages/actions';
+import { getLinkedParticipantsList } from '../../../redux/asyncMessages/actions';
 import { USERTYPES } from '../../../constants/constants';
 
 class ParticipantsList extends Component {
@@ -18,7 +18,7 @@ class ParticipantsList extends Component {
                 participantType: USERTYPES.SERVICE_PROVIDER,
                 userId: userId
             };
-            this.props.getLinkedParticipantsByPatients(data);
+            this.props.getLinkedParticipantsList(data);
         };
     };
 
@@ -63,7 +63,7 @@ class ParticipantsList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data))
+        getLinkedParticipantsList: (data) => dispatch(getLinkedParticipantsList(data))
     }
 };
 

@@ -3,10 +3,15 @@ import { connect } from 'react-redux';
 import AppStackRoot from './routes';
 import * as SignalR from '@aspnet/signalr';
 import {
-  pushConversation,
-  pushUnreadCount,
-  pushConversationSummary
+  getConversationItemSignalR,
+  getConversationSummaryItemSignalR
 } from './redux/asyncMessages/actions';
+import { getConversationSummaryDashboardSignalR } from './redux/dashboard/Dashboard/actions';
+import {
+  checkTeleHealth
+} from './redux/telehealth/actions'
+import {getUserInfo} from './services/http';
+import { USERTYPES } from './constants/constants';
 
 class App extends Component {
 
@@ -17,11 +22,23 @@ class App extends Component {
     .build();
 
     connection.on("UpdateChat", data => {
-        this.props.pushConversation(data.result);
+      if(data && getUserInfo()){
+        let ParticipantList = data.result ? [...data.result.participantList] : [...data.participantList];
+        const index = ParticipantList.indexOf(
+          ParticipantList.filter(el => el.userId === getUserInfo().serviceProviderId && el.participantType === USERTYPES.SERVICE_PROVIDER)[0]
+        );
+        if(index !== -1){
+          let conversationId = data.result ? data.result.conversationId : data.conversationId;
+          let messageId = data.result ? data.result.conversationMessageId : data.conversationMessageId;
+          this.props.getConversationSummaryItemSignalR(conversationId);
+          this.props.getConversationItemSignalR(conversationId, messageId);
+          this.props.getConversationSummaryDashboardSignalR(conversationId);
+        };
+      };
     });
 
-    connection.on("UpdateConversation", data => {
-       this.props.pushConversationSummary(data.result);
+    connection.on("TeleHealth", data => {
+      this.props.checkTeleHealth(data);
     });
 
     connection.start()
@@ -45,8 +62,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    pushConversation: (data) => dispatch(pushConversation(data)),
-    pushConversationSummary: (data) => dispatch(pushConversationSummary(data)),
+    getConversationItemSignalR: (conversationId, messageId) => dispatch(getConversationItemSignalR(conversationId, messageId)),
+    getConversationSummaryItemSignalR: (conversationId) => dispatch(getConversationSummaryItemSignalR(conversationId)),
+    checkTeleHealth: (data) => dispatch(checkTeleHealth(data)),
+    getConversationSummaryDashboardSignalR: (conversationId) => dispatch(getConversationSummaryDashboardSignalR(conversationId)),
   }
 }
 

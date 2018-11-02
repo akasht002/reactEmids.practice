@@ -17,8 +17,10 @@ class BlackoutModal extends Component {
         toDate: "",
         remarks: "",
         serviceProviderBlackoutDayId: "",
-        isDiscardModalOpen: false
-      }
+        isDiscardModalOpen: false,
+        isDisabledSaveBtn: true
+      },
+     
     };
     this.fromMinDate = newDate();
     this.toMinDate = newDate();
@@ -36,7 +38,8 @@ class BlackoutModal extends Component {
       this.setState(prevState => ({
         blackoutData: {
           ...prevState.blackoutData,
-          fromDate: formattedDate
+          fromDate: formattedDate,
+          isDisabledSaveBtn: false
         }
       }));
      } else {
@@ -44,7 +47,8 @@ class BlackoutModal extends Component {
       this.setState(prevState => ({
         blackoutData: {
           ...prevState.blackoutData,
-          toDate: formattedDate
+          toDate: formattedDate,
+          isDisabledSaveBtn: false
         }
       }));
      }
@@ -77,13 +81,29 @@ dateChangedRaw = (dateType, event) => {
     this.setState(prevState => ({
       blackoutData: {
         ...prevState.blackoutData,
-        remarks: value
+        remarks: value,
+        isDisabledSaveBtn: false
       }
     }));
   };
 
   saveData = () => {
-    this.props.saveBlackout(this.state.blackoutData);
+    const { fromDate, toDate, remarks } = this.state.blackoutData;
+    let disabledSave = false;
+    if ((fromDate === undefined || fromDate === '' || fromDate === null) ||
+    (toDate === undefined || toDate === '' || toDate === null) || 
+    (remarks === undefined || remarks === '' || remarks === null)) {
+      disabledSave = true;
+      this.setState(prevState => ({
+        blackoutData: {
+          ...prevState.blackoutData,
+          isDisabledSaveBtn: disabledSave
+        }
+      }));
+    } else {
+      this.props.saveBlackout(this.state.blackoutData);
+    }
+   
   };
 
   componentWillReceiveProps(nextProps) {
@@ -145,7 +165,7 @@ dateChangedRaw = (dateType, event) => {
   }
 
   render() {
-    const { fromDate, toDate, remarks } = this.state.blackoutData;
+    const { fromDate, toDate, remarks, isDisabledSaveBtn } = this.state.blackoutData;
     return (
       <React.Fragment>
         <Modal
@@ -208,7 +228,7 @@ dateChangedRaw = (dateType, event) => {
             </form>
           </ModalBody>
           <ModalFooter className={this.props.headerFooter}>
-            <Button className="" color="primary" onClick={this.saveData}>
+            <Button className="" color="primary" onClick={this.saveData} disabled={isDisabledSaveBtn}>
               Save
             </Button>
           </ModalFooter>

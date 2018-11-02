@@ -3,6 +3,7 @@ import { ThirdPartyGet, ThirdPartyPost, ThirdPartyPut } from '../../../../servic
 import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
+import { DEMO } from '../../../../constants/config';
 
 export const paymentsCardList = {
     getPaymentsCardListSuccess: 'get_paymentsCardList_success/performtasks',
@@ -27,31 +28,41 @@ export function getpaymentsCardList(data) {
     }
 };
 
-export function createCharge(data) {
+export function createCharge(data, claimData) {
     return (dispatch) => {
         dispatch(startLoading());
         ThirdPartyPost(API.createCharge, data).then((resp) => {
             if (resp.data === 'success') {
                 dispatch(push(Path.paymentsuccess))
+                dispatch(claimsSubmission(claimData))
             }
             dispatch(endLoading());
         }).catch((err) => {
-            dispatch(push(Path.paymentfailure))
+            if (DEMO === 'true') {
+                dispatch(push(Path.paymentsuccess))
+            } else {
+                dispatch(push(Path.paymentfailure))
+            }
             dispatch(endLoading());
         })
     }
 };
 
-export function chargeByCustomerId(data) {
+export function chargeByCustomerId(data,claimData) {
     return (dispatch) => {
         dispatch(startLoading());
         ThirdPartyPost(API.chargeByCustomerId, data).then((resp) => {
             if (resp.data === 'success') {
                 dispatch(push(Path.paymentsuccess))
+                dispatch(claimsSubmission(claimData))
             }
             dispatch(endLoading());
         }).catch((err) => {
-            dispatch(push(Path.paymentfailure))
+            if (DEMO === 'true') {
+                dispatch(push(Path.paymentsuccess))
+            } else {
+                dispatch(push(Path.paymentfailure))
+            }
             dispatch(endLoading());
         })
     }
@@ -64,7 +75,11 @@ export function claimsSubmission(data) {
             dispatch(endLoading());
             dispatch(push(Path.paymentsuccess))
         }).catch((err) => {
-            dispatch(push(Path.paymentfailure))
+            if (DEMO === 'true') {
+                dispatch(push(Path.paymentsuccess))
+            } else {
+                dispatch(push(Path.paymentfailure))
+            }
             dispatch(endLoading());
         })
     }
@@ -77,7 +92,11 @@ export function captureAmount(data) {
             dispatch(endLoading());
             dispatch(push(Path.paymentsuccess))
         }).catch((err) => {
-            dispatch(push(Path.paymentfailure))
+            if (DEMO === 'true') {
+                dispatch(push(Path.paymentsuccess))
+            } else {
+                dispatch(push(Path.paymentfailure))
+            }
             dispatch(endLoading());
         })
     }

@@ -70,9 +70,9 @@ class VerifyContact extends React.Component {
                     <div className="container-fluid mainContent px-5 d-flex align-items-start flex-column">
                         <div className="row d-block">
                             <div className="col-md-12 py-5 px-0">
-                                <h4 className="font-weight-normal mb-4">Verify My Mobile Number</h4>
-                                <p className="m-0">Your registered Contact Number</p>
-                                <p className="contactNumber"> XXX XXX {this.state.mobileNumber}</p>
+                                <h4 className="font-weight-normal mb-4 verify-title">Verify My Mobile Number</h4>
+                                <p className="m-0 default-444">Your registered Contact Number</p>
+                                <p className="contactNumber default-444"> XXX XXX {this.state.mobileNumber}</p>
                                 <div className={"my-5 tempPassword " + this.state.visible}>
                                     <Button
                                         type="button"
@@ -83,8 +83,7 @@ class VerifyContact extends React.Component {
                                     <span className="d-block my-3 text-muted">A temporary passcode will be sent to your registered Contact Number</span>
                                 </div>
                                 <div className={"tempPassForm " + this.state.invisible}>
-
-                                    <form className="form my-2 my-lg-0">
+                                    <div className="form my-2 my-lg-0">
                                         <Input
                                             id="passcode"
                                             autoComplete="off"
@@ -94,13 +93,13 @@ class VerifyContact extends React.Component {
                                             value={checkSpace(this.state.temporaryPassCode)}
                                             textChange={(e) => this.onChangePassword(e)}
                                         />
-                                    </form>
+                                    </div>
                                 </div>
                                 {this.props.isPasscodeNotMatch && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Please enter valid Passcode.</span>}
                                 {this.props.isPasscodeExpired && <span className="text-danger d-block mb-3 width100 MsgWithIcon MsgWrongIcon">Your passcode is been expired, please regenerate the passcode</span>}
                             </div>
                         </div>
-                        <div className="row mt-auto">
+                        <div className="row mt-auto verify-msgie11">
                             {this.state.passCodeSentMsg && <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been sent to your registered Contact Number.</span>}
                             <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
                         </div>

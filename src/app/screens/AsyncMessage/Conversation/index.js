@@ -271,62 +271,58 @@ class Conversation extends Component {
 
         return (
             <AsideScreenCover async='active'>
-                <div className="d-flex msgSectionWrapper mobile-view-title">
-                    {this.props.isLoading && <Preloader />}
-                    <div className="container-fluid p-0">
-                        <div className="width100 mainWidgetProfile">
-                            <div className="container mainProfileContent">
-                                <div className="row d-flex justify-content-center">
-                                    <div className="col-md-12 d-flex p-0 my-4 slightTopview">
-                                        <h5 className="font-weight-semi-bold mr-auto pageTitle detailsview-title">My Conversations</h5>
-                                    </div>
-                                    <div className="col-md-12 card chatContainerWrapper">
-                                        <table className="table width100">
-                                            <tbody>
-                                                <tr>
-                                                    <td className="chatContentWidget ">
-                                                        <div className={(this.state.displayGreyedOut ? "PanelDisabled" : 'd-none')} />
-                                                        <MessageContent
-                                                            onRef={ref => (this.messageComponent = ref)}
-                                                            conversation={this.props.conversation}
-                                                            onChangeTitle={this.onChangeTitle}
-                                                            isEditTitle={this.state.editTitle}
-                                                            onSubmitChangeTitle={this.onSubmitChangeTitle}
-                                                            title={this.state.title}
-                                                            onToggleEditTitle={this.onToggleEditTitle}
-                                                            onClickSendMessage={this.onClickSendMessage}
-                                                            onChangeMessage={this.onChangeMessage}
-                                                            messageText={this.state.messageText}
-                                                            toggleParticipantList={this.toggleParticipantList}
-                                                            unreadCounts={this.props.unreadCounts}
-                                                            loggedInUser={this.props.loggedInUser}
-                                                            onImageUpload={this.onImageUpload}
-                                                            isDirty={this.setIsDirty}
-                                                            closePreview={this.closePreview}
-                                                            onInvalidImageSelection={this.onInvalidImageSelection}
-                                                            exististingTitle={this.state.exististingTitle} />
-                                                    </td>
-                                                    <td className={"participantsWidget " + this.state.showParticipantList}>
-                                                        <ParticipantContent
-                                                            onRef={ref => (this.participantComponent = ref)}
-                                                            displayWarningPopup={this.displayWarningPopup}
-                                                            existingParticipants={this.props.conversation.participantList}
-                                                            toggleParticipantList={this.toggleParticipantList}
-                                                            conversationId={this.state.conversationId}
-                                                            isActive={this.props.conversation.isActive}
-                                                            title={this.state.title}
-                                                            context={this.props.conversation.context}
-                                                            isDirty={this.setIsDirty}
-                                                            setDisplayGreyedOut={this.setDisplayGreyedOut}
-                                                            onCilckRemoveParticipant={this.onCilckRemoveParticipant}
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                {this.props.isLoading && <Preloader />}
+                    <div className='ProfileHeaderWidget'>
+                        <div className='ProfileHeaderTitle'>
+                            <h5 className='primaryColor m-0'>My Conversations</h5>
+                        </div>
+                    </div>
+                    <div className="container-fluid SPContentWidget MessageCardWidget">
+                        <div className="col-md-12 card chatContainerWrapper">
+                            <table className="table width100 tableLayoutFixed">
+                                <tbody>
+                                    <tr>
+                                        <td className="chatContentWidget ">
+                                            <div className={(this.state.displayGreyedOut ? "PanelDisabled" : 'd-none')} />
+                                            <MessageContent
+                                                onRef={ref => (this.messageComponent = ref)}
+                                                conversation={this.props.conversation}
+                                                onChangeTitle={this.onChangeTitle}
+                                                isEditTitle={this.state.editTitle}
+                                                onSubmitChangeTitle={this.onSubmitChangeTitle}
+                                                title={this.state.title}
+                                                onToggleEditTitle={this.onToggleEditTitle}
+                                                onClickSendMessage={this.onClickSendMessage}
+                                                onChangeMessage={this.onChangeMessage}
+                                                messageText={this.state.messageText}
+                                                toggleParticipantList={this.toggleParticipantList}
+                                                unreadCounts={this.props.unreadCounts}
+                                                loggedInUser={this.props.loggedInUser}
+                                                onImageUpload={this.onImageUpload}
+                                                isDirty={this.setIsDirty}
+                                                closePreview={this.closePreview}
+                                                onInvalidImageSelection={this.onInvalidImageSelection}
+                                                exististingTitle={this.state.exististingTitle} />
+                                        </td>
+                                        <td className={"participantsWidget " + this.state.showParticipantList}>
+                                            <ParticipantContent
+                                                onRef={ref => (this.participantComponent = ref)}
+                                                displayWarningPopup={this.displayWarningPopup}
+                                                existingParticipants={this.props.conversation.participantList}
+                                                toggleParticipantList={this.toggleParticipantList}
+                                                conversationId={this.props.conversation.conversationId}
+                                                isActive={this.props.conversation.isActive}
+                                                title={this.state.title}
+                                                context={this.props.conversation.context}
+                                                isDirty={this.setIsDirty}
+                                                setDisplayGreyedOut={this.setDisplayGreyedOut}
+                                                onCilckRemoveParticipant={this.onCilckRemoveParticipant}
+                                                conversation={this.props.conversation}
+                                            />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <ModalTemplate
@@ -339,7 +335,6 @@ class Conversation extends Component {
                         headerFooter="d-none"
                         centered={true}
                     />
-                </div>
             </AsideScreenCover>
         )
     }

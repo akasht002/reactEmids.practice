@@ -8,8 +8,9 @@ import {
 } from '../../../redux/asyncMessages/actions';
 import { Button } from '../../../components';
 import { USERTYPES } from '../../../constants/constants';
-
-
+import { Path } from '../../../routes';
+import { setPatient} from '../../../redux/patientProfile/actions';
+import { push } from '../../../redux/navigation/actions'
 
 class ParticipantContent extends Component {
 
@@ -117,7 +118,7 @@ class ParticipantContent extends Component {
         this.setState({ searchText: e.target.value });
         
             let data = {
-                patientId: this.props.loggedInUser.serviceProviderId,
+                patientId: this.props.context,
                 conversationId: this.props.conversationId,
                 searchText: e.target.value
             }
@@ -213,7 +214,10 @@ class ParticipantContent extends Component {
                             </table>
                             {this.state.popupVisible && (<ul ref={node => { this.node = node; }} className={"table profileBack " + profileOptionClass}>
                                 <li className="ProfileOptionItems align-middle">
-                                    <a>View Profile</a>
+                                    <a onClick={() => {
+                                        this.props.setPatient(participant.userId);
+                                        this.props.goToPatientProfile();
+                                    }}>View Profile</a>
                                 </li>
                             </ul>)}
                         </li>
@@ -250,12 +254,14 @@ class ParticipantContent extends Component {
         };
 
         if (!this.state.addParticipantView) {
+            let accesDenied = !this.props.isActive || (this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId
+                && this.props.conversation.createdByType !== this.props.loggedInUser.userType) ? true : false;
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
                         <span className="mr-auto primaryColor sideParticipantsTitle">Participants</span>
                         <span className="ml-auto d-flex">
-                            { this.props.loggedInUser.serviceProviderTypeId === USERTYPES.DESIGNATED_SERVICE_PROVIDER && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
+                            { !accesDenied && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
                             <button className="ParticipantClose" onClick={this.props.toggleParticipantList} />
                         </span>
 
@@ -326,7 +332,9 @@ function mapDispatchToProps(dispatch) {
     return {
         addParticipants: (data) => dispatch(onAddParticipant(data)),
         removeParticipant: (data) => dispatch(onRemoveParticipant(data)),
-        getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data))
+        getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
+        setPatient: data => dispatch(setPatient(data)),
+        goToPatientProfile: () => dispatch(push(Path.patientProfile))
     }
 };
 

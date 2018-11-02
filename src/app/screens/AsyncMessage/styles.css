@@ -277,7 +277,7 @@ table{
 }
 
 .chatMsgContent .Content{
-    max-width: 837px;
+    max-width: 100%;
     /* overflow-y: auto; */
     overflow-x: hidden;
     height: calc( 100vh - 335px );
@@ -285,10 +285,6 @@ table{
     -webkit-transition: all ease-in-out 0.3s;
     -moz-transition: all ease-in-out 0.3s;
     -o-transition: all ease-in-out 0.3s;
-}
-
-.chatMsgContent .Content
-{
     padding-bottom: 70px;
 }
 .chatContentWidget .table .chatMsgContent .Content
@@ -913,11 +909,10 @@ button.CloseMsgModal span{
     width: auto;
 }
 
-.block-picview
-{
-    width: 300px;
-    height: 300px;
+.block-picview{
     background:#ddd;
+    width: 800px;
+    height: 500px;
     padding: 10px;
     position: relative;
     display: flex;
@@ -925,13 +920,15 @@ button.CloseMsgModal span{
     justify-content: center;
     margin: 0 auto;
 }
-.block-picview .msgImgPreview
-{
-display: block;
-max-width: 100%;
-max-height: 100%;
-height: auto;
-margin: 0 auto;
+
+.block-picview .msgImgPreview {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    object-fit: contain;
 }
 
 .leaveConversation{
@@ -940,12 +937,13 @@ margin: 0 auto;
 }
 
 .leaveConversation .btn{
-    padding: 6px 24px 6px 50px !important;
+    /* padding: 6px 24px 6px 50px !important; */
+    padding: 6px 20px !important;
     position: relative;
 }
 
 .leaveConversation .btn:before{
-    content: '';
+    /*content: '';*/
     position: absolute;
     display: block;
     top: 12px;
@@ -1342,7 +1340,7 @@ height: 80px;
     width: 24px;
     height: 24px;
     border-radius: 100%;
-    background-color: #ffffff;
+    background-color: rgba(0,0,0,0);
     color: #444444;
 }
 
@@ -1410,9 +1408,17 @@ height: 80px;
     height: 100%;
 }*/
 
+.tableLayoutFixed{
+    table-layout: fixed;
+}
+
 .chatContainerWrapper{
-    height: calc(100vh - 175px);
+    height: calc(100vh - 165px);
     overflow: hidden;
+}
+
+.SPContentWidget.MessageCardWidget{
+    padding: 0 30px;
 }
 
 /*.msgContent{
@@ -1660,6 +1666,16 @@ overflow: auto;
     overflow:scroll !important;	
 }
 
+
+
+.participantsSearchForm .participantsSearchList .participantName
+{
+    -o-text-overflow: initial;
+    text-overflow: initial;
+    max-width: initial;
+}
+
+
 /*microsoft-edge-detection*/
 @supports (-ms-ime-align: auto) {
     .table td.addAttachmentWidget, .table td.messageTypeWidget, .table td.sendButtonWidget {
@@ -1827,9 +1843,8 @@ margin-bottom: 0px !important;
 
 .btn-primary.disabled, .btn-primary:disabled{
     color: #ffffff !important;
-    opacity: .5 !important;
-    /*background-color: #633F75 !important;*/
-    background-color: #7a329f !important;
+    background-color:#dcd6df !important;
+    opacity: initial !important;
 }
 
 .btn-primary:focus{
@@ -1891,8 +1906,7 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
     .mainWidgetProfile .mainProfileContent {
         padding: 0px 15px;
     }
-    .mainProfileContent .slightTopview
-    {
+    .mainProfileContent .slightTopview{
         margin: 0px 20px 20px 0px;  
     }
     .slightTopview .pageTitle
@@ -1907,6 +1921,43 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
         clear: both;
         padding: 0px 20px;
     } 
+
+    .block-picview{
+        width: 600px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .block-picview {
+        width: 300px;
+        height: 400px;
+    }
 }
 
 /*--/responsive-code-for-devices*/
+
+.previewImgHolder > div{
+    background-color: transparent;
+    border: none;
+}
+
+
+.previewImg {
+    display: flex;
+    position: relative;
+    justify-content: flex-start;
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+.block-picview > button{
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.block-picview > img{
+    width: 300px;
+    height: auto;
+}

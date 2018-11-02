@@ -31,7 +31,7 @@ export const AsyncMessageActions = {
     setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
     clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage',
     setConversationCount: 'set_conversation_count/asyncMessage',
-    openedAsyncPage: 'set_opened_async_page/asynMessage'
+    setopenedAsyncPage: 'set_opened_async_page/asynMessage'
 };
 
 export const setConversationSummary = (data) => {
@@ -48,10 +48,70 @@ export const pushConversation = (data) => {
     }
 };
 
-export const pushConversationSummary = (data) => {
-    return {
-        type: AsyncMessageActions.pushConversationSummary,
-        data
+export function getConversationSummaryItemSignalR(conversationId){
+    return (dispatch, getState) => {
+        let state = getState();
+        if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
+            let userId = getUserInfo().serviceProviderId;
+            let userType = USERTYPES.SERVICE_PROVIDER;
+            dispatch(startLoading());
+            AsyncGet(API.getConversationSummary 
+                + conversationId + '/'
+                + userId + '/' 
+                + userType
+            )
+            .then(resp => {
+                dispatch(getConversationSummaryItemSignalRSuceess(resp.data));
+                dispatch(endLoading());
+            })
+            .catch(err => {
+                dispatch(endLoading())
+            })
+        }
+    };
+};
+
+const getConversationSummaryItemSignalRSuceess = (data) => {
+    return(dispatch, getState) => {
+        let state = getState();
+        let conversationSummaryData = [...state.asyncMessageState.conversationSummary];
+        const index = conversationSummaryData.indexOf(
+            conversationSummaryData.filter(el => el.conversationId === data.conversationId)[0]
+        );
+        if(index !== -1){
+            conversationSummaryData.splice(index, 1);
+        }
+        conversationSummaryData = [data, ...conversationSummaryData];
+        dispatch(setConversationSummary(conversationSummaryData));
+        dispatch(getUnreadMessageCounts());
+    };
+};
+
+
+export function getConversationItemSignalR(conversationId, messageId){
+    return (dispatch, getState) => {
+        let state = getState();
+        if(state.asyncMessageState.openedAsyncPage === 'conversation' 
+        && state.asyncMessageState.currentConversation.conversationId === conversationId){
+            let userId = getUserInfo().serviceProviderId;
+            let userType = USERTYPES.SERVICE_PROVIDER;
+            dispatch(startLoading());
+            let data = {conversationId: conversationId};
+            AsyncGet(API.getConversationMessage 
+                + messageId + '/'
+                + conversationId + '/'
+                + userId + '/' 
+                + userType
+            )
+            .then(resp => {
+                dispatch(pushConversation(resp.data));
+                dispatch(updateReadStatus(data));
+                dispatch(endLoading());
+            })
+            .catch(err => {
+                dispatch(endLoading())
+            })
+        };
     }
 };
 
@@ -64,7 +124,7 @@ export const pushUnreadCount = (data) => {
 
 export const openedAsyncPage = (data) =>{
     return{
-        type: AsyncMessageActions.openedAsyncPage,
+        type: AsyncMessageActions.setopenedAsyncPage,
         data
     };
 };
@@ -107,6 +167,7 @@ export function onFetchConversation(id) {
             + pageSize)
             .then(resp => {
                 dispatch(setConversationData(resp.data));
+                dispatch(setCurrentOpenConversation(resp.data));
                 dispatch(endLoading());
             })
             .catch(err => {
@@ -135,7 +196,6 @@ export function onSaveTitle(data) {
         dispatch(startLoading());
         AsyncPut(API.saveTitle, data)
             .then(resp => {
-                dispatch(onFetchConversation(resp.data.conversationId));
                 dispatch(endLoading());
             })
             .catch(err => {
@@ -277,7 +337,7 @@ export function leaveConversation(data) {
             + data.conversationId + '/'
             + USER_TYPE)
             .then(resp => {
-                dispatch(onFetchConversation(resp.data));
+                dispatch(onFetchConversation(resp.data.conversationId));
                 dispatch(endLoading())
             })
             .catch(err => {
@@ -295,13 +355,52 @@ const getLinkedPatientsSuccess = data => {
 
 
 export function getLinkedParticipantsByPatients(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(startLoading())
         let serchText = data.searchText === "" ? null : data.searchText;
-        AsyncGet(API.getParticipantsByContext + data.conversationId +
-            '/' + data.userId +
+        let patients = getState().asyncMessageState.linkedPatients;
+        let patient = patients.find((e) => {
+            return e.userId === data.patientId
+        });
+        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+        data.firstName = patient.firstName;
+        data.lastName = patient.lastName;
+        data.participantType = USERTYPES.PATIENT;
+        data.thumbNail = patient.thumbNail;
+        data.userId = data.patientId;
+        AsyncGet(API.getParticipantsByContext 
+                + data.conversationId +
+            '/' + USER_ID +
             '/' + data.patientId +
-            '/' + data.participantType +
+            '/' + USER_TYPE +
+            '/' + serchText)
+            .then(resp => {
+                let modifiedData = [
+                    data,
+                    ...resp.data
+                ];
+                dispatch(getLinkedParticipantsByPatientsSuccess(modifiedData));
+                dispatch(endLoading())
+            })
+            .catch(err => {
+                dispatch(endLoading())
+            })
+    }
+};
+
+
+export function getLinkedParticipantsList(data) {
+    return (dispatch, getState) => {
+        dispatch(startLoading())
+        let serchText = data.searchText === "" ? null : data.searchText;
+        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+        AsyncGet(API.getParticipantsByContext 
+                + data.conversationId +
+            '/' + USER_ID +
+            '/' + data.patientId +
+            '/' + USER_TYPE +
             '/' + serchText)
             .then(resp => {
                 dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));

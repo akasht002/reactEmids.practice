@@ -46,13 +46,12 @@ class VisitSummary extends React.Component {
 
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-        <div className='ProfileRightContainer'>
           <div className='ProfileHeaderWidget'>
             <div className='ProfileHeaderTitle'>
               <h5 className='primaryColor m-0'>
                 Service Request
                 {' '}
-                <span>/ {visitSummary.serviceRequestVisitId}</span>
+                <span>/ {visitSummary.serviceRequestId}</span>
               </h5>
             </div>
           </div>
@@ -99,7 +98,7 @@ class VisitSummary extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className='CardContainers ServiceCategoryWidget'>
+              <div className='CardContainers'>
                 <Summary
                   SummaryDetails={visitSummary}
                   FeedbackModal={this.FeedbackModal}
@@ -108,7 +107,6 @@ class VisitSummary extends React.Component {
             </div>
             <div className='cardBottom' />
           </Scrollbars>
-        </div>
       </AsideScreenCover>
     )
   }

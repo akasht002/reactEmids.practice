@@ -228,7 +228,8 @@ class Education extends React.Component {
                         value={this.state.fieldOfStudy}
                         maxlength={'500'}
                         textChange={(e) => this.setState({
-                            fieldOfStudy: e.target.value
+                            fieldOfStudy: e.target.value,
+                            disabledSaveBtn:false
                         })}
                     />
                 </div>
@@ -238,7 +239,8 @@ class Education extends React.Component {
                         <select  className={"form-control"}
                         value={this.state.startYear}
                         onChange={(e) => this.setState({
-                            startYear: e.target.value
+                            startYear: e.target.value,
+                            disabledSaveBtn:false
                         })}>
                         {this.YearList()}
                         </select>
@@ -250,7 +252,8 @@ class Education extends React.Component {
                         <select  className={"form-control"}
                         value={this.state.endYear}
                         onChange={(e) => this.setState({
-                            endYear: e.target.value
+                            endYear: e.target.value,
+                            disabledSaveBtn:false
                         })}>
                         {this.YearListCal()}                            
                         </select>

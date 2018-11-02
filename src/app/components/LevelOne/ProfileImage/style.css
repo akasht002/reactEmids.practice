@@ -3,10 +3,12 @@
     padding: 5px;
     width: 90px;
     margin: 0 auto;
+    cursor: pointer;
 }
 
 .ProfileImage{
     height: 80px;
+    width: 80px;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;

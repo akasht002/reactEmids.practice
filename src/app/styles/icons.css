@@ -270,27 +270,71 @@
 }
 
 .SPIconServices1:after{
-    background-image: url("../assets/images/Bathing_Purple.svg");
+    background-image: url("../assets/ServiceTypes/ADL Ambulation & Mobility.svg");
 }
 
 .SPIconServices2:after{
-    background-image: url("../assets/images/Meal_Prep_Purple.svg");
+    background-image: url("../assets/ServiceTypes/ADL Bathing.svg");
 }
 
 .SPIconServices3:after{
-    background-image: url("../assets/images/Medication_Purple.svg");
+    background-image: url("../assets/ServiceTypes/ADL Continence.svg");
 }
 
 .SPIconServices4:after{
-    background-image: url("../assets/images/Bathing_Purple.svg");
-}
-
-.SPIconServices5:after{
-    background-image: url("../assets/images/Meal_Prep_Purple.svg");
+    background-image: url("../assets/ServiceTypes/HAH - Housekeeping.svg");
 }
 
 .SPIconServices6:after{
-    background-image: url("../assets/images/Medication_Purple.svg");
+    background-image: url("../assets/ServiceTypes/ADL Eating.svg");
+}
+
+.SPIconServices7:after{
+    background-image: url("../assets/ServiceTypes/ADL Getting Dressed.svg");
+}
+
+.SPIconServices8:after{
+    background-image: url("../assets/ServiceTypes/ADL Toileting.svg");
+}
+
+.SPIconServices9:after{
+    background-image: url("../assets/ServiceTypes/ADL Transferring.svg");
+}
+
+.SPIconServices10:after{
+    background-image: url("../assets/ServiceTypes/G&N Grocery Delivery.svg");
+}
+
+.SPIconServices11:after{
+    background-image: url("../assets/ServiceTypes/G&N Meal Delivery.svg");
+}
+
+.SPIconServices12:after{
+    background-image: url("../assets/ServiceTypes/HAH - Companionship & Errands.svg");
+}
+
+.SPIconServices13:after{
+    background-image: url("../assets/ServiceTypes/HAH - Food Preparation.svg");
+}
+
+.SPIconServices14:after{
+    background-image: url("../assets/ServiceTypes/HAH - Housekeeping.svg");
+}
+
+.SPIconServices15:after{
+    background-image: url("../assets/ServiceTypes/HAH - Laundry.svg");
+}
+
+.SPIconServices16:after{
+    background-image: url("../assets/ServiceTypes/HAH - Shopping.svg");
+}
+
+.SPIconServices17:after{
+    background-image: url("../assets/ServiceTypes/HAH - Help at Home.svg");
+}
+
+.SPIconServices18:after{
+    background-image: url("../assets/ServiceTypes/Transportation - General Transportation.svg");
 }
 
 .SPIconSlideArrow{

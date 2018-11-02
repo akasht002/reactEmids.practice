@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TimeAgo from 'timeago-react';
 import autosize from "autosize";
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import {
     goToConversationSummary,
@@ -27,10 +28,16 @@ class MessageContent extends Component {
     };
 
     componentDidMount() {
-        this.textarea.focus();
+        this.scrollToBottom();
         autosize(this.textarea);
         this.props.onRef(this);
+    };
+
+
+    componentDidUpdate() {
         this.scrollToBottom();
+        autosize(this.textarea);
+        this.props.onRef(this);
     };
 
     componentWillUnmount() {
@@ -132,6 +139,8 @@ class MessageContent extends Component {
         };
 
         let conversations = "";
+        let accesDenied = !this.props.conversation.isActive || (this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId
+             && this.props.conversation.createdByType !== this.props.loggedInUser.userType) ? true : false;
         if (this.props.conversation.messages && this.props.conversation.messages.length > 0) {
             conversations = this.props.conversation.messages.map((conversation, index) => {
                 let messageClass = "";
@@ -151,13 +160,13 @@ class MessageContent extends Component {
                 return (
                     <div className={"chatMessage " + messageClass}>
                         <div className={"avatarContainer " + ordering}>
-                            <img key={index} alt="i" src={require("../../../assets/images/Blank_Profile_icon.png")}
+                            <img key={index} alt="i" src={ conversation.createdByThumbnail ? conversation.createdByThumbnail : require("../../../assets/images/Blank_Profile_icon.png")}
                                 className="avatarImage" />
                         </div>
                         <div className="ChatBubble">
                             <div className="bubbleHeader d-flex">
                                 <span className="mr-auto memberName">{conversation.firstName + ' ' + conversation.lastName}</span>
-                                <span className="ml-auto messageTime"><TimeAgo datetime={conversation.createdDate} /></span>
+                                <span className="ml-auto messageTime"><TimeAgo datetime={moment.utc(conversation.createdDate).local().format()} /></span>
                             </div>
                             <div className="bubbleBody">
                                 <span className="bubbleMsg">{conversation.messageText}</span>
@@ -181,8 +190,8 @@ class MessageContent extends Component {
         };
 
         return (
-            <div>
-                <table className="table">
+            <section>
+                <table className="table tableLayoutFixed">
                     <tbody>
                         <tr>
                             <td className="chatHeader align-middle" ref={this.setChatHeaderRef}>
@@ -193,11 +202,12 @@ class MessageContent extends Component {
                                             <span className="MsgIndiTitle chatHeaderText">
                                                 {this.props.title ? this.props.title : "Add Title"}
                                             </span>
-                                            <button
-                                                disabled={!this.props.conversation.isActive || !this.props.canCreateConversation || this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId}
+                                            {!accesDenied &&
+                                                <button
                                                 className="editButton"
                                                 onClick={this.props.onToggleEditTitle} />
-
+                                            }
+                                            
                                             <button disabled={!this.props.conversation.isActive}
                                                 className="ParticipantslistButton showParticipantList"
                                                 onClick={this.props.toggleParticipantList} />
@@ -293,7 +303,7 @@ class MessageContent extends Component {
                     modalTitle="New Conversation"
                     centered="centered"
                 />
-            </div>
+            </section>
         )
     }
 };

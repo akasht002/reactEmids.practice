@@ -6,7 +6,9 @@ const defaultState = {
     VisitServiceDetails: [],
     VisitServiceSchedule: [],
     ServiceRequestId: '',
-    VisitServiceElibilityStatus: ''
+    VisitServiceElibilityStatus: '',
+    daysType:[],
+    updateServiceRequestMsgStatus : 0
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -17,6 +19,12 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 ...state,
                 VisitServiceDetails: action.data
             };
+
+        case VisitServiceDetails.updateServiceRequestByServiceProviderSuccess:
+        return {
+            ...state,
+            updateServiceRequestMsg: action.data
+        };
 
         case VisitServiceDetails.getVisitServiceScheduleSuccess:
             return {
@@ -34,6 +42,12 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 VisitServiceElibilityStatus: action.data
+            };
+
+        case VisitServiceDetails.getDaysSuccess:
+            return {
+                ...state,
+                daysType: action.data
             };
 
         default:

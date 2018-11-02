@@ -12,6 +12,7 @@ import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes'
+import { checkNumber } from '../../../../utils/validations';
 import './style.css'
 
 class Summary extends Component {
@@ -33,7 +34,10 @@ class Summary extends Component {
             isAlertModalOpen: false,
             isSignatureModalOpen: false,
             isSaveBtnShown: true,
-            timeErrMessage: ''
+            timeErrMessage: '',
+            emptyErrMessage: '',
+            disableSignatureBtn: true,
+            isProccedModalOpen: false
         };
     };
 
@@ -58,6 +62,10 @@ class Summary extends Component {
         this.setState({ collapse: !this.state.collapse });
     }
 
+    togglePopup = () => {
+        this.setState({ isModalOpen: !this.state.isModalOpen })
+    }
+
     AdjustTime = () => {
         this.setState({
             isModalOpen: !this.state.isModalOpen
@@ -75,6 +83,7 @@ class Summary extends Component {
 
     resetSignature = () => {
         this.signaturePad.clear();
+        this.setState({ disableSignatureBtn: true })
     }
 
     onClickSignaturePad = () => {
@@ -93,8 +102,8 @@ class Summary extends Component {
                 serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
                 ServiceProviderId: this.state.summaryDetails.serviceProviderId,
                 ServiceRequestId: this.state.summaryDetails.serviceRequestId,
-                EstimatedClaim: this.state.summaryDetails.estimatedClaim,
-                OutOfPocketAmount: this.state.summaryDetails.outOfPocketAmount,
+                EstimatedClaim: this.props.CalculationsData.estimatedClaim,
+                OutOfPocketAmount: this.props.CalculationsData.copayAmount,
                 HourlyRate: this.state.summaryDetails.hourlyRate,
                 OriginalTotalDuration: originalTotalDuration,
                 BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
@@ -109,12 +118,18 @@ class Summary extends Component {
         }
     }
 
+    onClickNextBtn = () => {
+        this.setState({ isProccedModalOpen: true })
+    }
+
     timerErrMessage = () => {
         if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
             this.state.updatedMin > this.props.CalculationsData.totalMinutes ||
             this.state.updatedSec > this.props.CalculationsData.totalSeconds) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
-        }else{
+        } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
+            this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
+        } else {
             this.updateTime();
         }
     }
@@ -123,13 +138,15 @@ class Summary extends Component {
         const data = {
             hour: parseInt(this.state.updatedHour, 0),
             min: parseInt(this.state.updatedMin, 0),
-            sec: parseInt(this.state.updatedMin, 0)
+            sec: parseInt(this.state.updatedSec, 0)
         }
-        this.setState({ isModalOpen: !this.state.isModalOpen })
+        this.setState({ isModalOpen: false })
         this.props.onUpdateTime(data)
     }
 
-    
+    onMouseUp = () => {
+        this.setState({ disableSignatureBtn: false })
+    }
 
     render() {
 
@@ -145,9 +162,13 @@ class Summary extends Component {
                 <p className="AdjustTimeContent">
                     <span className="mr-3">
                         HH <input
-                            type="number"
-                            value={this.state.updatedHour}
-                            onChange={(e) => this.setState({ updatedHour: e.target.value, timeErrMessage: '' })}
+                            type="text"
+                            value={checkNumber(this.state.updatedHour) ? this.state.updatedHour : ''}
+                            onChange={(e) => {
+                                if (checkNumber(e.target.value)) {
+                                    this.setState({ updatedHour: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
+                                }
+                            }}
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={this.props.CalculationsData.totalHours}
@@ -155,9 +176,13 @@ class Summary extends Component {
                     </span>
                     <span className="mr-3">
                         MM <input
-                            type="number"
-                            value={this.state.updatedMin}
-                            onChange={(e) => this.setState({ updatedMin: e.target.value, timeErrMessage: '' })}
+                            type="text"
+                            value={checkNumber(this.state.updatedMin) ? this.state.updatedMin : ''}
+                            onChange={(e) => {
+                                if (checkNumber(e.target.value)) {
+                                    this.setState({ updatedMin: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
+                                }
+                            }}
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={this.props.CalculationsData.totalMinutes}
@@ -165,16 +190,22 @@ class Summary extends Component {
                     </span>
                     <span>
                         SS <input
-                            type="number"
-                            value={this.state.updatedSec}
-                            onChange={(e) => this.setState({ updatedSec: e.target.value, timeErrMessage: '' })}
+                            type="text"
+                            value={checkNumber(this.state.updatedSec) ? this.state.updatedSec : ''}
+                            onChange={(e) => {
+                                if (checkNumber(e.target.value)) {
+                                    this.setState({ updatedSec: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
+                                }
+                            }}
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={this.props.CalculationsData.totalSeconds}
                         />
                     </span>
+                    <span className="mt-4 d-block text-danger">{this.state.timeErrMessage}</span>
+                    <span className="mt-4 d-block text-danger">{this.state.emptyErrMessage}</span>
                 </p>
-                {/* <p>{this.state.timeErrMessage}</p> */}
+
                 <p className="AdjustTimeText">
                     Note: Maximum adjustable time is
                     <span> {this.props.CalculationsData.totalHours} hr</span>
@@ -228,7 +259,7 @@ class Summary extends Component {
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerContent running">{this.props.CalculationsData.totalChargableTime}</span>
+                                            <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
@@ -310,12 +341,12 @@ class Summary extends Component {
                                         <div className="RightContent">
                                             <p className="SummaryContentTitle">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
-                                            <div id="signatureWidget" className="SignatureColumn" onClick={this.onClickSignaturePad}>
+                                            <div id="signatureWidget" className="SignatureColumn" onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
                                             </div>
                                             {this.state.isSaveBtnShown ?
                                                 <div className="SignatureButtons">
-                                                    <button className="btn btn-outline-primary CancelSignature" onClick={this.saveSignature}>Save</button>
+                                                    <button className="btn btn-outline-primary CancelSignature" disabled={this.state.disableSignatureBtn} onClick={this.saveSignature}>Save</button>
                                                     <button className="btn btn-outline-primary ResetSignature" onClick={this.resetSignature}>Reset Signature</button>
                                                 </div>
                                                 :
@@ -326,7 +357,7 @@ class Summary extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <a className='btn btn-primary' onClick={this.onClickNext}>Proceed to Payment</a>
+                                        <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
                                     </div>
                                 </div>
                             </div>
@@ -335,14 +366,15 @@ class Summary extends Component {
                     <div className='cardBottom' />
                     <GeneralModalPopup
                         isOpen={this.state.isModalOpen}
+                        toggle={this.togglePopup}
                         ModalBody={modalContent}
                         modalTitle={'Adjust Time'}
                         className="modal-lg asyncModal CertificationModal"
                         centered={true}
                         label={'Update'}
                         onClick={() => {
-                            this.updateTime()
-                            this.setState({ isModalOpen: !this.state.isModalOpen })
+                            this.timerErrMessage()
+                            // this.setState({ isModalOpen: !this.state.isModalOpen })
                         }}
                     />
 
@@ -356,6 +388,21 @@ class Summary extends Component {
                         onConfirm={() => this.setState({
                             isSignatureModalOpen: !this.state.isSignatureModalOpen,
                         })}
+                    />
+
+                    <ModalPopup
+                        isOpen={this.state.isProccedModalOpen}
+                        ModalBody={<span>Do you want to proceed for payment.</span>}
+                        btn1="No"
+                        btn2="Yes"
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                        onCancel={() => {
+                            this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen }),
+                                this.onClickNext()
+                        }}
+                        onConfirm={() => this.setState({ isProccedModalOpen: false })}
                     />
                 </Scrollbars>
             </AsideScreenCover>

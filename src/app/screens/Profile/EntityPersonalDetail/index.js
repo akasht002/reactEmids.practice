@@ -194,7 +194,6 @@ class EntityPersonalDetail extends React.PureComponent {
 
   onCroppeds = e => {
     let image = e.image
-    console.log(e.image)
     this.setState({
       croppedImage: image
     })
@@ -352,7 +351,7 @@ class EntityPersonalDetail extends React.PureComponent {
                 }}
               />
               <small className='text-danger d-block OnboardingAlert'>
-                {this.state.firstNameInvaild && 'Please enter valid first Name'}
+                {this.state.firstNameInvaild && 'Please enter valid First Name'}
               </small>
 
             </div>
@@ -478,7 +477,7 @@ class EntityPersonalDetail extends React.PureComponent {
             autoComplete='off'
             required='required'
             type='text'
-            maxlength='2'
+            maxlength='40'
             value={this.state.url}
             textChange={e => {
               this.setState({
@@ -493,7 +492,8 @@ class EntityPersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
-            placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            placeholder='Tell us about yourself'
             className='form-control'
             rows='5'
             value={this.state.description}
@@ -661,7 +661,7 @@ class EntityPersonalDetail extends React.PureComponent {
                     </span>}
                   {!this.state.isValidPhoneNumber &&
                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                      Please enter vaild last name
+                      Please enter vaild Phone Number
                     </span>}
                 </div>
               </div>

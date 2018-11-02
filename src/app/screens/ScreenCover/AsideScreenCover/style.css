@@ -257,7 +257,8 @@ section .ProfileRightWidget {
     }
 
     .SPContentWidget .ProfileContainer.topProfile {
-        height: calc(100vh - 88px);
+        /* height: calc(100vh - 88px); */
+        height: 620px;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
@@ -266,10 +267,12 @@ section .ProfileRightWidget {
 
     .ProfileCardNameContainer {
         width: 80px;
+        cursor: pointer;
     }
 
     .ProfileServices {
         max-width: calc(100% - 193px);
+        cursor: pointer;
     }
 
     .ProfileServices .ServicesTitle, .ProfileSkillServices .ServicesTitle, .SPThreadContent .SPIndiTitle {
@@ -311,6 +314,10 @@ section .ProfileRightWidget {
 
     .dateRow label {
         margin: 0;
+    }
+
+    .BrandLink{
+        height: 16px;
     }
 }
 
@@ -360,11 +367,12 @@ section .ProfileRightWidget {
     }
 
     .SPContentWidget .ProfileContainer.topProfile, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette, .bottomProfile .innerWidget:first-child, .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content, .ProfileCardBody .ServiceRequestPalette, .bottomPalette, .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
-        height: 100%;
+        height: auto !important;
     }
 
     .ProfileCardNameContainer {
         width: 110px;
+        cursor: pointer;
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
@@ -373,6 +381,7 @@ section .ProfileRightWidget {
 
     .ProfileServices {
         max-width: calc(100% - 240px);
+        cursor: pointer;
     }
 
     .ProfileServicesVisitList {

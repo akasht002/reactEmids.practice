@@ -30,7 +30,8 @@ class TeleHealthWidget extends Component {
             sessionInactivePopup: false,
             timeStartedSeconds: 0,
             timeStarted: '',
-            currentDateTime: moment().format('MM/DD/YYYY HH:mm')
+            currentDateTime: moment().format('MM/DD/YYYY HH:mm'),
+            showLeaveConfModal: false
         };
         this.interval = null;
         this.leaveTimeout = null;
@@ -46,7 +47,7 @@ class TeleHealthWidget extends Component {
         clearTimeout(this.leaveTimeout);
         clearTimeout(this.inactiveSession);
         if (this.state.hasJoinedRoom) {
-            this.leaveRoom(true);
+            this.leaveRoom(this.state.hasJoinedRoom);
         }
     }
 
@@ -96,7 +97,9 @@ class TeleHealthWidget extends Component {
     }
 
     leaveRoom = (data) => {
-        this.state.activeRoom.disconnect();
+        if (this.state.activeRoom) {
+            this.state.activeRoom.disconnect();
+        }
         this.setState({
             hasJoinedRoom: false,
             localMediaAvailable: false
@@ -105,7 +108,9 @@ class TeleHealthWidget extends Component {
     }
 
     endConference = () => {
-        this.state.activeRoom.disconnect();
+        if (this.state.activeRoom) {
+            this.state.activeRoom.disconnect();
+        }
         this.setState({
             hasJoinedRoom: false,
             localMediaAvailable: false
@@ -306,7 +311,7 @@ class TeleHealthWidget extends Component {
                         isMuteAudio={this.state.isMuteAudio}
                         isHiddenVideo={this.state.isHiddenVideo}
                         controlVideo={this.controlVideo}
-                        leaveRoom={() => {this.leaveRoom(false)}}
+                        leaveRoom={() => {this.setState({showLeaveConfModal: true})}}
                         endConference={this.endConference}
                         initiator={this.props.initiator}
                     />
@@ -328,6 +333,26 @@ class TeleHealthWidget extends Component {
                     className="modal-sm"
                     headerFooter="d-none"
                     centered={true}
+                    isOpen={this.state.showLeaveConfModal}
+                    btn1="Continue"
+                    btn2="Leave"
+                    onConfirm={() => {
+                        this.setState({
+                            showLeaveConfModal: !this.state.showLeaveConfModal,
+                        })
+                    }}
+                    onCancel={() => {
+                        this.setState({
+                            showLeaveConfModal: !this.state.showLeaveConfModal,
+                        })
+                        this.leaveRoom()
+                    }}
+                    ModalBody={<span>This will leave you out from ongoing video conference. Are you sure you want to continue?</span>}
+               />
+               <ModalPopup
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
                     isOpen={this.state.sessionInactivePopup}
                     btn1="Continue"
                     btn2="Leave"
@@ -343,7 +368,7 @@ class TeleHealthWidget extends Component {
                         })
                         this.leaveRoom()
                     }}
-                    ModalBody={<span>Your session has timed out due to inactivity. Please log in to continue</span>}
+                    ModalBody={<span>Your time has elapsed. Are you sure you want to continue with the conference?</span>}
                />
             </div>
         );

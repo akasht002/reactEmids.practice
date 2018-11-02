@@ -57,7 +57,7 @@ export function getServiceStatusDetail () {
   }
 }
 
-export const updateStandByModeSuccess = () => {}
+// export const updateStandByModeSuccess = () => {}
 
 export const getPatientVisitDetailSuccess = data => {
   return {
@@ -104,7 +104,7 @@ export const getEntityServiceProviderListSuccess = data => {
 export function getEntityServiceProviderList () {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    Get(API.getEntityServiceProviderList + getUserInfo().entityId)
+    Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
       .then(resp => {
         dispatch(getEntityServiceProviderListSuccess(resp.data))
         dispatch(endLoading())
@@ -211,9 +211,7 @@ export const getConversationDetailSuccess = data => {
 export function getConversationDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    axios
-      .get(
-        messageURL +
+    MessageURLGet(
           API.getConversationSummary +
           getUserInfo().serviceProviderId + '/' +
           USERTYPES.SERVICE_PROVIDER + '/' +
@@ -240,9 +238,7 @@ export const onUnreadCountSuccess = data => {
 export function getUnreadMessageCounts (userId) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    axios
-      .get(
-        messageURL +
+    MessageURLGet(
           API.getUnreadCount +
           getUserInfo().serviceProviderId + '/' +
           USERTYPES.SERVICE_PROVIDER
@@ -264,15 +260,14 @@ export function updateStandByMode (data) {
     
     Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
-        dispatch(updateStandByModeSuccess())
+       // dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
       })
       .catch(err => {
         try{
-
         }catch(e){
           if (e instanceof TypeError) {
-            dispatch(endLoading())
+            
         } else if (e instanceof RangeError) {
           dispatch(endLoading())
         } else if (e instanceof EvalError) {
@@ -288,3 +283,42 @@ export function updateStandByMode (data) {
 
 
 }
+
+
+
+
+export function getConversationSummaryDashboardSignalR(conversationId){
+  return (dispatch, getState) => {
+          let userId = getUserInfo().serviceProviderId;
+          let userType = USERTYPES.SERVICE_PROVIDER;
+          dispatch(startLoading());
+          MessageURLGet(API.getConversationSummary 
+              + conversationId + '/'
+              + userId + '/' 
+              + userType
+          )
+          .then(resp => {
+              dispatch(getConversationSummaryItemSignalRSuceess(resp.data));
+              dispatch(endLoading());
+          })
+          .catch(err => {
+              dispatch(endLoading())
+          })
+    };
+};
+
+const getConversationSummaryItemSignalRSuceess = (data) => {
+  return(dispatch, getState) => {
+      let state = getState();
+      let conversationSummaryData = [...state.dashboardState.dashboardState.conversationDetail];
+      const index = conversationSummaryData.indexOf(
+          conversationSummaryData.filter(el => el.conversationId === data.conversationId)[0]
+      );
+      if(index !== -1){
+          conversationSummaryData.splice(index, 1);
+      }
+      conversationSummaryData = [data, ...conversationSummaryData];
+      dispatch(getConversationDetailSuccess(conversationSummaryData));
+      dispatch(getUnreadMessageCounts());
+  };
+};

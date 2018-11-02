@@ -15,7 +15,8 @@ import {
   ModalPopup,ScreenCover,
   ProfileImage
 } from '../../../components'
-import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
+import BlackoutModal from '../../../components/LevelOne/BlackoutModal';
+import ImageModal from './ImageModal';
 import { OrganizationData } from '../../../data/OrganizationData';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
@@ -58,8 +59,12 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps.....', nextProps);
     this.setState({
       imageProfile: nextProps.profileImgData.image,
+      uploadedImageFile: nextProps.profileImgData.image
+        ? nextProps.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png'),
       firstName: nextProps.personalDetail.firstName,
       lastName: nextProps.personalDetail.lastName,
       age: nextProps.personalDetail.age,
@@ -169,7 +174,9 @@ class PersonalDetail extends React.PureComponent {
     if (
      this.state.firstNameInvaild ||
      this.state.lastNameInvaild ||
-     this.state.phoneNumberInvalid
+     this.state.phoneNumberInvalid ||
+     this.state.ageInvaild ||
+     this.state.yearOfExpInvaild
     ) {
       
       this.setState({ isValid: false})
@@ -181,8 +188,13 @@ class PersonalDetail extends React.PureComponent {
     }
   }
  
-
   closeImageUpload = () => {
+    this.setState({
+      uploadImage: !this.state.uploadImage
+    });
+  }
+
+  saveImageUpload = () => {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -196,17 +208,17 @@ class PersonalDetail extends React.PureComponent {
     })
   }
 
-  render() {    
+  render() {   
     let modalContent
     let modalTitle = 'Edit Personal Detials'
     let modalType = ''
-    const cityDetail = this.props.cityDetail.map((city, i) => {
+    const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
       return {label :  city.name ,value:city.id + '-' + city.name}
     })
-    const genderDetail = this.props.genderList.map((gender, i) => {
+    const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
       return {label :  gender.name ,value:gender.id + '-' + gender.name}
     })
-    const affiliationDetail = this.props.affiliationList.map((affiliation, i) => {
+    const affiliationDetail = this.props.affiliationList && this.props.affiliationList.map((affiliation, i) => {
       return {label :  affiliation.name ,value:affiliation.affiliationId + '-' + affiliation.name}
     })
    
@@ -214,13 +226,14 @@ class PersonalDetail extends React.PureComponent {
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
         {this.getModalContent(cityDetail, genderDetail,affiliationDetail)}
-        <BlackoutModal
+        <ImageModal
           isOpen={this.state.uploadImage}
           toggle={this.closeImageUpload}
           ModalBody={this.getBlackModalContent()}
           className='modal-lg asyncModal BlackoutModal'
           modalTitle='Edit Profile Image'
           centered='centered'
+          saveImage={this.saveImageUpload}
         />
       </form>
     )
@@ -334,8 +347,12 @@ class PersonalDetail extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
+              <li>Click on Change Photo</li>
+              <li>Select the image from your desktop/gallery</li>
               <li>The image should not exceed beyond 2MB.</li>
               <li>The image should be either of PNG or JPEG/JPG type only.</li>
+              <li>Once select you can crop the image by dragging the cursor the image</li>
+              <li>Click on Save</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>
@@ -379,19 +396,17 @@ class PersonalDetail extends React.PureComponent {
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.genderName}
-                  {' '}
-                  gender
                 </span>
                 <span>
                   {this.props.personalDetail && this.props.personalDetail.age}
                   {' '}
-                  years
+                  Yrs Old
                 </span>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.yearOfExperience}
                   {' '}
-                  years exp
+                  Yrs Exp
                 </span>
               </p>
             </div>
@@ -406,14 +421,16 @@ class PersonalDetail extends React.PureComponent {
           </div>
           <div className={'width100'}>
             <div className={'SPAffiliatedList'}>
+            {this.props.personalDetail &&
+                    this.props.personalDetail.affiliationName &&
               <span className={'AffiliatedList'}>
                 Affiliated to In
-                {' '}0
+                {' '}
                 <bd>
                   {this.props.personalDetail &&
                     this.props.personalDetail.affiliationName}
                 </bd>
-              </span>
+              </span>}
             </div>
           </div>
           <div className={'width100'}>
@@ -519,8 +536,8 @@ class PersonalDetail extends React.PureComponent {
                 }}
               />
               <small className="text-danger d-block OnboardingAlert">
-                {this.state.firstNameInvaild && 'Please enter valid first name'}
-                </small>
+                {this.state.firstNameInvaild && 'Please enter valid First Name'}
+              </small>
             </div>
             <div className='col-md-6 mb-2'>
               <Input
@@ -550,12 +567,12 @@ class PersonalDetail extends React.PureComponent {
               />
             
                 <small className="text-danger d-block OnboardingAlert">
-                {this.state.lastNameInvaild && 'Please enter valid last name'}
+                {this.state.lastNameInvaild && 'Please enter valid Last Name'}
             </small>
             </div>
             <div className='col-md-6 mb-2'>
               <div className='form-group'>
-                <label> Gender</label>
+                <label className="m-0"> Gender</label>
                 <SelectBox
                   options={genderDetail}
                   simpleValue
@@ -567,7 +584,7 @@ class PersonalDetail extends React.PureComponent {
                     })
                   }}
                   selectedValue={this.state.selectedGender}
-                  className={'inputFailure'}
+                  className='inputFailure ServiceRequestSelect'
                 />
               </div>
             </div>
@@ -585,11 +602,21 @@ class PersonalDetail extends React.PureComponent {
                     (e.target.value === '' || re.test(e.target.value)) &&
                     getLength(e.target.value) <= 3 && (e.target.value)<=100
                   ) {
-                    this.setState({ age: e.target.value,  disabledSaveBtn: false })
+                    this.setState({ age:e.target.value,
+                      disabledSaveBtn: false,
+                      ageInvaild: false})
                   }
                 }}
-                className='form-control'
+                onBlur={e => {
+                  if(!e.target.value) {
+                    this.setState({ageInvaild: true})
+                  }
+                }}
+                className={"form-control " + (this.state.ageInvaild && 'inputFailure')}
               />
+                <small className="text-danger d-block OnboardingAlert">
+                {this.state.ageInvaild && 'Please enter valid Age'}
+            </small>
             </div>
             <div className='col-md-6 mb-2'>
               <Input
@@ -601,13 +628,21 @@ class PersonalDetail extends React.PureComponent {
                 maxlength='2'
                 value={this.state.yearOfExperience}
                 textChange={e => {
-                  const re = /^[0-9\b]+$/
+                  const re = /^[0-9\b]+$/;
                   if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({ yearOfExperience: e.target.value, disabledSaveBtn: false })
+                    this.setState({ yearOfExperience: e.target.value, disabledSaveBtn: false, yearOfExpInvaild:false })
                   }
                 }}
-                className='form-control'
+                onBlur={e => {
+                  if(!e.target.value) {
+                    this.setState({yearOfExpInvaild: true})
+                  }
+                }}
+                className={"form-control " + (this.state.yearOfExpInvaild && 'inputFailure')}
               />
+              <small className="text-danger d-block OnboardingAlert">
+              {this.state.yearOfExpInvaild && 'Please enter valid Year of Experience'}
+          </small>
             </div>
           </div>
         </div>
@@ -645,7 +680,7 @@ class PersonalDetail extends React.PureComponent {
                 this.setState({ selectedAffiliation: value,disabledSaveBtn: false })
               }}
               selectedValue={this.state.selectedAffiliation}
-              className={'inputFailure'}
+              className='inputFailure ServiceRequestSelect'
             />
           </div>
 
@@ -654,15 +689,26 @@ class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
-            placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+           // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            placeholder='Tell us about yourself'
             className='form-control'
             rows='5'
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-                this.setState({ description: e.target.value,disabledSaveBtn: false })
+                if (e.target.value === '') {
+                  this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild:false })
+                } 
+            }}
+            onBlur={e => {
+              if(!e.target.value) {
+                this.setState({descriptionInvaild: true})
+              }
             }}
           />
+          <small className="text-danger d-block OnboardingAlert">
+             {this.state.descriptionInvaild && 'Please enter valid Description'}
+          </small>
         </div>
         <div className='col-md-4'>
           <Input
@@ -682,12 +728,20 @@ class PersonalDetail extends React.PureComponent {
                   '$1.$2'
                 )
                 this.setState({ hourlyRate: number,
-                 disabledSaveBtn:false })
+                 disabledSaveBtn:false, hourlyRateInvalid: false })
               }
             }
           }
-            className='form-control'
+          onBlur={e => {
+            if(!e.target.value) {
+              this.setState({hourlyRateInvalid: true})
+            }
+          }}
+          className={"form-control " + (this.state.hourlyRateInvalid && 'inputFailure')}
           />
+          <small className="text-danger d-block OnboardingAlert">
+             {this.state.hourlyRateInvalid && 'Please enter valid HourlyRate'}
+          </small>
         </div>
         <div className='hrLine' />
         <div className='col-md-12 mb-2'>
@@ -701,7 +755,7 @@ class PersonalDetail extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label>State</label>
+                    <label className="m-0">State</label>
                     <SelectBox
                       options={stateDetail}
                       simpleValue
@@ -711,7 +765,7 @@ class PersonalDetail extends React.PureComponent {
                       }                      
                     }                      
                       selectedValue={this.state.selectedState}
-                      className={'inputFailure'}
+                      className='inputFailure ServiceRequestSelect'
                     />
                   </div>
                 </div>
@@ -822,7 +876,7 @@ class PersonalDetail extends React.PureComponent {
                 }}
                       />
                         <small className="text-danger d-block OnboardingAlert">
-                        {this.state.phoneNumberInvalid && 'Please enter valid phone number'}
+                        {this.state.phoneNumberInvalid && 'Please enter valid Phone Number'}
                     </small>
                 </div>
               </div>

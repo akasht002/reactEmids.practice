@@ -17,7 +17,7 @@ import {
   ScreenCover,
   ProfileImage
 } from '../../../components'
-import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
+import ImageModal from '../PersonalDetail/ImageModal';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants'
 import {
@@ -58,7 +58,8 @@ class Organization extends React.PureComponent {
   componentWillReceiveProps (nextProps) {
     this.setState({
       imageProfile: nextProps.profileImgData.image,
-      organizationName: nextProps.personalDetail.organization,
+      organizationName:  nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.organization,
+      url: nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
       description: nextProps.personalDetail.description,
       hourlyRate: nextProps.personalDetail.hourlyRate,
       city: getArrayLength(nextProps.personalDetail.address) > 0
@@ -171,6 +172,12 @@ class Organization extends React.PureComponent {
     this.setState({
       uploadImage: !this.state.uploadImage
     })
+  }
+
+  saveImageUpload = () => {
+    this.setState({
+      uploadImage: !this.state.uploadImage
+    })
     this.props.uploadImg(this.state.src)
   }
 
@@ -194,13 +201,14 @@ class Organization extends React.PureComponent {
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
         {this.getModalContent(cityDetail)}
-        <BlackoutModal
+        <ImageModal
           isOpen={this.state.uploadImage}
           toggle={this.closeImageUpload}
           ModalBody={this.getBlackModalContent()}
           className='modal-lg asyncModal BlackoutModal'
           modalTitle='Edit Profile Image'
           centered='centered'
+          saveImage={this.saveImageUpload}
         />
       </form>
     )
@@ -336,7 +344,7 @@ class Organization extends React.PureComponent {
         </div>
       </div>
     )
-  }
+  } 
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>       
@@ -357,11 +365,17 @@ class Organization extends React.PureComponent {
           <div className={'d-flex'}>
             <div className={'col-md-7 p-0'}>
               <h3 className={'SPName'}>
-                {this.props.personalDetail &&
-                  `${this.props.personalDetail.organizationName || ''} `}
+                {this.props.personalDetail && this.props.personalDetail.entity &&
+                  `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
-
+              <div className={'col-md-7 p-0'}>
+              <h3 className={'SPName'}>
+                {this.props.personalDetail && this.props.personalDetail.entity &&
+                  `${this.props.personalDetail.entity.websiteUrl || ''} `}
+              </h3>
             </div>
+
+          </div>
             <div className={'col p-0'}>
               <h3 className={'ratePerHour primaryColor'}>
                 <span>
@@ -488,7 +502,7 @@ class Organization extends React.PureComponent {
                }}
            />
            <small className="text-danger d-block OnboardingAlert">
-               {this.state.organizationNameInvaild && 'Please enter valid organization name'}
+               {this.state.organizationNameInvaild && 'Please enter valid Organization Name'}
            </small>
             </div>
             <div className='col-md-4'>
@@ -540,14 +554,15 @@ class Organization extends React.PureComponent {
             className='form-control'
           />
            <small className="text-danger d-block OnboardingAlert">
-                {this.state.urlInvaild && 'Please enter valid url'}
+                {this.state.urlInvaild && 'Please enter valid Url'}
                 </small>
 
         </div>
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
-            placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            placeholder='Tell us about yourself'
             className='form-control'
             rows='5'
             value={this.state.description}
@@ -701,7 +716,7 @@ class Organization extends React.PureComponent {
             }}
                   />
                     <small className="text-danger d-block OnboardingAlert">
-                    {this.state.phoneNumberInvalid && 'Please enter valid phone number'}
+                    {this.state.phoneNumberInvalid && 'Please enter valid Phone Number'}
                 </small>
 
                 </div>
@@ -723,8 +738,8 @@ class Organization extends React.PureComponent {
     let old_data = {
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      organizationName: this.props.personalDetail.organizationName
-        ? this.props.personalDetail.organizationName
+      organizationName: this.props.personalDetail.entity.organization
+        ? this.props.personalDetail.entity.organization
         : '',
       phoneNumber: this.props.personalDetail.phoneNumber
     }
