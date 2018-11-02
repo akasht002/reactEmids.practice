@@ -139,7 +139,8 @@ class MessageContent extends Component {
         };
 
         let conversations = "";
-        let accesDenied = !this.props.conversation.isActive || this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId;
+        let accesDenied = !this.props.conversation.isActive || (this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId
+             && this.props.conversation.createdByType !== this.props.loggedInUser.userType) ? true : false;
         if (this.props.conversation.messages && this.props.conversation.messages.length > 0) {
             conversations = this.props.conversation.messages.map((conversation, index) => {
                 let messageClass = "";
@@ -203,7 +204,6 @@ class MessageContent extends Component {
                                             </span>
                                             {!accesDenied &&
                                                 <button
-                                                disabled={!this.props.conversation.isActive || this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId}
                                                 className="editButton"
                                                 onClick={this.props.onToggleEditTitle} />
                                             }
