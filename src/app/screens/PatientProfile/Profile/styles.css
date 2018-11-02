@@ -1254,6 +1254,21 @@ color:#444;
 color: #444;
 }
 
+
+@media only screen and (max-width: 1024px) {
+    .BlackoutModal .modal-content .modal-body {
+        height:100%;
+        padding: 15px 30px;
+        overflow-y:auto;
+    }
+    .BlackoutModal .modal-footer
+    {
+    clear: both;
+    }
+}
+
+
+
 @media (max-width: 1024px) {
     .GuardianList .GuardianItems {
         width: 25%;
