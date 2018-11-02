@@ -36,6 +36,10 @@ import {
   RECURRING_PATTERN
 } from '../../../constants/constants'
 import { getLength } from '../../../utils/validations'
+import {
+  getVisitServiceHistoryByIdDetail
+} from '../../../redux/visitHistory/VisitServiceDetails/actions'
+
 class VisitServiceDetails extends Component {
   constructor (props) {
     super(props)
@@ -165,6 +169,11 @@ class VisitServiceDetails extends Component {
       )
     }
   }
+
+  visitSummary = (data) => {
+    this.props.getVisitServiceHistoryByIdDetail(data)
+}
+
 
   render () {
     let defaultCheck = ''
@@ -592,7 +601,7 @@ class VisitServiceDetails extends Component {
                                     SERVICE_VISIT_STATUS.COMPLETED
                                     ? <a
                                       className='btn btn-outline-primary'
-                                      to='/'
+                                      onClick={() => this.visitSummary(ScheduleList.serviceRequestVisitId)}
                                       >
                                       <i className='ProfileIconEye' />Summary
                                       </a>
@@ -701,7 +710,8 @@ function mapDispatchToProps (dispatch) {
       dispatch(getVisitServiceEligibilityStatus(data)),
     getDays: () => dispatch(getDays()),
     goBack: () => dispatch(goBack()),
-    dispatchServiceRequestByServiceProvider:()=>dispatchServiceRequestByServiceProvider()
+    dispatchServiceRequestByServiceProvider:()=>dispatchServiceRequestByServiceProvider(),
+    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data))
   }
 }
 

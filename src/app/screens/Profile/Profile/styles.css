@@ -379,6 +379,15 @@ i.SPIconEditPersonalDetails{
     background-color: #e9d9f9;
 }
 
+.SPTabHeader:hover, .SPTabHeader.true{
+    cursor: pointer;
+    background-color: #e9d9f9;
+}
+.ModalPadding0 .modal-body .SPTabHeader:hover, .ModalPadding0 .modal-body .SPTabHeader.true
+{
+    background-color: #f2f5f7;
+}
+
 .SPTabTitle{
     display: flex;
     padding: 20px 40px 20px 0;

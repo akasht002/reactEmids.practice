@@ -61,6 +61,10 @@ class Summary extends Component {
         this.setState({ collapse: !this.state.collapse });
     }
 
+    togglePopup = () => {
+        this.setState({isModalOpen: !this.state.isModalOpen})
+    }
+
     AdjustTime = () => {
         this.setState({
             isModalOpen: !this.state.isModalOpen
@@ -357,6 +361,7 @@ class Summary extends Component {
                     <div className='cardBottom' />
                     <GeneralModalPopup
                         isOpen={this.state.isModalOpen}
+                        toggle={this.togglePopup}
                         ModalBody={modalContent}
                         modalTitle={'Adjust Time'}
                         className="modal-lg asyncModal CertificationModal"

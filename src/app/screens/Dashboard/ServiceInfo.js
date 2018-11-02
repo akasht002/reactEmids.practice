@@ -11,6 +11,7 @@ import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
 import { HIRED_STATUS_ID } from '../../constants/constants';
 import { ENTITY_USER } from '../../constants/constants';
+import { MessageTypes } from '../../data/AsyncMessage';
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -280,7 +281,7 @@ export const ServiceProviderRequestDetails = props => {
         patientImage = sp && sp.image ? sp.image : require('../../assets/images/Blank_Profile_icon.png');
         patientLastName = sp && sp.patientLastName;
       } else {
-        patientLastName = sp && sp.patientLastName.charAt(0);
+        patientLastName = sp && sp.patientLastName && sp.patientLastName.charAt(0);
         patientImage = require('../../assets/images/Blank_Profile_icon.png');
       }
       return (
@@ -420,7 +421,12 @@ export const MyConversionDetail = props => {
             <div className='MsgThreadContent mr-auto'>
               <span className='MsgIndiTitle'>{msgHeader}</span>
               <p className='m-0 MsgContent'>
-                {conversations.messageText}
+              {conversations.messageType === MessageTypes.image &&
+                  <span className="chatHeaderText"><i className='addAttachmentBtn d-inline-block' />
+                    Image
+                  </span>}
+              {conversations.messageType === MessageTypes.text &&
+                  <span className="chatHeaderText">{conversations.messageText}</span>}
               </p>
             </div>
             <div className='MsgCount ml-auto'>

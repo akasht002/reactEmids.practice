@@ -21,7 +21,7 @@ export const getModal = (data, action) => {
         "zipCode": data.zip,
         "isActive": true,
         "rowversionId": [],
-        "coverageArea": data.count,
+        "coverageArea": data.coverageArea,
         "lat": 10,
         "lon": 10,
         "addressExternalId": 0
@@ -34,7 +34,7 @@ export const getModal = (data, action) => {
         city: data.city,
         zip: data.zip ? data.zip : 0,
         street: data.street,
-        count:data.count,
+        coverageArea: data.coverageArea,
         isActive: true,
         addressTypeId: data.addressType,
         stateId: states ? states[0] : 0
