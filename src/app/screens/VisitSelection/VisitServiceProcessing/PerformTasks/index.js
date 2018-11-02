@@ -49,7 +49,7 @@ class PerformTasks extends Component {
 
     componentDidMount() {
         if (this.props.ServiceRequestVisitId) {
-            this.props.getPerformTasksList(this.props.ServiceRequestVisitId);
+            this.props.getPerformTasksList(this.props.ServiceRequestVisitId, true);
             this.props.getSummaryDetails(this.props.ServiceRequestVisitId);
         } else {
             this.props.history.push(Path.visitServiceList)
@@ -315,7 +315,7 @@ class PerformTasks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getPerformTasksList: (data) => dispatch(getPerformTasksList(data)),
+        getPerformTasksList: (data) => dispatch(getPerformTasksList(data, true)),
         addPerformedTask: (data) => dispatch(addPerformedTask(data)),
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime))

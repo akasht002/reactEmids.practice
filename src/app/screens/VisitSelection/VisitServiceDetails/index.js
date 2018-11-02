@@ -104,7 +104,7 @@ class VisitServiceDetails extends Component {
   }
 
   visitProcessing = data => {
-    this.props.getPerformTasksList(data)
+    this.props.getPerformTasksList(data, true)
   }
 
   selectedServiceType = e => {
@@ -701,7 +701,7 @@ function mapDispatchToProps (dispatch) {
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
     getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
     visitService: () => dispatch(push(Path.visitServiceList)),
-    getPerformTasksList: data => dispatch(getPerformTasksList(data)),
+    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
     updateServiceRequestByServiceProvider: data =>
       dispatch(updateServiceRequestByServiceProvider(data)),
     cancelServiceRequestByServiceProvider: data =>

@@ -1,30 +1,50 @@
 import {
     PerformTasks
 } from './actions'
-import {SERVICE_STATES} from '../../../../constants/constants'
+import { SERVICE_STATES } from '../../../../constants/constants'
 
 const defaultState = {
     PerformTasksList: {},
     ServiceRequestVisitId: '',
     startedTime: '',
-    SummaryDetails: ''
+    SummaryDetails: '',
+    visitStatus: ''
 };
 
 const PerformTasksState = (state = defaultState, action) => {
     switch (action.type) {
 
         case PerformTasks.getPerformTasksListSuccess:
-        let visitStatus = SERVICE_STATES.YET_TO_START
-            if(action.data.visitStatusId === 44){
+            let visitStatus = SERVICE_STATES.YET_TO_START
+            if (action.data.visitStatusId === 44) {
                 visitStatus = SERVICE_STATES.IN_PROGRESS
-            }else if(action.data.visitStatusId === 45){
+            } else if (action.data.visitStatusId === 45) {
                 visitStatus = SERVICE_STATES.COMPLETED
-            }else if(action.data.visitStatusId === 90){
+            } else if (action.data.visitStatusId === 90) {
                 visitStatus = SERVICE_STATES.PAYMENT_PENDING
             }
             return {
                 ...state,
-                PerformTasksList: {...action.data, visitStatus},
+                PerformTasksList: { ...action.data, visitStatus },
+            };
+
+        case PerformTasks.getVisitStatus:
+            let visitStatuses = SERVICE_STATES.YET_TO_START
+            if (action.data.visitStatusId === 44) {
+                visitStatuses = SERVICE_STATES.IN_PROGRESS
+            } else if (action.data.visitStatusId === 45) {
+                visitStatuses = SERVICE_STATES.COMPLETED
+            } else if (action.data.visitStatusId === 90) {
+                visitStatuses = SERVICE_STATES.PAYMENT_PENDING
+            }
+            return {
+                ...state,
+                PerformTasksList: {
+                    ...state.PerformTasksList,
+                    visitStatus: visitStatuses,
+                    visitStartTime: action.data.visitStartTime,
+                    visitEndTime: action.data.visitEndTime
+                }
             };
 
         case PerformTasks.getServiceRequestVisitId:
