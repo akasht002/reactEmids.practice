@@ -183,7 +183,7 @@ export const getServiceTypeImage = (serviceTypeId) => {
 export function getStatus(input, field, status) {
   var output = 0
   for (var i = 0; i < input.length; ++i) {
-    if (i === input.length - 1 && input[i][field] === status) {
+    if (input[i][field] === status) {
       output++
     }
   }
