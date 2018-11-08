@@ -108,12 +108,13 @@ export function cancelServiceRequestByServiceProvider(data) {
 
 export function getVisitServiceDetails(data) {
   return dispatch => {
+    debugger;
     dispatch(getServiceRequestId(data))
     dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestDetails +`${data}/${getUserInfo().serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data))
-        //dispatch(push(Path.visitServiceDetails))
+        // dispatch(push(Path.visitServiceDetails))
         dispatch(endLoading())
       })
       .catch(err => {

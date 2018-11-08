@@ -107,6 +107,7 @@
     "build-qa": "node scripts/build.js --qa",
     "build-dev": "node scripts/build.js --dev",
     "build-demo": "node scripts/build.js --demo",
+    "build-hmsademo": "node scripts/build.js --hmsademo",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {

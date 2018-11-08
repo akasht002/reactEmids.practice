@@ -64,8 +64,8 @@ export const VisitList = props => {
                               key={index}
                               className='avatarImage'
                               src={
-                                vistList.providerImage
-                                  ? vistList.providerImage
+                                vistList.patientImage
+                                  ? vistList.patientImage
                                   : require('../../assets/images/Blank_Profile_icon.png')
                               }
                             />

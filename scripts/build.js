@@ -57,6 +57,17 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_SIGNALR_URL = 'https://chdemo-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://chdemo-vp-api.CoreoDevServer.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://chdemo-gen-api.coreodevserver.com/api/';
+}else if (argv.includes('--hmsademo')) {
+  process.env.REACT_APP_API_URL = 'https://HMSADemo-sp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'https://HMSADemo-oauth-api.coreodevserver.com/';
+  process.env.REACT_APP_SR_URL = 'https://HMSADemo-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_UI_URL = 'https://HMSADemo-sp.coreodevserver.com/#/';
+  process.env.REACT_APP_MSG_URL = "https://HMSADemo-tp-api.coreodevserver.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://HMSADemo-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://HMSADemo-tp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://HMSADemo-tp-api.coreodevserver.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://HMSADemo-ct-api.coreodevserver.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://HMSADemo-gen-api.coreodevserver.com/api/';
 }
 
 // Ensure environment variables are read.

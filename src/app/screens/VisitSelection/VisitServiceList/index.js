@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
-import { getVisitServiceList } from '../../../redux/visitSelection/VisitServiceList/actions';
+import { getVisitServiceList, getServiceRequestCount } from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
@@ -22,6 +22,7 @@ import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/act
 import Sorting from "../ServiceRequestSorting"
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
+import Pagination from 'react-js-pagination';
 
 import './style.css'
 import { Path } from "../../../routes";
@@ -52,7 +53,10 @@ class VisitServiceList extends Component {
             lat: '',
             lon: '',
             ServiceAreas: {},
-            isChecked: false
+            isChecked: false,
+            activePage: 1,
+            pageNumber: 1,
+            pageSize: 9 
         };
     };
 
@@ -63,10 +67,15 @@ class VisitServiceList extends Component {
     }
 
     componentDidMount() {
-        this.props.getVisitServiceList();
+        let data = {
+            pageNumber:this.state.pageNumber,
+            pageSize:this.state.pageSize
+        }
+        this.props.getVisitServiceList(data);
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
-        this.props.getServiceArea()
+        this.props.getServiceArea();
+        this.props.getServiceRequestCount()
     }
 
     handleClick = (requestId) => {
@@ -248,7 +257,17 @@ class VisitServiceList extends Component {
             Newest: this.Newest,
             Oldest: this.Oldest
         });
-    }
+    };
+
+    handlePageChange = pageNumber => {
+        this.setState({ pageNumber: pageNumber });
+        let data = {
+          pageNumber: pageNumber,
+          pageSize: this.state.pageSize
+        };
+        this.props.getVisitServiceList(data);
+        this.setState({ activePage: pageNumber });
+      };
 
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -337,6 +356,21 @@ class VisitServiceList extends Component {
                     <div className='BoardContainer'>
                         {visitList}
                     </div>
+                    {this.props.visitServiceList && <div class="col-md-12 p-0 AsyncConversationPagination"> 
+                            <Pagination
+                                activePage={this.state.activePage}
+                                itemsCountPerPage={this.state.pageSize}
+                                totalItemsCount={this.props.serviceRequestCount}
+                                pageRangeDisplayed={5}
+                                onChange={this.handlePageChange}
+                                itemClass="PaginationItem"
+                                itemClassFirst="PaginationIcon First"
+                                itemClassPrev="PaginationIcon Prev"
+                                itemClassNext="PaginationIcon Next"
+                                itemClassLast="PaginationIcon Last"
+                                />
+                        </div>
+                    }
                 </Scrollbars>
                 <Filter
                     isOpen={this.state.filterOpen}
@@ -371,7 +405,7 @@ class VisitServiceList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getVisitServiceList: () => dispatch(getVisitServiceList()),
+        getVisitServiceList: (data) => dispatch(getVisitServiceList(data)),
         getServiceRequestId: (data) => dispatch(getServiceRequestId(data)),
         goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
         getServiceCategory: () => dispatch(getServiceCategory()),
@@ -384,7 +418,8 @@ function mapDispatchToProps(dispatch) {
         clearServiceArea: (data) => dispatch(clearServiceArea(data)),
         clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data)),
         setPatient: (data) => dispatch(setPatient(data)),
-        goToPatientProfile: () => dispatch(push(Path.patientProfile))
+        goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        getServiceRequestCount: () => dispatch(getServiceRequestCount()),
     }
 };
 
@@ -397,7 +432,8 @@ function mapStateToProps(state) {
         ServiceCategory: state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
         ServiceStatus: state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
         ServiceType: state.visitSelectionState.ServiceRequestFilterState.ServiceType,
-        ServiceAreaList: state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList
+        ServiceAreaList: state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList,
+        serviceRequestCount:state.visitSelectionState.VisitServiceListState.serviceRequestCount
     };
 };
 

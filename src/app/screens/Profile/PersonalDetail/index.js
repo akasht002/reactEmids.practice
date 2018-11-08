@@ -210,7 +210,7 @@ class PersonalDetail extends React.PureComponent {
 
   render() {   
     let modalContent
-    let modalTitle = 'Edit Personal Detials'
+    let modalTitle = 'Edit Personal Details'
     let modalType = ''
     const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
       return {label :  city.name ,value:city.id + '-' + city.name}
@@ -696,9 +696,9 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-                if (e.target.value === '') {
+                // if (e.target.value === '') {
                   this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild:false })
-                } 
+                // } 
             }}
             onBlur={e => {
               if(!e.target.value) {

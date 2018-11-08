@@ -190,7 +190,7 @@ class Organization extends React.PureComponent {
 
   render () {
     let modalContent
-    let modalTitle = 'Edit Entity Detials'
+    let modalTitle = 'Edit Entity Details'
     let modalType = ''
     const cityDetail = this.props.cityDetail.map((city, i) => {
       city.label = city.name

@@ -4,6 +4,8 @@ import {
 
 const defaultState = {
     visitServiceList: [],
+    serviceRequestCount: 0,
+    status: 0
 };
 
 const VisitServiceListState = (state = defaultState, action) => {
@@ -13,6 +15,11 @@ const VisitServiceListState = (state = defaultState, action) => {
             return {
                 ...state,
                 visitServiceList: action.data
+            };
+            case VisitServiceList.serviceRequestCount:
+            return {
+                ...state,
+                serviceRequestCount: action.data
             };
 
         default:
