@@ -696,9 +696,9 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-                if (e.target.value === '') {
+                // if (e.target.value === '') {
                   this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild:false })
-                } 
+                // } 
             }}
             onBlur={e => {
               if(!e.target.value) {
