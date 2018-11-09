@@ -392,17 +392,17 @@ class Summary extends Component {
 
                     <ModalPopup
                         isOpen={this.state.isProccedModalOpen}
-                        ModalBody={<span>Do you want to proceed for payment.</span>}
-                        btn1="No"
-                        btn2="Yes"
+                        ModalBody={<span>Do you want to proceed for payment?</span>}
+                        btn1="Yes"
+                        btn2="No"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onCancel={() => {
+                        onConfirm={() => {
                             this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen }),
                                 this.onClickNext()
                         }}
-                        onConfirm={() => this.setState({ isProccedModalOpen: false })}
+                        onCancel={() => this.setState({ isProccedModalOpen: false })}
                     />
                 </Scrollbars>
             </AsideScreenCover>
