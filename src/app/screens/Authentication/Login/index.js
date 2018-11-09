@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { onLogin } from '../../redux/auth/login/actions' 
-import {ScreenCover, CoreoWizScreen, Button} from '../../components';
+import { ScreenCover, CoreoWizScreen, Button } from '../../components';
 import userManager from '../../utils/userManager';
 
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -11,6 +11,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 class Login extends PureComponent {
   
   onBtnPress = () => {
+    debugger;
     userManager.signinRedirect();
   } 
 
