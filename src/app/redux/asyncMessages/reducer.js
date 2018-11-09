@@ -64,11 +64,15 @@ const asyncMessageState = (state = defaultState, action) => {
                         action.data.messages[0]
                     ],
                     participantList:  action.data.participantList,
-                    title: action.data.title
+                    title: action.data.title,
+                    isActive: action.data.isActive,
+                    canEdit: action.data.canEdit,
                 },
                 currentConversation:{
                     ...state.currentConversation,
-                    title: action.data.title
+                    title: action.data.title,
+                    isActive: action.data.isActive,
+                    canEdit: action.data.canEdit,
                 }
             };
         case AsyncMessageActions.setUnreadCountDetails:

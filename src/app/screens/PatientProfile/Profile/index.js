@@ -59,7 +59,7 @@ class Profile extends Component {
                 <ClinicalCondition />
                 <PointService />
                 <Languages />
-                <MyConnections />
+                {/* <MyConnections /> */}
               </div>
             </div>
           </div>
