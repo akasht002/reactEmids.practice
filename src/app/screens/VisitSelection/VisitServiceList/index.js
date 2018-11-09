@@ -15,7 +15,7 @@ import {
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
-import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea, clearServiceCategory, clearServiceArea, clearServiceRequestStatus } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea, clearServiceCategory, clearServiceArea, clearServiceRequestStatus ,checkAllServiceRequestStatus } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -190,7 +190,27 @@ class VisitServiceList extends Component {
         })
     }
 
+    handleAllServiceStatus = (item, e) => {
+        let service = this.state.serviceStatus
+        this.setState({
+            isChecked: !this.state.isChecked
+        })
+        if (e.target.checked) {
+            this.props.checkAllServiceRequestStatus(e.target.checked, this.props.ServiceStatus)
+            this.props.ServiceStatus.forEach(function(status){
+                if(status.keyValue !== 'All')
+                service.push(status.keyValue)
+              });
+        } else {
+            this.props.checkAllServiceRequestStatus(e.target.checked, this.props.ServiceStatus)
+            service = [];
+        }
+        this.setState({
+            serviceStatus: service
+        })
+    }
     handleChangeserviceStatus = (item, e) => {
+        debugger;
         let service = this.state.serviceStatus
         if (e.target.checked) {
             service.push(item.keyValue)
@@ -206,6 +226,7 @@ class VisitServiceList extends Component {
         });
 
     }
+    
     handleServiceArea = (item) => {
 
         const locations = {
@@ -397,6 +418,7 @@ class VisitServiceList extends Component {
                     handleServiceArea={this.handleServiceArea}
                     serviceArea={this.state.serviceArea}
                     checked={this.state.isChecked}
+                    handleAllServiceStatus={this.handleAllServiceStatus}
                 />
             </AsideScreenCover>
         )
@@ -420,6 +442,7 @@ function mapDispatchToProps(dispatch) {
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         getServiceRequestCount: () => dispatch(getServiceRequestCount()),
+        checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
     }
 };
 

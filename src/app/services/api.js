@@ -137,4 +137,5 @@ export const API = {
     getRatingAndFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/',
     getVisitFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/',
     getServiceRequestCount: 'ServiceRequest/ServiceProvider/RequestCount/',
+    getAllPatientForServiceProviders: 'ServiceRequest/GetPatientForServiceProvider/',
 }

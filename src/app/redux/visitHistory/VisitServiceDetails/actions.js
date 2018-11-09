@@ -19,7 +19,9 @@ export const vistServiceHistoryDetails = {
     clearServiceTypes: 'clearServiceTypes/visitHistory',
     clearServiceProviders: 'clearServiceProviders/visitHistory',
     getHistoryListCountSuccess: 'getHistoryListCountSuccess/visitHistory',
-    getVisitFeedBack: 'getVisitFeedBack/visit'
+    getVisitFeedBack: 'getVisitFeedBack/visit',
+    getAllPatientForServiceProviders: "getAllPatientForServiceProviders/visitHistory",
+    clearPatientForServiceProviders: "clearPatientForServiceProviders/visitHistory",
 };
 
 export const getVisitServiceHistoryDetailsSuccess = (data) => {
@@ -234,7 +236,13 @@ export const clearServiceProviders = (data) => {
         data
     }
 }
-
+export const clearPatientForServiceProviders = (data) => {
+    _.forEach(data, function (obj) { obj.isChecked = false; });
+    return {
+        type: vistServiceHistoryDetails.clearPatientForServiceProviders,
+        data
+    }
+}
 export function clearServiceTypes() {
     return {
         type: vistServiceHistoryDetails.clearServiceTypes
@@ -265,3 +273,22 @@ export function getVisitFeedBack(data) {
         })
     }
 };
+export function getAllPatientForServiceProviders(data) {
+  
+    let serviceProviderId = getUserInfo().serviceProviderId;
+    return (dispatch, getState) => {
+        dispatch(startLoading())
+        ServiceRequestGet(API.getAllPatientForServiceProviders + serviceProviderId).then((resp) => {
+            dispatch(getAllPatientForServiceProvidersSuccess(resp.data))
+            dispatch(endLoading())
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+}
+export const getAllPatientForServiceProvidersSuccess = (data) => {
+    return {
+        type: vistServiceHistoryDetails.getAllPatientForServiceProviders,
+        data
+    }
+}

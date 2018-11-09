@@ -10,7 +10,9 @@ export const ServiceRequestFiltersList = {
     getServiceAreaSuccess: 'get_servicearea_status_success/servicerequestfilters',
     clearServiceCategory: 'clear_service_category/servicerequestfilters',
     clearServiceArea: 'clear_service_area/servicerequestfilters',
-    clearServiceRequestStatus: 'clear_servicerequest_status_success/servicerequestfilters'
+    clearServiceRequestStatus: 'clear_servicerequest_status_success/servicerequestfilters',
+    checkAllServiceRequestStatus: 'checkAllServiceRequestStatus/servicerequestfilters',
+    
 };
 
 export const clearServiceRequestStatus = (data) => {
@@ -166,4 +168,20 @@ export function getFilter(data) {
   
     }
   };
+  export const checkAllServiceRequestStatus = (checked, data) => {
+    if(checked) {
+        data.map((item) => {
+            return item.isChecked = true;
+        })    
+    }
+  else {
+    data.map((item) => {
+        return item.isChecked = false;
+    })      
+  }
+    return {
+        type: ServiceRequestFiltersList.checkAllServiceRequestStatus,
+        data
+    }
+};
 

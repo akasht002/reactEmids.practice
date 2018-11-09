@@ -124,8 +124,8 @@ class Summary extends Component {
 
     timerErrMessage = () => {
         if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
-            this.state.updatedMin > this.props.CalculationsData.totalMinutes ||
-            this.state.updatedSec > this.props.CalculationsData.totalSeconds) {
+            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
+            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
@@ -392,17 +392,17 @@ class Summary extends Component {
 
                     <ModalPopup
                         isOpen={this.state.isProccedModalOpen}
-                        ModalBody={<span>Do you want to proceed for payment.</span>}
-                        btn1="No"
-                        btn2="Yes"
+                        ModalBody={<span>Do you want to proceed for payment?</span>}
+                        btn1="Yes"
+                        btn2="No"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onCancel={() => {
+                        onConfirm={() => {
                             this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen }),
                                 this.onClickNext()
                         }}
-                        onConfirm={() => this.setState({ isProccedModalOpen: false })}
+                        onCancel={() => this.setState({ isProccedModalOpen: false })}
                     />
                 </Scrollbars>
             </AsideScreenCover>
