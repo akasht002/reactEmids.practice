@@ -59,7 +59,6 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps.....', nextProps);
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       uploadedImageFile: nextProps.profileImgData.image
@@ -195,6 +194,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   saveImageUpload = () => {
+    console.log(111111111111)
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -696,9 +696,7 @@ class PersonalDetail extends React.PureComponent {
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-                // if (e.target.value === '') {
-                  this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild:false })
-                // } 
+                  this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild:false })               
             }}
             onBlur={e => {
               if(!e.target.value) {

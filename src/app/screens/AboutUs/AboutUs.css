@@ -138,3 +138,30 @@
     border-top: 1px solid #acacac;
     padding: 10px 0 0 0;
 }
+
+/*Resposive-bug-fixed*/
+@media only screen and (max-width: 480px) {
+    .AboutModalContent {
+      display: block;
+    }
+
+    .AboutModal
+    {
+        margin: 0 auto !important;
+        padding: 0px 8px !important;
+        max-width: 100% !important;  
+    }
+
+    .AboutModalContent .AboutContentContainer.Right
+    {
+    display: block;
+    clear: both;
+    width: 100%;
+    padding-left: 0;
+    }
+
+    .AboutModalContent .AboutContentContainer.Left
+    {
+        width: 100%;
+    }
+}

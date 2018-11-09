@@ -3,10 +3,10 @@ textarea .custom-text {
   }
 
 img.crop{
-    height: auto !important;
-    max-height: 300px;
-    width: auto !important;
-    max-width: 300px;
+    /* height: auto !important; */
+   height: 300px;
+    /* width: auto !important; */
+    width: 300px;
 }
 
 .UploadProfileImageContainer div.RICC{

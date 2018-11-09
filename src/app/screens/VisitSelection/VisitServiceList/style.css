@@ -227,6 +227,10 @@ li div.dropdown-menu{
     border-bottom: 1px solid #dcdcdc;
 }
 
+.LeftPostedBy .PostedByImageContainer
+{
+padding: 5px 0px;
+}
 .PostedByImageContainer .ProfileImage{
     width: 40px;
     height: 40px;
