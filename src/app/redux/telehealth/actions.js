@@ -70,7 +70,6 @@ const getLinkedParticipantsByPatientsSuccess = data => {
 export function getLinkedParticipantsByPatients(data) {
     return (dispatch, getState) => {
         let searchText = data.searchText === "" ? null : data.searchText;
-        const userInfo = getUserInfo();
         let patients = getState().telehealthState.linkedPatients;
         let patient = patients.find((e) => {
             return e.userId === data.patientId
@@ -87,11 +86,7 @@ export function getLinkedParticipantsByPatients(data) {
             '/' + data.participantType +
             '/' + searchText
         ).then((resp) => {
-            let modifiedData = [
-                data,
-                ...resp.data
-            ];
-            dispatch(getLinkedParticipantsByPatientsSuccess(modifiedData));
+            dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
