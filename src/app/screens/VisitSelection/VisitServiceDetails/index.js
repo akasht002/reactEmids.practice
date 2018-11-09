@@ -360,6 +360,7 @@ class VisitServiceDetails extends Component {
               </section>
               <section class='LeftPalette'>
                 <div class='LeftPostedBy'>
+                <h2 className='postdby-title'>Posted By</h2>
                   <div class='PostedByImageContainer pt-0'>
                     <img
                       className='ProfileImage'

@@ -1229,3 +1229,10 @@ div.scrollarea .scrollbar-container.vertical {
     -moz-border-radius: 8px;
     border: solid 1px #7a329f;
 }
+
+.postdby-title
+{
+    font-size: 18px;
+    font-weight: 400;
+    color: #7a329f;
+}
