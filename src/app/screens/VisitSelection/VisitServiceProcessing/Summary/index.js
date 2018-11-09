@@ -124,8 +124,8 @@ class Summary extends Component {
 
     timerErrMessage = () => {
         if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
-            this.state.updatedMin > this.props.CalculationsData.totalMinutes ||
-            this.state.updatedSec > this.props.CalculationsData.totalSeconds) {
+            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
+            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
