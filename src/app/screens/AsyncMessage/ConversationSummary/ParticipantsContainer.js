@@ -44,7 +44,8 @@ class ParticipantsContainer extends Component {
         };
         let updatedParticipants = [...this.state.selectedParticipants];
         const index = updatedParticipants.indexOf(
-            updatedParticipants.filter(el => el.userId === participant.userId)[0]
+            updatedParticipants.filter(el => el.userId === participant.userId
+                && el.participantType === participant.participantType)[0]
         );
         if (event.target.checked && index === -1) {
             this.setState({ selectedParticipants: [...this.state.selectedParticipants, selectedParticipant] });
