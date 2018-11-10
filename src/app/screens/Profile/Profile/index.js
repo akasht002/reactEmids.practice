@@ -184,10 +184,11 @@ class Profile extends Component {
                   </h4>
                 </div>
                 {this.getPersonalDetail()}
-                {/* {
-                  (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-                  !getUserInfo().isEntityServiceProvider) ? <div>
-                */}
+                {
+                  // (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+                  // !getUserInfo().isEntityServiceProvider) ? 
+                  <div>
+               
                 <div className='col-md-12 card CardWidget SPCertificate'>
                 {this.getServiceOffered()}
                 </div>
@@ -203,13 +204,9 @@ class Profile extends Component {
                 </div>
                 {this.getWorkHistory()}
                 {this.getEducation()}
-               {this.getAvailability()} 
-               
-               {/* </div> : <div>{this.getEducation()}</div>
-              } */}
-              
-               
-
+               {this.getAvailability()} </div> 
+              //  : <div>{this.getEducation()}</div>
+              }
               </div>
             </div>
           </div>

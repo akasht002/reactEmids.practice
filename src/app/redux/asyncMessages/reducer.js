@@ -126,6 +126,18 @@ const asyncMessageState = (state = defaultState, action) => {
                 openedAsyncPage: action.data
             }
         }
+        case AsyncMessageActions.pushConversationMessage:
+            return {
+                ...state,
+                conversation: {
+                    ...state.conversation,
+                    messages: [
+                        ...state.conversation.messages,
+                        action.data
+                    ],
+                    participantList:  action.data.participantList,
+                }
+            };
         default:
             return state;
     }
