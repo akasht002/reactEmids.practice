@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Scrollbars } from '../../components';
+import {getUserInfo} from '../../utils/userUtility';
 import './styles.css';
 
 const images = require.context('../../assets', true);
@@ -8,23 +9,39 @@ const imagePath = (name) => images(name, true);
 export default class TeleHealthParticipants extends Component {
 
     getParticipants = () => {
-        return this.props.participantList.map(participant => {
+        return [ 
+            <li className="list-group-item">
+                <div className="TeleHealthParticipantAvatar">
+                    <div className="TeleHealthAvatarContainer">
+                        <img alt="participant" src={getUserInfo().imageData.image ? getUserInfo().imageData.image : require("../../assets/images/Blank_Profile_icon.png")}
+                            className="avatarImage" />
+                        <div className="memberType memT-I">{getUserInfo().userType}</div>
+                    </div>
+                    <div className="TeleHealthParticipantNameContainer">
+                        <span className="Name">Me</span>
+                        <span className="Status">Joined</span>
+                    </div>
+                </div>
+            </li>
+            ,
+            this.props.participantList.map(participant => {
             return (
                 <li className="list-group-item">
                     <div className="TeleHealthParticipantAvatar">
                         <div className="TeleHealthAvatarContainer">
-                            <img alt="participant" src={imagePath('./images/telehealth/user-1.jpg')}
+                            <img alt="participant" src={participant.thumbNail ? participant.thumbNail : require("../../assets/images/Blank_Profile_icon.png")}
                                 className="avatarImage" />
                             <div className="memberType memT-I">{participant.participantType}</div>
                         </div>
                         <div className="TeleHealthParticipantNameContainer">
                             <span className="Name">{participant.firstName + ' ' + participant.lastName}</span>
-                            <span className="Status"></span>
+                            <span className="Status">{participant.status}</span>
                         </div>
                     </div>
                 </li>
             )
         })
+        ]
     }
     render() {
         let participants = "";
