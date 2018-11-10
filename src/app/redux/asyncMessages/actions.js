@@ -31,7 +31,8 @@ export const AsyncMessageActions = {
     setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
     clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage',
     setConversationCount: 'set_conversation_count/asyncMessage',
-    setopenedAsyncPage: 'set_opened_async_page/asynMessage'
+    setopenedAsyncPage: 'set_opened_async_page/asynMessage',
+    pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
 };
 
 export const setConversationSummary = (data) => {
@@ -44,6 +45,13 @@ export const setConversationSummary = (data) => {
 export const pushConversation = (data) => {
     return {
         type: AsyncMessageActions.pushConversation,
+        data
+    }
+};
+
+export const pushConversationMessage = (data) => {
+    return {
+        type: AsyncMessageActions.pushConversationMessage,
         data
     }
 };
@@ -104,7 +112,7 @@ export function getConversationItemSignalR(conversationId, messageId){
                 + userType
             )
             .then(resp => {
-                dispatch(pushConversation(resp.data));
+                dispatch(verifyIsConversationMessageExist(resp.data));
                 dispatch(updateReadStatus(data));
                 dispatch(endLoading());
             })
@@ -245,6 +253,7 @@ export function onSendNewMessage(data) {
         dispatch(startLoading());
         AsyncPost(API.sendMessage, data)
             .then(resp => {
+                dispatch(pushConversationMessage(resp.data.result));
                 dispatch(endLoading());
             })
             .catch(err => {
@@ -562,4 +571,17 @@ const getConversationCountSuccess = (data) =>{
         type: AsyncMessageActions.setConversationCount,
         data
     }
-}
+};
+
+const verifyIsConversationMessageExist = (data) => {
+    return(dispatch, getState) => {
+        let state = getState();
+        let conversationData = [...state.asyncMessageState.conversation];
+        const index = conversationData.indexOf(
+            conversationData.filter(el => el.conversationMessageId === data.conversationMessageId)[0]
+        );
+        if(index !== -1){
+            dispatch(pushConversation(data));
+        }
+    };
+};

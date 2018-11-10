@@ -178,7 +178,7 @@ export function updateStandByMode (data) {
     Put(API.updateStandByMode + serviceProviderId + '/' + data)
       .then(resp => {
        dispatch(getPersonalDetail())
-        // dispatch(endLoading())
+       dispatch(getSpBusyInVisit())
       })
       .catch(err => {
           dispatch(endLoading())    
@@ -195,7 +195,6 @@ export function updatePersonalDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
-       // dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -214,7 +213,6 @@ export function updateOrganizationDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
-        // dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -232,7 +230,6 @@ export function updateEntityDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
-        // dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
