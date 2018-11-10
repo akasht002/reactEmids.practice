@@ -50,6 +50,10 @@ class Summary extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.SummaryDetails.signature) {
+            this.signaturePad.fromDataURL(nextProps.SummaryDetails.signature);
+            this.setState({ signatureImage: nextProps.SummaryDetails.signature })
+        }
         this.setState({
             summaryDetails: nextProps.SummaryDetails,
             updatedHour: nextProps.CalculationsData.totalHours,

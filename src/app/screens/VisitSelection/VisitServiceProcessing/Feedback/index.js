@@ -10,6 +10,9 @@ import { Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
+import {
+    getVisitFeedBack
+} from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import './style.css'
 
 class Feedback extends Component {
@@ -33,6 +36,7 @@ class Feedback extends Component {
     componentDidMount() {
         if (this.props.ServiceRequestVisitId) {
             this.props.getQuestionsList();
+            this.props.getVisitFeedBack(this.props.ServiceRequestVisitId)
         } else {
             this.props.history.push(Path.visitServiceList)
         }
@@ -141,6 +145,13 @@ class Feedback extends Component {
                                                             <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
                                                             <div className='FeedbackAnswerWidget'>
                                                                 {questionList.answers.map((answer, i) => {
+                                                                    this.props.VisitFeedback.map((feedback) => {
+                                                                        if (feedback.feedbackQuestionnaireId === questionList.feedbackQuestionnaireId) {
+                                                                            if (feedback.selectedAnswer === answer.answerName) {
+                                                                                answer.checked = true;
+                                                                            }
+                                                                        }
+                                                                    });
                                                                     return (
                                                                         <div className="form-radio col-md-3" key={answer.id}>
                                                                             <input className="form-radio-input"
@@ -148,7 +159,11 @@ class Feedback extends Component {
                                                                                 type="radio"
                                                                                 value={answer.answerName}
                                                                                 name={questionList.feedbackQuestionnaireId}
-                                                                                onChange={(e) => this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)}
+                                                                                onChange={(e) => {
+                                                                                    answer.checked = e.target.checked;
+                                                                                    this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
+                                                                                }}
+                                                                                checked={answer.checked}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>
@@ -225,7 +240,8 @@ class Feedback extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getQuestionsList: () => dispatch(getQuestionsList()),
-        saveAnswers: (data) => dispatch(saveAnswers(data))
+        saveAnswers: (data) => dispatch(saveAnswers(data)),
+        getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data))
     }
 };
 
@@ -235,7 +251,8 @@ function mapStateToProps(state) {
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
-        ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId
+        ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
+        VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback
     };
 };
 
