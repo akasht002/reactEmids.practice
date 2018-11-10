@@ -28,7 +28,8 @@ import './styles.css'
 
 class Profile extends Component {
   state = {
-    selectedLink: ''
+    selectedLink: '',
+    showValidationPopUp : false
   };
   componentDidMount () {
     this.props.getProfilePercentage()
@@ -54,7 +55,6 @@ class Profile extends Component {
   }
 
   getAvailability = () => {
-    // console.log("111111111111111111111111111111")
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
     !getUserInfo().isEntityServiceProvider) {
      return <Availability />
@@ -121,6 +121,26 @@ class Profile extends Component {
      }
   }
 
+  validationPopUp = () => {
+    debugger;
+    let serviceOfferedList = this.props.serviceOfferedList && this.props.serviceOfferedList.length
+    let LanguagesList = this.props.LanguagesList && this.props.LanguagesList.length
+    let availableDays = this.props.availableDays && this.props.availableDays.length
+    if(serviceOfferedList === 0 || LanguagesList === 0 || availableDays === 0 ) {
+      this.setState({ showValidationPopUp : true })
+    } else {
+      this.goToDashboard();
+    }
+  }
+
+  stayOnProfile = () => {
+    this.setState({ showValidationPopUp : false})
+  }
+
+  goToDashboard = () => {
+    this.props.goToDashboard
+  }
+
   getWorkHistory = () => {
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
       !getUserInfo().isEntityServiceProvider) {
@@ -177,9 +197,8 @@ class Profile extends Component {
               <div className='row d-flex-view justify-content-center m-auto'>
                 <div className='col-md-12'>
                   <h4 className='my-3 text-white SPTitleText'>
-                    <Link className='BrandLink' to={Path.dashboard}>
-                      <i className='Icon icon-back' />
-                    </Link>
+                    <a className='BrandLink Icon icon-back' onClick={this.validationPopUp}>
+                    </a>
                     Profile
                   </h4>
                 </div>
@@ -230,6 +249,17 @@ class Profile extends Component {
             onCancel={this.props.clearInvitaion}
         />
           
+        <ModalPopup
+        isOpen={this.state.showValidationPopUp}
+        ModalBody={<span>To increase your visibility across the care seeker network, please provide your Profile Information, Services Offered, Language Spoken and Availability. Do you want to continue with updating?</span>}
+        btn1="Yes"
+        btn2="No"
+        className="zh"
+        headerFooter="d-none"
+        centered={true}
+        onConfirm={this.stayOnProfile}
+        onCancel={this.goToDashboard}
+    />
       </ScreenCover>
     )
   }
@@ -240,7 +270,8 @@ function mapDispatchToProps (dispatch) {
     getProfilePercentage: () => dispatch(getProfilePercentage()),
     navigateProfileHeader: (link) => dispatch(push(link)),
     clearInvitaion: () => dispatch(clearInvitaion()),
-    joinVideoConference: () => dispatch(joinVideoConference())
+    joinVideoConference: () => dispatch(joinVideoConference()),
+    goToDashboard: () => dispatch(push(Path.dashboard))
   }
 }
 
@@ -248,7 +279,10 @@ function mapStateToProps (state) {
   return {
     profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
     canCreateConversation: state.asyncMessageState.canCreateConversation,
-    showTelehealthInvite: state.telehealthState.isInvitationCame
+    showTelehealthInvite: state.telehealthState.isInvitationCame,
+    serviceOfferedList: state.profileState.serviceOfferedState.serviceOfferedList,
+    LanguagesList: state.profileState.LanguagesState.LanguagesList,
+    availableDays: state.profileState.AvailabilityState.availableDays
   }
 }
 
