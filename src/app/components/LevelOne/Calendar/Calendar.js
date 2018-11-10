@@ -15,6 +15,7 @@ class Calendar extends Component {
             <div className="form-group">
                 <label className="width100" onClick={e => this.calendar.state.open && e.preventDefault()}> {this.props.label}
                     <DatePicker
+                        id={this.props.id}
                         selected={this.props.startDate}
                         onChange={this.props.onDateChange}
                         onChangeRaw={this.props.onDateChangeRaw}
@@ -30,7 +31,7 @@ class Calendar extends Component {
                         showMonthDropdown
                         showYearDropdown
                         dropdownMode="select"
-                        value={this.props.value}
+                        value={this.props.startDate}
                     />
                 </label>
             </div>
