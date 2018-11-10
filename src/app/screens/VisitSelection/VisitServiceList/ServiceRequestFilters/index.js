@@ -145,6 +145,7 @@ class Filter extends Component {
                                         ServiceStatus ={this.props.ServiceStatus}
                                         handleChangeserviceStatus={this.props.handleChangeserviceStatus}
                                         serviceStatus={this.props.serviceStatus}
+                                        handleAllServiceStatus={this.props.handleAllServiceStatus}
                                     />
                                 </TabPane>
                             </TabContent>

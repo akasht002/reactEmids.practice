@@ -516,7 +516,7 @@ class Organization extends React.PureComponent {
             textChange={e => {
               const onlyNums = e.target.value.replace(/[^0-9]/g, '')
               if (onlyNums.length < 5) {
-                this.setState({ hourlyRate: onlyNums })
+                this.setState({ hourlyRate: onlyNums, disabledSaveBtn:false })
               } else if (onlyNums.length === 5) {
                 const number = onlyNums.replace(
                   /(\d{3})(\d{2})/,

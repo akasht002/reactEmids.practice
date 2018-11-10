@@ -57,7 +57,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_SIGNALR_URL = 'https://chdemo-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://chdemo-vp-api.CoreoDevServer.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://chdemo-gen-api.coreodevserver.com/api/';
-}else if (argv.includes('--hmsademo')) {
+} else if (argv.includes('--hmsademo')) {
   process.env.REACT_APP_API_URL = 'https://HMSADemo-sp-api.coreodevserver.com/api/';
   process.env.REACT_APP_AUTH_URL = 'https://HMSADemo-oauth-api.coreodevserver.com/';
   process.env.REACT_APP_SR_URL = 'https://HMSADemo-sr-api.coreodevserver.com/api/';
@@ -68,6 +68,17 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_SIGNALR_URL = 'https://HMSADemo-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://HMSADemo-ct-api.coreodevserver.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://HMSADemo-gen-api.coreodevserver.com/api/';
+} else if (argv.includes('--pftest')) {
+  process.env.REACT_APP_API_URL = 'https://PFTest-sp-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'https://PFTest-oauth-api.coreoflowsandbox.com/';
+  process.env.REACT_APP_SR_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_UI_URL = 'https://PFTest-sp.coreoflowsandbox.com/#/';
+  process.env.REACT_APP_MSG_URL = "https://PFTest-tp-api.coreoflowsandbox.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://PFTest-ct-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://PFTest-gen-api.coreoflowsandbox.com/api/';
 }
 
 // Ensure environment variables are read.

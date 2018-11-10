@@ -184,11 +184,18 @@ class Profile extends Component {
                   </h4>
                 </div>
                 {this.getPersonalDetail()}
+<<<<<<< HEAD
                 {
                   // (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
                   // !getUserInfo().isEntityServiceProvider) ? 
                   <div>
                
+=======
+                {/* {
+                  (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+                  !getUserInfo().isEntityServiceProvider) ? <div>
+                */}
+>>>>>>> cf28c64145c75cf4a3f17198672c9dc109c604b7
                 <div className='col-md-12 card CardWidget SPCertificate'>
                 {this.getServiceOffered()}
                 </div>
@@ -204,9 +211,16 @@ class Profile extends Component {
                 </div>
                 {this.getWorkHistory()}
                 {this.getEducation()}
+<<<<<<< HEAD
                {this.getAvailability()} </div> 
               //  : <div>{this.getEducation()}</div>
               }
+=======
+               {this.getAvailability()} 
+               
+               {/* </div> : <div>{this.getEducation()}</div>
+              } */}
+>>>>>>> cf28c64145c75cf4a3f17198672c9dc109c604b7
               
                
 

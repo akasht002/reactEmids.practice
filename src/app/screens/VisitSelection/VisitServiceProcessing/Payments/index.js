@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { StripeProvider } from 'react-stripe-elements';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
@@ -227,7 +227,7 @@ class Payments extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <i className="TitleContent backProfileIcon" />
+                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>

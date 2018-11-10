@@ -26,6 +26,7 @@ class VisitFilter extends Component {
     this.fromDateProps = ''
     this.toDateProps = ''
     this.serviceProviderArray = []
+    this.individualList= []
   }
 
   toggle(tab) {
@@ -94,6 +95,53 @@ class VisitFilter extends Component {
     })
   }
 
+  getAllPatientForServiceProvider = AllPatientForserviceProviders => {
+    return AllPatientForserviceProviders.map((AllPatientForserviceProviders, index) => {
+      return (
+        <div key={index} className='CheckboxSet CheckboxSetImage'>
+          <input
+            className='ServiceCheckbox'
+            type='checkbox'
+            value={AllPatientForserviceProviders.patientId}
+            id={
+              'ServiceStatus' + index
+            }
+            checked={AllPatientForserviceProviders.isChecked}
+            name='ServiceStatus'
+            onChange={event => {       
+              AllPatientForserviceProviders.isChecked = event.target.checked;
+              this.onCheckPatientForServiceProvider(
+                AllPatientForserviceProviders.patientId,
+                event.target.checked,
+              )
+            }}
+          />
+          <label
+            htmlFor={
+              'ServiceStatus' + index
+            }
+            className='ServiceCheckboxLabel'
+          >
+            <img
+              alt='NO'
+              className='ServiceCheckboxImage'
+              src={
+                AllPatientForserviceProviders.image
+                  ? AllPatientForserviceProviders.image
+                  : require('../../../assets/images/Blank_Profile_icon.png')
+              }
+            />
+            <span className='ServiceCheckboxName'>
+              {AllPatientForserviceProviders.firstName && AllPatientForserviceProviders.firstName}
+              {' '}
+              {AllPatientForserviceProviders.lastName && AllPatientForserviceProviders.lastName}
+            </span>
+          </label>
+        </div>
+      )
+    })
+  }
+//The below function is not needed  here
   onCheckServiceProvider = (data, status) => {
     let index = this.serviceProviderArray.indexOf(data);
     status
@@ -101,7 +149,14 @@ class VisitFilter extends Component {
       : this.serviceProviderArray.splice(index, 1);
       this.setState({isChecked: !this.state.isChecked});
   }
-
+  onCheckPatientForServiceProvider = (data, status) => {
+  
+    let index = this.individualList.indexOf(data);
+    status
+      ? this.individualList.push(data)
+      : this.individualList.splice(index, 1);
+      this.setState({isChecked: !this.state.isChecked});
+  }
   render() {
     const serviceCategories = this.props.serviceCategory && this.props.serviceCategory.map(function (type) {
       return { "label": type.serviceCategoryDescription, "value": type.serviceCategoryId };
@@ -150,12 +205,12 @@ class VisitFilter extends Component {
               <TabContent activeTab={this.state.activeTab}>
                 <TabPane tabId='1'>
                   <div className='form-group'>
-                    <label>Select Service Providers</label>
+                    <label>Select Individuals</label>
                   </div>
                   <div className='ServiceProvider'>
                     <fieldset>
-                      {getArrayLength(this.props.serviceProviders) > 0 &&
-                        this.getServiceProvider(this.props.serviceProviders)}
+                      {getArrayLength(this.props.AllPatientForserviceProviders) > 0 &&
+                        this.getAllPatientForServiceProvider(this.props.AllPatientForserviceProviders)}
                     </fieldset>
                   </div>
                 </TabPane>
@@ -237,6 +292,7 @@ class VisitFilter extends Component {
                 this.props.applyReset();
                 this.serviceProviderArray = [];
                 this.setState({ searchData: { ...this.state.searchData, startDate: null, endDate: null }, dobValid: false });
+                this.individualList=[];
               }
               } />
             <Button
@@ -245,7 +301,8 @@ class VisitFilter extends Component {
               label='Apply'
               onClick={() => this.props.applyFilter({
                 searchData: this.state.searchData,
-                serviceProviderArray: this.serviceProviderArray
+                serviceProviderArray: [],
+                individualList: this.individualList
               })}
             />
           </div>

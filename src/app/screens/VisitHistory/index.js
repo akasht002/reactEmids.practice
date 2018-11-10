@@ -16,7 +16,9 @@ import {
   getServiceType,
   clearServiceTypes,
   getFilteredData,
-  getHistoryListCount
+  getHistoryListCount,
+  getAllPatientForServiceProviders,
+  clearPatientForServiceProviders
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { VisitList } from './VisitList'
 import Filter from './VisitHistoryFilter'
@@ -51,6 +53,7 @@ class VisitHistory extends Component {
     }
     this.props.getVisitServiceLists(data)
     this.props.getAllServiceProviders()
+    this.props.getAllPatientForServiceProviders(data)
     this.props.getServiceCategory()
     this.props.getHistoryListCount()
   }
@@ -102,6 +105,7 @@ class VisitHistory extends Component {
   }
 
   applyFilter = (selectedData) => {
+   
     const data = {
       fromDate: selectedData.searchData.startDate ? selectedData.searchData.startDate : '1900-01-01',
       toDate: selectedData.searchData.endDate ? selectedData.searchData.endDate : moment().toDate(),
@@ -109,6 +113,7 @@ class VisitHistory extends Component {
       serviceTypeList: this.state.serviceTypeIds,
       status: [],
       serviceProviderList: selectedData.serviceProviderArray,
+      individualList:selectedData.individualList,
       serviceProviderId: 0,
       pageNumber: 1,
       pageSize: 10
@@ -124,6 +129,7 @@ class VisitHistory extends Component {
     this.setState({ selectedOption: '', serviceTypeIds: [], sort:true })
     this.props.clearServiceTypes();
     this.props.clearServiceProviders(this.props.serviceProviders);
+    this.props.clearPatientForServiceProviders(this.props.PatientForServiceproviders) ;
     let data = {
       pageNumber: 1,
       pageSize: 10,
@@ -239,6 +245,7 @@ class VisitHistory extends Component {
         </Scrollbars>
         <Filter
           serviceProviders={this.props.serviceProviders}
+          AllPatientForserviceProviders={this.props.PatientForServiceproviders}
           serviceCategory={this.props.serviceCategories}
           isOpen={this.state.filterOpen}
           toggle={this.toggleFilter}
@@ -266,7 +273,10 @@ function mapDispatchToProps(dispatch) {
     clearServiceTypes: () => dispatch(clearServiceTypes()),
     clearServiceProviders: (data) => dispatch(clearServiceProviders(data)),
     getFilteredData: (data) => dispatch(getFilteredData(data)),
-    getHistoryListCount: () => dispatch(getHistoryListCount())
+    getHistoryListCount: () => dispatch(getHistoryListCount()),
+    getAllPatientForServiceProviders: () => dispatch(getAllPatientForServiceProviders()),
+    clearPatientForServiceProviders: (data) => dispatch(clearPatientForServiceProviders(data))
+
   }
 }
 
@@ -283,6 +293,8 @@ function mapStateToProps(state) {
     serviceType: state.visitHistoryState.vistServiceHistoryState.typeList,
     historyListCount: state.visitHistoryState.vistServiceHistoryState
       .historyListCount,
+      PatientForServiceproviders: state.visitHistoryState.vistServiceHistoryState
+      .PatientForServiceproviders,
   }
 }
 

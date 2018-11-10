@@ -6,7 +6,6 @@ function ServiceRequestsStatus(props){
         if(item.keyValue !== SERVICE_STATUS.CLOSED && item.keyValue !== SERVICE_STATUS.CANCELLED 
         && item.keyValue !== SERVICE_STATUS.INPROGRESS && item.keyValue !== SERVICE_STATUS.COMPLETED
         && item.keyValue !== SERVICE_STATUS["NOT INTERESTED"] ){
-
             let catNum = index + 1;
             return(
                 <fieldset>
@@ -19,8 +18,18 @@ function ServiceRequestsStatus(props){
                             type="checkbox"
                             value={props.serviceStatus}
                             onChange={(e)=>{
-                                props.handleChangeserviceStatus(item,e)
+                                
+
+                                if (item.keyValue === 'All') {
+                                    props.handleAllServiceStatus(item, e)
+                                }
+                                else {
+                                    item.isChecked = e.target.checked;
+                                    props.handleChangeserviceStatus(item,e)
+                                }
                             }
+
+                            
                             }
                         />
                         <label htmlFor={"ServiceStatus"+catNum}>{item.keyValue}</label>

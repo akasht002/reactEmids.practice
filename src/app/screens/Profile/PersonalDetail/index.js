@@ -73,6 +73,9 @@ class PersonalDetail extends React.PureComponent {
       yearOfExperience: nextProps.personalDetail.yearOfExperience,
       description: nextProps.personalDetail.description,
       hourlyRate: nextProps.personalDetail.hourlyRate,
+      addressId: getArrayLength(nextProps.personalDetail.address) > 0
+        ? nextProps.personalDetail.address[0].addressId
+        : 0,
       city: getArrayLength(nextProps.personalDetail.address) > 0
         ? nextProps.personalDetail.address[0].city
         : '',
