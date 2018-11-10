@@ -54,10 +54,12 @@ class Profile extends Component {
   }
 
   getAvailability = () => {
+    // console.log("111111111111111111111111111111")
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
     !getUserInfo().isEntityServiceProvider) {
      return <Availability />
-    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && 
+    getUserInfo().entityId === 0) {
       return <Availability />
     } else {
       return '';
@@ -183,8 +185,9 @@ class Profile extends Component {
                 </div>
                 {this.getPersonalDetail()}
                 {
-                  (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-                  !getUserInfo().isEntityServiceProvider) ? <div>
+                  // (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+                  // !getUserInfo().isEntityServiceProvider) ? 
+                  <div>
                
                 <div className='col-md-12 card CardWidget SPCertificate'>
                 {this.getServiceOffered()}
@@ -201,7 +204,8 @@ class Profile extends Component {
                 </div>
                 {this.getWorkHistory()}
                 {this.getEducation()}
-               {this.getAvailability()} </div> : <div>{this.getEducation()}</div>
+               {this.getAvailability()} </div> 
+              //  : <div>{this.getEducation()}</div>
               }
               
                
