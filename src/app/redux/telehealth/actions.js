@@ -179,7 +179,13 @@ export function GetParticipantByConferenceId() {
         AsyncGet(API.getParticipantByConferenceId
             + userInfo.serviceProviderId + '/S/'
             + state.telehealthState.roomId).then((resp) => {
-                dispatch(onGetParticipantByConfernceIdSuccess(resp.data));
+                var data = resp.data && resp.data.map((part) => {
+                    return {
+                        ...part,
+                        status: 'Invited'
+                    }
+                })
+                dispatch(onGetParticipantByConfernceIdSuccess(data));
                 dispatch(endLoading());
             }).catch((err) => {
                 dispatch(endLoading());
@@ -280,16 +286,24 @@ export function AddParticipantsToVideoConference(data) {
 };
 
 export function checkTeleHealth(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         const userInfo = getUserInfo();
+        const teleHealthState = getState().telehealthState;
         const userId = userInfo.serviceProviderId;
-        data.participantList && data.participantList.map((participant) => {
-            if (userInfo.userType === participant.participantType && userId === participant.userId) {
-                if (data.messageType === 'Invited') {
+        if (data.messageType === 'Invited') {
+            data.participantList && data.participantList.map((participant) => {
+                if (userInfo.userType === participant.participantType && userId === participant.userId) {
                     dispatch(setRoomId(data.roomID));
                     dispatch(invitaionCame());
                 }
+            })
+            if (teleHealthState.roomId === data.roomID) {
+                let participants = [
+                    ...data.participantList,
+                    ...teleHealthState.participantsByConferenceId
+                ];
+                dispatch(onGetParticipantByConfernceIdSuccess(participants));
             }
-        })
+        }
     }
 }
