@@ -44,6 +44,12 @@ class App extends Component {
     connection.start()
         .then(() => {
       }).catch(err => console.error(err.toString()));
+    
+      connection.onclose((e) => {
+        connection.start()
+        .then(() => {
+        }).catch(err => console.error(err.toString()));
+      })
   }
 
   render() {
