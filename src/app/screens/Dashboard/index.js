@@ -120,7 +120,8 @@ standByTimer(visitProcess) {
 
   onClickYes = () => {
     this.setState({showModalOnTurnOff: false})
-        this.props.updateStandByMode(false);
+    this.CheckClickToggle = false;
+    this.props.updateStandByMode(false);
  }
 
  checkEveryHourYes = () => {
