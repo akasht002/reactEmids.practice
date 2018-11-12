@@ -178,9 +178,9 @@ class PersonalDetail extends React.PureComponent {
      this.state.lastNameInvaild ||
      this.state.phoneNumberInvalid ||
      this.state.ageInvaild ||
-     this.state.yearOfExpInvaild
+     this.state.yearOfExpInvaild ||
+     this.state.hourlyRate
     ) {
-      
       this.setState({ isValid: false})
     } else {
       this.props.updatePersonalDetail(this.state)
@@ -197,7 +197,6 @@ class PersonalDetail extends React.PureComponent {
   }
 
   saveImageUpload = () => {
-    console.log(111111111111)
     this.setState({
       uploadImage: !this.state.uploadImage
     })

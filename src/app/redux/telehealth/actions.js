@@ -145,6 +145,7 @@ export function joinVideoConference() {
         AsyncPutWithUrl(API.joinVideoConference 
             + userInfo.serviceProviderId + '/S/'
             + roomNumber).then((resp) => {
+            dispatch(clearInvitaion())
             dispatch(push(Path.teleHealth));
             dispatch(endLoading());
         }).catch((err) => {
