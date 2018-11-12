@@ -81,10 +81,9 @@ export function getLinkedParticipantsByPatients(data) {
         data.userId = data.userId;
         dispatch(startLoading());
         AsyncGet(API.getParticipantsByContext + data.conversationId +
-            '/' + data.userId +
+            '/' + getUserInfo().serviceProviderId +
             '/' + data.patientId +
-            '/' + data.participantType +
-            '/' + searchText
+            '/S/' + searchText
         ).then((resp) => {
             dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
             dispatch(endLoading());
@@ -97,9 +96,12 @@ export function getLinkedParticipantsByPatients(data) {
 export function createVideoConference(data) {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
+        const personalState = getState().profileState.PersonalDetailState.personalDetail
         let twilioData = {
             createdBy: userInfo.serviceProviderId,
             createdByType: 'S',
+            createdByFirstName : personalState.firstName,
+            createdByLastName  : personalState.lastName,
             participantList: data
         };
         dispatch(startLoading());
