@@ -115,8 +115,8 @@ export const getModal = (data, action) => {
       }
     case PERSONAL_DETAIL.UPDATE_ENTITY_DETAIL:
       let genderData = getDataValueArray(
-        data.selectedGender
-          ? data.selectedGender
+        data.selectedGender.value
+          ? data.selectedGender.value
           : data.selectedGender,
         '-'
       )
