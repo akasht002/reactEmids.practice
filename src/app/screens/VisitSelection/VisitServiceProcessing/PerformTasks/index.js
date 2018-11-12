@@ -62,6 +62,22 @@ class PerformTasks extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.PerformTasksList !== nextProps.PerformTasksList) {
+            nextProps.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
+                serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
+                    if (taskList.statusId === 90) {
+                        taskList.checked = taskList.statusId === 90;
+                        this.handleChange(taskList, {
+                            target: {
+                                checked: true,
+                                value: taskList.serviceRequestTypeTaskVisitId
+                            }
+                        })
+                        taskList.statusId = 45;
+                    }
+                });
+            });
+        }
         this.setState({ taskList: nextProps.PerformTasksList })
     }
 
@@ -236,12 +252,6 @@ class PerformTasks extends Component {
                                                         {serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
                                                             if (taskList.statusId === 90) {
                                                                 taskList.checked = taskList.statusId === 90;
-                                                                this.handleChange(taskList, {
-                                                                    target: {
-                                                                        checked: true,
-                                                                        value: taskList.serviceRequestTypeTaskVisitId
-                                                                    }
-                                                                })
                                                                 taskList.statusId = 45;
                                                             }
                                                             

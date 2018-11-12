@@ -39,7 +39,9 @@ class ParticipantsContainer extends Component {
     onCheckParticipant = (participant, event) => {
         let selectedParticipant = {
             userId: participant.userId,
-            participantType: participant.participantType
+            participantType: participant.participantType,
+            firstName: participant.firstName,
+            lastName: participant.lastName
         };
         let updatedParticipants = [...this.state.selectedParticipants];
         const index = updatedParticipants.indexOf(
