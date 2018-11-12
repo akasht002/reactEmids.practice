@@ -12,6 +12,8 @@ import {TeleHealthSettings} from '../../constants/config';
 import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
 import './styles.css';
 import _ from 'lodash'
+import { Path } from '../../routes';
+import {push} from '../../redux/navigation/actions'
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -39,7 +41,11 @@ class TeleHealthWidget extends Component {
     }
 
     componentDidMount() {
-        this.joinRoom();
+        if (this.props.roomId) {
+            this.joinRoom();
+        } else {
+            this.props.goToDashBoard()
+        }
     }
 
     componentWillUnmount() {
@@ -381,7 +387,8 @@ function mapDispatchToProps(dispatch) {
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
         endConference: () => dispatch(endConference()),
-        getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId())
+        getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId()),
+        goToDashBoard: () => dispatch(push(Path.dashboard))
     }
 };
 
