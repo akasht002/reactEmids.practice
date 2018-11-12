@@ -14,7 +14,8 @@ const defaultState = {
     conversationImageUrl: '',
     canCreateConversation: false,
     conversationCount: 20,
-    openedAsyncPage : null
+    openedAsyncPage : null,
+    removeParticipantConcurrencyExist: false,
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -138,6 +139,11 @@ const asyncMessageState = (state = defaultState, action) => {
                     participantList:  action.data.participantList,
                 }
             };
+        case AsyncMessageActions.setRemoveParticipantConcurrency:
+            return{
+            ...state,
+            removeParticipantConcurrencyExist: action.data
+        }
         default:
             return state;
     }

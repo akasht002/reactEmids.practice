@@ -1,6 +1,10 @@
 import { store } from '../redux/store';
 import {USERTYPES} from '../constants/constants';
 
+export const getState = () => {
+    return store && store.getState();
+}
+
 export const getUserState = () => {
     return store && store.getState().authState.userState;
 }
