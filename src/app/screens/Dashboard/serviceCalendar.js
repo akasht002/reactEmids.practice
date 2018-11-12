@@ -434,7 +434,7 @@ class serviceCalendar extends React.Component {
         <div className="ProfileCardBody">
           <div className="ProfileCardHeader">
             <span className="ProfileCardHeaderTitle primaryColor">
-              My Service Visits
+              Service Visits
             </span>
           </div>
           <div className="topPalette">

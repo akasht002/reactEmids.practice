@@ -772,7 +772,7 @@ color: #444;
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
         /* height: calc(100vh - 143px); */
-        height: 683px;
+        height: 620px;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
@@ -782,7 +782,7 @@ color: #444;
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
         /* height: calc(100vh - 465px); */
-        height: 360px;
+        height: 380px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
