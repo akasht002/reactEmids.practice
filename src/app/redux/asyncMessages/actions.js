@@ -33,6 +33,7 @@ export const AsyncMessageActions = {
     setConversationCount: 'set_conversation_count/asyncMessage',
     setopenedAsyncPage: 'set_opened_async_page/asynMessage',
     pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
+    setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
 };
 
 export const setConversationSummary = (data) => {
@@ -285,7 +286,10 @@ export function onRemoveParticipant(data) {
                 dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
+                dispatch(endLoading());
+                if(err.response && err.response.status === 400){
+                    dispatch(setRemoveParticipantConcurrency(true));
+                }
             })
     }
 };
@@ -585,3 +589,10 @@ const verifyIsConversationMessageExist = (data) => {
         }
     };
 };
+
+export function setRemoveParticipantConcurrency (data){
+    return {
+        type: AsyncMessageActions.setRemoveParticipantConcurrency,
+        data
+    }
+ };
