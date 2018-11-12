@@ -48,7 +48,7 @@ export function createCharge(data, claimData) {
     }
 };
 
-export function chargeByCustomerId(data,claimData) {
+export function chargeByCustomerId(data, claimData) {
     return (dispatch) => {
         dispatch(startLoading());
         ThirdPartyPost(API.chargeByCustomerId, data).then((resp) => {
@@ -85,12 +85,13 @@ export function claimsSubmission(data) {
     }
 };
 
-export function captureAmount(data) {
+export function captureAmount(data, claimData) {
     return (dispatch) => {
         dispatch(startLoading());
         ThirdPartyPut(API.captureAmount, data).then((resp) => {
             dispatch(endLoading());
             dispatch(push(Path.paymentsuccess))
+            dispatch(claimsSubmission(claimData))
         }).catch((err) => {
             if (DEMO === 'true') {
                 dispatch(push(Path.paymentsuccess))

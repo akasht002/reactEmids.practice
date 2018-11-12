@@ -91,7 +91,6 @@ class Payments extends Component {
 
     payByAuthorizedCardOption = () => {
         if (this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false) {
-            this.payByAuthorizedCard();
             this.captureAmount();
         } else {
             this.captureAmount();
@@ -135,7 +134,7 @@ class Payments extends Component {
             :
             data.amount = this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2);
 
-        this.props.captureAmount(data)
+        this.props.captureAmount(data, this.Claimdata)
     }
 
     paymentsMethods = () => {
@@ -316,7 +315,7 @@ function mapDispatchToProps(dispatch) {
         getpaymentsCardList: (data) => dispatch(getpaymentsCardList(data)),
         chargeByCustomerId: (data, Claimdata) => dispatch(chargeByCustomerId(data, Claimdata)),
         claimsSubmission: (data) => dispatch(claimsSubmission(data)),
-        captureAmount: (data) => dispatch(captureAmount(data))
+        captureAmount: (data,Claimdata) => dispatch(captureAmount(data,Claimdata))
     }
 };
 
