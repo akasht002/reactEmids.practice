@@ -65,7 +65,7 @@
 
 div.TeleHealthWidget{
     padding: 0 30px;
-    height: 100%;
+    height: calc(100% - 75px);
 }
 
 .TeleHealthParticipantsListContent .TeleHealthParticipants{
@@ -648,7 +648,7 @@ input.searchParticipants ~ small:before {
 }
 
 .participantsSearchList{
-    height: calc(100vh - 380px);
+    height: calc(100vh - 500px);
     padding: 0 24px;
     overflow-y: auto;
     overflow-x: hidden;

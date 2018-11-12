@@ -580,11 +580,11 @@ const getConversationCountSuccess = (data) =>{
 const verifyIsConversationMessageExist = (data) => {
     return(dispatch, getState) => {
         let state = getState();
-        let conversationData = [...state.asyncMessageState.conversation];
-        const index = conversationData.indexOf(
-            conversationData.filter(el => el.conversationMessageId === data.conversationMessageId)[0]
+        let conversationMessageData = [...state.asyncMessageState.conversation.messages];
+        const index = conversationMessageData.indexOf(
+            conversationMessageData.filter(el => el.conversationMessageId === data.messages[0].conversationMessageId)[0]
         );
-        if(index !== -1){
+        if(index === -1){
             dispatch(pushConversation(data));
         }
     };

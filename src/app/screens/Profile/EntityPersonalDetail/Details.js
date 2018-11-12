@@ -8,7 +8,6 @@ import { PHONE_NUMBER_CONST } from '../../../constants/constants'
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 export const Details = props => {
-  console.log('props.personalDetail............', props.personalDetail);
   return (
     <div className='col-md-12 card CardWidget SPDetails'>
       <ProfileImage
