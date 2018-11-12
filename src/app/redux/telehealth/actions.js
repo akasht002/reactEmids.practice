@@ -292,7 +292,7 @@ export function checkTeleHealth(data) {
         const userId = userInfo.serviceProviderId;
         if (data.messageType === 'Invited') {
             data.participantList && data.participantList.map((participant) => {
-                if (userInfo.userType === participant.participantType && userId === participant.userId) {
+                if (participant.participantType === 'S' && userId === participant.userId) {
                     dispatch(setRoomId(data.roomID));
                     dispatch(invitaionCame());
                 }
