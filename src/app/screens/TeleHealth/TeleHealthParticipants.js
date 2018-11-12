@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Scrollbars } from '../../components';
-import {getUserInfo} from '../../utils/userUtility';
+import {getState, getUserInfo} from '../../utils/userUtility';
 import './styles.css';
 
 const images = require.context('../../assets', true);
@@ -13,9 +13,9 @@ export default class TeleHealthParticipants extends Component {
             <li className="list-group-item">
                 <div className="TeleHealthParticipantAvatar">
                     <div className="TeleHealthAvatarContainer">
-                        <img alt="participant" src={getUserInfo().imageData.image ? getUserInfo().imageData.image : require("../../assets/images/Blank_Profile_icon.png")}
+                        <img alt="participant" src={getState().profileState.PersonalDetailState.imageData.image ? getState().profileState.PersonalDetailState.imageData.image : require("../../assets/images/Blank_Profile_icon.png")}
                             className="avatarImage" />
-                        <div className="memberType memT-I">{getUserInfo().userType}</div>
+                        <div className="memberType memT-I">S</div>
                     </div>
                     <div className="TeleHealthParticipantNameContainer">
                         <span className="Name">Me</span>
