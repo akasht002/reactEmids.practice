@@ -59,6 +59,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('componentwillrecieveprops', nextProps.personalDetail);
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       uploadedImageFile: nextProps.profileImgData.image
@@ -174,12 +175,12 @@ class PersonalDetail extends React.PureComponent {
 
   onSubmit = () => {
     if (
-     this.state.firstNameInvaild ||
-     this.state.lastNameInvaild ||
-     this.state.phoneNumberInvalid ||
-     this.state.ageInvaild ||
-     this.state.yearOfExpInvaild ||
-     this.state.hourlyRate
+      this.state.firstName === '' ||
+      this.state.lastName === '' ||
+      this.state.phoneNumber === '' ||
+      this.state.age === '' ||
+      this.state.yearOfExperience === '' ||
+      this.state.hourlyRate === '' 
     ) {
       this.setState({ isValid: false})
     } else {
@@ -664,7 +665,7 @@ class PersonalDetail extends React.PureComponent {
                 }}
                 defaultChecked={this.state.isActive}
               />
-              <span class="CheckboxIcon" />
+              <span className="CheckboxIcon" />
             </label>
           </div>
         </div>
