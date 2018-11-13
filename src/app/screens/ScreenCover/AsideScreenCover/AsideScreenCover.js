@@ -151,7 +151,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ModalPopup
                     isOpen={this.props.showTelehealthInvite}
-                    ModalBody={<span>You have a new video conference invite.</span>}
+                    ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}</span>}
                     btn1="Accept"
                     btn2="Decline"
                     className="zh"
@@ -192,7 +192,9 @@ function mapStateToProps(state) {
         aboutUsContent: state.aboutUsState.aboutUsContent,
         isLoading: state.loadingState.isLoading,
         canCreateConversation: state.asyncMessageState.canCreateConversation,
-        showTelehealthInvite: state.telehealthState.isInvitationCame
+        showTelehealthInvite: state.telehealthState.isInvitationCame,
+        initiatorFirstName: state.telehealthState.initiatorFirstName,
+        initiatorLastName: state.telehealthState.initiatorLastName,
     };
 };
 
