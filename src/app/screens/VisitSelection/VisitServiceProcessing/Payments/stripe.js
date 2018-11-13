@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import {
     CardNumberElement,
     CardExpiryElement,
@@ -66,7 +66,7 @@ class _CardForm extends Component {
                     data.amount = this.props.data.CalculationsData.grandTotalAmount.toFixed(2);
 
                 this.props.token(data);
-                
+
             } else {
                 if (payload.error.code === 'incomplete_number') {
                     this.setState({ cardErrorMessage: payload.error.message, expErrorMessage: '', cvcErrorMessage: '' })
@@ -121,6 +121,7 @@ class _CardForm extends Component {
                 <div id="card-errors" role="alert"></div>
                 <div className='col-md-12 mt-3'>
                     <div className='text-right'>
+                        <Link className='btn btn-outline-primary mr-3' to='/summary'>Previous</Link>
                         <button className='btn btn-primary'>Pay</button>
                     </div>
                 </div>

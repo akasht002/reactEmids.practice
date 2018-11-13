@@ -24,7 +24,7 @@ class Payments extends Component {
             selectedCard: '',
             disabled: true
         };
-        this.Claimdata ={};
+        this.Claimdata = {};
     };
 
     componentDidMount() {
@@ -138,7 +138,7 @@ class Payments extends Component {
     }
 
     paymentsMethods = () => {
-         this.Claimdata = {
+        this.Claimdata = {
             "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
             "claimOnsetDate": this.props.summaryAmount.SummaryDetails.visitDate,
             "claimServiceLinesChargeAmount": this.props.summaryAmount.CalculationsData.estimatedClaim,
@@ -187,6 +187,7 @@ class Payments extends Component {
                         })}
                     </div>
                     <div className='text-right width100'>
+                        <Link className='btn btn-outline-primary mr-3' to='/summary'>Previous</Link>
                         <button disabled={this.state.disabled} className='btn btn-primary' onClick={this.handleClick}>Pay</button>
                     </div>
                 </div>
@@ -207,6 +208,7 @@ class Payments extends Component {
         } else if (this.state.SelectedCard === '3') {
             return (
                 <div className='text-right width100'>
+                    <Link className='btn btn-outline-primary mr-3' to='/summary'>Previous</Link>
                     <button className='btn btn-primary' onClick={this.payByAuthorizedCardOption}>Pay</button>
                 </div>
             )
@@ -315,7 +317,7 @@ function mapDispatchToProps(dispatch) {
         getpaymentsCardList: (data) => dispatch(getpaymentsCardList(data)),
         chargeByCustomerId: (data, Claimdata) => dispatch(chargeByCustomerId(data, Claimdata)),
         claimsSubmission: (data) => dispatch(claimsSubmission(data)),
-        captureAmount: (data,Claimdata) => dispatch(captureAmount(data,Claimdata))
+        captureAmount: (data, Claimdata) => dispatch(captureAmount(data, Claimdata))
     }
 };
 
