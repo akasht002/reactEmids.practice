@@ -46,7 +46,7 @@ class PaymentFailure extends Component {
 
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <i className="TitleContent backProfileIcon" />
+                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
