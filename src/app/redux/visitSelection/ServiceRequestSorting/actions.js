@@ -14,7 +14,7 @@ export function getSort(data) {
              fromDate:null,
              toDate:null
          }
-         ServiceRequestGet(API.getPatientServiceRequests+`${serviceProviderId}/${data.sortByOrder}/${data.sortByColumn}/${data.pageNumber}/${data.PageSize}`).then((resp) => {
+         ServiceRequestGet(API.getPatientServiceRequests+`${serviceProviderId}/${data.sortByOrder}/${data.sortByColumn}/${Reqdata.status}/${data.pageNumber}/${data.PageSize}?fromDate=null&toDate=null`).then((resp) => {
              dispatch(getVisitServiceListSuccess(resp.data))
              dispatch(endLoading());
          }).catch((err) => {
