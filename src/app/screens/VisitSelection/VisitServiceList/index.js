@@ -6,7 +6,6 @@ import { getVisitServiceList, getServiceRequestCount } from '../../../redux/visi
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
-import { getFirstCharOfString } from '../../../utils/stringHelper'
 import {
     VISIT_SERVICE_STATUS_OPEN,
     VISIT_SERVICE_STATUS_APPLIED,
@@ -15,7 +14,7 @@ import {
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
-import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea, clearServiceCategory, clearServiceArea, clearServiceRequestStatus ,checkAllServiceRequestStatus } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea, clearServiceCategory, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -26,7 +25,7 @@ import Pagination from 'react-js-pagination';
 import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
-import { HIRED_STATUS_ID,RECURRING_PATTERN } from '../../../constants/constants';
+import { HIRED_STATUS_ID, RECURRING_PATTERN } from '../../../constants/constants';
 
 class VisitServiceList extends Component {
 
@@ -44,10 +43,10 @@ class VisitServiceList extends Component {
             ServiceCategoryId: '',
             serviceTypes: [],
             isSortOpen: false,
-            PostedDate:false,
-            VisitDate:false,
-            Newest:false,
-            Oldest:false,
+            PostedDate: true,
+            VisitDate: false,
+            Newest: true,
+            Oldest: false,
             serviceArea: '',
             coverageArea: '',
             lat: '',
@@ -56,7 +55,7 @@ class VisitServiceList extends Component {
             isChecked: false,
             activePage: 1,
             pageNumber: 1,
-            pageSize: 9 
+            pageSize: 9
         };
     };
 
@@ -68,8 +67,8 @@ class VisitServiceList extends Component {
 
     componentDidMount() {
         let data = {
-            pageNumber:this.state.pageNumber,
-            pageSize:this.state.pageSize
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
         }
         this.props.getVisitServiceList(data);
         this.props.getServiceCategory();
@@ -197,10 +196,10 @@ class VisitServiceList extends Component {
         })
         if (e.target.checked) {
             this.props.checkAllServiceRequestStatus(e.target.checked, this.props.ServiceStatus)
-            this.props.ServiceStatus.forEach(function(status){
-                if(status.keyValue !== 'All')
-                service.push(status.keyValue)
-              });
+            this.props.ServiceStatus.forEach(function (status) {
+                if (status.keyValue !== 'All')
+                    service.push(status.keyValue)
+            });
         } else {
             this.props.checkAllServiceRequestStatus(e.target.checked, this.props.ServiceStatus)
             service = [];
@@ -226,7 +225,7 @@ class VisitServiceList extends Component {
         });
 
     }
-    
+
     handleServiceArea = (item) => {
 
         const locations = {
@@ -245,21 +244,30 @@ class VisitServiceList extends Component {
     /* sorting */
     toggleclass = (e) => {
         var element = document.getElementsByClassName("dropdown-menu")[1];
-        element.classList.add("show");
+        if (element.classList.contains('show')) {
+            element.classList.remove("show");
+            element.classList.add("hide");
+        } else {
+            element.classList.add("show");
+            element.classList.remove("hide");
+        }
+
         var element1 = document.getElementsByClassName("dropdown-item")[0];
         element1.classList.add("dropdown-item-checked");
+        var element2 = document.getElementsByClassName("dropdown-item")[2];
+        element2.classList.add("dropdown-item-checked");
     }
 
-    setStatusSort = (selectedElement) =>{
+    setStatusSort = (selectedElement) => {
         console.log(selectedElement)
-        if(selectedElement === 'PostedDate') { this.PostedDate = !this.PostedDate; this.VisitDate = !this.PostedDate }
-        if(selectedElement === 'VisitDate')  {this.VisitDate = !this.VisitDate; this.PostedDate = !this.VisitDate }
-        if(selectedElement === 'Newest')  {this.Newest = !this.Newest;this.Oldest = !this.Newest}
-        if(selectedElement === 'Oldest')  {this.Oldest = !this.Oldest;this.Newest = !this.Oldest}
+        if (selectedElement === 'PostedDate') { this.PostedDate = !this.PostedDate; this.VisitDate = !this.PostedDate }
+        if (selectedElement === 'VisitDate') { this.VisitDate = !this.VisitDate; this.PostedDate = !this.VisitDate }
+        if (selectedElement === 'Newest') { this.Newest = !this.Newest; this.Oldest = !this.Newest }
+        if (selectedElement === 'Oldest') { this.Oldest = !this.Oldest; this.Newest = !this.Oldest }
     }
 
-    onSortChange = (e,posted, newest) => {
-        let selectedElement = e.target.innerHTML.replace(/ /g,'');
+    onSortChange = (e, posted, newest) => {
+        let selectedElement = e.target.innerHTML.replace(/ /g, '');
         this.setStatusSort(selectedElement)
         var data = {
             sortByOrder: this.Newest ? "ASC" : "DESC",
@@ -283,12 +291,12 @@ class VisitServiceList extends Component {
     handlePageChange = pageNumber => {
         this.setState({ pageNumber: pageNumber });
         let data = {
-          pageNumber: pageNumber,
-          pageSize: this.state.pageSize
+            pageNumber: pageNumber,
+            pageSize: this.state.pageSize
         };
         this.props.getVisitServiceList(data);
         this.setState({ activePage: pageNumber });
-      };
+    };
 
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -296,7 +304,7 @@ class VisitServiceList extends Component {
             let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
             let patientImage = '';
             let patientLastName = '';
-            if(serviceList.statusId === HIRED_STATUS_ID) {
+            if (serviceList.statusId === HIRED_STATUS_ID) {
                 patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
                 patientLastName = serviceList && serviceList.patientLastName;
             } else {
@@ -306,7 +314,7 @@ class VisitServiceList extends Component {
             return (
                 <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card'>
-                        <div className="BlockImageContainer" onClick={() => 
+                        <div className="BlockImageContainer" onClick={() =>
                             this.handleClick(serviceList.serviceRequestId)}>
                             <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
@@ -317,9 +325,9 @@ class VisitServiceList extends Component {
                                     {serviceList.serviceCategoryDescription}
                                 </div>
                                 <div className='BlockImageDetailsDate'>
-                                    {serviceList.recurring} 
-                                    <span className='DetailsDateSeperator'>|</span> 
-                                    <Moment format="MMM DD">{serviceList.startDate}</Moment> 
+                                    {serviceList.recurring}
+                                    <span className='DetailsDateSeperator'>|</span>
+                                    <Moment format="MMM DD">{serviceList.startDate}</Moment>
                                     {serviceList.recurring !== RECURRING_PATTERN && <React.Fragment>  - <Moment format="MMM DD">{serviceList.endDate}</Moment> </React.Fragment>}
                                 </div>
                             </div>
@@ -377,20 +385,20 @@ class VisitServiceList extends Component {
                     <div className='BoardContainer'>
                         {visitList}
                     </div>
-                    {this.props.visitServiceList && <div class="col-md-12 p-0 AsyncConversationPagination"> 
-                            <Pagination
-                                activePage={this.state.activePage}
-                                itemsCountPerPage={this.state.pageSize}
-                                totalItemsCount={this.props.serviceRequestCount}
-                                pageRangeDisplayed={5}
-                                onChange={this.handlePageChange}
-                                itemClass="PaginationItem"
-                                itemClassFirst="PaginationIcon First"
-                                itemClassPrev="PaginationIcon Prev"
-                                itemClassNext="PaginationIcon Next"
-                                itemClassLast="PaginationIcon Last"
-                                />
-                        </div>
+                    {this.props.visitServiceList && <div class="col-md-12 p-0 AsyncConversationPagination">
+                        <Pagination
+                            activePage={this.state.activePage}
+                            itemsCountPerPage={this.state.pageSize}
+                            totalItemsCount={this.props.serviceRequestCount}
+                            pageRangeDisplayed={5}
+                            onChange={this.handlePageChange}
+                            itemClass="PaginationItem"
+                            itemClassFirst="PaginationIcon First"
+                            itemClassPrev="PaginationIcon Prev"
+                            itemClassNext="PaginationIcon Next"
+                            itemClassLast="PaginationIcon Last"
+                        />
+                    </div>
                     }
                 </Scrollbars>
                 <Filter
@@ -455,7 +463,7 @@ function mapStateToProps(state) {
         ServiceStatus: state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
         ServiceType: state.visitSelectionState.ServiceRequestFilterState.ServiceType,
         ServiceAreaList: state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList,
-        serviceRequestCount:state.visitSelectionState.VisitServiceListState.serviceRequestCount
+        serviceRequestCount: state.visitSelectionState.VisitServiceListState.serviceRequestCount
     };
 };
 
