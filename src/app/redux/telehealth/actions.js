@@ -16,7 +16,8 @@ export const TeleHealth = {
     setRoomId : 'set_roomId/telehealth',
     clearRoom: 'clear_room/telehealth',
     invitaionCame: 'invitaion_came/telehealth',
-    clearInvitaion: 'clear_invitaion/telehealth'
+    clearInvitaion: 'clear_invitaion/telehealth',
+    setInitiator: 'setInitiator/telehealth'
 };
 
 export const generateTokenSuccess = (data) => {
@@ -35,6 +36,13 @@ export const clearRoom = () =>{
 export const invitaionCame = () => {
     return {
         type: TeleHealth.invitaionCame
+    }
+};
+
+export const setInitiator = (data) => {
+    return {
+        type: TeleHealth.setInitiator,
+        data
     }
 };
 
@@ -193,12 +201,7 @@ export function GetParticipantByConferenceId() {
             + state.telehealthState.roomId).then((resp) => {
                 var data = resp.data && resp.data.filter((participant) => {
                     return userInfo.serviceProviderId !== participant.userId;
-                }).map((part) => {
-                    return {
-                        ...part,
-                        status: 'Invited'
-                    }
-                })
+                });
                 dispatch(onGetParticipantByConfernceIdSuccess(data));
                 dispatch(endLoading());
             }).catch((err) => {
@@ -309,6 +312,10 @@ export function checkTeleHealth(data) {
                 data.participantList && data.participantList.map((participant) => {
                     if (participant.participantType === 'S' && userId === participant.userId) {
                         dispatch(setRoomId(data.roomID));
+                        dispatch(setInitiator({
+                            userFirstName: data.userFirstName,
+                            userLastName: data.userLastName
+                        }))
                         dispatch(invitaionCame());
                     }
                 })

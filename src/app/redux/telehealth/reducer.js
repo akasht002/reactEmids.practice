@@ -11,7 +11,9 @@ const defaultState = {
     allParticipants: [],
     participantsByConferenceId: [],
     initiator: false,
-    isInvitationCame: false
+    isInvitationCame: false,
+    initiatorFirstName: '',
+    initiatorLastName: ''
 };
 
 const telehealthState = (state = defaultState, action) => {
@@ -69,6 +71,12 @@ const telehealthState = (state = defaultState, action) => {
             return {
                 ...state,
                 isInvitationCame: false
+            };
+        case TeleHealth.setInitiator:
+            return {
+                ...state,
+                initiatorFirstName: action.data.userFirstName,
+                initiatorLastName: action.data.userLastName
             };
         default:
             return state;
