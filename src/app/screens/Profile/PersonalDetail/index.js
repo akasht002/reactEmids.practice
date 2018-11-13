@@ -39,6 +39,9 @@ class PersonalDetail extends React.PureComponent {
       isDiscardModalOpen: false,
       isAlertModalOpen:false,
       isValidPhoneNumber:true,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      isStreetInvalid: false,
       ModalOrg: true,
       src: null,
       crop: {
@@ -180,9 +183,22 @@ class PersonalDetail extends React.PureComponent {
       this.state.phoneNumber === '' ||
       this.state.age === '' ||
       this.state.yearOfExperience === '' ||
-      this.state.hourlyRate === '' 
+      this.state.hourlyRate === '' ||
+      this.state.city === '' || this.state.city === null ||
+      this.state.zipCode === '' || this.state.zipCode === null ||
+      this.state.streetAddress === '' || this.state.streetAddress === null
     ) {
-      this.setState({ isValid: false})
+      let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false;
+       if(this.state.city === '' || this.state.city === null) {
+          cityInvalid = true;
+       } 
+       if(this.state.zipCode === '' || this.state.zipCode === null) {
+         zipCodeInvalid = true;
+       }
+       if(this.state.streetAddress === '' || this.state.streetAddress === null) {
+         streetInvalid = true;
+       }
+      this.setState({ isValid: false, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid})
     } else {
       this.props.updatePersonalDetail(this.state)
       this.setState({
@@ -782,10 +798,19 @@ class PersonalDetail extends React.PureComponent {
                       textChange={e =>
                         this.setState({
                           city: e.target.value,
-                          disabledSaveBtn: false
+                          disabledSaveBtn: false,
+                          isCityInvalid: false
                         })}
-                      className='form-control'
+                        onBlur={e => {
+                          if(!e.target.value) {
+                            this.setState({isCityInvalid: true})
+                          }
+                        }}
+                        className={"form-control " + (this.state.isCityInvalid && 'inputFailure')}
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                       {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
+                    </small>
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
@@ -802,10 +827,19 @@ class PersonalDetail extends React.PureComponent {
                           textChange={e =>
                             this.setState({
                               streetAddress: e.target.value,
-                              disabledSaveBtn: false
+                              disabledSaveBtn: false,
+                              isStreetInvalid: false
                             })}
-                          className='form-control'
+                            onBlur={e => {
+                              if(!e.target.value) {
+                                this.setState({isStreetInvalid: true})
+                              }
+                            }}
+                          className={"form-control " + (this.state.isStreetInvalid && 'inputFailure')}
                         />
+                        <small className="text-danger d-block OnboardingAlert">
+                           {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                        </small>
                       </div>
                     </div>
                     <div className='col-md-6'>
@@ -823,11 +857,19 @@ class PersonalDetail extends React.PureComponent {
                               re.test(e.target.value)) &&
                             getLength(e.target.value) <= 5
                           ) {
-                            this.setState({ zipCode: e.target.value ,disabledSaveBtn: false})
+                            this.setState({ zipCode: e.target.value , disabledSaveBtn: false, isZipInvalid: false})
                           }
                         }}
-                        className='form-control'
+                        onBlur={e => {
+                          if(!e.target.value || getLength(e.target.value) < 5) {
+                            this.setState({isZipInvalid: true})
+                          }
+                        }}
+                        className={"form-control " + (this.state.isZipInvalid && 'inputFailure')}
                       />
+                      <small className="text-danger d-block OnboardingAlert">
+                       {this.state.isZipInvalid && <span>Please enter valid {(this.state.zipCode === '' || this.state.zipCode === null) && 'Zipcode'}</span>}
+                    </small>
                     </div>
                   </div>
                 </div>
