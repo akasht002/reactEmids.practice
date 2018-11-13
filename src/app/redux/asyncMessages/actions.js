@@ -34,6 +34,7 @@ export const AsyncMessageActions = {
     setopenedAsyncPage: 'set_opened_async_page/asynMessage',
     pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
     setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
+    clearConversation: 'clearConversation/asyncMessage',
 };
 
 export const setConversationSummary = (data) => {
@@ -336,8 +337,15 @@ export const onUnreadCountSuccess = data => {
 
 export function goToConversationSummary() {
     return (dispatch, getState) => {
+        dispatch(clearConversation());
         dispatch(push(Path.messageSummary));
     };
+};
+
+export const clearConversation = () => {
+    return {
+        type: AsyncMessageActions.clearConversation,
+    }
 };
 
 export function leaveConversation(data) {
