@@ -320,6 +320,21 @@ export function checkTeleHealth(data) {
                 ];
                 dispatch(onGetParticipantByConfernceIdSuccess(participants));
             }
+        } else if (data.messageType === 'Joined') {
+            if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
+                let participants = teleHealthState.participantsByConferenceId.map((participant) => {
+                    if (participant.userType === data.participantList[0].userType &&
+                        participant.userId === data.participantList[0].userId) {
+                            return {
+                                ...participant,
+                                status: 'Joined'
+                            }
+                    } else {
+                        return participant;
+                    }
+                });
+                dispatch(onGetParticipantByConfernceIdSuccess(participants));
+            }
         }
     }
 }

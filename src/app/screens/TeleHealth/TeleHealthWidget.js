@@ -292,7 +292,6 @@ class TeleHealthWidget extends Component {
                         <div className="VideoBackground" />
                         <div className="TeleHealthHeader">
                             <div className="TeleHealthDate">
-                                <span className="RoomId">Room ID<i>{this.props.roomId}</i></span>
                                 <div className='TeleHealthParticipants' onClick={() => { this.participantClick(this.state.activeRoom.localParticipant) }}>
                                     <input id='Participants' type='radio' name='Participants' value='0' />
                                     <label className='ParticipantsLinkLabel' htmlFor='Participants'>
