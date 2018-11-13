@@ -144,6 +144,12 @@ const asyncMessageState = (state = defaultState, action) => {
             ...state,
             removeParticipantConcurrencyExist: action.data
         }
+        case AsyncMessageActions.clearConversation:
+        return{
+        ...state,
+        conversation: {},
+        currentConversation: {}
+    }
         default:
             return state;
     }
