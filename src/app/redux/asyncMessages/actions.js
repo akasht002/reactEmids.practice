@@ -255,13 +255,26 @@ export function onSendNewMessage(data) {
         dispatch(startLoading());
         AsyncPost(API.sendMessage, data)
             .then(resp => {
-                dispatch(pushConversationMessage(resp.data.result));
+                dispatch(verifyIsConversationMessageExistSendMessage(resp.data.result));
                 dispatch(endLoading());
             })
             .catch(err => {
                 dispatch(endLoading())
             })
     }
+};
+
+const verifyIsConversationMessageExistSendMessage = (data) => {
+    return(dispatch, getState) => {
+        let state = getState();
+        let conversationMessageData = [...state.asyncMessageState.conversation.messages];
+        const index = conversationMessageData.indexOf(
+            conversationMessageData.filter(el => el.conversationMessageId === data.conversationMessageId)[0]
+        );
+        if(index === -1){
+            dispatch(pushConversationMessage(data));
+        }
+    };
 };
 
 export function onAddParticipant(data) {
