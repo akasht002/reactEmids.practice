@@ -41,7 +41,8 @@ class ParticipantsContainer extends Component {
             userId: participant.userId,
             participantType: participant.participantType,
             firstName: participant.firstName,
-            lastName: participant.lastName
+            lastName: participant.lastName,
+            thumbNail: participant.thumbNail
         };
         let updatedParticipants = [...this.state.selectedParticipants];
         const index = updatedParticipants.indexOf(

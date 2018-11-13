@@ -122,11 +122,9 @@ class Profile extends Component {
   }
 
   validationPopUp = () => {
-    debugger;
     let serviceOfferedList = this.props.serviceOfferedList && this.props.serviceOfferedList.length
-    let LanguagesList = this.props.LanguagesList && this.props.LanguagesList.length
-    let availableDays = this.props.availableDays && this.props.availableDays.length
-    if(serviceOfferedList === 0 || LanguagesList === 0 || availableDays === 0 ) {
+    let LanguagesList = this.props.LanguagesList && this.props.LanguagesList.languages.length
+    if(serviceOfferedList === 0 || LanguagesList === 0) {
       this.setState({ showValidationPopUp : true })
     } else {
       this.goToDashboard();
@@ -138,7 +136,7 @@ class Profile extends Component {
   }
 
   goToDashboard = () => {
-    this.props.goToDashboard
+    this.props.goToDashboard();
   }
 
   getWorkHistory = () => {
@@ -281,8 +279,8 @@ function mapStateToProps (state) {
     canCreateConversation: state.asyncMessageState.canCreateConversation,
     showTelehealthInvite: state.telehealthState.isInvitationCame,
     serviceOfferedList: state.profileState.serviceOfferedState.serviceOfferedList,
-    LanguagesList: state.profileState.LanguagesState.LanguagesList,
-    availableDays: state.profileState.AvailabilityState.availableDays
+    LanguagesList: state.profileState.LanguagesState.selectedLanguagesList,
+    // availableDays: state.profileState.AvailabilityState.availableDays
   }
 }
 

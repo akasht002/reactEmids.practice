@@ -23,7 +23,7 @@ import Sorting from "../ServiceRequestSorting"
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import Pagination from 'react-js-pagination';
-
+import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
 import { HIRED_STATUS_ID,RECURRING_PATTERN } from '../../../constants/constants';
@@ -145,8 +145,8 @@ class VisitServiceList extends Component {
     applyFilter = () => {
 
         let data = {
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
+            startDate: this.state.startDate === '' ? '1900-01-01' : this.state.startDate,
+            endDate: this.state.endDate === '' ? moment().toDate() : this.state.endDate,
             serviceStatus: uniqElementOfArray(this.state.serviceStatus),
             ServiceCategoryId: this.state.ServiceCategoryId,
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
@@ -413,7 +413,6 @@ class VisitServiceList extends Component {
                     handleserviceType={this.handleserviceType}
                     ServiceStatus={this.props.ServiceStatus}
                     handleChangeserviceStatus={this.handleChangeserviceStatus}
-                    serviceStatus={this.state.serviceStatus}
                     ServiceAreaList={this.props.ServiceAreaList}
                     handleServiceArea={this.handleServiceArea}
                     serviceArea={this.state.serviceArea}
