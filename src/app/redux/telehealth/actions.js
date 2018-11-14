@@ -201,6 +201,11 @@ export function GetParticipantByConferenceId() {
             + state.telehealthState.roomId).then((resp) => {
                 var data = resp.data && resp.data.filter((participant) => {
                     return userInfo.serviceProviderId !== participant.userId;
+                }).map((participant) => {
+                    return {
+                        ...participant,
+                        status: 'Invited'
+                    }
                 });
                 dispatch(onGetParticipantByConfernceIdSuccess(data));
                 dispatch(endLoading());

@@ -9,16 +9,17 @@ export const isStatusInArray = (data) => {
 }
 
 export const ServiceStatus = props => {
+  debugger;
   if (!isStatusInArray(props.status.id)) {    
     return (
       <React.Fragment>
-        <Button
+        {props.status.id !== 58 && <Button
           classname='btn btn-outline-primary mx-2 float-right'
           label='Not Interested'
           onClick={() => {
             props.postServiceRequest({ isInterested: false, isCancel: false })
           }}
-        />
+        />}
         <Button
           classname='btn outline btn-primary'
           label='Apply'

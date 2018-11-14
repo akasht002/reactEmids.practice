@@ -134,3 +134,4 @@ export const serviceTypesImage = {
     15: 'HAH - Laundry.svg',
     18: 'Transportation - General Transportation.svg' 
 }
+
