@@ -272,9 +272,11 @@ class VisitServiceList extends Component {
         var data = {
             sortByOrder: this.Newest ? "ASC" : "DESC",
             sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "VISITDATE",
-            fromDate: null,
-            toDate: null,
-            status: 0
+            pageNumber: 1,
+            PageSize: 10
+            // fromDate: null,
+            // toDate: null,
+            // status: 0
         }
         this.props.getSort(data);
         let element = document.getElementsByClassName("dropdown-menu")[1];

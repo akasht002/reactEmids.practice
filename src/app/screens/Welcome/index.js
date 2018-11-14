@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ScreenCover, Button } from '../../components';
 import { onLogin } from '../../redux/auth/login/actions';
+import {SLIDER_TIME} from '../../constants/config';
 import './styles.css';
 
 const images = require.context('../../assets/images/home', true);
@@ -33,6 +34,9 @@ class Welcome extends Component {
             sliderWidth: window.innerWidth,
             sliderHeight: window.innerHeight,
         });
+        this.interval = setInterval(() => {
+            this.nextSlide();
+        }, SLIDER_TIME);
     };
 
     prevSlide() {
@@ -60,7 +64,6 @@ class Welcome extends Component {
                 left: this.state.left - this.state.sliderWidth,
             });
         }
-        console.log(this.state.sliderTimer);
     };
 
     clickIndicator(e) {
@@ -76,7 +79,9 @@ class Welcome extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        if (this.interval) {
+            clearInterval(this.interval)
+        }
         window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
     }
 

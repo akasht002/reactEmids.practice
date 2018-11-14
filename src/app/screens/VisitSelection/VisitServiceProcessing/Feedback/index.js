@@ -209,7 +209,7 @@ class Feedback extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        {/* <Link className='btn btn-outline-primary mr-3' to='/VisitProcessing'>Previous</Link> */}
+                                        <Link className='btn btn-outline-primary mr-3' to='/performtasks'>Previous</Link>
                                         <a className='btn btn-primary' onClick={this.onClickNext}>Next</a>
                                     </div>
                                 </div>

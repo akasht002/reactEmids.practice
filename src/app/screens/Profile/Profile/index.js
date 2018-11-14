@@ -237,7 +237,7 @@ class Profile extends Component {
           />
         <ModalPopup
             isOpen={this.props.showTelehealthInvite}
-            ModalBody={<span>You have a new video conference invite.</span>}
+            ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}</span>}
             btn1="Accept"
             btn2="Decline"
             className="zh"
@@ -280,7 +280,10 @@ function mapStateToProps (state) {
     showTelehealthInvite: state.telehealthState.isInvitationCame,
     serviceOfferedList: state.profileState.serviceOfferedState.serviceOfferedList,
     LanguagesList: state.profileState.LanguagesState.selectedLanguagesList,
-    // availableDays: state.profileState.AvailabilityState.availableDays
+    // availableDays: state.profileState.AvailabilityState.availableDays,
+    initiatorFirstName: state.telehealthState.initiatorFirstName,
+    initiatorLastName: state.telehealthState.initiatorLastName,
+    personalDetail: state.profileState.PersonalDetailState.personalDetail,
   }
 }
 
