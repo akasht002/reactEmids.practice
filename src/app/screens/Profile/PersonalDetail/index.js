@@ -62,7 +62,6 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentwillrecieveprops', nextProps.personalDetail);
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       uploadedImageFile: nextProps.profileImgData.image
