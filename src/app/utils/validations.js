@@ -30,6 +30,10 @@ export function formattedDateMoment (date) {
   return date ? moment(new Date(date.toString())).format(DATE_FORMAT) : null
 }
 
+export function formattedDateMomentValue (date) {
+  return date ? moment(new Date(date.toString()), DATE_FORMAT) : null
+}
+
 export function formattedDateChange (event) {
   if (
     event.target.value.length === 10 &&

@@ -6,7 +6,7 @@ import { Calendar } from "../../../components";
 import { compare } from "../../../utils/comparerUtility";
 import { changeDateFormat, formatDate } from '../../../utils/dateUtility';
 import { DATE_FORMAT } from '../../../constants/constants';
-import { formattedDateMoment, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDate } from '../../../utils/validations';
+import { formattedDateMoment, formattedDateMomentValue, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDate } from '../../../utils/validations';
 
 class BlackoutModal extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class BlackoutModal extends Component {
         isDiscardModalOpen: false,
         isDisabledSaveBtn: true
       },
-     
+      isValid: true
     };
     this.fromMinDate = newDate();
     this.toMinDate = newDate();
@@ -30,7 +30,7 @@ class BlackoutModal extends Component {
   }
 
   dateChanged = (dateType, date) => {
-     const formattedDate = formattedDateMoment(date);
+     const formattedDate = formattedDateMomentValue(date);
      this.stateChange = true;
 
      if (dateType === 'fromDate') {
@@ -82,6 +82,7 @@ dateChangedRaw = (dateType, event) => {
       blackoutData: {
         ...prevState.blackoutData,
         remarks: value,
+        isRemarkInvalid: false,
         isDisabledSaveBtn: false
       }
     }));
@@ -98,7 +99,8 @@ dateChangedRaw = (dateType, event) => {
         blackoutData: {
           ...prevState.blackoutData,
           isDisabledSaveBtn: disabledSave
-        }
+        },
+        isValid: false
       }));
     } else {
       this.props.saveBlackout(this.state.blackoutData);
@@ -159,7 +161,8 @@ dateChangedRaw = (dateType, event) => {
           isDiscardModalOpen: false,
           fromDate: this.state.fromDate,
           toDate: this.state.toDate,
-          remarks: this.state.remarks
+          remarks: this.state.remarks,
+          isRemarkInvalid: true
       });
       this.props.closeBlackoutModal();
   }
@@ -212,17 +215,25 @@ dateChangedRaw = (dateType, event) => {
                   />
                 </div>
                 <div className="col-md-12 mb-2">
-                  <div className="form-group">
+                  <div className={"form-group"}>
                     <TextArea
                       name="Remarks"
                       placeholder="Remarks"
-                      className="form-control"
+                      className={"form-control " + (!this.state.isValid && !remarks && 'inputFailure')}
                       rows="5"
                       textChange={this.remarksChange}
                       maxlength={"500"}
                       value={remarks}
+                      onBlur={e => {
+                        if(!e.target.value) {
+                          this.setState({isRemarkInvalid: true})
+                        }
+                      }}
                     />
                   </div>
+                  
+                  {!this.state.isValid && (!remarks) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter Valid {(remarks === '' || remarks === undefined) && ' Remark'}</span>}
+                 
                 </div>
               </div>
             </form>

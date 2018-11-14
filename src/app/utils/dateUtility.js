@@ -8,6 +8,10 @@ export function formatDate(date, dateFormat) {
     return getMomentDate(date).format(dateFormat);
 }
 
+export function formatDateValue(date, dateFormat) {
+    return getMomentDate(date, dateFormat);
+}
+
 export function changeDateFormat(value) {
     const onlyNums = value.replace(/[^\d]/g, '');
     if (onlyNums.length <= 2) {

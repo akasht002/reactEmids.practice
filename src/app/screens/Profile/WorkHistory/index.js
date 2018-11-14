@@ -9,7 +9,8 @@ import { checkSpace, checkDateFormatNumber, formateStateDate } from "../../../ut
 import { compare } from "../../../utils/comparerUtility";
 import {
     formatDate,
-    changeDateFormat
+    changeDateFormat,
+    formatDateValue
 } from '../../../utils/dateUtility';
 
 import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, deleteWorkHistory } from "../../../redux/profile/WorkHistory/actions";
@@ -187,7 +188,7 @@ class WorkHistory extends Component {
     }
 
     dateChanged = (date) => {
-        const formattedDate = date ? formatDate(date, DATE_FORMAT) : null;
+        const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
         this.setState({ fromDate: formattedDate, disabledSaveBtn: false, toDate: null });
         
     }
@@ -208,7 +209,7 @@ class WorkHistory extends Component {
         }
 
         todateChanged = (date) => {
-            const formattedDate = date ? formatDate(date, DATE_FORMAT) : null;
+            const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
             this.setState({ toDate: formattedDate, disabledSaveBtn: false });
             
         }
