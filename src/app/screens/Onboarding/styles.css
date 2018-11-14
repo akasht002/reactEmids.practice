@@ -156,6 +156,12 @@ margin-left: 5px !important;
 color: #444;
 }
 
+.succss-idblock
+{
+    margin-top: 30px;
+    display: block;
+}
+
 /*cross-browser-bug-fixed-e11*/
 
 @media all and (-ms-high-contrast:none)

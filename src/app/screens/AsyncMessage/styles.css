@@ -1885,6 +1885,12 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
 }
 
 
+.participantsSearchForm .ParticipantsListContainer .participantsSearchList.ChatContainer
+{
+    padding-bottom: 100px;
+}
+
+
 
 /*** end of button styles ***/
 
