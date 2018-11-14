@@ -267,7 +267,7 @@ class TeleHealthWidget extends Component {
         };
 
         let sliderCategory = [];
-        this.state.activeRoom && _.forEach(this.state.activeRoom.participants,(participant) => {
+        this.state.activeRoom && this.state.activeRoom.participants.forEach((participant) => {
             var tracks = Array.from(participant.tracks.values());
             let cat = <div className='TeleHealthParticipants' onClick={() => { this.participantClick(participant) }}>
                 <input id={'Participants' + participant.sid} type='radio' name='Participants' value={participant.sid} />
@@ -280,7 +280,9 @@ class TeleHealthWidget extends Component {
             sliderCategory.push(cat);
             setTimeout(() => {
                 _.forEach(tracks,track => {
-                    this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+                    if (this.refs['remoteVideo' + participant.sid]) {
+                        this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+                    }
                 });
             }, 1000)
         })
