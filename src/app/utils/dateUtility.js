@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export function getMomentDate(date) {
-    return moment(new Date(date.toString()));
+    return date ? moment(new Date(date.toString())) : null;
 }
 
 export function formatDate(date, dateFormat) {

@@ -82,7 +82,7 @@ export function editWorkHistory(data) {
         };
         dispatch(startLoading());
         Get(API.WorkHistory + `${serviceProviderId}/WorkHistory/${workHistoryId}`, modal).then((resp) => {
-            dispatch(getWorkhistoryFieldDetails(resp.data))
+            dispatch(getWorkhistoryFieldDetails(resp.data));
             dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {

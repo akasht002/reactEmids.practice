@@ -233,7 +233,6 @@ class WorkHistory extends Component {
         let modalContent;
         let modalTitle;
 
-
         const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
                 <div className="col-md-12 mb-2">
@@ -293,7 +292,7 @@ class WorkHistory extends Component {
                         <label>From Date</label>
                         <Calendar
                             id="fromDate"
-                            startDate={this.state.fromDate && moment(this.state.fromDate)}
+                            startDate={this.state.fromDate && moment(this.state.fromDate, DATE_FORMAT)}
                             onDateChange={this.dateChanged}
                             onDateChangeRaw={this.dateChangedRaw}
                             mandatory={true}
@@ -310,7 +309,7 @@ class WorkHistory extends Component {
                         <label>To Date</label>
                         <Calendar
                             id="toDate"
-                            startDate={this.state.toDate && moment(this.state.toDate)}
+                            startDate={this.state.toDate && moment(this.state.toDate, DATE_FORMAT)}
                             onDateChange={this.todateChanged}
                             onDateChangeRaw={this.todateChangedRaw}
                             mandatory={true}
@@ -327,7 +326,9 @@ class WorkHistory extends Component {
                     <div className="form-check">
                         <label className="form-check-label">
                             <input className="form-check-input" type="checkbox" value={this.state.isWorking} id="defaultCheck1"
-                                onChange={(e) => this.setState({ isWorking: e.target.checked, disabledSaveBtn: false })}
+                                onChange={(e) => 
+                                    this.setState({ isWorking: e.target.checked, disabledSaveBtn: false, toDate: moment(new Date())}
+                                )}
                             />
                             I am currently working here
                             <span className="CheckboxIcon" />
@@ -363,16 +364,17 @@ class WorkHistory extends Component {
                                 {WorkHistoryList.designation} - <span>{WorkHistoryList.company}</span>
                             </h5>
                             <span className="ml-auto SPWorkYear">
-                                <Moment format='MMM YYYY' className="mr-2">
-                                    {WorkHistoryList.fromDate}
-                                </Moment>
-                                -
+                            <span>
+                                {WorkHistoryList.fromDate }
+                            </span>
+
+                               <span> - </span>
                                  {WorkHistoryList.toDate === '01-01-1900' ?
-                                    <span className="ml-2">Present</span>
+                                    <span>Present</span>
                                     :
-                                    <Moment format='MMM YYYY' className="ml-2">
+                                    <span> { /* to do change removing className="ml-2" */}
                                         {WorkHistoryList.toDate}
-                                    </Moment>
+                                    </span>
                                 }
                             </span>
                         </div>
