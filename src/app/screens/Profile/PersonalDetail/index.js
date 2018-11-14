@@ -738,7 +738,7 @@ class PersonalDetail extends React.PureComponent {
             textChange={e => {
               const onlyNums = e.target.value.replace(/[^0-9]/g, '')
               if (onlyNums.length < 5) {
-                this.setState({ hourlyRate: onlyNums })
+                this.setState({ hourlyRate: onlyNums, disabledSaveBtn: true })
               } else if (onlyNums.length === 5) {
                 const number = onlyNums.replace(
                   /(\d{3})(\d{2})/,
@@ -750,7 +750,10 @@ class PersonalDetail extends React.PureComponent {
             }
           }
           onBlur={e => {
-            if(!e.target.value) {
+            if(
+              (!e.target.value) ||
+              getLength(e.target.value) <= 5
+            ) {
               this.setState({hourlyRateInvalid: true})
             }
           }}
