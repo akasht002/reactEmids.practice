@@ -8,7 +8,8 @@ import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
 
 export const QuestionsList = {
-  getQuestionsListSuccess: 'get_questions_list_success/performtasks'
+  getQuestionsListSuccess: 'get_questions_list_success/performtasks',
+  formDirtyFeedback: 'formDirtyFeedback/performtasks'
 }
 
 export const getQuestionsListSuccess = data => {
@@ -17,6 +18,13 @@ export const getQuestionsListSuccess = data => {
     data
   }
 }
+
+export const formDirtyFeedback = () => {
+  return {
+      type: QuestionsList.formDirtyFeedback,
+  }
+}
+
 
 export function getQuestionsList () {
   return dispatch => {

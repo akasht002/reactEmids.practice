@@ -410,11 +410,7 @@ export function getLinkedParticipantsByPatients(data) {
             '/' + USER_TYPE +
             '/' + serchText)
             .then(resp => {
-                let modifiedData = [
-                    data,
-                    ...resp.data
-                ];
-                dispatch(getLinkedParticipantsByPatientsSuccess(modifiedData));
+                dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
                 dispatch(endLoading())
             })
             .catch(err => {
