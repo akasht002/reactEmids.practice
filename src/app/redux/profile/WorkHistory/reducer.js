@@ -5,7 +5,16 @@ import {
 const defaultState = {
     workhistoryList:[],
     addeworkhistorySuccess: false,
-    workhistoyFieldDetails: ''
+    workhistoyFieldDetails: {
+        designation: '',
+        company: '',
+        location: '',
+        fromDate: '',
+        toDate: '',
+        description:'',
+        isWorking:false,
+        workHistoryId:''
+    }
 };
 
 const WorkHistoryState = (state = defaultState, action) => {
@@ -27,7 +36,7 @@ const WorkHistoryState = (state = defaultState, action) => {
                     fromDate: '',
                     toDate: '',
                     description:'',
-                    isWorking:'',
+                    isWorking:false,
                     workHistoryId:''
                     
                 }
