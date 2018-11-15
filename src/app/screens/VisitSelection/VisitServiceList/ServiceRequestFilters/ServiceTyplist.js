@@ -14,7 +14,8 @@ function ServiceTypeList(props){
                    value={props.serviceType}
                    checked={item.isChecked}
                     onChange={(e)=>{
-                        props.handleserviceType(item)}
+                        item.isChecked = e.target.checked;
+                        props.handleserviceType(item,e)}
                     }
                 />
                 <label htmlFor={"ServiceList"+catNum}>{item.serviceTypeDescription}</label>

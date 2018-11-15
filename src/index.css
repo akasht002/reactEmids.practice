@@ -804,6 +804,14 @@ div.RICC{
 .Select.is-focused:not(.is-open)>.Select-controll{
     border-color: #7a329f!important;
 }
+
+body{
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+}
  @media all and (-ms-high-contrast:none)
      {
         .react-datepicker__input-container { background-size: 16px 16px; } /* IE10 */

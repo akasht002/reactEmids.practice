@@ -42,7 +42,7 @@ export const API = {
     startOrStopService: 'VisitProcessing/ServiceRequestVisit/',
     SendResetPasswordLink: 'api/User/',
     getEmailIdByUserId: 'user/verifypasswordlink/',
-    resetPassword: 'user',
+    resetPassword: 'api/user',
     getPersonalDetail: 'ServiceProvider/',
     updatePersonalDetail: 'ServiceProvider/',
     getCity: 'ServiceProviderLookUp/GetState',
@@ -140,4 +140,6 @@ export const API = {
     getAllPatientForServiceProviders: 'ServiceRequest/GetPatientForServiceProvider/',
     getServiceRequestCountOfFilters: 'Search/NumberOfServiceRequestsFilter',
     rejectConference: 'VideoConferencing/RejectConference',
+    getVisitNotification: 'ServiceProvider/GetAllNotifications/',
+    getVisitNotificationCount: 'ServiceProvider/GetAllNotificationsCount/'
 }

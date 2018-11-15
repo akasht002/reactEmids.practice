@@ -36,8 +36,8 @@ class VisitServiceList extends Component {
             serviceRequestId: '',
             isOpen: false,
             filterOpen: false,
-            startDate: '1900-01-01',
-            endDate: moment(),
+            startDate: '',
+            endDate: '',
             serviceStatus: [],
             isValid: true,
             selectedOption: null,
@@ -168,9 +168,9 @@ class VisitServiceList extends Component {
     handleSortFilterChange = pageNumber => {
         this.setState({ pageNumber: pageNumber });
         let number;
-        if(pageNumber === 1){
+        if (pageNumber === 1) {
             number = 0
-        }else{
+        } else {
             number = pageNumber
         }
         let serviceProviderId = getUserInfo().serviceProviderId;
@@ -199,7 +199,6 @@ class VisitServiceList extends Component {
             serviceTypes: [],
             isValid: true,
             selectedOption: '',
-            filterOpen: !this.state.filterOpen
         })
         this.props.clearServiceCategory(this.props.ServiceType);
         this.props.clearServiceArea(this.props.ServiceAreaList);
@@ -215,14 +214,22 @@ class VisitServiceList extends Component {
     handleChangeServiceCategory = (selectedOption) => {
         this.setState({
             ServiceCategoryId: selectedOption.label,
-            selectedOption: selectedOption
+            selectedOption: selectedOption,
         });
         this.props.getServiceType(selectedOption)
+        this.setState({ serviceTypes: [] })
     }
 
-    handleserviceType = (item) => {
+    handleserviceType = (item, e) => {
         let serviceType = this.state.serviceTypes
-        serviceType.push(item.serviceTypeDescription)
+        if (e.target.checked) {
+            serviceType.push(item.serviceTypeDescription)
+        }
+        else {
+            serviceType.splice(serviceType.findIndex(function (item, index) {
+                return item.serviceTypeDescription === (item.serviceTypeDescription);
+            }), 1);
+        }
         this.setState({
             serviceTypes: serviceType
         })

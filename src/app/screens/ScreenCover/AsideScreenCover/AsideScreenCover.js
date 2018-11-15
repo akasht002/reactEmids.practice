@@ -15,22 +15,24 @@ import Help from '../../../assets/HelpDoc/Help.pdf';
 import { getAboutUsContent } from '../../../redux/aboutUs/actions';
 import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
-import {CanServiceProviderCreateMessage} from '../../../redux/asyncMessages/actions';
+import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/actions';
 import { onLogout } from '../../../redux/auth/logout/actions';
-import {extractRole, authorizePermission} from '../../../utils/roleUtility';
-import {SCREENS} from '../../../constants/constants';
+import { extractRole, authorizePermission } from '../../../utils/roleUtility';
+import { SCREENS } from '../../../constants/constants';
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
 import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
+import  VisitNotification  from '../../VisitProcessingNotification/VisitNotification';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            profilePermission: extractRole(SCREENS.PROFILE)
+            profilePermission: extractRole(SCREENS.PROFILE),
+            showNotification: false
         }
     }
 
@@ -54,6 +56,9 @@ class AsideScreenCover extends React.Component {
 
     navigateProfileHeader = (link) => {
         switch (link) {
+            case 'visitNotification':
+            this.setState({selectedLink: link, showNotification: !this.state.showNotification});
+            break;
             case 'messagesummary':
                 this.props.navigateProfileHeader(link);
                 break;
@@ -63,8 +68,8 @@ class AsideScreenCover extends React.Component {
             case 'logout':
                 this.props.onLogout();
                 break;
-            default: 
-                this.setState({selectedLink: link})
+            default:
+                this.setState({ selectedLink: link })
                 break;
         }
     };
@@ -100,18 +105,18 @@ class AsideScreenCover extends React.Component {
                             <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</a>
                         </div>
                     </div>
-                        <AsideMenu menuData={menuData} url={this.props}/>
+                    <AsideMenu menuData={menuData} url={this.props} />
                 </div>
                 <div className="container-fluid ProfileRightWidget">
-                        <ProfileHeader 
-                            headerMenu={headerMenu}
-                            profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
-                                    : require('../../../assets/images/Blank_Profile_icon.png')} 
-                            toggle={this.props.toggle} 
-                            onClick={(link) => this.navigateProfileHeader(link)}
-                        />
-                
-                    <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
+                    <ProfileHeader
+                        headerMenu={headerMenu}
+                        profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
+                            : require('../../../assets/images/Blank_Profile_icon.png')}
+                        toggle={this.props.toggle}
+                        onClick={(link) => this.navigateProfileHeader(link)}
+                    />
+
+                    <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
                     <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '') + ' ' + (this.props.async === 'active' ? 'async' : '')}>
                         {this.props.children}
@@ -160,6 +165,11 @@ class AsideScreenCover extends React.Component {
                     onConfirm={this.props.joinVideoConference}
                     onCancel={this.props.rejectConference}
                 />
+                <VisitNotification
+                    isOpen={this.state.showNotification}
+                   // visitNotification={this.props.visitNotification}
+                    toggle={() => { this.setState({ showNotification: !this.state.showNotification }) }}
+                />
             </ScreenCover>
         )
     }
@@ -196,6 +206,7 @@ function mapStateToProps(state) {
         showTelehealthInvite: state.telehealthState.isInvitationCame,
         initiatorFirstName: state.telehealthState.initiatorFirstName,
         initiatorLastName: state.telehealthState.initiatorLastName,
+        visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification, 
     };
 };
 
