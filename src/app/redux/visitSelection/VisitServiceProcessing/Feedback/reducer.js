@@ -15,6 +15,12 @@ const FeedbackState = (state = defaultState, action) => {
                 QuestionsList: action.data
             };
 
+        case QuestionsList.formDirtyFeedback:
+            return {
+                ...state,
+                QuestionsList: {}
+            };
+
         default:
             return state;
     }

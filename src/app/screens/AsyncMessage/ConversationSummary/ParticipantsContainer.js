@@ -44,7 +44,8 @@ class ParticipantsContainer extends Component {
         };
         let updatedParticipants = [...this.state.selectedParticipants];
         const index = updatedParticipants.indexOf(
-            updatedParticipants.filter(el => el.userId === participant.userId)[0]
+            updatedParticipants.filter(el => el.userId === participant.userId
+                && el.participantType === participant.participantType)[0]
         );
         if (event.target.checked && index === -1) {
             this.setState({ selectedParticipants: [...this.state.selectedParticipants, selectedParticipant] });
@@ -135,6 +136,10 @@ class ParticipantsContainer extends Component {
             <SelectPatient
                 onSelect={this.onSelectPatient}
                 patients={this.props.patients} />
+            { (Object.getOwnPropertyNames(this.state.selectedPatientDetails).length === 0) &&
+            <span className="text-danger d-block">
+                Please select an Individual to continue.
+            </span>}
 
             <p className="primaryColor mb-0 mt-4">Add Participants</p>
             <ParticipantsList

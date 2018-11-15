@@ -23,12 +23,13 @@ import {SCREENS} from '../../../constants/constants';
 import {authorizePermission} from '../../../utils/roleUtility';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
-import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
+import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
 import './styles.css'
 
 class Profile extends Component {
   state = {
-    selectedLink: ''
+    selectedLink: '',
+    showValidationPopUp : false
   };
   componentDidMount () {
     this.props.getProfilePercentage()
@@ -57,7 +58,8 @@ class Profile extends Component {
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
     !getUserInfo().isEntityServiceProvider) {
      return <Availability />
-    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && 
+    getUserInfo().entityId === 0) {
       return <Availability />
     } else {
       return '';
@@ -119,6 +121,24 @@ class Profile extends Component {
      }
   }
 
+  validationPopUp = () => {
+    let serviceOfferedList = this.props.serviceOfferedList && this.props.serviceOfferedList.length
+    let LanguagesList = this.props.LanguagesList && this.props.LanguagesList.languages &&  this.props.LanguagesList.languages.length
+    if(serviceOfferedList === 0 && LanguagesList === 0) {
+      this.setState({ showValidationPopUp : true })
+    } else {
+      this.goToDashboard();
+    }
+  }
+
+  stayOnProfile = () => {
+    this.setState({ showValidationPopUp : false})
+  }
+
+  goToDashboard = () => {
+    this.props.goToDashboard();
+  }
+
   getWorkHistory = () => {
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
       !getUserInfo().isEntityServiceProvider) {
@@ -175,16 +195,16 @@ class Profile extends Component {
               <div className='row d-flex-view justify-content-center m-auto'>
                 <div className='col-md-12'>
                   <h4 className='my-3 text-white SPTitleText'>
-                    <Link className='BrandLink' to={Path.dashboard}>
-                      <i className='Icon icon-back' />
-                    </Link>
+                    <a className='BrandLink Icon icon-back' onClick={this.validationPopUp}>
+                    </a>
                     Profile
                   </h4>
                 </div>
                 {this.getPersonalDetail()}
                 {
-                  (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-                  !getUserInfo().isEntityServiceProvider) ? <div>
+                  // (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+                  // !getUserInfo().isEntityServiceProvider) ? 
+                  <div>
                
                 <div className='col-md-12 card CardWidget SPCertificate'>
                 {this.getServiceOffered()}
@@ -201,11 +221,9 @@ class Profile extends Component {
                 </div>
                 {this.getWorkHistory()}
                 {this.getEducation()}
-               {this.getAvailability()} </div> : <div>{this.getEducation()}</div>
+               {this.getAvailability()} </div> 
+              //  : <div>{this.getEducation()}</div>
               }
-              
-               
-
               </div>
             </div>
           </div>
@@ -219,16 +237,27 @@ class Profile extends Component {
           />
         <ModalPopup
             isOpen={this.props.showTelehealthInvite}
-            ModalBody={<span>You have a new video conference invite.</span>}
+            ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}</span>}
             btn1="Accept"
             btn2="Decline"
             className="zh"
             headerFooter="d-none"
             centered={true}
             onConfirm={this.props.joinVideoConference}
-            onCancel={this.props.clearInvitaion}
+            onCancel={this.props.rejectConference}
         />
           
+        <ModalPopup
+        isOpen={this.state.showValidationPopUp}
+        ModalBody={<span>To increase your visibility across the care seeker network, please provide your Profile Information, Services Offered, Language Spoken and Availability. Do you want to continue with updating?</span>}
+        btn1="Yes"
+        btn2="No"
+        className="zh"
+        headerFooter="d-none"
+        centered={true}
+        onConfirm={this.stayOnProfile}
+        onCancel={this.goToDashboard}
+    />
       </ScreenCover>
     )
   }
@@ -239,7 +268,9 @@ function mapDispatchToProps (dispatch) {
     getProfilePercentage: () => dispatch(getProfilePercentage()),
     navigateProfileHeader: (link) => dispatch(push(link)),
     clearInvitaion: () => dispatch(clearInvitaion()),
-    joinVideoConference: () => dispatch(joinVideoConference())
+    joinVideoConference: () => dispatch(joinVideoConference()),
+    goToDashboard: () => dispatch(push(Path.dashboard)),
+    rejectConference: () => dispatch(rejectConference())
   }
 }
 
@@ -247,7 +278,13 @@ function mapStateToProps (state) {
   return {
     profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
     canCreateConversation: state.asyncMessageState.canCreateConversation,
-    showTelehealthInvite: state.telehealthState.isInvitationCame
+    showTelehealthInvite: state.telehealthState.isInvitationCame,
+    serviceOfferedList: state.profileState.serviceOfferedState.serviceOfferedList,
+    LanguagesList: state.profileState.LanguagesState.selectedLanguagesList,
+    // availableDays: state.profileState.AvailabilityState.availableDays,
+    initiatorFirstName: state.telehealthState.initiatorFirstName,
+    initiatorLastName: state.telehealthState.initiatorLastName,
+    personalDetail: state.profileState.PersonalDetailState.personalDetail,
   }
 }
 

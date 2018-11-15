@@ -216,3 +216,20 @@ margin: 10px 0px;
   .SortBlock .btn-group .multiselect-container li label.checkbox:focus, .SortBlock .btn-group .multiselect-container li label.checkbox:active, .SortBlock .btn-group .multiselect-container li a:focus{
     outline: 0;
   }
+
+  /* .ProfileHeaderOption .SortBlock .SortMenu .dropdown-item-checked {
+    background-color: transparent !important; 
+    color: #7a329f !important;
+}
+.ProfileHeaderOption .SortBlock .SortMenu .dropdown-item-checked:after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 12px;
+  height: 12px;
+  width: 12px;
+  background-image: url(/static/media/checked_purple.ff93f2ba.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+} */

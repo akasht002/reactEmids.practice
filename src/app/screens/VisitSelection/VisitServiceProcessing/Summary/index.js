@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
-import { Scrollbars, DashboardWizFlow, GeneralModalPopup, ModalPopup } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
 import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
@@ -50,6 +50,12 @@ class Summary extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.SummaryDetails.signature) {
+            this.signaturePad.fromDataURL(nextProps.SummaryDetails.signature);
+            if (nextProps.SummaryDetails.signature !== 'data:image/jpeg;base64,') {
+                this.setState({ signatureImage: nextProps.SummaryDetails.signature })
+            }
+        }
         this.setState({
             summaryDetails: nextProps.SummaryDetails,
             updatedHour: nextProps.CalculationsData.totalHours,
@@ -63,7 +69,7 @@ class Summary extends Component {
     }
 
     togglePopup = () => {
-        this.setState({ isModalOpen: !this.state.isModalOpen })
+        this.setState({ isModalOpen: false })
     }
 
     AdjustTime = () => {
@@ -124,8 +130,8 @@ class Summary extends Component {
 
     timerErrMessage = () => {
         if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
-            this.state.updatedMin > this.props.CalculationsData.totalMinutes ||
-            this.state.updatedSec > this.props.CalculationsData.totalSeconds) {
+            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
+            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
@@ -151,6 +157,15 @@ class Summary extends Component {
     render() {
 
         let modalContent = '';
+
+        let validationContent = '';
+
+        if (this.state.disableSignatureBtn) {
+            validationContent = <span>Please provide the customer signature.</span>
+        } else {
+            validationContent = <span>Please save the customer signature.</span>
+        }
+
 
         let completedTaskPercent = Math.round((this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100);
 
@@ -232,7 +247,7 @@ class Summary extends Component {
                                 <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
                                     </div>
                                     <div className='requestImageContent'>
 
@@ -357,6 +372,7 @@ class Summary extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
+                                        <Link className='btn btn-outline-primary mr-3' to='/feedback'>Previous</Link>
                                         <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
                                     </div>
                                 </div>
@@ -364,23 +380,20 @@ class Summary extends Component {
                         </div>
                     </div>
                     <div className='cardBottom' />
-                    <GeneralModalPopup
+                    <ProfileModalPopup
                         isOpen={this.state.isModalOpen}
                         toggle={this.togglePopup}
                         ModalBody={modalContent}
+                        className="modal-lg asyncModal ModalPadding0"
                         modalTitle={'Adjust Time'}
-                        className="modal-lg asyncModal CertificationModal"
-                        centered={true}
-                        label={'Update'}
-                        onClick={() => {
-                            this.timerErrMessage()
-                            // this.setState({ isModalOpen: !this.state.isModalOpen })
-                        }}
+                        centered="true"
+                        onClick={this.timerErrMessage}
+                        buttonLabel={'Update'}
                     />
 
                     <ModalPopup
                         isOpen={this.state.isSignatureModalOpen}
-                        ModalBody={<span>Please provide the customer signature.</span>}
+                        ModalBody={validationContent}
                         btn1="OK"
                         className="modal-sm"
                         headerFooter="d-none"
@@ -392,17 +405,17 @@ class Summary extends Component {
 
                     <ModalPopup
                         isOpen={this.state.isProccedModalOpen}
-                        ModalBody={<span>Do you want to proceed for payment.</span>}
-                        btn1="No"
-                        btn2="Yes"
+                        ModalBody={<span>Do you want to proceed for payment?</span>}
+                        btn1="Yes"
+                        btn2="No"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onCancel={() => {
+                        onConfirm={() => {
                             this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen }),
                                 this.onClickNext()
                         }}
-                        onConfirm={() => this.setState({ isProccedModalOpen: false })}
+                        onCancel={() => this.setState({ isProccedModalOpen: false })}
                     />
                 </Scrollbars>
             </AsideScreenCover>

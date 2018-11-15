@@ -50,10 +50,10 @@ class PaymentSuccess extends Component {
 
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <i className="TitleContent backProfileIcon" />
+                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
                                     </div>
                                     <div className='requestImageContent'>
                                         {this.props.patientDetails.patient ?
@@ -98,7 +98,7 @@ class PaymentSuccess extends Component {
 
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <Link className='btn btn-primary' to='/visitservicelist'>Done</Link>
+                                        <Link className='btn btn-primary' to='/visitservicedetails'>Done</Link>
                                     </div>
                                 </div>
                             </form>

@@ -11,10 +11,11 @@ import {
     pushConversation,
     updateReadStatus,
     ClearCurrentOpenConversation,
-    openedAsyncPage
+    openedAsyncPage,    
+    setRemoveParticipantConcurrency
 } from '../../../redux/asyncMessages/actions';
 import ModalTemplate from '../Modals/Modal';
-import { Preloader } from '../../../components';
+import { Preloader, ModalPopup } from '../../../components';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import { USERTYPES } from '../../../constants/constants';
@@ -335,6 +336,16 @@ class Conversation extends Component {
                         headerFooter="d-none"
                         centered={true}
                     />
+
+                    <ModalPopup
+                        isOpen={this.props.removeParticipantConcurrencyExist}
+                        ModalBody={<span>Please note that your information was unable to be saved due to another user updating the same information at the same time. Return to further update as needed.</span>}
+                        btn1="Ok"
+                        className="zh"
+                        headerFooter="d-none"
+                        centered={true}
+                        onConfirm={() => this.props.setRemoveParticipantConcurrency(false)}
+                    />
             </AsideScreenCover>
         )
     }
@@ -350,7 +361,8 @@ function mapDispatchToProps(dispatch) {
         pushConversation: (data) => dispatch(pushConversation(data)),
         updateUnreadCount: (data) => dispatch(updateReadStatus(data)),
         clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation()),
-        openedAsyncPage: (data) => dispatch(openedAsyncPage(data))
+        openedAsyncPage: (data) => dispatch(openedAsyncPage(data)),
+        setRemoveParticipantConcurrency: (data ) => dispatch(setRemoveParticipantConcurrency(data)),
     }
 };
 
@@ -360,8 +372,7 @@ function mapStateToProps(state) {
         isLoading: state.asyncMessageState.isLoading,
         currentConversation: state.asyncMessageState.currentConversation,
         loggedInUser: state.authState.userState.userData.userInfo,
-        
-
+        removeParticipantConcurrencyExist: state.asyncMessageState.removeParticipantConcurrencyExist,
     }
 };
 

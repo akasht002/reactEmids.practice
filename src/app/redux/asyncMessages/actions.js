@@ -31,7 +31,10 @@ export const AsyncMessageActions = {
     setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
     clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage',
     setConversationCount: 'set_conversation_count/asyncMessage',
-    setopenedAsyncPage: 'set_opened_async_page/asynMessage'
+    setopenedAsyncPage: 'set_opened_async_page/asynMessage',
+    pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
+    setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
+    clearConversation: 'clearConversation/asyncMessage',
 };
 
 export const setConversationSummary = (data) => {
@@ -44,6 +47,13 @@ export const setConversationSummary = (data) => {
 export const pushConversation = (data) => {
     return {
         type: AsyncMessageActions.pushConversation,
+        data
+    }
+};
+
+export const pushConversationMessage = (data) => {
+    return {
+        type: AsyncMessageActions.pushConversationMessage,
         data
     }
 };
@@ -104,7 +114,7 @@ export function getConversationItemSignalR(conversationId, messageId){
                 + userType
             )
             .then(resp => {
-                dispatch(pushConversation(resp.data));
+                dispatch(verifyIsConversationMessageExist(resp.data));
                 dispatch(updateReadStatus(data));
                 dispatch(endLoading());
             })
@@ -245,12 +255,26 @@ export function onSendNewMessage(data) {
         dispatch(startLoading());
         AsyncPost(API.sendMessage, data)
             .then(resp => {
+                dispatch(verifyIsConversationMessageExistSendMessage(resp.data.result));
                 dispatch(endLoading());
             })
             .catch(err => {
                 dispatch(endLoading())
             })
     }
+};
+
+const verifyIsConversationMessageExistSendMessage = (data) => {
+    return(dispatch, getState) => {
+        let state = getState();
+        let conversationMessageData = [...state.asyncMessageState.conversation.messages];
+        const index = conversationMessageData.indexOf(
+            conversationMessageData.filter(el => el.conversationMessageId === data.conversationMessageId)[0]
+        );
+        if(index === -1){
+            dispatch(pushConversationMessage(data));
+        }
+    };
 };
 
 export function onAddParticipant(data) {
@@ -276,7 +300,10 @@ export function onRemoveParticipant(data) {
                 dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
+                dispatch(endLoading());
+                if(err.response && err.response.status === 400){
+                    dispatch(setRemoveParticipantConcurrency(true));
+                }
             })
     }
 };
@@ -323,8 +350,15 @@ export const onUnreadCountSuccess = data => {
 
 export function goToConversationSummary() {
     return (dispatch, getState) => {
+        dispatch(clearConversation());
         dispatch(push(Path.messageSummary));
     };
+};
+
+export const clearConversation = () => {
+    return {
+        type: AsyncMessageActions.clearConversation,
+    }
 };
 
 export function leaveConversation(data) {
@@ -376,11 +410,7 @@ export function getLinkedParticipantsByPatients(data) {
             '/' + USER_TYPE +
             '/' + serchText)
             .then(resp => {
-                let modifiedData = [
-                    data,
-                    ...resp.data
-                ];
-                dispatch(getLinkedParticipantsByPatientsSuccess(modifiedData));
+                dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
                 dispatch(endLoading())
             })
             .catch(err => {
@@ -562,4 +592,24 @@ const getConversationCountSuccess = (data) =>{
         type: AsyncMessageActions.setConversationCount,
         data
     }
-}
+};
+
+const verifyIsConversationMessageExist = (data) => {
+    return(dispatch, getState) => {
+        let state = getState();
+        let conversationMessageData = [...state.asyncMessageState.conversation.messages];
+        const index = conversationMessageData.indexOf(
+            conversationMessageData.filter(el => el.conversationMessageId === data.messages[0].conversationMessageId)[0]
+        );
+        if(index === -1){
+            dispatch(pushConversation(data));
+        }
+    };
+};
+
+export function setRemoveParticipantConcurrency (data){
+    return {
+        type: AsyncMessageActions.setRemoveParticipantConcurrency,
+        data
+    }
+ };

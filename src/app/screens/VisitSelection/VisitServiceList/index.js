@@ -6,7 +6,6 @@ import { getVisitServiceList, getServiceRequestCount } from '../../../redux/visi
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
-import { getFirstCharOfString } from '../../../utils/stringHelper'
 import {
     VISIT_SERVICE_STATUS_OPEN,
     VISIT_SERVICE_STATUS_APPLIED,
@@ -15,7 +14,7 @@ import {
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
-import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea, clearServiceCategory, clearServiceArea, clearServiceRequestStatus } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea, clearServiceCategory, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus, getFilterDataCount, formDirty } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -23,10 +22,11 @@ import Sorting from "../ServiceRequestSorting"
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import Pagination from 'react-js-pagination';
-
+import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
-import { HIRED_STATUS_ID,RECURRING_PATTERN } from '../../../constants/constants';
+import { HIRED_STATUS_ID, RECURRING_PATTERN } from '../../../constants/constants';
+import { getUserInfo } from '../../../services/http';
 
 class VisitServiceList extends Component {
 
@@ -44,10 +44,10 @@ class VisitServiceList extends Component {
             ServiceCategoryId: '',
             serviceTypes: [],
             isSortOpen: false,
-            PostedDate:false,
-            VisitDate:false,
-            Newest:false,
-            Oldest:false,
+            PostedDate: false,
+            VisitDate: false,
+            Newest: false,
+            Oldest: false,
             serviceArea: '',
             coverageArea: '',
             lat: '',
@@ -56,8 +56,10 @@ class VisitServiceList extends Component {
             isChecked: false,
             activePage: 1,
             pageNumber: 1,
-            pageSize: 9 
+            pageSize: 9,
+            sort: 'false'
         };
+        this.sort = false
     };
 
     toggle() {
@@ -68,8 +70,8 @@ class VisitServiceList extends Component {
 
     componentDidMount() {
         let data = {
-            pageNumber:this.state.pageNumber,
-            pageSize:this.state.pageSize
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
         }
         this.props.getVisitServiceList(data);
         this.props.getServiceCategory();
@@ -143,21 +145,50 @@ class VisitServiceList extends Component {
     }
 
     applyFilter = () => {
-
+        let serviceProviderId = getUserInfo().serviceProviderId;
         let data = {
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
+            startDate: this.state.startDate === '' ? '1900-01-01' : this.state.startDate,
+            endDate: this.state.endDate === '' ? moment().toDate() : this.state.endDate,
             serviceStatus: uniqElementOfArray(this.state.serviceStatus),
             ServiceCategoryId: this.state.ServiceCategoryId,
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
-            ServiceAreas: this.state.ServiceAreas
+            ServiceAreas: this.state.ServiceAreas,
+            serviceProviderId: serviceProviderId,
+            FromPage: 0,
+            ToPage: 9,
         };
         this.props.getFilter(data)
+        this.props.getFilterDataCount(data)
         this.setState({
             filterOpen: !this.state.filterOpen
         })
 
     }
+
+    handleSortFilterChange = pageNumber => {
+        this.setState({ pageNumber: pageNumber });
+        let number;
+        if (pageNumber === 1) {
+            number = 0
+        } else {
+            number = pageNumber
+        }
+        let serviceProviderId = getUserInfo().serviceProviderId;
+        let data = {
+            startDate: this.state.startDate === '' ? '1900-01-01' : this.state.startDate,
+            endDate: this.state.endDate === '' ? moment().toDate() : this.state.endDate,
+            serviceStatus: uniqElementOfArray(this.state.serviceStatus),
+            ServiceCategoryId: this.state.ServiceCategoryId,
+            serviceTypes: uniqElementOfArray(this.state.serviceTypes),
+            ServiceAreas: this.state.ServiceAreas,
+            serviceProviderId: serviceProviderId,
+            FromPage: number,
+            ToPage: 9,
+        };
+        this.props.getFilter(data)
+        this.props.getFilterDataCount(data)
+        this.setState({ activePage: pageNumber });
+    };
 
     applyReset = () => {
         this.setState({
@@ -167,29 +198,62 @@ class VisitServiceList extends Component {
             ServiceCategoryId: '',
             serviceTypes: [],
             isValid: true,
-            selectedOption: ''
+            selectedOption: '',
         })
         this.props.clearServiceCategory(this.props.ServiceType);
         this.props.clearServiceArea(this.props.ServiceAreaList);
         this.props.clearServiceRequestStatus(this.props.ServiceStatus)
+        let data = {
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+        }
+        this.props.getVisitServiceList(data);
+        this.props.formDirty()
     }
 
     handleChangeServiceCategory = (selectedOption) => {
         this.setState({
             ServiceCategoryId: selectedOption.label,
-            selectedOption: selectedOption
+            selectedOption: selectedOption,
         });
         this.props.getServiceType(selectedOption)
+        this.setState({ serviceTypes: [] })
     }
 
-    handleserviceType = (item) => {
+    handleserviceType = (item, e) => {
         let serviceType = this.state.serviceTypes
-        serviceType.push(item.serviceTypeDescription)
+        if (e.target.checked) {
+            serviceType.push(item.serviceTypeDescription)
+        }
+        else {
+            serviceType.splice(serviceType.findIndex(function (item, index) {
+                return item.serviceTypeDescription === (item.serviceTypeDescription);
+            }), 1);
+        }
         this.setState({
             serviceTypes: serviceType
         })
     }
 
+    handleAllServiceStatus = (item, e) => {
+        let service = this.state.serviceStatus
+        this.setState({
+            isChecked: !this.state.isChecked
+        })
+        if (e.target.checked) {
+            this.props.checkAllServiceRequestStatus(e.target.checked, this.props.ServiceStatus)
+            this.props.ServiceStatus.forEach(function (status) {
+                if (status.keyValue !== 'All')
+                    service.push(status.keyValue)
+            });
+        } else {
+            this.props.checkAllServiceRequestStatus(e.target.checked, this.props.ServiceStatus)
+            service = [];
+        }
+        this.setState({
+            serviceStatus: service
+        })
+    }
     handleChangeserviceStatus = (item, e) => {
         let service = this.state.serviceStatus
         if (e.target.checked) {
@@ -206,6 +270,7 @@ class VisitServiceList extends Component {
         });
 
     }
+
     handleServiceArea = (item) => {
 
         const locations = {
@@ -224,28 +289,43 @@ class VisitServiceList extends Component {
     /* sorting */
     toggleclass = (e) => {
         var element = document.getElementsByClassName("dropdown-menu")[1];
-        element.classList.add("show");
+        if (element.classList.contains('show')) {
+            element.classList.remove("show");
+            element.classList.add("hide");
+        } else {
+            element.classList.add("show");
+            element.classList.remove("hide");
+        }
+
         var element1 = document.getElementsByClassName("dropdown-item")[0];
         element1.classList.add("dropdown-item-checked");
+        var element2 = document.getElementsByClassName("dropdown-item")[2];
+        element2.classList.add("dropdown-item-checked");
     }
 
-    setStatusSort = (selectedElement) =>{
-        console.log(selectedElement)
-        if(selectedElement === 'PostedDate') { this.PostedDate = !this.PostedDate; this.VisitDate = !this.PostedDate }
-        if(selectedElement === 'VisitDate')  {this.VisitDate = !this.VisitDate; this.PostedDate = !this.VisitDate }
-        if(selectedElement === 'Newest')  {this.Newest = !this.Newest;this.Oldest = !this.Newest}
-        if(selectedElement === 'Oldest')  {this.Oldest = !this.Oldest;this.Newest = !this.Oldest}
+    toggleclassoutside = () => {
+        var element = document.getElementsByClassName("dropdown-menu")[1];
+        element.classList.remove("show");
+        element.classList.add("hide");
     }
 
-    onSortChange = (e,posted, newest) => {
-        let selectedElement = e.target.innerHTML.replace(/ /g,'');
+    setStatusSort = (selectedElement) => {
+        if (selectedElement === 'PostedDate') { this.PostedDate = !this.PostedDate; this.VisitDate = !this.PostedDate }
+        if (selectedElement === 'VisitDate') { this.VisitDate = !this.VisitDate; this.PostedDate = !this.VisitDate }
+        if (selectedElement === 'Newest') { this.Newest = !this.Newest; this.Oldest = !this.Newest }
+        if (selectedElement === 'Oldest') { this.Oldest = !this.Oldest; this.Newest = !this.Oldest }
+    }
+
+    onSortChange = (e, posted, newest) => {
+        this.setState({ sort: true })
+        this.sort = true
+        let selectedElement = e.target.innerHTML.replace(/ /g, '');
         this.setStatusSort(selectedElement)
         var data = {
             sortByOrder: this.Newest ? "ASC" : "DESC",
             sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "VISITDATE",
-            fromDate: null,
-            toDate: null,
-            status: 0
+            pageNumber: 1,
+            PageSize: 9
         }
         this.props.getSort(data);
         let element = document.getElementsByClassName("dropdown-menu")[1];
@@ -259,15 +339,27 @@ class VisitServiceList extends Component {
         });
     };
 
+    handleSortPageChange = pageNumber => {
+        this.setState({ pageNumber: pageNumber });
+        let data = {
+            sortByOrder: this.Newest ? "ASC" : "DESC",
+            sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "VISITDATE",
+            pageNumber: pageNumber,
+            PageSize: 9
+        }
+        this.props.getSort(data);
+        this.setState({ activePage: pageNumber });
+    };
+
     handlePageChange = pageNumber => {
         this.setState({ pageNumber: pageNumber });
         let data = {
-          pageNumber: pageNumber,
-          pageSize: this.state.pageSize
+            pageNumber: pageNumber,
+            pageSize: this.state.pageSize
         };
         this.props.getVisitServiceList(data);
         this.setState({ activePage: pageNumber });
-      };
+    };
 
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -275,7 +367,7 @@ class VisitServiceList extends Component {
             let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
             let patientImage = '';
             let patientLastName = '';
-            if(serviceList.statusId === HIRED_STATUS_ID) {
+            if (serviceList.statusId === HIRED_STATUS_ID) {
                 patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
                 patientLastName = serviceList && serviceList.patientLastName;
             } else {
@@ -283,9 +375,9 @@ class VisitServiceList extends Component {
                 patientImage = require('../../../assets/images/Blank_Profile_icon.png');
             }
             return (
-                <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
+                <div class='ServiceRequestBoard' key={serviceList.serviceRequestId} onClick={this.toggleclassoutside}>
                     <div className='card'>
-                        <div className="BlockImageContainer" onClick={() => 
+                        <div className="BlockImageContainer" onClick={() =>
                             this.handleClick(serviceList.serviceRequestId)}>
                             <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                             <div className='BlockImageDetails'>
@@ -296,9 +388,9 @@ class VisitServiceList extends Component {
                                     {serviceList.serviceCategoryDescription}
                                 </div>
                                 <div className='BlockImageDetailsDate'>
-                                    {serviceList.recurring} 
-                                    <span className='DetailsDateSeperator'>|</span> 
-                                    <Moment format="MMM DD">{serviceList.startDate}</Moment> 
+                                    {serviceList.recurring}
+                                    <span className='DetailsDateSeperator'>|</span>
+                                    <Moment format="MMM DD">{serviceList.startDate}</Moment>
                                     {serviceList.recurring !== RECURRING_PATTERN && <React.Fragment>  - <Moment format="MMM DD">{serviceList.endDate}</Moment> </React.Fragment>}
                                 </div>
                             </div>
@@ -337,7 +429,7 @@ class VisitServiceList extends Component {
                 patientImage={this.props.profileImgData.image ? this.props.profileImgData.image
                     : require('./avatar/user-5.jpg')}>
                 <div className='ProfileHeaderWidget'>
-                    <div className='ProfileHeaderTitle'>
+                    <div className='ProfileHeaderTitle' onClick={this.toggleclassoutside}>
                         <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
@@ -353,10 +445,11 @@ class VisitServiceList extends Component {
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
-                    <div className='BoardContainer'>
+                    <div className='BoardContainer' onClick={this.toggleclassoutside}>
                         {visitList}
                     </div>
-                    {this.props.visitServiceList && <div class="col-md-12 p-0 AsyncConversationPagination"> 
+                    {this.props.visitServiceList.length > 0 && !this.sort && !this.props.FilterDataCount && (
+                        <div class="col-md-12 p-0 AsyncConversationPagination">
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
@@ -368,9 +461,41 @@ class VisitServiceList extends Component {
                                 itemClassPrev="PaginationIcon Prev"
                                 itemClassNext="PaginationIcon Next"
                                 itemClassLast="PaginationIcon Last"
-                                />
+                            />
                         </div>
-                    }
+                    )}
+                    {this.props.visitServiceList.length > 0 && this.sort && !this.props.FilterDataCount && (
+                        <div class="col-md-12 p-0 AsyncConversationPagination">
+                            <Pagination
+                                activePage={this.state.activePage}
+                                itemsCountPerPage={10}
+                                totalItemsCount={this.props.visitServiceList[0].dataCount}
+                                pageRangeDisplayed={5}
+                                onChange={this.handleSortPageChange}
+                                itemClass="PaginationItem"
+                                itemClassFirst="PaginationIcon First"
+                                itemClassPrev="PaginationIcon Prev"
+                                itemClassNext="PaginationIcon Next"
+                                itemClassLast="PaginationIcon Last"
+                            />
+                        </div>
+                    )}
+                    {this.props.visitServiceList.length > 0 && this.props.FilterDataCount && (
+                        <div class="col-md-12 p-0 AsyncConversationPagination">
+                            <Pagination
+                                activePage={this.state.activePage}
+                                itemsCountPerPage={10}
+                                totalItemsCount={this.props.FilterDataCount}
+                                pageRangeDisplayed={5}
+                                onChange={this.handleSortFilterChange}
+                                itemClass="PaginationItem"
+                                itemClassFirst="PaginationIcon First"
+                                itemClassPrev="PaginationIcon Prev"
+                                itemClassNext="PaginationIcon Next"
+                                itemClassLast="PaginationIcon Last"
+                            />
+                        </div>
+                    )}
                 </Scrollbars>
                 <Filter
                     isOpen={this.state.filterOpen}
@@ -392,11 +517,11 @@ class VisitServiceList extends Component {
                     handleserviceType={this.handleserviceType}
                     ServiceStatus={this.props.ServiceStatus}
                     handleChangeserviceStatus={this.handleChangeserviceStatus}
-                    serviceStatus={this.state.serviceStatus}
                     ServiceAreaList={this.props.ServiceAreaList}
                     handleServiceArea={this.handleServiceArea}
                     serviceArea={this.state.serviceArea}
                     checked={this.state.isChecked}
+                    handleAllServiceStatus={this.handleAllServiceStatus}
                 />
             </AsideScreenCover>
         )
@@ -420,6 +545,9 @@ function mapDispatchToProps(dispatch) {
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         getServiceRequestCount: () => dispatch(getServiceRequestCount()),
+        getFilterDataCount: (data) => dispatch(getFilterDataCount(data)),
+        formDirty: () => dispatch(formDirty()),
+        checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
     }
 };
 
@@ -433,7 +561,8 @@ function mapStateToProps(state) {
         ServiceStatus: state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
         ServiceType: state.visitSelectionState.ServiceRequestFilterState.ServiceType,
         ServiceAreaList: state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList,
-        serviceRequestCount:state.visitSelectionState.VisitServiceListState.serviceRequestCount
+        serviceRequestCount: state.visitSelectionState.VisitServiceListState.serviceRequestCount,
+        FilterDataCount: state.visitSelectionState.ServiceRequestFilterState.FilterDataCount,
     };
 };
 

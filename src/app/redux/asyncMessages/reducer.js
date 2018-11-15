@@ -14,7 +14,8 @@ const defaultState = {
     conversationImageUrl: '',
     canCreateConversation: false,
     conversationCount: 20,
-    openedAsyncPage : null
+    openedAsyncPage : null,
+    removeParticipantConcurrencyExist: false,
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -64,11 +65,15 @@ const asyncMessageState = (state = defaultState, action) => {
                         action.data.messages[0]
                     ],
                     participantList:  action.data.participantList,
-                    title: action.data.title
+                    title: action.data.title,
+                    isActive: action.data.isActive,
+                    canEdit: action.data.canEdit,
                 },
                 currentConversation:{
                     ...state.currentConversation,
-                    title: action.data.title
+                    title: action.data.title,
+                    isActive: action.data.isActive,
+                    canEdit: action.data.canEdit,
                 }
             };
         case AsyncMessageActions.setUnreadCountDetails:
@@ -122,6 +127,29 @@ const asyncMessageState = (state = defaultState, action) => {
                 openedAsyncPage: action.data
             }
         }
+        case AsyncMessageActions.pushConversationMessage:
+            return {
+                ...state,
+                conversation: {
+                    ...state.conversation,
+                    messages: [
+                        ...state.conversation.messages,
+                        action.data
+                    ],
+                    participantList:  action.data.participantList,
+                }
+            };
+        case AsyncMessageActions.setRemoveParticipantConcurrency:
+            return{
+            ...state,
+            removeParticipantConcurrencyExist: action.data
+        }
+        case AsyncMessageActions.clearConversation:
+        return{
+        ...state,
+        conversation: {},
+        currentConversation: {}
+    }
         default:
             return state;
     }

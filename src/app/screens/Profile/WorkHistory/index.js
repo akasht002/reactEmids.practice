@@ -2,12 +2,19 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment'
+import moment from 'moment';
 import { Input, TextArea, ProfileModalPopup, ModalPopup } from "../../../components";
 import { Calendar } from "../../../components/LevelOne/index";
-import { checkSpace, formattedDateMoment, formattedDateChange, formateStateDate, newDate } from "../../../utils/validations";
+import { checkSpace, checkDateFormatNumber, formateStateDate } from "../../../utils/validations";
 import { compare } from "../../../utils/comparerUtility";
+import {
+    formatDate,
+    changeDateFormat,
+    formatDateValue
+} from '../../../utils/dateUtility';
+
 import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, deleteWorkHistory } from "../../../redux/profile/WorkHistory/actions";
-import { SCREENS, PERMISSIONS } from '../../../constants/constants';
+import { SCREENS, PERMISSIONS, DATE_FORMAT } from '../../../constants/constants';
 import "./styles.css";
 
 class WorkHistory extends Component {
@@ -22,6 +29,7 @@ class WorkHistory extends Component {
             fromDate: '',
             toDate: '',
             isWorking: false,
+            currentlyWorking: false,
             description: '',
             isOnDeleteModalOpen: false,
             isAdd: false,
@@ -37,19 +45,19 @@ class WorkHistory extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.workhistoyFieldDetails.isWorking === '') {
-            this.setState({ isWorking: false })
+        if (!nextProps.workhistoyFieldDetails.currentlyWorking) {
+            this.setState({ currentlyWorking: false })
         } else {
-            this.setState({ isWorking: nextProps.workhistoyFieldDetails.isWorking })
+            this.setState({ currentlyWorking: nextProps.workhistoyFieldDetails.currentlyWorking })
         }
         this.setState({
-            designation: nextProps.workhistoyFieldDetails.designation,
-            company: nextProps.workhistoyFieldDetails.company,
-            location: nextProps.workhistoyFieldDetails.location,
-            fromDate: nextProps.workhistoyFieldDetails.fromDate,
-            toDate: nextProps.workhistoyFieldDetails.toDate,
-            description: nextProps.workhistoyFieldDetails.description,
-            isWorking: nextProps.workhistoyFieldDetails.isWorking,
+            designation: nextProps.workhistoyFieldDetails.designation || "",
+            company: nextProps.workhistoyFieldDetails.company || "",
+            location: nextProps.workhistoyFieldDetails.location || "",
+            fromDate: nextProps.workhistoyFieldDetails.fromDate  || null,
+            toDate: nextProps.workhistoyFieldDetails.toDate || null,
+            description: nextProps.workhistoyFieldDetails.description || "",
+            currentlyWorking: nextProps.workhistoyFieldDetails.currentlyWorking,
             workHistoryId: nextProps.workhistoyFieldDetails.workHistoryId
         })
     }
@@ -63,7 +71,7 @@ class WorkHistory extends Component {
             fromDate: '',
             toDate: '',
             description: '',
-            isWorking: '',
+            currentlyWorking: false,
             disabledSaveBtn: true,
             isDiscardModalOpen: false,
             isAdd: true,
@@ -87,7 +95,8 @@ class WorkHistory extends Component {
             fromDate: workHistory.fromDate,
             toDate: workHistory.toDate,
             description: workHistory.description,
-            isWorking: workHistory.isWorking
+            isWorking: workHistory.isWorking,
+            currentlyWorking: workHistory.currentlyWorking
         }
 
         let stateObject = {
@@ -97,7 +106,8 @@ class WorkHistory extends Component {
             fromDate: this.state.fromDate,
             toDate: this.state.toDate,
             description: this.state.description,
-            isWorking: this.state.isWorking
+            isWorking: this.state.isWorking,
+            currentlyWorking: this.state.currentlyWorking
         }
 
         const fieldDifference = compare(workhistoryFielObject, stateObject);
@@ -111,7 +121,8 @@ class WorkHistory extends Component {
                 fromDate: '',
                 toDate: '',
                 description: '',
-                isWorking: ''
+                isWorking: false,
+                currentlyWorking: false
             })
         } else {
             this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
@@ -131,7 +142,8 @@ class WorkHistory extends Component {
                 fromDate: this.state.fromDate,
                 toDate: this.state.toDate,
                 isWorking: this.state.isWorking,
-                description: this.state.description && this.state.description.trim()
+                description: this.state.description && this.state.description.trim(),
+                currentlyWorking: this.state.currentlyWorking
             };
             this.props.addWorkHistory(data);
             this.reset();
@@ -152,7 +164,7 @@ class WorkHistory extends Component {
     updateWorkHistory = () => {
         if (this.state.designation && this.state.company && this.state.fromDate && this.state.toDate) {
             {
-                this.state.isWorking ?
+                this.state.currentlyWorking ?
                 this.setState({ toDate: '' })
                 :
                 this.setState({ toDate: this.state.toDate })
@@ -165,7 +177,8 @@ class WorkHistory extends Component {
                 toDate: this.state.toDate,
                 description: this.state.description,
                 workHistoryId: this.state.workHistoryId,
-                isWorking: this.state.isWorking
+                isWorking: this.state.isWorking,
+                currentlyWorking: this.state.currentlyWorking
             };
             this.props.updateWorkHistory(data);
             this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen, disabledSaveBtn: true });
@@ -181,43 +194,50 @@ class WorkHistory extends Component {
     }
 
     dateChanged = (date) => {
-        const formattedDate = formattedDateMoment(date);
-        this.setState({
-            fromDate: formattedDate,
-            disabledSaveBtn: false
-        });
-
+        const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
+        this.setState({ fromDate: formattedDate, disabledSaveBtn: false, toDate: null });
+        
     }
 
-    dateChangedRaw = (event) => {
-        const formattedDate = formattedDateChange(event);
-        this.setState({
-            fromDate: formattedDate
-        });
+    dateChangedRaw = (event) => { 
+        if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
+          event.preventDefault();
+        } else {
+            let dobVal = document.getElementById('fromDate');
+            dobVal.value = changeDateFormat(event.target.value);
+            const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
+            if(!formattedDate) {
+              this.setState({
+                fromDate: formattedDate
+              })
+            }
+          }
+        }
 
-    }
-
-    todateChanged = (date) => {
-        const formattedDate = formattedDateMoment(date);
-        this.setState({
-            toDate: formattedDate,
-            disabledSaveBtn: false
-        });
-
-    }
-
-    todateChangedRaw = (event) => {
-        const formattedDate = formattedDateChange(event);
-        this.setState({
-            toDate: formattedDate
-        });
-
-    }
+        todateChanged = (date) => {
+            const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
+            this.setState({ toDate: formattedDate, disabledSaveBtn: false });
+            
+        }
+    
+        todateChangedRaw = (event) => { 
+            if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
+              event.preventDefault();
+            } else {
+                let dobVal = document.getElementById('toDate');
+                dobVal.value = changeDateFormat(event.target.value);
+                const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
+                if(!formattedDate) {
+                  this.setState({
+                    toDate: formattedDate
+                  })
+                }
+              }
+            }
 
     render() {
         let modalContent;
         let modalTitle;
-
 
         const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
@@ -277,31 +297,33 @@ class WorkHistory extends Component {
                     <div className="form-group">
                         <label>From Date</label>
                         <Calendar
-                            startDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
+                            id="fromDate"
+                            startDate={this.state.fromDate && moment(this.state.fromDate, DATE_FORMAT)}
                             onDateChange={this.dateChanged}
                             onDateChangeRaw={this.dateChangedRaw}
                             mandatory={true}
-                            maxDate={newDate()}
+                            maxDate={moment()}
                             value={this.state.fromDate}
                             className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate)) && 'inputFailure')}
-                        />
+                         />
                         {!this.state.isValid && (!this.state.fromDate) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.fromDate === '' ? 'From Date' : 'From Date'}</span>}
                     </div>
                 </div>
 
                 <div className="col-md-6 MonthlyPicker mb-2">
-                    {!this.state.isWorking && <div className="form-group">
+                    {!this.state.currentlyWorking && <div className="form-group">
                         <label>To Date</label>
                         <Calendar
-                            startDate={this.state.toDate && formateStateDate(this.state.toDate)}
+                            id="toDate"
+                            startDate={this.state.toDate && moment(this.state.toDate, DATE_FORMAT)}
                             onDateChange={this.todateChanged}
                             onDateChangeRaw={this.todateChangedRaw}
                             mandatory={true}
                             minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
-                            maxDate={newDate()}
+                            maxDate={moment()}
                             value={this.state.toDate}
                             className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
-                        />
+                         />
                         {!this.state.isValid && (!this.state.toDate) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.toDate === '' ? 'To Date' : 'To Date'}</span>}
 
                     </div>}
@@ -309,8 +331,10 @@ class WorkHistory extends Component {
                 <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
-                            <input className="form-check-input" type="checkbox" value={this.state.isWorking} id="defaultCheck1"
-                                onChange={(e) => this.setState({ isWorking: e.target.checked, disabledSaveBtn: false })}
+                            <input className="form-check-input" type="checkbox" checked={this.state.currentlyWorking} id="defaultCheck1"
+                                onChange={(e) => 
+                                    this.setState({ currentlyWorking: e.target.checked, disabledSaveBtn: false, toDate: moment(new Date())}
+                                )}
                             />
                             I am currently working here
                             <span className="CheckboxIcon" />
@@ -346,16 +370,17 @@ class WorkHistory extends Component {
                                 {WorkHistoryList.designation} - <span>{WorkHistoryList.company}</span>
                             </h5>
                             <span className="ml-auto SPWorkYear">
-                                <Moment format='MMM YYYY' className="mr-2">
-                                    {WorkHistoryList.fromDate}
-                                </Moment>
-                                -
+                            <span>
+                                {WorkHistoryList.fromDate }
+                            </span>
+
+                               <span> - </span>
                                  {WorkHistoryList.toDate === '01-01-1900' ?
-                                    <span className="ml-2">Present</span>
+                                    <span>Present</span>
                                     :
-                                    <Moment format='MMM YYYY' className="ml-2">
+                                    <span> { /* to do change removing className="ml-2" */}
                                         {WorkHistoryList.toDate}
-                                    </Moment>
+                                    </span>
                                 }
                             </span>
                         </div>

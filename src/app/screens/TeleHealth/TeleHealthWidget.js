@@ -12,6 +12,8 @@ import {TeleHealthSettings} from '../../constants/config';
 import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
 import './styles.css';
 import _ from 'lodash'
+import { Path } from '../../routes';
+import {push} from '../../redux/navigation/actions'
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -39,7 +41,11 @@ class TeleHealthWidget extends Component {
     }
 
     componentDidMount() {
-        this.joinRoom();
+        if (this.props.roomId) {
+            this.joinRoom();
+        } else {
+            this.props.goToDashBoard()
+        }
     }
 
     componentWillUnmount() {
@@ -261,7 +267,7 @@ class TeleHealthWidget extends Component {
         };
 
         let sliderCategory = [];
-        this.state.activeRoom && _.forEach(this.state.activeRoom.participants,(participant) => {
+        this.state.activeRoom && this.state.activeRoom.participants.forEach((participant) => {
             var tracks = Array.from(participant.tracks.values());
             let cat = <div className='TeleHealthParticipants' onClick={() => { this.participantClick(participant) }}>
                 <input id={'Participants' + participant.sid} type='radio' name='Participants' value={participant.sid} />
@@ -274,7 +280,9 @@ class TeleHealthWidget extends Component {
             sliderCategory.push(cat);
             setTimeout(() => {
                 _.forEach(tracks,track => {
-                    this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+                    if (this.refs['remoteVideo' + participant.sid]) {
+                        this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+                    }
                 });
             }, 1000)
         })
@@ -286,7 +294,6 @@ class TeleHealthWidget extends Component {
                         <div className="VideoBackground" />
                         <div className="TeleHealthHeader">
                             <div className="TeleHealthDate">
-                                <span className="RoomId">Room ID<i>{this.props.roomId}</i></span>
                                 <div className='TeleHealthParticipants' onClick={() => { this.participantClick(this.state.activeRoom.localParticipant) }}>
                                     <input id='Participants' type='radio' name='Participants' value='0' />
                                     <label className='ParticipantsLinkLabel' htmlFor='Participants'>
@@ -320,6 +327,7 @@ class TeleHealthWidget extends Component {
                     <TeleHealthParticipants
                         participantList={this.props.existingParticipantList}
                         ToggleAddParticipantsListView={this.DisplayInviteParticipantsList}
+                        initiator={this.props.initiator}
                     />
                     <TeleHealthInviteParticipants
                         participantList={this.props.conferenceParticipants}
@@ -381,7 +389,8 @@ function mapDispatchToProps(dispatch) {
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
         endConference: () => dispatch(endConference()),
-        getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId())
+        getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId()),
+        goToDashBoard: () => dispatch(push(Path.dashboard))
     }
 };
 

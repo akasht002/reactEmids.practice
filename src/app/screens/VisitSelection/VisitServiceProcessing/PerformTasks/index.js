@@ -14,6 +14,7 @@ import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes'
 import './style.css'
+
 class PerformTasks extends Component {
 
     constructor(props) {
@@ -61,6 +62,22 @@ class PerformTasks extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.PerformTasksList !== nextProps.PerformTasksList) {
+            nextProps.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
+                serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
+                    if (taskList.statusId === 90) {
+                        taskList.checked = taskList.statusId === 90;
+                        this.handleChange(taskList, {
+                            target: {
+                                checked: true,
+                                value: taskList.serviceRequestTypeTaskVisitId
+                            }
+                        })
+                        taskList.statusId = 45;
+                    }
+                });
+            });
+        }
         this.setState({ taskList: nextProps.PerformTasksList })
     }
 
@@ -104,7 +121,7 @@ class PerformTasks extends Component {
         // } else
         if (this.state.taskCount > 0) {
             this.setState({ isModalOpen: true })
-        } else if (this.state.taskCount === 0) {
+        } else {
             this.saveData();
         }
     }
@@ -161,7 +178,7 @@ class PerformTasks extends Component {
                                 <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitId}</span>
                                     </div>
                                     <div className='requestImageContent'>
                                         <span>
@@ -224,7 +241,7 @@ class PerformTasks extends Component {
                                                 <div className="TabHeaderContent">
                                                     <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>
                                                     <span><i className="SelectedTask">{serviceType.serviceRequestTypeTaskVisits.filter((taskList) => {
-                                                        return taskList.checked
+                                                        return taskList.checked || taskList.statusId === 90
                                                     }).length}</i>
                                                         <i className="TotalTasks">/{(serviceType.serviceRequestTypeTaskVisits).length}</i> tasks completed</span>
                                                 </div>
@@ -233,6 +250,11 @@ class PerformTasks extends Component {
                                                 <Card>
                                                     <CardBody>
                                                         {serviceType.serviceRequestTypeTaskVisits.map((taskList) => {
+                                                            if (taskList.statusId === 90) {
+                                                                taskList.checked = taskList.statusId === 90;
+                                                                taskList.statusId = 45;
+                                                            }
+                                                            
                                                             return (
                                                                 <div className='ServiceList' key={taskList.serviceRequestTypeTaskDetailsId}>
                                                                     <input
@@ -241,9 +263,10 @@ class PerformTasks extends Component {
                                                                         className='ServicesInput'
                                                                         name='serviceType'
                                                                         value={taskList.serviceRequestTypeTaskVisitId}
-                                                                        checked={this.state.isChecked}
+                                                                        checked={taskList.checked}
                                                                         onChange={(e) => {
                                                                             taskList.checked = e.target.checked;
+                                                                            taskList.statusId = e.target.checked ? 90 : 45;
                                                                             this.handleChange(taskList, e);
                                                                         }}
                                                                         disabled={visitStatus === SERVICE_STATES.YET_TO_START}

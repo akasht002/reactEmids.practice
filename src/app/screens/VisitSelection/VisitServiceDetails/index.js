@@ -20,6 +20,9 @@ import {
 import {
   getPerformTasksList
 } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
+import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
+import { formDirtyPerformTask } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import { serviceRequestMessages } from '../../../utils/messageUtility'
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
@@ -28,7 +31,8 @@ import {
   MORNING,
   AFTERNOON,
   EVENING,
-  HIRED_STATUS_ID
+  HIRED_STATUS_ID,
+  USERTYPES
 } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
 import {
@@ -39,9 +43,12 @@ import { getLength } from '../../../utils/validations'
 import {
   getVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import { getUserInfo } from '../../../utils/userUtility';
+import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
+import { createVideoConference } from '../../../redux/telehealth/actions';
 
 class VisitServiceDetails extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       verticalScroll: false,
@@ -53,14 +60,14 @@ class VisitServiceDetails extends Component {
       patientId: '',
       serviceType: '',
       isOpen: false,
-      isAlertModalopenConfirm:false
+      isAlertModalopenConfirm: false
     }
     this.alertModalMsg = ''
     this.status = {}
-    this.alertModalMsgstatus='Please apply for another service request.Service Provider is already been Hired for this request'
+    this.alertModalMsgstatus = 'Please apply for another service request.Service Provider is already been Hired for this request'
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId)
       this.props.getVisitServiceSchedule(this.props.ServiceRequestId)
@@ -70,7 +77,7 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       visitServiceDetails: nextProps.VisitServiceDetails,
       visitServiceSchedule: nextProps.VisitServiceSchedule,
@@ -95,7 +102,7 @@ class VisitServiceDetails extends Component {
     this.props.visitService()
   }
 
-  toggle (tab) {
+  toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab
@@ -105,6 +112,9 @@ class VisitServiceDetails extends Component {
 
   visitProcessing = data => {
     this.props.getPerformTasksList(data, true)
+    this.props.formDirty();
+    this.props.formDirtyFeedback();
+    this.props.formDirtyPerformTask();
   }
 
   selectedServiceType = e => {
@@ -133,12 +143,12 @@ class VisitServiceDetails extends Component {
       }
       this.props.updateServiceRequestByServiceProvider(model)
       console.log(this.props.updateServiceRequestMsgStatus)
-        if(this.props.updateServiceRequestMsgStatus === 1){
-          this.setState({isAlertModalopenConfirm :true}) 
-        }else {
-          this.props.history.push("/visitServiceList")
-        }
-      
+      if (this.props.updateServiceRequestMsgStatus === 1) {
+        this.setState({ isAlertModalopenConfirm: true })
+      } else {
+        this.props.history.push("/visitServiceList")
+      }
+
     } else {
       let model = {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
@@ -149,8 +159,8 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  onConfirmSerivceRequestMsg=()=>{
-    this.setState({isAlertModalopenConfirm :false}) 
+  onConfirmSerivceRequestMsg = () => {
+    this.setState({ isAlertModalopenConfirm: false })
     this.props.history.push("/visitServiceList")
   }
 
@@ -172,10 +182,49 @@ class VisitServiceDetails extends Component {
 
   visitSummary = (data) => {
     this.props.getVisitServiceHistoryByIdDetail(data)
-}
+  }
+
+  showPhoneNumber = () => {
+    let data = this.state.visitServiceDetails;
+    this.setState({ phoneNumber: data.phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+  };
+
+  onClickConversation = () => {
+    let userId = getUserInfo().serviceProviderId;
+    let item = this.state.visitServiceDetails;
+    let selectedParticipants = [{
+      userId: item.patient.patientId,
+      participantType: USERTYPES.PATIENT
+    }];
+
+    let loggedInUser = {
+      userId: userId,
+      participantType: USERTYPES.SERVICE_PROVIDER
+    }
+
+    selectedParticipants.push(loggedInUser);
+    let data = {
+      participantList: selectedParticipants,
+      createdBy: userId,
+      createdByType: loggedInUser.participantType,
+      title: '',
+      context: item.patient.patientId
+    };
+    this.props.createNewConversation(data);
+  };
 
 
-  render () {
+  onClickVideoConference = () => {
+    let item = this.state.visitServiceDetails;
+    let selectedParticipants = [{
+      userId: item.patient.patientId,
+      participantType: USERTYPES.PATIENT
+    }];
+    this.props.createVideoConference(selectedParticipants);
+  };
+
+
+  render() {
     let defaultCheck = ''
     let sliderTypes =
       this.state.visitServiceDetails.serviceRequestTypeDetails &&
@@ -224,7 +273,7 @@ class VisitServiceDetails extends Component {
                   if (
                     this.state.serviceType &&
                     this.state.serviceType ===
-                      taskDetails.serviceRequestTypeDetailsId
+                    taskDetails.serviceRequestTypeDetailsId
                   ) {
                     return (
                       <li>
@@ -272,7 +321,7 @@ class VisitServiceDetails extends Component {
               <label
                 className={
                   'SPAvailItems ' +
-                    (days.slotDescription.includes('Morning') ? 'active' : '')
+                  (days.slotDescription.includes('Morning') ? 'active' : '')
                 }
               >
                 Morning
@@ -280,7 +329,7 @@ class VisitServiceDetails extends Component {
               <label
                 className={
                   'SPAvailItems ' +
-                    (days.slotDescription.includes('Afternoon') ? 'active' : '')
+                  (days.slotDescription.includes('Afternoon') ? 'active' : '')
                 }
               >
                 Afternoon
@@ -288,7 +337,7 @@ class VisitServiceDetails extends Component {
               <label
                 className={
                   'SPAvailItems ' +
-                    (days.slotDescription.includes('Evening') ? 'active' : '')
+                  (days.slotDescription.includes('Evening') ? 'active' : '')
                 }
               >
                 Evening
@@ -323,7 +372,9 @@ class VisitServiceDetails extends Component {
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Service Requests</h5>
+            <h5 className='primaryColor m-0'>Service Requests / {this.state.visitServiceDetails.serviceRequestId
+              ? this.state.visitServiceDetails.serviceRequestId
+              : this.state.visitServiceDetails.ServiceRequestId}</h5>
           </div>
         </div>
         <Scrollbars
@@ -336,7 +387,7 @@ class VisitServiceDetails extends Component {
             <div className='CardContainers'>
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
-                  <span className='HeaderBackWrapper'>
+                  <span className='HeaderBackWrapper CursorPointer'>
                     <span className='HeaderBackButton' onClick={this.props.goBack}></span>
                   </span>
                   <span className='HeaderRequestLabel'>
@@ -360,6 +411,7 @@ class VisitServiceDetails extends Component {
               </section>
               <section class='LeftPalette'>
                 <div class='LeftPostedBy'>
+                  <h2 className='postdby-title'>Posted By</h2>
                   <div class='PostedByImageContainer pt-0'>
                     <img
                       className='ProfileImage'
@@ -384,7 +436,7 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className='PostedByImageContainer'>
+                  <div className='PostedByImageContainer CursorPointer' onClick={this.showPhoneNumber}>
                     <i class='ProfileIcon IconCall' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
@@ -392,7 +444,7 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className='PostedByImageContainer'>
+                  <div className='PostedByImageContainer CursorPointer' onClick={this.onClickConversation}>
                     <i class='ProfileIcon IconConversations' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
@@ -400,11 +452,11 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className='PostedByImageContainer'>
+                  <div className='PostedByImageContainer CursorPointer' onClick={this.onClickVideoConference}>
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                        <Link to="/teleHealth/">Video Conference </Link>
+                        Video Conference
                       </div>
                     </div>
                   </div>
@@ -480,7 +532,7 @@ class VisitServiceDetails extends Component {
                                 .recurringPatternDescription ===
                                 RECURRING_PATTERN
                                 ? this.state.visitServiceDetails
-                                    .recurringPatternDescription + ' '
+                                  .recurringPatternDescription + ' '
                                 : 'Recurring '}
                               Schedule
                             </span>
@@ -494,7 +546,7 @@ class VisitServiceDetails extends Component {
                                 .recurringPatternDescription !==
                                 RECURRING_PATTERN &&
                                 this.showData(this.state.visitServiceDetails)
-                              // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
+                                // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
                               }
                             </span>
                             {this.state.visitServiceDetails
@@ -602,7 +654,7 @@ class VisitServiceDetails extends Component {
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() => this.visitSummary(ScheduleList.serviceRequestVisitId)}
-                                      >
+                                    >
                                       <i className='ProfileIconEye' />Summary
                                       </a>
                                     : ''}
@@ -611,11 +663,11 @@ class VisitServiceDetails extends Component {
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
-                                          this.visitProcessing(
-                                            ScheduleList.serviceRequestVisitId
-                                          )}
-                                      >
-                                        Start Visit
+                                        this.visitProcessing(
+                                          ScheduleList.serviceRequestVisitId
+                                        )}
+                                    >
+                                      Start Visit
                                       </a>
                                     : ''}
                                   {ScheduleList.visitStatusName ===
@@ -623,11 +675,11 @@ class VisitServiceDetails extends Component {
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
-                                          this.visitProcessing(
-                                            ScheduleList.serviceRequestVisitId
-                                          )}
-                                      >
-                                        In Progress
+                                        this.visitProcessing(
+                                          ScheduleList.serviceRequestVisitId
+                                        )}
+                                    >
+                                      In Progress
                                       </a>
                                     : ''}
                                   {ScheduleList.visitStatusName ===
@@ -635,11 +687,11 @@ class VisitServiceDetails extends Component {
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
-                                          this.visitProcessing(
-                                            ScheduleList.serviceRequestVisitId
-                                          )}
-                                      >
-                                        Payment Pending
+                                        this.visitProcessing(
+                                          ScheduleList.serviceRequestVisitId
+                                        )}
+                                    >
+                                      Payment Pending
                                       </a>
                                     : ''}
                                 </div>
@@ -673,7 +725,7 @@ class VisitServiceDetails extends Component {
                 isAlertModalOpen: false
               })}
           />
-           <ModalPopup
+          <ModalPopup
             isOpen={this.state.isAlertModalopenConfirm}
             toggle={this.reset1}
             ModalBody={<span>{this.alertModalMsgstatus}</span>}
@@ -683,11 +735,24 @@ class VisitServiceDetails extends Component {
             centered='centered'
             onConfirm={() => {
               this.onConfirmSerivceRequestMsg()
-              
+
             }}
             onCancel={() =>
               this.setState({
                 isAlertModalopenConfirm: false
+              })}
+          />
+          <ModalPopup
+            isOpen={this.state.phoneNumberModal}
+            ModalBody={<span> {this.state.phoneNumber} </span>}
+            btn1='OK'
+            className='modal-sm'
+            headerFooter='d-none'
+            footer='d-none'
+            centered='centered'
+            onConfirm={() =>
+              this.setState({
+                phoneNumberModal: false
               })}
           />
         </Scrollbars>
@@ -696,7 +761,7 @@ class VisitServiceDetails extends Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
     getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
@@ -710,12 +775,17 @@ function mapDispatchToProps (dispatch) {
       dispatch(getVisitServiceEligibilityStatus(data)),
     getDays: () => dispatch(getDays()),
     goBack: () => dispatch(goBack()),
-    dispatchServiceRequestByServiceProvider:()=>dispatchServiceRequestByServiceProvider(),
-    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data))
+    dispatchServiceRequestByServiceProvider: () => dispatchServiceRequestByServiceProvider(),
+    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
+    createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
+    createVideoConference: (data) => dispatch(createVideoConference(data)),
+    formDirty: () => dispatch(formDirty()),
+    formDirtyFeedback: () => dispatch(formDirtyFeedback()),
+    formDirtyPerformTask: () => dispatch(formDirtyPerformTask())
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     VisitServiceDetails: state.visitSelectionState.VisitServiceDetailsState
       .VisitServiceDetails,

@@ -30,6 +30,10 @@ export function formattedDateMoment (date) {
   return date ? moment(new Date(date.toString())).format(DATE_FORMAT) : null
 }
 
+export function formattedDateMomentValue (date) {
+  return date ? moment(new Date(date.toString()), DATE_FORMAT) : null
+}
+
 export function formattedDateChange (event) {
   if (
     event.target.value.length === 10 &&
@@ -59,6 +63,10 @@ export function checkFormatDate (value) {
 
 export function formateStateDate (date) {
   return date ? moment(date) : null
+}
+
+export function formateStateDateValue (date) {
+  return date ? moment(date, DATE_FORMAT) : null
 }
 
 export function formateYearDate () {
@@ -183,7 +191,7 @@ export const getServiceTypeImage = (serviceTypeId) => {
 export function getStatus(input, field, status) {
   var output = 0
   for (var i = 0; i < input.length; ++i) {
-    if (i === input.length - 1 && input[i][field] === status) {
+    if (input[i][field] === status) {
       output++
     }
   }

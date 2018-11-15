@@ -58,7 +58,8 @@ export function addWorkHistory(data) {
             toDate:data.toDate,
             description:data.description,
             isWorking:data.isWorking,
-            isActive: true
+            isActive: true,
+            currentlyWorking: data.currentlyWorking
         };
         dispatch(startLoading());
         Post(API.WorkHistory+`${serviceProviderId}/WorkHistory`, modal).then((resp) => {
@@ -82,7 +83,7 @@ export function editWorkHistory(data) {
         };
         dispatch(startLoading());
         Get(API.WorkHistory + `${serviceProviderId}/WorkHistory/${workHistoryId}`, modal).then((resp) => {
-            dispatch(getWorkhistoryFieldDetails(resp.data))
+            dispatch(getWorkhistoryFieldDetails(resp.data));
             dispatch(getProfilePercentage());
             dispatch(endLoading());
         }).catch((err) => {
@@ -104,7 +105,8 @@ export function updateWorkHistory(data) {
             fromDate:data.fromDate,
             toDate:data.toDate,
             description:data.description,
-            isWorking:data.isWorking
+            isWorking:data.isWorking,
+            currentlyWorking: data.currentlyWorking
         };
         dispatch(startLoading());
         Put(API.WorkHistory + `${serviceProviderId}/WorkHistory`, modal).then((resp) => {

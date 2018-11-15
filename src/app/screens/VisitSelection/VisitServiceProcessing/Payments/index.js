@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { StripeProvider } from 'react-stripe-elements';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
@@ -24,7 +24,7 @@ class Payments extends Component {
             selectedCard: '',
             disabled: true
         };
-        this.Claimdata ={};
+        this.Claimdata = {};
     };
 
     componentDidMount() {
@@ -91,7 +91,6 @@ class Payments extends Component {
 
     payByAuthorizedCardOption = () => {
         if (this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false) {
-            this.payByAuthorizedCard();
             this.captureAmount();
         } else {
             this.captureAmount();
@@ -135,11 +134,11 @@ class Payments extends Component {
             :
             data.amount = this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2);
 
-        this.props.captureAmount(data)
+        this.props.captureAmount(data, this.Claimdata)
     }
 
     paymentsMethods = () => {
-         this.Claimdata = {
+        this.Claimdata = {
             "serviceRequestId": this.props.summaryAmount.SummaryDetails.serviceRequestId,
             "claimOnsetDate": this.props.summaryAmount.SummaryDetails.visitDate,
             "claimServiceLinesChargeAmount": this.props.summaryAmount.CalculationsData.estimatedClaim,
@@ -188,6 +187,7 @@ class Payments extends Component {
                         })}
                     </div>
                     <div className='text-right width100'>
+                        <Link className='btn btn-outline-primary mr-3' to='/summary'>Previous</Link>
                         <button disabled={this.state.disabled} className='btn btn-primary' onClick={this.handleClick}>Pay</button>
                     </div>
                 </div>
@@ -208,6 +208,7 @@ class Payments extends Component {
         } else if (this.state.SelectedCard === '3') {
             return (
                 <div className='text-right width100'>
+                    <Link className='btn btn-outline-primary mr-3' to='/summary'>Previous</Link>
                     <button className='btn btn-primary' onClick={this.payByAuthorizedCardOption}>Pay</button>
                 </div>
             )
@@ -227,10 +228,10 @@ class Payments extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <i className="TitleContent backProfileIcon" />
+                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
                                     </div>
                                     <div className='requestImageContent'>
                                         {this.props.patientDetails.patient ?
@@ -316,7 +317,7 @@ function mapDispatchToProps(dispatch) {
         getpaymentsCardList: (data) => dispatch(getpaymentsCardList(data)),
         chargeByCustomerId: (data, Claimdata) => dispatch(chargeByCustomerId(data, Claimdata)),
         claimsSubmission: (data) => dispatch(claimsSubmission(data)),
-        captureAmount: (data) => dispatch(captureAmount(data))
+        captureAmount: (data, Claimdata) => dispatch(captureAmount(data, Claimdata))
     }
 };
 

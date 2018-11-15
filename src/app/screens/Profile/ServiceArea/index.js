@@ -28,9 +28,9 @@ class ServiceArea extends Component {
       showModalOnDelete: false,
       isAdd: false,
       isValid: true,
-      disabledSaveBtn: true,
+      disabledSaveBtn: false,
       isDiscardModalOpen: false,
-      coverageArea: 0
+      coverageArea: 0,
     };
     this.countValue = 0;
   }
@@ -63,7 +63,7 @@ class ServiceArea extends Component {
       zip: '',
       coverageArea: 0,
       addressId: 0,
-      disabledSaveBtn: true,
+      disabledSaveBtn: false,
       isDiscardModalOpen: false,
       streetInvalid: false,
       cityInvalid: false,
@@ -80,7 +80,7 @@ class ServiceArea extends Component {
       serviceAreaModal: !this.state.serviceAreaModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: true,
+      disabledSaveBtn: false,
       coverageArea: coverageArea
     })
     this.onClose()
@@ -143,7 +143,7 @@ class ServiceArea extends Component {
       this.setState({
         zip: onlyNums,
         zipInvalid: false,
-
+        disabledSaveBtn: false
       })
     }
   }
@@ -158,7 +158,8 @@ class ServiceArea extends Component {
       this.countValue = this.countValue + 1;
     }
     this.setState({
-      coverageArea: this.countValue
+      coverageArea: this.countValue,
+      disabledSaveBtn: false
     });   
   }
 
@@ -172,15 +173,17 @@ class ServiceArea extends Component {
       this.countValue = this.countValue - 1;
     }
     this.setState({
-      coverageArea: this.countValue
+      coverageArea: this.countValue,
+      disabledSaveBtn: false
     });
   }
 
   checkLength = (value) => {
-    return value && value.length > 0
+    return value && value.length > 0;
   }
 
   checkFiledLengths = () => {
+   // debugger
     const { city, state_id, street, zip } = this.state
     let
       cityValidation = this.checkLength(city),
@@ -188,6 +191,16 @@ class ServiceArea extends Component {
       streetValidation = this.checkLength(street),
       zipValidation = this.checkLength(zip)
     return cityValidation && state_idValidation && streetValidation && zipValidation
+  }
+
+  checkFieldsOnEdit = () => {
+    const { city, state_id, street, zip } = this.state
+    if(city === '' || state_id === '' || street === '' || zip === '') {
+      this.setState({disabledSaveBtn: true})
+    }
+    else {
+      this.setState({disabledSaveBtn: false})
+    }
   }
 
   render() {
@@ -214,11 +227,12 @@ class ServiceArea extends Component {
               className={"form-control custome-placeholder " + (this.state.streetInvalid && 'inputFailure')}
               value={this.state.street}
               maxlength={'500'}
-              textChange={e =>
+              textChange={e =>{
                 this.setState({
                   street: e.target.value,
-                  streetInvalid: false
-                })}
+                  streetInvalid: false,
+                })
+                this.checkFieldsOnEdit()}}
               onBlur={(e) => {
                 if (e.target.value === '') {
                   this.setState({
@@ -241,11 +255,13 @@ class ServiceArea extends Component {
               className={"form-control custome-placeholder " + (this.state.cityInvalid && 'inputFailure')}
               value={this.state.city}
               maxlength={'500'}
-              textChange={e =>
+              textChange={e =>{
                 this.setState({
                   city: e.target.value,
-                  cityInvalid: false
-                })}
+                  cityInvalid: false,
+                })
+                this.checkFieldsOnEdit()
+                }}
               onBlur={(e) => {
                 if (e.target.value === '') {
                   this.setState({
@@ -268,8 +284,9 @@ class ServiceArea extends Component {
                 onChange={value => {
                   this.setState({
                     state_id: value,
-                    stateInvalid: false
+                    stateInvalid: false,
                   })
+                  this.checkFieldsOnEdit()
                 }}
                 selectedValue={this.state.state_id}
                 onBlur={(e) => {
@@ -311,11 +328,11 @@ class ServiceArea extends Component {
             <div className="form-group">
               <label className="m-0">Range (in miles)</label>
               <div className='InputInDeWidget'>
-                <span className='IncreDecreBTN'
+                <span className='IncreDecreBTN plus'
                   onClick={this.onClickHandleIncr}>+</span>
                 <input className="form-control" 
                   value={this.state.coverageArea} />
-                <span className='IncreDecreBTN'
+                <span className='IncreDecreBTN minus'
                   onClick={this.onClickHandleDecr}>-</span>
               </div>
             </div>
@@ -378,7 +395,7 @@ class ServiceArea extends Component {
           ModalBody={modalContent}
           className='modal-lg asyncModal serviceAreaModal'
           modalTitle={modalTitle}
-          disabled={!this.checkFiledLengths()}
+          disabled={this.state.isAdd ? !this.checkFiledLengths() : this.state.disabledSaveBtn}
           centered
           onClick={
             this.state.isAdd ? this.addServiceArea : this.updateServiceArea

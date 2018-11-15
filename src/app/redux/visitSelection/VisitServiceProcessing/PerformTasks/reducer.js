@@ -65,6 +65,12 @@ const PerformTasksState = (state = defaultState, action) => {
                 SummaryDetails: action.data
             };
 
+        case PerformTasks.formDirtyPerformTask:
+            return {
+                ...state,
+                PerformTasksList: {}
+            };
+
         default:
             return state;
     }

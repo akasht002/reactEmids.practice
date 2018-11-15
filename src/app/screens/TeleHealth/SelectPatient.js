@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {MultiSelectAvatar} from "../../components";
+import {UserAvatarMultiSelect} from "../../components";
 
 export default class SelectPatient extends Component {
     state = {
@@ -28,7 +28,7 @@ export default class SelectPatient extends Component {
         return (
             <div className="form-group">
                 <label className='primaryColor'>Select Individual</label>
-                <MultiSelectAvatar
+                <UserAvatarMultiSelect
                     listItems={this.state.Patients}
                     multi={false}
                     closeOnSelect={true}

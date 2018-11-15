@@ -227,6 +227,10 @@ li div.dropdown-menu{
     border-bottom: 1px solid #dcdcdc;
 }
 
+.LeftPostedBy .PostedByImageContainer
+{
+padding: 5px 0px;
+}
 .PostedByImageContainer .ProfileImage{
     width: 40px;
     height: 40px;
@@ -765,10 +769,74 @@ div.scrollarea .scrollbar-container.vertical {
 color: #444;
 }
 
+.ProfileHeaderOptions .SortBlock .SortMenu
+{
+    left: -60px;
+}
+
+/*selection-dropdown-box*/
+
+.sort-block .dropdown-item-checked::before {
+    position: absolute;
+    right: .4rem;
+    content: '✓';
+    font-weight: 600;
+    width:16px;
+    height:13px;
+    color:#7a329f;
+    font-size: 19px;
+      /* background: url('../../../assets/images/checked.svg') no-repeat right; */
+  }
+  .sort-block .dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #007bff;
+}
+
+.sort-block .dropdown-menu
+{
+    width: 200px !important;
+    height: 179px !important;
+    border-radius: 4px !important;
+    -moz-border-radius:4px !important;
+    -webkit-border-radius:4px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 11.5px 0.5px rgba(0, 0, 0, 0.08) !important;
+    -moz-box-shadow: 0 0 11.5px 0.5px rgba(0, 0, 0, 0.08) !important;
+    -webkit-box-shadow: 0 0 11.5px 0.5px rgba(0, 0, 0, 0.08) !important;
+    border:none !important;
+    left: -130px !important;
+    padding: 10px 0px !important;
+}
+.sort-block div.dropdown-item
+{
+    font-family: 'Open Sans', sans-serif;
+   font-size: 14px;
+   color: #444444;
+   line-height: 20px !important;
+    padding-bottom: 11px !important;
+    background: none !important;
+}
+
+.sort-block div.dropdown-item:focus, .sort-block a.dropdown-item:hover {
+    color: #7a329f !important;
+    text-decoration: none !important;
+    background-color: #f8f9fa !important;
+}
+
+.sort-block div.dropdown-item.active, a.dropdown-item:active {
+    color: #7a329f !important;
+    text-decoration: none !important;
+    background-color: #fff !important;
+}
+
+
+
+
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
         /* height: calc(100vh - 143px); */
-        height: 683px;
+        height: 620px;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
@@ -778,7 +846,7 @@ color: #444;
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
         /* height: calc(100vh - 465px); */
-        height: 360px;
+        height: 380px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
