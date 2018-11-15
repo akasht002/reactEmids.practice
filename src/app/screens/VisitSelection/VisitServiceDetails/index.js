@@ -28,7 +28,8 @@ import {
   MORNING,
   AFTERNOON,
   EVENING,
-  HIRED_STATUS_ID
+  HIRED_STATUS_ID,
+  USERTYPES
 } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
 import {
@@ -39,6 +40,9 @@ import { getLength } from '../../../utils/validations'
 import {
   getVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import {getUserInfo} from '../../../utils/userUtility';
+import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
+import { createVideoConference } from '../../../redux/telehealth/actions';
 
 class VisitServiceDetails extends Component {
   constructor (props) {
@@ -173,6 +177,45 @@ class VisitServiceDetails extends Component {
   visitSummary = (data) => {
     this.props.getVisitServiceHistoryByIdDetail(data)
 }
+
+  showPhoneNumber = () => {
+    let data = this.state.visitServiceDetails;
+    this.setState({phoneNumber: data.phoneNumber, phoneNumberModal :!this.state.phoneNumberModal})
+  };
+
+  onClickConversation = () => {
+    let userId = getUserInfo().serviceProviderId;
+    let item = this.state.visitServiceDetails;
+    let selectedParticipants = [{
+      userId: item.patient.patientId,
+      participantType: USERTYPES.PATIENT
+    }];
+
+    let loggedInUser = {
+      userId: userId,
+      participantType: USERTYPES.SERVICE_PROVIDER
+    }
+
+    selectedParticipants.push(loggedInUser);
+      let data = {
+          participantList: selectedParticipants,
+          createdBy:  userId,
+          createdByType: loggedInUser.participantType,
+          title: '',
+          context: item.patient.patientId
+      };
+      this.props.createNewConversation(data);
+  };
+
+
+  onClickVideoConference = () =>{
+      let item = this.state.visitServiceDetails;
+      let selectedParticipants = [{
+          userId: item.patient.patientId,
+          participantType: USERTYPES.PATIENT
+      }];
+      this.props.createVideoConference(selectedParticipants);
+  };
 
 
   render () {
@@ -336,7 +379,7 @@ class VisitServiceDetails extends Component {
             <div className='CardContainers'>
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
-                  <span className='HeaderBackWrapper'>
+                  <span className='HeaderBackWrapper CursorPointer'>
                     <span className='HeaderBackButton' onClick={this.props.goBack}></span>
                   </span>
                   <span className='HeaderRequestLabel'>
@@ -385,7 +428,7 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className='PostedByImageContainer'>
+                  <div className='PostedByImageContainer CursorPointer' onClick={this.showPhoneNumber}>
                     <i class='ProfileIcon IconCall' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
@@ -393,7 +436,7 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className='PostedByImageContainer'>
+                  <div className='PostedByImageContainer CursorPointer' onClick={this.onClickConversation}>
                     <i class='ProfileIcon IconConversations' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
@@ -401,11 +444,11 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className='PostedByImageContainer'>
+                  <div className='PostedByImageContainer CursorPointer' onClick={this.onClickVideoConference}>
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                        <Link to="/teleHealth/">Video Conference </Link>
+                          Video Conference
                       </div>
                     </div>
                   </div>
@@ -691,6 +734,19 @@ class VisitServiceDetails extends Component {
                 isAlertModalopenConfirm: false
               })}
           />
+          <ModalPopup
+              isOpen={this.state.phoneNumberModal}
+              ModalBody={ <span> {this.state.phoneNumber} </span> }
+              btn1='OK'
+              className='modal-sm'
+              headerFooter='d-none'
+              footer='d-none'
+              centered='centered'
+              onConfirm={() =>
+              this.setState({
+                  phoneNumberModal: false
+              })}
+          />
         </Scrollbars>
       </AsideScreenCover>
     )
@@ -712,7 +768,9 @@ function mapDispatchToProps (dispatch) {
     getDays: () => dispatch(getDays()),
     goBack: () => dispatch(goBack()),
     dispatchServiceRequestByServiceProvider:()=>dispatchServiceRequestByServiceProvider(),
-    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data))
+    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
+    createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
+    createVideoConference: (data) => dispatch(createVideoConference(data))
   }
 }
 

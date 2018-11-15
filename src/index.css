@@ -794,3 +794,7 @@ div.RICC{
     width: 100%!important;
     height: 100%!important;
 }
+
+.CursorPointer {
+    cursor: pointer;
+}

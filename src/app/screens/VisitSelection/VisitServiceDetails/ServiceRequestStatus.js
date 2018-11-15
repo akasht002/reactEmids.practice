@@ -9,7 +9,6 @@ export const isStatusInArray = (data) => {
 }
 
 export const ServiceStatus = props => {
-  debugger;
   if (!isStatusInArray(props.status.id)) {    
     return (
       <React.Fragment>
