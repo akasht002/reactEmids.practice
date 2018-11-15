@@ -794,6 +794,10 @@ div.RICC{
     width: 100%!important;
     height: 100%!important;
 }
+
+.CursorPointer {
+    cursor: pointer;
+}
 .modal-dialog.modal-lg.asyncModal.serviceAreaModal > div > div.modal-body > form > div > div:nth-child(3) > div > .Select.ServiceRequestSelect.is-clearable.is-searchable > div{
     outline:none;
 }

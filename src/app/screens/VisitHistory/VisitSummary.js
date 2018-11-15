@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-
+import Moment from 'react-moment'
 import { Scrollbars } from '../../components'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import {Path } from '../../routes'
@@ -70,10 +70,12 @@ class VisitSummary extends React.Component {
                   />
                   <div className='requestContent'>
                     <div className='requestNameContent'>
-                      <span>
+                      {/* <span>
                         <i className='requestName'>Sun, 24 Aug, Morning</i>
                         {visitSummary.serviceRequestVisitId}
-                      </span>
+                      </span> */}
+                      <span>
+                          <i className='requestName'><Moment format="ddd, DD MMM">{visitSummary.visitDate}</Moment>, {visitSummary.slotDescription}</i>{visitSummary.serviceRequestVisitId}</span>
                     </div>
                     <div className='requestImageContent'>
                       <span className='IndividualName'>

@@ -3,13 +3,12 @@ import { Button } from '../../../components'
 import _ from 'lodash'
 
 export const isStatusInArray = (data) => {
-  let statusArray = [38, 40];
+  let statusArray = [38, 40, 37];
   if(_.indexOf(statusArray,data) !==-1) return true
   return false
 }
 
 export const ServiceStatus = props => {
-  debugger;
   if (!isStatusInArray(props.status.id)) {    
     return (
       <React.Fragment>

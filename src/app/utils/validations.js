@@ -62,7 +62,7 @@ export function checkFormatDate (value) {
 }
 
 export function formateStateDate (date) {
-  return date ? moment(date, DATE_FORMAT) : null
+  return date ? moment(date) : null
 }
 
 export function formateYearDate () {
