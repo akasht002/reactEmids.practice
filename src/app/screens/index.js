@@ -30,7 +30,10 @@ import {
   ResetPasswordConfirmation
 } from './Authentication'
 import PatientProfile from '../screens/PatientProfile/Profile';
-
+import {
+  VisitNotification
+  } from './VisitProcessingNotification'
+  
 export {
   Welcome,
   VerifyContact,
@@ -59,5 +62,6 @@ export {
   ConversationSummary,
   VisitHistory,
   VistSummary,
-  PatientProfile
+  PatientProfile,
+  VisitNotification
 }

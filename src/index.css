@@ -804,3 +804,11 @@ div.RICC{
 .Select.is-focused:not(.is-open)>.Select-controll{
     border-color: #7a329f!important;
 }
+
+body{
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+}
