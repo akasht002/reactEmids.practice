@@ -24,8 +24,6 @@ export const getVisitNotificationCountSuccess = (data) => {
 }
 
 export function getVisitNotification(data) {
-    console.log(1111111111111111111111)
-    console.log(data.count)
     return (dispatch) => {
         let userType = USERTYPES.SERVICE_PROVIDER;
         let userId = getUserInfo().serviceProviderId;
