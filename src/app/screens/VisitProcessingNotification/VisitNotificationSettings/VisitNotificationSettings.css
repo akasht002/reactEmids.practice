@@ -1,0 +1,134 @@
+.VisitNotificationSettingWidget{
+    position: relative;
+    height: calc(100% - 60px);
+}
+
+.NotificationsSettingsBody{
+    position: relative;
+    background-color: #f8f8f8;
+    height: calc(100% - 38px);
+    padding: 20px 0;
+}
+
+.NotificationsSettingsBody > div{
+    position: relative;
+    padding: 0 30px;
+    overflow: hidden;
+}
+
+.NotificationsSettingsBody > .NotificationsSettingsContainer{
+    padding: 0;
+    /*height: calc(100% - 45px);*/
+}
+
+.NotificationsHeaderTitle{
+    font-size: 20px;
+    font-weight: 600;
+    color: #7a329f;
+}
+
+.NotificationsListHeaderRow{
+    position: relative;
+    height: 100%;
+    margin-top: 15px;
+}
+
+.NotificationsListHeader{
+    padding: 10px 0;
+    border-bottom: 1px solid #7a329f;
+    display: inline-block;
+    color: #7a329f;
+    font-size: 16px;
+    line-height: 16px;
+    margin: 15px 30px;
+}
+
+.NotificationsSettingsListBox{
+    padding: 0 30px;
+}
+
+.NotificationsSettingsWidget {
+    width: 100%;
+    height: calc(100vh - 190px);
+    padding: 0 30px;
+}
+
+.NotificationsSettingsListItems > h6{
+    font-size: 16px;
+    color: #7a329f;
+    margin-bottom: 0;
+    font-weight: 600;
+    margin-top: 35px;
+}
+
+.NotificationsSettingsContents{
+    position: relative;
+    border-bottom: solid 1px #d7d7d7;
+}
+
+.NotificationsSettingsContents > div{
+    width: calc(100% - 70px);
+}
+
+.NotificationsSettingsDetailsName{
+    padding: 20px 0 5px 0;
+    color: #444444;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.NotificationsSettingsDetailsActivity{
+    color: #8c8c8c;
+    font-size: 14px;
+    padding-bottom: 15px;
+}
+
+span.NotificationsActionImage{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: calc(50% - 30px);
+    right: 0;
+}
+
+.CheckboxSet label:hover{
+    cursor: pointer;
+}
+.CheckboxSet input{
+    position: absolute;
+    opacity: 0;
+}
+span.NotificationsActionImage label:before{
+    content: '';
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #b7b7b7;
+    background-color: #ffffff;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+span.NotificationsActionImage:hover label:before{
+    border-color: #7a329f;
+}
+span.NotificationsActionImage:focus label:before{
+    border-color: #7a329f;
+}
+span.NotificationsActionImage input:checked ~ label:before{
+    background-color: #7a329f;
+    border-color: #7a329f;
+    background-repeat: no-repeat;
+    background-image: url("../../../assets/images/checked.svg");
+    background-size: 14px;
+    background-position: center;
+}
+
+span.NotificationsActionImage input:checked~label:before {
+    background-size: 14px;
+}
+
+.bottomButton {
+    float: right;
+    margin-top: 30px;
+}

@@ -9,7 +9,8 @@ import { checkSpace, checkDateFormatNumber, formateStateDate } from "../../../ut
 import { compare } from "../../../utils/comparerUtility";
 import {
     formatDate,
-    changeDateFormat
+    changeDateFormat,
+    formatDateValue
 } from '../../../utils/dateUtility';
 
 import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, deleteWorkHistory } from "../../../redux/profile/WorkHistory/actions";
@@ -28,6 +29,7 @@ class WorkHistory extends Component {
             fromDate: '',
             toDate: '',
             isWorking: false,
+            currentlyWorking: false,
             description: '',
             isOnDeleteModalOpen: false,
             isAdd: false,
@@ -43,10 +45,10 @@ class WorkHistory extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.workhistoyFieldDetails.isWorking === '') {
-            this.setState({ isWorking: false })
+        if (!nextProps.workhistoyFieldDetails.currentlyWorking) {
+            this.setState({ currentlyWorking: false })
         } else {
-            this.setState({ isWorking: nextProps.workhistoyFieldDetails.isWorking })
+            this.setState({ currentlyWorking: nextProps.workhistoyFieldDetails.currentlyWorking })
         }
         this.setState({
             designation: nextProps.workhistoyFieldDetails.designation || "",
@@ -55,7 +57,7 @@ class WorkHistory extends Component {
             fromDate: nextProps.workhistoyFieldDetails.fromDate  || null,
             toDate: nextProps.workhistoyFieldDetails.toDate || null,
             description: nextProps.workhistoyFieldDetails.description || "",
-            isWorking: nextProps.workhistoyFieldDetails.isWorking,
+            currentlyWorking: nextProps.workhistoyFieldDetails.currentlyWorking,
             workHistoryId: nextProps.workhistoyFieldDetails.workHistoryId
         })
     }
@@ -69,7 +71,7 @@ class WorkHistory extends Component {
             fromDate: '',
             toDate: '',
             description: '',
-            isWorking: '',
+            currentlyWorking: false,
             disabledSaveBtn: true,
             isDiscardModalOpen: false,
             isAdd: true,
@@ -93,7 +95,8 @@ class WorkHistory extends Component {
             fromDate: workHistory.fromDate,
             toDate: workHistory.toDate,
             description: workHistory.description,
-            isWorking: workHistory.isWorking
+            isWorking: workHistory.isWorking,
+            currentlyWorking: workHistory.currentlyWorking
         }
 
         let stateObject = {
@@ -103,7 +106,8 @@ class WorkHistory extends Component {
             fromDate: this.state.fromDate,
             toDate: this.state.toDate,
             description: this.state.description,
-            isWorking: this.state.isWorking
+            isWorking: this.state.isWorking,
+            currentlyWorking: this.state.currentlyWorking
         }
 
         const fieldDifference = compare(workhistoryFielObject, stateObject);
@@ -117,7 +121,8 @@ class WorkHistory extends Component {
                 fromDate: '',
                 toDate: '',
                 description: '',
-                isWorking: ''
+                isWorking: false,
+                currentlyWorking: false
             })
         } else {
             this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
@@ -137,7 +142,8 @@ class WorkHistory extends Component {
                 fromDate: this.state.fromDate,
                 toDate: this.state.toDate,
                 isWorking: this.state.isWorking,
-                description: this.state.description && this.state.description.trim()
+                description: this.state.description && this.state.description.trim(),
+                currentlyWorking: this.state.currentlyWorking
             };
             this.props.addWorkHistory(data);
             this.reset();
@@ -158,7 +164,7 @@ class WorkHistory extends Component {
     updateWorkHistory = () => {
         if (this.state.designation && this.state.company && this.state.fromDate && this.state.toDate) {
             {
-                this.state.isWorking ?
+                this.state.currentlyWorking ?
                 this.setState({ toDate: '' })
                 :
                 this.setState({ toDate: this.state.toDate })
@@ -171,7 +177,8 @@ class WorkHistory extends Component {
                 toDate: this.state.toDate,
                 description: this.state.description,
                 workHistoryId: this.state.workHistoryId,
-                isWorking: this.state.isWorking
+                isWorking: this.state.isWorking,
+                currentlyWorking: this.state.currentlyWorking
             };
             this.props.updateWorkHistory(data);
             this.setState({ isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen, disabledSaveBtn: true });
@@ -187,7 +194,7 @@ class WorkHistory extends Component {
     }
 
     dateChanged = (date) => {
-        const formattedDate = date ? formatDate(date, DATE_FORMAT) : null;
+        const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
         this.setState({ fromDate: formattedDate, disabledSaveBtn: false, toDate: null });
         
     }
@@ -208,7 +215,7 @@ class WorkHistory extends Component {
         }
 
         todateChanged = (date) => {
-            const formattedDate = date ? formatDate(date, DATE_FORMAT) : null;
+            const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
             this.setState({ toDate: formattedDate, disabledSaveBtn: false });
             
         }
@@ -231,7 +238,6 @@ class WorkHistory extends Component {
     render() {
         let modalContent;
         let modalTitle;
-
 
         const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
@@ -292,7 +298,7 @@ class WorkHistory extends Component {
                         <label>From Date</label>
                         <Calendar
                             id="fromDate"
-                            startDate={this.state.fromDate && moment(this.state.fromDate)}
+                            startDate={this.state.fromDate && moment(this.state.fromDate, DATE_FORMAT)}
                             onDateChange={this.dateChanged}
                             onDateChangeRaw={this.dateChangedRaw}
                             mandatory={true}
@@ -305,11 +311,11 @@ class WorkHistory extends Component {
                 </div>
 
                 <div className="col-md-6 MonthlyPicker mb-2">
-                    {!this.state.isWorking && <div className="form-group">
+                    {!this.state.currentlyWorking && <div className="form-group">
                         <label>To Date</label>
                         <Calendar
                             id="toDate"
-                            startDate={this.state.toDate && moment(this.state.toDate)}
+                            startDate={this.state.toDate && moment(this.state.toDate, DATE_FORMAT)}
                             onDateChange={this.todateChanged}
                             onDateChangeRaw={this.todateChangedRaw}
                             mandatory={true}
@@ -325,8 +331,10 @@ class WorkHistory extends Component {
                 <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
-                            <input className="form-check-input" type="checkbox" value={this.state.isWorking} id="defaultCheck1"
-                                onChange={(e) => this.setState({ isWorking: e.target.checked, disabledSaveBtn: false })}
+                            <input className="form-check-input" type="checkbox" checked={this.state.currentlyWorking} id="defaultCheck1"
+                                onChange={(e) => 
+                                    this.setState({ currentlyWorking: e.target.checked, disabledSaveBtn: false, toDate: moment(new Date())}
+                                )}
                             />
                             I am currently working here
                             <span className="CheckboxIcon" />
@@ -362,16 +370,17 @@ class WorkHistory extends Component {
                                 {WorkHistoryList.designation} - <span>{WorkHistoryList.company}</span>
                             </h5>
                             <span className="ml-auto SPWorkYear">
-                                <Moment format='MMM YYYY' className="mr-2">
-                                    {WorkHistoryList.fromDate}
-                                </Moment>
-                                -
+                            <span>
+                                {WorkHistoryList.fromDate }
+                            </span>
+
+                               <span> - </span>
                                  {WorkHistoryList.toDate === '01-01-1900' ?
-                                    <span className="ml-2">Present</span>
+                                    <span>Present</span>
                                     :
-                                    <Moment format='MMM YYYY' className="ml-2">
+                                    <span> { /* to do change removing className="ml-2" */}
                                         {WorkHistoryList.toDate}
-                                    </Moment>
+                                    </span>
                                 }
                             </span>
                         </div>

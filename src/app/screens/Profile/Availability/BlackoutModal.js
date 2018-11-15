@@ -6,7 +6,7 @@ import { Calendar } from "../../../components";
 import { compare } from "../../../utils/comparerUtility";
 import { changeDateFormat, formatDate } from '../../../utils/dateUtility';
 import { DATE_FORMAT } from '../../../constants/constants';
-import { formattedDateMoment, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDate } from '../../../utils/validations';
+import { formattedDateMoment, formattedDateMomentValue, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDate } from '../../../utils/validations';
 
 class BlackoutModal extends Component {
   constructor(props) {
@@ -17,10 +17,9 @@ class BlackoutModal extends Component {
         toDate: "",
         remarks: "",
         serviceProviderBlackoutDayId: "",
-        isDiscardModalOpen: false,
-        isDisabledSaveBtn: true
+        isDiscardModalOpen: false
       },
-     
+      isValid: true
     };
     this.fromMinDate = newDate();
     this.toMinDate = newDate();
@@ -30,7 +29,7 @@ class BlackoutModal extends Component {
   }
 
   dateChanged = (dateType, date) => {
-     const formattedDate = formattedDateMoment(date);
+     const formattedDate = formattedDateMomentValue(date);
      this.stateChange = true;
 
      if (dateType === 'fromDate') {
@@ -38,8 +37,7 @@ class BlackoutModal extends Component {
       this.setState(prevState => ({
         blackoutData: {
           ...prevState.blackoutData,
-          fromDate: formattedDate,
-          isDisabledSaveBtn: false
+          fromDate: formattedDate
         }
       }));
      } else {
@@ -47,8 +45,7 @@ class BlackoutModal extends Component {
       this.setState(prevState => ({
         blackoutData: {
           ...prevState.blackoutData,
-          toDate: formattedDate,
-          isDisabledSaveBtn: false
+          toDate: formattedDate
         }
       }));
      }
@@ -81,29 +78,13 @@ dateChangedRaw = (dateType, event) => {
     this.setState(prevState => ({
       blackoutData: {
         ...prevState.blackoutData,
-        remarks: value,
-        isDisabledSaveBtn: false
+        remarks: value
       }
     }));
   };
 
   saveData = () => {
-    const { fromDate, toDate, remarks } = this.state.blackoutData;
-    let disabledSave = false;
-    if ((fromDate === undefined || fromDate === '' || fromDate === null) ||
-    (toDate === undefined || toDate === '' || toDate === null) || 
-    (remarks === undefined || remarks === '' || remarks === null)) {
-      disabledSave = true;
-      this.setState(prevState => ({
-        blackoutData: {
-          ...prevState.blackoutData,
-          isDisabledSaveBtn: disabledSave
-        }
-      }));
-    } else {
-      this.props.saveBlackout(this.state.blackoutData);
-    }
-   
+     this.props.saveBlackout(this.state.blackoutData);
   };
 
   componentWillReceiveProps(nextProps) {
@@ -165,7 +146,7 @@ dateChangedRaw = (dateType, event) => {
   }
 
   render() {
-    const { fromDate, toDate, remarks, isDisabledSaveBtn } = this.state.blackoutData;
+    const { fromDate, toDate, remarks } = this.state.blackoutData;
     return (
       <React.Fragment>
         <Modal
@@ -212,7 +193,7 @@ dateChangedRaw = (dateType, event) => {
                   />
                 </div>
                 <div className="col-md-12 mb-2">
-                  <div className="form-group">
+                  <div className={"form-group"}>
                     <TextArea
                       name="Remarks"
                       placeholder="Remarks"
@@ -228,7 +209,7 @@ dateChangedRaw = (dateType, event) => {
             </form>
           </ModalBody>
           <ModalFooter className={this.props.headerFooter}>
-            <Button className="" color="primary" onClick={this.saveData} disabled={isDisabledSaveBtn}>
+            <Button className="" color="primary" onClick={this.saveData}>
               Save
             </Button>
           </ModalFooter>

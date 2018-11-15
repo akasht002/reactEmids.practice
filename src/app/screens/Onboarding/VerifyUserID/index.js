@@ -126,7 +126,7 @@ class VerifyUserID extends React.Component {
                                             disable={!this.state.email}
                                         />}
                                 </form>
-                                {this.props.isEmailExist && <div className="MsgWithIcon MsgSuccessIcon">
+                                {this.props.isEmailExist && <div className="MsgWithIcon MsgSuccessIcon succss-idblock">
                                     <span className="text-success d-block mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
                                 </div>}
                                 {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>

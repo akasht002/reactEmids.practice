@@ -20,6 +20,7 @@ export const ProfileHeaderMenu = [
     {
         name: "notification",
         status: true,
-        id: 5
+        id: 5,
+        link: "visitNotification",
     },
 ];

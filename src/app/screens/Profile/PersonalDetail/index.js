@@ -62,7 +62,6 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentwillrecieveprops', nextProps.personalDetail);
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       uploadedImageFile: nextProps.profileImgData.image
@@ -192,7 +191,7 @@ class PersonalDetail extends React.PureComponent {
        if(this.state.city === '' || this.state.city === null) {
           cityInvalid = true;
        } 
-       if(this.state.zipCode === '' || this.state.zipCode === null) {
+       if(this.state.zipCode === '' || this.state.zipCode === null || this.state.zipCode < 5) {
          zipCodeInvalid = true;
        }
        if(this.state.streetAddress === '' || this.state.streetAddress === null) {

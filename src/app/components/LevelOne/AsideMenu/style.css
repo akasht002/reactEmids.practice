@@ -179,6 +179,10 @@
 
 .SelectFormControl .Select-control .Select-input:focus, .SelectFormControl.Select.is-focused > .Select-control, .SelectFormControl.Select.is-focused:not(.is-open) > .Select-control{
     background: rgba(0,0,0,0);
+    border-color: #7a329f!important;
+    -webkit-box-shadow: none!important;
+	-moz-box-shadow: none!important;
+	box-shadow: none!important;
 }
 
 /************************************************************************************************************************************************************************/

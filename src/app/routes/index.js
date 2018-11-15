@@ -29,7 +29,8 @@ import {
   TeleHealth,
   ConversationSummary,
   Conversation,
-  PatientProfile
+  PatientProfile,
+  VisitNotification
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -73,7 +74,8 @@ export const Path = {
   conversation: '/conversation/',
   visitHistory: '/visitHistory',
   visitSummaryDetail: '/visitSummary',
-  patientProfile: '/patientProfile'
+  patientProfile: '/patientProfile',
+  visitNotification: '/visitNotification'
 };
 
 class AppStackRoot extends Component {
@@ -92,7 +94,7 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
-
+            <PrivateRoute path={Path.visitNotification} component={VisitNotification} />
             <PrivateRoute path={Path.visitServiceList} permission={SCREENS.VISIT_PROCESSING} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} permission={SCREENS.VISIT_PROCESSING} component={VisitServiceDetails} />
             <PrivateRoute path={Path.performTasks} permission={SCREENS.SERVICE_REQUEST} component={PerformTasks} />

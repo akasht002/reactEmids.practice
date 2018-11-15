@@ -134,3 +134,6 @@ export const serviceTypesImage = {
     15: 'HAH - Laundry.svg',
     18: 'Transportation - General Transportation.svg' 
 }
+
+export const DEFAULT_PAGE_SIZE = 10;
+export const DEFAULT_PAGE_NUMBER = 1;
