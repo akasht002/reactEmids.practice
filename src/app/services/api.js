@@ -138,4 +138,5 @@ export const API = {
     getVisitFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/',
     getServiceRequestCount: 'ServiceRequest/ServiceProvider/RequestCount/',
     getAllPatientForServiceProviders: 'ServiceRequest/GetPatientForServiceProvider/',
+    getServiceRequestCountOfFilters: 'Search/NumberOfServiceRequestsFilter'
 }

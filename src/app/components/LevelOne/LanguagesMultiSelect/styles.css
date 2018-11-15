@@ -45,6 +45,11 @@
 }
 .Select.is-searchable.is-focused:not(.is-open) > .Select-control {
     cursor: text;
+    border-color: #7a329f!important;    
+    -webkit-box-shadow: none!important;
+	-moz-box-shadow: none!important;
+	box-shadow: none!important;
+    
 }
 .Select.is-focused > .Select-control {
     background: #fff;

@@ -311,11 +311,11 @@ class ServiceArea extends Component {
             <div className="form-group">
               <label className="m-0">Range (in miles)</label>
               <div className='InputInDeWidget'>
-                <span className='IncreDecreBTN'
+                <span className='IncreDecreBTN plus'
                   onClick={this.onClickHandleIncr}>+</span>
                 <input className="form-control" 
                   value={this.state.coverageArea} />
-                <span className='IncreDecreBTN'
+                <span className='IncreDecreBTN minus'
                   onClick={this.onClickHandleDecr}>-</span>
               </div>
             </div>
