@@ -44,7 +44,7 @@ class WorkHistory extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.workhistoyFieldDetails.isWorking === '') {
+        if (!nextProps.workhistoyFieldDetails.isWorking) {
             this.setState({ isWorking: false })
         } else {
             this.setState({ isWorking: nextProps.workhistoyFieldDetails.isWorking })
@@ -70,7 +70,7 @@ class WorkHistory extends Component {
             fromDate: '',
             toDate: '',
             description: '',
-            isWorking: '',
+            isWorking: false,
             disabledSaveBtn: true,
             isDiscardModalOpen: false,
             isAdd: true,
@@ -118,7 +118,7 @@ class WorkHistory extends Component {
                 fromDate: '',
                 toDate: '',
                 description: '',
-                isWorking: ''
+                isWorking: false
             })
         } else {
             this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
