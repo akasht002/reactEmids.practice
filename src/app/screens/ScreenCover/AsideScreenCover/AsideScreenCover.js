@@ -23,7 +23,7 @@ import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
-import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
+import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -158,7 +158,7 @@ class AsideScreenCover extends React.Component {
                     headerFooter="d-none"
                     centered={true}
                     onConfirm={this.props.joinVideoConference}
-                    onCancel={this.props.clearInvitaion}
+                    onCancel={this.props.rejectConference}
                 />
             </ScreenCover>
         )
@@ -178,7 +178,8 @@ function mapDispatchToProps(dispatch) {
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
         onLogout: () => dispatch(onLogout()),
         clearInvitaion: () => dispatch(clearInvitaion()),
-        joinVideoConference: () => dispatch(joinVideoConference())
+        joinVideoConference: () => dispatch(joinVideoConference()),
+        rejectConference: () => dispatch(rejectConference())
     }
 };
 
