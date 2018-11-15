@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import moment from 'moment';
 import { ModalPopup } from "../../../components";
 import { TextArea } from "../../../components";
 import { Calendar } from "../../../components";
@@ -188,7 +189,7 @@ dateChangedRaw = (dateType, event) => {
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
                     label="From Date"
-                    startDate={fromDate && formateStateDate(fromDate)}
+                    startDate={fromDate && moment(fromDate, DATE_FORMAT)}
                     onDateChange={this.dateChanged.bind(this, 'fromDate')}
                     onDateChangeRaw={this.dateChangedRaw.bind(this, 'fromDate')}
                     value={fromDate}
@@ -204,7 +205,7 @@ dateChangedRaw = (dateType, event) => {
                   <Calendar
                     label="To Date"
                     dateFormat="LL"
-                    startDate={toDate && formateStateDate(toDate)}
+                    startDate={toDate && moment(toDate, DATE_FORMAT)}
                     onDateChange={this.dateChanged.bind(this, 'toDate')}
                     onDateChangeRaw={this.dateChangedRaw.bind(this, 'toDate')}
                     value={toDate}
