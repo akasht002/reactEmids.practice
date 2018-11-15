@@ -798,3 +798,9 @@ div.RICC{
 .CursorPointer {
     cursor: pointer;
 }
+.modal-dialog.modal-lg.asyncModal.serviceAreaModal > div > div.modal-body > form > div > div:nth-child(3) > div > .Select.ServiceRequestSelect.is-clearable.is-searchable > div{
+    outline:none;
+}
+.Select.is-focused:not(.is-open)>.Select-controll{
+    border-color: #7a329f!important;
+}
