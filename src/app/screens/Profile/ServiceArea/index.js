@@ -158,7 +158,8 @@ class ServiceArea extends Component {
       this.countValue = this.countValue + 1;
     }
     this.setState({
-      coverageArea: this.countValue
+      coverageArea: this.countValue,
+      disabledSaveBtn: false
     });   
   }
 
@@ -172,7 +173,8 @@ class ServiceArea extends Component {
       this.countValue = this.countValue - 1;
     }
     this.setState({
-      coverageArea: this.countValue
+      coverageArea: this.countValue,
+      disabledSaveBtn: false
     });
   }
 
