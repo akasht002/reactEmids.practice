@@ -1,5 +1,5 @@
 import { API } from '../../services/api';
-import { AsyncPutWithUrl, AsyncGet, AsyncPost, getUserInfo } from '../../services/http';
+import { AsyncPutWithUrl, AsyncGet, AsyncPost, getUserInfo, AsyncPut } from '../../services/http';
 import { startLoading, endLoading } from '../loading/actions';
 import { push } from '../navigation/actions';
 import { Path } from '../../routes';
@@ -57,7 +57,7 @@ export function generateToken() {
     return (dispatch, getState) => {
         dispatch(startLoading());
         const user = getState().profileState.PersonalDetailState.personalDetail
-        AsyncGet(API.generateToken + user.firstName + ' ' + user.lastName).then((resp) => {
+        AsyncGet(API.generateToken + user.serviceProviderId).then((resp) => {
             if (resp && resp.data) {
                 dispatch(generateTokenSuccess(resp.data));
             }
@@ -239,17 +239,33 @@ export function GetAllParticipants(data) {
 export function endConference() {
     return (dispatch, getState) => {
         let state = getState().telehealthState;
-        let token = {
-            authToken: state.token
-        }
         dispatch(startLoading());
-        AsyncPost(API.endConference + state.roomId, token).then((resp) => {
+        AsyncPost(API.endConference + state.roomId).then((resp) => {
             dispatch(push(Path.dashboard));
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
     }
+};
+
+export function rejectConference() {
+    return (dispatch, getState) => {
+          let state = getState();
+          let userInfo = getUserInfo();
+          let data = {
+            participantId: userInfo.serviceProviderId,
+            participantType: USERTYPES.SERVICE_PROVIDER,
+            roomNumber: state.telehealthState.roomId
+          };
+          dispatch(startLoading());
+          AsyncPut(API.rejectConference, data).then((resp) => {
+              dispatch(clearInvitaion());
+              dispatch(endLoading());
+          }).catch((err) => {
+              dispatch(endLoading());
+          })
+      }
 };
 
 export function getLinkedPatients() {
@@ -332,7 +348,7 @@ export function checkTeleHealth(data) {
                 ];
                 dispatch(onGetParticipantByConfernceIdSuccess(participants));
             }
-        } else if (data.messageType === 'Joined') {
+        } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
             if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
                 let participants = teleHealthState.participantsByConferenceId.map((participant) => {
                     if (participant.userType === data.participantList[0].userType &&
@@ -346,6 +362,10 @@ export function checkTeleHealth(data) {
                     }
                 });
                 dispatch(onGetParticipantByConfernceIdSuccess(participants));
+            }
+        }  else if (data.messageType === 'Ended') {
+            if (teleHealthState.roomId === data.roomID) {
+                dispatch(leaveVideoConference())
             }
         }
     }

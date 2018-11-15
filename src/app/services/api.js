@@ -139,6 +139,7 @@ export const API = {
     getServiceRequestCount: 'ServiceRequest/ServiceProvider/RequestCount/',
     getAllPatientForServiceProviders: 'ServiceRequest/GetPatientForServiceProvider/',
     getServiceRequestCountOfFilters: 'Search/NumberOfServiceRequestsFilter',
+    rejectConference: 'VideoConferencing/RejectConference',
     getVisitNotification: 'ServiceProvider/GetAllNotifications/',
     getVisitNotificationCount: 'ServiceProvider/GetAllNotificationsCount/'
 }

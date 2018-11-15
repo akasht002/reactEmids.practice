@@ -82,7 +82,6 @@ dateChangedRaw = (dateType, event) => {
       blackoutData: {
         ...prevState.blackoutData,
         remarks: value,
-        isRemarkInvalid: false,
         isDisabledSaveBtn: false
       }
     }));
@@ -99,8 +98,7 @@ dateChangedRaw = (dateType, event) => {
         blackoutData: {
           ...prevState.blackoutData,
           isDisabledSaveBtn: disabledSave
-        },
-        isValid: false
+        }
       }));
     } else {
       this.props.saveBlackout(this.state.blackoutData);
@@ -161,8 +159,7 @@ dateChangedRaw = (dateType, event) => {
           isDiscardModalOpen: false,
           fromDate: this.state.fromDate,
           toDate: this.state.toDate,
-          remarks: this.state.remarks,
-          isRemarkInvalid: true
+          remarks: this.state.remarks
       });
       this.props.closeBlackoutModal();
   }
@@ -219,21 +216,13 @@ dateChangedRaw = (dateType, event) => {
                     <TextArea
                       name="Remarks"
                       placeholder="Remarks"
-                      className={"form-control " + (!this.state.isValid && !remarks && 'inputFailure')}
+                      className="form-control"
                       rows="5"
                       textChange={this.remarksChange}
                       maxlength={"500"}
                       value={remarks}
-                      onBlur={e => {
-                        if(!e.target.value) {
-                          this.setState({isRemarkInvalid: true})
-                        }
-                      }}
                     />
                   </div>
-                  
-                  {!this.state.isValid && (!remarks) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter Valid {(remarks === '' || remarks === undefined) && ' Remark'}</span>}
-                 
                 </div>
               </div>
             </form>
