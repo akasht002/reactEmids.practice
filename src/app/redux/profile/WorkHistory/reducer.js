@@ -13,7 +13,8 @@ const defaultState = {
         toDate: '',
         description:'',
         isWorking:false,
-        workHistoryId:''
+        workHistoryId:'',
+        currentlyWorking: false
     }
 };
 
@@ -37,8 +38,8 @@ const WorkHistoryState = (state = defaultState, action) => {
                     toDate: '',
                     description:'',
                     isWorking:false,
-                    workHistoryId:''
-                    
+                    workHistoryId:'',
+                    currentlyWorking: false
                 }
             };
 
