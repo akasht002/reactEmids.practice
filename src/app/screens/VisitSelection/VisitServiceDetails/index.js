@@ -20,6 +20,8 @@ import {
 import {
   getPerformTasksList
 } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
+import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
 import { serviceRequestMessages } from '../../../utils/messageUtility'
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
@@ -40,7 +42,7 @@ import { getLength } from '../../../utils/validations'
 import {
   getVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
-import {getUserInfo} from '../../../utils/userUtility';
+import { getUserInfo } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { createVideoConference } from '../../../redux/telehealth/actions';
 
@@ -109,6 +111,8 @@ class VisitServiceDetails extends Component {
 
   visitProcessing = data => {
     this.props.getPerformTasksList(data, true)
+    this.props.formDirty();
+    this.props.formDirtyFeedback();
   }
 
   selectedServiceType = e => {
@@ -180,7 +184,7 @@ class VisitServiceDetails extends Component {
 
   showPhoneNumber = () => {
     let data = this.state.visitServiceDetails;
-    this.setState({phoneNumber: data.phoneNumber, phoneNumberModal :!this.state.phoneNumberModal})
+    this.setState({ phoneNumber: data.phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
   };
 
   onClickConversation = () => {
@@ -197,24 +201,24 @@ class VisitServiceDetails extends Component {
     }
 
     selectedParticipants.push(loggedInUser);
-      let data = {
-          participantList: selectedParticipants,
-          createdBy:  userId,
-          createdByType: loggedInUser.participantType,
-          title: '',
-          context: item.patient.patientId
-      };
-      this.props.createNewConversation(data);
+    let data = {
+      participantList: selectedParticipants,
+      createdBy: userId,
+      createdByType: loggedInUser.participantType,
+      title: '',
+      context: item.patient.patientId
+    };
+    this.props.createNewConversation(data);
   };
 
 
-  onClickVideoConference = () =>{
-      let item = this.state.visitServiceDetails;
-      let selectedParticipants = [{
-          userId: item.patient.patientId,
-          participantType: USERTYPES.PATIENT
-      }];
-      this.props.createVideoConference(selectedParticipants);
+  onClickVideoConference = () => {
+    let item = this.state.visitServiceDetails;
+    let selectedParticipants = [{
+      userId: item.patient.patientId,
+      participantType: USERTYPES.PATIENT
+    }];
+    this.props.createVideoConference(selectedParticipants);
   };
 
 
@@ -450,7 +454,7 @@ class VisitServiceDetails extends Component {
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
                       <div class='ProfileIconDetails'>
-                          Video Conference
+                        Video Conference
                       </div>
                     </div>
                   </div>
@@ -737,16 +741,16 @@ class VisitServiceDetails extends Component {
               })}
           />
           <ModalPopup
-              isOpen={this.state.phoneNumberModal}
-              ModalBody={ <span> {this.state.phoneNumber} </span> }
-              btn1='OK'
-              className='modal-sm'
-              headerFooter='d-none'
-              footer='d-none'
-              centered='centered'
-              onConfirm={() =>
+            isOpen={this.state.phoneNumberModal}
+            ModalBody={<span> {this.state.phoneNumber} </span>}
+            btn1='OK'
+            className='modal-sm'
+            headerFooter='d-none'
+            footer='d-none'
+            centered='centered'
+            onConfirm={() =>
               this.setState({
-                  phoneNumberModal: false
+                phoneNumberModal: false
               })}
           />
         </Scrollbars>
@@ -772,7 +776,9 @@ function mapDispatchToProps(dispatch) {
     dispatchServiceRequestByServiceProvider: () => dispatchServiceRequestByServiceProvider(),
     getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
-    createVideoConference: (data) => dispatch(createVideoConference(data))
+    createVideoConference: (data) => dispatch(createVideoConference(data)),
+    formDirty: () => dispatch(formDirty()),
+    formDirtyFeedback: () => dispatch(formDirtyFeedback())
   }
 }
 
