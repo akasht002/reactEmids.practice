@@ -22,6 +22,7 @@ export const vistServiceHistoryDetails = {
     getVisitFeedBack: 'getVisitFeedBack/visit',
     getAllPatientForServiceProviders: "getAllPatientForServiceProviders/visitHistory",
     clearPatientForServiceProviders: "clearPatientForServiceProviders/visitHistory",
+    formDirty: 'formDirty/visitHistory'
 };
 
 export const getVisitServiceHistoryDetailsSuccess = (data) => {
@@ -86,6 +87,12 @@ export const getVisitFeedBackSuccess = (data) => {
     return {
         type: vistServiceHistoryDetails.getVisitFeedBack,
         data
+    }
+}
+
+export const formDirty = () => {
+    return {
+        type: vistServiceHistoryDetails.formDirty,
     }
 }
 
