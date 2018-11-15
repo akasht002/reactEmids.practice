@@ -327,6 +327,7 @@ class TeleHealthWidget extends Component {
                     <TeleHealthParticipants
                         participantList={this.props.existingParticipantList}
                         ToggleAddParticipantsListView={this.DisplayInviteParticipantsList}
+                        initiator={this.props.initiator}
                     />
                     <TeleHealthInviteParticipants
                         participantList={this.props.conferenceParticipants}

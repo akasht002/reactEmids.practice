@@ -23,7 +23,7 @@ import {SCREENS} from '../../../constants/constants';
 import {authorizePermission} from '../../../utils/roleUtility';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
-import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
+import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
 import './styles.css'
 
 class Profile extends Component {
@@ -244,7 +244,7 @@ class Profile extends Component {
             headerFooter="d-none"
             centered={true}
             onConfirm={this.props.joinVideoConference}
-            onCancel={this.props.clearInvitaion}
+            onCancel={this.props.rejectConference}
         />
           
         <ModalPopup
@@ -269,7 +269,8 @@ function mapDispatchToProps (dispatch) {
     navigateProfileHeader: (link) => dispatch(push(link)),
     clearInvitaion: () => dispatch(clearInvitaion()),
     joinVideoConference: () => dispatch(joinVideoConference()),
-    goToDashboard: () => dispatch(push(Path.dashboard))
+    goToDashboard: () => dispatch(push(Path.dashboard)),
+    rejectConference: () => dispatch(rejectConference())
   }
 }
 

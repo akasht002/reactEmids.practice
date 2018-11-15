@@ -52,7 +52,7 @@ export default class TeleHealthParticipants extends Component {
             <div className="TeleHealthParticipantList">
                 <div className="TeleHealthParticipantListHeader">
                     <span className="sideParticipantsTitle primaryColor">Participants</span>
-                    <span onClick={this.props.ToggleAddParticipantsListView}><i className="addParticipantsButton" /></span>
+                    {this.prop.initiator && <span onClick={this.props.ToggleAddParticipantsListView}><i className="addParticipantsButton" /></span>}
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
                     className='TeleHealthParticipantsListContent'>
