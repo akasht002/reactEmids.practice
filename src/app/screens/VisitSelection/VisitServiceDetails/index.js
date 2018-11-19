@@ -22,6 +22,7 @@ import {
 } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
+import { formDirtyPerformTask } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import { serviceRequestMessages } from '../../../utils/messageUtility'
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
@@ -114,6 +115,7 @@ class VisitServiceDetails extends Component {
     this.props.getPerformTasksList(data, true)
     this.props.formDirty();
     this.props.formDirtyFeedback();
+    this.props.formDirtyPerformTask();
   }
 
   selectedServiceType = e => {
@@ -781,7 +783,8 @@ function mapDispatchToProps(dispatch) {
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
     createVideoConference: (data) => dispatch(createVideoConference(data)),
     formDirty: () => dispatch(formDirty()),
-    formDirtyFeedback: () => dispatch(formDirtyFeedback())
+    formDirtyFeedback: () => dispatch(formDirtyFeedback()),
+    formDirtyPerformTask: () => dispatch(formDirtyPerformTask())
   }
 }
 

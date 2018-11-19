@@ -65,6 +65,10 @@ export function formateStateDate (date) {
   return date ? moment(date) : null
 }
 
+export function formateStateDateValue (date) {
+  return date ? moment(date, DATE_FORMAT) : null
+}
+
 export function formateYearDate () {
   return moment().format(DATE_YEAR)
 }
