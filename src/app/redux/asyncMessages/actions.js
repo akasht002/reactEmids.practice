@@ -35,6 +35,7 @@ export const AsyncMessageActions = {
     pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
     setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
     clearConversation: 'clearConversation/asyncMessage',
+    setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
 };
 
 export const setConversationSummary = (data) => {
