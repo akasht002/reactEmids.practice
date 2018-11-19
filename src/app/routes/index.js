@@ -52,6 +52,7 @@ export const Path = {
   setPassword: '/setpassword',
   verifyEmail: '/verifyemail',
   verifyContact: '/verifycontact',
+  verifyContactEntity: '/verifycontactentity/:id/:token/:type',
   onboardSuccess: '/onboardsuccess',
   profile: '/profile',
   visitServiceList: '/Visitservicelist',
@@ -87,6 +88,7 @@ class AppStackRoot extends Component {
             <Route exact path={Path.root} component={Welcome} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.verifyContact} component={VerifyContact} />
+            <Route path={Path.verifyContactEntity} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
             <Route path={Path.onboardSuccess} component={OnboardSuccess} />
             <Route path={Path.loginCallBack} component={LoginCallBack} />

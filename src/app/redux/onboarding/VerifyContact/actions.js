@@ -1,9 +1,10 @@
 import { API } from '../../../services/api';
-import { Post } from '../../../services/http';
+import { Post, Get } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { clearState as verifyUserIdClear } from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
+import { USERTYPES } from '../../../constants/constants';
 
 export const VerifyContact = {
     passcodeSentSuccess: 'passcode_sent_success/verifycontact',
@@ -139,10 +140,34 @@ export function getUserData() {
                 emailId: serviceProviderDetails.emailId,
                 fullName: serviceProviderDetails.fullName,
                 mobileNumber: serviceProviderDetails.mobileNumber,
-                passcode: serviceProviderDetails.passcode
+                passcode: serviceProviderDetails.passcode,
+                token: '',
+                userType: USERTYPES.SERVICE_PROVIDER
             };
             dispatch(onSetUserIdCompletion(getUserData));
         }
+    }
+};
+
+export function getEntityUserData(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        Get(API.getEntityUserData + data.serviceProviderId + '/' + data.token).then((resp) => {
+            let getUserData = {
+                serviceProviderId: resp.data.serviceProviderId,
+                memberId: '',
+                emailId: resp.data.entityUserEmail,
+                fullName: '',
+                mobileNumber: resp.data.mobileNumber,
+                passcode: '',
+                token: data.token,
+                userType: data.userType
+            };
+            dispatch(onSetUserIdCompletion(getUserData));
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
     }
 };
 
