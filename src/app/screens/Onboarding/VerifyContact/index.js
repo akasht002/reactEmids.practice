@@ -89,6 +89,7 @@ class VerifyContact extends React.Component {
                                             autoComplete="off"
                                             type="password"
                                             label="Enter temporary passcode"
+                                            maxlength="6"
                                             className={"form-control mr-sm-2 " + (this.props.isPasscodeMatch ? '' : this.props.isPasscodeNotMatch && 'inputFailure')}
                                             value={checkSpace(this.state.temporaryPassCode)}
                                             textChange={(e) => this.onChangePassword(e)}
