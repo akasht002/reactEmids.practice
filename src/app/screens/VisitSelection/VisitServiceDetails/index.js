@@ -37,7 +37,8 @@ import {
 import { ServiceStatus } from './ServiceRequestStatus'
 import {
   SERVICE_VISIT_STATUS,
-  RECURRING_PATTERN
+  RECURRING_PATTERN,
+  ORG_SERVICE_PROVIDER_TYPE_ID
 } from '../../../constants/constants'
 import { getLength } from '../../../utils/validations'
 import {
@@ -130,7 +131,7 @@ class VisitServiceDetails extends Component {
   postServiceRequest = status => {
     this.alertModalMsg = status.isInterested
       ? serviceRequestMessages.applyServiceProvider
-      : serviceRequestMessages.notInterestedServiceProvider
+      : (status.isCancel ? serviceRequestMessages.cancelServiceProvider : serviceRequestMessages.notInterestedServiceProvider)
     this.setState({ isAlertModalOpen: true })
     this.status = status
   }
@@ -658,8 +659,10 @@ class VisitServiceDetails extends Component {
                                       <i className='ProfileIconEye' />Summary
                                       </a>
                                     : ''}
-                                  {ScheduleList.visitStatusName ===
-                                    SERVICE_VISIT_STATUS.SCHEDULED
+
+                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
+                                    ((ScheduleList.visitStatusName ===
+                                    SERVICE_VISIT_STATUS.SCHEDULED)
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
@@ -669,7 +672,7 @@ class VisitServiceDetails extends Component {
                                     >
                                       Start Visit
                                       </a>
-                                    : ''}
+                                    : '') : '')}
                                   {ScheduleList.visitStatusName ===
                                     SERVICE_VISIT_STATUS.INPROGRESS
                                     ? <a
