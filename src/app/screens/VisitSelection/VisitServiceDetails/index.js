@@ -130,7 +130,7 @@ class VisitServiceDetails extends Component {
   postServiceRequest = status => {
     this.alertModalMsg = status.isInterested
       ? serviceRequestMessages.applyServiceProvider
-      : serviceRequestMessages.notInterestedServiceProvider
+      : (status.isCancel ? serviceRequestMessages.cancelServiceProvider : serviceRequestMessages.notInterestedServiceProvider)
     this.setState({ isAlertModalOpen: true })
     this.status = status
   }
