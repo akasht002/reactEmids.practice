@@ -82,11 +82,22 @@ class Certification extends Component {
                 certificationAuthority:'',
                 certificateLicenceNumber: '',
                 certificationName: ''
-             })
+             });
         } else {
-            this.setState({ isDiscardModalOpen: true, certificationModal: true })
+            let status = this.checkValidation(this.state.isAdd, this.state.certificationAuthority, 
+                this.state.certificationName, this.state.certificateLicenceNumber)
+            this.setState({
+                isDiscardModalOpen: status, certificationModal: status
+            });
         }
+    }
 
+    checkValidation = (isAdd, certificationAuthority, certificationName, certificateLicenceNumber) => {
+        if(isAdd && certificationAuthority === '' && certificationName === '' && certificateLicenceNumber === ''){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     addCertification = () => {
