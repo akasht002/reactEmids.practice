@@ -500,3 +500,33 @@
 .Vietnamese:before{
     background-image: url("../assets/images/Flags/Vietnamese.svg");
 }
+
+.MsgWithIcon{
+    position: relative;
+    margin-left: 25px;
+}
+
+.MsgWithIcon:before{
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    top: 4px;
+    left: -25px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 8px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.MsgSuccessIcon:before{
+    background-color: #28a745;
+    background-image: url("../assets/images/checked.svg");
+}
+
+.MsgWrongIcon:before{
+    background-color: #dc3545;
+    background-image: url("../assets/images/remove.svg");
+}

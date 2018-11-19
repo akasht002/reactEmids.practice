@@ -141,5 +141,7 @@ export const API = {
     getServiceRequestCountOfFilters: 'Search/NumberOfServiceRequestsFilter',
     rejectConference: 'VideoConferencing/RejectConference',
     getVisitNotification: 'ServiceProvider/GetAllNotifications/',
-    getVisitNotificationCount: 'ServiceProvider/GetAllNotificationsCount/'
+    getVisitNotificationCount: 'ServiceProvider/GetAllNotificationsCount/',
+    getEntityUserData: 'ServiceProviderOnBoarding/',
+    setPasswordEntityUser: 'ServiceProviderOnBoarding/SetEntityPassword'
 }

@@ -781,3 +781,7 @@ input.searchParticipants ~ small:before {
     width: 140px!important;
     height: 102px!important;        
 }
+
+.ParticipantSelectMsg {
+    color: #8c8c8c;
+}

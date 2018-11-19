@@ -69,7 +69,6 @@ class VerifyUserID extends React.Component {
         if (this.props.serviceProviderDetails.emailId) {
             this.setState({ email: this.props.serviceProviderDetails.emailId });
         };
-        this.props.setWorkflowDirty();
     };
 
     onClickButtonNext = () => {
@@ -89,7 +88,7 @@ class VerifyUserID extends React.Component {
     };
 
     render() {
-
+        
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <CoreoWizScreen 

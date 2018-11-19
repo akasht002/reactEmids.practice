@@ -35,6 +35,7 @@ export default class SelectPatient extends Component {
                     placeholder='Select Individual'
                     className="ProfileImageMultiSelect mt-2"
                     onSelect={this.props.onSelect} />
+                <span className="ParticipantSelectMsg">Only those related to selected individual will be potential participants.</span>
             </div>
         );
     };
