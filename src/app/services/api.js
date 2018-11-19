@@ -107,7 +107,7 @@ export const API = {
     getConversationImage: 'Conversation/Message/',
     canCreateMessage: 'Conversation/CanServiceProviderCreate/',
     applyServiceRequestByServiceProvider: 'ServiceRequest/ServiceRequestResponse/',
-    cancelServiceRequestByServiceProvider: 'ServiceRequest/Cancel',
+    cancelServiceRequestByServiceProvider: 'ServiceRequest/CancelHiredServiceProvider',
     getAboutUsContent: 'Common/LookupConfig/AboutUsWeb',
     getConverstionCountByUserId: 'Conversation/Count/',
     getAffiliationDetail:'ServiceProviderLookUp/Affiliation',
@@ -141,5 +141,7 @@ export const API = {
     getServiceRequestCountOfFilters: 'Search/NumberOfServiceRequestsFilter',
     rejectConference: 'VideoConferencing/RejectConference',
     getVisitNotification: 'ServiceProvider/GetAllNotifications/',
-    getVisitNotificationCount: 'ServiceProvider/GetAllNotificationsCount/'
+    getVisitNotificationCount: 'ServiceProvider/GetAllNotificationsCount/',
+    getEntityUserData: 'ServiceProviderOnBoarding/',
+    setPasswordEntityUser: 'ServiceProviderOnBoarding/SetEntityPassword'
 }

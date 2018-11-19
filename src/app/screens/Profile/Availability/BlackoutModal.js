@@ -6,7 +6,7 @@ import { Calendar } from "../../../components";
 import { compare } from "../../../utils/comparerUtility";
 import { changeDateFormat, formatDate } from '../../../utils/dateUtility';
 import { DATE_FORMAT } from '../../../constants/constants';
-import { formattedDateMoment, formattedDateMomentValue, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDate } from '../../../utils/validations';
+import { formattedDateMoment, formattedDateMomentValue, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDateValue } from '../../../utils/validations';
 
 class BlackoutModal extends Component {
   constructor(props) {
@@ -166,7 +166,7 @@ dateChangedRaw = (dateType, event) => {
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
                     label="From Date"
-                    startDate={fromDate && formateStateDate(fromDate)}
+                    startDate={fromDate && formateStateDateValue(fromDate)}
                     onDateChange={this.dateChanged.bind(this, 'fromDate')}
                     onDateChangeRaw={this.dateChangedRaw.bind(this, 'fromDate')}
                     value={fromDate}
@@ -182,7 +182,7 @@ dateChangedRaw = (dateType, event) => {
                   <Calendar
                     label="To Date"
                     dateFormat="LL"
-                    startDate={toDate && formateStateDate(toDate)}
+                    startDate={toDate && formateStateDateValue(toDate)}
                     onDateChange={this.dateChanged.bind(this, 'toDate')}
                     onDateChangeRaw={this.dateChangedRaw.bind(this, 'toDate')}
                     value={toDate}

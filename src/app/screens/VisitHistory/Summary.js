@@ -346,7 +346,7 @@ class VistSummary extends React.Component {
 
   calculate = (totalTaskCompleted, totalTask) => {
     if (totalTaskCompleted !== 0 && totalTask !== 0) {
-      return Math.floor((totalTaskCompleted / totalTask) * 100);
+      return Math.round((totalTaskCompleted / totalTask) * 100);
     } else if (totalTask === 0) {
       return 0;
     } else {
@@ -452,18 +452,26 @@ class VistSummary extends React.Component {
                     <p>
                       <span>{summaryDetail.originalTotalDuration} hrs</span>
                       <span>
-                        ${summaryDetail.hourlyRate}
+                        ${" "}{summaryDetail.hourlyRate}
                         /hr
                       </span>
                     </p>
                     <p className="TaxCost">
-                      <span>
-                        $
-                        {(
-                          summaryDetail.totalCost && summaryDetail.totalCost
-                        )}
-                      </span>
-                      <span>${summaryDetail.taxAmount}</span>
+                      {summaryDetail.totalCost ?
+                        <span>
+                          ${" "}
+                          {(
+                            summaryDetail.totalCost && summaryDetail.totalCost
+                          ).toFixed(2)}
+                        </span>
+                        :
+                        ''
+                      }
+                      {summaryDetail.taxPaid ?
+                        <span>${" "}{(summaryDetail.taxPaid).toFixed(2)}</span>
+                        :
+                        ''
+                      }
                     </p>
                   </div>
                   <div className="col-md-12 CostTableContainer Total">
@@ -471,9 +479,13 @@ class VistSummary extends React.Component {
                       <span>Total Cost </span>
                     </p>
                     <p className="TotalCost">
-                      <span>
-                        ${summaryDetail.totalCost + summaryDetail.taxAmount}
-                      </span>
+                      {summaryDetail.totalCost ?
+                        <span>
+                          ${" "}{(summaryDetail.totalCost + summaryDetail.taxPaid).toFixed(2)}
+                        </span>
+                        :
+                        ''
+                      }
                     </p>
                   </div>
                 </div>
@@ -493,6 +505,7 @@ class VistSummary extends React.Component {
                           summaryDetail.estimatedClaim.toFixed(2)}
                       </span>
                       <span>
+                        ${" "}
                         {summaryDetail.outOfPocketAmount &&
                           summaryDetail.outOfPocketAmount.toFixed(2)}
                       </span>

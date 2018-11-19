@@ -22,6 +22,7 @@ import {
 } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
+import { formDirtyPerformTask } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import { serviceRequestMessages } from '../../../utils/messageUtility'
 import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
@@ -36,7 +37,8 @@ import {
 import { ServiceStatus } from './ServiceRequestStatus'
 import {
   SERVICE_VISIT_STATUS,
-  RECURRING_PATTERN
+  RECURRING_PATTERN,
+  ORG_SERVICE_PROVIDER_TYPE_ID
 } from '../../../constants/constants'
 import { getLength } from '../../../utils/validations'
 import {
@@ -113,6 +115,7 @@ class VisitServiceDetails extends Component {
     this.props.getPerformTasksList(data, true)
     this.props.formDirty();
     this.props.formDirtyFeedback();
+    this.props.formDirtyPerformTask();
   }
 
   selectedServiceType = e => {
@@ -128,7 +131,7 @@ class VisitServiceDetails extends Component {
   postServiceRequest = status => {
     this.alertModalMsg = status.isInterested
       ? serviceRequestMessages.applyServiceProvider
-      : serviceRequestMessages.notInterestedServiceProvider
+      : (status.isCancel ? serviceRequestMessages.cancelServiceProvider : serviceRequestMessages.notInterestedServiceProvider)
     this.setState({ isAlertModalOpen: true })
     this.status = status
   }
@@ -656,8 +659,10 @@ class VisitServiceDetails extends Component {
                                       <i className='ProfileIconEye' />Summary
                                       </a>
                                     : ''}
-                                  {ScheduleList.visitStatusName ===
-                                    SERVICE_VISIT_STATUS.SCHEDULED
+
+                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
+                                    ((ScheduleList.visitStatusName ===
+                                    SERVICE_VISIT_STATUS.SCHEDULED)
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
@@ -667,7 +672,7 @@ class VisitServiceDetails extends Component {
                                     >
                                       Start Visit
                                       </a>
-                                    : ''}
+                                    : '') : '')}
                                   {ScheduleList.visitStatusName ===
                                     SERVICE_VISIT_STATUS.INPROGRESS
                                     ? <a
@@ -778,7 +783,8 @@ function mapDispatchToProps(dispatch) {
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
     createVideoConference: (data) => dispatch(createVideoConference(data)),
     formDirty: () => dispatch(formDirty()),
-    formDirtyFeedback: () => dispatch(formDirtyFeedback())
+    formDirtyFeedback: () => dispatch(formDirtyFeedback()),
+    formDirtyPerformTask: () => dispatch(formDirtyPerformTask())
   }
 }
 
