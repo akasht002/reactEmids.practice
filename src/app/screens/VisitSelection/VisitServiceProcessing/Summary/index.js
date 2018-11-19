@@ -117,6 +117,7 @@ class Summary extends Component {
                 BilledPerService: this.props.CalculationsData.totalVisitCost,
                 TotalCost: this.props.CalculationsData.grandTotalAmount,
                 Image: this.state.signatureImage,
+                TaxRate: this.state.summaryDetails.taxAmount
             }
             this.props.saveSummaryDetails(data);
         } else {
@@ -165,7 +166,6 @@ class Summary extends Component {
         } else {
             validationContent = <span>Please save the customer signature.</span>
         }
-
 
         let completedTaskPercent = Math.round((this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100);
 
@@ -356,7 +356,7 @@ class Summary extends Component {
                                         <div className="RightContent">
                                             <p className="SummaryContentTitle">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
-                                            <div id="signatureWidget" className="SignatureColumn" onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
+                                            <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
                                             </div>
                                             {this.state.isSaveBtnShown ?
