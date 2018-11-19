@@ -5,6 +5,7 @@ import {clearState as verifyContactClear} from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
 import {Path} from '../../../routes';
 import {encryptPassword} from '../../../utils/encryptPassword';
+import { USERTYPES } from '../../../constants/constants';
 
 export const SetPassword = {
     setPassword: 'set_password/setPassword',
@@ -34,7 +35,7 @@ export const clearOnboardingState = () => {
 export function getUserData() {
     return (dispatch, getState) => {
         let currstate = getState();
-        let serviceProviderDetails = currstate.onboardingState.verifyUserIDState.serviceProviderDetails;
+        let serviceProviderDetails = currstate.onboardingState.verifyContactState.serviceProviderDetails;
         if (serviceProviderDetails) {
             let getUserData = {
                 serviceProviderId: serviceProviderDetails.serviceProviderId,
@@ -42,7 +43,9 @@ export function getUserData() {
                 emailId: serviceProviderDetails.emailId,
                 fullName: serviceProviderDetails.fullName,
                 mobileNumber: serviceProviderDetails.mobileNumber,
-                passcode: serviceProviderDetails.passcode
+                passcode: serviceProviderDetails.passcode,
+                token: serviceProviderDetails.token,
+                userType: serviceProviderDetails.userType
             };
             dispatch(onSetUserIdCompletion(getUserData));
         }
@@ -57,6 +60,17 @@ export const onSetUserIdCompletion = (data) => {
 };
 
 export function setPassword(data) {
+    return (dispatch, getState) => {
+        let userType = getState().onboardingState.setPasswordState.serviceProviderDetails.userType;
+        if (userType === USERTYPES.ENTITY_USER) {
+            dispatch(setPasswordEntity(data))
+        } else {
+            dispatch(setPasswordIndividual(data))
+        }
+    }
+};
+
+export function setPasswordIndividual(data) {
     return (dispatch) => {
         let body = {
             userName: data.username,
@@ -64,6 +78,28 @@ export function setPassword(data) {
         };
         dispatch(startLoading());
         Post(API.setPassword, body).then((resp) => {
+            dispatch(onboardSucess());
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function setPasswordEntity(data) {
+    return (dispatch, getState) => {
+        let token = getState().onboardingState.setPasswordState.serviceProviderDetails.token;
+        let body = {
+            userName: data.username,
+            password: encryptPassword(data.password),
+            confirmPassword: encryptPassword(data.password),
+            isActive: true,
+            rowversionId: '',
+            salt: '',
+            token: token
+        };
+        dispatch(startLoading());
+        Post(API.setPasswordEntityUser, body).then((resp) => {
             dispatch(onboardSucess());
             dispatch(endLoading());
         }).catch((err) => {

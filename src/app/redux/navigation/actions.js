@@ -20,15 +20,10 @@ export const goForward = () => ({
   type: GO_FORWARD,
 });
 export const locationChange = ({ pathname, search, hash }) => {
-  return (dispatch, getState) => {
+  return () => {
     switch (pathname) {
       case Path.verifyContact:
       case Path.setPassword:
-        const isDirty = getState().wizardState.isDirty;
-        if (!isDirty) {
-          pathname = Path.verifyEmail;
-          dispatch(push(pathname));
-        }
         return ({
           type: LOCATION_CHANGE,
           payload: {

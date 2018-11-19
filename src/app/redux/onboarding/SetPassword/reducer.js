@@ -9,7 +9,9 @@ const defaultState = {
         emailId: '',
         fullName: '',
         mobileNumber: '',
-        passcode: ''
+        passcode: '',
+        token: '',
+        userType: ''
     },
 };
 
@@ -26,7 +28,9 @@ const setPasswordState = (state = defaultState, action) => {
                     emailId: action.data.serviceProviderEmailId,
                     fullName: action.data.firstName + ' ' + action.data.lastName,
                     mobileNumber: action.data.mobileNumber,
-                    passcode: action.data.tempPassword
+                    passcode: action.data.tempPassword,
+                    token: action.data.token,
+                    userType: action.data.userType
                 }
             };
 

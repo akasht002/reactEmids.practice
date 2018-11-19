@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
-import { getUserData, sendTemporaryPasscode, verifyTempPasscode, formDirty, onCancelClick } from '../../../redux/onboarding/VerifyContact/actions';
+import { getUserData, sendTemporaryPasscode, verifyTempPasscode, formDirty, onCancelClick, getEntityUserData } from '../../../redux/onboarding/VerifyContact/actions';
 import { Input, Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalPopup } from '../../../components';
 import { checkSpace } from '../../../utils/validations'
 import '../styles.css';
+import { USERTYPES } from "../../../constants/constants";
 
 class VerifyContact extends React.Component {
 
@@ -23,7 +24,15 @@ class VerifyContact extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getUserData();
+        if (this.props.match.params.type === USERTYPES.ENTITY_USER) {
+            this.props.getEntityUserData({
+                serviceProviderId: this.props.match.params.id,
+                token: this.props.match.params.token,
+                userType: this.props.match.params.type
+            });
+        } else {
+            this.props.getUserData();
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -64,6 +73,12 @@ class VerifyContact extends React.Component {
     }
 
     render() {
+        let navigationData = CoreoWizNavigationData;
+        if (this.props.match.params.type === USERTYPES.ENTITY_USER) {
+            navigationData = CoreoWizNavigationData.filter((data) => {
+                return data.id !== 0;
+            });
+        } 
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <CoreoWizScreen menus={ContactMenu} activeCoreoWiz={1} displayNextButton={true} displayPrevButton={false} isNextDisabled={!this.state.temporaryPassCode} onNextClick={this.onClickButtonNext} onPreviousClick={this.onClickButtonPrevious} onCancelClick={this.onClickButtonCancel}>
@@ -72,7 +87,7 @@ class VerifyContact extends React.Component {
                             <div className="col-md-12 py-5 px-0">
                                 <h4 className="font-weight-normal mb-4 verify-title">Verify My Mobile Number</h4>
                                 <p className="m-0 default-444">Your registered Contact Number</p>
-                                <p className="contactNumber default-444"> XXX XXX {this.state.mobileNumber}</p>
+                                <p className="contactNumber default-444">+1 XXX XXX {this.state.mobileNumber}</p>
                                 <div className={"my-5 tempPassword " + this.state.visible}>
                                     <Button
                                         type="button"
@@ -106,7 +121,7 @@ class VerifyContact extends React.Component {
                         </div>
                     </div>
                 </CoreoWizScreen>
-                <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={1} />
+                <CoreoWizFlow coreoWizNavigationData={navigationData} activeFlowId={1} />
                 <ModalPopup
                     isOpen={this.state.showModalOnCancel}
                     ModalBody={<span>Do you want to cancel the onboarding process?</span>}
@@ -131,7 +146,8 @@ function mapDispatchToProps(dispatch) {
         sendPassCode: (data) => (dispatch(sendTemporaryPasscode(data))),
         verifyPasscode: (data) => (dispatch(verifyTempPasscode(data))),
         getUserData: () => (dispatch(getUserData())),
-        formDirty: () => dispatch(formDirty())
+        formDirty: () => dispatch(formDirty()),
+        getEntityUserData: (data) => dispatch(getEntityUserData(data))
     }
 };
 

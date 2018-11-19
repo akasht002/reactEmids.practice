@@ -16,7 +16,9 @@ const defaultState = {
         emailId: '',
         fullName: '',
         mobileNumber: '',
-        passcode: ''
+        passcode: '',
+        token: '',
+        userType: ''
     },
 };
 
@@ -32,10 +34,12 @@ const verifyContactState = (state = defaultState, action) => {
                     ...state.serviceProviderDetails,
                     serviceProviderId: action.data.serviceProviderId,
                     memberId: action.data.memberId,
-                    emailId: action.data.serviceProviderEmailId,
+                    emailId: action.data.emailId,
                     fullName: action.data.firstName + ' ' + action.data.lastName,
                     mobileNumber: action.data.mobileNumber,
-                    passcode: action.data.tempPassword
+                    passcode: action.data.tempPassword,
+                    token: action.data.token,
+                    userType: action.data.userType
                 }
             };
         case VerifyContact.loadingStart:
