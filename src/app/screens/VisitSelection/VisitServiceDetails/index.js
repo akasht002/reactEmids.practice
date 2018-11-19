@@ -660,7 +660,7 @@ class VisitServiceDetails extends Component {
                                       </a>
                                     : ''}
 
-                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) ?
+                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
                                     ((ScheduleList.visitStatusName ===
                                     SERVICE_VISIT_STATUS.SCHEDULED)
                                     ? <a
