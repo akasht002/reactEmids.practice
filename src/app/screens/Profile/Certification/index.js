@@ -92,14 +92,14 @@ class Certification extends Component {
     addCertification = () => {
         if (checkSpace(this.state.certificationName) && checkSpace(this.state.certificationAuthority)) {
             const data = {
-                certificationName: this.state.certificationName.trim(),
-                authority: this.state.certificationAuthority.trim(),
-                licenceNumber: this.state.certificateLicenceNumber.trim()
+                certificationName: this.state.certificationName && this.state.certificationName.trim(),
+                authority: this.state.certificationAuthority && this.state.certificationAuthority.trim(),
+                licenceNumber: this.state.certificateLicenceNumber && this.state.certificateLicenceNumber.trim()
             };
             this.props.addCertification(data);
             this.reset();
         } else {
-            this.setState({ isValid: false });
+            this.setState({ isValid: false, certificateNameInvaild: false, certificateAuthorityInvaild: false });
         }
     }
 
@@ -115,16 +115,16 @@ class Certification extends Component {
     updateCertification = () => {
         if (this.state.certificationName && this.state.certificationAuthority) {
             const data = {
-                certificationName: this.state.certificationName.trim(),
-                authority: this.state.certificationAuthority.trim(),
-                licenceNumber: this.state.certificateLicenceNumber.trim(),
+                certificationName: this.state.certificationName && this.state.certificationName.trim(),
+                authority: this.state.certificationAuthority && this.state.certificationAuthority.trim(),
+                licenceNumber: this.state.certificateLicenceNumber && this.state.certificateLicenceNumber.trim(),
                 certificationId: this.state.certificationId
             };
             this.props.updateCertification(data);
             this.setState({ certificationModal: !this.state.certificationModal, disabledSaveBtn: true });
             this.reset();
         } else {
-            this.setState({ isValid: false });
+            this.setState({ isValid: false, certificateNameInvaild: false, certificateAuthorityInvaild: false });
         }
     }
 
@@ -153,9 +153,22 @@ class Certification extends Component {
                         textChange={(e) => this.setState({
                             certificationName: e.target.value,
                             disabledSaveBtn: false,
+                            certificateNameInvaild: false
                         })}
+                        onBlur={(e)=>{
+                            if(!(e.target.value)){
+                              this.setState({
+                                certificateNameInvaild:true,
+                                isValid: true
+                              })
+                            }
+          
+                          }}
                     />
                     {!this.state.isValid && (!this.state.certificationName) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.certificationName === '' && ' Certification'}</span>}
+                    <small className="text-danger d-block OnboardingAlert">
+                        {this.state.certificateNameInvaild && 'Please enter valid Certification'}
+                    </small>
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -170,9 +183,22 @@ class Certification extends Component {
                         textChange={(e) => this.setState({
                             certificationAuthority: e.target.value,
                             disabledSaveBtn: false,
+                            certificateAuthorityInvaild: false
                         })}
+                        onBlur={(e)=>{
+                            if(!(e.target.value)){
+                              this.setState({
+                                certificateAuthorityInvaild:true,
+                                isValid: true
+                              })
+                            }
+          
+                        }}
                     />
                     {!this.state.isValid && (!this.state.certificationAuthority) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.certificationAuthority === '' && ' Certification Authority'}</span>}
+                    <small className="text-danger d-block OnboardingAlert">
+                       {this.state.certificateAuthorityInvaild && 'Please enter valid Certification Authority'}
+                    </small>
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input

@@ -733,25 +733,17 @@ class PersonalDetail extends React.PureComponent {
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
-            maxlength='6'
+            maxlength='3'
             textChange={e => {
               const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-              if (onlyNums.length < 5) {
-                this.setState({ hourlyRate: onlyNums, disabledSaveBtn: true })
-              } else if (onlyNums.length === 5) {
-                const number = onlyNums.replace(
-                  /(\d{3})(\d{2})/,
-                  '$1.$2'
-                )
-                this.setState({ hourlyRate: number,
-                 disabledSaveBtn:false, hourlyRateInvalid: false })
-              }
+              this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
+              
             }
           }
           onBlur={e => {
             if(
               (!e.target.value) ||
-              getLength(e.target.value) <= 5
+              getLength(e.target.value) < 1
             ) {
               this.setState({hourlyRateInvalid: true})
             }
@@ -982,7 +974,8 @@ class PersonalDetail extends React.PureComponent {
       phoneNumber: this.props.personalDetail.phoneNumber,
       firstNameInvaild:false,
       lastNameInvaild:false,
-      phoneNumberInvalid:false
+      phoneNumberInvalid:false,
+      hourlyRateInvalid: false
     })
   }
 }
