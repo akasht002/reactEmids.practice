@@ -450,10 +450,11 @@ const getLinkedParticipantsByPatientsSuccess = data => {
     }
 };
 
-export function getDashboardMessageCount(userData) {
+export function getDashboardMessageCount() {
     return (dispatch) => {
         dispatch(startLoading())
-        AsyncGet(API.getDashboardMessageCount + userData.userId + '/' + userData.userType)
+        let USER_ID = getUserInfo().serviceProviderId;
+        AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USERTYPES.SERVICE_PROVIDER)
             .then(resp => {
                 dispatch(getDashboardCountSuccess(resp.data));
                 dispatch(endLoading())
