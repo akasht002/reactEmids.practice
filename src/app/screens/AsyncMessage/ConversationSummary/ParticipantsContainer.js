@@ -137,7 +137,7 @@ class ParticipantsContainer extends Component {
                 onSelect={this.onSelectPatient}
                 patients={this.props.patients} />
             { (Object.getOwnPropertyNames(this.state.selectedPatientDetails).length === 0) &&
-            <span className="text-danger d-block">
+            <span className="text-muted d-block">
                 Please select an Individual to continue.
             </span>}
 
