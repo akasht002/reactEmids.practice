@@ -23,6 +23,10 @@ export const Details = props => {
         circle='SPdpCircle'
         profileImage='SPdpImage'
       />
+      <span>
+        {props.personalDetail &&
+          props.personalDetail.rating}
+      </span>
       <div className={'SPDetailsContainer SPNameWidget'}>
         <div className={'d-flex'}>
           <div className={'col-md-7 p-0'}>
@@ -48,15 +52,15 @@ export const Details = props => {
               </span>
             </p>
           </div>
-          <div className={'col p-0'}>
-            <h3 className={'ratePerHour primaryColor'}>
-              <span>
-                {props.personalDetail &&
-                  props.personalDetail.hourlyRate}
-              </span>
-            </h3>
-          </div>
         </div>
+       <div className={'width100'}>
+        <div className={'SPAffiliatedList'}>
+          <span>
+            {props.personalDetail.entity &&
+              props.personalDetail.entity.assignedBy}
+          </span>
+        </div>
+      </div>
         <div className={'width100'}>
           <div className={'SPAffiliatedList'}>
             <span>

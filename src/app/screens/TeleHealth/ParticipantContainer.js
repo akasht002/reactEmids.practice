@@ -58,7 +58,7 @@ class ParticipantsContainer extends Component {
     };
 
     onCreateConversation = () => {
-        this.props.createVideoConference(this.state.selectedParticipants);
+        this.props.createVideoConference(this.state.selectedParticipants, this.state.selectedPatientDetails);
     };
 
     onSearchTextChange = (e) => {
@@ -131,7 +131,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
-        createVideoConference: (data) => dispatch(createVideoConference(data)),
+        createVideoConference: (data, patientData) => dispatch(createVideoConference(data, patientData)),
         getLinkedPatients: () => dispatch(getLinkedPatients())
     }
 };
