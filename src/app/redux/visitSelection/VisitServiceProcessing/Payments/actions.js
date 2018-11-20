@@ -73,7 +73,7 @@ export function claimsSubmission(data) {
         dispatch(startLoading());
         ThirdPartyPost(API.claimsSubmission, data).then((resp) => {
             dispatch(endLoading());
-            dispatch(push(Path.paymentsuccess))
+            //dispatch(push(Path.paymentsuccess))
         }).catch((err) => {
             if (DEMO === 'true') {
                 dispatch(push(Path.paymentsuccess))

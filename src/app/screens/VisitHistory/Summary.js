@@ -193,6 +193,7 @@ class VistSummary extends React.Component {
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
       isModalOpen: false
     });
+    this.props.getVisitFeedBack(this.props.SummaryDetails.serviceRequestVisitId)
   };
 
   getFeedback = () => {
