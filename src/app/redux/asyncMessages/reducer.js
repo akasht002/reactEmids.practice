@@ -10,7 +10,7 @@ const defaultState = {
     unreadCounts: [],
     linkedPatients: [],
     linkedParticipants: [],
-    dashboardMessageCount: null,
+    dashboardMessageCount: 0,
     conversationImageUrl: '',
     canCreateConversation: false,
     conversationCount: 20,

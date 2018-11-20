@@ -72,6 +72,8 @@ class serviceCalendar extends React.Component {
       ]
     };
     this.props.updateEntityServiceVisit(model);
+    this.initialCall()
+    this.props.getServiceProviderVists(moment(this.state.startDate).format("YYYY-MM-DD"));
   };
 
   MonthChange = e => {
@@ -169,6 +171,14 @@ class serviceCalendar extends React.Component {
       selectedValue: e
     });
   };
+
+  initialCall = () => {   
+    const date_range = {
+      start_date:moment().subtract(3, 'months').format('YYYY-MM-DD'),
+      end_date: moment().add(3, 'months').format('YYYY-MM-DD')
+    }    
+    this.props.getServiceVisitCount(date_range)
+  }
 
   componentDidMount() {
     let utc = new Date()
