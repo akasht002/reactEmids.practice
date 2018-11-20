@@ -23,7 +23,7 @@ export const Details = props => {
         circle='SPdpCircle'
         profileImage='SPdpImage'
       />
-      <span>
+      <span className="rating-blockcustome">
         {props.personalDetail &&
           props.personalDetail.rating}
       </span>
