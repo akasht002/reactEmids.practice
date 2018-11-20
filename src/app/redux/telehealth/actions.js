@@ -101,7 +101,7 @@ export function getLinkedParticipantsByPatients(data) {
     }
 };
 
-export function createVideoConference(data) {
+export function createVideoConference(data, patientData) {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         const personalState = getState().profileState.PersonalDetailState.personalDetail
@@ -110,6 +110,7 @@ export function createVideoConference(data) {
             createdByType: 'S',
             createdByFirstName : personalState.firstName,
             createdByLastName  : personalState.lastName,
+            context: patientData.userId,
             participantList: [
                 {
                     userId: userInfo.serviceProviderId,
