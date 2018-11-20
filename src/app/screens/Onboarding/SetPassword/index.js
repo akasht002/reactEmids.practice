@@ -8,6 +8,7 @@ import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalUserAgreement, M
 import { checkPassword } from '../../../utils/validations'
 import { endUserAgreement } from '../../../assets/templates/EndUserAgreement';
 import '../styles.css';
+import { USERTYPES } from "../../../constants/constants";
 
 class SetPassword extends React.Component {
 
@@ -61,6 +62,12 @@ class SetPassword extends React.Component {
     };
 
     render() {
+        let navigationData = CoreoWizNavigationData;
+        if (this.props.userType === USERTYPES.ENTITY_USER) {
+            navigationData = CoreoWizNavigationData.filter((data) => {
+                return data.id !== 0;
+            });
+        } 
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <CoreoWizScreen
@@ -140,7 +147,7 @@ class SetPassword extends React.Component {
                         </div>
                     </div>
                 </CoreoWizScreen>
-                <CoreoWizFlow coreoWizNavigationData={CoreoWizNavigationData} activeFlowId={2} />
+                <CoreoWizFlow coreoWizNavigationData={navigationData} activeFlowId={2} />
                 <ModalPopup
                     isOpen={this.state.showModalOnCancel}
                     ModalBody={<span>Do you want to cancel the onboarding process?</span>}
@@ -180,7 +187,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         userEmail: state.onboardingState.setPasswordState.userEmail,
-        isLoading: state.onboardingState.setPasswordState.loading
+        isLoading: state.onboardingState.setPasswordState.loading,
+        userType: state.onboardingState.verifyContactState.serviceProviderDetails.userType
     }
 };
 

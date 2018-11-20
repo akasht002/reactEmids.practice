@@ -12,7 +12,8 @@ import {
     updateReadStatus,
     ClearCurrentOpenConversation,
     openedAsyncPage,    
-    setRemoveParticipantConcurrency
+    setRemoveParticipantConcurrency,
+    getDashboardMessageCount
 } from '../../../redux/asyncMessages/actions';
 import ModalTemplate from '../Modals/Modal';
 import { Preloader, ModalPopup } from '../../../components';
@@ -76,6 +77,7 @@ class Conversation extends Component {
         };
         this.props.updateUnreadCount(data);
         this.props.openedAsyncPage('conversation');
+        this.props.getDashboardMessageCount();
     };
 
     onChangeTitle = (e) => {
@@ -363,6 +365,7 @@ function mapDispatchToProps(dispatch) {
         clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation()),
         openedAsyncPage: (data) => dispatch(openedAsyncPage(data)),
         setRemoveParticipantConcurrency: (data ) => dispatch(setRemoveParticipantConcurrency(data)),
+        getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
     }
 };
 

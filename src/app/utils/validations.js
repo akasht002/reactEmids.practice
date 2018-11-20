@@ -31,7 +31,7 @@ export function formattedDateMoment (date) {
 }
 
 export function formattedDateMomentValue (date) {
-  return date ? moment(new Date(date.toString()), DATE_FORMAT) : null
+  return date ? moment(new Date(date.toString()), DATE_FORMAT).format(DATE_FORMAT) : null
 }
 
 export function formattedDateChange (event) {

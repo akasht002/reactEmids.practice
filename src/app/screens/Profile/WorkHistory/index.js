@@ -127,7 +127,6 @@ class WorkHistory extends Component {
         } else {
             this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
         }
-        this.reset();
     }
 
     addWorkhistory = () => {
@@ -239,6 +238,9 @@ class WorkHistory extends Component {
         let modalContent;
         let modalTitle;
 
+        let isShowWorkHistory = this.props.workhistoryList.every(history => {
+            return history.currentlyWorking === false;
+        });
         const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
                 <div className="col-md-12 mb-2">
@@ -328,7 +330,8 @@ class WorkHistory extends Component {
 
                     </div>}
                 </div>
-                <div className="col-md-12 mb-3">
+                {
+                    isShowWorkHistory ? <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
                             <input className="form-check-input" type="checkbox" checked={this.state.currentlyWorking} id="defaultCheck1"
@@ -340,7 +343,9 @@ class WorkHistory extends Component {
                             <span className="CheckboxIcon" />
                         </label>
                     </div>
-                </div>
+                  </div> : ''
+                }
+                
                 <div className="col-md-12">
                     <TextArea
                         name='Description'
