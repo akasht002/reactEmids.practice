@@ -31,7 +31,8 @@ import {
 } from './Authentication'
 import PatientProfile from '../screens/PatientProfile/Profile';
 import {
-  VisitNotification
+  VisitNotification,
+  VisitNotificationSettings
   } from './VisitProcessingNotification'
   
 export {
@@ -63,5 +64,6 @@ export {
   VisitHistory,
   VistSummary,
   PatientProfile,
-  VisitNotification
+  VisitNotification,
+  VisitNotificationSettings
 }

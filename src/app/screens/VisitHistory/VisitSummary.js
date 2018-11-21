@@ -39,7 +39,9 @@ class VisitSummary extends React.Component {
       : this.props.history.push(Path.visitHistory)
   }
 
-  componentDidMount () {}
+  handelBack = () => {
+    this.props.history.goBack()
+  }
 
   render () {
     let visitSummary = this.props.Visits.VisitServiceDetails
@@ -64,16 +66,13 @@ class VisitSummary extends React.Component {
             <div className='card mainProfileCard'>
               <div className='CardContainers TitleWizardWidget'>
                 <div className='TitleContainer'>
-                  <Link
+                  <a
                     className='TitleContent backProfileIcon'
-                    to='/visitHistory'
+                    onClick={this.handelBack}
                   />
+                  
                   <div className='requestContent'>
                     <div className='requestNameContent'>
-                      {/* <span>
-                        <i className='requestName'>Sun, 24 Aug, Morning</i>
-                        {visitSummary.serviceRequestVisitId}
-                      </span> */}
                       <span>
                           <i className='requestName'><Moment format="ddd, DD MMM">{visitSummary.visitDate}</Moment>, {visitSummary.slotDescription}</i>{visitSummary.serviceRequestVisitId}</span>
                     </div>

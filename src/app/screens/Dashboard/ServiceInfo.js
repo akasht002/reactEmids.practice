@@ -83,21 +83,53 @@ export const serviceCalendar = (
               </span>
               {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
               <div className="EntityUServiceProf">
-                <span><i className="assignSPLink"
-                  onClick={e =>
+               {conversations.providerId === getUserInfo().serviceProviderId ? 
+               <span><i className="assignSPLink"
+                  onClick={e =>{
                     togglePersonalDetails({
                       serviceRequestId: conversations.serviceRequestId,
                       serviceRequestVisitid: conversations.serviceRequestVisitId,
-                      patientId: conversations.patientId
+                      patientId: conversations.patientId,
+                      visitDate:conversations.visitDate
                     })}
+                  }
                 >
                   Assign Service Provider
                   </i>
-                </span>
+                </span> :
+              <React.Fragment>
+                <div className='ProfileCardImageContainer' 
+                onClick={() => {
+              // props.goToPatientProfile(conversations.patientId);
+            }}>
+              <img
+                alt={'NO_IMAGE'}
+                key={index}
+                className='avatarImage avatarImageBorder'
+                src={
+                  conversations.providerImage
+                    ? conversations.providerImage
+                    : require('../../assets/images/Blank_Profile_icon.png')
+                }
+              />
+            </div>
+            <div className='ProfileCardNameContainer' onClick={() => {
+              // props.goToPatientProfile(conversations.patientId);
+            }}>
+              <span>
+                {conversations.providerFirstName &&
+                  conversations.providerFirstName +
+                  ' '}
+                {' '}
+                {conversations.providerLastName && conversations.providerLastName}
+              </span>
+            </div>
+            </React.Fragment>}
               </div>
                 }
             </div>
-            <div className='ProfileCardImageContainer' onClick={() => {
+            <div className='ProfileCardImageContainer' 
+            onClick={() => {
               props.goToPatientProfile(conversations.patientId);
             }}>
               <img
@@ -128,9 +160,10 @@ export const serviceCalendar = (
                   <Select
                     placement='auto'
                     options={[
-                      // <Item className='ListItem CTDashboard' key='item-1'>
-                      //   <i className='iconPhone' /> Phone Call
-                      // </Item>,
+                      <Item className='ListItem CTDashboard' key='item-1'
+                      onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+                        <i className='iconPhone' /> Phone Call
+                      </Item>,
                       <Item className='ListItem CTDashboard' key='item-2'
                         onClick={(e) => { props.onClickConversation(conversations) }}>
                         <i className='iconConversation' /> Conversation
@@ -311,17 +344,25 @@ export const ServiceProviderRequestDetails = props => {
                 {sp.serviceCategoryDescription}
               </span>
               <span>
-                {sp.recurringPattern === 0 ? 'One Time' : 'Recurring'}
+                {sp.recurringPattern === 0 ? 'One Time' : sp.recurringPatternDescription}
                 {' '}
                 |
                 {' '}
                 <Moment format='DD MMM'>
                   {sp.startDate}
                 </Moment>
+                {sp.recurringPattern !== 0 && <React.Fragment>
+                  { ' - '}
+                  <Moment format='DD MMM'>
+                  {sp.endDate}
+                </Moment>
+                </React.Fragment>}
               </span>
             </div>
 
-            <div className='ProfileApplicationNumbers Avatar'>
+            <div className='ProfileApplicationNumbers Avatar'  onClick={() => {
+              props.goToPatientProfile(sp.patientId);
+            }}>
               <div className='ProfileApplicationWidget'>
                 <div className='avatarContainer'>
                   <img
@@ -363,7 +404,8 @@ export const MyConversionDetail = props => {
   let unreadMessages = ''
   let msgClass = ''
   let msgHeader = '';
-  return conversation.slice(0, 3).map((conversations, index) => {
+  console.log(props.conversation)
+  return conversation.slice(0, 4).map((conversations, index) => {
     !conversations.title ? msgHeader = getPartcipitantHeader(conversations.participantList) : msgHeader = conversations.title;
     if (props.getUnreadMsgCounts.length > 0) {
       unreadMessages = ''
@@ -447,6 +489,18 @@ export const MyConversionDetail = props => {
 export const MyConversionDefault = () => {
   return (
     <Fragment>
+      <li className='list-group-item NoInformation myConversationContainer'>
+        <div className='myConversationContent'>
+          <div className='avatarWidget'>
+            <div className='avatarContainer' />
+          </div>
+          <div className='MsgThreadContent m-auto'>
+            <div className='NoProfileServices'>
+              <i className='NoInformationIcon' /><span>No Conversations</span>
+            </div>
+          </div>
+        </div>
+      </li>
       <li className='list-group-item NoInformation myConversationContainer'>
         <div className='myConversationContent'>
           <div className='avatarWidget'>

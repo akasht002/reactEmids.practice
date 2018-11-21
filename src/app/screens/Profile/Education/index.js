@@ -24,7 +24,8 @@ class Education extends React.Component {
             isAdd: false,
             isValid: true,
             disabledSaveBtn: true,
-            isDiscardModalOpen:false
+            isDiscardModalOpen:false,
+            fromDateChange: false
         };
     };
     componentDidMount() {
@@ -52,7 +53,8 @@ class Education extends React.Component {
             disabledSaveBtn:true,
             isDiscardModalOpen: false,
             isAdd: true,
-            isValid: true
+            isValid: true,
+            fromDateChange: false
         })
     }
 
@@ -92,7 +94,7 @@ class Education extends React.Component {
                 endYear:''
              })
         } else {
-            this.setState({ isDiscardModalOpen: true, IsEducationModalOpen: true })
+            this.setState({ isDiscardModalOpen: true, IsEducationModalOpen: true, fromDateChange: true })
         }
     }
     addEducation = () => {
@@ -117,7 +119,7 @@ class Education extends React.Component {
     }
 
     editEducation = (e) => {
-        this.setState({IsEducationModalOpen: true, isAdd: false, educationId: e.target.id });
+        this.setState({IsEducationModalOpen: true, isAdd: false, educationId: e.target.id, fromDateChange: true });
         this.props.editEducation(e.target.id);
     }
 
@@ -144,13 +146,13 @@ class Education extends React.Component {
         this.setState({ showModalOnDelete: !this.state.showModalOnDelete });
     }
     YearList() {
-        var year = [];
-        var selectedYear = "2018";
-        var defaultYear ="1901";
-        var curYear = formateYearDate();
+        let year = [];
+        let selectedYear = "2018";
+        let defaultYear ="1901";
+        let curYear = formateYearDate();
         year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
-        for (var i = defaultYear; i <= curYear; i++) {
-            var selectedOption = 'false';
+        for (let i = defaultYear; i <= curYear; i++) {
+            let selectedOption = 'false';
             if (i === selectedYear) {
                 selectedOption = 'selected'
                 
@@ -159,21 +161,28 @@ class Education extends React.Component {
         }
         return year;
     };
+    
     YearListCal(){
-        var year = [];
-        var selectedYear = "2018";
-        var curYear = formateYearDate();
-        year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
-        for (var i = this.state.startYear; i <= curYear; i++) {
-            var selectedOption = 'false';
-            if (i === selectedYear) {
-                selectedOption = 'selected'
-                
+        let year = [];
+        let selectedYear = formateYearDate();
+        let curYear = formateYearDate();
+        if(this.state.fromDateChange) {
+            year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
+            for (var i = this.state.startYear; i <= curYear; i++) {
+                var selectedOption = 'false';
+                if (i === selectedYear) {
+                    selectedOption = 'selected'
+                    
+                }
+                year.push(<option  key= {i} value={i} selected={selectedOption}>{i}</option>)
             }
-            year.push(<option  key= {i} value={i} selected={selectedOption}>{i}</option>)
+            return year;
+        } else {
+            year.push(<option value="" key= {curYear} disabled selected>YYYY</option>);
+            return year;
         }
-        return year;
     }
+
     render() {
         let modalContent;
         let modalTitle;
@@ -238,10 +247,13 @@ class Education extends React.Component {
                         <label>From Year</label>
                         <select  className={"form-control"}
                         value={this.state.startYear}
-                        onChange={(e) => this.setState({
-                            startYear: e.target.value,
-                            disabledSaveBtn:false
-                        })}>
+                        onChange={ (e) => 
+                            this.setState({
+                              startYear: e.target.value,
+                              disabledSaveBtn:false,
+                              fromDateChange: true
+                           })
+                    }>
                         {this.YearList()}
                         </select>
                     </div>

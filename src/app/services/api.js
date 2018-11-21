@@ -143,5 +143,9 @@ export const API = {
     getVisitNotification: 'ServiceProvider/GetAllNotifications/',
     getVisitNotificationCount: 'ServiceProvider/GetAllNotificationsCount/',
     getEntityUserData: 'ServiceProviderOnBoarding/',
-    setPasswordEntityUser: 'ServiceProviderOnBoarding/SetEntityPassword'
+    setPasswordEntityUser: 'ServiceProviderOnBoarding/SetEntityPassword',
+    getNotificationSettings: 'NotificationSetting/get-notification-settings/',
+    updateNotificationSettings: 'NotificationSetting/insert-notification-settings/',
+    saveSignature: 'VisitProcessing/ServiceRequestVisit/UploadSignature',
+    getSavedSignature: 'VisitProcessing/ServiceRequestVisit/GetCustomerSignature/'
 }

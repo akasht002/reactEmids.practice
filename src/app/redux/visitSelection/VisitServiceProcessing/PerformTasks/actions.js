@@ -17,7 +17,7 @@ export const formDirtyPerformTask = () => {
     return {
         type: PerformTasks.formDirtyPerformTask,
     }
-  }
+}
 
 export const getPerformTasksListSuccess = (data) => {
     return {
@@ -59,10 +59,10 @@ export function getPerformTasksList(data, startOrStop) {
         dispatch(getServiceRequestVisitId(data))
         dispatch(startLoading());
         ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
-            if(startOrStop === false){
+            if (startOrStop === false) {
                 dispatch(getVisitStatus(resp.data))
             }
-            else{
+            else {
                 dispatch(getPerformTasksListSuccess(resp.data))
             }
             dispatch(push(Path.performTasks))
@@ -73,11 +73,33 @@ export function getPerformTasksList(data, startOrStop) {
     }
 };
 
-export function addPerformedTask(data) {
+export function getServiceVisitId(data, startOrStop) {
+    return (dispatch) => {
+        dispatch(getServiceRequestVisitId(data))
+        dispatch(startLoading());
+        ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
+            if (startOrStop === false) {
+                dispatch(getVisitStatus(resp.data))
+            }
+            else {
+                dispatch(getPerformTasksListSuccess(resp.data))
+            }
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function addPerformedTask(data, startServiceAction) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
-            dispatch(push(Path.feedback))
+            if (startServiceAction === 1 || startServiceAction === undefined) {
+                dispatch(push(Path.feedback))
+                dispatch(endLoading());
+            }
+            //dispatch(push(Path.feedback))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
