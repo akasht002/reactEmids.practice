@@ -6,7 +6,7 @@ import { checkSpace } from "../../../utils/validations";
 import {compare} from "../../../utils/comparerUtility";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
-
+import EllipsisText from "react-ellipsis-text";
 class Certification extends Component {
 
     constructor(props) {
@@ -234,8 +234,10 @@ class Certification extends Component {
             return (
                 <li className='SPSCertificateItems' key={certificateList.certificationId}>
                     <div className='SPCertificateContent'>
-                        <h5 className='SPCertificateHeader'>{certificateList.certificationName}</h5>
-                        <span className='SPCertificateDesc'>{certificateList.authority}</span>
+                         {/*<h5 className='SPCertificateHeader'>{certificateList.certificationName}</h5> to do check this*/} 
+                        <EllipsisText className='SPCertificateDesc' text={certificateList.certificationName} length={"50"} />
+                        <EllipsisText className='SPCertificateDesc' text={certificateList.authority} length={"50"} />
+                        {/*<span className='SPCertificateDesc'>{certificateList.authority}</span> to do check this*/}
                     </div>
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={certificateList.certificationId}
                         onClick={(e) => this.showModalOnDelete(e)} />

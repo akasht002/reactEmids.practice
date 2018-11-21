@@ -16,6 +16,7 @@ import {
 import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, deleteWorkHistory } from "../../../redux/profile/WorkHistory/actions";
 import { SCREENS, PERMISSIONS, DATE_FORMAT } from '../../../constants/constants';
 import "./styles.css";
+import EllipsisText from "react-ellipsis-text";
 
 class WorkHistory extends Component {
     constructor(props) {
@@ -390,7 +391,8 @@ class WorkHistory extends Component {
                             </span>
                         </div>
                         <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
-                        <span className="SPCertificateDesc">{WorkHistoryList.description}</span>
+                        {/*<span className="SPCertificateDesc">{WorkHistoryList.description}</span>*/}
+                        <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.description} length={"50"} />
                     </div>
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.isOnDeleteModalOpen(e)} />
