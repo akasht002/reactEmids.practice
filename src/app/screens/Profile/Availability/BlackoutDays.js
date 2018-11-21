@@ -12,7 +12,7 @@ import {
 } from "../../../redux/profile/Availability/actions";
 import "./AvailabilityStyles.css";
 import { dateDifference, formattedDateMoment } from '../../../utils/validations';
-
+import EllipsisText from "react-ellipsis-text";
 
 class BlackoutDays extends Component {
   constructor(props) {
@@ -132,7 +132,7 @@ class BlackoutDays extends Component {
                       )}
                     </div>
                   <div className={"SPBlackoutDesc"}>
-                    <span>{remarks}</span>
+                    <EllipsisText text={remarks} length={"50"} />
                   </div>
                 </div>
               </div>
