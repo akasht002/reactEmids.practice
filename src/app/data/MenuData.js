@@ -29,10 +29,4 @@ export const MenuData = [
         link: '/visitNotificationSettings',
         name: SCREENS.NOTIFICATIONS
     },
-    // {
-    //     id: 3,
-    //     title: 'Service Providers',        
-    //     iconName: 'iconProfile iconProfileServiceProviders',
-    //     link:'/'
-    // }
 ];
