@@ -13,7 +13,8 @@ const defaultState = {
     initiator: false,
     isInvitationCame: false,
     initiatorFirstName: '',
-    initiatorLastName: ''
+    initiatorLastName: '',
+    contextId: 0
 };
 
 const telehealthState = (state = defaultState, action) => {
@@ -78,6 +79,11 @@ const telehealthState = (state = defaultState, action) => {
                 initiatorFirstName: action.data.userFirstName,
                 initiatorLastName: action.data.userLastName
             };
+        case TeleHealth.saveContextData:
+            return {
+                ...state,
+                contextId: action.data
+            }
         default:
             return state;
     }

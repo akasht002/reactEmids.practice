@@ -66,7 +66,7 @@ class Feedback extends Component {
         if (this.state.textareaData) {
             this.selectedAnswers.push(this.state.textareaData);
         }
-        if (this.props.QuestionsList.length === this.selectedAnswers.length) {
+        if (this.props.QuestionsList.length === this.selectedAnswers.length || this.props.VisitFeedback.length > 0) {
             this.onSubmit();
         } else {
             this.setState({ isModalOpen: true })
@@ -164,6 +164,7 @@ class Feedback extends Component {
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
                                                                                 checked={answer.checked}
+                                                                                disabled={this.props.VisitFeedback.length > 0 ? true: false}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>

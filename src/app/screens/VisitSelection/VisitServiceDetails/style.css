@@ -1237,3 +1237,11 @@ div.scrollarea .scrollbar-container.vertical {
     font-weight: 400;
     color: #7a329f;
 }
+
+.start-visit-btn{
+    font-size: 14px !important;
+    margin: 13px !important;
+    padding: 5px 10px !important;
+    float: right !important;
+    height: 33px !important;
+}

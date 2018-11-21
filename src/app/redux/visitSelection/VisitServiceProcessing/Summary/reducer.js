@@ -4,8 +4,9 @@ import {
 
 const defaultState = {
     SummaryDetails: {},
-    CalculationsData : {},
-    actualTimeDiff: ''
+    CalculationsData: {},
+    actualTimeDiff: '',
+    signature: ''
 };
 
 const SummaryState = (state = defaultState, action) => {
@@ -34,6 +35,18 @@ const SummaryState = (state = defaultState, action) => {
             return {
                 ...state,
                 actualTimeDiff: action.data
+            }
+        case SummaryDetails.getSavedSignatureSuccess:
+            return {
+                ...state,
+                signature: action.data
+            }
+        case SummaryDetails.formDirtySummaryDetails:
+            return {
+                ...state,
+                SummaryDetails: {},
+                CalculationsData: {},
+                signature: ''
             }
         default:
             return state;

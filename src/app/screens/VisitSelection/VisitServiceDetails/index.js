@@ -18,13 +18,14 @@ import {
   dispatchServiceRequestByServiceProvider
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
-  getPerformTasksList
+  getPerformTasksList,
+  formDirtyPerformTask,
+  getServiceVisitId
 } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import { formDirtySummaryDetails } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions'
 import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
-import { formDirtyPerformTask } from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import { serviceRequestMessages } from '../../../utils/messageUtility'
-import { getFirstCharOfString } from '../../../utils/stringHelper'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
 import {
@@ -46,7 +47,9 @@ import {
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import { getUserInfo } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
+import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { createVideoConference } from '../../../redux/telehealth/actions';
+import { isFutureDay } from '../../../utils/dateUtility'
 
 class VisitServiceDetails extends Component {
   constructor(props) {
@@ -116,6 +119,15 @@ class VisitServiceDetails extends Component {
     this.props.formDirty();
     this.props.formDirtyFeedback();
     this.props.formDirtyPerformTask();
+  }
+
+  visitProcessingSummary = data => {
+    this.props.getServiceVisitId(data, true);
+    this.props.getSummaryDetails(data);
+    this.props.getSavedSignature(data);
+    this.props.formDirtySummaryDetails();
+    this.props.formDirty();
+    this.props.formDirtyFeedback();
   }
 
   selectedServiceType = e => {
@@ -662,17 +674,18 @@ class VisitServiceDetails extends Component {
 
                                   {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
                                     ((ScheduleList.visitStatusName ===
-                                    SERVICE_VISIT_STATUS.SCHEDULED)
-                                    ? <a
-                                      className='btn btn-outline-primary'
-                                      onClick={() =>
-                                        this.visitProcessing(
-                                          ScheduleList.serviceRequestVisitId
-                                        )}
-                                    >
-                                      Start Visit
-                                      </a>
-                                    : '') : '')}
+                                      SERVICE_VISIT_STATUS.SCHEDULED)
+                                      ? <button
+                                        className='btn btn-outline-primary start-visit-btn'
+                                        onClick={() =>
+                                          this.visitProcessing(
+                                            ScheduleList.serviceRequestVisitId
+                                          )}
+                                          disabled={!isFutureDay(ScheduleList.visitDate)}
+                                      >
+                                        Start Visit
+                                      </button>
+                                      : '') : '')}
                                   {ScheduleList.visitStatusName ===
                                     SERVICE_VISIT_STATUS.INPROGRESS
                                     ? <a
@@ -690,7 +703,7 @@ class VisitServiceDetails extends Component {
                                     ? <a
                                       className='btn btn-outline-primary'
                                       onClick={() =>
-                                        this.visitProcessing(
+                                        this.visitProcessingSummary(
                                           ScheduleList.serviceRequestVisitId
                                         )}
                                     >
@@ -784,7 +797,12 @@ function mapDispatchToProps(dispatch) {
     createVideoConference: (data) => dispatch(createVideoConference(data)),
     formDirty: () => dispatch(formDirty()),
     formDirtyFeedback: () => dispatch(formDirtyFeedback()),
-    formDirtyPerformTask: () => dispatch(formDirtyPerformTask())
+    formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),
+    //getSummaryPage: () => dispatch(push(Path.summary)),
+    getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
+    getSavedSignature: (data) => dispatch(getSavedSignature(data)),
+    getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
+    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails())
   }
 }
 

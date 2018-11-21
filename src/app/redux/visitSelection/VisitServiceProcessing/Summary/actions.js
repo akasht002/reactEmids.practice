@@ -1,17 +1,20 @@
 import { API } from '../../../../services/api';
-import { ServiceRequestGet, ServiceRequestPut } from '../../../../services/http';
+import { ServiceRequestGet, ServiceRequestPut, ServiceRequestPost } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import moment from 'moment'
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
+import { getUserInfo } from '../../../../services/http';
 
 
 export const SummaryDetails = {
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
     getCalculationsData: 'get_calculations_data/summarydetails',
     saveOriginalTimeDiff: 'save_original_time_diff/summarydetails',
-    saveActualTimeDiff: 'save_actual_time_diff/summarydetails'
+    saveActualTimeDiff: 'save_actual_time_diff/summarydetails',
+    getSavedSignatureSuccess: 'getSavedSignatureSuccess/summarydetails',
+    formDirtySummaryDetails: 'formDirtySummaryDetails/summarydetails'
 };
 
 export const getSummaryDetailsSuccess = (data) => {
@@ -42,12 +45,26 @@ export const saveActualTimeDiff = (data) => {
     }
 }
 
+export const getSavedSignatureSuccess = (data) => {
+    return {
+        type: SummaryDetails.getSavedSignatureSuccess,
+        data
+    }
+}
+
+export const formDirtySummaryDetails = () => {
+    return {
+        type: SummaryDetails.formDirtySummaryDetails,
+    }
+}
+
 export function getSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(calculationsFirstTime(resp.data))
+            dispatch(push(Path.summary))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -131,7 +148,34 @@ export function saveSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestPut(API.saveSummaryDetails + data.serviceRequestVisitId, data).then((resp) => {
-            dispatch(push(Path.payments))
+            if (getUserInfo().isEntityServiceProvider) {
+                dispatch(push(Path.visitServiceDetails))
+            } else {
+                dispatch(push(Path.payments))
+            }
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function saveSignature(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ServiceRequestPost(API.saveSignature, data).then((resp) => {
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function getSavedSignature(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ServiceRequestGet(API.getSavedSignature + data).then((resp) => {
+            dispatch(getSavedSignatureSuccess(resp.data));
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

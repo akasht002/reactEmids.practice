@@ -17,7 +17,8 @@ export const TeleHealth = {
     clearRoom: 'clear_room/telehealth',
     invitaionCame: 'invitaion_came/telehealth',
     clearInvitaion: 'clear_invitaion/telehealth',
-    setInitiator: 'setInitiator/telehealth'
+    setInitiator: 'setInitiator/telehealth',
+    saveContextData: 'saveContextData/telehealth'
 };
 
 export const generateTokenSuccess = (data) => {
@@ -75,28 +76,24 @@ const getLinkedParticipantsByPatientsSuccess = data => {
     }
 };
 
+const saveContextData = data => {
+    return {
+        type: TeleHealth.saveContextData,
+        data: data
+    }
+};
+
 export function getLinkedParticipantsByPatients(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         let searchText = data.searchText === "" ? null : data.searchText;
-        let patients = getState().telehealthState.linkedPatients;
-        let patient = patients.find((e) => {
-            return e.userId === data.patientId
-        });
-        data.firstName = patient.firstName;
-        data.lastName = patient.lastName;
-        data.participantType = USERTYPES.PATIENT;
-        data.image = patient.image;
-        data.userId = data.userId;
-        dispatch(startLoading());
-        AsyncGet(API.getParticipantsByContext + data.conversationId +
-            '/' + getUserInfo().serviceProviderId +
+        dispatch(saveContextData(data.patientId))
+        AsyncGet(API.getParticipantsByContext +
+            '/0/' + getUserInfo().serviceProviderId +
             '/' + data.patientId +
             '/S/' + searchText
         ).then((resp) => {
             dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
-            dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
         })
     }
 };
@@ -315,11 +312,8 @@ export function AddParticipantsToVideoConference(data) {
             conferenceId: state.telehealthState.conferenceId,
             participants: data
         };
-        dispatch(startLoading());
         AsyncPost(API.addParticipants, twilioData).then((resp) => {
-            dispatch(endLoading());
-        }).catch((err) => {
-            dispatch(endLoading());
+        }).catch(() => {
         })
     }
 };
@@ -328,45 +322,47 @@ export function checkTeleHealth(data) {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         const teleHealthState = getState().telehealthState;
-        const userId = userInfo.serviceProviderId;
-        if (data.messageType === 'Invited') {
-            if (data.userId !== userId) {
-                data.participantList && data.participantList.map((participant) => {
-                    if (participant.participantType === 'S' && userId === participant.userId) {
-                        dispatch(setRoomId(data.roomID));
-                        dispatch(setInitiator({
-                            userFirstName: data.userFirstName,
-                            userLastName: data.userLastName
-                        }))
-                        dispatch(invitaionCame());
-                    }
-                })
-            }
-            if (teleHealthState.roomId === data.roomID) {
-                let participants = [
-                    ...data.participantList,
-                    ...teleHealthState.participantsByConferenceId
-                ];
-                dispatch(onGetParticipantByConfernceIdSuccess(participants));
-            }
-        } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
-            if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
-                let participants = teleHealthState.participantsByConferenceId.map((participant) => {
-                    if (participant.userType === data.participantList[0].userType &&
-                        participant.userId === data.participantList[0].userId) {
-                            return {
-                                ...participant,
-                                status: 'Joined'
-                            }
-                    } else {
-                        return participant;
-                    }
-                });
-                dispatch(onGetParticipantByConfernceIdSuccess(participants));
-            }
-        }  else if (data.messageType === 'Ended') {
-            if (teleHealthState.roomId === data.roomID) {
-                dispatch(leaveVideoConference())
+        if (userInfo) {
+            const userId = userInfo.serviceProviderId;
+            if (data.messageType === 'Invited') {
+                if (data.userId !== userId) {
+                    data.participantList && data.participantList.map((participant) => {
+                        if (participant.participantType === 'S' && userId === participant.userId) {
+                            dispatch(setRoomId(data.roomID));
+                            dispatch(setInitiator({
+                                userFirstName: data.userFirstName,
+                                userLastName: data.userLastName
+                            }))
+                            dispatch(invitaionCame());
+                        }
+                    })
+                }
+                if (teleHealthState.roomId === data.roomID) {
+                    let participants = [
+                        ...data.participantList,
+                        ...teleHealthState.participantsByConferenceId
+                    ];
+                    dispatch(onGetParticipantByConfernceIdSuccess(participants));
+                }
+            } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
+                if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
+                    let participants = teleHealthState.participantsByConferenceId.map((participant) => {
+                        if (participant.userType === data.participantList[0].userType &&
+                            participant.userId === data.participantList[0].userId) {
+                                return {
+                                    ...participant,
+                                    status: 'Joined'
+                                }
+                        } else {
+                            return participant;
+                        }
+                    });
+                    dispatch(onGetParticipantByConfernceIdSuccess(participants));
+                }
+            }  else if (data.messageType === 'Ended') {
+                if (teleHealthState.roomId === data.roomID) {
+                    dispatch(leaveVideoConference())
+                }
             }
         }
     }

@@ -25,6 +25,7 @@ import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
 import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
 import  VisitNotification  from '../../VisitProcessingNotification/VisitNotification';
+import {USER_TYPE} from '../../../constants/constants'
 import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
 import './style.css'
 
@@ -80,7 +81,7 @@ class AsideScreenCover extends React.Component {
     render() {
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
-        let menuData = MenuData;
+        let menuData = getUserInfo().serviceProviderTypeId !== USER_TYPE.SERVICE_PROVIDER_TYPE_ID ? MenuData:EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>

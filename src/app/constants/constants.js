@@ -114,8 +114,13 @@ export const Pagination = {
 
 export const DashboardConversationPagination = {
     pageNumber : 1,
-    pageSize : 2
+    pageSize : 3
 };
+
+
+export const USER_TYPE = {
+    SERVICE_PROVIDER_TYPE_ID :2
+}
 
 export const serviceTypesImage = {
     1: 'ADL Ambulation & Mobility.svg',

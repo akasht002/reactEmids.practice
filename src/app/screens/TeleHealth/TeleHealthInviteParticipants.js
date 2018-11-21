@@ -16,8 +16,8 @@ export default class TeleHealthInviteParticipants extends Component {
 
     componentDidMount() {
         let data = {
-            searchText: null,
-            contextId: this.state.selectedPatientDetails.length > 0 ? this.state.selectedPatientDetails.userId : null
+            searchText: '',
+            patientId: this.props.contextId
         };
         this.props.getAllParticipants(data)
     }
@@ -52,7 +52,7 @@ export default class TeleHealthInviteParticipants extends Component {
         this.setState({ searchText: e.target.value });
         let data = {
             searchText: e.target.value,
-            contextId: this.state.selectedPatientDetails.length > 0 ? this.state.selectedPatientDetails.userId : null
+            patientId: this.props.contextId
         };
         this.props.getAllParticipants(data);
     };
