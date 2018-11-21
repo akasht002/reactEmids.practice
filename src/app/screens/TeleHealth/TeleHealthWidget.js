@@ -11,7 +11,6 @@ import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
 import {TeleHealthSettings} from '../../constants/config';
 import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
 import './styles.css';
-import _ from 'lodash'
 import { Path } from '../../routes';
 import {push} from '../../redux/navigation/actions'
 
@@ -72,7 +71,7 @@ class TeleHealthWidget extends Component {
     }
 
     attachTracks(tracks, container) {
-        _.forEach(tracks,track => {
+        tracks.forEach(track => {
             container.appendChild(track.attach());
         });
     }
@@ -84,13 +83,13 @@ class TeleHealthWidget extends Component {
 
     detachTracks = (tracks) => {
         let isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-        _.forEach(tracks,track => {
+        tracks.forEach(track => {
             if (isSafari) {
-                _.forEach(track._attachments, function (element) {
+                track._attachments.forEach((element) => {
                     element.remove();
                 });
             } else {
-                _.forEach(track.detach(),detachedElement => {
+                track.detach().forEach(detachedElement => {
                     detachedElement.remove();
                 });
             }
@@ -169,7 +168,7 @@ class TeleHealthWidget extends Component {
 
         this.setState({ activeParticipantIdentity: room.localParticipant.identity });
 
-        _.forEach(room.participants,participant => {
+        room.participants.forEach(participant => {
             this.setState({ videoAdded: true });
         });
 
@@ -193,12 +192,12 @@ class TeleHealthWidget extends Component {
 
         room.on('disconnected', () => {
             if (this.state.previewTracks) {
-                _.forEach(this.state.previewTracks,track => {
+                this.state.previewTracks.forEach(track => {
                     track.stop();
                 });
             }
             this.detachParticipantTracks(room.localParticipant);
-            _.forEach(room.participants,this.detachParticipantTracks);
+            room.participants.forEach(this.detachParticipantTracks);
             this.setState({ hasJoinedRoom: false, localMediaAvailable: false });
         });
     }
@@ -217,14 +216,14 @@ class TeleHealthWidget extends Component {
     }
 
     controlAudio = () => {
-        _.forEach(this.state.activeRoom.localParticipant.audioTracks,(audioTrack) => {
+        this.state.activeRoom.localParticipant && this.state.activeRoom.localParticipant.audioTracks.forEach((audioTrack) => {
             this.state.isMuteAudio ? audioTrack.enable() : audioTrack.disable();
         });
         this.setState({ isMuteAudio: !this.state.isMuteAudio });
     }
 
     controlVideo = () => {
-        _.forEach(this.state.activeRoom.localParticipant.videoTracks,(videoTrack) => {
+        this.state.activeRoom.localParticipant && this.state.activeRoom.localParticipant.videoTracks.forEach((videoTrack) => {
             this.state.isHiddenVideo ? videoTrack.enable() : videoTrack.disable();
         });
         this.setState({ isHiddenVideo: !this.state.isHiddenVideo });
@@ -279,7 +278,7 @@ class TeleHealthWidget extends Component {
             </div>
             sliderCategory.push(cat);
             setTimeout(() => {
-                _.forEach(tracks,track => {
+                tracks.forEach(track => {
                     if (this.refs['remoteVideo' + participant.sid]) {
                         this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
                     }
