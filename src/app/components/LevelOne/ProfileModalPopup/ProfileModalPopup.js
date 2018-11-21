@@ -11,8 +11,14 @@ export default class ProfileModalPopup extends React.Component {
                 </ModalHeader>
                 <ModalBody>{this.props.ModalBody} </ModalBody>
                 <ModalFooter className={this.props.headerFooter}>
+                    {this.props.discardBtn ?
+                        <Button className="btn btn-outline-primary pull-left" disabled={this.props.disabled} onClick={this.props.onDiscard}>
+                            Discard</Button>
+                        :
+                        ''
+                    }
                     <Button className="" disabled={this.props.disabled} color="primary" onClick={this.props.onClick}>
-                    {this.props.buttonLabel?this.props.buttonLabel:'Save'}</Button>
+                        {this.props.buttonLabel ? this.props.buttonLabel : 'Save'}</Button>
                 </ModalFooter>
             </Modal>
         );

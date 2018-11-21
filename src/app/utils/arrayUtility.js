@@ -1,7 +1,14 @@
+
+import _ from 'lodash';
+
 export const uniqElementOfArray = data => {
-    console.log(data)
-   let uniqueArray = data.filter(function(item, pos) {
+    let uniqueArray = data.filter(function (item, pos) {
         return data.indexOf(item) === pos;
     })
     return uniqueArray
 }
+
+export const isArrayEqual = function (x, y) {
+    return _.difference(x, y)
+};
+

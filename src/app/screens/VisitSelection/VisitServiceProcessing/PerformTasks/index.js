@@ -12,6 +12,7 @@ import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
 import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { isArrayEqual } from "../../../../utils/arrayUtility"
 import { Path } from '../../../../routes'
 import './style.css'
 
@@ -40,6 +41,7 @@ class PerformTasks extends Component {
             stopTimer: false
         };
         this.checkedTask = [];
+        this.checkedTaskInitial = [];
     };
 
     toggle = () => {
@@ -75,6 +77,7 @@ class PerformTasks extends Component {
                         })
                         taskList.statusId = 45;
                     }
+                    this.checkedTaskInitial = taskList;
                 });
             });
         }
@@ -109,6 +112,7 @@ class PerformTasks extends Component {
         } else {
             current_time = this.state.startedTime;
             this.setState({ stopTime: true, startService: true })
+            this.saveData(data);
         }
         this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
         this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
@@ -116,9 +120,6 @@ class PerformTasks extends Component {
 
     onClickNext = () => {
         this.setState({ taskCount: (this.state.taskList.totalTask - (this.checkedTask).length) })
-        // if (!this.state.startService) {
-        //     this.setState({ isStopModalOpen: true })
-        // } else
         if (this.state.taskCount > 0) {
             this.setState({ isModalOpen: true })
         } else {
@@ -126,7 +127,7 @@ class PerformTasks extends Component {
         }
     }
 
-    saveData = () => {
+    saveData = (startServiceAction) => {
         let taskList = this.state.taskList
         let data = {
             serviceRequestVisitId: taskList.serviceRequestVisitId,
@@ -137,7 +138,7 @@ class PerformTasks extends Component {
             isActive: true,
             serviceRequestTypeTaskVisits: this.checkedTask
         }
-        this.props.addPerformedTask(data);
+        this.props.addPerformedTask(data,startServiceAction);
     }
 
     render() {
@@ -254,7 +255,7 @@ class PerformTasks extends Component {
                                                                 taskList.checked = taskList.statusId === 90;
                                                                 taskList.statusId = 45;
                                                             }
-                                                            
+
                                                             return (
                                                                 <div className='ServiceList' key={taskList.serviceRequestTypeTaskDetailsId}>
                                                                     <input
@@ -339,7 +340,7 @@ class PerformTasks extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data, true)),
-        addPerformedTask: (data) => dispatch(addPerformedTask(data)),
+        addPerformedTask: (data, startServiceAction) => dispatch(addPerformedTask(data, startServiceAction)),
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime))
     }
