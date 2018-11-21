@@ -71,7 +71,7 @@ export const serviceCalendar = (
               className='ProfileServices'              
             >
             <span className="ServicesCalendarWidget" onClick={() => {
-                handleClick(conversations)
+                handleClick(conversations.serviceRequestId)
               }}>
               <span className='ServicesTitle'>
                 {conversations.serviceTypes &&
