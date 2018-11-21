@@ -81,7 +81,7 @@ class AsideScreenCover extends React.Component {
     render() {
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
-        let menuData = getUserInfo().serviceProviderTypeId !== USER_TYPE.SERVICE_PROVIDER_TYPE_ID ? MenuData:EntityMenuData;
+        let menuData = (!getUserInfo().isEntityServiceProvider) ? MenuData:EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
