@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 import Moment from 'react-moment'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
@@ -413,13 +412,13 @@ class VisitServiceDetails extends Component {
                   </span>
                 </div>
                 <div className='ProfileHeaderButton'>
-                  <ServiceStatus
+                 { !getUserInfo().isEntityServiceProvider && <ServiceStatus
                     status={{
                       id: this.state.visitServiceDetails.statusId,
                       name: this.state.visitServiceDetails.statusName
                     }}
                     postServiceRequest={this.postServiceRequest}
-                  />
+                  /> }
                 </div>
               </section>
               <section class='LeftPalette'>
