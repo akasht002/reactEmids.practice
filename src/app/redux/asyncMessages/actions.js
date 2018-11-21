@@ -35,6 +35,7 @@ export const AsyncMessageActions = {
     pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
     setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
     clearConversation: 'clearConversation/asyncMessage',
+    setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
 };
 
 export const setConversationSummary = (data) => {
@@ -449,10 +450,11 @@ const getLinkedParticipantsByPatientsSuccess = data => {
     }
 };
 
-export function getDashboardMessageCount(userData) {
+export function getDashboardMessageCount() {
     return (dispatch) => {
         dispatch(startLoading())
-        AsyncGet(API.getDashboardMessageCount + userData.userId + '/' + userData.userType)
+        let USER_ID = getUserInfo().serviceProviderId;
+        AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USERTYPES.SERVICE_PROVIDER)
             .then(resp => {
                 dispatch(getDashboardCountSuccess(resp.data));
                 dispatch(endLoading())

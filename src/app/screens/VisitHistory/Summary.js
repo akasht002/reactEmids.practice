@@ -193,6 +193,7 @@ class VistSummary extends React.Component {
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
       isModalOpen: false
     });
+    this.props.getVisitFeedBack(this.props.SummaryDetails.serviceRequestVisitId)
   };
 
   getFeedback = () => {
@@ -320,7 +321,7 @@ class VistSummary extends React.Component {
                                   answer.answerName,
                                   questionList.feedbackQuestionnaireId
                                 )}
-                              checked={questionList.selectedAnswer}
+                              checked={questionList.selectedAnswer === answer.answerName ? true : false}
                               disabled={true}
                             />
                             <label
@@ -360,6 +361,8 @@ class VistSummary extends React.Component {
     let modalTitle = "Feedback";
     let modalType = "";
     let feedbackContent = this.getFeedbackContent(this.props.VisitFeedback)
+
+    console.log("aaaaa"+ JSON.stringify(this.props.history))
 
     return (
       <React.Fragment>

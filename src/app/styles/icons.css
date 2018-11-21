@@ -69,6 +69,10 @@
     background-repeat: no-repeat;
 }
 
+.iconAlertMessage:before{
+    background-image: url("../assets/images/messages-alert.png");
+}
+
 .iconContact:before{
     background-image: url("../assets/images/contact.png");
 }

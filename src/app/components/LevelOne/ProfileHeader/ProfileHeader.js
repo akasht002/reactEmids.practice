@@ -49,6 +49,9 @@ class ProfileHeader extends Component {
             let separator = "";
             if (menu.status) {
                 let clsName = "navIcon icon" + makeProperCase(menuName);
+                if(menuName === 'messages' && this.props.dashboardMessageCount > 0){
+                    clsName = "navIcon iconAlertMessage";
+                }
                 if (menuName === "notification") {
                     separator = "NavIconSeparator"
                 }

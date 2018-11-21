@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
-import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetails, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
@@ -44,16 +44,18 @@ class Summary extends Component {
     componentDidMount() {
         if (this.props.ServiceRequestVisitId) {
             this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
+            this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId)
         } else {
             this.props.history.push(Path.visitServiceList)
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.SummaryDetails.signature) {
-            this.signaturePad.fromDataURL(nextProps.SummaryDetails.signature);
-            if (nextProps.SummaryDetails.signature !== 'data:image/jpeg;base64,') {
-                this.setState({ signatureImage: nextProps.SummaryDetails.signature })
+        if (nextProps.signatureImage.signature) {
+            this.signaturePad.fromDataURL(nextProps.signatureImage.signature);
+            if (nextProps.signatureImage.signature !== null) {
+                this.setState({ signatureImage: nextProps.signatureImage.signature })
+                this.signaturePad.off();
             }
         }
         this.setState({
@@ -84,6 +86,15 @@ class Summary extends Component {
             this.setState({ isSaveBtnShown: false })
             this.signaturePad.off();
         }
+        let signatureData = {
+            "patientId": this.state.summaryDetails.patient.patientId,
+            "serviceRequestVisitId": this.state.summaryDetails.serviceRequestVisitId,
+            "serviceRequestId": this.state.summaryDetails.serviceRequestId,
+            "rating": 0,
+            "signature": data,
+            "signatureArray": ""
+        }
+        this.props.saveSignature(signatureData)
         this.setState({ signatureImage: data })
     }
 
@@ -359,7 +370,7 @@ class Summary extends Component {
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
                                             </div>
-                                            {this.state.isSaveBtnShown ?
+                                            {this.state.isSaveBtnShown && (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
                                                 <div className="SignatureButtons">
                                                     <button className="btn btn-outline-primary CancelSignature" disabled={this.state.disableSignatureBtn} onClick={this.saveSignature}>Save</button>
                                                     <button className="btn btn-outline-primary ResetSignature" onClick={this.resetSignature}>Reset Signature</button>
@@ -373,7 +384,11 @@ class Summary extends Component {
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
                                         <Link className='btn btn-outline-primary mr-3' to='/feedback'>Previous</Link>
-                                        <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
+                                        {getUserInfo().isEntityServiceProvider ?
+                                            <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
+                                            :
+                                            <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -388,7 +403,9 @@ class Summary extends Component {
                         modalTitle={'Adjust Time'}
                         centered="true"
                         onClick={this.timerErrMessage}
+                        onDiscard={this.togglePopup}
                         buttonLabel={'Update'}
+                        discardBtn={true}
                     />
 
                     <ModalPopup
@@ -427,7 +444,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         onUpdateTime: (data) => dispatch(onUpdateTime(data)),
-        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data))
+        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
+        saveSignature: (data) => dispatch(saveSignature(data)),
+        getSavedSignature: (data) => dispatch(getSavedSignature(data))
     }
 };
 
@@ -439,7 +458,8 @@ function mapStateToProps(state) {
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
-        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus
+        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
+        signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature
     };
 };
 

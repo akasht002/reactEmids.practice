@@ -35,7 +35,10 @@
     height: 22px;
     width: 25px;}
 /* line-height: 14px; */
-.InputInDeWidget span:first-child{
+.InputInDeWidget span:nth-child(1){
+    padding: 3px;
+}
+.InputInDeWidget span.plus{
     padding: 1px;
 }
 

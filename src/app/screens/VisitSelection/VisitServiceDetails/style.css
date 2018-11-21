@@ -531,9 +531,10 @@ ul li.list-group-item.EligibilityList{
 .ScheduleRowButton a{
     font-size: 14px !important;
     margin: 13px;
-    padding: 5px 10px !important;
+    padding: 0px 10px !important;
     float: right;
-    height: 33px;
+    height: 30px;
+    line-height: 30px;
 }
 
 .TabBody .ServiceCategoryContent{
@@ -1235,4 +1236,12 @@ div.scrollarea .scrollbar-container.vertical {
     font-size: 18px;
     font-weight: 400;
     color: #7a329f;
+}
+
+.start-visit-btn{
+    font-size: 14px !important;
+    margin: 13px !important;
+    padding: 5px 10px !important;
+    float: right !important;
+    height: 33px !important;
 }

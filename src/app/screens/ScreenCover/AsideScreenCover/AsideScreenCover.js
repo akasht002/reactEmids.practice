@@ -26,6 +26,7 @@ import { getUserInfo } from '../../../services/http';
 import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
 import  VisitNotification  from '../../VisitProcessingNotification/VisitNotification';
 import {USER_TYPE} from '../../../constants/constants'
+import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -49,6 +50,7 @@ class AsideScreenCover extends React.Component {
         authorizePermission(SCREENS.VISIT_HISTORY);
         authorizePermission(SCREENS.TELEHEALTH);
         authorizePermission(SCREENS.ASYNC_MESSAGE);
+        this.props.getDashboardMessageCount();
     }
 
     onClickOk = () => {
@@ -115,7 +117,7 @@ class AsideScreenCover extends React.Component {
                             : require('../../../assets/images/Blank_Profile_icon.png')}
                         toggle={this.props.toggle}
                         onClick={(link) => this.navigateProfileHeader(link)}
-                    />
+                        dashboardMessageCount={this.props.dashboardMessageCount}/>
 
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
@@ -190,7 +192,8 @@ function mapDispatchToProps(dispatch) {
         onLogout: () => dispatch(onLogout()),
         clearInvitaion: () => dispatch(clearInvitaion()),
         joinVideoConference: () => dispatch(joinVideoConference()),
-        rejectConference: () => dispatch(rejectConference())
+        rejectConference: () => dispatch(rejectConference()),
+        getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
     }
 };
 
@@ -207,7 +210,8 @@ function mapStateToProps(state) {
         showTelehealthInvite: state.telehealthState.isInvitationCame,
         initiatorFirstName: state.telehealthState.initiatorFirstName,
         initiatorLastName: state.telehealthState.initiatorLastName,
-        visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification, 
+        visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification,
+        dashboardMessageCount: state.asyncMessageState.dashboardMessageCount, 
     };
 };
 
