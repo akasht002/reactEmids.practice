@@ -94,7 +94,7 @@ class Education extends React.Component {
                 endYear:''
              })
         } else {
-            this.setState({ isDiscardModalOpen: true, IsEducationModalOpen: true })
+            this.setState({ isDiscardModalOpen: true, IsEducationModalOpen: true, fromDateChange: true })
         }
     }
     addEducation = () => {
@@ -119,7 +119,7 @@ class Education extends React.Component {
     }
 
     editEducation = (e) => {
-        this.setState({IsEducationModalOpen: true, isAdd: false, educationId: e.target.id });
+        this.setState({IsEducationModalOpen: true, isAdd: false, educationId: e.target.id, fromDateChange: true });
         this.props.editEducation(e.target.id);
     }
 
@@ -146,13 +146,13 @@ class Education extends React.Component {
         this.setState({ showModalOnDelete: !this.state.showModalOnDelete });
     }
     YearList() {
-        var year = [];
-        var selectedYear = "2018";
-        var defaultYear ="1901";
-        var curYear = formateYearDate();
+        let year = [];
+        let selectedYear = "2018";
+        let defaultYear ="1901";
+        let curYear = formateYearDate();
         year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
-        for (var i = defaultYear; i <= curYear; i++) {
-            var selectedOption = 'false';
+        for (let i = defaultYear; i <= curYear; i++) {
+            let selectedOption = 'false';
             if (i === selectedYear) {
                 selectedOption = 'selected'
                 
@@ -161,11 +161,12 @@ class Education extends React.Component {
         }
         return year;
     };
+    
     YearListCal(){
+        let year = [];
+        let selectedYear = formateYearDate();
+        let curYear = formateYearDate();
         if(this.state.fromDateChange) {
-            var year = [];
-            var selectedYear = formateYearDate();
-            var curYear = formateYearDate();
             year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
             for (var i = this.state.startYear; i <= curYear; i++) {
                 var selectedOption = 'false';
@@ -177,13 +178,11 @@ class Education extends React.Component {
             }
             return year;
         } else {
-            var year = [];
-            var selectedYear = formateYearDate();
-            var curYear = formateYearDate();
             year.push(<option value="" key= {curYear} disabled selected>YYYY</option>);
             return year;
         }
     }
+
     render() {
         let modalContent;
         let modalTitle;
