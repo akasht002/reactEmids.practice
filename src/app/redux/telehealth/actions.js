@@ -101,7 +101,7 @@ export function getLinkedParticipantsByPatients(data) {
     }
 };
 
-export function createVideoConference(data) {
+export function createVideoConference(data, patientData) {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         const personalState = getState().profileState.PersonalDetailState.personalDetail
@@ -110,6 +110,7 @@ export function createVideoConference(data) {
             createdByType: 'S',
             createdByFirstName : personalState.firstName,
             createdByLastName  : personalState.lastName,
+            context: patientData.userId,
             participantList: [
                 {
                     userId: userInfo.serviceProviderId,
@@ -327,45 +328,47 @@ export function checkTeleHealth(data) {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         const teleHealthState = getState().telehealthState;
-        const userId = userInfo.serviceProviderId;
-        if (data.messageType === 'Invited') {
-            if (data.userId !== userId) {
-                data.participantList && data.participantList.map((participant) => {
-                    if (participant.participantType === 'S' && userId === participant.userId) {
-                        dispatch(setRoomId(data.roomID));
-                        dispatch(setInitiator({
-                            userFirstName: data.userFirstName,
-                            userLastName: data.userLastName
-                        }))
-                        dispatch(invitaionCame());
-                    }
-                })
-            }
-            if (teleHealthState.roomId === data.roomID) {
-                let participants = [
-                    ...data.participantList,
-                    ...teleHealthState.participantsByConferenceId
-                ];
-                dispatch(onGetParticipantByConfernceIdSuccess(participants));
-            }
-        } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
-            if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
-                let participants = teleHealthState.participantsByConferenceId.map((participant) => {
-                    if (participant.userType === data.participantList[0].userType &&
-                        participant.userId === data.participantList[0].userId) {
-                            return {
-                                ...participant,
-                                status: 'Joined'
-                            }
-                    } else {
-                        return participant;
-                    }
-                });
-                dispatch(onGetParticipantByConfernceIdSuccess(participants));
-            }
-        }  else if (data.messageType === 'Ended') {
-            if (teleHealthState.roomId === data.roomID) {
-                dispatch(leaveVideoConference())
+        if (userInfo) {
+            const userId = userInfo.serviceProviderId;
+            if (data.messageType === 'Invited') {
+                if (data.userId !== userId) {
+                    data.participantList && data.participantList.map((participant) => {
+                        if (participant.participantType === 'S' && userId === participant.userId) {
+                            dispatch(setRoomId(data.roomID));
+                            dispatch(setInitiator({
+                                userFirstName: data.userFirstName,
+                                userLastName: data.userLastName
+                            }))
+                            dispatch(invitaionCame());
+                        }
+                    })
+                }
+                if (teleHealthState.roomId === data.roomID) {
+                    let participants = [
+                        ...data.participantList,
+                        ...teleHealthState.participantsByConferenceId
+                    ];
+                    dispatch(onGetParticipantByConfernceIdSuccess(participants));
+                }
+            } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
+                if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
+                    let participants = teleHealthState.participantsByConferenceId.map((participant) => {
+                        if (participant.userType === data.participantList[0].userType &&
+                            participant.userId === data.participantList[0].userId) {
+                                return {
+                                    ...participant,
+                                    status: 'Joined'
+                                }
+                        } else {
+                            return participant;
+                        }
+                    });
+                    dispatch(onGetParticipantByConfernceIdSuccess(participants));
+                }
+            }  else if (data.messageType === 'Ended') {
+                if (teleHealthState.roomId === data.roomID) {
+                    dispatch(leaveVideoConference())
+                }
             }
         }
     }

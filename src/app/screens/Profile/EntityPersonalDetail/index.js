@@ -461,6 +461,7 @@ class EntityPersonalDetail extends React.PureComponent {
             required='required'
             type='text'
             maxlength='100'
+            disabled={true}
             value={this.state.assigned_by}
             textChange={e => {
               this.setState({
@@ -480,6 +481,7 @@ class EntityPersonalDetail extends React.PureComponent {
             type='text'
             maxlength='40'
             value={this.state.url}
+            disabled={true}
             textChange={e => {
               this.setState({
                 url: e.target.value,
