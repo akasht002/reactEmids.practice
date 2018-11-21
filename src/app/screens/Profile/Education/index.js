@@ -24,7 +24,8 @@ class Education extends React.Component {
             isAdd: false,
             isValid: true,
             disabledSaveBtn: true,
-            isDiscardModalOpen:false
+            isDiscardModalOpen:false,
+            fromDateChange: false
         };
     };
     componentDidMount() {
@@ -52,7 +53,8 @@ class Education extends React.Component {
             disabledSaveBtn:true,
             isDiscardModalOpen: false,
             isAdd: true,
-            isValid: true
+            isValid: true,
+            fromDateChange: false
         })
     }
 
@@ -160,19 +162,27 @@ class Education extends React.Component {
         return year;
     };
     YearListCal(){
-        var year = [];
-        var selectedYear = "2018";
-        var curYear = formateYearDate();
-        year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
-        for (var i = this.state.startYear; i <= curYear; i++) {
-            var selectedOption = 'false';
-            if (i === selectedYear) {
-                selectedOption = 'selected'
-                
+        if(this.state.fromDateChange) {
+            var year = [];
+            var selectedYear = formateYearDate();
+            var curYear = formateYearDate();
+            year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
+            for (var i = this.state.startYear; i <= curYear; i++) {
+                var selectedOption = 'false';
+                if (i === selectedYear) {
+                    selectedOption = 'selected'
+                    
+                }
+                year.push(<option  key= {i} value={i} selected={selectedOption}>{i}</option>)
             }
-            year.push(<option  key= {i} value={i} selected={selectedOption}>{i}</option>)
+            return year;
+        } else {
+            var year = [];
+            var selectedYear = formateYearDate();
+            var curYear = formateYearDate();
+            year.push(<option value="" key= {curYear} disabled selected>YYYY</option>);
+            return year;
         }
-        return year;
     }
     render() {
         let modalContent;
@@ -238,10 +248,13 @@ class Education extends React.Component {
                         <label>From Year</label>
                         <select  className={"form-control"}
                         value={this.state.startYear}
-                        onChange={(e) => this.setState({
-                            startYear: e.target.value,
-                            disabledSaveBtn:false
-                        })}>
+                        onChange={ (e) => 
+                            this.setState({
+                              startYear: e.target.value,
+                              disabledSaveBtn:false,
+                              fromDateChange: true
+                           })
+                    }>
                         {this.YearList()}
                         </select>
                     </div>
