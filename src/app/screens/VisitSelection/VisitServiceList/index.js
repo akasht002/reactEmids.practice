@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
-import { getVisitServiceList, getServiceRequestCount } from '../../../redux/visitSelection/VisitServiceList/actions';
+import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList } from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
@@ -56,7 +56,7 @@ class VisitServiceList extends Component {
             isChecked: false,
             activePage: 1,
             pageNumber: 1,
-            pageSize: 9,
+            pageSize: 15,
             sort: 'false'
         };
         this.sort = false
@@ -337,6 +337,7 @@ class VisitServiceList extends Component {
             Newest: this.Newest,
             Oldest: this.Oldest
         });
+        this.props.formDirtyVisitList()
     };
 
     handleSortPageChange = pageNumber => {
@@ -349,6 +350,7 @@ class VisitServiceList extends Component {
         }
         this.props.getSort(data);
         this.setState({ activePage: pageNumber });
+        this.props.formDirtyVisitList()
     };
 
     handlePageChange = pageNumber => {
@@ -359,6 +361,7 @@ class VisitServiceList extends Component {
         };
         this.props.getVisitServiceList(data);
         this.setState({ activePage: pageNumber });
+        this.props.formDirtyVisitList()
     };
 
     render() {
@@ -547,6 +550,7 @@ function mapDispatchToProps(dispatch) {
         getServiceRequestCount: () => dispatch(getServiceRequestCount()),
         getFilterDataCount: (data) => dispatch(getFilterDataCount(data)),
         formDirty: () => dispatch(formDirty()),
+        formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
     }
 };

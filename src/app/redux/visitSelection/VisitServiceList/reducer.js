@@ -21,7 +21,11 @@ const VisitServiceListState = (state = defaultState, action) => {
                 ...state,
                 serviceRequestCount: action.data
             };
-
+            case VisitServiceList.formDirtyVisitList:
+            return {
+                ...state,
+                visitServiceList: []
+            };
         default:
             return state;
     }

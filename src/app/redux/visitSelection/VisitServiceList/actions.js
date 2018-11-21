@@ -6,12 +6,19 @@ import { getUserInfo } from '../../../services/http';
 export const VisitServiceList = {
     getVisitServiceListSuccess: 'get_visit_service_list_success/visitservice',
     serviceRequestCount: 'serviceRequestCount/visitservice',
+    formDirtyVisitList: 'formDirtyVisitList/visitservice'
 };
 
 export const getVisitServiceListSuccess = (data) => {
     return {
         type: VisitServiceList.getVisitServiceListSuccess,
         data
+    }
+};
+
+export const formDirtyVisitList = () => {
+    return {
+        type: VisitServiceList.formDirtyVisitList,
     }
 };
 
