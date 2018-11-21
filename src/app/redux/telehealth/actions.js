@@ -17,7 +17,8 @@ export const TeleHealth = {
     clearRoom: 'clear_room/telehealth',
     invitaionCame: 'invitaion_came/telehealth',
     clearInvitaion: 'clear_invitaion/telehealth',
-    setInitiator: 'setInitiator/telehealth'
+    setInitiator: 'setInitiator/telehealth',
+    saveContextData: 'saveContextData/telehealth'
 };
 
 export const generateTokenSuccess = (data) => {
@@ -75,28 +76,24 @@ const getLinkedParticipantsByPatientsSuccess = data => {
     }
 };
 
+const saveContextData = data => {
+    return {
+        type: TeleHealth.saveContextData,
+        data: data
+    }
+};
+
 export function getLinkedParticipantsByPatients(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         let searchText = data.searchText === "" ? null : data.searchText;
-        let patients = getState().telehealthState.linkedPatients;
-        let patient = patients.find((e) => {
-            return e.userId === data.patientId
-        });
-        data.firstName = patient.firstName;
-        data.lastName = patient.lastName;
-        data.participantType = USERTYPES.PATIENT;
-        data.image = patient.image;
-        data.userId = data.userId;
-        dispatch(startLoading());
-        AsyncGet(API.getParticipantsByContext + data.conversationId +
-            '/' + getUserInfo().serviceProviderId +
+        dispatch(saveContextData(data.patientId))
+        AsyncGet(API.getParticipantsByContext +
+            '/0/' + getUserInfo().serviceProviderId +
             '/' + data.patientId +
             '/S/' + searchText
         ).then((resp) => {
             dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
-            dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
         })
     }
 };
@@ -315,11 +312,8 @@ export function AddParticipantsToVideoConference(data) {
             conferenceId: state.telehealthState.conferenceId,
             participants: data
         };
-        dispatch(startLoading());
         AsyncPost(API.addParticipants, twilioData).then((resp) => {
-            dispatch(endLoading());
-        }).catch((err) => {
-            dispatch(endLoading());
+        }).catch(() => {
         })
     }
 };
