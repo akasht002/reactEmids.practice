@@ -334,6 +334,7 @@ export function updateReadStatus(data) {
         AsyncPutWithUrl(API.updateReadStatus + USER_ID + '/' + data.conversationId
             + '/' + USER_TYPE)
             .then(resp => {
+                dispatch(getDashboardMessageCount());
                 dispatch(endLoading())
             })
             .catch(err => {
