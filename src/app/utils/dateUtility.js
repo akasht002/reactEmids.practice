@@ -28,7 +28,7 @@ export function getUTCFormatedDate(date, dateFormat = "hh:mm a") {
     return local
 }
 
-export function getUTCTimeInLocal(startTime, endTime){
+export function getUTCTimeInLocal(startTime, endTime) {
     var gmtDateTime = moment.utc(startTime)
     var localStartDate = gmtDateTime.local();
     var endDateTime = moment.utc(endTime)
@@ -40,4 +40,9 @@ export function convertUTCTime(date, dateFormat = "HH:MM a") {
     var gmtDateTime = moment.utc(date)
     var local = gmtDateTime.local().format();
     return moment().diff(local, "seconds")
+}
+
+export function isFutureDay(date) {
+    let difference = moment(date).diff(moment(), "days")
+    return difference >= 0
 }

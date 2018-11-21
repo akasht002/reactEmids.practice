@@ -49,6 +49,7 @@ import { getUserInfo } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { createVideoConference } from '../../../redux/telehealth/actions';
+import { isFutureDay } from '../../../utils/dateUtility'
 
 class VisitServiceDetails extends Component {
   constructor(props) {
@@ -674,15 +675,16 @@ class VisitServiceDetails extends Component {
                                   {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
                                     ((ScheduleList.visitStatusName ===
                                       SERVICE_VISIT_STATUS.SCHEDULED)
-                                      ? <a
-                                        className='btn btn-outline-primary'
+                                      ? <button
+                                        className='btn btn-outline-primary start-visit-btn'
                                         onClick={() =>
                                           this.visitProcessing(
                                             ScheduleList.serviceRequestVisitId
                                           )}
+                                          disabled={!isFutureDay(ScheduleList.visitDate)}
                                       >
                                         Start Visit
-                                      </a>
+                                      </button>
                                       : '') : '')}
                                   {ScheduleList.visitStatusName ===
                                     SERVICE_VISIT_STATUS.INPROGRESS
