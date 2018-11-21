@@ -3,7 +3,8 @@ import {
   ServiceRequestGet,
   ThirdPartyGet,
   ServiceRequestPost,
-  ThirdPartyPost
+  ThirdPartyPost,
+  ServiceRequestPut
 } from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
 import { push } from '../../navigation/actions'
@@ -94,7 +95,7 @@ export function cancelServiceRequestByServiceProvider(data) {
   }
   return dispatch => {
     dispatch(startLoading())
-    ServiceRequestPost(API.cancelServiceRequestByServiceProvider, model)
+    ServiceRequestPut(API.cancelServiceRequestByServiceProvider, model)
       .then(resp => {
         dispatch(endLoading())
         dispatch(push(Path.visitServiceList))
