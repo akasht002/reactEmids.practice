@@ -20,6 +20,7 @@ export const EntityProfileHeaderMenu = [
     {
         name: "notification",
         status: true,
-        id: 4
+        id: 4,
+        link: "visitNotification"
     }
 ];

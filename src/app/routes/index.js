@@ -30,7 +30,8 @@ import {
   ConversationSummary,
   Conversation,
   PatientProfile,
-  VisitNotification
+  VisitNotification,
+  VisitNotificationSettings
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -76,7 +77,8 @@ export const Path = {
   visitHistory: '/visitHistory',
   visitSummaryDetail: '/visitSummary',
   patientProfile: '/patientProfile',
-  visitNotification: '/visitNotification'
+  visitNotification: '/visitNotification',
+  visitNotificationSettings: '/visitNotificationSettings'
 };
 
 class AppStackRoot extends Component {
@@ -113,6 +115,10 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.paymentsuccess} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentSuccess} />
             <PrivateRoute path={Path.paymentfailure} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentFailure} />
             <PrivateRoute path={Path.patientProfile} component={PatientProfile} />
+            <PrivateRoute
+              path={Path.visitNotificationSettings}
+              component={VisitNotificationSettings}
+            />
           </Switch>
         </HashRouter>
       </ConnectedRouter>
