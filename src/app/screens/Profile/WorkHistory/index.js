@@ -373,8 +373,13 @@ class WorkHistory extends Component {
                     <div className="SPCertificateContent">
                         <div className="width100 d-flex">
                             <h5 className="SPCertificateHeader">
-                            <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.designation} length={"50"} /> -
-                            <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />  
+                            {
+                                WorkHistoryList.designation && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.designation} length={"50"} />
+                            }
+                            -
+                            {
+                                WorkHistoryList.company && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />  
+                            }                           
                             </h5>
                             <span className="ml-auto SPWorkYear">
                             <span>
@@ -393,7 +398,9 @@ class WorkHistory extends Component {
                         </div>
                         <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
                         {/*<span className="SPCertificateDesc">{WorkHistoryList.description}</span>*/}
-                        <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.description} length={"50"} />
+                        {
+                            WorkHistoryList.description && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.description} length={"50"} />
+                        } 
                     </div>
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.isOnDeleteModalOpen(e)} />

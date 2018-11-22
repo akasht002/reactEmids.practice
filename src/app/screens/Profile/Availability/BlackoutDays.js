@@ -132,7 +132,9 @@ class BlackoutDays extends Component {
                       )}
                     </div>
                   <div className={"SPBlackoutDesc"}>
-                    <EllipsisText text={remarks} length={"50"} />
+                  {
+                    remarks &&  <EllipsisText text={remarks && remarks} length={"50"} />
+                  }
                   </div>
                 </div>
               </div>
