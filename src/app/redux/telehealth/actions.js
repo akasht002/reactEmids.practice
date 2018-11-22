@@ -76,7 +76,7 @@ const getLinkedParticipantsByPatientsSuccess = data => {
     }
 };
 
-const saveContextData = data => {
+export const saveContextData = data => {
     return {
         type: TeleHealth.saveContextData,
         data: data
@@ -84,12 +84,11 @@ const saveContextData = data => {
 };
 
 export function getLinkedParticipantsByPatients(data) {
-    return (dispatch) => {
-        let searchText = data.searchText === "" ? null : data.searchText;
-        dispatch(saveContextData(data.patientId))
+    return (dispatch, getState) => {
+        let searchText = data ? data : null;
         AsyncGet(API.getParticipantsByContext +
             '/0/' + getUserInfo().serviceProviderId +
-            '/' + data.patientId +
+            '/' + getState().telehealthState.contextId +
             '/S/' + searchText
         ).then((resp) => {
             dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
