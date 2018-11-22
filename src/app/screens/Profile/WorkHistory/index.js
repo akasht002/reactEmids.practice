@@ -374,8 +374,7 @@ class WorkHistory extends Component {
                         <div className="width100 d-flex">
                             <h5 className="SPCertificateHeader">
                             <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.designation} length={"50"} /> -
-                            <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />
-                               
+                            <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />  
                             </h5>
                             <span className="ml-auto SPWorkYear">
                             <span>
