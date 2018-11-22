@@ -17,12 +17,20 @@ export const VisitServiceDetails = {
   updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails',
   getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/visitservicedetails',
   getDaysSuccess: 'getDaysSuccess/visitservicedetails',
-  updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails'
+  updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails',
+  setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
 }
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
     type: VisitServiceDetails.getVisitServiceDetailsSuccess,
+    data
+  }
+}
+
+export const setEntityServiceProviderSuccess = data => {
+  return {
+    type: VisitServiceDetails.setEntityServiceProviderSuccess,
     data
   }
 }
@@ -59,6 +67,10 @@ export function dispatchServiceRequestByServiceProvider(){
   return dispatch => {
   dispatch(push(Path.dashboard))
   }
+}
+
+export function setEntityServiceProvider(data){
+  return dispatch => { dispatch(setEntityServiceProviderSuccess(data)) }
 }
 
 export function updateServiceRequestByServiceProvider(data) {
@@ -106,11 +118,14 @@ export function cancelServiceRequestByServiceProvider(data) {
   }
 }
 
-export function getVisitServiceDetails(data) {
-  return dispatch => {
+export function getVisitServiceDetails(data) {  
+  return (dispatch, getState) => {
+    let currstate = getState();
+    let serviceProviderId = getUserInfo().isEntityServiceProvider ? currstate.visitSelectionState.VisitServiceDetailsState.entityServiceProviderId
+    : getUserInfo().serviceProviderId
     dispatch(getServiceRequestId(data))
     dispatch(startLoading())
-    ServiceRequestGet(API.getServiceRequestDetails +`${data}/${getUserInfo().serviceProviderId}`)
+    ServiceRequestGet(API.getServiceRequestDetails +`${data}/${serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data))
         dispatch(endLoading())
