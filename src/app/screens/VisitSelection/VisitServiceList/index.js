@@ -98,9 +98,9 @@ class VisitServiceList extends Component {
         else if (status === VISIT_SERVICE_STATUS_INVITED) {
             return 'btn btn-invited';
         }
-        // /*else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
-        //     return 'BlockProfileMatching';
-        // }*/
+        else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
+            return 'BlockProfileMatching';
+        }
         else {
             return 'BlockProfileMatching';
         }
@@ -419,8 +419,7 @@ class VisitServiceList extends Component {
                             <div class='BlockProfileDetailsStatus'>
                                 {
                                     <span className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`}>{
-                                        serviceList.serviceRequestStatus === VISIT_SERVICE_STATUS_NOT_HIRED ?
-                                            serviceList.matchPercentage : serviceList.serviceRequestStatus
+                                         serviceList.serviceRequestStatus
                                     }</span>
                                 }
                             </div>
