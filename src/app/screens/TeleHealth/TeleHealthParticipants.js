@@ -15,7 +15,7 @@ export default class TeleHealthParticipants extends Component {
                     <div className="TeleHealthAvatarContainer">
                         <img alt="participant" src={getState().profileState.PersonalDetailState.imageData.image ? getState().profileState.PersonalDetailState.imageData.image : require("../../assets/images/Blank_Profile_icon.png")}
                             className="avatarImage" />
-                        <div className="memberType memT-I">S</div>
+                        <div className="memberType memT-S">S</div>
                     </div>
                     <div className="TeleHealthParticipantNameContainer">
                         <span className="Name">Me</span>
@@ -31,7 +31,7 @@ export default class TeleHealthParticipants extends Component {
                         <div className="TeleHealthAvatarContainer">
                             <img alt="participant" src={participant.thumbNail ? participant.thumbNail : require("../../assets/images/Blank_Profile_icon.png")}
                                 className="avatarImage" />
-                            <div className="memberType memT-I">{participant.participantType}</div>
+                            <div className={"memberType memT-" + (participant.participantType === 'IG' ? 'I' : participant.participantType)}>{participant.participantType === 'IG' ? 'I' : participant.participantType}</div>
                         </div>
                         <div className="TeleHealthParticipantNameContainer">
                             <span className="Name">{participant.firstName + ' ' + participant.lastName}</span>
