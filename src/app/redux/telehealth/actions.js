@@ -97,7 +97,7 @@ export function getLinkedParticipantsByPatients(data) {
     }
 };
 
-export function createVideoConference(data, patientData) {
+export function createVideoConference(data) {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         const personalState = getState().profileState.PersonalDetailState.personalDetail
@@ -106,7 +106,7 @@ export function createVideoConference(data, patientData) {
             createdByType: 'S',
             createdByFirstName : personalState.firstName,
             createdByLastName  : personalState.lastName,
-            context: patientData.userId,
+            context: getState().telehealthState.contextId,
             participantList: [
                 {
                     userId: userInfo.serviceProviderId,
@@ -201,7 +201,7 @@ export function GetParticipantByConferenceId() {
                 }).map((participant) => {
                     return {
                         ...participant,
-                        status: 'Invited'
+                        status: participant.status ? participant.status : 'Invited'
                     }
                 });
                 dispatch(onGetParticipantByConfernceIdSuccess(data));
@@ -216,9 +216,9 @@ export function GetAllParticipants(data) {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         let state = getState();
-        let searchText = data.searchText ? data.searchText : null;
+        let searchText = data ? data : null;
         let roomId = state.telehealthState.roomId ? state.telehealthState.roomId : 0;
-        let contextId = data.contextId ? data.contextId : userInfo.serviceProviderId;
+        let contextId = state.telehealthState.contextId ? state.telehealthState.contextId : 0;
         dispatch(startLoading());
         AsyncGet(API.getAllParticipants
             + userInfo.serviceProviderId + '/S/'

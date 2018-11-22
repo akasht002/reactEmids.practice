@@ -9,7 +9,7 @@ import TeleHealthVideoControls from './TeleHealthVideoControls';
 import TeleHealthParticipants from './TeleHealthParticipants';
 import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
 import {TeleHealthSettings} from '../../constants/config';
-import { leaveVideoConference, getLinkedParticipantsByPatients, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
+import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
 import './styles.css';
 import { Path } from '../../routes';
 import {push} from '../../redux/navigation/actions'
@@ -42,6 +42,7 @@ class TeleHealthWidget extends Component {
     componentDidMount() {
         if (this.props.roomId) {
             this.joinRoom();
+            this.props.getParticipantByConferenceId()
         } else {
             this.props.goToDashBoard()
         }
@@ -210,7 +211,7 @@ class TeleHealthWidget extends Component {
         this.setState({
             AddParticipants: true
         });
-        this.props.getLinkedParticipantsByPatients()
+        this.props.getAllParticipants()
     };
 
     closeInviteParticipants = () => {
@@ -343,7 +344,7 @@ class TeleHealthWidget extends Component {
                         participantList={this.props.conferenceParticipants}
                         AddParticipants={this.state.AddParticipants}
                         ToggleAddParticipantsListView={this.closeInviteParticipants}
-                        getAllParticipants={this.props.getLinkedParticipantsByPatients}
+                        getAllParticipants={this.props.getAllParticipants}
                         addParticipantsToConference={this.props.addParticipantsToConference}
                     />
                 </div>
@@ -396,7 +397,7 @@ class TeleHealthWidget extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         leaveVideoConference: (checkRoute) => dispatch(leaveVideoConference(checkRoute)),
-        getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
+        getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
         endConference: () => dispatch(endConference()),
         getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId()),

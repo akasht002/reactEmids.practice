@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import ParticipantListModal from './Modals/ParticipantListModal';
 import ParticipantList from './ParticipantList';
 import {
-    getLinkedParticipantsByPatients,
     clearLinkedParticipants,
     createVideoConference,
     getLinkedPatients,
-    saveContextData
+    saveContextData,
+    GetAllParticipants
 } from '../../redux/telehealth/actions';
 import SelectPatient from './SelectPatient';
 import {USERTYPES} from '../../constants/constants';
@@ -58,13 +58,13 @@ class ParticipantsContainer extends Component {
     };
 
     onCreateConversation = () => {
-        this.props.createVideoConference(this.state.selectedParticipants, this.state.selectedPatientDetails);
+        this.props.createVideoConference(this.state.selectedParticipants);
     };
 
     onSearchTextChange = (e) => {
         this.setState({ searchText: e.target.value });
         if (this.state.selectedPatientDetails && this.state.selectedPatientDetails.userId) {
-            this.props.getLinkedParticipantsByPatients(e.target.value);
+            this.props.getAllParticipants(e.target.value);
         }
     };
 
@@ -79,7 +79,7 @@ class ParticipantsContainer extends Component {
             };
             this.props.saveContextData(patientId);
             this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
-            this.props.getLinkedParticipantsByPatients(this.state.searchText);
+            this.props.getAllParticipants(this.state.searchText);
         }
     };
 
@@ -116,9 +116,9 @@ class ParticipantsContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
+        getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
-        createVideoConference: (data, patientData) => dispatch(createVideoConference(data, patientData)),
+        createVideoConference: (data) => dispatch(createVideoConference(data)),
         getLinkedPatients: () => dispatch(getLinkedPatients()),
         saveContextData: (data) => dispatch(saveContextData(data))
     }

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import ParticipantList from './ParticipantList';
 import './styles.css';
-import { USERTYPES  } from '../../constants/constants';
-const images = require.context('../../assets', true);
-const imagePath = (name) => images(name, true);
 
 
 export default class TeleHealthInviteParticipants extends Component {
@@ -42,11 +39,7 @@ export default class TeleHealthInviteParticipants extends Component {
 
     onSearchTextChange = (e) => {
         this.setState({ searchText: e.target.value });
-        let data = {
-            searchText: e.target.value,
-            patientId: this.props.contextId
-        };
-        this.props.getAllParticipants(data);
+        this.props.getAllParticipants(e.target.value);
     };
 
     AddParticipantsToConference = () => {
