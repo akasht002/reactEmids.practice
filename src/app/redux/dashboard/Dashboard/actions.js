@@ -15,7 +15,7 @@ import {
   PAGE_NO,
   PAGE_SIZE,
   MSG_TYPE,
-  DEFAULT_SERVICE_STATUS,
+  DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD,
 } from '../../constants/constants'
 import { DashboardConversationPagination, USERTYPES } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http'
@@ -43,11 +43,12 @@ export const getServiceStatusSuccess = data => {
   }
 }
 
-export function getServiceStatusDetail () {
+export function getServiceStatusDetail () { 
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestStatus)
       .then(resp => {
+        console.log(resp.data)
         dispatch(getServiceStatusSuccess(resp.data.slice(0, 5)))
         dispatch(endLoading())
       })
@@ -139,7 +140,7 @@ export const getPatientServiceRequestDetailSuccess = data => {
 }
 
 export function getPatientServiceRequestDetail (data) {
-  let id = data || DEFAULT_SERVICE_STATUS
+  let id = data || DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestGet(

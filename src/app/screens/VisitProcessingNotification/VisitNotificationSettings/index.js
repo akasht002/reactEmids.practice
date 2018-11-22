@@ -100,7 +100,6 @@ function mapDispatchToProps(dispatch) {
         updateVisitNotificationSettings: (data) => dispatch(updateVisitNotificationSettings(data)),
         handlePushChange: (data) => dispatch(handlePushChange(data)),
         handleEmailChange: (data) => dispatch(handleEmailChange(data))
-
     }
 };
 
@@ -108,7 +107,7 @@ function mapStateToProps(state) {
     return {
         pushNotification: state.visitNotificationState.VisitNotificationSettingsState.pushNotification,
         emailNotification: state.visitNotificationState.VisitNotificationSettingsState.emailNotification,
-        userId: state.authState.userState.userData.userInfo.userId
+        userId: state.authState.userState.userData.userInfo.serviceProviderId
     };
 };
 

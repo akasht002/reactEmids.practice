@@ -18,6 +18,7 @@ import {
 } from '../../redux/visitSelection/VisitServiceDetails/actions'
 import { Path } from '../../routes';
 import { push } from '../../redux/navigation/actions'
+import { setPatient } from "../../redux/patientProfile/actions";
 
 import { getLength } from '../../utils/validations'
 
@@ -28,9 +29,10 @@ class ServiceRequest extends React.Component {
       showMore: true,
       min:0,
       max:2,
-      selectedValue: { label: 'Hired', value: '38' }
+      selectedValue: { label: 'All', value: '0' }
     }
     this.toggleName = 'Show more'
+    this.phoneNumber = ''
   }
 
   componentDidMount() {
@@ -59,11 +61,13 @@ class ServiceRequest extends React.Component {
     })
     this.props.getPatientServiceRequestDetail(e.id)
   }
+
   handleClick = requestId => {
     this.props.getServiceRequestId(requestId)
     this.props.goToServiceRequestDetailsPage();
   }
 
+ 
   menuRenderer = (params) => {
     const menu = Select.defaultProps.menuRenderer(params)
 
@@ -80,6 +84,8 @@ class ServiceRequest extends React.Component {
     )
   }
 
+  
+
   render() {
     const serviceStatusLookUp = this.props.serviceStatusLookUp.map(
       (data, i) => {
@@ -87,8 +93,7 @@ class ServiceRequest extends React.Component {
         data.value = data.id
         return data
       }
-    )
-
+    )   
     let serviceRequest = this.props.patientServiceRequest
     let serviceRequestItem = ''
     serviceRequestItem = getLength(serviceRequest) > 0
@@ -97,6 +102,11 @@ class ServiceRequest extends React.Component {
         handleClick={requestId => this.handleClick(requestId)}
         minVal={this.state.min}
         maxVal={this.state.max}
+        goToPatientProfile={data => {
+          console.log(data)
+          this.props.setPatient(data);
+          this.props.goToPatientProfile();
+        }}   
       />
       : <ServiceRequestDefault />
     return (
@@ -161,6 +171,7 @@ class ServiceRequest extends React.Component {
             </li>
           </ul>
         }
+       
       </div>
     )
   }
@@ -172,7 +183,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(getPatientServiceRequestDetail(data)),
     getServiceStatusDetail: () => dispatch(getServiceStatusDetail()),    
     getServiceRequestId: data => dispatch(getServiceRequestId(data)),
-    goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails))
+    goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
+    goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+    setPatient: data => dispatch(setPatient(data)),
   }
 }
 

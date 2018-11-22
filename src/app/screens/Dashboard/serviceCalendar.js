@@ -12,7 +12,7 @@ import {
   getEntityServiceProviderList,
   updateEntityServiceVisit
 } from "../../redux/dashboard/Dashboard/actions";
-import { getServiceRequestId } from "../../redux/visitSelection/VisitServiceDetails/actions";
+import { getServiceRequestId,setEntityServiceProvider } from "../../redux/visitSelection/VisitServiceDetails/actions";
 import { ServiceCalendarDefault, ShowIndicator } from "./ServiceInfo";
 import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
@@ -21,7 +21,7 @@ import { push } from "../../redux/navigation/actions";
 import { USERTYPES } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference } from "../../redux/telehealth/actions";
-
+import {  ModalPopup } from '../../components'
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -44,7 +44,9 @@ class serviceCalendar extends React.Component {
       },
       showMore: false,
       verticalScroll: true,
-      width: window.innerWidth
+      width: window.innerWidth,
+      isAlertModalOpen : false,
+      phoneNumber:''
     };
     this.data = "";
   }
@@ -70,10 +72,10 @@ class serviceCalendar extends React.Component {
           serviceProviderId: this.state.selectedServiceProviderId
         }
       ]
-    };
+    };   
     this.props.updateEntityServiceVisit(model);
     this.initialCall()
-    this.props.getServiceProviderVists(moment(this.state.startDate).format("YYYY-MM-DD"));
+    this.props.getServiceProviderVists(moment(this.data.visitDate).format("YYYY-MM-DD"));
   };
 
   MonthChange = e => {
@@ -90,10 +92,10 @@ class serviceCalendar extends React.Component {
   clickNextWeek = () => {
     let updatedDay = "";
     if (this.state.width > "1280") {
-      updatedDay = moment(this.state.startDate).add(5, "days");
+      updatedDay = moment(this.state.startDate).add(7, "days");
       this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     } else {
-      updatedDay = moment(this.state.startDate).add(7, "days");
+      updatedDay = moment(this.state.startDate).add(5, "days");
       this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     }
     this.setState({
@@ -111,10 +113,10 @@ class serviceCalendar extends React.Component {
   clickPrevWeek = () => {
     let updatedDay = "";
     if (this.state.width > "1280") {
-      updatedDay = moment(this.state.startDate).subtract(5, "days");
+      updatedDay = moment(this.state.startDate).subtract(7, "days");
       this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     } else {
-      updatedDay = moment(this.state.startDate).subtract(7, "days");
+      updatedDay = moment(this.state.startDate).subtract(5, "days");
       this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     }
     this.setState({
@@ -180,6 +182,16 @@ class serviceCalendar extends React.Component {
     this.props.getServiceVisitCount(date_range)
   }
 
+  handlePhoneNumber = data =>{
+    this.setState({isAlertModalOpen:!this.state.isAlertModalOpen,
+                  phoneNumber:data.phoneNumber})
+  }
+
+  reset = () => {
+    this.setState({isAlertModalOpen:!this.state.isAlertModalOpen})
+  }
+
+
   componentDidMount() {
     let utc = new Date()
       .toJSON()
@@ -229,7 +241,8 @@ class serviceCalendar extends React.Component {
   };
 
   handleClick = requestId => {
-    this.props.getServiceRequestId(requestId);
+    this.props.getServiceRequestId(requestId.serviceRequestId);
+    getUserInfo().isEntityServiceProvider && this.props.setEntityServiceProvider(requestId.serviceProviderId)
     this.props.goToServiceRequestDetailsPage();
   };
 
@@ -405,7 +418,8 @@ class serviceCalendar extends React.Component {
         goToPatientProfile={data => {
           this.props.setPatient(data);
           this.props.goToPatientProfile();
-        }}
+        }}        
+        handlePhoneNumber={this.handlePhoneNumber}
       />
     );
 
@@ -509,6 +523,29 @@ class serviceCalendar extends React.Component {
           onClick={this.onSubmit}
           disabled={this.state.disabledSaveBtn}
         />
+         <ModalPopup
+          isOpen={this.state.isAlertModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Phone Number : {this.state.phoneNumber}</span>}
+          btn1='OK'
+          className='modal-sm'
+          headerFooter='d-none'
+          centered='centered'
+          onConfirm={() =>{
+            this.setState({
+              isAlertModalOpen: false,
+              phoneNumber:''
+            })
+          }
+           }
+          onCancel={() =>{
+            this.setState({
+              isAlertModalOpen: false,
+              phoneNumber:''
+            })
+          }
+           }
+        />
       </div>
     );
   }
@@ -527,7 +564,8 @@ function mapDispatchToProps(dispatch) {
     createNewConversation: data => dispatch(onCreateNewConversation(data)),
     createVideoConference: data => dispatch(createVideoConference(data)),
     goToServiceRequestDetailsPage: () =>
-      dispatch(push(Path.visitServiceDetails))
+      dispatch(push(Path.visitServiceDetails)),
+    setEntityServiceProvider:data =>dispatch(setEntityServiceProvider(data))
   };
 }
 

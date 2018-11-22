@@ -8,7 +8,8 @@ const defaultState = {
     ServiceRequestId: '',
     VisitServiceElibilityStatus: '',
     daysType:[],
-    updateServiceRequestMsgStatus : 0
+    updateServiceRequestMsgStatus : 0,
+    entityServiceProviderId: 0
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -19,6 +20,12 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 ...state,
                 VisitServiceDetails: action.data
             };
+            
+        case VisitServiceDetails.setEntityServiceProviderSuccess:
+        return {
+            ...state,
+            entityServiceProviderId: action.data
+        };    
 
         case VisitServiceDetails.updateServiceRequestByServiceProviderSuccess:
         return {

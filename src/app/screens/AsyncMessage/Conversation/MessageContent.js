@@ -3,6 +3,7 @@ import TimeAgo from 'timeago-react';
 import autosize from "autosize";
 import { connect } from 'react-redux';
 import moment from 'moment';
+import Dropzone from 'react-dropzone';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import {
     goToConversationSummary,
@@ -44,15 +45,14 @@ class MessageContent extends Component {
         this.props.onRef(undefined);
     };
 
-    onSelectImage = (e) => {
+    onSelectImage = (file) => {
         this.props.onImageUpload();
         this.setState({
             uploadedImageFile: '',
             imgBinary: '',
             imgName: '',
         });
-        let picture = e.target.files[0];
-        e.target.value = null;
+        let picture = file[0];
         if (picture.size <= 2097152 && (picture.type === ImageFormats.JPG ||
             picture.type === ImageFormats.PNG ||
             picture.type === ImageFormats.JPEG ||
@@ -256,13 +256,12 @@ class MessageContent extends Component {
                                         <tr>
                                             <td className="addAttachmentWidget">
                                                 <div title=" " className="upload-btn-wrapper">
-                                                    <button className="addAttachmentBtn">
-                                                    </button>
-                                                    <input
-                                                        disabled={!this.props.conversation.isActive || this.props.messageText.trim().length > 0}
-                                                        type="file"
-                                                        accept="image/x-png,image/gif,image/jpeg,image/jpg"
-                                                        onChange={this.onSelectImage} />
+                                                    <Dropzone
+                                                    disabled={!this.props.conversation.isActive || this.props.messageText.trim().length > 0}
+                                                    onDrop={(files) => this.onSelectImage(files)}>
+                                                            <button className="addAttachmentBtn">
+                                                        </button>
+                                                    </Dropzone>
                                                 </div>
                                             </td>
                                             <td className="messageTypeWidget">

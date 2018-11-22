@@ -68,3 +68,9 @@ div.Select--single > .Select-control .Select-value, div.Select-placeholder, span
     display: block;
 }
 }
+
+/*UI_fixes_for_placeholder*/
+.LanguagesModal .Select-control .Select-placeholder
+{
+padding-left:20px;
+}
