@@ -208,10 +208,17 @@ class TeleHealthWidget extends Component {
 
     DisplayInviteParticipantsList = () => {
         this.setState({
-            AddParticipants: !this.state.AddParticipants
+            AddParticipants: true
+        });
+        this.props.getLinkedParticipantsByPatients()
+    };
+
+    closeInviteParticipants = () => {
+        this.setState({
+            AddParticipants: false
         });
         this.props.getParticipantByConferenceId();
-    };
+    }
 
     ToggleFullScreen() {
         this.setState({
@@ -335,10 +342,9 @@ class TeleHealthWidget extends Component {
                     <TeleHealthInviteParticipants
                         participantList={this.props.conferenceParticipants}
                         AddParticipants={this.state.AddParticipants}
-                        ToggleAddParticipantsListView={this.DisplayInviteParticipantsList}
+                        ToggleAddParticipantsListView={this.closeInviteParticipants}
                         getAllParticipants={this.props.getLinkedParticipantsByPatients}
                         addParticipantsToConference={this.props.addParticipantsToConference}
-                        contextId={this.props.contextId}
                     />
                 </div>
                 <ModalPopup

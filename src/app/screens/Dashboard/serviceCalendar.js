@@ -12,7 +12,7 @@ import {
   getEntityServiceProviderList,
   updateEntityServiceVisit
 } from "../../redux/dashboard/Dashboard/actions";
-import { getServiceRequestId } from "../../redux/visitSelection/VisitServiceDetails/actions";
+import { getServiceRequestId,setEntityServiceProvider } from "../../redux/visitSelection/VisitServiceDetails/actions";
 import { ServiceCalendarDefault, ShowIndicator } from "./ServiceInfo";
 import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
@@ -241,7 +241,8 @@ class serviceCalendar extends React.Component {
   };
 
   handleClick = requestId => {
-    this.props.getServiceRequestId(requestId);
+    this.props.getServiceRequestId(requestId.serviceRequestId);
+    getUserInfo().isEntityServiceProvider && this.props.setEntityServiceProvider(requestId.serviceProviderId)
     this.props.goToServiceRequestDetailsPage();
   };
 
@@ -563,7 +564,8 @@ function mapDispatchToProps(dispatch) {
     createNewConversation: data => dispatch(onCreateNewConversation(data)),
     createVideoConference: data => dispatch(createVideoConference(data)),
     goToServiceRequestDetailsPage: () =>
-      dispatch(push(Path.visitServiceDetails))
+      dispatch(push(Path.visitServiceDetails)),
+    setEntityServiceProvider:data =>dispatch(setEntityServiceProvider(data))
   };
 }
 

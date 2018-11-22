@@ -14,14 +14,6 @@ export default class TeleHealthInviteParticipants extends Component {
         selectedPatientDetails: {}
     };
 
-    componentDidMount() {
-        let data = {
-            searchText: '',
-            patientId: this.props.contextId
-        };
-        this.props.getAllParticipants(data)
-    }
-
     onClearParticipantContainer = () => {
         this.setState({ selectedParticipants: [], title: '', searchText: '', selectedPatientDetails: {} });
         this.props.clearLinkedParticipants();
@@ -56,22 +48,6 @@ export default class TeleHealthInviteParticipants extends Component {
         };
         this.props.getAllParticipants(data);
     };
-
-    onSelectPatient = (patientId) => {
-        let patientData = {
-            userId: patientId,
-            participantType: USERTYPES.PATIENT
-        };
-        this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
-        let data = {
-            userId: this.props.loggedInUser.userId,
-            participantType: this.props.loggedInUser.userType,
-            searchText: this.state.searchText,
-            patientId: patientId ? patientId : 0,
-        };
-        this.props.getLinkedParticipantsByPatients(data);
-    };
-
 
     AddParticipantsToConference = () => {
         this.props.addParticipantsToConference(this.state.selectedParticipants);

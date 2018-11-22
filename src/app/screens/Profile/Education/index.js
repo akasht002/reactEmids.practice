@@ -6,7 +6,7 @@ import {formateYearDate} from "../../../utils/validations";
 import {compare} from "../../../utils/comparerUtility";
 import { getEducation, addEducation, editEducation, updateEducation, deleteEducation } from '../../../redux/profile/Education/actions';
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
-
+import EllipsisText from "react-ellipsis-text";
 import "./styles.css";
 class Education extends React.Component {
     constructor(props) {
@@ -280,10 +280,11 @@ class Education extends React.Component {
                 <li className='SPEducationItems' key={EducationList.educationId}>
                     <div className='SPCertificateContent'>
                     <div className={'width100 d-flex'}>
-                    <h5 className={'SPCertificateHeader'}>{EducationList.school}</h5>
+                    <EllipsisText className='SPCertificateHeader' text={EducationList.school} length={"50"} />
                     <span className={'ml-auto SPWorkYear'}>{EducationList.startYear} - {EducationList.endYear}</span>
                     </div>
-                    <span className={'SPEducationDesc'}>{EducationList.degree} {EducationList.fieldOfStudy}</span>
+                    <span className={'SPEducationDesc'}><EllipsisText className='SPCertificateDesc' text={EducationList.degree} length={"50"} />
+                        <EllipsisText className='SPCertificateDesc' text={EducationList.fieldOfStudy} length={"50"} /></span>
                     </div>
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={EducationList.educationId}
                         onClick={(e) => this.showModalOnDelete(e)} />

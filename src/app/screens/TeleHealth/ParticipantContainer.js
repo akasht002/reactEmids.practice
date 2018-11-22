@@ -7,11 +7,11 @@ import {
     getLinkedParticipantsByPatients,
     clearLinkedParticipants,
     createVideoConference,
-    getLinkedPatients
+    getLinkedPatients,
+    saveContextData
 } from '../../redux/telehealth/actions';
 import SelectPatient from './SelectPatient';
 import {USERTYPES} from '../../constants/constants';
-import {getUserInfo} from '../../services/http'
 import './styles.css';
 
 class ParticipantsContainer extends Component {
@@ -64,35 +64,22 @@ class ParticipantsContainer extends Component {
     onSearchTextChange = (e) => {
         this.setState({ searchText: e.target.value });
         if (this.state.selectedPatientDetails && this.state.selectedPatientDetails.userId) {
-            let data = {
-                searchText: e.target.value,
-                patientId: this.state.selectedPatientDetails.userId,
-                conversationId: 0,
-                userId: 0,
-                participantType: USERTYPES.SERVICE_PROVIDER
-            };
-            this.props.getLinkedParticipantsByPatients(data);
+            this.props.getLinkedParticipantsByPatients(e.target.value);
         }
     };
 
     onSelectPatient = (patientId) => {
         if (patientId === null){
+            this.props.saveContextData(0);
             this.props.clearLinkedParticipants();
         } else {
             let patientData = {
                 userId: patientId,
                 participantType: USERTYPES.PATIENT
             };
-            let userId = getUserInfo().serviceProviderId;
+            this.props.saveContextData(patientId);
             this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
-            let data = {
-                userId: patientId,
-                participantType: USERTYPES.PATIENT,
-                searchText: this.state.searchText,
-                patientId: patientId ? patientId : 0,
-                conversationId: 0
-            };
-            this.props.getLinkedParticipantsByPatients(data);
+            this.props.getLinkedParticipantsByPatients(this.state.searchText);
         }
     };
 
@@ -132,7 +119,8 @@ function mapDispatchToProps(dispatch) {
         getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
         createVideoConference: (data, patientData) => dispatch(createVideoConference(data, patientData)),
-        getLinkedPatients: () => dispatch(getLinkedPatients())
+        getLinkedPatients: () => dispatch(getLinkedPatients()),
+        saveContextData: (data) => dispatch(saveContextData(data))
     }
 };
 
