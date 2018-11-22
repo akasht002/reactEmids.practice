@@ -98,9 +98,9 @@ class VisitServiceList extends Component {
         else if (status === VISIT_SERVICE_STATUS_INVITED) {
             return 'btn btn-invited';
         }
-        /*else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
-            return 'BlockProfileMatching';
-        }*/
+        // /*else if (status === VISIT_SERVICE_STATUS_NOT_HIRED) {
+        //     return 'BlockProfileMatching';
+        // }*/
         else {
             return 'BlockProfileMatching';
         }
@@ -155,13 +155,14 @@ class VisitServiceList extends Component {
             ServiceAreas: this.state.ServiceAreas,
             serviceProviderId: serviceProviderId,
             FromPage: 0,
-            ToPage: 9,
+            ToPage: 15,
         };
         this.props.getFilter(data)
         this.props.getFilterDataCount(data)
         this.setState({
             filterOpen: !this.state.filterOpen
         })
+        this.props.formDirtyVisitList()
 
     }
 
@@ -183,11 +184,12 @@ class VisitServiceList extends Component {
             ServiceAreas: this.state.ServiceAreas,
             serviceProviderId: serviceProviderId,
             FromPage: number,
-            ToPage: 9,
+            ToPage: 15,
         };
         this.props.getFilter(data)
         this.props.getFilterDataCount(data)
         this.setState({ activePage: pageNumber });
+        this.props.formDirtyVisitList()
     };
 
     applyReset = () => {
@@ -209,6 +211,7 @@ class VisitServiceList extends Component {
         }
         this.props.getVisitServiceList(data);
         this.props.formDirty()
+        //this.props.formDirtyVisitList()
     }
 
     handleChangeServiceCategory = (selectedOption) => {
@@ -322,10 +325,10 @@ class VisitServiceList extends Component {
         let selectedElement = e.target.innerHTML.replace(/ /g, '');
         this.setStatusSort(selectedElement)
         var data = {
-            sortByOrder: this.Newest ? "ASC" : "DESC",
+            sortByOrder: this.Newest ? "DESC" : "ASC",
             sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "VISITDATE",
             pageNumber: 1,
-            PageSize: 9
+            PageSize: 15
         }
         this.props.getSort(data);
         let element = document.getElementsByClassName("dropdown-menu")[1];
@@ -344,9 +347,9 @@ class VisitServiceList extends Component {
         this.setState({ pageNumber: pageNumber });
         let data = {
             sortByOrder: this.Newest ? "ASC" : "DESC",
-            sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "VISITDATE",
+            sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "MODIFIEDDATE",
             pageNumber: pageNumber,
-            PageSize: 9
+            PageSize: 15
         }
         this.props.getSort(data);
         this.setState({ activePage: pageNumber });
@@ -457,7 +460,6 @@ class VisitServiceList extends Component {
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
                                 totalItemsCount={this.props.serviceRequestCount}
-                                pageRangeDisplayed={5}
                                 onChange={this.handlePageChange}
                                 itemClass="PaginationItem"
                                 itemClassFirst="PaginationIcon First"
@@ -471,9 +473,8 @@ class VisitServiceList extends Component {
                         <div class="col-md-12 p-0 AsyncConversationPagination">
                             <Pagination
                                 activePage={this.state.activePage}
-                                itemsCountPerPage={10}
+                                itemsCountPerPage={this.state.pageSize}
                                 totalItemsCount={this.props.visitServiceList[0].dataCount}
-                                pageRangeDisplayed={5}
                                 onChange={this.handleSortPageChange}
                                 itemClass="PaginationItem"
                                 itemClassFirst="PaginationIcon First"
@@ -487,9 +488,8 @@ class VisitServiceList extends Component {
                         <div class="col-md-12 p-0 AsyncConversationPagination">
                             <Pagination
                                 activePage={this.state.activePage}
-                                itemsCountPerPage={10}
+                                itemsCountPerPage={this.state.pageSize}
                                 totalItemsCount={this.props.FilterDataCount}
-                                pageRangeDisplayed={5}
                                 onChange={this.handleSortFilterChange}
                                 itemClass="PaginationItem"
                                 itemClassFirst="PaginationIcon First"

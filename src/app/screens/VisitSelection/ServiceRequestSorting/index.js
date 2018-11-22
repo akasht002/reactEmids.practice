@@ -21,12 +21,12 @@ function Sorting (props) {
           >
             Posted Date
           </div>
-          <div
+          {/* <div
             className={props.VisitDate ? 'dropdown-item SortItem active' :'dropdown-item SortItem'}
             onClick={(e) => props.onSortChange(e,false, null)}
           >
             Visit Date
-          </div>
+          </div> */}
           <hr />
           <div
             className={props.Newest ? 'dropdown-item SortItem active' :'dropdown-item SortItem'}
