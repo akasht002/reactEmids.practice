@@ -235,8 +235,12 @@ class Certification extends Component {
                 <li className='SPSCertificateItems' key={certificateList.certificationId}>
                     <div className='SPCertificateContent'>
                          {/*<h5 className='SPCertificateHeader'>{certificateList.certificationName}</h5> to do check this*/} 
-                        <EllipsisText className='SPCertificateDesc' text={certificateList.certificationName} length={"50"} />
-                        <EllipsisText className='SPCertificateDesc' text={certificateList.authority} length={"50"} />
+                         {
+                            certificateList.certificationName &&  <EllipsisText className='SPCertificateDesc' text={certificateList.certificationName} length={"50"} />
+                         }
+                        {
+                            certificateList.authority && <EllipsisText className='SPCertificateDesc' text={certificateList.authority} length={"50"} />
+                        }
                         {/*<span className='SPCertificateDesc'>{certificateList.authority}</span> to do check this*/}
                     </div>
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={certificateList.certificationId}

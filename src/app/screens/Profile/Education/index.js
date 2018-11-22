@@ -280,11 +280,19 @@ class Education extends React.Component {
                 <li className='SPEducationItems' key={EducationList.educationId}>
                     <div className='SPCertificateContent'>
                     <div className={'width100 d-flex'}>
-                    <EllipsisText className='SPCertificateHeader' text={EducationList.school} length={"50"} />
+                    {
+                        EducationList.school && <EllipsisText className='SPCertificateHeader' text={EducationList.school} length={"50"} />
+                    }
+                    
                     <span className={'ml-auto SPWorkYear'}>{EducationList.startYear} - {EducationList.endYear}</span>
                     </div>
-                    <span className={'SPEducationDesc'}><EllipsisText className='SPCertificateDesc' text={EducationList.degree} length={"50"} />
-                        <EllipsisText className='SPCertificateDesc' text={EducationList.fieldOfStudy} length={"50"} /></span>
+                    <span className={'SPEducationDesc'}>{
+                        EducationList.degree && <EllipsisText className='SPCertificateDesc' text={EducationList.degree} length={"50"} />
+                    }
+                    {
+                        EducationList.fieldOfStudy && <EllipsisText className='SPCertificateDesc' text={EducationList.fieldOfStudy} length={"50"} />
+                    }
+                    </span>
                     </div>
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={EducationList.educationId}
                         onClick={(e) => this.showModalOnDelete(e)} />
