@@ -11,7 +11,7 @@ class ParticipantsList extends Component {
             return this.props.participantList.map((participantData, index) => {
                 if (this.props.selectedParticipants.length > 0) {
                     let isChecked = "";
-                    this.props.selectedParticipants.map((selectedParticipant, index) => {
+                    this.props.selectedParticipants.map((selectedParticipant) => {
                         if (selectedParticipant.userId === participantData.userId && selectedParticipant.participantType === participantData.participantType) {
                             return isChecked = "checked";
                         }
