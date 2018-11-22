@@ -126,8 +126,8 @@ class VisitFilter extends Component {
               alt='NO'
               className='ServiceCheckboxImage'
               src={
-                AllPatientForserviceProviders.image
-                  ? AllPatientForserviceProviders.image
+                AllPatientForserviceProviders.imageString
+                  ? AllPatientForserviceProviders.imageString
                   : require('../../../assets/images/Blank_Profile_icon.png')
               }
             />

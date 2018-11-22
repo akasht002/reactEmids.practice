@@ -10,6 +10,7 @@ import { Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
+import { push } from '../../../../redux/navigation/actions'
 import {
     getVisitFeedBack
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
@@ -71,6 +72,11 @@ class Feedback extends Component {
         } else {
             this.setState({ isModalOpen: true })
         }
+    }
+
+    onClickConfirm = () => {
+        this.selectedAnswers = [];
+        this.props.goToSummary();
     }
 
     onSubmit = () => {
@@ -226,7 +232,7 @@ class Feedback extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onConfirm={() => this.onSubmit()}
+                        onConfirm={() => this.onClickConfirm()}
                         onCancel={() => this.setState({
                             isModalOpen: !this.state.isModalOpen,
                         })}
@@ -242,7 +248,8 @@ function mapDispatchToProps(dispatch) {
     return {
         getQuestionsList: () => dispatch(getQuestionsList()),
         saveAnswers: (data) => dispatch(saveAnswers(data)),
-        getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data))
+        getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data)),
+        goToSummary: () => dispatch(push(Path.summary))
     }
 };
 
