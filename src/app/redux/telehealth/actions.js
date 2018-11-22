@@ -337,8 +337,14 @@ export function checkTeleHealth(data) {
                     })
                 }
                 if (teleHealthState.roomId === data.roomID) {
+                    let modifiedParticipants = data.participantList && data.participantList.map((participant) => {
+                        return {
+                            ...participant,
+                            status: 'Invited'
+                        }
+                    });
                     let participants = [
-                        ...data.participantList,
+                        ...modifiedParticipants,
                         ...teleHealthState.participantsByConferenceId
                     ];
                     dispatch(onGetParticipantByConfernceIdSuccess(participants));
