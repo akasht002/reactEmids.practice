@@ -128,6 +128,7 @@ export const serviceCalendar = (
               </div>
                 }
             </div>
+      {/*Patient Profile*/}
             <div className='ProfileCardImageContainer' 
             onClick={() => {
               props.goToPatientProfile(conversations.patientId);

@@ -416,6 +416,8 @@ class serviceCalendar extends React.Component {
         handleClick={requestId => this.handleClick(requestId)}
         onClick={link => this.navigateProfileHeader(link)}
         goToPatientProfile={data => {
+          console.log(11111111111111111111111111)
+          console.log(data)
           this.props.setPatient(data);
           this.props.goToPatientProfile();
         }}   
