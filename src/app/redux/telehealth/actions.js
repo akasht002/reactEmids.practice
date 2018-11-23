@@ -201,7 +201,6 @@ export function GetParticipantByConferenceId() {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         let state = getState();
-        dispatch(startLoading());
         AsyncGet(API.getParticipantByConferenceId
             + userInfo.serviceProviderId + '/S/'
             + state.telehealthState.roomId).then((resp) => {
@@ -214,9 +213,7 @@ export function GetParticipantByConferenceId() {
                     }
                 });
                 dispatch(onGetParticipantByConfernceIdSuccess(data));
-                dispatch(endLoading());
             }).catch((err) => {
-                dispatch(endLoading());
             })
     }
 };
@@ -228,16 +225,13 @@ export function GetAllParticipants(data) {
         let searchText = data ? data : null;
         let roomId = state.telehealthState.roomId ? state.telehealthState.roomId : 0;
         let contextId = state.telehealthState.contextId ? state.telehealthState.contextId : 0;
-        dispatch(startLoading());
         AsyncGet(API.getAllParticipants
             + userInfo.serviceProviderId + '/S/'
             + contextId + '/'
             + roomId + '/'
             + searchText).then((resp) => {
                 dispatch(onGetAllParticipantsSuccess(resp.data));
-                dispatch(endLoading());
             }).catch((err) => {
-                dispatch(endLoading());
             })
     };
 };
@@ -355,6 +349,33 @@ export function checkTeleHealth(data) {
                     })
                 }
                 if (teleHealthState.roomId === data.roomID) {
+                    //let participantFound = false;
+                    // let existingParticipants = teleHealthState.participantsByConferenceId.map((existingParticipant) => {
+                    //     data.participantList && data.participantList.map((participant) => {
+                    //         if(existingParticipant.userId === participant.userId && 
+                    //         existingParticipant.userType === participant.userType &&
+                    //         (existingParticipant.status === 'Rejected' ||
+                    //         existingParticipant.status === 'Left')) {
+                    //             participantFound = true;
+                    //         }
+                    //     });
+                    //     if (participantFound) {
+                    //         participantFound = false;
+                    //         return {
+                    //             ...existingParticipant,
+                    //             status: 'Invited'
+                    //         }
+                    //     } else {
+                    //         return {
+                    //             ...existingParticipant
+                    //         }
+                    //     }
+                    // });
+                    // data.participantList.filter(() => {
+                    //     return {
+
+                    //     }
+                    // });
                     let modifiedParticipants = data.participantList && data.participantList.map((participant) => {
                         return {
                             ...participant,
