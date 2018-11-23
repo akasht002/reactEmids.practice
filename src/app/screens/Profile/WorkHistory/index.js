@@ -343,7 +343,7 @@ class WorkHistory extends Component {
                     </div>}
                 </div>
                 {
-                    isShowWorkHistory ? <div className="col-md-12 mb-3">
+                    <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
                             <input className="form-check-input" type="checkbox" checked={this.state.currentlyWorking} id="defaultCheck1"
@@ -355,7 +355,7 @@ class WorkHistory extends Component {
                             <span className="CheckboxIcon" />
                         </label>
                     </div>
-                  </div> : ''
+                  </div> 
                 }
                 
                 <div className="col-md-12">
