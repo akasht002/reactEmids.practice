@@ -405,7 +405,10 @@ export function checkTeleHealth(data) {
                 }
             }  else if (data.messageType === 'Ended') {
                 if (teleHealthState.roomId === data.roomID) {
-                    dispatch(leaveVideoConference())
+                    dispatch(clearInvitaion())
+                    if (teleHealthState.token) {
+                        dispatch(leaveVideoConference())
+                    }
                 }
             }
         }
