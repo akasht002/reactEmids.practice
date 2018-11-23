@@ -9,10 +9,11 @@ import TeleHealthVideoControls from './TeleHealthVideoControls';
 import TeleHealthParticipants from './TeleHealthParticipants';
 import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
 import {TeleHealthSettings} from '../../constants/config';
-import { leaveVideoConference, getLinkedParticipantsByPatients, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
+import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
 import './styles.css';
 import { Path } from '../../routes';
 import {push} from '../../redux/navigation/actions'
+import {setMenuClicked} from '../../redux/auth/user/actions';
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -39,9 +40,14 @@ class TeleHealthWidget extends Component {
         this.inactiveSession = null;
     }
 
+    componentWillMount() {
+        this.props.setMenuClicked(null)
+    }
+
     componentDidMount() {
         if (this.props.roomId) {
             this.joinRoom();
+            this.props.getParticipantByConferenceId()
         } else {
             this.props.goToDashBoard()
         }
@@ -208,10 +214,17 @@ class TeleHealthWidget extends Component {
 
     DisplayInviteParticipantsList = () => {
         this.setState({
-            AddParticipants: !this.state.AddParticipants
+            AddParticipants: true
+        });
+        this.props.getAllParticipants()
+    };
+
+    closeInviteParticipants = () => {
+        this.setState({
+            AddParticipants: false
         });
         this.props.getParticipantByConferenceId();
-    };
+    }
 
     ToggleFullScreen() {
         this.setState({
@@ -335,27 +348,27 @@ class TeleHealthWidget extends Component {
                     <TeleHealthInviteParticipants
                         participantList={this.props.conferenceParticipants}
                         AddParticipants={this.state.AddParticipants}
-                        ToggleAddParticipantsListView={this.DisplayInviteParticipantsList}
-                        getAllParticipants={this.props.getLinkedParticipantsByPatients}
+                        ToggleAddParticipantsListView={this.closeInviteParticipants}
+                        getAllParticipants={this.props.getAllParticipants}
                         addParticipantsToConference={this.props.addParticipantsToConference}
-                        contextId={this.props.contextId}
                     />
                 </div>
                 <ModalPopup
                     className="modal-sm"
                     headerFooter="d-none"
                     centered={true}
-                    isOpen={this.state.showLeaveConfModal}
+                    isOpen={this.state.showLeaveConfModal || this.props.menuClicked}
                     btn1="Continue"
                     btn2="Leave"
                     onConfirm={() => {
                         this.setState({
-                            showLeaveConfModal: !this.state.showLeaveConfModal,
+                            showLeaveConfModal: false,
                         })
+                        this.props.setMenuClicked(null)
                     }}
                     onCancel={() => {
                         this.setState({
-                            showLeaveConfModal: !this.state.showLeaveConfModal,
+                            showLeaveConfModal: false,
                         })
                         this.leaveRoom()
                     }}
@@ -390,11 +403,12 @@ class TeleHealthWidget extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         leaveVideoConference: (checkRoute) => dispatch(leaveVideoConference(checkRoute)),
-        getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
+        getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
         endConference: () => dispatch(endConference()),
         getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId()),
-        goToDashBoard: () => dispatch(push(Path.dashboard))
+        goToDashBoard: () => dispatch(push(Path.dashboard)),
+        setMenuClicked: (data) => dispatch(setMenuClicked(data))
     }
 };
 
@@ -403,7 +417,8 @@ function mapStateToProps(state) {
         existingParticipantList: state.telehealthState.participantsByConferenceId,
         conferenceParticipants: state.telehealthState.linkedParticipants,
         initiator: state.telehealthState.initiator,
-        contextId: state.telehealthState.contextId
+        contextId: state.telehealthState.contextId,
+        menuClicked: state.authState.userState.menuClicked
     }
 };
 

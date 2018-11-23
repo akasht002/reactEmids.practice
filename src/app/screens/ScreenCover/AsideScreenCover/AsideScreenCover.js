@@ -25,8 +25,8 @@ import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
 import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
 import  VisitNotification  from '../../VisitProcessingNotification/VisitNotification';
-import {USER_TYPE} from '../../../constants/constants'
 import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
+import {setMenuClicked} from '../../../redux/auth/user/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -60,23 +60,43 @@ class AsideScreenCover extends React.Component {
     navigateProfileHeader = (link) => {
         switch (link) {
             case 'visitNotification':
-            this.setState({selectedLink: link, showNotification: !this.state.showNotification});
-            break;
+                this.setState({selectedLink: link, showNotification: !this.state.showNotification});
+                break;
             case 'messagesummary':
                 this.props.navigateProfileHeader(link);
                 break;
             case 'contact':
                 this.helpDocEl.click();
                 break;
+            case 'telehealth':
+                this.setState({ selectedLink: link })
+                break;
             case 'logout':
                 this.props.onLogout();
                 break;
             default:
                 this.setState({ selectedLink: link })
+                this.props.navigateProfileHeader(link);
                 break;
         }
     };
 
+    checkIsFormDirty = (link) => {
+        if (this.props.roomId && link !== 'aboutUs' && link !== 'visitNotification'
+            && link !== 'contact' && link !== 'telehealth') {
+            this.props.setMenuClicked(link)
+        } else {
+            this.navigateProfileHeader(link);
+        };
+    }
+
+    goToProfile = () => {
+        if (this.props.roomId) {
+            this.props.setMenuClicked(Path.profile);
+        } else {
+            this.props.goToProfile();
+        }
+    }
 
     render() {
         let entityUser = getUserInfo().isEntityServiceProvider;
@@ -100,7 +120,7 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
-                        onClick={this.state.profilePermission.Read && this.props.goToProfile}
+                        onClick={this.state.profilePermission.Read && this.goToProfile}
                     />
 
                     <div className='ProfileNameWidget'>
@@ -108,7 +128,7 @@ class AsideScreenCover extends React.Component {
                             <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</a>
                         </div>
                     </div>
-                    <AsideMenu menuData={menuData} url={this.props} />
+                    <AsideMenu menuData={menuData} url={this.props} onClick={link => this.checkIsFormDirty(link)}/>
                 </div>
                 <div className="container-fluid ProfileRightWidget">
                     <ProfileHeader
@@ -116,7 +136,7 @@ class AsideScreenCover extends React.Component {
                         profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
                             : require('../../../assets/images/Blank_Profile_icon.png')}
                         toggle={this.props.toggle}
-                        onClick={(link) => this.navigateProfileHeader(link)}
+                        onClick={(link) => this.checkIsFormDirty(link)}
                         dashboardMessageCount={this.props.dashboardMessageCount}/>
 
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
@@ -194,6 +214,7 @@ function mapDispatchToProps(dispatch) {
         joinVideoConference: () => dispatch(joinVideoConference()),
         rejectConference: () => dispatch(rejectConference()),
         getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
+        setMenuClicked: (data) => dispatch(setMenuClicked(data))
     }
 };
 
@@ -211,7 +232,8 @@ function mapStateToProps(state) {
         initiatorFirstName: state.telehealthState.initiatorFirstName,
         initiatorLastName: state.telehealthState.initiatorLastName,
         visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification,
-        dashboardMessageCount: state.asyncMessageState.dashboardMessageCount, 
+        dashboardMessageCount: state.asyncMessageState.dashboardMessageCount,
+        roomId: state.telehealthState.roomId
     };
 };
 

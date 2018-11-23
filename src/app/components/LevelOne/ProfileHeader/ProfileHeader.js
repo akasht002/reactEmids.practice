@@ -85,7 +85,7 @@ class ProfileHeader extends Component {
                 <Dropdown nav isOpen={this.state.dropdownOpen} toggle={() => {this.setState({dropdownOpen: !this.state.dropdownOpen})}}>
                     <DropdownToggle nav className="ProfileIcon"><img className="ProfileImage" src={this.props.profilePic}/></DropdownToggle>
                     <DropdownMenu right>
-                        <NavLink href='#/profile'>My Profile</NavLink>
+                        <NavLink onClick={() => this.props.onClick('profile')}>My Profile</NavLink>
                         <NavLink onClick={() => this.props.onClick('aboutUs')}>About Us</NavLink>
                         <NavLink onClick={() => this.props.onClick('logout')}>Logout</NavLink>
                     </DropdownMenu>

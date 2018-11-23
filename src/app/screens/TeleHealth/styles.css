@@ -297,7 +297,7 @@ div.TeleHealthWidget{
 .TeleHealthItem.true{
     position: fixed;
     width: 100% !important;
-    z-index: 99999;
+    z-index: 1000;
 }
 
 .TeleHealthItem.Right{

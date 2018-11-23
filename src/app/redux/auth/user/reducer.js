@@ -7,7 +7,8 @@ const defaultState = {
         message: '',
         code: ''
     },
-    roles: {}
+    roles: {},
+    menuClicked: null
 };
 
 export default (state = defaultState, action) => {
@@ -30,7 +31,11 @@ export default (state = defaultState, action) => {
             }
         case USER.clearData:
             return defaultState;
-
+        case USER.menuClicked:
+            return {
+                ...state,
+                menuClicked: action.data
+            }
         default:
             return state;
     }

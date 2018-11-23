@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import ParticipantList from './ParticipantList';
 import './styles.css';
-import { USERTYPES  } from '../../constants/constants';
-const images = require.context('../../assets', true);
-const imagePath = (name) => images(name, true);
 
 
 export default class TeleHealthInviteParticipants extends Component {
@@ -13,14 +10,6 @@ export default class TeleHealthInviteParticipants extends Component {
         searchText: '',
         selectedPatientDetails: {}
     };
-
-    componentDidMount() {
-        let data = {
-            searchText: '',
-            patientId: this.props.contextId
-        };
-        this.props.getAllParticipants(data)
-    }
 
     onClearParticipantContainer = () => {
         this.setState({ selectedParticipants: [], title: '', searchText: '', selectedPatientDetails: {} });
@@ -50,28 +39,8 @@ export default class TeleHealthInviteParticipants extends Component {
 
     onSearchTextChange = (e) => {
         this.setState({ searchText: e.target.value });
-        let data = {
-            searchText: e.target.value,
-            patientId: this.props.contextId
-        };
-        this.props.getAllParticipants(data);
+        this.props.getAllParticipants(e.target.value);
     };
-
-    onSelectPatient = (patientId) => {
-        let patientData = {
-            userId: patientId,
-            participantType: USERTYPES.PATIENT
-        };
-        this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
-        let data = {
-            userId: this.props.loggedInUser.userId,
-            participantType: this.props.loggedInUser.userType,
-            searchText: this.state.searchText,
-            patientId: patientId ? patientId : 0,
-        };
-        this.props.getLinkedParticipantsByPatients(data);
-    };
-
 
     AddParticipantsToConference = () => {
         this.props.addParticipantsToConference(this.state.selectedParticipants);

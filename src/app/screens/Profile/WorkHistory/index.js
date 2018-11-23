@@ -69,8 +69,8 @@ class WorkHistory extends Component {
             designation: '',
             company: '',
             location: '',
-            fromDate: '',
-            toDate: '',
+            fromDate: null,
+            toDate: null,
             description: '',
             currentlyWorking: false,
             disabledSaveBtn: true,
@@ -119,14 +119,25 @@ class WorkHistory extends Component {
                 designation: '',
                 company: '',
                 location: '',
-                fromDate: '',
-                toDate: '',
+                fromDate: null,
+                toDate: null,
                 description: '',
                 isWorking: false,
                 currentlyWorking: false
             })
         } else {
-            this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
+            let status = this.checkValidation(this.state.isAdd, this.state.designation, 
+                this.state.company, this.state.location, this.state.fromDate, this.state.toDate, this.state.description);
+            this.setState({ isDiscardModalOpen: status, isWorkHistoryModalOpen: status })
+        }
+    }
+
+    checkValidation = (isAdd, designation, company, location, fromDate, toDate, description) => {
+        if(isAdd && designation === '' && company === '' && location === '' && 
+           fromDate === null && toDate === null && description === '') {
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -332,7 +343,7 @@ class WorkHistory extends Component {
                     </div>}
                 </div>
                 {
-                    isShowWorkHistory ? <div className="col-md-12 mb-3">
+                    <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
                             <input className="form-check-input" type="checkbox" checked={this.state.currentlyWorking} id="defaultCheck1"
@@ -344,7 +355,7 @@ class WorkHistory extends Component {
                             <span className="CheckboxIcon" />
                         </label>
                     </div>
-                  </div> : ''
+                  </div> 
                 }
                 
                 <div className="col-md-12">
@@ -373,8 +384,12 @@ class WorkHistory extends Component {
                     <div className="SPCertificateContent">
                         <div className="width100 d-flex">
                             <h5 className="SPCertificateHeader">
-                            <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.designation} length={"50"} /> -
-                            <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />  
+                            {
+                                WorkHistoryList.designation && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.designation} length={"50"} />
+                            }
+                            {
+                                WorkHistoryList.company && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />  
+                            }                           
                             </h5>
                             <span className="ml-auto SPWorkYear">
                             <span>
@@ -393,7 +408,9 @@ class WorkHistory extends Component {
                         </div>
                         <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
                         {/*<span className="SPCertificateDesc">{WorkHistoryList.description}</span>*/}
-                        <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.description} length={"50"} />
+                        {
+                            WorkHistoryList.description && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.description} length={"50"} />
+                        } 
                     </div>
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
                         onClick={(e) => this.isOnDeleteModalOpen(e)} />

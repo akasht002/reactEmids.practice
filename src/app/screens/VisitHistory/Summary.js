@@ -7,12 +7,9 @@ import {
 } from "react-accessible-accordion";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Progressbar } from "../../components";
-import moment from "moment";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { getFields, getLength, getStatus } from "../../utils/validations";
-import { ProfileModalPopup, ModalPopup, StarRating } from "../../components";
-import { getFirstCharOfString } from "../../utils/stringHelper";
+import { ProfileModalPopup } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
@@ -22,6 +19,7 @@ import {
   getServiceProviderRating, getVisitFeedBack
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
+import { push } from '../../redux/navigation/actions'
 
 class VistSummary extends React.Component {
   constructor(props) {
@@ -34,7 +32,8 @@ class VistSummary extends React.Component {
       textareaValue: "",
       textareaData: "",
       EditFeedbackDetailModal: false,
-      ViewFeedbackDetailModal: false
+      ViewFeedbackDetailModal: false,
+      disabled: true
     };
     this.selectedAnswers = [];
   }
@@ -135,7 +134,8 @@ class VistSummary extends React.Component {
 
   togglePersonalDetails(action, e) {
     this.setState({
-      EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal
+      EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
+      disabled: true
     });
   }
 
@@ -153,6 +153,9 @@ class VistSummary extends React.Component {
     filteredData.push(answers);
     this.selectedAnswers = filteredData;
     this.setState({ answerList: filteredData });
+    if (this.props.QuestionsList.length === this.selectedAnswers.length) {
+      this.setState({ disabled: false });
+    }
   };
 
   handleTextarea = (e, id) => {
@@ -170,17 +173,20 @@ class VistSummary extends React.Component {
   };
 
   onClickNext = () => {
-    if (this.state.textareaData) {
-      this.selectedAnswers.push(this.state.textareaData);
-    }
     if (this.props.QuestionsList.length === this.selectedAnswers.length) {
       this.onSubmit();
     } else {
-      this.setState({ isModalOpen: true });
+      this.onClickConfirm();
     }
   };
 
+  onClickConfirm = () => {
+    this.selectedAnswers = [];
+    this.togglePersonalDetails();
+  }
+
   onSubmit = () => {
+    this.props.getVisitFeedBack(this.props.SummaryDetails.serviceRequestVisitId)
     const data = {
       serviceRequestVisitId: this.props.SummaryDetails.serviceRequestVisitId,
       serviceRequestId: this.props.SummaryDetails.serviceRequestId,
@@ -193,7 +199,6 @@ class VistSummary extends React.Component {
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
       isModalOpen: false
     });
-    this.props.getVisitFeedBack(this.props.SummaryDetails.serviceRequestVisitId)
   };
 
   getFeedback = () => {
@@ -362,7 +367,7 @@ class VistSummary extends React.Component {
     let modalType = "";
     let feedbackContent = this.getFeedbackContent(this.props.VisitFeedback)
 
-    console.log("aaaaa"+ JSON.stringify(this.props.history))
+    console.log("aaaaa" + JSON.stringify(this.props.history))
 
     return (
       <React.Fragment>
@@ -548,7 +553,8 @@ class VistSummary extends React.Component {
           className="modal-lg FeedbackModal"
           modalTitle={modalTitle}
           centered="centered"
-          onClick={this.onSubmit}
+          onClick={this.onClickNext}
+          disabled={this.state.disabled}
         />
         <ProfileModalPopup
           isOpen={this.state.ViewFeedbackDetailModal}
@@ -570,7 +576,8 @@ function mapDispatchToProps(dispatch) {
     getQuestionsList: () => dispatch(getQuestionsList()),
     saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data)),
     getServiceProviderRating: data => dispatch(getServiceProviderRating(data)),
-    getVisitFeedBack: data => dispatch(getVisitFeedBack(data))
+    getVisitFeedBack: data => dispatch(getVisitFeedBack(data)),
+    goToSummary: () => dispatch(push(Path.summary))
   };
 }
 

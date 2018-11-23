@@ -36,7 +36,9 @@ class VerifyContact extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ mobileNumber: nextProps.serviceProviderDetails.mobileNumber.substring(nextProps.serviceProviderDetails.mobileNumber.length - 4) })
+        if (nextProps.serviceProviderDetails.mobileNumber) {
+            this.setState({ mobileNumber: nextProps.serviceProviderDetails.mobileNumber.substring(nextProps.serviceProviderDetails.mobileNumber.length - 4) })
+        }
     }
 
     onClickSendPasscode = () => {
