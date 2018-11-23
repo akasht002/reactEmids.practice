@@ -69,8 +69,8 @@ class WorkHistory extends Component {
             designation: '',
             company: '',
             location: '',
-            fromDate: '',
-            toDate: '',
+            fromDate: null,
+            toDate: null,
             description: '',
             currentlyWorking: false,
             disabledSaveBtn: true,
@@ -119,14 +119,25 @@ class WorkHistory extends Component {
                 designation: '',
                 company: '',
                 location: '',
-                fromDate: '',
-                toDate: '',
+                fromDate: null,
+                toDate: null,
                 description: '',
                 isWorking: false,
                 currentlyWorking: false
             })
         } else {
-            this.setState({ isDiscardModalOpen: true, isWorkHistoryModalOpen: true })
+            let status = this.checkValidation(this.state.isAdd, this.state.designation, 
+                this.state.company, this.state.location, this.state.fromDate, this.state.toDate, this.state.description);
+            this.setState({ isDiscardModalOpen: status, isWorkHistoryModalOpen: status })
+        }
+    }
+
+    checkValidation = (isAdd, designation, company, location, fromDate, toDate, description) => {
+        if(isAdd && designation === '' && company === '' && location === '' && 
+           fromDate === null && toDate === null && description === '') {
+            return false;
+        } else {
+            return true;
         }
     }
 
