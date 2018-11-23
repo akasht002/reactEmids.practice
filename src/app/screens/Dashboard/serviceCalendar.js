@@ -16,7 +16,7 @@ import { getServiceRequestId,setEntityServiceProvider } from "../../redux/visitS
 import { ServiceCalendarDefault, ShowIndicator } from "./ServiceInfo";
 import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
-import { setPatient } from "../../redux/patientProfile/actions";
+import { setPatient,setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
 import { USERTYPES } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
@@ -418,7 +418,14 @@ class serviceCalendar extends React.Component {
         goToPatientProfile={data => {
           this.props.setPatient(data);
           this.props.goToPatientProfile();
-        }}        
+        }}   
+        goToESPProfile={
+          data => {
+            this.props.setESP(data);
+            this.props.goToESPProfile();
+            console.log(data)
+        } 
+      }    
         handlePhoneNumber={this.handlePhoneNumber}
       />
     );
@@ -565,7 +572,9 @@ function mapDispatchToProps(dispatch) {
     createVideoConference: data => dispatch(createVideoConference(data)),
     goToServiceRequestDetailsPage: () =>
       dispatch(push(Path.visitServiceDetails)),
-    setEntityServiceProvider:data =>dispatch(setEntityServiceProvider(data))
+    setEntityServiceProvider:data =>dispatch(setEntityServiceProvider(data)),
+    setESP:data=>dispatch(setESP(data)),
+    goToESPProfile:()=>dispatch(push(Path.ESPProfile))
   };
 }
 

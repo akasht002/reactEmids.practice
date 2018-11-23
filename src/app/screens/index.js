@@ -23,6 +23,7 @@ import Conversation from './AsyncMessage/Conversation'
 import ConversationSummary from './AsyncMessage/ConversationSummary'
 import VisitHistory from './VisitHistory'
 import VistSummary from './VisitHistory/VisitSummary'
+import ESPProfile from './ESPProfile/Profile'
 import {
   ForgetPassword,
   ResetPassword,
@@ -65,5 +66,6 @@ export {
   VistSummary,
   PatientProfile,
   VisitNotification,
-  VisitNotificationSettings
+  VisitNotificationSettings,
+  ESPProfile
 }

@@ -33,7 +33,7 @@ export const ServiceStatus = props => {
       <React.Fragment>
         <Button
           classname='btn btn-outline-primary mx-2 float-right'
-          label='Cancel Service'
+          label='Cancel Application'
           onClick={() => {
             props.postServiceRequest({ isInterested: false, isCancel: true })
           }}

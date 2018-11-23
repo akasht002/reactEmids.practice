@@ -100,7 +100,7 @@ export const serviceCalendar = (
               <React.Fragment>
                 <div className='ProfileCardImageContainer' 
                 onClick={() => {
-              // props.goToPatientProfile(conversations.patientId);
+                props.goToESPProfile(conversations.providerId);
             }}>
               <img
                 alt={'NO_IMAGE'}
@@ -114,7 +114,7 @@ export const serviceCalendar = (
               />
             </div>
             <div className='ProfileCardNameContainer' onClick={() => {
-              // props.goToPatientProfile(conversations.patientId);
+              props.goToESPProfile(conversations.providerId);
             }}>
               <span>
                 {conversations.providerFirstName &&

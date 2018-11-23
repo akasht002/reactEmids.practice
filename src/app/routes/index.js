@@ -31,7 +31,8 @@ import {
   Conversation,
   PatientProfile,
   VisitNotification,
-  VisitNotificationSettings
+  VisitNotificationSettings,
+  ESPProfile
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -78,7 +79,8 @@ export const Path = {
   visitSummaryDetail: '/visitSummary',
   patientProfile: '/patientProfile',
   visitNotification: '/visitNotification',
-  visitNotificationSettings: '/visitNotificationSettings'
+  visitNotificationSettings: '/visitNotificationSettings',
+  ESPProfile:'/espProfile'
 };
 
 class AppStackRoot extends Component {
@@ -98,6 +100,7 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
+            <PrivateRoute path={Path.ESPProfile} component={ESPProfile} />
             <PrivateRoute path={Path.visitNotification} component={VisitNotification} />
             <PrivateRoute path={Path.visitServiceList} permission={SCREENS.VISIT_PROCESSING} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} permission={SCREENS.VISIT_PROCESSING} component={VisitServiceDetails} />

@@ -10,16 +10,35 @@ const defaultState = {
     pointOfServiceList: [],
     myConnectionList: [],
     languageList: [],
-    clinicalConditionList: []
+    clinicalConditionList: [],
+    espID:'',
+    espPatient:{},
+    espimageData:{},
+    espEducation:[]
 };
 
 const patientProfileState = (state = defaultState, action) => {
     switch (action.type) {
-        case PatientProfile.setPatient: 
+        case PatientProfile.get_esp_personal_detail_success: 
+        return {
+            ...state,
+            espPatient: action.data
+        };
+        case PatientProfile.getESPEducationSuccess: 
+        return {
+            ...state,
+            espEducation: action.data
+        };
+        case PatientProfile.upload_esp_img_success: 
             return {
                 ...state,
-                patientId: action.data
+                espimageData: action.data
             };
+        case PatientProfile.setESP: 
+        return {
+            ...state,
+            espID: action.data
+        };    
         case PatientProfile.getPersonalDetailSuccess:
             return {
               ...state,
