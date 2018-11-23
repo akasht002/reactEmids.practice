@@ -10,7 +10,7 @@ function AsideMenu(props) {
             return (
                 <li className={'profileSideNavigationList'}>
                     <div name={menu.name + '_' + PERMISSIONS.READ} 
-                        className={'asideMenuNavigationLink ' + (path === menu.link ? 'active' : '')} 
+                        className={'profileSideNavigationLink ' + (path === menu.link ? 'active' : '')} 
                         onClick={() => {props.onClick(menu.link)}} >
                         <i className={menu.iconName} />
                         <span>{menu.title}</span>
