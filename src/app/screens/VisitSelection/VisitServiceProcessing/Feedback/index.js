@@ -25,7 +25,8 @@ class Feedback extends Component {
             isModalOpen: false,
             answerList: '',
             textareaValue: '',
-            textareaData: ''
+            textareaData: '',
+            isDiscardModalOpen: false
         };
         this.selectedAnswers = [];
     };
@@ -88,6 +89,22 @@ class Feedback extends Component {
         }
         this.props.saveAnswers(data);
         this.setState({ isModalOpen: false })
+    }
+
+    onPreviousClick = () => {
+        if (this.selectedAnswers.length > 0) {
+            this.setState({ isDiscardModalOpen: true })
+        } else {
+            this.selectedAnswers = []
+            this.props.goBack();
+        }
+    }
+
+    goBack = () => {
+        this.selectedAnswers = []
+        this.props.goBack();
+        this.props.getQuestionsList();
+        this.props.getVisitFeedBack(this.props.ServiceRequestVisitId)
     }
 
     render() {
@@ -170,7 +187,7 @@ class Feedback extends Component {
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
                                                                                 checked={answer.checked}
-                                                                                disabled={this.props.VisitFeedback.length > 0 ? true: false}
+                                                                                disabled={this.props.VisitFeedback.length > 0 ? true : false}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>
@@ -216,7 +233,8 @@ class Feedback extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <Link className='btn btn-outline-primary mr-3' to='/performtasks'>Previous</Link>
+                                        {/* <Link className='btn btn-outline-primary mr-3' to='/performtasks'>Previous</Link> */}
+                                        <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         <a className='btn btn-primary' onClick={this.onClickNext}>Next</a>
                                     </div>
                                 </div>
@@ -237,6 +255,21 @@ class Feedback extends Component {
                             isModalOpen: !this.state.isModalOpen,
                         })}
                     />
+                    <ModalPopup
+                        isOpen={this.state.isDiscardModalOpen}
+                        toggle={this.toggleCheck}
+                        ModalBody={<span>Do you want to discard the changes?</span>}
+                        btn1='YES'
+                        btn2='NO'
+                        className='modal-sm'
+                        headerFooter='d-none'
+                        centered='centered'
+                        onConfirm={() => this.goBack()}
+                        onCancel={() =>
+                            this.setState({
+                                isDiscardModalOpen: false
+                            })}
+                    />
                 </Scrollbars>
             </AsideScreenCover>
 
@@ -249,7 +282,8 @@ function mapDispatchToProps(dispatch) {
         getQuestionsList: () => dispatch(getQuestionsList()),
         saveAnswers: (data) => dispatch(saveAnswers(data)),
         getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data)),
-        goToSummary: () => dispatch(push(Path.summary))
+        goToSummary: () => dispatch(push(Path.summary)),
+        goBack: () => dispatch(push(Path.performTasks))
     }
 };
 
