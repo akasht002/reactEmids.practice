@@ -8,7 +8,7 @@ function AsideMenu(props) {
     const menuList = props.menuData.map(
         (menu) => {
             return (
-                <li className={'profileSideNavigationList'}>
+                <li className={'profileSideNavigationList CursorPointer'}>
                     <div name={menu.name + '_' + PERMISSIONS.READ} 
                         className={'profileSideNavigationLink ' + (path === menu.link ? 'active' : '')} 
                         onClick={() => {props.onClick(menu.link)}} >

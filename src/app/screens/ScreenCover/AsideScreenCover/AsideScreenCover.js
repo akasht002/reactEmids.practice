@@ -73,6 +73,7 @@ class AsideScreenCover extends React.Component {
                 break;
             default:
                 this.setState({ selectedLink: link })
+                this.props.navigateProfileHeader(link);
                 break;
         }
     };
