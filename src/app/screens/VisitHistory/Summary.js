@@ -7,12 +7,9 @@ import {
 } from "react-accessible-accordion";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Progressbar } from "../../components";
-import moment from "moment";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { getFields, getLength, getStatus } from "../../utils/validations";
-import { ProfileModalPopup, ModalPopup, StarRating } from "../../components";
-import { getFirstCharOfString } from "../../utils/stringHelper";
+import { ProfileModalPopup } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
@@ -35,7 +32,8 @@ class VistSummary extends React.Component {
       textareaValue: "",
       textareaData: "",
       EditFeedbackDetailModal: false,
-      ViewFeedbackDetailModal: false
+      ViewFeedbackDetailModal: false,
+      disabled: true
     };
     this.selectedAnswers = [];
   }
@@ -136,7 +134,8 @@ class VistSummary extends React.Component {
 
   togglePersonalDetails(action, e) {
     this.setState({
-      EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal
+      EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
+      disabled: true
     });
   }
 
@@ -154,6 +153,9 @@ class VistSummary extends React.Component {
     filteredData.push(answers);
     this.selectedAnswers = filteredData;
     this.setState({ answerList: filteredData });
+    if (this.props.QuestionsList.length === this.selectedAnswers.length) {
+      this.setState({ disabled: false });
+    }
   };
 
   handleTextarea = (e, id) => {
@@ -552,6 +554,7 @@ class VistSummary extends React.Component {
           modalTitle={modalTitle}
           centered="centered"
           onClick={this.onClickNext}
+          disabled={this.state.disabled}
         />
         <ProfileModalPopup
           isOpen={this.state.ViewFeedbackDetailModal}
