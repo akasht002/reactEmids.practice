@@ -188,6 +188,7 @@ export function leaveVideoConference(checkRoute) {
                 } else if (!checkRoute) {
                     dispatch(push(Path.dashboard))
                 }
+                dispatch(clearRoom())
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(push(Path.dashboard))
@@ -251,6 +252,7 @@ export function endConference() {
             } else {
                 dispatch(push(Path.dashboard))
             }
+            dispatch(clearRoom())
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -270,6 +272,9 @@ export function rejectConference() {
           dispatch(startLoading());
           AsyncPut(API.rejectConference, data).then((resp) => {
               dispatch(clearInvitaion());
+              if (!state.telehealthState.token) {
+                dispatch(clearRoom())
+              }
               dispatch(endLoading());
           }).catch((err) => {
               dispatch(endLoading());
