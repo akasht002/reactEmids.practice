@@ -4,6 +4,8 @@ import { startLoading, endLoading } from '../loading/actions';
 import { push } from '../navigation/actions';
 import { Path } from '../../routes';
 import { USERTYPES } from '../../constants/constants';
+import { setMenuClicked } from '../auth/user/actions';
+import { onLogout } from '../auth/logout/actions';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
@@ -176,7 +178,14 @@ export function leaveVideoConference(checkRoute) {
         AsyncPutWithUrl(API.leaveVideoConference 
             + userInfo.serviceProviderId + '/S/'
             + state.telehealthState.roomId).then((resp) => {
-                if (!checkRoute) {
+                if (state.authState.userState.menuClicked) {
+                    if (state.authState.userState.menuClicked === 'logout') {
+                        dispatch(onLogout())
+                    } else {
+                        dispatch(push(state.authState.userState.menuClicked))
+                    }
+                    dispatch(setMenuClicked(null))
+                } else if (!checkRoute) {
                     dispatch(push(Path.dashboard))
                 }
             dispatch(endLoading());
@@ -238,7 +247,16 @@ export function endConference() {
         let state = getState().telehealthState;
         dispatch(startLoading());
         AsyncPost(API.endConference + state.roomId).then((resp) => {
-            dispatch(push(Path.dashboard));
+            if (state.authState.userState.menuClicked) {
+                if (state.authState.userState.menuClicked === 'logout') {
+                    dispatch(onLogout())
+                } else {
+                    dispatch(push(state.authState.userState.menuClicked))
+                }
+                dispatch(setMenuClicked(null))
+            } else {
+                dispatch(push(Path.dashboard))
+            }
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());

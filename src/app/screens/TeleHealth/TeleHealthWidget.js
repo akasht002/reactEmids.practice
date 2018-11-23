@@ -13,6 +13,7 @@ import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConfere
 import './styles.css';
 import { Path } from '../../routes';
 import {push} from '../../redux/navigation/actions'
+import {setMenuClicked} from '../../redux/auth/user/actions';
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -37,6 +38,10 @@ class TeleHealthWidget extends Component {
         this.interval = null;
         this.leaveTimeout = null;
         this.inactiveSession = null;
+    }
+
+    componentWillMount() {
+        this.props.setMenuClicked(null)
     }
 
     componentDidMount() {
@@ -352,17 +357,18 @@ class TeleHealthWidget extends Component {
                     className="modal-sm"
                     headerFooter="d-none"
                     centered={true}
-                    isOpen={this.state.showLeaveConfModal}
+                    isOpen={this.state.showLeaveConfModal || this.props.menuClicked}
                     btn1="Continue"
                     btn2="Leave"
                     onConfirm={() => {
                         this.setState({
-                            showLeaveConfModal: !this.state.showLeaveConfModal,
+                            showLeaveConfModal: false,
                         })
+                        this.props.setMenuClicked(null)
                     }}
                     onCancel={() => {
                         this.setState({
-                            showLeaveConfModal: !this.state.showLeaveConfModal,
+                            showLeaveConfModal: false,
                         })
                         this.leaveRoom()
                     }}
@@ -401,7 +407,8 @@ function mapDispatchToProps(dispatch) {
         addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
         endConference: () => dispatch(endConference()),
         getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId()),
-        goToDashBoard: () => dispatch(push(Path.dashboard))
+        goToDashBoard: () => dispatch(push(Path.dashboard)),
+        setMenuClicked: (data) => dispatch(setMenuClicked(data))
     }
 };
 
@@ -410,7 +417,8 @@ function mapStateToProps(state) {
         existingParticipantList: state.telehealthState.participantsByConferenceId,
         conferenceParticipants: state.telehealthState.linkedParticipants,
         initiator: state.telehealthState.initiator,
-        contextId: state.telehealthState.contextId
+        contextId: state.telehealthState.contextId,
+        menuClicked: state.authState.userState.menuClicked
     }
 };
 

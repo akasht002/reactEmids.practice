@@ -13,7 +13,8 @@ export const USER = {
     setUser: 'fetch_success/user',
     deleteUser: 'delete_user/user',
     clearData: 'clear_data/user',
-    setUserRoles: 'set_user_roles/user'
+    setUserRoles: 'set_user_roles/user',
+    menuClicked: 'menuClicked/user'
 };
 
 export const setUserRoles = (data) => {
@@ -123,3 +124,10 @@ export const checkUserData = () => {
         }
     }
 }
+
+export function setMenuClicked(data){
+    return{
+        type: USER.menuClicked,
+        data
+    }
+};
