@@ -68,6 +68,9 @@ class AsideScreenCover extends React.Component {
             case 'contact':
                 this.helpDocEl.click();
                 break;
+            case 'telehealth':
+                this.setState({ selectedLink: link })
+                break;
             case 'logout':
                 this.props.onLogout();
                 break;
@@ -133,7 +136,7 @@ class AsideScreenCover extends React.Component {
                         profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
                             : require('../../../assets/images/Blank_Profile_icon.png')}
                         toggle={this.props.toggle}
-                        onClick={(link) => this.navigateProfileHeader(link)}
+                        onClick={(link) => this.checkIsFormDirty(link)}
                         dashboardMessageCount={this.props.dashboardMessageCount}/>
 
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
