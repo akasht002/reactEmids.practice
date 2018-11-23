@@ -387,7 +387,6 @@ class WorkHistory extends Component {
                             {
                                 WorkHistoryList.designation && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.designation} length={"50"} />
                             }
-                            -
                             {
                                 WorkHistoryList.company && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />  
                             }                           
