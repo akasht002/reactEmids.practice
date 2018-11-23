@@ -321,12 +321,18 @@ class VisitServiceList extends Component {
 
     onSortChange = (e, posted, newest) => {
         this.setState({ sort: true })
+        {
+            this.Newest ?
+            this.setState({ Newest: 'DESC' })
+            :
+            this.setState({ Newest: 'ASC' })
+        }
         this.sort = true
         let selectedElement = e.target.innerHTML.replace(/ /g, '');
         this.setStatusSort(selectedElement)
         var data = {
             sortByOrder: this.Newest ? "DESC" : "ASC",
-            sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "VISITDATE",
+            sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "MODIFIEDDATE",
             pageNumber: 1,
             PageSize: 15
         }
@@ -345,9 +351,13 @@ class VisitServiceList extends Component {
 
     handleSortPageChange = pageNumber => {
         this.setState({ pageNumber: pageNumber });
-        let data = {
-            sortByOrder: this.Newest ? "ASC" : "DESC",
+        let sortData = {
+            sortByOrder: this.Newest ? "DESC" : "ASC",
             sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "MODIFIEDDATE",
+        }
+        let data = {
+            sortByOrder: sortData.sortByOrder,
+            sortByColumn: sortData.sortByColumn,
             pageNumber: pageNumber,
             PageSize: 15
         }
@@ -419,7 +429,7 @@ class VisitServiceList extends Component {
                             <div class='BlockProfileDetailsStatus'>
                                 {
                                     <span className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`}>{
-                                         serviceList.serviceRequestStatus
+                                        serviceList.serviceRequestStatus
                                     }</span>
                                 }
                             </div>

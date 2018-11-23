@@ -59,18 +59,18 @@ export const getVisitServiceEligibityStatusSuccess = data => {
 
 export const updateServiceRequestByServiceProviderSuccess = data => {
   return {
-    type :VisitServiceDetails.updateServiceRequestByServiceProviderSuccess,
+    type: VisitServiceDetails.updateServiceRequestByServiceProviderSuccess,
     data
   }
 }
 
-export function dispatchServiceRequestByServiceProvider(){
+export function dispatchServiceRequestByServiceProvider() {
   return dispatch => {
-  dispatch(push(Path.dashboard))
+    dispatch(push(Path.dashboard))
   }
 }
 
-export function setEntityServiceProvider(data){
+export function setEntityServiceProvider(data) {
   return dispatch => { dispatch(setEntityServiceProviderSuccess(data)) }
 }
 
@@ -119,14 +119,14 @@ export function cancelServiceRequestByServiceProvider(data) {
   }
 }
 
-export function getVisitServiceDetails(data) {  
+export function getVisitServiceDetails(data) {
   return (dispatch, getState) => {
     let currstate = getState();
     let serviceProviderId = getUserInfo().isEntityServiceProvider ? currstate.visitSelectionState.VisitServiceDetailsState.entityServiceProviderId
-    : getUserInfo().serviceProviderId
+      : getUserInfo().serviceProviderId
     dispatch(getServiceRequestId(data))
     dispatch(startLoading())
-    ServiceRequestGet(API.getServiceRequestDetails +`${data}/${serviceProviderId}`)
+    ServiceRequestGet(API.getServiceRequestDetails + `${data}/${serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data))
         dispatch(endLoading())
@@ -140,12 +140,14 @@ export function getVisitServiceDetails(data) {
 
 
 export function getVisitServiceSchedule(data) {
+  let serviceProviderId = getUserInfo().serviceProviderId
   return dispatch => {
-    ServiceRequestGet(API.getServiceRequestSchedule + `${data}`)
+    ServiceRequestGet(API.getServiceRequestSchedule + `${data}/${serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceScheduleSuccess(resp.data))
       })
       .catch(err => {
+        dispatch(endLoading())
       })
   }
 }
@@ -164,19 +166,19 @@ export function getVisitServiceEligibilityStatus(data) {
 
 export const getDaysSuccess = (data) => {
   return {
-      type: VisitServiceDetails.getDaysSuccess,
-      data
+    type: VisitServiceDetails.getDaysSuccess,
+    data
   }
 }
 
 export function getDays() {
   return (dispatch) => {
-      dispatch(startLoading());
-      ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
-          dispatch(getDaysSuccess(resp.data))
-          dispatch(endLoading());
-      }).catch((err) => {
-          dispatch(endLoading());
-      })
+    dispatch(startLoading());
+    ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
+      dispatch(getDaysSuccess(resp.data))
+      dispatch(endLoading());
+    }).catch((err) => {
+      dispatch(endLoading());
+    })
   }
 };

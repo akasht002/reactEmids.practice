@@ -58,19 +58,19 @@ class Languages extends React.Component {
         });
 
         let previosObj = {
-            selectedLanguage: stringConcat(previouslySelectedValues)
+            selectedLanguage: previouslySelectedValues && stringConcat(previouslySelectedValues)
         }
 
 
         let selectStateObject = {
-            selectedLanguage: this.state.selectedLanguage
+            selectedLanguage: String(this.state.selectedLanguage)
         }
 
 
         const fieldDifference = compare(previosObj, selectStateObject);
 
         if (fieldDifference === true) {
-
+            this.setState({ isModalOpen: false, isDiscardModalOpen: false })
         } else {
             this.setState({ isModalOpen: true, isDiscardModalOpen: true })
         }
