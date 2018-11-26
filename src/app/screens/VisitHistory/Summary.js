@@ -8,7 +8,7 @@ import {
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { getFields, getLength, getStatus } from "../../utils/validations";
+import { getFields, getLength, getStatus, getServiceTypeImage } from "../../utils/validations";
 import { ProfileModalPopup } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
@@ -94,13 +94,14 @@ class VistSummary extends React.Component {
   getServiceDetails = lists => {
     if (lists) {
       return lists.map((list, index) => {
+        let image_url = getServiceTypeImage(list.serviceRequestTypeTaskVisits && list.serviceRequestTypeTaskVisits.length > 0 && list.serviceRequestTypeTaskVisits[0].serviceTypeId );
         return (
           <AccordionItem>
             <AccordionItemTitle className="TabContainer">
               <img
                 alt={"NO_IMAGE"}
                 className="ServiceTasksImg"
-                src={require("../../assets/images/Bathing_Purple.svg")}
+                src={require(`../../assets/ServiceTypes/${image_url}`)}
               />{" "}
               <div className="TabHeaderContent">
                 <span className="TabHeaderText">
@@ -137,6 +138,7 @@ class VistSummary extends React.Component {
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
       disabled: true
     });
+    this.selectedAnswers = []
   }
 
   toggleShowFeedbackDetails(action, e) {
@@ -559,7 +561,7 @@ class VistSummary extends React.Component {
           isOpen={this.state.ViewFeedbackDetailModal}
           toggle={this.toggleShowFeedbackDetails.bind(this, modalType)}
           ModalBody={feedbackContent}
-          className='modal-lg asyncModal CertificationModal'
+          className='modal-lg FeedbackModal'
           modalTitle={modalTitle}
           centered='centered'
           onClick={this.onConfirm}

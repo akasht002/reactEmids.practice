@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import classnames from 'classnames'
 import Moment from 'react-moment'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
@@ -400,7 +400,7 @@ class VisitServiceDetails extends Component {
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
                   <span className='HeaderBackWrapper CursorPointer'>
-                    <span className='HeaderBackButton' onClick={this.props.goBack}></span>
+                    <Link className='HeaderBackButton' to="/visitServiceList"></Link>
                   </span>
                   <span className='HeaderRequestLabel'>
                     Request ID

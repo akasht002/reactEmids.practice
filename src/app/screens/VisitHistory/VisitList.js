@@ -1,5 +1,5 @@
 import React from 'react'
-import { getFields, serviceTypeImages } from '../../utils/validations'
+import { getFields, getServiceTypeImage } from '../../utils/validations'
 import Moment from 'react-moment'
 import { Progressbar } from '../../components'
 
@@ -8,7 +8,7 @@ export const VisitList = props => {
   let visitHistoryListItem = ''
   if (visitHistoryList) {
     visitHistoryListItem = visitHistoryList.map((vistList, index) => {
-      let filename = serviceTypeImages.Bathing
+      let visitId = getServiceTypeImage(vistList.serviceTypes && vistList.serviceTypes[0].serviceTypeId);
       return (
         <div className='card mainProfileCard' key={index}>
           <div className='visitListWidget' key={index}>
@@ -20,7 +20,7 @@ export const VisitList = props => {
                       {vistList.visitDate}
                     </Moment>, {vistList.slotDescription}
                   </span>
-                  <span>{vistList.billedTotalDuration} hrs</span>                 
+                  <span>{vistList.billedTotalDuration} hrs</span>
                   <span>{vistList.serviceRequestVisitId}</span>
                 </div>
               </div>
@@ -33,9 +33,7 @@ export const VisitList = props => {
                           alt={'NO_IMAGE'}
                           key={index}
                           className='visitListImage'
-                          src={
-                            require(`../../assets/images/${filename}.svg`)
-                          }
+                          src={require(`../../assets/ServiceTypes/${visitId}`)}
                         />
                       </div>
                       <div className='visitListNameContainer'>
