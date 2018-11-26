@@ -15,9 +15,7 @@ import {
   ModalPopup,ScreenCover,
   ProfileImage
 } from '../../../components'
-import BlackoutModal from '../../../components/LevelOne/BlackoutModal';
 import ImageModal from './ImageModal';
-import { OrganizationData } from '../../../data/OrganizationData';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
   checkTextNotStartWithNumber,
