@@ -154,7 +154,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ParticipantContainer
                     onRef={ref => (this.participantComponent = ref)}
-                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation}
+                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation && !this.props.telehealthToken}
                     onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
                     createConversation={() => { this.setState({ selectedLink: null }) }}
                 />
@@ -233,7 +233,8 @@ function mapStateToProps(state) {
         initiatorLastName: state.telehealthState.initiatorLastName,
         visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification,
         dashboardMessageCount: state.asyncMessageState.dashboardMessageCount,
-        roomId: state.telehealthState.roomId
+        roomId: state.telehealthState.roomId,
+        telehealthToken: state.telehealthState.token
     };
 };
 
