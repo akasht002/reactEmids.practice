@@ -1,9 +1,10 @@
 import React from "react";
 import moment from "moment";
 import Select from "react-select";
+import _ from 'lodash'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Scrollbars, ProfileModalPopup } from "../../components";
+import { Scrollbars, ProfileModalPopup,Input } from "../../components";
 import "./ProfileMainPanel.css";
 import { convertStringToDate } from "../../utils/validations";
 import {
@@ -22,6 +23,7 @@ import { USERTYPES } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference } from "../../redux/telehealth/actions";
 import {  ModalPopup } from '../../components'
+import {MAX_MONTH_LIMIT,IN_MAX_ARRAY,COUNT_BASED_MONTH} from '../../constants/constants'
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -79,12 +81,17 @@ class serviceCalendar extends React.Component {
   };
 
   MonthChange = e => {
+    let selectMonth =  moment().month(e.value).format("M")
+    let  current_year =  moment().year()
+    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
+                parseInt(current_year,10) + 1 : current_year    
     let curDate = moment(this.state.startYear + '-' + moment().month(e.value).format("M") + '- 01',"YYYY-MM-DD")
 
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
-      selectedMonth: e.value
+      selectedMonth: e.value,
+      startYear:year
     });
     this.props.getServiceProviderVists(moment(curDate).format("YYYY-MM-DD"));
   };
@@ -294,6 +301,50 @@ class serviceCalendar extends React.Component {
     }
   };
 
+
+  getModalContent = (serviceProviderList) => {
+    return (
+    <form>
+      <Input
+          id='participantsSearch'
+          autoComplete='false'
+          required='required'
+          type='text'
+          placeholder='search'
+          className='form-control searchParticipants'
+      />
+      <div className="participantsSearchList">
+              {serviceProviderList.map((item, index) => {
+      let catNum = index + 1;
+      return (
+        <fieldset>
+          <div className="CheckboxSet" key={item.id}>
+            <input
+              className="ServiceCheckbox"
+              name={"ServiceStatus"}
+              id={item.serviceProviderId}
+              type="radio"
+              value={item.serviceProviderId}
+              onChange={e => this.handleserviceType(item, e)}
+            />
+           <div className={"avatarContainer"}>
+              <img
+              alt={'NO_IMAGE'}
+              key={index}
+              className='avatarImage avatarImageBorder'
+                src={require('../../assets/images/Blank_Profile_icon.png')}
+                />
+            </div>
+            <label htmlFor={item.serviceProviderId}>
+              {item.firstName + " " + item.lastName}
+            </label>
+          </div>
+        </fieldset>)  })}
+       </div>
+      </form>
+              )
+  }
+
   render() {
     let selectedDate = this.state.startDate;
     const visitCount = this.props.serviceVistCount;
@@ -360,7 +411,10 @@ class serviceCalendar extends React.Component {
     let pervious_month = moment.months().splice(current_month - 3, 3);
     let next_month_list = moment.months().splice(current_month, 3);
 
-    let monthLists = pervious_month.concat(next_month_list);
+    let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month,10)]) 
+    let nextMonthLists =  current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
+
+    let monthLists = pervious_month.concat(nextMonthLists)
 
     let monthList = monthLists.map(month => {
       return { label: month.substring(0, 3), value: month };
@@ -416,8 +470,6 @@ class serviceCalendar extends React.Component {
         handleClick={requestId => this.handleClick(requestId)}
         onClick={link => this.navigateProfileHeader(link)}
         goToPatientProfile={data => {
-          console.log(11111111111111111111111111)
-          console.log(data)
           this.props.setPatient(data);
           this.props.goToPatientProfile();
         }}   
@@ -434,27 +486,7 @@ class serviceCalendar extends React.Component {
 
     let modalTitle = "Assign Service Provider";
     let modalType = "";
-    let modalContent = this.props.serviceProviderList.map((item, index) => {
-      let catNum = index + 1;
-      return (
-        <fieldset>
-          <div className="CheckboxSet" key={item.id}>
-            <input
-              className="ServiceCheckbox"
-              name={"ServiceStatus"}
-              id={item.serviceProviderId}
-              type="radio"
-              value={item.serviceProviderId}
-              onChange={e => this.handleserviceType(item, e)}
-            />
-            <label htmlFor={item.serviceProviderId}>
-              {item.firstName + " " + item.lastName}
-            </label>
-          </div>
-        </fieldset>
-      );
-    });
-
+    let modalContent = this.getModalContent(this.props.serviceProviderList)    
     return (
       <div
         className={

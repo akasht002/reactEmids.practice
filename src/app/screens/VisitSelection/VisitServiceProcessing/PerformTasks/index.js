@@ -12,8 +12,8 @@ import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
 import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
-import { isArrayEqual } from "../../../../utils/arrayUtility"
-import { Path } from '../../../../routes'
+import { Path } from '../../../../routes';
+import { getServiceTypeImage } from '../../../../utils/validations';
 import './style.css'
 
 class PerformTasks extends Component {
@@ -232,13 +232,14 @@ class PerformTasks extends Component {
                         <div className='CardContainers'>
                             <div className='ServiceContent'>
                                 {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
+                                     let image_url = getServiceTypeImage(serviceType.serviceRequestTypeTaskVisits && serviceType.serviceRequestTypeTaskVisits.length > 0 && serviceType.serviceRequestTypeTaskVisits[0].serviceTypeId);
                                     return (
                                         <div className={"TabContainerWidget"} key={serviceType.serviceRequestTypeDetailsId}>
                                             <div onClick={() => {
                                                 serviceType.collapse = !serviceType.collapse;
                                                 this.setState({ collapse: !this.state.collapse });
                                             }} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + serviceType.collapse}>
-                                                <img src={require("../../../../assets/images/Bathing_Purple.svg")} className="ServiceTasksImg" alt="categoryImage" />
+                                                <img src={require(`../../../../assets/ServiceTypes/${image_url}`)} className="ServiceTasksImg" alt="categoryImage" />
                                                 <div className="TabHeaderContent">
                                                     <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>
                                                     <span><i className="SelectedTask">{serviceType.serviceRequestTypeTaskVisits.filter((taskList) => {

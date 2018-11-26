@@ -17,7 +17,10 @@ export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
 export const HIRED_STATUS_ID  = 38;
 export const RECURRING_PATTERN = 'One Time'
 export const ENTITY_USER = 2
-
+export const MONTH_LENGTH = 12
+export const MAX_MONTH_LIMIT =  9
+export const IN_MAX_ARRAY = [1,2,3]
+export const COUNT_BASED_MONTH = {9:1,10:2,11:3}
 export const PHONE_NUMBER_CONST = '+1 ';
 
 export const RESPONSE_STATUS = {

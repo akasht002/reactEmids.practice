@@ -8,6 +8,12 @@ export const isStatusInArray = (data) => {
   return false
 }
 
+export const StatusLabel = {
+  37 : 'Cancel Application',
+  38 : 'Cancel Request',
+  40 :  'Cancel Request'
+}
+
 export const ServiceStatus = props => {
   if (!isStatusInArray(props.status.id)) {    
     return (
@@ -33,7 +39,7 @@ export const ServiceStatus = props => {
       <React.Fragment>
         <Button
           classname='btn btn-outline-primary mx-2 float-right'
-          label='Cancel Application'
+          label={StatusLabel[props.status.id]}
           onClick={() => {
             props.postServiceRequest({ isInterested: false, isCancel: true })
           }}
