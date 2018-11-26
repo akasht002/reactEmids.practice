@@ -152,13 +152,12 @@ class AsideScreenCover extends React.Component {
                     modalTitle="User Agreement has been updated, please accept to proceed."
                     onClick={this.onClickOk}
                 />
-                {this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation && !this.props.telehealthToken &&
-                 <ParticipantContainer
+                <ParticipantContainer
                     onRef={ref => (this.participantComponent = ref)}
                     isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation && !this.props.telehealthToken}
                     onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
                     createConversation={() => { this.setState({ selectedLink: null }) }}
-                />}
+                />
                 <AboutUs
                     isOpen={this.state.selectedLink === 'aboutUs'}
                     ModalBody={<AboutContent
