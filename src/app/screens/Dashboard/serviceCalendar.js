@@ -3,7 +3,7 @@ import moment from "moment";
 import Select from "react-select";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Scrollbars, ProfileModalPopup } from "../../components";
+import { Scrollbars, ProfileModalPopup,Input } from "../../components";
 import "./ProfileMainPanel.css";
 import { convertStringToDate } from "../../utils/validations";
 import {
@@ -294,6 +294,50 @@ class serviceCalendar extends React.Component {
     }
   };
 
+
+  getModalContent = (serviceProviderList) => {
+    return (
+    <form>
+      <Input
+          id='participantsSearch'
+          autoComplete='false'
+          required='required'
+          type='text'
+          placeholder='search'
+          className='form-control searchParticipants'
+      />
+      <div className="participantsSearchList">
+              {serviceProviderList.map((item, index) => {
+      let catNum = index + 1;
+      return (
+        <fieldset>
+          <div className="CheckboxSet" key={item.id}>
+            <input
+              className="ServiceCheckbox"
+              name={"ServiceStatus"}
+              id={item.serviceProviderId}
+              type="radio"
+              value={item.serviceProviderId}
+              onChange={e => this.handleserviceType(item, e)}
+            />
+           <div className={"avatarContainer"}>
+              <img
+              alt={'NO_IMAGE'}
+              key={index}
+              className='avatarImage avatarImageBorder'
+                src={require('../../assets/images/Blank_Profile_icon.png')}
+                />
+            </div>
+            <label htmlFor={item.serviceProviderId}>
+              {item.firstName + " " + item.lastName}
+            </label>
+          </div>
+        </fieldset>)  })}
+       </div>
+      </form>
+              )
+  }
+
   render() {
     let selectedDate = this.state.startDate;
     const visitCount = this.props.serviceVistCount;
@@ -416,8 +460,6 @@ class serviceCalendar extends React.Component {
         handleClick={requestId => this.handleClick(requestId)}
         onClick={link => this.navigateProfileHeader(link)}
         goToPatientProfile={data => {
-          console.log(11111111111111111111111111)
-          console.log(data)
           this.props.setPatient(data);
           this.props.goToPatientProfile();
         }}   
@@ -434,27 +476,7 @@ class serviceCalendar extends React.Component {
 
     let modalTitle = "Assign Service Provider";
     let modalType = "";
-    let modalContent = this.props.serviceProviderList.map((item, index) => {
-      let catNum = index + 1;
-      return (
-        <fieldset>
-          <div className="CheckboxSet" key={item.id}>
-            <input
-              className="ServiceCheckbox"
-              name={"ServiceStatus"}
-              id={item.serviceProviderId}
-              type="radio"
-              value={item.serviceProviderId}
-              onChange={e => this.handleserviceType(item, e)}
-            />
-            <label htmlFor={item.serviceProviderId}>
-              {item.firstName + " " + item.lastName}
-            </label>
-          </div>
-        </fieldset>
-      );
-    });
-
+    let modalContent = this.getModalContent(this.props.serviceProviderList)    
     return (
       <div
         className={
