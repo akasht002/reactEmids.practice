@@ -1116,6 +1116,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     .innerWidget .card.extended {
         /* height: calc(100vh - 140px); */
         height: 620px;
+        z-index: 1;
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
@@ -1792,4 +1793,9 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     width: auto;
     margin-top: 60px;
     height: calc(100% - 120px)
+}
+
+.bottomProfile .innerWidget .ProfileCardBody
+{
+    z-index: 0;
 }

@@ -239,7 +239,7 @@ a:focus, a:hover{
     	}
     	
     	input.form-control::placeholder {
-    	    color: #8c8c8c;
+    	    color: #acacac;
     	}
     	
     	label{
@@ -814,9 +814,9 @@ body{
 }
  @media all and (-ms-high-contrast:none)
      {
-        .react-datepicker__input-container { background-size: 16px 16px; } /* IE10 */
-     *::-ms-backdrop, .react-datepicker__input-container { background-size: 16px 16px; } /* IE11 */
+        .react-datepicker__input-container { background-size: 16px 16px !important; } /* IE10 */
+     *::-ms-backdrop, .react-datepicker__input-container { background-size: 16px 16px !important; } /* IE11 */
      }
 .react-datepicker__input-container input{
-    cursor:pointer;
+    cursor:pointer !important;
 }

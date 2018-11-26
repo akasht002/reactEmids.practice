@@ -687,6 +687,7 @@ class Organization extends React.PureComponent {
                   <Input
                     name='PhoneNumber'
                     label='Phone Number'
+                    PhoneInput="PhoneInput"
                     autoComplete='off'
                     maxlength='15'
                     type='text'

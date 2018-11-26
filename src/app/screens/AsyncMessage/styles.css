@@ -1671,10 +1671,10 @@ margin-bottom: 8px;
 resize:vertical;	
 overflow: auto;	
 }	
- .messageTypeWidget textarea.msgTextArea:focus	
+ /* .messageTypeWidget textarea.msgTextArea:focus	
 {	
     overflow:scroll !important;	
-}
+} */
 
 
 

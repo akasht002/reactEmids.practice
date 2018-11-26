@@ -885,6 +885,7 @@ class PersonalDetail extends React.PureComponent {
                   <Input
                     name='PhoneNumber'
                     label='Phone Number'
+                    PhoneInput="PhoneInput"
                     autoComplete='off'
                     maxlength='10'
                     type='text'
