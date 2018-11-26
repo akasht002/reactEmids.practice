@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import Select from "react-select";
+import _ from 'lodash'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Scrollbars, ProfileModalPopup,Input } from "../../components";
@@ -22,6 +23,7 @@ import { USERTYPES } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference } from "../../redux/telehealth/actions";
 import {  ModalPopup } from '../../components'
+import {MAX_MONTH_LIMIT,IN_MAX_ARRAY,COUNT_BASED_MONTH} from '../../constants/constants'
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -79,12 +81,17 @@ class serviceCalendar extends React.Component {
   };
 
   MonthChange = e => {
+    let selectMonth =  moment().month(e.value).format("M")
+    let  current_year =  moment().year()
+    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
+                parseInt(current_year,10) + 1 : current_year    
     let curDate = moment(this.state.startYear + '-' + moment().month(e.value).format("M") + '- 01',"YYYY-MM-DD")
 
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
-      selectedMonth: e.value
+      selectedMonth: e.value,
+      startYear:year
     });
     this.props.getServiceProviderVists(moment(curDate).format("YYYY-MM-DD"));
   };
@@ -404,7 +411,10 @@ class serviceCalendar extends React.Component {
     let pervious_month = moment.months().splice(current_month - 3, 3);
     let next_month_list = moment.months().splice(current_month, 3);
 
-    let monthLists = pervious_month.concat(next_month_list);
+    let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month,10)]) 
+    let nextMonthLists =  current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
+
+    let monthLists = pervious_month.concat(nextMonthLists)
 
     let monthList = monthLists.map(month => {
       return { label: month.substring(0, 3), value: month };
