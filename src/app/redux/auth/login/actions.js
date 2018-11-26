@@ -1,7 +1,8 @@
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import userManager from '../../../utils/userManager';
-import { onSetUserSuccess } from '../user/actions';
+import { onSetUserSuccess, checkUserData } from '../user/actions';
+import { USER_LOCALSTORAGE, USERTYPES } from '../../../constants/constants';
 
 export const LOGIN = {
     start: 'authentication_start/login',
@@ -42,7 +43,13 @@ export function onLoginFail(){
 
 export function onLogin() {
     return (dispatch) => {
-        dispatch(loginStart());
-        userManager.signinRedirect();
+        let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
+        if (localStorageData && localStorageData.data && localStorageData.data.access_token) {
+            dispatch(checkUserData())
+            dispatch(push(Path.dashboard))
+        } else {
+            dispatch(loginStart());
+            userManager.signinRedirect();
+        }
     }
 }
