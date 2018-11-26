@@ -94,7 +94,7 @@ class VisitServiceDetails extends Component {
 
   checkEligibility = () => {
     const data = {
-      patientId: this.state.patientId,
+      patientId: this.state.visitServiceDetails.patient.patientId,
       serviceRequestId: this.props.ServiceRequestId,
       serviceProviderId: this.state.visitServiceDetails.serviceProviderId
     }
