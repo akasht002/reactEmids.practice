@@ -108,12 +108,14 @@
     "start-demo": "node scripts/start.js --demo",
     "start-hmsademo": "node scripts/start.js --hmsademo",
     "start-pftest": "node scripts/start.js --pftest",
+    "start-uat": "node scripts/start.js --uat",
     "build": "node scripts/build.js",
     "build-qa": "node scripts/build.js --qa",
     "build-dev": "node scripts/build.js --dev",
     "build-demo": "node scripts/build.js --demo",
     "build-hmsademo": "node scripts/build.js --hmsademo",
     "build-pftest": "node scripts/build.js --pftest",
+    "build-uat": "node scripts/build.js --uat",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
