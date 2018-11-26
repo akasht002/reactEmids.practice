@@ -226,7 +226,71 @@ class PersonalDetail extends React.PureComponent {
     })
   }
 
-  render() {   
+  togglePersonalDetails = (action, e) => {
+    this.setState({
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
+      isDiscardModalOpen: false,
+      isValid: true,
+      disabledSaveBtn: !this.state.disabledSaveBtn
+    })
+    let old_data = {
+      firstName: this.props.personalDetail.firstName,
+      lastName: this.props.personalDetail.lastName,
+      age: this.props.personalDetail.age,
+      yearOfExperience: this.props.personalDetail.yearOfExperience,
+      affiliationName: this.props.personalDetail.affiliationName,
+      description: this.props.personalDetail.description,
+      hourlyRate: this.props.personalDetail.hourlyRate,
+      phoneNumber: this.props.personalDetail.phoneNumber,
+    }
+
+    let updated_data = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      age: this.state.age,
+      yearOfExperience: this.state.yearOfExperience,
+      affiliationName: this.state.affiliationName,
+      description: this.state.description,
+      hourlyRate: this.state.hourlyRate,
+      phoneNumber: this.state.phoneNumber,
+    }
+
+    const fieldDifference = _.isEqual(old_data, updated_data)
+
+    if (fieldDifference === true) {
+      this.setState({ certificationModal: false, isDiscardModalOpen: false })
+    } else {
+      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
+    }
+  }
+
+  reset = () => {
+    this.setState({
+      EditPersonalDetailModal: false,
+      isDiscardModalOpen: false,
+      firstName: this.props.personalDetail && this.props.personalDetail.firstName,
+      lastName: this.props.personalDetail && this.props.personalDetail.lastName,
+      age: this.props.personalDetail && this.props.personalDetail.age,
+      yearOfExperience: this.props.personalDetail && this.props.personalDetail.yearOfExperience,
+      affiliationName: this.props.personalDetail && this.props.personalDetail.affiliationName,
+      affiliationId: this.props.personalDetail && this.props.personalDetail.affiliationId,
+      description: this.props.personalDetail && this.props.personalDetail.description,
+      hourlyRate: this.props.personalDetail && this.props.personalDetail.hourlyRate,
+      phoneNumber: this.props.personalDetail && this.props.personalDetail.phoneNumber,
+      firstNameInvaild:false,
+      lastNameInvaild:false,
+      phoneNumberInvalid:false,
+      hourlyRateInvalid: false,
+      disabledSaveBtn: false,
+      isActive: false,
+      selectedAffiliation: {
+        label: this.props.personalDetail && this.props.personalDetail.affiliationName,
+        value: this.props.personalDetail && this.props.personalDetail.affiliationId + '-'+ this.props.personalDetail && this.props.personalDetail.affiliationName
+      },
+    })
+  }
+
+  render() {  
     let modalContent
     let modalTitle = 'Edit Personal Details'
     let modalType = ''
@@ -283,7 +347,8 @@ class PersonalDetail extends React.PureComponent {
           onConfirm={() => this.reset()}
           onCancel={() =>
             this.setState({
-              isDiscardModalOpen: false
+              isDiscardModalOpen: false,
+              disabledSaveBtn: false
             })}
         />
         <ModalPopup
@@ -695,7 +760,8 @@ class PersonalDetail extends React.PureComponent {
               simpleValue
               placeholder='Select the Organization'
               onChange={value => {
-                this.setState({ selectedAffiliation: value,disabledSaveBtn: false })
+                let data = value.split('-');
+                this.setState({ selectedAffiliation: value,disabledSaveBtn: false, affiliationName: data[1] })
               }}
               selectedValue={this.state.selectedAffiliation}
               className='inputFailure ServiceRequestSelect'
@@ -922,61 +988,6 @@ class PersonalDetail extends React.PureComponent {
         </div>
       </div>
     )
-  }
-
-
-  togglePersonalDetails = (action, e) => {
-    this.setState({
-      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
-      isDiscardModalOpen: false,
-      isValid: true,
-      disabledSaveBtn: !this.state.disabledSaveBtn
-    })
-    let old_data = {
-      firstName: this.props.personalDetail.firstName,
-      lastName: this.props.personalDetail.lastName,
-      age: this.props.personalDetail.age,
-      yearOfExperience: this.props.personalDetail.yearOfExperience,
-      description: this.props.personalDetail.description,
-      hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber
-    }
-
-    let updated_data = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      age: this.state.age,
-      yearOfExperience: this.state.yearOfExperience,
-      description: this.state.description,
-      hourlyRate: this.state.hourlyRate,
-      phoneNumber: this.state.phoneNumber
-    }
-
-    const fieldDifference = _.isEqual(old_data, updated_data)
-
-    if (fieldDifference === true) {
-      this.setState({ certificationModal: false, isDiscardModalOpen: false })
-    } else {
-      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
-    }
-  }
-
-  reset = () => {
-    this.setState({
-      EditPersonalDetailModal: false,
-      isDiscardModalOpen: false,
-      firstName: this.props.personalDetail.firstName,
-      lastName: this.props.personalDetail.lastName,
-      age: this.props.personalDetail.age,
-      yearOfExperience: this.props.personalDetail.yearOfExperience,
-      description: this.props.personalDetail.description,
-      hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber,
-      firstNameInvaild:false,
-      lastNameInvaild:false,
-      phoneNumberInvalid:false,
-      hourlyRateInvalid: false
-    })
   }
 }
 
