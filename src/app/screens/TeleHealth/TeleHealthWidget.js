@@ -334,9 +334,15 @@ class TeleHealthWidget extends Component {
             </div>
             sliderCategory.push(cat);
             setTimeout(() => {
+                let container = this.refs['remoteVideo' + participant.sid];
                 tracks.forEach(track => {
-                    if (this.refs['remoteVideo' + participant.sid]) {
-                        this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+                    if (container && 
+                        (
+                            (track.kind === 'audio' && !container.querySelector('audio')) ||
+                            (track.kind === 'video' && !container.querySelector('video'))
+                        )
+                    ) {
+                        container.appendChild(track.attach());
                     }
                 });
             }, 1000)
