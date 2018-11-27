@@ -90,7 +90,7 @@ div.TeleHealthWidget{
 .TeleHealthParticipantSlider{
     bottom: 0;
     padding: 20px 10px;
-    position: absolute;
+    position: absolute !important;
     width: 100%;
     z-index: 2;
 }
@@ -201,6 +201,7 @@ div.TeleHealthWidget{
     height: 90px;
     width: 140px;
     overflow: hidden;
+    margin: 5px;
 }
 
 .TeleHealthVideo{
