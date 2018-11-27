@@ -119,8 +119,10 @@ export const checkUserData = () => {
         let userState = getState().authState.userState;
         let access_token = userState && userState.userData && userState.userData.access_token
         if (!access_token) {
-            let userData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)).data;
-            dispatch(setUserSuccess(userData));
+            let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
+            if (localStorageData) {
+                dispatch(setUserSuccess(localStorageData.data));
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ class PrivateRoute extends Component {
       this.props.checkUserData();
     }
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
-    return (this.props.access_token) || (localStorageData && localStorageData.data && localStorageData.data.access_token);
+    return (localStorageData && localStorageData.data && localStorageData.data.access_token);
   }
 
   renderMethod = () => {
