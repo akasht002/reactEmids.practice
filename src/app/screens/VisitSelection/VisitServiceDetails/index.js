@@ -197,7 +197,7 @@ class VisitServiceDetails extends Component {
   }
 
   showPhoneNumber = () => {
-    let data = this.state.visitServiceDetails;
+    let data = this.props.VisitServiceDetails;
     this.setState({ phoneNumber: data.phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
   };
 
