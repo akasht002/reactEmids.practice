@@ -123,6 +123,11 @@ div.TeleHealthWidget{
     border: 0;
 }
 
+.TeleHealthVideoContainer .TeleHealthParticipantSlider .slick-list {
+    width: 100%;
+    display: block;
+}
+
 .memberType{
     position: absolute;
     bottom: 0px;
