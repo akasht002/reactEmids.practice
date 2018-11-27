@@ -179,7 +179,7 @@ standByTimer(visitProcess) {
         </div>
         <ModalPopup
           isOpen={this.state.showVisitModal}
-          ModalBody={<span>Standby Mode cannot be switched on during a Visit processing.</span>}
+          ModalBody={<span className="default-444">Standby Mode cannot be switched on during a Visit processing.</span>}
           btn1='OK'
           className='modal-sm'
           headerFooter='d-none'
