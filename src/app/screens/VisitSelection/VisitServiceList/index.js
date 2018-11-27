@@ -18,7 +18,9 @@ import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, ge
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
-import Sorting from "../ServiceRequestSorting"
+import Sorting from "../ServiceRequestSorting";
+import { SelectField, Select, Item } from '@zendeskgarden/react-select';
+import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import Pagination from 'react-js-pagination';
@@ -57,7 +59,9 @@ class VisitServiceList extends Component {
             activePage: 1,
             pageNumber: 1,
             pageSize: 15,
-            sort: 'false'
+            sort: 'false',
+            sortByOrder: 'DESC',
+            selectedKey: 'item-1'
         };
         this.sort = false
     };
@@ -106,7 +110,6 @@ class VisitServiceList extends Component {
         }
     }
 
-    /* filter code */
     toggleFilter = () => {
         this.setState({
             filterOpen: !this.state.filterOpen
@@ -257,6 +260,7 @@ class VisitServiceList extends Component {
             serviceStatus: service
         })
     }
+
     handleChangeserviceStatus = (item, e) => {
         let service = this.state.serviceStatus
         if (e.target.checked) {
@@ -275,7 +279,6 @@ class VisitServiceList extends Component {
     }
 
     handleServiceArea = (item) => {
-
         const locations = {
             'lat': item.lat,
             'lon': item.lon,
@@ -289,75 +292,11 @@ class VisitServiceList extends Component {
         })
     }
 
-    /* sorting */
-    toggleclass = (e) => {
-        var element = document.getElementsByClassName("dropdown-menu")[1];
-        if (element.classList.contains('show')) {
-            element.classList.remove("show");
-            element.classList.add("hide");
-        } else {
-            element.classList.add("show");
-            element.classList.remove("hide");
-        }
-
-        var element1 = document.getElementsByClassName("dropdown-item")[0];
-        element1.classList.add("dropdown-item-checked");
-        var element2 = document.getElementsByClassName("dropdown-item")[2];
-        element2.classList.add("dropdown-item-checked");
-    }
-
-    toggleclassoutside = () => {
-        var element = document.getElementsByClassName("dropdown-menu")[1];
-        element.classList.remove("show");
-        element.classList.add("hide");
-    }
-
-    setStatusSort = (selectedElement) => {
-        if (selectedElement === 'PostedDate') { this.PostedDate = !this.PostedDate; this.VisitDate = !this.PostedDate }
-        if (selectedElement === 'VisitDate') { this.VisitDate = !this.VisitDate; this.PostedDate = !this.VisitDate }
-        if (selectedElement === 'Newest') { this.Newest = !this.Newest; this.Oldest = !this.Newest }
-        if (selectedElement === 'Oldest') { this.Oldest = !this.Oldest; this.Newest = !this.Oldest }
-    }
-
-    onSortChange = (e, posted, newest) => {
-        this.setState({ sort: true })
-        {
-            this.Newest ?
-            this.setState({ Newest: 'DESC' })
-            :
-            this.setState({ Newest: 'ASC' })
-        }
-        this.sort = true
-        let selectedElement = e.target.innerHTML.replace(/ /g, '');
-        this.setStatusSort(selectedElement)
-        var data = {
-            sortByOrder: this.Newest ? "DESC" : "ASC",
-            sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "MODIFIEDDATE",
-            pageNumber: 1,
-            PageSize: 15
-        }
-        this.props.getSort(data);
-        let element = document.getElementsByClassName("dropdown-menu")[1];
-        element.classList.remove("show");
-        element.classList.add("hide");
-        this.setState({
-            PostedDate: this.PostedDate,
-            VisitDate: this.VisitDate,
-            Newest: this.Newest,
-            Oldest: this.Oldest
-        });
-        this.props.formDirtyVisitList()
-    };
-
     handleSortPageChange = pageNumber => {
         this.setState({ pageNumber: pageNumber });
-        let sortData = {
-            sortByOrder: this.Newest ? "DESC" : "ASC",
-            sortByColumn: this.PostedDate ? "MODIFIEDDATE" : "MODIFIEDDATE",
-        }
         let data = {
-            sortByOrder: sortData.sortByOrder,
-            sortByColumn: sortData.sortByColumn,
+            sortByOrder: this.state.selectedKey,
+            sortByColumn: "MODIFIEDDATE",
             pageNumber: pageNumber,
             PageSize: 15
         }
@@ -377,6 +316,19 @@ class VisitServiceList extends Component {
         this.props.formDirtyVisitList()
     };
 
+    selectedSort = (selectedKey) => {
+        this.sort = true
+        this.setState({selectedKey: selectedKey})
+        var data = {
+            sortByOrder: selectedKey,
+            sortByColumn: "MODIFIEDDATE",
+            pageNumber: this.state.pageNumber,
+            PageSize: 15
+        }
+        this.props.getSort(data);
+        this.props.formDirtyVisitList();
+      }
+
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
             let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
@@ -391,7 +343,7 @@ class VisitServiceList extends Component {
                 patientImage = require('../../../assets/images/Blank_Profile_icon.png');
             }
             return (
-                <div class='ServiceRequestBoard' key={serviceList.serviceRequestId} onClick={this.toggleclassoutside}>
+                <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card'>
                         <div className="BlockImageContainer" onClick={() =>
                             this.handleClick(serviceList.serviceRequestId)}>
@@ -444,23 +396,37 @@ class VisitServiceList extends Component {
                 patientImage={this.props.profileImgData.image ? this.props.profileImgData.image
                     : require('./avatar/user-5.jpg')}>
                 <div className='ProfileHeaderWidget'>
-                    <div className='ProfileHeaderTitle' onClick={this.toggleclassoutside}>
+                    <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
-                        <Sorting
-                            onSortChange={this.onSortChange}
-                            PostedDate={this.state.PostedDate}
-                            VisitDate={this.state.VisitDate}
-                            Newest={this.state.Newest}
-                            Oldest={this.state.Oldest}
-                            toggleclass={this.toggleclass}
-                        />
+                        <ThemeProvider>
+                            <SelectField>
+                                <Select
+                                    selectedKey={this.state.selectedKey}
+                                    placement='auto'
+                                    onChange={selectedKey => {
+                                        this.setState({ sortByOrder: selectedKey }),
+                                            this.selectedSort(selectedKey)
+                                    }}
+                                    options={[
+                                        <Item disabled className='ListItem disabled' key='item-1'>
+                                            Posted Date
+                                        </Item>,
+                                        <Item className='ListItem' key='DESC'>Newest</Item>,
+                                        <Item className='ListItem' key='ASC'>Oldest</Item>
+                                    ]}
+                                    className='SelectDropDown sorting'
+                                >
+                                    {this.state.selectedKey}
+                                </Select>
+                            </SelectField>
+                        </ThemeProvider>
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
-                    <div className='BoardContainer' onClick={this.toggleclassoutside}>
+                    <div className='BoardContainer'>
                         {visitList}
                     </div>
                     {this.props.visitServiceList.length > 0 && !this.sort && !this.props.FilterDataCount && (
