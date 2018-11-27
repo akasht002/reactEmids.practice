@@ -4,9 +4,10 @@ import React, { Component } from 'react'
 import { Scrollbars, Calendar, Button } from '../../../components'
 import ServiceCategory from "./ServiceCategory";
 import ServiceTypeList from "./ServiceTyplist";
-import { getArrayLength } from '../../../utils/validations'
+import { getArrayLength, checkDateFormatNumber, checkFormatDate } from '../../../utils/validations'
 import {
-  formatDate
+  formatDate,
+  changeDateFormat
 } from '../../../utils/dateUtility';
 import { DATE_FORMAT } from '../../../constants/constants';
 
@@ -157,6 +158,47 @@ class VisitFilter extends Component {
       : this.individualList.splice(index, 1);
       this.setState({isChecked: !this.state.isChecked});
   }
+
+  dateChangedRaw = (event) => { 
+    if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
+      event.preventDefault();
+    } else {
+        let dobVal = document.getElementById('dob');
+        dobVal.value = changeDateFormat(event.target.value);
+        const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
+        if(!formattedDate) {
+          this.setState({
+            searchData: { ...this.state.searchData, dob: formattedDate }
+          })
+        }
+        if (checkFormatDate(dobVal)) {
+          this.setState({dobValid: true})
+        } else {
+          this.setState({ dobValid: false });
+        }
+      }
+    }
+
+    dateChangedRawEndDate = (event) => { 
+      if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
+        event.preventDefault();
+      } else {
+          let dobVal = document.getElementById('dob1');
+          dobVal.value = changeDateFormat(event.target.value);
+          const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
+          if(!formattedDate) {
+            this.setState({
+              searchData: { ...this.state.searchData, dob: formattedDate }
+            })
+          }
+          if (checkFormatDate(dobVal)) {
+            this.setState({dobValid: true})
+          } else {
+            this.setState({ dobValid: false });
+          }
+        }
+      }
+
   render() {
     const serviceCategories = this.props.serviceCategory && this.props.serviceCategory.map(function (type) {
       return { "label": type.serviceCategoryDescription, "value": type.serviceCategoryId };
@@ -248,7 +290,7 @@ class VisitFilter extends Component {
                         moment(this.state.searchData.endDate)
                       }
                       onDateChange={this.dateToChanged}
-                      onDateChangeRaw={this.dateChangedRaw}
+                      onDateChangeRaw={this.dateChangedRawEndDate}
                       mandatory
                       className={'form-control datePicker '}
                       onBlur={() => {

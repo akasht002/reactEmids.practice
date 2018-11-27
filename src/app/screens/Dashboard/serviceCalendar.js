@@ -304,7 +304,7 @@ class serviceCalendar extends React.Component {
 
   getModalContent = (serviceProviderList) => {
     return (
-    <form>
+    <form className="assign-serviceproblock">
       <Input
           id='participantsSearch'
           autoComplete='false'
