@@ -62,6 +62,7 @@ export const pushConversationMessage = (data) => {
 export function getConversationSummaryItemSignalR(conversationId){
     return (dispatch, getState) => {
         let state = getState();
+        dispatch(getDashboardMessageCount());
         if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
             let userId = getUserInfo().serviceProviderId;
             let userType = USERTYPES.SERVICE_PROVIDER;
@@ -334,7 +335,7 @@ export function updateReadStatus(data) {
         AsyncPutWithUrl(API.updateReadStatus + USER_ID + '/' + data.conversationId
             + '/' + USER_TYPE)
             .then(resp => {
-                dispatch(getDashboardMessageCount());
+                dispatch(getDashboardMessageCount());            
                 dispatch(endLoading())
             })
             .catch(err => {

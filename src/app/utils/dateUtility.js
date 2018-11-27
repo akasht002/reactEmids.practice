@@ -9,7 +9,7 @@ export function formatDate(date, dateFormat) {
 }
 
 export function formatDateValue(date, dateFormat) {
-    return getMomentDate(date, dateFormat);
+    return getMomentDate(date, dateFormat).format(dateFormat);
 }
 
 export function changeDateFormat(value) {

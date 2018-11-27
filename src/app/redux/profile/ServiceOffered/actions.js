@@ -29,7 +29,7 @@ export function getServiceOffered() {
     dispatch(startLoading())
     Get(API.getServiceOffered + serviceProviderId + '/Offer/Selected')
       .then(resp => {
-        if(resp.data) {
+        if(resp.data.length > 0) {
           resp.data[0].isOpen = true;
         }
         dispatch(getServicesOfferedSuccess(resp.data));
