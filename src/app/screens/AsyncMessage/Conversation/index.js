@@ -358,7 +358,6 @@ function mapDispatchToProps(dispatch) {
         leaveConversation: (data) => dispatch(leaveConversation(data)),
         pushConversation: (data) => dispatch(pushConversation(data)),
         updateUnreadCount: (data) => dispatch(updateReadStatus(data)),
-        clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation()),
         openedAsyncPage: (data) => dispatch(openedAsyncPage(data)),
         setRemoveParticipantConcurrency: (data ) => dispatch(setRemoveParticipantConcurrency(data)),
     }
