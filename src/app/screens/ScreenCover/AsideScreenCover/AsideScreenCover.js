@@ -74,6 +74,9 @@ class AsideScreenCover extends React.Component {
             case 'logout':
                 this.props.onLogout();
                 break;
+            case 'aboutUs':
+                this.setState({ selectedLink: link })
+                break;
             default:
                 this.setState({ selectedLink: link })
                 this.props.navigateProfileHeader(link);
