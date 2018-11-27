@@ -26,3 +26,78 @@
 .NoInformation .myConversationContent .avatarContainer:after{
     right: 0;
 }
+.assign-serviceproblock
+{
+    display: block;
+    width: 100%;
+}
+.assign-serviceproblock .form-group
+{
+    margin-bottom: 25px;
+}
+
+.assign-serviceproblock .form-group label.m-0
+{
+display: block;
+}
+.assign-serviceproblock .participantsSearchList
+{
+padding: 0;
+display: block;
+width: 100%;
+}
+.assign-serviceproblock .participantsSearchList .CheckboxSet 
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.assign-serviceproblock .participantsSearchList .CheckboxSet label
+{
+    padding: 8px 30px 18px 13px!important;
+}
+.assign-serviceproblock .participantsSearchList .CheckboxSet label:before {
+    right: 0;
+    left: initial;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-size: 15px;
+}
+
+.assign-serviceproblock .participantsSearchList .CheckboxSet .avatarContainer
+{
+width: 6%;
+float: none;
+}
+.assign-serviceproblock .participantsSearchList .CheckboxSet label
+{
+    width: 92%;
+    display: flex;
+    font-size: 14px;
+    text-align: left;
+    color: #2b2b2b;
+}
+
+.assign-serviceproblock>.form-group small:before{
+    content: "";
+    position: absolute;
+    display: block;
+    top: 11px;
+    left: 18px;
+    height: 17px;
+    width: 17px;
+    background-image: url("../../../assets/images/search.png");
+    background-size: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 1024px){
+    .assign-serviceproblock .form-group label.m-0
+    {
+    display:block;
+    margin-top: 15px !important;
+    }
+}
