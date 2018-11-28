@@ -14,7 +14,9 @@ import {
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
-import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea, clearServiceCategory, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus, getFilterDataCount, formDirty } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea,
+     clearServiceCategory, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus, 
+     getFilterDataCount, formDirty } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
