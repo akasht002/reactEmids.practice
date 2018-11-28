@@ -191,7 +191,7 @@ standByTimer(visitProcess) {
         />
         <ModalPopup
           isOpen={this.state.showModalOnTurnOff}
-          ModalBody={<span>Are you sure, you want to turn off the Standby mode and start the Visit Processing?</span>}
+          ModalBody={<span>Are you sure you want to turn off the standby mode?</span>}
           btn1='YES'
           btn2='NO'
           className='modal-sm'
