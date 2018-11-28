@@ -802,11 +802,23 @@ class PersonalDetail extends React.PureComponent {
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
-            maxlength='3'
+            maxlength='7'
             textChange={e => {
-              const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-              this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
-              
+              let onlyNums = e.target.value.replace(/[^0-9.]/g, '')
+              let status =false ;
+              if(onlyNums.length < 7 && !status) {                
+                  this.setState({ hourlyRate: onlyNums, disabledSaveBtn:false, hourlyRateInvalid: false })               
+              } else if (onlyNums.length === 7) {
+                if(onlyNums.indexOf(".")>-1){
+                  if((onlyNums.split('.')[1].length > 1)){
+                   this.setState({ hourlyRate: onlyNums.substr(0,(onlyNums.indexOf(".")+3)),
+                    disabledSaveBtn:false, hourlyRateInvalid: false })
+                  }
+                }else{
+                  this.setState({ hourlyRate: onlyNums.substr(0,3),
+                    disabledSaveBtn:false, hourlyRateInvalid: false })
+                }
+              }
             }
           }
           onBlur={e => {
