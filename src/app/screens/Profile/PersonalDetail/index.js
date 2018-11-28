@@ -225,6 +225,11 @@ class PersonalDetail extends React.PureComponent {
   }
 
   togglePersonalDetails = (action, e) => {
+    if(this.state.selectedAffiliation) {
+      this.setState({
+        isActive: true
+      })
+    }
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,

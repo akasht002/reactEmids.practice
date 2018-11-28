@@ -98,10 +98,10 @@ class BlackoutDays extends Component {
       let { isActive, startDate, endDate, remarks } = item;
       let indexId = item.serviceProviderBlackoutDayId;
       let day = formateDate(startDate, 'dddd');
-      let dateStart = formateDate(startDate, 'MMM DD');
-      let dateEnd = formateDate(endDate, 'MMM DD');
+      let dateStart = formateDate(startDate, 'MMM DD YYYY');
+      let dateEnd = formateDate(endDate, 'MMM DD YYYY');
       let dateEqual = false;
-      let numberOfDays = dateDifference(dateStart,dateEnd);
+      let numberOfDays = dateDifference(dateStart, dateEnd);
       if (startDate === endDate) {
         dateEqual = true;
       }

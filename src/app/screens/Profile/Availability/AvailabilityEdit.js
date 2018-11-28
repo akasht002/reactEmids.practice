@@ -33,7 +33,7 @@ class AvailabilityEdit extends Component {
                 if (selectedSlot.slotName === slot.slotName) {
                     selectedSlot.isActive = true;
                     selectedSlot.slotId = this.state.lookupSlots[slotIndex].slotId;
-                    selectedSlot.availabilityId = slot.availabilityId;
+                    selectedSlot.availabilityId = slot.availabilityId ? slot.availabilityId : 0;
                     selectedSlot.slotName = slot.slotName;
                     selectedSlot.dayId = tempDay.dayId;
                     this.state.availableList.push(selectedSlot);
@@ -43,7 +43,7 @@ class AvailabilityEdit extends Component {
             tempDay.slots.map(selectedSlot => {
                 if (selectedSlot.slotName === slot.slotName) {
                     selectedSlot.isActive = false;
-                    selectedSlot.availabilityId = slot.availabilityId;
+                    selectedSlot.availabilityId = slot.availabilityId ? slot.availabilityId : 0;
                     selectedSlot.slotId = this.state.lookupSlots[slotIndex].slotId;
                     selectedSlot.dayId = tempDay.dayId;
                     this.state.availableList.push(selectedSlot);

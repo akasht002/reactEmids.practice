@@ -809,7 +809,7 @@ div.CertificationModal{
 .SPBlackoutDate{
     display: flex;
     position: relative;
-    width: 135px;
+    width: calc(100% - 360px);
     flex-direction: column;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;

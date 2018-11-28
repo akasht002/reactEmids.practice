@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TabContent, TabPane } from 'reactstrap';
 import { Scrollbars, Calendar } from '../../../../components/LevelOne';
-import { formateStateDate } from "../../../../utils/validations";
+import { formateStateDate, formateStateDateValue } from "../../../../utils/validations";
 import ServiceCategory from "./ServiceCategory";
 import ServiceTypeList from "./ServiceTyplist";
 import ServiceRequestsStatus from "./Status";
@@ -110,7 +110,7 @@ class Filter extends Component {
                                     </div>
                                     <div className="col-md-12 mb-4 p-0">
                                         <Calendar
-                                            startDate={this.props.startDate && formateStateDate(this.props.startDate)}
+                                            startDate={this.props.startDate && formateStateDateValue(this.props.startDate)}
                                             onDateChange={this.props.dateChanged}
                                             onDateChangeRaw={this.props.dateChangedRaw}
                                             mandatory={false}
@@ -122,7 +122,7 @@ class Filter extends Component {
                                     </div>
                                     <div className="col-md-12 mb-4 p-0">
                                         <Calendar
-                                            startDate={this.props.endDate && formateStateDate(this.props.endDate)}
+                                            startDate={this.props.endDate && formateStateDateValue(this.props.endDate)}
                                             onDateChange={this.props.todateChanged}
                                             onDateChangeRaw={this.props.todateChangedRaw}
                                             mandatory={false}
