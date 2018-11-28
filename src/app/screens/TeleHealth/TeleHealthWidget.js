@@ -249,6 +249,7 @@ class TeleHealthWidget extends Component {
 
     participantClick = (participant) => {
         var fullWidthMediaContainer = this.refs.fullWidthMedia;
+        fullWidthMediaContainer.innerHTML = '';
         this.attachParticipantTracks(participant, fullWidthMediaContainer);
         this.setState({ activeParticipantIdentity: participant.identity });
     }
