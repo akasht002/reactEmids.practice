@@ -9,7 +9,14 @@ import TeleHealthVideoControls from './TeleHealthVideoControls';
 import TeleHealthParticipants from './TeleHealthParticipants';
 import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
 import {TeleHealthSettings} from '../../constants/config';
-import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
+import { 
+    leaveVideoConference, 
+    GetAllParticipants, 
+    AddParticipantsToVideoConference, 
+    endConference, 
+    GetParticipantByConferenceId,
+    clearLinkedParticipants
+} from '../../redux/telehealth/actions';
 import './styles.css';
 import './SliderSlick.css';
 import { Path } from '../../routes';
@@ -58,6 +65,7 @@ class TeleHealthWidget extends Component {
         clearInterval(this.interval);
         clearTimeout(this.leaveTimeout);
         clearTimeout(this.inactiveSession);
+        this.props.clearLinkedParticipants();
         if (this.state.hasJoinedRoom) {
             this.leaveRoom(this.state.hasJoinedRoom);
         }
@@ -454,7 +462,8 @@ function mapDispatchToProps(dispatch) {
         endConference: () => dispatch(endConference()),
         getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId()),
         goToDashBoard: () => dispatch(push(Path.dashboard)),
-        setMenuClicked: (data) => dispatch(setMenuClicked(data))
+        setMenuClicked: (data) => dispatch(setMenuClicked(data)),
+        clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
     }
 };
 
