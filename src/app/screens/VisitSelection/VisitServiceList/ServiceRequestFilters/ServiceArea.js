@@ -1,7 +1,11 @@
 import React from "react";
+import _ from 'lodash'
 
 function ServiceArea (props) {
-    var PatientAddress = props.ServiceAreaList && props.ServiceAreaList.map((address,item)=>{
+    let serviceAreaList = props.ServiceAreaList && _.filter(props.ServiceAreaList, function(serviceArea) {
+        return serviceArea.isActive ;
+    });
+    var PatientAddress = serviceAreaList && serviceAreaList.map((address,item)=>{
         let catNum = item + 1;
         return(
             <div className="form-radio AddressCardWidget mb-2">
