@@ -41,7 +41,7 @@ class serviceCalendar extends React.Component {
       EditPersonalDetailModal: false,
       reportDay: moment(today).format(),
       selectedMonth: {
-        label: moment(today).format("MMM"),
+        label: moment(today).format("MMM") + ' ' + moment().year(),
         value: moment(today).format("MMM")
       },
       showMore: false,
@@ -111,7 +111,7 @@ class serviceCalendar extends React.Component {
       reportDay: updatedDay.format(),
       startMonth: updatedDay.format("MMM"),
       selectedMonth: {
-        label: updatedDay.format("MMM"),
+        label: updatedDay.format("MMM") + ' ' + updatedDay.year(),
         value: updatedDay.format("MMM")
       }
     });
@@ -132,7 +132,7 @@ class serviceCalendar extends React.Component {
       reportDay: updatedDay.format(),
       startMonth: updatedDay.format("MMM"),
       selectedMonth: {
-        label: updatedDay.format("MMM"),
+        label: updatedDay.format("MMM") + ' ' + updatedDay.year(),
         value: updatedDay.format("MMM")
       }
     });
@@ -146,7 +146,7 @@ class serviceCalendar extends React.Component {
       startMonth: moment(today).format("MMM"),
       currentDate: moment().format("DD"),
       selectedMonth: {
-        label: moment(today).format("MMM"),
+        label: moment(today).format("MMM") + ' ' + moment(today).year(),
         value: moment(today).format("MMM")
       }
     });
@@ -161,7 +161,7 @@ class serviceCalendar extends React.Component {
       startYear: getDate.format("YYYY"),
       startMonth: getDate.format("MMM"),
       selectedMonth: {
-        label: getDate.format("MMM"),
+        label: getDate.format("MMM") + ' ' + getDate.year(),
         value: getDate.format("MMM")
       },
       currentDate: getDate.format("DD")
@@ -417,7 +417,11 @@ class serviceCalendar extends React.Component {
     let monthLists = pervious_month.concat(nextMonthLists)
 
     let monthList = monthLists.map(month => {
-      return { label: month.substring(0, 3), value: month };
+      let selectMonth =  moment().month(month).format("M")
+      let  current_year =  moment().year()
+      let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
+                parseInt(current_year,10) + 1 : current_year
+      return { label: month.substring(0, 3) + ' ' + year, value: month };
     });
     let dateList = dates.map((daysMapping, i) => {
       let className = "";
@@ -510,7 +514,7 @@ class serviceCalendar extends React.Component {
                 onChange={this.MonthChange}
                 value={this.state.selectedMonth}
               />
-              <span>{this.state.startYear}</span>
+              {/* <span>{this.state.startYear}</span> */}
             </div>
             <div className="todayPalette">
               <span
