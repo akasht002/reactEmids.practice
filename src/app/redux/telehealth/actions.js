@@ -20,7 +20,15 @@ export const TeleHealth = {
     invitaionCame: 'invitaion_came/telehealth',
     clearInvitaion: 'clear_invitaion/telehealth',
     setInitiator: 'setInitiator/telehealth',
-    saveContextData: 'saveContextData/telehealth'
+    saveContextData: 'saveContextData/telehealth',
+    setInvitedRoomId: 'setInvitedRoomId/telehealth'
+};
+
+export const setInvitedRoomId = data =>{
+    return{
+        type: TeleHealth.setInvitedRoomId,
+        data
+    }
 };
 
 export const generateTokenSuccess = (data) => {
@@ -239,9 +247,10 @@ export function GetAllParticipants(data) {
 
 export function endConference() {
     return (dispatch, getState) => {
-        let state = getState().telehealthState;
+        let telehealthState = getState().telehealthState;
+        let state = getState();
         dispatch(startLoading());
-        AsyncPost(API.endConference + state.roomId).then((resp) => {
+        AsyncPost(API.endConference + telehealthState.roomId).then((resp) => {
             if (state.authState.userState.menuClicked) {
                 if (state.authState.userState.menuClicked === 'logout') {
                     dispatch(onLogout())
@@ -344,7 +353,11 @@ export function checkTeleHealth(data) {
                 if (data.userId !== userId) {
                     data.participantList && data.participantList.map((participant) => {
                         if (participant.participantType === 'S' && userId === participant.userId) {
-                            dispatch(setRoomId(data.roomID));
+                            // if (teleHealthState.token) {
+                            //     dispatch(setInvitedRoomId(data.roomID))
+                            // } else {
+                                dispatch(setRoomId(data.roomID));
+                            //}
                             dispatch(setInitiator({
                                 userFirstName: data.userFirstName,
                                 userLastName: data.userLastName
@@ -354,33 +367,6 @@ export function checkTeleHealth(data) {
                     })
                 }
                 if (teleHealthState.roomId === data.roomID) {
-                    //let participantFound = false;
-                    // let existingParticipants = teleHealthState.participantsByConferenceId.map((existingParticipant) => {
-                    //     data.participantList && data.participantList.map((participant) => {
-                    //         if(existingParticipant.userId === participant.userId && 
-                    //         existingParticipant.userType === participant.userType &&
-                    //         (existingParticipant.status === 'Rejected' ||
-                    //         existingParticipant.status === 'Left')) {
-                    //             participantFound = true;
-                    //         }
-                    //     });
-                    //     if (participantFound) {
-                    //         participantFound = false;
-                    //         return {
-                    //             ...existingParticipant,
-                    //             status: 'Invited'
-                    //         }
-                    //     } else {
-                    //         return {
-                    //             ...existingParticipant
-                    //         }
-                    //     }
-                    // });
-                    // data.participantList.filter(() => {
-                    //     return {
-
-                    //     }
-                    // });
                     let modifiedParticipants = data.participantList && data.participantList.map((participant) => {
                         return {
                             ...participant,
