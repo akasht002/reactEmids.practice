@@ -38,7 +38,8 @@ class WorkHistory extends Component {
             disabledSaveBtn: true,
             isValidDate: true,
             isDiscardModalOpen: false
-        }
+        };
+        this.isDisableCurrentlyWorking = true;
     }
 
     componentDidMount() {
@@ -143,7 +144,7 @@ class WorkHistory extends Component {
 
     addWorkhistory = () => {
         this.setState({ workHistoryId: 0 })
-        if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate)) {
+        if (checkSpace(this.state.designation) && checkSpace(this.state.company) && (this.state.fromDate) && ((this.state.toDate || this.state.currentlyWorking))) {
 
             const data = {
                 workHistoryId: 0,
@@ -173,7 +174,7 @@ class WorkHistory extends Component {
     }
 
     updateWorkHistory = () => {
-        if (this.state.designation && this.state.company && this.state.fromDate && this.state.toDate) {
+        if (this.state.designation && this.state.company && this.state.fromDate && (this.state.toDate || this.state.currentlyWorking)) {
             {
                 this.state.currentlyWorking ?
                 this.setState({ toDate: '' })
@@ -249,10 +250,21 @@ class WorkHistory extends Component {
     render() {
         let modalContent;
         let modalTitle;
-
-        let isShowWorkHistory = this.props.workhistoryList.every(history => {
-            return history.currentlyWorking === false;
-        });
+        if(this.state.isAdd) {
+            this.isDisableCurrentlyWorking = this.props.workhistoryList.every(history => {
+                return history.currentlyWorking === false;
+            });
+        } else {
+           let working = this.props.workhistoryList.every(history => {
+                return history.currentlyWorking === false;
+            });
+            if(working) {
+                this.isDisableCurrentlyWorking = true;
+            } else {
+                this.isDisableCurrentlyWorking = this.props.workhistoyFieldDetails.currentlyWorking;
+            }
+            
+        }
         const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
                 <div className="col-md-12 mb-2">
@@ -346,9 +358,9 @@ class WorkHistory extends Component {
                     <div className="col-md-12 mb-3">
                     <div className="form-check">
                         <label className="form-check-label">
-                            <input className="form-check-input" type="checkbox" checked={this.state.currentlyWorking} id="defaultCheck1"
+                            <input className="form-check-input" type="checkbox" disabled={!this.isDisableCurrentlyWorking} checked={this.state.currentlyWorking} id="defaultCheck1"
                                 onChange={(e) => 
-                                    this.setState({ currentlyWorking: e.target.checked, disabledSaveBtn: false, toDate: moment(new Date())}
+                                    this.setState({ currentlyWorking: e.target.checked, disabledSaveBtn: false, toDate: ''}
                                 )}
                             />
                             I am currently working here
@@ -397,7 +409,7 @@ class WorkHistory extends Component {
                             </span>
 
                                <span> - </span>
-                                 {WorkHistoryList.toDate === '01-01-1900' ?
+                                 {WorkHistoryList.currentlyWorking === true ?
                                     <span>Present</span>
                                     :
                                     <span> { /* to do change removing className="ml-2" */}
@@ -497,8 +509,6 @@ class WorkHistory extends Component {
             </div>
         )
     }
-
-
 }
 
 function mapDispatchToProps(dispatch) {

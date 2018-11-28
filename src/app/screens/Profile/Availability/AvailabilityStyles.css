@@ -11,7 +11,7 @@
     display: -ms-flexbox;
     display: flex;
     position: relative;
-    width: 200px;
+    width: calc(100% - 360px);
     flex-direction: row !important;
 }
 

@@ -832,6 +832,15 @@ color: #444;
 }
 
 
+.ProfileHeaderWidget .ProfileHeaderOptions span.ProfileHeaderFilter
+{
+    position: relative;
+    margin-left: 15px;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+
 
 
 @media (min-width: 1367px) {

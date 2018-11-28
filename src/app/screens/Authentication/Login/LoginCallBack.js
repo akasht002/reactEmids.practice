@@ -12,10 +12,14 @@ class LoginCallBack extends Component {
         <CallbackComponent
           userManager={ userManager }
           successCallback={(data) => {
-            this.props.onLoginSuccess(data);
+            if (data.access_token) {
+              this.props.onLoginSuccess(data);
+            } else {
+              this.props.onLoginFail();
+            }
           }}
           errorCallback={error => {
-            this.props.onLoginFail();
+            console.log(error)
           }}>
           <div>Redirecting...</div>
         </CallbackComponent>

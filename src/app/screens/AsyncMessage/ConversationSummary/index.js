@@ -9,7 +9,8 @@ import {
     getUnreadMessageCounts,
     CanServiceProviderCreateMessage,
     getConversationCount,
-    openedAsyncPage
+    openedAsyncPage,
+    ClearCurrentOpenConversation
 } from '../../../redux/asyncMessages/actions';
 import MessageList from './MessageList';
 import ParticipantsContainer from './ParticipantsContainer';
@@ -38,6 +39,7 @@ class ConversationSummary extends Component {
         this.props.getUnreadMsgCounts();
         this.props.canServiceProviderCreateMessage();
         this.props.openedAsyncPage('conversationSummary');
+        this.props.clearCurrentOpenConversation();
     };
     
     componentWillUnmount(){
@@ -161,7 +163,8 @@ function mapDispatchToProps(dispatch) {
         getUnreadMsgCounts: () => dispatch(getUnreadMessageCounts()),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
         getConversationCount: () => dispatch(getConversationCount()),
-        openedAsyncPage: (data) => dispatch(openedAsyncPage(data))
+        openedAsyncPage: (data) => dispatch(openedAsyncPage(data)),
+        clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation()),
     }
 };
 

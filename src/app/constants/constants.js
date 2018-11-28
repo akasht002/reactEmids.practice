@@ -11,7 +11,7 @@ export const AFTERNOON = "Afternoon";
 export const EVENING = "Evening";
 export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
 
-export const USER_LOCALSTORAGE = "userData";
+export const USER_LOCALSTORAGE = "CoreoSP";
 export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
 export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
 export const HIRED_STATUS_ID  = 38;
@@ -146,3 +146,5 @@ export const serviceTypesImage = {
 
 export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_NUMBER = 1;
+
+export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];

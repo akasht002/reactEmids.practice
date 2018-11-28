@@ -14,7 +14,8 @@ const defaultState = {
     isInvitationCame: false,
     initiatorFirstName: '',
     initiatorLastName: '',
-    contextId: 0
+    contextId: 0,
+    invitedRoomId: ''
 };
 
 const telehealthState = (state = defaultState, action) => {
@@ -83,6 +84,11 @@ const telehealthState = (state = defaultState, action) => {
             return {
                 ...state,
                 contextId: action.data
+            }
+        case TeleHealth.setInvitedRoomId:
+            return {
+                ...state,
+                invitedRoomId: action.data
             }
         default:
             return state;
