@@ -39,7 +39,7 @@ class ConversationSummary extends Component {
         this.props.getUnreadMsgCounts();
         this.props.canServiceProviderCreateMessage();
         this.props.openedAsyncPage('conversationSummary');
-        this.props.ClearCurrentOpenConversation();
+        this.props.clearCurrentOpenConversation();
     };
     
     componentWillUnmount(){
