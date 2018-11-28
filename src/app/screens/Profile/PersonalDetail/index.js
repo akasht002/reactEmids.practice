@@ -225,16 +225,13 @@ class PersonalDetail extends React.PureComponent {
   }
 
   togglePersonalDetails = (action, e) => {
-    if(this.state.selectedAffiliation) {
-      this.setState({
-        isActive: true
-      })
-    }
+   let checkStatus = this.checkAffiliationValue(this.state.selectedAffiliation.label);
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: !this.state.disabledSaveBtn
+      disabledSaveBtn: !this.state.disabledSaveBtn,
+      isActive: checkStatus
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,
@@ -264,6 +261,14 @@ class PersonalDetail extends React.PureComponent {
       this.setState({ certificationModal: false, isDiscardModalOpen: false })
     } else {
       this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
+    }
+  }
+
+  checkAffiliationValue = value => {
+    if(value !== '' && value !== null && value !== undefined) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -744,7 +749,7 @@ class PersonalDetail extends React.PureComponent {
                 type='checkbox'
                 maxLength='100'
                 onClick={e => {
-                  this.setState({ isActive: e.target.checked, disabledSaveBtn: false })
+                  this.setState({ isActive: e.target.checked, disabledSaveBtn: false, selectedAffiliation: '' })
                 }}
                 defaultChecked={this.state.isActive}
               />
