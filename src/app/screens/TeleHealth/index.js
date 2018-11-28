@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 import TeleHealthWidget from './TeleHealthWidget';
-import { generateToken, GetParticipantByConferenceId, clearLinkedParticipants, clearRoom  } from '../../redux/telehealth/actions';
+import { generateToken, clearRoom  } from '../../redux/telehealth/actions';
 import './styles.css';
 
 class TeleHealth extends Component {
@@ -28,7 +28,6 @@ class TeleHealth extends Component {
     }
 
     componentWillUnmount() {
-        this.props.clearLinkedParticipants();
         this.props.clearRoom();
     }
 
@@ -77,7 +76,6 @@ class TeleHealth extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         generateToken: () => dispatch(generateToken()),
-        clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
         clearRoom: () => dispatch(clearRoom())
     }
 }
