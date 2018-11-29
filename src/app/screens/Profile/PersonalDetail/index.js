@@ -48,7 +48,8 @@ class PersonalDetail extends React.PureComponent {
         width: 80,
         height: 80
       }     
-    }
+    };
+    this.isImageSave = false;
   }
 
   componentDidMount() {
@@ -60,12 +61,9 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      imageProfile: nextProps.profileImgData.image,
-      uploadedImageFile: nextProps.profileImgData.image
-        ? nextProps.profileImgData.image
-        : require('../../../assets/images/Blank_Profile_icon.png'),
-      firstName: nextProps.personalDetail.firstName,
+    if(this.isImageSave === false) {
+      this.setState({
+        firstName: nextProps.personalDetail.firstName,
       lastName: nextProps.personalDetail.lastName,
       age: nextProps.personalDetail.age,
       genderName: nextProps.personalDetail.genderName,
@@ -112,6 +110,14 @@ class PersonalDetail extends React.PureComponent {
       ? nextProps.personalDetail.address[0].addressId:0,
       addressTypeId:getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressTypeId != null
       ? nextProps.personalDetail.address[0].addressTypeId:2
+      })
+    };
+
+    this.setState({
+      imageProfile: nextProps.profileImgData.image,
+      uploadedImageFile: nextProps.profileImgData.image
+        ? nextProps.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
     })
     this.styles = {
       height: 100,
@@ -174,6 +180,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   onSubmit = () => {
+    this.isImageSave = false;
     if (
       this.state.firstName === '' ||
       this.state.lastName === '' ||
@@ -211,6 +218,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   saveImageUpload = () => {
+    this.isImageSave = true;
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -273,6 +281,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   reset = () => {
+    this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: false,
       isDiscardModalOpen: false,
