@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_YEAR, serviceTypesImage } from '../constants/constants'
+import { DATE_FORMAT, DATE_FORMAT_MONTH, DATE_YEAR, serviceTypesImage } from '../constants/constants'
 import _ from 'lodash'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
@@ -67,6 +67,10 @@ export function formateStateDate (date) {
 
 export function formateStateDateValue (date) {
   return date ? moment(date, DATE_FORMAT) : null
+}
+
+export function formateDateValue (date) {
+  return date ? moment(date, DATE_FORMAT_MONTH).format(DATE_FORMAT_MONTH) : null
 }
 
 export function formateYearDate () {
