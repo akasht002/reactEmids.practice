@@ -4,7 +4,7 @@ function EntityUserMyConversionDefault(){
 
     let initConversations = []
   
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 1; i++) {
       initConversations.push(<Fragment>
         {
           <li className="list-group-item NoInformation myConversationContainer">
