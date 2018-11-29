@@ -66,7 +66,10 @@ class VisitServiceDetails extends Component {
       patientId: '',
       serviceType: '',
       isOpen: false,
-      isAlertModalopenConfirm: false
+      isAlertModalopenConfirm: false,
+      conversationsModal: false,
+      canInitiateConversation: false,
+      conversationErrMsg: ''
     }
     this.alertModalMsg = ''
     this.status = {}
@@ -75,9 +78,9 @@ class VisitServiceDetails extends Component {
 
   componentDidMount() {
     if (this.props.ServiceRequestId) {
-      this.props.getVisitServiceDetails(this.props.ServiceRequestId)
-      this.props.getVisitServiceSchedule(this.props.ServiceRequestId)
-      this.props.getDays()
+      this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+      this.props.getVisitServiceSchedule(this.props.ServiceRequestId);
+      this.props.getDays();
     } else {
       this.props.history.push(Path.visitServiceList)
     }
@@ -91,7 +94,7 @@ class VisitServiceDetails extends Component {
         nextProps.VisitServiceDetails.patientId,
       serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
         nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
-          .serviceRequestTypeDetailsId
+          .serviceRequestTypeDetailsId,
     })
   }
 
@@ -208,37 +211,51 @@ class VisitServiceDetails extends Component {
   };
 
   onClickConversation = () => {
-    let userId = getUserInfo().serviceProviderId;
-    let item = this.state.visitServiceDetails;
-    let selectedParticipants = [{
-      userId: item.patient.patientId,
-      participantType: USERTYPES.PATIENT
-    }];
+    if (!this.props.initiateConversation) {
+      this.setState({ 
+        conversationsModal: true,
+        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests.' 
+      })
+    } else {
+      let userId = getUserInfo().serviceProviderId;
+      let item = this.state.visitServiceDetails;
+      let selectedParticipants = [{
+        userId: item.patient.patientId,
+        participantType: USERTYPES.PATIENT
+      }];
 
-    let loggedInUser = {
-      userId: userId,
-      participantType: USERTYPES.SERVICE_PROVIDER
+      let loggedInUser = {
+        userId: userId,
+        participantType: USERTYPES.SERVICE_PROVIDER
+      }
+
+      selectedParticipants.push(loggedInUser);
+      let data = {
+        participantList: selectedParticipants,
+        createdBy: userId,
+        createdByType: loggedInUser.participantType,
+        title: '',
+        context: item.patient.patientId
+      };
+      this.props.createNewConversation(data);
     }
-
-    selectedParticipants.push(loggedInUser);
-    let data = {
-      participantList: selectedParticipants,
-      createdBy: userId,
-      createdByType: loggedInUser.participantType,
-      title: '',
-      context: item.patient.patientId
-    };
-    this.props.createNewConversation(data);
   };
 
 
   onClickVideoConference = () => {
-    let item = this.state.visitServiceDetails;
-    let selectedParticipants = [{
-      userId: item.patient.patientId,
-      participantType: USERTYPES.PATIENT
-    }];
-    this.props.createVideoConference(selectedParticipants);
+    if (!this.props.initiateConversation) {
+      this.setState({ 
+        conversationsModal: true,
+        conversationErrMsg: 'You cannot initiate a video call as you have no current service requests'
+      })
+    } else {
+      let item = this.state.visitServiceDetails;
+      let selectedParticipants = [{
+        userId: item.patient.patientId,
+        participantType: USERTYPES.PATIENT
+      }];
+      this.props.createVideoConference(selectedParticipants);
+    }
   };
 
 
@@ -406,7 +423,7 @@ class VisitServiceDetails extends Component {
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
                   <span className='HeaderBackWrapper CursorPointer'>
-                    <Link className='HeaderBackButton' to="/visitServiceList"></Link>
+                    <a className='HeaderBackButton' onClick={this.props.goBack}></a>
                   </span>
                   <span className='HeaderRequestLabel'>
                     Request ID
@@ -418,13 +435,13 @@ class VisitServiceDetails extends Component {
                   </span>
                 </div>
                 <div className='ProfileHeaderButton'>
-                 { !getUserInfo().isEntityServiceProvider && <ServiceStatus
+                  {!getUserInfo().isEntityServiceProvider && <ServiceStatus
                     status={{
                       id: this.state.visitServiceDetails.statusId,
                       name: this.state.visitServiceDetails.statusName
                     }}
                     postServiceRequest={this.postServiceRequest}
-                  /> }
+                  />}
                 </div>
               </section>
               <section class='LeftPalette'>
@@ -686,7 +703,7 @@ class VisitServiceDetails extends Component {
                                           this.visitProcessing(
                                             ScheduleList.serviceRequestVisitId
                                           )}
-                                          disabled={!isFutureDay(ScheduleList.visitDate)}
+                                        disabled={!isFutureDay(ScheduleList.visitDate)}
                                       >
                                         Start Visit
                                       </button>
@@ -776,6 +793,19 @@ class VisitServiceDetails extends Component {
                 phoneNumberModal: false
               })}
           />
+          <ModalPopup
+            isOpen={this.state.conversationsModal}
+            ModalBody={<span> {this.state.conversationErrMsg} </span>}
+            btn1='OK'
+            className='modal-sm'
+            headerFooter='d-none'
+            footer='d-none'
+            centered='centered'
+            onConfirm={() =>
+              this.setState({
+                conversationsModal: false
+              })}
+          />
         </Scrollbars>
       </AsideScreenCover>
     )
@@ -803,7 +833,6 @@ function mapDispatchToProps(dispatch) {
     formDirty: () => dispatch(formDirty()),
     formDirtyFeedback: () => dispatch(formDirtyFeedback()),
     formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),
-    //getSummaryPage: () => dispatch(push(Path.summary)),
     getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
     getSavedSignature: (data) => dispatch(getSavedSignature(data)),
     getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
@@ -826,7 +855,9 @@ function mapStateToProps(state) {
       .VisitServiceDetailsState.updateServiceRequestMsgStatus,
     VisitServiceElibilityStatus: state.visitSelectionState
       .VisitServiceDetailsState.VisitServiceElibilityStatus,
-    daysType: state.visitSelectionState.VisitServiceDetailsState.daysType
+    daysType: state.visitSelectionState.VisitServiceDetailsState.daysType,
+    initiateConversation: state.visitSelectionState.VisitServiceDetailsState
+      .canInitiateConversation,
   }
 }
 

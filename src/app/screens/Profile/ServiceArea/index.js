@@ -420,7 +420,7 @@ class ServiceArea extends Component {
         <ModalPopup
           isOpen={this.state.showModalOnDelete}
           ModalBody={
-            <span>Do you really want to remove this Service Area detail ?</span>
+            <span>Do you really want to remove this service area?</span>
           }
           btn1='YES'
           btn2='NO'

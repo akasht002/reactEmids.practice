@@ -48,7 +48,8 @@ class PersonalDetail extends React.PureComponent {
         width: 80,
         height: 80
       }     
-    }
+    };
+    this.isImageSave = false;
   }
 
   componentDidMount() {
@@ -60,12 +61,9 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      imageProfile: nextProps.profileImgData.image,
-      uploadedImageFile: nextProps.profileImgData.image
-        ? nextProps.profileImgData.image
-        : require('../../../assets/images/Blank_Profile_icon.png'),
-      firstName: nextProps.personalDetail.firstName,
+    if(this.isImageSave === false) {
+      this.setState({
+        firstName: nextProps.personalDetail.firstName,
       lastName: nextProps.personalDetail.lastName,
       age: nextProps.personalDetail.age,
       genderName: nextProps.personalDetail.genderName,
@@ -112,6 +110,14 @@ class PersonalDetail extends React.PureComponent {
       ? nextProps.personalDetail.address[0].addressId:0,
       addressTypeId:getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressTypeId != null
       ? nextProps.personalDetail.address[0].addressTypeId:2
+      })
+    };
+
+    this.setState({
+      imageProfile: nextProps.profileImgData.image,
+      uploadedImageFile: nextProps.profileImgData.image
+        ? nextProps.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
     })
     this.styles = {
       height: 100,
@@ -174,6 +180,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   onSubmit = () => {
+    this.isImageSave = false;
     if (
       this.state.firstName === '' ||
       this.state.lastName === '' ||
@@ -211,6 +218,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   saveImageUpload = () => {
+    this.isImageSave = true;
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -231,7 +239,13 @@ class PersonalDetail extends React.PureComponent {
       isDiscardModalOpen: false,
       isValid: true,
       disabledSaveBtn: !this.state.disabledSaveBtn,
-      isActive: checkStatus
+      isActive: checkStatus,
+      isStreetInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      zipCode: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].zipCode,
+      city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
+      streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,
@@ -241,7 +255,7 @@ class PersonalDetail extends React.PureComponent {
       affiliationName: this.props.personalDetail.affiliationName,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber,
+      phoneNumber: this.props.personalDetail.phoneNumber
     }
 
     let updated_data = {
@@ -273,6 +287,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   reset = () => {
+    this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: false,
       isDiscardModalOpen: false,
@@ -285,11 +300,17 @@ class PersonalDetail extends React.PureComponent {
       description: this.props.personalDetail && this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail && this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail && this.props.personalDetail.phoneNumber,
+      city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
+      streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress,
+      zipCode: this.props.personalDetail && this.props.personalDetail.address[0] &&this.props.personalDetail.address[0].zipCode,
       firstNameInvaild:false,
       lastNameInvaild:false,
       phoneNumberInvalid:false,
       hourlyRateInvalid: false,
       disabledSaveBtn: false,
+      isCityInvalid: false,
+      isStreetInvalid: false,
+      isZipInvalid: false,
       isActive: false,
       selectedAffiliation: {
         label: this.props.personalDetail && this.props.personalDetail.affiliationName,
@@ -304,9 +325,10 @@ class PersonalDetail extends React.PureComponent {
     let modalType = ''
     const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
       return {label :  city.name ,value:city.id + '-' + city.name}
-    })
-    const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
-      return {label :  gender.name ,value:gender.id + '-' + gender.name}
+    });
+    let genderList = this.props.genderList.slice(0, 2);
+    const genderDetail = genderList && genderList.map((gender, i) => {
+        return {label :  gender.name ,value:gender.id + '-' + gender.name}
     })
     const affiliationDetail = this.props.affiliationList && this.props.affiliationList.map((affiliation, i) => {
       return {label :  affiliation.name ,value:affiliation.affiliationId + '-' + affiliation.name}
@@ -356,7 +378,8 @@ class PersonalDetail extends React.PureComponent {
           onCancel={() =>
             this.setState({
               isDiscardModalOpen: false,
-              disabledSaveBtn: false
+              disabledSaveBtn: false,
+              isActive: true
             })}
         />
         <ModalPopup

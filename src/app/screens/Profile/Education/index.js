@@ -355,13 +355,14 @@ class Education extends React.Component {
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
+                        disabledSaveBtn: false
                     })}
                 />
 
 
                 <ModalPopup
                     isOpen={this.state.showModalOnDelete}
-                    ModalBody={<span>Do you really want to remove the Education details</span>}
+                    ModalBody={<span>Do you really want to remove the education details?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"

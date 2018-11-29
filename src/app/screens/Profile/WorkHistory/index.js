@@ -207,9 +207,8 @@ class WorkHistory extends Component {
 
     dateChanged = (date) => {
         const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
-        this.setState({ fromDate: formattedDate, disabledSaveBtn: false, toDate: null });
-        
-    }
+        this.setState({ fromDate: formattedDate, disabledSaveBtn: false });
+    };
 
     dateChangedRaw = (event) => { 
         if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
@@ -328,7 +327,7 @@ class WorkHistory extends Component {
                             onDateChange={this.dateChanged}
                             onDateChangeRaw={this.dateChangedRaw}
                             mandatory={true}
-                            maxDate={moment()}
+                            maxDate={this.state.toDate? formateStateDate(this.state.toDate) : moment()}
                             value={this.state.fromDate}
                             className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate)) && 'inputFailure')}
                          />
@@ -490,12 +489,13 @@ class WorkHistory extends Component {
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
+                        disabledSaveBtn: false
                     })}
                 />
 
                 <ModalPopup
                     isOpen={this.state.isOnDeleteModalOpen}
-                    ModalBody={<span>Do you really want to remove the Work History details</span>}
+                    ModalBody={<span>Do you really want to remove the work history entry?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"

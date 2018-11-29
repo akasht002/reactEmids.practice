@@ -16,7 +16,7 @@ export const EntityMenuData = [
     },
     {
         id: 3,
-        title: 'My Settings',
+        title: 'Settings',
         iconName: 'iconProfile iconProfileMySettings',
         link: '/visitNotificationSettings',
         name: SCREENS.NOTIFICATIONS

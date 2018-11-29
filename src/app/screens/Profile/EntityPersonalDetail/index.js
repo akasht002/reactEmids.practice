@@ -24,6 +24,7 @@ import {
 import { Details, ProfileImageDetail } from './Details'
 import { SETTING } from '../../../services/api'
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import ImageModal from '../PersonalDetail/ImageModal';
 
 class EntityPersonalDetail extends React.PureComponent {
   constructor (props) {
@@ -42,7 +43,8 @@ class EntityPersonalDetail extends React.PureComponent {
         width: 80,
         height: 80
       }
-    }
+    };
+    this.isImageSave = false;
   }
 
   componentDidMount () {
@@ -53,60 +55,64 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.setState({
-      imageProfile: nextProps.profileImgData.image,
-      firstName: nextProps.personalDetail.firstName,
-      lastName: nextProps.personalDetail.lastName,
-      age: nextProps.personalDetail.age,
-      genderName: nextProps.personalDetail.genderName,
-      organization: nextProps.personalDetail.organization,
-      yearOfExperience: nextProps.personalDetail.yearOfExperience,
-      description: nextProps.personalDetail.description,
-      hourlyRate: nextProps.personalDetail.hourlyRate,
-      url:nextProps.personalDetail.entity  && nextProps.personalDetail.entity.websiteUrl,
-      assigned_by: nextProps.personalDetail.entity  && nextProps.personalDetail.entity.assignedBy,
-      city: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].city
-        : '',
-      streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].streetAddress
-        : '',
-      zipCode: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].zipCode
-        : '',
-      phoneNumber: nextProps.personalDetail.phoneNumber,
-      state_id: getArrayLength(nextProps.personalDetail.address) > 0 &&
-        nextProps.personalDetail.address[0].state != null
-        ? nextProps.personalDetail.address[0].state.id
-        : '',
-      isActive: false,
-      selectedGender: {
-        label: nextProps.personalDetail.genderName,
-        value: nextProps.personalDetail.genderId +
-          '-' +
-          nextProps.personalDetail.genderName
-      },
-      selectedState: {
-        label: getArrayLength(nextProps.personalDetail.address) > 0 &&
-          nextProps.personalDetail.address[0].state != null
-          ? nextProps.personalDetail.address[0].state.name
+    if(this.isImageSave === false) {
+      this.setState({
+        firstName: nextProps.personalDetail.firstName,
+        lastName: nextProps.personalDetail.lastName,
+        age: nextProps.personalDetail.age,
+        genderName: nextProps.personalDetail.genderName,
+        organization: nextProps.personalDetail.organization,
+        yearOfExperience: nextProps.personalDetail.yearOfExperience,
+        description: nextProps.personalDetail.description,
+        hourlyRate: nextProps.personalDetail.hourlyRate,
+        url:nextProps.personalDetail.entity  && nextProps.personalDetail.entity.websiteUrl,
+        assigned_by: nextProps.personalDetail.entity  && nextProps.personalDetail.entity.assignedBy,
+        city: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].city
           : '',
-        value: getArrayLength(nextProps.personalDetail.address) > 0 &&
+        streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].streetAddress
+          : '',
+        zipCode: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].zipCode
+          : '',
+        phoneNumber: nextProps.personalDetail.phoneNumber,
+        state_id: getArrayLength(nextProps.personalDetail.address) > 0 &&
           nextProps.personalDetail.address[0].state != null
           ? nextProps.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
-              nextProps.personalDetail.address[0].state != null
-              ? nextProps.personalDetail.address[0].state.name
-              : ''
-      },
-      addressId: getArrayLength(nextProps.personalDetail.address) > 0 &&
-        nextProps.personalDetail.address[0].addressId != null
-        ? nextProps.personalDetail.address[0].addressId
-        : 0,
-      addressTypeId: getArrayLength(nextProps.personalDetail.address) > 0 &&
-        nextProps.personalDetail.address[0].addressTypeId != null
-        ? nextProps.personalDetail.address[0].addressTypeId
-        : 2
+          : '',
+        isActive: false,
+        selectedGender: {
+          label: nextProps.personalDetail.genderName,
+          value: nextProps.personalDetail.genderId +
+            '-' +
+            nextProps.personalDetail.genderName
+        },
+        selectedState: {
+          label: getArrayLength(nextProps.personalDetail.address) > 0 &&
+            nextProps.personalDetail.address[0].state != null
+            ? nextProps.personalDetail.address[0].state.name
+            : '',
+          value: getArrayLength(nextProps.personalDetail.address) > 0 &&
+            nextProps.personalDetail.address[0].state != null
+            ? nextProps.personalDetail.address[0].state.id
+            : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
+                nextProps.personalDetail.address[0].state != null
+                ? nextProps.personalDetail.address[0].state.name
+                : ''
+        },
+        addressId: getArrayLength(nextProps.personalDetail.address) > 0 &&
+          nextProps.personalDetail.address[0].addressId != null
+          ? nextProps.personalDetail.address[0].addressId
+          : 0,
+        addressTypeId: getArrayLength(nextProps.personalDetail.address) > 0 &&
+          nextProps.personalDetail.address[0].addressTypeId != null
+          ? nextProps.personalDetail.address[0].addressTypeId
+          : 2
+      })
+    }
+    this.setState({
+      imageProfile: nextProps.profileImgData.image
     })
     this.styles = {
       height: 100,
@@ -172,6 +178,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   onSubmit = () => {
+    this.isImageSave = false;
     if (
       getLength(this.state.firstName) === 0 ||
       getLength(this.state.lastName) === 0 ||
@@ -187,6 +194,13 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   closeImageUpload = () => {
+    this.setState({
+      uploadImage: !this.state.uploadImage
+    })
+  }
+
+  saveImageUpload = () => {
+    this.isImageSave = true;
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -207,28 +221,29 @@ class EntityPersonalDetail extends React.PureComponent {
     const cityDetail = this.props.cityDetail.map((city, i) => {
       return { label: city.name, value: city.id + '-' + city.name }
     })
-    const genderDetail = this.props.genderList.map((gender, i) => {
+    let genderList = this.props.genderList.slice(0, 2);
+    const genderDetail = genderList && genderList.map((gender, i) => {
       return { label: gender.name, value: gender.id + '-' + gender.name }
     })
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
         {this.getModalContent(cityDetail, genderDetail)}
-        <BlackoutModal
-          isOpen={this.state.uploadImage}
-          toggle={this.closeImageUpload}
-          ModalBody={
-            <ProfileImageDetail
-              uploadedImageFile={this.state.uploadedImageFile}
-              watch={this.watch}
-              onCroppeds={this.onCroppeds}
-              reUpload={this.reUpload}
-            />
-          }
-          className='modal-lg asyncModal BlackoutModal'
-          modalTitle='Edit Profile Image'
-          centered='centered'
-        />
+        <ImageModal
+        isOpen={this.state.uploadImage}
+        toggle={this.closeImageUpload}
+        ModalBody={  
+          <ProfileImageDetail
+          uploadedImageFile={this.state.uploadedImageFile}
+          watch={this.watch}
+          onCroppeds={this.onCroppeds}
+          reUpload={this.reUpload}
+        />}
+        className='modal-lg asyncModal BlackoutModal'
+        modalTitle='Edit Profile Image'
+        centered='centered'
+        saveImage={this.saveImageUpload}
+      />
       </form>
     )
     modalContent = EducationModalContent
@@ -676,6 +691,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   togglePersonalDetails = (action, e) => {
+    this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
@@ -712,6 +728,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   reset = () => {
+    this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: false,
       isDiscardModalOpen: false,
