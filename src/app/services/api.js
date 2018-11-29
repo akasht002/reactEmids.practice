@@ -146,5 +146,8 @@ export const API = {
     getNotificationSettings: 'NotificationSetting/get-notification-settings/',
     updateNotificationSettings: 'NotificationSetting/insert-notification-settings/',
     saveSignature: 'VisitProcessing/ServiceRequestVisit/UploadSignature',
-    getSavedSignature: 'VisitProcessing/ServiceRequestVisit/GetCustomerSignature/'
+    getSavedSignature: 'VisitProcessing/ServiceRequestVisit/GetCustomerSignature/',
+    cancelInvitedServiceProvider:'ServiceRequest/CancelInvitedServiceProvider',
+    cancelAppliedServiceProvider:'ServiceRequest/UpdateServiceRequestResponse/',
+    cancelHiredServiceProvider:'ServiceRequest/CancelHiredServiceProvider',
 }

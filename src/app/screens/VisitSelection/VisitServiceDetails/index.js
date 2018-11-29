@@ -12,6 +12,9 @@ import {
   getVisitServiceSchedule,
   updateServiceRequestByServiceProvider,
   cancelServiceRequestByServiceProvider,
+  cancelInvitedServiceProvider,
+  cancelAppliedServiceProvider,
+  cancelHiredServiceProvider,
   getVisitServiceEligibilityStatus,
   getDays,
   dispatchServiceRequestByServiceProvider
@@ -164,16 +167,19 @@ class VisitServiceDetails extends Component {
     } else {
       let model = {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
-        patientId: this.state.patientId,
-        cancelledDescription: 'Canceled'
+         patientId: this.state.patientId,
+         cancelledDescription: 'Canceled'
       }
-      this.props.cancelServiceRequestByServiceProvider(model)
+      if(status.status === 36) this.props.cancelInvitedServiceProvider(model)
+       else if(status.status === 37) this.props.cancelAppliedServiceProvider(model)
+        else if(status.status === 38) this.props.cancelHiredServiceProvider(model)
+        else this.props.cancelServiceRequestByServiceProvider(model)
     }
   }
 
   onConfirmSerivceRequestMsg = () => {
     this.setState({ isAlertModalopenConfirm: false })
-    this.props.history.push("/visitServiceList")
+    this.props.history.push(Path.visitServiceList)
   }
 
   showData = data => {
@@ -801,7 +807,10 @@ function mapDispatchToProps(dispatch) {
     getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
     getSavedSignature: (data) => dispatch(getSavedSignature(data)),
     getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
-    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails())
+    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails()),
+    cancelInvitedServiceProvider: (data) => dispatch(cancelInvitedServiceProvider(data)),
+    cancelAppliedServiceProvider: (data) => dispatch(cancelAppliedServiceProvider(data)),
+    cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
   }
 }
 
