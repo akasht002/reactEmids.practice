@@ -18,6 +18,7 @@ import {
   DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD,
 } from '../../constants/constants'
 import { DashboardConversationPagination, USERTYPES } from '../../../constants/constants';
+import { getUnreadMessageCounts } from '../../asyncMessages/actions';
 import { getUserInfo } from '../../../services/http'
 
 export const DashboardDetail = {
@@ -229,30 +230,6 @@ export function getConversationDetail (data) {
   }
 }
 
-
-export const onUnreadCountSuccess = data => {
-  return {
-    type: DashboardDetail.set_unread_conversation_count_detail,
-    data: data
-  }
-}
-export function getUnreadMessageCounts (userId) {
-  return (dispatch, getState) => {
-    dispatch(startLoading())
-    MessageURLGet(
-          API.getUnreadCount +
-          getUserInfo().serviceProviderId + '/' +
-          USERTYPES.SERVICE_PROVIDER
-      )
-      .then(resp => {
-        dispatch(onUnreadCountSuccess(resp.data))
-        dispatch(endLoading())
-      })
-      .catch(err => {
-        dispatch(endLoading())
-      })
-  }
-}
 
 export function updateStandByMode (data) { 
   

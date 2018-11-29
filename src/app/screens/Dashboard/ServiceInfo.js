@@ -362,7 +362,9 @@ export const ServiceProviderRequestDetails = props => {
             </div>
 
             <div className='ProfileApplicationNumbers Avatar'  onClick={() => {
-              props.goToPatientProfile(sp.patientId);
+              if (sp.statusId !== 35) {
+                props.goToPatientProfile(sp.patientId);
+              }
             }}>
               <div className='ProfileApplicationWidget'>
                 <div className='avatarContainer'>
@@ -490,42 +492,6 @@ export const MyConversionDetail = props => {
 export const MyConversionDefault = () => {
   return (
     <Fragment>
-      <li className='list-group-item NoInformation myConversationContainer'>
-        <div className='myConversationContent'>
-          <div className='avatarWidget'>
-            <div className='avatarContainer' />
-          </div>
-          <div className='MsgThreadContent m-auto'>
-            <div className='NoProfileServices'>
-              <i className='NoInformationIcon' /><span>No Conversations</span>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li className='list-group-item NoInformation myConversationContainer'>
-        <div className='myConversationContent'>
-          <div className='avatarWidget'>
-            <div className='avatarContainer' />
-          </div>
-          <div className='MsgThreadContent m-auto'>
-            <div className='NoProfileServices'>
-              <i className='NoInformationIcon' /><span>No Conversations</span>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li className='list-group-item NoInformation myConversationContainer'>
-        <div className='myConversationContent'>
-          <div className='avatarWidget'>
-            <div className='avatarContainer' />
-          </div>
-          <div className='MsgThreadContent m-auto'>
-            <div className='NoProfileServices'>
-              <i className='NoInformationIcon' /><span>No Conversations</span>
-            </div>
-          </div>
-        </div>
-      </li>
       <li className='list-group-item NoInformation myConversationContainer'>
         <div className='myConversationContent'>
           <div className='avatarWidget'>
