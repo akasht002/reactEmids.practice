@@ -221,7 +221,8 @@ class EntityPersonalDetail extends React.PureComponent {
     const cityDetail = this.props.cityDetail.map((city, i) => {
       return { label: city.name, value: city.id + '-' + city.name }
     })
-    const genderDetail = this.props.genderList.map((gender, i) => {
+    let genderList = this.props.genderList.slice(0, 2);
+    const genderDetail = genderList && genderList.map((gender, i) => {
       return { label: gender.name, value: gender.id + '-' + gender.name }
     })
 

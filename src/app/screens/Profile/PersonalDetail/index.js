@@ -239,7 +239,13 @@ class PersonalDetail extends React.PureComponent {
       isDiscardModalOpen: false,
       isValid: true,
       disabledSaveBtn: !this.state.disabledSaveBtn,
-      isActive: checkStatus
+      isActive: checkStatus,
+      isStreetInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      zipCode: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].zipCode,
+      city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
+      streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,
@@ -249,7 +255,7 @@ class PersonalDetail extends React.PureComponent {
       affiliationName: this.props.personalDetail.affiliationName,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber,
+      phoneNumber: this.props.personalDetail.phoneNumber
     }
 
     let updated_data = {
@@ -294,11 +300,17 @@ class PersonalDetail extends React.PureComponent {
       description: this.props.personalDetail && this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail && this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail && this.props.personalDetail.phoneNumber,
+      city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
+      streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress,
+      zipCode: this.props.personalDetail && this.props.personalDetail.address[0] &&this.props.personalDetail.address[0].zipCode,
       firstNameInvaild:false,
       lastNameInvaild:false,
       phoneNumberInvalid:false,
       hourlyRateInvalid: false,
       disabledSaveBtn: false,
+      isCityInvalid: false,
+      isStreetInvalid: false,
+      isZipInvalid: false,
       isActive: false,
       selectedAffiliation: {
         label: this.props.personalDetail && this.props.personalDetail.affiliationName,
@@ -313,9 +325,10 @@ class PersonalDetail extends React.PureComponent {
     let modalType = ''
     const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
       return {label :  city.name ,value:city.id + '-' + city.name}
-    })
-    const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
-      return {label :  gender.name ,value:gender.id + '-' + gender.name}
+    });
+    let genderList = this.props.genderList.slice(0, 2);
+    const genderDetail = genderList && genderList.map((gender, i) => {
+        return {label :  gender.name ,value:gender.id + '-' + gender.name}
     })
     const affiliationDetail = this.props.affiliationList && this.props.affiliationList.map((affiliation, i) => {
       return {label :  affiliation.name ,value:affiliation.affiliationId + '-' + affiliation.name}
