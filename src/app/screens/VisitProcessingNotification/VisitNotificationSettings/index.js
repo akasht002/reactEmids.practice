@@ -41,7 +41,7 @@ class VisitNotificationSettings extends React.Component {
     onClickSave = () => {
         this.props.updateVisitNotificationSettings({
             pushNotification: this.props.pushNotification,
-            emaiNotificationNotification: this.props.emailNotification
+            emailNotification: this.props.emailNotification
         });
     }
 

@@ -240,7 +240,7 @@ class VisitServiceDetails extends Component {
     if (!this.props.initiateConversation) {
       this.setState({ 
         conversationsModal: true,
-        conversationErrMsg: 'You cannot initiate a video call as you have no current service requests.'
+        conversationErrMsg: 'You cannot initiate a video call as you have no current service requests'
       })
     } else {
       let item = this.state.visitServiceDetails;
