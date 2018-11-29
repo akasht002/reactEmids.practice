@@ -355,6 +355,7 @@ class Education extends React.Component {
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
+                        disabledSaveBtn: false
                     })}
                 />
 

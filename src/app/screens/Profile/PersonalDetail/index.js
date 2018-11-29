@@ -365,7 +365,8 @@ class PersonalDetail extends React.PureComponent {
           onCancel={() =>
             this.setState({
               isDiscardModalOpen: false,
-              disabledSaveBtn: false
+              disabledSaveBtn: false,
+              isActive: true
             })}
         />
         <ModalPopup
