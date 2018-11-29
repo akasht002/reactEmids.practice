@@ -37,6 +37,7 @@ class PersonalDetail extends React.PureComponent {
       isDiscardModalOpen: false,
       isAlertModalOpen:false,
       isValidPhoneNumber:true,
+      isStateInvalid: false,
       isCityInvalid: false,
       isZipInvalid: false,
       isStreetInvalid: false,
@@ -190,9 +191,10 @@ class PersonalDetail extends React.PureComponent {
       this.state.hourlyRate === '' ||
       this.state.city === '' || this.state.city === null ||
       this.state.zipCode === '' || this.state.zipCode === null ||
-      this.state.streetAddress === '' || this.state.streetAddress === null
+      this.state.streetAddress === '' || this.state.streetAddress === null ||
+      this.state.selectedState === '' || this.state.selectedState === null
     ) {
-      let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false;
+      let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
        if(this.state.city === '' || this.state.city === null) {
           cityInvalid = true;
        } 
@@ -202,7 +204,10 @@ class PersonalDetail extends React.PureComponent {
        if(this.state.streetAddress === '' || this.state.streetAddress === null) {
          streetInvalid = true;
        }
-      this.setState({ isValid: false, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid})
+       if(this.state.selectedState === '' || this.state.selectedState === null || this.state.selectedState === undefined) {
+        stateInvalid = true;
+       }
+      this.setState({ isValid: false, isStateInvalid: stateInvalid, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid})
     } else {
       this.props.updatePersonalDetail(this.state)
       this.setState({
@@ -245,7 +250,16 @@ class PersonalDetail extends React.PureComponent {
       isZipInvalid: false,
       zipCode: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].zipCode,
       city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
-      streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress
+      streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress,
+      selectedState: {
+        label: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+        ? this.props.personalDetail.address[0].state.name
+        : '',
+        value: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+        ? this.props.personalDetail.address[0].state.id
+        : '' + '-' +getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+        ? this.props.personalDetail.address[0].state.name:''
+      },
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,
@@ -312,6 +326,15 @@ class PersonalDetail extends React.PureComponent {
       isStreetInvalid: false,
       isZipInvalid: false,
       isActive: false,
+      selectedState: {
+        label: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+        ? this.props.personalDetail.address[0].state.name
+        : '',
+        value: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+        ? this.props.personalDetail.address[0].state.id
+        : '' + '-' +getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+        ? this.props.personalDetail.address[0].state.name:''
+      },
       selectedAffiliation: {
         label: this.props.personalDetail && this.props.personalDetail.affiliationName,
         value: this.props.personalDetail && this.props.personalDetail.affiliationId + '-'+ this.props.personalDetail && this.props.personalDetail.affiliationName
@@ -881,12 +904,20 @@ class PersonalDetail extends React.PureComponent {
                       simpleValue
                       placeholder='Select the state'
                       onChange={value => {
-                        this.setState({ selectedState: value,disabledSaveBtn: false })
+                        this.setState({ selectedState: value,disabledSaveBtn: false, isStateInvalid: false })
                       }                      
-                    }                      
-                      selectedValue={this.state.selectedState}
+                    }
+                    onBlur={(e) => {
+                      if(this.state.selectedState === '') {
+                        this.setState({ isStateInvalid: true})
+                      }
+                   }}                      
+                   selectedValue={this.state.selectedState}
                       className='inputFailure ServiceRequestSelect'
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                    {this.state.isStateInvalid && 'Please select valid State'}
+                  </small>
                   </div>
                 </div>
                 <div className='col-md-6 mb-2'>
