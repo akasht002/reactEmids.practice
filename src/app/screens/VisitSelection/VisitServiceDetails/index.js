@@ -170,7 +170,7 @@ class VisitServiceDetails extends Component {
     } else {
       let model = {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
-         patientId: this.state.patientId,
+         patientId: this.state.visitServiceDetails.patient ?  this.state.visitServiceDetails.patient.patientId :0,
          cancelledDescription: 'Canceled'
       }
       if(status.status === 36) this.props.cancelInvitedServiceProvider(model)
