@@ -489,6 +489,7 @@ class WorkHistory extends Component {
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
+                        disabledSaveBtn: false
                     })}
                 />
 
