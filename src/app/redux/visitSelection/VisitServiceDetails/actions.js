@@ -190,6 +190,76 @@ export function getDays() {
   }
 };
 
+
+
+export function cancelInvitedServiceProvider(data) {
+  let serviceProviderId = getUserInfo().serviceProviderId
+  let model = {
+    serviceRequestId: data.serviceRequestId,
+    serviceProviderId: serviceProviderId,
+    patientId: data.patientId,
+    cancelledDescription: data.cancelledDescription
+  }
+  return dispatch => {
+    dispatch(startLoading())
+    ServiceRequestPut(API.cancelInvitedServiceProvider, model)
+      .then(resp => {
+        dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
+      })
+      .catch(err => {
+        dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
+      })
+  }
+}
+
+export function cancelAppliedServiceProvider(data) {
+  console.log(data)
+  let serviceProviderId = getUserInfo().serviceProviderId
+  let model = {
+    serviceRequestId: data.serviceRequestId,
+    serviceProviderId: serviceProviderId,
+    patientId: data.patientId,
+    cancelledDescription: data.cancelledDescription
+  }
+  return dispatch => {
+    dispatch(startLoading())
+    ServiceRequestPut(API.cancelAppliedServiceProvider + `${data.serviceRequestId}/${serviceProviderId}`, model)
+      .then(resp => {
+        dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
+      })
+      .catch(err => {
+        dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
+      })
+  }
+}
+
+
+export function cancelHiredServiceProvider(data) {
+  let serviceProviderId = getUserInfo().serviceProviderId
+  let model = {
+    serviceRequestId: data.serviceRequestId,
+    serviceProviderId: serviceProviderId,
+    patientId: data.patientId,
+    cancelledDescription: data.cancelledDescription
+  }
+  return dispatch => {
+    dispatch(startLoading())
+    ServiceRequestPut(API.cancelHiredServiceProvider, model)
+      .then(resp => {
+        dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
+      })
+      .catch(err => {
+        dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
+      })
+  }
+}
+
 export function canInitiateConversation(data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch) => {

@@ -4,7 +4,7 @@ import Select from "react-select";
 import _ from 'lodash'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Scrollbars, ProfileModalPopup,Input } from "../../components";
+import { Scrollbars,Input } from "../../components";
 import "./ProfileMainPanel.css";
 import { convertStringToDate } from "../../utils/validations";
 import {
@@ -577,16 +577,24 @@ class serviceCalendar extends React.Component {
           >
             Show more <i className="ProfileIconShowMore" />
           </li>
-        </ul>
-        <ProfileModalPopup
+        </ul>        
+          <ModalPopup
           isOpen={this.state.EditPersonalDetailModal}
           toggle={() => this.togglePersonalDetails(this, modalType)}
           ModalBody={modalContent}
           className="modal-lg asyncModal CertificationModal"
           modalTitle={modalTitle}
           centered="centered"
-          onClick={this.onSubmit}
-          disabled={this.state.disabledSaveBtn}
+          headerFooter='d-none'
+          btn1='Save'
+          btn2='Cancel'
+          onConfirm={this.onSubmit}
+          onCancel={() =>{
+            this.setState({
+              EditPersonalDetailModal: false
+            })
+          }
+           }
         />
          <ModalPopup
           isOpen={this.state.isAlertModalOpen}
