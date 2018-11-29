@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { Scrollbars, Calendar, Button } from '../../../components'
 import ServiceCategory from "./ServiceCategory";
 import ServiceTypeList from "./ServiceTyplist";
-import { getArrayLength, checkDateFormatNumber, checkFormatDate } from '../../../utils/validations'
+import { getArrayLength, checkDateFormatNumber, checkFormatDate,formateStateDateValue } from '../../../utils/validations'
 import {
   formatDate,
   changeDateFormat
@@ -267,7 +267,7 @@ class VisitFilter extends Component {
                       value={this.state.searchData.startDate}
                       startDate={
                         this.state.searchData.startDate &&
-                        moment(this.state.searchData.startDate)
+                        formateStateDateValue(this.state.searchData.startDate)
                       }
                       onDateChange={this.dateFromChanged}
                       onDateChangeRaw={this.dateChangedRaw}
@@ -287,7 +287,7 @@ class VisitFilter extends Component {
                       value={this.state.searchData.endDate}
                       startDate={
                         this.state.searchData.endDate &&
-                        moment(this.state.searchData.endDate)
+                        formateStateDateValue(this.state.searchData.endDate)
                       }
                       onDateChange={this.dateToChanged}
                       onDateChangeRaw={this.dateChangedRawEndDate}

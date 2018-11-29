@@ -129,7 +129,7 @@ class Filter extends Component {
                                             minDate={this.props.fromDate && formateStateDate(this.props.fromDate)}
                                             maxDate={formateStateDate()}
                                             value={this.props.endDate}
-                                            className={"form-control recurrenceEndPicker"}
+                                            className={"form-control datePicker"}
                                             label="To Date"
                                         />
                                     </div>
