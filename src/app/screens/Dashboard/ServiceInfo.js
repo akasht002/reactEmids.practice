@@ -362,7 +362,9 @@ export const ServiceProviderRequestDetails = props => {
             </div>
 
             <div className='ProfileApplicationNumbers Avatar'  onClick={() => {
-              props.goToPatientProfile(sp.patientId);
+              if (sp.statusId !== 35) {
+                props.goToPatientProfile(sp.patientId);
+              }
             }}>
               <div className='ProfileApplicationWidget'>
                 <div className='avatarContainer'>
