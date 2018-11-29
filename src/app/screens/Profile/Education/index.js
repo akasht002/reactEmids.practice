@@ -94,9 +94,21 @@ class Education extends React.Component {
                 endYear:''
              })
         } else {
-            this.setState({ isDiscardModalOpen: true, IsEducationModalOpen: true, fromDateChange: true })
+            let status = this.checkValidation(this.state.isAdd, this.state.school, 
+                this.state.degree, this.state.fieldOfStudy, this.state.startYear, this.state.endYear);
+            this.setState({ isDiscardModalOpen: status, IsEducationModalOpen: status, fromDateChange: true })
         }
     }
+
+    checkValidation = (isAdd, school, degree, fieldOfStudy, startYear, endYear) => {
+        if(isAdd && school === '' && degree === '' && fieldOfStudy === '' && 
+        startYear === '' && endYear === '') {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     addEducation = () => {
         if ((this.state.school) && (this.state.degree)) {
             const data = {
