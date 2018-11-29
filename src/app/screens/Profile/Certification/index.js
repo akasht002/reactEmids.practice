@@ -317,7 +317,7 @@ class Certification extends Component {
 
                 <ModalPopup
                     isOpen={this.state.showModalOnDelete}
-                    ModalBody={<span>Do you really want to remove the Certification details?</span>}
+                    ModalBody={<span>Do you really want to remove the certification?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"

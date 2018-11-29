@@ -820,3 +820,19 @@ body{
 .react-datepicker__input-container input{
     cursor:pointer !important;
 }
+
+
+/*updated-date-block-dashboard*/
+.topProfile .topPalette .ProfileMonthList.MonthName .Select-control .Select-value .Select-value-label
+{
+    text-align: center;
+    padding: 10px 12px;
+}
+.topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu
+{
+    min-width: 120px;   
+}
+
+.topProfile .topPalette  .ProfileMonthList .Select-menu-outer {
+    top: 40px;
+}

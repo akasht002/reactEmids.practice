@@ -7,9 +7,10 @@ const defaultState = {
     VisitServiceSchedule: [],
     ServiceRequestId: '',
     VisitServiceElibilityStatus: '',
-    daysType:[],
-    updateServiceRequestMsgStatus : 0,
-    entityServiceProviderId: 0
+    daysType: [],
+    updateServiceRequestMsgStatus: 0,
+    entityServiceProviderId: 0,
+    canInitiateConversation: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -20,18 +21,18 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 ...state,
                 VisitServiceDetails: action.data
             };
-            
+
         case VisitServiceDetails.setEntityServiceProviderSuccess:
-        return {
-            ...state,
-            entityServiceProviderId: action.data
-        };    
+            return {
+                ...state,
+                entityServiceProviderId: action.data
+            };
 
         case VisitServiceDetails.updateServiceRequestByServiceProviderSuccess:
-        return {
-            ...state,
-            updateServiceRequestMsg: action.data
-        };
+            return {
+                ...state,
+                updateServiceRequestMsg: action.data
+            };
 
         case VisitServiceDetails.getVisitServiceScheduleSuccess:
             return {
@@ -55,6 +56,12 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 daysType: action.data
+            };
+
+        case VisitServiceDetails.canInitiateConversationSuccess:
+            return {
+                ...state,
+                canInitiateConversation: action.data
             };
 
         default:
