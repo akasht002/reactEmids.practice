@@ -20,6 +20,7 @@ export const VisitServiceDetails = {
   getDaysSuccess: 'getDaysSuccess/visitservicedetails',
   updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails',
   setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
+  canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -60,6 +61,13 @@ export const getVisitServiceEligibityStatusSuccess = data => {
 export const updateServiceRequestByServiceProviderSuccess = data => {
   return {
     type: VisitServiceDetails.updateServiceRequestByServiceProviderSuccess,
+    data
+  }
+}
+
+export const canInitiateConversationSuccess = data => {
+  return {
+    type: VisitServiceDetails.canInitiateConversationSuccess,
     data
   }
 }
@@ -124,11 +132,12 @@ export function getVisitServiceDetails(data) {
     let currstate = getState();
     let serviceProviderId = getUserInfo().isEntityServiceProvider ? currstate.visitSelectionState.VisitServiceDetailsState.entityServiceProviderId
       : getUserInfo().serviceProviderId
-    dispatch(getServiceRequestId(data))
+    dispatch(getServiceRequestId(data));
     dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestDetails + `${data}/${serviceProviderId}`)
       .then(resp => {
-        dispatch(getVisitServiceDetailsSuccess(resp.data))
+        dispatch(getVisitServiceDetailsSuccess(resp.data));
+        dispatch(canInitiateConversation(resp.data));
         dispatch(endLoading())
       })
       .catch(err => {
@@ -136,8 +145,6 @@ export function getVisitServiceDetails(data) {
       })
   }
 }
-
-
 
 export function getVisitServiceSchedule(data) {
   let serviceProviderId = getUserInfo().serviceProviderId
@@ -176,6 +183,19 @@ export function getDays() {
     dispatch(startLoading());
     ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
       dispatch(getDaysSuccess(resp.data))
+      dispatch(endLoading());
+    }).catch((err) => {
+      dispatch(endLoading());
+    })
+  }
+};
+
+export function canInitiateConversation(data) {
+  let serviceProviderId = getUserInfo().serviceProviderId
+  return (dispatch) => {
+    dispatch(startLoading());
+    ThirdPartyGet(API.canInitiateConversation + `${serviceProviderId}/${data.patient.patientId}`).then((resp) => {
+      dispatch(canInitiateConversationSuccess(resp.data))
       dispatch(endLoading());
     }).catch((err) => {
       dispatch(endLoading());
