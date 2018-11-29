@@ -300,6 +300,7 @@ a:focus, a:hover{
     display: block;
     height: 100%;
     margin: 0 auto;
+    cursor: none;
     }
 
 .mainWidget{
