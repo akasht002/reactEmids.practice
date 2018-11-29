@@ -47,6 +47,7 @@ class Organization extends React.PureComponent {
         height: 80
       }
     }
+    this.isImageSave = false;
   }
 
   componentDidMount () {
@@ -56,40 +57,43 @@ class Organization extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.setState({
-      imageProfile: nextProps.profileImgData.image,
-      organizationName:  nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.organization,
-      url: nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
-      description: nextProps.personalDetail.description,
-      hourlyRate: nextProps.personalDetail.hourlyRate,
-      city: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].city
-        : '',
-      streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].streetAddress
-        : '',
-      zipCode: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].zipCode
-        : '',
-      phoneNumber: nextProps.personalDetail.phoneNumber,
-      state_id: getArrayLength(nextProps.personalDetail.address) > 0 &&
-        nextProps.personalDetail.address[0].state != null
-        ? nextProps.personalDetail.address[0].state.id
-        : '',
-      isActive: false,
-      selectedState: {
-        label: getArrayLength(nextProps.personalDetail.address) > 0 &&
-          nextProps.personalDetail.address[0].state != null
-          ? nextProps.personalDetail.address[0].state.name
+    if(this.isImageSave === false) {
+      this.setState({
+        organizationName:  nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.organization,
+        url: nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
+        description: nextProps.personalDetail.description,
+        hourlyRate: nextProps.personalDetail.hourlyRate,
+        city: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].city
           : '',
-        value: getArrayLength(nextProps.personalDetail.address) > 0 &&
+        streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].streetAddress
+          : '',
+        zipCode: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].zipCode
+          : '',
+        phoneNumber: nextProps.personalDetail.phoneNumber,
+        state_id: getArrayLength(nextProps.personalDetail.address) > 0 &&
           nextProps.personalDetail.address[0].state != null
           ? nextProps.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
-              nextProps.personalDetail.address[0].state != null
-              ? nextProps.personalDetail.address[0].state.name
-              : ''
-      }
+          : '',
+        selectedState: {
+          label: getArrayLength(nextProps.personalDetail.address) > 0 &&
+            nextProps.personalDetail.address[0].state != null
+            ? nextProps.personalDetail.address[0].state.name
+            : '',
+          value: getArrayLength(nextProps.personalDetail.address) > 0 &&
+            nextProps.personalDetail.address[0].state != null
+            ? nextProps.personalDetail.address[0].state.id
+            : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
+                nextProps.personalDetail.address[0].state != null
+                ? nextProps.personalDetail.address[0].state.name
+                : ''
+        }
+      })
+    }
+    this.setState({
+      imageProfile: nextProps.profileImgData.image
     })
     this.styles = {
       height: 100,
@@ -155,6 +159,7 @@ class Organization extends React.PureComponent {
   }
 
   onSubmit = () => {
+    this.isImageSave = false;
     if (
      this.state.organizationNameInvaild ||
      this.state.phoneNumberInvalid
@@ -175,6 +180,7 @@ class Organization extends React.PureComponent {
   }
 
   saveImageUpload = () => {
+    this.isImageSave = true;
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -730,6 +736,7 @@ class Organization extends React.PureComponent {
   }
 
   togglePersonalDetails (action, e) {
+    this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
@@ -764,6 +771,7 @@ class Organization extends React.PureComponent {
   }
 
   reset = () => {
+    this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: false,
       isDiscardModalOpen: false,
