@@ -150,4 +150,6 @@ export const API = {
     cancelInvitedServiceProvider:'ServiceRequest/CancelInvitedServiceProvider',
     cancelAppliedServiceProvider:'ServiceRequest/UpdateServiceRequestResponse/',
     cancelHiredServiceProvider:'ServiceRequest/CancelHiredServiceProvider',
+    getPersonalDetailGuardian: 'CoreoHomeUser/GuardianProfile/',
+    getImageGuardian: 'CoreoHomeUser/Image/',
 }

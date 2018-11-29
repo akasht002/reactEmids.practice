@@ -9,7 +9,7 @@ import {
 import { Button } from '../../../components';
 import { USERTYPES } from '../../../constants/constants';
 import { Path } from '../../../routes';
-import { setPatient} from '../../../redux/patientProfile/actions';
+import { setParticipantProfile} from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions'
 
 class ParticipantContent extends Component {
@@ -212,11 +212,27 @@ class ParticipantContent extends Component {
                                     </tr>
                                 </tbody>
                             </table>
-                            {this.state.popupVisible && (<ul ref={node => { this.node = node; }} className={"table profileBack " + profileOptionClass}>
+                            {this.state.popupVisible && participant.participantType !== USERTYPES.CARETEAM && (<ul ref={node => { this.node = node; }} className={"table profileBack " + profileOptionClass}>
                                 <li className="ProfileOptionItems align-middle">
                                     <a onClick={() => {
-                                        this.props.setPatient(participant.userId);
-                                        this.props.goToPatientProfile();
+                                        if(participant.participantType !== USERTYPES.SERVICE_PROVIDER){
+                                            let data = {
+                                                userId : participant.userId,
+                                                userType: participant.participantType,
+                                                isUser: false
+                                            };
+                                            this.props.setParticipantProfile(data);
+                                            this.props.goToPatientProfile();
+                                        }
+                                        // else{
+                                        //     let data = {
+                                        //         userId : participant.userId,
+                                        //         userType: participant.participantType,
+                                        //         isUser: false
+                                        //     };
+                                        //     this.props.goToProfile();
+                                        // }
+                                        
                                     }}>View Profile</a>
                                 </li>
                             </ul>)}
@@ -333,7 +349,7 @@ function mapDispatchToProps(dispatch) {
         addParticipants: (data) => dispatch(onAddParticipant(data)),
         removeParticipant: (data) => dispatch(onRemoveParticipant(data)),
         getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
-        setPatient: data => dispatch(setPatient(data)),
+        setParticipantProfile: data => dispatch(setParticipantProfile(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile))
     }
 };

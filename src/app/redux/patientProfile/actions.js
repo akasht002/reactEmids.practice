@@ -16,7 +16,8 @@ export const PatientProfile = {
     setESP: 'setESP/PatientProfile',
     get_esp_personal_detail_success:'get_esp_personal_detail_success/PatientProfile',
     upload_esp_img_success:'upload_esp_img_success/PatientProfile',
-    getESPEducationSuccess:'getESPEducationSuccess/PatientProfile'
+    getESPEducationSuccess:'getESPEducationSuccess/PatientProfile',
+    setParticipantProfile: 'setParticipantProfile/PatientProfile',
 };
 
 export const clearState = () => {
@@ -28,6 +29,14 @@ export const clearState = () => {
 export const setPatient = (data) => {
     return {
         type: PatientProfile.setPatient,
+        data
+    }
+}
+
+
+export const setParticipantProfile = (data) => {
+    return {
+        type: PatientProfile.setParticipantProfile,
         data
     }
 }
@@ -134,7 +143,9 @@ export const getPersonalDetailSuccess = data => {
 export function getPersonalDetail() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        dispatch(startLoading())
+        let userType = getState().patientProfileState.userType;
+        if(userType === USERTYPES.PATIENT){
+            dispatch(startLoading())
         PatientGet(API.getPatientPersonalDetail + patientId + '/PatientDetails')
         .then(resp => {
             dispatch(getPersonalDetailSuccess(resp.data))
@@ -143,8 +154,34 @@ export function getPersonalDetail() {
         .catch(err => {
             dispatch(endLoading())
         })
+        }else{
+            dispatch(getPersonalDetailGuardian(patientId));
+        }
+        
     }
 }
+
+export function getPersonalDetailGuardian(userId) {
+    return (dispatch) => {
+      dispatch(startLoading())
+      PatientGet(API.getPersonalDetailGuardian + userId)
+        .then(resp => {
+            let data = {
+                ...resp.data,
+                phoneNumber: resp.data.contactNumber,
+                gender: {
+                  id: resp.data.genderId,
+                  genderName: resp.data.genderName
+                }
+              };
+            dispatch(getPersonalDetailSuccess(data))
+            dispatch(endLoading())
+        })
+        .catch(err => {
+          dispatch(endLoading())
+        })
+    }
+  };
 
 export const getImgSuccess = data => {
     return {
@@ -156,14 +193,31 @@ export const getImgSuccess = data => {
 export function getImage() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
+        
+        let userType = getState().patientProfileState.userType;
+        if(userType === USERTYPES.PATIENT){
         PatientGet(API.getPatientImage + patientId)
         .then(resp => {
             dispatch(getImgSuccess(resp.data))
         })
         .catch(err => {
         })
+        }else{
+            dispatch(getImageGuardian(patientId));
+        }
     }
-}
+};
+
+export function getImageGuardian(userId) {
+    return (dispatch) => {
+      PatientGet(API.getImageGuardian + userId)
+        .then(resp => {
+            dispatch(getImgSuccess(resp.data))
+        })
+        .catch(err => {
+        })
+    }
+  }
 
 export const getPointServiceSuccess = data => {
     return {

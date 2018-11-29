@@ -12,7 +12,8 @@ const defaultState = {
   espID: '',
   espPatient: {},
   espimageData: {},
-  espEducation: []
+  espEducation: [],
+  userType: ''
 }
 
 const patientProfileState = (state = defaultState, action) => {
@@ -37,10 +38,16 @@ const patientProfileState = (state = defaultState, action) => {
         ...state,
         espID: action.data
       }
-    case PatientProfile.setPatient:
+      case PatientProfile.setPatient:
       return {
         ...state,
         patientId: action.data
+      }
+      case PatientProfile.setParticipantProfile:
+      return {
+        ...state,
+        patientId: action.data.userId,
+        userType: action.data.userType,
       }
     case PatientProfile.getPersonalDetailSuccess:
       return {

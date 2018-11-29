@@ -50,7 +50,9 @@ export const USERTYPES = {
     GUARDIAN : 'G',
     SERVICE_PROVIDER: 'S',
     DESIGNATED_SERVICE_PROVIDER: 2,
-    ENTITY_USER: 'EU'
+    ENTITY_USER: 'EU',
+    PATIENT_AND_GUARDIAN: "IG",
+    CARETEAM: 'CT'
 };
 
 export const ImageFormats = {
