@@ -353,7 +353,7 @@ class ServiceArea extends Component {
     return (
       <div className='col-md-12 card CardWidget SPCertificate'>
         <div className='SPCardTitle d-flex'>
-          <h4 className='primaryColor'>Service Area</h4>
+          <h4 className='primaryColor'>Service Areas</h4>
           <i
             name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
             className='SPIconLarge SPIconAdd'
