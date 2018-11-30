@@ -1799,3 +1799,8 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 {
     z-index: 0;
 }
+
+/*update-uit-fixes*/
+.topProfile .ProfileCard .ProfileCardBody .bottomPalette {
+  height: calc(100% - 200px) !important;
+}
