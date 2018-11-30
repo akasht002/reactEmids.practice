@@ -3,6 +3,8 @@ import { startLoading, endLoading } from '../../loading/actions';
 import { Get, Post} from '../../../services/http';
 import { getUserInfo } from '../../../services/http';
 
+import {unique} from '../../../utils/validations'
+
 export const AvailabilityActions = {
    setAvailabilityDays : 'set_available_days',
    setBlackoutDays: 'set_blackout_days',
@@ -29,9 +31,10 @@ export const getAvailableDaysSuccess = (data) => {
 };
 
 export const updateAvailabilityDays = (data) => {
+    let filtered_data = unique(data, ['slotId', 'slotId','dayId'])
     return dispatch => {
         let modal = {
-            availableKeys: data
+            availableKeys: filtered_data
          };
         dispatch(startLoading());
         Post(API.addBlackOutDay + getUserInfo().serviceProviderId + '/Available', modal).then(resp => {

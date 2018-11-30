@@ -46,7 +46,9 @@ class AvailabilityEdit extends Component {
                     selectedSlot.availabilityId = slot.availabilityId ? slot.availabilityId : 0;
                     selectedSlot.slotId = this.state.lookupSlots[slotIndex].slotId;
                     selectedSlot.dayId = tempDay.dayId;
-                    this.state.availableList.push(selectedSlot);
+                    if(selectedSlot.availabilityId !== 0) {
+                        this.state.availableList.push(selectedSlot);
+                    }
                 }
             });
         }
