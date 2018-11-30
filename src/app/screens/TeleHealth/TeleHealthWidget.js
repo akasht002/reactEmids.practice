@@ -412,7 +412,7 @@ class TeleHealthWidget extends Component {
                     headerFooter="d-none"
                     centered={true}
                     isOpen={this.state.showLeaveConfModal || this.props.menuClicked}
-                    btn1="Continue"
+                    btn1="Cancel"
                     btn2="Leave"
                     onConfirm={() => {
                         this.setState({
@@ -433,7 +433,7 @@ class TeleHealthWidget extends Component {
                     headerFooter="d-none"
                     centered={true}
                     isOpen={this.state.sessionInactivePopup}
-                    btn1="Continue"
+                    btn1="Cancel"
                     btn2="Leave"
                     onConfirm={() => {
                         this.setState({
