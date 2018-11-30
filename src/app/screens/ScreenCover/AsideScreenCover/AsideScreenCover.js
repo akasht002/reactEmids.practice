@@ -110,8 +110,9 @@ class AsideScreenCover extends React.Component {
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
                     <div className='BrandNameWidget'>
                         <div className='BrandName'>
-                            <Link className='BrandLink' to='/'><img src={require('../../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
-                            </Link>
+                            <span className='BrandLink'>
+                                <img src={require('../../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
+                            </span>
                         </div>
                     </div>
                     <ProfileImage
