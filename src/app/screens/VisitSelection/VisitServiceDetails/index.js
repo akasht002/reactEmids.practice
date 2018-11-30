@@ -214,7 +214,7 @@ class VisitServiceDetails extends Component {
     if (!this.props.initiateConversation) {
       this.setState({ 
         conversationsModal: true,
-        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests.' 
+        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests' 
       })
     } else {
       let userId = getUserInfo().serviceProviderId;
