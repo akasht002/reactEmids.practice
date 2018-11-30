@@ -34,7 +34,8 @@
 }
 
 .modal-footer{
-    height: 80px;
+    height: 60px;
+    padding: 10px 30px;
 }
 
 .lead {
