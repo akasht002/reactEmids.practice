@@ -177,7 +177,8 @@ class Education extends React.Component {
     YearListCal(){
         let year = [];
         let selectedYear = formateYearDate();
-        let curYear = formateYearDate();
+       // let curYear = formateYearDate();
+        let curYear = 2200; //To do confirm with BA
         if(this.state.fromDateChange) {
             year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
             for (var i = this.state.startYear; i <= curYear; i++) {
