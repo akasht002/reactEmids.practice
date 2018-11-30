@@ -24,8 +24,8 @@ export const Details = props => {
         profileImage='SPdpImage'
       />
       <span className="rating-blockcustome">
-        {props.personalDetail &&
-          props.personalDetail.rating}
+          <i className={"Icon iconFilledStar"}/>
+          {props.personalDetail && props.personalDetail.rating}
       </span>
       <div className={'SPDetailsContainer SPNameWidget'}>
         <div className={'d-flex'}>
