@@ -69,9 +69,13 @@ class Profile extends Component {
   getServiceOffered = () => {
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
       !getUserInfo().isEntityServiceProvider) {
-      return <ServiceOffered />
+      return <div className='col-md-12 card CardWidget SPCertificate'>
+        <ServiceOffered />
+      </div>
      } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-       return <ServiceOffered />
+       return <div className='col-md-12 card CardWidget SPCertificate'>
+        <ServiceOffered />
+      </div>
      } else {
        return '';
      }
@@ -89,36 +93,38 @@ class Profile extends Component {
   }
 
   getSkills = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) {
+    // if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+    //   !getUserInfo().isEntityServiceProvider) {
       return <Skills />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-       return <Skills />
-     } else {
-       return '';
-     }
+    //  } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+    //    return <Skills />
+    //  } else {
+    //    return '';
+    //  }
   }
 
   getLanguages = () => {
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
       !getUserInfo().isEntityServiceProvider) {
       return <Languages />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+     } 
+     else if(getUserInfo().serviceProviderTypeId === 1 && getUserInfo().entityId !== 0 && getUserInfo().isEntityServiceProvider) {
        return <Languages />
-     } else {
+     } 
+     else {
        return '';
      }
   }
 
   getCertification = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) {
+    // if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+    //   !getUserInfo().isEntityServiceProvider) {
       return <Certification />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-       return <Certification />
-     } else {
-       return '';
-     }
+    //  } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+    //    return <Certification />
+    //  } else {
+    //    return '';
+    //  }
   }
 
   validationPopUp = () => {
@@ -143,9 +149,11 @@ class Profile extends Component {
     if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
       !getUserInfo().isEntityServiceProvider) {
       return <WorkHistory />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-       return <WorkHistory />
-     } else {
+     } 
+    //  else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+    //    return <WorkHistory />
+    //  } 
+     else {
        return '';
      }
   }
@@ -206,13 +214,13 @@ class Profile extends Component {
                   // !getUserInfo().isEntityServiceProvider) ? 
                   <div>
                
-                <div className='col-md-12 card CardWidget SPCertificate'>
+                
                 {this.getServiceOffered()}
-                </div>
-                  {this.getServiceArea()}
                 <div className='col-md-12 card CardWidget SPCertificate'>
                   {this.getSkills()}
                 </div>
+                {this.getServiceArea()}
+                {this.getAvailability()}
                 <div className='col-md-12 card CardWidget SPLanguages'>
                  {this.getLanguages()}
                 </div>
@@ -221,7 +229,7 @@ class Profile extends Component {
                 </div>
                 {this.getWorkHistory()}
                 {this.getEducation()}
-               {this.getAvailability()} </div> 
+                </div> 
               //  : <div>{this.getEducation()}</div>
               }
               </div>
