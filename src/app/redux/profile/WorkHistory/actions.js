@@ -57,7 +57,6 @@ export function addWorkHistory(data) {
             fromDate:data.fromDate,
             toDate:data.toDate,
             description:data.description,
-            isWorking:data.isWorking,
             isActive: true,
             currentlyWorking: data.currentlyWorking
         };
@@ -105,7 +104,6 @@ export function updateWorkHistory(data) {
             fromDate:data.fromDate,
             toDate:data.toDate,
             description:data.description,
-            isWorking:data.isWorking,
             currentlyWorking: data.currentlyWorking
         };
         dispatch(startLoading());
