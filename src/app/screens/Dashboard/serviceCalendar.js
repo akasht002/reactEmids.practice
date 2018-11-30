@@ -52,7 +52,8 @@ class serviceCalendar extends React.Component {
       verticalScroll: true,
       width: window.innerWidth,
       isAlertModalOpen : false,
-      phoneNumber:''
+      phoneNumber:'',
+      selectedMonths:moment(today).format('M')
     };
     this.data = "";
   }
@@ -95,7 +96,8 @@ class serviceCalendar extends React.Component {
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
       selectedMonth: e.value,
-      startYear:year
+      startYear:year,
+      selectedMonths:moment().month(e.value).format("M")
     });
     this.props.getServiceProviderVists(moment(curDate).format("YYYY-MM-DD"));
   };
@@ -118,6 +120,7 @@ class serviceCalendar extends React.Component {
       startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
       startMonth: updatedDay.format("MMM"),
+      selectedMonths:updatedDay.format("M"),
       selectedMonth: {
         label: updatedDay.format("MMM") + ' ' + year,
         value: updatedDay.format("MMM")
@@ -143,6 +146,7 @@ class serviceCalendar extends React.Component {
       startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
       startMonth: updatedDay.format("MMM"),
+      selectedMonths:updatedDay.format("M"),
       selectedMonth: {
         label: updatedDay.format("MMM") + ' ' + year,
         value: updatedDay.format("MMM")
@@ -161,6 +165,7 @@ class serviceCalendar extends React.Component {
       reportDay: moment(today).format(),
       startMonth: moment(today).format("MMM"),
       currentDate: moment().format("DD"),
+      selectedMonths:moment(today).format("M"),
       selectedMonth: {
         label: moment(today).format("MMM") + ' ' + year,
         value: moment(today).format("MMM")
@@ -365,67 +370,72 @@ class serviceCalendar extends React.Component {
               )
   }
 
-  render() {
-    let selectedDate = this.state.startDate;
-    const visitCount = this.props.serviceVistCount;
-
-    let dates = [
+  getDates = selectedDate => {
+    let dates = [];
+   
+    if (this.state.width > '1280')
+    return dates = [
       {
-        day: moment(selectedDate).subtract(2, "days"),
-        date: moment(selectedDate).subtract(2, "days")
+        day: moment(selectedDate).subtract(3, 'days'),
+        date: moment(selectedDate).subtract(3, 'days')
       },
       {
-        day: moment(selectedDate).subtract(1, "days"),
-        date: moment(selectedDate).subtract(1, "days")
+        day: moment(selectedDate).subtract(2, 'days'),
+        date: moment(selectedDate).subtract(2, 'days')
+      },
+      {
+        day: moment(selectedDate).subtract(1, 'days'),
+        date: moment(selectedDate).subtract(1, 'days')
       },
       {
         day: moment(selectedDate),
         date: moment(selectedDate)
       },
       {
-        day: moment(selectedDate).add(1, "days"),
-        date: moment(selectedDate).add(1, "days")
+        day: moment(selectedDate).add(1, 'days'),
+        date: moment(selectedDate).add(1, 'days')
       },
       {
-        day: moment(selectedDate).add(2, "days"),
-        date: moment(selectedDate).add(2, "days")
+        day: moment(selectedDate).add(2, 'days'),
+        date: moment(selectedDate).add(2, 'days')
+      },
+      {
+        day: moment(selectedDate).add(3, 'days'),
+        date: moment(selectedDate).add(3, 'days')
       }
-    ];
+    ]
+    else
+    return dates = [
+      {
+        day: moment(selectedDate).subtract(2, 'days'),
+        date: moment(selectedDate).subtract(2, 'days')
+      },
+      {
+        day: moment(selectedDate).subtract(1, 'days'),
+        date: moment(selectedDate).subtract(1, 'days')
+      },
+      {
+        day: moment(selectedDate),
+        date: moment(selectedDate)
+      },
+      {
+        day: moment(selectedDate).add(1, 'days'),
+        date: moment(selectedDate).add(1, 'days')
+      },
+      {
+        day: moment(selectedDate).add(2, 'days'),
+        date: moment(selectedDate).add(2, 'days')
+      }
+    ]   
+  }
 
-    if (this.state.width > "1280") {
-      dates = [
-        {
-          day: moment(selectedDate).subtract(3, "days"),
-          date: moment(selectedDate).subtract(3, "days")
-        },
-        {
-          day: moment(selectedDate).subtract(2, "days"),
-          date: moment(selectedDate).subtract(2, "days")
-        },
-        {
-          day: moment(selectedDate).subtract(1, "days"),
-          date: moment(selectedDate).subtract(1, "days")
-        },
-        {
-          day: moment(selectedDate),
-          date: moment(selectedDate)
-        },
-        {
-          day: moment(selectedDate).add(1, "days"),
-          date: moment(selectedDate).add(1, "days")
-        },
-        {
-          day: moment(selectedDate).add(2, "days"),
-          date: moment(selectedDate).add(2, "days")
-        },
-        {
-          day: moment(selectedDate).add(3, "days"),
-          date: moment(selectedDate).add(3, "days")
-        }
-      ];
-    }
 
-    let optionChecked = this.state.reportDay;
+  render() {
+    let selectedDate = this.state.startDate;
+    const visitCount = this.props.serviceVistCount;
+    let dates = this.getDates(this.state.startDate)
+    let optionChecked = this.state.reportDay
+    let count = this.state.width > '1280' ? 7 : 5
 
     let current_month = new Date().getMonth();
     let pervious_month = moment.months().splice(current_month - 3, 3);
@@ -485,6 +495,10 @@ class serviceCalendar extends React.Component {
     });
 
     let serviceVist = this.props.serviceVist;
+
+    let start_day_month = parseInt(dates[0].date.format('MM'),10)
+    let end_day_month = parseInt(dates[(count -1)].date.format('MM'),10)
+    let selectedMonth = parseInt(this.state.selectedMonths,10)
     let visitData = (
       <ServiceCalendarDefault
         onClickConversation={data => this.onClickConversation(data)}
@@ -547,17 +561,17 @@ class serviceCalendar extends React.Component {
           </div>
           <div className="middlePalette">
             <div className="datePalette">
-              <span
-                className="ProfileCalendarCaret CaretPrev"
-                onClick={this.clickPrevWeek}
-              />
+            { start_day_month === selectedMonth &&  <span
+                className='ProfileCalendarCaret CaretPrev'
+                onClick={this.clickPrevWeek.bind(this)}
+           /> }
               <div onChange={this.handleDayChange} className="datesList">
                 {dateList}
               </div>
-              <span
-                className="ProfileCalendarCaret CaretNext"
-                onClick={this.clickNextWeek}
-              />
+              { end_day_month === selectedMonth &&  <span
+                className='ProfileCalendarCaret CaretNext'
+                onClick={this.clickNextWeek.bind(this)}
+              /> }
             </div>
           </div>
           <Scrollbars
