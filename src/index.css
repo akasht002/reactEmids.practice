@@ -322,6 +322,7 @@ a:focus, a:hover{
 .PhoneInput{
     display: block;
     position: relative;
+    color:#444;
 }
 
 .PhoneInput:before{
@@ -332,6 +333,7 @@ a:focus, a:hover{
     height: 100%;
     top: 0;
     left: 0;
+    color: #444;
 }
 
 span.PhoneInput > input{
