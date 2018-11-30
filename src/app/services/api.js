@@ -152,4 +152,5 @@ export const API = {
     cancelHiredServiceProvider:'ServiceRequest/CancelHiredServiceProvider',
     getPersonalDetailGuardian: 'CoreoHomeUser/GuardianProfile/',
     getImageGuardian: 'CoreoHomeUser/Image/',
+    canInitiateConversation: 'Conversation/CanInitiate/'
 }
