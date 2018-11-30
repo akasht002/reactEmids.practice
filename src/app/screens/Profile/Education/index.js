@@ -349,7 +349,7 @@ class Education extends React.Component {
                     isOpen={this.state.IsEducationModalOpen}
                     toggle={this.toggleEducation}
                     ModalBody={modalContent}
-                    className="modal-lg asyncModal CertificationModal"
+                    className="modal-lg asyncModal CertificationModal educ-modpop"
                     modalTitle={modalTitle}
                     centered={true}
                     onClick={this.state.isAdd ? this.addEducation : this.updateEducation}
