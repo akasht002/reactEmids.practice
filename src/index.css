@@ -839,3 +839,21 @@ body{
 .topProfile .topPalette  .ProfileMonthList .Select-menu-outer {
     top: 40px;
 }
+.count-topred
+{
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    display: block;
+    border-radius: 50%;
+    background: #ed1c24;
+    color: #fff;
+    font-size: 10px;
+    text-align: center;
+    top: 9px;
+    padding: 3px 2px;
+    /* bottom: 3px; */
+    /* right: 0; */
+    margin-left: 18px;
+    z-index: 100;
+}
