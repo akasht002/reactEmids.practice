@@ -211,3 +211,9 @@ export function unique(arr, keyProps) {
   const map = new Map(kvArray);
   return Array.from(map.values());
  }
+
+
+
+export function format_DDMMMYYYY_Value (date) {
+  return date ? moment(date).format(DATE_FORMAT_MONTH) : null
+}

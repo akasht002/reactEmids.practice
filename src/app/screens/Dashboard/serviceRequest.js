@@ -2,6 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
+import _ from 'lodash'
 import { CSS_PROPS } from './css-data-props'
 import { Scrollbars } from '../../components'
 import {
@@ -94,11 +95,11 @@ class ServiceRequest extends React.Component {
         return data
       }
     )   
-    let serviceRequest = this.props.patientServiceRequest
+    let serviceRequest = this.props.patientServiceRequest && _.uniqBy(this.props.patientServiceRequest, 'serviceRequestId');
     let serviceRequestItem = ''
     serviceRequestItem = getLength(serviceRequest) > 0
       ? <ServiceProviderRequestDetails
-        serviceRequest={this.props.patientServiceRequest}
+        serviceRequest={serviceRequest}
         handleClick={requestId => this.handleClick(requestId)}
         minVal={this.state.min}
         maxVal={this.state.max}

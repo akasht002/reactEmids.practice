@@ -243,7 +243,7 @@ export function cancelHiredServiceProvider(data) {
   let model = {
     serviceRequestId: data.serviceRequestId,
     serviceProviderId: serviceProviderId,
-    patientId: data.patientId,
+    patientId: 0,
     cancelledDescription: data.cancelledDescription
   }
   return dispatch => {

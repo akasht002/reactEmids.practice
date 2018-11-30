@@ -174,7 +174,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ModalPopup
                     isOpen={this.state.selectedLink === 'telehealth' && !this.props.canCreateConversation}
-                    ModalBody={<span>You cannot initiate a conversation as you have no current service requests</span>}
+                    ModalBody={<span>You cannot initiate a video call as you have no current service requests</span>}
                     btn1="OK"
                     className="modal-sm"
                     headerFooter="d-none"

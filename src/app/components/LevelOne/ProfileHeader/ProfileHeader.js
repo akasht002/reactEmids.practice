@@ -49,14 +49,14 @@ class ProfileHeader extends Component {
             let separator = "";
             if (menu.status) {
                 let clsName = "navIcon icon" + makeProperCase(menuName);
-                if(menuName === 'messages' && this.props.dashboardMessageCount > 0){
-                    clsName = "navIcon iconAlertMessage";
-                }
                 if (menuName === "notification") {
                     separator = "NavIconSeparator"
                 }
                 return (
                     <NavItem className={menuName + "Widget navIconWidget " + separator} key={menu.id}>
+                    {menuName === 'messages' && this.props.dashboardMessageCount > 0 &&
+                    <span className="count-topred">{this.props.dashboardMessageCount > 99 ? this.props.dashboardMessageCount + '+':this.props.dashboardMessageCount }</span>
+                  }
                         <NavLink className={clsName} key={menu.id} onClick={() => { this.props.onClick(menu.link) }} />
                     </NavItem>
                 )
