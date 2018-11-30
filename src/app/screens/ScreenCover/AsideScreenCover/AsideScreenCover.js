@@ -110,8 +110,9 @@ class AsideScreenCover extends React.Component {
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
                     <div className='BrandNameWidget'>
                         <div className='BrandName'>
-                            <Link className='BrandLink' to='/'><img src={require('../../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
-                            </Link>
+                            <span className='BrandLink'>
+                                <img src={require('../../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
+                            </span>
                         </div>
                     </div>
                     <ProfileImage
@@ -173,7 +174,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ModalPopup
                     isOpen={this.state.selectedLink === 'telehealth' && !this.props.canCreateConversation}
-                    ModalBody={<span>You cannot initiate a conversation as you have no current service requests</span>}
+                    ModalBody={<span>You cannot initiate a video call as you have no current service requests</span>}
                     btn1="OK"
                     className="modal-sm"
                     headerFooter="d-none"

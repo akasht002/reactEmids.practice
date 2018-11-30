@@ -5,7 +5,7 @@ import Moment from 'react-moment'
 import moment from 'moment';
 import { Input, TextArea, ProfileModalPopup, ModalPopup } from "../../../components";
 import { Calendar } from "../../../components/LevelOne/index";
-import { checkSpace, checkDateFormatNumber, formateStateDate, formateDateValue } from "../../../utils/validations";
+import { checkSpace, checkDateFormatNumber, formateStateDate, format_DDMMMYYYY_Value } from "../../../utils/validations";
 import { compare } from "../../../utils/comparerUtility";
 import {
     formatDate,
@@ -404,7 +404,7 @@ class WorkHistory extends Component {
                             </h5>
                             <span className="ml-auto SPWorkYear">
                             <span>
-                                {formateDateValue(WorkHistoryList.fromDate) }
+                                {format_DDMMMYYYY_Value(WorkHistoryList.fromDate) }
                             </span>
 
                                <span> - </span>
@@ -412,7 +412,7 @@ class WorkHistory extends Component {
                                     <span>Present</span>
                                     :
                                     <span> { /* to do change removing className="ml-2" */}
-                                        {formateDateValue(WorkHistoryList.toDate)}
+                                        {format_DDMMMYYYY_Value(WorkHistoryList.toDate)}
                                     </span>
                                 }
                             </span>
@@ -495,7 +495,7 @@ class WorkHistory extends Component {
 
                 <ModalPopup
                     isOpen={this.state.isOnDeleteModalOpen}
-                    ModalBody={<span>Do you really want to remove the Work History Details?</span>}
+                    ModalBody={<span>Do you really want to remove the work history entry?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"

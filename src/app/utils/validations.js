@@ -200,4 +200,10 @@ export function getStatus(input, field, status) {
     }
   }
   return output
+};
+
+
+
+export function format_DDMMMYYYY_Value (date) {
+  return date ? moment(date).format(DATE_FORMAT_MONTH) : null
 }

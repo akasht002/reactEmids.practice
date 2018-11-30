@@ -144,18 +144,18 @@ export function getPersonalDetail() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
         let userType = getState().patientProfileState.userType;
-        if(userType === USERTYPES.PATIENT){
-            dispatch(startLoading())
-        PatientGet(API.getPatientPersonalDetail + patientId + '/PatientDetails')
-        .then(resp => {
-            dispatch(getPersonalDetailSuccess(resp.data))
-            dispatch(endLoading())
-        })
-        .catch(err => {
-            dispatch(endLoading())
-        })
-        }else{
+        if(userType === USERTYPES.GUARDIAN || userType === USERTYPES.PATIENT_AND_GUARDIAN){
             dispatch(getPersonalDetailGuardian(patientId));
+        }else{
+            dispatch(startLoading())
+            PatientGet(API.getPatientPersonalDetail + patientId + '/PatientDetails')
+            .then(resp => {
+                dispatch(getPersonalDetailSuccess(resp.data))
+                dispatch(endLoading())
+            })
+            .catch(err => {
+                dispatch(endLoading())
+            })
         }
         
     }
@@ -195,15 +195,15 @@ export function getImage() {
         const patientId = getState().patientProfileState.patientId;
         
         let userType = getState().patientProfileState.userType;
-        if(userType === USERTYPES.PATIENT){
-        PatientGet(API.getPatientImage + patientId)
-        .then(resp => {
-            dispatch(getImgSuccess(resp.data))
-        })
-        .catch(err => {
-        })
-        }else{
+        if(userType === USERTYPES.GUARDIAN || userType === USERTYPES.PATIENT_AND_GUARDIAN){
             dispatch(getImageGuardian(patientId));
+        }else{
+            PatientGet(API.getPatientImage + patientId)
+            .then(resp => {
+                dispatch(getImgSuccess(resp.data))
+            })
+            .catch(err => {
+            })
         }
     }
 };
