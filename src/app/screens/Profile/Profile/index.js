@@ -93,14 +93,14 @@ class Profile extends Component {
   }
 
   getSkills = () => {
-    // if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-    //   !getUserInfo().isEntityServiceProvider) {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) {
       return <Skills />
-    //  } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-    //    return <Skills />
-    //  } else {
-    //    return '';
-    //  }
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+       return <Skills />
+     } else {
+       return '';
+     }
   }
 
   getLanguages = () => {
@@ -108,7 +108,7 @@ class Profile extends Component {
       !getUserInfo().isEntityServiceProvider) {
       return <Languages />
      } 
-     else if(getUserInfo().serviceProviderTypeId === 1 && getUserInfo().entityId !== 0 && getUserInfo().isEntityServiceProvider) {
+     else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
        return <Languages />
      } 
      else {
@@ -117,14 +117,14 @@ class Profile extends Component {
   }
 
   getCertification = () => {
-    // if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-    //   !getUserInfo().isEntityServiceProvider) {
+    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) {
       return <Certification />
-    //  } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-    //    return <Certification />
-    //  } else {
-    //    return '';
-    //  }
+     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+       return <Certification />
+     } else {
+       return '';
+     }
   }
 
   validationPopUp = () => {
@@ -150,9 +150,9 @@ class Profile extends Component {
       !getUserInfo().isEntityServiceProvider) {
       return <WorkHistory />
      } 
-    //  else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-    //    return <WorkHistory />
-    //  } 
+     else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+       return <WorkHistory />
+     } 
      else {
        return '';
      }
