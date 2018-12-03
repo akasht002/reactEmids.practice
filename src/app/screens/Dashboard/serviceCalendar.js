@@ -125,7 +125,7 @@ class serviceCalendar extends React.Component {
       startMonth: updatedDay.format("MMM"),
       selectedMonths:updatedDay.format("M"),
       selectedMonth: {
-        label: updatedDay.format("MMM") + ' ' + year,
+        label: updatedDay.format("MMM") + ' ' + updatedDay.format('YYYY'),
         value: updatedDay.format("MMM")
       }
     }) : this.setState({
@@ -135,7 +135,7 @@ class serviceCalendar extends React.Component {
       startMonth:moment(this.state.startDate).format('MMM'),
       selectedMonths:moment(this.state.startDate).format("M"),
       selectedMonth: {
-        label: moment(this.state.startDate).format('MMM') + ' ' + year,
+        label: moment(this.state.startDate).format('MMM') + ' ' +  moment(this.state.startDate).format('YYYY'),  
         value: moment(this.state.startDate).format('MMM')
       }
     })
@@ -163,7 +163,7 @@ class serviceCalendar extends React.Component {
       startMonth: updatedDay.format("MMM"),
       selectedMonths:updatedDay.format("M"),
       selectedMonth: {
-        label: updatedDay.format("MMM") + ' ' + year,
+        label: updatedDay.format("MMM") + ' ' + updatedDay.format('YYYY'),
         value: updatedDay.format("MMM")
       }
     }): this.setState({
@@ -173,7 +173,7 @@ class serviceCalendar extends React.Component {
       startMonth:moment(this.state.startDate).format('MMM'),
       selectedMonths:moment(this.state.startDate).format("M"),
       selectedMonth: {
-        label: moment(this.state.startDate).format('MMM') + ' ' + year,
+        label: moment(this.state.startDate).format('MMM') + ' ' + moment(this.state.startDate).format('YYYY'),
         value: moment(this.state.startDate).format('MMM')
       }
     })
