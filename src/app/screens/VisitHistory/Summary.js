@@ -460,7 +460,7 @@ class VistSummary extends React.Component {
                   </div>
                   <div className="col-md-4 CostTableContainer Cost">
                     <p>
-                      <span>{summaryDetail.originalTotalDuration.substring(0,5)} hrs</span>
+                      <span>{summaryDetail.originalTotalDuration && summaryDetail.originalTotalDuration.substring(0,5)} hrs</span>
                       <span>
                         ${" "}{summaryDetail.hourlyRate}
                         /hr
