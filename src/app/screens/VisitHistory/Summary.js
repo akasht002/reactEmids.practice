@@ -7,6 +7,7 @@ import {
 } from "react-accessible-accordion";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import Moment from 'react-moment'
 import "react-accessible-accordion/dist/fancy-example.css";
 import { getFields, getLength, getStatus, getServiceTypeImage } from "../../utils/validations";
 import { ProfileModalPopup } from "../../components";
@@ -449,7 +450,7 @@ class VistSummary extends React.Component {
                 <div className="row CostTableWidget">
                   <div className="col-md-8 CostTableContainer Label">
                     <p>
-                      <span>Total Chargeable Time</span>
+                      <span>Billable Time (Hrs : Mins)</span>
                       <span>Hourly Rate</span>
                     </p>
                     <p className="TaxLabel">
@@ -459,7 +460,7 @@ class VistSummary extends React.Component {
                   </div>
                   <div className="col-md-4 CostTableContainer Cost">
                     <p>
-                      <span>{summaryDetail.originalTotalDuration} hrs</span>
+                      <span>{summaryDetail.originalTotalDuration.substring(0,5)} hrs</span>
                       <span>
                         ${" "}{summaryDetail.hourlyRate}
                         /hr
