@@ -45,7 +45,7 @@ class serviceCalendar extends React.Component {
       EditPersonalDetailModal: false,
       reportDay: moment(today).format(),
       selectedMonth: {
-        label: moment(today).format("MMM") + ' ' + year,
+        label: moment(today).format("MMM") + ' ' + moment(today).format("YYYY"),
         value: moment(today).format("MMM")
       },
       showMore: false,
@@ -113,19 +113,32 @@ class serviceCalendar extends React.Component {
     }
     let selectMonth =  updatedDay.format("M")
     let  current_year =  updatedDay.year()
+    let prev_month = parseInt(moment(this.state.startDate).format('MM'),10)
+    let next_month = parseInt(moment(updatedDay).format('MM'),10)
     let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
               parseInt(current_year,10) + 1 : current_year
-    this.setState({
+
+    prev_month===next_month?this.setState({
       startDate: updatedDay.format(),
       startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
       startMonth: updatedDay.format("MMM"),
       selectedMonths:updatedDay.format("M"),
       selectedMonth: {
-        label: updatedDay.format("MMM") + ' ' + year,
+        label: updatedDay.format("MMM") + ' ' + updatedDay.format('YYYY'),
         value: updatedDay.format("MMM")
       }
-    });
+    }) : this.setState({
+      startDate:moment(this.state.startDate).endOf('month').format(),
+      startYear: moment(this.state.startDate).format('YYYY'),
+      reportDay: moment(this.state.startDate).format(),
+      startMonth:moment(this.state.startDate).format('MMM'),
+      selectedMonths:moment(this.state.startDate).format("M"),
+      selectedMonth: {
+        label: moment(this.state.startDate).format('MMM') + ' ' +  moment(this.state.startDate).format('YYYY'),  
+        value: moment(this.state.startDate).format('MMM')
+      }
+    })
   };
 
   clickPrevWeek = () => {
@@ -139,19 +152,31 @@ class serviceCalendar extends React.Component {
     }
     let selectMonth =  updatedDay.format("M")
     let  current_year =  updatedDay.year()
+    let prev_month = parseInt(moment(this.state.startDate).format('MM'),10)
+    let next_month = parseInt(moment(updatedDay).format('MM'),10)
     let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
               parseInt(current_year,10) + 1 : current_year
-    this.setState({
+    prev_month===next_month? this.setState({
       startDate: updatedDay.format(),
       startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
       startMonth: updatedDay.format("MMM"),
       selectedMonths:updatedDay.format("M"),
       selectedMonth: {
-        label: updatedDay.format("MMM") + ' ' + year,
+        label: updatedDay.format("MMM") + ' ' + updatedDay.format('YYYY'),
         value: updatedDay.format("MMM")
       }
-    });
+    }): this.setState({
+      startDate:moment(this.state.startDate).startOf('month').format(),
+      startYear: moment(this.state.startDate).format('YYYY'),
+      reportDay: moment(this.state.startDate).format(),
+      startMonth:moment(this.state.startDate).format('MMM'),
+      selectedMonths:moment(this.state.startDate).format("M"),
+      selectedMonth: {
+        label: moment(this.state.startDate).format('MMM') + ' ' + moment(this.state.startDate).format('YYYY'),
+        value: moment(this.state.startDate).format('MMM')
+      }
+    })
   };
 
   todayDate = () => {
@@ -167,7 +192,7 @@ class serviceCalendar extends React.Component {
       currentDate: moment().format("DD"),
       selectedMonths:moment(today).format("M"),
       selectedMonth: {
-        label: moment(today).format("MMM") + ' ' + year,
+        label: moment(today).format("MMM") + ' ' + moment(today).format("YYYY"),
         value: moment(today).format("MMM")
       }
     });
@@ -186,7 +211,7 @@ class serviceCalendar extends React.Component {
       startYear: getDate.format("YYYY"),
       startMonth: getDate.format("MMM"),
       selectedMonth: {
-        label: getDate.format("MMM") + ' ' + year,
+        label: getDate.format("MMM") + ' ' + getDate.format("YYYY"),
         value: getDate.format("MMM")
       },
       currentDate: getDate.format("DD")
@@ -262,6 +287,7 @@ class serviceCalendar extends React.Component {
   };
 
   showServiceProviderList = data => {
+    console.log(data.target.value)
     let date = convertStringToDate(data.target.value);
     this.props.getServiceProviderVists(date);
   };
