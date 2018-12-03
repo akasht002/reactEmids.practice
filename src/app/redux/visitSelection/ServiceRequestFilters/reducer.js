@@ -48,6 +48,11 @@ const ServiceRequestFilterState = (state = defaultState, action) => {
                 ...state,
                 ServiceType: action.data
             };
+        case ServiceRequestFiltersList.clearServiceType:
+        return {
+            ...state,
+            ServiceType: action.data
+        };
         case ServiceRequestFiltersList.clearServiceArea:
             return {
                 ...state,

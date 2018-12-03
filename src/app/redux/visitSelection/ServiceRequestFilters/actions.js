@@ -13,7 +13,8 @@ export const ServiceRequestFiltersList = {
     clearServiceRequestStatus: 'clear_servicerequest_status_success/servicerequestfilters',
     checkAllServiceRequestStatus: 'checkAllServiceRequestStatus/servicerequestfilters',
     getFilterDataCountSuccess:'getFilterDataCountSuccess/servicerequestfilters',
-    formDirty:'formDirty/servicerequestfilters'
+    formDirty:'formDirty/servicerequestfilters',
+    clearServiceType:'clear_service_type/servicerequestfilters',
 };
 
 export const clearServiceRequestStatus = (data) => {
@@ -33,6 +34,13 @@ export const clearServiceCategory = (data) => {
     })
     return {
         type: ServiceRequestFiltersList.clearServiceCategory,
+        data
+    }
+}
+
+export const clearServiceType = data => {
+    return {
+        type: ServiceRequestFiltersList.clearServiceType,
         data
     }
 }

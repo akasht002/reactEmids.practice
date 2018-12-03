@@ -15,7 +15,7 @@ import {
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea,
-     clearServiceCategory, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus, 
+     clearServiceCategory,clearServiceType, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus, 
      getFilterDataCount, formDirty } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
@@ -210,6 +210,7 @@ class VisitServiceList extends Component {
         this.props.clearServiceCategory(this.props.ServiceType);
         this.props.clearServiceArea(this.props.ServiceAreaList);
         this.props.clearServiceRequestStatus(this.props.ServiceStatus)
+        this.props.clearServiceType([])
         let data = {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
@@ -522,6 +523,7 @@ function mapDispatchToProps(dispatch) {
         clearServiceCategory: (data) => dispatch(clearServiceCategory(data)),
         clearServiceArea: (data) => dispatch(clearServiceArea(data)),
         clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data)),
+        clearServiceType:(data)=>dispatch(clearServiceType(data)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         getServiceRequestCount: () => dispatch(getServiceRequestCount()),
