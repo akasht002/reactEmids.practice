@@ -45,7 +45,7 @@ class serviceCalendar extends React.Component {
       EditPersonalDetailModal: false,
       reportDay: moment(today).format(),
       selectedMonth: {
-        label: moment(today).format("MMM") + ' ' + year,
+        label: moment(today).format("MMM") + ' ' + moment(today).format("YYYY"),
         value: moment(today).format("MMM")
       },
       showMore: false,
@@ -192,7 +192,7 @@ class serviceCalendar extends React.Component {
       currentDate: moment().format("DD"),
       selectedMonths:moment(today).format("M"),
       selectedMonth: {
-        label: moment(today).format("MMM") + ' ' + year,
+        label: moment(today).format("MMM") + ' ' + moment(today).format("YYYY"),
         value: moment(today).format("MMM")
       }
     });
@@ -211,7 +211,7 @@ class serviceCalendar extends React.Component {
       startYear: getDate.format("YYYY"),
       startMonth: getDate.format("MMM"),
       selectedMonth: {
-        label: getDate.format("MMM") + ' ' + year,
+        label: getDate.format("MMM") + ' ' + getDate.format("YYYY"),
         value: getDate.format("MMM")
       },
       currentDate: getDate.format("DD")
@@ -287,6 +287,7 @@ class serviceCalendar extends React.Component {
   };
 
   showServiceProviderList = data => {
+    console.log(data.target.value)
     let date = convertStringToDate(data.target.value);
     this.props.getServiceProviderVists(date);
   };
