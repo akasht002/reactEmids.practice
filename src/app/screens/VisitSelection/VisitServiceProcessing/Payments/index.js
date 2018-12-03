@@ -293,7 +293,7 @@ class Payments extends Component {
                                             <div className="form-radio col-md-6">
                                                 <input className="form-radio-input" name="CardSelect" id="CardSelect13" type="radio"
                                                     value={3} onClick={this.toggleCardSelection} checked={this.state.SelectedCard === AUTHORIZEDCARD ? 'checked' : ''} />
-                                                <label className="form-radio-label" htmlFor="CardSelect13">Pay through pre authorized card
+                                                <label className="form-radio-label" htmlFor="CardSelect13">Pay through default card
                                     <span className="RadioBoxIcon" /></label>
                                             </div>
                                         </div>
