@@ -169,7 +169,7 @@ class VisitHistory extends Component {
             <h5 className='primaryColor m-0'>Visit History</h5>
           </div>
           <div className='ProfileHeaderRight'>
-            <ThemeProvider>
+            {/* <ThemeProvider>
               <SelectField>
                 <Select
                   selectedKey={this.state.selectedKey}
@@ -190,7 +190,7 @@ class VisitHistory extends Component {
                   {this.state.selectedKey}
                 </Select>
               </SelectField>
-            </ThemeProvider>
+            </ThemeProvider> */}
             <span
               className='primaryColor'
               onClick={this.toggleFilter}

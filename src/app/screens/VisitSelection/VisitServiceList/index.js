@@ -402,7 +402,7 @@ class VisitServiceList extends Component {
                         <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
-                        <ThemeProvider>
+                        {/* <ThemeProvider>
                             <SelectField>
                                 <Select
                                     selectedKey={this.state.selectedKey}
@@ -423,7 +423,7 @@ class VisitServiceList extends Component {
                                     {this.state.selectedKey}
                                 </Select>
                             </SelectField>
-                        </ThemeProvider>
+                        </ThemeProvider> */}
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
