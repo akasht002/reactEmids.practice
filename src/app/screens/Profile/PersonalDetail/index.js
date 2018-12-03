@@ -784,7 +784,7 @@ class PersonalDetail extends React.PureComponent {
           </div>
         </div>
         <div className='col-md-12 mb-2'>
-          <label>Affiliation</label>
+          <label className="dark-font">Affiliation</label>
         </div>
         <div className='col-md-12'>
           <div className="form-check mb-2">
