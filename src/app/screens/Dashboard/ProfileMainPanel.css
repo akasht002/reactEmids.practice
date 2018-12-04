@@ -1048,6 +1048,7 @@ div.ProfileConversation{
     left: 15px;
     background-image: url("../../assets/images/Like_Purple.svg");
     background-size: contain;
+    background-repeat: no-repeat;    
 }
 
 /**********************************************************************************************************************/
