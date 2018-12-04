@@ -272,7 +272,7 @@ class Payments extends Component {
                                     {this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
                                         <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.copayAmount}</i></p>
                                         :
-                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2)}</i></p>
+                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount && this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2)}</i></p>
                                     }
 
                                     <div className="FeedbackQuestionWidget form-group">

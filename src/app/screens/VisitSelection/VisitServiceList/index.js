@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
+import _ from 'lodash'
 import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList } from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
@@ -21,15 +22,13 @@ import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from ".
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
 import Sorting from "../ServiceRequestSorting";
-import { SelectField, Select, Item } from '@zendeskgarden/react-select';
-import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import Pagination from 'react-js-pagination';
 import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
-import { HIRED_STATUS_ID, RECURRING_PATTERN } from '../../../constants/constants';
+import { SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 
 class VisitServiceList extends Component {
@@ -338,7 +337,7 @@ class VisitServiceList extends Component {
             let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
             let patientImage = '';
             let patientLastName = '';
-            if (serviceList.statusId === HIRED_STATUS_ID) {
+            if (_.indexOf(SHOW_IMAGES_SERVICE_REQUEST, serviceList.statusId ) !== -1) {
                 patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
                 patientLastName = serviceList && serviceList.patientLastName;
             } else {
