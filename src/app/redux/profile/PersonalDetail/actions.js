@@ -4,6 +4,7 @@ import { Get, Post, Put } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 import { getUserInfo } from '../../../services/http';
+import { getServiceArea } from '../serviceArea/action';
 
 export const PersonalDetails = {
   get_personal_detail_success : "profile/get_personal_detail_success",
@@ -148,6 +149,7 @@ export function getPersonalDetail () {
     Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
+        dispatch(getServiceArea());
         dispatch(endLoading())
       })
       .catch(err => {
