@@ -12,9 +12,13 @@ export const AvailabilityActions = {
 };
 
 export const getAvailableDays = () => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(startLoading());
-        Get(API.getAvailableDays + getUserInfo().serviceProviderId + '/Available').then(resp => {   
+        let serviceProviderId = getUserInfo().serviceProviderId;
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+        };
+        Get(API.getAvailableDays + serviceProviderId + '/Available').then(resp => {   
             dispatch(getAvailableDaysSuccess(resp.data[0]));
             dispatch(endLoading());
         }).catch(err => {

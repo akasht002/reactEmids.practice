@@ -32,8 +32,11 @@ export const getEducationFieldDetails = (data) => {
 }
 
 export function getEducation() {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         let serviceProviderId = getUserInfo().serviceProviderId;
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+          };
         dispatch(startLoading());
         Get(API.education + serviceProviderId+'/Education').then((resp) => {
             dispatch(getEducationSuccess(resp.data))

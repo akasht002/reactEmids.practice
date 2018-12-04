@@ -27,26 +27,36 @@ class BlackoutDays extends Component {
   }
 
   toggleBlackout = (action, data, disabledEdit, e) => {
-    if (disabledEdit === "disabled") {
-      e.stopPropagation();
-    } else {
-      let currentDate = new Date();
-      if (currentDate > new Date(data.startDate) && currentDate < new Date(data.endDate)) {
-        this.setState({
-          disabledStartDate: "disabled"
-        });
-      } else {
-        this.setState({
-          disabledStartDate: ""
-        });
-      }
-      this.setState({
-        IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen,
-        [action]: !this.state[action],
-        itemData: data,
-        modalTypeValue: action
-      });
-    }
+
+    this.setState({
+      IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen,
+      [action]: !this.state[action],
+      itemData: data,
+      modalTypeValue: action
+    });
+
+    // to do check with confirmation about requiremnts 
+
+    // if (disabledEdit === "disabled") {
+    //   e.stopPropagation();
+    // } else {
+    //   let currentDate = new Date();
+    //   if (currentDate > new Date(data.startDate) && currentDate < new Date(data.endDate)) {
+    //     this.setState({
+    //       disabledStartDate: "disabled"
+    //     });
+    //   } else {
+    //     this.setState({
+    //       disabledStartDate: ""
+    //     });
+    //   }
+    //   this.setState({
+    //     IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen,
+    //     [action]: !this.state[action],
+    //     itemData: data,
+    //     modalTypeValue: action
+    //   });
+    // }
   }
 
   saveBlackoutData = data => {
@@ -106,8 +116,11 @@ class BlackoutDays extends Component {
         dateEqual = true;
       }
 
+      let currentDateValue = formateDate(new Date(), 'MMM DD YYYY')
+      let startDateValue = formateDate(startDate, 'MMM DD YYYY');
       let currentDate = new Date(), disabledEdit = "";
-      currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit = 'disabled') : '';
+     // currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit = 'disabled') : '';
+      currentDate = currentDateValue > startDateValue ? (disabledEdit = 'disabled') : '';
 
       return (
         <li id={indexId}>
@@ -202,7 +215,6 @@ class BlackoutDays extends Component {
           itemData={this.state.itemData}
           modalTitle={modalTitle}
           saveBlackout={this.saveBlackoutData}
-          disabledStartDate={this.state.disabledStartDate}
           onClickToggle={this.toggleCheck}
           closeBlackoutModal={this.closeBlackoutModal}
         />

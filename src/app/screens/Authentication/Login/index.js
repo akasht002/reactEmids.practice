@@ -11,7 +11,6 @@ import { Scrollbars } from 'react-custom-scrollbars';
 class Login extends PureComponent {
   
   onBtnPress = () => {
-    debugger;
     userManager.signinRedirect();
   } 
 

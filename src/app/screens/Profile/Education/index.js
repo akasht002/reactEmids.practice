@@ -307,10 +307,13 @@ class Education extends React.Component {
                     }
                     </span>
                     </div>
-                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={EducationList.educationId}
-                        onClick={(e) => this.showModalOnDelete(e)} />
-                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={EducationList.educationId}
+                    {this.props.isUser && 
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={EducationList.educationId}
+                        onClick={(e) => this.showModalOnDelete(e)} />}
+                    {this.props.isUser && <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={EducationList.educationId}
                         onClick={(e) => this.editEducation(e)} />
+                    }
+                    
                 </li>
             )
         });
@@ -328,8 +331,9 @@ class Education extends React.Component {
             <div className="col-md-12 card CardWidget SPCertificate">
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Education</h4>
+                    {this.props.isUser && 
                     <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
-                        onClick={() => this.setState({IsEducationModalOpen: true,isAdd: true})} />
+                        onClick={() => this.setState({IsEducationModalOpen: true,isAdd: true})} />}
                 </div>
                 <div className="SPCertificateContainer width100">
                     
@@ -338,7 +342,7 @@ class Education extends React.Component {
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>  Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ IsEducationModalOpen: true , isAdd: true})}/> to add Education</span>
+                                      <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>  Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ IsEducationModalOpen: true , isAdd: true})}/> to add Education</span>
                                 </div>
                             </div>
                             </ul>
@@ -408,7 +412,8 @@ function mapStateToProps(state) {
         educationList: state.profileState.EducationState.educationList,
         addeducationSuccess: state.profileState.EducationState.addeducationSuccess,
         educationalDetails: state.profileState.EducationState.educationalDetails,
-        serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId
+        serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId,
+        isUser: state.profileState.PersonalDetailState.isUser,
     };
 };
 

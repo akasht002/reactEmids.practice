@@ -445,8 +445,9 @@ class WorkHistory extends Component {
             <div className="col-md-12 card CardWidget SPWorkHistory">
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Work History</h4>
+                    {this.props.isUser &&
                     <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
-                        onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} />
+                        onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} />}
                 </div>
 
                 <div className="SPCertificateContainer width100">
@@ -526,7 +527,8 @@ function mapStateToProps(state) {
         workhistoryList: state.profileState.WorkHistoryState.workhistoryList,
         addeworkhistorySuccess: state.profileState.WorkHistoryState.addeworkhistorySuccess,
         workhistoyFieldDetails: state.profileState.WorkHistoryState.workhistoyFieldDetails,
-        serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId
+        serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId,
+        isUser: state.profileState.PersonalDetailState.isUser,
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkHistory));

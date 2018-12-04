@@ -10,7 +10,8 @@ import { Button } from '../../../components';
 import { USERTYPES } from '../../../constants/constants';
 import { Path } from '../../../routes';
 import { setParticipantProfile} from '../../../redux/patientProfile/actions';
-import { push } from '../../../redux/navigation/actions'
+import { push } from '../../../redux/navigation/actions';
+import { setServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
 
 class ParticipantContent extends Component {
 
@@ -224,14 +225,13 @@ class ParticipantContent extends Component {
                                             this.props.setParticipantProfile(data);
                                             this.props.goToPatientProfile();
                                         }
-                                        // else{
-                                        //     let data = {
-                                        //         userId : participant.userId,
-                                        //         userType: participant.participantType,
-                                        //         isUser: false
-                                        //     };
-                                        //     this.props.goToProfile();
-                                        // }
+                                        else{
+                                            let data = {
+                                                userId : participant.userId
+                                            };
+                                            this.props.setServiceProviderId(data);
+                                            this.props.goToProfile();
+                                        }
                                         
                                     }}>View Profile</a>
                                 </li>
@@ -350,7 +350,9 @@ function mapDispatchToProps(dispatch) {
         removeParticipant: (data) => dispatch(onRemoveParticipant(data)),
         getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
         setParticipantProfile: data => dispatch(setParticipantProfile(data)),
-        goToPatientProfile: () => dispatch(push(Path.patientProfile))
+        goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        goToProfile: () => dispatch(push(Path.profile)),
+        setServiceProviderId: (data) => dispatch(setServiceProviderId(data)),
     }
 };
 

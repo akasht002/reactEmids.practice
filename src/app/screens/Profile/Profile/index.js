@@ -21,9 +21,10 @@ import { getUserInfo } from '../../../services/http'
 import { PROFILE_SERVICE_PROVIDER_TYPE_ID, ORG_SERVICE_PROVIDER_TYPE_ID } from '../../../constants/constants'
 import {SCREENS} from '../../../constants/constants';
 import {authorizePermission} from '../../../utils/roleUtility';
-import { push } from '../../../redux/navigation/actions';
+import { push, goBack } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
 import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
+import { clearServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
 import './styles.css'
 
 class Profile extends Component {
@@ -142,7 +143,8 @@ class Profile extends Component {
   }
 
   goToDashboard = () => {
-    this.props.goToDashboard();
+    this.props.clearServiceProviderId();
+    this.props.goBack();
   }
 
   getWorkHistory = () => {
@@ -278,7 +280,9 @@ function mapDispatchToProps (dispatch) {
     clearInvitaion: () => dispatch(clearInvitaion()),
     joinVideoConference: () => dispatch(joinVideoConference()),
     goToDashboard: () => dispatch(push(Path.dashboard)),
-    rejectConference: () => dispatch(rejectConference())
+    rejectConference: () => dispatch(rejectConference()),
+    goBack: () => dispatch(goBack()),
+    clearServiceProviderId : () => dispatch(clearServiceProviderId()),
   }
 }
 

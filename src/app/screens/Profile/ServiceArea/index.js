@@ -183,7 +183,6 @@ class ServiceArea extends Component {
   }
 
   checkFiledLengths = () => {
-   // debugger
     const { city, state_id, street, zip } = this.state
     let
       cityValidation = this.checkLength(city),
@@ -354,16 +353,18 @@ class ServiceArea extends Component {
       <div className='col-md-12 card CardWidget SPCertificate'>
         <div className='SPCardTitle d-flex'>
           <h4 className='primaryColor'>Service Areas</h4>
-          <i
+          {this.props.isUser && <i
             name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
             className='SPIconLarge SPIconAdd'
             onClick={() =>
               this.setState({ serviceAreaModal: true, isAdd: true })}
-          />
+          /> }
+          
         </div>
         <div className='SPCertificateContainer width100'>
           <ul className='SPCertificateList'>
-            {this.props.ServiceAreaList.length > 0
+            { this.props.isUser &&<div>
+              { this.props.ServiceAreaList.length > 0
               ? <div>
                 {ServiceAreaList}
               </div>
@@ -386,6 +387,8 @@ class ServiceArea extends Component {
                     </span>
                 </div>
               </div>}
+            </div> }
+            
           </ul>
         </div>
 
@@ -457,6 +460,7 @@ function mapStateToProps(state) {
       .addServiceAreaSuccess,
     ServiceAreaFieldDetails: state.profileState.ServiceAreaState
       .ServiceAreaFieldDetails,
+      isUser: state.profileState.PersonalDetailState.isUser,
   }
 }
 

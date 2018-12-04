@@ -264,8 +264,10 @@ class Certification extends Component {
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification and Licenses</h4>
+                    {this.props.isUser &&
                     <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
-                        onClick={() => this.setState({ certificationModal: true, isAdd: true })} />
+                    onClick={() => this.setState({ certificationModal: true, isAdd: true })} />}
+                    
                 </div>
                 <div className="SPCertificateContainer width100">
                     <ul className="SPCertificateList">
@@ -348,6 +350,7 @@ function mapStateToProps(state) {
         certificationList: state.profileState.CertificationState.certificationList,
         addCertificationSuccess: state.profileState.CertificationState.addCertificationSuccess,
         certificationFieldDetails: state.profileState.CertificationState.certificationFieldDetails,
+        isUser: state.profileState.PersonalDetailState.isUser,
     };
 };
 

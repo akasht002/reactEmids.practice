@@ -24,8 +24,11 @@ export const getServiceOfferedDetails = data => {
 }
 
 export function getServiceOffered() {
-  return dispatch => {
+  return (dispatch, getState) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
+    if(getState().profileState.PersonalDetailState.serviceProviderId){
+      serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+  };
     dispatch(startLoading())
     Get(API.getServiceOffered + serviceProviderId + '/Offer/Selected')
       .then(resp => {
