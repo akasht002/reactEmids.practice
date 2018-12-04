@@ -64,8 +64,8 @@ export function getPerformTasksList(data, startOrStop) {
             }
             else {
                 dispatch(getPerformTasksListSuccess(resp.data))
+                dispatch(push(Path.performTasks))
             }
-            dispatch(push(Path.performTasks))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -93,16 +93,16 @@ export function getServiceVisitId(data, startOrStop) {
 
 export function addPerformedTask(data, startServiceAction) {
     return (dispatch) => {
-        dispatch(startLoading());
+        //dispatch(startLoading());
         ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
             if (startServiceAction === 1 || startServiceAction === undefined) {
                 dispatch(push(Path.feedback))
-                dispatch(endLoading());
+                //dispatch(endLoading());
             }
             //dispatch(push(Path.feedback))
-            dispatch(endLoading());
+            //dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+           // dispatch(endLoading());
             dispatch(push(Path.feedback))
         })
     }

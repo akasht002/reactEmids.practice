@@ -6,12 +6,20 @@ import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
 
 export const paymentsCardList = {
-    getPaymentsCardListSuccess: 'get_paymentsCardList_success/performtasks',
+    getPaymentsCardListSuccess: 'get_paymentsCardList_success/payments',
+    updateServiceRequestId: 'updateServiceRequestId/payments'
 };
 
 export const getPaymentsCardListSuccess = (data) => {
     return {
         type: paymentsCardList.getPaymentsCardListSuccess,
+        data
+    }
+}
+
+export const updateServiceRequestId = (data) => {
+    return {
+        type: paymentsCardList.updateServiceRequestId,
         data
     }
 }

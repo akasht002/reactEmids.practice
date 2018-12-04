@@ -150,9 +150,9 @@ class Profile extends Component {
       !getUserInfo().isEntityServiceProvider) {
       return <WorkHistory />
      } 
-     else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-       return <WorkHistory />
-     } 
+    //  else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+    //    return <WorkHistory />
+    //  } 
      else {
        return '';
      }
