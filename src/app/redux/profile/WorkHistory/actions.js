@@ -32,8 +32,11 @@ export const getWorkhistoryFieldDetails = (data) => {
 }
 
 export function getWorkHistory() {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         let serviceProviderId = getUserInfo().serviceProviderId;
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+        };
         dispatch(startLoading());
         Get(API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
             dispatch(getWorkhistorySuccess(resp.data))

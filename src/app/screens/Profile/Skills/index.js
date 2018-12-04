@@ -155,11 +155,13 @@ class Skills extends Component {
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Skills and Experience</h4>
-                    {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
+                    {this.props.isUser &&  <div>
+                        { this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editSkills} />
                         :
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className="SPIconLarge SPIconAdd" onClick={() => this.setState({isSkillsModalOpen: true,isAdd:true})} />
                     }
+                    </div>}
                 </div>
                 <div className="SPCertificateContainer width100">
                     {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
@@ -222,6 +224,7 @@ function mapStateToProps(state) {
     return {
         SkillsList: state.profileState.SkillsState.SkillsList,
         selectedSkillsList: state.profileState.SkillsState.selectedSkillsList,
+        isUser: state.profileState.PersonalDetailState.isUser,
     };
 };
 

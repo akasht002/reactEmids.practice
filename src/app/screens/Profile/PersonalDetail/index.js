@@ -611,11 +611,12 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>
         </div>
+        {this.props.isUser && 
         <i
           name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
           className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
           onClick={this.togglePersonalDetails}
-        />
+        />}
       </div>
     )
   }
@@ -1087,7 +1088,8 @@ function mapStateToProps(state) {
     profileImgData: state.profileState.PersonalDetailState.imageData,
     genderList: state.profileState.PersonalDetailState.genderList,
     affiliationList:state.profileState.PersonalDetailState.affiliationList,
-    isLoading:state.loadingState.isLoading
+    isLoading:state.loadingState.isLoading,
+    isUser: state.profileState.PersonalDetailState.isUser,
   }
 }
 export default withRouter(

@@ -156,10 +156,14 @@ class Availability extends Component {
                 <div className="col-md-12 card CardWidget SPAvailability">
                     <div className={"SPCardTitle d-flex"}>
                         <h4 className={"primaryColor"}>Availability</h4>
-                        {!availableSlot && this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
+                        { this.props.isUser &&
+                        <div>
+                            { !availableSlot && this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.toggleAvailability.bind('edit', 'editButton')} />
                         :
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className={"SPIconLarge SPIconAdd"} onClick={this.toggleAvailability.bind('add', 'addButton')} />}
+                        </div>
+                        }
                     </div>
                      <div className={'width100 SPAvailWidget'}>
                         { availableDays && !availableSlot ? availableDays : 
@@ -223,7 +227,8 @@ class Availability extends Component {
 const mapStateToProps = state => {
     return {
         availableDays: state.profileState.AvailabilityState.availableDays,
-        blackoutDays: state.profileState.AvailabilityState.blackoutDays
+        blackoutDays: state.profileState.AvailabilityState.blackoutDays,
+        isUser: state.profileState.PersonalDetailState.isUser,
     }
 };
 
