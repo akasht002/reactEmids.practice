@@ -18,6 +18,7 @@ export const NOT_INTERESTED = 58
 export const CANCELLED_NOT_HIRED_ARR = [47, 39]
 export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
 export const HIRED_STATUS_ID  = 38;
+export const SHOW_IMAGES_SERVICE_REQUEST = [38,40]
 export const RECURRING_PATTERN = 'One Time'
 export const ENTITY_USER = 2
 export const MONTH_LENGTH = 12
