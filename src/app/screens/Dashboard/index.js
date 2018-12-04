@@ -8,6 +8,10 @@ import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import {getPersonalDetail, getSpBusyInVisit, clearSbMode, updateStandByMode} from '../../redux/profile/PersonalDetail/actions'
 import { getUserInfo } from '../../services/http'
+import {
+  PROFILE_SERVICE_PROVIDER_TYPE_ID,
+  ORG_SERVICE_PROVIDER_TYPE_ID
+} from '../../constants/constants';
 import './dashboard.css'
 import './ctdashboard.css'
 import './styles/toggleSwitch.css'
@@ -154,7 +158,9 @@ standByTimer(visitProcess) {
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>Dashboard</h5>
           </div>
-          <div className='ProfileHeaderButton'>
+          {
+            (!entityUser && getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) ?  
+            <div className='ProfileHeaderButton'>
             <span className='standBy'>Stand by</span>
             <label className='switch'>
               <input type='checkbox' checked={this.state.isChecked}
@@ -163,6 +169,9 @@ standByTimer(visitProcess) {
               <span className='sliderSwitch round' />
             </label>
           </div>
+          :
+          "" 
+          }
         </div>
         <div className="scrollarea SPContentWidget ScrollBar">
           <div className="scrollarea-content">
