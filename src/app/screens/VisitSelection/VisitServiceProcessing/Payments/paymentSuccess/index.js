@@ -7,6 +7,9 @@ import { getFirstCharOfString } from '../../../../../utils/stringHelper'
 import { Scrollbars, DashboardWizFlow } from '../../../../../components';
 import { AsideScreenCover } from '../../../../ScreenCover/AsideScreenCover';
 import { getUTCFormatedDate } from "../../../../../utils/dateUtility";
+import { push } from '../../../../../redux/navigation/actions'
+import { Path } from '../../../../../routes'
+import {updateServiceRequestId} from '../../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 
 import '../style.css'
 
@@ -20,6 +23,16 @@ class PaymentSuccess extends Component {
         };
     };
 
+    componentDidMount() {
+        if (!this.props.ServiceRequestVisitId) {
+            this.props.goVisitServiceList()
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.updateServiceRequestId(null)
+    }
+
     toggleCardSelection = (e) => {
         this.setState({
             SelectedCard: e.target.value
@@ -30,13 +43,7 @@ class PaymentSuccess extends Component {
         this.setState({ collapse: !this.state.collapse });
     }
 
-    componentDidMount() {
-    }
-
-
-
     render() {
-
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileHeaderWidget'>
@@ -113,7 +120,8 @@ class PaymentSuccess extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-
+        goVisitServiceList: () => dispatch(push(Path.visitServiceList)),
+        updateServiceRequestId: (data) => dispatch(updateServiceRequestId(data))
     }
 };
 
@@ -123,6 +131,7 @@ function mapStateToProps(state) {
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
         CardList: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.CardList,
+        ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.serviceRequestId
     };
 };
 

@@ -6,7 +6,7 @@ import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
-
+import { updateServiceRequestId } from '../Payments/actions';
 
 export const SummaryDetails = {
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
@@ -151,6 +151,7 @@ export function saveSummaryDetails(data) {
             if (getUserInfo().isEntityServiceProvider) {
                 dispatch(push(Path.visitServiceDetails))
             } else {
+                dispatch(updateServiceRequestId(data.serviceRequestVisitId))
                 dispatch(push(Path.payments))
             }
             dispatch(endLoading());

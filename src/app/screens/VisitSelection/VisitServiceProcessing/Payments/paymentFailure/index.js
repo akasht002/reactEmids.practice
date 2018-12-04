@@ -8,6 +8,9 @@ import { getFirstCharOfString } from '../../../../../utils/stringHelper'
 import { Scrollbars, DashboardWizFlow } from '../../../../../components';
 import { AsideScreenCover } from '../../../../ScreenCover/AsideScreenCover';
 import { getUTCFormatedDate } from "../../../../../utils/dateUtility";
+import { push } from '../../../../../redux/navigation/actions'
+import { Path } from '../../../../../routes'
+import {updateServiceRequestId} from '../../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 
 import '../style.css'
 
@@ -20,6 +23,16 @@ class PaymentFailure extends Component {
             selectedCard: ''
         };
     };
+
+    componentDidMount() {
+        if (!this.props.ServiceRequestVisitId) {
+            this.props.goVisitServiceList()
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.updateServiceRequestId(null)
+    }
 
     toggleCardSelection = (e) => {
         this.setState({
@@ -104,7 +117,8 @@ class PaymentFailure extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-
+        goVisitServiceList: () => dispatch(push(Path.visitServiceList)),
+        updateServiceRequestId: (data) => dispatch(updateServiceRequestId(data))
     }
 };
 
@@ -114,6 +128,7 @@ function mapStateToProps(state) {
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
         CardList: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.CardList,
+        ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.serviceRequestId
     };
 };
 
