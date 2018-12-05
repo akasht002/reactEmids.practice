@@ -249,6 +249,7 @@ class WorkHistory extends Component {
     render() {
         let modalContent;
         let modalTitle;
+
         if(this.state.isAdd) {
             this.isDisableCurrentlyWorking = this.props.workhistoryList.every(history => {
                 return history.currentlyWorking === false;
@@ -327,7 +328,7 @@ class WorkHistory extends Component {
                             onDateChange={this.dateChanged}
                             onDateChangeRaw={this.dateChangedRaw}
                             mandatory={true}
-                            maxDate={this.state.toDate? formateStateDate(this.state.toDate) : moment()}
+                            maxDate={!this.state.currentlyWorking ? formateStateDate(this.state.toDate) : ''}
                             value={this.state.fromDate}
                             className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate)) && 'inputFailure')}
                          />

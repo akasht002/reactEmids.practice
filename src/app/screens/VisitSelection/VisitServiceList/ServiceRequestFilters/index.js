@@ -69,7 +69,7 @@ class Filter extends Component {
                         </div>
                         <div className="FilterMiddleContent FilterMiddleRight">
                             <TabContent activeTab={this.state.activeTab}>
-                                <TabPane tabId="1">
+                                <TabPane tabId="1" id="Service_Category_tab">
                                     <div className="form-group">
                                         <label>Select the Service Category</label>
                                     </div>
@@ -86,25 +86,23 @@ class Filter extends Component {
                                         />
                                     </div>
                                     <ServiceTypeList
+                                        id="Service Type List"
                                         ServiceType={this.props.ServiceType}
                                         handleserviceType={this.props.handleserviceType}
-
                                     />
                                 </TabPane>
-                                <TabPane tabId="2">
+                                <TabPane tabId="2" id="Service_Area_tab">
                                     <div className="form-group">
                                         <label className="mb-3">Select Service Area</label>
                                     </div>
-
-
                                     <ServiceArea
+                                        id="Service Area"
                                         ServiceAreaList={this.props.ServiceAreaList}
                                         handleServiceArea={this.props.handleServiceArea}
                                         serviceArea={this.props.serviceArea}
                                     />
-
                                 </TabPane>
-                                <TabPane tabId="3">
+                                <TabPane tabId="3" id=" Date_range_tab">
                                     <div className="form-group">
                                         <label>Select the Date range</label>
                                     </div>
@@ -140,6 +138,7 @@ class Filter extends Component {
                                         <label>Select the Status of Service Requests</label>
                                     </div>
                                     <ServiceRequestsStatus
+                                        id="Service Requests Status"
                                         ServiceStatus={this.props.ServiceStatus}
                                         handleChangeserviceStatus={this.props.handleChangeserviceStatus}
                                         handleAllServiceStatus={this.props.handleAllServiceStatus}

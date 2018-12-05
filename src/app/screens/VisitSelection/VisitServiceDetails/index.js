@@ -146,9 +146,10 @@ class VisitServiceDetails extends Component {
   }
 
   postServiceRequest = status => {
+    console.log(status)
     this.alertModalMsg = status.isInterested
       ? serviceRequestMessages.applyServiceProvider
-      : (status.isCancel ? serviceRequestMessages.cancelServiceProvider : serviceRequestMessages.notInterestedServiceProvider)
+      : (status.isCancel ? serviceRequestMessages[status.status] : serviceRequestMessages.notInterestedServiceProvider)
     this.setState({ isAlertModalOpen: true })
     this.status = status
   }
@@ -211,7 +212,7 @@ class VisitServiceDetails extends Component {
   };
 
   onClickConversation = () => {
-    if (!this.props.initiateConversation) {
+    if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({ 
         conversationsModal: true,
         conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests' 
@@ -243,7 +244,7 @@ class VisitServiceDetails extends Component {
 
 
   onClickVideoConference = () => {
-    if (!this.props.initiateConversation) {
+    if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({ 
         conversationsModal: true,
         conversationErrMsg: 'You cannot initiate a video call as you have no current service requests'
