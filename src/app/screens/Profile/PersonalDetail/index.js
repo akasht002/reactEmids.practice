@@ -260,6 +260,10 @@ class PersonalDetail extends React.PureComponent {
         : '' + '-' +getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
         ? this.props.personalDetail.address[0].state.name:''
       },
+      selectedAffiliation: {
+        label: this.props.personalDetail && this.props.personalDetail.affiliationName,
+        value: this.props.personalDetail && this.props.personalDetail.affiliationId + '-'+ this.props.personalDetail && this.props.personalDetail.affiliationName
+      }
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,
@@ -798,6 +802,7 @@ class PersonalDetail extends React.PureComponent {
                 onClick={e => {
                   this.setState({ isActive: e.target.checked, disabledSaveBtn: false, selectedAffiliation: '' })
                 }}
+                checked={this.state.isActive}
                 defaultChecked={this.state.isActive}
               />
               <span className="CheckboxIcon" />
