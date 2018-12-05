@@ -144,6 +144,11 @@
     transition: all linear .3s;
 }
 
+.NotificationsWidgetForm .NotificationsMiddle .NotificationsListDetailsName:after
+{
+background-image: none !important;
+}
+
 @media (max-width: 768px){
 
     .NotificationsWidget.true{
