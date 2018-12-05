@@ -4,6 +4,10 @@ import { CallbackComponent } from "redux-oidc";
 import userManager from "../../../utils/userManager";
 import { ScreenCover } from '../../../components';
 import { onLoginSuccess, onLoginFail } from '../../../redux/auth/login/actions';
+import {
+  Navbar,
+  NavbarBrand } from 'reactstrap';
+  import './styles.css';
 
 class LoginCallBack extends Component {
   render() {
@@ -21,7 +25,12 @@ class LoginCallBack extends Component {
           errorCallback={error => {
             console.log(error)
           }}>
-          <div>Redirecting...</div>
+          <div className="redirect-screen"><Navbar className="navbar-light boxShadowBottom white-backgnd" expand="md">
+                    <NavbarBrand className="text-uppercase px-3 onboardingLogo">
+                    <img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" />
+                    </NavbarBrand>
+                </Navbar>
+                </div>
         </CallbackComponent>
       </ScreenCover>
     );
