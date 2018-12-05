@@ -802,6 +802,7 @@ class PersonalDetail extends React.PureComponent {
                 onClick={e => {
                   this.setState({ isActive: e.target.checked, disabledSaveBtn: false, selectedAffiliation: '' })
                 }}
+                checked={this.state.isActive}
                 defaultChecked={this.state.isActive}
               />
               <span className="CheckboxIcon" />
