@@ -53,17 +53,19 @@ class MessageContent extends Component {
             imgName: '',
         });
         let picture = file[0];
-        if (picture.size <= 2097152 && (picture.type === ImageFormats.JPG ||
-            picture.type === ImageFormats.PNG ||
-            picture.type === ImageFormats.JPEG ||
-            picture.type === ImageFormats.GIF)) {
-            let reader = new FileReader();
-            reader.readAsDataURL(picture);
-            setTimeout(() => {
-                this.setState({ imgBinary: reader.result, uploadedImageFile: URL.createObjectURL(picture), imgName: picture.name });
-            }, 100);
-        } else {
-            this.props.onInvalidImageSelection();
+        if(picture){
+            if (picture.size <= 2097152 && (picture.type === ImageFormats.JPG ||
+                picture.type === ImageFormats.PNG ||
+                picture.type === ImageFormats.JPEG ||
+                picture.type === ImageFormats.GIF)) {
+                let reader = new FileReader();
+                reader.readAsDataURL(picture);
+                setTimeout(() => {
+                    this.setState({ imgBinary: reader.result, uploadedImageFile: URL.createObjectURL(picture), imgName: picture.name });
+                }, 100);
+            } else {
+                this.props.onInvalidImageSelection();
+            }
         }
     };
 

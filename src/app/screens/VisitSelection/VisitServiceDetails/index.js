@@ -691,7 +691,7 @@ class VisitServiceDetails extends Component {
                                       className='btn btn-outline-primary'
                                       onClick={() => this.visitSummary(ScheduleList.serviceRequestVisitId)}
                                     >
-                                      <i className='ProfileIconEye' />Summary
+                                      <i className='ProfileIconEye' />Visit Summary
                                       </a>
                                     : ''}
 
