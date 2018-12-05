@@ -8,7 +8,7 @@ function ServiceArea (props) {
     var PatientAddress = serviceAreaList && serviceAreaList.map((address,item)=>{
         let catNum = item + 1;
         return(
-            <div className="form-radio AddressCardWidget mb-2">
+            <div className="form-radio AddressCardWidget mb-2" id={"Service_area"+catNum}>
             
                 <input className="form-radio-input" 
                 name="AddressPOS" id={'Address' + catNum}
