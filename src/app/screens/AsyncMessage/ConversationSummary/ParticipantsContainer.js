@@ -156,7 +156,7 @@ class ParticipantsContainer extends Component {
                 isOpen={this.props.isDisplayParticipantModal}
                 toggle={this.props.onSetDisplayParticipantModal}
                 ModalBody={participantModalData}
-                className="modal-lg asyncModal box-modelnewsearch"
+                className="modal-lg asyncModal box-modelnewsearch list-fullblock"
                 modalTitle="New Conversation"
                 centered="centered"
                 isEnable={this.state.selectedParticipants.length > 0}
