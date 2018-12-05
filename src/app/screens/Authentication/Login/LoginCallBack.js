@@ -8,7 +8,7 @@ import { onLoginSuccess, onLoginFail } from '../../../redux/auth/login/actions';
 class LoginCallBack extends Component {
   render() {
     return (
-      <ScreenCover onPress={this.onBtnPress}>
+      <ScreenCover onPress={this.onBtnPress} isLoading={true}>
         <CallbackComponent
           userManager={ userManager }
           successCallback={(data) => {
