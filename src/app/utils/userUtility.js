@@ -1,5 +1,5 @@
 import { store } from '../redux/store';
-import {USERTYPES} from '../constants/constants';
+import {USERTYPES, PROFILE_SERVICE_PROVIDER_TYPE_ID} from '../constants/constants';
 
 export const getState = () => {
     return store && store.getState();
@@ -16,6 +16,10 @@ export const getUserInfo = () => {
 export const getPatientData = () => {
     return getUserState().selectedPatientData;
 }
+
+export const isEntityServiceProvider = () => {
+    return getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && getUserInfo().isEntityServiceProvider
+};
 
 export const fetchUserId = () => {
     return getUserInfo().userType === USERTYPES.PATIENT ? getUserInfo().patientId : getUserInfo().userId;
