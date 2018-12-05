@@ -12,6 +12,7 @@ import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
 import { HIRED_STATUS_ID } from '../../constants/constants';
 import { ENTITY_USER } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
+import { isEntityServiceProvider } from '../../utils/userUtility';
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -50,6 +51,8 @@ export const splitSlots = (togglePersonalDetails, data, type, handleClick, props
   return serviceCalendar(togglePersonalDetails, newData, handleClick, props)
 }
 
+
+
 export const serviceCalendar = (
   togglePersonalDetails,
   newData,
@@ -58,6 +61,28 @@ export const serviceCalendar = (
 ) => {
   if (newData.length > 0) {
     return newData.slice(0, 3).map((conversations, index) => {
+      let options = [
+        <Item className='ListItem CTDashboard' key='item-1'
+        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+          <i className='iconPhone' /> Phone Call
+        </Item>,
+        <Item className='ListItem CTDashboard' key='item-2'
+          onClick={(e) => { props.onClickConversation(conversations) }}>
+          <i className='iconConversation' /> Conversation
+      </Item>,
+        <Item className='ListItem CTDashboard' key='item-3'
+          onClick={(e) => { props.onClickVideoConference(conversations) }}>
+          <i className='iconVideoCon' /> Video Conference
+      </Item>
+      ];
+      if(isEntityServiceProvider()){
+        options = [
+          <Item className='ListItem CTDashboard' key='item-1'
+          onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+            <i className='iconPhone' /> Phone Call
+          </Item>
+        ];
+      };
       return (
         <Fragment>
           <li
@@ -160,20 +185,7 @@ export const serviceCalendar = (
                 <SelectField>
                   <Select
                     placement='auto'
-                    options={[
-                      <Item className='ListItem CTDashboard' key='item-1'
-                      onClick={(e) => { props.handlePhoneNumber(conversations) }}>
-                        <i className='iconPhone' /> Phone Call
-                      </Item>,
-                      <Item className='ListItem CTDashboard' key='item-2'
-                        onClick={(e) => { props.onClickConversation(conversations) }}>
-                        <i className='iconConversation' /> Conversation
-                    </Item>,
-                      <Item className='ListItem CTDashboard' key='item-3'
-                        onClick={(e) => { props.onClickVideoConference(conversations) }}>
-                        <i className='iconVideoCon' /> Video Conference
-                    </Item>
-                    ]}
+                    options={options}
                     className='SelectDropDown CTDashboard'
                   />
                 </SelectField>
