@@ -22,6 +22,12 @@ export const formDirtyVisitList = () => {
     }
 };
 
+export const clearVisitServiceList = () =>{
+    return (dispatch) => {
+        dispatch(getVisitServiceListSuccess([]))
+    }
+}
+
 export function getVisitServiceList(data) {
     return (dispatch) => {
         let serviceProviderId = getUserInfo().serviceProviderId
