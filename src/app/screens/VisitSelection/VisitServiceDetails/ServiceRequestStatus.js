@@ -58,6 +58,7 @@ export const ServiceStatus = props => {
             onClick={() => {
               props.postServiceRequest({ isInterested: false, isCancel: true,status:props.status.id })
             }}
+            disable={props.visitInProgress}
           />
         </React.Fragment>
       )
