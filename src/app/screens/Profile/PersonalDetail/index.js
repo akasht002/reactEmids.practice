@@ -273,7 +273,19 @@ class PersonalDetail extends React.PureComponent {
       affiliationName: this.props.personalDetail.affiliationName,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber
+      phoneNumber: this.props.personalDetail.phoneNumber,
+      city:getArrayLength( this.props.personalDetail.address) > 0
+                ?  this.props.personalDetail.address[0].city
+                : '',
+      streetAddress: getArrayLength( this.props.personalDetail.address) > 0
+                  ?  this.props.personalDetail.address[0].streetAddress
+                  : '',
+      zipCode: getArrayLength( this.props.personalDetail.address) > 0
+            ?  this.props.personalDetail.address[0].zipCode
+            : '', 
+      state_id: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+              ? this.props.personalDetail.address[0].state.id
+              : ''         
     }
 
     let updated_data = {
@@ -285,7 +297,11 @@ class PersonalDetail extends React.PureComponent {
       description: this.state.description,
       hourlyRate: this.state.hourlyRate,
       phoneNumber: this.state.phoneNumber,
-    }
+      city:this.state.city,
+      streetAddress:this.state.streetAddress,
+      zipCode:this.state.zipCode,
+      state_id:this.state.selectedState && this.state.selectedState.value
+    }   
 
     const fieldDifference = _.isEqual(old_data, updated_data)
 
