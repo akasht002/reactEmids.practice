@@ -1694,6 +1694,8 @@ bottom: auto !important
 
 
 
+
+
 /*microsoft-edge-detection*/
 @supports (-ms-ime-align: auto) {
     .table td.addAttachmentWidget, .table td.messageTypeWidget, .table td.sendButtonWidget {

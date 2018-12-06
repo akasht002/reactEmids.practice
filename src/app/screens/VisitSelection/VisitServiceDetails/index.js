@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import classnames from 'classnames'
 import Moment from 'react-moment'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import { Scrollbars, ModalPopup } from '../../../components'
 import { goBack, push } from '../../../redux/navigation/actions'
 import { Path } from '../../../routes'
+import AssignServiceProvider from './AssignServiceProvider'
 import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
@@ -661,6 +662,12 @@ class VisitServiceDetails extends Component {
                         <div>
                           <span>Visit Length</span>
                         </div>
+                        {
+                          getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
+                            <div>
+                              <span>Service Provider</span>
+                            </div>
+                         }
                         <div />
                       </div>
                       {this.state.visitServiceSchedule &&
@@ -746,6 +753,10 @@ class VisitServiceDetails extends Component {
 
                                 </div>
                               </div>
+                              {
+                                getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
+                                <AssignServiceProvider sp={this.state.visitServiceDetails}/>
+                              }
                             </div>
                           )
                         })}

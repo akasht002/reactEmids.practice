@@ -413,10 +413,20 @@ export function checkTeleHealth(data) {
                     })
                 }
                 if (teleHealthState.roomId === data.roomID) {
-                    let modifiedParticipants = data.participantList && data.participantList.map((participant) => {
-                        return {
-                            ...participant,
-                            status: 'Invited'
+                    let modifiedParticipants = []
+                    data.participantList && data.participantList.map((participant) => {
+                        let participantFound = false;
+                        teleHealthState.participantsByConferenceId.map((confParticipant) => {
+                            if (confParticipant.participantType === participant.participantType &&
+                                confParticipant.userId === participant.userId) {
+                                    participantFound = true;
+                            }
+                        })
+                        if (!participantFound) {
+                            modifiedParticipants.push({
+                                ...participant,
+                                status: 'Invited'
+                            })
                         }
                     });
                     let participants = [

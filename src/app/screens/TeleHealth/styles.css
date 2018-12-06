@@ -791,3 +791,46 @@ input.searchParticipants ~ small:before {
 .ParticipantSelectMsg {
     color: #8c8c8c;
 }
+
+.full-blockvideoconf
+{
+    width: 100%;
+    height: auto;
+    position: relative;
+    clear: both;
+    display: block;
+}
+.full-blockvideoconf .participantsSearchList
+{
+width: 100%;
+display: block;
+padding-bottom: 50px;
+}
+
+.full-blockvideoconf .form-group small:before, .full-blockvideoconf  input.searchParticipants~small:before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: -31px;
+    left: 18px;
+    height: 17px;
+    width: 17px;
+    background-image: url("../../assets/images/search.png");
+    background-size: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+.ParticipantsListContainer .form-group input.searchParticipants ~ small:before, .ParticipantsListContainer > .form-group small:before {
+    content: '';
+    position: absolute;
+    display: block;
+    top: -31px;
+    left: 18px;
+    height: 17px;
+    width: 17px;
+    background-image: url("../../assets/images/search.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
