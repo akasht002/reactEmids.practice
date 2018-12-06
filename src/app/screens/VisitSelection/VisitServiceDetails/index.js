@@ -177,13 +177,13 @@ class VisitServiceDetails extends Component {
     } else {
       let model = {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
-         patientId: this.state.visitServiceDetails.patient ?  this.state.visitServiceDetails.patient.patientId :0,
-         cancelledDescription: 'Canceled'
+        patientId: this.state.visitServiceDetails.patient ? this.state.visitServiceDetails.patient.patientId : 0,
+        cancelledDescription: 'Canceled'
       }
-      if(status.status === 36) this.props.cancelInvitedServiceProvider(model)
-       else if(status.status === 37) this.props.cancelAppliedServiceProvider(model)
-        else if(status.status === 38) this.props.cancelHiredServiceProvider(model)
-        else this.props.cancelServiceRequestByServiceProvider(model)
+      if (status.status === 36) this.props.cancelInvitedServiceProvider(model)
+      else if (status.status === 37) this.props.cancelAppliedServiceProvider(model)
+      else if (status.status === 38) this.props.cancelHiredServiceProvider(model)
+      else this.props.cancelServiceRequestByServiceProvider(model)
     }
   }
 
@@ -219,9 +219,9 @@ class VisitServiceDetails extends Component {
 
   onClickConversation = () => {
     if (this.props.VisitServiceDetails.statusId !== 38) {
-      this.setState({ 
+      this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests' 
+        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests'
       })
     } else {
       let userId = getUserInfo().serviceProviderId;
@@ -251,7 +251,7 @@ class VisitServiceDetails extends Component {
 
   onClickVideoConference = () => {
     if (this.props.VisitServiceDetails.statusId !== 38) {
-      this.setState({ 
+      this.setState({
         conversationsModal: true,
         conversationErrMsg: 'You cannot initiate a video call as you have no current service requests'
       })
@@ -445,7 +445,8 @@ class VisitServiceDetails extends Component {
                   {!getUserInfo().isEntityServiceProvider && <ServiceStatus
                     status={{
                       id: this.state.visitServiceDetails.statusId,
-                      name: this.state.visitServiceDetails.statusName
+                      name: this.state.visitServiceDetails.statusName,
+                      visitInProgress: this.state.visitServiceDetails.visitInProgress
                     }}
                     postServiceRequest={this.postServiceRequest}
                   />}
@@ -721,30 +722,35 @@ class VisitServiceDetails extends Component {
                                         Start Visit
                                       </button>
                                       : '') : '')}
-                                  {ScheduleList.visitStatusName ===
-                                    SERVICE_VISIT_STATUS.INPROGRESS
-                                    ? <a
-                                      className='btn btn-outline-primary'
-                                      onClick={() =>
-                                        this.visitProcessing(
-                                          ScheduleList.serviceRequestVisitId
-                                        )}
-                                    >
-                                      In Progress
+
+                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
+                                    ((ScheduleList.visitStatusName ===
+                                      SERVICE_VISIT_STATUS.INPROGRESS)
+                                      ? <a
+                                        className='btn btn-outline-primary'
+                                        onClick={() =>
+                                          this.visitProcessing(
+                                            ScheduleList.serviceRequestVisitId
+                                          )}
+                                      >
+                                        In Progress
                                       </a>
-                                    : ''}
-                                  {ScheduleList.visitStatusName ===
-                                    SERVICE_VISIT_STATUS.PAYMENTPENDING
-                                    ? <a
-                                      className='btn btn-outline-primary'
-                                      onClick={() =>
-                                        this.visitProcessingSummary(
-                                          ScheduleList.serviceRequestVisitId
-                                        )}
-                                    >
-                                      Payment Pending
+                                      : '') : '')}
+
+                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
+                                    ((ScheduleList.visitStatusName ===
+                                      SERVICE_VISIT_STATUS.PAYMENTPENDING)
+                                      ? <a
+                                        className='btn btn-outline-primary'
+                                        onClick={() =>
+                                          this.visitProcessingSummary(
+                                            ScheduleList.serviceRequestVisitId
+                                          )}
+                                      >
+                                        Payment Pending
                                       </a>
-                                    : ''}
+                                      : '') : '')}
+
                                 </div>
                               </div>
                               {
@@ -857,7 +863,7 @@ function mapDispatchToProps(dispatch) {
     cancelInvitedServiceProvider: (data) => dispatch(cancelInvitedServiceProvider(data)),
     cancelAppliedServiceProvider: (data) => dispatch(cancelAppliedServiceProvider(data)),
     cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
-    clearVisitServiceHistoryByIdDetail:()=>dispatch(clearVisitServiceHistoryByIdDetail())
+    clearVisitServiceHistoryByIdDetail: () => dispatch(clearVisitServiceHistoryByIdDetail())
   }
 }
 
