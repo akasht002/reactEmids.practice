@@ -13,7 +13,8 @@ import {
   getEntityServiceProviderList,
   updateEntityServiceVisit
 } from "../../redux/dashboard/Dashboard/actions";
-import { getServiceRequestId,setEntityServiceProvider } from "../../redux/visitSelection/VisitServiceDetails/actions";
+import { getServiceRequestId,setEntityServiceProvider } 
+  from "../../redux/visitSelection/VisitServiceDetails/actions";
 import { ServiceCalendarDefault, ShowIndicator } from "./ServiceInfo";
 import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
@@ -55,7 +56,7 @@ class serviceCalendar extends React.Component {
       phoneNumber:'',
       selectedMonths:moment(today).format('M')
     };
-    this.data = "";
+    
   }
 
   togglePersonalDetails = (action, e) => {
@@ -533,7 +534,6 @@ class serviceCalendar extends React.Component {
           data => {
             this.props.setESP(data);
             this.props.goToESPProfile();
-            console.log(data)
         } 
       }    
         handlePhoneNumber={this.handlePhoneNumber}
