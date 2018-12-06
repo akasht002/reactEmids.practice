@@ -44,6 +44,7 @@ export default class TeleHealthInviteParticipants extends Component {
 
     AddParticipantsToConference = () => {
         this.props.addParticipantsToConference(this.state.selectedParticipants);
+        this.setState({ selectedParticipants: [], searchText: '', selectedPatientDetails: {} });
         this.props.ToggleAddParticipantsListView();
     };
 
