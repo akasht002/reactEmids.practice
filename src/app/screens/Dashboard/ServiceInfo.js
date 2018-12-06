@@ -419,7 +419,6 @@ export const MyConversionDetail = props => {
   let unreadMessages = ''
   let msgClass = ''
   let msgHeader = '';
-  console.log(props.conversation)
   return conversation.slice(0, 4).map((conversations, index) => {
     !conversations.title ? msgHeader = getPartcipitantHeader(conversations.participantList) : msgHeader = conversations.title;
     if (props.getUnreadMsgCounts.length > 0) {

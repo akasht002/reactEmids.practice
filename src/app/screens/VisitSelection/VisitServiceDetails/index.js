@@ -45,7 +45,8 @@ import {
 } from '../../../constants/constants'
 import { getLength } from '../../../utils/validations'
 import {
-  getVisitServiceHistoryByIdDetail
+  getVisitServiceHistoryByIdDetail,
+  clearVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import { getUserInfo } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
@@ -96,6 +97,10 @@ class VisitServiceDetails extends Component {
         nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
           .serviceRequestTypeDetailsId,
     })
+  }
+
+  componentWillUnmount() {
+    this.props.clearVisitServiceHistoryByIdDetail()
   }
 
   checkEligibility = () => {
@@ -841,6 +846,7 @@ function mapDispatchToProps(dispatch) {
     cancelInvitedServiceProvider: (data) => dispatch(cancelInvitedServiceProvider(data)),
     cancelAppliedServiceProvider: (data) => dispatch(cancelAppliedServiceProvider(data)),
     cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
+    clearVisitServiceHistoryByIdDetail:()=>dispatch(clearVisitServiceHistoryByIdDetail())
   }
 }
 
