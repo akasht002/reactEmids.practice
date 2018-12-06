@@ -27,7 +27,7 @@ class ParticipantsList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="full-blockvideoconf">
                 <Input
                     id='participantsSearch'
                     autoComplete='false'
