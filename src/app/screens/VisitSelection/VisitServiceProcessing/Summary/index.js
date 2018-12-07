@@ -5,13 +5,13 @@ import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
-import { getSummaryDetails, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetails, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, gotoFeedback } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
-import { Path } from '../../../../routes'
+import { Path, push } from '../../../../routes'
 import { checkNumber } from '../../../../utils/validations';
 import './style.css'
 
@@ -37,7 +37,8 @@ class Summary extends Component {
             timeErrMessage: '',
             emptyErrMessage: '',
             disableSignatureBtn: true,
-            isProccedModalOpen: false
+            isProccedModalOpen: false,
+            isDiscardModalOpen: false
         };
     };
 
@@ -151,6 +152,12 @@ class Summary extends Component {
             this.updateTime();
         }
     }
+
+
+    onPreviousClick = () => {
+        this.setState({ isDiscardModalOpen: true })
+    }
+
 
     updateTime = () => {
         const data = {
@@ -383,7 +390,7 @@ class Summary extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <Link className='btn btn-outline-primary mr-3' to='/feedback'>Previous</Link>
+                                        <button className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</button>
                                         {getUserInfo().isEntityServiceProvider ?
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
                                             :
@@ -434,6 +441,21 @@ class Summary extends Component {
                         }}
                         onCancel={() => this.setState({ isProccedModalOpen: false })}
                     />
+
+                    <ModalPopup
+                        isOpen={this.state.isDiscardModalOpen}
+                        toggle={this.onPreviousClick}
+                        ModalBody={<span>Do you want to discard the changes?</span>}
+                        btn1="Yes"
+                        btn2="No"
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                        onConfirm={() => {
+                            this.props.gotoFeedback()                        
+                        }}
+                        onCancel={() => this.setState({ isDiscardModalOpen: false })}
+                    />
                 </Scrollbars>
             </AsideScreenCover>
         );
@@ -446,7 +468,8 @@ function mapDispatchToProps(dispatch) {
         onUpdateTime: (data) => dispatch(onUpdateTime(data)),
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),
-        getSavedSignature: (data) => dispatch(getSavedSignature(data))
+        getSavedSignature: (data) => dispatch(getSavedSignature(data)),
+        gotoFeedback: (data) => dispatch(gotoFeedback(data))
     }
 };
 
