@@ -25,8 +25,11 @@ class Education extends React.Component {
             isValid: true,
             disabledSaveBtn: true,
             isDiscardModalOpen:false,
-            fromDateChange: false
+            fromDateChange: false,
+            isOnfocus: false,
+            isToYearOnfocus: false
         };
+        this.size = 1
     };
     componentDidMount() {
         this.props.getEducation();
@@ -159,7 +162,7 @@ class Education extends React.Component {
     }
     YearList() {
         let year = [];
-        let selectedYear = "2018";
+        let selectedYear = formateYearDate();
         let defaultYear ="1901";
         let curYear = formateYearDate();
         year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
@@ -194,6 +197,48 @@ class Education extends React.Component {
             year.push(<option value="" key= {curYear} disabled selected>YYYY</option>);
             return year;
         }
+    }
+
+    selectOnFocus = (e) => {
+        e.target.size = 10
+        this.setState({ isOnfocus: true })
+    }
+
+    selectOnBlur = (e) => {
+        e.target.size = 1
+        this.setState({ isOnfocus: false })
+    }
+
+    selectOnFocusTo = (e) => {
+        e.target.size = 10
+        this.setState({ isToYearOnfocus: true })
+    }
+
+    selectOnBlurTo = (e) => {
+        e.target.size = 1
+        this.setState({ isToYearOnfocus: false })
+    }
+
+    selectChange = (e) => {
+        e.target.size = 1;
+        e.target.blur();
+        this.setState({
+            startYear: e.target.value,
+            disabledSaveBtn: false,
+            fromDateChange: true,
+            isOnfocus: false
+
+        })
+    }
+
+    selectToYearChange = (e) => {
+        e.target.size = 1;
+        e.target.blur();
+        this.setState({
+            endYear: e.target.value,
+            disabledSaveBtn: false,
+            isToYearOnfocus: false
+        })
     }
 
     render() {
@@ -258,32 +303,30 @@ class Education extends React.Component {
                 <div className="col-md-6 MonthlyPicker mb-2">
                     <div className="form-group">
                         <label>From Year</label>
-                        <select  className={"form-control"}
+                        <select className={(this.state.isOnfocus ? "no-border": " ") + " form-control"}                            
+                            size={this.size}                       
+                            onFocus={(e) => this.selectOnFocus(e)}
+                            onBlur={(e) => this.selectOnBlur(e)}
                         value={this.state.startYear}
-                        onChange={ (e) => 
-                            this.setState({
-                              startYear: e.target.value,
-                              disabledSaveBtn:false,
-                              fromDateChange: true
-                           })
-                    }>
+                        onChange={(e) => this.selectChange(e)}
+                        >
                         {this.YearList()}
                         </select>
-                    </div>
                 </div>
-                <div className="col-md-6 MonthlyPicker mb-2">
-                    <div className="form-group">
-                        <label>To Year (or Expected)</label>
-                        <select  className={"form-control"}
+            </div>
+            <div className="col-md-6 MonthlyPicker mb-2">
+                <div className="form-group">
+                    <label>To Year (or Expected)</label>
+                    <select className={(this.state.isToYearOnfocus ? "no-border": " ") + " form-control"}
+                        // disabled={!this.state.fromDateChange}
+                        onFocus={(e) => this.selectOnFocusTo(e)}
+                        onBlur={(e) => this.selectOnBlurTo(e)}
                         value={this.state.endYear}
-                        onChange={(e) => this.setState({
-                            endYear: e.target.value,
-                            disabledSaveBtn:false
-                        })}>
-                        {this.YearListCal()}                            
-                        </select>
-                    </div>
+                        onChange={(e) => this.selectToYearChange(e)}>
+                        {this.YearListCal()}
+                    </select>
                 </div>
+            </div>
                 
             </div>
         </form>
