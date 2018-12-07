@@ -248,6 +248,7 @@ class PersonalDetail extends React.PureComponent {
       isStreetInvalid: false,
       isCityInvalid: false,
       isZipInvalid: false,
+      isStateInvalid: false,
       zipCode: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].zipCode,
       city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
       streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress,
@@ -344,6 +345,7 @@ class PersonalDetail extends React.PureComponent {
       disabledSaveBtn: false,
       isCityInvalid: false,
       isStreetInvalid: false,
+      isStateInvalid: false,
       isZipInvalid: false,
       isActive: false,
       selectedState: {
