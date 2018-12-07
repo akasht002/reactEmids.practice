@@ -78,7 +78,9 @@ class PerformTasks extends Component {
                         taskList.statusId = 45;
                     }
                     this.checkedTaskInitial = taskList;
+                    return taskList;
                 });
+                return serviceType;
             });
         }
         this.setState({ taskList: nextProps.PerformTasksList })

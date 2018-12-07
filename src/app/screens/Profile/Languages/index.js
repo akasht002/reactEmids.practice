@@ -93,12 +93,11 @@ class Languages extends React.Component {
     }
 
     reset = () => {
-
         const previosValue = [];
         const newValue = [];
-        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
+        this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return previosValue.push(elem.id);
-        }).join(",");
+        });
 
         const newlySelectedValues = this.state.selectedLanguage;
         newValue.push(newlySelectedValues);
