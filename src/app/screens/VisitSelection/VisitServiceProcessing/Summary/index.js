@@ -11,7 +11,8 @@ import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
-import { Path } from '../../../../routes'
+import { Path } from '../../../../routes';
+import { push } from '../../../../redux/navigation/actions';
 import { checkNumber } from '../../../../utils/validations';
 import './style.css'
 
@@ -37,7 +38,8 @@ class Summary extends Component {
             timeErrMessage: '',
             emptyErrMessage: '',
             disableSignatureBtn: true,
-            isProccedModalOpen: false
+            isProccedModalOpen: false,
+            isDiscardModalOpen: false
         };
     };
 
@@ -52,9 +54,9 @@ class Summary extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.signatureImage.signature) {
-           
-                this.setState({ signatureImage: nextProps.signatureImage.signature })
-                
+
+            this.setState({ signatureImage: nextProps.signatureImage.signature })
+
         }
         this.setState({
             summaryDetails: nextProps.SummaryDetails,
@@ -161,6 +163,18 @@ class Summary extends Component {
 
     onMouseUp = () => {
         this.setState({ disableSignatureBtn: false })
+    }
+
+    onPreviousClick = () => {
+        if (!this.state.disableSignatureBtn && this.state.isSaveBtnShown) {
+            this.setState({ isDiscardModalOpen: true })
+        } else {
+            this.props.goBack();
+        }
+    }
+
+    goBack = () => {
+        this.props.goBack();
     }
 
     render() {
@@ -366,7 +380,7 @@ class Summary extends Component {
                                             <p>Put your signature inside the box</p>
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 {this.props.signatureImage && this.props.signatureImage.signature ?
-                                                    <img className="sign-pad" alt="sign" src={this.props.signatureImage.signature}/> :
+                                                    <img className="sign-pad" alt="sign" src={this.props.signatureImage.signature} /> :
                                                     <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
                                                 }
                                             </div>
@@ -383,7 +397,7 @@ class Summary extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <Link className='btn btn-outline-primary mr-3' to='/feedback'>Previous</Link>
+                                        <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         {getUserInfo().isEntityServiceProvider ?
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
                                             :
@@ -434,6 +448,21 @@ class Summary extends Component {
                         }}
                         onCancel={() => this.setState({ isProccedModalOpen: false })}
                     />
+
+                    <ModalPopup
+                        isOpen={this.state.isDiscardModalOpen}
+                        ModalBody={<span>Do you want to discard the changes?</span>}
+                        btn1='YES'
+                        btn2='NO'
+                        className='modal-sm'
+                        headerFooter='d-none'
+                        centered='centered'
+                        onConfirm={() => this.goBack()}
+                        onCancel={() =>
+                            this.setState({
+                                isDiscardModalOpen: false
+                            })}
+                    />
                 </Scrollbars>
             </AsideScreenCover>
         );
@@ -446,7 +475,8 @@ function mapDispatchToProps(dispatch) {
         onUpdateTime: (data) => dispatch(onUpdateTime(data)),
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),
-        getSavedSignature: (data) => dispatch(getSavedSignature(data))
+        getSavedSignature: (data) => dispatch(getSavedSignature(data)),
+        goBack: () => dispatch(push(Path.feedback))
     }
 };
 
