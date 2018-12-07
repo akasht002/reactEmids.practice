@@ -1179,3 +1179,11 @@ div.CertificationModal{
     min-height: 350px
 }
 
+
+/*ui-responsive-issue-for-tab*/
+@media only screen and (max-width: 1024px) {
+    .BlackoutModal .MonthlyPicker .react-datepicker-popper {
+        transform: translate3d(0px, 0px, 0px) !important;
+        
+    }
+}

@@ -51,6 +51,7 @@ class ParticipantsList extends Component {
                     placeholder='search'
                     className='form-control searchParticipants ChatContainer'
                     textChange={this.props.onSearchTextChange}
+                    iconStyle='icon-search'
                 />
                <div className="participantsSearchList ChatContainer">
                     {this.participants()}

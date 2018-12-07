@@ -56,8 +56,9 @@ class ParticipantContent extends Component {
             let updatedParticipantsList = [...this.state.selectedParticipantsList];
             let index = updatedParticipants.indexOf(event.target.value);
             updatedParticipants.splice(index, 1);
-            index = updatedParticipants.indexOf(
-                updatedParticipants.filter(el => el.userId === selectedParticipant.userId)[0]
+            index = updatedParticipantsList.indexOf(
+                updatedParticipantsList.filter(el => el.userId === selectedParticipant.userId 
+                    && el.participantType === selectedParticipant.participantType)[0]
             );
             updatedParticipantsList.splice(index, 1);
             this.setState({ selectedParticipants: updatedParticipants, selectedParticipantsList: updatedParticipantsList });
