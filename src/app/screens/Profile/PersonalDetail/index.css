@@ -37,3 +37,9 @@
 {
     font-weight: 600;
 }
+
+.iconFilledStar:before{
+    width: 100%;
+    height: 100%;
+    background-image: url("../../../assets/images/RatingFilledStar.svg");
+}

@@ -5,7 +5,7 @@ import 'react-image-crop/dist/ReactCrop.css'
 import 'react-image-crop/lib/ReactCrop.scss'
 import { ProfileImage } from '../../../components'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants'
-import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 
 export const Details = props => {
   return (
@@ -24,8 +24,7 @@ export const Details = props => {
         profileImage='SPdpImage'
       />
       <span className="rating-blockcustome">
-        {props.personalDetail &&
-          props.personalDetail.rating}
+        {Math.round(props.personalDetail && props.personalDetail.rating)}
       </span>
       <div className={'SPDetailsContainer SPNameWidget'}>
         <div className={'d-flex'}>
@@ -53,14 +52,14 @@ export const Details = props => {
             </p>
           </div>
         </div>
-       <div className={'width100'}>
-        <div className={'SPAffiliatedList'}>
-          <span>
-            {props.personalDetail.entity &&
-              props.personalDetail.entity.assignedBy}
-          </span>
+        <div className={'width100'}>
+          <div className={'SPAffiliatedList'}>
+            <span>
+              {props.personalDetail.entity &&
+                props.personalDetail.entity.assignedBy}
+            </span>
+          </div>
         </div>
-      </div>
         <div className={'width100'}>
           <div className={'SPAffiliatedList'}>
             <span>
@@ -77,8 +76,8 @@ export const Details = props => {
               name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
               className={'SPDescriptionNone'}
               onClick={props.togglePersonalDetails}
-              >
-                Edit your profile here
+            >
+              Edit your profile here
               </span>}
         </div>
       </div>
@@ -123,47 +122,47 @@ export const Details = props => {
             </span>
           </div>
         </div>
-      </div>      
+      </div>
     </div>
   )
 }
 
 
 export const ProfileImageDetail = props => {
-    return (
-        <div className={'UploadProfileImageWidget'}>
-        <div className={'width100 UploadProfileImageContainer'}>
-          <div style={{ width: '300px', height: '300px' }}>
-            <ImageCrop
-              src={props.uploadedImageFile}
-              setWidth={300}
-              setHeight={300}
-              square={false}
-              resize
-              border={'dashed #ffffff 2px'}
-              onCrop={props.onCroppeds}
-              watch={props.watch}
-            />
-          </div>
-        </div>
-        <div className={'row'}>
-          <div className={'col-md-8'}>
-            <ul className={'UploadedImageLimitation'}>
-              <li>The image should not exceed beyond 2MB.</li>
-              <li>The image should be either of PNG or JPEG/JPG type only.</li>
-            </ul>
-          </div>
-          <div className={'col-md-4 text-right'}>
-            <button className='btn btn-outline-primary UploadImageBtn'>
-              Change Photo
-            </button>
-            <input
-              className='addImageInput'
-              type='file'
-              onChange={props.reUpload}
-            />
-          </div>
+  return (
+    <div className={'UploadProfileImageWidget'}>
+      <div className={'width100 UploadProfileImageContainer'}>
+        <div style={{ width: '300px', height: '300px' }}>
+          <ImageCrop
+            src={props.uploadedImageFile}
+            setWidth={300}
+            setHeight={300}
+            square={false}
+            resize
+            border={'dashed #ffffff 2px'}
+            onCrop={props.onCroppeds}
+            watch={props.watch}
+          />
         </div>
       </div>
-    )
+      <div className={'row'}>
+        <div className={'col-md-8'}>
+          <ul className={'UploadedImageLimitation'}>
+            <li>The image should not exceed beyond 2MB.</li>
+            <li>The image should be either of PNG or JPEG/JPG type only.</li>
+          </ul>
+        </div>
+        <div className={'col-md-4 text-right'}>
+          <button className='btn btn-outline-primary UploadImageBtn'>
+            Change Photo
+            </button>
+          <input
+            className='addImageInput'
+            type='file'
+            onChange={props.reUpload}
+          />
+        </div>
+      </div>
+    </div>
+  )
 }
