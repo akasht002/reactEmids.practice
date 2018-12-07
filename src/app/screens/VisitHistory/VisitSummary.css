@@ -188,6 +188,11 @@ div.EstimatedCostWidget{
 
 .AdjustTimeForm{
     padding: 20px;
+    color:#444;
+}
+.AdjustTimeForm .AdjustTimeContent input
+{
+    color:#444;
 }
 
 .AdjustTimeForm .AdjustTimeText{

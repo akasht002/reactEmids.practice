@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import _ from 'lodash'
-import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList } from '../../../redux/visitSelection/VisitServiceList/actions';
+import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList,clearVisitServiceList } 
+    from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
@@ -101,6 +102,11 @@ class VisitServiceList extends Component {
         this.setState({
           serviceRequestList: nextProps.ServiceStatus
         })
+      }
+
+      componentWillUnmount() {
+        console.log("Clock", "componentWillUnmount");
+        this.props.clearVisitServiceList()
       }
 
     handleClick = (requestId) => {
@@ -548,6 +554,7 @@ function mapDispatchToProps(dispatch) {
         formDirty: () => dispatch(formDirty()),
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
+        clearVisitServiceList:()=>dispatch(clearVisitServiceList())
     }
 };
 
