@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Input ,ProfileModalPopup, ModalPopup } from "../../../components";
+import { Input ,ProfileModalPopup, ModalPopup, SelectBox } from "../../../components";
 import {formateYearDate} from "../../../utils/validations";
 import {compare} from "../../../utils/comparerUtility";
 import { getEducation, addEducation, editEducation, updateEducation, deleteEducation } from '../../../redux/profile/Education/actions';
@@ -160,82 +160,40 @@ class Education extends React.Component {
         this.props.deleteEducation(this.state.educationId);
         this.setState({ showModalOnDelete: !this.state.showModalOnDelete });
     }
+
     YearList() {
         let year = [];
-        let selectedYear = formateYearDate();
         let defaultYear ="1901";
         let curYear = formateYearDate();
-        year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
         for (let i = defaultYear; i <= curYear; i++) {
-            let selectedOption = 'false';
-            if (i === selectedYear) {
-                selectedOption = 'selected'
-                
-            }
-            year.push(<option key= {i} value={i} selected={selectedOption}>{i}</option>)
+            year.push({ label: i, value: i })
         }
         return year;
     };
     
     YearListCal(){
         let year = [];
-        let selectedYear = formateYearDate();
-       // let curYear = formateYearDate();
         let curYear = 2200; //To do confirm with BA
         if(this.state.fromDateChange) {
-            year.push(<option value="" key= {curYear} disabled selected>YYYY</option>)
             for (var i = this.state.startYear; i <= curYear; i++) {
-                var selectedOption = 'false';
-                if (i === selectedYear) {
-                    selectedOption = 'selected'
-                    
-                }
-                year.push(<option  key= {i} value={i} selected={selectedOption}>{i}</option>)
+                year.push({ label: i, value: i })
             }
-            return year;
-        } else {
-            year.push(<option value="" key= {curYear} disabled selected>YYYY</option>);
-            return year;
         }
-    }
-
-    selectOnFocus = (e) => {
-        e.target.size = 10
-        this.setState({ isOnfocus: true })
-    }
-
-    selectOnBlur = (e) => {
-        e.target.size = 1
-        this.setState({ isOnfocus: false })
-    }
-
-    selectOnFocusTo = (e) => {
-        e.target.size = 10
-        this.setState({ isToYearOnfocus: true })
-    }
-
-    selectOnBlurTo = (e) => {
-        e.target.size = 1
-        this.setState({ isToYearOnfocus: false })
+        return year;
     }
 
     selectChange = (e) => {
-        e.target.size = 1;
-        e.target.blur();
         this.setState({
-            startYear: e.target.value,
+            startYear: parseInt(e, 10),
             disabledSaveBtn: false,
             fromDateChange: true,
             isOnfocus: false
-
         })
     }
 
     selectToYearChange = (e) => {
-        e.target.size = 1;
-        e.target.blur();
         this.setState({
-            endYear: e.target.value,
+            endYear: parseInt(e, 10),
             disabledSaveBtn: false,
             isToYearOnfocus: false
         })
@@ -303,28 +261,27 @@ class Education extends React.Component {
                 <div className="col-md-6 MonthlyPicker mb-2">
                     <div className="form-group">
                         <label>From Year</label>
-                        <select className={(this.state.isOnfocus ? "no-border": " ") + " form-control"}                            
-                            size={this.size}                       
-                            onFocus={(e) => this.selectOnFocus(e)}
-                            onBlur={(e) => this.selectOnBlur(e)}
-                        value={this.state.startYear}
-                        onChange={(e) => this.selectChange(e)}
-                        >
-                        {this.YearList()}
-                        </select>
+                        <SelectBox
+                            options={this.YearList()}
+                            simpleValue
+                            placeholder='YYYY'
+                            onChange={(e) => this.selectChange(e)}
+                            selectedValue={this.state.startYear}
+                            className='inputFailure ServiceRequestSelect'
+                        />
                 </div>
             </div>
             <div className="col-md-6 MonthlyPicker mb-2">
                 <div className="form-group">
                     <label>To Year (or Expected)</label>
-                    <select className={(this.state.isToYearOnfocus ? "no-border": " ") + " form-control"}
-                        // disabled={!this.state.fromDateChange}
-                        onFocus={(e) => this.selectOnFocusTo(e)}
-                        onBlur={(e) => this.selectOnBlurTo(e)}
-                        value={this.state.endYear}
-                        onChange={(e) => this.selectToYearChange(e)}>
-                        {this.YearListCal()}
-                    </select>
+                    <SelectBox
+                        options={this.YearListCal()}
+                        simpleValue
+                        placeholder='YYYY'
+                        onChange={(e) => this.selectToYearChange(e)}
+                        selectedValue={this.state.endYear}
+                        className='inputFailure ServiceRequestSelect'
+                    />
                 </div>
             </div>
                 

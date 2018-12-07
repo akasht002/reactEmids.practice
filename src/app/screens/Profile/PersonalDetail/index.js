@@ -20,9 +20,7 @@ import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
   checkTextNotStartWithNumber,
   getArrayLength,
-  getLength,
-  checkhourlyRate,
-  checkPhoneNumber
+  getLength
 } from '../../../utils/validations'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
