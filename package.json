@@ -163,7 +163,10 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "jsx-a11y/anchor-has-content": "off"
+    }
   },
   "devDependencies": {
     "jest-cli": "^23.5.0",

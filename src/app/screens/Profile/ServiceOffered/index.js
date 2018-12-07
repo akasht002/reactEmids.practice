@@ -67,10 +67,6 @@ class ServiceOffered extends React.Component {
     }
 
     render() {
-
-        let modalContent;
-        let modalTitle;
-
         let listOfServicesOffered = this.props.serviceOfferedList && this.props.serviceOfferedList.map((serviceList) => {
             const services = [];
             serviceList.serviceTypeModel && _.forEach(serviceList.serviceTypeModel, element => {
@@ -86,26 +82,20 @@ class ServiceOffered extends React.Component {
             )
         });
 
+        let modalContent = listOfServicesOffered ?
+            <ServiceOfferedContent
+                handleClick={this.oncheckedServices}
+                name={this.props.serviceOfferedDetails}
+                type={'edit'}
+                toggleCollapse={(category) => { this.props.toggleCollapseDetails(category) }}
+            />
+            :
+            '';
 
-        {
-            listOfServicesOffered ?
-                modalContent =
-                <ServiceOfferedContent
-                    handleClick={this.oncheckedServices}
-                    name={this.props.serviceOfferedDetails}
-                    type={'edit'}
-                    toggleCollapse={(category) => { this.props.toggleCollapseDetails(category) }}
-                />
+        let modalTitle = this.state.isModalOpen && this.state.isAdd ?
+                'Add Services Offered'
                 :
-                ''
-        }
-
-        {
-            this.state.isModalOpen && this.state.isAdd ?
-                modalTitle = 'Add Services Offered'
-                :
-                modalTitle = 'Edit Services Offered'
-        }
+                'Edit Services Offered'
 
         return (
             <div>

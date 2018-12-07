@@ -16,10 +16,12 @@ import { isEntityServiceProvider } from '../../utils/userUtility';
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
-    return <i className='indicator' />
+    return <React.Fragment>
+      <i className='indicator'/> 
+      </React.Fragment>
   } else if (props.count === 2) {
     return (
-      <React.Fragment>
+      <React.Fragment> 
         <i className='indicator' /><i className='indicator' />
       </React.Fragment>
     )

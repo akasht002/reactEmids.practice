@@ -85,7 +85,7 @@ class Organization extends React.PureComponent {
           value: getArrayLength(nextProps.personalDetail.address) > 0 &&
             nextProps.personalDetail.address[0].state != null
             ? nextProps.personalDetail.address[0].state.id
-            : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
+            : '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
                 nextProps.personalDetail.address[0].state != null
                 ? nextProps.personalDetail.address[0].state.name
                 : ''

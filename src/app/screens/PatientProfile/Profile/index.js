@@ -6,7 +6,6 @@ import PointService from '../PointService'
 import Languages from '../Languages'
 import ClinicalCondition from '../ClinicalCondition'
 import { ScreenCover, Header, ModalPopup } from '../../../components';
-import MyConnections from '../MyConnections';
 import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
 import {goBack, push} from '../../../redux/navigation/actions';
 import Help from '../../../assets/HelpDoc/Help.pdf';

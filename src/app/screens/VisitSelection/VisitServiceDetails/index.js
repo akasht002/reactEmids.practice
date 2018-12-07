@@ -49,7 +49,7 @@ import {
   getVisitServiceHistoryByIdDetail,
   clearVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
-import { getUserInfo } from '../../../utils/userUtility';
+import { getUserInfo, isEntityServiceProvider } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { createVideoConference } from '../../../redux/telehealth/actions';
@@ -214,7 +214,8 @@ class VisitServiceDetails extends Component {
 
   showPhoneNumber = () => {
     let data = this.props.VisitServiceDetails;
-    this.setState({ phoneNumber: data.phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    let phoneNumber = data.patient ? data.patient.phoneNumber:''
+    this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
   };
 
   onClickConversation = () => {
@@ -430,7 +431,7 @@ class VisitServiceDetails extends Component {
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
                   <span className='HeaderBackWrapper CursorPointer'>
-                    <a className='HeaderBackButton' onClick={this.props.goBack}></a>
+                    <a className={'HeaderBackButton'} onClick={this.props.goBack}></a>
                   </span>
                   <span className='HeaderRequestLabel'>
                     Request ID
@@ -487,6 +488,7 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
+                  {!isEntityServiceProvider() && 
                   <div className='PostedByImageContainer CursorPointer' onClick={this.onClickConversation}>
                     <i class='ProfileIcon IconConversations' />
                     <div class='PostedByProfileDetails'>
@@ -494,7 +496,8 @@ class VisitServiceDetails extends Component {
                         Conversations
                       </div>
                     </div>
-                  </div>
+                  </div>}
+                  {!isEntityServiceProvider() && 
                   <div className='PostedByImageContainer CursorPointer' onClick={this.onClickVideoConference}>
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
@@ -502,7 +505,7 @@ class VisitServiceDetails extends Component {
                         Video Conference
                       </div>
                     </div>
-                  </div>
+                  </div>}
                 </div>
               </section>
               <section className='rightPalette'>

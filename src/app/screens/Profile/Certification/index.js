@@ -58,6 +58,8 @@ class Certification extends Component {
             certificationModal: !this.state.certificationModal,
             isDiscardModalOpen: false,
             isValid: true,
+            certificateNameInvaild: false,
+            certificateAuthorityInvaild: false,
             disabledSaveBtn: true
         })
 
