@@ -35,6 +35,10 @@ class EntityPersonalDetail extends React.PureComponent {
       isDiscardModalOpen: false,
       isAlertModalOpen: false,
       isValidPhoneNumber: true,
+      isStateInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      isStreetInvalid: false,
       ModalOrg: true,
       src: null,
       crop: {
@@ -182,9 +186,26 @@ class EntityPersonalDetail extends React.PureComponent {
     if (
       getLength(this.state.firstName) === 0 ||
       getLength(this.state.lastName) === 0 ||
-      getLength(this.state.phoneNumber) < 10
+      getLength(this.state.phoneNumber) < 10 ||
+      this.state.city === '' || this.state.city === null ||
+      this.state.zipCode === '' || this.state.zipCode === null ||
+      this.state.streetAddress === '' || this.state.streetAddress === null ||
+      this.state.selectedState === '' || this.state.selectedState === null
     ) {
-      this.setState({ isValid: false })
+      let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
+      if (this.state.city === '' || this.state.city === null) {
+        cityInvalid = true;
+      }
+      if (this.state.zipCode === '' || this.state.zipCode === null || this.state.zipCode < 5) {
+        zipCodeInvalid = true;
+      }
+      if (this.state.streetAddress === '' || this.state.streetAddress === null) {
+        streetInvalid = true;
+      }
+      if (this.state.selectedState === '' || this.state.selectedState === null || this.state.selectedState === undefined) {
+        stateInvalid = true;
+      }
+      this.setState({ isValid: false, isStateInvalid: stateInvalid, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid })
     } else {
       this.props.updateEntityDetail(this.state)
       this.setState({
@@ -544,12 +565,21 @@ class EntityPersonalDetail extends React.PureComponent {
                       onChange={value => {
                         this.setState({
                           selectedState: value,
-                          disabledSaveBtn: false
+                          disabledSaveBtn: false,
+                          isStateInvalid: false
                         })
+                      }}
+                      onBlur={(e) => {
+                        if (this.state.selectedState === '') {
+                          this.setState({ isStateInvalid: true })
+                        }
                       }}
                       selectedValue={this.state.selectedState}
                       className='inputFailure ServiceRequestSelect'
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                      {this.state.isStateInvalid && 'Please select valid State'}
+                    </small>
                   </div>
                 </div>
                 <div className='col-md-6 mb-2'>
@@ -564,10 +594,19 @@ class EntityPersonalDetail extends React.PureComponent {
                       textChange={e =>
                         this.setState({
                           city: e.target.value,
-                          disabledSaveBtn: false
+                          disabledSaveBtn: false,
+                          isCityInvalid: false
                         })}
+                        onBlur={e => {
+                          if (!e.target.value) {
+                            this.setState({ isCityInvalid: true })
+                          }
+                        }}
                       className='form-control'
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                    {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
+                  </small>
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
@@ -584,10 +623,19 @@ class EntityPersonalDetail extends React.PureComponent {
                           textChange={e =>
                             this.setState({
                               streetAddress: e.target.value,
-                              disabledSaveBtn: false
+                              disabledSaveBtn: false,
+                              isStreetInvalid: false
                             })}
+                            onBlur={e => {
+                              if (!e.target.value) {
+                                this.setState({ isStreetInvalid: true })
+                              }
+                            }}
                           className='form-control'
                         />
+                        <small className="text-danger d-block OnboardingAlert">
+                          {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                        </small>
                       </div>
                     </div>
                     <div className='col-md-6'>
@@ -607,12 +655,21 @@ class EntityPersonalDetail extends React.PureComponent {
                           ) {
                             this.setState({
                               zipCode: e.target.value,
-                              disabledSaveBtn: false
+                              disabledSaveBtn: false,
+                              isZipInvalid: false
                             })
+                          }
+                        }}
+                        onBlur={e => {
+                          if (!e.target.value || getLength(e.target.value) < 5) {
+                            this.setState({ isZipInvalid: true })
                           }
                         }}
                         className='form-control'
                       />
+                      <small className="text-danger d-block OnboardingAlert">
+                        {this.state.isZipInvalid && <span>Please enter valid {(this.state.zipCode === '' || this.state.zipCode === null) && 'Zipcode'}</span>}
+                      </small>
                     </div>
                   </div>
                 </div>
@@ -696,7 +753,33 @@ class EntityPersonalDetail extends React.PureComponent {
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: !this.state.disabledSaveBtn
+      disabledSaveBtn: !this.state.disabledSaveBtn,
+      isStreetInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      isStateInvalid: false,
+      city: getArrayLength(this.props.personalDetail.address) > 0
+      ? this.props.personalDetail.address[0].city
+      : '',
+      streetAddress: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].streetAddress
+        : '',
+      zipCode: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].zipCode
+        : '',
+      selectedState: {
+        label: getArrayLength(this.props.personalDetail.address) > 0 &&
+          this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.name
+          : '',
+        value: getArrayLength(this.props.personalDetail.address) > 0 &&
+          this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.id
+          : '' + '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
+              this.props.personalDetail.address[0].state != null
+              ? this.props.personalDetail.address[0].state.name
+              : ''
+      }
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,
@@ -738,7 +821,33 @@ class EntityPersonalDetail extends React.PureComponent {
       yearOfExperience: this.props.personalDetail.yearOfExperience,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber
+      phoneNumber: this.props.personalDetail.phoneNumber,
+      isStreetInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      isStateInvalid: false,
+      city: getArrayLength(this.props.personalDetail.address) > 0
+      ? this.props.personalDetail.address[0].city
+      : '',
+      streetAddress: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].streetAddress
+        : '',
+      zipCode: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].zipCode
+        : '',
+      selectedState: {
+        label: getArrayLength(this.props.personalDetail.address) > 0 &&
+          this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.name
+          : '',
+        value: getArrayLength(this.props.personalDetail.address) > 0 &&
+          this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.id
+          : '' + '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
+              this.props.personalDetail.address[0].state != null
+              ? this.props.personalDetail.address[0].state.name
+              : ''
+      }
     })
   }
 }

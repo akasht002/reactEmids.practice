@@ -1,7 +1,7 @@
 import React from "react";
 import { SERVICE_STATUS } from "../../../../constants/constants"
 function ServiceRequestsStatus(props) {
-    let statusTempalte = props.ServiceStatus.map((item, index) => {
+    let statusTempalte = props.ServiceStatus && props.ServiceStatus.map((item, index) => {
 
         if (item.keyValue !== SERVICE_STATUS.COMPLETED
             && item.keyValue !== SERVICE_STATUS["NOT INTERESTED"]) {

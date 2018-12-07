@@ -1685,6 +1685,16 @@ overflow: auto;
     max-width: initial;
 }
 
+.list-fullblock .participantsSearchForm .SelectWithFlag .ProfileImageMultiSelect .Select-menu-outer
+{
+max-height: 300px !important;
+top:10px !important;
+bottom: auto !important
+}
+
+
+
+
 
 /*microsoft-edge-detection*/
 @supports (-ms-ime-align: auto) {
@@ -1894,10 +1904,20 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
     height: 100% !important;
 }
 
-
+.participantsSearchForm .ParticipantsListContainer
+{
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
 .participantsSearchForm .ParticipantsListContainer .participantsSearchList.ChatContainer
 {
-    padding-bottom: 100px;
+    padding-bottom: 50px;
+    display: block;
+    width: 100%;
+    height: calc;
+    height: calc(100vh - 522px);
 }
 
 

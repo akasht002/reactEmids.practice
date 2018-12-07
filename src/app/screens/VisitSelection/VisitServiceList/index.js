@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import _ from 'lodash'
-import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList } from '../../../redux/visitSelection/VisitServiceList/actions';
+import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList,clearVisitServiceList } 
+    from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
@@ -62,7 +63,8 @@ class VisitServiceList extends Component {
             pageSize: 15,
             sort: 'false',
             sortByOrder: 'DESC',
-            selectedKey: 'item-1'
+            selectedKey: 'item-1',
+            serviceRequestList:[]
         };
         this.sort = false
     };
@@ -83,7 +85,29 @@ class VisitServiceList extends Component {
         this.props.ServiceRequestStatus()
         this.props.getServiceArea();
         this.props.getServiceRequestCount()
+        this.props.clearServiceType()
     }
+
+    componentWillReceiveProps (nextProps) {
+        let serviceRequestStatus = []
+        if (nextProps.ServiceStatus !== this.props.ServiceStatus) {
+          nextProps.ServiceStatus.forEach(function (status) {
+            if (status.keyValue !== 'ALL') serviceRequestStatus.push(status.keyValue)
+          })
+          this.setState({
+            serviceStatus:  serviceRequestStatus,
+            serviceRequestList: nextProps.ServiceStatus
+          })
+        }
+        this.setState({
+          serviceRequestList: nextProps.ServiceStatus
+        })
+      }
+
+      componentWillUnmount() {
+        console.log("Clock", "componentWillUnmount");
+        this.props.clearVisitServiceList()
+      }
 
     handleClick = (requestId) => {
         this.props.getServiceRequestId(requestId);
@@ -345,7 +369,7 @@ class VisitServiceList extends Component {
                 patientImage = require('../../../assets/images/Blank_Profile_icon.png');
             }
             return (
-                <div class='ServiceRequestBoard' key={serviceList.serviceRequestId}>
+                <div className='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                     <div className='card'>
                         <div className="BlockImageContainer" onClick={() =>
                             this.handleClick(serviceList.serviceRequestId)}>
@@ -380,7 +404,7 @@ class VisitServiceList extends Component {
                                     <span>Posted on <Moment format="DD MMM">{serviceList.createDate}</Moment></span>
                                 </div>
                             </div>
-                            <div class='BlockProfileDetailsStatus'>
+                            <div className='BlockProfileDetailsStatus'>
                                 {
                                     <span className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`}>{
                                         serviceList.serviceRequestStatus
@@ -432,7 +456,7 @@ class VisitServiceList extends Component {
                         {visitList}
                     </div>
                     {this.props.visitServiceList.length > 0 && !this.sort && !this.props.FilterDataCount && (
-                        <div class="col-md-12 p-0 AsyncConversationPagination">
+                        <div className="col-md-12 p-0 AsyncConversationPagination">
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
@@ -447,7 +471,7 @@ class VisitServiceList extends Component {
                         </div>
                     )}
                     {this.props.visitServiceList.length > 0 && this.sort && !this.props.FilterDataCount && (
-                        <div class="col-md-12 p-0 AsyncConversationPagination">
+                        <div className="col-md-12 p-0 AsyncConversationPagination">
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
@@ -462,7 +486,7 @@ class VisitServiceList extends Component {
                         </div>
                     )}
                     {this.props.visitServiceList.length > 0 && this.props.FilterDataCount && (
-                        <div class="col-md-12 p-0 AsyncConversationPagination">
+                        <div className="col-md-12 p-0 AsyncConversationPagination">
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
@@ -495,7 +519,7 @@ class VisitServiceList extends Component {
                     selectedOption={this.state.selectedOption}
                     ServiceType={this.props.ServiceType}
                     handleserviceType={this.handleserviceType}
-                    ServiceStatus={this.props.ServiceStatus}
+                    ServiceStatus={this.state.serviceRequestList}
                     handleChangeserviceStatus={this.handleChangeserviceStatus}
                     ServiceAreaList={this.props.ServiceAreaList}
                     handleServiceArea={this.handleServiceArea}
@@ -530,6 +554,7 @@ function mapDispatchToProps(dispatch) {
         formDirty: () => dispatch(formDirty()),
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
+        clearVisitServiceList:()=>dispatch(clearVisitServiceList())
     }
 };
 

@@ -53,11 +53,9 @@ class Summary extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.signatureImage.signature) {
-            this.signaturePad.fromDataURL(nextProps.signatureImage.signature);
-            if (nextProps.signatureImage.signature !== null) {
+           
                 this.setState({ signatureImage: nextProps.signatureImage.signature })
-                this.signaturePad.off();
-            }
+                
         }
         this.setState({
             summaryDetails: nextProps.SummaryDetails,
@@ -115,7 +113,6 @@ class Summary extends Component {
         let originalTotalDuration = (seconds / 60);
 
         if (this.state.signatureImage) {
-            this.saveSignature();
             const data = {
                 serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
                 ServiceProviderId: this.state.summaryDetails.serviceProviderId,
@@ -375,7 +372,10 @@ class Summary extends Component {
                                             <p className="SummaryContentTitle">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
-                                                <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
+                                                {this.props.signatureImage && this.props.signatureImage.signature ?
+                                                    <img className="sign-pad" alt="sign" src={this.props.signatureImage.signature}/> :
+                                                    <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
+                                                }
                                             </div>
                                             {this.state.isSaveBtnShown && (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
                                                 <div className="SignatureButtons">

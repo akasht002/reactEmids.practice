@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import classnames from 'classnames'
 import Moment from 'react-moment'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import { Scrollbars, ModalPopup } from '../../../components'
 import { goBack, push } from '../../../redux/navigation/actions'
 import { Path } from '../../../routes'
+import AssignServiceProvider from './AssignServiceProvider'
 import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
@@ -45,7 +46,8 @@ import {
 } from '../../../constants/constants'
 import { getLength } from '../../../utils/validations'
 import {
-  getVisitServiceHistoryByIdDetail
+  getVisitServiceHistoryByIdDetail,
+  clearVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import { getUserInfo } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
@@ -96,6 +98,10 @@ class VisitServiceDetails extends Component {
         nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
           .serviceRequestTypeDetailsId,
     })
+  }
+
+  componentWillUnmount() {
+    this.props.clearVisitServiceHistoryByIdDetail()
   }
 
   checkEligibility = () => {
@@ -171,13 +177,13 @@ class VisitServiceDetails extends Component {
     } else {
       let model = {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
-         patientId: this.state.visitServiceDetails.patient ?  this.state.visitServiceDetails.patient.patientId :0,
-         cancelledDescription: 'Canceled'
+        patientId: this.state.visitServiceDetails.patient ? this.state.visitServiceDetails.patient.patientId : 0,
+        cancelledDescription: 'Canceled'
       }
-      if(status.status === 36) this.props.cancelInvitedServiceProvider(model)
-       else if(status.status === 37) this.props.cancelAppliedServiceProvider(model)
-        else if(status.status === 38) this.props.cancelHiredServiceProvider(model)
-        else this.props.cancelServiceRequestByServiceProvider(model)
+      if (status.status === 36) this.props.cancelInvitedServiceProvider(model)
+      else if (status.status === 37) this.props.cancelAppliedServiceProvider(model)
+      else if (status.status === 38) this.props.cancelHiredServiceProvider(model)
+      else this.props.cancelServiceRequestByServiceProvider(model)
     }
   }
 
@@ -208,14 +214,15 @@ class VisitServiceDetails extends Component {
 
   showPhoneNumber = () => {
     let data = this.props.VisitServiceDetails;
-    this.setState({ phoneNumber: data.phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    let phoneNumber = data.patient ? data.patient.phoneNumber:''
+    this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
   };
 
   onClickConversation = () => {
     if (this.props.VisitServiceDetails.statusId !== 38) {
-      this.setState({ 
+      this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests' 
+        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests'
       })
     } else {
       let userId = getUserInfo().serviceProviderId;
@@ -245,7 +252,7 @@ class VisitServiceDetails extends Component {
 
   onClickVideoConference = () => {
     if (this.props.VisitServiceDetails.statusId !== 38) {
-      this.setState({ 
+      this.setState({
         conversationsModal: true,
         conversationErrMsg: 'You cannot initiate a video call as you have no current service requests'
       })
@@ -424,7 +431,7 @@ class VisitServiceDetails extends Component {
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
                   <span className='HeaderBackWrapper CursorPointer'>
-                    <a className='HeaderBackButton' onClick={this.props.goBack}></a>
+                    <a className={'HeaderBackButton'} onClick={this.props.goBack}></a>
                   </span>
                   <span className='HeaderRequestLabel'>
                     Request ID
@@ -439,7 +446,8 @@ class VisitServiceDetails extends Component {
                   {!getUserInfo().isEntityServiceProvider && <ServiceStatus
                     status={{
                       id: this.state.visitServiceDetails.statusId,
-                      name: this.state.visitServiceDetails.statusName
+                      name: this.state.visitServiceDetails.statusName,
+                      visitInProgress: this.state.visitServiceDetails.visitInProgress
                     }}
                     postServiceRequest={this.postServiceRequest}
                   />}
@@ -655,6 +663,12 @@ class VisitServiceDetails extends Component {
                         <div>
                           <span>Visit Length</span>
                         </div>
+                        {
+                          getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
+                            <div>
+                              <span>Service Provider</span>
+                            </div>
+                         }
                         <div />
                       </div>
                       {this.state.visitServiceSchedule &&
@@ -691,7 +705,7 @@ class VisitServiceDetails extends Component {
                                       className='btn btn-outline-primary'
                                       onClick={() => this.visitSummary(ScheduleList.serviceRequestVisitId)}
                                     >
-                                      <i className='ProfileIconEye' />Summary
+                                      <i className='ProfileIconEye' />Visit Summary
                                       </a>
                                     : ''}
 
@@ -709,32 +723,41 @@ class VisitServiceDetails extends Component {
                                         Start Visit
                                       </button>
                                       : '') : '')}
-                                  {ScheduleList.visitStatusName ===
-                                    SERVICE_VISIT_STATUS.INPROGRESS
-                                    ? <a
-                                      className='btn btn-outline-primary'
-                                      onClick={() =>
-                                        this.visitProcessing(
-                                          ScheduleList.serviceRequestVisitId
-                                        )}
-                                    >
-                                      In Progress
+
+                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
+                                    ((ScheduleList.visitStatusName ===
+                                      SERVICE_VISIT_STATUS.INPROGRESS)
+                                      ? <a
+                                        className='btn btn-outline-primary'
+                                        onClick={() =>
+                                          this.visitProcessing(
+                                            ScheduleList.serviceRequestVisitId
+                                          )}
+                                      >
+                                        In Progress
                                       </a>
-                                    : ''}
-                                  {ScheduleList.visitStatusName ===
-                                    SERVICE_VISIT_STATUS.PAYMENTPENDING
-                                    ? <a
-                                      className='btn btn-outline-primary'
-                                      onClick={() =>
-                                        this.visitProcessingSummary(
-                                          ScheduleList.serviceRequestVisitId
-                                        )}
-                                    >
-                                      Payment Pending
+                                      : '') : '')}
+
+                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
+                                    ((ScheduleList.visitStatusName ===
+                                      SERVICE_VISIT_STATUS.PAYMENTPENDING)
+                                      ? <a
+                                        className='btn btn-outline-primary'
+                                        onClick={() =>
+                                          this.visitProcessingSummary(
+                                            ScheduleList.serviceRequestVisitId
+                                          )}
+                                      >
+                                        Payment Pending
                                       </a>
-                                    : ''}
+                                      : '') : '')}
+
                                 </div>
                               </div>
+                              {
+                                getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
+                                <AssignServiceProvider sp={this.state.visitServiceDetails}/>
+                              }
                             </div>
                           )
                         })}
@@ -841,6 +864,7 @@ function mapDispatchToProps(dispatch) {
     cancelInvitedServiceProvider: (data) => dispatch(cancelInvitedServiceProvider(data)),
     cancelAppliedServiceProvider: (data) => dispatch(cancelAppliedServiceProvider(data)),
     cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
+    clearVisitServiceHistoryByIdDetail: () => dispatch(clearVisitServiceHistoryByIdDetail())
   }
 }
 

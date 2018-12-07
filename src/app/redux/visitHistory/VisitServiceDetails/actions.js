@@ -96,6 +96,12 @@ export const formDirty = () => {
     }
 }
 
+export const clearVisitServiceHistoryByIdDetail = () =>{
+    return (dispatch) => {
+    dispatch(getVisitServiceHistoryByIdDetailSuccess([]))
+    }
+}
+
 export function getVisitServiceLists(data) {
     return (dispatch) => {
         dispatch(startLoading());

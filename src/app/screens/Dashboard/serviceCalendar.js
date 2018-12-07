@@ -11,9 +11,11 @@ import {
   getServiceProviderVists,
   getServiceVisitCount,
   getEntityServiceProviderList,
-  updateEntityServiceVisit
+  updateEntityServiceVisit,
+  getEntityServiceProviderListSearch
 } from "../../redux/dashboard/Dashboard/actions";
-import { getServiceRequestId,setEntityServiceProvider } from "../../redux/visitSelection/VisitServiceDetails/actions";
+import { getServiceRequestId,setEntityServiceProvider } 
+  from "../../redux/visitSelection/VisitServiceDetails/actions";
 import { ServiceCalendarDefault, ShowIndicator } from "./ServiceInfo";
 import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
@@ -55,7 +57,7 @@ class serviceCalendar extends React.Component {
       phoneNumber:'',
       selectedMonths:moment(today).format('M')
     };
-    this.data = "";
+    
   }
 
   togglePersonalDetails = (action, e) => {
@@ -345,6 +347,12 @@ class serviceCalendar extends React.Component {
   };
 
 
+  onchangeSearchServiceProvider = e => {
+    this.props.getEntityServiceProviderListSearch(e.target.value)
+    console.log(e.target.value)
+  }
+
+
   getModalContent = (serviceProviderList) => {
     return (
     <form className="assign-serviceproblock">
@@ -353,8 +361,11 @@ class serviceCalendar extends React.Component {
           autoComplete='false'
           required='required'
           type='text'
-          placeholder='search'
+          placeholder='Search By First Name'
           className='form-control searchParticipants'
+          textChange = {(e)=>{
+            this.onchangeSearchServiceProvider(e)
+          }}
       />
       <div className="participantsSearchList">
               {serviceProviderList.map((item, index) => {
@@ -533,7 +544,6 @@ class serviceCalendar extends React.Component {
           data => {
             this.props.setESP(data);
             this.props.goToESPProfile();
-            console.log(data)
         } 
       }    
         handlePhoneNumber={this.handlePhoneNumber}
@@ -616,6 +626,7 @@ class serviceCalendar extends React.Component {
           ModalBody={modalContent}
           className="modal-lg asyncModal CertificationModal"
           modalTitle={modalTitle}
+          showHeader={true}
           centered="centered"
           headerFooter='d-none'
           btn1='Save'
@@ -672,7 +683,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(push(Path.visitServiceDetails)),
     setEntityServiceProvider:data =>dispatch(setEntityServiceProvider(data)),
     setESP:data=>dispatch(setESP(data)),
-    goToESPProfile:()=>dispatch(push(Path.ESPProfile))
+    goToESPProfile:()=>dispatch(push(Path.ESPProfile)),
+    getEntityServiceProviderListSearch:(data)=>dispatch(getEntityServiceProviderListSearch(data))
   };
 }
 

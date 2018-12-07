@@ -214,6 +214,13 @@ button.btn.ResetSignature, button.btn.CancelSignature{
     display: block;
 }
 
+.sign-pad {   
+    display: flex;
+    margin: 0 auto;
+    width: 300px;
+    margin-top: 5%;
+}
+
 @media (max-width: 768px){
     .VisitSummaryWidget {
         flex-direction: column;
