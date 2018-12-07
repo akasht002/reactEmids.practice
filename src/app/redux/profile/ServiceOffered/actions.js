@@ -58,9 +58,10 @@ export function addServiceOfferd(data) {
      return ({
       "categoryId": category,
       "serviceType": data.filter((obj) => {
-        if(obj.categoryId === category){
-          return delete obj.categoryId;
-        }
+        return obj.categoryId === category && delete obj.categoryId;
+        // if(obj.categoryId === category){
+        //   return delete obj.categoryId;
+        // }
       })
      })
   })

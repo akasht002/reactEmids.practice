@@ -377,8 +377,11 @@ const onGetAllParticipantsSuccess = (data) => {
 
 export function AddParticipantsToVideoConference(data) {
     return (dispatch, getState) => {
+        const personalState = getState().profileState.PersonalDetailState.personalDetail
         let state = getState();
         let twilioData = {
+            createdByFirstName: personalState.firstName,
+            createdByLastName: personalState.lastName,
             roomNumber: state.telehealthState.roomId,
             conferenceId: state.telehealthState.conferenceId,
             participants: data
