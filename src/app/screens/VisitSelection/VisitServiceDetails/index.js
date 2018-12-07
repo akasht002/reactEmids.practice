@@ -214,7 +214,8 @@ class VisitServiceDetails extends Component {
 
   showPhoneNumber = () => {
     let data = this.props.VisitServiceDetails;
-    this.setState({ phoneNumber: data.phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    let phoneNumber = data.patient ? data.patient.phoneNumber:''
+    this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
   };
 
   onClickConversation = () => {
@@ -430,7 +431,7 @@ class VisitServiceDetails extends Component {
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
                   <span className='HeaderBackWrapper CursorPointer'>
-                    <a className='HeaderBackButton' onClick={this.props.goBack}></a>
+                    <a className={'HeaderBackButton'} onClick={this.props.goBack}></a>
                   </span>
                   <span className='HeaderRequestLabel'>
                     Request ID

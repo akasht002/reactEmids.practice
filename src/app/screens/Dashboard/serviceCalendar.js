@@ -11,7 +11,8 @@ import {
   getServiceProviderVists,
   getServiceVisitCount,
   getEntityServiceProviderList,
-  updateEntityServiceVisit
+  updateEntityServiceVisit,
+  getEntityServiceProviderListSearch
 } from "../../redux/dashboard/Dashboard/actions";
 import { getServiceRequestId,setEntityServiceProvider } 
   from "../../redux/visitSelection/VisitServiceDetails/actions";
@@ -249,15 +250,11 @@ class serviceCalendar extends React.Component {
       .replace(/-/g, "-");
     this.props.getServiceProviderVists(utc);
     let d = new Date(utc);
-    d.setMonth(d.getMonth() - 3);
-    let start_date = d.toLocaleDateString();
-    let d2 = new Date(utc);
-    d2.setMonth(d2.getMonth() + 3);
-    let end_date = d2.toLocaleDateString();
+    d.setMonth(d.getMonth() - 3);    
     const date_range = {
-      start_date: start_date,
-      end_date: end_date
-    };
+      start_date:moment().subtract(3, 'months').format('YYYY-MM-DD'),
+      end_date: moment().add(3, 'months').format('YYYY-MM-DD')
+    }
     this.props.getServiceVisitCount(date_range);
     this.props.getEntityServiceProviderList();
     this.updateWindowDimensions();
@@ -346,6 +343,12 @@ class serviceCalendar extends React.Component {
   };
 
 
+  onchangeSearchServiceProvider = e => {
+    this.props.getEntityServiceProviderListSearch(e.target.value)
+    console.log(e.target.value)
+  }
+
+
   getModalContent = (serviceProviderList) => {
     return (
     <form className="assign-serviceproblock">
@@ -354,8 +357,11 @@ class serviceCalendar extends React.Component {
           autoComplete='false'
           required='required'
           type='text'
-          placeholder='search'
+          placeholder='Search By First Name'
           className='form-control searchParticipants'
+          textChange = {(e)=>{
+            this.onchangeSearchServiceProvider(e)
+          }}
       />
       <div className="participantsSearchList">
               {serviceProviderList.map((item, index) => {
@@ -616,6 +622,7 @@ class serviceCalendar extends React.Component {
           ModalBody={modalContent}
           className="modal-lg asyncModal CertificationModal"
           modalTitle={modalTitle}
+          showHeader={true}
           centered="centered"
           headerFooter='d-none'
           btn1='Save'
@@ -672,7 +679,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(push(Path.visitServiceDetails)),
     setEntityServiceProvider:data =>dispatch(setEntityServiceProvider(data)),
     setESP:data=>dispatch(setESP(data)),
-    goToESPProfile:()=>dispatch(push(Path.ESPProfile))
+    goToESPProfile:()=>dispatch(push(Path.ESPProfile)),
+    getEntityServiceProviderListSearch:(data)=>dispatch(getEntityServiceProviderListSearch(data))
   };
 }
 
