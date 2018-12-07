@@ -49,7 +49,7 @@ import {
   getVisitServiceHistoryByIdDetail,
   clearVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
-import { getUserInfo } from '../../../utils/userUtility';
+import { getUserInfo, isEntityServiceProvider } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { createVideoConference } from '../../../redux/telehealth/actions';
@@ -488,6 +488,7 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
+                  {!isEntityServiceProvider() && 
                   <div className='PostedByImageContainer CursorPointer' onClick={this.onClickConversation}>
                     <i class='ProfileIcon IconConversations' />
                     <div class='PostedByProfileDetails'>
@@ -495,7 +496,8 @@ class VisitServiceDetails extends Component {
                         Conversations
                       </div>
                     </div>
-                  </div>
+                  </div>}
+                  {!isEntityServiceProvider() && 
                   <div className='PostedByImageContainer CursorPointer' onClick={this.onClickVideoConference}>
                     <i class='ProfileIcon IconVideo' />
                     <div class='PostedByProfileDetails'>
@@ -503,7 +505,7 @@ class VisitServiceDetails extends Component {
                         Video Conference
                       </div>
                     </div>
-                  </div>
+                  </div>}
                 </div>
               </section>
               <section className='rightPalette'>
