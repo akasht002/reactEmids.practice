@@ -82,14 +82,14 @@ export function getSummaryDetails(data) {
 };
 
 export function getVisitServiceEligibilityStatus(data) {
-    const data1 = {
-        patientId: 72,
-        serviceProviderId: 530,
-        serviceRequestId: 609
+    const eligibilityData = {
+        patientId: data.patient.patientId,
+        serviceProviderId: data.serviceProviderId,
+        serviceRequestId: data.serviceRequestId
     }
     return (dispatch) => {
         dispatch(startLoading());
-        ThirdPartyPost(API.getServiceRequestEligibilityStatus, data1).then((resp) => {
+        ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
             dispatch(getVisitServiceEligibityStatusSuccess(resp.data));
             dispatch(calculationsFirstTime(data));
             dispatch(push(Path.summary))

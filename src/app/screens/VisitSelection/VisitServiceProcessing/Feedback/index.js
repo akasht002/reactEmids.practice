@@ -14,6 +14,8 @@ import { push } from '../../../../redux/navigation/actions'
 import {
     getVisitFeedBack
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+
 import './style.css'
 
 class Feedback extends Component {
@@ -77,7 +79,9 @@ class Feedback extends Component {
 
     onClickConfirm = () => {
         this.selectedAnswers = [];
-        this.props.goToSummary();
+        // this.props.goToSummary();
+        this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
+        this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
     }
 
     onSubmit = () => {
@@ -284,7 +288,9 @@ function mapDispatchToProps(dispatch) {
         saveAnswers: (data) => dispatch(saveAnswers(data)),
         getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data)),
         goToSummary: () => dispatch(push(Path.summary)),
-        goBack: () => dispatch(push(Path.performTasks))
+        goBack: () => dispatch(push(Path.performTasks)),
+        getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
+        getSavedSignature: (data) => dispatch(getSavedSignature(data))
     }
 };
 
