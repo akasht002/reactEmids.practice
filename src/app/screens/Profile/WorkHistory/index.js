@@ -17,6 +17,9 @@ import { getWorkHistory, addWorkHistory, editWorkHistory, updateWorkHistory, del
 import { SCREENS, PERMISSIONS, DATE_FORMAT } from '../../../constants/constants';
 import "./styles.css";
 import EllipsisText from "react-ellipsis-text";
+import {
+    getLength
+  } from '../../../utils/validations'
 
 class WorkHistory extends Component {
     constructor(props) {
@@ -37,7 +40,12 @@ class WorkHistory extends Component {
             isValid: true,
             disabledSaveBtn: true,
             isValidDate: true,
-            isDiscardModalOpen: false
+            isDiscardModalOpen: false,
+            designationInvalid:false,
+            companyInvalid:false,
+            locationInvalid:false,
+            fromDateInvalid:false,
+            toDateInvalid:false
         };
         this.isDisableCurrentlyWorking = true;
     }
@@ -78,7 +86,12 @@ class WorkHistory extends Component {
             isDiscardModalOpen: false,
             isAdd: true,
             isValid: true,
-            workHistoryId: ''
+            workHistoryId: '',
+            designationInvalid:false,
+            companyInvalid:false,
+            locationInvalid:false,
+            fromDateInvalid:false,
+            toDateInvalid:false
         })
     }
 
@@ -87,7 +100,12 @@ class WorkHistory extends Component {
             isWorkHistoryModalOpen: !this.state.isWorkHistoryModalOpen,
             isValid: true,
             disabledSaveBtn: true,
-            isDiscardModalOpen: false
+            isDiscardModalOpen: false,
+            designationInvalid:false,
+            companyInvalid:false,
+            locationInvalid:false,
+            fromDateInvalid:false,
+            toDateInvalid:false
         })
         let workHistory = this.props.workhistoyFieldDetails;
         let workhistoryFielObject = {
@@ -274,16 +292,26 @@ class WorkHistory extends Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Car Provider"
-                        className={"form-control " + (!this.state.isValid && !this.state.designation && 'inputFailure')}
-                        value={this.state.designation}
+                        className={"form-control " + (!this.state.isValid && !this.state.designation && 'inputFailure')}                        value={this.state.designation}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
                             designation: e.target.value,
                             disabledSaveBtn: false
                         })}
-
+                        onBlur={(e)=>{
+                            if(!(e.target.value)){
+                              this.setState({
+                                designationInvalid:true,
+                              })
+                            }
+          
+                          }}
                     />
-                    {!this.state.isValid && (!this.state.designation) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.designation === '' && ' Designation'}</span>}
+                    {!this.state.designation && (this.state.designationInvalid || !this.state.isValid) &&
+                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                                    Please enter designation
+                                </small>
+                            }
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -292,17 +320,29 @@ class WorkHistory extends Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Home Supportive SVC"
-                        className={"form-control " + (!this.state.isValid && !this.state.company && 'inputFailure')}
+                        className={"form-control " + (!this.state.isValid && !this.state.company && 'inputFailure')}                        value={this.state.designation}
                         value={this.state.company}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
                             company: e.target.value,
                             disabledSaveBtn: false
                         })}
-                    />
-                    {!this.state.isValid && (!this.state.company) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.company === '' && ' CompanyName'}</span>}
 
-                </div>
+                        onBlur={(e)=>{
+                            if(!(e.target.value)){
+                              this.setState({
+                                companyInvalid:true,
+                              })
+                            }
+          
+                          }}
+                    />
+                    {!this.state.company && (this.state.companyInvalid || !this.state.isValid) &&
+                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                                    Please enter company
+                                </small>
+                            }
+                            </div>
                 <div className="col-md-12 mb-2">
                     <Input
                         name="Location"
@@ -310,14 +350,27 @@ class WorkHistory extends Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. San Francisco Bay Area"
-                        className="form-control"
+                        className={"form-control " + (!this.state.isValid && !this.state.location && 'inputFailure')}                        value={this.state.designation}
                         value={this.state.location}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
                             location: e.target.value,
                             disabledSaveBtn: false
                         })}
+                        onBlur={(e)=>{
+                            if(!(e.target.value)){
+                              this.setState({
+                                locationInvalid:true,
+                              })
+                            }
+          
+                          }}
                     />
+                    {!this.state.location && (this.state.locationInvalid || !this.state.isValid) &&
+                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                                    Please enter location
+                                </small>
+                            }
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
                     <div className="form-group">
@@ -330,9 +383,23 @@ class WorkHistory extends Component {
                             mandatory={true}
                             maxDate={!this.state.currentlyWorking ? formateStateDate(this.state.toDate) : ''}
                             value={this.state.fromDate}
-                            className={"form-control datePicker " + (((!this.state.isValid && !this.state.fromDate)) && 'inputFailure')}
+                            className={"form-control datePicker " +  (getLength(this.state.fromDate) === 0 && (!this.state.isValid ||
+                                    this.state.fromDateInvalid) &&
+                                    'inputFailure')
+                            }
+
+                            onBlur={() => {
+                                if (!this.state.fromDate) {
+                                    this.setState({ fromDateInvalid: true });
+                                }
+                            }}
                          />
-                        {!this.state.isValid && (!this.state.fromDate) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.fromDate === '' ? 'From Date' : 'From Date'}</span>}
+                         {getLength(this.state.fromDate) === 0 && (this.state.fromDateInvalid
+                                    || !this.state.isValid) &&
+                                    <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
+                                        Please Select from Date
+                                </small>
+                                }
                     </div>
                 </div>
 
@@ -348,9 +415,22 @@ class WorkHistory extends Component {
                             minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
                             maxDate={moment()}
                             value={this.state.toDate}
-                            className={"form-control datePicker " + (((!this.state.isValid && !this.state.toDate)) && 'inputFailure')}
+                            className={"form-control datePicker " +  (getLength(this.state.toDate) === 0 && (!this.state.isValid ||
+                                this.state.toDateInvalid) &&
+                                'inputFailure')
+                        }
+                        onBlur={() => {
+                            if (!this.state.toDate) {
+                                this.setState({ toDateInvalid: true });
+                            }
+                        }}
                          />
-                        {!this.state.isValid && (!this.state.toDate) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.toDate === '' ? 'To Date' : 'To Date'}</span>}
+                         {getLength(this.state.toDate) === 0 && (this.state.toDateInvalid
+                                    || !this.state.isValid) &&
+                                    <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
+                                        Please Select to Date
+                                </small>
+                                }
 
                     </div>}
                 </div>
