@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScreenCover } from "../../../components";
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './loginCover.css';
 

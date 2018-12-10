@@ -33,12 +33,10 @@ class Skills extends Component {
 
         if (nextProps.selectedSkillsList && nextProps.selectedSkillsList.skills) {
             for (const skills of nextProps.selectedSkillsList.skills) {
-                {
-                    selectedSkillIds === '' ?
-                        selectedSkillIds = skills.id
-                        :
-                        selectedSkillIds = selectedSkillIds + ',' + skills.id
-                }
+                selectedSkillIds === '' ?
+                    selectedSkillIds = skills.id
+                    :
+                    selectedSkillIds = selectedSkillIds + ',' + skills.id
             }
         }
         this.setState({ selectedSkills: selectedSkillIds });
@@ -98,9 +96,9 @@ class Skills extends Component {
 
         const previosInitValue = [];
 
-        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
+        this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return previosInitValue.push(elem.id);
-        }).join(",");
+        })
 
         const newlyInitValue = [];
 
@@ -141,13 +139,10 @@ class Skills extends Component {
                 </li>
             )
         })
-
-        {
-            this.state.isSkillsModalOpen && this.state.isAdd ?
-                modalTitle = 'Add Skills and Experience'
-                :
-                modalTitle = 'Edit Skills and Experience'
-        }
+        this.state.isSkillsModalOpen && this.state.isAdd ?
+            modalTitle = 'Add Skills and Experience'
+            :
+            modalTitle = 'Edit Skills and Experience'
 
         modalContent = SkillsModalContent;
 

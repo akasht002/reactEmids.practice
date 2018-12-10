@@ -443,8 +443,8 @@ class Summary extends Component {
                         headerFooter="d-none"
                         centered={true}
                         onConfirm={() => {
-                            this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen }),
-                                this.onClickNext()
+                            this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen });
+                                this.onClickNext();
                         }}
                         onCancel={() => this.setState({ isProccedModalOpen: false })}
                     />

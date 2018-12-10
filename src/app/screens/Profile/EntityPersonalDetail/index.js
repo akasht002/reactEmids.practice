@@ -14,7 +14,6 @@ import {
   ModalPopup,
   ScreenCover
 } from '../../../components'
-import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
   checkTextNotStartWithNumber,
@@ -100,7 +99,7 @@ class EntityPersonalDetail extends React.PureComponent {
           value: getArrayLength(nextProps.personalDetail.address) > 0 &&
             nextProps.personalDetail.address[0].state != null
             ? nextProps.personalDetail.address[0].state.id
-            : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
+            : '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
                 nextProps.personalDetail.address[0].state != null
                 ? nextProps.personalDetail.address[0].state.name
                 : ''
@@ -775,7 +774,7 @@ class EntityPersonalDetail extends React.PureComponent {
         value: getArrayLength(this.props.personalDetail.address) > 0 &&
           this.props.personalDetail.address[0].state != null
           ? this.props.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
+          : '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
               this.props.personalDetail.address[0].state != null
               ? this.props.personalDetail.address[0].state.name
               : ''
@@ -843,7 +842,7 @@ class EntityPersonalDetail extends React.PureComponent {
         value: getArrayLength(this.props.personalDetail.address) > 0 &&
           this.props.personalDetail.address[0].state != null
           ? this.props.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
+          : '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
               this.props.personalDetail.address[0].state != null
               ? this.props.personalDetail.address[0].state.name
               : ''

@@ -118,9 +118,14 @@ class BlackoutDays extends Component {
 
       let currentDateValue = formateDate(new Date(), 'MMM DD YYYY')
       let startDateValue = formateDate(startDate, 'MMM DD YYYY');
-      let currentDate = new Date(), disabledEdit = "";
+      // let currentDate = new Date()
+      let disabledEdit = "";
      // currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit = 'disabled') : '';
-      currentDate = currentDateValue > startDateValue ? (disabledEdit = 'disabled') : '';
+     if (currentDateValue > startDateValue) {
+      disabledEdit = 'disabled'
+     } 
+     
+    //  currentDate = currentDateValue > startDateValue ? (disabledEdit = 'disabled') : '';
 
       return (
         <li id={indexId}>

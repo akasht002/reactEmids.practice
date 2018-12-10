@@ -71,9 +71,6 @@ class PersonalDetail extends React.PureComponent {
         yearOfExperience: nextProps.personalDetail.yearOfExperience,
         description: nextProps.personalDetail.description,
         hourlyRate: nextProps.personalDetail.hourlyRate,
-        addressId: getArrayLength(nextProps.personalDetail.address) > 0
-          ? nextProps.personalDetail.address[0].addressId
-          : 0,
         city: getArrayLength(nextProps.personalDetail.address) > 0
           ? nextProps.personalDetail.address[0].city
           : '',
@@ -102,7 +99,7 @@ class PersonalDetail extends React.PureComponent {
             : '',
           value: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
             ? nextProps.personalDetail.address[0].state.id
-            : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+            : '-' + getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
               ? nextProps.personalDetail.address[0].state.name : ''
         },
         addressId: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressId != null
@@ -256,7 +253,7 @@ class PersonalDetail extends React.PureComponent {
           : '',
         value: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
           ? this.props.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+          : '-' + getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
             ? this.props.personalDetail.address[0].state.name : ''
       },
       selectedAffiliation: {
@@ -352,7 +349,7 @@ class PersonalDetail extends React.PureComponent {
           : '',
         value: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
           ? this.props.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+          : '-' + getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
             ? this.props.personalDetail.address[0].state.name : ''
       },
       selectedAffiliation: {
