@@ -76,7 +76,7 @@ export function getPerformTasksList(data, startOrStop) {
 export function getServiceVisitId(data, startOrStop) {
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))
-        dispatch(startLoading());
+        //dispatch(startLoading());
         ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
             if (startOrStop === false) {
                 dispatch(getVisitStatus(resp.data))
@@ -84,9 +84,9 @@ export function getServiceVisitId(data, startOrStop) {
             else {
                 dispatch(getPerformTasksListSuccess(resp.data))
             }
-            dispatch(endLoading());
+           // dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+           // dispatch(endLoading());
         })
     }
 };
