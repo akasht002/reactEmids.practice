@@ -379,7 +379,7 @@ class Education extends React.Component {
 
                 <ModalPopup
                     isOpen={this.state.showModalOnDelete}
-                    ModalBody={<span>Do you want to remove the Education Details?</span>}
+                    ModalBody={<span>Do you really want to remove the Education Details?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"
