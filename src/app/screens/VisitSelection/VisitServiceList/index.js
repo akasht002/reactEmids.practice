@@ -22,7 +22,7 @@ import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, ge
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
-import Sorting from "../ServiceRequestSorting";
+// import Sorting from "../ServiceRequestSorting";
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import Pagination from 'react-js-pagination';
@@ -259,7 +259,7 @@ class VisitServiceList extends Component {
         }
         else {
             serviceType.splice(serviceType.findIndex(function (item, index) {
-                return item.serviceTypeDescription === (item.serviceTypeDescription);
+                return true;
             }), 1);
         }
         this.setState({

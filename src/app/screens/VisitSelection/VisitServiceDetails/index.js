@@ -345,10 +345,12 @@ class VisitServiceDetails extends Component {
             if (day.id === slotDay.dayOfWeek) {
               checkDay.slotDescription.push(slotDay.slotDescription)
             }
+            return '';
           })
         if (checkDay.slotDescription.length > 0) {
           modifiedDays.push(checkDay)
         }
+        return '';
       })
 
     let AvailDays =

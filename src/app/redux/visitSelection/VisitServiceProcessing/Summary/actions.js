@@ -201,6 +201,12 @@ export function getSavedSignature(data) {
         })
     }
 };
+export function gotoFeedback() {
+    return (dispatch) => {
+        dispatch(push(Path.feedback))
+    
+    }
+};
 
 
 

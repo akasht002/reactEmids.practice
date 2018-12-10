@@ -8,6 +8,9 @@ import { getEducation, addEducation, editEducation, updateEducation, deleteEduca
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 import EllipsisText from "react-ellipsis-text";
 import "./styles.css";
+import {
+    getLength
+  } from '../../../utils/validations'
 class Education extends React.Component {
     constructor(props) {
         super(props);
@@ -27,7 +30,12 @@ class Education extends React.Component {
             isDiscardModalOpen:false,
             fromDateChange: false,
             isOnfocus: false,
-            isToYearOnfocus: false
+            isToYearOnfocus: false,
+            schoolInvalid:false,
+            degreeInvalid:false,
+            schoofieldOfStudyInvalid:false,
+            startYearInvalid:false,
+            endYearInvalid:false
         };
         this.size = 1
     };
@@ -57,7 +65,12 @@ class Education extends React.Component {
             isDiscardModalOpen: false,
             isAdd: true,
             isValid: true,
-            fromDateChange: false
+            fromDateChange: false,
+            schoolInvalid:false,
+            degreeInvalid:false,
+            schoofieldOfStudyInvalid:false,
+            startYearInvalid:false,
+            endYearInvalid:false
         })
     }
 
@@ -66,7 +79,12 @@ class Education extends React.Component {
             IsEducationModalOpen: !this.state.IsEducationModalOpen,
             isValid: true,
             disabledSaveBtn: true,
-            isDiscardModalOpen:false
+            isDiscardModalOpen:false,
+            schoolInvalid:false,
+            degreeInvalid:false,
+            schoofieldOfStudyInvalid:false,
+            startYearInvalid:false,
+            endYearInvalid:false
         })
         let education = this.props.educationalDetails;
         let educationPropObject = {
@@ -113,7 +131,7 @@ class Education extends React.Component {
     }
 
     addEducation = () => {
-        if ((this.state.school) && (this.state.degree)) {
+        if ((this.state.school) && (this.state.degree)&&(this.state.fieldOfStudy)&&(this.state.startYear)&&(this.state.endYear)) {
             const data = {
                 school: this.state.school,
                 degree: this.state.degree,
@@ -187,7 +205,8 @@ class Education extends React.Component {
             startYear: parseInt(e, 10),
             disabledSaveBtn: false,
             fromDateChange: true,
-            isOnfocus: false
+            startYearInvalid:false,
+            isValid: true
         })
     }
 
@@ -195,7 +214,8 @@ class Education extends React.Component {
         this.setState({
             endYear: parseInt(e, 10),
             disabledSaveBtn: false,
-            isToYearOnfocus: false
+            endYearInvalid:false,
+            isValid: true,
         })
     }
 
@@ -218,10 +238,23 @@ class Education extends React.Component {
                         maxlength={'500'}
                         textChange={(e) => this.setState({
                             school: e.target.value,
-                            disabledSaveBtn:false
+                            disabledSaveBtn:false,
+                            schoolInvalid:false
                         })}
+                        onBlur={(e)=>{
+                            if(!(e.target.value)){
+                              this.setState({
+                                schoolInvalid:true,
+                              })
+                            }
+          
+                          }}
                     />
-                    {!this.state.isValid && (!this.state.school) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.school === '' && ' School/University'}</span>}
+                   {!this.state.school && (this.state.schoolInvalid || !this.state.isValid) &&
+                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                                    Please enter School
+                                </small>
+                            }
 
                 </div>
                 <div className="col-md-12 mb-2">
@@ -237,10 +270,23 @@ class Education extends React.Component {
                         maxlength={'500'}
                         textChange={(e) => this.setState({
                             degree: e.target.value,
-                            disabledSaveBtn:false
+                            disabledSaveBtn:false,
+                            degreeInvalid:false
                         })}
+                        onBlur={(e)=>{
+                            if(!(e.target.value)){
+                              this.setState({
+                                degreeInvalid:true,
+                              })
+                            }
+          
+                          }}
                     />
-                    {!this.state.isValid && (!this.state.degree) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please enter {this.state.degree === '' && ' Degree'}</span>}
+                    {!this.state.degree && (this.state.degreeInvalid || !this.state.isValid) &&
+                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                                    Please enter Degree
+                                </small>
+                            }
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -249,14 +295,28 @@ class Education extends React.Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Speech Language Pathology / Pathologist"
-                        className={"form-control"}
+                        className={"form-control " + (!this.state.isValid && !this.state.fieldOfStudy && 'inputFailure')}
                         value={this.state.fieldOfStudy}
                         maxlength={'500'}
                         textChange={(e) => this.setState({
                             fieldOfStudy: e.target.value,
-                            disabledSaveBtn:false
+                            disabledSaveBtn:false,
+                            schoofieldOfStudyInvalid:false
                         })}
+                        onBlur={(e)=>{
+                            if(!(e.target.value)){
+                              this.setState({
+                                schoofieldOfStudyInvalid:true,
+                              })
+                            }
+          
+                          }}
                     />
+                      {!this.state.fieldOfStudy && (this.state.schoofieldOfStudyInvalid || !this.state.isValid) &&
+                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                                    Please enter Field of Study
+                                </small>
+                            }
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
                     <div className="form-group">
@@ -267,8 +327,24 @@ class Education extends React.Component {
                             placeholder='YYYY'
                             onChange={(e) => this.selectChange(e)}
                             selectedValue={this.state.startYear}
-                            className='inputFailure ServiceRequestSelect'
-                        />
+                            className={
+                                'inputFailure ServiceRequestSelect ' +
+                                (getLength(this.state.startYear) === 0 && (!this.state.isValid ||
+                                    this.state.startYearInvalid) &&
+                                    'inputFailure')
+                            }
+                            onBlur={() => {
+                                if (!this.state.startYear) {
+                                    this.setState({ startYearInvalid: true });
+                                }
+                            }}
+                         />
+                         {getLength(this.state.startYear) === 0 && (this.state.startYearInvalid
+                                    || !this.state.isValid) &&
+                                    <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
+                                        Please Select start Year
+                                </small>
+                                }
                 </div>
             </div>
             <div className="col-md-6 MonthlyPicker mb-2">
@@ -280,8 +356,25 @@ class Education extends React.Component {
                         placeholder='YYYY'
                         onChange={(e) => this.selectToYearChange(e)}
                         selectedValue={this.state.endYear}
-                        className='inputFailure ServiceRequestSelect'
+                        className={
+                            'inputFailure ServiceRequestSelect ' +
+                            (getLength(this.state.endYear) === 0 && (!this.state.isValid ||
+                                this.state.endYearInvalid) &&
+                                'inputFailure')
+                        }
+                        onBlur={() => {
+                            if (!this.state.endYear) {
+                                this.setState({ endYearInvalid: true });
+                            }
+                        }}
+                       
                     />
+                      {getLength(this.state.endYear) === 0 && (this.state.endYearInvalid
+                                || !this.state.isValid) &&
+                                <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
+                                    Please Select End Year
+                            </small>
+                            }
                 </div>
             </div>
                 

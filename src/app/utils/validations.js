@@ -164,11 +164,7 @@ export const formatDate = date => {
 }
 
 export const partialCompare = (value, array) => {
-  console.log(array)
   array.find(obj => {
-    console.log(value)
-    console.log(obj.visitDate.substring(0, 10))
-    console.log( value === obj.visitDate.substring(0, 10) ? true : false)
     return value === obj.visitDate.substring(0, 10) ? 1 : 2
   })
 }
@@ -181,7 +177,7 @@ export const serviceTypeImages = {
 }
 
 export const isUrlValid = (userInput) =>{
-  let res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+  let res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g);
   if(res == null)
       return false;
   else

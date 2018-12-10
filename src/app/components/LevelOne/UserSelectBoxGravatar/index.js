@@ -25,7 +25,7 @@ const UserSelectBoxGravatar = createClass({
     render() {
         let base = this.props.base;
         const formattedValue = this.props.value;
-        const src = base + formattedValue + '.' + this.props.extension;
+        // const src = base + formattedValue + '.' + this.props.extension;
         const retinaSrc = base + formattedValue + '.' + this.props.extension;
 
         let modernBrowser = true;  // server-side, we render for modern browsers

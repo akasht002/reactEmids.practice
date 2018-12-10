@@ -31,10 +31,10 @@ const today = new Date();
 class serviceCalendar extends React.Component {
   constructor(props) {
     super(props);
-    let selectMonth =  moment().month(today).format("M")
-    let  current_year =  moment().year()
-    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
-              parseInt(current_year,10) + 1 : current_year
+    // let selectMonth =  moment().month(today).format("M")
+    // let  current_year =  moment().year()
+    // let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
+    //           parseInt(current_year,10) + 1 : current_year
     this.state = {
       startDate: moment(today).format(),
       startMonth: moment(today).format("MMM"),
@@ -88,7 +88,7 @@ class serviceCalendar extends React.Component {
   };
 
   MonthChange = e => {
-    let  current_month =  moment().month()
+    // let  current_month =  moment().month()
     let selectMonth =  moment().month(e.value).format("M")
     let  current_year =  moment().year()
     let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
@@ -115,12 +115,12 @@ class serviceCalendar extends React.Component {
       updatedDay = moment(this.state.startDate).add(5, "days");
       this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     }
-    let selectMonth =  updatedDay.format("M")
-    let  current_year =  updatedDay.year()
+    // let selectMonth =  updatedDay.format("M")
+    // let  current_year =  updatedDay.year()
     let prev_month = parseInt(moment(this.state.startDate).format('MM'),10)
     let next_month = parseInt(moment(updatedDay).format('MM'),10)
-    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
-              parseInt(current_year,10) + 1 : current_year
+    // let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
+    //           parseInt(current_year,10) + 1 : current_year
 
     prev_month===next_month?this.setState({
       startDate: updatedDay.format(),
@@ -154,12 +154,12 @@ class serviceCalendar extends React.Component {
       updatedDay = moment(this.state.startDate).subtract(5, "days");
       this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
     }
-    let selectMonth =  updatedDay.format("M")
-    let  current_year =  updatedDay.year()
-    let prev_month = parseInt(moment(this.state.startDate).format('MM'),10)
-    let next_month = parseInt(moment(updatedDay).format('MM'),10)
-    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
-              parseInt(current_year,10) + 1 : current_year
+    // let selectMonth =  updatedDay.format("M")
+    // let  current_year =  updatedDay.year()
+    // let prev_month = parseInt(moment(this.state.startDate).format('MM'),10)
+    // let next_month = parseInt(moment(updatedDay).format('MM'),10)
+    // let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
+    //           parseInt(current_year,10) + 1 : current_year
      this.setState({
       startDate: updatedDay.format(),
       startYear: updatedDay.format("YYYY"),
@@ -196,10 +196,10 @@ class serviceCalendar extends React.Component {
 
   handleDayChange = e => {
     let getDate = moment(e.target.getAttribute("data-date"));
-    let selectMonth =  getDate.format("M")
-    let  current_year =  getDate.year()
-    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
-              parseInt(current_year,10) + 1 : current_year
+    // let selectMonth =  getDate.format("M")
+    // let  current_year =  getDate.year()
+    // let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
+    //           parseInt(current_year,10) + 1 : current_year
     this.setState({
       reportDay: e.target.getAttribute("data-date"),
       startYear: getDate.format("YYYY"),
@@ -365,7 +365,7 @@ class serviceCalendar extends React.Component {
       />
       <div className="participantsSearchList">
               {serviceProviderList.map((item, index) => {
-      let catNum = index + 1;
+      // let catNum = index + 1;
       return (
         <fieldset>
           <div className="CheckboxSet" key={item.id}>
@@ -396,10 +396,10 @@ class serviceCalendar extends React.Component {
   }
 
   getDates = selectedDate => {
-    let dates = [];
+    // let dates = [];
    
     if (this.state.width > '1280')
-    return dates = [
+    return [
       {
         day: moment(selectedDate).subtract(3, 'days'),
         date: moment(selectedDate).subtract(3, 'days')
@@ -430,7 +430,7 @@ class serviceCalendar extends React.Component {
       }
     ]
     else
-    return dates = [
+    return [
       {
         day: moment(selectedDate).subtract(2, 'days'),
         date: moment(selectedDate).subtract(2, 'days')
@@ -456,7 +456,7 @@ class serviceCalendar extends React.Component {
 
 
   render() {
-    let selectedDate = this.state.startDate;
+    // let selectedDate = this.state.startDate;
     const visitCount = this.props.serviceVistCount;
     let dates = this.getDates(this.state.startDate)
     let optionChecked = this.state.reportDay

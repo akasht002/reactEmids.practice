@@ -413,6 +413,7 @@ export function checkTeleHealth(data) {
                             }))
                             dispatch(invitaionCame());
                         }
+                        return '';
                     })
                 }
                 if (teleHealthState.roomId === data.roomID) {
@@ -424,6 +425,7 @@ export function checkTeleHealth(data) {
                                 confParticipant.userId === participant.userId) {
                                     participantFound = true;
                             }
+                            return '';
                         })
                         if (!participantFound) {
                             modifiedParticipants.push({
@@ -431,6 +433,7 @@ export function checkTeleHealth(data) {
                                 status: 'Invited'
                             })
                         }
+                        return ''
                     });
                     let participants = [
                         ...modifiedParticipants,

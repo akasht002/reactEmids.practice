@@ -1,5 +1,4 @@
 import { TabContent, TabPane } from 'reactstrap'
-import moment from 'moment';
 import React, { Component } from 'react'
 import { Scrollbars, Calendar, Button } from '../../../components'
 import ServiceCategory from "./ServiceCategory";

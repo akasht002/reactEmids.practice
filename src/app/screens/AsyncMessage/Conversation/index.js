@@ -120,6 +120,7 @@ class Conversation extends Component {
         if (this.props.currentConversation && this.props.currentConversation.participantList) {
             this.props.currentConversation.participantList.map(participant => {
                 participants.push(participant.userId);
+                return '';
             });
 
             let data = {

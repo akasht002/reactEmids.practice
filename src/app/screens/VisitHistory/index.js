@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
-import { ThemeProvider } from '@zendeskgarden/react-theming'
 import moment from 'moment'
-import { SelectField, Select, Item } from '@zendeskgarden/react-select'
 import Pagination from 'react-js-pagination';
 import { Scrollbars } from '../../components'
 import {
@@ -27,7 +25,6 @@ import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import '../Dashboard/styles/ServiceTasks.css'
 import './visitList.css'
 import '../../styles/SelectDropdown.css'
-import { getUserInfo } from '../../services/http';
 
 class VisitHistory extends Component {
   constructor(props) {

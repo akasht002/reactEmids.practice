@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Header, ScreenCover, ModalPopup } from '../../../components'
 import Education from '../Education/index'
 import EntityPersonalDetail from '../EntityPersonalDetail'
@@ -8,11 +8,6 @@ import { Path } from '../../../routes'
 import {
   getProfilePercentage
 } from '../../../redux/profile/ProgressIndicator/actions'
-import { getUserInfo } from '../../../services/http'
-import {
-  PROFILE_SERVICE_PROVIDER_TYPE_ID,
-  ORG_SERVICE_PROVIDER_TYPE_ID
-} from '../../../constants/constants'
 import { SCREENS } from '../../../constants/constants'
 import { authorizePermission } from '../../../utils/roleUtility'
 import { push } from '../../../redux/navigation/actions'

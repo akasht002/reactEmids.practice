@@ -9,8 +9,7 @@ import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import {getPersonalDetail, getSpBusyInVisit, clearSbMode, updateStandByMode} from '../../redux/profile/PersonalDetail/actions'
 import { getUserInfo } from '../../services/http'
 import {
-  PROFILE_SERVICE_PROVIDER_TYPE_ID,
-  ORG_SERVICE_PROVIDER_TYPE_ID
+  PROFILE_SERVICE_PROVIDER_TYPE_ID
 } from '../../constants/constants';
 import './dashboard.css'
 import './ctdashboard.css'
