@@ -58,6 +58,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log('nextProps.personalDetail........', nextProps.personalDetail);
     if(this.isImageSave === false) {
       this.setState({
         firstName: nextProps.personalDetail.firstName,
@@ -68,8 +69,8 @@ class EntityPersonalDetail extends React.PureComponent {
         yearOfExperience: nextProps.personalDetail.yearOfExperience,
         description: nextProps.personalDetail.description,
         hourlyRate: nextProps.personalDetail.hourlyRate,
-        url:nextProps.personalDetail.entity  && nextProps.personalDetail.url,
-        assigned_by: nextProps.personalDetail.entity  && nextProps.personalDetail.entityName,
+        url:nextProps.personalDetail.entity  && nextProps.personalDetail.entity.websiteUrl,
+        assigned_by: nextProps.personalDetail.entity  && nextProps.personalDetail.entity.assignedBy,
         city: getArrayLength(nextProps.personalDetail.address) > 0
           ? nextProps.personalDetail.address[0].city
           : '',

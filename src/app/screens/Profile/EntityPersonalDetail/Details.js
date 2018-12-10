@@ -57,7 +57,7 @@ export const Details = props => {
         <div className={'SPAffiliatedList'}>
           <span>
             {props.personalDetail.entity &&
-              props.personalDetail.entityName}
+              props.personalDetail.entity.assignedBy}
           </span>
         </div>
       </div>
@@ -65,7 +65,7 @@ export const Details = props => {
           <div className={'SPAffiliatedList'}>
             <span>
               {props.personalDetail.entity &&
-                props.personalDetail.url}
+                props.personalDetail.entity.websiteUrl}
             </span>
           </div>
         </div>
