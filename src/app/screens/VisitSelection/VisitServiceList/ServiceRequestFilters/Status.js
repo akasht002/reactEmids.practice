@@ -32,6 +32,7 @@ function ServiceRequestsStatus(props) {
                 </fieldset>
             )
         }
+        return '';
     });
 
     return (
