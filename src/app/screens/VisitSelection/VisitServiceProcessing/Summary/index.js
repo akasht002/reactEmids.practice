@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
-import { getSummaryDetails, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetails, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, gotoFeedback } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
@@ -150,6 +150,12 @@ class Summary extends Component {
             this.updateTime();
         }
     }
+
+
+    onPreviousClick = () => {
+        this.setState({ isDiscardModalOpen: true })
+    }
+
 
     updateTime = () => {
         const data = {

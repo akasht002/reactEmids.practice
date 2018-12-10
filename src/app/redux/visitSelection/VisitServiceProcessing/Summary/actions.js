@@ -97,9 +97,27 @@ export function calculationActualData() {
 
         let grandTotalAmount = totalVisitCost + taxes;
 
-        let estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
+        let estimatedClaim;
+        let copayAmount;
 
-        let copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2);
+        {
+            ClaimState ?
+                estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2)
+                :
+                estimatedClaim = 0
+        }
+
+        {
+            ClaimState ?
+                copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2)
+                :
+                copayAmount = 0
+        }
+
+
+        // let estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
+
+        // let copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2);
 
         const calculationdata = {
             totalChargableTime: totalChargableTime,
@@ -181,6 +199,12 @@ export function getSavedSignature(data) {
         }).catch((err) => {
             dispatch(endLoading());
         })
+    }
+};
+export function gotoFeedback() {
+    return (dispatch) => {
+        dispatch(push(Path.feedback))
+    
     }
 };
 

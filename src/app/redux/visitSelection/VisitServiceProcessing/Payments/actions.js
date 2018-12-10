@@ -86,7 +86,7 @@ export function claimsSubmission(data) {
             if (DEMO === 'true') {
                 dispatch(push(Path.paymentsuccess))
             } else {
-                dispatch(push(Path.paymentfailure))
+                //dispatch(push(Path.paymentfailure))
             }
             dispatch(endLoading());
         })
