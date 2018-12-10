@@ -11,12 +11,8 @@ import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
-<<<<<<< HEAD
-import { Path, push } from '../../../../routes'
-=======
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
->>>>>>> 749cdf28a9243ece8d1d3d8013c6a75288961cf4
 import { checkNumber } from '../../../../utils/validations';
 import './style.css'
 
@@ -407,11 +403,7 @@ class Summary extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-<<<<<<< HEAD
-                                        <button className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</button>
-=======
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
->>>>>>> 749cdf28a9243ece8d1d3d8013c6a75288961cf4
                                         {getUserInfo().isEntityServiceProvider ?
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
                                             :
@@ -490,11 +482,7 @@ function mapDispatchToProps(dispatch) {
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
-<<<<<<< HEAD
-        gotoFeedback: (data) => dispatch(gotoFeedback(data))
-=======
         goBack: () => dispatch(push(Path.feedback))
->>>>>>> 749cdf28a9243ece8d1d3d8013c6a75288961cf4
     }
 };
 
