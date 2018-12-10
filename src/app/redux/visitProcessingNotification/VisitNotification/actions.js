@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { Get, Post } from '../../../services/http';
+import { Get } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import {getUserInfo} from '../../../utils/userUtility';
 import { USERTYPES } from '../../../constants/constants';
@@ -28,7 +28,7 @@ export function getVisitNotification(data) {
         let userType = USERTYPES.SERVICE_PROVIDER;
         let userId = getUserInfo().serviceProviderId;
         let pageNumber = data.data.pageNumber;
-        let rowsPerPage = data.data.pageSize;
+        // let rowsPerPage = data.data.pageSize;
         dispatch(startLoading());
         Get(`${API.getVisitNotification}${userId}/${userType}/${pageNumber}/${data.count}`).then((resp) => {
            

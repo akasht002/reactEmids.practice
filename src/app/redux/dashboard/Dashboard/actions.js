@@ -1,21 +1,17 @@
-import axios from 'axios'
 import _ from 'lodash'
 import {
   ServiceRequestGet,
   Put,
   Get,
   ServiceRequestPost,
-  baseURL,
   MessageURLGet
 } from '../../../services/http'
-import { API, messageURL } from '../../../services/api'
+import { API } from '../../../services/api'
 import { startLoading, endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
-import { getPersonalDetail } from '../../profile/PersonalDetail/actions'
 import {
   PAGE_NO,
   PAGE_SIZE,
-  MSG_TYPE,
   DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD
 } from '../../constants/constants'
 import {

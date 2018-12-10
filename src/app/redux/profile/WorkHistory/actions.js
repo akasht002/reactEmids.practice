@@ -99,7 +99,7 @@ export function updateWorkHistory(data) {
         let serviceProviderId = getUserInfo().serviceProviderId;
         let modal = {
             serviceProviderId: serviceProviderId,
-            workHistoryId: parseInt(data.workHistoryId),
+            workHistoryId: parseInt(data.workHistoryId, 10),
             designation: data.designation,
             company: data.company,
             isActive: "true",

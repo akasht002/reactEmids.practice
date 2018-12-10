@@ -167,13 +167,14 @@ class Feedback extends Component {
                                                         <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
                                                             <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
                                                             <div className='FeedbackAnswerWidget'>
-                                                                {questionList.answers.map((answer, i) => {
+                                                                {questionList.answers.map((answer) => {
                                                                     this.props.VisitFeedback.map((feedback) => {
                                                                         if (feedback.feedbackQuestionnaireId === questionList.feedbackQuestionnaireId) {
                                                                             if (feedback.selectedAnswer === answer.answerName) {
                                                                                 answer.checked = true;
                                                                             }
                                                                         }
+                                                                        return '';
                                                                     });
                                                                     return (
                                                                         <div className="form-radio col-md-3" key={answer.id}>
