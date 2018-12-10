@@ -1125,8 +1125,10 @@ div.AddressCardWidget {
 }
 
 .SummaryContent.POS p {
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 14px;
+    margin-bottom: 0px;
+    color: #444;
+    
 }
 
 .SummaryContent p.ContentTitle.Summary {

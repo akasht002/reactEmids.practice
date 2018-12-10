@@ -297,7 +297,7 @@ class WorkHistory extends Component {
                             disabledSaveBtn: false
                         })}
                     />
-                    {!this.state.isValid && (!this.state.company) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.company === '' && ' CompanyName'}</span>}
+                    {!this.state.isValid && (!this.state.company) && <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">Please select {this.state.company === '' && ' Company Name'}</span>}
 
                 </div>
                 <div className="col-md-12 mb-2">
