@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
 import { Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, Input, ModalPopup } from '../../../components';

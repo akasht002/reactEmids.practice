@@ -19,7 +19,7 @@ import ModalTemplate from '../Modals/Modal';
 import '../styles.css';
 import './index.css';
 import { USERTYPES } from '../../../constants/constants';
-
+import { isEntityServiceProvider } from '../../../utils/userUtility';
 
 class ConversationSummary extends Component {
     constructor(props) {
@@ -107,7 +107,7 @@ class ConversationSummary extends Component {
                     <div className='ProfileHeaderTitle'>
                         <h5 class="primaryColor m-0">Conversation Summary</h5>
                     </div>
-                    {this.props.loggedInUser.userType !== USERTYPES.SERVICE_PROVIDER &&
+                    {!isEntityServiceProvider() &&
                         <div class="ProfileHeaderButton">
                             <button class="btn btn-outline-primary" onClick={this.onSetDisplayParticipantModal}>+ New Conversation</button>
                         </div>

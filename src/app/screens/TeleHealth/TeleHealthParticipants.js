@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Scrollbars } from '../../components';
-import {getState, getUserInfo} from '../../utils/userUtility';
+import {getState} from '../../utils/userUtility';
 import './styles.css';
-
-const images = require.context('../../assets', true);
-const imagePath = (name) => images(name, true);
 
 export default class TeleHealthParticipants extends Component {
 

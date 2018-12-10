@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Moment from 'react-moment'
 import moment from 'moment';
 import { Input, TextArea, ProfileModalPopup, ModalPopup } from "../../../components";
 import { Calendar } from "../../../components/LevelOne/index";
@@ -193,12 +192,10 @@ class WorkHistory extends Component {
 
     updateWorkHistory = () => {
         if (this.state.designation && this.state.company && this.state.fromDate && (this.state.toDate || this.state.currentlyWorking)) {
-            {
-                this.state.currentlyWorking ?
-                this.setState({ toDate: '' })
-                :
-                this.setState({ toDate: this.state.toDate })
-            }
+            this.state.currentlyWorking ?
+            this.setState({ toDate: '' })
+            :
+            this.setState({ toDate: this.state.toDate })
             const data = {
                 designation: this.state.designation,
                 company: this.state.company,
@@ -577,7 +574,7 @@ class WorkHistory extends Component {
 
                 <ModalPopup
                     isOpen={this.state.isOnDeleteModalOpen}
-                    ModalBody={<span>Do you really want to remove the work history entry?</span>}
+                    ModalBody={<span>Do you want to remove the work history entry?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"

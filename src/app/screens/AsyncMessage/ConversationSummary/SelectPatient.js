@@ -17,6 +17,7 @@ export default class SelectPatient extends Component {
                     participantType: patient.participantType
                 };
                 patients.push(data);
+                return '';
             });
             this.setState({ Patients: patients });
         }

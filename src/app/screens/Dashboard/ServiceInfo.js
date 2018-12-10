@@ -16,10 +16,12 @@ import { isEntityServiceProvider } from '../../utils/userUtility';
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
-    return <i className='indicator' />
+    return <React.Fragment>
+      <i className='indicator'/> 
+      </React.Fragment>
   } else if (props.count === 2) {
     return (
-      <React.Fragment>
+      <React.Fragment> 
         <i className='indicator' /><i className='indicator' />
       </React.Fragment>
     )
@@ -406,6 +408,7 @@ function getPartcipitantHeader(participants) {
   if (participants && participants.length > 0) {
     participants.map(participant => {
       header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
+      return '';
     });
     header = header.slice(0, -2);
   }
@@ -433,6 +436,7 @@ export const MyConversionDetail = props => {
             </span>
           ))
         }
+        return '';
       })
     }
     return (
@@ -470,8 +474,8 @@ export const MyConversionDetail = props => {
                       </div>
                     </div>
                   )
-                } else {
                 }
+                return '';
               })}
             </div>
             <div className='MsgThreadContent mr-auto'>

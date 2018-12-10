@@ -49,6 +49,7 @@ class MessageList extends Component {
                     default:
                         break;
                 }
+                return '';
             }));
     };
 
@@ -57,6 +58,7 @@ class MessageList extends Component {
         if (participants && participants.length > 0) {
             participants.map(participant => {
                 header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
+                return '';
             });
             header = header.slice(0, -2);
         }
@@ -80,6 +82,7 @@ class MessageList extends Component {
                             msgClass = "";
                             return unreadMessages = <span className={"float-right count" + msgClass}>{unreadMsgCount.unreadMessageCount}</span>
                         }
+                        return '';
                     });
                 };
                 !msgThread.title ? msgHeader = this.getPartcipitantHeader(msgThread.participantList) : msgHeader = msgThread.title;

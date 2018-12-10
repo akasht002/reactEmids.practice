@@ -7,7 +7,6 @@ import {
 } from "react-accessible-accordion";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Moment from 'react-moment'
 import "react-accessible-accordion/dist/fancy-example.css";
 import { getFields, getLength, getStatus, getServiceTypeImage } from "../../utils/validations";
 import { ProfileModalPopup } from "../../components";

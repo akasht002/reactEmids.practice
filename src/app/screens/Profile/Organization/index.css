@@ -18,3 +18,45 @@
 .SPDescriptionNone{
     color:#989892;
 }
+
+.webUrl a{
+    font-size: 14px;
+    color: #7a329f;
+    font-weight: 600;
+}
+
+.webUrl a:hover {
+    color: #7a329f;
+}
+.border-style .Select-control {
+    border: none;
+    border-bottom: 1px solid #acacac;
+    border-radius: 0px;
+    height: 35px;
+    margin-top: -4px;
+}
+
+.url-separator {
+    margin-bottom: 25px;
+}
+
+.url-separator:after{
+    content: '____';
+    display: block;
+    color: #7a329f;
+}
+
+.webUrl:before{
+    content: '';
+    position: relative;
+    display: inline-block;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-color: #a7a6cf;
+    background-image: url("../../../assets/images/url.png");
+    background-position: center;
+    background-size: 16px;
+    background-repeat: no-repeat;
+}

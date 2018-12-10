@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover, ModalPopup } from '../../../components';
@@ -18,9 +17,11 @@ import AboutContent from '../../AboutUs/aboutContent';
 import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/actions';
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { extractRole, authorizePermission } from '../../../utils/roleUtility';
+import { isEntityServiceProvider } from '../../../utils/userUtility';
 import { SCREENS } from '../../../constants/constants';
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
+import { EntitySPProfileHeaderMenu } from "../../../data/EntitySPProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
 import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
@@ -104,6 +105,9 @@ class AsideScreenCover extends React.Component {
     render() {
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
+        if(isEntityServiceProvider()){
+            headerMenu = EntitySPProfileHeaderMenu;
+        };
         let menuData = (!getUserInfo().isEntityServiceProvider) ? MenuData:EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>

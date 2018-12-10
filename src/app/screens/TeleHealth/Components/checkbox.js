@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import '../styles.css';
 
-const images = require.context('../../../assets/images/telehealth/avatar', true)
-const imagePath = (name) => images(name, true)
-
 class CheckBox extends Component {
     render() {
         return (

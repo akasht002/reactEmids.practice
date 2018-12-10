@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Header, ScreenCover, ModalPopup } from '../../../components'
 import ServiceOffered from '../ServiceOffered/index'
 import Languages from '../Languages/index'

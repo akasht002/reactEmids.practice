@@ -30,6 +30,7 @@ export const initialAuthorizePermission = (screen) => {
         document.getElementsByName(_.forEach(createPermissionName(screen, PERMISSIONS[key])),(dom) => {
             dom.style.display = 'none';
         });
+        return '';
     });
 }
 
@@ -40,6 +41,7 @@ export const authorizePermission = (screen) => {
         document.getElementsByName(_.forEach(createPermissionName(screen, key)),(dom) => {
             dom.style.display = roles[key] ? 'inline-block' : 'none';
         });
+        return '';
     });
 }
  

@@ -85,7 +85,7 @@ class Organization extends React.PureComponent {
           value: getArrayLength(nextProps.personalDetail.address) > 0 &&
             nextProps.personalDetail.address[0].state != null
             ? nextProps.personalDetail.address[0].state.id
-            : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
+            : '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
                 nextProps.personalDetail.address[0].state != null
                 ? nextProps.personalDetail.address[0].state.name
                 : ''
@@ -162,7 +162,8 @@ class Organization extends React.PureComponent {
     this.isImageSave = false;
     if (
      this.state.organizationNameInvaild ||
-     this.state.phoneNumberInvalid
+     this.state.phoneNumberInvalid ||
+     this.state.urlInvaild
     ) {
       this.setState({ isValid: false })
     } else {
@@ -374,13 +375,7 @@ class Organization extends React.PureComponent {
                 {this.props.personalDetail && this.props.personalDetail.entity &&
                   `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
-              <div className={'col-md-7 p-0'}>
-              <h3 className={'SPName'}>
-                {this.props.personalDetail && this.props.personalDetail.entity &&
-                  `${this.props.personalDetail.entity.websiteUrl || ''} `}
-              </h3>
-            </div>
-
+              
           </div>
             <div className={'col p-0'}>
               <h3 className={'ratePerHour primaryColor'}>
@@ -392,6 +387,12 @@ class Organization extends React.PureComponent {
             </div>
           </div>
 
+          <div className={'width100 url-separator'}>
+              <h3 className={'webUrl'}>
+                {(this.props.personalDetail && this.props.personalDetail.entity) && this.props.personalDetail.entity.websiteUrl ?
+                <a href={'https://'+this.props.personalDetail.entity.websiteUrl} target="_blank">{this.props.personalDetail.entity.websiteUrl}</a> : ''}
+              </h3>
+            </div>
           <div className={'width100'}>
             {this.props.personalDetail &&
               this.props.personalDetail.description !== ''
@@ -482,7 +483,7 @@ class Organization extends React.PureComponent {
         </div>
         <div className='col-md-8 mb-2 editProfileDetailsContainer'>
           <div className='row'>
-            <div className='col-md-6 mb-2'>
+            <div className='col-md-12'>
               <Input
                 name='organizationName'
                 label='Entity Name'
@@ -511,7 +512,7 @@ class Organization extends React.PureComponent {
                {this.state.organizationNameInvaild && 'Please enter valid Organization Name'}
            </small>
             </div>
-            <div className='col-md-4'>
+            <div className='col-md-12'>
               <Input
                 name='hourlyRate'
                 label='Hourly Rate ($/hr)'
@@ -535,12 +536,9 @@ class Organization extends React.PureComponent {
           }
                 className='form-control'
               />
+              <small className="text-danger d-block OnboardingAlert"></small>
             </div>
-
-          </div>
-        </div>
-
-        <div className='col-md-12 mb-2'>
+            <div className='col-md-12'>
           <Input
             name='url'
             label='URL'
@@ -550,19 +548,21 @@ class Organization extends React.PureComponent {
             maxlength='60'
             value={this.state.url}
             textChange={e => {
-              this.setState({ url: e.target.value, disabledSaveBtn: false })
+              this.setState({ url: e.target.value, urlInvaild: false, disabledSaveBtn: false })
             }}
             onBlur={(e) => {
               if (!isUrlValid(e.target.value)) {
                   this.setState({urlInvaild: true});
               }
           }}
-            className='form-control'
+            className={'form-control ' + (this.state.urlInvaild && 'inputFailure')}
           />
            <small className="text-danger d-block OnboardingAlert">
                 {this.state.urlInvaild && 'Please enter valid Url'}
                 </small>
 
+        </div>
+          </div>
         </div>
         <div className='col-md-12 mb-2'>
           <TextArea
@@ -607,7 +607,7 @@ class Organization extends React.PureComponent {
                         })
                       }}
                       selectedValue={this.state.selectedState}
-                      className={'inputFailure'}
+                      className={'inputFailure border-style'}
                     />
                   </div>
                 </div>

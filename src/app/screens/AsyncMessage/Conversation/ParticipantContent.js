@@ -168,7 +168,7 @@ class ParticipantContent extends Component {
             lastName: this.state.selectedRemovableParticipant.lastName
         }];
         let data = {
-            conversationId: parseInt(this.props.conversationId),
+            conversationId: parseInt(this.props.conversationId, 10),
             participants: this.state.selectedRemovableParticipant.userId,
             modifiedBy: userId,
             modifiedByType: USERTYPES.SERVICE_PROVIDER,
@@ -183,15 +183,15 @@ class ParticipantContent extends Component {
         let participants = '';
         let participantsHeader = '';
         let leaveBtn = "";
-        let existingParticipants = "";
+        let existingParticipants = [];
         let profileOptionClass = "";
-        let loggedInUser = "";
+        let loggedInUser = [];
         let userId = this.props.loggedInUser.serviceProviderId;
         if (this.props.existingParticipants && this.props.existingParticipants.length > 0) {
-            existingParticipants = this.props.existingParticipants.map((participant, index) => {
+             this.props.existingParticipants.map((participant, index) => {
                 if (userId !== participant.userId) {
                     participant.userId.toString() === this.state.selectedProfile ? profileOptionClass = "Open" : profileOptionClass = "";
-                    return (
+                    existingParticipants.push(
                         <li key={index} className="list-group-item participants">
                             <table className={"table profileFront " + (!this.props.isActive ? 'left' : '')}>
                                 <tbody>
@@ -240,11 +240,11 @@ class ParticipantContent extends Component {
                         </li>
                     )
                 }
-
+                return '';
             });
-            loggedInUser = this.props.existingParticipants.map((participant, index) => {
+            this.props.existingParticipants.map((participant, index) => {
                 if (userId === participant.userId) {
-                    return (
+                    loggedInUser.push(
                         <li className="list-group-item d-flex participants myChat">
                             <table className="table">
                                 <tbody>
@@ -267,6 +267,7 @@ class ParticipantContent extends Component {
                         </li>
                     )
                 }
+                return '';
             });
         };
 

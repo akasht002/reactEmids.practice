@@ -15,6 +15,7 @@ class ParticipantsList extends Component {
                         if (selectedParticipant.userId === participantData.userId && selectedParticipant.participantType === participantData.participantType) {
                             return isChecked = "checked";
                         }
+                        return '';
                     })
                     return (<Checkbox key={index} isChecked={isChecked} onCheckParticipant={this.props.onCheckParticipant} participant={participantData} />)
                 }

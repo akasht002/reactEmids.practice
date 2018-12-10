@@ -38,6 +38,7 @@ class AvailabilityEdit extends Component {
                     selectedSlot.dayId = tempDay.dayId;
                     this.state.availableList.push(selectedSlot);
                 }   
+                return '';
             });
         } else {
             tempDay.slots.map(selectedSlot => {
@@ -50,6 +51,7 @@ class AvailabilityEdit extends Component {
                         this.state.availableList.push(selectedSlot);
                     }
                 }
+                return '';
             });
         }
         tempUpdatedAvailableDays[index] = tempDay;
@@ -135,10 +137,14 @@ class AvailabilityEdit extends Component {
                                     currentSlot.isActive = slot.isActive;
                                     currentSlot.slotId = slot.slotId;
                                 } 
+                                return '';
                             })
+                            return '';
                         })
                     }
+                    return '';
                 })
+                return '';
             });
             this.setState({ updatedAvailableDays: tempAvailableData, isSetData: true });
         };
