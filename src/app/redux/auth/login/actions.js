@@ -2,7 +2,7 @@ import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import userManager from '../../../utils/userManager';
 import { onSetUserSuccess, checkUserData } from '../user/actions';
-import { USER_LOCALSTORAGE, USERTYPES } from '../../../constants/constants';
+import { USER_LOCALSTORAGE } from '../../../constants/constants';
 
 export const LOGIN = {
     start: 'authentication_start/login',

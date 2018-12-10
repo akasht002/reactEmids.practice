@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import _ from 'lodash'
 import 'react-image-crop-component/style.css'
 import 'react-image-crop/dist/ReactCrop.css'
 import 'react-image-crop/lib/ReactCrop.scss'
@@ -82,7 +81,7 @@ class EntityPersonalDetail extends React.PureComponent {
         value: getArrayLength(nextProps.personalDetail.address) > 0 &&
           nextProps.personalDetail.address[0].state != null
           ? nextProps.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
+          : '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
               nextProps.personalDetail.address[0].state != null
               ? nextProps.personalDetail.address[0].state.name
               : ''
