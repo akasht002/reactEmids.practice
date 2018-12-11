@@ -228,7 +228,10 @@ class ParticipantContent extends Component {
                                         }
                                         else{
                                             let data = {
-                                                userId : participant.userId
+                                                userId : participant.userId,
+                                                isEntityServiceProvider: participant.isEntityServiceProvider,
+                                                serviceProviderTypeId: participant.serviceProviderTypeId,
+                                                entityId: participant.entityId
                                             };
                                             this.props.setServiceProviderId(data);
                                             this.props.goToProfile();

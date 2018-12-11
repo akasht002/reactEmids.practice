@@ -24,7 +24,7 @@ export const Details = props => {
         profileImage='SPdpImage'
       />
       <span className="rating-blockcustome">
-        {Math.round(props.personalDetail && props.personalDetail.rating)}
+        {props.personalDetail && Math.round(props.personalDetail.rating * 10)/10}
       </span>
       <div className={'SPDetailsContainer SPNameWidget'}>
         <div className={'d-flex'}>

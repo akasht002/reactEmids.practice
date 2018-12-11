@@ -245,10 +245,13 @@ class Certification extends Component {
                         }
                         {/*<span className='SPCertificateDesc'>{certificateList.authority}</span> to do check this*/}
                     </div>
-                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={certificateList.certificationId}
+                    {this.props.isUser && 
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={certificateList.certificationId}
                         onClick={(e) => this.showModalOnDelete(e)} />
+                    }
+                    {this.props.isUser && 
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={certificateList.certificationId}
-                        onClick={(e) => this.editCertification(e)} />
+                        onClick={(e) => this.editCertification(e)} />}
                 </li>
             )
         });

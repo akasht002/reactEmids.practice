@@ -8,6 +8,10 @@ import {
     getEntityServiceProviderList,
     updateEntityServiceVisit
   } from "../../../redux/dashboard/Dashboard/actions";
+  import {
+    getVisitServiceDetails,
+    getVisitServiceSchedule
+  } from '../../../redux/visitSelection/VisitServiceDetails/actions'
   import { Path } from "../../../routes";
 import { push } from "../../../redux/navigation/actions";
 
@@ -82,7 +86,6 @@ class AssignServiceProvider extends Component {
   };
 
   onSubmit = () => {
-      console.log(this.data)
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
     });
@@ -98,6 +101,7 @@ class AssignServiceProvider extends Component {
       ]
     };   
     this.props.updateEntityServiceVisit(model);
+    this.props.getVisitServiceSchedule(this.data.serviceRequestId);
   }
 
   goToESPProfile = (data) => {
@@ -192,7 +196,8 @@ function mapDispatchToProps (dispatch) {
     getEntityServiceProviderList: () =>dispatch(getEntityServiceProviderList()),
     updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
     setESP:data=>dispatch(setESP(data)),
-    goToESPProfile:()=>dispatch(push(Path.ESPProfile))
+    goToESPProfile:()=>dispatch(push(Path.ESPProfile)),
+    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
   }
 }
 
