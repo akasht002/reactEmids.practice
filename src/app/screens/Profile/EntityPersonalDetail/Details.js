@@ -124,11 +124,13 @@ export const Details = props => {
           </div>
         </div>
       </div>
-      <i
+      {props.isUser && 
+        <i
         name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
         className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
         onClick={props.togglePersonalDetails}
       />
+      }
     </div>
   )
 }

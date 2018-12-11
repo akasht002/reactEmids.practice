@@ -39,4 +39,8 @@ export const isUserGuardian = () => {
 
 export const isUserIndividual = () => {
     return getUserInfo().userType === USERTYPES.PATIENT;
-}
+};
+
+export const getPersonalDetailsState = () => {
+    return store && store.getState().profileState.PersonalDetailState;
+};

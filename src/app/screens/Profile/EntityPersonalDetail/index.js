@@ -280,6 +280,7 @@ class EntityPersonalDetail extends React.PureComponent {
           city={this.city}
           states={this.states}
           zipCode={this.zipCode}
+          isUser={this.props.isUser}
         />
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
@@ -871,7 +872,8 @@ function mapStateToProps (state) {
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
     profileImgData: state.profileState.PersonalDetailState.imageData,
     genderList: state.profileState.PersonalDetailState.genderList,
-    isLoading: state.loadingState.isLoading
+    isLoading: state.loadingState.isLoading,
+    isUser: state.profileState.PersonalDetailState.isUser,
   }
 }
 export default withRouter(

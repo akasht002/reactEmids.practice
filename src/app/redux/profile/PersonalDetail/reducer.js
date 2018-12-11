@@ -10,7 +10,10 @@ const defaultState = {
   spBusyInVisit: null,
   sbModeClicked: false,
   serviceProviderId: null,
-  isUser: true
+  isUser: true,
+  serviceProviderTypeId: 0,
+  isEntityServiceProvider: false,
+  entityId: null
 }
 
 const PersonalDetailState = (state = defaultState, action) => {
@@ -65,13 +68,19 @@ const PersonalDetailState = (state = defaultState, action) => {
       return {
           ...state,
           serviceProviderId: action.data.userId,
-          isUser: false
+          isUser: false,
+          isEntityServiceProvider: action.data.isEntityServiceProvider,
+          serviceProviderTypeId: action.data.serviceProviderTypeId,
+          entityId: action.data.entityId
       }
       case PersonalDetails.clearServiceProviderId:
       return {
           ...state,
           serviceProviderId: null,
-          isUser: true
+          isUser: true,
+          isEntityServiceProvider: false,
+          serviceProviderTypeId: 0,
+          entityId: null
       }
     default:
       return state
