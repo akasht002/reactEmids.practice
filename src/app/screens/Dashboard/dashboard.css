@@ -597,6 +597,7 @@ span.btn-invited, span.btn-invited:hover{
     height: 60px;
     border-bottom: 1px solid #dcdcdc;
     clear: both;
+    width: 100%;
 }
 
 .ScheduleTableHeader{
@@ -610,6 +611,21 @@ span.btn-invited, span.btn-invited:hover{
     padding: 20px;
     display: block;
     white-space: nowrap;
+}
+
+.TabBody .ScheduleTableRow .EntityUServiceProf
+{
+    position: absolute;
+    right: 0;
+    display: flex;
+    padding: 2px 0px;
+    padding-left: 40px;
+}
+
+.TabBody .ScheduleTableRow .EntityUServiceProf .ProfileCardImageContainer
+{
+    margin-right: 5px;
+    margin-left: 0;
 }
 
 .ScheduleRowButton a{

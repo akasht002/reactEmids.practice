@@ -8,6 +8,10 @@ import {
     getEntityServiceProviderList,
     updateEntityServiceVisit
   } from "../../../redux/dashboard/Dashboard/actions";
+  import {
+    getVisitServiceDetails,
+    getVisitServiceSchedule
+  } from '../../../redux/visitSelection/VisitServiceDetails/actions'
   import { Path } from "../../../routes";
 import { push } from "../../../redux/navigation/actions";
 
@@ -82,7 +86,6 @@ class AssignServiceProvider extends Component {
   };
 
   onSubmit = () => {
-      console.log(this.data)
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
     });
@@ -98,6 +101,7 @@ class AssignServiceProvider extends Component {
       ]
     };   
     this.props.updateEntityServiceVisit(model);
+    this.props.getVisitServiceSchedule(this.data.serviceRequestId);
   }
 
   goToESPProfile = (data) => {
@@ -112,7 +116,7 @@ class AssignServiceProvider extends Component {
     let modalContent = this.getModalContent(this.props.serviceProviderList)    
     return (
       <div className='EntityUServiceProf'>
-        {this.props.sp.serviceProviderId === getUserInfo().serviceProviderId ? (
+        {this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ? (
           <span>
             <i
               className='assignSPLink'
@@ -133,7 +137,7 @@ class AssignServiceProvider extends Component {
             <div
               className='ProfileCardImageContainer'
               onClick={() => {
-                this.goToESPProfile(this.props.sp.providerId)
+                this.goToESPProfile(this.props.sp.entityServiceProviderImage)
               }}
             >
               <img
@@ -141,8 +145,8 @@ class AssignServiceProvider extends Component {
                 key={'SP_IMAGE'}
                 className='avatarImage avatarImageBorder'
                 src={
-                  this.props.sp.providerImage
-                    ? this.props.sp.providerImage
+                  this.props.sp.entityServiceProviderImage
+                    ? this.props.sp.entityServiceProviderImage
                     : require('../../../assets/images/Blank_Profile_icon.png')
                 }
               />
@@ -150,14 +154,14 @@ class AssignServiceProvider extends Component {
             <div
               className='ProfileCardNameContainer'
               onClick={() => {
-                this.goToESPProfile(this.props.sp.providerId)
+                this.goToESPProfile(this.props.sp.entityServiceProviderImage)
               }}
             >
               <span>
-                {this.props.sp.providerFirstName &&
-                  this.props.sp.providerFirstName + ' '}{' '}
-                {this.props.sp.providerLastName &&
-                  this.props.sp.providerLastName}
+                {this.props.sp.entityServiceProviderFirstName &&
+                  this.props.sp.entityServiceProviderFirstName + ' '}{' '}
+                {this.props.sp.entityServiceProviderLastName &&
+                  this.props.sp.entityServiceProviderLastName}
               </span>
             </div>
           </Fragment>
@@ -169,9 +173,10 @@ class AssignServiceProvider extends Component {
           ModalBody={modalContent}
           className="modal-lg asyncModal CertificationModal"
           modalTitle={modalTitle}
+          showHeader={true}
           centered="centered"
           headerFooter='d-none'
-          btn1='Save'
+          btn1='Assign'
           btn2='Cancel'
           onConfirm={this.onSubmit}
           onCancel={() =>{
@@ -191,7 +196,8 @@ function mapDispatchToProps (dispatch) {
     getEntityServiceProviderList: () =>dispatch(getEntityServiceProviderList()),
     updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
     setESP:data=>dispatch(setESP(data)),
-    goToESPProfile:()=>dispatch(push(Path.ESPProfile))
+    goToESPProfile:()=>dispatch(push(Path.ESPProfile)),
+    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
   }
 }
 
