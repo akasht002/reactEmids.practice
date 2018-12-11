@@ -760,7 +760,7 @@ class VisitServiceDetails extends Component {
                               </div>
                               {
                                 getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
-                                <AssignServiceProvider sp={this.state.visitServiceDetails}/>
+                                <AssignServiceProvider sp={ScheduleList}/>
                               }
                             </div>
                           )
