@@ -629,8 +629,9 @@ span.btn-invited, span.btn-invited:hover{
     clear: both;
 }
 
-.ScheduleTableRow > div, .ScheduleTableHeader > div{
-}
+
+
+
 
 .ScheduleTableRow > div > span, .ScheduleTableHeader > div > span{
     padding: 20px;
