@@ -77,6 +77,7 @@ class Availability extends Component {
     }
 
     reset = () => {
+        this.disabled = 'disabled';
         this.setState({
             availabilityModal: !this.state.availabilityModal,
             isDiscardModalOpen: false
