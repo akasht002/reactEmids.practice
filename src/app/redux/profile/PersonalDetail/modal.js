@@ -46,7 +46,7 @@ export const getModal = (data, action) => {
           }
         },
         entity: null,
-        description: data.description,
+        description: data.description.length>0?data.description:'-',
         hourlyRate: data.hourlyRate ? data.hourlyRate : 0,
         addresses: [
           {
