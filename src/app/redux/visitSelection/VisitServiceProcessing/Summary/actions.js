@@ -127,20 +127,15 @@ export function calculationActualData() {
 
         let estimatedClaim;
         let copayAmount;
-
-        {
-            ClaimState ?
-                estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2)
-                :
-                estimatedClaim = 0
-        }
-
-        {
-            ClaimState ?
-                copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2)
-                :
-                copayAmount = 0
-        }
+        ClaimState ?
+            estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2)
+            :
+            estimatedClaim = 0
+            
+        ClaimState ?
+            copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2)
+            :
+            copayAmount = 0
 
 
         // let estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);

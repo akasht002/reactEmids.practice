@@ -317,7 +317,7 @@ class WorkHistory extends Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Home Supportive SVC"
-                        className={"form-control " + (!this.state.isValid && !this.state.company && 'inputFailure')}                        value={this.state.designation}
+                        className={"form-control " + (!this.state.isValid && !this.state.company && 'inputFailure')}
                         value={this.state.company}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
@@ -347,7 +347,7 @@ class WorkHistory extends Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. San Francisco Bay Area"
-                        className={"form-control " + (!this.state.isValid && !this.state.location && 'inputFailure')}                        value={this.state.designation}
+                        className={"form-control " + (!this.state.isValid && !this.state.location && 'inputFailure')}
                         value={this.state.location}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
