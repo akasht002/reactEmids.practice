@@ -133,7 +133,8 @@ class AsideScreenCover extends React.Component {
 
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
-                            <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</a>
+                            {this.props.personalDetail.serviceProviderTypeId !== 2 && <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</a>}
+                            {this.props.personalDetail.serviceProviderTypeId === 2 && <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.entityName || ''}</a>}
                         </div>
                     </div>
                     <AsideMenu menuData={menuData} url={this.props} onClick={link => this.checkIsFormDirty(link)}/>
