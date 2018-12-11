@@ -532,7 +532,7 @@ class VisitServiceDetails extends Component {
                         })}
                         onClick={() => {
                           this.toggle('2')
-                          this.checkEligibility()
+                          // this.checkEligibility()
                         }}
                       >
                         Schedule

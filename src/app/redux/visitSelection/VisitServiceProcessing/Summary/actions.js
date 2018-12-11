@@ -1,5 +1,5 @@
 import { API } from '../../../../services/api';
-import { ServiceRequestGet, ServiceRequestPut, ServiceRequestPost } from '../../../../services/http';
+import { ServiceRequestGet, ServiceRequestPut, ServiceRequestPost, ThirdPartyPost } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import moment from 'moment'
 import { push } from '../../../navigation/actions';
@@ -14,12 +14,20 @@ export const SummaryDetails = {
     saveOriginalTimeDiff: 'save_original_time_diff/summarydetails',
     saveActualTimeDiff: 'save_actual_time_diff/summarydetails',
     getSavedSignatureSuccess: 'getSavedSignatureSuccess/summarydetails',
-    formDirtySummaryDetails: 'formDirtySummaryDetails/summarydetails'
+    formDirtySummaryDetails: 'formDirtySummaryDetails/summarydetails',
+    getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/summarydetails',
 };
 
 export const getSummaryDetailsSuccess = (data) => {
     return {
         type: SummaryDetails.getSummaryDetailsSuccess,
+        data
+    }
+}
+
+export const getVisitServiceEligibityStatusSuccess = data => {
+    return {
+        type: SummaryDetails.getVisitServiceEligibityStatusSuccess,
         data
     }
 }
@@ -63,7 +71,27 @@ export function getSummaryDetails(data) {
         dispatch(startLoading());
         ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
-            dispatch(calculationsFirstTime(resp.data))
+            // dispatch(calculationsFirstTime(resp.data));
+            dispatch(getVisitServiceEligibilityStatus(resp.data))
+            // dispatch(push(Path.summary))
+            //dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function getVisitServiceEligibilityStatus(data) {
+    const eligibilityData = {
+        patientId: data.patient.patientId,
+        serviceProviderId: data.serviceProviderId,
+        serviceRequestId: data.serviceRequestId
+    }
+    return (dispatch) => {
+        dispatch(startLoading());
+        ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
+            dispatch(getVisitServiceEligibityStatusSuccess(resp.data));
+            dispatch(calculationsFirstTime(data));
             dispatch(push(Path.summary))
             dispatch(endLoading());
         }).catch((err) => {
@@ -77,7 +105,7 @@ export function calculationActualData() {
 
         const currState = getState().visitSelectionState.VisitServiceProcessingState.SummaryState;
 
-        const ClaimState = DEMO === 'true' ? 20 : getState().visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus.amount
+        const ClaimState = DEMO === 'true' ? 20 : getState().visitSelectionState.VisitServiceProcessingState.SummaryState.VisitServiceElibilityStatus.amount
 
         let duration = DEMO === 'true' ? moment.duration(3600000) : moment.duration(currState.actualTimeDiff);
 
@@ -192,19 +220,19 @@ export function saveSignature(data) {
 
 export function getSavedSignature(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        //dispatch(startLoading());
         ServiceRequestGet(API.getSavedSignature + data).then((resp) => {
             dispatch(getSavedSignatureSuccess(resp.data));
-            dispatch(endLoading());
+            //dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            //dispatch(endLoading());
         })
     }
 };
 export function gotoFeedback() {
     return (dispatch) => {
         dispatch(push(Path.feedback))
-    
+
     }
 };
 

@@ -6,7 +6,8 @@ const defaultState = {
     SummaryDetails: {},
     CalculationsData: {},
     actualTimeDiff: '',
-    signature: ''
+    signature: '',
+    VisitServiceElibilityStatus: '',
 };
 
 const SummaryState = (state = defaultState, action) => {
@@ -48,6 +49,11 @@ const SummaryState = (state = defaultState, action) => {
                 CalculationsData: {},
                 signature: ''
             }
+            case SummaryDetails.getVisitServiceEligibityStatusSuccess:
+            return {
+                ...state,
+                VisitServiceElibilityStatus: action.data
+            };
         default:
             return state;
     }
