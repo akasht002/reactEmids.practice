@@ -404,7 +404,7 @@ class VistSummary extends React.Component {
                       <span className="SummaryContentTableTitle">
                         Visit Length
                       </span>
-                      <span>{summaryDetail.originalTotalDuration} hrs</span>
+                      <span>{summaryDetail.originalTotalDuration && summaryDetail.originalTotalDuration.substring(0,5)} hrs</span>
                     </p>
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">Tasks</span>
