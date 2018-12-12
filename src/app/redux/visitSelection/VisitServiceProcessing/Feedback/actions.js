@@ -44,7 +44,7 @@ export function getQuestionsList () {
 export function saveAnswers (data) {
   return dispatch => {
     dispatch(startLoading())
-    let path = data.path ? data.path : Path.summary
+    // let path = data.path ? data.path : Path.summary
     ServiceRequestPost(API.saveAnswers, data)
       .then(resp => {
         //dispatch(push(path))

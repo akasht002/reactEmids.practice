@@ -544,7 +544,7 @@ class PersonalDetail extends React.PureComponent {
         />
         <span className="rating-blockcustome">
           <i class="Icon iconFilledStar"></i>
-          {Math.round(this.props.personalDetail && this.props.personalDetail.rating)}
+          {this.props.personalDetail && Math.round(this.props.personalDetail.rating * 10)/10}
         </span>
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>

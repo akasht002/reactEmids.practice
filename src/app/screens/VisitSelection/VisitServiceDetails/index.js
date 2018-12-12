@@ -667,6 +667,7 @@ class VisitServiceDetails extends Component {
                         <div>
                           <span>Visit Length</span>
                         </div>
+                        <div></div>
                         {
                           getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
                             <div>
@@ -709,7 +710,7 @@ class VisitServiceDetails extends Component {
                                       className='btn btn-outline-primary'
                                       onClick={() => this.visitSummary(ScheduleList.serviceRequestVisitId)}
                                     >
-                                      <i className='ProfileIconEye' />Visit Summary
+                                      <i className='ProfileIconEye' />Summary
                                       </a>
                                     : ''}
 
@@ -760,7 +761,7 @@ class VisitServiceDetails extends Component {
                               </div>
                               {
                                 getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
-                                <AssignServiceProvider sp={this.state.visitServiceDetails}/>
+                                <AssignServiceProvider sp={ScheduleList}/>
                               }
                             </div>
                           )

@@ -522,10 +522,99 @@ ul li.list-group-item.EligibilityList{
     float: left;
 }
 
+.ScheduleTableHeader > div:nth-child(1)
+{
+    width: 10%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableHeader > div:nth-child(2)
+{
+    width: 15%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableHeader > div:nth-child(3)
+{
+    width: 20%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableHeader > div:nth-child(4)
+{
+    width: 15%;
+    float: none;
+    padding: 10px 0px;
+}
+
+.ScheduleTableHeader > div:nth-child(5)
+{
+    width: 20%;
+    float: none;
+    padding: 10px 0px;
+}
+
+.ScheduleTableHeader > div:nth-child(6)
+{
+    width:20%;
+    float: none;
+    padding: 10px 0px;
+}
+
+
+.ScheduleTableRow > div:nth-child(1)
+{
+    width: 10%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(2)
+{
+    width: 15%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(3)
+{
+    width: 20%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(4)
+{
+    width: 15%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(5)
+{
+     width: 20%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(6)
+{
+    width:20%;
+    float: none;
+    padding: 10px 0px;
+}
+
+
 .ScheduleTableRow > div > span, .ScheduleTableHeader > div > span{
     padding: 20px;
     display: block;
     white-space: nowrap;
+}
+
+.ScheduleTableHeader > div span, .ScheduleTableRow > div span
+{
+text-align: left;
+}
+
+.ScheduleTableRow > div .ScheduleRowButton
+{
+float: left;
+display: block;
 }
 
 .ScheduleRowButton a{
