@@ -667,6 +667,7 @@ class VisitServiceDetails extends Component {
                         <div>
                           <span>Visit Length</span>
                         </div>
+                        <div></div>
                         {
                           getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
                             <div>
@@ -709,7 +710,7 @@ class VisitServiceDetails extends Component {
                                       className='btn btn-outline-primary'
                                       onClick={() => this.visitSummary(ScheduleList.serviceRequestVisitId)}
                                     >
-                                      <i className='ProfileIconEye' />Visit Summary
+                                      <i className='ProfileIconEye' />Summary
                                       </a>
                                     : ''}
 
@@ -760,7 +761,7 @@ class VisitServiceDetails extends Component {
                               </div>
                               {
                                 getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
-                                <AssignServiceProvider sp={this.state.visitServiceDetails}/>
+                                <AssignServiceProvider sp={ScheduleList}/>
                               }
                             </div>
                           )
@@ -810,7 +811,7 @@ class VisitServiceDetails extends Component {
           />
           <ModalPopup
             isOpen={this.state.phoneNumberModal}
-            ModalBody={<span> {this.state.phoneNumber} </span>}
+            ModalBody={<span> Phone Number : +1 {this.state.phoneNumber} </span>}
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'

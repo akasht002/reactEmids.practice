@@ -39,6 +39,7 @@ class PersonalDetail extends React.PureComponent {
       isCityInvalid: false,
       isZipInvalid: false,
       isStreetInvalid: false,
+      selectedState: '',
       ModalOrg: true,
       src: null,
       crop: {
@@ -176,30 +177,32 @@ class PersonalDetail extends React.PureComponent {
   }
 
   onSubmit = () => {
+    const {firstName, lastName, phoneNumber, age, yearOfExperience, 
+      hourlyRate, city, zipCode, streetAddress, selectedState } = this.state;
     this.isImageSave = false;
     if (
-      this.state.firstName === '' ||
-      this.state.lastName === '' ||
-      this.state.phoneNumber === '' ||
-      this.state.age === '' ||
-      this.state.yearOfExperience === '' ||
-      this.state.hourlyRate === '' ||
-      this.state.city === '' || this.state.city === null ||
-      this.state.zipCode === '' || this.state.zipCode === null ||
-      this.state.streetAddress === '' || this.state.streetAddress === null ||
-      this.state.selectedState === '' || this.state.selectedState === null
+      firstName === '' ||
+      lastName === '' ||
+      phoneNumber === '' ||
+      age === '' ||
+      yearOfExperience === '' ||
+      hourlyRate === '' ||
+      city === '' || this.state.city === null ||
+      zipCode === '' || this.state.zipCode === null ||
+      streetAddress === '' || this.state.streetAddress === null ||
+      selectedState === '' || this.state.selectedState === null
     ) {
       let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
-      if (this.state.city === '' || this.state.city === null) {
+      if (city === '' || city === null) {
         cityInvalid = true;
       }
-      if (this.state.zipCode === '' || this.state.zipCode === null || this.state.zipCode < 5) {
+      if (zipCode === '' || zipCode === null || zipCode < 5) {
         zipCodeInvalid = true;
       }
-      if (this.state.streetAddress === '' || this.state.streetAddress === null) {
+      if (streetAddress === '' || streetAddress === null) {
         streetInvalid = true;
       }
-      if (this.state.selectedState === '' || this.state.selectedState === null || this.state.selectedState === undefined) {
+      if (selectedState === '' || selectedState === null || selectedState === undefined) {
         stateInvalid = true;
       }
       this.setState({ isValid: false, isStateInvalid: stateInvalid, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid })
@@ -541,7 +544,7 @@ class PersonalDetail extends React.PureComponent {
         />
         <span className="rating-blockcustome">
           <i class="Icon iconFilledStar"></i>
-          {Math.round(this.props.personalDetail && this.props.personalDetail.rating)}
+          {this.props.personalDetail && Math.round(this.props.personalDetail.rating * 10)/10}
         </span>
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>

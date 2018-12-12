@@ -448,7 +448,7 @@ export function checkTeleHealth(data) {
                             participant.userId === data.participantList[0].userId) {
                                 return {
                                     ...participant,
-                                    status: 'Joined'
+                                    status: data.messageType
                                 }
                         } else {
                             return participant;

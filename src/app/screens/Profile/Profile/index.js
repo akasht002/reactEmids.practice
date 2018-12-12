@@ -25,6 +25,8 @@ import { push, goBack } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
 import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
 import { clearServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
+import {getPersonalDetail} from '../../../redux/profile/PersonalDetail/actions'
+import {getPersonalDetailsState} from '../../../utils/userUtility';
 import './styles.css'
 
 class Profile extends Component {
@@ -39,13 +41,15 @@ class Profile extends Component {
 
   getPersonalDetail = () => {
     if (
-      getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-      !getUserInfo().isEntityServiceProvider
+      (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      !getUserInfo().isEntityServiceProvider) ||  (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      !getPersonalDetailsState().isEntityServiceProvider) 
     ) {
       return <PersonalDetail profilePercentage={this.props.profilePercentage} />
     } else if (
-      getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-      getUserInfo().isEntityServiceProvider
+      (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      getPersonalDetailsState().isEntityServiceProvider)
     ) {
       return (
         <EntityPersonalDetail
@@ -56,11 +60,12 @@ class Profile extends Component {
   }
 
   getAvailability = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-    !getUserInfo().isEntityServiceProvider) {
+    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+    !getUserInfo().isEntityServiceProvider) ||(getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+    !getPersonalDetailsState().isEntityServiceProvider)) {
      return <Availability />
-    } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && 
-    getUserInfo().entityId === 0) {
+    } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0 )
+    || (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
       return <Availability />
     } else {
       return '';
@@ -68,12 +73,16 @@ class Profile extends Component {
   }
 
   getServiceOffered = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) {
+    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider)||
+      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getPersonalDetailsState().isEntityServiceProvider)) {
       return <div className='col-md-12 card CardWidget SPCertificate'>
         <ServiceOffered />
       </div>
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+     } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) || 
+     (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID 
+     && getPersonalDetailsState().entityId === 0)) {
        return <div className='col-md-12 card CardWidget SPCertificate'>
         <ServiceOffered />
       </div>
@@ -83,21 +92,29 @@ class Profile extends Component {
   }
 
   getServiceArea = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) {
+    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) ||
+      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getPersonalDetailsState().isEntityServiceProvider)) {
       return <ServiceArea /> 
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+     } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)
+     || (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID 
+     && getPersonalDetailsState().entityId === 0)) {
       return <ServiceArea /> 
      } else {
        return '';
      }
-  }
+  };
 
   getSkills = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) {
+    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider)||
+      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getPersonalDetailsState().isEntityServiceProvider)) {
       return <Skills />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+     } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)||
+     (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID 
+     && getPersonalDetailsState().entityId === 0)) {
        return <Skills />
      } else {
        return '';
@@ -105,11 +122,13 @@ class Profile extends Component {
   }
 
   getLanguages = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) {
+    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getPersonalDetailsState().isEntityServiceProvider)) {
       return <Languages />
      } 
-     else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+     else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)
+     ||(getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
        return <Languages />
      } 
      else {
@@ -118,10 +137,13 @@ class Profile extends Component {
   }
 
   getCertification = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) {
+    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getUserInfo().isEntityServiceProvider) || 
+      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+      !getPersonalDetailsState().isEntityServiceProvider)) {
       return <Certification />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+     } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) ||
+     (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
        return <Certification />
      } else {
        return '';
@@ -129,12 +151,16 @@ class Profile extends Component {
   }
 
   validationPopUp = () => {
-    let serviceOfferedList = this.props.serviceOfferedList && this.props.serviceOfferedList.length
-    let LanguagesList = this.props.LanguagesList && this.props.LanguagesList.languages &&  this.props.LanguagesList.languages.length
-    if(serviceOfferedList === 0 && LanguagesList === 0) {
-      this.setState({ showValidationPopUp : true })
-    } else {
-      this.goToDashboard();
+      if(!this.props.isUser){
+        this.goToDashboard();
+      }else{
+      let serviceOfferedList = this.props.serviceOfferedList && this.props.serviceOfferedList.length
+      let LanguagesList = this.props.LanguagesList && this.props.LanguagesList.languages &&  this.props.LanguagesList.languages.length
+      if(serviceOfferedList === 0 && LanguagesList === 0) {
+        this.setState({ showValidationPopUp : true })
+      } else {
+        this.goToDashboard();
+      }
     }
   }
 
@@ -142,8 +168,14 @@ class Profile extends Component {
     this.setState({ showValidationPopUp : false})
   }
 
+  componentWillUnmount(){
+    this.props.clearServiceProviderId();
+    this.props.getPersonalDetail();
+  }
+
   goToDashboard = () => {
     this.props.clearServiceProviderId();
+    this.props.getPersonalDetail();
     this.props.goBack();
   }
 
@@ -283,6 +315,7 @@ function mapDispatchToProps (dispatch) {
     rejectConference: () => dispatch(rejectConference()),
     goBack: () => dispatch(goBack()),
     clearServiceProviderId : () => dispatch(clearServiceProviderId()),
+    getPersonalDetail: () => dispatch(getPersonalDetail()),
   }
 }
 
@@ -297,6 +330,7 @@ function mapStateToProps (state) {
     initiatorFirstName: state.telehealthState.initiatorFirstName,
     initiatorLastName: state.telehealthState.initiatorLastName,
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
+    isUser: state.profileState.PersonalDetailState.isUser,
   }
 }
 

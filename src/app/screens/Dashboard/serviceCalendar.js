@@ -625,7 +625,7 @@ class serviceCalendar extends React.Component {
           showHeader={true}
           centered="centered"
           headerFooter='d-none'
-          btn1='Save'
+          btn1='Assign'
           btn2='Cancel'
           onConfirm={this.onSubmit}
           onCancel={() =>{

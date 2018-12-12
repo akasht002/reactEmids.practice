@@ -597,6 +597,7 @@ span.btn-invited, span.btn-invited:hover{
     height: 60px;
     border-bottom: 1px solid #dcdcdc;
     clear: both;
+    width: 100%;
 }
 
 .ScheduleTableHeader{
@@ -612,6 +613,64 @@ span.btn-invited, span.btn-invited:hover{
     white-space: nowrap;
 }
 
+.TabBody .ScheduleTableRow .EntityUServiceProf
+{
+    position: absolute;
+    right: 0;
+    display: table;
+    padding: 2px 0px;
+}
+
+.TabBody .ScheduleTableRow .EntityUServiceProf .ProfileCardImageContainer, .TabBody .ScheduleTableRow .EntityUServiceProf .ProfileCardNameContainer
+{
+display: table-cell;
+}
+
+.TabBody .ScheduleTableRow .EntityUServiceProf .ProfileCardImageContainer .avatarImageBorder
+{
+float: right;
+display: block;
+}
+
+.TabBody .ScheduleTableRow .EntityUServiceProf .ProfileCardNameContainer
+{
+width: auto;
+vertical-align: middle;
+}
+.TabBody .ScheduleTableRow .EntityUServiceProf .ProfileCardNameContainer span
+{
+    display: block;
+    text-align: left;
+    vertical-align: middle;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 77px;
+}
+
+.TabBody .ScheduleTableRow .EntityUServiceProf .ProfileCardImageContainer
+{
+    margin-right: 5px;
+    margin-left: 0;
+}
+.TabBody .ScheduleTableRow .ScheduleRowButton a
+{
+margin: 0 auto;
+}
+
+.TabBody .ScheduleTableRow .EntityUServiceProf  span i.assignSPLink
+{
+  
+        font-style: normal;
+        color: #7a329f;
+        font-size: 13px;
+        display: block;
+        text-align: left;
+        padding-left: 13px;
+        float: left;
+    
+}
 .ScheduleRowButton a{
     font-size: 14px !important;
     margin: 13px;
