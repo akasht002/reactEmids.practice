@@ -320,8 +320,12 @@ class Organization extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
+            <li>Click on Change Photo</li>
+              <li>Select the image from your desktop/gallery</li>
               <li>The image should not exceed beyond 2MB.</li>
               <li>The image should be either of PNG or JPEG/JPG type only.</li>
+              <li>Once select you can crop the image by dragging the cursor the image</li>
+              <li>Click on Save</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>
@@ -358,8 +362,12 @@ class Organization extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
+            <li>Click on Change Photo</li>
+              <li>Select the image from your desktop/gallery</li>
               <li>The image should not exceed beyond 2MB.</li>
               <li>The image should be either of PNG or JPEG/JPG type only.</li>
+              <li>Once select you can crop the image by dragging the cursor the image</li>
+              <li>Click on Save</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>
