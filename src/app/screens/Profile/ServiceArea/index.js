@@ -9,7 +9,7 @@ import {
 } from '../../../components'
 import { getCityDetail } from '../../../redux/profile/PersonalDetail/actions'
 import * as action from '../../../redux/profile/serviceArea/action'
-import { getLength } from '../../../utils/validations'
+import { getLength, getArrayLength } from '../../../utils/validations'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { authorizePermission } from '../../../utils/roleUtility';
 import { Details } from './Details'
@@ -50,7 +50,16 @@ class ServiceArea extends Component {
       coverageArea:nextProps.ServiceAreaFieldDetails.coverageArea ? nextProps.ServiceAreaFieldDetails.coverageArea: 0,
       zip: nextProps.ServiceAreaFieldDetails.zipCode,
       addressId: nextProps.ServiceAreaFieldDetails.addressId ?
-      nextProps.ServiceAreaFieldDetails.addressId : 0
+      nextProps.ServiceAreaFieldDetails.addressId : 0,
+      selectedState: {
+        label: getArrayLength(nextProps.ServiceAreaFieldDetails.address) > 0 && nextProps.ServiceAreaFieldDetails.address[0].state != null
+          ? nextProps.ServiceAreaFieldDetails.address[0].state.name
+          : '',
+        value: getArrayLength(nextProps.ServiceAreaFieldDetails.address) > 0 && nextProps.ServiceAreaFieldDetails.address[0].state != null
+          ? nextProps.ServiceAreaFieldDetails.address[0].state.id
+          : '-' + getArrayLength(nextProps.ServiceAreaFieldDetails.address) > 0 && nextProps.ServiceAreaFieldDetails.address[0].state != null
+            ? nextProps.ServiceAreaFieldDetails.address[0].state.name : ''
+      },
     })
   }
 
@@ -68,6 +77,7 @@ class ServiceArea extends Component {
       streetInvalid: false,
       cityInvalid: false,
       state_idInvalid: false,
+      stateInvalid: false,
       zipInvalid: false,
       isAdd: true,
       isValid: true
@@ -101,7 +111,7 @@ class ServiceArea extends Component {
     if (
       this.state.street === '' ||
       this.state.city === '' ||
-      this.state.state_id === '' ||
+      this.state.selectedState.value === '' ||
       this.state.zip === '')
       this.setState({
         isValid: false
@@ -282,22 +292,22 @@ class ServiceArea extends Component {
                 placeholder='Select the state'
                 onChange={value => {
                   this.setState({
-                    state_id: value,
-                    stateInvalid: false,
+                    selectedState: value,
+                    stateInvalid: false
                   })
                   this.checkFieldsOnEdit()
                 }}
-                selectedValue={this.state.state_id}
+                selectedValue={this.state.selectedState}
                 onBlur={(e) => {
-                  if (e.target.value === '') {
+                  if (this.state.selectedState.value === '') {
                     this.setState({
-                      state_idInvalid: true
+                      stateInvalid: true
                     })
-                  }
+                  } 
                 }}
               />
               <small className="text-danger d-block OnboardingAlert">
-                {this.state.state_idInvalid && 'Please enter state'}
+                {this.state.stateInvalid && 'Please enter state'}
               </small>
             </div>
           </div>
@@ -386,7 +396,7 @@ class ServiceArea extends Component {
                     to add Service Area
                     </span>
                 </div>
-              </div>}
+              </div>} 
             </div> }
             
           </ul>
