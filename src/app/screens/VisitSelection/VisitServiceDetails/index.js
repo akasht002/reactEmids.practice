@@ -811,7 +811,7 @@ class VisitServiceDetails extends Component {
           />
           <ModalPopup
             isOpen={this.state.phoneNumberModal}
-            ModalBody={<span> {this.state.phoneNumber} </span>}
+            ModalBody={<span> Phone Number : +1 {this.state.phoneNumber} </span>}
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'

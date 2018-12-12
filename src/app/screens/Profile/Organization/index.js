@@ -159,13 +159,37 @@ class Organization extends React.PureComponent {
   }
 
   onSubmit = () => {
+    const {organizationNameInvaild, phoneNumberInvalid, urlInvaild, city, zipCode, streetAddress, selectedState } = this.state;
     this.isImageSave = false;
     if (
-     this.state.organizationNameInvaild ||
-     this.state.phoneNumberInvalid ||
-     this.state.urlInvaild
+     organizationNameInvaild ||
+     phoneNumberInvalid ||
+     urlInvaild ||
+     city === '' || city === null ||
+     zipCode === '' || zipCode === null ||
+     streetAddress === '' || streetAddress === null ||
+     selectedState === '' || selectedState === null
     ) {
-      this.setState({ isValid: false })
+      let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
+      if (city === '' || city === null) {
+        cityInvalid = true;
+      }
+      if (zipCode === '' || zipCode === null || zipCode < 5) {
+        zipCodeInvalid = true;
+      }
+      if (streetAddress === '' || streetAddress === null) {
+        streetInvalid = true;
+      }
+      if(selectedState === '' || selectedState === null || selectedState === undefined) {
+        stateInvalid = false;
+      }
+      this.setState({ 
+          isValid: false, 
+          isStateInvalid: stateInvalid, 
+          isCityInvalid: cityInvalid, 
+          isZipInvalid: zipCodeInvalid, 
+          isStreetInvalid: streetInvalid 
+      })
     } else {
       this.props.updateOrganizationDetail(this.state)
       this.setState({
@@ -457,6 +481,8 @@ class Organization extends React.PureComponent {
     )
   }
   getModalContent = stateDetail => {
+
+    console.log('getModalContent state value............', this.state.selectedState)
     return (
       <div className='row'>
         <div className='col-md-12'>
@@ -603,12 +629,21 @@ class Organization extends React.PureComponent {
                       onChange={value => {
                         this.setState({
                           selectedState: value,
-                          disabledSaveBtn: false
+                          disabledSaveBtn: false,
+                          isStateInvalid: false
                         })
+                      }}
+                      onBlur={(e) => {
+                        if (this.state.selectedState.value === '') {
+                          this.setState({ isStateInvalid: true })
+                        }
                       }}
                       selectedValue={this.state.selectedState}
                       className={'inputFailure border-style'}
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                    {this.state.isStateInvalid && 'Please select valid State'}
+                  </small>
                   </div>
                 </div>
                 <div className='col-md-6 mb-2'>
@@ -623,10 +658,19 @@ class Organization extends React.PureComponent {
                       textChange={e =>
                         this.setState({
                           city: e.target.value,
-                          disabledSaveBtn: false
+                          disabledSaveBtn: false,
+                          isCityInvalid: false
                         })}
+                        onBlur={e => {
+                          if (!e.target.value) {
+                            this.setState({ isCityInvalid: true })
+                          }
+                        }}
                       className='form-control'
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                    {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
+                  </small>
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
@@ -643,10 +687,19 @@ class Organization extends React.PureComponent {
                           textChange={e =>
                             this.setState({
                               streetAddress: e.target.value,
-                              disabledSaveBtn: false
+                              disabledSaveBtn: false,
+                              isStreetInvalid: false
                             })}
+                            onBlur={e => {
+                              if (!e.target.value) {
+                                this.setState({ isStreetInvalid: true })
+                              }
+                            }}
                           className='form-control'
                         />
+                        <small className="text-danger d-block OnboardingAlert">
+                          {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                        </small>
                       </div>
                     </div>
                     <div className='col-md-6'>
@@ -666,12 +719,21 @@ class Organization extends React.PureComponent {
                           ) {
                             this.setState({
                               zipCode: e.target.value,
-                              disabledSaveBtn: false
+                              disabledSaveBtn: false,
+                              isZipInvalid: false
                             })
+                          }
+                        }}
+                        onBlur={e => {
+                          if (!e.target.value || getLength(e.target.value) < 5) {
+                            this.setState({ isZipInvalid: true })
                           }
                         }}
                         className='form-control'
                       />
+                      <small className="text-danger d-block OnboardingAlert">
+                      {this.state.isZipInvalid && <span>Please enter valid Zipcode</span>}
+                    </small>
                     </div>
                   </div>
                 </div>
