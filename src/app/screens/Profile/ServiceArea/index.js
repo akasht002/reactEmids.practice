@@ -9,7 +9,7 @@ import {
 } from '../../../components'
 import { getCityDetail } from '../../../redux/profile/PersonalDetail/actions'
 import * as action from '../../../redux/profile/serviceArea/action'
-import { getLength, getArrayLength } from '../../../utils/validations'
+import { getLength } from '../../../utils/validations'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { authorizePermission } from '../../../utils/roleUtility';
 import { Details } from './Details'

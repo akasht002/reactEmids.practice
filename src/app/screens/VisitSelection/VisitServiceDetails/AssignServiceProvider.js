@@ -9,7 +9,6 @@ import {
     updateEntityServiceVisit
   } from "../../../redux/dashboard/Dashboard/actions";
   import {
-    getVisitServiceDetails,
     getVisitServiceSchedule
   } from '../../../redux/visitSelection/VisitServiceDetails/actions'
   import { Path } from "../../../routes";
