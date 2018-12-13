@@ -875,7 +875,7 @@ div.CertificationModal{
 .SPBlackoutDate .date{
     display: block;
     font-weight: 600;
-    color: #494949;
+    color: #444444 !important;
 }
 
 .SPBlackoutDate .day{

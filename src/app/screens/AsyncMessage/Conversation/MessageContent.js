@@ -276,7 +276,7 @@ class MessageContent extends Component {
                                                         height: this.state.height
                                                     }}
                                                     disabled={!this.props.conversation.isActive}
-                                                    placeholder="Type here..."
+                                                    placeholder="Write your message here.."
                                                     maxLength="1000"
                                                     value={this.props.messageText}
                                                     onChange={this.props.onChangeMessage} />
