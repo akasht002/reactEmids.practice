@@ -39,6 +39,10 @@ export const clearData = () => {
 
 export function onSetUserSuccess(data){
     return (dispatch, getState) => {
+        let userData = {
+            ...getState().oidc.user
+        };
+        dispatch(setUserSuccess(userData))
         dispatch(getUserInactiveTimeout(getState().oidc.user.profile.sub));
     }
 }

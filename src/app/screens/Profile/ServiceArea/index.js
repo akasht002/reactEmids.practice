@@ -13,7 +13,9 @@ import { getLength, getArrayLength } from '../../../utils/validations'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { authorizePermission } from '../../../utils/roleUtility';
 import { Details } from './Details'
-import './style.css'
+import './style.css';
+import {compare} from "../../../utils/comparerUtility";
+
 
 class ServiceArea extends Component {
   constructor(props) {
@@ -101,6 +103,35 @@ class ServiceArea extends Component {
       },
     })
     this.onClose()
+  let previousObject ={
+    street: this.props.ServiceAreaFieldDetails.streetAddress,
+    city: this.props.ServiceAreaFieldDetails.city,
+    coverageArea:this.props.ServiceAreaFieldDetails.coverageArea ? this.props.ServiceAreaFieldDetails.coverageArea: 0,
+    zip: this.props.ServiceAreaFieldDetails.zipCode,
+  }
+
+  let newObject ={
+    street : this.state.street,
+    city :this.state.city,
+    coverageArea :this.state.coverageArea,
+    zip :this.state.zip
+
+  }
+
+  const fieldDifference = compare(previousObject, newObject);
+
+  if (fieldDifference === true) {
+      this.setState({ serviceAreaModal: false, isDiscardModalOpen: false
+       });
+  } else {
+      this.setState({
+          isDiscardModalOpen: true, serviceAreaModal: true
+      });
+  }
+
+
+
+
   }
 
   onClose = () => {
@@ -219,7 +250,7 @@ class ServiceArea extends Component {
     }
   }
 
-  render() {
+render() {
     authorizePermission(SCREENS.PROFILE);
     let modalContent
     let modalTitle
