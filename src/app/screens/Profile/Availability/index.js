@@ -53,7 +53,8 @@ class Availability extends Component {
        this.props.updateAvailabilityDays(updatedDataValue);
        this.setState({
             availabilityModal: !this.state.availabilityModal,
-       })
+       });
+       this.disabled = 'disabled';
     };
 
     componentDidMount(){
