@@ -52,13 +52,12 @@ class ServiceArea extends Component {
       addressId: nextProps.ServiceAreaFieldDetails.addressId ?
       nextProps.ServiceAreaFieldDetails.addressId : 0,
       selectedState: {
-        label: getArrayLength(nextProps.ServiceAreaFieldDetails.address) > 0 && nextProps.ServiceAreaFieldDetails.address[0].state != null
-          ? nextProps.ServiceAreaFieldDetails.address[0].state.name
+        label: nextProps.ServiceAreaFieldDetails
+          ? nextProps.ServiceAreaFieldDetails.stateName
           : '',
-        value: getArrayLength(nextProps.ServiceAreaFieldDetails.address) > 0 && nextProps.ServiceAreaFieldDetails.address[0].state != null
-          ? nextProps.ServiceAreaFieldDetails.address[0].state.id
-          : '-' + getArrayLength(nextProps.ServiceAreaFieldDetails.address) > 0 && nextProps.ServiceAreaFieldDetails.address[0].state != null
-            ? nextProps.ServiceAreaFieldDetails.address[0].state.name : ''
+        value: nextProps.ServiceAreaFieldDetails
+          ? nextProps.ServiceAreaFieldDetails.stateId + '-' + nextProps.ServiceAreaFieldDetails.stateName
+           : ''
       },
     })
   }
@@ -91,7 +90,15 @@ class ServiceArea extends Component {
       isDiscardModalOpen: false,
       isValid: true,
       disabledSaveBtn: false,
-      coverageArea: coverageArea
+      coverageArea: coverageArea,
+      selectedState: {
+        label: this.props.ServiceAreaFieldDetails
+          ? this.props.ServiceAreaFieldDetails.stateName
+          : '',
+          value: this.props.ServiceAreaFieldDetails
+          ? this.props.ServiceAreaFieldDetails.stateId + '-' + this.props.ServiceAreaFieldDetails.stateName
+           : ''
+      },
     })
     this.onClose()
   }
