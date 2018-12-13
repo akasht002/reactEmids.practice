@@ -10,7 +10,6 @@ class AvailabilityEdit extends Component {
         super(props);
         this.state = {
             add: false,
-            edit: false,
             availabeDays: [],
             availableList: [],
             updatedAvailableDays: [],
@@ -66,15 +65,6 @@ class AvailabilityEdit extends Component {
             updatedAvailableDays: weekdays,
             lookupDays: lookupDays,
             lookupSlots: slots
-        });
-    };
-
-    componenDidMount() {
-        const { router } = this.props;
-        router.setRouteLeaveHook(router.routes[1], () => {
-          if (!this.state.submitted) {
-            return 'You have unsaved changes. Exit the page?';
-          }
         });
     };
 
