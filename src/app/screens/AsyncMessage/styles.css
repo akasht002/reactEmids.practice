@@ -844,11 +844,17 @@ textarea.msgTextArea:focus{
     outline: 0;
     box-shadow: none;
 }
+textarea.msgTextArea::-webkit-input-placeholder {
+    color: #8c8c8c;
+    }
+
+
 
 input.searchParticipants, input.searchParticipants:focus{
     border: 0 !important;
     background-color: #f9f9f9 !important;
-    padding: 14px 15px 14px 50px !important; 
+    padding: 0px 15px 0px 50px !important; 
+    line-height: 38px;
 }
 
 input.searchParticipants.ChatContainer ~ small:before {

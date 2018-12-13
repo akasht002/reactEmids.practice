@@ -39,6 +39,7 @@ class PersonalDetail extends React.PureComponent {
       isCityInvalid: false,
       isZipInvalid: false,
       isStreetInvalid: false,
+      selectedState: '',
       ModalOrg: true,
       src: null,
       crop: {
@@ -176,30 +177,32 @@ class PersonalDetail extends React.PureComponent {
   }
 
   onSubmit = () => {
+    const {firstName, lastName, phoneNumber, age, yearOfExperience, 
+      hourlyRate, city, zipCode, streetAddress, selectedState } = this.state;
     this.isImageSave = false;
     if (
-      this.state.firstName === '' ||
-      this.state.lastName === '' ||
-      this.state.phoneNumber === '' ||
-      this.state.age === '' ||
-      this.state.yearOfExperience === '' ||
-      this.state.hourlyRate === '' ||
-      this.state.city === '' || this.state.city === null ||
-      this.state.zipCode === '' || this.state.zipCode === null ||
-      this.state.streetAddress === '' || this.state.streetAddress === null ||
-      this.state.selectedState === '' || this.state.selectedState === null
+      firstName === '' ||
+      lastName === '' ||
+      phoneNumber === '' ||
+      age === '' ||
+      yearOfExperience === '' ||
+      hourlyRate === '' ||
+      city === '' || this.state.city === null ||
+      zipCode === '' || this.state.zipCode === null ||
+      streetAddress === '' || this.state.streetAddress === null ||
+      selectedState === '' || this.state.selectedState === null
     ) {
       let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
-      if (this.state.city === '' || this.state.city === null) {
+      if (city === '' || city === null) {
         cityInvalid = true;
       }
-      if (this.state.zipCode === '' || this.state.zipCode === null || this.state.zipCode < 5) {
+      if (zipCode === '' || zipCode === null || zipCode < 5) {
         zipCodeInvalid = true;
       }
-      if (this.state.streetAddress === '' || this.state.streetAddress === null) {
+      if (streetAddress === '' || streetAddress === null) {
         streetInvalid = true;
       }
-      if (this.state.selectedState === '' || this.state.selectedState === null || this.state.selectedState === undefined) {
+      if (selectedState === '' || selectedState === null || selectedState === undefined) {
         stateInvalid = true;
       }
       this.setState({ isValid: false, isStateInvalid: stateInvalid, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid })
@@ -463,8 +466,10 @@ class PersonalDetail extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
-              <li>The image should not exceed beyond 2MB.</li>
-              <li>The image should be either of PNG or JPEG/JPG type only.</li>
+              <li>1. Click on the Change Photo Button. </li>
+              <li>2. Select the image from your desktop/ gallery.</li>
+              <li>3. Click and drag the curser across the image to crop.</li>
+              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>
@@ -501,12 +506,10 @@ class PersonalDetail extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
-              <li>Click on Change Photo</li>
-              <li>Select the image from your desktop/gallery</li>
-              <li>The image should not exceed beyond 2MB.</li>
-              <li>The image should be either of PNG or JPEG/JPG type only.</li>
-              <li>Once select you can crop the image by dragging the cursor the image</li>
-              <li>Click on Save</li>
+            <li>1. Click on the Change Photo Button. </li>
+              <li>2. Select the image from your desktop/ gallery.</li>
+              <li>3. Click and drag the curser across the image to crop.</li>
+              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>

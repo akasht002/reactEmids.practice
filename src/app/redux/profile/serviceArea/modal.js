@@ -1,4 +1,4 @@
-import { getDataValueArray } from '../../../utils/validations'
+import { getDataValueArray, getValueOfArray} from '../../../utils/validations'
 import { getUserInfo } from '../../../services/http'
 
 export const ACTION_MODEL = {
@@ -7,7 +7,9 @@ export const ACTION_MODEL = {
 }
 
 export const getModal = (data, action) => {
-  let states = getDataValueArray(data.state_id, '-')  
+  let states = data.selectedState && data.selectedState.value
+  ? getDataValueArray(data.selectedState.value, '-')
+  : getValueOfArray(data.selectedState, '-')
   switch (action) {
     case ACTION_MODEL.ADD_DATA:
       return {

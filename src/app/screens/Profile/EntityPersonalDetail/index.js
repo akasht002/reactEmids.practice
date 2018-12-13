@@ -182,27 +182,28 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   onSubmit = () => {
+    const { firstName, lastName, phoneNumber, city, zipCode, streetAddress, selectedState} = this.state;
     this.isImageSave = false;
     if (
-      getLength(this.state.firstName) === 0 ||
-      getLength(this.state.lastName) === 0 ||
-      getLength(this.state.phoneNumber) < 10 ||
-      this.state.city === '' || this.state.city === null ||
-      this.state.zipCode === '' || this.state.zipCode === null ||
-      this.state.streetAddress === '' || this.state.streetAddress === null ||
-      this.state.selectedState === '' || this.state.selectedState === null
+      getLength(firstName) === 0 ||
+      getLength(lastName) === 0 ||
+      getLength(phoneNumber) < 10 ||
+      city === '' || city === null ||
+      zipCode === '' || zipCode === null ||
+      streetAddress === '' || streetAddress === null ||
+      selectedState === '' || selectedState === null
     ) {
       let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
-      if (this.state.city === '' || this.state.city === null) {
+      if (city === '' || city === null) {
         cityInvalid = true;
       }
-      if (this.state.zipCode === '' || this.state.zipCode === null || this.state.zipCode < 5) {
+      if (zipCode === '' || zipCode === null || zipCode < 5) {
         zipCodeInvalid = true;
       }
-      if (this.state.streetAddress === '' || this.state.streetAddress === null) {
+      if (streetAddress === '' || streetAddress === null) {
         streetInvalid = true;
       }
-      if (this.state.selectedState === '' || this.state.selectedState === null || this.state.selectedState === undefined) {
+      if (selectedState === '' || selectedState === null || selectedState === undefined) {
         stateInvalid = true;
       }
       this.setState({ isValid: false, isStateInvalid: stateInvalid, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid })

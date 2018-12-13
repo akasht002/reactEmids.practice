@@ -63,9 +63,9 @@ export const Details = props => {
       </div>
         <div className={'width100'}>
           <div className={'SPAffiliatedList'}>
-            <span>
-              {props.personalDetail.entity &&
-                props.personalDetail.entity.websiteUrl}
+            <span className="link-view webUrl">
+              {props.personalDetail.entity && props.personalDetail.entity.websiteUrl ?
+                <a href={'https://'+props.personalDetail.entity.websiteUrl} target="_blank">{props.personalDetail.entity.websiteUrl}</a> : ''}               
             </span>
           </div>
         </div>
@@ -156,8 +156,10 @@ export const ProfileImageDetail = props => {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
-              <li>The image should not exceed beyond 2MB.</li>
-              <li>The image should be either of PNG or JPEG/JPG type only.</li>
+            <li>1. Click on the Change Photo Button. </li>
+              <li>2. Select the image from your desktop/ gallery.</li>
+              <li>3. Click and drag the curser across the image to crop.</li>
+              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>

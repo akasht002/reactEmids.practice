@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { ModalPopup } from "../../../components";
 import { TextArea } from "../../../components";
@@ -148,7 +148,7 @@ dateChangedRaw = (dateType, event) => {
   render() {
     const { fromDate, toDate, remarks } = this.state.blackoutData;
     return (
-      <React.Fragment>
+      <Fragment>
         <Modal
           isOpen={this.props.isOpen}
           className={this.props.className}
@@ -230,7 +230,7 @@ dateChangedRaw = (dateType, event) => {
             })
           }
         />
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

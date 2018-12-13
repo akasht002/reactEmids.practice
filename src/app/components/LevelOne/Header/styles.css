@@ -5,3 +5,8 @@
 a.navbar-brand.onboardingLogo {
     display: block !important;
 }
+.navbar-light .navbar-brand
+{
+display: block;
+cursor: context-menu !important;
+}

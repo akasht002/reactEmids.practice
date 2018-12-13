@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { formateDate } from '../../../utils/validations';
@@ -195,7 +195,7 @@ class BlackoutDays extends Component {
       }
     }
     return (
-      <React.Fragment>
+      <Fragment>
         <div className={"SPAvailBlackOutWidget"}>
           <div className="col-md-12 card CardWidget SPBlackoutDays">
           { !this.props.showBalckout ? 
@@ -238,7 +238,7 @@ class BlackoutDays extends Component {
             isDeleteModalOpen: false
           })}
         />
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

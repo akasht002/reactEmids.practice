@@ -13,7 +13,9 @@ import { getLength } from '../../../utils/validations'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { authorizePermission } from '../../../utils/roleUtility';
 import { Details } from './Details'
-import './style.css'
+import './style.css';
+import {compare} from "../../../utils/comparerUtility";
+
 
 class ServiceArea extends Component {
   constructor(props) {
@@ -50,7 +52,15 @@ class ServiceArea extends Component {
       coverageArea:nextProps.ServiceAreaFieldDetails.coverageArea ? nextProps.ServiceAreaFieldDetails.coverageArea: 0,
       zip: nextProps.ServiceAreaFieldDetails.zipCode,
       addressId: nextProps.ServiceAreaFieldDetails.addressId ?
-      nextProps.ServiceAreaFieldDetails.addressId : 0
+      nextProps.ServiceAreaFieldDetails.addressId : 0,
+      selectedState: {
+        label: nextProps.ServiceAreaFieldDetails
+          ? nextProps.ServiceAreaFieldDetails.stateName
+          : '',
+        value: nextProps.ServiceAreaFieldDetails
+          ? nextProps.ServiceAreaFieldDetails.stateId + '-' + nextProps.ServiceAreaFieldDetails.stateName
+           : ''
+      },
     })
   }
 
@@ -68,6 +78,7 @@ class ServiceArea extends Component {
       streetInvalid: false,
       cityInvalid: false,
       state_idInvalid: false,
+      stateInvalid: false,
       zipInvalid: false,
       isAdd: true,
       isValid: true
@@ -81,9 +92,46 @@ class ServiceArea extends Component {
       isDiscardModalOpen: false,
       isValid: true,
       disabledSaveBtn: false,
-      coverageArea: coverageArea
+      coverageArea: coverageArea,
+      selectedState: {
+        label: this.props.ServiceAreaFieldDetails
+          ? this.props.ServiceAreaFieldDetails.stateName
+          : '',
+          value: this.props.ServiceAreaFieldDetails
+          ? this.props.ServiceAreaFieldDetails.stateId + '-' + this.props.ServiceAreaFieldDetails.stateName
+           : ''
+      },
     })
     this.onClose()
+  let previousObject ={
+    street: this.props.ServiceAreaFieldDetails.streetAddress,
+    city: this.props.ServiceAreaFieldDetails.city,
+    coverageArea:this.props.ServiceAreaFieldDetails.coverageArea ? this.props.ServiceAreaFieldDetails.coverageArea: 0,
+    zip: this.props.ServiceAreaFieldDetails.zipCode,
+  }
+
+  let newObject ={
+    street : this.state.street,
+    city :this.state.city,
+    coverageArea :this.state.coverageArea,
+    zip :this.state.zip
+
+  }
+
+  const fieldDifference = compare(previousObject, newObject);
+
+  if (fieldDifference === true) {
+      this.setState({ serviceAreaModal: false, isDiscardModalOpen: false
+       });
+  } else {
+      this.setState({
+          isDiscardModalOpen: true, serviceAreaModal: true
+      });
+  }
+
+
+
+
   }
 
   onClose = () => {
@@ -101,7 +149,7 @@ class ServiceArea extends Component {
     if (
       this.state.street === '' ||
       this.state.city === '' ||
-      this.state.state_id === '' ||
+      this.state.selectedState.value === '' ||
       this.state.zip === '')
       this.setState({
         isValid: false
@@ -202,7 +250,7 @@ class ServiceArea extends Component {
     }
   }
 
-  render() {
+render() {
     authorizePermission(SCREENS.PROFILE);
     let modalContent
     let modalTitle
@@ -282,22 +330,22 @@ class ServiceArea extends Component {
                 placeholder='Select the state'
                 onChange={value => {
                   this.setState({
-                    state_id: value,
-                    stateInvalid: false,
+                    selectedState: value,
+                    stateInvalid: false
                   })
                   this.checkFieldsOnEdit()
                 }}
-                selectedValue={this.state.state_id}
+                selectedValue={this.state.selectedState}
                 onBlur={(e) => {
-                  if (e.target.value === '') {
+                  if (this.state.selectedState.value === '') {
                     this.setState({
-                      state_idInvalid: true
+                      stateInvalid: true
                     })
-                  }
+                  } 
                 }}
               />
               <small className="text-danger d-block OnboardingAlert">
-                {this.state.state_idInvalid && 'Please enter state'}
+                {this.state.stateInvalid && 'Please enter state'}
               </small>
             </div>
           </div>
@@ -386,7 +434,7 @@ class ServiceArea extends Component {
                     to add Service Area
                     </span>
                 </div>
-              </div>}
+              </div>} 
             </div> }
             
           </ul>

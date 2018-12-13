@@ -119,6 +119,25 @@ div.TeleHealthWidget{
     margin-right: 20px;
 }
 
+.TeleHealthParticipantAvatar .TeleHealthAvatarContainer
+{
+    vertical-align: middle!important;
+    width: 50px;
+    padding: 10px 5px 10px 0px!important;
+}
+
+.TeleHealthParticipantAvatar .TeleHealthParticipantNameContainer span
+{
+    vertical-align: middle!important;
+    padding: 0!important;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    max-width: 160px;
+    min-width: 160px;
+}
+
 .TeleHealthAvatarContainer img{
     border: 0;
 }
