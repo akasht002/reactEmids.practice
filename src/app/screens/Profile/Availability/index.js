@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileModalPopup } from "../../../components";
@@ -20,11 +20,9 @@ class Availability extends Component {
             availabilityModal: false,
             modalType: '',
             add: false,
-            edit: false, 
             updatedData: [],
             isDiscardModalOpen: false,
             isBlackoutModalOpen: false,
-            activeSlots: []          
         }
         this.disabled = "disabled";
         this.slotList = 0;
@@ -69,7 +67,7 @@ class Availability extends Component {
         })
     }
 
-    storeData = (data, changeAvailableDays) => {
+    storeData = data => {
         this.setState({
             updatedData: data
         });
@@ -153,7 +151,7 @@ class Availability extends Component {
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
         blackoutModalContent = <BlackoutDays showBalckout="true"/>
         return (
-            <React.Fragment>
+            <Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
                     <div className={"SPCardTitle d-flex"}>
                         <h4 className={"primaryColor"}>Availability</h4>
@@ -197,30 +195,30 @@ class Availability extends Component {
                     data1={this.props.availableDays}
                 />
                 <ModalPopup
-                isOpen={this.state.isDiscardModalOpen}
-                toggle={this.toggleCheck}
-                ModalBody={<span>Do you want to discard the changes?</span>}
-                btn1='YES'
-                btn2='NO'
-                className='modal-sm'
-                headerFooter='d-none'
-                centered='centered'
-                onConfirm={() => this.reset()}
-                onCancel={() =>
-                this.setState({
-                    isDiscardModalOpen: false
-                })}
+                    isOpen={this.state.isDiscardModalOpen}
+                    toggle={this.toggleCheck}
+                    ModalBody={<span>Do you want to discard the changes?</span>}
+                    btn1='YES'
+                    btn2='NO'
+                    className='modal-sm'
+                    headerFooter='d-none'
+                    centered='centered'
+                    onConfirm={() => this.reset()}
+                    onCancel={() =>
+                    this.setState({
+                        isDiscardModalOpen: false
+                    })}
               />
               <ProfileModalPopup
-                isOpen={this.state.isBlackoutModalOpen}
-                toggle={this.toggleBlackoutModal}
-                ModalBody={blackoutModalContent}
-                className='modal-lg asyncModal availabilityModal'
-                headerFooter='d-none'
-                centered='centered'
-                modalTitle={"Blackout Days"}
+                    isOpen={this.state.isBlackoutModalOpen}
+                    toggle={this.toggleBlackoutModal}
+                    ModalBody={blackoutModalContent}
+                    className='modal-lg asyncModal availabilityModal'
+                    headerFooter='d-none'
+                    centered='centered'
+                    modalTitle={"Blackout Days"}
               />
-            </React.Fragment>
+            </Fragment>
         )
     }
 }
