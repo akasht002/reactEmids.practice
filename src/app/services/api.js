@@ -82,7 +82,7 @@ export const API = {
     getPaymentCardList: 'Account/GetByStripeCustomer/',
     createCharge: 'Account/Pay',
     chargeByCustomerId: 'Account/PayByCustomerId',
-    getServiceareaList: 'ServiceProvider/',
+    getServiceareaList: 'ServiceProvider/GetServiceProviderServiceAreaView/',
     generateToken: 'VideoConferencing/',
     createRoomId: 'VideoConferencing',
     getLinkedParticipants: 'GetParticipants/',

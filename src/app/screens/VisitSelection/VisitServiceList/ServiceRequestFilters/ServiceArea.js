@@ -23,7 +23,7 @@ function ServiceArea (props) {
                 <label className="form-radio-label AddressPOS" htmlFor={'Address' + catNum}>
                     <span className='POSAddress'><i>Street</i>{address.streetAddress}</span>
                     <span className='POSAddress'><i>City</i>{address.city}</span>
-                    <span className='POSAddress'><i>State</i>{address.state.name}</span>
+                    <span className='POSAddress'><i>State</i>{address.stateName}</span>
                     <span className='POSAddress'><i>Zip</i>{address.zipCode}</span>
                     <span className="RadioBoxIcon"/>
                 </label>
