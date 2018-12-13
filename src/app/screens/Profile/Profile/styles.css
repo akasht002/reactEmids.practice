@@ -247,6 +247,13 @@ i.SPIconEditPersonalDetails{
     justify-content: space-between!important;
 }
 
+.UploadProfileImageWidget .UploadedImageLimitation
+{
+margin-bottom: 0px;
+padding-left: 0px;
+list-style-type: none;
+}
+
 .SPCardTitle h4{
     font-size: 20px;
     font-weight: normal;
