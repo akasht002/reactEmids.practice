@@ -74,3 +74,10 @@ div.Select--single > .Select-control .Select-value, div.Select-placeholder, span
 {
 padding-left:20px;
 }
+
+.link-view
+{
+    color: #7a329f;
+    font-size: 14px;
+    font-weight: 600;
+}

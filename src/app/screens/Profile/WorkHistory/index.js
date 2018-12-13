@@ -306,7 +306,7 @@ class WorkHistory extends Component {
                     />
                     {!this.state.designation && (this.state.designationInvalid || !this.state.isValid) &&
                                 <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                                    Please enter designation
+                                    Please enter Designation
                                 </small>
                             }
                 </div>
@@ -336,7 +336,7 @@ class WorkHistory extends Component {
                     />
                     {!this.state.company && (this.state.companyInvalid || !this.state.isValid) &&
                                 <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                                    Please enter company
+                                    Please enter Company Name
                                 </small>
                             }
                             </div>
@@ -365,7 +365,7 @@ class WorkHistory extends Component {
                     />
                     {!this.state.location && (this.state.locationInvalid || !this.state.isValid) &&
                                 <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                                    Please enter location
+                                    Please enter Location
                                 </small>
                             }
                 </div>
@@ -394,7 +394,7 @@ class WorkHistory extends Component {
                          {getLength(this.state.fromDate) === 0 && (this.state.fromDateInvalid
                                     || !this.state.isValid) &&
                                     <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
-                                        Please Select from Date
+                                        Please select 'From Date'
                                 </small>
                                 }
                     </div>
@@ -425,7 +425,7 @@ class WorkHistory extends Component {
                          {getLength(this.state.toDate) === 0 && (this.state.toDateInvalid
                                     || !this.state.isValid) &&
                                     <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
-                                        Please Select to Date
+                                        Please select 'To Date'
                                 </small>
                                 }
 

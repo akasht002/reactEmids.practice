@@ -844,6 +844,11 @@ textarea.msgTextArea:focus{
     outline: 0;
     box-shadow: none;
 }
+textarea.msgTextArea::-webkit-input-placeholder {
+    color: #8c8c8c;
+    }
+
+
 
 input.searchParticipants, input.searchParticipants:focus{
     border: 0 !important;
