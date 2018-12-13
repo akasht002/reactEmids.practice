@@ -1864,3 +1864,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
   height: calc(100% - 200px) !important;
 }
+
+@media (max-width: 1920px) 
+    {
+        .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
+            max-height: 485px;
+            height: 100%;
+        }
+    }

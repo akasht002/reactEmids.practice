@@ -153,13 +153,15 @@ div.modal-lg.EULA{
 .agreementList li {
     padding-left: 1em;
     text-indent: -.7em;
+    line-height: 30px;
 }
 
 .agreementList li::before {
     content: "\2022 ";
     color: #b16193;
     font-size: 30px;
-    line-height: 26px;
+    line-height: 35px;
+    vertical-align: middle;
 }
 
 a.btn.nav-link{
