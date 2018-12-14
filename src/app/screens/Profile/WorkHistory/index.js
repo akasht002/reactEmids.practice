@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { Input, TextArea, ProfileModalPopup, ModalPopup } from "../../../components";
 import { Calendar } from "../../../components/LevelOne/index";
-import { checkSpace, checkDateFormatNumber, formateStateDate, format_DDMMMYYYY_Value, formatDateValue as formatMoment } from "../../../utils/validations";
+import { checkSpace, checkDateFormatNumber, formateStateDate, formatDateValue as formatMoment } from "../../../utils/validations";
 import { compare } from "../../../utils/comparerUtility";
 import {
     formatDate,
