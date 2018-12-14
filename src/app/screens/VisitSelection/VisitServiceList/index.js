@@ -193,9 +193,7 @@ class VisitServiceList extends Component {
         this.setState({
             filterOpen: !this.state.filterOpen
         })
-        this.props.formDirtyVisitList()
-        setTimeout(()=>this.props.startLoading(),400)
-        
+        this.props.formDirtyVisitList()        
     }
 
     handleSortFilterChange = pageNumber => {
