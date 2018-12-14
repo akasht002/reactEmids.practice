@@ -8,7 +8,8 @@ const defaultState = {
         code: ''
     },
     roles: {},
-    menuClicked: null
+    menuClicked: null,
+    isFormDirty: false
 };
 
 export default (state = defaultState, action) => {
@@ -35,6 +36,11 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 menuClicked: action.data
+            }
+        case USER.setIsFormDirty:
+            return {
+                ...state,
+                isFormDirty: action.data
             }
         default:
             return state;

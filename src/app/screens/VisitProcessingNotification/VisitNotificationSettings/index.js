@@ -6,7 +6,7 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import { getVisitNotificationSettings, updateVisitNotificationSettings, handlePushChange, handleEmailChange } from '../../../redux/visitProcessingNotification/VisitNotificationSettings/actions';
 import './VisitNotificationSettings.css';
 import { NotificationCheckBox } from './NotificationCheckBox';
-
+import { setIsFormDirty } from '../../../redux/auth/user/actions';
 class VisitNotificationSettings extends React.Component {
 
     constructor(props) {
@@ -29,16 +29,19 @@ class VisitNotificationSettings extends React.Component {
     }
 
     handlePushChange = (pList) => {
+        this.props.setIsFormDirty(true);
         this.props.handlePushChange(pList);
         this.setState({ checkedPushData: this.props.pushNotification });
     }
 
     handleEmailChange = (eList) => {
+        this.props.setIsFormDirty(true);
         this.props.handleEmailChange(eList);
         this.setState({ checkedEmailData: this.props.emailNotification });
     }
 
     onClickSave = () => {
+        this.props.setIsFormDirty(false);
         this.props.updateVisitNotificationSettings({
             pushNotification: this.props.pushNotification,
             emailNotification: this.props.emailNotification
@@ -99,7 +102,8 @@ function mapDispatchToProps(dispatch) {
         getVisitNotificationSettings: () => dispatch(getVisitNotificationSettings()),
         updateVisitNotificationSettings: (data) => dispatch(updateVisitNotificationSettings(data)),
         handlePushChange: (data) => dispatch(handlePushChange(data)),
-        handleEmailChange: (data) => dispatch(handleEmailChange(data))
+        handleEmailChange: (data) => dispatch(handleEmailChange(data)),
+        setIsFormDirty: (data) => dispatch(setIsFormDirty(data))  
     }
 };
 

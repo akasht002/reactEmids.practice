@@ -87,7 +87,7 @@ class VisitServiceList extends Component {
         this.props.getServiceArea();
         this.props.getServiceRequestCount()
         this.props.clearServiceType()
-        setTimeout(()=>this.props.startLoading(),400)
+        setTimeout(()=>this.props.startLoading(),500)
     }
 
     componentWillReceiveProps (nextProps) {
@@ -193,7 +193,9 @@ class VisitServiceList extends Component {
         this.setState({
             filterOpen: !this.state.filterOpen
         })
-        this.props.formDirtyVisitList()        
+        this.props.formDirtyVisitList() 
+        setTimeout(()=>this.props.startLoading(),100)
+              
     }
 
     handleSortFilterChange = pageNumber => {
@@ -242,6 +244,7 @@ class VisitServiceList extends Component {
         }
         this.props.getVisitServiceList(data);
         this.props.formDirty()
+        setTimeout(()=>this.props.startLoading(),100)
         //this.props.formDirtyVisitList()
     }
 

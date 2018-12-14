@@ -24,10 +24,10 @@ import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntitySPProfileHeaderMenu } from "../../../data/EntitySPProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
-import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
-import  VisitNotification  from '../../VisitProcessingNotification/VisitNotification';
+import { clearInvitaion, joinVideoConference, rejectConference } from '../../../redux/telehealth/actions';
+import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
 import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
-import {setMenuClicked} from '../../../redux/auth/user/actions';
+import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -35,7 +35,9 @@ class AsideScreenCover extends React.Component {
         super(props)
         this.state = {
             profilePermission: extractRole(SCREENS.PROFILE),
-            showNotification: false
+            showNotification: false,
+            displayWarningPopup: false,
+            routeUrlLink: '/'
         }
     }
 
@@ -60,9 +62,10 @@ class AsideScreenCover extends React.Component {
     }
 
     navigateProfileHeader = (link) => {
+        this.props.setIsFormDirty(false);
         switch (link) {
             case 'visitNotification':
-                this.setState({selectedLink: link, showNotification: !this.state.showNotification});
+                this.setState({ selectedLink: link, showNotification: !this.state.showNotification });
                 break;
             case 'messagesummary':
                 this.props.navigateProfileHeader(link);
@@ -79,6 +82,9 @@ class AsideScreenCover extends React.Component {
             case 'aboutUs':
                 this.setState({ selectedLink: link })
                 break;
+                case 'profile':
+                this.goToProfile();
+                break;
             default:
                 this.setState({ selectedLink: link })
                 this.props.navigateProfileHeader(link);
@@ -87,7 +93,11 @@ class AsideScreenCover extends React.Component {
     };
 
     checkIsFormDirty = (link) => {
-        if (this.props.roomId && link !== 'aboutUs' && link !== 'visitNotification'
+        this.setState({ routeUrlLink: link });
+        if (this.props.isFormDirty) {
+            this.setState({ displayWarningPopup: true });
+        }
+        else if (this.props.roomId && link !== 'aboutUs' && link !== 'visitNotification'
             && link !== 'contact' && link !== 'telehealth') {
             this.props.setMenuClicked(link)
         } else {
@@ -106,10 +116,10 @@ class AsideScreenCover extends React.Component {
     render() {
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
-        if(isEntityServiceProvider()){
+        if (isEntityServiceProvider()) {
             headerMenu = EntitySPProfileHeaderMenu;
         };
-        let menuData = (!getUserInfo().isEntityServiceProvider) ? MenuData:EntityMenuData;
+        let menuData = (!getUserInfo().isEntityServiceProvider) ? MenuData : EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
@@ -129,7 +139,7 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
-                        onClick={this.state.profilePermission.Read && this.goToProfile}
+                        onClick={() => {this.state.profilePermission.Read && this.checkIsFormDirty('profile')}}
                     />
 
                     <div className='ProfileNameWidget'>
@@ -138,7 +148,7 @@ class AsideScreenCover extends React.Component {
                             {this.props.personalDetail.serviceProviderTypeId === 2 && <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.entityName || ''}</a>}
                         </div>
                     </div>
-                    <AsideMenu menuData={menuData} url={this.props} onClick={link => this.checkIsFormDirty(link)}/>
+                    <AsideMenu menuData={menuData} url={this.props} onClick={link => this.checkIsFormDirty(link)} />
                 </div>
                 <div className="container-fluid ProfileRightWidget">
                     <ProfileHeader
@@ -147,7 +157,7 @@ class AsideScreenCover extends React.Component {
                             : require('../../../assets/images/Blank_Profile_icon.png')}
                         toggle={this.props.toggle}
                         onClick={(link) => this.checkIsFormDirty(link)}
-                        dashboardMessageCount={this.props.dashboardMessageCount}/>
+                        dashboardMessageCount={this.props.dashboardMessageCount} />
 
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
@@ -201,8 +211,24 @@ class AsideScreenCover extends React.Component {
                 />
                 <VisitNotification
                     isOpen={this.state.showNotification}
-                   // visitNotification={this.props.visitNotification}
+                    // visitNotification={this.props.visitNotification}
                     toggle={() => { this.setState({ showNotification: !this.state.showNotification }) }}
+                />
+                <ModalPopup
+                    isOpen={this.state.displayWarningPopup}
+                    ModalBody={<span>Do you want to discard changes?</span>}
+                    btn1="Yes"
+                    btn2="No"
+                    className="zh"
+                    headerFooter="d-none"
+                    footer='d-none'
+                    centered={true}
+                    onConfirm={() => {
+                        this.navigateProfileHeader(this.state.routeUrlLink)
+                    }}
+                    onCancel={() => this.setState({
+                        displayWarningPopup: !this.state.displayWarningPopup,
+                    })}
                 />
             </ScreenCover>
         )
@@ -226,7 +252,8 @@ function mapDispatchToProps(dispatch) {
         rejectConference: () => dispatch(rejectConference()),
         getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
         setMenuClicked: (data) => dispatch(setMenuClicked(data)),
-        getBuildVersion: () => dispatch(getBuildVersion())
+        getBuildVersion: () => dispatch(getBuildVersion()),
+        setIsFormDirty: (data) => dispatch(setIsFormDirty(data))
     }
 };
 
@@ -247,7 +274,8 @@ function mapStateToProps(state) {
         dashboardMessageCount: state.asyncMessageState.dashboardMessageCount,
         roomId: state.telehealthState.roomId,
         telehealthToken: state.telehealthState.token,
-        buildVersion: state.aboutUsState.buildVersion
+        buildVersion: state.aboutUsState.buildVersion,
+        isFormDirty: state.authState.userState.isFormDirty
     };
 };
 

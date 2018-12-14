@@ -14,7 +14,8 @@ export const USER = {
     deleteUser: 'delete_user/user',
     clearData: 'clear_data/user',
     setUserRoles: 'set_user_roles/user',
-    menuClicked: 'menuClicked/user'
+    menuClicked: 'menuClicked/user',
+    setIsFormDirty: 'set_isFormDirty/user'
 };
 
 export const setUserRoles = (data) => {
@@ -135,5 +136,12 @@ export function setMenuClicked(data){
     return{
         type: USER.menuClicked,
         data
+    }
+};
+
+export function setIsFormDirty(isDirty){
+    return{
+        type: USER.setIsFormDirty,
+        data: isDirty
     }
 };
