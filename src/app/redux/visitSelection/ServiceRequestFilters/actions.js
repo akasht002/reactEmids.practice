@@ -30,7 +30,7 @@ export const clearServiceRequestStatus = (data) => {
 
 
 export const clearServiceCategory = (data) => {
-    data.map((item) => {
+    data && data.map((item) => {
         return item.isChecked = false;
     })
     return {
@@ -190,9 +190,9 @@ export function getFilter(data) {
 
         elasticSearchPost(API.PostSearchServiceRequest, reqObj).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
-            dispatch(endLoading());
+//            dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+//            dispatch(endLoading());
         })
 
     }
@@ -215,9 +215,9 @@ export function getFilterDataCount(data) {
             }
         elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
             dispatch(getFilterDataCountSuccess(resp.data))
-            dispatch(endLoading());
+  //          dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+ //           dispatch(endLoading());
         })
 
     }

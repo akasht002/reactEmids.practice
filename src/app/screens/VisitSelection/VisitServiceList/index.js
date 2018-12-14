@@ -30,6 +30,7 @@ import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
 import { SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN } from '../../../constants/constants';
+import { startLoading, endLoading } from '../../../redux/loading/actions';
 import { getUserInfo } from '../../../services/http';
 
 class VisitServiceList extends Component {
@@ -79,16 +80,18 @@ class VisitServiceList extends Component {
         let data = {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
-        }
+        }        
         this.props.getVisitServiceList(data);
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
         this.props.getServiceArea();
         this.props.getServiceRequestCount()
         this.props.clearServiceType()
+        setTimeout(()=>this.props.startLoading(),400)
     }
 
     componentWillReceiveProps (nextProps) {
+        this.props.endLoading()
         let serviceRequestStatus = []
         if (nextProps.ServiceStatus !== this.props.ServiceStatus) {
           nextProps.ServiceStatus.forEach(function (status) {
@@ -191,6 +194,7 @@ class VisitServiceList extends Component {
             filterOpen: !this.state.filterOpen
         })
         this.props.formDirtyVisitList()
+        setTimeout(()=>this.props.startLoading(),400)
 
     }
 
@@ -554,7 +558,9 @@ function mapDispatchToProps(dispatch) {
         formDirty: () => dispatch(formDirty()),
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
-        clearVisitServiceList:()=>dispatch(clearVisitServiceList())
+        clearVisitServiceList:()=>dispatch(clearVisitServiceList()),
+        startLoading: () => dispatch(startLoading()),
+        endLoading: () => dispatch(endLoading())
     }
 };
 

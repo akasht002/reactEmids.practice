@@ -34,9 +34,9 @@ export function getVisitServiceList(data) {
         dispatch(startLoading());
         elasticSearchGet(API.getServiceRequestList + `${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
-            dispatch(endLoading());
+            //dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+           // dispatch(endLoading());
         })
     };
 };
@@ -54,10 +54,10 @@ export function getServiceRequestCount () {
           if (resp && resp.data) {
             dispatch(serviceRequestCountSuccess(resp.data))
           }
-          dispatch(endLoading())
+        //   dispatch(endLoading())
         })
         .catch(() => {
-          dispatch(endLoading())
+       //   dispatch(endLoading())
         })
     }
   };
