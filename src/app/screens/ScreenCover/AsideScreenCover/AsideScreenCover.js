@@ -11,7 +11,7 @@ import { ModalUserAgreement } from '../../../components';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
 import Help from '../../../assets/HelpDoc/Help.pdf';
-import { getAboutUsContent } from '../../../redux/aboutUs/actions';
+import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
 import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
 import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/actions';
@@ -46,6 +46,7 @@ class AsideScreenCover extends React.Component {
         this.props.getPersonalDetail();
         this.props.getAboutUsContent();
         this.props.canServiceProviderCreateMessage();
+        this.props.getBuildVersion();
         authorizePermission(SCREENS.DASHBOARD);
         authorizePermission(SCREENS.SERVICE_REQUEST);
         authorizePermission(SCREENS.VISIT_HISTORY);
@@ -172,6 +173,7 @@ class AsideScreenCover extends React.Component {
                     ModalBody={<AboutContent
                         toggle={() => { this.setState({ selectedLink: null }) }}
                         aboutUsContent={<div dangerouslySetInnerHTML={{ __html: this.props.aboutUsContent }} />}
+                        buildVersion={this.props.buildVersion}
                     />}
                     className="modal-lg AboutModal"
                     headerFooter='d-none'
@@ -223,7 +225,8 @@ function mapDispatchToProps(dispatch) {
         joinVideoConference: () => dispatch(joinVideoConference()),
         rejectConference: () => dispatch(rejectConference()),
         getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
-        setMenuClicked: (data) => dispatch(setMenuClicked(data))
+        setMenuClicked: (data) => dispatch(setMenuClicked(data)),
+        getBuildVersion: () => dispatch(getBuildVersion())
     }
 };
 
@@ -243,7 +246,8 @@ function mapStateToProps(state) {
         visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification,
         dashboardMessageCount: state.asyncMessageState.dashboardMessageCount,
         roomId: state.telehealthState.roomId,
-        telehealthToken: state.telehealthState.token
+        telehealthToken: state.telehealthState.token,
+        buildVersion: state.aboutUsState.buildVersion
     };
 };
 
