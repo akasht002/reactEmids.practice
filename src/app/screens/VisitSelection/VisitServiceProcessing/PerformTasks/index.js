@@ -140,7 +140,7 @@ class PerformTasks extends Component {
             isActive: true,
             serviceRequestTypeTaskVisits: this.checkedTask
         }
-        this.props.addPerformedTask(data,startServiceAction);
+        this.props.addPerformedTask(data, startServiceAction);
     }
 
     render() {
@@ -163,7 +163,7 @@ class PerformTasks extends Component {
         }
 
         if (visitStatus === SERVICE_STATES.IN_PROGRESS) {
-            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(stopService, this.state.taskList.serviceRequestVisitId) }}>Stop Service</a>
+            timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
         }
 
         return (
@@ -234,7 +234,7 @@ class PerformTasks extends Component {
                         <div className='CardContainers'>
                             <div className='ServiceContent'>
                                 {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
-                                     let image_url = getServiceTypeImage(serviceType.serviceRequestTypeTaskVisits && serviceType.serviceRequestTypeTaskVisits.length > 0 && serviceType.serviceRequestTypeTaskVisits[0].serviceTypeId);
+                                    let image_url = getServiceTypeImage(serviceType.serviceRequestTypeTaskVisits && serviceType.serviceRequestTypeTaskVisits.length > 0 && serviceType.serviceRequestTypeTaskVisits[0].serviceTypeId);
                                     return (
                                         <div className={"TabContainerWidget"} key={serviceType.serviceRequestTypeDetailsId}>
                                             <div onClick={() => {
@@ -325,12 +325,14 @@ class PerformTasks extends Component {
 
                     <ModalPopup
                         isOpen={this.state.isStopModalOpen}
-                        ModalBody={<span>Please stop the service to proceed.</span>}
-                        btn1="OK"
+                        ModalBody={<span>Do you want to End the visit.</span>}
+                        btn1="Yes"
+                        btn2="No"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onConfirm={() => this.setState({
+                        onConfirm={() => {this.setState({isStopModalOpen: !this.state.isStopModalOpen,}),this.startService(0, this.state.taskList.serviceRequestVisitId)}}
+                        onCancel={() => this.setState({
                             isStopModalOpen: !this.state.isStopModalOpen,
                         })}
                     />

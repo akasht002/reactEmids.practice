@@ -125,7 +125,7 @@ class Summary extends Component {
                 BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
                 TaxPaid: this.props.CalculationsData.taxes,
                 BilledPerService: this.props.CalculationsData.totalVisitCost,
-                TotalCost: this.props.CalculationsData.grandTotalAmount,
+                TotalCost: this.props.CalculationsData.totalVisitCost,
                 Image: this.state.signatureImage,
                 TaxRate: this.state.summaryDetails.taxAmount
             }
