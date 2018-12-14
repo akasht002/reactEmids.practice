@@ -45,8 +45,8 @@ class Summary extends Component {
 
     componentDidMount() {
         if (this.props.ServiceRequestVisitId) {
-            // this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
-            // this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
+            this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
+            this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
         } else {
             this.props.history.push(Path.visitServiceList)
         }
