@@ -20,7 +20,6 @@ import {
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
-
 class VistSummary extends React.Component {
   constructor(props) {
     super(props);
@@ -503,7 +502,7 @@ class VistSummary extends React.Component {
                   <div className="col-md-8 EstimatedCostContainer Label">
                     <p>
                       <span>Estimated Claim</span>
-                      <span>Copay On Credit Card</span>
+                      <span>Credit Card Payment</span>
                     </p>
                   </div>
                   <div className="col-md-4 EstimatedCostContainer Cost">

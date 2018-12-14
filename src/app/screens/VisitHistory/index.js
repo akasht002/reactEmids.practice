@@ -21,10 +21,12 @@ import {
 import { VisitList } from './VisitList'
 import Filter from './VisitHistoryFilter'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
-
+import { setPatient } from '../../redux/patientProfile/actions';
 import '../Dashboard/styles/ServiceTasks.css'
 import './visitList.css'
 import '../../styles/SelectDropdown.css'
+import { push } from '../../redux/navigation/actions';
+import { Path } from "../../routes";
 
 class VisitHistory extends Component {
   constructor(props) {
@@ -43,10 +45,10 @@ class VisitHistory extends Component {
 
   componentDidMount() {
     let data = {
-      pageNumber : 1,
-      pageSize : 10,
-      sortOrder : 'asc',
-      sortName : 'visitdate'
+      pageNumber: 1,
+      pageSize: 10,
+      sortOrder: 'asc',
+      sortName: 'visitdate'
     }
     this.props.getVisitServiceLists(data)
     this.props.getAllServiceProviders()
@@ -102,7 +104,7 @@ class VisitHistory extends Component {
   }
 
   applyFilter = (selectedData) => {
-   
+
     const data = {
       fromDate: selectedData.searchData.startDate ? selectedData.searchData.startDate : '1900-01-01',
       toDate: selectedData.searchData.endDate ? selectedData.searchData.endDate : moment().toDate(),
@@ -110,7 +112,7 @@ class VisitHistory extends Component {
       serviceTypeList: this.state.serviceTypeIds,
       status: [],
       serviceProviderList: selectedData.serviceProviderArray,
-      individualList:selectedData.individualList,
+      individualList: selectedData.individualList,
       serviceProviderId: 0,
       pageNumber: 1,
       pageSize: 10
@@ -123,10 +125,10 @@ class VisitHistory extends Component {
   }
 
   applyReset = () => {
-    this.setState({ selectedOption: '', serviceTypeIds: [], sort:true })
+    this.setState({ selectedOption: '', serviceTypeIds: [], sort: true })
     this.props.clearServiceTypes();
     this.props.clearServiceProviders(this.props.serviceProviders);
-    this.props.clearPatientForServiceProviders(this.props.PatientForServiceproviders) ;
+    this.props.clearPatientForServiceProviders(this.props.PatientForServiceproviders);
     let data = {
       pageNumber: 1,
       pageSize: 10,
@@ -137,12 +139,12 @@ class VisitHistory extends Component {
   }
 
   handlePageChange = (pageNumber) => {
-    this.setState({pageNumber: pageNumber})
+    this.setState({ pageNumber: pageNumber })
     let data = {
-      pageNumber : pageNumber,
-      pageSize : 10,
-      sortOrder : this.state.sortByOrder,
-      sortName : 'visitdate'
+      pageNumber: pageNumber,
+      pageSize: 10,
+      sortOrder: this.state.sortByOrder,
+      sortName: 'visitdate'
     }
     this.props.getVisitServiceLists(data)
     this.setState({ activePage: pageNumber });
@@ -150,12 +152,17 @@ class VisitHistory extends Component {
 
   selectedSort = (selectedKey) => {
     let data = {
-      pageNumber : this.state.pageNumber,
-      pageSize : 10,
-      sortOrder : selectedKey,
-      sortName : 'visitdate'
+      pageNumber: this.state.pageNumber,
+      pageSize: 10,
+      sortOrder: selectedKey,
+      sortName: 'visitdate'
     }
     this.props.getVisitServiceLists(data);
+  }
+
+  handelPatientProfile = (data) => {
+    this.props.setPatient(data)
+    this.props.goToPatientProfile()
   }
 
   render() {
@@ -205,39 +212,40 @@ class VisitHistory extends Component {
           <VisitList
             visitHistoryList={this.props.VisitServiceHistory}
             handleClicks={this.handleClick}
+            handelPatientProfile={this.handelPatientProfile}
           />
           {this.props.VisitServiceHistory.length > 0 && this.state.sort === 'true' && (
-              <div class="col-md-12 p-0 AsyncConversationPagination">
-                <Pagination
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={this.props.historyListCount}
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange}
-                  itemClass="PaginationItem"
-                  itemClassFirst="PaginationIcon First"
-                  itemClassPrev="PaginationIcon Prev"
-                  itemClassNext="PaginationIcon Next"
-                  itemClassLast="PaginationIcon Last"
-                />
-              </div>
-            )}
-            {this.props.VisitServiceHistory.length > 0 && this.state.sort === 'false' && (
-              <div class="col-md-12 p-0 AsyncConversationPagination">
-                <Pagination
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={this.props.VisitServiceHistory[0].dataCount}
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange}
-                  itemClass="PaginationItem"
-                  itemClassFirst="PaginationIcon First"
-                  itemClassPrev="PaginationIcon Prev"
-                  itemClassNext="PaginationIcon Next"
-                  itemClassLast="PaginationIcon Last"
-                />
-              </div>
-            )}
+            <div class="col-md-12 p-0 AsyncConversationPagination">
+              <Pagination
+                activePage={this.state.activePage}
+                itemsCountPerPage={10}
+                totalItemsCount={this.props.historyListCount}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+                itemClass="PaginationItem"
+                itemClassFirst="PaginationIcon First"
+                itemClassPrev="PaginationIcon Prev"
+                itemClassNext="PaginationIcon Next"
+                itemClassLast="PaginationIcon Last"
+              />
+            </div>
+          )}
+          {this.props.VisitServiceHistory.length > 0 && this.state.sort === 'false' && (
+            <div class="col-md-12 p-0 AsyncConversationPagination">
+              <Pagination
+                activePage={this.state.activePage}
+                itemsCountPerPage={10}
+                totalItemsCount={this.props.VisitServiceHistory[0].dataCount}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+                itemClass="PaginationItem"
+                itemClassFirst="PaginationIcon First"
+                itemClassPrev="PaginationIcon Prev"
+                itemClassNext="PaginationIcon Next"
+                itemClassLast="PaginationIcon Last"
+              />
+            </div>
+          )}
           <div className='cardBottom' />
         </Scrollbars>
         <Filter
@@ -272,7 +280,9 @@ function mapDispatchToProps(dispatch) {
     getFilteredData: (data) => dispatch(getFilteredData(data)),
     getHistoryListCount: () => dispatch(getHistoryListCount()),
     getAllPatientForServiceProviders: () => dispatch(getAllPatientForServiceProviders()),
-    clearPatientForServiceProviders: (data) => dispatch(clearPatientForServiceProviders(data))
+    clearPatientForServiceProviders: (data) => dispatch(clearPatientForServiceProviders(data)),
+    setPatient: (data) => dispatch(setPatient(data)),
+    goToPatientProfile: () => dispatch(push(Path.patientProfile)),
 
   }
 }
@@ -290,7 +300,7 @@ function mapStateToProps(state) {
     serviceType: state.visitHistoryState.vistServiceHistoryState.typeList,
     historyListCount: state.visitHistoryState.vistServiceHistoryState
       .historyListCount,
-      PatientForServiceproviders: state.visitHistoryState.vistServiceHistoryState
+    PatientForServiceproviders: state.visitHistoryState.vistServiceHistoryState
       .PatientForServiceproviders,
   }
 }

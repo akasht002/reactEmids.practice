@@ -54,7 +54,7 @@ export const VisitList = props => {
                       </div>
                     </div>
                     <div className="col-md-4 col-sm-4 col-xs-12 d-flex padding-less align-items-center justify-content-end p-0">
-                      <div className="visitUserPic-block right-uservisit-view">
+                      <div className="visitUserPic-block right-uservisit-view" onClick={() => props.handelPatientProfile(vistList.patientId)}>
                         <div className="visitUserPic">
                           <div class="avatarContainer">
                             <img

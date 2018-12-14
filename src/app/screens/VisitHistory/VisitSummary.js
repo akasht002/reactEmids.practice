@@ -5,12 +5,14 @@ import Moment from 'react-moment'
 import { Scrollbars } from '../../components'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import { Path } from '../../routes'
+import { push } from '../../redux/navigation/actions';
 import {
   getVisitServiceHistoryByIdDetail, getVisitFeedBack
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import './VisitSummary.css'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import Summary from './Summary'
+import { setPatient } from '../../redux/patientProfile/actions';
 import './visitProcessing.css'
 
 class VisitSummary extends React.Component {
@@ -47,6 +49,11 @@ class VisitSummary extends React.Component {
     this.props.getVisitFeedBack(this.props.Visits.VisitServiceDetails.serviceRequestVisitId)
   }
 
+  handelPatientProfile = (data) => {
+    this.props.setPatient(data)
+    this.props.goToPatientProfile()
+  }
+
   render() {
     let visitSummary = this.props.Visits.VisitServiceDetails
 
@@ -80,7 +87,7 @@ class VisitSummary extends React.Component {
                     <span>
                       <i className='requestName'><Moment format="ddd, DD MMM">{visitSummary.visitDate}</Moment>, {visitSummary.slotDescription}</i>{visitSummary.serviceRequestVisitId}</span>
                   </div>
-                  <div className='requestImageContent'>
+                  <div className='requestImageContent' onClick={() => this.handelPatientProfile(visitSummary.patient && visitSummary.patient.patientId)}>
                     <span className='IndividualName'>
                       <img
                         alt={'NO_IMAGE'}
@@ -121,7 +128,9 @@ function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceHistoryByIdDetail: data =>
       dispatch(getVisitServiceHistoryByIdDetail(data)),
-    getVisitFeedBack: data => dispatch(getVisitFeedBack(data))
+    getVisitFeedBack: data => dispatch(getVisitFeedBack(data)),
+    setPatient: (data) => dispatch(setPatient(data)),
+    goToPatientProfile: () => dispatch(push(Path.patientProfile)),
   }
 }
 

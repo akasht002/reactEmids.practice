@@ -424,3 +424,7 @@ button.btn.CancelSignature{
         height: 200px;
     }
 }
+
+.requestImageContent {
+    cursor: pointer;
+}
