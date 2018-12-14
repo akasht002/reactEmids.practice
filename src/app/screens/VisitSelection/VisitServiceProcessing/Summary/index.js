@@ -369,15 +369,15 @@ class Summary extends Component {
                                                     <div className="col-md-8 EstimatedCostContainer Label">
                                                         <p><span>Estimated Claim</span>
                                                         </p>
-                                                        <p><span>Copay On Credit Card</span></p>
+                                                        <p><span>Credit Card Payment</span></p>
                                                     </div>
                                                     <div className="col-md-4 EstimatedCostContainer Cost">
                                                         <p><span>${this.props.CalculationsData.estimatedClaim}</span></p>
-                                                        <p><span>${this.props.CalculationsData.copayAmount}</span></p>
+                                                        <p><span>${this.props.CalculationsData.copayAmount && this.props.CalculationsData.copayAmount.toFixed(2)}</span></p>
                                                     </div>
                                                 </div>
                                             }
-                                            <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that this claim is an estimate pending the claim process</p>
+                                            <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that any claim is an estimate pending the claim process</p>
                                         </div>
                                     </div>
                                     <div className="RightWidget">
