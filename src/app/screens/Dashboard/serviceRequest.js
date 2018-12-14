@@ -113,7 +113,7 @@ class ServiceRequest extends React.Component {
     return (
       <div
         className={
-          this.state.showMore ? 'card ProfileCard' : 'card ProfileCard extended'
+          this.state.showMore ? 'card ProfileCard extended' : 'card ProfileCard'
         }
       >
         <div className='ProfileCardBody'>

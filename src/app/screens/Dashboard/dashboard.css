@@ -1175,8 +1175,8 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .innerWidget .card.extended {
         /* height: calc(100vh - 140px); */
-        height: 620px;
-        z-index: 1;
+        /* height: 620px;
+        z-index: 1; */
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
@@ -1279,7 +1279,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .innerWidget .card.extended {
         /* height: calc(100vh - 140px); */
-        height: 620px;
+        height: 596px;
     }
 
     .ProfileCardNameContainer {
@@ -1868,7 +1868,8 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 @media (max-width: 1920px) 
     {
         .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-            max-height: 485px;
-            height: 100%;
+            max-height: 475px;
+            height: auto;
+            overflow-y: auto;
         }
     }
