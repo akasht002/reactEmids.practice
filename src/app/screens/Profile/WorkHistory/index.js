@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { Input, TextArea, ProfileModalPopup, ModalPopup } from "../../../components";
 import { Calendar } from "../../../components/LevelOne/index";
-import { checkSpace, checkDateFormatNumber, formateStateDate, format_DDMMMYYYY_Value } from "../../../utils/validations";
+import { checkSpace, checkDateFormatNumber, formateStateDate, formatDateValue as formatMoment } from "../../../utils/validations";
 import { compare } from "../../../utils/comparerUtility";
 import {
     formatDate,
@@ -482,7 +482,7 @@ class WorkHistory extends Component {
                             </h5>
                             <span className="ml-auto SPWorkYear">
                             <span>
-                                {format_DDMMMYYYY_Value(WorkHistoryList.fromDate) }
+                                {formatMoment(WorkHistoryList.fromDate, 'MM-DD-YYYY', 'DD MMM YYYY')}
                             </span>
 
                                <span> - </span>
@@ -490,7 +490,7 @@ class WorkHistory extends Component {
                                     <span>Present</span>
                                     :
                                     <span> { /* to do change removing className="ml-2" */}
-                                        {format_DDMMMYYYY_Value(WorkHistoryList.toDate)}
+                                        {formatMoment(WorkHistoryList.toDate, 'MM-DD-YYYY', 'DD MMM YYYY')}
                                     </span>
                                 }
                             </span>

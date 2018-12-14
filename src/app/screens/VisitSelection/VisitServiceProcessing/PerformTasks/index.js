@@ -145,7 +145,7 @@ class PerformTasks extends Component {
 
     render() {
         let startService = 1;
-        let stopService = 0;
+        // let stopService = 0;
         let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
         let timerBtn;
         const { visitStatus, visitStartTime, visitEndTime } = this.props.PerformTasksList
@@ -331,7 +331,7 @@ class PerformTasks extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onConfirm={() => {this.setState({isStopModalOpen: !this.state.isStopModalOpen,}),this.startService(0, this.state.taskList.serviceRequestVisitId)}}
+                        onConfirm={() => {this.setState({isStopModalOpen: !this.state.isStopModalOpen}); this.startService(0, this.state.taskList.serviceRequestVisitId)}}
                         onCancel={() => this.setState({
                             isStopModalOpen: !this.state.isStopModalOpen,
                         })}
