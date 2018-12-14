@@ -13,6 +13,7 @@ export default class AboutContent extends React.Component {
                     </div>
                 </div>
                 <div className='AboutModalContent'>
+                    <span class="version">Version {this.props.buildVersion} - SP</span>
                     {this.props.aboutUsContent}
                     <div className='AboutContentContainer Right'>
                         <span className="LinkCard"><img src={require('./images/about_translation.svg')} alt="translation" />www.navvishealthcare.com</span>
