@@ -213,3 +213,7 @@ export function unique(arr, keyProps) {
 export function format_DDMMMYYYY_Value (date) {
   return date ? moment(date).format(DATE_FORMAT_MONTH) : null
 }
+
+export function formatDateValue(date, dateFormat, outputFormat) {
+  return date ? moment(date, dateFormat).format(outputFormat) : null
+}
