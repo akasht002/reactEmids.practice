@@ -36,7 +36,7 @@ export function getVisitServiceList(data) {
             dispatch(getVisitServiceListSuccess(resp.data))
             //dispatch(endLoading());
         }).catch((err) => {
-           // dispatch(endLoading());
+            dispatch(endLoading());
         })
     };
 };
@@ -57,7 +57,7 @@ export function getServiceRequestCount () {
         //   dispatch(endLoading())
         })
         .catch(() => {
-       //   dispatch(endLoading())
+          dispatch(endLoading())
         })
     }
   };

@@ -195,7 +195,7 @@ class VisitServiceList extends Component {
         })
         this.props.formDirtyVisitList()
         setTimeout(()=>this.props.startLoading(),400)
-
+        
     }
 
     handleSortFilterChange = pageNumber => {
