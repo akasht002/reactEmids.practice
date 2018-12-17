@@ -19,22 +19,24 @@ import {
 import Availability from '../Availability/index'
 import { getUserInfo } from '../../../services/http'
 import { PROFILE_SERVICE_PROVIDER_TYPE_ID, ORG_SERVICE_PROVIDER_TYPE_ID } from '../../../constants/constants'
-import {SCREENS} from '../../../constants/constants';
-import {authorizePermission} from '../../../utils/roleUtility';
+import { SCREENS } from '../../../constants/constants';
+import { authorizePermission } from '../../../utils/roleUtility';
 import { push, goBack } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
-import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
+import { clearInvitaion, joinVideoConference, rejectConference } from '../../../redux/telehealth/actions';
 import { clearServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
-import {getPersonalDetail} from '../../../redux/profile/PersonalDetail/actions'
-import {getPersonalDetailsState} from '../../../utils/userUtility';
+import { getPersonalDetail } from '../../../redux/profile/PersonalDetail/actions'
+import { getPersonalDetailsState } from '../../../utils/userUtility';
+import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
 import './styles.css'
 
 class Profile extends Component {
   state = {
     selectedLink: '',
-    showValidationPopUp : false
+    showValidationPopUp: false,
+    showNotification: false
   };
-  componentDidMount () {
+  componentDidMount() {
     this.props.getProfilePercentage()
     authorizePermission(SCREENS.PROFILE);
   }
@@ -42,14 +44,14 @@ class Profile extends Component {
   getPersonalDetail = () => {
     if (
       (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-      !getUserInfo().isEntityServiceProvider) ||  (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-      !getPersonalDetailsState().isEntityServiceProvider) 
+        !getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+          !getPersonalDetailsState().isEntityServiceProvider)
     ) {
       return <PersonalDetail profilePercentage={this.props.profilePercentage} />
     } else if (
       (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-      getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-      getPersonalDetailsState().isEntityServiceProvider)
+        getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+          getPersonalDetailsState().isEntityServiceProvider)
     ) {
       return (
         <EntityPersonalDetail
@@ -60,12 +62,12 @@ class Profile extends Component {
   }
 
   getAvailability = () => {
-    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-    !getUserInfo().isEntityServiceProvider) ||(getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-    !getPersonalDetailsState().isEntityServiceProvider)) {
-     return <Availability />
-    } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0 )
-    || (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
+    if ((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      !getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+        !getPersonalDetailsState().isEntityServiceProvider)) {
+      return <Availability />
+    } else if ((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)
+      || (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
       return <Availability />
     } else {
       return '';
@@ -73,91 +75,91 @@ class Profile extends Component {
   }
 
   getServiceOffered = () => {
-    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider)||
-      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getPersonalDetailsState().isEntityServiceProvider)) {
+    if ((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      !getUserInfo().isEntityServiceProvider) ||
+      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+        !getPersonalDetailsState().isEntityServiceProvider)) {
       return <div className='col-md-12 card CardWidget SPCertificate'>
         <ServiceOffered />
       </div>
-     } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) || 
-     (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID 
-     && getPersonalDetailsState().entityId === 0)) {
-       return <div className='col-md-12 card CardWidget SPCertificate'>
+    } else if ((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) ||
+      (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID
+        && getPersonalDetailsState().entityId === 0)) {
+      return <div className='col-md-12 card CardWidget SPCertificate'>
         <ServiceOffered />
       </div>
-     } else {
-       return '';
-     }
+    } else {
+      return '';
+    }
   }
 
   getServiceArea = () => {
-    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+    if ((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
       !getUserInfo().isEntityServiceProvider) ||
-      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getPersonalDetailsState().isEntityServiceProvider)) {
-      return <ServiceArea /> 
-     } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)
-     || (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID 
-     && getPersonalDetailsState().entityId === 0)) {
-      return <ServiceArea /> 
-     } else {
-       return '';
-     }
+      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+        !getPersonalDetailsState().isEntityServiceProvider)) {
+      return <ServiceArea />
+    } else if ((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)
+      || (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID
+        && getPersonalDetailsState().entityId === 0)) {
+      return <ServiceArea />
+    } else {
+      return '';
+    }
   };
 
   getSkills = () => {
-    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider)||
-      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getPersonalDetailsState().isEntityServiceProvider)) {
+    if ((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      !getUserInfo().isEntityServiceProvider) ||
+      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+        !getPersonalDetailsState().isEntityServiceProvider)) {
       return <Skills />
-     } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)||
-     (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID 
-     && getPersonalDetailsState().entityId === 0)) {
-       return <Skills />
-     } else {
-       return '';
-     }
+    } else if ((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) ||
+      (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID
+        && getPersonalDetailsState().entityId === 0)) {
+      return <Skills />
+    } else {
+      return '';
+    }
   }
 
   getLanguages = () => {
-    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getPersonalDetailsState().isEntityServiceProvider)) {
+    if ((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      !getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+        !getPersonalDetailsState().isEntityServiceProvider)) {
       return <Languages />
-     } 
-     else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)
-     ||(getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
-       return <Languages />
-     } 
-     else {
-       return '';
-     }
+    }
+    else if ((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0)
+      || (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
+      return <Languages />
+    }
+    else {
+      return '';
+    }
   }
 
   getCertification = () => {
-    if((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getUserInfo().isEntityServiceProvider) || 
-      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
-      !getPersonalDetailsState().isEntityServiceProvider)) {
+    if ((getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      !getUserInfo().isEntityServiceProvider) ||
+      (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+        !getPersonalDetailsState().isEntityServiceProvider)) {
       return <Certification />
-     } else if((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) ||
-     (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
-       return <Certification />
-     } else {
-       return '';
-     }
+    } else if ((getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) ||
+      (getPersonalDetailsState().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getPersonalDetailsState().entityId === 0)) {
+      return <Certification />
+    } else {
+      return '';
+    }
   }
 
   validationPopUp = () => {
-      if(!this.props.isUser){
-        this.goToDashboard();
-      }else{
+    if (!this.props.isUser) {
+      this.goToDashboard();
+    } else {
       let serviceOfferedList = this.props.serviceOfferedList && this.props.serviceOfferedList.length
-      let LanguagesList = this.props.LanguagesList && this.props.LanguagesList.languages &&  this.props.LanguagesList.languages.length
-      if(serviceOfferedList === 0 && LanguagesList === 0) {
-        this.setState({ showValidationPopUp : true })
+      let LanguagesList = this.props.LanguagesList && this.props.LanguagesList.languages && this.props.LanguagesList.languages.length
+      if (serviceOfferedList === 0 && LanguagesList === 0) {
+        this.setState({ showValidationPopUp: true })
       } else {
         this.goToDashboard();
       }
@@ -165,10 +167,10 @@ class Profile extends Component {
   }
 
   stayOnProfile = () => {
-    this.setState({ showValidationPopUp : false})
+    this.setState({ showValidationPopUp: false })
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.props.clearServiceProviderId();
     this.props.getPersonalDetail();
   }
@@ -180,49 +182,52 @@ class Profile extends Component {
   }
 
   getWorkHistory = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
+    if (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
       !getUserInfo().isEntityServiceProvider) {
       return <WorkHistory />
-     } 
+    }
     //  else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
     //    return <WorkHistory />
     //  } 
-     else {
-       return '';
-     }
+    else {
+      return '';
+    }
   }
 
   getEducation = () => {
-    if(getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+    if (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
       return <Education />
-     } else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
-       return '';
-     }
+    } else if (getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+      return '';
+    }
   }
-  
+
   navigateProfileHeader = (link) => {
     switch (link) {
-        case 'messagesummary':
-            this.props.navigateProfileHeader(link);
-            break;
-        case 'contact':
-            this.helpDocEl.click();
-            break;
-        case 'logout':
-            this.props.onLogout();
-            break;
-        default: 
-            this.setState({selectedLink: link})
-            break;
+      case 'visitNotification':
+        this.setState({ selectedLink: link, showNotification: !this.state.showNotification });
+        break;
+      case 'messagesummary':
+        this.props.navigateProfileHeader(link);
+        break;
+      case 'contact':
+        this.helpDocEl.click();
+        break;
+      case 'logout':
+        this.props.onLogout();
+        break;
+      default:
+        this.setState({ selectedLink: link })
+        break;
     }
-};
+  };
 
-  render () {
+  render() {
     return (
       <ScreenCover>
         <div className='container-fluid p-0'>
           <Header
-            onClick = { (link) => this.navigateProfileHeader(link)}
+            onClick={(link) => this.navigateProfileHeader(link)}
             menuArray={[
               'contact',
               'videoChat',
@@ -247,65 +252,70 @@ class Profile extends Component {
                   // (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && 
                   // !getUserInfo().isEntityServiceProvider) ? 
                   <div>
-               
-                
-                {this.getServiceOffered()}
-                <div className='col-md-12 card CardWidget SPCertificate'>
-                  {this.getSkills()}
-                </div>
-                {this.getServiceArea()}
-                {this.getAvailability()}
-                <div className='col-md-12 card CardWidget SPLanguages'>
-                 {this.getLanguages()}
-                </div>
-                <div className='col-md-12 card CardWidget SPCertificate'>
-                  {this.getCertification()}
-                </div>
-                {this.getWorkHistory()}
-                {this.getEducation()}
-                </div> 
-              //  : <div>{this.getEducation()}</div>
-              }
+
+
+                    {this.getServiceOffered()}
+                    <div className='col-md-12 card CardWidget SPCertificate'>
+                      {this.getSkills()}
+                    </div>
+                    {this.getServiceArea()}
+                    {this.getAvailability()}
+                    <div className='col-md-12 card CardWidget SPLanguages'>
+                      {this.getLanguages()}
+                    </div>
+                    <div className='col-md-12 card CardWidget SPCertificate'>
+                      {this.getCertification()}
+                    </div>
+                    {this.getWorkHistory()}
+                    {this.getEducation()}
+                  </div>
+                  //  : <div>{this.getEducation()}</div>
+                }
               </div>
             </div>
           </div>
         </div>
-        
+
         <ParticipantContainer
-              onRef={ref => (this.participantComponent = ref)}
-              isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation}
-              onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
-              createConversation={() => { this.setState({ selectedLink: null }) }}
-          />
-        <ModalPopup
-            isOpen={this.props.showTelehealthInvite}
-            ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}</span>}
-            btn1="Accept"
-            btn2="Decline"
-            className="zh"
-            headerFooter="d-none"
-            centered={true}
-            onConfirm={this.props.joinVideoConference}
-            onCancel={this.props.rejectConference}
+          onRef={ref => (this.participantComponent = ref)}
+          isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation}
+          onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
+          createConversation={() => { this.setState({ selectedLink: null }) }}
         />
-          
         <ModalPopup
-        isOpen={this.state.showValidationPopUp}
-        ModalBody={<span>To increase your visibility across the care seeker network, please provide your Profile Information, Services Offered, Language Spoken and Availability. Do you want to continue with updating?</span>}
-        btn1="Yes"
-        btn2="No"
-        className="zh"
-        headerFooter="d-none"
-        centered={true}
-        onConfirm={this.stayOnProfile}
-        onCancel={this.goToDashboard}
-    />
+          isOpen={this.props.showTelehealthInvite}
+          ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}</span>}
+          btn1="Accept"
+          btn2="Decline"
+          className="zh"
+          headerFooter="d-none"
+          centered={true}
+          onConfirm={this.props.joinVideoConference}
+          onCancel={this.props.rejectConference}
+        />
+
+        <ModalPopup
+          isOpen={this.state.showValidationPopUp}
+          ModalBody={<span>To increase your visibility across the care seeker network, please provide your Profile Information, Services Offered, Language Spoken and Availability. Do you want to continue with updating?</span>}
+          btn1="Yes"
+          btn2="No"
+          className="zh"
+          headerFooter="d-none"
+          centered={true}
+          onConfirm={this.stayOnProfile}
+          onCancel={this.goToDashboard}
+        />
+        <VisitNotification
+          isOpen={this.state.showNotification}
+          // visitNotification={this.props.visitNotification}
+          toggle={() => { this.setState({ showNotification: !this.state.showNotification }) }}
+        />
       </ScreenCover>
     )
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getProfilePercentage: () => dispatch(getProfilePercentage()),
     navigateProfileHeader: (link) => dispatch(push(link)),
@@ -314,12 +324,12 @@ function mapDispatchToProps (dispatch) {
     goToDashboard: () => dispatch(push(Path.dashboard)),
     rejectConference: () => dispatch(rejectConference()),
     goBack: () => dispatch(goBack()),
-    clearServiceProviderId : () => dispatch(clearServiceProviderId()),
+    clearServiceProviderId: () => dispatch(clearServiceProviderId()),
     getPersonalDetail: () => dispatch(getPersonalDetail()),
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
     canCreateConversation: state.asyncMessageState.canCreateConversation,
