@@ -30,7 +30,6 @@ import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
 import { SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN } from '../../../constants/constants';
-import { startLoading, endLoading } from '../../../redux/loading/actions';
 import { getUserInfo } from '../../../services/http';
 
 class VisitServiceList extends Component {
@@ -555,8 +554,6 @@ function mapDispatchToProps(dispatch) {
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
         clearVisitServiceList:()=>dispatch(clearVisitServiceList()),
-        startLoading: () => dispatch(startLoading()),
-        endLoading: () => dispatch(endLoading())
     }
 };
 
