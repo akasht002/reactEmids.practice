@@ -574,7 +574,7 @@ class WorkHistory extends Component {
 
                 <ModalPopup
                     isOpen={this.state.isOnDeleteModalOpen}
-                    ModalBody={<span>Do you really  want to remove the Work History Entry?</span>}
+                    ModalBody={<span>Do you want to remove the Work History Details?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"

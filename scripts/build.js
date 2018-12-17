@@ -90,6 +90,17 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_SIGNALR_URL = 'https://uat-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://uat-ct-api.coreodevserver.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://uat-gen-api.coreodevserver.com/api/';
+} else if (argv.includes('--hmsauat')) {
+  process.env.REACT_APP_API_URL = 'https://HMSA-UAT-sp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'https://HMSA-UAT-oauth-api.coreodevserver.com/';
+  process.env.REACT_APP_SR_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_UI_URL = 'https://HMSA-UAT-sp.coreodevserver.com/#/';
+  process.env.REACT_APP_MSG_URL = "https://HMSA-UAT-tp-api.coreodevserver.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://HMSA-UAT-ct-api.coreodevserver.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://HMSA-UAT-api.coreodevserver.com/api/';
 }
 
 // Ensure environment variables are read.
