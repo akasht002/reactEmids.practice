@@ -34,7 +34,7 @@ export function getVisitServiceList(data) {
         dispatch(startLoading());
         elasticSearchGet(API.getServiceRequestList + `${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
-            resp.data.length === 0 && dispatch(endLoading());
+            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -54,7 +54,7 @@ export function getServiceRequestCount () {
           if (resp && resp.data) {
             dispatch(serviceRequestCountSuccess(resp.data))
           }
-        resp.data.length === 0 && dispatch(endLoading())
+        dispatch(endLoading())
         })
         .catch(() => {
           dispatch(endLoading())
