@@ -183,7 +183,7 @@ class VisitServiceList extends Component {
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas: this.state.ServiceAreas,
             serviceProviderId: serviceProviderId,
-            FromPage: 0,
+            FromPage: this.state.pageNumber,
             ToPage: 15,
         };
         this.props.getFilter(data)
@@ -211,7 +211,7 @@ class VisitServiceList extends Component {
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas: this.state.ServiceAreas,
             serviceProviderId: serviceProviderId,
-            FromPage: number,
+            FromPage: pageNumber,
             ToPage: 15,
         };
         this.props.getFilter(data)
