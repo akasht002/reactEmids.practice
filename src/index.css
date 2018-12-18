@@ -732,7 +732,8 @@ button.navbar-toggler{
 }
 
 div.scrollarea .scrollbar-container.active, div.scrollarea .scrollbar-container:hover{
-    	    opacity: 0.4 !important;
+            opacity: 0.9 !important;
+            background: #8c8c8c;
     }
 
 body > div:nth-child(4) > div > div.modal.fade.show{display:flex!important;}
@@ -858,4 +859,15 @@ body{
     /* right: 0; */
     margin-left: 18px;
     z-index: 100;
+}
+
+div.scrollarea .scrollbar-container.vertical
+{
+    width: 7px !important;
+    opacity: 0.9 !important;
+}
+
+.scrollarea .scrollbar-container
+{
+    opacity: 0.9 !important;
 }

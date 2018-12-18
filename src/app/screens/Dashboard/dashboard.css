@@ -914,7 +914,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 div.scrollarea .scrollbar-container.vertical {
-    width: 5px;
+    width: 8px;
 }
 
 .scrollarea-content {
@@ -1873,3 +1873,5 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
             overflow-y: auto;
         }
     }
+
+    
