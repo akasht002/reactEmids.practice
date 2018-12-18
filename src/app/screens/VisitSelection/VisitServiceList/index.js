@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import _ from 'lodash'
-import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList,clearVisitServiceList } 
+import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearVisitServiceList }
     from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
@@ -16,9 +16,11 @@ import {
     VISIT_SERVICE_STATUS_NOT_HIRED
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
-import { getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea,
-     clearServiceCategory,clearServiceType, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus, 
-     getFilterDataCount, formDirty } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {
+    getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea,
+    clearServiceCategory, clearServiceType, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus,
+    getFilterDataCount, formDirty
+} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
@@ -31,7 +33,7 @@ import './style.css'
 import { Path } from "../../../routes";
 import { SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
-
+import { Preloader } from '../../../components';
 class VisitServiceList extends Component {
 
     constructor(props) {
@@ -64,7 +66,7 @@ class VisitServiceList extends Component {
             sort: 'false',
             sortByOrder: 'DESC',
             selectedKey: 'item-1',
-            serviceRequestList:[]
+            serviceRequestList: []
         };
         this.sort = false
     };
@@ -79,7 +81,7 @@ class VisitServiceList extends Component {
         let data = {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
-        }        
+        }
         this.props.getVisitServiceList(data);
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
@@ -88,26 +90,26 @@ class VisitServiceList extends Component {
         this.props.clearServiceType()
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         let serviceRequestStatus = []
         if (nextProps.ServiceStatus !== this.props.ServiceStatus) {
-          nextProps.ServiceStatus.forEach(function (status) {
-            if (status.keyValue !== 'ALL') serviceRequestStatus.push(status.keyValue)
-          })
-          this.setState({
-            serviceStatus:  serviceRequestStatus,
-            serviceRequestList: nextProps.ServiceStatus
-          })
+            nextProps.ServiceStatus.forEach(function (status) {
+                if (status.keyValue !== 'ALL') serviceRequestStatus.push(status.keyValue)
+            })
+            this.setState({
+                serviceStatus: serviceRequestStatus,
+                serviceRequestList: nextProps.ServiceStatus
+            })
         }
         this.setState({
-          serviceRequestList: nextProps.ServiceStatus
+            serviceRequestList: nextProps.ServiceStatus
         })
-      }
+    }
 
-      componentWillUnmount() {
+    componentWillUnmount() {
         console.log("Clock", "componentWillUnmount");
         this.props.clearVisitServiceList()
-      }
+    }
 
     handleClick = (requestId) => {
         this.props.getServiceRequestId(requestId);
@@ -190,7 +192,7 @@ class VisitServiceList extends Component {
         this.setState({
             filterOpen: !this.state.filterOpen
         })
-        this.props.formDirtyVisitList()               
+        this.props.formDirtyVisitList()
     }
 
     handleSortFilterChange = pageNumber => {
@@ -343,7 +345,7 @@ class VisitServiceList extends Component {
 
     selectedSort = (selectedKey) => {
         this.sort = true
-        this.setState({selectedKey: selectedKey})
+        this.setState({ selectedKey: selectedKey })
         var data = {
             sortByOrder: selectedKey,
             sortByColumn: "MODIFIEDDATE",
@@ -352,7 +354,7 @@ class VisitServiceList extends Component {
         }
         this.props.getSort(data);
         this.props.formDirtyVisitList();
-      }
+    }
 
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
@@ -360,7 +362,7 @@ class VisitServiceList extends Component {
             let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
             let patientImage = '';
             let patientLastName = '';
-            if (_.indexOf(SHOW_IMAGES_SERVICE_REQUEST, serviceList.statusId ) !== -1) {
+            if (_.indexOf(SHOW_IMAGES_SERVICE_REQUEST, serviceList.statusId) !== -1) {
                 patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
                 patientLastName = serviceList && serviceList.patientLastName;
             } else {
@@ -420,6 +422,7 @@ class VisitServiceList extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}
                 patientImage={this.props.profileImgData.image ? this.props.profileImgData.image
                     : require('./avatar/user-5.jpg')}>
+                {this.props.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests</h5>
@@ -545,7 +548,7 @@ function mapDispatchToProps(dispatch) {
         clearServiceCategory: (data) => dispatch(clearServiceCategory(data)),
         clearServiceArea: (data) => dispatch(clearServiceArea(data)),
         clearServiceRequestStatus: (data) => dispatch(clearServiceRequestStatus(data)),
-        clearServiceType:(data)=>dispatch(clearServiceType(data)),
+        clearServiceType: (data) => dispatch(clearServiceType(data)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         getServiceRequestCount: () => dispatch(getServiceRequestCount()),
@@ -553,15 +556,15 @@ function mapDispatchToProps(dispatch) {
         formDirty: () => dispatch(formDirty()),
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
-        clearVisitServiceList:()=>dispatch(clearVisitServiceList()),
+        clearVisitServiceList: () => dispatch(clearVisitServiceList()),
     }
 };
 
 function mapStateToProps(state) {
 
     return {
-
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
+        isLoading: state.visitSelectionState.VisitServiceListState.isLoading,
         profileImgData: state.profileState.PersonalDetailState.imageData,
         ServiceCategory: state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
         ServiceStatus: state.visitSelectionState.ServiceRequestFilterState.ServiceStatus,
