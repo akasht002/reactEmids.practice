@@ -16,6 +16,7 @@ const defaultState = {
     conversationCount: 20,
     openedAsyncPage : null,
     removeParticipantConcurrencyExist: false,
+    activePageNumber: 1,
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -145,11 +146,16 @@ const asyncMessageState = (state = defaultState, action) => {
             removeParticipantConcurrencyExist: action.data
         }
         case AsyncMessageActions.clearConversation:
-        return{
-        ...state,
-        conversation: {},
-        currentConversation: {}
-    }
+            return{
+            ...state,
+            conversation: {},
+            currentConversation: {}
+        }
+        case AsyncMessageActions.setActivePageNumber:
+            return{
+            ...state,
+            activePageNumber: action.data
+        }
         default:
             return state;
     }
