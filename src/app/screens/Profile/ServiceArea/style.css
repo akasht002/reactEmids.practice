@@ -46,3 +46,13 @@
     cursor: pointer;
     background-color: #f4ecfc;
 }
+
+.serviceAreaModal .Select-control .Select-multi-value-wrapper .Select-input
+{
+    padding-left: 0px;
+}
+
+.serviceAreaModal .Select-control .Select-multi-value-wrapper .Select-input input
+{
+    padding-left: 0px;
+}
