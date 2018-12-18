@@ -146,10 +146,16 @@ export function getVisitServiceDetails(data) {
   }
 }
 
-export function getVisitServiceSchedule(data) {
+export function clearVisitServiceSchedule() {
+  return dispatch => dispatch(getVisitServiceScheduleSuccess([]))
+}
+
+
+export function getVisitServiceSchedule(data, pageNumber) {
   let serviceProviderId = getUserInfo().serviceProviderId
+  let pageSize = 10
   return dispatch => {
-    ServiceRequestGet(API.getServiceRequestSchedule + `${data}/${serviceProviderId}`)
+    ServiceRequestGet(API.getServiceRequestSchedule + `${data}/${serviceProviderId}/${pageNumber}/${pageSize}`)
       .then(resp => {
         dispatch(getVisitServiceScheduleSuccess(resp.data))
       })
