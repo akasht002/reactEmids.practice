@@ -193,6 +193,15 @@ li div.dropdown-menu{
     padding: 27px 25px;
 }
 
+.ServiceRequestsWidget .ProfileCardHeader .HeaderBackWrapper
+{
+    cursor: context-menu;
+}
+.ServiceRequestsWidget .ProfileCardHeader .HeaderBackWrapper .HeaderBackButton
+{
+cursor: pointer;
+}
+
 .LeftPalette{
     width: 274px;
     border-radius: 8px;
