@@ -871,3 +871,7 @@ div.scrollarea .scrollbar-container.vertical
 {
     opacity: 0.9 !important;
 }
+.scrollarea .scrollbar-container.vertical .scrollbar
+{
+    background: #8c8c8c !important;
+}
