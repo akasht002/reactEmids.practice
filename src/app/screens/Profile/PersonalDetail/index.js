@@ -21,8 +21,6 @@ import {
   checkTextNotStartWithNumber,
   getArrayLength,
   getLength,
-  getDataValueArray,
-  getValueOfArray
 } from '../../../utils/validations'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
