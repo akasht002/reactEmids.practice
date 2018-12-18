@@ -10,7 +10,8 @@ import {
     CanServiceProviderCreateMessage,
     getConversationCount,
     openedAsyncPage,
-    ClearCurrentOpenConversation
+    ClearCurrentOpenConversation,
+    setActivePageNumber
 } from '../../../redux/asyncMessages/actions';
 import MessageList from './MessageList';
 import ParticipantsContainer from './ParticipantsContainer';
@@ -28,7 +29,7 @@ class ConversationSummary extends Component {
             isDisplayParticipantModal: false,
             isOpen: false,
             noPermission: false,
-            activePage: 1
+            activePage: this.props.activePage
         };
     };
 
@@ -90,6 +91,7 @@ class ConversationSummary extends Component {
     handlePageChange = (pageNumber) => {
         this.props.fetchConversationSummary(pageNumber);
         this.setState({ activePage: pageNumber });
+        this.props.setActivePageNumber(pageNumber);
     }
 
     render() {
@@ -165,6 +167,7 @@ function mapDispatchToProps(dispatch) {
         getConversationCount: () => dispatch(getConversationCount()),
         openedAsyncPage: (data) => dispatch(openedAsyncPage(data)),
         clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation()),
+        setActivePageNumber: (page) => dispatch(setActivePageNumber(page)),
     }
 };
 
@@ -176,7 +179,8 @@ function mapStateToProps(state) {
         unreadMsgCounts: state.asyncMessageState.unreadCounts,
         loggedInUser: state.authState.userState.userData.userInfo,
         canCreateConversation: state.asyncMessageState.canCreateConversation,
-        conversationCount: state.asyncMessageState.conversationCount
+        conversationCount: state.asyncMessageState.conversationCount,
+        activePage: state.asyncMessageState.activePageNumber,
     }
 };
 
