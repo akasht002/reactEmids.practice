@@ -552,7 +552,7 @@ class serviceCalendar extends React.Component {
     return (
       <div
         className={
-          this.state.showMore ? "card ProfileCard extended" : "card ProfileCard"
+          this.state.showMore ? 'card ProfileCard extended' : 'card ProfileCard'
         }
       >
         <div className="ProfileCardBody">

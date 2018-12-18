@@ -27,7 +27,7 @@ class ServiceRequest extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showMore: true,
+      showMore: false,
       min:0,
       max:2,
       selectedValue: { label: 'All', value: '0' }
@@ -113,7 +113,7 @@ class ServiceRequest extends React.Component {
     return (
       <div
         className={
-          this.state.showMore ? 'card ProfileCard' : 'card ProfileCard extended'
+          this.state.showMore ? 'card ProfileCard extended' : 'card ProfileCard'
         }
       >
         <div className='ProfileCardBody'>

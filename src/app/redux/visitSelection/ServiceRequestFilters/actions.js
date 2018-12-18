@@ -190,7 +190,7 @@ export function getFilter(data) {
 
         elasticSearchPost(API.PostSearchServiceRequest, reqObj).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
-            resp.data.length === 0 && dispatch(endLoading());
+            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -215,7 +215,7 @@ export function getFilterDataCount(data) {
             }
         elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
             dispatch(getFilterDataCountSuccess(resp.data))
-            resp.data.length === 0 && dispatch(endLoading());
+            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })

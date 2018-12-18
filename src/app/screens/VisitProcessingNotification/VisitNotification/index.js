@@ -21,8 +21,8 @@ class VisitNotification extends React.Component {
         const data = {
             pageNumber: DEFAULT_PAGE_NUMBER,
             pageSize: DEFAULT_PAGE_SIZE
-        } 
-        this.props.getVisitNotification({data:data,count:10});
+        }
+        this.props.getVisitNotification({ data: data, count: 10 });
         this.props.getVisitNotificationCount();
     }
 
@@ -37,8 +37,8 @@ class VisitNotification extends React.Component {
         const data = {
             pageNumber: DEFAULT_PAGE_NUMBER,
             pageSize: DEFAULT_PAGE_SIZE
-        } 
-        this.props.getVisitNotification({data:data,count:this.state.rowCount});
+        }
+        this.props.getVisitNotification({ data: data, count: this.state.rowCount });
     }
 
     render() {
@@ -53,7 +53,9 @@ class VisitNotification extends React.Component {
                         <NotificationDetails
                             visitNotification={this.props.visitNotification}
                         />
-                        <ul className="list-group list-group-flush notify" onClick={() => this.pageNumberChange(this.state.pageNumber)}><li className="list-group-item ProfileShowMore">Show more <i className="ProfileIconShowMore"></i></li></ul>
+                        {this.state.rowCount >= 10 &&
+                            <ul className="list-group list-group-flush notify" onClick={() => this.pageNumberChange(this.state.pageNumber)}><li className="list-group-item ProfileShowMore">Show more <i className="ProfileIconShowMore"></i></li></ul>
+                        }
                     </Scrollbars>
                 </form>
             </div>

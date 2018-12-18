@@ -885,7 +885,7 @@ div.scrollarea .scrollbar-container.vertical {
 
     .innerWidget .card.extended {
         /* height: calc(100vh - 140px); */
-        height: 620px;
+        height: 596px;
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {

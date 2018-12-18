@@ -42,7 +42,7 @@ class CoreoWizHeader extends Component {
                 },
                 {
                     name: "notification",
-                    link: "login",
+                    link: "visitNotification",
                     status: true,
                 }
             ]

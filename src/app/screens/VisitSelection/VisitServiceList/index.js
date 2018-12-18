@@ -30,7 +30,6 @@ import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
 import { SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN } from '../../../constants/constants';
-import { startLoading, endLoading } from '../../../redux/loading/actions';
 import { getUserInfo } from '../../../services/http';
 
 class VisitServiceList extends Component {
@@ -87,11 +86,9 @@ class VisitServiceList extends Component {
         this.props.getServiceArea();
         this.props.getServiceRequestCount()
         this.props.clearServiceType()
-        setTimeout(()=>this.props.startLoading(),500)
     }
 
     componentWillReceiveProps (nextProps) {
-        this.props.endLoading()
         let serviceRequestStatus = []
         if (nextProps.ServiceStatus !== this.props.ServiceStatus) {
           nextProps.ServiceStatus.forEach(function (status) {
@@ -185,7 +182,7 @@ class VisitServiceList extends Component {
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas: this.state.ServiceAreas,
             serviceProviderId: serviceProviderId,
-            FromPage: 0,
+            FromPage: this.state.pageNumber,
             ToPage: 15,
         };
         this.props.getFilter(data)
@@ -193,9 +190,7 @@ class VisitServiceList extends Component {
         this.setState({
             filterOpen: !this.state.filterOpen
         })
-        this.props.formDirtyVisitList() 
-        setTimeout(()=>this.props.startLoading(),100)
-              
+        this.props.formDirtyVisitList()               
     }
 
     handleSortFilterChange = pageNumber => {
@@ -215,7 +210,7 @@ class VisitServiceList extends Component {
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas: this.state.ServiceAreas,
             serviceProviderId: serviceProviderId,
-            FromPage: number,
+            FromPage: pageNumber,
             ToPage: 15,
         };
         this.props.getFilter(data)
@@ -244,7 +239,6 @@ class VisitServiceList extends Component {
         }
         this.props.getVisitServiceList(data);
         this.props.formDirty()
-        setTimeout(()=>this.props.startLoading(),100)
         //this.props.formDirtyVisitList()
     }
 
@@ -560,8 +554,6 @@ function mapDispatchToProps(dispatch) {
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
         clearVisitServiceList:()=>dispatch(clearVisitServiceList()),
-        startLoading: () => dispatch(startLoading()),
-        endLoading: () => dispatch(endLoading())
     }
 };
 
