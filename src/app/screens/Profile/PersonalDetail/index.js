@@ -20,7 +20,9 @@ import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
   checkTextNotStartWithNumber,
   getArrayLength,
-  getLength
+  getLength,
+  getDataValueArray,
+  getValueOfArray
 } from '../../../utils/validations'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
@@ -60,7 +62,8 @@ class PersonalDetail extends React.PureComponent {
     this.props.getGender()
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {  
+    
     if (this.isImageSave === false) {
       this.setState({
         firstName: nextProps.personalDetail.firstName,
@@ -106,7 +109,8 @@ class PersonalDetail extends React.PureComponent {
         addressId: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressId != null
           ? nextProps.personalDetail.address[0].addressId : 0,
         addressTypeId: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressTypeId != null
-          ? nextProps.personalDetail.address[0].addressTypeId : 2
+          ? nextProps.personalDetail.address[0].addressTypeId : 2,
+        affiliationList : this.props.affiliationList
       })
     };
 
@@ -132,6 +136,7 @@ class PersonalDetail extends React.PureComponent {
     this.states = getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
       ? nextProps.personalDetail.address[0].state.name
       : ''
+      console.log(this.state.selectedAffiliation)
   }
 
   handleChange = () => {
@@ -176,9 +181,9 @@ class PersonalDetail extends React.PureComponent {
     }
   }
 
-  onSubmit = () => {
+  onSubmit = () => {    
     const {firstName, lastName, phoneNumber, age, yearOfExperience, 
-      hourlyRate, city, zipCode, streetAddress, selectedState } = this.state;
+      hourlyRate, city, zipCode, streetAddress, selectedState ,selectedAffiliation} = this.state;
     this.isImageSave = false;
     if (
       firstName === '' ||
@@ -187,6 +192,7 @@ class PersonalDetail extends React.PureComponent {
       age === '' ||
       yearOfExperience === '' ||
       hourlyRate === '' ||
+      // selectedAffiliation === '' || this.state.selectedAffiliation === null ||
       city === '' || this.state.city === null ||
       zipCode === '' || this.state.zipCode === null ||
       streetAddress === '' || this.state.streetAddress === null ||
@@ -363,6 +369,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   render() {
+    
     let modalContent
     let modalTitle = 'Edit Personal Details'
     let modalType = ''
