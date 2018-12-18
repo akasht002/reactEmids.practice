@@ -1334,3 +1334,10 @@ div.scrollarea .scrollbar-container.vertical {
     float: right !important;
     height: 33px !important;
 }
+
+ul.sr-showmore-btn
+{
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
