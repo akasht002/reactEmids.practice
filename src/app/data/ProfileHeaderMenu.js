@@ -17,10 +17,10 @@ export const ProfileHeaderMenu = [
         id: 4,
         link:'messagesummary'
     },
-    {
-        name: "notification",
-        status: true,
-        id: 5,
-        link: "visitNotification",
-    },
+    // {
+    //     name: "notification",
+    //     status: true,
+    //     id: 5,
+    //     link: "visitNotification",
+    // },
 ];
