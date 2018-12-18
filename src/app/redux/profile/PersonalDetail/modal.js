@@ -12,9 +12,12 @@ export const PERSONAL_DETAIL = {
 }
 
 export const getModal = (data, action) => {
+  console.log(data)
   let affiliation = data.selectedAffiliation && data.selectedAffiliation.value
     ? getDataValueArray(data.selectedAffiliation.value, '-')
     : getValueOfArray(data.selectedAffiliation, '-')
+  let dataList = _.filter(data.affiliationList, { 'name': affiliation[1]?affiliation[1]:affiliation[0] });  
+  console.log(dataList)
   let states = data.selectedState && data.selectedState.value
     ? getDataValueArray(data.selectedState.value, '-')
     : getValueOfArray(data.selectedState, '-')
@@ -41,8 +44,8 @@ export const getModal = (data, action) => {
           },
           yearOfExperience: data.yearOfExperience ? data.yearOfExperience : 0,
           affiliation: {
-            affiliationId: affiliation[0] ? parseInt(affiliation[0],10) : 0,
-            name:  affiliation[1] ? affiliation[1] : ''
+            affiliationId: dataList.length>0?dataList[0].affiliationId:0,
+            name:  dataList.length>0?dataList[0].name:''
           }
         },
         entity: null,
