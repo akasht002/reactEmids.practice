@@ -222,7 +222,7 @@ class VisitServiceDetails extends Component {
     if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests'
+        conversationErrMsg: 'You will be able to initiate a conversation once you are hired'
       })
     } else {
       let userId = getUserInfo().serviceProviderId;
@@ -254,7 +254,7 @@ class VisitServiceDetails extends Component {
     if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You cannot initiate a video call as you have no current service requests'
+        conversationErrMsg: 'You will be able to initiate a video call once you are hired'
       })
     } else {
       let item = this.state.visitServiceDetails;
