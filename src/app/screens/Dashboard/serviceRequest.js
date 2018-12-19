@@ -98,7 +98,7 @@ class ServiceRequest extends React.Component {
     )   
     let serviceRequest = this.props.patientServiceRequest && _.uniqBy(this.props.patientServiceRequest, 'serviceRequestId');
     let serviceRequestItem = ''
-    serviceRequestItem = getLength(serviceRequest) > 0
+    serviceRequestItem = serviceRequest? getLength(serviceRequest) > 0
       ? <ServiceProviderRequestDetails
         serviceRequest={serviceRequest}
         handleClick={requestId => this.handleClick(requestId)}
@@ -110,7 +110,7 @@ class ServiceRequest extends React.Component {
           this.props.goToPatientProfile();
         }}   
       />
-      : <ServiceRequestDefault />
+      : <ServiceRequestDefault /> : <div>{''}</div>
     return (
       <div
         className={
