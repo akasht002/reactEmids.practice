@@ -419,7 +419,7 @@ class VisitServiceList extends Component {
                 )
             })
         ) : (
-         'No results found for the current criteria'
+         <span className="no-resultblock">No results found for the current criteria</span>
         )
 
         return (
