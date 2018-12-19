@@ -100,13 +100,12 @@ export const formDirty = () => {
 export function getServiceCategory() {
 
     return (dispatch) => {
-
-        dispatch(startLoading());
+        // dispatch(startLoading());
         elasticSearchGet(API.getServiceCategory).then((resp) => {
             dispatch(getServiceCategoryListSuccess(resp.data))
-            dispatch(endLoading());
+            // dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            // dispatch(endLoading());
         })
 
     }
@@ -130,7 +129,7 @@ export function getServiceType(data) {
 
 export function ServiceRequestStatus() {
     return (dispatch) => {
-        dispatch(startLoading());
+        // dispatch(startLoading());
         elasticSearchGet(API.getServiceRequestStatus).then((resp) => {
             let newArr = _.map(resp.data, function(element) { 
                 return _.extend({}, element, {isChecked: true});
@@ -138,9 +137,9 @@ export function ServiceRequestStatus() {
             let listToDelete = [106, 107];
             let data =newArr.filter(obj => !listToDelete.includes(obj.id));
             dispatch(getServiceRequestStatusSuccess(data))
-            dispatch(endLoading());
+            // dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            // dispatch(endLoading());
         })
     }
 };
