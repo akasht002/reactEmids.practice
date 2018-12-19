@@ -20,7 +20,7 @@ export const ServiceRequestFiltersList = {
 
 export const clearServiceRequestStatus = (data) => {
     data.map((item) => {
-        return item.isChecked = false;
+        return item.isChecked = true;
     })
     return {
         type: ServiceRequestFiltersList.clearServiceRequestStatus,
