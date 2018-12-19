@@ -257,7 +257,7 @@ class MessageContent extends Component {
                                         {previewImage}
                                         <tr>
                                             <td className="addAttachmentWidget">
-                                                <div title=" " className="upload-btn-wrapper">
+                                                <div title=" " className={!this.props.conversation.isActive || this.props.messageText.trim().length > 0 ? "upload-btn-wrapper dis-attach" : 'upload-btn-wrapper'}>
                                                     <Dropzone
                                                     disabled={!this.props.conversation.isActive || this.props.messageText.trim().length > 0}
                                                     onDrop={(files) => this.onSelectImage(files)}>
