@@ -357,66 +357,70 @@ class VisitServiceList extends Component {
     }
 
     render() {
-        let visitList = this.props.visitServiceList && this.props.visitServiceList.map(serviceList => {
-            let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
-            let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
-            let patientImage = '';
-            let patientLastName = '';
-            if (_.indexOf(SHOW_IMAGES_SERVICE_REQUEST, serviceList.statusId) !== -1) {
-                patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
-                patientLastName = serviceList && serviceList.patientLastName;
-            } else {
-                patientLastName = serviceList && serviceList.patientLastName.charAt(0);
-                patientImage = require('../../../assets/images/Blank_Profile_icon.png');
-            }
-            return (
-                <div className='ServiceRequestBoard' key={serviceList.serviceRequestId}>
-                    <div className='card'>
-                        <div className="BlockImageContainer" onClick={() =>
-                            this.handleClick(serviceList.serviceRequestId)}>
-                            <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
-                            <div className='BlockImageDetails'>
-                                <div className='BlockImageDetailsName'>
-                                    <span className="default-444">{serviceList.type}</span>
-                                </div>
-                                <div className='BlockImageDetailsActivity'>
-                                    {serviceList.serviceCategoryDescription}
-                                </div>
-                                <div className='BlockImageDetailsDate'>
-                                    {serviceList.recurring}
-                                    <span className='DetailsDateSeperator'>|</span>
-                                    <Moment format="MMM DD">{serviceList.startDate}</Moment>
-                                    {serviceList.recurring !== RECURRING_PATTERN && <React.Fragment>  - <Moment format="MMM DD">{serviceList.endDate}</Moment> </React.Fragment>}
-                                </div>
-                            </div>
-                        </div>
-                        <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Hired' ? '' : 'noArrow')} onClick={() => {
-                            if (serviceList.serviceRequestStatus === 'Hired') {
-                                this.props.setPatient(serviceList.patientId)
-                                this.props.goToPatientProfile()
-                            }
-                        }}>
-                            <img className="ProfileImage" src={patientImage} alt="" />
-                            <div className='BlockProfileDetails'>
-                                <div className='BlockProfileDetailsName'>
-                                    <span>{serviceList.patientFirstName} {patientLastName}</span>
-                                </div>
-                                <div className='BlockProfileDetailsActivity'>
-                                    <span>Posted on <Moment format="DD MMM">{serviceList.createDate}</Moment></span>
+        let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? ( 
+            this.props.visitServiceList.map(serviceList => {
+                let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
+                let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
+                let patientImage = '';
+                let patientLastName = '';
+                if (_.indexOf(SHOW_IMAGES_SERVICE_REQUEST, serviceList.statusId) !== -1) {
+                    patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
+                    patientLastName = serviceList && serviceList.patientLastName;
+                } else {
+                    patientLastName = serviceList && serviceList.patientLastName.charAt(0);
+                    patientImage = require('../../../assets/images/Blank_Profile_icon.png');
+                }
+                return (
+                    <div className='ServiceRequestBoard' key={serviceList.serviceRequestId}>
+                        <div className='card'>
+                            <div className="BlockImageContainer" onClick={() =>
+                                this.handleClick(serviceList.serviceRequestId)}>
+                                <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
+                                <div className='BlockImageDetails'>
+                                    <div className='BlockImageDetailsName'>
+                                        <span className="default-444">{serviceList.type}</span>
+                                    </div>
+                                    <div className='BlockImageDetailsActivity'>
+                                        {serviceList.serviceCategoryDescription}
+                                    </div>
+                                    <div className='BlockImageDetailsDate'>
+                                        {serviceList.recurring}
+                                        <span className='DetailsDateSeperator'>|</span>
+                                        <Moment format="MMM DD">{serviceList.startDate}</Moment>
+                                        {serviceList.recurring !== RECURRING_PATTERN && <React.Fragment>  - <Moment format="MMM DD">{serviceList.endDate}</Moment> </React.Fragment>}
+                                    </div>
                                 </div>
                             </div>
-                            <div className='BlockProfileDetailsStatus'>
-                                {
-                                    <span className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`}>{
-                                        serviceList.serviceRequestStatus
-                                    }</span>
+                            <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Hired' ? '' : 'noArrow')} onClick={() => {
+                                if (serviceList.serviceRequestStatus === 'Hired') {
+                                    this.props.setPatient(serviceList.patientId)
+                                    this.props.goToPatientProfile()
                                 }
+                            }}>
+                                <img className="ProfileImage" src={patientImage} alt="" />
+                                <div className='BlockProfileDetails'>
+                                    <div className='BlockProfileDetailsName'>
+                                        <span>{serviceList.patientFirstName} {patientLastName}</span>
+                                    </div>
+                                    <div className='BlockProfileDetailsActivity'>
+                                        <span>Posted on <Moment format="DD MMM">{serviceList.createDate}</Moment></span>
+                                    </div>
+                                </div>
+                                <div className='BlockProfileDetailsStatus'>
+                                    {
+                                        <span className={`${this.renderStatusClassName(serviceList.serviceRequestStatus)}`}>{
+                                            serviceList.serviceRequestStatus
+                                        }</span>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )
-        })
+                )
+            })
+        ) : (
+         'No results found for the current criteria'
+        )
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}

@@ -7,7 +7,7 @@ export default class TeleHealthParticipants extends Component {
 
     getParticipants = () => {
         return [ 
-            this.props.participantList.map(participant => {
+            this.props.participantList && this.props.participantList.map(participant => {
                 return (
                     <li className="list-group-item">
                         <div className="TeleHealthParticipantAvatar">
@@ -39,10 +39,7 @@ export default class TeleHealthParticipants extends Component {
         ]
     }
     render() {
-        let participants = "";
-        if (this.props.participantList && this.props.participantList.length > 0) {
-            participants = this.getParticipants();
-        }
+        let participants = this.getParticipants();
         return (
             <div className="TeleHealthParticipantList">
                 <div className="TeleHealthParticipantListHeader">

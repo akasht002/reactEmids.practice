@@ -401,7 +401,7 @@ const getLinkedPatientsSuccess = data => {
 
 export function getLinkedParticipantsByPatients(data) {
     return (dispatch, getState) => {
-        dispatch(startLoading())
+        //dispatch(startLoading())
         let serchText = data.searchText === "" ? null : data.searchText;
         let patients = getState().asyncMessageState.linkedPatients;
         let patient = patients.find((e) => {
@@ -422,10 +422,10 @@ export function getLinkedParticipantsByPatients(data) {
             '/' + serchText)
             .then(resp => {
                 dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
-                dispatch(endLoading())
+                //dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
+               // dispatch(endLoading())
             })
     }
 };
