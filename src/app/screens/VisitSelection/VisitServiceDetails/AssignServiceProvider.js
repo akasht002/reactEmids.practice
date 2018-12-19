@@ -58,7 +58,7 @@ class AssignServiceProvider extends Component {
               alt={'NO_IMAGE'}
               key={index}
               className='avatarImage avatarImageBorder'
-                src={require('../../../assets/images/Blank_Profile_icon.png')}
+                src={item.thumbnail?item.thumbnail:require('../../../assets/images/Blank_Profile_icon.png')}
                 />
             </div>
             <label htmlFor={item.serviceProviderId}>

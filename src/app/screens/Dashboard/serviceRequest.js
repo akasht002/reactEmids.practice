@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import { CSS_PROPS } from './css-data-props'
 import { Scrollbars } from '../../components'
+import {VIEW_ALL_COUNT} from '../../constants/constants'
 import {
   ServiceProviderRequestDetails,
   ServiceRequestDefault
@@ -121,7 +122,7 @@ class ServiceRequest extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               Service Requests
             </span>
-            {getLength(serviceRequest) > 5 &&
+            {getLength(serviceRequest) > VIEW_ALL_COUNT &&
             <Link className='ProfileCardHeaderLink' to='/visitServiceList'>View all</Link>
             }
           </div>
