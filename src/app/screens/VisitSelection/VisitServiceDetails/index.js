@@ -229,7 +229,7 @@ class VisitServiceDetails extends Component {
 
   showData = data => {
     if (data.occurence !== 0) {
-      return '- ' + data.occurence + ' occurences'
+      return '- ' + data.occurence + ' occurrences'
     } else {
       return (
         <React.Fragment>

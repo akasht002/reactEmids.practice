@@ -100,7 +100,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_TP_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/api/';
   process.env.REACT_APP_SIGNALR_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://HMSA-UAT-ct-api.coreodevserver.com/api/';
-  process.env.REACT_APP_PATIENT_URL = 'https://HMSA-UAT-api.coreodevserver.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://HMSA-UAT-gen-api.coreodevserver.com/api/';
 }
 
 // Ensure environment variables are read.
