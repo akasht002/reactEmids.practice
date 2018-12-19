@@ -76,7 +76,7 @@ class VistSummary extends React.Component {
           <div key={index} className="ServiceList Individual Summary">
             <label className="ServicesLink active" htmlFor="Services1">
               <div className="servicesDesc">
-                <span className="serviceName">
+                <span className={"serviceName " + (list.statusId === 45 ? 'completedtask' : 'non_completedtask')} >
                   {list.serviceTaskDescription}
                 </span>
               </div>

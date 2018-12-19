@@ -243,6 +243,11 @@ div.EstimatedCostWidget{
     margin: 0 0 0 60px;
 }
 
+.accordion .ServiceList.Summary label.ServicesLink .serviceName.non_completedtask
+{
+color: #b3b3b3;
+}
+
 .ServiceList.Summary:before {
     left: 24px;
 }

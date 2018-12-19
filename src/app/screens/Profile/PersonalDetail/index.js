@@ -60,8 +60,8 @@ class PersonalDetail extends React.PureComponent {
     this.props.getGender()
   }
 
-  componentWillReceiveProps(nextProps) {  
-    
+  componentWillReceiveProps(nextProps) {
+
     if (this.isImageSave === false) {
       this.setState({
         firstName: nextProps.personalDetail.firstName,
@@ -108,7 +108,7 @@ class PersonalDetail extends React.PureComponent {
           ? nextProps.personalDetail.address[0].addressId : 0,
         addressTypeId: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressTypeId != null
           ? nextProps.personalDetail.address[0].addressTypeId : 2,
-        affiliationList : this.props.affiliationList
+        affiliationList: this.props.affiliationList
       })
     };
 
@@ -134,7 +134,7 @@ class PersonalDetail extends React.PureComponent {
     this.states = getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
       ? nextProps.personalDetail.address[0].state.name
       : ''
-      console.log(this.state.selectedAffiliation)
+    console.log(this.state.selectedAffiliation)
   }
 
   handleChange = () => {
@@ -179,9 +179,9 @@ class PersonalDetail extends React.PureComponent {
     }
   }
 
-  onSubmit = () => {    
-    const {firstName, lastName, phoneNumber, age, yearOfExperience, 
-      hourlyRate, city, zipCode, streetAddress, selectedState} = this.state;
+  onSubmit = () => {
+    const { firstName, lastName, phoneNumber, age, yearOfExperience,
+      hourlyRate, city, zipCode, streetAddress, selectedState } = this.state;
     this.isImageSave = false;
     if (
       firstName === '' ||
@@ -277,18 +277,18 @@ class PersonalDetail extends React.PureComponent {
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail.phoneNumber,
-      city:getArrayLength( this.props.personalDetail.address) > 0
-                ?  this.props.personalDetail.address[0].city
-                : '',
-      streetAddress: getArrayLength( this.props.personalDetail.address) > 0
-                  ?  this.props.personalDetail.address[0].streetAddress
-                  : '',
-      zipCode: getArrayLength( this.props.personalDetail.address) > 0
-            ?  this.props.personalDetail.address[0].zipCode
-            : '', 
+      city: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].city
+        : '',
+      streetAddress: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].streetAddress
+        : '',
+      zipCode: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].zipCode
+        : '',
       state_id: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
-              ? this.props.personalDetail.address[0].state.id
-              : ''         
+        ? this.props.personalDetail.address[0].state.id
+        : ''
     }
 
     let updated_data = {
@@ -300,11 +300,11 @@ class PersonalDetail extends React.PureComponent {
       description: this.state.description,
       hourlyRate: this.state.hourlyRate,
       phoneNumber: this.state.phoneNumber,
-      city:this.state.city,
-      streetAddress:this.state.streetAddress,
-      zipCode:this.state.zipCode,
-      state_id:this.state.selectedState && this.state.selectedState.value
-    }   
+      city: this.state.city,
+      streetAddress: this.state.streetAddress,
+      zipCode: this.state.zipCode,
+      state_id: this.state.selectedState && this.state.selectedState.value
+    }
 
     const fieldDifference = _.isEqual(old_data, updated_data)
 
@@ -367,7 +367,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   render() {
-    
+
     let modalContent
     let modalTitle = 'Edit Personal Details'
     let modalType = ''
@@ -511,7 +511,7 @@ class PersonalDetail extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
-            <li>1. Click on the Change Photo Button. </li>
+              <li>1. Click on the Change Photo Button. </li>
               <li>2. Select the image from your desktop/ gallery.</li>
               <li>3. Click and drag the curser across the image to crop.</li>
               <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
@@ -549,7 +549,7 @@ class PersonalDetail extends React.PureComponent {
         />
         <span className="rating-blockcustome">
           <i class="Icon iconFilledStar"></i>
-          {this.props.personalDetail && Math.round(this.props.personalDetail.rating * 10)/10}
+          {this.props.personalDetail && Math.round(this.props.personalDetail.rating * 10) / 10}
         </span>
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>
@@ -935,25 +935,28 @@ class PersonalDetail extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label className="m-0">State</label>
-                    <SelectBox
-                      options={stateDetail}
-                      simpleValue
-                      placeholder='Select the state'
-                      onChange={value => {
-                        this.setState({ selectedState: value, disabledSaveBtn: false, isStateInvalid: false })
-                      }
-                      }
-                      onBlur={(e) => {
-                        if (this.state.selectedState === '') {
-                          this.setState({ isStateInvalid: true })
+                    <Input
+                      name='Street'
+                      label='Street'
+                      autoComplete='off'
+                      type='text'
+                      maxlength='500'
+                      value={this.state.streetAddress}
+                      textChange={e =>
+                        this.setState({
+                          streetAddress: e.target.value,
+                          disabledSaveBtn: false,
+                          isStreetInvalid: false
+                        })}
+                      onBlur={e => {
+                        if (!e.target.value) {
+                          this.setState({ isStreetInvalid: true })
                         }
                       }}
-                      selectedValue={this.state.selectedState}
-                      className='inputFailure ServiceRequestSelect'
+                      className={"form-control " + (this.state.isStreetInvalid && 'inputFailure')}
                     />
                     <small className="text-danger d-block OnboardingAlert">
-                      {this.state.isStateInvalid && 'Please select valid State'}
+                      {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
                     </small>
                   </div>
                 </div>
@@ -988,31 +991,29 @@ class PersonalDetail extends React.PureComponent {
                   <div className='row'>
                     <div className='col-md-6 mb-2'>
                       <div className='form-group'>
-                        <Input
-                          name='Street'
-                          label='Street'
-                          autoComplete='off'
-                          type='text'
-                          maxlength='500'
-                          value={this.state.streetAddress}
-                          textChange={e =>
-                            this.setState({
-                              streetAddress: e.target.value,
-                              disabledSaveBtn: false,
-                              isStreetInvalid: false
-                            })}
-                          onBlur={e => {
-                            if (!e.target.value) {
-                              this.setState({ isStreetInvalid: true })
+                        <label className="m-0">State</label>
+                        <SelectBox
+                          options={stateDetail}
+                          simpleValue
+                          placeholder='Select the state'
+                          onChange={value => {
+                            this.setState({ selectedState: value, disabledSaveBtn: false, isStateInvalid: false })
+                          }
+                          }
+                          onBlur={(e) => {
+                            if (this.state.selectedState === '') {
+                              this.setState({ isStateInvalid: true })
                             }
                           }}
-                          className={"form-control " + (this.state.isStreetInvalid && 'inputFailure')}
+                          selectedValue={this.state.selectedState}
+                          className='inputFailure ServiceRequestSelect'
                         />
                         <small className="text-danger d-block OnboardingAlert">
-                          {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                          {this.state.isStateInvalid && 'Please select valid State'}
                         </small>
                       </div>
                     </div>
+
                     <div className='col-md-6'>
                       <Input
                         name='Zip'
