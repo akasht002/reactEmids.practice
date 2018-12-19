@@ -1294,3 +1294,10 @@ color: #444;
         display: none;
     }*/
 }
+
+.no-resultblock
+{
+    display: table;
+    text-align: center;
+    margin: 0 auto;
+}
