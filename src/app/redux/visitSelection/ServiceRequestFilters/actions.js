@@ -134,7 +134,7 @@ export function ServiceRequestStatus() {
             let newArr = _.map(resp.data, function(element) { 
                 return _.extend({}, element, {isChecked: true});
            });
-            let listToDelete = [106, 107];
+            let listToDelete = [106, 107, 40];
             let data =newArr.filter(obj => !listToDelete.includes(obj.id));
             dispatch(getServiceRequestStatusSuccess(data))
             // dispatch(endLoading());
