@@ -20,7 +20,8 @@ export const VisitServiceDetails = {
   getDaysSuccess: 'getDaysSuccess/visitservicedetails',
   updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails',
   setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
-  canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails'
+  canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails',
+  formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -80,6 +81,12 @@ export function dispatchServiceRequestByServiceProvider() {
 
 export function setEntityServiceProvider(data) {
   return dispatch => { dispatch(setEntityServiceProviderSuccess(data)) }
+}
+
+export function formDirtyVisitServiceDetails() {
+  return {
+    type: VisitServiceDetails.formDirtyVisitServiceDetails
+  }
 }
 
 export function updateServiceRequestByServiceProvider(data) {
