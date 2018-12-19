@@ -357,3 +357,20 @@ div.vMpca {
         margin: 0 10px;
     }
 }
+
+/*updated-scroll-for-filter*/
+
+/* width */
+.FilterMiddleRight::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Handle */
+  .FilterMiddleRight::-webkit-scrollbar-thumb {
+    background:#8c8c8c; 
+  }
+  
+  /* Handle on hover */
+  .FilterMiddleRight::-webkit-scrollbar-thumb:hover {
+    background: #8c8c8c; 
+  }

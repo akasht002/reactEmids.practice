@@ -863,7 +863,7 @@ body{
 
 div.scrollarea .scrollbar-container.vertical
 {
-    width: 7px !important;
+    width: 8px !important;
     opacity: 0.9 !important;
 }
 
@@ -874,4 +874,21 @@ div.scrollarea .scrollbar-container.vertical
 .scrollarea .scrollbar-container.vertical .scrollbar
 {
     background: #8c8c8c !important;
+    width: 6px !important;
 }
+
+
+/* width */
+.modal-body::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Handle */
+  .modal-body::-webkit-scrollbar-thumb {
+    background:#8c8c8c; 
+  }
+  
+  /* Handle on hover */
+  .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #8c8c8c; 
+  }

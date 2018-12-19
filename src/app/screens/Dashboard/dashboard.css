@@ -1888,15 +1888,13 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     background: #8c8c8c; 
   }
 
-
-
     }
 
 /*updated-scroll-design-dashboard*/
 
     /* width */
 .mainWidgetOverflow::-webkit-scrollbar {
-    width: 7px;
+    width: 6px;
   }
   
   /* Handle */
