@@ -172,7 +172,7 @@ standByTimer(visitProcess) {
           "" 
           }
         </div>
-        <div className="scrollarea SPContentWidget ScrollBar">
+        <div className="scrollarea SPContentWidget ScrollBar updated-scrll">
           <div className="scrollarea-content">
             <div className='ProfileContainer topProfile'>
               <ServiceCalendar />

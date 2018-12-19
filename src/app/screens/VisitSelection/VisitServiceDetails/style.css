@@ -193,6 +193,15 @@ li div.dropdown-menu{
     padding: 27px 25px;
 }
 
+.ServiceRequestsWidget .ProfileCardHeader .HeaderBackWrapper
+{
+    cursor: context-menu;
+}
+.ServiceRequestsWidget .ProfileCardHeader .HeaderBackWrapper .HeaderBackButton
+{
+cursor: pointer;
+}
+
 .LeftPalette{
     width: 274px;
     border-radius: 8px;
@@ -1333,4 +1342,11 @@ div.scrollarea .scrollbar-container.vertical {
     padding: 5px 10px !important;
     float: right !important;
     height: 33px !important;
+}
+
+ul.sr-showmore-btn
+{
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }

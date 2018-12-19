@@ -17,10 +17,10 @@ export const EntityProfileHeaderMenu = [
         id: 3,
         link:'messagesummary'
     },
-    {
-        name: "notification",
-        status: true,
-        id: 4,
-        link: "visitNotification"
-    }
+    // {
+    //     name: "notification",
+    //     status: true,
+    //     id: 4,
+    //     link: "visitNotification"
+    // }
 ];

@@ -36,6 +36,7 @@ export const AsyncMessageActions = {
     setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
     clearConversation: 'clearConversation/asyncMessage',
     setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
+    setActivePageNumber: 'setActivePageNumber/asyncMessage',
 };
 
 export const setConversationSummary = (data) => {
@@ -48,6 +49,13 @@ export const setConversationSummary = (data) => {
 export const pushConversation = (data) => {
     return {
         type: AsyncMessageActions.pushConversation,
+        data
+    }
+};
+
+export function setActivePageNumber(data) {
+    return {
+        type: AsyncMessageActions.setActivePageNumber,
         data
     }
 };

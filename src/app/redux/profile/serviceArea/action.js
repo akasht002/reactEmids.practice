@@ -32,15 +32,12 @@ export const getServiceAreaFieldDetails = data => {
 
 export function getServiceArea() {
   return (dispatch) => {   
-    dispatch(startLoading());
     let serviceProviderId = getUserInfo().serviceProviderId;
     Get(API.getServiceArea +  serviceProviderId )
       .then(resp => {
         dispatch(getServiceAreaSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
       })
   }
 }

@@ -28,6 +28,7 @@ import { clearServiceProviderId } from '../../../redux/profile/PersonalDetail/ac
 import { getPersonalDetail } from '../../../redux/profile/PersonalDetail/actions'
 import { getPersonalDetailsState } from '../../../utils/userUtility';
 import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
+import Help from '../../../assets/HelpDoc/Help.pdf';
 import './styles.css'
 
 class Profile extends Component {
@@ -232,10 +233,11 @@ class Profile extends Component {
               'contact',
               'videoChat',
               'messages',
-              'notification',
+              //'notification',
               'logout'
             ]}
           />
+          <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
             <div className='width100 topWidgetBG' />
             <div className='container mainProfileContent bgWhite'>
