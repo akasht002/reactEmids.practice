@@ -1872,6 +1872,41 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
             height: auto;
             overflow-y: auto;
         }
+
+     /* width */
+     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Handle */
+  .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar-thumb {
+    background:#8c8c8c; 
+  }
+  
+  /* Handle on hover */
+  .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar-thumb:hover {
+    background: #8c8c8c; 
+  }
+
+
+
     }
+
+/*updated-scroll-design-dashboard*/
+
+    /* width */
+.mainWidgetOverflow::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Handle */
+  .mainWidgetOverflow::-webkit-scrollbar-thumb {
+    background:#8c8c8c; 
+  }
+  
+  /* Handle on hover */
+  .mainWidgetOverflow::-webkit-scrollbar-thumb:hover {
+    background: #8c8c8c; 
+  }
 
     

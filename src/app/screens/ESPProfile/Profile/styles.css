@@ -1179,3 +1179,19 @@ div.CertificationModal{
     min-height: 350px
 }
 
+
+
+/* width */
+.updated-scrll::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Handle */
+  .updated-scrll::-webkit-scrollbar-thumb {
+    background:#8c8c8c; 
+  }
+  
+  /* Handle on hover */
+  .updated-scrll::-webkit-scrollbar-thumb:hover {
+    background: #8c8c8c; 
+  }
