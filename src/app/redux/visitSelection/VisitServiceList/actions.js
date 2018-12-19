@@ -59,7 +59,7 @@ export function getVisitServiceList(data) {
 export function getServiceRequestCount () {
     return (dispatch, getState) => {
       let data = getState().visitSelectionState.VisitServiceListState.status
-      dispatch(startLoading())
+    //   dispatch(startLoading())
       let serviceProviderId = getUserInfo().serviceProviderId
       ServiceRequestGet(
         API.getServiceRequestCount + serviceProviderId + '/' + data 
@@ -67,11 +67,11 @@ export function getServiceRequestCount () {
         .then(resp => {
           if (resp && resp.data) {
             dispatch(serviceRequestCountSuccess(resp.data))
-            dispatch(endLoading())
+            // dispatch(endLoading())
           }
         })
         .catch(() => {
-          dispatch(endLoading())
+        //   dispatch(endLoading())
         })
     }
   };
