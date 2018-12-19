@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import { CSS_PROPS } from './css-data-props'
 import { Scrollbars } from '../../components'
+import {VIEW_ALL_COUNT} from '../../constants/constants'
 import {
   ServiceProviderRequestDetails,
   ServiceRequestDefault
@@ -97,7 +98,7 @@ class ServiceRequest extends React.Component {
     )   
     let serviceRequest = this.props.patientServiceRequest && _.uniqBy(this.props.patientServiceRequest, 'serviceRequestId');
     let serviceRequestItem = ''
-    serviceRequestItem = getLength(serviceRequest) > 0
+    serviceRequestItem = serviceRequest? getLength(serviceRequest) > 0
       ? <ServiceProviderRequestDetails
         serviceRequest={serviceRequest}
         handleClick={requestId => this.handleClick(requestId)}
@@ -109,7 +110,7 @@ class ServiceRequest extends React.Component {
           this.props.goToPatientProfile();
         }}   
       />
-      : <ServiceRequestDefault />
+      : <ServiceRequestDefault /> : <div>{''}</div>
     return (
       <div
         className={
@@ -121,7 +122,7 @@ class ServiceRequest extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               Service Requests
             </span>
-            {getLength(serviceRequest) > 5 &&
+            {getLength(serviceRequest) > VIEW_ALL_COUNT &&
             <Link className='ProfileCardHeaderLink' to='/visitServiceList'>View all</Link>
             }
           </div>

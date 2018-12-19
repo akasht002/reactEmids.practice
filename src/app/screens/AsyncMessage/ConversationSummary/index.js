@@ -36,7 +36,7 @@ class ConversationSummary extends Component {
 
     componentDidMount() {
         this.props.getConversationCount();
-        this.props.fetchConversationSummary(1);
+        this.props.fetchConversationSummary(this.props.activePage);
         this.props.getUnreadMsgCounts();
         this.props.canServiceProviderCreateMessage();
         this.props.openedAsyncPage('conversationSummary');
