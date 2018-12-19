@@ -197,12 +197,12 @@ class VisitServiceList extends Component {
 
     handleSortFilterChange = pageNumber => {
         this.setState({ pageNumber: pageNumber });
-        let number;
-        if (pageNumber === 1) {
-            number = 0
-        } else {
-            number = pageNumber
-        }
+        // let number;
+        // if (pageNumber === 1) {
+        //     number = 0
+        // } else {
+        //     number = pageNumber
+        // }
         let serviceProviderId = getUserInfo().serviceProviderId;
         let data = {
             startDate: this.state.startDate === '' ? '1900-01-01' : this.state.startDate,

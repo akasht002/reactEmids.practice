@@ -181,7 +181,7 @@ class PersonalDetail extends React.PureComponent {
 
   onSubmit = () => {    
     const {firstName, lastName, phoneNumber, age, yearOfExperience, 
-      hourlyRate, city, zipCode, streetAddress, selectedState ,selectedAffiliation} = this.state;
+      hourlyRate, city, zipCode, streetAddress, selectedState} = this.state;
     this.isImageSave = false;
     if (
       firstName === '' ||
