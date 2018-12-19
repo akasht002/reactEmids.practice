@@ -11,6 +11,7 @@ import AssignServiceProvider from './AssignServiceProvider'
 import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
+  clearVisitServiceSchedule,
   updateServiceRequestByServiceProvider,
   cancelServiceRequestByServiceProvider,
   cancelInvitedServiceProvider,
@@ -63,7 +64,7 @@ class VisitServiceDetails extends Component {
       width: window.innerWidth,
       activeTab: '1',
       visitServiceDetails: '',
-      visitServiceSchedule: '',
+      visitServiceSchedule: [],
       isAlertModalOpen: false,
       patientId: '',
       serviceType: '',
@@ -71,7 +72,9 @@ class VisitServiceDetails extends Component {
       isAlertModalopenConfirm: false,
       conversationsModal: false,
       canInitiateConversation: false,
-      conversationErrMsg: ''
+      conversationErrMsg: '',
+      pageNumber: 1,
+      disableShowMore: false,
     }
     this.alertModalMsg = ''
     this.status = {}
@@ -81,7 +84,7 @@ class VisitServiceDetails extends Component {
   componentDidMount() {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
-      this.props.getVisitServiceSchedule(this.props.ServiceRequestId);
+      this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
       this.props.getDays();
     } else {
       this.props.history.push(Path.visitServiceList)
@@ -91,17 +94,49 @@ class VisitServiceDetails extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       visitServiceDetails: nextProps.VisitServiceDetails,
-      visitServiceSchedule: nextProps.VisitServiceSchedule,
       patientId: nextProps.VisitServiceDetails.patient &&
         nextProps.VisitServiceDetails.patientId,
       serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
         nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
           .serviceRequestTypeDetailsId,
     })
+    this.visitServiceScheduleData(nextProps);
   }
 
   componentWillUnmount() {
-    this.props.clearVisitServiceHistoryByIdDetail()
+    this.props.clearVisitServiceHistoryByIdDetail();
+    this.props.clearVisitServiceSchedule();
+  }
+
+  clickShowMore = () => {
+    this.setState({ pageNumber: this.state.pageNumber + 1 }, () => {
+      this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
+    })
+  }
+
+  visitServiceScheduleData = (nextProps) => {
+    if (nextProps.VisitServiceSchedule.length) {
+      if (this.state.visitServiceSchedule.length === 0) {
+        this.setState({
+          visitServiceSchedule: this.state.visitServiceSchedule.concat(nextProps.VisitServiceSchedule)
+        })
+      }
+      else if (this.state.visitServiceSchedule[this.state.visitServiceSchedule.length - 1].serviceRequestVisitId !==
+        nextProps.VisitServiceSchedule[nextProps.VisitServiceSchedule.length - 1].serviceRequestVisitId) {
+        this.setState({
+          visitServiceSchedule: this.state.visitServiceSchedule.concat(nextProps.VisitServiceSchedule)
+        })
+      }
+      if (nextProps.VisitServiceSchedule.length === 10) {
+        this.setState({
+          disableShowMore: false
+        })
+      } else {
+        this.setState({ disableShowMore: true })
+      }
+    } else {
+      this.setState({ disableShowMore: true })
+    }
   }
 
   checkEligibility = () => {
@@ -214,7 +249,7 @@ class VisitServiceDetails extends Component {
 
   showPhoneNumber = () => {
     let data = this.props.VisitServiceDetails;
-    let phoneNumber = data.patient ? data.patient.phoneNumber:''
+    let phoneNumber = data.patient ? data.patient.phoneNumber : ''
     this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
   };
 
@@ -222,7 +257,7 @@ class VisitServiceDetails extends Component {
     if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You cannot initiate a conversation as you have no current service requests'
+        conversationErrMsg: 'You will be able to initiate a conversation once you are hired'
       })
     } else {
       let userId = getUserInfo().serviceProviderId;
@@ -254,7 +289,7 @@ class VisitServiceDetails extends Component {
     if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You cannot initiate a video call as you have no current service requests'
+        conversationErrMsg: 'You will be able to initiate a video call once you are hired'
       })
     } else {
       let item = this.state.visitServiceDetails;
@@ -490,24 +525,24 @@ class VisitServiceDetails extends Component {
                       </div>
                     </div>
                   </div>
-                  {!isEntityServiceProvider() && 
-                  <div className='PostedByImageContainer CursorPointer' onClick={this.onClickConversation}>
-                    <i class='ProfileIcon IconConversations' />
-                    <div class='PostedByProfileDetails'>
-                      <div class='ProfileIconDetails'>
-                        Conversations
+                  {!isEntityServiceProvider() &&
+                    <div className='PostedByImageContainer CursorPointer' onClick={this.onClickConversation}>
+                      <i class='ProfileIcon IconConversations' />
+                      <div class='PostedByProfileDetails'>
+                        <div class='ProfileIconDetails'>
+                          Conversations
                       </div>
-                    </div>
-                  </div>}
-                  {!isEntityServiceProvider() && 
-                  <div className='PostedByImageContainer CursorPointer' onClick={this.onClickVideoConference}>
-                    <i class='ProfileIcon IconVideo' />
-                    <div class='PostedByProfileDetails'>
-                      <div class='ProfileIconDetails'>
-                        Video Conference
                       </div>
-                    </div>
-                  </div>}
+                    </div>}
+                  {!isEntityServiceProvider() &&
+                    <div className='PostedByImageContainer CursorPointer' onClick={this.onClickVideoConference}>
+                      <i class='ProfileIcon IconVideo' />
+                      <div class='PostedByProfileDetails'>
+                        <div class='ProfileIconDetails'>
+                          Video Conference
+                      </div>
+                      </div>
+                    </div>}
                 </div>
               </section>
               <section className='rightPalette'>
@@ -669,11 +704,11 @@ class VisitServiceDetails extends Component {
                         </div>
                         <div></div>
                         {
-                          getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
-                            <div>
-                              <span>Service Provider</span>
-                            </div>
-                         }
+                          getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
+                          <div>
+                            <span>Service Provider</span>
+                          </div>
+                        }
                         <div />
                       </div>
                       {this.state.visitServiceSchedule &&
@@ -760,12 +795,27 @@ class VisitServiceDetails extends Component {
                                 </div>
                               </div>
                               {
-                                getUserInfo().serviceProviderTypeId===ORG_SERVICE_PROVIDER_TYPE_ID &&  
-                                <AssignServiceProvider sp={ScheduleList}/>
+                                getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
+                                <AssignServiceProvider sp={ScheduleList} />
                               }
                             </div>
                           )
                         })}
+                      {/* <div
+                        className='sr-showmore-btn'
+                        onClick={() => this.clickShowMore()}
+                        disabled={this.state.disableShowMore}
+                      >
+                        Show more
+                                      </div> */}
+                      {!this.state.disableShowMore && <ul className="list-group list-group-flush sr-showmore-btn">
+                        <li
+                          className="list-group-item ProfileShowMore"
+                          onClick={this.clickShowMore}
+                        >
+                          Show more <i className="ProfileIconShowMore" />
+                        </li>
+                      </ul>}
                     </TabPane>
                   </TabContent>
                 </div>
@@ -844,7 +894,7 @@ class VisitServiceDetails extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
-    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
+    getVisitServiceSchedule: (data, pgNumber) => dispatch(getVisitServiceSchedule(data, pgNumber)),
     visitService: () => dispatch(push(Path.visitServiceList)),
     getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
     updateServiceRequestByServiceProvider: data =>
@@ -869,7 +919,8 @@ function mapDispatchToProps(dispatch) {
     cancelInvitedServiceProvider: (data) => dispatch(cancelInvitedServiceProvider(data)),
     cancelAppliedServiceProvider: (data) => dispatch(cancelAppliedServiceProvider(data)),
     cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
-    clearVisitServiceHistoryByIdDetail: () => dispatch(clearVisitServiceHistoryByIdDetail())
+    clearVisitServiceHistoryByIdDetail: () => dispatch(clearVisitServiceHistoryByIdDetail()),
+    clearVisitServiceSchedule: () => dispatch(clearVisitServiceSchedule())
   }
 }
 

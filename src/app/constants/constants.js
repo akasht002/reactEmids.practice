@@ -11,6 +11,7 @@ export const MORNING = "Morning";
 export const AFTERNOON = "Afternoon";
 export const EVENING = "Evening";
 export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
+export const VIEW_ALL_COUNT = 4
 
 export const USER_LOCALSTORAGE = "CoreoSP";
 export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
@@ -75,7 +76,7 @@ export const SERVICE_VISIT_STATUS = {
     COMPLETED: 'Completed',
     SCHEDULED: 'Scheduled',
     INPROGRESS: 'InProgress',
-    PAYMENTPENDING: 'PaymentPending'
+    PAYMENTPENDING: 'Payment Pending'
 }
 
 

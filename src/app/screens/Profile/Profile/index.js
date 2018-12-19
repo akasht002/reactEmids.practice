@@ -233,7 +233,7 @@ class Profile extends Component {
               'contact',
               'videoChat',
               'messages',
-              'notification',
+              //'notification',
               'logout'
             ]}
           />
