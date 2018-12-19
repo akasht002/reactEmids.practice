@@ -29,7 +29,8 @@ export const Details = props => {
       </span>
       <div className={'SPDetailsContainer SPNameWidget'}>
         <div className={'d-flex'}>
-          <div className={'col-md-7 p-0'}>
+        {/* <div className={'col-md-7 p-0'}> */}
+          <div className={'p-0'}>
             <h3 className={'SPName'}>
               {props.personalDetail &&
                 `${props.personalDetail.firstName || ''} ${props.personalDetail.lastName || ''} `}

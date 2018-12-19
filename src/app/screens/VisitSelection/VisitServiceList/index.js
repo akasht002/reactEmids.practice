@@ -31,7 +31,10 @@ import Pagination from 'react-js-pagination';
 import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
-import { SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN } from '../../../constants/constants';
+import {
+    SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN, PAGE_NO,
+    SERVICE_REQUEST_PAGE_SIZE,
+} from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
 class VisitServiceList extends Component {
@@ -61,8 +64,8 @@ class VisitServiceList extends Component {
             ServiceAreas: {},
             isChecked: false,
             activePage: 1,
-            pageNumber: 1,
-            pageSize: 15,
+            pageNumber: PAGE_NO,
+            pageSize: SERVICE_REQUEST_PAGE_SIZE,
             sort: 'false',
             sortByOrder: 'DESC',
             selectedKey: 'item-1',
@@ -184,13 +187,14 @@ class VisitServiceList extends Component {
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas: this.state.ServiceAreas,
             serviceProviderId: serviceProviderId,
-            FromPage: this.state.pageNumber,
-            ToPage: 15,
+            FromPage: PAGE_NO,
+            ToPage: SERVICE_REQUEST_PAGE_SIZE,
         };
         this.props.getFilter(data)
         this.props.getFilterDataCount(data)
         this.setState({
-            filterOpen: !this.state.filterOpen
+            filterOpen: !this.state.filterOpen,
+            activePage: 1
         })
         this.props.formDirtyVisitList()
     }
@@ -230,14 +234,15 @@ class VisitServiceList extends Component {
             serviceTypes: [],
             isValid: true,
             selectedOption: '',
+            activePage: 1
         })
         this.props.clearServiceCategory(this.props.ServiceType);
         this.props.clearServiceArea(this.props.ServiceAreaList);
         this.props.clearServiceRequestStatus(this.props.ServiceStatus)
         this.props.clearServiceType([])
         let data = {
-            pageNumber: this.state.pageNumber,
-            pageSize: this.state.pageSize
+            pageNumber: PAGE_NO,
+            pageSize: SERVICE_REQUEST_PAGE_SIZE
         }
         this.props.getVisitServiceList(data);
         this.props.formDirty()
@@ -357,7 +362,7 @@ class VisitServiceList extends Component {
     }
 
     render() {
-        let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? ( 
+        let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? (
             this.props.visitServiceList.map(serviceList => {
                 let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
                 let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
@@ -419,8 +424,8 @@ class VisitServiceList extends Component {
                 )
             })
         ) : (
-         <span className="no-resultblock">No results found for the current criteria</span>
-        )
+                <span className="no-resultblock">No results found for the current criteria</span>
+            )
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}
