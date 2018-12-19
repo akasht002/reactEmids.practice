@@ -64,6 +64,8 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 canInitiateConversation: action.data
             };
 
+        case VisitServiceDetails.formDirtyVisitServiceDetails:
+            return defaultState;
         default:
             return state;
     }

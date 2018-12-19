@@ -19,7 +19,8 @@ import {
   cancelHiredServiceProvider,
   getVisitServiceEligibilityStatus,
   getDays,
-  dispatchServiceRequestByServiceProvider
+  dispatchServiceRequestByServiceProvider,
+  formDirtyVisitServiceDetails
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import {
   getPerformTasksList,
@@ -229,7 +230,7 @@ class VisitServiceDetails extends Component {
 
   showData = data => {
     if (data.occurence !== 0) {
-      return '- ' + data.occurence + ' occurrences'
+      return '- ' + !!!data.occurence ? '' :  data.occurence + ' occurrences'
     } else {
       return (
         <React.Fragment>
@@ -301,6 +302,10 @@ class VisitServiceDetails extends Component {
     }
   };
 
+  goBackToServiceRequest = () => {
+    this.props.goBack();
+    this.props.formDirtyVisitServiceDetails();
+  }
 
   render() {
     let defaultCheck = ''
@@ -468,7 +473,7 @@ class VisitServiceDetails extends Component {
               <section className='ProfileCardHeader'>
                 <div className='primaryColor'>
                   <span className='HeaderBackWrapper CursorPointer'>
-                    <a className={'HeaderBackButton'} onClick={this.props.goBack}></a>
+                    <a className={'HeaderBackButton'} onClick={this.goBackToServiceRequest}></a>
                   </span>
                   <span className='HeaderRequestLabel'>
                     Request ID
@@ -920,7 +925,8 @@ function mapDispatchToProps(dispatch) {
     cancelAppliedServiceProvider: (data) => dispatch(cancelAppliedServiceProvider(data)),
     cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
     clearVisitServiceHistoryByIdDetail: () => dispatch(clearVisitServiceHistoryByIdDetail()),
-    clearVisitServiceSchedule: () => dispatch(clearVisitServiceSchedule())
+    clearVisitServiceSchedule: () => dispatch(clearVisitServiceSchedule()),
+    formDirtyVisitServiceDetails: () => dispatch(formDirtyVisitServiceDetails())
   }
 }
 
