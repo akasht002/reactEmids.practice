@@ -48,7 +48,7 @@ class MyConversation extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               My Conversations
             </span>
-            <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>
+           { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>}
           </div>
           
           <div className='topPalette ProfileConversation'>

@@ -62,7 +62,8 @@ export const serviceCalendar = (
   props
 ) => {
   if (newData.length > 0) {
-    return newData.slice(0, 3).map((conversations, index) => {
+    // return newData.slice(0, 3).map((conversations, index) => {
+    return newData.map((conversations, index) => {  
       let options = [
         <Item className='ListItem CTDashboard' key='item-1'
         onClick={(e) => { props.handlePhoneNumber(conversations) }}>
