@@ -59,7 +59,8 @@ class ServiceRequest extends React.Component {
 
   optionChanged = (e) => {
     this.setState({
-      selectedValue: e
+      selectedValue: e,
+      showMore: false
     })
     this.props.getPatientServiceRequestDetail(e.id)
   }

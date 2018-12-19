@@ -111,14 +111,14 @@ export const getEntityServiceProviderListSuccess = data => {
 
 export function getEntityServiceProviderList () {
   return (dispatch, getState) => {
-    dispatch(startLoading())
+    // dispatch(startLoading())
     Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
       .then(resp => {
         dispatch(getEntityServiceProviderListSuccess(resp.data))
-        dispatch(endLoading())
+        // dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        // dispatch(endLoading())
       })
   }
 }
