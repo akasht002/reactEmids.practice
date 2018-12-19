@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import {SCREENS} from '../constants/constants';
+import {SCREENS,USER_LOCALSTORAGE} from '../constants/constants';
 import {
   VerifyContact,
   SetPassword,
@@ -84,12 +84,20 @@ export const Path = {
 };
 
 class AppStackRoot extends Component {
+
+  startPage = (props, context) => {
+    let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
+    if (localStorageData && localStorageData.data && localStorageData.data.access_token) {     
+      return <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />      
+    } else{ return <Welcome/>}      
+   }
+
   render() {
     return (
       <ConnectedRouter history={this.props.history}>
         <HashRouter>
           <Switch>
-            <Route exact path={Path.root} component={Welcome} />
+            <Route exact path={Path.root} component={this.startPage} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyContactEntity} component={VerifyContact} />

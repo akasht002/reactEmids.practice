@@ -4,7 +4,7 @@ const defaultState = {
   conversationDetail: [],
   unreadCounts: [],
   serviceProvider: [],
-  patientServiceRequest:[],
+  patientServiceRequest:null,
   serviceVist:[],
   serviceStatusLookUp:[],
   serviceVistCount:[],
