@@ -127,6 +127,18 @@ export function calculationActualData() {
 
         let estimatedClaim;
         let copayAmount;
+        let amount;
+        let grandAmount;
+
+        
+        if(totalVisitCost < 1) {
+            amount = 1
+            grandAmount= 1
+        }else{
+            amount = totalVisitCost
+            grandAmount = grandTotalAmount
+        }
+
         ClaimState ?
             estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2)
             :
@@ -135,8 +147,7 @@ export function calculationActualData() {
         ClaimState ?
             copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2)
             :
-            copayAmount = grandTotalAmount
-
+            copayAmount = amount
 
         // let estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
 
@@ -144,9 +155,9 @@ export function calculationActualData() {
 
         const calculationdata = {
             totalChargableTime: totalChargableTime,
-            totalVisitCost: totalVisitCost,
+            totalVisitCost: amount,
             taxes: taxes,
-            grandTotalAmount: grandTotalAmount,
+            grandTotalAmount: grandAmount,
             totalHours: hours,
             totalMinutes: min,
             totalSeconds: sec,
