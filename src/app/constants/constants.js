@@ -27,6 +27,8 @@ export const MAX_MONTH_LIMIT =  9
 export const IN_MAX_ARRAY = [1,2,3]
 export const COUNT_BASED_MONTH = {9:1,10:2,11:3}
 export const PHONE_NUMBER_CONST = '+1 ';
+export const PAGE_NO = 1;
+export const SERVICE_REQUEST_PAGE_SIZE = 15
 
 export const RESPONSE_STATUS = {
     VALID: "Valid",

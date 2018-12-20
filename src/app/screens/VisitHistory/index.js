@@ -39,8 +39,9 @@ class VisitHistory extends Component {
       activePage: 1,
       sortByOrder: 'asc',
       pageNumber: 1,
-      sort: 'true'
+      sort: true
     }
+    this.selectedData = ''
   }
 
   componentDidMount() {
@@ -104,7 +105,7 @@ class VisitHistory extends Component {
   }
 
   applyFilter = (selectedData) => {
-
+    this.selectedData = selectedData;
     const data = {
       fromDate: selectedData.searchData.startDate ? selectedData.searchData.startDate : '1900-01-01',
       toDate: selectedData.searchData.endDate ? selectedData.searchData.endDate : moment().toDate(),
@@ -120,12 +121,41 @@ class VisitHistory extends Component {
     this.props.getFilteredData(data)
     this.setState({
       filterOpen: !this.state.filterOpen,
-      sort: 'false'
+      sort: false,
+      activePage: 1
     })
   }
 
+  handlePageChange = (pageNumber) => {
+    this.setState({ pageNumber: pageNumber, activePage: pageNumber })
+    const data = {
+      fromDate: this.selectedData.searchData.startDate ?  this.selectedData.searchData.startDate : '1900-01-01',
+      toDate:  this.selectedData.searchData.endDate ?  this.selectedData.searchData.endDate : moment().toDate(),
+      serviceCategory: this.state.serviceCategoryId,
+      serviceTypeList: this.state.serviceTypeIds,
+      status: [],
+      serviceProviderList:  this.selectedData.serviceProviderArray,
+      individualList:  this.selectedData.individualList,
+      serviceProviderId: 0,
+      pageNumber: pageNumber,
+      pageSize: 10
+    }
+    this.props.getFilteredData(data)
+  }
+
+  handlePageChangeList = (pageNumber) => {
+    this.setState({ pageNumber: pageNumber, activePage: pageNumber })
+    let data = {
+      pageNumber: pageNumber,
+      pageSize: 10,
+      sortOrder: this.state.sortByOrder,
+      sortName: 'visitdate'
+    }
+    this.props.getVisitServiceLists(data)
+  }
+
   applyReset = () => {
-    this.setState({ selectedOption: '', serviceTypeIds: [], sort: true })
+    this.setState({ selectedOption: '', serviceTypeIds: [], sort: true, activePage: 1 })
     this.props.clearServiceTypes();
     this.props.clearServiceProviders(this.props.serviceProviders);
     this.props.clearPatientForServiceProviders(this.props.PatientForServiceproviders);
@@ -136,18 +166,7 @@ class VisitHistory extends Component {
       sortName: "visitdate"
     };
     this.props.getVisitServiceLists(data);
-  }
-
-  handlePageChange = (pageNumber) => {
-    this.setState({ pageNumber: pageNumber })
-    let data = {
-      pageNumber: pageNumber,
-      pageSize: 10,
-      sortOrder: this.state.sortByOrder,
-      sortName: 'visitdate'
-    }
-    this.props.getVisitServiceLists(data)
-    this.setState({ activePage: pageNumber });
+    this.props.getHistoryListCount();
   }
 
   selectedSort = (selectedKey) => {
@@ -214,14 +233,14 @@ class VisitHistory extends Component {
             handleClicks={this.handleClick}
             handelPatientProfile={this.handelPatientProfile}
           />
-          {this.props.VisitServiceHistory.length > 0 && this.state.sort === 'true' && (
+          {this.props.VisitServiceHistory.length > 0 && this.state.sort === true && (
             <div class="col-md-12 p-0 AsyncConversationPagination">
               <Pagination
                 activePage={this.state.activePage}
                 itemsCountPerPage={10}
                 totalItemsCount={this.props.historyListCount}
                 pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
+                onChange={this.handlePageChangeList}
                 itemClass="PaginationItem"
                 itemClassFirst="PaginationIcon First"
                 itemClassPrev="PaginationIcon Prev"
@@ -230,7 +249,7 @@ class VisitHistory extends Component {
               />
             </div>
           )}
-          {this.props.VisitServiceHistory.length > 0 && this.state.sort === 'false' && (
+          {this.props.VisitServiceHistory.length > 0 && this.state.sort === false && (
             <div class="col-md-12 p-0 AsyncConversationPagination">
               <Pagination
                 activePage={this.state.activePage}

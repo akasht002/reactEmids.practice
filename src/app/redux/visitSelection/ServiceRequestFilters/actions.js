@@ -20,7 +20,7 @@ export const ServiceRequestFiltersList = {
 
 export const clearServiceRequestStatus = (data) => {
     data.map((item) => {
-        return item.isChecked = false;
+        return item.isChecked = true;
     })
     return {
         type: ServiceRequestFiltersList.clearServiceRequestStatus,
@@ -134,7 +134,7 @@ export function ServiceRequestStatus() {
             let newArr = _.map(resp.data, function(element) { 
                 return _.extend({}, element, {isChecked: true});
            });
-            let listToDelete = [106, 107];
+            let listToDelete = [106, 107, 40];
             let data =newArr.filter(obj => !listToDelete.includes(obj.id));
             dispatch(getServiceRequestStatusSuccess(data))
             // dispatch(endLoading());
@@ -199,7 +199,7 @@ export function getFilter(data) {
 
 export function getFilterDataCount(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+       // dispatch(startLoading());
         let reqObj;
             reqObj = {
                 "Category": data.ServiceCategoryId,
@@ -214,9 +214,9 @@ export function getFilterDataCount(data) {
             }
         elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
             dispatch(getFilterDataCountSuccess(resp.data))
-            dispatch(endLoading());
+            //dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            //dispatch(endLoading());
         })
 
     }

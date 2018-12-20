@@ -62,6 +62,7 @@ class ServiceRequest extends React.Component {
       selectedValue: e,
       showMore: false
     })
+    this.toggleName = 'Show more'
     this.props.getPatientServiceRequestDetail(e.id)
   }
 
