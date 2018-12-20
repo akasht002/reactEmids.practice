@@ -199,7 +199,7 @@ export function getFilter(data) {
 
 export function getFilterDataCount(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+       // dispatch(startLoading());
         let reqObj;
             reqObj = {
                 "Category": data.ServiceCategoryId,
@@ -214,9 +214,9 @@ export function getFilterDataCount(data) {
             }
         elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
             dispatch(getFilterDataCountSuccess(resp.data))
-            dispatch(endLoading());
+            //dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            //dispatch(endLoading());
         })
 
     }
