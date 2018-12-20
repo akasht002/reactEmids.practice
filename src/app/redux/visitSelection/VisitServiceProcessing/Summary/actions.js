@@ -147,7 +147,7 @@ export function calculationActualData() {
         ClaimState ?
             copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2)
             :
-            copayAmount = amount
+            copayAmount = grandAmount
 
         // let estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
 
