@@ -224,18 +224,22 @@ class Profile extends Component {
   };
 
   render() {
+
+    let menuArray = (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+    getUserInfo().isEntityServiceProvider) ? [
+      'contact',
+      'messages'
+    ] : [
+      'contact',
+      'videoChat',
+      'messages'
+    ]
     return (
       <ScreenCover>
         <div className='container-fluid p-0'>
           <Header
             onClick={(link) => this.navigateProfileHeader(link)}
-            menuArray={[
-              'contact',
-              'videoChat',
-              'messages',
-              //'notification',
-              'logout'
-            ]}
+            menuArray={menuArray}
           />
           <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
