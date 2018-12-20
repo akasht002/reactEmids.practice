@@ -7,7 +7,7 @@ export const VisitList = props => {
   let visitHistoryList = props.visitHistoryList
   let visitHistoryListItem = ''
   if (visitHistoryList) {
-    visitHistoryListItem = visitHistoryList.map((vistList, index) => {
+    visitHistoryListItem = visitHistoryList.length > 0 ? visitHistoryList.map((vistList, index) => {
       let visitId = getServiceTypeImage(vistList.serviceTypes && vistList.serviceTypes[0].serviceTypeId);
       return (
         <div className='card mainProfileCard' key={index}>
@@ -91,7 +91,8 @@ export const VisitList = props => {
 
         </div>
       )
-    })
+    }) : 
+        <span className="no-resultblock">No results found for the current criteria</span>
   }
   return visitHistoryListItem
 }
