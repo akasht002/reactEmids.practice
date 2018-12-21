@@ -128,6 +128,7 @@ class Skills extends Component {
                 listItems={skillsOptions}
                 value={this.state.selectedSkills}
                 multi={true}
+                className="block-lesright"
                 closeOnSelect={true}
                 placeholder='Select your skills'
             />;

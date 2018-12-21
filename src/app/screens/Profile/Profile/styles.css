@@ -1186,6 +1186,10 @@ div.CertificationModal{
     min-height: 350px
 }
 
+.block-lesright .Select-input{
+    margin-left: 2px;
+}
+
 
 /*ui-responsive-issue-for-tab*/
 @media only screen and (max-width: 1024px) {
