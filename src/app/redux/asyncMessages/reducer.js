@@ -163,6 +163,10 @@ const asyncMessageState = (state = defaultState, action) => {
             conversation:{
                 ...state.conversation,
                 title: action.data
+            },
+            currentConversation:{
+                ...state.currentConversation,
+                title: action.data
             }
         }
         case AsyncMessageActions.loadingStart:
