@@ -21,7 +21,7 @@ class MessageList extends Component {
     };
 
     participantsContent = (participants) => {
-        let extraParticipants = (participants.length - 3);
+        let extraParticipants = (participants.length - 2);
         return (
             participants.map((participant, index) => {
                 let zIndex = (participants.length - index);
@@ -30,14 +30,13 @@ class MessageList extends Component {
                 switch (index) {
                     case 0:
                     case 1:
-                    case 2:
                         return (
                             <div key={index} className="avatarContainer" style={zIndexStyle}>
                                 <img  alt="i" src={participant.thumbNail ? participant.thumbNail : require("../../../assets/images/Blank_Profile_icon.png")}
                                     className="avatarImage" />
                             </div>
                         )
-                    case 3:
+                    case 2:
                         return (
                             <div key={index} className="avatarContainer">
                                 <div
