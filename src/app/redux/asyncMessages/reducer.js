@@ -17,6 +17,7 @@ const defaultState = {
     openedAsyncPage : null,
     removeParticipantConcurrencyExist: false,
     activePageNumber: 1,
+    isLoading:false,
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -156,6 +157,24 @@ const asyncMessageState = (state = defaultState, action) => {
             ...state,
             activePageNumber: action.data
         }
+        case AsyncMessageActions.updateTitle:
+            return{
+            ...state,
+            conversation:{
+                ...state.conversation,
+                title: action.data
+            }
+        }
+        case AsyncMessageActions.loadingStart:
+            return{
+            ...state,
+             isLoading: true
+        }
+        case AsyncMessageActions.loadingEnd:
+            return{
+            ...state,
+                isLoading: false
+            }
         default:
             return state;
     }

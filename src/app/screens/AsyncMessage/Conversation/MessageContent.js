@@ -178,7 +178,7 @@ class MessageContent extends Component {
                     </div>
                 )
             })
-        } else {
+        } else if(!this.props.isLoading) {
             conversations = (<table className="table noMessage">
                 <tbody>
                     <tr>
