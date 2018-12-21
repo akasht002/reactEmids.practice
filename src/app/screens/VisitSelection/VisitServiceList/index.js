@@ -72,6 +72,8 @@ class VisitServiceList extends Component {
             serviceRequestList: []
         };
         this.sort = false
+        this.defaultStatus = ["Open", "Invited", "Applied", "Hired", "Not Hired", "Completed", "Closed", "Cancelled", "Not Interested"]
+        this.isStatusChanged = false
     };
 
     toggle() {
@@ -182,7 +184,7 @@ class VisitServiceList extends Component {
         let data = {
             startDate: this.state.startDate === '' ? '1900-01-01' : this.state.startDate,
             endDate: this.state.endDate === '' ? moment().toDate() : this.state.endDate,
-            serviceStatus: uniqElementOfArray(this.state.serviceStatus),
+            serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
             ServiceCategoryId: this.state.ServiceCategoryId,
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas: this.state.ServiceAreas,
@@ -236,6 +238,7 @@ class VisitServiceList extends Component {
             selectedOption: '',
             activePage: 1
         })
+        this.isStatusChanged = false
         this.props.clearServiceCategory(this.props.ServiceType);
         this.props.clearServiceArea(this.props.ServiceAreaList);
         this.props.clearServiceRequestStatus(this.props.ServiceStatus)
@@ -289,7 +292,8 @@ class VisitServiceList extends Component {
             service = [];
         }
         this.setState({
-            serviceStatus: service
+            serviceStatus: service,
+            isStatusChanged: true
         })
     }
 
@@ -303,7 +307,7 @@ class VisitServiceList extends Component {
                 service.splice(index, 1);
             }
         }
-
+        this.isStatusChanged = true;
         this.setState({
             serviceStatus: service,
         });
