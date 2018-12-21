@@ -81,6 +81,18 @@ export function getSummaryDetails(data) {
     }
 };
 
+export function getSummaryDetail(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
+            dispatch(getSummaryDetailsSuccess(resp.data));
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
+
 export function getVisitServiceEligibilityStatus(data) {
     const eligibilityData = {
         patientId: data.patient.patientId,
