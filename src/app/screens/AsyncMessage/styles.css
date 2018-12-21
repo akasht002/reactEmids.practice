@@ -816,7 +816,7 @@ li.participants{
 }
 
 .participantSearchName{
-    padding: 8px 30px 8px 54px !important;
+    padding: 8px 30px 8px 18px !important;
 }
 
 .participantsSearchList{
@@ -1690,9 +1690,10 @@ overflow: auto;
 
 .participantsSearchForm .participantsSearchList .participantName
 {
-    -o-text-overflow: initial;
-    text-overflow: initial;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
     max-width: initial;
+
 }
 
 .list-fullblock .participantsSearchForm .SelectWithFlag .ProfileImageMultiSelect .Select-menu-outer
@@ -2015,3 +2016,22 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
 button:disabled {
     cursor: default !important;
 }
+
+
+/* width */
+.MsgModalBody.modal-body::-webkit-scrollbar {
+    width: 5px;
+    /* background:rgba(0, 0, 0, 0.8); */
+  }
+  
+  /* Handle */
+  .MsgModalBody.modal-body::-webkit-scrollbar-thumb {
+    background:rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Handle on hover */
+  .MsgModalBody.modal-body::-webkit-scrollbar-thumb:hover {
+    background:rgba(0, 0, 0, 0.6);
+  }
+  
+     
