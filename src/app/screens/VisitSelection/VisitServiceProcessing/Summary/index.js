@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
-import { getSummaryDetails, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
@@ -45,7 +45,7 @@ class Summary extends Component {
 
     componentDidMount() {
         if (this.props.ServiceRequestVisitId) {
-            this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
+            this.props.getSummaryDetail(this.props.patientDetails.serviceRequestVisitId);
             this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
         } else {
             this.props.history.push(Path.visitServiceList)
@@ -477,7 +477,7 @@ class Summary extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
+        getSummaryDetail: (data) => dispatch(getSummaryDetail(data)),
         onUpdateTime: (data) => dispatch(onUpdateTime(data)),
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),

@@ -147,13 +147,13 @@ export function ServiceRequestStatus() {
 export function getServiceArea(data) {
     return (dispatch) => {
 
-        dispatch(startLoading());
+        // dispatch(startLoading());
         let serviceProviderId = getUserInfo().serviceProviderId;
         Get(API.getServiceareaList + `${serviceProviderId}`).then((resp) => {
             dispatch(getServiceAreaSuccess(resp.data))
-            dispatch(endLoading());
+            // dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            // dispatch(endLoading());
         })
 
     }

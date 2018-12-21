@@ -230,7 +230,7 @@ class VisitServiceDetails extends Component {
 
   showData = data => {
     if (data.occurence !== 0) {
-      return '- ' + !!!data.occurence ? '' :  data.occurence + ' occurrences'
+      return '- ' + !!!data.occurence ? '' : data.occurence + ' occurrences'
     } else {
       return (
         <React.Fragment>
@@ -716,6 +716,20 @@ class VisitServiceDetails extends Component {
                         }
                         <div />
                       </div>
+                      {this.props.VisitServiceDetails &&
+                        (this.props.VisitServiceDetails.statusId === 35 ||
+                          this.props.VisitServiceDetails.statusId === 36 ||
+                          this.props.VisitServiceDetails.statusId === 37 ||
+                          this.props.VisitServiceDetails.statusId === 39 ||
+                          this.props.VisitServiceDetails.statusId === 58 ||
+                          this.props.VisitServiceDetails.statusId === 106 ||
+                          this.props.VisitServiceDetails.statusId === 107) &&
+                        <div className='BoardContainer noInfoBlock update-noblockinfo'>
+                          <span className="SPNoInfoDesc">
+                            Visit Schedule(s) will be displayed after the hiring is completed.
+                          </span>
+                        </div>
+                      }
                       {this.state.visitServiceSchedule &&
                         this.state.visitServiceSchedule.map(ScheduleList => {
                           return (

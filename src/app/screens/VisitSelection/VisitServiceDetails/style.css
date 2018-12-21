@@ -1350,3 +1350,13 @@ ul.sr-showmore-btn
     margin-bottom: 5px;
     margin-top: 5px;
 }
+
+.update-noblockinfo
+{
+    align-items: baseline;
+}
+
+.update-noblockinfo .SPNoInfoDesc
+{
+padding-top: 80px;
+}

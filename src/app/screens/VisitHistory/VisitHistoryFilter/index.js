@@ -291,6 +291,7 @@ class VisitFilter extends Component {
                       onDateChange={this.dateToChanged}
                       onDateChangeRaw={this.dateChangedRawEndDate}
                       mandatory
+                      minDate={this.state.searchData.startDate && formateStateDateValue(this.state.searchData.startDate)}
                       className={'form-control datePicker '}
                       onBlur={() => {
                         if (!this.state.searchData.endDate) {

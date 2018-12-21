@@ -37,6 +37,7 @@ export const AsyncMessageActions = {
     clearConversation: 'clearConversation/asyncMessage',
     setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
     setActivePageNumber: 'setActivePageNumber/asyncMessage',
+    updateTitle: 'updateTitle/asyncMessage',
 };
 
 export const setConversationSummary = (data) => {
@@ -50,6 +51,18 @@ export const pushConversation = (data) => {
     return {
         type: AsyncMessageActions.pushConversation,
         data
+    }
+};
+
+export const convLoadingStart = () => {
+    return {
+        type: AsyncMessageActions.loadingStart
+    }
+};
+
+export const convLoadingEnd = () => {
+    return {
+        type: AsyncMessageActions.loadingEnd
     }
 };
 
@@ -115,7 +128,6 @@ export function getConversationItemSignalR(conversationId, messageId){
         && state.asyncMessageState.currentConversation.conversationId === conversationId){
             let userId = getUserInfo().serviceProviderId;
             let userType = USERTYPES.SERVICE_PROVIDER;
-            dispatch(startLoading());
             let data = {conversationId: conversationId};
             AsyncGet(API.getConversationMessage 
                 + messageId + '/'
@@ -126,10 +138,8 @@ export function getConversationItemSignalR(conversationId, messageId){
             .then(resp => {
                 dispatch(verifyIsConversationMessageExist(resp.data));
                 dispatch(updateReadStatus(data));
-                dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
             })
         };
     }
@@ -172,7 +182,7 @@ export function onFetchConversationSummary(pageNumber) {
 
 export function onFetchConversation(id) {
     return (dispatch, getState) => {
-        dispatch(startLoading());
+        dispatch(convLoadingStart());
         let state = getState();
         let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
         let pageNumber = 1;
@@ -188,10 +198,10 @@ export function onFetchConversation(id) {
             .then(resp => {
                 dispatch(setConversationData(resp.data));
                 dispatch(setCurrentOpenConversation(resp.data));
-                dispatch(endLoading());
+                dispatch(convLoadingEnd());
             })
             .catch(err => {
-                dispatch(endLoading())
+                dispatch(convLoadingEnd())
             })
     }
 };
@@ -217,10 +227,20 @@ export function onSaveTitle(data) {
         AsyncPut(API.saveTitle, data)
             .then(resp => {
                 dispatch(endLoading());
+                dispatch(updateTitle(data.title));
+                dispatch(verifyIsConversationMessageExistSendMessage(resp.data));
             })
             .catch(err => {
                 dispatch(endLoading())
             })
+    }
+};
+
+
+export const updateTitle = (data) =>{
+    return  {
+        type: AsyncMessageActions.updateTitle,
+        data
     }
 };
 
@@ -337,17 +357,14 @@ export function getUnreadMessageCounts() {
 
 export function updateReadStatus(data) {
     return (dispatch) => {
-        dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncPutWithUrl(API.updateReadStatus + USER_ID + '/' + data.conversationId
             + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(getDashboardMessageCount());            
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
             })
     }
 };
@@ -462,15 +479,12 @@ const getLinkedParticipantsByPatientsSuccess = data => {
 
 export function getDashboardMessageCount() {
     return (dispatch) => {
-        dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
         AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USERTYPES.SERVICE_PROVIDER)
             .then(resp => {
                 dispatch(getDashboardCountSuccess(resp.data));
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
             })
     }
 };
@@ -535,12 +549,9 @@ const onClearConversationImageUrl = () => {
 export function CanServiceProviderCreateMessage() {
     return (dispatch, getState) => {
         let USER_ID = getUserInfo().serviceProviderId;
-        dispatch(startLoading());
         AsyncGet(API.canCreateMessage + USER_ID).then(resp => {
             dispatch(CanServiceProviderCreateMessageSuccess(resp.data))
-            dispatch(endLoading());
         }).catch(err => {
-            dispatch(endLoading());
         })
     }
 };
@@ -555,15 +566,12 @@ const CanServiceProviderCreateMessageSuccess = (data) =>{
 
 export function getLinkedPatients() {
         return (dispatch) => {
-        dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
         AsyncGet(API.getContext + USER_ID)
             .then(resp => {
                 dispatch(getLinkedPatientsSuccess(resp.data));
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
             })
     }
 };
