@@ -192,9 +192,8 @@ export function onFetchConversation(id) {
         AsyncGet(API.getConversation 
             + conversationId + '/' 
             + USER_ID + '/' 
-            + USER_TYPE + '/'
-            + pageNumber + '/'
-            + pageSize)
+            + USER_TYPE + '/all'
+            )
             .then(resp => {
                 dispatch(setConversationData(resp.data));
                 dispatch(setCurrentOpenConversation(resp.data));
