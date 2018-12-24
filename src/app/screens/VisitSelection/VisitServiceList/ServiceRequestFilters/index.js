@@ -101,6 +101,7 @@ class Filter extends Component {
                                         handleServiceArea={this.props.handleServiceArea}
                                         serviceArea={this.props.serviceArea}
                                     />
+                                    <span>Note : Service Area filters will only be applicable for open service request(s).</span>
                                 </TabPane>
                                 <TabPane tabId="3" id=" Date_range_tab">
                                     <div className="form-group">
