@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
-import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature,updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
@@ -165,6 +165,11 @@ class Summary extends Component {
         }
         this.setState({ isModalOpen: false })
         this.props.onUpdateTime(data)
+        //Added by Vimal
+        this.props.updateVisitProcessingUpdateBilledDuration(
+            {serviceRequestVisitId:this.state.summaryDetails.serviceRequestVisitId,
+             updatedData:data
+            })
     }
 
     onMouseUp = () => {
@@ -482,7 +487,8 @@ function mapDispatchToProps(dispatch) {
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
-        goBack: () => dispatch(push(Path.feedback))
+        goBack: () => dispatch(push(Path.feedback)),
+        updateVisitProcessingUpdateBilledDuration:(data)=>dispatch(updateVisitProcessingUpdateBilledDuration(data))
     }
 };
 
