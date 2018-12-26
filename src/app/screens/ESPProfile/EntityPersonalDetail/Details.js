@@ -24,6 +24,7 @@ export const Details = props => {
         profileImage='SPdpImage'
       />
       <span className="rating-blockcustome">
+        <i class="Icon iconFilledStar"></i>
         {props.personalDetail && Math.round(props.personalDetail.rating * 10)/10}
       </span>
       <div className={'SPDetailsContainer SPNameWidget'}>
