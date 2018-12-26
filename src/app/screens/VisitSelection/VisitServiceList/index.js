@@ -323,7 +323,8 @@ class VisitServiceList extends Component {
         }
         const serviceAreaObj = {
             'CoverageArea': item.coverageArea,
-            'Locations': locations
+            'Locations': locations,
+            'Zip': item.zipCode
         };
         this.setState({
             ServiceAreas: serviceAreaObj

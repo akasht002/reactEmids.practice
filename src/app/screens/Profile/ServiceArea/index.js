@@ -196,6 +196,17 @@ class ServiceArea extends Component {
     }
   }
 
+  rangeChangeValue = (e) => {
+    const onlyNums = e.target.value.replace(/[^0-9]/g, '');
+    if (onlyNums.length <= 3) {
+      this.setState({
+        coverageArea: onlyNums,
+        coverageAreaInvalid: false,
+        disabledSaveBtn: false
+      })
+    }
+  }
+
   onClickHandleIncr = () => {
     if(this.state.coverageArea !== 0) {
       this.countValue = this.state.coverageArea;
@@ -371,6 +382,30 @@ render() {
               {this.state.zipInvalid && 'Please enter zip code'}
             </small>
           </div>
+          <div className='col-md-6 mb-2'>
+            <Input
+              name='range_miles'
+              label='Range (in miles)'
+              className={"form-control custome-placeholder " + (this.state.coverageAreaInvalid && 'inputFailure')}
+              autoComplete='off'
+              type='text'
+              placeholder=''
+              value={this.state.coverageArea}
+              textChange={this.rangeChangeValue}
+              onBlur={(e) => {
+                if (getLength(e.target.value) === 0 ) {
+                  this.setState({
+                    coverageAreaInvalid: true
+                  })
+                }
+              }}
+            />
+            <small className="text-danger d-block OnboardingAlert">
+              {this.state.coverageAreaInvalid && 'Please enter Coverage Area'}
+            </small>
+          </div>
+          {/*
+         
           <div className='col-md-6'>
             <div className="form-group">
               <label className="m-0">Range (in miles)</label>
@@ -383,7 +418,7 @@ render() {
                   onClick={this.onClickHandleIncr}>+</span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </form>
     )

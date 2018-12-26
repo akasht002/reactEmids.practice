@@ -185,7 +185,7 @@ class TeleHealthWidget extends Component {
             this.attachParticipantTracks(room.localParticipant, fullWidthMediaContainer);
         }
 
-        this.setState({ activeParticipantIdentity: room.localParticipant.identity });
+        this.setState({ activeParticipantIdentity: 'Me' });
 
         room.participants.forEach(participant => {
             this.setState({ videoAdded: true });
@@ -259,7 +259,13 @@ class TeleHealthWidget extends Component {
         var fullWidthMediaContainer = this.refs.fullWidthMedia;
         fullWidthMediaContainer.innerHTML = '';
         this.attachParticipantTracks(participant, fullWidthMediaContainer);
-        this.setState({ activeParticipantIdentity: participant.identity });
+        let name = 'Me';
+        this.props.existingParticipantList.map((existingParticipant) => {
+            if (parseInt(participant.identity, 10) === existingParticipant.userId) {
+                name = existingParticipant.firstName + ' ' + existingParticipant.lastName;
+            }
+        });
+        this.setState({ activeParticipantIdentity: name });
     }
 
     render() {
@@ -332,12 +338,18 @@ class TeleHealthWidget extends Component {
 
         let sliderCategory = [];
         this.state.activeRoom && this.state.activeRoom.participants.forEach((participant) => {
+            let name = '';
+            this.props.existingParticipantList.map((existingParticipant) => {
+                if (parseInt(participant.identity, 10) === existingParticipant.userId) {
+                    name = existingParticipant.firstName + ' ' + existingParticipant.lastName;
+                }
+            });
             var tracks = Array.from(participant.tracks.values());
             let cat = <div className='TeleHealthParticipants' onClick={() => { this.participantClick(participant) }}>
                 <input id={'Participants' + participant.sid} type='radio' name='Participants' value={participant.sid} />
                 <label className='ParticipantsLinkLabel' htmlFor={'Participants' + participant.sid}>
                     <div className="VideoBackground" />
-                    <span className="ParticipantSliderName">{participant.identity}</span>
+                    <span className="ParticipantSliderName">{name}</span>
                     <div ref={"remoteVideo" + participant.sid}></div>
                 </label>
             </div>

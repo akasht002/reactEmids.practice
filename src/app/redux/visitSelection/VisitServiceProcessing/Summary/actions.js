@@ -92,6 +92,18 @@ export function getSummaryDetail(data) {
         })
     }
 };
+/* Added By Vimal on 24/12/2018 */
+export function updateVisitProcessingUpdateBilledDuration(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ServiceRequestGet(API.visitProcessingUpdateBilledDuration + + `${data.serviceRequestVisitId}/${data.updatedData.hour}:${data.updatedData.min}:${data.updatedData.sec}`).then((resp) => {
+            // dispatch(getSummaryDetailsSuccess(resp.data));
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
 
 export function getVisitServiceEligibilityStatus(data) {
     const eligibilityData = {

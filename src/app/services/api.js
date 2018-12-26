@@ -153,5 +153,6 @@ export const API = {
     getPersonalDetailGuardian: 'CoreoHomeUser/GuardianProfile/',
     getImageGuardian: 'CoreoHomeUser/Image/',
     canInitiateConversation: 'Conversation/CanInitiate/',
-    getBuildVersion: 'Common/LookupConfig/BuildVersionSP'
+    getBuildVersion: 'Common/LookupConfig/BuildVersionSP',
+    visitProcessingUpdateBilledDuration:'VisitProcessing/UpdateBilledDuration'
 }

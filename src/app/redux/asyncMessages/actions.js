@@ -128,7 +128,6 @@ export function getConversationItemSignalR(conversationId, messageId){
         && state.asyncMessageState.currentConversation.conversationId === conversationId){
             let userId = getUserInfo().serviceProviderId;
             let userType = USERTYPES.SERVICE_PROVIDER;
-            dispatch(startLoading());
             let data = {conversationId: conversationId};
             AsyncGet(API.getConversationMessage 
                 + messageId + '/'
@@ -139,10 +138,8 @@ export function getConversationItemSignalR(conversationId, messageId){
             .then(resp => {
                 dispatch(verifyIsConversationMessageExist(resp.data));
                 dispatch(updateReadStatus(data));
-                dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
             })
         };
     }
@@ -195,9 +192,8 @@ export function onFetchConversation(id) {
         AsyncGet(API.getConversation 
             + conversationId + '/' 
             + USER_ID + '/' 
-            + USER_TYPE + '/'
-            + pageNumber + '/'
-            + pageSize)
+            + USER_TYPE + '/all'
+            )
             .then(resp => {
                 dispatch(setConversationData(resp.data));
                 dispatch(setCurrentOpenConversation(resp.data));
