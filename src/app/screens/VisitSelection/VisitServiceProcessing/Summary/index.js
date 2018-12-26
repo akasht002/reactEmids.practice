@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment from "moment";
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
@@ -139,10 +140,25 @@ class Summary extends Component {
         this.setState({ isProccedModalOpen: true })
     }
 
-    timerErrMessage = () => {
-        if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
-            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
-            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
+    timerErrMessage = () => {        
+        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");       
+        let hours = this.state.updatedHour > 9  ? "" + this.state.updatedHour: "0" + this.state.updatedHour;
+        let minutes = this.state.updatedMin > 9 ? "" + this.state.updatedMin: "0" + this.state.updatedMin;
+        let seconds = this.state.updatedSec > 9 ? "" + this.state.updatedSec: "0" + this.state.updatedSec;
+        let newTime = hours +':'+ minutes+':'+seconds
+        var endTime = moment(newTime, "HH:mm:ss");
+        
+        // if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
+        //     (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
+        //     (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
+        //     this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
+        // } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
+        //     this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
+        // } else {
+        //     this.updateTime();
+        // }
+
+        if (currentTime.isBefore(endTime)) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
@@ -151,11 +167,9 @@ class Summary extends Component {
         }
     }
 
-
     onPreviousClick = () => {
         this.setState({ isDiscardModalOpen: true })
     }
-
 
     updateTime = () => {
         const data = {
@@ -251,9 +265,13 @@ class Summary extends Component {
 
                 <p className="AdjustTimeText">
                     Note: Maximum adjustable time is
-                    <span> {this.props.CalculationsData.totalHours} hr</span>
+                    {/* <span> {this.props.CalculationsData.totalHours} hr</span>
                     <span> {this.props.CalculationsData.totalMinutes} min</span>
-                    <span> {this.props.CalculationsData.totalSeconds} sec</span>
+                    <span> {this.props.CalculationsData.totalSeconds} sec</span> */}
+
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)} hr</span>
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(3, 2)} min</span>
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span>
                 </p>
             </form>
         }
