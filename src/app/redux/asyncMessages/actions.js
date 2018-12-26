@@ -87,7 +87,6 @@ export function getConversationSummaryItemSignalR(conversationId){
         if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
             let userId = getUserInfo().serviceProviderId;
             let userType = USERTYPES.SERVICE_PROVIDER;
-            dispatch(startLoading());
             AsyncGet(API.getConversationSummary 
                 + conversationId + '/'
                 + userId + '/' 
@@ -95,10 +94,8 @@ export function getConversationSummaryItemSignalR(conversationId){
             )
             .then(resp => {
                 dispatch(getConversationSummaryItemSignalRSuceess(resp.data));
-                dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
             })
         }
     };
@@ -161,7 +158,7 @@ export const openedAsyncPage = (data) =>{
 
 export function onFetchConversationSummary(pageNumber) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(convLoadingStart());
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversationSummary 
@@ -171,10 +168,10 @@ export function onFetchConversationSummary(pageNumber) {
             + Pagination.pageSize)
             .then(resp => {
                 dispatch(setConversationSummary(resp.data));
-                dispatch(endLoading());
+                dispatch(convLoadingEnd());
             })
             .catch(err => {
-                dispatch(endLoading())
+                dispatch(convLoadingEnd());
             })
     }
 };
@@ -185,8 +182,6 @@ export function onFetchConversation(id) {
         dispatch(convLoadingStart());
         let state = getState();
         let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
-        let pageNumber = 1;
-        let pageSize = 500;
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversation 
@@ -339,16 +334,13 @@ export function onRemoveParticipant(data) {
 
 export function getUnreadMessageCounts() {
     return (dispatch) => {
-        dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getUnreadCount + USER_ID + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(onUnreadCountSuccess(resp.data))
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
             })
     }
 };
@@ -590,7 +582,6 @@ const onClearCurrentOpenConversation = () => {
 
 export function getConversationCount() {
     return (dispatch) => {
-    dispatch(startLoading())
     let USER_ID = getUserInfo().serviceProviderId;
     let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
     AsyncGet(API.getConverstionCountByUserId 
@@ -598,10 +589,8 @@ export function getConversationCount() {
         + USER_TYPE)
         .then(resp => {
             dispatch(getConversationCountSuccess(resp.data));
-            dispatch(endLoading())
         })
         .catch(err => {
-            dispatch(endLoading())
         })
 }
 };

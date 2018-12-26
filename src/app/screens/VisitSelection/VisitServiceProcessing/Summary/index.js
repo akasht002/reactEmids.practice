@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment from "moment";
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
-import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature,updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
@@ -139,10 +140,25 @@ class Summary extends Component {
         this.setState({ isProccedModalOpen: true })
     }
 
-    timerErrMessage = () => {
-        if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
-            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
-            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
+    timerErrMessage = () => {        
+        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");       
+        let hours = this.state.updatedHour > 9  ? "" + this.state.updatedHour: "0" + this.state.updatedHour;
+        let minutes = this.state.updatedMin > 9 ? "" + this.state.updatedMin: "0" + this.state.updatedMin;
+        let seconds = this.state.updatedSec > 9 ? "" + this.state.updatedSec: "0" + this.state.updatedSec;
+        let newTime = hours +':'+ minutes+':'+seconds
+        var endTime = moment(newTime, "HH:mm:ss");
+        
+        // if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
+        //     (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
+        //     (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
+        //     this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
+        // } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
+        //     this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
+        // } else {
+        //     this.updateTime();
+        // }
+
+        if (currentTime.isBefore(endTime)) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
@@ -151,11 +167,9 @@ class Summary extends Component {
         }
     }
 
-
     onPreviousClick = () => {
         this.setState({ isDiscardModalOpen: true })
     }
-
 
     updateTime = () => {
         const data = {
@@ -164,13 +178,7 @@ class Summary extends Component {
             sec: parseInt(this.state.updatedSec, 0)
         }
         this.setState({ isModalOpen: false })
-        this.props.onUpdateTime(data)
-        //Added by Vimal
-        this.props.updateVisitProcessingUpdateBilledDuration(
-            {
-                serviceRequestVisitId:this.state.summaryDetails.serviceRequestVisitId,
-                updatedData:data
-            })
+        this.props.onUpdateTime(data, this.state.summaryDetails.serviceRequestVisitId)
     }
 
     onMouseUp = () => {
@@ -257,14 +265,17 @@ class Summary extends Component {
 
                 <p className="AdjustTimeText">
                     Note: Maximum adjustable time is
-                    <span> {this.props.CalculationsData.totalHours} hr</span>
+                    {/* <span> {this.props.CalculationsData.totalHours} hr</span>
                     <span> {this.props.CalculationsData.totalMinutes} min</span>
-                    <span> {this.props.CalculationsData.totalSeconds} sec</span>
+                    <span> {this.props.CalculationsData.totalSeconds} sec</span> */}
+
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)} hr</span>
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(3, 2)} min</span>
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span>
                 </p>
             </form>
         }
 
-        const SignWidth = 400;
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -349,7 +360,6 @@ class Summary extends Component {
                                                     :
                                                     ''
                                                 }
-
                                                 <div className="col-md-8 CostTableContainer Label">
                                                     <p><span>Total Chargeable Time</span>
                                                         <span>Hourly Rate</span></p>
@@ -393,7 +403,7 @@ class Summary extends Component {
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 {this.props.signatureImage && this.props.signatureImage.signature ?
                                                     <img className="sign-pad" alt="sign" src={this.props.signatureImage.signature} /> :
-                                                    <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
+                                                    <SignaturePad ref={ref => this.signaturePad = ref} />
                                                 }
                                             </div>
                                             {this.state.isSaveBtnShown && (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
@@ -456,7 +466,7 @@ class Summary extends Component {
                         centered={true}
                         onConfirm={() => {
                             this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen });
-                                this.onClickNext();
+                            this.onClickNext();
                         }}
                         onCancel={() => this.setState({ isProccedModalOpen: false })}
                     />
@@ -484,12 +494,12 @@ class Summary extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetail: (data) => dispatch(getSummaryDetail(data)),
-        onUpdateTime: (data) => dispatch(onUpdateTime(data)),
+        onUpdateTime: (data, visitId) => dispatch(onUpdateTime(data, visitId)),
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
         goBack: () => dispatch(push(Path.feedback)),
-        updateVisitProcessingUpdateBilledDuration:(data)=>dispatch(updateVisitProcessingUpdateBilledDuration(data))
+        updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data))
     }
 };
 
@@ -502,7 +512,7 @@ function mapStateToProps(state) {
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
-        signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature
+        signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature,
     };
 };
 
