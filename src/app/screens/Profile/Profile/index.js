@@ -196,7 +196,7 @@ class Profile extends Component {
   }
 
   getEducation = () => {
-    if (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) {
+    if (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&  !getUserInfo().isEntityServiceProvider) {
       return <Education />
     } else if (getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
       return '';

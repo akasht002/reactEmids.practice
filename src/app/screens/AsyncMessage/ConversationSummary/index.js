@@ -175,7 +175,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         conversation: state.asyncMessageState.conversationSummary,
-        isLoading: state.loadingState.isLoading,
+        isLoading: state.asyncMessageState.isLoading,
         unreadMsgCounts: state.asyncMessageState.unreadCounts,
         loggedInUser: state.authState.userState.userData.userInfo,
         canCreateConversation: state.asyncMessageState.canCreateConversation,
