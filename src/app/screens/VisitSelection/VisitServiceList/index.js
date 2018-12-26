@@ -13,7 +13,9 @@ import {
     VISIT_SERVICE_STATUS_APPLIED,
     VISIT_SERVICE_STATUS_INVITED,
     VISIT_SERVICE_STATUS_HIRED,
-    VISIT_SERVICE_STATUS_NOT_HIRED
+    VISIT_SERVICE_STATUS_NOT_HIRED,
+    DEFAULT_FROM_DATE,
+    DEFAULT_TO_DATE
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import {
@@ -182,8 +184,8 @@ class VisitServiceList extends Component {
     applyFilter = () => {
         let serviceProviderId = getUserInfo().serviceProviderId;
         let data = {
-            startDate: this.state.startDate === '' ? '1900-01-01' : this.state.startDate,
-            endDate: this.state.endDate === '' ? moment().toDate() : this.state.endDate,
+            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
+            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE: this.state.endDate,
             serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
             ServiceCategoryId: this.state.ServiceCategoryId,
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
@@ -211,8 +213,8 @@ class VisitServiceList extends Component {
         // }
         let serviceProviderId = getUserInfo().serviceProviderId;
         let data = {
-            startDate: this.state.startDate === '' ? '1900-01-01' : this.state.startDate,
-            endDate: this.state.endDate === '' ? moment().toDate() : this.state.endDate,
+            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
+            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
             serviceStatus: uniqElementOfArray(this.state.serviceStatus),
             ServiceCategoryId: this.state.ServiceCategoryId,
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
