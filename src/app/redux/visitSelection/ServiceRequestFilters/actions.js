@@ -47,7 +47,6 @@ export const clearServiceType = data => {
 }
 
 export const clearServiceArea = (data) => {
-
     data.map((item) => {
         return item.isChecked = false;
     })
@@ -85,6 +84,9 @@ export const getServiceRequestStatusSuccess = (data) => {
 }
 
 export const getServiceAreaSuccess = (data) => {
+    data.map((item) => {
+        return item.isChecked = false;
+    })
     return {
         type: ServiceRequestFiltersList.getServiceAreaSuccess,
         data
