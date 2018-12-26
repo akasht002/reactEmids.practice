@@ -29,6 +29,6 @@ export const TeleHealthSettings = {
     sessionInactiveInMs: 300000
 }
 
-export const SLIDER_TIME = 2000;
+export const SLIDER_TIME = 10000;
 
 export const DEMO = 'false'

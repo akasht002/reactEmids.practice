@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
-import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature,updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
@@ -164,13 +164,7 @@ class Summary extends Component {
             sec: parseInt(this.state.updatedSec, 0)
         }
         this.setState({ isModalOpen: false })
-        this.props.onUpdateTime(data)
-        //Added by Vimal
-        this.props.updateVisitProcessingUpdateBilledDuration(
-            {
-                serviceRequestVisitId:this.state.summaryDetails.serviceRequestVisitId,
-                updatedData:data
-            })
+        this.props.onUpdateTime(data, this.state.summaryDetails.serviceRequestVisitId)
     }
 
     onMouseUp = () => {
@@ -264,7 +258,6 @@ class Summary extends Component {
             </form>
         }
 
-        const SignWidth = 400;
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -349,7 +342,6 @@ class Summary extends Component {
                                                     :
                                                     ''
                                                 }
-
                                                 <div className="col-md-8 CostTableContainer Label">
                                                     <p><span>Total Chargeable Time</span>
                                                         <span>Hourly Rate</span></p>
@@ -393,7 +385,7 @@ class Summary extends Component {
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 {this.props.signatureImage && this.props.signatureImage.signature ?
                                                     <img className="sign-pad" alt="sign" src={this.props.signatureImage.signature} /> :
-                                                    <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
+                                                    <SignaturePad ref={ref => this.signaturePad = ref} />
                                                 }
                                             </div>
                                             {this.state.isSaveBtnShown && (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
@@ -456,7 +448,7 @@ class Summary extends Component {
                         centered={true}
                         onConfirm={() => {
                             this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen });
-                                this.onClickNext();
+                            this.onClickNext();
                         }}
                         onCancel={() => this.setState({ isProccedModalOpen: false })}
                     />
@@ -484,12 +476,12 @@ class Summary extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetail: (data) => dispatch(getSummaryDetail(data)),
-        onUpdateTime: (data) => dispatch(onUpdateTime(data)),
+        onUpdateTime: (data, visitId) => dispatch(onUpdateTime(data, visitId)),
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
         goBack: () => dispatch(push(Path.feedback)),
-        updateVisitProcessingUpdateBilledDuration:(data)=>dispatch(updateVisitProcessingUpdateBilledDuration(data))
+        updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data))
     }
 };
 
@@ -502,7 +494,7 @@ function mapStateToProps(state) {
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
-        signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature
+        signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature,
     };
 };
 

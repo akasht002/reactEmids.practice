@@ -93,11 +93,11 @@ export function getSummaryDetail(data) {
     }
 };
 /* Added By Vimal on 24/12/2018 */
-export function updateVisitProcessingUpdateBilledDuration(data) {
+export function updateVisitProcessingUpdateBilledDuration(data, visitId) {
+    let calculate = (data / 1000) / 60
     return (dispatch) => {
         dispatch(startLoading());
-        ServiceRequestGet(API.visitProcessingUpdateBilledDuration + + `${data.serviceRequestVisitId}/${data.updatedData.hour}:${data.updatedData.min}:${data.updatedData.sec}`).then((resp) => {
-            // dispatch(getSummaryDetailsSuccess(resp.data));
+        ServiceRequestPut(API.visitProcessingUpdateBilledDuration + `/${visitId}/${calculate}`).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -145,33 +145,28 @@ export function calculationActualData() {
 
         let totalVisitCost = (currState.hourlyRate / 60) * hoursinMin;
 
+        if (totalVisitCost < 1) {
+            totalVisitCost = 1
+        } else {
+            totalVisitCost = totalVisitCost
+        }
+
         let taxes = (totalVisitCost * currState.taxPaid) / 100;
 
         let grandTotalAmount = totalVisitCost + taxes;
 
         let estimatedClaim;
         let copayAmount;
-        let amount;
-        let grandAmount;
-
-        
-        if(totalVisitCost < 1) {
-            amount = 1
-            grandAmount= 1
-        }else{
-            amount = totalVisitCost
-            grandAmount = grandTotalAmount
-        }
 
         ClaimState ?
             estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2)
             :
             estimatedClaim = 0
-            
+
         ClaimState ?
             copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2)
             :
-            copayAmount = grandAmount
+            copayAmount = grandTotalAmount
 
         // let estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
 
@@ -179,9 +174,9 @@ export function calculationActualData() {
 
         const calculationdata = {
             totalChargableTime: totalChargableTime,
-            totalVisitCost: amount,
+            totalVisitCost: totalVisitCost,
             taxes: taxes,
-            grandTotalAmount: grandAmount,
+            grandTotalAmount: grandTotalAmount,
             totalHours: hours,
             totalMinutes: min,
             totalSeconds: sec,
@@ -199,8 +194,15 @@ export function calculationsFirstTime(data) {
 
         let startTimeinMs = moment(startTime);
         let endTimeinMs = moment(endTime);
+        let timediffms;
 
-        let timediffms = endTimeinMs - startTimeinMs;
+        if (data.billedTotalDuration !== "00:00:00") {
+            let hms = data.billedTotalDuration
+            let splits = hms.split(":")
+            timediffms = ((+splits[0]) * 60 * 60 + (+splits[1]) * 60 + (+splits[2])) * 1000
+        } else {
+            timediffms = endTimeinMs.diff(startTimeinMs, "milliseconds")
+        }
         let dataObj = {
             timediffms: timediffms,
             hourlyRate: data.hourlyRate,
@@ -211,12 +213,15 @@ export function calculationsFirstTime(data) {
     }
 }
 
-export function onUpdateTime(data) {
+export function onUpdateTime(data, visitId) {
     return (dispatch) => {
-        let min = data.hour * 60 + data.min;
-        let timediffms = moment.duration(min, 'm').asMilliseconds();
+        // let min = data.hour * 60 + data.min;
+        // let timediffms = moment.duration(min, 'm').asMilliseconds();
+        let sec = data.hour * 60 * 60 + data.min * 60 // + data.sec;
+        let timediffms = moment.duration(sec, 's').asMilliseconds();
         dispatch(saveActualTimeDiff(timediffms));
         dispatch(calculationActualData());
+        dispatch(updateVisitProcessingUpdateBilledDuration(timediffms, visitId))
     }
 }
 
