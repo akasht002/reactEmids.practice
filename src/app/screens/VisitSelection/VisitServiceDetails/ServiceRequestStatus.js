@@ -39,13 +39,14 @@ export const ServiceStatus = props => {
               }}
             />
           )}
+          {props.status.id !== NOT_INTERESTED && (
           <Button
             classname='btn outline btn-primary'
             label='Apply'
             onClick={() => {
               props.postServiceRequest({ isInterested: true, isCancel: false,status:props.status.id })
             }}
-          />
+          />)}
         </React.Fragment>
       )
     } else {
