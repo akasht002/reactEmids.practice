@@ -167,8 +167,9 @@ class Summary extends Component {
         this.props.onUpdateTime(data)
         //Added by Vimal
         this.props.updateVisitProcessingUpdateBilledDuration(
-            {serviceRequestVisitId:this.state.summaryDetails.serviceRequestVisitId,
-             updatedData:data
+            {
+                serviceRequestVisitId:this.state.summaryDetails.serviceRequestVisitId,
+                updatedData:data
             })
     }
 
