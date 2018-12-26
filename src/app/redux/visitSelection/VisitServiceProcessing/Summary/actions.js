@@ -96,7 +96,7 @@ export function getSummaryDetail(data) {
 export function updateVisitProcessingUpdateBilledDuration(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        ServiceRequestGet(API.visitProcessingUpdateBilledDuration + + `${data.serviceRequestVisitId}/${data.updatedData}`).then((resp) => {
+        ServiceRequestGet(API.visitProcessingUpdateBilledDuration + + `${data.serviceRequestVisitId}/${data.updatedData.hour}:${data.updatedData.min}:${data.updatedData.sec}`).then((resp) => {
             // dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(endLoading());
         }).catch((err) => {
