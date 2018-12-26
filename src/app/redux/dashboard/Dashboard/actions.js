@@ -286,7 +286,6 @@ export function getConversationSummaryDashboardSignalR (conversationId) {
   return (dispatch, getState) => {
     let userId = getUserInfo().serviceProviderId
     let userType = USERTYPES.SERVICE_PROVIDER
-    dispatch(startLoading())
     MessageURLGet(
       API.getConversationSummary +
         conversationId +
@@ -297,10 +296,8 @@ export function getConversationSummaryDashboardSignalR (conversationId) {
     )
       .then(resp => {
         dispatch(getConversationSummaryItemSignalRSuceess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
       })
   }
 }

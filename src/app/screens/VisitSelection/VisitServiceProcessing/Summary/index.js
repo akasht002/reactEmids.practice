@@ -276,7 +276,6 @@ class Summary extends Component {
             </form>
         }
 
-        const SignWidth = 400;
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -404,7 +403,7 @@ class Summary extends Component {
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 {this.props.signatureImage && this.props.signatureImage.signature ?
                                                     <img className="sign-pad" alt="sign" src={this.props.signatureImage.signature} /> :
-                                                    <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
+                                                    <SignaturePad ref={ref => this.signaturePad = ref} />
                                                 }
                                             </div>
                                             {this.state.isSaveBtnShown && (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
