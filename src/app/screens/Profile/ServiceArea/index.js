@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {
@@ -14,7 +14,7 @@ import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { authorizePermission } from '../../../utils/roleUtility';
 import { Details } from './Details'
 import './style.css';
-import {compare} from "../../../utils/comparerUtility";
+import { compare } from "../../../utils/comparerUtility";
 
 
 class ServiceArea extends Component {
@@ -33,6 +33,7 @@ class ServiceArea extends Component {
       disabledSaveBtn: false,
       isDiscardModalOpen: false,
       coverageArea: 0,
+      isChanged: false
     };
     this.countValue = 0;
   }
@@ -49,23 +50,24 @@ class ServiceArea extends Component {
         '-' +
         nextProps.ServiceAreaFieldDetails.stateName,
       city: nextProps.ServiceAreaFieldDetails.city,
-      coverageArea:nextProps.ServiceAreaFieldDetails.coverageArea ? nextProps.ServiceAreaFieldDetails.coverageArea: 0,
+      coverageArea: nextProps.ServiceAreaFieldDetails.coverageArea ? nextProps.ServiceAreaFieldDetails.coverageArea : 0,
       zip: nextProps.ServiceAreaFieldDetails.zipCode,
       addressId: nextProps.ServiceAreaFieldDetails.addressId ?
-      nextProps.ServiceAreaFieldDetails.addressId : 0,
+        nextProps.ServiceAreaFieldDetails.addressId : 0,
       selectedState: {
         label: nextProps.ServiceAreaFieldDetails
           ? nextProps.ServiceAreaFieldDetails.stateName
           : '',
         value: nextProps.ServiceAreaFieldDetails
           ? nextProps.ServiceAreaFieldDetails.stateId + '-' + nextProps.ServiceAreaFieldDetails.stateName
-           : ''
+          : ''
       },
     })
   }
 
   reset = () => {
     this.setState({
+      isChanged: false,
       serviceAreaModal: false,
       street: '',
       state_id: '',
@@ -81,57 +83,33 @@ class ServiceArea extends Component {
       stateInvalid: false,
       zipInvalid: false,
       isAdd: true,
-      isValid: true
+      isValid: true,
+      selectedState: {
+        label: '',
+        value: 0 
+      }
     })
   }
 
   toggleServiceArea = () => {
-    let coverageArea = this.state.coverageArea ?  this.state.coverageArea : 0;
+    let coverageArea = this.state.coverageArea ? this.state.coverageArea : 0;
     this.setState({
       serviceAreaModal: !this.state.serviceAreaModal,
       isDiscardModalOpen: false,
       isValid: true,
       disabledSaveBtn: false,
       coverageArea: coverageArea,
-      selectedState: {
-        label: this.props.ServiceAreaFieldDetails
-          ? this.props.ServiceAreaFieldDetails.stateName
-          : '',
-          value: this.props.ServiceAreaFieldDetails
-          ? this.props.ServiceAreaFieldDetails.stateId + '-' + this.props.ServiceAreaFieldDetails.stateName
-           : ''
-      },
     })
     this.onClose()
-  let previousObject ={
-    street: this.props.ServiceAreaFieldDetails.streetAddress,
-    city: this.props.ServiceAreaFieldDetails.city,
-    coverageArea:this.props.ServiceAreaFieldDetails.coverageArea ? this.props.ServiceAreaFieldDetails.coverageArea: 0,
-    zip: this.props.ServiceAreaFieldDetails.zipCode,
-  }
-
-  let newObject ={
-    street : this.state.street,
-    city :this.state.city,
-    coverageArea :this.state.coverageArea,
-    zip :this.state.zip
-
-  }
-
-  const fieldDifference = compare(previousObject, newObject);
-
-  if (fieldDifference === true) {
-      this.setState({ serviceAreaModal: false, isDiscardModalOpen: false
-       });
-  } else {
+    if (!this.state.isChanged) {
       this.setState({
-          isDiscardModalOpen: true, serviceAreaModal: true
+        serviceAreaModal: false, isDiscardModalOpen: false
       });
-  }
-
-
-
-
+    } else {
+      this.setState({
+        isDiscardModalOpen: true, serviceAreaModal: true
+      });
+    }
   }
 
   onClose = () => {
@@ -168,10 +146,11 @@ class ServiceArea extends Component {
   }
 
   editServiceArea = e => {
-      this.setState({
+    this.setState({
       serviceAreaModal: true,
       isAdd: false,
       addressId: e.target.id,
+      disabledSaveBtn: true
     })
     this.props.editServiceArea(e.target.id)
   }
@@ -191,9 +170,11 @@ class ServiceArea extends Component {
       this.setState({
         zip: onlyNums,
         zipInvalid: false,
-        disabledSaveBtn: false
+        disabledSaveBtn: false,
+        isChanged: true
       })
     }
+    this.checkFieldsOnEdit(onlyNums)
   }
 
   rangeChangeValue = (e) => {
@@ -202,38 +183,42 @@ class ServiceArea extends Component {
       this.setState({
         coverageArea: onlyNums,
         coverageAreaInvalid: false,
-        disabledSaveBtn: false
+        disabledSaveBtn: false,
+        isChanged: true
       })
     }
+    this.checkFieldsOnEdit(onlyNums)
   }
 
   onClickHandleIncr = () => {
-    if(this.state.coverageArea !== 0) {
+    if (this.state.coverageArea !== 0) {
       this.countValue = this.state.coverageArea;
     } else {
       this.countValue = 0;
     }
-    if(this.countValue >= 0) {
+    if (this.countValue >= 0) {
       this.countValue = this.countValue + 1;
     }
     this.setState({
       coverageArea: this.countValue,
-      disabledSaveBtn: false
-    });   
+      disabledSaveBtn: false,
+      isChanged: true
+    });
   }
 
   onClickHandleDecr = () => {
-    if(this.state.coverageArea !== 0) {
+    if (this.state.coverageArea !== 0) {
       this.countValue = this.state.coverageArea;
     } else {
       this.countValue = 0;
     }
-    if(this.countValue > 0) {
+    if (this.countValue > 0) {
       this.countValue = this.countValue - 1;
     }
     this.setState({
       coverageArea: this.countValue,
-      disabledSaveBtn: false
+      disabledSaveBtn: false,
+      isChanged: true
     });
   }
 
@@ -241,27 +226,30 @@ class ServiceArea extends Component {
     return value && value.length > 0;
   }
 
+  checkZipLength = (value) => {
+    return value && value.length > 4;
+  }
+
   checkFiledLengths = () => {
-    const { city, state_id, street, zip } = this.state
+    const { city, selectedState, state_id, street, zip } = this.state
     let
       cityValidation = this.checkLength(city),
-      state_idValidation = this.checkLength(state_id),
+      state_idValidation = this.checkLength(selectedState),
       streetValidation = this.checkLength(street),
-      zipValidation = this.checkLength(zip)
+      zipValidation = this.checkZipLength(zip)
     return cityValidation && state_idValidation && streetValidation && zipValidation
   }
 
-  checkFieldsOnEdit = () => {
-    const { city, state_id, street, zip } = this.state
-    if(city === '' || state_id === '' || street === '' || zip === '') {
-      this.setState({disabledSaveBtn: true})
+  checkFieldsOnEdit = (value) => {
+    if (value === '') {
+      this.setState({ disabledSaveBtn: true })
     }
     else {
-      this.setState({disabledSaveBtn: false})
+      this.setState({ disabledSaveBtn: false })
     }
   }
 
-render() {
+  render() {
     authorizePermission(SCREENS.PROFILE);
     let modalContent
     let modalTitle
@@ -285,12 +273,14 @@ render() {
               className={"form-control custome-placeholder " + (this.state.streetInvalid && 'inputFailure')}
               value={this.state.street}
               maxlength={'500'}
-              textChange={e =>{
+              textChange={e => {
                 this.setState({
                   street: e.target.value,
                   streetInvalid: false,
+                  isChanged: true
                 })
-                this.checkFieldsOnEdit()}}
+                this.checkFieldsOnEdit(e.target.value)
+              }}
               onBlur={(e) => {
                 if (e.target.value === '') {
                   this.setState({
@@ -313,13 +303,14 @@ render() {
               className={"form-control custome-placeholder " + (this.state.cityInvalid && 'inputFailure')}
               value={this.state.city}
               maxlength={'500'}
-              textChange={e =>{
+              textChange={e => {
                 this.setState({
                   city: e.target.value,
                   cityInvalid: false,
+                  isChanged: true
                 })
-                this.checkFieldsOnEdit()
-                }}
+                this.checkFieldsOnEdit(e.target.value)
+              }}
               onBlur={(e) => {
                 if (e.target.value === '') {
                   this.setState({
@@ -342,9 +333,10 @@ render() {
                 onChange={value => {
                   this.setState({
                     selectedState: value,
-                    stateInvalid: false
+                    stateInvalid: false,
+                    isChanged: true
                   })
-                  this.checkFieldsOnEdit()
+                  this.checkFieldsOnEdit(value)
                 }}
                 selectedValue={this.state.selectedState}
                 onBlur={(e) => {
@@ -352,7 +344,7 @@ render() {
                     this.setState({
                       stateInvalid: true
                     })
-                  } 
+                  }
                 }}
               />
               <small className="text-danger d-block OnboardingAlert">
@@ -393,7 +385,7 @@ render() {
               value={this.state.coverageArea}
               textChange={this.rangeChangeValue}
               onBlur={(e) => {
-                if (getLength(e.target.value) === 0 ) {
+                if (getLength(e.target.value) === 0) {
                   this.setState({
                     coverageAreaInvalid: true
                   })
@@ -439,39 +431,40 @@ render() {
           {this.props.isUser && <i
             name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
             className='SPIconLarge SPIconAdd'
-            onClick={() =>
-              this.setState({ serviceAreaModal: true, isAdd: true })}
-          /> }
-          
+            onClick={() => {
+              this.reset()
+              this.setState({ serviceAreaModal: true, isAdd: true })
+            }}
+          />}
         </div>
         <div className='SPCertificateContainer width100'>
           <ul className='SPCertificateList'>
-            { this.props.isUser &&<div>
-              { this.props.ServiceAreaList.length > 0
-              ? <div>
-                {ServiceAreaList}
-              </div>
-              : <div className='SPNoInfo'>
-                <div className='SPNoInfoContent'>
-                  <div className='SPInfoContentImage' />
-                  <span className='SPNoInfoDesc'>
-                    Click
-                      {' '}
-                    <i
-                      className='SPIconMedium SPIconAddGrayScale'
-                      onClick={() =>
-                        this.setState({
-                          serviceAreaModal: true,
-                          isAdd: true
-                        })}
-                    />
-                    {' '}
-                    to add Service Area
-                    </span>
+            {this.props.isUser && <div>
+              {this.props.ServiceAreaList.length > 0
+                ? <div>
+                  {ServiceAreaList}
                 </div>
-              </div>} 
-            </div> }
-            
+                : <div className='SPNoInfo'>
+                  <div className='SPNoInfoContent'>
+                    <div className='SPInfoContentImage' />
+                    <span className='SPNoInfoDesc'>
+                      Click
+                      {' '}
+                      <i
+                        className='SPIconMedium SPIconAddGrayScale'
+                        onClick={() =>
+                          this.setState({
+                            serviceAreaModal: true,
+                            isAdd: true
+                          })}
+                      />
+                      {' '}
+                      to add Service Area
+                    </span>
+                  </div>
+                </div>}
+            </div>}
+
           </ul>
         </div>
 
@@ -543,7 +536,7 @@ function mapStateToProps(state) {
       .addServiceAreaSuccess,
     ServiceAreaFieldDetails: state.profileState.ServiceAreaState
       .ServiceAreaFieldDetails,
-      isUser: state.profileState.PersonalDetailState.isUser,
+    isUser: state.profileState.PersonalDetailState.isUser,
   }
 }
 
