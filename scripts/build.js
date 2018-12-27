@@ -32,7 +32,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = "https://chqa-vp-ui.coreoflowsandbox.com/api/";
   process.env.REACT_APP_ES_URL = 'https://chqa-ui.coreoflowsandbox.com/api/';
   process.env.REACT_APP_TP_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/api/';
-  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_SIGNALR_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://chqa-ct-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://chqa-gen-api.coreoflowsandbox.com/api/';
 } else if (argv.includes('--dev')) {
@@ -43,7 +43,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = "https://chdevdemo-tp-api.coreoflowsandbox.com/api/";
   process.env.REACT_APP_ES_URL = 'https://chdevdemo-sr-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_TP_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/api/';
-  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_SIGNALR_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://chdevdemo-ct-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://chdevdemo-gen-api.coreoflowsandbox.com/api/';
 } else if (argv.includes('--demo')) {
@@ -54,7 +54,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = "https://chdemo-tp-api.coreodevserver.com/api/";
   process.env.REACT_APP_ES_URL = 'https://chdemo-sr-api.coreodevserver.com/api/';
   process.env.REACT_APP_TP_URL = 'https://chdemo-tp-api.coreodevserver.com/api/';
-  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_SIGNALR_URL = 'https://chdemo-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://chdemo-vp-api.CoreoDevServer.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://chdemo-gen-api.coreodevserver.com/api/';
 } else if (argv.includes('--hmsademo')) {
@@ -65,7 +65,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = "https://HMSADemo-tp-api.coreodevserver.com/api/";
   process.env.REACT_APP_ES_URL = 'https://HMSADemo-sr-api.coreodevserver.com/api/';
   process.env.REACT_APP_TP_URL = 'https://HMSADemo-tp-api.coreodevserver.com/api/';
-  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_SIGNALR_URL = 'https://HMSADemo-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://HMSADemo-ct-api.coreodevserver.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://HMSADemo-gen-api.coreodevserver.com/api/';
 } else if (argv.includes('--pftest')) {
@@ -76,7 +76,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = "https://PFTest-tp-api.coreoflowsandbox.com/api/";
   process.env.REACT_APP_ES_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_TP_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/api/';
-  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://PFTest-ct-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://PFTest-gen-api.coreoflowsandbox.com/api/';
 } else if (argv.includes('--uat')) {
@@ -87,7 +87,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = "https://uat-tp-api.coreodevserver.com/api/";
   process.env.REACT_APP_ES_URL = 'https://uat-sr-api.coreodevserver.com/api/';
   process.env.REACT_APP_TP_URL = 'https://uat-tp-api.coreodevserver.com/api/';
-  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_SIGNALR_URL = 'https://uat-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://uat-ct-api.coreodevserver.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://uat-gen-api.coreodevserver.com/api/';
 } else if (argv.includes('--hmsauat')) {
@@ -98,7 +98,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_MSG_URL = "https://HMSA-UAT-tp-api.coreodevserver.com/api/";
   process.env.REACT_APP_ES_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
   process.env.REACT_APP_TP_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/api/';
-  process.env.REACT_APP_SIGNALR_URL = 'https://PFTest.coreoflowsandbox.com/signalr';
+  process.env.REACT_APP_SIGNALR_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://HMSA-UAT-ct-api.coreodevserver.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://HMSA-UAT-gen-api.coreodevserver.com/api/';
 }

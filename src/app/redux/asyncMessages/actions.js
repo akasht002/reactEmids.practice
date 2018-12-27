@@ -39,6 +39,8 @@ export const AsyncMessageActions = {
     setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
     setActivePageNumber: 'setActivePageNumber/asyncMessage',
     updateTitle: 'updateTitle/asyncMessage',
+    pushUnreadConversation: 'pushUnreadConversation/asyncMessage'
+    
 };
 
 export const setConversationSummary = (data) => {
@@ -51,6 +53,14 @@ export const setConversationSummary = (data) => {
 export const pushConversation = (data) => {
     return {
         type: AsyncMessageActions.pushConversation,
+        data
+    }
+};
+
+
+export const pushUnreadConversation = (data) => {
+    return {
+        type: AsyncMessageActions.pushUnreadConversation,
         data
     }
 };
@@ -141,6 +151,51 @@ export function getConversationItemSignalR(conversationId, messageId){
             })
         };
     }
+};
+
+export function getUnreadConversationByUserId(conversationId){
+    return (dispatch, getState) => {
+        let state = getState();
+        if(state.asyncMessageState.openedAsyncPage === 'conversation' 
+        && state.asyncMessageState.currentConversation.conversationId === conversationId){
+            let userId = getUserInfo().serviceProviderId;
+            let userType = USERTYPES.SERVICE_PROVIDER;
+            let data = {conversationId: conversationId};
+            AsyncGet(API.getUnreadConversationsByUserId
+                + conversationId + '/'
+                + userId + '/' 
+                + userType
+            )
+            .then(resp => {
+                dispatch(verifyIsConversationMessagesExist(resp.data));
+                dispatch(updateReadStatus(data));
+            })
+            .catch(err => {
+            })
+        };
+    }
+};
+
+const verifyIsConversationMessagesExist = (data) => {
+    return(dispatch, getState) => {
+        let state = getState();
+        let conversationMessageData = [...state.asyncMessageState.conversation.messages];
+        let unreadMessages = [];
+        data.map((message) => {
+            let msgFound = false;
+            conversationMessageData.map((msg) => {
+                if (message.conversationMessageId === msg.conversationMessageId) {
+                    msgFound = true;
+                }
+            });
+            if (!msgFound) {
+                unreadMessages.push(message)
+            }
+        });
+        if(unreadMessages.length > 0){
+            dispatch(pushUnreadConversation(unreadMessages));
+        }
+    };
 };
 
 export const pushUnreadCount = (data) => {

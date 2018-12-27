@@ -143,13 +143,15 @@ export function calculationActualData() {
 
         let hoursinMin = duration.asMinutes();
 
-        let totalVisitCost = (currState.hourlyRate / 60) * hoursinMin;
+        let totalVisitCost1 = (currState.hourlyRate / 60) * hoursinMin;
 
-        if (totalVisitCost < 1) {
-            totalVisitCost = 1
-        } else {
-            totalVisitCost = totalVisitCost
-        }
+        // if (totalVisitCost < 1 ) {
+        //     totalVisitCost = 1
+        // } else {
+        //     totalVisitCost = totalVisitCost
+        // }
+
+        let totalVisitCost = totalVisitCost1 < 1 && !getUserInfo().isEntityServiceProvider && getUserInfo().serviceProviderTypeId === 1  ?  1 : totalVisitCost1
 
         let taxes = (totalVisitCost * currState.taxPaid) / 100;
 

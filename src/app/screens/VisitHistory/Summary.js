@@ -465,7 +465,7 @@ class VistSummary extends React.Component {
                       </span>
                     </p>
                     <p className="TaxCost">
-                      {summaryDetail.totalCost ?
+                      {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
                         <span>
                           ${" "}
                           {(
@@ -475,7 +475,7 @@ class VistSummary extends React.Component {
                         :
                         ''
                       }
-                      {summaryDetail.taxPaid ?
+                      {summaryDetail.taxPaid || summaryDetail.taxPaid === 0 ?
                         <span>${" "}{(summaryDetail.taxPaid).toFixed(2)}</span>
                         :
                         ''
@@ -487,7 +487,7 @@ class VistSummary extends React.Component {
                       <span>Total Cost </span>
                     </p>
                     <p className="TotalCost">
-                      {summaryDetail.totalCost ?
+                      {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
                         <span>
                           ${" "}{(summaryDetail.totalCost + summaryDetail.taxPaid).toFixed(2)}
                         </span>

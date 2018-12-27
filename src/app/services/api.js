@@ -154,5 +154,6 @@ export const API = {
     getImageGuardian: 'CoreoHomeUser/Image/',
     canInitiateConversation: 'Conversation/CanInitiate/',
     getBuildVersion: 'Common/LookupConfig/BuildVersionSP',
-    visitProcessingUpdateBilledDuration:'VisitProcessing/UpdateBilledDuration'
+    visitProcessingUpdateBilledDuration:'VisitProcessing/UpdateBilledDuration',
+    getUnreadConversationsByUserId: 'Conversation/GetUnreadMessages/'
 }
