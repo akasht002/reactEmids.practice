@@ -30,7 +30,6 @@ import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/act
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import Pagination from 'react-js-pagination';
-import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
 import {
@@ -205,17 +204,11 @@ class VisitServiceList extends Component {
 
     handleSortFilterChange = pageNumber => {
         this.setState({ pageNumber: pageNumber });
-        // let number;
-        // if (pageNumber === 1) {
-        //     number = 0
-        // } else {
-        //     number = pageNumber
-        // }
         let serviceProviderId = getUserInfo().serviceProviderId;
         let data = {
             startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
             endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
-            serviceStatus: uniqElementOfArray(this.state.serviceStatus),
+            serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
             ServiceCategoryId: this.state.ServiceCategoryId,
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas: this.state.ServiceAreas,
@@ -238,7 +231,8 @@ class VisitServiceList extends Component {
             serviceTypes: [],
             isValid: true,
             selectedOption: '',
-            activePage: 1
+            activePage: 1,
+            ServiceAreas: {}
         })
         this.isStatusChanged = false
         this.props.clearServiceCategory(this.props.ServiceType);

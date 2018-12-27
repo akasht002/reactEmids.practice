@@ -217,7 +217,6 @@ class ParticipantContent extends Component {
                             {this.state.popupVisible && participant.participantType !== USERTYPES.CARETEAM && (<ul ref={node => { this.node = node; }} className={"table profileBack " + profileOptionClass}>
                                 <li className="ProfileOptionItems align-middle">
                                     <a onClick={() => {
-                                        debugger;
                                         if(participant.participantType !== USERTYPES.SERVICE_PROVIDER){
                                             let data = {
                                                 userId : participant.userId,

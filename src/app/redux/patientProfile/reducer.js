@@ -9,7 +9,7 @@ const defaultState = {
   myConnectionList: [],
   languageList: [],
   clinicalConditionList: [],
-  espID: '',
+  espID: null,
   espPatient: {},
   espimageData: {},
   espEducation: [],
