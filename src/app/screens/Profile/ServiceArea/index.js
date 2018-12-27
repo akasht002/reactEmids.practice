@@ -86,7 +86,7 @@ class ServiceArea extends Component {
       isValid: true,
       selectedState: {
         label: '',
-        value: 0 
+        value: 0
       }
     })
   }
@@ -415,7 +415,9 @@ class ServiceArea extends Component {
       </form>
     )
     const ServiceAreaList = <Details ServiceAreaList={this.props.ServiceAreaList}
-      editServiceArea={this.editServiceArea} showModalOnDelete={this.showModalOnDelete} />
+      editServiceArea={this.editServiceArea} showModalOnDelete={this.showModalOnDelete} 
+      isUser={this.props.isUser}
+      />
     if (this.state.serviceAreaModal) {
       if (this.state.isAdd) {
         modalTitle = 'Add Service Area'
@@ -439,12 +441,12 @@ class ServiceArea extends Component {
         </div>
         <div className='SPCertificateContainer width100'>
           <ul className='SPCertificateList'>
-            {this.props.isUser && <div>
-              {this.props.ServiceAreaList.length > 0
-                ? <div>
-                  {ServiceAreaList}
-                </div>
-                : <div className='SPNoInfo'>
+            {this.props.ServiceAreaList.length > 0
+              ? <div>
+                {ServiceAreaList}
+              </div>
+              : this.props.isUser && <div>
+                <div className='SPNoInfo'>
                   <div className='SPNoInfoContent'>
                     <div className='SPInfoContentImage' />
                     <span className='SPNoInfoDesc'>
@@ -462,9 +464,8 @@ class ServiceArea extends Component {
                       to add Service Area
                     </span>
                   </div>
-                </div>}
-            </div>}
-
+                </div>
+              </div>}
           </ul>
         </div>
 

@@ -2033,5 +2033,9 @@ button:disabled {
   .MsgModalBody.modal-body::-webkit-scrollbar-thumb:hover {
     background:rgba(0, 0, 0, 0.6);
   }
+
+  .wsnw {
+      white-space: nowrap;
+  }
   
      

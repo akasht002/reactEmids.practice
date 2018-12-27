@@ -22,7 +22,7 @@ class Payments extends Component {
         this.state = {
             SelectedCard: '1',
             selectedCard: '',
-            disabled: true
+            // disabled: false
         };
         this.Claimdata = {};
     };
@@ -35,10 +35,18 @@ class Payments extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.CardList.length > 0){
+            this.setState({selectedCard: nextProps.CardList[0].coreoHomeStripeCustomerId, disabled: false})
+        }else{
+            this.setState({disabled: true})
+        }
+    }
+
     toggleCardSelection = (e) => {
         this.setState({
             SelectedCard: e.target.value,
-            disabled: true
+            // disabled: true
         })
     }
 
@@ -171,6 +179,7 @@ class Payments extends Component {
                                         type="radio"
                                         value={cardDetails.coreoHomeStripeCustomerId}
                                         onChange={(e) => this.handleChange(e)}
+                                        defaultChecked={cardDetails.isPrimary}
                                     />
                                     <label className="form-radio-label" htmlFor={cardDetails.coreoHomeStripeCustomerId}>
                                         <div className="CardTypeContainer">
@@ -205,14 +214,15 @@ class Payments extends Component {
                     </div>
                 </div>
             )
-        } else if (this.state.SelectedCard === '3') {
-            return (
-                <div className='text-right width100'>
-                    <Link className='btn btn-outline-primary mr-3' to='/summary'>Previous</Link>
-                    <button className='btn btn-primary' onClick={this.payByAuthorizedCardOption}>Pay</button>
-                </div>
-            )
-        }
+        } 
+        // else if (this.state.SelectedCard === '3') {
+        //     return (
+        //         <div className='text-right width100'>
+        //             <Link className='btn btn-outline-primary mr-3' to='/summary'>Previous</Link>
+        //             <button className='btn btn-primary' onClick={this.payByAuthorizedCardOption}>Pay</button>
+        //         </div>
+        //     )
+        // }
     }
 
     render() {
@@ -290,12 +300,12 @@ class Payments extends Component {
                                                 <label className="form-radio-label" htmlFor="CardSelect12">New Card
                                     <span className="RadioBoxIcon" /></label>
                                             </div>
-                                            <div className="form-radio col-md-6">
+                                            {/* <div className="form-radio col-md-6">
                                                 <input className="form-radio-input" name="CardSelect" id="CardSelect13" type="radio"
                                                     value={3} onClick={this.toggleCardSelection} checked={this.state.SelectedCard === AUTHORIZEDCARD ? 'checked' : ''} />
                                                 <label className="form-radio-label" htmlFor="CardSelect13">Pay through default card
                                     <span className="RadioBoxIcon" /></label>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
 

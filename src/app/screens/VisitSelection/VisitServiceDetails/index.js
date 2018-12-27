@@ -86,7 +86,7 @@ class VisitServiceDetails extends Component {
   componentDidMount() {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
-      this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
+      // this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
       this.props.getDays();
     } else {
       this.props.history.push(Path.visitServiceList)
@@ -160,6 +160,10 @@ class VisitServiceDetails extends Component {
         activeTab: tab
       })
     }
+  }
+
+  onClickSchedule() {
+    this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
   }
 
   visitProcessing = data => {
@@ -582,7 +586,7 @@ class VisitServiceDetails extends Component {
                         })}
                         onClick={() => {
                           this.toggle('2')
-                          // this.checkEligibility()
+                          this.onClickSchedule()
                         }}
                       >
                         Schedule
