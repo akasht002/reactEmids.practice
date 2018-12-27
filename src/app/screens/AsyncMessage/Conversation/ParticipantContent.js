@@ -9,7 +9,7 @@ import {
 import { Button } from '../../../components';
 import { USERTYPES } from '../../../constants/constants';
 import { Path } from '../../../routes';
-import { setParticipantProfile} from '../../../redux/patientProfile/actions';
+import { setParticipantProfile, setESP} from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import { setServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
 
@@ -226,9 +226,12 @@ class ParticipantContent extends Component {
                                             this.props.setParticipantProfile(data);
                                             this.props.goToPatientProfile();
                                         }
-                                        else{
+                                        else if (participant.isEntityServiceProvider && participant.serviceProviderTypeId === 1) {
+                                            this.props.setESP(participant.userId);
+                                            this.props.goToESPProfile();
+                                        } else {
                                             let data = {
-                                                userId : participant.userId,
+                                                userId: participant.userId,
                                                 isEntityServiceProvider: participant.isEntityServiceProvider,
                                                 serviceProviderTypeId: participant.serviceProviderTypeId,
                                                 entityId: participant.entityId
@@ -358,6 +361,8 @@ function mapDispatchToProps(dispatch) {
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         goToProfile: () => dispatch(push(Path.profile)),
         setServiceProviderId: (data) => dispatch(setServiceProviderId(data)),
+        setESP:data=>dispatch(setESP(data)),
+        goToESPProfile:()=>dispatch(push(Path.ESPProfile)),
     }
 };
 

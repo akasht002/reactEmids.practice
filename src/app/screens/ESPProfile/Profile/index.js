@@ -31,19 +31,10 @@ class Profile extends Component {
 
  
 
-  validationPopUp = () => {
-    let serviceOfferedList =
-      this.props.serviceOfferedList && this.props.serviceOfferedList.length
-    let LanguagesList =
-      this.props.LanguagesList &&
-      this.props.LanguagesList.languages &&
-      this.props.LanguagesList.languages.length
-    if (serviceOfferedList === 0 && LanguagesList === 0) {
-      this.setState({ showValidationPopUp: true })
-    } else {
+  validationPopUp = () => {    
       this.goToDashboard()
     }
-  }
+  
 
   stayOnProfile = () => {
     this.setState({ showValidationPopUp: false })

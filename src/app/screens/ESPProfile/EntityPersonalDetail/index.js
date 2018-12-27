@@ -6,7 +6,7 @@ import 'react-image-crop/dist/ReactCrop.css'
 import 'react-image-crop/lib/ReactCrop.scss'
 import './index.css'
 import {  
-  ScreenCover
+  ScreenCover,Preloader
 } from '../../../components'
 import * as action from '../../../redux/patientProfile/actions'
 import {
@@ -14,6 +14,7 @@ import {
 } from '../../../utils/validations'
 import { Details } from './Details'
 import { SETTING } from '../../../services/api'
+import { Path } from '../../../routes'
 class EntityPersonalDetail extends React.PureComponent {
   constructor (props) {
     super(props)
@@ -35,8 +36,12 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   componentDidMount () {
+    if (this.props.espID!==null) {
     this.props.getPersonalDetail()
     this.props.getImage()
+    }else{
+      this.props.history.push(Path.dashboard)
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -147,6 +152,7 @@ class EntityPersonalDetail extends React.PureComponent {
     
     return (
       <ScreenCover isLoading={this.props.isLoading}>
+      {this.props.personalDetail.lenght === 0 && <Preloader/>}
         <Details
           personalDetail={this.props.personalDetail}
           image={this.state.imageProfile}
@@ -176,7 +182,8 @@ function mapStateToProps (state) {
   return {
     personalDetail: state.patientProfileState.espPatient,
     profileImgData: state.patientProfileState.espimageData,
-    isLoading: state.loadingState.isLoading
+    isLoading: state.loadingState.isLoading,
+    espID : state.patientProfileState.espID
   }
 }
 export default withRouter(

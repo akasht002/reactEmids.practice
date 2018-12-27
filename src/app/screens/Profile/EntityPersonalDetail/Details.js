@@ -49,7 +49,7 @@ export const Details = props => {
                 {props.personalDetail &&
                   props.personalDetail.yearOfExperience}
                 {' '}
-                Yrs Business
+                Yrs Exp
               </span>
             </p>
           </div>

@@ -10,6 +10,7 @@ import {
 } from '../../services/http';
 import { USERTYPES, Pagination } from '../../constants/constants';
 import { startLoading, endLoading } from '../loading/actions';
+import {updateChat} from '../../utils/signalrUtility';
 
 
 export const AsyncMessageActions = {
@@ -276,14 +277,26 @@ export const setNewConversationId = id => {
 
 export function onSendNewMessage(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        //dispatch(startLoading());
         AsyncPost(API.sendMessage, data)
             .then(resp => {
+                let list = resp.data.result.participantList.map((participant) => {
+                    return {
+                        userId: participant.userId,
+                        participantType: participant.participantType
+                    }
+                });
+                const model = {
+                    participantList: list,
+                    conversationId: resp.data.result.conversationId,
+                    conversationMessageId: resp.data.result.conversationMessageId
+                }
+                updateChat(model)
                 dispatch(verifyIsConversationMessageExistSendMessage(resp.data.result));
-                dispatch(endLoading());
+                //dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
+                //dispatch(endLoading())
             })
     }
 };

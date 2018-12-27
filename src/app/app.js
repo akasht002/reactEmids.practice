@@ -12,14 +12,11 @@ import {
 } from './redux/telehealth/actions'
 import {getUserInfo} from './services/http';
 import { USERTYPES } from './constants/constants';
+import {connection, startConnection, onConnectionClosed} from './utils/signalrUtility';
 
 class App extends Component {
 
   componentDidMount() {
-    let connection = new SignalR.HubConnectionBuilder()
-    .withUrl(process.env.REACT_APP_SIGNALR_URL)
-    .configureLogging(SignalR.LogLevel.Information)
-    .build();
 
     connection.on("UpdateChat", data => {
       if(data && getUserInfo()){
@@ -41,15 +38,9 @@ class App extends Component {
       this.props.checkTeleHealth(data);
     });
 
-    connection.start()
-        .then(() => {
-      }).catch(err => console.error(err.toString()));
+    startConnection();
     
-      connection.onclose((e) => {
-        connection.start()
-        .then(() => {
-        }).catch(err => console.error(err.toString()));
-      })
+    onConnectionClosed();
   }
 
   render() {
