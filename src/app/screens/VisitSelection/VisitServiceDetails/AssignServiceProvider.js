@@ -112,15 +112,15 @@ class AssignServiceProvider extends Component {
           // !moment(this.props.sp.visitDate).isBefore(moment(new Date(), "MM-DD-YYYY")) 
          
   render () {
+    console.log(111111111111111111)
+    console.log(this.props.statusID)
     let modalTitle = "Assign Service Provider";
     let modalType = "";
     let modalContent = this.getModalContent(this.props.serviceProviderList)    
     return (
       <div className='EntityUServiceProf'>
         {this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ? 
-          (!this.props.statusID === 58 ||
-          !this.props.statusID === 47 )
-          
+          this.props.statusID === 38           
            ? <span>
             <i
               className='assignSPLink'
