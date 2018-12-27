@@ -131,7 +131,7 @@ class MessageContent extends Component {
             imgUploaded = "ImgUploaded";
             previewImage = <tr>
                 <td className="border-0 pb-0" />
-                <td className="border-0 PreviewImage pb-0">
+                <td className="wsnw border-0 PreviewImage pb-0">
                     <img alt="preview" src={this.state.uploadedImageFile} />
                     <a className="close" onClick={this.closePreview}>&times;</a>
                 </td>
