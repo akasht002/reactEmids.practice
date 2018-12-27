@@ -44,15 +44,12 @@ class Profile extends Component {
 
   getPersonalDetail = () => {
     if (
-      (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-        !getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-          !getPersonalDetailsState().isEntityServiceProvider)
+      (this.props.personalDetail.serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      this.props.personalDetail.serviceProviderType === "Individual")
     ) {
       return <PersonalDetail profilePercentage={this.props.profilePercentage} />
     } else if (
-      (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-        getUserInfo().isEntityServiceProvider) || (getPersonalDetailsState().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-          getPersonalDetailsState().isEntityServiceProvider)
+      (this.props.personalDetail.serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID && this.props.personalDetail.serviceProviderType === "EntityServiceProvider")
     ) {
       return (
         <EntityPersonalDetail
@@ -183,8 +180,8 @@ class Profile extends Component {
   }
 
   getWorkHistory = () => {
-    if (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
-      !getUserInfo().isEntityServiceProvider) {
+    if (this.props.personalDetail.serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&
+      this.props.personalDetail.serviceProviderType === "Individual") {
       return <WorkHistory />
     }
     //  else if(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
@@ -194,11 +191,11 @@ class Profile extends Component {
       return '';
     }
   }
-
+// &&  (!getUserInfo().isEntityServiceProvider || getUserInfo().isEntityServiceProvider)
   getEducation = () => {
-    if (getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID &&  !getUserInfo().isEntityServiceProvider) {
+    if (this.props.personalDetail.serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID ) {
       return <Education />
-    } else if (getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && getUserInfo().entityId === 0) {
+    } else if (this.props.personalDetail.serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID ) {
       return '';
     }
   }
