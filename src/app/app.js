@@ -4,7 +4,8 @@ import AppStackRoot from './routes';
 import * as SignalR from '@aspnet/signalr';
 import {
   getConversationItemSignalR,
-  getConversationSummaryItemSignalR
+  getConversationSummaryItemSignalR,
+  getUnreadConversationByUserId
 } from './redux/asyncMessages/actions';
 import { getConversationSummaryDashboardSignalR } from './redux/dashboard/Dashboard/actions';
 import {
@@ -28,7 +29,7 @@ class App extends Component {
           let conversationId = data.result ? data.result.conversationId : data.conversationId;
           let messageId = data.result ? data.result.conversationMessageId : data.conversationMessageId;
           this.props.getConversationSummaryItemSignalR(conversationId);
-          this.props.getConversationItemSignalR(conversationId, messageId);
+          this.props.getUnreadConversationByUserId(conversationId)
           this.props.getConversationSummaryDashboardSignalR(conversationId);
         };
       };
@@ -63,6 +64,7 @@ function mapDispatchToProps(dispatch) {
     getConversationSummaryItemSignalR: (conversationId) => dispatch(getConversationSummaryItemSignalR(conversationId)),
     checkTeleHealth: (data) => dispatch(checkTeleHealth(data)),
     getConversationSummaryDashboardSignalR: (conversationId) => dispatch(getConversationSummaryDashboardSignalR(conversationId)),
+    getUnreadConversationByUserId: (conversationId) => dispatch(getUnreadConversationByUserId(conversationId))
   }
 }
 

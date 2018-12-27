@@ -78,6 +78,17 @@ const asyncMessageState = (state = defaultState, action) => {
                     canEdit: action.data.canEdit,
                 }
             };
+        case AsyncMessageActions.pushUnreadConversation:
+            return {
+                ...state,
+                conversation: {
+                    ...state.conversation,
+                    messages: [
+                        ...state.conversation.messages,
+                        ...action.data
+                    ]
+                }
+            };
         case AsyncMessageActions.setUnreadCountDetails:
             return {
                 ...state,
