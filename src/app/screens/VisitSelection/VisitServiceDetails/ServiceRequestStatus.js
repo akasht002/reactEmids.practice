@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '../../../components'
-import {NOT_INTERESTED,CANCELLED_NOT_HIRED_ARR} from '../../../constants/constants'
+import {NOT_INTERESTED,CANCELLED_NOT_HIRED_ARR, OPEN, INVITED} from '../../../constants/constants'
 import _ from 'lodash'
 
 export const isStatusInArray = data => {
@@ -26,7 +26,7 @@ export const ServiceStatus = props => {
     if (!isStatusInArray(props.status.id)) {
       return (
         <React.Fragment>
-          {props.status.id !== NOT_INTERESTED && (
+          {(props.status.id !== NOT_INTERESTED) && (
             <Button
               classname='btn btn-outline-primary mx-2 float-right'
               label='Not Interested'
@@ -39,7 +39,7 @@ export const ServiceStatus = props => {
               }}
             />
           )}
-          {props.status.id !== NOT_INTERESTED && (
+          {(props.status.id === NOT_INTERESTED || props.status.id === OPEN || props.status.id === INVITED) && (
           <Button
             classname='btn outline btn-primary'
             label='Apply'
