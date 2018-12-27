@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import { withRouter } from 'react-router-dom'
 import { getUserInfo } from '../../../utils/userUtility'
 import { setESP } from "../../../redux/patientProfile/actions";
@@ -108,15 +109,19 @@ class AssignServiceProvider extends Component {
     this.props.goToESPProfile();
   }
 
+          // !moment(this.props.sp.visitDate).isBefore(moment(new Date(), "MM-DD-YYYY")) 
+         
   render () {
-      console.log(this.props.sp)
     let modalTitle = "Assign Service Provider";
     let modalType = "";
     let modalContent = this.getModalContent(this.props.serviceProviderList)    
     return (
       <div className='EntityUServiceProf'>
-        {this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ? (
-          <span>
+        {this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ? 
+          (!this.props.statusID === 58 ||
+          !this.props.statusID === 47 )
+          
+           ? <span>
             <i
               className='assignSPLink'
               onClick={e => {
@@ -130,8 +135,8 @@ class AssignServiceProvider extends Component {
             >
               Assign Service Provider
             </i>
-          </span>
-        ) : (
+          </span> : <span> -- </span>
+         : (
           <Fragment>
             <div
               className='ProfileCardImageContainer'
