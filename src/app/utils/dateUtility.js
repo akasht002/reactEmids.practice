@@ -4,6 +4,10 @@ export function getMomentDate(date) {
     return date ? moment(new Date(date.toString())) : null;
 }
 
+export function formatDateSingle (data){
+   return data > 9  ? "" + data: "0" + data;
+}
+
 export function formatDate(date, dateFormat) {
     return getMomentDate(date).format(dateFormat);
 }

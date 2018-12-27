@@ -15,6 +15,7 @@ import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
 import { checkNumber } from '../../../../utils/validations';
+import { formatDateSingle } from '../../../../utils/dateUtility'
 import './style.css'
 
 class Summary extends Component {
@@ -142,23 +143,13 @@ class Summary extends Component {
 
     timerErrMessage = () => {        
         var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");       
-        let hours = this.state.updatedHour > 9  ? "" + this.state.updatedHour: "0" + this.state.updatedHour;
-        let minutes = this.state.updatedMin > 9 ? "" + this.state.updatedMin: "0" + this.state.updatedMin;
-        let seconds = this.state.updatedSec > 9 ? "" + this.state.updatedSec: "0" + this.state.updatedSec;
+        let hours = formatDateSingle(this.state.updatedHour)  
+        let minutes = formatDateSingle(this.state.updatedMin)
+        let seconds = formatDateSingle(this.state.updatedSec)
         let newTime = hours +':'+ minutes+':'+seconds
         var endTime = moment(newTime, "HH:mm:ss");
-        
-        // if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
-        //     (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
-        //     (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
-        //     this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
-        // } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
-        //     this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
-        // } else {
-        //     this.updateTime();
-        // }
 
-        if (currentTime.isBefore(endTime)) {
+        if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
@@ -242,7 +233,7 @@ class Summary extends Component {
                             }}
                             style={{ width: 10 + '%' }}
                             min={0}
-                            max={this.props.CalculationsData.totalMinutes}
+                            max={59}
                         />
                     </span>
                     <span>
@@ -256,7 +247,7 @@ class Summary extends Component {
                             }}
                             style={{ width: 10 + '%' }}
                             min={0}
-                            max={this.props.CalculationsData.totalSeconds}
+                            max={59}
                         />
                     </span>
                     <span className="mt-4 d-block text-danger">{this.state.timeErrMessage}</span>
