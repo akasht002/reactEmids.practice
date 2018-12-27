@@ -593,3 +593,8 @@ section .ProfileRightWidget {
         bottom: 0;
     }
 }
+
+.ProfileRightContainer .Loader
+{
+width: 91%;
+} 
