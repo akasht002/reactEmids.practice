@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import classnames from 'classnames'
 import Moment from 'react-moment'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import { Scrollbars, ModalPopup } from '../../../components'
+import { Scrollbars, ModalPopup,Preloader } from '../../../components'
 import { goBack, push } from '../../../redux/navigation/actions'
 import { Path } from '../../../routes'
 import AssignServiceProvider from './AssignServiceProvider'
@@ -64,7 +64,7 @@ class VisitServiceDetails extends Component {
       verticalScroll: false,
       width: window.innerWidth,
       activeTab: '1',
-      visitServiceDetails: '',
+      visitServiceDetails: [],
       visitServiceSchedule: [],
       isAlertModalOpen: false,
       patientId: '',
@@ -95,9 +95,9 @@ class VisitServiceDetails extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       visitServiceDetails: nextProps.VisitServiceDetails,
-      patientId: nextProps.VisitServiceDetails.patient &&
+      patientId:  nextProps.VisitServiceDetails.patient &&
         nextProps.VisitServiceDetails.patientId,
-      serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
+      serviceType:  nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
         nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
           .serviceRequestTypeDetailsId,
     })
@@ -310,7 +310,7 @@ class VisitServiceDetails extends Component {
   render() {
     let defaultCheck = ''
     let sliderTypes =
-      this.state.visitServiceDetails.serviceRequestTypeDetails &&
+    this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
       this.state.visitServiceDetails.serviceRequestTypeDetails.map(
         (serviceTypes, index) => {
           index === 0 ? (defaultCheck = true) : (defaultCheck = false)
@@ -346,7 +346,7 @@ class VisitServiceDetails extends Component {
       )
 
     let description =
-      this.state.visitServiceDetails.serviceRequestTypeDetails &&
+    this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
       this.state.visitServiceDetails.serviceRequestTypeDetails.map(
         (typeDetails, index) => {
           return (
@@ -380,7 +380,7 @@ class VisitServiceDetails extends Component {
           day: day.keyValue,
           slotDescription: []
         }
-        this.state.visitServiceDetails.serviceRequestSlot &&
+        this.state.visitServiceDetails &&  this.state.visitServiceDetails.serviceRequestSlot &&
           this.state.visitServiceDetails.serviceRequestSlot.map(slotDay => {
             if (day.id === slotDay.dayOfWeek) {
               checkDay.slotDescription.push(slotDay.slotDescription)
@@ -433,13 +433,13 @@ class VisitServiceDetails extends Component {
       })
 
     let address =
-      this.state.visitServiceDetails.patient &&
+    this.state.visitServiceDetails && this.state.visitServiceDetails.patient &&
       this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
         return obj.isPrimaryAddress === true
       })
     let profileImage = null
     let patientLastName = ''
-    if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
+    if (this.state.visitServiceDetails && this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
       profileImage = this.state.visitServiceDetails.patient &&
         this.state.visitServiceDetails.patient.imageString
         ? this.state.visitServiceDetails.patient.imageString
@@ -455,6 +455,7 @@ class VisitServiceDetails extends Component {
     }
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+       {this.props.VisitServiceDetails.length === 0 && <Preloader />}
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>Service Requests / {this.state.visitServiceDetails.serviceRequestId

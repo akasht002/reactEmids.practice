@@ -30,7 +30,6 @@ import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/act
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import Pagination from 'react-js-pagination';
-import moment from 'moment'
 import './style.css'
 import { Path } from "../../../routes";
 import {
