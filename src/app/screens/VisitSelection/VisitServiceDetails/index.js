@@ -8,6 +8,7 @@ import { Scrollbars, ModalPopup,Preloader } from '../../../components'
 import { goBack, push } from '../../../redux/navigation/actions'
 import { Path } from '../../../routes'
 import AssignServiceProvider from './AssignServiceProvider'
+import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
@@ -175,6 +176,14 @@ class VisitServiceDetails extends Component {
     this.props.formDirtySummaryDetails();
     this.props.formDirty();
     this.props.formDirtyFeedback();
+  }
+
+  reset = () => {    
+    this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);   
+    setTimeout(() => {
+    this.setState({
+      visitServiceSchedule: this.props.VisitServiceSchedule
+    }) }, 300)
   }
 
   selectedServiceType = e => {
@@ -816,7 +825,7 @@ class VisitServiceDetails extends Component {
                               </div>
                               {
                                 getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
-                                <AssignServiceProvider sp={ScheduleList} />
+                                <AssignServiceProvider sp={ScheduleList} reset={this.reset} />
                               }
                             </div>
                           )
@@ -941,7 +950,9 @@ function mapDispatchToProps(dispatch) {
     cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
     clearVisitServiceHistoryByIdDetail: () => dispatch(clearVisitServiceHistoryByIdDetail()),
     clearVisitServiceSchedule: () => dispatch(clearVisitServiceSchedule()),
-    formDirtyVisitServiceDetails: () => dispatch(formDirtyVisitServiceDetails())
+    formDirtyVisitServiceDetails: () => dispatch(formDirtyVisitServiceDetails()),
+    getServiceRequestId: (data) => dispatch(getServiceRequestId(data)),
+    goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
   }
 }
 

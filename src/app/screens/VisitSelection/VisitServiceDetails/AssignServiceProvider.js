@@ -100,7 +100,7 @@ class AssignServiceProvider extends Component {
       ]
     };   
     this.props.updateEntityServiceVisit(model);
-    this.props.getVisitServiceSchedule(this.data.serviceRequestId);
+    this.props.reset()
   }
 
   goToESPProfile = (data) => {
@@ -153,7 +153,7 @@ class AssignServiceProvider extends Component {
             <div
               className='ProfileCardNameContainer'
               onClick={() => {
-                this.goToESPProfile(this.props.sp.entityServiceProviderImage)
+                this.goToESPProfile(this.props.sp.entityServiceProviderId)
               }}
             >
               <span>
