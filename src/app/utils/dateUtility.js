@@ -4,12 +4,16 @@ export function getMomentDate(date) {
     return date ? moment(new Date(date.toString())) : null;
 }
 
+export function formatDateSingle (data){
+   return data > 9  ? "" + data: "0" + data;
+}
+
 export function formatDate(date, dateFormat) {
     return getMomentDate(date).format(dateFormat);
 }
 
 export function formatDateValue(date, dateFormat) {
-    return getMomentDate(date, dateFormat);
+    return getMomentDate(date, dateFormat).format(dateFormat);
 }
 
 export function changeDateFormat(value) {
@@ -28,7 +32,7 @@ export function getUTCFormatedDate(date, dateFormat = "hh:mm a") {
     return local
 }
 
-export function getUTCTimeInLocal(startTime, endTime){
+export function getUTCTimeInLocal(startTime, endTime) {
     var gmtDateTime = moment.utc(startTime)
     var localStartDate = gmtDateTime.local();
     var endDateTime = moment.utc(endTime)
@@ -40,4 +44,9 @@ export function convertUTCTime(date, dateFormat = "HH:MM a") {
     var gmtDateTime = moment.utc(date)
     var local = gmtDateTime.local().format();
     return moment().diff(local, "seconds")
+}
+
+export function isFutureDay(date) {
+    let difference = moment(date).diff(moment(), "days")
+    return difference >= 0
 }

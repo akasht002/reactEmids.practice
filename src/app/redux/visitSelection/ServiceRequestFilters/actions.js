@@ -2,6 +2,7 @@ import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { getVisitServiceListSuccess } from '../VisitServiceList/actions';
+import _ from "lodash"
 
 export const ServiceRequestFiltersList = {
     getServiceCategoryListSuccess: 'get_service_request_filters_list_success/servicerequestfilters',
@@ -13,12 +14,13 @@ export const ServiceRequestFiltersList = {
     clearServiceRequestStatus: 'clear_servicerequest_status_success/servicerequestfilters',
     checkAllServiceRequestStatus: 'checkAllServiceRequestStatus/servicerequestfilters',
     getFilterDataCountSuccess:'getFilterDataCountSuccess/servicerequestfilters',
-    formDirty:'formDirty/servicerequestfilters'
+    formDirty:'formDirty/servicerequestfilters',
+    clearServiceType:'clear_service_type/servicerequestfilters',
 };
 
 export const clearServiceRequestStatus = (data) => {
     data.map((item) => {
-        return item.isChecked = false;
+        return item.isChecked = true;
     })
     return {
         type: ServiceRequestFiltersList.clearServiceRequestStatus,
@@ -28,7 +30,7 @@ export const clearServiceRequestStatus = (data) => {
 
 
 export const clearServiceCategory = (data) => {
-    data.map((item) => {
+    data && data.map((item) => {
         return item.isChecked = false;
     })
     return {
@@ -37,8 +39,14 @@ export const clearServiceCategory = (data) => {
     }
 }
 
-export const clearServiceArea = (data) => {
+export const clearServiceType = data => {
+    return {
+        type: ServiceRequestFiltersList.clearServiceType,
+        data
+    }
+}
 
+export const clearServiceArea = (data) => {
     data.map((item) => {
         return item.isChecked = false;
     })
@@ -76,6 +84,9 @@ export const getServiceRequestStatusSuccess = (data) => {
 }
 
 export const getServiceAreaSuccess = (data) => {
+    data.map((item) => {
+        return item.isChecked = false;
+    })
     return {
         type: ServiceRequestFiltersList.getServiceAreaSuccess,
         data
@@ -91,13 +102,12 @@ export const formDirty = () => {
 export function getServiceCategory() {
 
     return (dispatch) => {
-
-        dispatch(startLoading());
+        // dispatch(startLoading());
         elasticSearchGet(API.getServiceCategory).then((resp) => {
             dispatch(getServiceCategoryListSuccess(resp.data))
-            dispatch(endLoading());
+            // dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            // dispatch(endLoading());
         })
 
     }
@@ -121,15 +131,17 @@ export function getServiceType(data) {
 
 export function ServiceRequestStatus() {
     return (dispatch) => {
-        dispatch(startLoading());
+        // dispatch(startLoading());
         elasticSearchGet(API.getServiceRequestStatus).then((resp) => {
-            console.log(resp.data)
-            var listToDelete = [106, 107];
-            let data = resp.data.filter(obj => !listToDelete.includes(obj.id));
+            let newArr = _.map(resp.data, function(element) { 
+                return _.extend({}, element, {isChecked: true});
+           });
+            let listToDelete = [106, 107, 40];
+            let data =newArr.filter(obj => !listToDelete.includes(obj.id));
             dispatch(getServiceRequestStatusSuccess(data))
-            dispatch(endLoading());
+            // dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            // dispatch(endLoading());
         })
     }
 };
@@ -137,13 +149,13 @@ export function ServiceRequestStatus() {
 export function getServiceArea(data) {
     return (dispatch) => {
 
-        dispatch(startLoading());
+        // dispatch(startLoading());
         let serviceProviderId = getUserInfo().serviceProviderId;
         Get(API.getServiceareaList + `${serviceProviderId}`).then((resp) => {
             dispatch(getServiceAreaSuccess(resp.data))
-            dispatch(endLoading());
+            // dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            // dispatch(endLoading());
         })
 
     }
@@ -189,7 +201,7 @@ export function getFilter(data) {
 
 export function getFilterDataCount(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+       // dispatch(startLoading());
         let reqObj;
             reqObj = {
                 "Category": data.ServiceCategoryId,
@@ -204,9 +216,9 @@ export function getFilterDataCount(data) {
             }
         elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
             dispatch(getFilterDataCountSuccess(resp.data))
-            dispatch(endLoading());
+            //dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            //dispatch(endLoading());
         })
 
     }

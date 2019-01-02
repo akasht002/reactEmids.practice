@@ -17,7 +17,7 @@ export const formDirtyPerformTask = () => {
     return {
         type: PerformTasks.formDirtyPerformTask,
     }
-  }
+}
 
 export const getPerformTasksListSuccess = (data) => {
     return {
@@ -59,13 +59,13 @@ export function getPerformTasksList(data, startOrStop) {
         dispatch(getServiceRequestVisitId(data))
         dispatch(startLoading());
         ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
-            if(startOrStop === false){
+            if (startOrStop === false) {
                 dispatch(getVisitStatus(resp.data))
             }
-            else{
+            else {
                 dispatch(getPerformTasksListSuccess(resp.data))
+                dispatch(push(Path.performTasks))
             }
-            dispatch(push(Path.performTasks))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -73,14 +73,28 @@ export function getPerformTasksList(data, startOrStop) {
     }
 };
 
-export function addPerformedTask(data) {
+export function getServiceVisitId(data, startOrStop) {
     return (dispatch) => {
-        dispatch(startLoading());
-        ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
-            dispatch(push(Path.feedback))
-            dispatch(endLoading());
+        dispatch(getServiceRequestVisitId(data))
+        ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
+            if (startOrStop === false) {
+                dispatch(getVisitStatus(resp.data))
+            }
+            else {
+                dispatch(getPerformTasksListSuccess(resp.data))
+            }
         }).catch((err) => {
-            dispatch(endLoading());
+        })
+    }
+};
+
+export function addPerformedTask(data, startServiceAction) {
+    return (dispatch) => {
+        ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
+            if (startServiceAction === 1 || startServiceAction === undefined) {
+                dispatch(push(Path.feedback))
+            }
+        }).catch((err) => {
             dispatch(push(Path.feedback))
         })
     }
@@ -88,14 +102,15 @@ export function addPerformedTask(data) {
 
 export function startOrStopService(data, visitId, startedTime) {
     return (dispatch) => {
-        if (data === 0) {
-            dispatch(getSummaryDetails(visitId));
-        }
+        // if (data === 0) {
+        //     dispatch(getSummaryDetails(visitId));
+        // }
         dispatch(startLoading());
         ServiceRequestPut(API.startOrStopService + visitId + '/' + data).then((resp) => {
             dispatch(saveStartedTime(startedTime))
-            dispatch(getPerformTasksList(visitId, false))
-            dispatch(endLoading());
+            dispatch(getPerformTasksList(visitId, false));
+            dispatch(getSummaryDetails(visitId));
+            //dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { formateDate } from '../../../utils/validations';
@@ -12,7 +12,7 @@ import {
 } from "../../../redux/profile/Availability/actions";
 import "./AvailabilityStyles.css";
 import { dateDifference, formattedDateMoment } from '../../../utils/validations';
-
+import EllipsisText from "react-ellipsis-text";
 
 class BlackoutDays extends Component {
   constructor(props) {
@@ -27,26 +27,36 @@ class BlackoutDays extends Component {
   }
 
   toggleBlackout = (action, data, disabledEdit, e) => {
-    if (disabledEdit === "disabled") {
-      e.stopPropagation();
-    } else {
-      let currentDate = new Date();
-      if (currentDate > new Date(data.startDate) && currentDate < new Date(data.endDate)) {
-        this.setState({
-          disabledStartDate: "disabled"
-        });
-      } else {
-        this.setState({
-          disabledStartDate: ""
-        });
-      }
-      this.setState({
-        IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen,
-        [action]: !this.state[action],
-        itemData: data,
-        modalTypeValue: action
-      });
-    }
+
+    this.setState({
+      IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen,
+      [action]: !this.state[action],
+      itemData: data,
+      modalTypeValue: action
+    });
+
+    // to do check with confirmation about requiremnts 
+
+    // if (disabledEdit === "disabled") {
+    //   e.stopPropagation();
+    // } else {
+    //   let currentDate = new Date();
+    //   if (currentDate > new Date(data.startDate) && currentDate < new Date(data.endDate)) {
+    //     this.setState({
+    //       disabledStartDate: "disabled"
+    //     });
+    //   } else {
+    //     this.setState({
+    //       disabledStartDate: ""
+    //     });
+    //   }
+    //   this.setState({
+    //     IsBlackoutModalOpen: !this.state.IsBlackoutModalOpen,
+    //     [action]: !this.state[action],
+    //     itemData: data,
+    //     modalTypeValue: action
+    //   });
+    // }
   }
 
   saveBlackoutData = data => {
@@ -98,16 +108,24 @@ class BlackoutDays extends Component {
       let { isActive, startDate, endDate, remarks } = item;
       let indexId = item.serviceProviderBlackoutDayId;
       let day = formateDate(startDate, 'dddd');
-      let dateStart = formateDate(startDate, 'MMM DD');
-      let dateEnd = formateDate(endDate, 'MMM DD');
+      let dateStart = formateDate(startDate, 'MMM DD YYYY');
+      let dateEnd = formateDate(endDate, 'MMM DD YYYY');
       let dateEqual = false;
-      let numberOfDays = dateDifference(dateStart,dateEnd);
+      let numberOfDays = dateDifference(dateStart, dateEnd);
       if (startDate === endDate) {
         dateEqual = true;
       }
 
-      let currentDate = new Date(), disabledEdit = "";
-      currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit = 'disabled') : '';
+      let currentDateValue = formateDate(new Date(), 'MMM DD YYYY')
+      let startDateValue = formateDate(startDate, 'MMM DD YYYY');
+      // let currentDate = new Date()
+      let disabledEdit = "";
+     // currentDate = new Date() > new Date(startDate) && currentDate > new Date(endDate) ? (disabledEdit = 'disabled') : '';
+     if (currentDateValue > startDateValue) {
+      disabledEdit = 'disabled'
+     } 
+     
+    //  currentDate = currentDateValue > startDateValue ? (disabledEdit = 'disabled') : '';
 
       return (
         <li id={indexId}>
@@ -132,7 +150,9 @@ class BlackoutDays extends Component {
                       )}
                     </div>
                   <div className={"SPBlackoutDesc"}>
-                    <span>{remarks}</span>
+                  {
+                    remarks &&  <EllipsisText text={remarks && remarks} length={"120"} />
+                  }
                   </div>
                 </div>
               </div>
@@ -175,7 +195,7 @@ class BlackoutDays extends Component {
       }
     }
     return (
-      <React.Fragment>
+      <Fragment>
         <div className={"SPAvailBlackOutWidget"}>
           <div className="col-md-12 card CardWidget SPBlackoutDays">
           { !this.props.showBalckout ? 
@@ -200,7 +220,6 @@ class BlackoutDays extends Component {
           itemData={this.state.itemData}
           modalTitle={modalTitle}
           saveBlackout={this.saveBlackoutData}
-          disabledStartDate={this.state.disabledStartDate}
           onClickToggle={this.toggleCheck}
           closeBlackoutModal={this.closeBlackoutModal}
         />
@@ -219,7 +238,7 @@ class BlackoutDays extends Component {
             isDeleteModalOpen: false
           })}
         />
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

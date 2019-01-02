@@ -15,9 +15,13 @@ export const getProfilePercentageSuccess = (data) => {
 }
 
 export function getProfilePercentage() {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(startLoading());
-        Get(API.getProfilePercentage + getUserInfo().serviceProviderId).then((resp) => {
+        let serviceProviderId = getUserInfo().serviceProviderId
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+        };
+        Get(API.getProfilePercentage + serviceProviderId).then((resp) => {
             dispatch(getProfilePercentageSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

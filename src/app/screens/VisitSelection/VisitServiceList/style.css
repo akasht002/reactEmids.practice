@@ -536,9 +536,10 @@ span.btn-invited, span.btn-invited:hover{
 .ScheduleRowButton a{
     font-size: 14px !important;
     margin: 13px;
-    padding: 5px 10px !important;
+    padding: 0px 10px !important;
     float: right;
-    height: 33px;
+    height: 30px;
+    line-height: 30px;
 }
 
 .TabBody .ServiceCategoryContent{
@@ -751,7 +752,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 div.scrollarea .scrollbar-container.vertical {
-    width: 5px;
+    width: 7px;
 }
 
 .scrollarea-content {
@@ -831,6 +832,15 @@ color: #444;
 }
 
 
+.ProfileHeaderWidget .ProfileHeaderOptions span.ProfileHeaderFilter
+{
+    position: relative;
+    margin-left: 15px;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+
 
 
 @media (min-width: 1367px) {
@@ -872,7 +882,7 @@ color: #444;
 
     .innerWidget .card.extended {
         /* height: calc(100vh - 140px); */
-        height: 620px;
+        height: 596px;
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
@@ -1283,4 +1293,11 @@ color: #444;
     .profileSideNavigationLink span{
         display: none;
     }*/
+}
+
+.no-resultblock
+{
+    display: table;
+    text-align: center;
+    margin: 0 auto;
 }

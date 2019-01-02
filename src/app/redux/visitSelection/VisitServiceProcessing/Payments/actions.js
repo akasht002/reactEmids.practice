@@ -6,12 +6,20 @@ import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
 
 export const paymentsCardList = {
-    getPaymentsCardListSuccess: 'get_paymentsCardList_success/performtasks',
+    getPaymentsCardListSuccess: 'get_paymentsCardList_success/payments',
+    updateServiceRequestId: 'updateServiceRequestId/payments'
 };
 
 export const getPaymentsCardListSuccess = (data) => {
     return {
         type: paymentsCardList.getPaymentsCardListSuccess,
+        data
+    }
+}
+
+export const updateServiceRequestId = (data) => {
+    return {
+        type: paymentsCardList.updateServiceRequestId,
         data
     }
 }
@@ -73,12 +81,12 @@ export function claimsSubmission(data) {
         dispatch(startLoading());
         ThirdPartyPost(API.claimsSubmission, data).then((resp) => {
             dispatch(endLoading());
-            dispatch(push(Path.paymentsuccess))
+            //dispatch(push(Path.paymentsuccess))
         }).catch((err) => {
             if (DEMO === 'true') {
                 dispatch(push(Path.paymentsuccess))
             } else {
-                dispatch(push(Path.paymentfailure))
+                //dispatch(push(Path.paymentfailure))
             }
             dispatch(endLoading());
         })

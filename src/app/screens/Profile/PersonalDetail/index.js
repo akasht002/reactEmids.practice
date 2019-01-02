@@ -12,23 +12,19 @@ import {
   TextArea,
   SelectBox,
   ProfileModalPopup,
-  ModalPopup,ScreenCover,
+  ModalPopup, ScreenCover,
   ProfileImage
 } from '../../../components'
-import BlackoutModal from '../../../components/LevelOne/BlackoutModal';
 import ImageModal from './ImageModal';
-import { OrganizationData } from '../../../data/OrganizationData';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
   checkTextNotStartWithNumber,
   getArrayLength,
   getLength,
-  checkhourlyRate,
-  checkPhoneNumber
 } from '../../../utils/validations'
 import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
-import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 
 class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -37,11 +33,13 @@ class PersonalDetail extends React.PureComponent {
       useEllipsis: true,
       EducationModal: false,
       isDiscardModalOpen: false,
-      isAlertModalOpen:false,
-      isValidPhoneNumber:true,
+      isAlertModalOpen: false,
+      isValidPhoneNumber: true,
+      isStateInvalid: false,
       isCityInvalid: false,
       isZipInvalid: false,
       isStreetInvalid: false,
+      selectedState: '',
       ModalOrg: true,
       src: null,
       crop: {
@@ -49,8 +47,9 @@ class PersonalDetail extends React.PureComponent {
         y: 10,
         width: 80,
         height: 80
-      }     
-    }
+      }
+    };
+    this.isImageSave = false;
   }
 
   componentDidMount() {
@@ -62,58 +61,62 @@ class PersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+
+    if (this.isImageSave === false) {
+      this.setState({
+        firstName: nextProps.personalDetail.firstName,
+        lastName: nextProps.personalDetail.lastName,
+        age: nextProps.personalDetail.age,
+        genderName: nextProps.personalDetail.genderName,
+        affiliationName: nextProps.personalDetail.affiliationName,
+        organization: nextProps.personalDetail.organization,
+        yearOfExperience: nextProps.personalDetail.yearOfExperience,
+        description: nextProps.personalDetail.description,
+        hourlyRate: nextProps.personalDetail.hourlyRate,
+        city: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].city
+          : '',
+        streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].streetAddress
+          : '',
+        zipCode: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].zipCode
+          : '',
+        phoneNumber: nextProps.personalDetail.phoneNumber,
+        state_id: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+          ? nextProps.personalDetail.address[0].state.id
+          : '',
+        isActive: false,
+        selectedGender: {
+          label: nextProps.personalDetail.genderName,
+          value: nextProps.personalDetail.genderId + '-' + nextProps.personalDetail.genderName
+        },
+        selectedAffiliation: {
+          label: nextProps.personalDetail.affiliationName,
+          value: nextProps.personalDetail.affiliationId + '-' + nextProps.personalDetail.affiliationName
+        },
+        selectedState: {
+          label: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+            ? nextProps.personalDetail.address[0].state.name
+            : '',
+          value: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+            ? nextProps.personalDetail.address[0].state.id
+            : '-' + getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
+              ? nextProps.personalDetail.address[0].state.name : ''
+        },
+        addressId: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressId != null
+          ? nextProps.personalDetail.address[0].addressId : 0,
+        addressTypeId: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressTypeId != null
+          ? nextProps.personalDetail.address[0].addressTypeId : 2,
+        affiliationList: this.props.affiliationList
+      })
+    };
+
     this.setState({
       imageProfile: nextProps.profileImgData.image,
       uploadedImageFile: nextProps.profileImgData.image
         ? nextProps.profileImgData.image
-        : require('../../../assets/images/Blank_Profile_icon.png'),
-      firstName: nextProps.personalDetail.firstName,
-      lastName: nextProps.personalDetail.lastName,
-      age: nextProps.personalDetail.age,
-      genderName: nextProps.personalDetail.genderName,
-      affiliationName:nextProps.personalDetail.affiliationName,
-      organization: nextProps.personalDetail.organization,
-      yearOfExperience: nextProps.personalDetail.yearOfExperience,
-      description: nextProps.personalDetail.description,
-      hourlyRate: nextProps.personalDetail.hourlyRate,
-      addressId: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].addressId
-        : 0,
-      city: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].city
-        : '',
-      streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].streetAddress
-        : '',
-      zipCode: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].zipCode
-        : '',
-      phoneNumber: nextProps.personalDetail.phoneNumber,
-      state_id: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
-        ? nextProps.personalDetail.address[0].state.id
-        : '',
-      isActive: false,
-      selectedGender: {
-        label: nextProps.personalDetail.genderName,
-        value: nextProps.personalDetail.genderId + '-'+nextProps.personalDetail.genderName
-      },
-      selectedAffiliation: {
-        label: nextProps.personalDetail.affiliationName,
-        value: nextProps.personalDetail.affiliationId + '-'+nextProps.personalDetail.affiliationName
-      },
-      selectedState: {
-        label: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
-        ? nextProps.personalDetail.address[0].state.name
-        : '',
-        value: getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
-        ? nextProps.personalDetail.address[0].state.id
-        : '' + '-' +getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
-        ? nextProps.personalDetail.address[0].state.name:''
-      },
-      addressId:getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressId != null
-      ? nextProps.personalDetail.address[0].addressId:0,
-      addressTypeId:getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].addressTypeId != null
-      ? nextProps.personalDetail.address[0].addressTypeId:2
+        : require('../../../assets/images/Blank_Profile_icon.png')
     })
     this.styles = {
       height: 100,
@@ -130,18 +133,19 @@ class PersonalDetail extends React.PureComponent {
       : ''
     this.states = getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
       ? nextProps.personalDetail.address[0].state.name
-      : ''      
+      : ''
+    console.log(this.state.selectedAffiliation)
   }
 
   handleChange = () => {
-    this.setState({ uploadImage: true })  
+    this.setState({ uploadImage: true })
   }
 
   reUpload = e => {
     if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE && e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
       this.setState({
         uploadedImageFile: URL.createObjectURL(e.target.files[0])
-      }) 
+      })
       const reader = new FileReader()
       reader.addEventListener(
         'load',
@@ -155,7 +159,7 @@ class PersonalDetail extends React.PureComponent {
     } else {
       this.setState({
         isAlertModalOpen: !this.state.isAlertModalOpen
-      })  
+      })
     }
   }
 
@@ -171,33 +175,41 @@ class PersonalDetail extends React.PureComponent {
         false
       )
       reader.readAsDataURL(e.target.files[0])
-    
+
     }
   }
 
   onSubmit = () => {
+    const { firstName, lastName, phoneNumber, age, yearOfExperience,
+      hourlyRate, city, zipCode, streetAddress, selectedState } = this.state;
+    this.isImageSave = false;
     if (
-      this.state.firstName === '' ||
-      this.state.lastName === '' ||
-      this.state.phoneNumber === '' ||
-      this.state.age === '' ||
-      this.state.yearOfExperience === '' ||
-      this.state.hourlyRate === '' ||
-      this.state.city === '' || this.state.city === null ||
-      this.state.zipCode === '' || this.state.zipCode === null ||
-      this.state.streetAddress === '' || this.state.streetAddress === null
+      firstName === '' ||
+      lastName === '' ||
+      phoneNumber === '' ||
+      age === '' ||
+      yearOfExperience === '' ||
+      hourlyRate === '' ||
+      // selectedAffiliation === '' || this.state.selectedAffiliation === null ||
+      city === '' || this.state.city === null ||
+      zipCode === '' || this.state.zipCode === null ||
+      streetAddress === '' || this.state.streetAddress === null ||
+      selectedState === '' || this.state.selectedState === null
     ) {
-      let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false;
-       if(this.state.city === '' || this.state.city === null) {
-          cityInvalid = true;
-       } 
-       if(this.state.zipCode === '' || this.state.zipCode === null || this.state.zipCode < 5) {
-         zipCodeInvalid = true;
-       }
-       if(this.state.streetAddress === '' || this.state.streetAddress === null) {
-         streetInvalid = true;
-       }
-      this.setState({ isValid: false, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid})
+      let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
+      if (city === '' || city === null) {
+        cityInvalid = true;
+      }
+      if (zipCode === '' || zipCode === null || zipCode < 5) {
+        zipCodeInvalid = true;
+      }
+      if (streetAddress === '' || streetAddress === null) {
+        streetInvalid = true;
+      }
+      if (selectedState === '' || selectedState === null || selectedState === undefined) {
+        stateInvalid = true;
+      }
+      this.setState({ isValid: false, isStateInvalid: stateInvalid, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid })
     } else {
       this.props.updatePersonalDetail(this.state)
       this.setState({
@@ -205,7 +217,7 @@ class PersonalDetail extends React.PureComponent {
       })
     }
   }
- 
+
   closeImageUpload = () => {
     this.setState({
       uploadImage: !this.state.uploadImage
@@ -213,6 +225,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   saveImageUpload = () => {
+    this.isImageSave = true;
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -226,24 +239,153 @@ class PersonalDetail extends React.PureComponent {
     })
   }
 
-  render() {   
+  togglePersonalDetails = (action, e) => {
+    let checkStatus = this.checkAffiliationValue(this.state.selectedAffiliation.label);
+    this.setState({
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
+      isDiscardModalOpen: false,
+      isValid: true,
+      disabledSaveBtn: !this.state.disabledSaveBtn,
+      isActive: checkStatus,
+      isStreetInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      isStateInvalid: false,
+      zipCode: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].zipCode,
+      city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
+      streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress,
+      selectedState: {
+        label: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.name
+          : '',
+        value: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.id
+          : '-' + getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+            ? this.props.personalDetail.address[0].state.name : ''
+      },
+      selectedAffiliation: {
+        label: this.props.personalDetail && this.props.personalDetail.affiliationName,
+        value: this.props.personalDetail && this.props.personalDetail.affiliationId + '-' + this.props.personalDetail && this.props.personalDetail.affiliationName
+      }
+    })
+    let old_data = {
+      firstName: this.props.personalDetail.firstName,
+      lastName: this.props.personalDetail.lastName,
+      age: this.props.personalDetail.age,
+      yearOfExperience: this.props.personalDetail.yearOfExperience,
+      affiliationName: this.props.personalDetail.affiliationName,
+      description: this.props.personalDetail.description,
+      hourlyRate: this.props.personalDetail.hourlyRate,
+      phoneNumber: this.props.personalDetail.phoneNumber,
+      city: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].city
+        : '',
+      streetAddress: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].streetAddress
+        : '',
+      zipCode: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].zipCode
+        : '',
+      state_id: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+        ? this.props.personalDetail.address[0].state.id
+        : ''
+    }
+
+    let updated_data = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      age: this.state.age,
+      yearOfExperience: this.state.yearOfExperience,
+      affiliationName: this.state.affiliationName,
+      description: this.state.description,
+      hourlyRate: this.state.hourlyRate,
+      phoneNumber: this.state.phoneNumber,
+      city: this.state.city,
+      streetAddress: this.state.streetAddress,
+      zipCode: this.state.zipCode,
+      state_id: this.state.selectedState && this.state.selectedState.value
+    }
+
+    const fieldDifference = _.isEqual(old_data, updated_data)
+
+    if (fieldDifference === true) {
+      this.setState({ certificationModal: false, isDiscardModalOpen: false })
+    } else {
+      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
+    }
+  }
+
+  checkAffiliationValue = value => {
+    if (value !== '' && value !== null && value !== undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  reset = () => {
+    this.isImageSave = false;
+    this.setState({
+      EditPersonalDetailModal: false,
+      isDiscardModalOpen: false,
+      firstName: this.props.personalDetail && this.props.personalDetail.firstName,
+      lastName: this.props.personalDetail && this.props.personalDetail.lastName,
+      age: this.props.personalDetail && this.props.personalDetail.age,
+      yearOfExperience: this.props.personalDetail && this.props.personalDetail.yearOfExperience,
+      affiliationName: this.props.personalDetail && this.props.personalDetail.affiliationName,
+      affiliationId: this.props.personalDetail && this.props.personalDetail.affiliationId,
+      description: this.props.personalDetail && this.props.personalDetail.description,
+      hourlyRate: this.props.personalDetail && this.props.personalDetail.hourlyRate,
+      phoneNumber: this.props.personalDetail && this.props.personalDetail.phoneNumber,
+      city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
+      streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress,
+      zipCode: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].zipCode,
+      firstNameInvaild: false,
+      lastNameInvaild: false,
+      phoneNumberInvalid: false,
+      hourlyRateInvalid: false,
+      disabledSaveBtn: false,
+      isCityInvalid: false,
+      isStreetInvalid: false,
+      isStateInvalid: false,
+      isZipInvalid: false,
+      isActive: false,
+      selectedState: {
+        label: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.name
+          : '',
+        value: getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.id
+          : '-' + getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
+            ? this.props.personalDetail.address[0].state.name : ''
+      },
+      selectedAffiliation: {
+        label: this.props.personalDetail && this.props.personalDetail.affiliationName,
+        value: this.props.personalDetail && this.props.personalDetail.affiliationId + '-' + this.props.personalDetail && this.props.personalDetail.affiliationName
+      },
+    })
+  }
+
+  render() {
+
     let modalContent
     let modalTitle = 'Edit Personal Details'
     let modalType = ''
     const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
-      return {label :  city.name ,value:city.id + '-' + city.name}
-    })
+      return { label: city.name, value: city.id + '-' + city.name }
+    });
+
     const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
-      return {label :  gender.name ,value:gender.id + '-' + gender.name}
+      return { label: gender.name, value: gender.id + '-' + gender.name }
     })
     const affiliationDetail = this.props.affiliationList && this.props.affiliationList.map((affiliation, i) => {
-      return {label :  affiliation.name ,value:affiliation.affiliationId + '-' + affiliation.name}
+      return { label: affiliation.name, value: affiliation.affiliationId + '-' + affiliation.name }
     })
-   
+
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
-        {this.getModalContent(cityDetail, genderDetail,affiliationDetail)}
+        {this.getModalContent(cityDetail, genderDetail, affiliationDetail)}
         <ImageModal
           isOpen={this.state.uploadImage}
           toggle={this.closeImageUpload}
@@ -283,7 +425,9 @@ class PersonalDetail extends React.PureComponent {
           onConfirm={() => this.reset()}
           onCancel={() =>
             this.setState({
-              isDiscardModalOpen: false
+              isDiscardModalOpen: false,
+              disabledSaveBtn: false,
+              isActive: true
             })}
         />
         <ModalPopup
@@ -303,7 +447,7 @@ class PersonalDetail extends React.PureComponent {
               isDiscardModalOpen: false
             })}
         />
-       </ScreenCover>
+      </ScreenCover>
     )
   }
 
@@ -327,8 +471,10 @@ class PersonalDetail extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
-              <li>The image should not exceed beyond 2MB.</li>
-              <li>The image should be either of PNG or JPEG/JPG type only.</li>
+              <li>1. Click on the Change Photo Button. </li>
+              <li>2. Select the image from your desktop/ gallery.</li>
+              {/* <li>3. Click and drag the curser across the image to crop.</li> */}
+              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>
@@ -365,12 +511,10 @@ class PersonalDetail extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
-              <li>Click on Change Photo</li>
-              <li>Select the image from your desktop/gallery</li>
-              <li>The image should not exceed beyond 2MB.</li>
-              <li>The image should be either of PNG or JPEG/JPG type only.</li>
-              <li>Once select you can crop the image by dragging the cursor the image</li>
-              <li>Click on Save</li>
+              <li>1. Click on the Change Photo Button. </li>
+              <li>2. Select the image from your desktop/ gallery.</li>
+              {/* <li>3. Click and drag the curser across the image to crop.</li> */}
+              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
             </ul>
           </div>
           <div className={'col-md-4 text-right'}>
@@ -389,7 +533,7 @@ class PersonalDetail extends React.PureComponent {
   }
   renderDetails = () => {
     return (
-      <div className='col-md-12 card CardWidget SPDetails'>       
+      <div className='col-md-12 card CardWidget SPDetails'>
         <ProfileImage
           src={
             this.state.imageProfile
@@ -403,6 +547,10 @@ class PersonalDetail extends React.PureComponent {
           circle='SPdpCircle'
           profileImage='SPdpImage'
         />
+        <span className="rating-blockcustome">
+          <i class="Icon iconFilledStar"></i>
+          {this.props.personalDetail && Math.round(this.props.personalDetail.rating * 10) / 10}
+        </span>
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>
             <div className={'col-md-7 p-0'}>
@@ -439,16 +587,16 @@ class PersonalDetail extends React.PureComponent {
           </div>
           <div className={'width100'}>
             <div className={'SPAffiliatedList'}>
-            {this.props.personalDetail &&
-                    this.props.personalDetail.affiliationName &&
-              <span className={'AffiliatedList'}>
-                Affiliated to In
+              {this.props.personalDetail &&
+                this.props.personalDetail.affiliationName &&
+                <span className={'AffiliatedList'}>
+                  Affiliated to In
                 {' '}
-                <bd>
-                  {this.props.personalDetail &&
-                    this.props.personalDetail.affiliationName}
-                </bd>
-              </span>}
+                  <bd>
+                    {this.props.personalDetail &&
+                      this.props.personalDetail.affiliationName}
+                  </bd>
+                </span>}
             </div>
           </div>
           <div className={'width100'}>
@@ -487,20 +635,21 @@ class PersonalDetail extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail &&
-                PHONE_NUMBER_CONST + this.props.personalDetail.phoneNumber}
+                  PHONE_NUMBER_CONST + this.props.personalDetail.phoneNumber}
               </span>
             </div>
           </div>
         </div>
-        <i
-          name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
-          className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
-          onClick={this.togglePersonalDetails}
-        />
+        {this.props.isUser &&
+          <i
+            name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
+            className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
+            onClick={this.togglePersonalDetails}
+          />}
       </div>
     )
   }
-  getModalContent = (stateDetail, genderDetail,affiliationDetail) => {
+  getModalContent = (stateDetail, genderDetail, affiliationDetail) => {
     return (
       <div className='row'>
         <div className='col-md-12'>
@@ -520,7 +669,7 @@ class PersonalDetail extends React.PureComponent {
             />
             <span className='editDpImage' />
             <div className='uploadWidget' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>
-              <i className='addImageBtn' onClick={this.handleChange} />             
+              <i className='addImageBtn' onClick={this.handleChange} />
             </div>
           </div>
         </div>
@@ -537,17 +686,17 @@ class PersonalDetail extends React.PureComponent {
                 value={this.state.firstName}
                 className={"form-control custome-placeholder " + (this.state.firstNameInvaild && 'inputFailure')}
                 textChange={e => {
+                  this.setState({
+                    firstName: e.target.value,
+                    firstNameInvaild: false,
+                    disabledSaveBtn: false
+                  })
+                }}
+
+                onBlur={(e) => {
+                  if (!checkTextNotStartWithNumber(e.target.value)) {
                     this.setState({
-                      firstName:e.target.value,
-                      firstNameInvaild: false,
-                      disabledSaveBtn: false
-                    })
-                  }}
-          
-                onBlur={(e)=>{
-                  if(!checkTextNotStartWithNumber(e.target.value)){
-                    this.setState({
-                      firstNameInvaild:true
+                      firstNameInvaild: true
                     })
                   }
 
@@ -568,25 +717,25 @@ class PersonalDetail extends React.PureComponent {
                 className={"form-control custome-placeholder " + (this.state.lastNameInvaild && 'inputFailure')}
                 textChange={e => {
                   this.setState({
-                    lastName:e.target.value,
+                    lastName: e.target.value,
                     lastNameInvaild: false,
                     disabledSaveBtn: false
                   })
                 }}
-        
-                onBlur={(e)=>{
-                  if(!checkTextNotStartWithNumber(e.target.value)){
+
+                onBlur={(e) => {
+                  if (!checkTextNotStartWithNumber(e.target.value)) {
                     this.setState({
-                      lastNameInvaild:true
+                      lastNameInvaild: true
                     })
                   }
 
                 }}
               />
-            
-                <small className="text-danger d-block OnboardingAlert">
+
+              <small className="text-danger d-block OnboardingAlert">
                 {this.state.lastNameInvaild && 'Please enter valid Last Name'}
-            </small>
+              </small>
             </div>
             <div className='col-md-6 mb-2'>
               <div className='form-group'>
@@ -595,10 +744,10 @@ class PersonalDetail extends React.PureComponent {
                   options={genderDetail}
                   simpleValue
                   placeholder='Select Gender'
-                  onChange={value  => {
+                  onChange={value => {
                     this.setState({
                       selectedGender: value,
-                      disabledSaveBtn: false 
+                      disabledSaveBtn: false
                     })
                   }}
                   selectedValue={this.state.selectedGender}
@@ -618,23 +767,25 @@ class PersonalDetail extends React.PureComponent {
                   const re = /^[0-9\b]+$/
                   if (
                     (e.target.value === '' || re.test(e.target.value)) &&
-                    getLength(e.target.value) <= 3 && (e.target.value)<=100
+                    getLength(e.target.value) <= 3 && (e.target.value) <= 100
                   ) {
-                    this.setState({ age:e.target.value,
+                    this.setState({
+                      age: e.target.value,
                       disabledSaveBtn: false,
-                      ageInvaild: false})
+                      ageInvaild: false
+                    })
                   }
                 }}
                 onBlur={e => {
-                  if(!e.target.value) {
-                    this.setState({ageInvaild: true})
+                  if (!e.target.value) {
+                    this.setState({ ageInvaild: true })
                   }
                 }}
                 className={"form-control " + (this.state.ageInvaild && 'inputFailure')}
               />
-                <small className="text-danger d-block OnboardingAlert">
+              <small className="text-danger d-block OnboardingAlert">
                 {this.state.ageInvaild && 'Please enter valid Age'}
-            </small>
+              </small>
             </div>
             <div className='col-md-6 mb-2'>
               <Input
@@ -648,24 +799,24 @@ class PersonalDetail extends React.PureComponent {
                 textChange={e => {
                   const re = /^[0-9\b]+$/;
                   if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({ yearOfExperience: e.target.value, disabledSaveBtn: false, yearOfExpInvaild:false })
+                    this.setState({ yearOfExperience: e.target.value, disabledSaveBtn: false, yearOfExpInvaild: false })
                   }
                 }}
                 onBlur={e => {
-                  if(!e.target.value) {
-                    this.setState({yearOfExpInvaild: true})
+                  if (!e.target.value) {
+                    this.setState({ yearOfExpInvaild: true })
                   }
                 }}
                 className={"form-control " + (this.state.yearOfExpInvaild && 'inputFailure')}
               />
               <small className="text-danger d-block OnboardingAlert">
-              {this.state.yearOfExpInvaild && 'Please enter valid Year of Experience'}
-          </small>
+                {this.state.yearOfExpInvaild && 'Please enter valid Year of Experience'}
+              </small>
             </div>
           </div>
         </div>
         <div className='col-md-12 mb-2'>
-          <label>Affiliation</label>
+          <label className="dark-font">Affiliation</label>
         </div>
         <div className='col-md-12'>
           <div className="form-check mb-2">
@@ -676,8 +827,9 @@ class PersonalDetail extends React.PureComponent {
                 type='checkbox'
                 maxLength='100'
                 onClick={e => {
-                  this.setState({ isActive: e.target.checked, disabledSaveBtn: false })
+                  this.setState({ isActive: e.target.checked, disabledSaveBtn: false, selectedAffiliation: '' })
                 }}
+                checked={this.state.isActive}
                 defaultChecked={this.state.isActive}
               />
               <span className="CheckboxIcon" />
@@ -695,7 +847,8 @@ class PersonalDetail extends React.PureComponent {
               simpleValue
               placeholder='Select the Organization'
               onChange={value => {
-                this.setState({ selectedAffiliation: value,disabledSaveBtn: false })
+                let data = value.split('-');
+                this.setState({ selectedAffiliation: value, disabledSaveBtn: false, affiliationName: data[1] })
               }}
               selectedValue={this.state.selectedAffiliation}
               className='inputFailure ServiceRequestSelect'
@@ -707,23 +860,23 @@ class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <TextArea
             name='Description'
-           // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
+            // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
             placeholder='Tell us about yourself'
             className='form-control'
             rows='5'
             value={this.state.description}
             maxlength={'500'}
             textChange={e => {
-                  this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild:false })               
+              this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild: false })
             }}
             onBlur={e => {
-              if(!e.target.value) {
-                this.setState({descriptionInvaild: true})
+              if (!e.target.value) {
+                this.setState({ descriptionInvaild: true })
               }
             }}
           />
           <small className="text-danger d-block OnboardingAlert">
-             {this.state.descriptionInvaild && 'Please enter valid Description'}
+            {this.state.descriptionInvaild && 'Please enter valid Description'}
           </small>
         </div>
         <div className='col-md-4'>
@@ -733,25 +886,41 @@ class PersonalDetail extends React.PureComponent {
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
-            maxlength='3'
+            maxlength='7'
             textChange={e => {
-              const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-              this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
-              
+              let onlyNums = e.target.value.replace(/[^0-9.]/g, '')
+              let status = false;
+              if (onlyNums.length < 7 && !status) {
+                this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
+              } else if (onlyNums.length === 7) {
+                if (onlyNums.indexOf(".") > -1) {
+                  if ((onlyNums.split('.')[1].length > 1)) {
+                    this.setState({
+                      hourlyRate: onlyNums.substr(0, (onlyNums.indexOf(".") + 3)),
+                      disabledSaveBtn: false, hourlyRateInvalid: false
+                    })
+                  }
+                } else {
+                  this.setState({
+                    hourlyRate: onlyNums.substr(0, 3),
+                    disabledSaveBtn: false, hourlyRateInvalid: false
+                  })
+                }
+              }
             }
-          }
-          onBlur={e => {
-            if(
-              (!e.target.value) ||
-              getLength(e.target.value) < 1
-            ) {
-              this.setState({hourlyRateInvalid: true})
             }
-          }}
-          className={"form-control " + (this.state.hourlyRateInvalid && 'inputFailure')}
+            onBlur={e => {
+              if (
+                (!e.target.value) ||
+                getLength(e.target.value) < 1
+              ) {
+                this.setState({ hourlyRateInvalid: true })
+              }
+            }}
+            className={"form-control " + (this.state.hourlyRateInvalid && 'inputFailure')}
           />
           <small className="text-danger d-block OnboardingAlert">
-             {this.state.hourlyRateInvalid && 'Please enter valid HourlyRate'}
+            {this.state.hourlyRateInvalid && 'Please enter valid HourlyRate'}
           </small>
         </div>
         <div className='hrLine' />
@@ -766,18 +935,29 @@ class PersonalDetail extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label className="m-0">State</label>
-                    <SelectBox
-                      options={stateDetail}
-                      simpleValue
-                      placeholder='Select the state'
-                      onChange={value => {
-                        this.setState({ selectedState: value,disabledSaveBtn: false })
-                      }                      
-                    }                      
-                      selectedValue={this.state.selectedState}
-                      className='inputFailure ServiceRequestSelect'
+                    <Input
+                      name='Street'
+                      label='Street'
+                      autoComplete='off'
+                      type='text'
+                      maxlength='500'
+                      value={this.state.streetAddress}
+                      textChange={e =>
+                        this.setState({
+                          streetAddress: e.target.value,
+                          disabledSaveBtn: false,
+                          isStreetInvalid: false
+                        })}
+                      onBlur={e => {
+                        if (!e.target.value) {
+                          this.setState({ isStreetInvalid: true })
+                        }
+                      }}
+                      className={"form-control " + (this.state.isStreetInvalid && 'inputFailure')}
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                      {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                    </small>
                   </div>
                 </div>
                 <div className='col-md-6 mb-2'>
@@ -795,15 +975,15 @@ class PersonalDetail extends React.PureComponent {
                           disabledSaveBtn: false,
                           isCityInvalid: false
                         })}
-                        onBlur={e => {
-                          if(!e.target.value) {
-                            this.setState({isCityInvalid: true})
-                          }
-                        }}
-                        className={"form-control " + (this.state.isCityInvalid && 'inputFailure')}
+                      onBlur={e => {
+                        if (!e.target.value) {
+                          this.setState({ isCityInvalid: true })
+                        }
+                      }}
+                      className={"form-control " + (this.state.isCityInvalid && 'inputFailure')}
                     />
                     <small className="text-danger d-block OnboardingAlert">
-                       {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
+                      {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
                     </small>
                   </div>
                 </div>
@@ -811,31 +991,29 @@ class PersonalDetail extends React.PureComponent {
                   <div className='row'>
                     <div className='col-md-6 mb-2'>
                       <div className='form-group'>
-                        <Input
-                          name='Street'
-                          label='Street'
-                          autoComplete='off'
-                          type='text'
-                          maxlength='500'
-                          value={this.state.streetAddress}
-                          textChange={e =>
-                            this.setState({
-                              streetAddress: e.target.value,
-                              disabledSaveBtn: false,
-                              isStreetInvalid: false
-                            })}
-                            onBlur={e => {
-                              if(!e.target.value) {
-                                this.setState({isStreetInvalid: true})
-                              }
-                            }}
-                          className={"form-control " + (this.state.isStreetInvalid && 'inputFailure')}
+                        <label className="m-0">State</label>
+                        <SelectBox
+                          options={stateDetail}
+                          simpleValue
+                          placeholder='Select the state'
+                          onChange={value => {
+                            this.setState({ selectedState: value, disabledSaveBtn: false, isStateInvalid: false })
+                          }
+                          }
+                          onBlur={(e) => {
+                            if (this.state.selectedState === '') {
+                              this.setState({ isStateInvalid: true })
+                            }
+                          }}
+                          selectedValue={this.state.selectedState}
+                          className='inputFailure ServiceRequestSelect'
                         />
                         <small className="text-danger d-block OnboardingAlert">
-                           {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                          {this.state.isStateInvalid && 'Please select valid State'}
                         </small>
                       </div>
                     </div>
+
                     <div className='col-md-6'>
                       <Input
                         name='Zip'
@@ -851,19 +1029,19 @@ class PersonalDetail extends React.PureComponent {
                               re.test(e.target.value)) &&
                             getLength(e.target.value) <= 5
                           ) {
-                            this.setState({ zipCode: e.target.value , disabledSaveBtn: false, isZipInvalid: false})
+                            this.setState({ zipCode: e.target.value, disabledSaveBtn: false, isZipInvalid: false })
                           }
                         }}
                         onBlur={e => {
-                          if(!e.target.value || getLength(e.target.value) < 5) {
-                            this.setState({isZipInvalid: true})
+                          if (!e.target.value || getLength(e.target.value) < 5) {
+                            this.setState({ isZipInvalid: true })
                           }
                         }}
                         className={"form-control " + (this.state.isZipInvalid && 'inputFailure')}
                       />
                       <small className="text-danger d-block OnboardingAlert">
-                       {this.state.isZipInvalid && <span>Please enter valid {(this.state.zipCode === '' || this.state.zipCode === null) && 'Zipcode'}</span>}
-                    </small>
+                        {this.state.isZipInvalid && <span>Please enter valid {(this.state.zipCode === '' || this.state.zipCode === null) && 'Zipcode'}</span>}
+                      </small>
                     </div>
                   </div>
                 </div>
@@ -885,14 +1063,15 @@ class PersonalDetail extends React.PureComponent {
                   <Input
                     name='PhoneNumber'
                     label='Phone Number'
+                    PhoneInput="PhoneInput"
                     autoComplete='off'
                     maxlength='10'
                     type='text'
                     value={this.state.phoneNumber}
                     className={"form-control custome-placeholder " + (this.state.phoneNumberInvalid && 'inputFailure')}
 
-                    textChange={e =>{
-                    const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+                    textChange={e => {
+                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
                       if (onlyNums.length < 10) {
                         this.setState({ phoneNumber: onlyNums })
                       } else if (onlyNums.length === 10) {
@@ -900,21 +1079,23 @@ class PersonalDetail extends React.PureComponent {
                           /(\d{3})(\d{3})(\d{4})/,
                           '$1-$2-$3'
                         )
-                        this.setState({ phoneNumber: number,
+                        this.setState({
+                          phoneNumber: number,
                           phoneNumberInvalid: false,
-                          disabledSaveBtn:false })
+                          disabledSaveBtn: false
+                        })
                       }
                     }
-                  }
-                  onBlur={(e) => {
-                    if (getLength(e.target.value) < 10 ) {
-                        this.setState({phoneNumberInvalid: true});
                     }
-                }}
-                      />
-                        <small className="text-danger d-block OnboardingAlert">
-                        {this.state.phoneNumberInvalid && 'Please enter valid Phone Number'}
-                    </small>
+                    onBlur={(e) => {
+                      if (getLength(e.target.value) < 10) {
+                        this.setState({ phoneNumberInvalid: true });
+                      }
+                    }}
+                  />
+                  <small className="text-danger d-block OnboardingAlert">
+                    {this.state.phoneNumberInvalid && 'Please enter valid Phone Number'}
+                  </small>
                 </div>
               </div>
             </div>
@@ -923,67 +1104,12 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
-
-
-  togglePersonalDetails = (action, e) => {
-    this.setState({
-      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
-      isDiscardModalOpen: false,
-      isValid: true,
-      disabledSaveBtn: !this.state.disabledSaveBtn
-    })
-    let old_data = {
-      firstName: this.props.personalDetail.firstName,
-      lastName: this.props.personalDetail.lastName,
-      age: this.props.personalDetail.age,
-      yearOfExperience: this.props.personalDetail.yearOfExperience,
-      description: this.props.personalDetail.description,
-      hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber
-    }
-
-    let updated_data = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      age: this.state.age,
-      yearOfExperience: this.state.yearOfExperience,
-      description: this.state.description,
-      hourlyRate: this.state.hourlyRate,
-      phoneNumber: this.state.phoneNumber
-    }
-
-    const fieldDifference = _.isEqual(old_data, updated_data)
-
-    if (fieldDifference === true) {
-      this.setState({ certificationModal: false, isDiscardModalOpen: false })
-    } else {
-      this.setState({ isDiscardModalOpen: true, EditPersonalDetailModal: true })
-    }
-  }
-
-  reset = () => {
-    this.setState({
-      EditPersonalDetailModal: false,
-      isDiscardModalOpen: false,
-      firstName: this.props.personalDetail.firstName,
-      lastName: this.props.personalDetail.lastName,
-      age: this.props.personalDetail.age,
-      yearOfExperience: this.props.personalDetail.yearOfExperience,
-      description: this.props.personalDetail.description,
-      hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber,
-      firstNameInvaild:false,
-      lastNameInvaild:false,
-      phoneNumberInvalid:false,
-      hourlyRateInvalid: false
-    })
-  }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
-    getAffiliationDetail:()=>dispatch(action.getAffiliationDetail()),
+    getAffiliationDetail: () => dispatch(action.getAffiliationDetail()),
     updatePersonalDetail: data => dispatch(action.updatePersonalDetail(data)),
     getCityDetail: () => dispatch(action.getCityDetail()),
     uploadImg: data => dispatch(action.uploadImg(data)),
@@ -1000,8 +1126,9 @@ function mapStateToProps(state) {
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
     profileImgData: state.profileState.PersonalDetailState.imageData,
     genderList: state.profileState.PersonalDetailState.genderList,
-    affiliationList:state.profileState.PersonalDetailState.affiliationList,
-    isLoading:state.loadingState.isLoading
+    affiliationList: state.profileState.PersonalDetailState.affiliationList,
+    isLoading: state.loadingState.isLoading,
+    isUser: state.profileState.PersonalDetailState.isUser,
   }
 }
 export default withRouter(

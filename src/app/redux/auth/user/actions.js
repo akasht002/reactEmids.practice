@@ -13,7 +13,9 @@ export const USER = {
     setUser: 'fetch_success/user',
     deleteUser: 'delete_user/user',
     clearData: 'clear_data/user',
-    setUserRoles: 'set_user_roles/user'
+    setUserRoles: 'set_user_roles/user',
+    menuClicked: 'menuClicked/user',
+    setIsFormDirty: 'set_isFormDirty/user'
 };
 
 export const setUserRoles = (data) => {
@@ -38,6 +40,10 @@ export const clearData = () => {
 
 export function onSetUserSuccess(data){
     return (dispatch, getState) => {
+        let userData = {
+            ...getState().oidc.user
+        };
+        dispatch(setUserSuccess(userData))
         dispatch(getUserInactiveTimeout(getState().oidc.user.profile.sub));
     }
 }
@@ -118,8 +124,24 @@ export const checkUserData = () => {
         let userState = getState().authState.userState;
         let access_token = userState && userState.userData && userState.userData.access_token
         if (!access_token) {
-            let userData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)).data;
-            dispatch(setUserSuccess(userData));
+            let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
+            if (localStorageData) {
+                dispatch(setUserSuccess(localStorageData.data));
+            }
         }
     }
 }
+
+export function setMenuClicked(data){
+    return{
+        type: USER.menuClicked,
+        data
+    }
+};
+
+export function setIsFormDirty(isDirty){
+    return{
+        type: USER.setIsFormDirty,
+        data: isDirty
+    }
+};

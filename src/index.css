@@ -153,13 +153,15 @@ div.modal-lg.EULA{
 .agreementList li {
     padding-left: 1em;
     text-indent: -.7em;
+    line-height: 30px;
 }
 
 .agreementList li::before {
     content: "\2022 ";
     color: #b16193;
     font-size: 30px;
-    line-height: 26px;
+    line-height: 35px;
+    vertical-align: middle;
 }
 
 a.btn.nav-link{
@@ -239,7 +241,7 @@ a:focus, a:hover{
     	}
     	
     	input.form-control::placeholder {
-    	    color: #8c8c8c;
+    	    color: #acacac;
     	}
     	
     	label{
@@ -300,6 +302,7 @@ a:focus, a:hover{
     display: block;
     height: 100%;
     margin: 0 auto;
+    cursor:context-menu;
     }
 
 .mainWidget{
@@ -321,6 +324,7 @@ a:focus, a:hover{
 .PhoneInput{
     display: block;
     position: relative;
+    color:#444;
 }
 
 .PhoneInput:before{
@@ -331,6 +335,7 @@ a:focus, a:hover{
     height: 100%;
     top: 0;
     left: 0;
+    color: #444;
 }
 
 span.PhoneInput > input{
@@ -727,7 +732,8 @@ button.navbar-toggler{
 }
 
 div.scrollarea .scrollbar-container.active, div.scrollarea .scrollbar-container:hover{
-    	    opacity: 0.4 !important;
+            opacity: 0.9 !important;
+            background: #8c8c8c;
     }
 
 body > div:nth-child(4) > div > div.modal.fade.show{display:flex!important;}
@@ -814,9 +820,75 @@ body{
 }
  @media all and (-ms-high-contrast:none)
      {
-        .react-datepicker__input-container { background-size: 16px 16px; } /* IE10 */
-     *::-ms-backdrop, .react-datepicker__input-container { background-size: 16px 16px; } /* IE11 */
+        .react-datepicker__input-container { background-size: 16px 16px !important; } /* IE10 */
+     *::-ms-backdrop, .react-datepicker__input-container { background-size: 16px 16px !important; } /* IE11 */
      }
 .react-datepicker__input-container input{
-    cursor:pointer;
+    cursor:pointer !important;
 }
+
+
+/*updated-date-block-dashboard*/
+.topProfile .topPalette .ProfileMonthList.MonthName .Select-control .Select-value .Select-value-label
+{
+    text-align: center;
+    padding: 10px 12px;
+}
+.topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu
+{
+    min-width: 120px;   
+}
+
+.topProfile .topPalette  .ProfileMonthList .Select-menu-outer {
+    top: 40px;
+}
+.count-topred
+{
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    display: block;
+    border-radius: 50%;
+    background: #ed1c24;
+    color: #fff;
+    font-size: 10px;
+    text-align: center;
+    top: 9px;
+    padding: 3px 2px;
+    /* bottom: 3px; */
+    /* right: 0; */
+    margin-left: 18px;
+    z-index: 100;
+}
+
+div.scrollarea .scrollbar-container.vertical
+{
+    width: 8px !important;
+    opacity: 0.9 !important;
+}
+
+.scrollarea .scrollbar-container
+{
+    opacity: 0.9 !important;
+}
+.scrollarea .scrollbar-container.vertical .scrollbar
+{
+    background: #8c8c8c !important;
+    width: 6px !important;
+}
+
+
+/* width */
+.modal-body::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Handle */
+  .modal-body::-webkit-scrollbar-thumb {
+    background:#8c8c8c; 
+  }
+  
+  /* Handle on hover */
+  .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #8c8c8c; 
+  }

@@ -35,11 +35,24 @@
     height: 22px;
     width: 25px;}
 /* line-height: 14px; */
-.InputInDeWidget span:first-child{
+.InputInDeWidget span:nth-child(1){
+    padding: 3px;
+}
+.InputInDeWidget span.plus{
     padding: 1px;
 }
 
 .InputInDeWidget span:hover{
     cursor: pointer;
     background-color: #f4ecfc;
+}
+
+.serviceAreaModal .Select-control .Select-multi-value-wrapper .Select-input
+{
+    padding-left: 0px;
+}
+
+.serviceAreaModal .Select-control .Select-multi-value-wrapper .Select-input input
+{
+    padding-left: 0px;
 }

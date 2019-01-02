@@ -6,6 +6,7 @@ import { getSkills, addSkills, getSelectedSkills } from '../../../redux/profile/
 import {compare,difference} from "../../../utils/comparerUtility";
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
+
 class Skills extends Component {
     
     constructor(props) {
@@ -32,12 +33,10 @@ class Skills extends Component {
 
         if (nextProps.selectedSkillsList && nextProps.selectedSkillsList.skills) {
             for (const skills of nextProps.selectedSkillsList.skills) {
-                {
-                    selectedSkillIds === '' ?
-                        selectedSkillIds = skills.id
-                        :
-                        selectedSkillIds = selectedSkillIds + ',' + skills.id
-                }
+                selectedSkillIds === '' ?
+                    selectedSkillIds = skills.id
+                    :
+                    selectedSkillIds = selectedSkillIds + ',' + skills.id
             }
         }
         this.setState({ selectedSkills: selectedSkillIds });
@@ -56,7 +55,7 @@ class Skills extends Component {
         }
 
         let staeSelectValue = {
-            selectedSkills: this.state.selectedSkills
+            selectedSkills: String(this.state.selectedSkills)
         }
         
         const fieldDifference = compare(previousValue, staeSelectValue);
@@ -97,9 +96,9 @@ class Skills extends Component {
 
         const previosInitValue = [];
 
-        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
+        this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return previosInitValue.push(elem.id);
-        }).join(",");
+        })
 
         const newlyInitValue = [];
 
@@ -129,6 +128,7 @@ class Skills extends Component {
                 listItems={skillsOptions}
                 value={this.state.selectedSkills}
                 multi={true}
+                className="block-lesright"
                 closeOnSelect={true}
                 placeholder='Select your skills'
             />;
@@ -140,13 +140,10 @@ class Skills extends Component {
                 </li>
             )
         })
-
-        {
-            this.state.isSkillsModalOpen && this.state.isAdd ?
-                modalTitle = 'Add Skills and Experience'
-                :
-                modalTitle = 'Edit Skills and Experience'
-        }
+        this.state.isSkillsModalOpen && this.state.isAdd ?
+            modalTitle = 'Add Skills and Experience'
+            :
+            modalTitle = 'Edit Skills and Experience'
 
         modalContent = SkillsModalContent;
 
@@ -154,11 +151,13 @@ class Skills extends Component {
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Skills and Experience</h4>
-                    {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
+                    {this.props.isUser &&  <div>
+                        { this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editSkills} />
                         :
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className="SPIconLarge SPIconAdd" onClick={() => this.setState({isSkillsModalOpen: true,isAdd:true})} />
                     }
+                    </div>}
                 </div>
                 <div className="SPCertificateContainer width100">
                     {this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
@@ -221,6 +220,7 @@ function mapStateToProps(state) {
     return {
         SkillsList: state.profileState.SkillsState.SkillsList,
         selectedSkillsList: state.profileState.SkillsState.selectedSkillsList,
+        isUser: state.profileState.PersonalDetailState.isUser,
     };
 };
 

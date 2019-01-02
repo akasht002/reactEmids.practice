@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Checkbox from '../Components/checkbox';
 import { Input } from '../../../components';
@@ -27,10 +26,11 @@ class ParticipantsList extends Component {
             return this.props.participantList.map((participantData, index) => {
                 if (this.props.selectedParticipants.length > 0) {
                     let isChecked = "";
-                    this.props.selectedParticipants.map((selectedParticipant, index) => {
+                    this.props.selectedParticipants.map((selectedParticipant) => {
                         if (selectedParticipant.userId === participantData.userId && selectedParticipant.participantType === participantData.participantType) {
                             return isChecked = "checked";
                         }
+                        return '';
                     })
                     return (<Checkbox key={index} isChecked={isChecked} onCheckParticipant={this.props.onCheckParticipant} participant={participantData} />)
                 }
@@ -51,6 +51,7 @@ class ParticipantsList extends Component {
                     placeholder='search'
                     className='form-control searchParticipants ChatContainer'
                     textChange={this.props.onSearchTextChange}
+                    iconStyle='icon-search'
                 />
                <div className="participantsSearchList ChatContainer">
                     {this.participants()}

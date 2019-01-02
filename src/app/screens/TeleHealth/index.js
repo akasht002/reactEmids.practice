@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
 import TeleHealthWidget from './TeleHealthWidget';
-import { generateToken, GetParticipantByConferenceId, clearLinkedParticipants, clearRoom  } from '../../redux/telehealth/actions';
+import { generateToken, clearRoom  } from '../../redux/telehealth/actions';
 import './styles.css';
 
 class TeleHealth extends Component {
@@ -21,7 +21,6 @@ class TeleHealth extends Component {
         this.updateHeight();
         window.addEventListener("load", this.updateHeight);
         window.addEventListener("resize", this.updateHeight);
-        this.props.getParticipantByConferenceId();
     }
 
     componentDidUpdate() {
@@ -29,7 +28,6 @@ class TeleHealth extends Component {
     }
 
     componentWillUnmount() {
-        this.props.clearLinkedParticipants();
         this.props.clearRoom();
     }
 
@@ -67,7 +65,6 @@ class TeleHealth extends Component {
                         <TeleHealthWidget
                             telehealthToken={this.props.telehealthToken}
                             roomId={this.props.roomId}
-                            participantList={this.props.participantList}
                         />
                     }
                 </div>
@@ -79,8 +76,6 @@ class TeleHealth extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         generateToken: () => dispatch(generateToken()),
-        getParticipantByConferenceId: ()=> dispatch(GetParticipantByConferenceId()),
-        clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
         clearRoom: () => dispatch(clearRoom())
     }
 }
@@ -88,8 +83,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         telehealthToken: state.telehealthState.token,
-        roomId: state.telehealthState.roomId,
-        participantList: state.telehealthState.linkedParticipants
+        roomId: state.telehealthState.roomId
     }
 }
 

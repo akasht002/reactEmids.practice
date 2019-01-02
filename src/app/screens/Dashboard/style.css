@@ -629,8 +629,9 @@ span.btn-invited, span.btn-invited:hover{
     clear: both;
 }
 
-.ScheduleTableRow > div, .ScheduleTableHeader > div{
-}
+
+
+
 
 .ScheduleTableRow > div > span, .ScheduleTableHeader > div > span{
     padding: 20px;
@@ -1120,7 +1121,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .innerWidget .card.extended {
         /* height: calc(100vh - 140px); */
-        height: 620px;
+        height: 596px;
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
@@ -1223,7 +1224,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .innerWidget .card.extended {
         /* height: calc(100vh - 140px); */
-        height: 620px;
+        height: 596px;
     }
 
     .ProfileCardNameContainer {

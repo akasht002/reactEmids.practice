@@ -32,8 +32,11 @@ export const getWorkhistoryFieldDetails = (data) => {
 }
 
 export function getWorkHistory() {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         let serviceProviderId = getUserInfo().serviceProviderId;
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+        };
         dispatch(startLoading());
         Get(API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
             dispatch(getWorkhistorySuccess(resp.data))
@@ -57,7 +60,6 @@ export function addWorkHistory(data) {
             fromDate:data.fromDate,
             toDate:data.toDate,
             description:data.description,
-            isWorking:data.isWorking,
             isActive: true,
             currentlyWorking: data.currentlyWorking
         };
@@ -97,7 +99,7 @@ export function updateWorkHistory(data) {
         let serviceProviderId = getUserInfo().serviceProviderId;
         let modal = {
             serviceProviderId: serviceProviderId,
-            workHistoryId: parseInt(data.workHistoryId),
+            workHistoryId: parseInt(data.workHistoryId, 10),
             designation: data.designation,
             company: data.company,
             isActive: "true",
@@ -105,7 +107,6 @@ export function updateWorkHistory(data) {
             fromDate:data.fromDate,
             toDate:data.toDate,
             description:data.description,
-            isWorking:data.isWorking,
             currentlyWorking: data.currentlyWorking
         };
         dispatch(startLoading());

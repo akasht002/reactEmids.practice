@@ -58,19 +58,19 @@ class Languages extends React.Component {
         });
 
         let previosObj = {
-            selectedLanguage: stringConcat(previouslySelectedValues)
+            selectedLanguage: previouslySelectedValues && stringConcat(previouslySelectedValues)
         }
 
 
         let selectStateObject = {
-            selectedLanguage: this.state.selectedLanguage
+            selectedLanguage: String(this.state.selectedLanguage)
         }
 
 
         const fieldDifference = compare(previosObj, selectStateObject);
 
         if (fieldDifference === true) {
-
+            this.setState({ isModalOpen: false, isDiscardModalOpen: false })
         } else {
             this.setState({ isModalOpen: true, isDiscardModalOpen: true })
         }
@@ -93,12 +93,11 @@ class Languages extends React.Component {
     }
 
     reset = () => {
-
         const previosValue = [];
         const newValue = [];
-        const previouslySelectedValues = this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
+        this.oldSelectedValue && this.oldSelectedValue.map(function (elem) {
             return previosValue.push(elem.id);
-        }).join(",");
+        });
 
         const newlySelectedValues = this.state.selectedLanguage;
         newValue.push(newlySelectedValues);
@@ -158,11 +157,14 @@ class Languages extends React.Component {
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Languages Spoken</h4>
-                    {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
+                    {this.props.isUser && <div>
+                        { this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />
                         :
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className="SPIconLarge SPIconAdd" onClick={() => this.setState({ isModalOpen: true, isAdd: true })} />
-                    }
+                        }
+                    </div>}
+                    
                 </div>
                 <div className="SPCertificateContainer width100">
                     {this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
@@ -225,6 +227,7 @@ function mapStateToProps(state) {
     return {
         LanguagesList: state.profileState.LanguagesState.LanguagesList,
         selectedLanguagesList: state.profileState.LanguagesState.selectedLanguagesList,
+        isUser: state.profileState.PersonalDetailState.isUser,
     };
 };
 

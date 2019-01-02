@@ -10,9 +10,8 @@ import {
     leaveConversation,
     pushConversation,
     updateReadStatus,
-    ClearCurrentOpenConversation,
     openedAsyncPage,    
-    setRemoveParticipantConcurrency
+    setRemoveParticipantConcurrency,
 } from '../../../redux/asyncMessages/actions';
 import ModalTemplate from '../Modals/Modal';
 import { Preloader, ModalPopup } from '../../../components';
@@ -46,7 +45,6 @@ class Conversation extends Component {
     }
 
      componentWillUnmount(){
-      this.props.clearCurrentOpenConversation();
       this.props.openedAsyncPage(null);
   };
 
@@ -122,6 +120,7 @@ class Conversation extends Component {
         if (this.props.currentConversation && this.props.currentConversation.participantList) {
             this.props.currentConversation.participantList.map(participant => {
                 participants.push(participant.userId);
+                return '';
             });
 
             let data = {
@@ -360,7 +359,6 @@ function mapDispatchToProps(dispatch) {
         leaveConversation: (data) => dispatch(leaveConversation(data)),
         pushConversation: (data) => dispatch(pushConversation(data)),
         updateUnreadCount: (data) => dispatch(updateReadStatus(data)),
-        clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation()),
         openedAsyncPage: (data) => dispatch(openedAsyncPage(data)),
         setRemoveParticipantConcurrency: (data ) => dispatch(setRemoveParticipantConcurrency(data)),
     }

@@ -67,10 +67,6 @@ class ServiceOffered extends React.Component {
     }
 
     render() {
-
-        let modalContent;
-        let modalTitle;
-
         let listOfServicesOffered = this.props.serviceOfferedList && this.props.serviceOfferedList.map((serviceList) => {
             const services = [];
             serviceList.serviceTypeModel && _.forEach(serviceList.serviceTypeModel, element => {
@@ -86,37 +82,34 @@ class ServiceOffered extends React.Component {
             )
         });
 
+        let modalContent = listOfServicesOffered ?
+            <ServiceOfferedContent
+                handleClick={this.oncheckedServices}
+                name={this.props.serviceOfferedDetails}
+                type={'edit'}
+                toggleCollapse={(category) => { this.props.toggleCollapseDetails(category) }}
+            />
+            :
+            '';
 
-        {
-            listOfServicesOffered ?
-                modalContent =
-                <ServiceOfferedContent
-                    handleClick={this.oncheckedServices}
-                    name={this.props.serviceOfferedDetails}
-                    type={'edit'}
-                    toggleCollapse={(category) => { this.props.toggleCollapseDetails(category) }}
-                />
+        let modalTitle = this.state.isModalOpen && this.state.isAdd ?
+                'Add Services Offered'
                 :
-                ''
-        }
-
-        {
-            this.state.isModalOpen && this.state.isAdd ?
-                modalTitle = 'Add Services Offered'
-                :
-                modalTitle = 'Edit Services Offered'
-        }
+                'Edit Services Offered'
 
         return (
             <div>
 
                 <div className={"SPCardTitle d-flex"}>
                     <h4 className={"primaryColor"}>Services Offered</h4>
-                    {this.props.serviceOfferedList && this.props.serviceOfferedList.length > 0 ?
+                    {this.props.isUser && <div>
+                        { this.props.serviceOfferedList && this.props.serviceOfferedList.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editServiceOffered} />
                         :
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className="SPIconLarge SPIconAdd" onClick={this.addIconServiceOffered} />
                     }
+                    </div>}
+                   
                 </div>
                 <div className="SPCertificateContainer width100">
                     {this.props.serviceOfferedList.length > 0 ?
@@ -181,7 +174,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         serviceOfferedList: state.profileState.serviceOfferedState.serviceOfferedList,
-        serviceOfferedDetails: state.profileState.serviceOfferedState.serviceOfferedDetails
+        serviceOfferedDetails: state.profileState.serviceOfferedState.serviceOfferedDetails,
+        isUser: state.profileState.PersonalDetailState.isUser,
     };
 };
 

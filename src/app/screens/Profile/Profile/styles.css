@@ -247,6 +247,13 @@ i.SPIconEditPersonalDetails{
     justify-content: space-between!important;
 }
 
+.UploadProfileImageWidget .UploadedImageLimitation
+{
+margin-bottom: 0px;
+padding-left: 0px;
+list-style-type: none;
+}
+
 .SPCardTitle h4{
     font-size: 20px;
     font-weight: normal;
@@ -866,7 +873,7 @@ div.CertificationModal{
 .SPBlackoutDate{
     display: flex;
     position: relative;
-    width: 120px;
+    width: calc(100% - 360px);
     flex-direction: column;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
@@ -1179,3 +1186,15 @@ div.CertificationModal{
     min-height: 350px
 }
 
+.block-lesright .Select-input{
+    margin-left: 2px;
+}
+
+
+/*ui-responsive-issue-for-tab*/
+@media only screen and (max-width: 1024px) {
+    .BlackoutModal .MonthlyPicker .react-datepicker-popper {
+        transform: translate3d(0px, 0px, 0px) !important;
+        
+    }
+}

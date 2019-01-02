@@ -424,7 +424,7 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent.EntityU
 
 .EntityUServiceProf img{
     height: 32px;
-    weight: 32px;
+    width: 32px;
     margin-right: 10px;
 }
 
@@ -1048,6 +1048,7 @@ div.ProfileConversation{
     left: 15px;
     background-image: url("../../assets/images/Like_Purple.svg");
     background-size: contain;
+    background-repeat: no-repeat;    
 }
 
 /**********************************************************************************************************************/
@@ -1095,4 +1096,20 @@ div.ProfileConversation{
 .ProfileSubOptions .Select-control .Select-arrow-zone{
     width: 10px;
     padding: 0;
+}
+
+.EntityUDashboard .ProfileServices .ProfileCardImageContainer
+{
+margin-left:0px;
+}
+
+
+/**IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+{
+   .topProfile .card { word-wrap:normal !important; } /* IE10 */
+*::-ms-backdrop, .topProfile .card { word-wrap:normal !important; } /* IE11 */
+.ProfileContentWidget .ProfileServicesVisitContent .AvatarName { margin-left:15px; } /* IE10 */
+*::-ms-backdrop, .ProfileContentWidget .ProfileServicesVisitContent .AvatarName { margin-left:15px; } /* IE11 */
 }

@@ -69,6 +69,10 @@
     background-repeat: no-repeat;
 }
 
+.iconAlertMessage:before{
+    background-image: url("../assets/images/messages-alert.png");
+}
+
 .iconContact:before{
     background-image: url("../assets/images/contact.png");
 }
@@ -501,6 +505,22 @@
     background-image: url("../assets/images/Flags/Vietnamese.svg");
 }
 
+.Chuukese:before{
+    background-image: url("../assets/images/Flags/Chuukese.svg");
+}
+
+.Hawaiian:before{
+    background-image: url("../assets/images/Flags/Hawaiian.svg");
+}
+
+.Filipino:before{
+    background-image: url("../assets/images/Flags/Filipino.svg");
+}
+
+.Marshallese:before{
+    background-image: url("../assets/images/Flags/Marshallese.svg");
+}
+
 .MsgWithIcon{
     position: relative;
     margin-left: 25px;
@@ -511,7 +531,7 @@
     position: absolute;
     height: 16px;
     width: 16px;
-    top: 4px;
+    top: 0px;
     left: -25px;
     background-position: center;
     background-repeat: no-repeat;

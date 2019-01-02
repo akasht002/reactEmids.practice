@@ -809,7 +809,7 @@ div.CertificationModal{
 .SPBlackoutDate{
     display: flex;
     position: relative;
-    width: 120px;
+    width: calc(100% - 360px);
     flex-direction: column;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
@@ -845,7 +845,8 @@ div.CertificationModal{
 .BlackoutModal .modal-content .modal-body{
     height: fit-content;
     padding: 15px 30px;
-    overflow: visible;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /*.BlackoutModal .modal-content .modal-header button.close{
@@ -1228,7 +1229,7 @@ div.CertificationModal{
 
 .CertificationModal .modal-footer, .ModalPadding0 .modal-footer, .LanguagesModal .modal-footer, .availabilityModal .modal-footer
 {
-    padding: 20px 30px;
+    padding: 10px 30px;
     height: 60px;
 }
 

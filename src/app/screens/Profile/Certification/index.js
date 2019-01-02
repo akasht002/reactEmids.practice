@@ -6,7 +6,7 @@ import { checkSpace } from "../../../utils/validations";
 import {compare} from "../../../utils/comparerUtility";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
-
+import EllipsisText from "react-ellipsis-text";
 class Certification extends Component {
 
     constructor(props) {
@@ -58,6 +58,8 @@ class Certification extends Component {
             certificationModal: !this.state.certificationModal,
             isDiscardModalOpen: false,
             isValid: true,
+            certificateNameInvaild: false,
+            certificateAuthorityInvaild: false,
             disabledSaveBtn: true
         })
 
@@ -234,13 +236,22 @@ class Certification extends Component {
             return (
                 <li className='SPSCertificateItems' key={certificateList.certificationId}>
                     <div className='SPCertificateContent'>
-                        <h5 className='SPCertificateHeader'>{certificateList.certificationName}</h5>
-                        <span className='SPCertificateDesc'>{certificateList.authority}</span>
+                         {/*<h5 className='SPCertificateHeader'>{certificateList.certificationName}</h5> to do check this*/} 
+                         {
+                            certificateList.certificationName &&  <EllipsisText className='SPCertificateDesc' text={certificateList.certificationName} length={"50"} />
+                         }
+                        {
+                            certificateList.authority && <EllipsisText className='SPCertificateDesc' text={certificateList.authority} length={"50"} />
+                        }
+                        {/*<span className='SPCertificateDesc'>{certificateList.authority}</span> to do check this*/}
                     </div>
-                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={certificateList.certificationId}
+                    {this.props.isUser && 
+                        <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={certificateList.certificationId}
                         onClick={(e) => this.showModalOnDelete(e)} />
+                    }
+                    {this.props.isUser && 
                     <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={certificateList.certificationId}
-                        onClick={(e) => this.editCertification(e)} />
+                        onClick={(e) => this.editCertification(e)} />}
                 </li>
             )
         });
@@ -258,8 +269,10 @@ class Certification extends Component {
             <div>
                 <div className="SPCardTitle d-flex">
                     <h4 className="primaryColor">Certification and Licenses</h4>
+                    {this.props.isUser &&
                     <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
-                        onClick={() => this.setState({ certificationModal: true, isAdd: true })} />
+                    onClick={() => this.setState({ certificationModal: true, isAdd: true })} />}
+                    
                 </div>
                 <div className="SPCertificateContainer width100">
                     <ul className="SPCertificateList">
@@ -305,12 +318,13 @@ class Certification extends Component {
                     onConfirm={() => this.reset()}
                     onCancel={() => this.setState({
                         isDiscardModalOpen: false,
+                        disabledSaveBtn: false,
                     })}
                 />
 
                 <ModalPopup
                     isOpen={this.state.showModalOnDelete}
-                    ModalBody={<span>Do you really want to remove the Certification details?</span>}
+                    ModalBody={<span>Do you really want to remove the certification?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"
@@ -341,6 +355,7 @@ function mapStateToProps(state) {
         certificationList: state.profileState.CertificationState.certificationList,
         addCertificationSuccess: state.profileState.CertificationState.addCertificationSuccess,
         certificationFieldDetails: state.profileState.CertificationState.certificationFieldDetails,
+        isUser: state.profileState.PersonalDetailState.isUser,
     };
 };
 

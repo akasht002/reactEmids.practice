@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TabContent, TabPane } from 'reactstrap';
 import { Scrollbars, Calendar } from '../../../../components/LevelOne';
-import { formateStateDate } from "../../../../utils/validations";
+import { formateStateDate, formateStateDateValue } from "../../../../utils/validations";
 import ServiceCategory from "./ServiceCategory";
 import ServiceTypeList from "./ServiceTyplist";
 import ServiceRequestsStatus from "./Status";
@@ -69,7 +69,7 @@ class Filter extends Component {
                         </div>
                         <div className="FilterMiddleContent FilterMiddleRight">
                             <TabContent activeTab={this.state.activeTab}>
-                                <TabPane tabId="1">
+                                <TabPane tabId="1" id="Service_Category_tab">
                                     <div className="form-group">
                                         <label>Select the Service Category</label>
                                     </div>
@@ -86,35 +86,34 @@ class Filter extends Component {
                                         />
                                     </div>
                                     <ServiceTypeList
+                                        id="Service Type List"
                                         ServiceType={this.props.ServiceType}
                                         handleserviceType={this.props.handleserviceType}
-
                                     />
                                 </TabPane>
-                                <TabPane tabId="2">
+                                <TabPane tabId="2" id="Service_Area_tab">
                                     <div className="form-group">
                                         <label className="mb-3">Select Service Area</label>
                                     </div>
-
-
                                     <ServiceArea
+                                        id="Service Area"
                                         ServiceAreaList={this.props.ServiceAreaList}
                                         handleServiceArea={this.props.handleServiceArea}
                                         serviceArea={this.props.serviceArea}
                                     />
-
+                                    <span>Note : Service Area filters will only be applicable for open service request(s).</span>
                                 </TabPane>
-                                <TabPane tabId="3">
+                                <TabPane tabId="3" id=" Date_range_tab">
                                     <div className="form-group">
                                         <label>Select the Date range</label>
                                     </div>
                                     <div className="col-md-12 mb-4 p-0">
                                         <Calendar
-                                            startDate={this.props.startDate && formateStateDate(this.props.startDate)}
+                                            startDate={this.props.startDate && formateStateDateValue(this.props.startDate)}
                                             onDateChange={this.props.dateChanged}
                                             onDateChangeRaw={this.props.dateChangedRaw}
                                             mandatory={false}
-                                            minDate={this.props.toDate ? formateStateDate(this.props.toDate) : formateStateDate()}
+                                            minDate={this.props.fromDate && formateStateDate(this.props.fromDate)}
                                             value={this.props.startDate}
                                             className={"form-control datePicker"}
                                             label="From Date"
@@ -122,14 +121,14 @@ class Filter extends Component {
                                     </div>
                                     <div className="col-md-12 mb-4 p-0">
                                         <Calendar
-                                            startDate={this.props.endDate && formateStateDate(this.props.endDate)}
+                                            startDate={this.props.endDate && formateStateDateValue(this.props.endDate)}
                                             onDateChange={this.props.todateChanged}
                                             onDateChangeRaw={this.props.todateChangedRaw}
                                             mandatory={false}
-                                            minDate={this.props.fromDate && formateStateDate(this.props.fromDate)}
+                                            minDate={this.props.startDate ? formateStateDate(this.props.startDate) : formateStateDate()}
                                             maxDate={formateStateDate()}
                                             value={this.props.endDate}
-                                            className={"form-control recurrenceEndPicker"}
+                                            className={"form-control datePicker"}
                                             label="To Date"
                                         />
                                     </div>
@@ -140,6 +139,7 @@ class Filter extends Component {
                                         <label>Select the Status of Service Requests</label>
                                     </div>
                                     <ServiceRequestsStatus
+                                        id="Service Requests Status"
                                         ServiceStatus={this.props.ServiceStatus}
                                         handleChangeserviceStatus={this.props.handleChangeserviceStatus}
                                         handleAllServiceStatus={this.props.handleAllServiceStatus}

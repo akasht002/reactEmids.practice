@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover, ModalPopup } from '../../../components';
@@ -12,19 +11,23 @@ import { ModalUserAgreement } from '../../../components';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
 import Help from '../../../assets/HelpDoc/Help.pdf';
-import { getAboutUsContent } from '../../../redux/aboutUs/actions';
+import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
 import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
 import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/actions';
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { extractRole, authorizePermission } from '../../../utils/roleUtility';
+import { isEntityServiceProvider } from '../../../utils/userUtility';
 import { SCREENS } from '../../../constants/constants';
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
+import { EntitySPProfileHeaderMenu } from "../../../data/EntitySPProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
-import {clearInvitaion, joinVideoConference, rejectConference} from '../../../redux/telehealth/actions';
-import  VisitNotification  from '../../VisitProcessingNotification/VisitNotification';
+import { clearInvitaion, joinVideoConference, rejectConference } from '../../../redux/telehealth/actions';
+import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
+import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
+import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -32,7 +35,9 @@ class AsideScreenCover extends React.Component {
         super(props)
         this.state = {
             profilePermission: extractRole(SCREENS.PROFILE),
-            showNotification: false
+            showNotification: false,
+            displayWarningPopup: false,
+            routeUrlLink: '/'
         }
     }
 
@@ -43,11 +48,13 @@ class AsideScreenCover extends React.Component {
         this.props.getPersonalDetail();
         this.props.getAboutUsContent();
         this.props.canServiceProviderCreateMessage();
+        this.props.getBuildVersion();
         authorizePermission(SCREENS.DASHBOARD);
         authorizePermission(SCREENS.SERVICE_REQUEST);
         authorizePermission(SCREENS.VISIT_HISTORY);
         authorizePermission(SCREENS.TELEHEALTH);
         authorizePermission(SCREENS.ASYNC_MESSAGE);
+        this.props.getDashboardMessageCount();
     }
 
     onClickOk = () => {
@@ -55,37 +62,72 @@ class AsideScreenCover extends React.Component {
     }
 
     navigateProfileHeader = (link) => {
+        this.props.setIsFormDirty(false);
         switch (link) {
             case 'visitNotification':
-            this.setState({selectedLink: link, showNotification: !this.state.showNotification});
-            break;
+                this.setState({ selectedLink: link, showNotification: !this.state.showNotification });
+                break;
             case 'messagesummary':
                 this.props.navigateProfileHeader(link);
                 break;
             case 'contact':
                 this.helpDocEl.click();
                 break;
+            case 'telehealth':
+                this.setState({ selectedLink: link })
+                break;
             case 'logout':
                 this.props.onLogout();
                 break;
+            case 'aboutUs':
+                this.setState({ selectedLink: link })
+                break;
+                case 'profile':
+                this.goToProfile();
+                break;
             default:
                 this.setState({ selectedLink: link })
+                this.props.navigateProfileHeader(link);
                 break;
         }
     };
 
+    checkIsFormDirty = (link) => {
+        this.setState({ routeUrlLink: link });
+        if (this.props.isFormDirty) {
+            this.setState({ displayWarningPopup: true });
+        }
+        else if (this.props.roomId && link !== 'aboutUs' && link !== 'visitNotification'
+            && link !== 'contact' && link !== 'telehealth') {
+            this.props.setMenuClicked(link)
+        } else {
+            this.navigateProfileHeader(link);
+        };
+    }
+
+    goToProfile = () => {
+        if (this.props.roomId) {
+            this.props.setMenuClicked(Path.profile);
+        } else {
+            this.props.goToProfile();
+        }
+    }
 
     render() {
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
-        let menuData = MenuData;
+        if (isEntityServiceProvider()) {
+            headerMenu = EntitySPProfileHeaderMenu;
+        };
+        let menuData = (!getUserInfo().isEntityServiceProvider) ? MenuData : EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>
                     <div className='BrandNameWidget'>
                         <div className='BrandName'>
-                            <Link className='BrandLink' to='/'><img src={require('../../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
-                            </Link>
+                            <span className='BrandLink'>
+                                <img src={require('../../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
+                            </span>
                         </div>
                     </div>
                     <ProfileImage
@@ -97,15 +139,16 @@ class AsideScreenCover extends React.Component {
                         cicularChart='circular-chart'
                         circle='SPdpCircle'
                         profileImage='ProfileImage'
-                        onClick={this.state.profilePermission.Read && this.props.goToProfile}
+                        onClick={() => {this.state.profilePermission.Read && this.checkIsFormDirty('profile')}}
                     />
 
                     <div className='ProfileNameWidget'>
                         <div className='ProfileNameContent'>
-                            <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</a>
+                            {this.props.personalDetail.serviceProviderTypeId !== 2 && <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.firstName || ''} {this.props.personalDetail.lastName || ''}</a>}
+                            {this.props.personalDetail.serviceProviderTypeId === 2 && <a className='BrandLink' onClick={this.state.profilePermission.Read && this.props.goToProfile}> {this.props.personalDetail.entityName || ''}</a>}
                         </div>
                     </div>
-                    <AsideMenu menuData={menuData} url={this.props} />
+                    <AsideMenu menuData={menuData} url={this.props} onClick={link => this.checkIsFormDirty(link)} />
                 </div>
                 <div className="container-fluid ProfileRightWidget">
                     <ProfileHeader
@@ -113,8 +156,8 @@ class AsideScreenCover extends React.Component {
                         profilePic={this.props.profileImgData.image ? this.props.profileImgData.image
                             : require('../../../assets/images/Blank_Profile_icon.png')}
                         toggle={this.props.toggle}
-                        onClick={(link) => this.navigateProfileHeader(link)}
-                    />
+                        onClick={(link) => this.checkIsFormDirty(link)}
+                        dashboardMessageCount={this.props.dashboardMessageCount} />
 
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
@@ -131,7 +174,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ParticipantContainer
                     onRef={ref => (this.participantComponent = ref)}
-                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation}
+                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation && !this.props.telehealthToken}
                     onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
                     createConversation={() => { this.setState({ selectedLink: null }) }}
                 />
@@ -140,6 +183,7 @@ class AsideScreenCover extends React.Component {
                     ModalBody={<AboutContent
                         toggle={() => { this.setState({ selectedLink: null }) }}
                         aboutUsContent={<div dangerouslySetInnerHTML={{ __html: this.props.aboutUsContent }} />}
+                        buildVersion={this.props.buildVersion}
                     />}
                     className="modal-lg AboutModal"
                     headerFooter='d-none'
@@ -147,7 +191,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ModalPopup
                     isOpen={this.state.selectedLink === 'telehealth' && !this.props.canCreateConversation}
-                    ModalBody={<span>You cannot initiate video call as you have no current service request.</span>}
+                    ModalBody={<span>You cannot initiate a video call as you have no current service requests</span>}
                     btn1="OK"
                     className="modal-sm"
                     headerFooter="d-none"
@@ -167,8 +211,24 @@ class AsideScreenCover extends React.Component {
                 />
                 <VisitNotification
                     isOpen={this.state.showNotification}
-                   // visitNotification={this.props.visitNotification}
+                    // visitNotification={this.props.visitNotification}
                     toggle={() => { this.setState({ showNotification: !this.state.showNotification }) }}
+                />
+                <ModalPopup
+                    isOpen={this.state.displayWarningPopup}
+                    ModalBody={<span>Do you want to discard changes?</span>}
+                    btn1="Yes"
+                    btn2="No"
+                    className="zh"
+                    headerFooter="d-none"
+                    footer='d-none'
+                    centered={true}
+                    onConfirm={() => {
+                        this.navigateProfileHeader(this.state.routeUrlLink)
+                    }}
+                    onCancel={() => this.setState({
+                        displayWarningPopup: !this.state.displayWarningPopup,
+                    })}
                 />
             </ScreenCover>
         )
@@ -189,7 +249,11 @@ function mapDispatchToProps(dispatch) {
         onLogout: () => dispatch(onLogout()),
         clearInvitaion: () => dispatch(clearInvitaion()),
         joinVideoConference: () => dispatch(joinVideoConference()),
-        rejectConference: () => dispatch(rejectConference())
+        rejectConference: () => dispatch(rejectConference()),
+        getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
+        setMenuClicked: (data) => dispatch(setMenuClicked(data)),
+        getBuildVersion: () => dispatch(getBuildVersion()),
+        setIsFormDirty: (data) => dispatch(setIsFormDirty(data))
     }
 };
 
@@ -206,7 +270,12 @@ function mapStateToProps(state) {
         showTelehealthInvite: state.telehealthState.isInvitationCame,
         initiatorFirstName: state.telehealthState.initiatorFirstName,
         initiatorLastName: state.telehealthState.initiatorLastName,
-        visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification, 
+        visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification,
+        dashboardMessageCount: state.asyncMessageState.dashboardMessageCount,
+        roomId: state.telehealthState.roomId,
+        telehealthToken: state.telehealthState.token,
+        buildVersion: state.aboutUsState.buildVersion,
+        isFormDirty: state.authState.userState.isFormDirty
     };
 };
 

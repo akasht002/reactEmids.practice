@@ -90,7 +90,7 @@ div.TeleHealthWidget{
 .TeleHealthParticipantSlider{
     bottom: 0;
     padding: 20px 10px;
-    position: absolute;
+    position: absolute !important;
     width: 100%;
     z-index: 2;
 }
@@ -119,8 +119,35 @@ div.TeleHealthWidget{
     margin-right: 20px;
 }
 
+.TeleHealthParticipantAvatar .TeleHealthAvatarContainer
+{
+    vertical-align: middle!important;
+    position: relative;
+    float: left;
+    width: 32px;
+    height: 40px;
+    /* padding: 10px 5px 10px 0px!important; */
+}
+
+.TeleHealthParticipantAvatar .TeleHealthParticipantNameContainer span
+{
+    vertical-align: middle!important;
+    padding: 0!important;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    max-width: 160px;
+    min-width: 160px;
+}
+
 .TeleHealthAvatarContainer img{
     border: 0;
+}
+
+.TeleHealthVideoContainer .TeleHealthParticipantSlider .slick-list {
+    width: 100%;
+    display: block;
 }
 
 .memberType{
@@ -151,7 +178,7 @@ div.TeleHealthWidget{
 }
 
 .TeleHealthAvatarContainer .memberType{
-    right: -8px;
+    right: -15px;
 }
 
 .TeleHealthParticipantNameContainer{
@@ -201,6 +228,7 @@ div.TeleHealthWidget{
     height: 90px;
     width: 140px;
     overflow: hidden;
+    margin: 5px;
 }
 
 .TeleHealthVideo{
@@ -297,7 +325,7 @@ div.TeleHealthWidget{
 .TeleHealthItem.true{
     position: fixed;
     width: 100% !important;
-    z-index: 99999;
+    z-index: 1000;
 }
 
 .TeleHealthItem.Right{
@@ -784,4 +812,47 @@ input.searchParticipants ~ small:before {
 
 .ParticipantSelectMsg {
     color: #8c8c8c;
+}
+
+.full-blockvideoconf
+{
+    width: 100%;
+    height: auto;
+    position: relative;
+    clear: both;
+    display: block;
+}
+.full-blockvideoconf .participantsSearchList
+{
+width: 100%;
+display: block;
+padding-bottom: 50px;
+}
+
+.full-blockvideoconf .form-group small:before, .full-blockvideoconf  input.searchParticipants~small:before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: -31px;
+    left: 18px;
+    height: 17px;
+    width: 17px;
+    background-image: url("../../assets/images/search.png");
+    background-size: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+.ParticipantsListContainer .form-group input.searchParticipants ~ small:before, .ParticipantsListContainer > .form-group small:before {
+    content: '';
+    position: absolute;
+    display: block;
+    top: -31px;
+    left: 18px;
+    height: 17px;
+    width: 17px;
+    background-image: url("../../assets/images/search.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 }

@@ -2,6 +2,7 @@ import { AboutUs } from './actions'
 
 const defaultState = {
     aboutUsContent: '',
+    buildVersion: ''
 };
 
 export default (state = defaultState, action) => {
@@ -10,6 +11,11 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 aboutUsContent: action.data.value,
+            };
+        case AboutUs.getBuildVersionSuccess:
+            return {
+                ...state,
+                buildVersion: action.data.value,
             };
         default:
             return state;

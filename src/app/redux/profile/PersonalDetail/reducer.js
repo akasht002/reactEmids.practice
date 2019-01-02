@@ -8,7 +8,12 @@ const defaultState = {
   genderList:[],
   affiliationList:[],
   spBusyInVisit: null,
-  sbModeClicked: false
+  sbModeClicked: false,
+  serviceProviderId: null,
+  isUser: true,
+  serviceProviderTypeId: 0,
+  isEntityServiceProvider: false,
+  entityId: null
 }
 
 const PersonalDetailState = (state = defaultState, action) => {
@@ -58,6 +63,24 @@ const PersonalDetailState = (state = defaultState, action) => {
       return {
           ...state,
           sbModeClicked: false
+      }
+      case PersonalDetails.setServiceProviderId:
+      return {
+          ...state,
+          serviceProviderId: action.data.userId,
+          isUser: false,
+          isEntityServiceProvider: action.data.isEntityServiceProvider,
+          serviceProviderTypeId: action.data.serviceProviderTypeId,
+          entityId: action.data.entityId
+      }
+      case PersonalDetails.clearServiceProviderId:
+      return {
+          ...state,
+          serviceProviderId: null,
+          isUser: true,
+          isEntityServiceProvider: false,
+          serviceProviderTypeId: 0,
+          entityId: null
       }
     default:
       return state

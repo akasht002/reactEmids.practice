@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment from "moment";
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
-import { getSummaryDetails, onUpdateTime, saveSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
-import { Path } from '../../../../routes'
+import { Path } from '../../../../routes';
+import { push } from '../../../../redux/navigation/actions';
 import { checkNumber } from '../../../../utils/validations';
+import { formatDateSingle } from '../../../../utils/dateUtility'
 import './style.css'
 
 class Summary extends Component {
@@ -37,24 +40,25 @@ class Summary extends Component {
             timeErrMessage: '',
             emptyErrMessage: '',
             disableSignatureBtn: true,
-            isProccedModalOpen: false
+            isProccedModalOpen: false,
+            isDiscardModalOpen: false
         };
     };
 
     componentDidMount() {
         if (this.props.ServiceRequestVisitId) {
-            this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
+            this.props.getSummaryDetail(this.props.patientDetails.serviceRequestVisitId);
+            this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
         } else {
             this.props.history.push(Path.visitServiceList)
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.SummaryDetails.signature) {
-            this.signaturePad.fromDataURL(nextProps.SummaryDetails.signature);
-            if (nextProps.SummaryDetails.signature !== 'data:image/jpeg;base64,') {
-                this.setState({ signatureImage: nextProps.SummaryDetails.signature })
-            }
+        if (nextProps.signatureImage.signature) {
+
+            this.setState({ signatureImage: nextProps.signatureImage.signature })
+
         }
         this.setState({
             summaryDetails: nextProps.SummaryDetails,
@@ -84,6 +88,15 @@ class Summary extends Component {
             this.setState({ isSaveBtnShown: false })
             this.signaturePad.off();
         }
+        let signatureData = {
+            "patientId": this.state.summaryDetails.patient.patientId,
+            "serviceRequestVisitId": this.state.summaryDetails.serviceRequestVisitId,
+            "serviceRequestId": this.state.summaryDetails.serviceRequestId,
+            "rating": 0,
+            "signature": data,
+            "signatureArray": ""
+        }
+        this.props.saveSignature(signatureData)
         this.setState({ signatureImage: data })
     }
 
@@ -103,7 +116,6 @@ class Summary extends Component {
         let originalTotalDuration = (seconds / 60);
 
         if (this.state.signatureImage) {
-            this.saveSignature();
             const data = {
                 serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
                 ServiceProviderId: this.state.summaryDetails.serviceProviderId,
@@ -115,7 +127,7 @@ class Summary extends Component {
                 BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
                 TaxPaid: this.props.CalculationsData.taxes,
                 BilledPerService: this.props.CalculationsData.totalVisitCost,
-                TotalCost: this.props.CalculationsData.grandTotalAmount,
+                TotalCost: this.props.CalculationsData.totalVisitCost,
                 Image: this.state.signatureImage,
                 TaxRate: this.state.summaryDetails.taxAmount
             }
@@ -129,16 +141,25 @@ class Summary extends Component {
         this.setState({ isProccedModalOpen: true })
     }
 
-    timerErrMessage = () => {
-        if (this.state.updatedHour > this.props.CalculationsData.totalHours ||
-            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin > this.props.CalculationsData.totalMinutes) ||
-            (this.state.updatedHour === this.props.CalculationsData.totalHours && this.state.updatedMin === this.props.CalculationsData.totalMinutes && this.state.updatedSec > this.props.CalculationsData.totalSeconds)) {
+    timerErrMessage = () => {        
+        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");       
+        let hours = formatDateSingle(this.state.updatedHour)  
+        let minutes = formatDateSingle(this.state.updatedMin)
+        let seconds = formatDateSingle(this.state.updatedSec)
+        let newTime = hours +':'+ minutes+':'+seconds
+        var endTime = moment(newTime, "HH:mm:ss");
+
+        if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
         } else {
             this.updateTime();
         }
+    }
+
+    onPreviousClick = () => {
+        this.setState({ isDiscardModalOpen: true })
     }
 
     updateTime = () => {
@@ -148,11 +169,23 @@ class Summary extends Component {
             sec: parseInt(this.state.updatedSec, 0)
         }
         this.setState({ isModalOpen: false })
-        this.props.onUpdateTime(data)
+        this.props.onUpdateTime(data, this.state.summaryDetails.serviceRequestVisitId)
     }
 
     onMouseUp = () => {
         this.setState({ disableSignatureBtn: false })
+    }
+
+    onPreviousClick = () => {
+        if (!this.state.disableSignatureBtn && this.state.isSaveBtnShown) {
+            this.setState({ isDiscardModalOpen: true })
+        } else {
+            this.props.goBack();
+        }
+    }
+
+    goBack = () => {
+        this.props.goBack();
     }
 
     render() {
@@ -200,7 +233,7 @@ class Summary extends Component {
                             }}
                             style={{ width: 10 + '%' }}
                             min={0}
-                            max={this.props.CalculationsData.totalMinutes}
+                            max={59}
                         />
                     </span>
                     <span>
@@ -214,7 +247,7 @@ class Summary extends Component {
                             }}
                             style={{ width: 10 + '%' }}
                             min={0}
-                            max={this.props.CalculationsData.totalSeconds}
+                            max={59}
                         />
                     </span>
                     <span className="mt-4 d-block text-danger">{this.state.timeErrMessage}</span>
@@ -223,14 +256,17 @@ class Summary extends Component {
 
                 <p className="AdjustTimeText">
                     Note: Maximum adjustable time is
-                    <span> {this.props.CalculationsData.totalHours} hr</span>
+                    {/* <span> {this.props.CalculationsData.totalHours} hr</span>
                     <span> {this.props.CalculationsData.totalMinutes} min</span>
-                    <span> {this.props.CalculationsData.totalSeconds} sec</span>
+                    <span> {this.props.CalculationsData.totalSeconds} sec</span> */}
+
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)} hr</span>
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(3, 2)} min</span>
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span>
                 </p>
             </form>
         }
 
-        const SignWidth = 400;
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -315,7 +351,6 @@ class Summary extends Component {
                                                     :
                                                     ''
                                                 }
-
                                                 <div className="col-md-8 CostTableContainer Label">
                                                     <p><span>Total Chargeable Time</span>
                                                         <span>Hourly Rate</span></p>
@@ -341,15 +376,15 @@ class Summary extends Component {
                                                     <div className="col-md-8 EstimatedCostContainer Label">
                                                         <p><span>Estimated Claim</span>
                                                         </p>
-                                                        <p><span>Copay On Credit Card</span></p>
+                                                        <p><span>Credit Card Payment</span></p>
                                                     </div>
                                                     <div className="col-md-4 EstimatedCostContainer Cost">
                                                         <p><span>${this.props.CalculationsData.estimatedClaim}</span></p>
-                                                        <p><span>${this.props.CalculationsData.copayAmount}</span></p>
+                                                        <p><span>${this.props.CalculationsData.copayAmount && this.props.CalculationsData.copayAmount.toFixed(2)}</span></p>
                                                     </div>
                                                 </div>
                                             }
-                                            <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that this claim is an estimate pending the claim process</p>
+                                            <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that any claim is an estimate pending the claim process</p>
                                         </div>
                                     </div>
                                     <div className="RightWidget">
@@ -357,9 +392,12 @@ class Summary extends Component {
                                             <p className="SummaryContentTitle">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
-                                                <SignaturePad width={SignWidth} height={320} ref={ref => this.signaturePad = ref} />
+                                                {this.props.signatureImage && this.props.signatureImage.signature ?
+                                                    <img className="sign-pad" alt="sign" src={this.props.signatureImage.signature} /> :
+                                                    <SignaturePad ref={ref => this.signaturePad = ref} />
+                                                }
                                             </div>
-                                            {this.state.isSaveBtnShown ?
+                                            {this.state.isSaveBtnShown && (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
                                                 <div className="SignatureButtons">
                                                     <button className="btn btn-outline-primary CancelSignature" disabled={this.state.disableSignatureBtn} onClick={this.saveSignature}>Save</button>
                                                     <button className="btn btn-outline-primary ResetSignature" onClick={this.resetSignature}>Reset Signature</button>
@@ -372,8 +410,12 @@ class Summary extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <Link className='btn btn-outline-primary mr-3' to='/feedback'>Previous</Link>
-                                        <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
+                                        <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
+                                        {getUserInfo().isEntityServiceProvider ?
+                                            <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
+                                            :
+                                            <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -388,7 +430,9 @@ class Summary extends Component {
                         modalTitle={'Adjust Time'}
                         centered="true"
                         onClick={this.timerErrMessage}
+                        onDiscard={this.togglePopup}
                         buttonLabel={'Update'}
+                        discardBtn={true}
                     />
 
                     <ModalPopup
@@ -412,10 +456,25 @@ class Summary extends Component {
                         headerFooter="d-none"
                         centered={true}
                         onConfirm={() => {
-                            this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen }),
-                                this.onClickNext()
+                            this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen });
+                            this.onClickNext();
                         }}
                         onCancel={() => this.setState({ isProccedModalOpen: false })}
+                    />
+
+                    <ModalPopup
+                        isOpen={this.state.isDiscardModalOpen}
+                        ModalBody={<span>Do you want to discard the changes?</span>}
+                        btn1='YES'
+                        btn2='NO'
+                        className='modal-sm'
+                        headerFooter='d-none'
+                        centered='centered'
+                        onConfirm={() => this.goBack()}
+                        onCancel={() =>
+                            this.setState({
+                                isDiscardModalOpen: false
+                            })}
                     />
                 </Scrollbars>
             </AsideScreenCover>
@@ -425,9 +484,13 @@ class Summary extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
-        onUpdateTime: (data) => dispatch(onUpdateTime(data)),
-        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data))
+        getSummaryDetail: (data) => dispatch(getSummaryDetail(data)),
+        onUpdateTime: (data, visitId) => dispatch(onUpdateTime(data, visitId)),
+        saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
+        saveSignature: (data) => dispatch(saveSignature(data)),
+        getSavedSignature: (data) => dispatch(getSavedSignature(data)),
+        goBack: () => dispatch(push(Path.feedback)),
+        updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data))
     }
 };
 
@@ -439,7 +502,8 @@ function mapStateToProps(state) {
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
-        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus
+        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
+        signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature,
     };
 };
 

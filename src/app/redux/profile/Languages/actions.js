@@ -61,8 +61,11 @@ export function addLanguages(data) {
 };
 
 export function getSelectedLanguages() {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         let serviceProviderId = getUserInfo().serviceProviderId;
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+          };
         dispatch(startLoading());
         Get(API.addLanguages + serviceProviderId + '/Language').then((resp) => {
             dispatch(getSelectedLanguageDetails(resp.data))

@@ -1,5 +1,5 @@
 import React from 'react'
-import { getFields, serviceTypeImages } from '../../utils/validations'
+import { getFields, getServiceTypeImage } from '../../utils/validations'
 import Moment from 'react-moment'
 import { Progressbar } from '../../components'
 
@@ -7,8 +7,8 @@ export const VisitList = props => {
   let visitHistoryList = props.visitHistoryList
   let visitHistoryListItem = ''
   if (visitHistoryList) {
-    visitHistoryListItem = visitHistoryList.map((vistList, index) => {
-      let filename = serviceTypeImages.Bathing
+    visitHistoryListItem = visitHistoryList.length > 0 ? visitHistoryList.map((vistList, index) => {
+      let visitId = getServiceTypeImage(vistList.serviceTypes && vistList.serviceTypes[0].serviceTypeId);
       return (
         <div className='card mainProfileCard' key={index}>
           <div className='visitListWidget' key={index}>
@@ -20,7 +20,7 @@ export const VisitList = props => {
                       {vistList.visitDate}
                     </Moment>, {vistList.slotDescription}
                   </span>
-                  <span>{vistList.billedTotalDuration} hrs</span>                 
+                  <span>{vistList.billedTotalDuration && vistList.billedTotalDuration.substring(0,5)} hrs</span>
                   <span>{vistList.serviceRequestVisitId}</span>
                 </div>
               </div>
@@ -33,9 +33,7 @@ export const VisitList = props => {
                           alt={'NO_IMAGE'}
                           key={index}
                           className='visitListImage'
-                          src={
-                            require(`../../assets/images/${filename}.svg`)
-                          }
+                          src={require(`../../assets/ServiceTypes/${visitId}`)}
                         />
                       </div>
                       <div className='visitListNameContainer'>
@@ -56,7 +54,7 @@ export const VisitList = props => {
                       </div>
                     </div>
                     <div className="col-md-4 col-sm-4 col-xs-12 d-flex padding-less align-items-center justify-content-end p-0">
-                      <div className="visitUserPic-block right-uservisit-view">
+                      <div className="visitUserPic-block right-uservisit-view" onClick={() => props.handelPatientProfile(vistList.patientId)}>
                         <div className="visitUserPic">
                           <div class="avatarContainer">
                             <img
@@ -93,7 +91,8 @@ export const VisitList = props => {
 
         </div>
       )
-    })
+    }) : 
+        <span className="no-resultblock">No results found for the current criteria</span>
   }
   return visitHistoryListItem
 }

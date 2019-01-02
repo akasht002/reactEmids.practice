@@ -13,7 +13,10 @@ const defaultState = {
     initiator: false,
     isInvitationCame: false,
     initiatorFirstName: '',
-    initiatorLastName: ''
+    initiatorLastName: '',
+    contextId: 0,
+    invitedRoomId: 0,
+    isNewRequestCame: false
 };
 
 const telehealthState = (state = defaultState, action) => {
@@ -59,6 +62,7 @@ const telehealthState = (state = defaultState, action) => {
             return {
                 ...state,
                 roomId: action.data,
+                invitedRoomId: 0
             };
         case TeleHealth.clearRoom:
             return defaultState;
@@ -78,6 +82,40 @@ const telehealthState = (state = defaultState, action) => {
                 initiatorFirstName: action.data.userFirstName,
                 initiatorLastName: action.data.userLastName
             };
+        case TeleHealth.saveContextData:
+            return {
+                ...state,
+                contextId: action.data
+            }
+        case TeleHealth.setInvitedRoomId:
+            return {
+                ...state,
+                invitedRoomId: action.data
+            }
+        case TeleHealth.clearExistingRoom:
+            return {
+                ...state,
+                token: null,
+                linkedParticipants: [],
+                linkedPatients: [],
+                conferenceId: 0,
+                allParticipants: [],
+                participantsByConferenceId: [],
+                isInvitationCame: false,
+                initiatorFirstName: '',
+                initiatorLastName: '',
+                contextId: 0
+            }
+        case TeleHealth.newRequestCame: 
+            return {
+                ...state,
+                isNewRequestCame: action.data
+            }
+        case TeleHealth.clearInitiator: 
+            return {
+                ...state,
+                initiator: false
+            }
         default:
             return state;
     }

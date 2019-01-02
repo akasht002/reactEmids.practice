@@ -292,6 +292,10 @@ vertical-align: middle;
     vertical-align: middle;
 }
 
+.visitUserPic-block{
+    cursor: pointer;
+}
+
 .rating-span-title .SPRating.particular-rating {
     display: inline-block;
     width: auto;

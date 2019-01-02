@@ -9,7 +9,9 @@ import {
     getUnreadMessageCounts,
     CanServiceProviderCreateMessage,
     getConversationCount,
-    openedAsyncPage
+    openedAsyncPage,
+    ClearCurrentOpenConversation,
+    setActivePageNumber
 } from '../../../redux/asyncMessages/actions';
 import MessageList from './MessageList';
 import ParticipantsContainer from './ParticipantsContainer';
@@ -18,7 +20,7 @@ import ModalTemplate from '../Modals/Modal';
 import '../styles.css';
 import './index.css';
 import { USERTYPES } from '../../../constants/constants';
-
+import { isEntityServiceProvider } from '../../../utils/userUtility';
 
 class ConversationSummary extends Component {
     constructor(props) {
@@ -27,17 +29,18 @@ class ConversationSummary extends Component {
             isDisplayParticipantModal: false,
             isOpen: false,
             noPermission: false,
-            activePage: 1
+            activePage: this.props.activePage
         };
     };
 
 
     componentDidMount() {
         this.props.getConversationCount();
-        this.props.fetchConversationSummary(1);
+        this.props.fetchConversationSummary(this.props.activePage);
         this.props.getUnreadMsgCounts();
         this.props.canServiceProviderCreateMessage();
         this.props.openedAsyncPage('conversationSummary');
+        this.props.clearCurrentOpenConversation();
     };
     
     componentWillUnmount(){
@@ -88,6 +91,7 @@ class ConversationSummary extends Component {
     handlePageChange = (pageNumber) => {
         this.props.fetchConversationSummary(pageNumber);
         this.setState({ activePage: pageNumber });
+        this.props.setActivePageNumber(pageNumber);
     }
 
     render() {
@@ -105,7 +109,7 @@ class ConversationSummary extends Component {
                     <div className='ProfileHeaderTitle'>
                         <h5 class="primaryColor m-0">Conversation Summary</h5>
                     </div>
-                    {this.props.loggedInUser.userType !== USERTYPES.SERVICE_PROVIDER &&
+                    {!isEntityServiceProvider() &&
                         <div class="ProfileHeaderButton">
                             <button class="btn btn-outline-primary" onClick={this.onSetDisplayParticipantModal}>+ New Conversation</button>
                         </div>
@@ -161,7 +165,9 @@ function mapDispatchToProps(dispatch) {
         getUnreadMsgCounts: () => dispatch(getUnreadMessageCounts()),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
         getConversationCount: () => dispatch(getConversationCount()),
-        openedAsyncPage: (data) => dispatch(openedAsyncPage(data))
+        openedAsyncPage: (data) => dispatch(openedAsyncPage(data)),
+        clearCurrentOpenConversation:  () => dispatch(ClearCurrentOpenConversation()),
+        setActivePageNumber: (page) => dispatch(setActivePageNumber(page)),
     }
 };
 
@@ -169,11 +175,12 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         conversation: state.asyncMessageState.conversationSummary,
-        isLoading: state.loadingState.isLoading,
+        isLoading: state.asyncMessageState.isLoading,
         unreadMsgCounts: state.asyncMessageState.unreadCounts,
         loggedInUser: state.authState.userState.userData.userInfo,
         canCreateConversation: state.asyncMessageState.canCreateConversation,
-        conversationCount: state.asyncMessageState.conversationCount
+        conversationCount: state.asyncMessageState.conversationCount,
+        activePage: state.asyncMessageState.activePageNumber,
     }
 };
 

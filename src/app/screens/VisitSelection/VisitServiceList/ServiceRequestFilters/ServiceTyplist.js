@@ -2,7 +2,7 @@ import React from "react";
 
 function ServiceTypeList(props){
  
-    let ServiceTempalte = props.ServiceType.map((item, index) =>{
+    let ServiceTempalte = props.ServiceType && props.ServiceType.map((item, index) =>{
         let catNum = index + 1;
         return(
              <div className="CheckSet" key={catNum}>

@@ -193,6 +193,10 @@ a:hover {
     display: none;
 }
 
+.left tbody tr, .left tbody tr td {
+    cursor: default !important;
+}
+
 .list-group-item table tbody tr td{
     border: 0;
 }
@@ -511,6 +515,16 @@ li.ProfileOptionItems:hover{
     padding: 0 !important;
 }
 
+.addAttachmentWidget>.upload-btn-wrapper>div{
+	position: relative;
+    width: auto !important;
+    height: auto !important;
+    border-width: 0px!important;
+    border-color:transparent!important;
+    border-style:none!important;
+    border-radius: 5px;
+}
+
 .messageTypeWidget{
     position: relative;
     padding: 0 10px 0 0 !important;
@@ -802,7 +816,7 @@ li.participants{
 }
 
 .participantSearchName{
-    padding: 8px 30px 8px 54px !important;
+    padding: 8px 30px 8px 18px !important;
 }
 
 .participantsSearchList{
@@ -834,11 +848,17 @@ textarea.msgTextArea:focus{
     outline: 0;
     box-shadow: none;
 }
+textarea.msgTextArea::-webkit-input-placeholder {
+    color: #8c8c8c;
+    }
+
+
 
 input.searchParticipants, input.searchParticipants:focus{
     border: 0 !important;
     background-color: #f9f9f9 !important;
-    padding: 14px 15px 14px 50px !important; 
+    padding: 0px 15px 0px 50px !important; 
+    line-height: 38px;
 }
 
 input.searchParticipants.ChatContainer ~ small:before {
@@ -1275,7 +1295,7 @@ overflow-y: auto;
 
 
 .modal-footer{
-height: 80px;
+height: 60px;
 }
 
 .ProfileRightContainer.async{
@@ -1661,19 +1681,30 @@ margin-bottom: 8px;
 resize:vertical;	
 overflow: auto;	
 }	
- .messageTypeWidget textarea.msgTextArea:focus	
+ /* .messageTypeWidget textarea.msgTextArea:focus	
 {	
     overflow:scroll !important;	
-}
+} */
 
 
 
 .participantsSearchForm .participantsSearchList .participantName
 {
-    -o-text-overflow: initial;
-    text-overflow: initial;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
     max-width: initial;
+
 }
+
+.list-fullblock .participantsSearchForm .SelectWithFlag .ProfileImageMultiSelect .Select-menu-outer
+{
+max-height: 300px !important;
+top:10px !important;
+bottom: auto !important
+}
+
+
+
 
 
 /*microsoft-edge-detection*/
@@ -1884,10 +1915,20 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
     height: 100% !important;
 }
 
-
+.participantsSearchForm .ParticipantsListContainer
+{
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
 .participantsSearchForm .ParticipantsListContainer .participantsSearchList.ChatContainer
 {
-    padding-bottom: 100px;
+    padding-bottom: 50px;
+    display: block;
+    width: 100%;
+    height: calc;
+    height: calc(100vh - 522px);
 }
 
 
@@ -1967,3 +2008,34 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
     width: 300px;
     height: auto;
 }
+
+.dis-attach div, .dis-attach .addAttachmentBtn {
+    cursor: default !important;
+}
+
+button:disabled {
+    cursor: default !important;
+}
+
+
+/* width */
+.MsgModalBody.modal-body::-webkit-scrollbar {
+    width: 5px;
+    /* background:rgba(0, 0, 0, 0.8); */
+  }
+  
+  /* Handle */
+  .MsgModalBody.modal-body::-webkit-scrollbar-thumb {
+    background:rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Handle on hover */
+  .MsgModalBody.modal-body::-webkit-scrollbar-thumb:hover {
+    background:rgba(0, 0, 0, 0.6);
+  }
+
+  .wsnw {
+      white-space: nowrap;
+  }
+  
+     

@@ -11,10 +11,11 @@ class ParticipantsList extends Component {
             return this.props.participantList.map((participantData, index) => {
                 if (this.props.selectedParticipants.length > 0) {
                     let isChecked = "";
-                    this.props.selectedParticipants.map((selectedParticipant, index) => {
+                    this.props.selectedParticipants.map((selectedParticipant) => {
                         if (selectedParticipant.userId === participantData.userId && selectedParticipant.participantType === participantData.participantType) {
                             return isChecked = "checked";
                         }
+                        return '';
                     })
                     return (<Checkbox key={index} isChecked={isChecked} onCheckParticipant={this.props.onCheckParticipant} participant={participantData} />)
                 }
@@ -27,7 +28,7 @@ class ParticipantsList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="full-blockvideoconf">
                 <Input
                     id='participantsSearch'
                     autoComplete='false'

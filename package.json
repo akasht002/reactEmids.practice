@@ -45,6 +45,7 @@
     "jest": "^20.0.4",
     "jsencrypt": "^3.0.0-rc.1",
     "lodash": "^4.17.10",
+    "material-ui": "^0.20.2",
     "moment": "^2.22.2",
     "npm": "^6.4.1",
     "object-assign": "4.1.1",
@@ -59,6 +60,7 @@
     "react-datepicker": "^1.5.0",
     "react-dev-utils": "^5.0.2",
     "react-dom": "^16.5.0",
+    "react-dropzone": "^7.0.1",
     "react-helmet": "^5.2.0",
     "react-idle-timer": "^4.0.9",
     "react-image-crop": "^4.0.2",
@@ -106,12 +108,16 @@
     "start-demo": "node scripts/start.js --demo",
     "start-hmsademo": "node scripts/start.js --hmsademo",
     "start-pftest": "node scripts/start.js --pftest",
+    "start-hmsauat": "node scripts/start.js --hmsauat",
+    "start-uat": "node scripts/start.js --uat",
     "build": "node scripts/build.js",
     "build-qa": "node scripts/build.js --qa",
     "build-dev": "node scripts/build.js --dev",
     "build-demo": "node scripts/build.js --demo",
     "build-hmsademo": "node scripts/build.js --hmsademo",
     "build-pftest": "node scripts/build.js --pftest",
+    "build-uat": "node scripts/build.js --uat",
+    "build-hmsauat": "node scripts/build.js --hmsauat",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
@@ -159,9 +165,13 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "jsx-a11y/anchor-has-content": "off"
+    }
   },
   "devDependencies": {
-    "jest-cli": "^23.5.0"
+    "jest-cli": "^23.5.0",
+    "react-ellipsis-text": "^1.1.0"
   }
 }

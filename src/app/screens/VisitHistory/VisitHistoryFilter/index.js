@@ -1,12 +1,12 @@
 import { TabContent, TabPane } from 'reactstrap'
-import moment from 'moment';
 import React, { Component } from 'react'
 import { Scrollbars, Calendar, Button } from '../../../components'
 import ServiceCategory from "./ServiceCategory";
 import ServiceTypeList from "./ServiceTyplist";
-import { getArrayLength } from '../../../utils/validations'
+import { getArrayLength, checkDateFormatNumber, checkFormatDate,formateStateDateValue } from '../../../utils/validations'
 import {
-  formatDate
+  formatDate,
+  changeDateFormat
 } from '../../../utils/dateUtility';
 import { DATE_FORMAT } from '../../../constants/constants';
 
@@ -126,8 +126,8 @@ class VisitFilter extends Component {
               alt='NO'
               className='ServiceCheckboxImage'
               src={
-                AllPatientForserviceProviders.image
-                  ? AllPatientForserviceProviders.image
+                AllPatientForserviceProviders.imageString
+                  ? AllPatientForserviceProviders.imageString
                   : require('../../../assets/images/Blank_Profile_icon.png')
               }
             />
@@ -157,6 +157,47 @@ class VisitFilter extends Component {
       : this.individualList.splice(index, 1);
       this.setState({isChecked: !this.state.isChecked});
   }
+
+  dateChangedRaw = (event) => { 
+    if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
+      event.preventDefault();
+    } else {
+        let dobVal = document.getElementById('dob');
+        dobVal.value = changeDateFormat(event.target.value);
+        const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
+        if(!formattedDate) {
+          this.setState({
+            searchData: { ...this.state.searchData, dob: formattedDate }
+          })
+        }
+        if (checkFormatDate(dobVal)) {
+          this.setState({dobValid: true})
+        } else {
+          this.setState({ dobValid: false });
+        }
+      }
+    }
+
+    dateChangedRawEndDate = (event) => { 
+      if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
+        event.preventDefault();
+      } else {
+          let dobVal = document.getElementById('dob1');
+          dobVal.value = changeDateFormat(event.target.value);
+          const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
+          if(!formattedDate) {
+            this.setState({
+              searchData: { ...this.state.searchData, dob: formattedDate }
+            })
+          }
+          if (checkFormatDate(dobVal)) {
+            this.setState({dobValid: true})
+          } else {
+            this.setState({ dobValid: false });
+          }
+        }
+      }
+
   render() {
     const serviceCategories = this.props.serviceCategory && this.props.serviceCategory.map(function (type) {
       return { "label": type.serviceCategoryDescription, "value": type.serviceCategoryId };
@@ -225,7 +266,7 @@ class VisitFilter extends Component {
                       value={this.state.searchData.startDate}
                       startDate={
                         this.state.searchData.startDate &&
-                        moment(this.state.searchData.startDate)
+                        formateStateDateValue(this.state.searchData.startDate)
                       }
                       onDateChange={this.dateFromChanged}
                       onDateChangeRaw={this.dateChangedRaw}
@@ -245,11 +286,12 @@ class VisitFilter extends Component {
                       value={this.state.searchData.endDate}
                       startDate={
                         this.state.searchData.endDate &&
-                        moment(this.state.searchData.endDate)
+                        formateStateDateValue(this.state.searchData.endDate)
                       }
                       onDateChange={this.dateToChanged}
-                      onDateChangeRaw={this.dateChangedRaw}
+                      onDateChangeRaw={this.dateChangedRawEndDate}
                       mandatory
+                      minDate={this.state.searchData.startDate && formateStateDateValue(this.state.searchData.startDate)}
                       className={'form-control datePicker '}
                       onBlur={() => {
                         if (!this.state.searchData.endDate) {

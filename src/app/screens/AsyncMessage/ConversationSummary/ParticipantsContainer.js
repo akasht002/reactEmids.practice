@@ -137,7 +137,7 @@ class ParticipantsContainer extends Component {
                 onSelect={this.onSelectPatient}
                 patients={this.props.patients} />
             { (Object.getOwnPropertyNames(this.state.selectedPatientDetails).length === 0) &&
-            <span className="text-danger d-block">
+            <span className="text-muted d-block">
                 Please select an Individual to continue.
             </span>}
 
@@ -156,7 +156,7 @@ class ParticipantsContainer extends Component {
                 isOpen={this.props.isDisplayParticipantModal}
                 toggle={this.props.onSetDisplayParticipantModal}
                 ModalBody={participantModalData}
-                className="modal-lg asyncModal box-modelnewsearch"
+                className="modal-lg asyncModal box-modelnewsearch list-fullblock"
                 modalTitle="New Conversation"
                 centered="centered"
                 isEnable={this.state.selectedParticipants.length > 0}

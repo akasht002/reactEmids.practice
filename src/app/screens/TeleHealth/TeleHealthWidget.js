@@ -9,11 +9,19 @@ import TeleHealthVideoControls from './TeleHealthVideoControls';
 import TeleHealthParticipants from './TeleHealthParticipants';
 import TeleHealthInviteParticipants from './TeleHealthInviteParticipants';
 import {TeleHealthSettings} from '../../constants/config';
-import { leaveVideoConference, GetAllParticipants, AddParticipantsToVideoConference, endConference, GetParticipantByConferenceId } from '../../redux/telehealth/actions';
+import { 
+    leaveVideoConference, 
+    GetAllParticipants, 
+    AddParticipantsToVideoConference, 
+    endConference, 
+    GetParticipantByConferenceId,
+    clearLinkedParticipants
+} from '../../redux/telehealth/actions';
 import './styles.css';
-import _ from 'lodash'
+import './SliderSlick.css';
 import { Path } from '../../routes';
 import {push} from '../../redux/navigation/actions'
+import {setMenuClicked} from '../../redux/auth/user/actions';
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -40,9 +48,14 @@ class TeleHealthWidget extends Component {
         this.inactiveSession = null;
     }
 
+    componentWillMount() {
+        this.props.setMenuClicked(null)
+    }
+
     componentDidMount() {
         if (this.props.roomId) {
             this.joinRoom();
+            this.props.getParticipantByConferenceId()
         } else {
             this.props.goToDashBoard()
         }
@@ -52,6 +65,7 @@ class TeleHealthWidget extends Component {
         clearInterval(this.interval);
         clearTimeout(this.leaveTimeout);
         clearTimeout(this.inactiveSession);
+        this.props.clearLinkedParticipants();
         if (this.state.hasJoinedRoom) {
             this.leaveRoom(this.state.hasJoinedRoom);
         }
@@ -72,7 +86,7 @@ class TeleHealthWidget extends Component {
     }
 
     attachTracks(tracks, container) {
-        _.forEach(tracks,track => {
+        tracks.forEach(track => {
             container.appendChild(track.attach());
         });
     }
@@ -84,13 +98,13 @@ class TeleHealthWidget extends Component {
 
     detachTracks = (tracks) => {
         let isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-        _.forEach(tracks,track => {
+        tracks.forEach(track => {
             if (isSafari) {
-                _.forEach(track._attachments, function (element) {
+                track._attachments.forEach((element) => {
                     element.remove();
                 });
             } else {
-                _.forEach(track.detach(),detachedElement => {
+                track.detach().forEach(detachedElement => {
                     detachedElement.remove();
                 });
             }
@@ -110,7 +124,11 @@ class TeleHealthWidget extends Component {
             hasJoinedRoom: false,
             localMediaAvailable: false
         });
-        this.props.leaveVideoConference(data);
+        if (this.props.initiator) {
+            this.props.endConference();
+        } else {
+            this.props.leaveVideoConference(data);
+        }
     }
 
     endConference = () => {
@@ -167,9 +185,9 @@ class TeleHealthWidget extends Component {
             this.attachParticipantTracks(room.localParticipant, fullWidthMediaContainer);
         }
 
-        this.setState({ activeParticipantIdentity: room.localParticipant.identity });
+        this.setState({ activeParticipantIdentity: 'Me' });
 
-        _.forEach(room.participants,participant => {
+        room.participants.forEach(participant => {
             this.setState({ videoAdded: true });
         });
 
@@ -193,22 +211,29 @@ class TeleHealthWidget extends Component {
 
         room.on('disconnected', () => {
             if (this.state.previewTracks) {
-                _.forEach(this.state.previewTracks,track => {
+                this.state.previewTracks.forEach(track => {
                     track.stop();
                 });
             }
             this.detachParticipantTracks(room.localParticipant);
-            _.forEach(room.participants,this.detachParticipantTracks);
+            room.participants.forEach(this.detachParticipantTracks);
             this.setState({ hasJoinedRoom: false, localMediaAvailable: false });
         });
     }
 
     DisplayInviteParticipantsList = () => {
         this.setState({
-            AddParticipants: !this.state.AddParticipants
+            AddParticipants: true
+        });
+        this.props.getAllParticipants()
+    };
+
+    closeInviteParticipants = () => {
+        this.setState({
+            AddParticipants: false
         });
         this.props.getParticipantByConferenceId();
-    };
+    }
 
     ToggleFullScreen() {
         this.setState({
@@ -217,14 +242,14 @@ class TeleHealthWidget extends Component {
     }
 
     controlAudio = () => {
-        _.forEach(this.state.activeRoom.localParticipant.audioTracks,(audioTrack) => {
+        this.state.activeRoom.localParticipant && this.state.activeRoom.localParticipant.audioTracks.forEach((audioTrack) => {
             this.state.isMuteAudio ? audioTrack.enable() : audioTrack.disable();
         });
         this.setState({ isMuteAudio: !this.state.isMuteAudio });
     }
 
     controlVideo = () => {
-        _.forEach(this.state.activeRoom.localParticipant.videoTracks,(videoTrack) => {
+        this.state.activeRoom.localParticipant && this.state.activeRoom.localParticipant.videoTracks.forEach((videoTrack) => {
             this.state.isHiddenVideo ? videoTrack.enable() : videoTrack.disable();
         });
         this.setState({ isHiddenVideo: !this.state.isHiddenVideo });
@@ -232,8 +257,15 @@ class TeleHealthWidget extends Component {
 
     participantClick = (participant) => {
         var fullWidthMediaContainer = this.refs.fullWidthMedia;
+        fullWidthMediaContainer.innerHTML = '';
         this.attachParticipantTracks(participant, fullWidthMediaContainer);
-        this.setState({ activeParticipantIdentity: participant.identity });
+        let name = 'Me';
+        this.props.existingParticipantList.map((existingParticipant) => {
+            if (parseInt(participant.identity, 10) === existingParticipant.userId) {
+                name = existingParticipant.firstName + ' ' + existingParticipant.lastName;
+            }
+        });
+        this.setState({ activeParticipantIdentity: name });
     }
 
     render() {
@@ -242,25 +274,63 @@ class TeleHealthWidget extends Component {
             dots: false,
             infinite: false,
             speed: 500,
+            slidesToShow: 5,
+            slidesToScroll: 5,
             variableWidth: true,
-            mobileFirst: true,
             responsive: [
+                {
+                    breakpoint: 1680,
+                    settings: {
+                        slidesToShow: 5,
+                        slidesToScroll: 5,
+                        infinite: false,
+                        variableWidth: true,
+                        speed: 500,
+                        dots: false
+                    }
+                },
+                {
+                    breakpoint: 1280,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 4,
+                        infinite: false,
+                        variableWidth: true,
+                        speed: 500,
+                        dots: false
+                    }
+                },
                 {
                     breakpoint: 1024,
                     settings: {
-                        slidesToShow: 3
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: false,
+                        variableWidth: true,
+                        speed: 500,
+                        dots: false
                     }
                 },
                 {
                     breakpoint: 600,
                     settings: {
-                        slidesToShow: 2
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        infinite: false,
+                        variableWidth: true,
+                        speed: 500,
+                        dots: false
                     }
                 },
                 {
                     breakpoint: 480,
                     settings: {
-                        slidesToShow: 1
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        infinite: false,
+                        variableWidth: true,
+                        speed: 500,
+                        dots: false
                     }
                 }
             ]
@@ -268,20 +338,32 @@ class TeleHealthWidget extends Component {
 
         let sliderCategory = [];
         this.state.activeRoom && this.state.activeRoom.participants.forEach((participant) => {
+            let name = '';
+            this.props.existingParticipantList.map((existingParticipant) => {
+                if (parseInt(participant.identity, 10) === existingParticipant.userId) {
+                    name = existingParticipant.firstName + ' ' + existingParticipant.lastName;
+                }
+            });
             var tracks = Array.from(participant.tracks.values());
             let cat = <div className='TeleHealthParticipants' onClick={() => { this.participantClick(participant) }}>
                 <input id={'Participants' + participant.sid} type='radio' name='Participants' value={participant.sid} />
                 <label className='ParticipantsLinkLabel' htmlFor={'Participants' + participant.sid}>
                     <div className="VideoBackground" />
-                    <span className="ParticipantSliderName">{participant.identity}</span>
+                    <span className="ParticipantSliderName">{name}</span>
                     <div ref={"remoteVideo" + participant.sid}></div>
                 </label>
             </div>
             sliderCategory.push(cat);
             setTimeout(() => {
-                _.forEach(tracks,track => {
-                    if (this.refs['remoteVideo' + participant.sid]) {
-                        this.refs['remoteVideo' + participant.sid].appendChild(track.attach());
+                let container = this.refs['remoteVideo' + participant.sid];
+                tracks.forEach(track => {
+                    if (container && 
+                        (
+                            (track.kind === 'audio' && !container.querySelector('audio')) ||
+                            (track.kind === 'video' && !container.querySelector('video'))
+                        )
+                    ) {
+                        container.appendChild(track.attach());
                     }
                 });
             }, 1000)
@@ -310,7 +392,7 @@ class TeleHealthWidget extends Component {
                         <Slider {...settings} className="TeleHealthParticipantSlider">
                             {sliderCategory}
                         </Slider>
-                    </div>
+                    </div>           
                     <TeleHealthVideoControls
                         FullScreen={this.state.FullScreen}
                         ToggleFullScreen={this.ToggleFullScreen.bind(this)}
@@ -332,7 +414,7 @@ class TeleHealthWidget extends Component {
                     <TeleHealthInviteParticipants
                         participantList={this.props.conferenceParticipants}
                         AddParticipants={this.state.AddParticipants}
-                        ToggleAddParticipantsListView={this.DisplayInviteParticipantsList}
+                        ToggleAddParticipantsListView={this.closeInviteParticipants}
                         getAllParticipants={this.props.getAllParticipants}
                         addParticipantsToConference={this.props.addParticipantsToConference}
                     />
@@ -341,17 +423,18 @@ class TeleHealthWidget extends Component {
                     className="modal-sm"
                     headerFooter="d-none"
                     centered={true}
-                    isOpen={this.state.showLeaveConfModal}
-                    btn1="Continue"
+                    isOpen={this.state.showLeaveConfModal || this.props.menuClicked}
+                    btn1="Cancel"
                     btn2="Leave"
                     onConfirm={() => {
                         this.setState({
-                            showLeaveConfModal: !this.state.showLeaveConfModal,
+                            showLeaveConfModal: false,
                         })
+                        this.props.setMenuClicked(null)
                     }}
                     onCancel={() => {
                         this.setState({
-                            showLeaveConfModal: !this.state.showLeaveConfModal,
+                            showLeaveConfModal: false,
                         })
                         this.leaveRoom()
                     }}
@@ -362,7 +445,7 @@ class TeleHealthWidget extends Component {
                     headerFooter="d-none"
                     centered={true}
                     isOpen={this.state.sessionInactivePopup}
-                    btn1="Continue"
+                    btn1="Cancel"
                     btn2="Leave"
                     onConfirm={() => {
                         this.setState({
@@ -390,7 +473,9 @@ function mapDispatchToProps(dispatch) {
         addParticipantsToConference: (data) => dispatch(AddParticipantsToVideoConference(data)),
         endConference: () => dispatch(endConference()),
         getParticipantByConferenceId: () => dispatch(GetParticipantByConferenceId()),
-        goToDashBoard: () => dispatch(push(Path.dashboard))
+        goToDashBoard: () => dispatch(push(Path.dashboard)),
+        setMenuClicked: (data) => dispatch(setMenuClicked(data)),
+        clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
     }
 };
 
@@ -398,7 +483,9 @@ function mapStateToProps(state) {
     return {
         existingParticipantList: state.telehealthState.participantsByConferenceId,
         conferenceParticipants: state.telehealthState.linkedParticipants,
-        initiator: state.telehealthState.initiator
+        initiator: state.telehealthState.initiator,
+        contextId: state.telehealthState.contextId,
+        menuClicked: state.authState.userState.menuClicked
     }
 };
 

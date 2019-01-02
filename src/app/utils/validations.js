@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_YEAR, serviceTypesImage } from '../constants/constants'
+import { DATE_FORMAT, DATE_FORMAT_MONTH, DATE_YEAR, serviceTypesImage } from '../constants/constants'
 import _ from 'lodash'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
@@ -69,6 +69,10 @@ export function formateStateDateValue (date) {
   return date ? moment(date, DATE_FORMAT) : null
 }
 
+export function formateDateValue (date) {
+  return date ? moment(date, DATE_FORMAT_MONTH).format(DATE_FORMAT_MONTH) : null
+}
+
 export function formateYearDate () {
   return moment().format(DATE_YEAR)
 }
@@ -78,7 +82,7 @@ export function formateDate (date, format) {
 }
 
 export function dateDifference (startDate, endDate) {
-  return moment(endDate, 'MMM DD').diff(moment(startDate, 'MMM DD'), 'days') + 1
+  return moment(endDate, 'MMM DD YYYY').diff(moment(startDate, 'MMM DD YYYY'), 'days') + 1
 }
 
 export function newDate () {
@@ -160,11 +164,7 @@ export const formatDate = date => {
 }
 
 export const partialCompare = (value, array) => {
-  console.log(array)
   array.find(obj => {
-    console.log(value)
-    console.log(obj.visitDate.substring(0, 10))
-    console.log( value === obj.visitDate.substring(0, 10) ? true : false)
     return value === obj.visitDate.substring(0, 10) ? 1 : 2
   })
 }
@@ -177,7 +177,7 @@ export const serviceTypeImages = {
 }
 
 export const isUrlValid = (userInput) =>{
-  let res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+  let res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g);
   if(res == null)
       return false;
   else
@@ -196,4 +196,24 @@ export function getStatus(input, field, status) {
     }
   }
   return output
+}
+
+
+export function unique(arr, keyProps) {
+  const kvArray = arr.map(entry => {
+   const key = keyProps.map(k => entry[k]).join('|');
+   return [key, entry];
+  });
+  const map = new Map(kvArray);
+  return Array.from(map.values());
+ }
+
+
+
+export function format_DDMMMYYYY_Value (date) {
+  return date ? moment(date).format(DATE_FORMAT_MONTH) : null
+}
+
+export function formatDateValue(date, dateFormat, outputFormat) {
+  return date ? moment(date, dateFormat).format(outputFormat) : null
 }

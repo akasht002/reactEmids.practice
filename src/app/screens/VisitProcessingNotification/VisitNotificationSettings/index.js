@@ -1,12 +1,12 @@
 import React from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import { Scrollbars } from '../../../components'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import { getVisitNotificationSettings, updateVisitNotificationSettings, handlePushChange, handleEmailChange } from '../../../redux/visitProcessingNotification/VisitNotificationSettings/actions';
 import './VisitNotificationSettings.css';
 import { NotificationCheckBox } from './NotificationCheckBox';
-
+import { setIsFormDirty } from '../../../redux/auth/user/actions';
 class VisitNotificationSettings extends React.Component {
 
     constructor(props) {
@@ -29,19 +29,22 @@ class VisitNotificationSettings extends React.Component {
     }
 
     handlePushChange = (pList) => {
+        this.props.setIsFormDirty(true);
         this.props.handlePushChange(pList);
         this.setState({ checkedPushData: this.props.pushNotification });
     }
 
     handleEmailChange = (eList) => {
+        this.props.setIsFormDirty(true);
         this.props.handleEmailChange(eList);
         this.setState({ checkedEmailData: this.props.emailNotification });
     }
 
     onClickSave = () => {
+        this.props.setIsFormDirty(false);
         this.props.updateVisitNotificationSettings({
             pushNotification: this.props.pushNotification,
-            emaiNotificationNotification: this.props.emailNotification
+            emailNotification: this.props.emailNotification
         });
     }
 
@@ -99,8 +102,8 @@ function mapDispatchToProps(dispatch) {
         getVisitNotificationSettings: () => dispatch(getVisitNotificationSettings()),
         updateVisitNotificationSettings: (data) => dispatch(updateVisitNotificationSettings(data)),
         handlePushChange: (data) => dispatch(handlePushChange(data)),
-        handleEmailChange: (data) => dispatch(handleEmailChange(data))
-
+        handleEmailChange: (data) => dispatch(handleEmailChange(data)),
+        setIsFormDirty: (data) => dispatch(setIsFormDirty(data))  
     }
 };
 
@@ -108,7 +111,7 @@ function mapStateToProps(state) {
     return {
         pushNotification: state.visitNotificationState.VisitNotificationSettingsState.pushNotification,
         emailNotification: state.visitNotificationState.VisitNotificationSettingsState.emailNotification,
-        userId: state.authState.userState.userData.userInfo.userId
+        userId: state.authState.userState.userData.userInfo.serviceProviderId
     };
 };
 

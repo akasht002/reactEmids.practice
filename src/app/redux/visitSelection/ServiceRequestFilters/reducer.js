@@ -41,13 +41,18 @@ const ServiceRequestFilterState = (state = defaultState, action) => {
         case ServiceRequestFiltersList.getServiceAreaSuccess:
             return {
                 ...state,
-                ServiceAreaList: action.data.addresses
+                ServiceAreaList: action.data
             };
         case ServiceRequestFiltersList.clearServiceCategory:
             return {
                 ...state,
                 ServiceType: action.data
             };
+        case ServiceRequestFiltersList.clearServiceType:
+        return {
+            ...state,
+            ServiceType: action.data
+        };
         case ServiceRequestFiltersList.clearServiceArea:
             return {
                 ...state,

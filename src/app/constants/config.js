@@ -25,8 +25,10 @@ export const STRIPE_KEY = "pk_test_n70bkOns9PqUMG4go5E77356"
 export const TeleHealthSettings = {
     maxVideoCallHourInMs: 7200000,
     sessionInactiveInMs: 1800000
+    // maxVideoCallHourInMs: 600000,
+    // sessionInactiveInMs: 300000
 }
 
-export const SLIDER_TIME = 2000;
+export const SLIDER_TIME = 10000;
 
 export const DEMO = 'false'

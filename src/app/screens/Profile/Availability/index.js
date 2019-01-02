@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ProfileModalPopup } from "../../../components";
@@ -20,11 +20,9 @@ class Availability extends Component {
             availabilityModal: false,
             modalType: '',
             add: false,
-            edit: false, 
             updatedData: [],
             isDiscardModalOpen: false,
             isBlackoutModalOpen: false,
-            activeSlots: []          
         }
         this.disabled = "disabled";
         this.slotList = 0;
@@ -55,7 +53,8 @@ class Availability extends Component {
        this.props.updateAvailabilityDays(updatedDataValue);
        this.setState({
             availabilityModal: !this.state.availabilityModal,
-       })
+       });
+       this.disabled = 'disabled';
     };
 
     componentDidMount(){
@@ -69,7 +68,7 @@ class Availability extends Component {
         })
     }
 
-    storeData = (data, changeAvailableDays) => {
+    storeData = data => {
         this.setState({
             updatedData: data
         });
@@ -77,6 +76,7 @@ class Availability extends Component {
     }
 
     reset = () => {
+        this.disabled = 'disabled';
         this.setState({
             availabilityModal: !this.state.availabilityModal,
             isDiscardModalOpen: false
@@ -152,14 +152,18 @@ class Availability extends Component {
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
         blackoutModalContent = <BlackoutDays showBalckout="true"/>
         return (
-            <React.Fragment>
+            <Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
                     <div className={"SPCardTitle d-flex"}>
                         <h4 className={"primaryColor"}>Availability</h4>
-                        {!availableSlot && this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
+                        { this.props.isUser &&
+                        <div>
+                            { !availableSlot && this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.toggleAvailability.bind('edit', 'editButton')} />
                         :
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE} className={"SPIconLarge SPIconAdd"} onClick={this.toggleAvailability.bind('add', 'addButton')} />}
+                        </div>
+                        }
                     </div>
                      <div className={'width100 SPAvailWidget'}>
                         { availableDays && !availableSlot ? availableDays : 
@@ -192,30 +196,30 @@ class Availability extends Component {
                     data1={this.props.availableDays}
                 />
                 <ModalPopup
-                isOpen={this.state.isDiscardModalOpen}
-                toggle={this.toggleCheck}
-                ModalBody={<span>Do you want to discard the changes?</span>}
-                btn1='YES'
-                btn2='NO'
-                className='modal-sm'
-                headerFooter='d-none'
-                centered='centered'
-                onConfirm={() => this.reset()}
-                onCancel={() =>
-                this.setState({
-                    isDiscardModalOpen: false
-                })}
+                    isOpen={this.state.isDiscardModalOpen}
+                    toggle={this.toggleCheck}
+                    ModalBody={<span>Do you want to discard the changes?</span>}
+                    btn1='YES'
+                    btn2='NO'
+                    className='modal-sm'
+                    headerFooter='d-none'
+                    centered='centered'
+                    onConfirm={() => this.reset()}
+                    onCancel={() =>
+                    this.setState({
+                        isDiscardModalOpen: false
+                    })}
               />
               <ProfileModalPopup
-                isOpen={this.state.isBlackoutModalOpen}
-                toggle={this.toggleBlackoutModal}
-                ModalBody={blackoutModalContent}
-                className='modal-lg asyncModal availabilityModal'
-                headerFooter='d-none'
-                centered='centered'
-                modalTitle={"Blackout Days"}
+                    isOpen={this.state.isBlackoutModalOpen}
+                    toggle={this.toggleBlackoutModal}
+                    ModalBody={blackoutModalContent}
+                    className='modal-lg asyncModal availabilityModal'
+                    headerFooter='d-none'
+                    centered='centered'
+                    modalTitle={"Blackout Days"}
               />
-            </React.Fragment>
+            </Fragment>
         )
     }
 }
@@ -223,7 +227,8 @@ class Availability extends Component {
 const mapStateToProps = state => {
     return {
         availableDays: state.profileState.AvailabilityState.availableDays,
-        blackoutDays: state.profileState.AvailabilityState.blackoutDays
+        blackoutDays: state.profileState.AvailabilityState.blackoutDays,
+        isUser: state.profileState.PersonalDetailState.isUser,
     }
 };
 

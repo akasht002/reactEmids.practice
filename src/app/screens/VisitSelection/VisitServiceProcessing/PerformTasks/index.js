@@ -12,7 +12,8 @@ import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
 import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
-import { Path } from '../../../../routes'
+import { Path } from '../../../../routes';
+import { getServiceTypeImage } from '../../../../utils/validations';
 import './style.css'
 
 class PerformTasks extends Component {
@@ -40,6 +41,7 @@ class PerformTasks extends Component {
             stopTimer: false
         };
         this.checkedTask = [];
+        this.checkedTaskInitial = [];
     };
 
     toggle = () => {
@@ -75,7 +77,10 @@ class PerformTasks extends Component {
                         })
                         taskList.statusId = 45;
                     }
+                    this.checkedTaskInitial = taskList;
+                    return taskList;
                 });
+                return serviceType;
             });
         }
         this.setState({ taskList: nextProps.PerformTasksList })
@@ -109,6 +114,7 @@ class PerformTasks extends Component {
         } else {
             current_time = this.state.startedTime;
             this.setState({ stopTime: true, startService: true })
+            this.saveData(data);
         }
         this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
         this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
@@ -116,9 +122,6 @@ class PerformTasks extends Component {
 
     onClickNext = () => {
         this.setState({ taskCount: (this.state.taskList.totalTask - (this.checkedTask).length) })
-        // if (!this.state.startService) {
-        //     this.setState({ isStopModalOpen: true })
-        // } else
         if (this.state.taskCount > 0) {
             this.setState({ isModalOpen: true })
         } else {
@@ -126,7 +129,7 @@ class PerformTasks extends Component {
         }
     }
 
-    saveData = () => {
+    saveData = (startServiceAction) => {
         let taskList = this.state.taskList
         let data = {
             serviceRequestVisitId: taskList.serviceRequestVisitId,
@@ -137,12 +140,12 @@ class PerformTasks extends Component {
             isActive: true,
             serviceRequestTypeTaskVisits: this.checkedTask
         }
-        this.props.addPerformedTask(data);
+        this.props.addPerformedTask(data, startServiceAction);
     }
 
     render() {
         let startService = 1;
-        let stopService = 0;
+        // let stopService = 0;
         let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
         let timerBtn;
         const { visitStatus, visitStartTime, visitEndTime } = this.props.PerformTasksList
@@ -160,7 +163,7 @@ class PerformTasks extends Component {
         }
 
         if (visitStatus === SERVICE_STATES.IN_PROGRESS) {
-            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(stopService, this.state.taskList.serviceRequestVisitId) }}>Stop Service</a>
+            timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
         }
 
         return (
@@ -231,13 +234,14 @@ class PerformTasks extends Component {
                         <div className='CardContainers'>
                             <div className='ServiceContent'>
                                 {this.props.PerformTasksList.serviceRequestTypeVisits && this.props.PerformTasksList.serviceRequestTypeVisits.map((serviceType) => {
+                                    let image_url = getServiceTypeImage(serviceType.serviceRequestTypeTaskVisits && serviceType.serviceRequestTypeTaskVisits.length > 0 && serviceType.serviceRequestTypeTaskVisits[0].serviceTypeId);
                                     return (
                                         <div className={"TabContainerWidget"} key={serviceType.serviceRequestTypeDetailsId}>
                                             <div onClick={() => {
                                                 serviceType.collapse = !serviceType.collapse;
                                                 this.setState({ collapse: !this.state.collapse });
                                             }} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + serviceType.collapse}>
-                                                <img src={require("../../../../assets/images/Bathing_Purple.svg")} className="ServiceTasksImg" alt="categoryImage" />
+                                                <img src={require(`../../../../assets/ServiceTypes/${image_url}`)} className="ServiceTasksImg" alt="categoryImage" />
                                                 <div className="TabHeaderContent">
                                                     <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>
                                                     <span><i className="SelectedTask">{serviceType.serviceRequestTypeTaskVisits.filter((taskList) => {
@@ -254,7 +258,7 @@ class PerformTasks extends Component {
                                                                 taskList.checked = taskList.statusId === 90;
                                                                 taskList.statusId = 45;
                                                             }
-                                                            
+
                                                             return (
                                                                 <div className='ServiceList' key={taskList.serviceRequestTypeTaskDetailsId}>
                                                                     <input
@@ -321,12 +325,14 @@ class PerformTasks extends Component {
 
                     <ModalPopup
                         isOpen={this.state.isStopModalOpen}
-                        ModalBody={<span>Please stop the service to proceed.</span>}
-                        btn1="OK"
+                        ModalBody={<span>Do you want to End the visit?</span>}
+                        btn1="Yes"
+                        btn2="No"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onConfirm={() => this.setState({
+                        onConfirm={() => {this.setState({isStopModalOpen: !this.state.isStopModalOpen}); this.startService(0, this.state.taskList.serviceRequestVisitId)}}
+                        onCancel={() => this.setState({
                             isStopModalOpen: !this.state.isStopModalOpen,
                         })}
                     />
@@ -339,7 +345,7 @@ class PerformTasks extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data, true)),
-        addPerformedTask: (data) => dispatch(addPerformedTask(data)),
+        addPerformedTask: (data, startServiceAction) => dispatch(addPerformedTask(data, startServiceAction)),
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime))
     }

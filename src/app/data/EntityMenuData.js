@@ -1,33 +1,24 @@
+import { SCREENS } from '../constants/constants';
 export const EntityMenuData = [
     {
         id: 0,
         title: 'Dashboard',     
         iconName: 'iconProfile iconProfileDashboard',
-        link:'/dashboard'
+        link:'/dashboard',
+        name: SCREENS.DASHBOARD
     },
     {
         id: 1,
-        title: 'Service Requests', 
-        iconName: 'iconProfile iconProfileServiceRequest',
-        link:'/'
-    },
-    {
-        id: 2,
         title: 'Visit History',        
         iconName: 'iconProfile iconProfileServiceVisits',
-        link:'/'
+        link: '/visitHistory',
+        name: SCREENS.VISIT_HISTORY
     },
     {
         id: 3,
-        title: 'Individuals',        
-        iconName: 'iconProfile iconProfileServiceProviders',
-        link:'/'
-    },
-    {
-        id: 4,
-        title: 'Settings',        
+        title: 'Settings',
         iconName: 'iconProfile iconProfileMySettings',
-        link:'/'
+        link: '/visitNotificationSettings',
+        name: SCREENS.NOTIFICATIONS
     }
-  
 ];

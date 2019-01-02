@@ -188,6 +188,11 @@ div.EstimatedCostWidget{
 
 .AdjustTimeForm{
     padding: 20px;
+    color:#444;
+}
+.AdjustTimeForm .AdjustTimeContent input
+{
+    color:#444;
 }
 
 .AdjustTimeForm .AdjustTimeText{
@@ -236,6 +241,11 @@ div.EstimatedCostWidget{
 
 .ServiceList.Summary label.ServicesLink{
     margin: 0 0 0 60px;
+}
+
+.accordion .ServiceList.Summary label.ServicesLink .serviceName.non_completedtask
+{
+color: #b3b3b3;
 }
 
 .ServiceList.Summary:before {
@@ -418,4 +428,8 @@ button.btn.CancelSignature{
     .SignatureColumn {
         height: 200px;
     }
+}
+
+.requestImageContent {
+    cursor: pointer;
 }

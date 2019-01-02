@@ -10,6 +10,7 @@ import {
 } from '../../services/http';
 import { USERTYPES, Pagination } from '../../constants/constants';
 import { startLoading, endLoading } from '../loading/actions';
+import {updateChat} from '../../utils/signalrUtility';
 
 
 export const AsyncMessageActions = {
@@ -35,6 +36,11 @@ export const AsyncMessageActions = {
     pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
     setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
     clearConversation: 'clearConversation/asyncMessage',
+    setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
+    setActivePageNumber: 'setActivePageNumber/asyncMessage',
+    updateTitle: 'updateTitle/asyncMessage',
+    pushUnreadConversation: 'pushUnreadConversation/asyncMessage'
+    
 };
 
 export const setConversationSummary = (data) => {
@@ -51,6 +57,33 @@ export const pushConversation = (data) => {
     }
 };
 
+
+export const pushUnreadConversation = (data) => {
+    return {
+        type: AsyncMessageActions.pushUnreadConversation,
+        data
+    }
+};
+
+export const convLoadingStart = () => {
+    return {
+        type: AsyncMessageActions.loadingStart
+    }
+};
+
+export const convLoadingEnd = () => {
+    return {
+        type: AsyncMessageActions.loadingEnd
+    }
+};
+
+export function setActivePageNumber(data) {
+    return {
+        type: AsyncMessageActions.setActivePageNumber,
+        data
+    }
+};
+
 export const pushConversationMessage = (data) => {
     return {
         type: AsyncMessageActions.pushConversationMessage,
@@ -61,10 +94,10 @@ export const pushConversationMessage = (data) => {
 export function getConversationSummaryItemSignalR(conversationId){
     return (dispatch, getState) => {
         let state = getState();
+        dispatch(getDashboardMessageCount());
         if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
             let userId = getUserInfo().serviceProviderId;
             let userType = USERTYPES.SERVICE_PROVIDER;
-            dispatch(startLoading());
             AsyncGet(API.getConversationSummary 
                 + conversationId + '/'
                 + userId + '/' 
@@ -72,10 +105,8 @@ export function getConversationSummaryItemSignalR(conversationId){
             )
             .then(resp => {
                 dispatch(getConversationSummaryItemSignalRSuceess(resp.data));
-                dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
             })
         }
     };
@@ -105,7 +136,6 @@ export function getConversationItemSignalR(conversationId, messageId){
         && state.asyncMessageState.currentConversation.conversationId === conversationId){
             let userId = getUserInfo().serviceProviderId;
             let userType = USERTYPES.SERVICE_PROVIDER;
-            dispatch(startLoading());
             let data = {conversationId: conversationId};
             AsyncGet(API.getConversationMessage 
                 + messageId + '/'
@@ -116,13 +146,56 @@ export function getConversationItemSignalR(conversationId, messageId){
             .then(resp => {
                 dispatch(verifyIsConversationMessageExist(resp.data));
                 dispatch(updateReadStatus(data));
-                dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
             })
         };
     }
+};
+
+export function getUnreadConversationByUserId(conversationId){
+    return (dispatch, getState) => {
+        let state = getState();
+        if(state.asyncMessageState.openedAsyncPage === 'conversation' 
+        && state.asyncMessageState.currentConversation.conversationId === conversationId){
+            let userId = getUserInfo().serviceProviderId;
+            let userType = USERTYPES.SERVICE_PROVIDER;
+            let data = {conversationId: conversationId};
+            AsyncGet(API.getUnreadConversationsByUserId
+                + conversationId + '/'
+                + userId + '/' 
+                + userType
+            )
+            .then(resp => {
+                dispatch(verifyIsConversationMessagesExist(resp.data));
+                dispatch(updateReadStatus(data));
+            })
+            .catch(err => {
+            })
+        };
+    }
+};
+
+const verifyIsConversationMessagesExist = (data) => {
+    return(dispatch, getState) => {
+        let state = getState();
+        let conversationMessageData = [...state.asyncMessageState.conversation.messages];
+        let unreadMessages = [];
+        data.map((message) => {
+            let msgFound = false;
+            conversationMessageData.map((msg) => {
+                if (message.conversationMessageId === msg.conversationMessageId) {
+                    msgFound = true;
+                }
+            });
+            if (!msgFound) {
+                unreadMessages.push(message)
+            }
+        });
+        if(unreadMessages.length > 0){
+            dispatch(pushUnreadConversation(unreadMessages));
+        }
+    };
 };
 
 export const pushUnreadCount = (data) => {
@@ -141,7 +214,7 @@ export const openedAsyncPage = (data) =>{
 
 export function onFetchConversationSummary(pageNumber) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(convLoadingStart());
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversationSummary 
@@ -151,10 +224,10 @@ export function onFetchConversationSummary(pageNumber) {
             + Pagination.pageSize)
             .then(resp => {
                 dispatch(setConversationSummary(resp.data));
-                dispatch(endLoading());
+                dispatch(convLoadingEnd());
             })
             .catch(err => {
-                dispatch(endLoading())
+                dispatch(convLoadingEnd());
             })
     }
 };
@@ -162,26 +235,23 @@ export function onFetchConversationSummary(pageNumber) {
 
 export function onFetchConversation(id) {
     return (dispatch, getState) => {
-        dispatch(startLoading());
+        dispatch(convLoadingStart());
         let state = getState();
         let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
-        let pageNumber = 1;
-        let pageSize = 500;
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversation 
             + conversationId + '/' 
             + USER_ID + '/' 
-            + USER_TYPE + '/'
-            + pageNumber + '/'
-            + pageSize)
+            + USER_TYPE + '/all'
+            )
             .then(resp => {
                 dispatch(setConversationData(resp.data));
                 dispatch(setCurrentOpenConversation(resp.data));
-                dispatch(endLoading());
+                dispatch(convLoadingEnd());
             })
             .catch(err => {
-                dispatch(endLoading())
+                dispatch(convLoadingEnd())
             })
     }
 };
@@ -207,10 +277,20 @@ export function onSaveTitle(data) {
         AsyncPut(API.saveTitle, data)
             .then(resp => {
                 dispatch(endLoading());
+                dispatch(updateTitle(data.title));
+                dispatch(verifyIsConversationMessageExistSendMessage(resp.data));
             })
             .catch(err => {
                 dispatch(endLoading())
             })
+    }
+};
+
+
+export const updateTitle = (data) =>{
+    return  {
+        type: AsyncMessageActions.updateTitle,
+        data
     }
 };
 
@@ -252,14 +332,26 @@ export const setNewConversationId = id => {
 
 export function onSendNewMessage(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        //dispatch(startLoading());
         AsyncPost(API.sendMessage, data)
             .then(resp => {
+                let list = resp.data.result.participantList.map((participant) => {
+                    return {
+                        userId: participant.userId,
+                        participantType: participant.participantType
+                    }
+                });
+                const model = {
+                    participantList: list,
+                    conversationId: resp.data.result.conversationId,
+                    conversationMessageId: resp.data.result.conversationMessageId
+                }
+                updateChat(model)
                 dispatch(verifyIsConversationMessageExistSendMessage(resp.data.result));
-                dispatch(endLoading());
+                //dispatch(endLoading());
             })
             .catch(err => {
-                dispatch(endLoading())
+                //dispatch(endLoading())
             })
     }
 };
@@ -310,16 +402,13 @@ export function onRemoveParticipant(data) {
 
 export function getUnreadMessageCounts() {
     return (dispatch) => {
-        dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getUnreadCount + USER_ID + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(onUnreadCountSuccess(resp.data))
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
             })
     }
 };
@@ -327,16 +416,14 @@ export function getUnreadMessageCounts() {
 
 export function updateReadStatus(data) {
     return (dispatch) => {
-        dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncPutWithUrl(API.updateReadStatus + USER_ID + '/' + data.conversationId
             + '/' + USER_TYPE)
             .then(resp => {
-                dispatch(endLoading())
+                dispatch(getDashboardMessageCount());            
             })
             .catch(err => {
-                dispatch(endLoading())
             })
     }
 };
@@ -390,7 +477,7 @@ const getLinkedPatientsSuccess = data => {
 
 export function getLinkedParticipantsByPatients(data) {
     return (dispatch, getState) => {
-        dispatch(startLoading())
+        //dispatch(startLoading())
         let serchText = data.searchText === "" ? null : data.searchText;
         let patients = getState().asyncMessageState.linkedPatients;
         let patient = patients.find((e) => {
@@ -411,10 +498,10 @@ export function getLinkedParticipantsByPatients(data) {
             '/' + serchText)
             .then(resp => {
                 dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
-                dispatch(endLoading())
+                //dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
+               // dispatch(endLoading())
             })
     }
 };
@@ -449,16 +536,14 @@ const getLinkedParticipantsByPatientsSuccess = data => {
     }
 };
 
-export function getDashboardMessageCount(userData) {
+export function getDashboardMessageCount() {
     return (dispatch) => {
-        dispatch(startLoading())
-        AsyncGet(API.getDashboardMessageCount + userData.userId + '/' + userData.userType)
+        let USER_ID = getUserInfo().serviceProviderId;
+        AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USERTYPES.SERVICE_PROVIDER)
             .then(resp => {
                 dispatch(getDashboardCountSuccess(resp.data));
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
             })
     }
 };
@@ -523,12 +608,9 @@ const onClearConversationImageUrl = () => {
 export function CanServiceProviderCreateMessage() {
     return (dispatch, getState) => {
         let USER_ID = getUserInfo().serviceProviderId;
-        dispatch(startLoading());
         AsyncGet(API.canCreateMessage + USER_ID).then(resp => {
             dispatch(CanServiceProviderCreateMessageSuccess(resp.data))
-            dispatch(endLoading());
         }).catch(err => {
-            dispatch(endLoading());
         })
     }
 };
@@ -543,15 +625,12 @@ const CanServiceProviderCreateMessageSuccess = (data) =>{
 
 export function getLinkedPatients() {
         return (dispatch) => {
-        dispatch(startLoading())
         let USER_ID = getUserInfo().serviceProviderId;
         AsyncGet(API.getContext + USER_ID)
             .then(resp => {
                 dispatch(getLinkedPatientsSuccess(resp.data));
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
             })
     }
 };
@@ -571,7 +650,6 @@ const onClearCurrentOpenConversation = () => {
 
 export function getConversationCount() {
     return (dispatch) => {
-    dispatch(startLoading())
     let USER_ID = getUserInfo().serviceProviderId;
     let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
     AsyncGet(API.getConverstionCountByUserId 
@@ -579,10 +657,8 @@ export function getConversationCount() {
         + USER_TYPE)
         .then(resp => {
             dispatch(getConversationCountSuccess(resp.data));
-            dispatch(endLoading())
         })
         .catch(err => {
-            dispatch(endLoading())
         })
 }
 };

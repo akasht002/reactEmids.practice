@@ -10,12 +10,14 @@ const defaultState = {
     unreadCounts: [],
     linkedPatients: [],
     linkedParticipants: [],
-    dashboardMessageCount: null,
+    dashboardMessageCount: 0,
     conversationImageUrl: '',
     canCreateConversation: false,
     conversationCount: 20,
     openedAsyncPage : null,
     removeParticipantConcurrencyExist: false,
+    activePageNumber: 1,
+    isLoading:false,
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -74,6 +76,17 @@ const asyncMessageState = (state = defaultState, action) => {
                     title: action.data.title,
                     isActive: action.data.isActive,
                     canEdit: action.data.canEdit,
+                }
+            };
+        case AsyncMessageActions.pushUnreadConversation:
+            return {
+                ...state,
+                conversation: {
+                    ...state.conversation,
+                    messages: [
+                        ...state.conversation.messages,
+                        ...action.data
+                    ]
                 }
             };
         case AsyncMessageActions.setUnreadCountDetails:
@@ -145,11 +158,38 @@ const asyncMessageState = (state = defaultState, action) => {
             removeParticipantConcurrencyExist: action.data
         }
         case AsyncMessageActions.clearConversation:
-        return{
-        ...state,
-        conversation: {},
-        currentConversation: {}
-    }
+            return{
+            ...state,
+            conversation: {},
+            currentConversation: {}
+        }
+        case AsyncMessageActions.setActivePageNumber:
+            return{
+            ...state,
+            activePageNumber: action.data
+        }
+        case AsyncMessageActions.updateTitle:
+            return{
+            ...state,
+            conversation:{
+                ...state.conversation,
+                title: action.data
+            },
+            currentConversation:{
+                ...state.currentConversation,
+                title: action.data
+            }
+        }
+        case AsyncMessageActions.loadingStart:
+            return{
+            ...state,
+             isLoading: true
+        }
+        case AsyncMessageActions.loadingEnd:
+            return{
+            ...state,
+                isLoading: false
+            }
         default:
             return state;
     }

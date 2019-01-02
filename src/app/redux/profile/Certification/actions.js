@@ -32,8 +32,11 @@ export const getCertificationFieldDetails = (data) => {
 }
 
 export function getCertification() {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         let serviceProviderId =  getUserInfo().serviceProviderId;
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+          };
         dispatch(startLoading());
         Get(API.certification + serviceProviderId + '/Certification').then((resp) => {
             dispatch(getCertificationSuccess(resp.data))

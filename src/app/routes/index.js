@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import {SCREENS} from '../constants/constants';
+import {SCREENS,USER_LOCALSTORAGE} from '../constants/constants';
 import {
   VerifyContact,
   SetPassword,
@@ -30,7 +30,9 @@ import {
   ConversationSummary,
   Conversation,
   PatientProfile,
-  VisitNotification
+  VisitNotification,
+  VisitNotificationSettings,
+  ESPProfile
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -76,16 +78,26 @@ export const Path = {
   visitHistory: '/visitHistory',
   visitSummaryDetail: '/visitSummary',
   patientProfile: '/patientProfile',
-  visitNotification: '/visitNotification'
+  visitNotification: '/visitNotification',
+  visitNotificationSettings: '/visitNotificationSettings',
+  ESPProfile:'/espProfile'
 };
 
 class AppStackRoot extends Component {
+
+  startPage = (props, context) => {
+    let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
+    if (localStorageData && localStorageData.data && localStorageData.data.access_token) {     
+      return <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />      
+    } else{ return <Welcome/>}      
+   }
+
   render() {
     return (
       <ConnectedRouter history={this.props.history}>
         <HashRouter>
           <Switch>
-            <Route exact path={Path.root} component={Welcome} />
+            <Route exact path={Path.root} component={this.startPage} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyContactEntity} component={VerifyContact} />
@@ -96,6 +108,7 @@ class AppStackRoot extends Component {
             <Route path={Path.resetPassword} component={ResetPassword} />
             <Route path={Path.resetPasswordConfirmation} component={ResetPasswordConfirmation} />
             <Route path={Path.resetPasswordSuccess} component={ResetPasswordSuccess} />
+            <PrivateRoute path={Path.ESPProfile} component={ESPProfile} />
             <PrivateRoute path={Path.visitNotification} component={VisitNotification} />
             <PrivateRoute path={Path.visitServiceList} permission={SCREENS.VISIT_PROCESSING} component={VisitServiceList} />
             <PrivateRoute path={Path.visitServiceDetails} permission={SCREENS.VISIT_PROCESSING} component={VisitServiceDetails} />
@@ -113,6 +126,10 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.paymentsuccess} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentSuccess} />
             <PrivateRoute path={Path.paymentfailure} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentFailure} />
             <PrivateRoute path={Path.patientProfile} component={PatientProfile} />
+            <PrivateRoute
+              path={Path.visitNotificationSettings}
+              component={VisitNotificationSettings}
+            />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

@@ -10,9 +10,12 @@ import { Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
+import { push } from '../../../../redux/navigation/actions'
 import {
     getVisitFeedBack
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+
 import './style.css'
 
 class Feedback extends Component {
@@ -24,7 +27,8 @@ class Feedback extends Component {
             isModalOpen: false,
             answerList: '',
             textareaValue: '',
-            textareaData: ''
+            textareaData: '',
+            isDiscardModalOpen: false
         };
         this.selectedAnswers = [];
     };
@@ -66,11 +70,18 @@ class Feedback extends Component {
         if (this.state.textareaData) {
             this.selectedAnswers.push(this.state.textareaData);
         }
-        if (this.props.QuestionsList.length === this.selectedAnswers.length) {
+        if (this.props.QuestionsList.length === this.selectedAnswers.length || this.props.VisitFeedback.length > 0) {
             this.onSubmit();
         } else {
             this.setState({ isModalOpen: true })
         }
+    }
+
+    onClickConfirm = () => {
+        this.selectedAnswers = [];
+        // this.props.goToSummary();
+        this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
+        this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
     }
 
     onSubmit = () => {
@@ -82,6 +93,22 @@ class Feedback extends Component {
         }
         this.props.saveAnswers(data);
         this.setState({ isModalOpen: false })
+    }
+
+    onPreviousClick = () => {
+        if (this.selectedAnswers.length > 0) {
+            this.setState({ isDiscardModalOpen: true })
+        } else {
+            this.selectedAnswers = []
+            this.props.goBack();
+        }
+    }
+
+    goBack = () => {
+        this.selectedAnswers = []
+        this.props.goBack();
+        this.props.getQuestionsList();
+        this.props.getVisitFeedBack(this.props.ServiceRequestVisitId)
     }
 
     render() {
@@ -144,13 +171,14 @@ class Feedback extends Component {
                                                         <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
                                                             <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
                                                             <div className='FeedbackAnswerWidget'>
-                                                                {questionList.answers.map((answer, i) => {
+                                                                {questionList.answers.map((answer) => {
                                                                     this.props.VisitFeedback.map((feedback) => {
                                                                         if (feedback.feedbackQuestionnaireId === questionList.feedbackQuestionnaireId) {
                                                                             if (feedback.selectedAnswer === answer.answerName) {
                                                                                 answer.checked = true;
                                                                             }
                                                                         }
+                                                                        return '';
                                                                     });
                                                                     return (
                                                                         <div className="form-radio col-md-3" key={answer.id}>
@@ -164,6 +192,7 @@ class Feedback extends Component {
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
                                                                                 checked={answer.checked}
+                                                                                disabled={this.props.VisitFeedback.length > 0 ? true : false}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>
@@ -209,7 +238,8 @@ class Feedback extends Component {
                                 </div>
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
-                                        <Link className='btn btn-outline-primary mr-3' to='/performtasks'>Previous</Link>
+                                        {/* <Link className='btn btn-outline-primary mr-3' to='/performtasks'>Previous</Link> */}
+                                        <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         <a className='btn btn-primary' onClick={this.onClickNext}>Next</a>
                                     </div>
                                 </div>
@@ -225,10 +255,25 @@ class Feedback extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onConfirm={() => this.onSubmit()}
+                        onConfirm={() => this.onClickConfirm()}
                         onCancel={() => this.setState({
                             isModalOpen: !this.state.isModalOpen,
                         })}
+                    />
+                    <ModalPopup
+                        isOpen={this.state.isDiscardModalOpen}
+                        toggle={this.toggleCheck}
+                        ModalBody={<span>Do you want to discard the changes?</span>}
+                        btn1='YES'
+                        btn2='NO'
+                        className='modal-sm'
+                        headerFooter='d-none'
+                        centered='centered'
+                        onConfirm={() => this.goBack()}
+                        onCancel={() =>
+                            this.setState({
+                                isDiscardModalOpen: false
+                            })}
                     />
                 </Scrollbars>
             </AsideScreenCover>
@@ -241,7 +286,11 @@ function mapDispatchToProps(dispatch) {
     return {
         getQuestionsList: () => dispatch(getQuestionsList()),
         saveAnswers: (data) => dispatch(saveAnswers(data)),
-        getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data))
+        getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data)),
+        goToSummary: () => dispatch(push(Path.summary)),
+        goBack: () => dispatch(push(Path.performTasks)),
+        getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
+        getSavedSignature: (data) => dispatch(getSavedSignature(data))
     }
 };
 

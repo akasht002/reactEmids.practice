@@ -21,7 +21,7 @@ class MessageList extends Component {
     };
 
     participantsContent = (participants) => {
-        let extraParticipants = (participants.length - 3);
+        let extraParticipants = (participants.length - 2);
         return (
             participants.map((participant, index) => {
                 let zIndex = (participants.length - index);
@@ -30,14 +30,13 @@ class MessageList extends Component {
                 switch (index) {
                     case 0:
                     case 1:
-                    case 2:
                         return (
                             <div key={index} className="avatarContainer" style={zIndexStyle}>
                                 <img  alt="i" src={participant.thumbNail ? participant.thumbNail : require("../../../assets/images/Blank_Profile_icon.png")}
                                     className="avatarImage" />
                             </div>
                         )
-                    case 3:
+                    case 2:
                         return (
                             <div key={index} className="avatarContainer">
                                 <div
@@ -49,6 +48,7 @@ class MessageList extends Component {
                     default:
                         break;
                 }
+                return '';
             }));
     };
 
@@ -57,6 +57,7 @@ class MessageList extends Component {
         if (participants && participants.length > 0) {
             participants.map(participant => {
                 header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
+                return '';
             });
             header = header.slice(0, -2);
         }
@@ -80,6 +81,7 @@ class MessageList extends Component {
                             msgClass = "";
                             return unreadMessages = <span className={"float-right count" + msgClass}>{unreadMsgCount.unreadMessageCount}</span>
                         }
+                        return '';
                     });
                 };
                 !msgThread.title ? msgHeader = this.getPartcipitantHeader(msgThread.participantList) : msgHeader = msgThread.title;

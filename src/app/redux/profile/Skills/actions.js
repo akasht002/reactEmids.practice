@@ -61,8 +61,11 @@ export function addSkills(data) {
 };
 
 export function getSelectedSkills() {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         let serviceProviderId = getUserInfo().serviceProviderId;
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+        };
         dispatch(startLoading());
         Get(API.addSkills + serviceProviderId + '/Skills').then((resp) => {
             dispatch(getSelectedSkillsDetails(resp.data))

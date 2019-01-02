@@ -8,6 +8,9 @@ import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import {getPersonalDetail, getSpBusyInVisit, clearSbMode, updateStandByMode} from '../../redux/profile/PersonalDetail/actions'
 import { getUserInfo } from '../../services/http'
+import {
+  PROFILE_SERVICE_PROVIDER_TYPE_ID
+} from '../../constants/constants';
 import './dashboard.css'
 import './ctdashboard.css'
 import './styles/toggleSwitch.css'
@@ -154,7 +157,9 @@ standByTimer(visitProcess) {
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>Dashboard</h5>
           </div>
-          <div className='ProfileHeaderButton'>
+          {
+            (!entityUser && getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) ?  
+            <div className='ProfileHeaderButton'>
             <span className='standBy'>Stand by</span>
             <label className='switch'>
               <input type='checkbox' checked={this.state.isChecked}
@@ -163,8 +168,11 @@ standByTimer(visitProcess) {
               <span className='sliderSwitch round' />
             </label>
           </div>
+          :
+          "" 
+          }
         </div>
-        <div className="scrollarea SPContentWidget ScrollBar">
+        <div className="scrollarea SPContentWidget ScrollBar updated-scrll">
           <div className="scrollarea-content">
             <div className='ProfileContainer topProfile'>
               <ServiceCalendar />
@@ -179,7 +187,7 @@ standByTimer(visitProcess) {
         </div>
         <ModalPopup
           isOpen={this.state.showVisitModal}
-          ModalBody={<span>Standby Mode cannot be switched on during a Visit processing.</span>}
+          ModalBody={<span className="default-444">Standby Mode cannot be switched on during a Visit processing.</span>}
           btn1='OK'
           className='modal-sm'
           headerFooter='d-none'
@@ -191,7 +199,7 @@ standByTimer(visitProcess) {
         />
         <ModalPopup
           isOpen={this.state.showModalOnTurnOff}
-          ModalBody={<span>Are you sure, you want to turn off the Standby mode and start the Visit Processing?</span>}
+          ModalBody={<span>Are you sure you want to turn off the standby mode?</span>}
           btn1='YES'
           btn2='NO'
           className='modal-sm'

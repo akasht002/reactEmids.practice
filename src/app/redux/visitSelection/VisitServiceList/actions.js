@@ -1,11 +1,26 @@
 import { API } from '../../../services/api';
 import { elasticSearchGet, ServiceRequestGet } from '../../../services/http';
-import { startLoading, endLoading } from '../../loading/actions';
+// import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 
 export const VisitServiceList = {
     getVisitServiceListSuccess: 'get_visit_service_list_success/visitservice',
     serviceRequestCount: 'serviceRequestCount/visitservice',
+    formDirtyVisitList: 'formDirtyVisitList/visitservice',
+    startLoading: 'startLoading/visitservice',
+    endLoading: 'endLoading/visitservice'
+};
+
+export const startLoading = () => {
+    return {
+      type: VisitServiceList.startLoading,
+    }
+  };
+  
+  export const endLoading = () => {
+    return {
+      type: VisitServiceList.endLoading,
+    }
 };
 
 export const getVisitServiceListSuccess = (data) => {
@@ -14,6 +29,18 @@ export const getVisitServiceListSuccess = (data) => {
         data
     }
 };
+
+export const formDirtyVisitList = () => {
+    return {
+        type: VisitServiceList.formDirtyVisitList,
+    }
+};
+
+export const clearVisitServiceList = () =>{
+    return (dispatch) => {
+        dispatch(getVisitServiceListSuccess([]))
+    }
+}
 
 export function getVisitServiceList(data) {
     return (dispatch) => {
@@ -32,7 +59,7 @@ export function getVisitServiceList(data) {
 export function getServiceRequestCount () {
     return (dispatch, getState) => {
       let data = getState().visitSelectionState.VisitServiceListState.status
-      dispatch(startLoading())
+    //   dispatch(startLoading())
       let serviceProviderId = getUserInfo().serviceProviderId
       ServiceRequestGet(
         API.getServiceRequestCount + serviceProviderId + '/' + data 
@@ -40,11 +67,11 @@ export function getServiceRequestCount () {
         .then(resp => {
           if (resp && resp.data) {
             dispatch(serviceRequestCountSuccess(resp.data))
+            // dispatch(endLoading())
           }
-          dispatch(endLoading())
         })
         .catch(() => {
-          dispatch(endLoading())
+        //   dispatch(endLoading())
         })
     }
   };

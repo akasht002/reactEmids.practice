@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom"
 import {PERMISSIONS} from '../../../constants/constants';
 import './style.css'
 
@@ -8,9 +7,13 @@ function AsideMenu(props) {
     const menuList = props.menuData.map(
         (menu) => {
             return (
-                <li className={'profileSideNavigationList'}>
-                    <Link name={menu.name + '_' + PERMISSIONS.READ} className={'profileSideNavigationLink ' + (path === menu.link ? 'active' : '')} to={menu.link}><i className={menu.iconName} />
-                        <span>{menu.title}</span></Link>
+                <li className={'profileSideNavigationList CursorPointer'}>
+                    <div name={menu.name + '_' + PERMISSIONS.READ} 
+                        className={'profileSideNavigationLink ' + (path === menu.link ? 'active' : '')} 
+                        onClick={() => {props.onClick(menu.link)}} >
+                        <i className={menu.iconName} />
+                        <span>{menu.title}</span>
+                    </div>
                 </li>
             )
         }

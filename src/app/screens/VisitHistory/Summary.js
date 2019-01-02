@@ -7,12 +7,9 @@ import {
 } from "react-accessible-accordion";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Progressbar } from "../../components";
-import moment from "moment";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { getFields, getLength, getStatus } from "../../utils/validations";
-import { ProfileModalPopup, ModalPopup, StarRating } from "../../components";
-import { getFirstCharOfString } from "../../utils/stringHelper";
+import { getFields, getLength, getStatus, getServiceTypeImage } from "../../utils/validations";
+import { ProfileModalPopup } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
@@ -22,7 +19,7 @@ import {
   getServiceProviderRating, getVisitFeedBack
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
-
+import { push } from '../../redux/navigation/actions'
 class VistSummary extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +31,8 @@ class VistSummary extends React.Component {
       textareaValue: "",
       textareaData: "",
       EditFeedbackDetailModal: false,
-      ViewFeedbackDetailModal: false
+      ViewFeedbackDetailModal: false,
+      disabled: true
     };
     this.selectedAnswers = [];
   }
@@ -78,7 +76,7 @@ class VistSummary extends React.Component {
           <div key={index} className="ServiceList Individual Summary">
             <label className="ServicesLink active" htmlFor="Services1">
               <div className="servicesDesc">
-                <span className="serviceName">
+                <span className={"serviceName " + (list.statusId === 45 ? 'completedtask' : 'non_completedtask')} >
                   {list.serviceTaskDescription}
                 </span>
               </div>
@@ -95,13 +93,14 @@ class VistSummary extends React.Component {
   getServiceDetails = lists => {
     if (lists) {
       return lists.map((list, index) => {
+        let image_url = getServiceTypeImage(list.serviceRequestTypeTaskVisits && list.serviceRequestTypeTaskVisits.length > 0 && list.serviceRequestTypeTaskVisits[0].serviceTypeId );
         return (
           <AccordionItem>
             <AccordionItemTitle className="TabContainer">
               <img
                 alt={"NO_IMAGE"}
                 className="ServiceTasksImg"
-                src={require("../../assets/images/Bathing_Purple.svg")}
+                src={require(`../../assets/ServiceTypes/${image_url}`)}
               />{" "}
               <div className="TabHeaderContent">
                 <span className="TabHeaderText">
@@ -135,8 +134,10 @@ class VistSummary extends React.Component {
 
   togglePersonalDetails(action, e) {
     this.setState({
-      EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal
+      EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
+      disabled: true
     });
+    this.selectedAnswers = []
   }
 
   toggleShowFeedbackDetails(action, e) {
@@ -153,6 +154,9 @@ class VistSummary extends React.Component {
     filteredData.push(answers);
     this.selectedAnswers = filteredData;
     this.setState({ answerList: filteredData });
+    if (this.props.QuestionsList.length === this.selectedAnswers.length) {
+      this.setState({ disabled: false });
+    }
   };
 
   handleTextarea = (e, id) => {
@@ -170,17 +174,20 @@ class VistSummary extends React.Component {
   };
 
   onClickNext = () => {
-    if (this.state.textareaData) {
-      this.selectedAnswers.push(this.state.textareaData);
-    }
     if (this.props.QuestionsList.length === this.selectedAnswers.length) {
       this.onSubmit();
     } else {
-      this.setState({ isModalOpen: true });
+      this.onClickConfirm();
     }
   };
 
+  onClickConfirm = () => {
+    this.selectedAnswers = [];
+    this.togglePersonalDetails();
+  }
+
   onSubmit = () => {
+    this.props.getVisitFeedBack(this.props.SummaryDetails.serviceRequestVisitId)
     const data = {
       serviceRequestVisitId: this.props.SummaryDetails.serviceRequestVisitId,
       serviceRequestId: this.props.SummaryDetails.serviceRequestId,
@@ -193,6 +200,7 @@ class VistSummary extends React.Component {
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
       isModalOpen: false
     });
+    this.props.onSubmitFeedback();
   };
 
   getFeedback = () => {
@@ -320,7 +328,7 @@ class VistSummary extends React.Component {
                                   answer.answerName,
                                   questionList.feedbackQuestionnaireId
                                 )}
-                              checked={questionList.selectedAnswer}
+                              checked={questionList.selectedAnswer === answer.answerName ? true : false}
                               disabled={true}
                             />
                             <label
@@ -395,7 +403,7 @@ class VistSummary extends React.Component {
                       <span className="SummaryContentTableTitle">
                         Visit Length
                       </span>
-                      <span>{summaryDetail.originalTotalDuration} hrs</span>
+                      <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0,5)} hrs</span>
                     </p>
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">Tasks</span>
@@ -440,7 +448,7 @@ class VistSummary extends React.Component {
                 <div className="row CostTableWidget">
                   <div className="col-md-8 CostTableContainer Label">
                     <p>
-                      <span>Total Chargeable Time</span>
+                      <span>Billable Time (Hrs : Mins)</span>
                       <span>Hourly Rate</span>
                     </p>
                     <p className="TaxLabel">
@@ -450,14 +458,14 @@ class VistSummary extends React.Component {
                   </div>
                   <div className="col-md-4 CostTableContainer Cost">
                     <p>
-                      <span>{summaryDetail.originalTotalDuration} hrs</span>
+                      <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0,5)} hrs</span>
                       <span>
                         ${" "}{summaryDetail.hourlyRate}
                         /hr
                       </span>
                     </p>
                     <p className="TaxCost">
-                      {summaryDetail.totalCost ?
+                      {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
                         <span>
                           ${" "}
                           {(
@@ -467,7 +475,7 @@ class VistSummary extends React.Component {
                         :
                         ''
                       }
-                      {summaryDetail.taxPaid ?
+                      {summaryDetail.taxPaid || summaryDetail.taxPaid === 0 ?
                         <span>${" "}{(summaryDetail.taxPaid).toFixed(2)}</span>
                         :
                         ''
@@ -479,7 +487,7 @@ class VistSummary extends React.Component {
                       <span>Total Cost </span>
                     </p>
                     <p className="TotalCost">
-                      {summaryDetail.totalCost ?
+                      {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
                         <span>
                           ${" "}{(summaryDetail.totalCost + summaryDetail.taxPaid).toFixed(2)}
                         </span>
@@ -494,7 +502,7 @@ class VistSummary extends React.Component {
                   <div className="col-md-8 EstimatedCostContainer Label">
                     <p>
                       <span>Estimated Claim</span>
-                      <span>Copay On Credit Card</span>
+                      <span>Credit Card Payment</span>
                     </p>
                   </div>
                   <div className="col-md-4 EstimatedCostContainer Cost">
@@ -545,13 +553,14 @@ class VistSummary extends React.Component {
           className="modal-lg FeedbackModal"
           modalTitle={modalTitle}
           centered="centered"
-          onClick={this.onSubmit}
+          onClick={this.onClickNext}
+          disabled={this.state.disabled}
         />
         <ProfileModalPopup
           isOpen={this.state.ViewFeedbackDetailModal}
           toggle={this.toggleShowFeedbackDetails.bind(this, modalType)}
           ModalBody={feedbackContent}
-          className='modal-lg asyncModal CertificationModal'
+          className='modal-lg FeedbackModal'
           modalTitle={modalTitle}
           centered='centered'
           onClick={this.onConfirm}
@@ -567,7 +576,8 @@ function mapDispatchToProps(dispatch) {
     getQuestionsList: () => dispatch(getQuestionsList()),
     saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data)),
     getServiceProviderRating: data => dispatch(getServiceProviderRating(data)),
-    getVisitFeedBack: data => dispatch(getVisitFeedBack(data))
+    getVisitFeedBack: data => dispatch(getVisitFeedBack(data)),
+    goToSummary: () => dispatch(push(Path.summary))
   };
 }
 

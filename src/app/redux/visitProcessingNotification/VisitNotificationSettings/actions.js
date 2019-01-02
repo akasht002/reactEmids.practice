@@ -1,7 +1,7 @@
 import { API } from '../../../services/api';
 import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
-import {getPatientData} from '../../../utils/userUtility';
+import {getUserInfo} from '../../../utils/userUtility';
 
 export const VisitNotificationSettings = {
     getVisitNotificationSettingsSuccess: 'get_visit_notification_list_success/VisitNotificationSettings',
@@ -27,7 +27,7 @@ export const updateVisitNotificationSettingsSuccess = (data) => {
 
 export function getVisitNotificationSettings() {
     return (dispatch) => {
-        let userId = getPatientData().userId;
+        let userId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Get(API.getNotificationSettings + userId).then((resp) => {
             dispatch(getVisitNotificationSettingsSuccess(resp.data))
@@ -41,7 +41,7 @@ export function getVisitNotificationSettings() {
 export function updateVisitNotificationSettings(data) {
     console.log('data: '+JSON.stringify(data))
     return (dispatch) => {
-        let userId = getPatientData().userId;
+        let userId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
         Post(API.updateNotificationSettings + userId, data).then((resp) => {
             dispatch(updateVisitNotificationSettingsSuccess(resp.data))

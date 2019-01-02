@@ -6,6 +6,7 @@ import {
 import { startLoading, endLoading } from '../../../loading/actions'
 import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
+import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 
 export const QuestionsList = {
   getQuestionsListSuccess: 'get_questions_list_success/performtasks',
@@ -43,10 +44,12 @@ export function getQuestionsList () {
 export function saveAnswers (data) {
   return dispatch => {
     dispatch(startLoading())
-    let path = data.path ? data.path : Path.summary
+    // let path = data.path ? data.path : Path.summary
     ServiceRequestPost(API.saveAnswers, data)
       .then(resp => {
-        dispatch(push(path))
+        //dispatch(push(path))
+        dispatch(getSummaryDetails(data.serviceRequestVisitId));
+        dispatch(getSavedSignature(data.serviceRequestVisitId))
         dispatch(endLoading())
       })
       .catch(err => {

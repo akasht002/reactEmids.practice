@@ -12,13 +12,16 @@ import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
 import { HIRED_STATUS_ID } from '../../constants/constants';
 import { ENTITY_USER } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
+import { isEntityServiceProvider } from '../../utils/userUtility';
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
-    return <i className='indicator' />
+    return <React.Fragment>
+      <i className='indicator'/> 
+      </React.Fragment>
   } else if (props.count === 2) {
     return (
-      <React.Fragment>
+      <React.Fragment> 
         <i className='indicator' /><i className='indicator' />
       </React.Fragment>
     )
@@ -50,6 +53,8 @@ export const splitSlots = (togglePersonalDetails, data, type, handleClick, props
   return serviceCalendar(togglePersonalDetails, newData, handleClick, props)
 }
 
+
+
 export const serviceCalendar = (
   togglePersonalDetails,
   newData,
@@ -57,7 +62,30 @@ export const serviceCalendar = (
   props
 ) => {
   if (newData.length > 0) {
-    return newData.slice(0, 3).map((conversations, index) => {
+    // return newData.slice(0, 3).map((conversations, index) => {
+    return newData.map((conversations, index) => {  
+      let options = [
+        <Item className='ListItem CTDashboard' key='item-1'
+        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+          <i className='iconPhone' /> Phone Call
+        </Item>,
+        <Item className='ListItem CTDashboard' key='item-2'
+          onClick={(e) => { props.onClickConversation(conversations) }}>
+          <i className='iconConversation' /> Conversation
+      </Item>,
+        <Item className='ListItem CTDashboard' key='item-3'
+          onClick={(e) => { props.onClickVideoConference(conversations) }}>
+          <i className='iconVideoCon' /> Video Conference
+      </Item>
+      ];
+      if(isEntityServiceProvider()){
+        options = [
+          <Item className='ListItem CTDashboard' key='item-1'
+          onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+            <i className='iconPhone' /> Phone Call
+          </Item>
+        ];
+      };
       return (
         <Fragment>
           <li
@@ -71,7 +99,7 @@ export const serviceCalendar = (
               className='ProfileServices'              
             >
             <span className="ServicesCalendarWidget" onClick={() => {
-                handleClick(conversations.serviceRequestId)
+                handleClick(conversations)
               }}>
               <span className='ServicesTitle'>
                 {conversations.serviceTypes &&
@@ -83,21 +111,54 @@ export const serviceCalendar = (
               </span>
               {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
               <div className="EntityUServiceProf">
-                <span><i className="assignSPLink"
-                  onClick={e =>
+               {conversations.providerId === getUserInfo().serviceProviderId ? 
+               <span><i className="assignSPLink"
+                  onClick={e =>{
                     togglePersonalDetails({
                       serviceRequestId: conversations.serviceRequestId,
                       serviceRequestVisitid: conversations.serviceRequestVisitId,
-                      patientId: conversations.patientId
+                      patientId: conversations.patientId,
+                      visitDate:conversations.visitDate
                     })}
+                  }
                 >
                   Assign Service Provider
                   </i>
-                </span>
+                </span> :
+              <React.Fragment>
+                <div className='ProfileCardImageContainer' 
+                onClick={() => {
+                props.goToESPProfile(conversations.providerId);
+            }}>
+              <img
+                alt={'NO_IMAGE'}
+                key={index}
+                className='avatarImage avatarImageBorder'
+                src={
+                  conversations.providerImage
+                    ? conversations.providerImage
+                    : require('../../assets/images/Blank_Profile_icon.png')
+                }
+              />
+            </div>
+            <div className='ProfileCardNameContainer' onClick={() => {
+              props.goToESPProfile(conversations.providerId);
+            }}>
+              <span>
+                {conversations.providerFirstName &&
+                  conversations.providerFirstName +
+                  ' '}
+                {' '}
+                {conversations.providerLastName && conversations.providerLastName}
+              </span>
+            </div>
+            </React.Fragment>}
               </div>
                 }
             </div>
-            <div className='ProfileCardImageContainer' onClick={() => {
+      {/*Patient Profile*/}
+            <div className='ProfileCardImageContainer' 
+            onClick={() => {
               props.goToPatientProfile(conversations.patientId);
             }}>
               <img
@@ -127,19 +188,7 @@ export const serviceCalendar = (
                 <SelectField>
                   <Select
                     placement='auto'
-                    options={[
-                      // <Item className='ListItem CTDashboard' key='item-1'>
-                      //   <i className='iconPhone' /> Phone Call
-                      // </Item>,
-                      <Item className='ListItem CTDashboard' key='item-2'
-                        onClick={(e) => { props.onClickConversation(conversations) }}>
-                        <i className='iconConversation' /> Conversation
-                    </Item>,
-                      <Item className='ListItem CTDashboard' key='item-3'
-                        onClick={(e) => { props.onClickVideoConference(conversations) }}>
-                        <i className='iconVideoCon' /> Video Conference
-                    </Item>
-                    ]}
+                    options={options}
                     className='SelectDropDown CTDashboard'
                   />
                 </SelectField>
@@ -311,17 +360,27 @@ export const ServiceProviderRequestDetails = props => {
                 {sp.serviceCategoryDescription}
               </span>
               <span>
-                {sp.recurringPattern === 0 ? 'One Time' : 'Recurring'}
+                {sp.recurringPattern === 0 ? 'One Time' : sp.recurringPatternDescription}
                 {' '}
                 |
                 {' '}
                 <Moment format='DD MMM'>
                   {sp.startDate}
                 </Moment>
+                {sp.recurringPattern !== 0 && <React.Fragment>
+                  { ' - '}
+                  <Moment format='DD MMM'>
+                  {sp.endDate}
+                </Moment>
+                </React.Fragment>}
               </span>
             </div>
 
-            <div className='ProfileApplicationNumbers Avatar'>
+            <div className='ProfileApplicationNumbers Avatar'  onClick={() => {
+              if (sp.statusId === HIRED_STATUS_ID) {
+                props.goToPatientProfile(sp.patientId);
+              }
+            }}>
               <div className='ProfileApplicationWidget'>
                 <div className='avatarContainer'>
                   <img
@@ -350,6 +409,7 @@ function getPartcipitantHeader(participants) {
   if (participants && participants.length > 0) {
     participants.map(participant => {
       header += (participant.firstName && participant.firstName.length > 0) ? formatName(participant.firstName) : '';
+      return '';
     });
     header = header.slice(0, -2);
   }
@@ -363,7 +423,7 @@ export const MyConversionDetail = props => {
   let unreadMessages = ''
   let msgClass = ''
   let msgHeader = '';
-  return conversation.slice(0, 3).map((conversations, index) => {
+  return conversation.slice(0, 4).map((conversations, index) => {
     !conversations.title ? msgHeader = getPartcipitantHeader(conversations.participantList) : msgHeader = conversations.title;
     if (props.getUnreadMsgCounts.length > 0) {
       unreadMessages = ''
@@ -377,6 +437,7 @@ export const MyConversionDetail = props => {
             </span>
           ))
         }
+        return '';
       })
     }
     return (
@@ -414,8 +475,8 @@ export const MyConversionDetail = props => {
                       </div>
                     </div>
                   )
-                } else {
                 }
+                return '';
               })}
             </div>
             <div className='MsgThreadContent mr-auto'>
@@ -447,30 +508,6 @@ export const MyConversionDetail = props => {
 export const MyConversionDefault = () => {
   return (
     <Fragment>
-      <li className='list-group-item NoInformation myConversationContainer'>
-        <div className='myConversationContent'>
-          <div className='avatarWidget'>
-            <div className='avatarContainer' />
-          </div>
-          <div className='MsgThreadContent m-auto'>
-            <div className='NoProfileServices'>
-              <i className='NoInformationIcon' /><span>No Conversations</span>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li className='list-group-item NoInformation myConversationContainer'>
-        <div className='myConversationContent'>
-          <div className='avatarWidget'>
-            <div className='avatarContainer' />
-          </div>
-          <div className='MsgThreadContent m-auto'>
-            <div className='NoProfileServices'>
-              <i className='NoInformationIcon' /><span>No Conversations</span>
-            </div>
-          </div>
-        </div>
-      </li>
       <li className='list-group-item NoInformation myConversationContainer'>
         <div className='myConversationContent'>
           <div className='avatarWidget'>

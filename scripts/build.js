@@ -79,6 +79,28 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_SIGNALR_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://PFTest-ct-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://PFTest-gen-api.coreoflowsandbox.com/api/';
+} else if (argv.includes('--uat')) {
+  process.env.REACT_APP_API_URL = 'https://uat-sp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'https://uat-oauth-api.coreodevserver.com/';
+  process.env.REACT_APP_SR_URL = 'https://uat-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_UI_URL = 'https://uat-sp.coreodevserver.com/#/';
+  process.env.REACT_APP_MSG_URL = "https://uat-tp-api.coreodevserver.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://uat-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://uat-tp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://uat-tp-api.coreodevserver.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://uat-ct-api.coreodevserver.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://uat-gen-api.coreodevserver.com/api/';
+} else if (argv.includes('--hmsauat')) {
+  process.env.REACT_APP_API_URL = 'https://HMSA-UAT-sp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'https://HMSA-UAT-oauth-api.coreodevserver.com/';
+  process.env.REACT_APP_SR_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_UI_URL = 'https://HMSA-UAT-sp.coreodevserver.com/#/';
+  process.env.REACT_APP_MSG_URL = "https://HMSA-UAT-tp-api.coreodevserver.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://HMSA-UAT-ct-api.coreodevserver.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://HMSA-UAT-gen-api.coreodevserver.com/api/';
 }
 
 // Ensure environment variables are read.
@@ -129,13 +151,13 @@ measureFileSizesBeforeBuild(paths.appBuild)
         console.log(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
-            chalk.underline(chalk.yellow('keywords')) +
-            ' to learn more about each warning.'
+          chalk.underline(chalk.yellow('keywords')) +
+          ' to learn more about each warning.'
         );
         console.log(
           'To ignore, add ' +
-            chalk.cyan('// eslint-disable-next-line') +
-            ' to the line before.\n'
+          chalk.cyan('// eslint-disable-next-line') +
+          ' to the line before.\n'
         );
       } else {
         console.log(chalk.green('Compiled successfully.\n'));
@@ -198,7 +220,7 @@ function build(previousFileSizes) {
         console.log(
           chalk.yellow(
             '\nTreating warnings as errors because process.env.CI = true.\n' +
-              'Most CI servers set it automatically.\n'
+            'Most CI servers set it automatically.\n'
           )
         );
         return reject(new Error(messages.warnings.join('\n\n')));

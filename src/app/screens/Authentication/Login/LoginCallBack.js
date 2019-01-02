@@ -4,20 +4,33 @@ import { CallbackComponent } from "redux-oidc";
 import userManager from "../../../utils/userManager";
 import { ScreenCover } from '../../../components';
 import { onLoginSuccess, onLoginFail } from '../../../redux/auth/login/actions';
+import {
+  Navbar,
+  NavbarBrand } from 'reactstrap';
+  import './styles.css';
 
 class LoginCallBack extends Component {
   render() {
     return (
-      <ScreenCover onPress={this.onBtnPress}>
+      <ScreenCover onPress={this.onBtnPress} isLoading={true}>
         <CallbackComponent
           userManager={ userManager }
           successCallback={(data) => {
-            this.props.onLoginSuccess(data);
+            if (data.access_token) {
+              this.props.onLoginSuccess(data);
+            } else {
+              this.props.onLoginFail();
+            }
           }}
           errorCallback={error => {
-            this.props.onLoginFail();
+            console.log(error)
           }}>
-          <div>Redirecting...</div>
+          <div className="redirect-screen"><Navbar className="navbar-light boxShadowBottom white-backgnd" expand="md">
+                    <NavbarBrand className="text-uppercase px-3 onboardingLogo">
+                    <img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" />
+                    </NavbarBrand>
+                </Navbar>
+                </div>
         </CallbackComponent>
       </ScreenCover>
     );

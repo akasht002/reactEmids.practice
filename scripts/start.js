@@ -4,16 +4,16 @@
 process.env.BABEL_ENV = 'development'
 process.env.NODE_ENV = 'development'
 
-process.env.REACT_APP_API_URL = 'https://chdevdemo-sp-api.coreoflowsandbox.com/api/';
+process.env.REACT_APP_API_URL = 'https://PFTest-sp-api.coreoflowsandbox.com/api/';
 process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
-process.env.REACT_APP_SR_URL = 'https://chdevdemo-sr-api.coreoflowsandbox.com/api/';
+process.env.REACT_APP_SR_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
 process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
-process.env.REACT_APP_MSG_URL = "https://chdevdemo-tp-api.coreoflowsandbox.com/api/";
-process.env.REACT_APP_ES_URL = 'https://chdevdemo-sr-api.coreoflowsandbox.com/api/';
-process.env.REACT_APP_TP_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/api/';
-process.env.REACT_APP_SIGNALR_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/signalr';
-process.env.REACT_APP_CARETEAM_URL = 'https://chdevdemo-ct-api.coreoflowsandbox.com/api/';
-process.env.REACT_APP_PATIENT_URL = 'https://chdevdemo-gen-api.coreoflowsandbox.com/api/';
+process.env.REACT_APP_MSG_URL = "https://PFTest-tp-api.coreoflowsandbox.com/api/";
+process.env.REACT_APP_ES_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
+process.env.REACT_APP_TP_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/api/';
+process.env.REACT_APP_SIGNALR_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/signalr';
+process.env.REACT_APP_CARETEAM_URL = 'https://PFTest-ct-api.coreoflowsandbox.com/api/';
+process.env.REACT_APP_PATIENT_URL = 'https://PFTest-gen-api.coreoflowsandbox.com/api/';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -79,6 +79,28 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_SIGNALR_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://PFTest-ct-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://PFTest-gen-api.coreoflowsandbox.com/api/';
+} else if (argv.includes('--uat')) {
+  process.env.REACT_APP_API_URL = 'https://uat-sp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
+  process.env.REACT_APP_SR_URL = 'https://uat-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
+  process.env.REACT_APP_MSG_URL = "https://uat-tp-api.coreodevserver.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://uat-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://uat-tp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://uat-tp-api.coreodevserver.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://uat-ct-api.coreodevserver.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://uat-gen-api.coreodevserver.com/api/';
+} else if (argv.includes('--hmsauat')) {
+  process.env.REACT_APP_API_URL = 'https://HMSA-UAT-sp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
+  process.env.REACT_APP_SR_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
+  process.env.REACT_APP_MSG_URL = "https://HMSA-UAT-tp-api.coreodevserver.com/api/";
+  process.env.REACT_APP_ES_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
+  process.env.REACT_APP_TP_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/api/';
+  process.env.REACT_APP_SIGNALR_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/signalr';
+  process.env.REACT_APP_CARETEAM_URL = 'https://HMSA-UAT-ct-api.coreodevserver.com/api/';
+  process.env.REACT_APP_PATIENT_URL = 'https://HMSA-UAT-gen-api.coreodevserver.com/api/';
 }
 
 // Ensure environment variables are read.
@@ -160,12 +182,12 @@ choosePort(HOST, DEFAULT_PORT)
       openBrowser(urls.localUrlForBrowser)
     })
 
-    ;['SIGINT', 'SIGTERM'].forEach(function (sig) {
-      process.on(sig, function () {
-        devServer.close()
-        process.exit()
+      ;['SIGINT', 'SIGTERM'].forEach(function (sig) {
+        process.on(sig, function () {
+          devServer.close()
+          process.exit()
+        })
       })
-    })
   })
   .catch(err => {
     if (err && err.message) {

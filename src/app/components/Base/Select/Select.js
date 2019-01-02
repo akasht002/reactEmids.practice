@@ -13,6 +13,7 @@ class SelectBox extends React.Component {
                 placeholder={this.props.placeholder}
                 onChange={this.props.onChange}
                 value={this.props.selectedValue}
+                onBlur={this.props.onBlur}
             />
         )
     }

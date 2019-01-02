@@ -6,13 +6,14 @@ import PointService from '../PointService'
 import Languages from '../Languages'
 import ClinicalCondition from '../ClinicalCondition'
 import { ScreenCover, Header, ModalPopup } from '../../../components';
-import MyConnections from '../MyConnections';
 import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
 import {goBack, push} from '../../../redux/navigation/actions';
 import Help from '../../../assets/HelpDoc/Help.pdf';
 import './styles.css'
 import { Path } from '../../../routes';
-import {clearState} from '../../../redux/patientProfile/actions'
+import {clearState} from '../../../redux/patientProfile/actions';
+import { USERTYPES} from '../../../constants/constants';
+import { USER } from '../../../redux/auth/user/actions';
 
 class Profile extends Component {
 
@@ -55,10 +56,13 @@ class Profile extends Component {
                     Profile
                   </h4>
                 </div>
-                <PersonalDetail />
-                <ClinicalCondition />
-                <PointService />
-                <Languages />
+                { (this.props.userType === USERTYPES.GUARDIAN || this.props.userType === USER.PATIENT_AND_GUARDIAN) ? 
+                <PersonalDetail /> : <div>
+                  <PersonalDetail />
+                  <ClinicalCondition />
+                  <PointService />
+                  <Languages />
+                </div>}
                 {/* <MyConnections /> */}
               </div>
             </div>
@@ -94,7 +98,8 @@ function mapStateToProps(state) {
   return {
     showTelehealthInvite: state.telehealthState.isInvitationCame,
     patientId: state.patientProfileState.patientId,
-    isLoading: state.loadingState.isLoading
+    isLoading: state.loadingState.isLoading,
+    userType: state.patientProfileState.userType,
   };
 };
 

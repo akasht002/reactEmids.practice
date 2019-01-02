@@ -9,8 +9,9 @@ import {
 import { Button } from '../../../components';
 import { USERTYPES } from '../../../constants/constants';
 import { Path } from '../../../routes';
-import { setPatient} from '../../../redux/patientProfile/actions';
-import { push } from '../../../redux/navigation/actions'
+import { setParticipantProfile, setESP} from '../../../redux/patientProfile/actions';
+import { push } from '../../../redux/navigation/actions';
+import { setServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
 
 class ParticipantContent extends Component {
 
@@ -55,8 +56,9 @@ class ParticipantContent extends Component {
             let updatedParticipantsList = [...this.state.selectedParticipantsList];
             let index = updatedParticipants.indexOf(event.target.value);
             updatedParticipants.splice(index, 1);
-            index = updatedParticipants.indexOf(
-                updatedParticipants.filter(el => el.userId === selectedParticipant.userId)[0]
+            index = updatedParticipantsList.indexOf(
+                updatedParticipantsList.filter(el => el.userId === selectedParticipant.userId 
+                    && el.participantType === selectedParticipant.participantType)[0]
             );
             updatedParticipantsList.splice(index, 1);
             this.setState({ selectedParticipants: updatedParticipants, selectedParticipantsList: updatedParticipantsList });
@@ -166,7 +168,7 @@ class ParticipantContent extends Component {
             lastName: this.state.selectedRemovableParticipant.lastName
         }];
         let data = {
-            conversationId: parseInt(this.props.conversationId),
+            conversationId: parseInt(this.props.conversationId, 10),
             participants: this.state.selectedRemovableParticipant.userId,
             modifiedBy: userId,
             modifiedByType: USERTYPES.SERVICE_PROVIDER,
@@ -181,15 +183,15 @@ class ParticipantContent extends Component {
         let participants = '';
         let participantsHeader = '';
         let leaveBtn = "";
-        let existingParticipants = "";
+        let existingParticipants = [];
         let profileOptionClass = "";
-        let loggedInUser = "";
+        let loggedInUser = [];
         let userId = this.props.loggedInUser.serviceProviderId;
         if (this.props.existingParticipants && this.props.existingParticipants.length > 0) {
-            existingParticipants = this.props.existingParticipants.map((participant, index) => {
+             this.props.existingParticipants.map((participant, index) => {
                 if (userId !== participant.userId) {
                     participant.userId.toString() === this.state.selectedProfile ? profileOptionClass = "Open" : profileOptionClass = "";
-                    return (
+                    existingParticipants.push(
                         <li key={index} className="list-group-item participants">
                             <table className={"table profileFront " + (!this.props.isActive ? 'left' : '')}>
                                 <tbody>
@@ -212,22 +214,43 @@ class ParticipantContent extends Component {
                                     </tr>
                                 </tbody>
                             </table>
-                            {this.state.popupVisible && (<ul ref={node => { this.node = node; }} className={"table profileBack " + profileOptionClass}>
+                            {this.state.popupVisible && participant.participantType !== USERTYPES.CARETEAM && (<ul ref={node => { this.node = node; }} className={"table profileBack " + profileOptionClass}>
                                 <li className="ProfileOptionItems align-middle">
                                     <a onClick={() => {
-                                        this.props.setPatient(participant.userId);
-                                        this.props.goToPatientProfile();
+                                        if(participant.participantType !== USERTYPES.SERVICE_PROVIDER){
+                                            let data = {
+                                                userId : participant.userId,
+                                                userType: participant.participantType,
+                                                isUser: false
+                                            };
+                                            this.props.setParticipantProfile(data);
+                                            this.props.goToPatientProfile();
+                                        }
+                                        else if (participant.isEntityServiceProvider && participant.serviceProviderTypeId === 1) {
+                                            this.props.setESP(participant.userId);
+                                            this.props.goToESPProfile();
+                                        } else {
+                                            let data = {
+                                                userId: participant.userId,
+                                                isEntityServiceProvider: participant.isEntityServiceProvider,
+                                                serviceProviderTypeId: participant.serviceProviderTypeId,
+                                                entityId: participant.entityId
+                                            };
+                                            this.props.setServiceProviderId(data);
+                                            this.props.goToProfile();
+                                        }
+                                        
                                     }}>View Profile</a>
                                 </li>
                             </ul>)}
                         </li>
                     )
                 }
-
+                return '';
             });
-            loggedInUser = this.props.existingParticipants.map((participant, index) => {
+            this.props.existingParticipants.map((participant, index) => {
                 if (userId === participant.userId) {
-                    return (
+                    loggedInUser.push(
                         <li className="list-group-item d-flex participants myChat">
                             <table className="table">
                                 <tbody>
@@ -250,6 +273,7 @@ class ParticipantContent extends Component {
                         </li>
                     )
                 }
+                return '';
             });
         };
 
@@ -333,8 +357,12 @@ function mapDispatchToProps(dispatch) {
         addParticipants: (data) => dispatch(onAddParticipant(data)),
         removeParticipant: (data) => dispatch(onRemoveParticipant(data)),
         getLinkedParticipantsByPatients: (data) => dispatch(getLinkedParticipantsByPatients(data)),
-        setPatient: data => dispatch(setPatient(data)),
-        goToPatientProfile: () => dispatch(push(Path.patientProfile))
+        setParticipantProfile: data => dispatch(setParticipantProfile(data)),
+        goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        goToProfile: () => dispatch(push(Path.profile)),
+        setServiceProviderId: (data) => dispatch(setServiceProviderId(data)),
+        setESP:data=>dispatch(setESP(data)),
+        goToESPProfile:()=>dispatch(push(Path.ESPProfile)),
     }
 };
 

@@ -50,7 +50,7 @@ section .ProfileRightWidget {
     display: block;
 }
 
-.BrandName a.BrandLink{
+.BrandName .BrandLink{
     display: block;
     color: #fff !important;
     text-align: center;
@@ -593,3 +593,8 @@ section .ProfileRightWidget {
         bottom: 0;
     }
 }
+
+.ProfileRightContainer .Loader
+{
+width: 91%;
+} 

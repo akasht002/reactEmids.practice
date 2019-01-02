@@ -9,8 +9,8 @@ import {goToConversation} from '../../redux/asyncMessages/actions';
 
 import {
   getConversationDetail,
-  getUnreadMessageCounts
-} from '../../redux/dashboard/Dashboard/actions'
+} from '../../redux/dashboard/Dashboard/actions';
+import {getUnreadMessageCounts} from '../../redux/asyncMessages/actions';
 import { getUserInfo } from '../../services/http';
 
 class MyConversation extends React.Component {
@@ -20,7 +20,7 @@ class MyConversation extends React.Component {
       pae_size: '10'
     };
     this.props.getConversationDetail(data)
-    this.props.getUnreadMessageCounts()
+    this.props.getUnreadMessageCounts();
   }
   componentWillReceiveProps(nextProps) {
     this.setState({ conversationDetail: nextProps.conversationDetail })
@@ -35,7 +35,6 @@ class MyConversation extends React.Component {
     let entityUser = getUserInfo().isEntityServiceProvider;
     let conversation_data = this.props.conversationDetail;
     let conversionDefault = entityUser ? <EntityUserMyConversionDefault />  : <MyConversionDefault />;
-
     let conversation_item = getLength(conversation_data) > 0
       ? <MyConversionDetail 
       gotoConversations={this.onClickConversation}
@@ -49,7 +48,7 @@ class MyConversation extends React.Component {
             <span className='ProfileCardHeaderTitle primaryColor'>
               My Conversations
             </span>
-            <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>
+           { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>}
           </div>
           
           <div className='topPalette ProfileConversation'>

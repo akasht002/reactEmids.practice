@@ -4,6 +4,7 @@ import { Get, Post, Put } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 import { getUserInfo } from '../../../services/http';
+import { getServiceArea } from '../serviceArea/action';
 
 export const PersonalDetails = {
   get_personal_detail_success : "profile/get_personal_detail_success",
@@ -16,8 +17,9 @@ export const PersonalDetails = {
   get_gender_success:'profile/get_gender_success,',
   get_sp_busy_in_visit_success: 'profile/get_sp_busy_in_visit_success',
   get_affiliation_detail_success:'profile/get_affiliation_detail_success',
-  clearSbMode: 'clearSbMode/profile'
-
+  clearSbMode: 'clearSbMode/profile',
+  setServiceProviderId: 'setServiceProviderId/profile',
+  clearServiceProviderId: 'clearServiceProviderId/profile',
 }
 
 export { getDataValueArray } from '../../../utils/validations'
@@ -129,6 +131,9 @@ export function uploadImg (data) {
 export function getImage () {
   return (dispatch, getState) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
+    if(getState().profileState.PersonalDetailState.serviceProviderId){
+      serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+    };
     dispatch(startLoading())
     Get(API.getImage + serviceProviderId)
       .then(resp => {
@@ -144,10 +149,14 @@ export function getImage () {
 export function getPersonalDetail () {
   return (dispatch, getState) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
+    if(getState().profileState.PersonalDetailState.serviceProviderId){
+      serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+    };
     dispatch(startLoading())
     Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
+        dispatch(getServiceArea());
         dispatch(endLoading())
       })
       .catch(err => {
@@ -252,3 +261,16 @@ export function getAffiliationDetail () {
       })
   }
 }
+
+export function setServiceProviderId(data){
+  return{
+    type: PersonalDetails.setServiceProviderId,
+    data
+  }
+};
+
+export function clearServiceProviderId(){
+  return{
+    type: PersonalDetails.clearServiceProviderId
+  }
+};

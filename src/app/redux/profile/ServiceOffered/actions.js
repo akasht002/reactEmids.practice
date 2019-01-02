@@ -24,12 +24,15 @@ export const getServiceOfferedDetails = data => {
 }
 
 export function getServiceOffered() {
-  return dispatch => {
+  return (dispatch, getState) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
+    if(getState().profileState.PersonalDetailState.serviceProviderId){
+      serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+  };
     dispatch(startLoading())
     Get(API.getServiceOffered + serviceProviderId + '/Offer/Selected')
       .then(resp => {
-        if(resp.data) {
+        if(resp.data.length > 0) {
           resp.data[0].isOpen = true;
         }
         dispatch(getServicesOfferedSuccess(resp.data));
@@ -55,9 +58,10 @@ export function addServiceOfferd(data) {
      return ({
       "categoryId": category,
       "serviceType": data.filter((obj) => {
-        if(obj.categoryId === category){
-          return delete obj.categoryId;
-        }
+        return obj.categoryId === category && delete obj.categoryId;
+        // if(obj.categoryId === category){
+        //   return delete obj.categoryId;
+        // }
       })
      })
   })

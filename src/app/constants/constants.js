@@ -1,6 +1,7 @@
 export const ACTIVE = "active";
 export const VISITED = "visited";
 export const DATE_FORMAT = "MM-DD-YYYY";
+export const DATE_FORMAT_MONTH = 'DD MMM YYYY';
 export const DATE_YEAR = "YYYY";
 export const VISIT_SERVICE_STATUS_OPEN = "Open";
 export const VISIT_SERVICE_STATUS_APPLIED = "Applied";
@@ -10,15 +11,26 @@ export const MORNING = "Morning";
 export const AFTERNOON = "Afternoon";
 export const EVENING = "Evening";
 export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
+export const VIEW_ALL_COUNT = 4
 
-export const USER_LOCALSTORAGE = "userData";
+export const USER_LOCALSTORAGE = "CoreoSP";
 export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
+export const NOT_INTERESTED = 58
+export const OPEN = 35
+export const INVITED = 36
+export const CANCELLED_NOT_HIRED_ARR = [47, 39, 42]
 export const ORG_SERVICE_PROVIDER_TYPE_ID = 2;
 export const HIRED_STATUS_ID  = 38;
+export const SHOW_IMAGES_SERVICE_REQUEST = [38,40]
 export const RECURRING_PATTERN = 'One Time'
 export const ENTITY_USER = 2
-
+export const MONTH_LENGTH = 12
+export const MAX_MONTH_LIMIT =  9
+export const IN_MAX_ARRAY = [1,2,3]
+export const COUNT_BASED_MONTH = {9:1,10:2,11:3}
 export const PHONE_NUMBER_CONST = '+1 ';
+export const PAGE_NO = 1;
+export const SERVICE_REQUEST_PAGE_SIZE = 15
 
 export const RESPONSE_STATUS = {
     VALID: "Valid",
@@ -44,7 +56,9 @@ export const USERTYPES = {
     GUARDIAN : 'G',
     SERVICE_PROVIDER: 'S',
     DESIGNATED_SERVICE_PROVIDER: 2,
-    ENTITY_USER: 'EU'
+    ENTITY_USER: 'EU',
+    PATIENT_AND_GUARDIAN: "IG",
+    CARETEAM: 'CT'
 };
 
 export const ImageFormats = {
@@ -65,8 +79,8 @@ export const SERVICE_STATUS = {
 export const SERVICE_VISIT_STATUS = {
     COMPLETED: 'Completed',
     SCHEDULED: 'Scheduled',
-    INPROGRESS: 'InProgress',
-    PAYMENTPENDING: 'PaymentPending'
+    INPROGRESS: 'In Progress',
+    PAYMENTPENDING: 'Payment Pending'
 }
 
 
@@ -114,8 +128,13 @@ export const Pagination = {
 
 export const DashboardConversationPagination = {
     pageNumber : 1,
-    pageSize : 2
+    pageSize : 3
 };
+
+
+export const USER_TYPE = {
+    SERVICE_PROVIDER_TYPE_ID :2
+}
 
 export const serviceTypesImage = {
     1: 'ADL Ambulation & Mobility.svg',
@@ -138,3 +157,8 @@ export const serviceTypesImage = {
 
 export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_NUMBER = 1;
+
+export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
+
+export const DEFAULT_FROM_DATE = '1900-01-01';
+export const DEFAULT_TO_DATE = '2100-01-01';

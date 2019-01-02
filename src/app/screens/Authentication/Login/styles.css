@@ -1,0 +1,13 @@
+
+.redirect-screen{
+    width: 100%;
+    background: #f4ecfc;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom:0px;
+}
+.white-backgnd{
+    background: white
+}

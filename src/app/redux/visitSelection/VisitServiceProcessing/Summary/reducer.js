@@ -4,8 +4,10 @@ import {
 
 const defaultState = {
     SummaryDetails: {},
-    CalculationsData : {},
-    actualTimeDiff: ''
+    CalculationsData: {},
+    actualTimeDiff: '',
+    signature: '',
+    VisitServiceElibilityStatus: '',
 };
 
 const SummaryState = (state = defaultState, action) => {
@@ -35,6 +37,23 @@ const SummaryState = (state = defaultState, action) => {
                 ...state,
                 actualTimeDiff: action.data
             }
+        case SummaryDetails.getSavedSignatureSuccess:
+            return {
+                ...state,
+                signature: action.data
+            }
+        case SummaryDetails.formDirtySummaryDetails:
+            return {
+                ...state,
+                SummaryDetails: {},
+                CalculationsData: {},
+                signature: ''
+            }
+            case SummaryDetails.getVisitServiceEligibityStatusSuccess:
+            return {
+                ...state,
+                VisitServiceElibilityStatus: action.data
+            };
         default:
             return state;
     }

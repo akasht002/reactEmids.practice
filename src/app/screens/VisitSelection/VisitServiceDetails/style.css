@@ -193,6 +193,15 @@ li div.dropdown-menu{
     padding: 27px 25px;
 }
 
+.ServiceRequestsWidget .ProfileCardHeader .HeaderBackWrapper
+{
+    cursor: context-menu;
+}
+.ServiceRequestsWidget .ProfileCardHeader .HeaderBackWrapper .HeaderBackButton
+{
+cursor: pointer;
+}
+
 .LeftPalette{
     width: 274px;
     border-radius: 8px;
@@ -522,18 +531,108 @@ ul li.list-group-item.EligibilityList{
     float: left;
 }
 
+.ScheduleTableHeader > div:nth-child(1)
+{
+    width: 10%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableHeader > div:nth-child(2)
+{
+    width: 15%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableHeader > div:nth-child(3)
+{
+    width: 20%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableHeader > div:nth-child(4)
+{
+    width: 15%;
+    float: none;
+    padding: 10px 0px;
+}
+
+.ScheduleTableHeader > div:nth-child(5)
+{
+    width: 20%;
+    float: none;
+    padding: 10px 0px;
+}
+
+.ScheduleTableHeader > div:nth-child(6)
+{
+    width:20%;
+    float: none;
+    padding: 10px 0px;
+}
+
+
+.ScheduleTableRow > div:nth-child(1)
+{
+    width: 10%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(2)
+{
+    width: 15%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(3)
+{
+    width: 20%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(4)
+{
+    width: 15%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(5)
+{
+     width: 20%;
+    float: none;
+    padding: 10px 0px;
+}
+.ScheduleTableRow > div:nth-child(6)
+{
+    width:20%;
+    float: none;
+    padding: 10px 0px;
+}
+
+
 .ScheduleTableRow > div > span, .ScheduleTableHeader > div > span{
     padding: 20px;
     display: block;
     white-space: nowrap;
 }
 
+.ScheduleTableHeader > div span, .ScheduleTableRow > div span
+{
+text-align: left;
+}
+
+.ScheduleTableRow > div .ScheduleRowButton
+{
+float: left;
+display: block;
+}
+
 .ScheduleRowButton a{
     font-size: 14px !important;
     margin: 13px;
-    padding: 5px 10px !important;
+    padding: 0px 10px !important;
     float: right;
-    height: 33px;
+    height: 30px;
+    line-height: 30px;
 }
 
 .TabBody .ServiceCategoryContent{
@@ -795,7 +894,7 @@ div.scrollarea .scrollbar-container.vertical {
 
     .innerWidget .card.extended {
         /* height: calc(100vh - 140px); */
-        height: 620px;
+        height: 596px;
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
@@ -1235,4 +1334,29 @@ div.scrollarea .scrollbar-container.vertical {
     font-size: 18px;
     font-weight: 400;
     color: #7a329f;
+}
+
+.start-visit-btn{
+    font-size: 14px !important;
+    margin: 13px !important;
+    padding: 5px 10px !important;
+    float: right !important;
+    height: 33px !important;
+}
+
+ul.sr-showmore-btn
+{
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.update-noblockinfo
+{
+    align-items: baseline;
+}
+
+.update-noblockinfo .SPNoInfoDesc
+{
+padding-top: 80px;
 }

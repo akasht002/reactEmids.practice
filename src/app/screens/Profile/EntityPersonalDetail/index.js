@@ -14,7 +14,6 @@ import {
   ModalPopup,
   ScreenCover
 } from '../../../components'
-import BlackoutModal from '../../../components/LevelOne/BlackoutModal'
 import * as action from '../../../redux/profile/PersonalDetail/actions'
 import {
   checkTextNotStartWithNumber,
@@ -24,6 +23,7 @@ import {
 import { Details, ProfileImageDetail } from './Details'
 import { SETTING } from '../../../services/api'
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import ImageModal from '../PersonalDetail/ImageModal';
 
 class EntityPersonalDetail extends React.PureComponent {
   constructor (props) {
@@ -34,6 +34,10 @@ class EntityPersonalDetail extends React.PureComponent {
       isDiscardModalOpen: false,
       isAlertModalOpen: false,
       isValidPhoneNumber: true,
+      isStateInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      isStreetInvalid: false,
       ModalOrg: true,
       src: null,
       crop: {
@@ -42,7 +46,8 @@ class EntityPersonalDetail extends React.PureComponent {
         width: 80,
         height: 80
       }
-    }
+    };
+    this.isImageSave = false;
   }
 
   componentDidMount () {
@@ -53,60 +58,65 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.setState({
-      imageProfile: nextProps.profileImgData.image,
-      firstName: nextProps.personalDetail.firstName,
-      lastName: nextProps.personalDetail.lastName,
-      age: nextProps.personalDetail.age,
-      genderName: nextProps.personalDetail.genderName,
-      organization: nextProps.personalDetail.organization,
-      yearOfExperience: nextProps.personalDetail.yearOfExperience,
-      description: nextProps.personalDetail.description,
-      hourlyRate: nextProps.personalDetail.hourlyRate,
-      url:nextProps.personalDetail.entity  && nextProps.personalDetail.entity.websiteUrl,
-      assigned_by: nextProps.personalDetail.entity  && nextProps.personalDetail.entity.assignedBy,
-      city: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].city
-        : '',
-      streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].streetAddress
-        : '',
-      zipCode: getArrayLength(nextProps.personalDetail.address) > 0
-        ? nextProps.personalDetail.address[0].zipCode
-        : '',
-      phoneNumber: nextProps.personalDetail.phoneNumber,
-      state_id: getArrayLength(nextProps.personalDetail.address) > 0 &&
-        nextProps.personalDetail.address[0].state != null
-        ? nextProps.personalDetail.address[0].state.id
-        : '',
-      isActive: false,
-      selectedGender: {
-        label: nextProps.personalDetail.genderName,
-        value: nextProps.personalDetail.genderId +
-          '-' +
-          nextProps.personalDetail.genderName
-      },
-      selectedState: {
-        label: getArrayLength(nextProps.personalDetail.address) > 0 &&
-          nextProps.personalDetail.address[0].state != null
-          ? nextProps.personalDetail.address[0].state.name
+    console.log('nextProps.personalDetail........', nextProps.personalDetail);
+    if(this.isImageSave === false) {
+      this.setState({
+        firstName: nextProps.personalDetail.firstName,
+        lastName: nextProps.personalDetail.lastName,
+        age: nextProps.personalDetail.age,
+        genderName: nextProps.personalDetail.genderName,
+        organization: nextProps.personalDetail.organization,
+        yearOfExperience: nextProps.personalDetail.yearOfExperience,
+        description: nextProps.personalDetail.description,
+        hourlyRate: nextProps.personalDetail.hourlyRate,
+        url:nextProps.personalDetail.entity  && nextProps.personalDetail.entity.websiteUrl,
+        assigned_by: nextProps.personalDetail.entity  && nextProps.personalDetail.entity.assignedBy,
+        city: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].city
           : '',
-        value: getArrayLength(nextProps.personalDetail.address) > 0 &&
+        streetAddress: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].streetAddress
+          : '',
+        zipCode: getArrayLength(nextProps.personalDetail.address) > 0
+          ? nextProps.personalDetail.address[0].zipCode
+          : '',
+        phoneNumber: nextProps.personalDetail.phoneNumber,
+        state_id: getArrayLength(nextProps.personalDetail.address) > 0 &&
           nextProps.personalDetail.address[0].state != null
           ? nextProps.personalDetail.address[0].state.id
-          : '' + '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
-              nextProps.personalDetail.address[0].state != null
-              ? nextProps.personalDetail.address[0].state.name
-              : ''
-      },
-      addressId: getArrayLength(nextProps.personalDetail.address) > 0 &&
-        nextProps.personalDetail.address[0].addressId != null
-        ? nextProps.personalDetail.address[0].addressId
-        : 0,
-      addressTypeId: getArrayLength(nextProps.personalDetail.address) > 0 &&
-        nextProps.personalDetail.address[0].addressTypeId != null
-        ? nextProps.personalDetail.address[0].addressTypeId
-        : 2
+          : '',
+        isActive: false,
+        selectedGender: {
+          label: nextProps.personalDetail.genderName,
+          value: nextProps.personalDetail.genderId +
+            '-' +
+            nextProps.personalDetail.genderName
+        },
+        selectedState: {
+          label: getArrayLength(nextProps.personalDetail.address) > 0 &&
+            nextProps.personalDetail.address[0].state != null
+            ? nextProps.personalDetail.address[0].state.name
+            : '',
+          value: getArrayLength(nextProps.personalDetail.address) > 0 &&
+            nextProps.personalDetail.address[0].state != null
+            ? nextProps.personalDetail.address[0].state.id
+            : '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
+                nextProps.personalDetail.address[0].state != null
+                ? nextProps.personalDetail.address[0].state.name
+                : ''
+        },
+        addressId: getArrayLength(nextProps.personalDetail.address) > 0 &&
+          nextProps.personalDetail.address[0].addressId != null
+          ? nextProps.personalDetail.address[0].addressId
+          : 0,
+        addressTypeId: getArrayLength(nextProps.personalDetail.address) > 0 &&
+          nextProps.personalDetail.address[0].addressTypeId != null
+          ? nextProps.personalDetail.address[0].addressTypeId
+          : 2
+      })
+    }
+    this.setState({
+      imageProfile: nextProps.profileImgData.image
     })
     this.styles = {
       height: 100,
@@ -172,12 +182,31 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   onSubmit = () => {
+    const { firstName, lastName, phoneNumber, city, zipCode, streetAddress, selectedState} = this.state;
+    this.isImageSave = false;
     if (
-      getLength(this.state.firstName) === 0 ||
-      getLength(this.state.lastName) === 0 ||
-      getLength(this.state.phoneNumber) < 10
+      getLength(firstName) === 0 ||
+      getLength(lastName) === 0 ||
+      getLength(phoneNumber) < 10 ||
+      city === '' || city === null ||
+      zipCode === '' || zipCode === null ||
+      streetAddress === '' || streetAddress === null ||
+      selectedState === '' || selectedState === null
     ) {
-      this.setState({ isValid: false })
+      let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
+      if (city === '' || city === null) {
+        cityInvalid = true;
+      }
+      if (zipCode === '' || zipCode === null || zipCode < 5) {
+        zipCodeInvalid = true;
+      }
+      if (streetAddress === '' || streetAddress === null) {
+        streetInvalid = true;
+      }
+      if (selectedState === '' || selectedState === null || selectedState === undefined) {
+        stateInvalid = true;
+      }
+      this.setState({ isValid: false, isStateInvalid: stateInvalid, isCityInvalid: cityInvalid, isZipInvalid: zipCodeInvalid, isStreetInvalid: streetInvalid })
     } else {
       this.props.updateEntityDetail(this.state)
       this.setState({
@@ -187,6 +216,13 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   closeImageUpload = () => {
+    this.setState({
+      uploadImage: !this.state.uploadImage
+    })
+  }
+
+  saveImageUpload = () => {
+    this.isImageSave = true;
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -207,28 +243,29 @@ class EntityPersonalDetail extends React.PureComponent {
     const cityDetail = this.props.cityDetail.map((city, i) => {
       return { label: city.name, value: city.id + '-' + city.name }
     })
-    const genderDetail = this.props.genderList.map((gender, i) => {
+   
+    const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
       return { label: gender.name, value: gender.id + '-' + gender.name }
     })
 
     const EducationModalContent = (
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
         {this.getModalContent(cityDetail, genderDetail)}
-        <BlackoutModal
-          isOpen={this.state.uploadImage}
-          toggle={this.closeImageUpload}
-          ModalBody={
-            <ProfileImageDetail
-              uploadedImageFile={this.state.uploadedImageFile}
-              watch={this.watch}
-              onCroppeds={this.onCroppeds}
-              reUpload={this.reUpload}
-            />
-          }
-          className='modal-lg asyncModal BlackoutModal'
-          modalTitle='Edit Profile Image'
-          centered='centered'
-        />
+        <ImageModal
+        isOpen={this.state.uploadImage}
+        toggle={this.closeImageUpload}
+        ModalBody={  
+          <ProfileImageDetail
+          uploadedImageFile={this.state.uploadedImageFile}
+          watch={this.watch}
+          onCroppeds={this.onCroppeds}
+          reUpload={this.reUpload}
+        />}
+        className='modal-lg asyncModal BlackoutModal'
+        modalTitle='Edit Profile Image'
+        centered='centered'
+        saveImage={this.saveImageUpload}
+      />
       </form>
     )
     modalContent = EducationModalContent
@@ -244,6 +281,7 @@ class EntityPersonalDetail extends React.PureComponent {
           city={this.city}
           states={this.states}
           zipCode={this.zipCode}
+          isUser={this.props.isUser}
         />
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
@@ -461,6 +499,7 @@ class EntityPersonalDetail extends React.PureComponent {
             required='required'
             type='text'
             maxlength='100'
+            disabled={true}
             value={this.state.assigned_by}
             textChange={e => {
               this.setState({
@@ -480,6 +519,7 @@ class EntityPersonalDetail extends React.PureComponent {
             type='text'
             maxlength='40'
             value={this.state.url}
+            disabled={true}
             textChange={e => {
               this.setState({
                 url: e.target.value,
@@ -527,12 +567,21 @@ class EntityPersonalDetail extends React.PureComponent {
                       onChange={value => {
                         this.setState({
                           selectedState: value,
-                          disabledSaveBtn: false
+                          disabledSaveBtn: false,
+                          isStateInvalid: false
                         })
+                      }}
+                      onBlur={(e) => {
+                        if (this.state.selectedState === '') {
+                          this.setState({ isStateInvalid: true })
+                        }
                       }}
                       selectedValue={this.state.selectedState}
                       className='inputFailure ServiceRequestSelect'
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                      {this.state.isStateInvalid && 'Please select valid State'}
+                    </small>
                   </div>
                 </div>
                 <div className='col-md-6 mb-2'>
@@ -547,10 +596,19 @@ class EntityPersonalDetail extends React.PureComponent {
                       textChange={e =>
                         this.setState({
                           city: e.target.value,
-                          disabledSaveBtn: false
+                          disabledSaveBtn: false,
+                          isCityInvalid: false
                         })}
+                        onBlur={e => {
+                          if (!e.target.value) {
+                            this.setState({ isCityInvalid: true })
+                          }
+                        }}
                       className='form-control'
                     />
+                    <small className="text-danger d-block OnboardingAlert">
+                    {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
+                  </small>
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
@@ -567,10 +625,19 @@ class EntityPersonalDetail extends React.PureComponent {
                           textChange={e =>
                             this.setState({
                               streetAddress: e.target.value,
-                              disabledSaveBtn: false
+                              disabledSaveBtn: false,
+                              isStreetInvalid: false
                             })}
+                            onBlur={e => {
+                              if (!e.target.value) {
+                                this.setState({ isStreetInvalid: true })
+                              }
+                            }}
                           className='form-control'
                         />
+                        <small className="text-danger d-block OnboardingAlert">
+                          {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                        </small>
                       </div>
                     </div>
                     <div className='col-md-6'>
@@ -590,12 +657,21 @@ class EntityPersonalDetail extends React.PureComponent {
                           ) {
                             this.setState({
                               zipCode: e.target.value,
-                              disabledSaveBtn: false
+                              disabledSaveBtn: false,
+                              isZipInvalid: false
                             })
+                          }
+                        }}
+                        onBlur={e => {
+                          if (!e.target.value || getLength(e.target.value) < 5) {
+                            this.setState({ isZipInvalid: true })
                           }
                         }}
                         className='form-control'
                       />
+                      <small className="text-danger d-block OnboardingAlert">
+                        {this.state.isZipInvalid && <span>Please enter valid {(this.state.zipCode === '' || this.state.zipCode === null) && 'Zipcode'}</span>}
+                      </small>
                     </div>
                   </div>
                 </div>
@@ -674,11 +750,38 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   togglePersonalDetails = (action, e) => {
+    this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
       isValid: true,
-      disabledSaveBtn: !this.state.disabledSaveBtn
+      disabledSaveBtn: !this.state.disabledSaveBtn,
+      isStreetInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      isStateInvalid: false,
+      city: getArrayLength(this.props.personalDetail.address) > 0
+      ? this.props.personalDetail.address[0].city
+      : '',
+      streetAddress: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].streetAddress
+        : '',
+      zipCode: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].zipCode
+        : '',
+      selectedState: {
+        label: getArrayLength(this.props.personalDetail.address) > 0 &&
+          this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.name
+          : '',
+        value: getArrayLength(this.props.personalDetail.address) > 0 &&
+          this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.id
+          : '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
+              this.props.personalDetail.address[0].state != null
+              ? this.props.personalDetail.address[0].state.name
+              : ''
+      }
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,
@@ -710,6 +813,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   reset = () => {
+    this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: false,
       isDiscardModalOpen: false,
@@ -719,7 +823,33 @@ class EntityPersonalDetail extends React.PureComponent {
       yearOfExperience: this.props.personalDetail.yearOfExperience,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
-      phoneNumber: this.props.personalDetail.phoneNumber
+      phoneNumber: this.props.personalDetail.phoneNumber,
+      isStreetInvalid: false,
+      isCityInvalid: false,
+      isZipInvalid: false,
+      isStateInvalid: false,
+      city: getArrayLength(this.props.personalDetail.address) > 0
+      ? this.props.personalDetail.address[0].city
+      : '',
+      streetAddress: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].streetAddress
+        : '',
+      zipCode: getArrayLength(this.props.personalDetail.address) > 0
+        ? this.props.personalDetail.address[0].zipCode
+        : '',
+      selectedState: {
+        label: getArrayLength(this.props.personalDetail.address) > 0 &&
+          this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.name
+          : '',
+        value: getArrayLength(this.props.personalDetail.address) > 0 &&
+          this.props.personalDetail.address[0].state != null
+          ? this.props.personalDetail.address[0].state.id
+          : '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
+              this.props.personalDetail.address[0].state != null
+              ? this.props.personalDetail.address[0].state.name
+              : ''
+      }
     })
   }
 }
@@ -743,7 +873,8 @@ function mapStateToProps (state) {
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
     profileImgData: state.profileState.PersonalDetailState.imageData,
     genderList: state.profileState.PersonalDetailState.genderList,
-    isLoading: state.loadingState.isLoading
+    isLoading: state.loadingState.isLoading,
+    isUser: state.profileState.PersonalDetailState.isUser,
   }
 }
 export default withRouter(

@@ -32,6 +32,7 @@ class Calendar extends Component {
                         showYearDropdown
                         dropdownMode="select"
                         value={this.props.startDate}
+                        onBlur={this.props.onBlur}
                     />
                 </label>
             </div>

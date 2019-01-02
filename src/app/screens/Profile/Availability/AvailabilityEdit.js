@@ -10,7 +10,6 @@ class AvailabilityEdit extends Component {
         super(props);
         this.state = {
             add: false,
-            edit: false,
             availabeDays: [],
             availableList: [],
             updatedAvailableDays: [],
@@ -33,21 +32,25 @@ class AvailabilityEdit extends Component {
                 if (selectedSlot.slotName === slot.slotName) {
                     selectedSlot.isActive = true;
                     selectedSlot.slotId = this.state.lookupSlots[slotIndex].slotId;
-                    selectedSlot.availabilityId = slot.availabilityId;
+                    selectedSlot.availabilityId = slot.availabilityId ? slot.availabilityId : 0;
                     selectedSlot.slotName = slot.slotName;
                     selectedSlot.dayId = tempDay.dayId;
                     this.state.availableList.push(selectedSlot);
                 }   
+                return '';
             });
         } else {
             tempDay.slots.map(selectedSlot => {
                 if (selectedSlot.slotName === slot.slotName) {
                     selectedSlot.isActive = false;
-                    selectedSlot.availabilityId = slot.availabilityId;
+                    selectedSlot.availabilityId = slot.availabilityId ? slot.availabilityId : 0;
                     selectedSlot.slotId = this.state.lookupSlots[slotIndex].slotId;
                     selectedSlot.dayId = tempDay.dayId;
-                    this.state.availableList.push(selectedSlot);
+                    if(selectedSlot.availabilityId !== 0) {
+                        this.state.availableList.push(selectedSlot);
+                    }
                 }
+                return '';
             });
         }
         tempUpdatedAvailableDays[index] = tempDay;
@@ -62,15 +65,6 @@ class AvailabilityEdit extends Component {
             updatedAvailableDays: weekdays,
             lookupDays: lookupDays,
             lookupSlots: slots
-        });
-    };
-
-    componenDidMount() {
-        const { router } = this.props;
-        router.setRouteLeaveHook(router.routes[1], () => {
-          if (!this.state.submitted) {
-            return 'You have unsaved changes. Exit the page?';
-          }
         });
     };
 
@@ -133,10 +127,14 @@ class AvailabilityEdit extends Component {
                                     currentSlot.isActive = slot.isActive;
                                     currentSlot.slotId = slot.slotId;
                                 } 
+                                return '';
                             })
+                            return '';
                         })
                     }
+                    return '';
                 })
+                return '';
             });
             this.setState({ updatedAvailableDays: tempAvailableData, isSetData: true });
         };

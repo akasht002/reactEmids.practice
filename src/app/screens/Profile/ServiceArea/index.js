@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {
@@ -13,7 +13,9 @@ import { getLength } from '../../../utils/validations'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { authorizePermission } from '../../../utils/roleUtility';
 import { Details } from './Details'
-import './style.css'
+import './style.css';
+import { compare } from "../../../utils/comparerUtility";
+
 
 class ServiceArea extends Component {
   constructor(props) {
@@ -31,6 +33,7 @@ class ServiceArea extends Component {
       disabledSaveBtn: false,
       isDiscardModalOpen: false,
       coverageArea: 0,
+      isChanged: false
     };
     this.countValue = 0;
   }
@@ -47,15 +50,24 @@ class ServiceArea extends Component {
         '-' +
         nextProps.ServiceAreaFieldDetails.stateName,
       city: nextProps.ServiceAreaFieldDetails.city,
-      coverageArea:nextProps.ServiceAreaFieldDetails.coverageArea ? nextProps.ServiceAreaFieldDetails.coverageArea: 0,
+      coverageArea: nextProps.ServiceAreaFieldDetails.coverageArea ? nextProps.ServiceAreaFieldDetails.coverageArea : 0,
       zip: nextProps.ServiceAreaFieldDetails.zipCode,
       addressId: nextProps.ServiceAreaFieldDetails.addressId ?
-      nextProps.ServiceAreaFieldDetails.addressId : 0
+        nextProps.ServiceAreaFieldDetails.addressId : 0,
+      selectedState: {
+        label: nextProps.ServiceAreaFieldDetails
+          ? nextProps.ServiceAreaFieldDetails.stateName
+          : '',
+        value: nextProps.ServiceAreaFieldDetails
+          ? nextProps.ServiceAreaFieldDetails.stateId + '-' + nextProps.ServiceAreaFieldDetails.stateName
+          : ''
+      },
     })
   }
 
   reset = () => {
     this.setState({
+      isChanged: false,
       serviceAreaModal: false,
       street: '',
       state_id: '',
@@ -68,22 +80,36 @@ class ServiceArea extends Component {
       streetInvalid: false,
       cityInvalid: false,
       state_idInvalid: false,
+      stateInvalid: false,
       zipInvalid: false,
       isAdd: true,
-      isValid: true
+      isValid: true,
+      selectedState: {
+        label: '',
+        value: 0
+      }
     })
   }
 
   toggleServiceArea = () => {
-    let coverageArea = this.state.coverageArea ?  this.state.coverageArea : 0;
+    let coverageArea = this.state.coverageArea ? this.state.coverageArea : 0;
     this.setState({
       serviceAreaModal: !this.state.serviceAreaModal,
       isDiscardModalOpen: false,
       isValid: true,
       disabledSaveBtn: false,
-      coverageArea: coverageArea
+      coverageArea: coverageArea,
     })
     this.onClose()
+    if (!this.state.isChanged) {
+      this.setState({
+        serviceAreaModal: false, isDiscardModalOpen: false
+      });
+    } else {
+      this.setState({
+        isDiscardModalOpen: true, serviceAreaModal: true
+      });
+    }
   }
 
   onClose = () => {
@@ -101,7 +127,7 @@ class ServiceArea extends Component {
     if (
       this.state.street === '' ||
       this.state.city === '' ||
-      this.state.state_id === '' ||
+      this.state.selectedState.value === '' ||
       this.state.zip === '')
       this.setState({
         isValid: false
@@ -120,10 +146,11 @@ class ServiceArea extends Component {
   }
 
   editServiceArea = e => {
-      this.setState({
+    this.setState({
       serviceAreaModal: true,
       isAdd: false,
       addressId: e.target.id,
+      disabledSaveBtn: true
     })
     this.props.editServiceArea(e.target.id)
   }
@@ -143,38 +170,55 @@ class ServiceArea extends Component {
       this.setState({
         zip: onlyNums,
         zipInvalid: false,
-        disabledSaveBtn: false
+        disabledSaveBtn: false,
+        isChanged: true
       })
     }
+    this.checkFieldsOnEdit(onlyNums)
+  }
+
+  rangeChangeValue = (e) => {
+    const onlyNums = e.target.value.replace(/[^0-9]/g, '');
+    if (onlyNums.length <= 3) {
+      this.setState({
+        coverageArea: onlyNums,
+        coverageAreaInvalid: false,
+        disabledSaveBtn: false,
+        isChanged: true
+      })
+    }
+    this.checkFieldsOnEdit(onlyNums)
   }
 
   onClickHandleIncr = () => {
-    if(this.state.coverageArea !== 0) {
+    if (this.state.coverageArea !== 0) {
       this.countValue = this.state.coverageArea;
     } else {
       this.countValue = 0;
     }
-    if(this.countValue >= 0) {
+    if (this.countValue >= 0) {
       this.countValue = this.countValue + 1;
     }
     this.setState({
       coverageArea: this.countValue,
-      disabledSaveBtn: false
-    });   
+      disabledSaveBtn: false,
+      isChanged: true
+    });
   }
 
   onClickHandleDecr = () => {
-    if(this.state.coverageArea !== 0) {
+    if (this.state.coverageArea !== 0) {
       this.countValue = this.state.coverageArea;
     } else {
       this.countValue = 0;
     }
-    if(this.countValue > 0) {
+    if (this.countValue > 0) {
       this.countValue = this.countValue - 1;
     }
     this.setState({
       coverageArea: this.countValue,
-      disabledSaveBtn: false
+      disabledSaveBtn: false,
+      isChanged: true
     });
   }
 
@@ -182,24 +226,26 @@ class ServiceArea extends Component {
     return value && value.length > 0;
   }
 
+  checkZipLength = (value) => {
+    return value && value.length > 4;
+  }
+
   checkFiledLengths = () => {
-   // debugger
-    const { city, state_id, street, zip } = this.state
+    const { city, selectedState, state_id, street, zip } = this.state
     let
       cityValidation = this.checkLength(city),
-      state_idValidation = this.checkLength(state_id),
+      state_idValidation = this.checkLength(selectedState),
       streetValidation = this.checkLength(street),
-      zipValidation = this.checkLength(zip)
+      zipValidation = this.checkZipLength(zip)
     return cityValidation && state_idValidation && streetValidation && zipValidation
   }
 
-  checkFieldsOnEdit = () => {
-    const { city, state_id, street, zip } = this.state
-    if(city === '' || state_id === '' || street === '' || zip === '') {
-      this.setState({disabledSaveBtn: true})
+  checkFieldsOnEdit = (value) => {
+    if (value === '') {
+      this.setState({ disabledSaveBtn: true })
     }
     else {
-      this.setState({disabledSaveBtn: false})
+      this.setState({ disabledSaveBtn: false })
     }
   }
 
@@ -227,12 +273,14 @@ class ServiceArea extends Component {
               className={"form-control custome-placeholder " + (this.state.streetInvalid && 'inputFailure')}
               value={this.state.street}
               maxlength={'500'}
-              textChange={e =>{
+              textChange={e => {
                 this.setState({
                   street: e.target.value,
                   streetInvalid: false,
+                  isChanged: true
                 })
-                this.checkFieldsOnEdit()}}
+                this.checkFieldsOnEdit(e.target.value)
+              }}
               onBlur={(e) => {
                 if (e.target.value === '') {
                   this.setState({
@@ -255,13 +303,14 @@ class ServiceArea extends Component {
               className={"form-control custome-placeholder " + (this.state.cityInvalid && 'inputFailure')}
               value={this.state.city}
               maxlength={'500'}
-              textChange={e =>{
+              textChange={e => {
                 this.setState({
                   city: e.target.value,
                   cityInvalid: false,
+                  isChanged: true
                 })
-                this.checkFieldsOnEdit()
-                }}
+                this.checkFieldsOnEdit(e.target.value)
+              }}
               onBlur={(e) => {
                 if (e.target.value === '') {
                   this.setState({
@@ -283,22 +332,23 @@ class ServiceArea extends Component {
                 placeholder='Select the state'
                 onChange={value => {
                   this.setState({
-                    state_id: value,
+                    selectedState: value,
                     stateInvalid: false,
+                    isChanged: true
                   })
-                  this.checkFieldsOnEdit()
+                  this.checkFieldsOnEdit(value)
                 }}
-                selectedValue={this.state.state_id}
+                selectedValue={this.state.selectedState}
                 onBlur={(e) => {
-                  if (e.target.value === '') {
+                  if (this.state.selectedState.value === '') {
                     this.setState({
-                      state_idInvalid: true
+                      stateInvalid: true
                     })
                   }
                 }}
               />
               <small className="text-danger d-block OnboardingAlert">
-                {this.state.state_idInvalid && 'Please enter state'}
+                {this.state.stateInvalid && 'Please enter state'}
               </small>
             </div>
           </div>
@@ -324,24 +374,50 @@ class ServiceArea extends Component {
               {this.state.zipInvalid && 'Please enter zip code'}
             </small>
           </div>
+          <div className='col-md-6 mb-2'>
+            <Input
+              name='range_miles'
+              label='Range (in miles)'
+              className={"form-control custome-placeholder " + (this.state.coverageAreaInvalid && 'inputFailure')}
+              autoComplete='off'
+              type='text'
+              placeholder=''
+              value={this.state.coverageArea}
+              textChange={this.rangeChangeValue}
+              onBlur={(e) => {
+                if (getLength(e.target.value) === 0) {
+                  this.setState({
+                    coverageAreaInvalid: true
+                  })
+                }
+              }}
+            />
+            <small className="text-danger d-block OnboardingAlert">
+              {this.state.coverageAreaInvalid && 'Please enter Coverage Area'}
+            </small>
+          </div>
+          {/*
+         
           <div className='col-md-6'>
             <div className="form-group">
               <label className="m-0">Range (in miles)</label>
               <div className='InputInDeWidget'>
-                <span className='IncreDecreBTN plus'
-                  onClick={this.onClickHandleIncr}>+</span>
+              <span className='IncreDecreBTN minus'
+                  onClick={this.onClickHandleDecr}>-</span>
                 <input className="form-control" 
                   value={this.state.coverageArea} />
-                <span className='IncreDecreBTN minus'
-                  onClick={this.onClickHandleDecr}>-</span>
+                <span className='IncreDecreBTN plus'
+                  onClick={this.onClickHandleIncr}>+</span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </form>
     )
     const ServiceAreaList = <Details ServiceAreaList={this.props.ServiceAreaList}
-      editServiceArea={this.editServiceArea} showModalOnDelete={this.showModalOnDelete} />
+      editServiceArea={this.editServiceArea} showModalOnDelete={this.showModalOnDelete} 
+      isUser={this.props.isUser}
+      />
     if (this.state.serviceAreaModal) {
       if (this.state.isAdd) {
         modalTitle = 'Add Service Area'
@@ -353,13 +429,15 @@ class ServiceArea extends Component {
     return (
       <div className='col-md-12 card CardWidget SPCertificate'>
         <div className='SPCardTitle d-flex'>
-          <h4 className='primaryColor'>Service Area</h4>
-          <i
+          <h4 className='primaryColor'>Service Areas</h4>
+          {this.props.isUser && <i
             name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
             className='SPIconLarge SPIconAdd'
-            onClick={() =>
-              this.setState({ serviceAreaModal: true, isAdd: true })}
-          />
+            onClick={() => {
+              this.reset()
+              this.setState({ serviceAreaModal: true, isAdd: true })
+            }}
+          />}
         </div>
         <div className='SPCertificateContainer width100'>
           <ul className='SPCertificateList'>
@@ -367,23 +445,25 @@ class ServiceArea extends Component {
               ? <div>
                 {ServiceAreaList}
               </div>
-              : <div className='SPNoInfo'>
-                <div className='SPNoInfoContent'>
-                  <div className='SPInfoContentImage' />
-                  <span className='SPNoInfoDesc'>
-                    Click
+              : this.props.isUser && <div>
+                <div className='SPNoInfo'>
+                  <div className='SPNoInfoContent'>
+                    <div className='SPInfoContentImage' />
+                    <span className='SPNoInfoDesc'>
+                      Click
                       {' '}
-                    <i
-                      className='SPIconMedium SPIconAddGrayScale'
-                      onClick={() =>
-                        this.setState({
-                          serviceAreaModal: true,
-                          isAdd: true
-                        })}
-                    />
-                    {' '}
-                    to add Service Area
+                      <i
+                        className='SPIconMedium SPIconAddGrayScale'
+                        onClick={() =>
+                          this.setState({
+                            serviceAreaModal: true,
+                            isAdd: true
+                          })}
+                      />
+                      {' '}
+                      to add Service Area
                     </span>
+                  </div>
                 </div>
               </div>}
           </ul>
@@ -420,7 +500,7 @@ class ServiceArea extends Component {
         <ModalPopup
           isOpen={this.state.showModalOnDelete}
           ModalBody={
-            <span>Do you really want to remove this Service Area detail ?</span>
+            <span>Do you really want to remove this service area?</span>
           }
           btn1='YES'
           btn2='NO'
@@ -457,6 +537,7 @@ function mapStateToProps(state) {
       .addServiceAreaSuccess,
     ServiceAreaFieldDetails: state.profileState.ServiceAreaState
       .ServiceAreaFieldDetails,
+    isUser: state.profileState.PersonalDetailState.isUser,
   }
 }
 

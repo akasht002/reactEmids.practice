@@ -3,6 +3,7 @@ import TimeAgo from 'timeago-react';
 import autosize from "autosize";
 import { connect } from 'react-redux';
 import moment from 'moment';
+import Dropzone from 'react-dropzone';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import {
     goToConversationSummary,
@@ -44,26 +45,27 @@ class MessageContent extends Component {
         this.props.onRef(undefined);
     };
 
-    onSelectImage = (e) => {
+    onSelectImage = (file) => {
         this.props.onImageUpload();
         this.setState({
             uploadedImageFile: '',
             imgBinary: '',
             imgName: '',
         });
-        let picture = e.target.files[0];
-        e.target.value = null;
-        if (picture.size <= 2097152 && (picture.type === ImageFormats.JPG ||
-            picture.type === ImageFormats.PNG ||
-            picture.type === ImageFormats.JPEG ||
-            picture.type === ImageFormats.GIF)) {
-            let reader = new FileReader();
-            reader.readAsDataURL(picture);
-            setTimeout(() => {
-                this.setState({ imgBinary: reader.result, uploadedImageFile: URL.createObjectURL(picture), imgName: picture.name });
-            }, 100);
-        } else {
-            this.props.onInvalidImageSelection();
+        let picture = file[0];
+        if(picture){
+            if (picture.size <= 2097152 && (picture.type === ImageFormats.JPG ||
+                picture.type === ImageFormats.PNG ||
+                picture.type === ImageFormats.JPEG ||
+                picture.type === ImageFormats.GIF)) {
+                let reader = new FileReader();
+                reader.readAsDataURL(picture);
+                setTimeout(() => {
+                    this.setState({ imgBinary: reader.result, uploadedImageFile: URL.createObjectURL(picture), imgName: picture.name });
+                }, 100);
+            } else {
+                this.props.onInvalidImageSelection();
+            }
         }
     };
 
@@ -129,7 +131,7 @@ class MessageContent extends Component {
             imgUploaded = "ImgUploaded";
             previewImage = <tr>
                 <td className="border-0 pb-0" />
-                <td className="border-0 PreviewImage pb-0">
+                <td className="wsnw border-0 PreviewImage pb-0">
                     <img alt="preview" src={this.state.uploadedImageFile} />
                     <a className="close" onClick={this.closePreview}>&times;</a>
                 </td>
@@ -176,7 +178,7 @@ class MessageContent extends Component {
                     </div>
                 )
             })
-        } else {
+        } else if(!this.props.isLoading) {
             conversations = (<table className="table noMessage">
                 <tbody>
                     <tr>
@@ -255,14 +257,13 @@ class MessageContent extends Component {
                                         {previewImage}
                                         <tr>
                                             <td className="addAttachmentWidget">
-                                                <div title=" " className="upload-btn-wrapper">
-                                                    <button className="addAttachmentBtn">
-                                                    </button>
-                                                    <input
-                                                        disabled={!this.props.conversation.isActive || this.props.messageText.trim().length > 0}
-                                                        type="file"
-                                                        accept="image/x-png,image/gif,image/jpeg,image/jpg"
-                                                        onChange={this.onSelectImage} />
+                                                <div title=" " className={!this.props.conversation.isActive || this.props.messageText.trim().length > 0 ? "upload-btn-wrapper dis-attach" : 'upload-btn-wrapper'}>
+                                                    <Dropzone
+                                                    disabled={!this.props.conversation.isActive || this.props.messageText.trim().length > 0}
+                                                    onDrop={(files) => this.onSelectImage(files)}>
+                                                            <button className="addAttachmentBtn">
+                                                        </button>
+                                                    </Dropzone>
                                                 </div>
                                             </td>
                                             <td className="messageTypeWidget">
@@ -275,7 +276,7 @@ class MessageContent extends Component {
                                                         height: this.state.height
                                                     }}
                                                     disabled={!this.props.conversation.isActive}
-                                                    placeholder="Type here..."
+                                                    placeholder="Write your message here.."
                                                     maxLength="1000"
                                                     value={this.props.messageText}
                                                     onChange={this.props.onChangeMessage} />
