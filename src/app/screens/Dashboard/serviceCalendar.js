@@ -92,7 +92,7 @@ class serviceCalendar extends React.Component {
     let selectMonth =  moment().month(e.value).format("M")
     let  current_year =  moment().year()
     let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
-                parseInt(current_year,10) + 1 : current_year
+                 current_year : parseInt(current_year,10) - 1
     let curDate = moment(year + '-' + moment().month(e.value).format("M") + '- 01',"YYYY-MM-DD")
     this.setState({
       startDate: moment(curDate).format(),
