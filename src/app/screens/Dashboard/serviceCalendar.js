@@ -25,7 +25,7 @@ import { USERTYPES } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference } from "../../redux/telehealth/actions";
 import {  ModalPopup } from '../../components'
-import {MAX_MONTH_LIMIT,IN_MAX_ARRAY,COUNT_BASED_MONTH} from '../../constants/constants'
+import {MAX_MONTH_LIMIT,IN_MAX_ARRAY,COUNT_BASED_MONTH,LAST_MONTH_ARRAY,END_MONTH} from '../../constants/constants'
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -87,12 +87,22 @@ class serviceCalendar extends React.Component {
     this.props.getServiceProviderVists(moment(this.data.visitDate).format("YYYY-MM-DD"));
   };
 
+  
+  getYear = (selectMonth) => {
+    let  current_year =  moment().year()
+    let  current_month = parseInt(moment().month(),10)
+    if(_.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) && _.includes(END_MONTH, current_month) )
+      return current_year + 1
+    else if(_.includes(LAST_MONTH_ARRAY, parseInt(selectMonth,10))) 
+      return parseInt(current_year,10) - 1
+    else 
+      return current_year
+  }
+
   MonthChange = e => {
     // let  current_month =  moment().month()
     let selectMonth =  moment().month(e.value).format("M")
-    let  current_year =  moment().year()
-    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
-                 current_year : parseInt(current_year,10) - 1
+    let year  = this.getYear(selectMonth)
     let curDate = moment(year + '-' + moment().month(e.value).format("M") + '- 01',"YYYY-MM-DD")
     this.setState({
       startDate: moment(curDate).format(),
@@ -473,9 +483,7 @@ class serviceCalendar extends React.Component {
 
     let monthList = monthLists.map(month => {
       let selectMonth =  moment().month(month).format("M")
-      let  current_year =  moment().year()
-      let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
-                 current_year :parseInt(current_year,10) - 1 
+      let year  = this.getYear(selectMonth)
       return { label: month.substring(0, 3) + ' ' + year, value: month };
     });
     let dateList = dates.map((daysMapping, i) => {
