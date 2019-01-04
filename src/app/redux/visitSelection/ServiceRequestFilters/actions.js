@@ -1,7 +1,6 @@
 import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
-import { startLoading, endLoading } from '../../loading/actions';
-import { getVisitServiceListSuccess } from '../VisitServiceList/actions';
+import { getVisitServiceListSuccess,startLoading, endLoading } from '../VisitServiceList/actions';
 import _ from "lodash"
 
 export const ServiceRequestFiltersList = {
