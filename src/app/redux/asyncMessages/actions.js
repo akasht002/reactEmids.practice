@@ -10,8 +10,9 @@ import {
 } from '../../services/http';
 import { USERTYPES, Pagination } from '../../constants/constants';
 import { startLoading, endLoading } from '../loading/actions';
-import {updateChat} from '../../utils/signalrUtility';
+import {invokeSignalr} from '../../utils/signalrUtility';
 
+let interval = null;
 
 export const AsyncMessageActions = {
     setConversationSummary: 'set_conversation_summary/asyncMessage',
@@ -294,17 +295,17 @@ export const updateTitle = (data) =>{
     }
 };
 
-export function goToConversation(data, userId) {
-    return (dispatch, getState) => {
+export function goToConversation(data) {
+    return (dispatch) => {
         dispatch(setCurrentOpenConversation(data));
-        dispatch(push(Path.conversation + data.conversationId));
+        dispatch(push(Path.conversation));
     }
 };
 
 export function setNewConversationSuccess(id) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(setCurrentOpenConversation(id));
-        dispatch(push(Path.conversation + id));
+        dispatch(push(Path.conversation));
     }
 };
 
@@ -346,7 +347,7 @@ export function onSendNewMessage(data) {
                     conversationId: resp.data.result.conversationId,
                     conversationMessageId: resp.data.result.conversationMessageId
                 }
-                updateChat(model)
+                invokeSignalr('UpdateChat', model)
                 dispatch(verifyIsConversationMessageExistSendMessage(resp.data.result));
                 //dispatch(endLoading());
             })
@@ -437,9 +438,68 @@ export const onUnreadCountSuccess = data => {
 
 export function goToConversationSummary() {
     return (dispatch, getState) => {
+        let conversatinId = getState().asyncMessageState.currentConversation.conversationId;
+        dispatch(removeFromGroup(conversatinId));
         dispatch(clearConversation());
         dispatch(push(Path.messageSummary));
     };
+};
+
+export function checkLatestMessages(conversationId){
+    return (dispatch, getState) => {
+        let state = getState();
+        if(state.asyncMessageState.currentConversation.conversationId && state.asyncMessageState.openedAsyncPage === 'conversation' 
+        && state.asyncMessageState.currentConversation.conversationId === conversationId){
+            let messages = state.asyncMessageState.conversation && state.asyncMessageState.conversation.messages;
+            let messageId = messages && messages.length > 0 && messages[messages.length - 1].conversationMessageId;
+            let lastMessageId = messageId ? messageId : 0
+            let USER_ID = getUserInfo().serviceProviderId;
+            let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+            let data = {conversationId: conversationId};
+            AsyncGet(API.getLatestMessages 
+                + conversationId + '/'
+                + lastMessageId + '/'
+                + USER_ID + '/'
+                + USER_TYPE
+            ).then(resp => {
+                dispatch(verifyIsConversationMessagesExist(resp.data.messages));
+                dispatch(updateReadStatus(data));
+            }).catch(err => { 
+                console.log(err)
+            })
+        }
+    }
+};
+
+export function joinGroup(conversationId){
+    return (dispatch) => {
+        if (conversationId) {
+            invokeSignalr('JoinRoom', conversationId)
+            dispatch(getLatestMessages(conversationId));
+        }
+    }
+};
+
+export function getLatestMessages(conversationId){
+    return (dispatch) => {
+        if (interval) {
+            clearInterval(interval);
+        }
+        interval = setInterval(() => {
+            dispatch(checkLatestMessages(conversationId));
+        }, 10000);
+    }
+}
+
+export function removeFromGroup(conversationId){
+    return () => {
+        if (interval) {
+            clearInterval(interval);
+        }
+        if (conversationId) {
+            invokeSignalr('LeaveRoom', conversationId)
+        }
+    }
 };
 
 export const clearConversation = () => {

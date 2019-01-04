@@ -155,5 +155,6 @@ export const API = {
     canInitiateConversation: 'Conversation/CanInitiate/',
     getBuildVersion: 'Common/LookupConfig/BuildVersionSP',
     visitProcessingUpdateBilledDuration:'VisitProcessing/UpdateBilledDuration',
-    getUnreadConversationsByUserId: 'Conversation/GetUnreadMessages/'
+    getUnreadConversationsByUserId: 'Conversation/GetUnreadMessages/',
+    getLatestMessages: 'Conversation/GetNewPostedMessage/'
 }

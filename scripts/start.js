@@ -7,11 +7,11 @@ process.env.NODE_ENV = 'development'
 process.env.REACT_APP_API_URL = 'https://PFTest-sp-api.coreoflowsandbox.com/api/';
 process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
 process.env.REACT_APP_SR_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
-process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
-process.env.REACT_APP_MSG_URL = "https://PFTest-tp-api.coreoflowsandbox.com/api/";
+process.env.REACT_APP_UI_URL = 'http://localhost:3001/#/';
+process.env.REACT_APP_MSG_URL = "http://localhost:63631/api/";
 process.env.REACT_APP_ES_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
-process.env.REACT_APP_TP_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/api/';
-process.env.REACT_APP_SIGNALR_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/signalr';
+process.env.REACT_APP_TP_URL = 'http://localhost:63631/api/';
+process.env.REACT_APP_SIGNALR_URL = 'http://localhost:63631/signalr';
 process.env.REACT_APP_CARETEAM_URL = 'https://PFTest-ct-api.coreoflowsandbox.com/api/';
 process.env.REACT_APP_PATIENT_URL = 'https://PFTest-gen-api.coreoflowsandbox.com/api/';
 
@@ -132,7 +132,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3001
 const HOST = process.env.HOST || '0.0.0.0'
 
 if (process.env.HOST) {

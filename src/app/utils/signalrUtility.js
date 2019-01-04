@@ -17,8 +17,7 @@ export const onConnectionClosed = () => {
     })
 }
 
-export const updateChat = (data) => {
-    connection.invoke('UpdateChat', data)
+export const invokeSignalr = (methodName, data) => {
+    connection.invoke(methodName, data)
         .catch(err => console.error(err));
 }
-
