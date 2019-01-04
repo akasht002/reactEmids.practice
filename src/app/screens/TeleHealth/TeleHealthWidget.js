@@ -264,6 +264,7 @@ class TeleHealthWidget extends Component {
             if (parseInt(participant.identity, 10) === existingParticipant.userId) {
                 name = existingParticipant.firstName + ' ' + existingParticipant.lastName;
             }
+            return existingParticipant;
         });
         this.setState({ activeParticipantIdentity: name });
     }
@@ -343,6 +344,7 @@ class TeleHealthWidget extends Component {
                 if (parseInt(participant.identity, 10) === existingParticipant.userId) {
                     name = existingParticipant.firstName + ' ' + existingParticipant.lastName;
                 }
+                return existingParticipant;
             });
             var tracks = Array.from(participant.tracks.values());
             let cat = <div className='TeleHealthParticipants' onClick={() => { this.participantClick(participant) }}>

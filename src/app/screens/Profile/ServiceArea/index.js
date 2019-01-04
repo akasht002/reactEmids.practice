@@ -14,8 +14,6 @@ import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { authorizePermission } from '../../../utils/roleUtility';
 import { Details } from './Details'
 import './style.css';
-import { compare } from "../../../utils/comparerUtility";
-
 
 class ServiceArea extends Component {
   constructor(props) {
@@ -231,7 +229,7 @@ class ServiceArea extends Component {
   }
 
   checkFiledLengths = () => {
-    const { city, selectedState, state_id, street, zip } = this.state
+    const { city, selectedState, street, zip } = this.state
     let
       cityValidation = this.checkLength(city),
       state_idValidation = this.checkLength(selectedState),

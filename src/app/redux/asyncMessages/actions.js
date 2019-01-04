@@ -188,10 +188,12 @@ const verifyIsConversationMessagesExist = (data) => {
                 if (message.conversationMessageId === msg.conversationMessageId) {
                     msgFound = true;
                 }
+                return msg;
             });
             if (!msgFound) {
                 unreadMessages.push(message)
             }
+            return message;
         });
         if(unreadMessages.length > 0){
             dispatch(pushUnreadConversation(unreadMessages));

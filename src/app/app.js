@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AppStackRoot from './routes';
-import * as SignalR from '@aspnet/signalr';
 import {
   getConversationItemSignalR,
   getConversationSummaryItemSignalR,
