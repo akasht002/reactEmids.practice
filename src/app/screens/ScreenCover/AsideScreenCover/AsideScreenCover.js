@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover, ModalPopup } from '../../../components';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
-import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
+//commented because of unnecessery call.
+// import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
 import { Path } from '../../../routes/';
-import { getUserInformation, updateEula } from '../../../redux/auth/UserAgreement/actions';
+import { updateEula } from '../../../redux/auth/UserAgreement/actions';
 import { ModalUserAgreement } from '../../../components';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
 import Help from '../../../assets/HelpDoc/Help.pdf';
-import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
+//commented because of unnecessery call.
+// import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
 import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
 import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/actions';
@@ -25,7 +27,7 @@ import { EntitySPProfileHeaderMenu } from "../../../data/EntitySPProfileHeaderMe
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
 import { clearInvitaion, joinVideoConference, rejectConference } from '../../../redux/telehealth/actions';
-import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
+// import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
 import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
 import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions';
 import './style.css'
@@ -42,13 +44,14 @@ class AsideScreenCover extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getProfilePercentage()
+        //commented because of unnecessery call.
+        // this.props.getProfilePercentage()
         this.props.getImage()
-        this.props.getUserInformation();
+        // this.props.getUserInformation();
         this.props.getPersonalDetail();
-        this.props.getAboutUsContent();
+        // this.props.getAboutUsContent();
         this.props.canServiceProviderCreateMessage();
-        this.props.getBuildVersion();
+        // this.props.getBuildVersion();
         authorizePermission(SCREENS.DASHBOARD);
         authorizePermission(SCREENS.SERVICE_REQUEST);
         authorizePermission(SCREENS.VISIT_HISTORY);
@@ -209,11 +212,11 @@ class AsideScreenCover extends React.Component {
                     onConfirm={this.props.joinVideoConference}
                     onCancel={this.props.rejectConference}
                 />
-                <VisitNotification
+                {//commented because we are not showing the notifications in this release
+                    /* <VisitNotification
                     isOpen={this.state.showNotification}
-                    // visitNotification={this.props.visitNotification}
                     toggle={() => { this.setState({ showNotification: !this.state.showNotification }) }}
-                />
+                /> */}
                 <ModalPopup
                     isOpen={this.state.displayWarningPopup}
                     ModalBody={<span>Do you want to discard changes?</span>}
@@ -237,14 +240,15 @@ class AsideScreenCover extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getProfilePercentage: () => dispatch(getProfilePercentage()),
+        //commented because of unnecessery caLL.
+        // getProfilePercentage: () => dispatch(getProfilePercentage()),
         getImage: () => dispatch(action.getImage()),
-        getUserInformation: () => dispatch(getUserInformation()),
+        // getUserInformation: () => dispatch(getUserInformation()),
         onClickOk: () => dispatch(updateEula()),
         goToProfile: () => dispatch(push(Path.profile)),
         getPersonalDetail: () => dispatch(action.getPersonalDetail()),
         navigateProfileHeader: (link) => dispatch(push(link)),
-        getAboutUsContent: () => dispatch(getAboutUsContent()),
+        // getAboutUsContent: () => dispatch(getAboutUsContent()),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
         onLogout: () => dispatch(onLogout()),
         clearInvitaion: () => dispatch(clearInvitaion()),
@@ -252,7 +256,7 @@ function mapDispatchToProps(dispatch) {
         rejectConference: () => dispatch(rejectConference()),
         getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
         setMenuClicked: (data) => dispatch(setMenuClicked(data)),
-        getBuildVersion: () => dispatch(getBuildVersion()),
+        // getBuildVersion: () => dispatch(getBuildVersion()),
         setIsFormDirty: (data) => dispatch(setIsFormDirty(data))
     }
 };
@@ -270,7 +274,6 @@ function mapStateToProps(state) {
         showTelehealthInvite: state.telehealthState.isInvitationCame,
         initiatorFirstName: state.telehealthState.initiatorFirstName,
         initiatorLastName: state.telehealthState.initiatorLastName,
-        visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification,
         dashboardMessageCount: state.asyncMessageState.dashboardMessageCount,
         roomId: state.telehealthState.roomId,
         telehealthToken: state.telehealthState.token,

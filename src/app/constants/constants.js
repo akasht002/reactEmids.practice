@@ -27,6 +27,10 @@ export const ENTITY_USER = 2
 export const MONTH_LENGTH = 12
 export const MAX_MONTH_LIMIT =  9
 export const IN_MAX_ARRAY = [1,2,3]
+export const LAST_MONTH_ARRAY = [10,11,12]
+export const START_MONTH = [0,1,2]
+export const END_MONTH = [9,10,11]
+
 export const COUNT_BASED_MONTH = {9:1,10:2,11:3}
 export const PHONE_NUMBER_CONST = '+1 ';
 export const PAGE_NO = 1;
