@@ -17,8 +17,8 @@ export default class AboutContent extends React.Component {
                     {this.props.aboutUsContent}
                     <div className='AboutContentContainer Right'>
                         <span className="LinkCard"><img src={require('./images/about_translation.svg')} alt="translation" />www.navvishealthcare.com</span>
-                        <span className="LinkCard"><img src={require('./images/about_email.svg')} alt="email" />help@coreohomesupport.com</span>
-                        <span className="LinkCard"><img src={require('./images/about_phone_call.svg')} alt="phoneCall" />+1 180 234 2300</span>
+                        {/* <span className="LinkCard"><img src={require('./images/about_email.svg')} alt="email" />help@coreohomesupport.com</span>
+                        <span className="LinkCard"><img src={require('./images/about_phone_call.svg')} alt="phoneCall" />+1 180 234 2300</span> */}
                     </div>
                 </div>
             </div>
