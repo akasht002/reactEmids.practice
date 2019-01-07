@@ -16,6 +16,8 @@ export const SummaryDetails = {
     getSavedSignatureSuccess: 'getSavedSignatureSuccess/summarydetails',
     formDirtySummaryDetails: 'formDirtySummaryDetails/summarydetails',
     getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/summarydetails',
+    startLoading: 'startLoading/visitservice',
+    endLoading: 'endLoading/visitservice'
 };
 
 export const getSummaryDetailsSuccess = (data) => {
@@ -31,6 +33,19 @@ export const getVisitServiceEligibityStatusSuccess = data => {
         data
     }
 }
+
+export const startLoadingProcessing = () => {
+    return {
+      type: SummaryDetails.startLoading,
+    }
+  };
+  
+  export const endLoadingProcessing = () => {
+    return {
+      type: SummaryDetails.endLoading,
+    }
+};
+
 
 export const getCalculationsData = (data) => {
     return {
@@ -68,7 +83,7 @@ export const formDirtySummaryDetails = () => {
 
 export function getSummaryDetails(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             // dispatch(calculationsFirstTime(resp.data));
@@ -112,14 +127,14 @@ export function getVisitServiceEligibilityStatus(data) {
         serviceRequestId: data.serviceRequestId
     }
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
             dispatch(getVisitServiceEligibityStatusSuccess(resp.data));
             dispatch(calculationsFirstTime(data));
             dispatch(push(Path.summary))
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };

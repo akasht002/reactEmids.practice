@@ -8,6 +8,7 @@ const defaultState = {
     actualTimeDiff: '',
     signature: '',
     VisitServiceElibilityStatus: '',
+    isLoading: false,
 };
 
 const SummaryState = (state = defaultState, action) => {
@@ -53,6 +54,16 @@ const SummaryState = (state = defaultState, action) => {
             return {
                 ...state,
                 VisitServiceElibilityStatus: action.data
+            };
+            case SummaryDetails.startLoading:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case SummaryDetails.endLoading:
+            return {
+                ...state,
+                isLoading: false
             };
         default:
             return state;
