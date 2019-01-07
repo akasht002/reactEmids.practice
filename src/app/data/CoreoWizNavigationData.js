@@ -1,8 +1,8 @@
 export const CoreoWizNavigationData = [
     {
         id: 0,
-        title: 'Verify My User ID',
-        label: 'Enter your registered Email ID and get it verified',
+        title: 'Verify My Email Address',
+        label: 'Enter your registered Email Address and get it verified',
         status: ''
     },
     {

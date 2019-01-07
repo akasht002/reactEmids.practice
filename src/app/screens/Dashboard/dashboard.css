@@ -818,6 +818,13 @@ a.ProfileCardHeaderLink:hover{
     background-position: center;
 }
 
+.ProfileCard.extended .ProfileIconShowMore {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+}
+
 .ProfileShowMore:hover {
     color: #7a329f;
     cursor: pointer;
