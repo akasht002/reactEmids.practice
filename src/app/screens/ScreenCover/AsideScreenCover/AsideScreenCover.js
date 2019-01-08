@@ -26,10 +26,11 @@ import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntitySPProfileHeaderMenu } from "../../../data/EntitySPProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
-import { clearInvitaion, joinVideoConference, rejectConference } from '../../../redux/telehealth/actions';
+import { clearRoom, joinVideoConference, rejectConference } from '../../../redux/telehealth/actions';
 // import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
 import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
 import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions';
+import {isIEBrowser, isMobileBrowser} from '../../../utils/browserUtility'
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -39,7 +40,8 @@ class AsideScreenCover extends React.Component {
             profilePermission: extractRole(SCREENS.PROFILE),
             showNotification: false,
             displayWarningPopup: false,
-            routeUrlLink: '/'
+            routeUrlLink: '/',
+            isInvitationCame: false
         }
     }
 
@@ -115,6 +117,15 @@ class AsideScreenCover extends React.Component {
             this.props.goToProfile();
         }
     }
+    
+    checkBrowserCompatibility = () => {
+        if (isIEBrowser || isMobileBrowser) {
+            this.setState({isInvitationCame: true})
+            this.props.clearRoom();
+        } else {
+            this.props.joinVideoConference();
+        }
+    }
 
     render() {
         let entityUser = getUserInfo().isEntityServiceProvider;
@@ -177,7 +188,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ParticipantContainer
                     onRef={ref => (this.participantComponent = ref)}
-                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation && !this.props.telehealthToken}
+                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation && !this.props.telehealthToken && !isIEBrowser && !isMobileBrowser}
                     onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
                     createConversation={() => { this.setState({ selectedLink: null }) }}
                 />
@@ -193,7 +204,7 @@ class AsideScreenCover extends React.Component {
                     centered="centered"
                 />
                 <ModalPopup
-                    isOpen={this.state.selectedLink === 'telehealth' && !this.props.canCreateConversation}
+                    isOpen={this.state.selectedLink === 'telehealth' && !this.props.canCreateConversation && !isIEBrowser && !isMobileBrowser}
                     ModalBody={<span>You cannot initiate a video call as you have no current service requests</span>}
                     btn1="OK"
                     className="modal-sm"
@@ -209,8 +220,26 @@ class AsideScreenCover extends React.Component {
                     className="zh"
                     headerFooter="d-none"
                     centered={true}
-                    onConfirm={this.props.joinVideoConference}
+                    onConfirm={this.checkBrowserCompatibility}
                     onCancel={this.props.rejectConference}
+                />
+                <ModalPopup
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
+                    isOpen={isIEBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame)}
+                    btn1="OK"
+                    onConfirm={() => { this.setState({ selectedLink: null, isInvitationCame: false }) }}
+                    ModalBody={<span>This browser doesn't support video conferencing. Please use a different browser.</span>}
+                />
+                <ModalPopup
+                    className="modal-sm"
+                    headerFooter="d-none"
+                    centered={true}
+                    isOpen={isMobileBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame)}
+                    btn1="OK"
+                    onConfirm={() => { this.setState({ selectedLink: null, isInvitationCame: false }) }}
+                    ModalBody={<span>Video conferencing available in app version.</span>}
                 />
                 {//commented because we are not showing the notifications in this release
                     /* <VisitNotification
@@ -251,7 +280,7 @@ function mapDispatchToProps(dispatch) {
         // getAboutUsContent: () => dispatch(getAboutUsContent()),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
         onLogout: () => dispatch(onLogout()),
-        clearInvitaion: () => dispatch(clearInvitaion()),
+        clearRoom: () => dispatch(clearRoom()),
         joinVideoConference: () => dispatch(joinVideoConference()),
         rejectConference: () => dispatch(rejectConference()),
         getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
