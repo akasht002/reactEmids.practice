@@ -239,7 +239,7 @@ class AsideScreenCover extends React.Component {
                     isOpen={isMobileBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame)}
                     btn1="OK"
                     onConfirm={() => { this.setState({ selectedLink: null, isInvitationCame: false }) }}
-                    ModalBody={<span>Video conferencing available in app version.</span>}
+                    ModalBody={<span>Video conferencing feature only available in app version.</span>}
                 />
                 {//commented because we are not showing the notifications in this release
                     /* <VisitNotification
