@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import { withRouter } from 'react-router-dom'
 import { getUserInfo } from '../../../utils/userUtility'
 import { setESP } from "../../../redux/patientProfile/actions";

@@ -12,6 +12,8 @@ import {
     updateReadStatus,
     openedAsyncPage,    
     setRemoveParticipantConcurrency,
+    joinGroup,
+    removeFromGroup
 } from '../../../redux/asyncMessages/actions';
 import ModalTemplate from '../Modals/Modal';
 import { Preloader, ModalPopup } from '../../../components';
@@ -19,6 +21,8 @@ import { MessageTypes } from '../../../data/AsyncMessage';
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import { USERTYPES } from '../../../constants/constants';
 import '../styles.css';
+import { push } from '../../../redux/navigation/actions';
+import { Path } from '../../../routes';
 
 class Conversation extends Component {
     constructor(props) {
@@ -41,12 +45,12 @@ class Conversation extends Component {
             exististingTitle: '',
             isOpen: false,
         };
-
     }
 
-     componentWillUnmount(){
-      this.props.openedAsyncPage(null);
-  };
+    componentWillUnmount(){
+        this.props.removeFromGroup(this.props.currentConversation.conversationId);
+        this.props.openedAsyncPage(null);
+    };
 
     static getDerivedStateFromProps(props, state) {
         if (!state.editTitle)
@@ -66,14 +70,19 @@ class Conversation extends Component {
     componentDidMount() {
         let userId = this.props.loggedInUser.serviceProviderId;
         let conversationId = this.props.currentConversation.conversationId;
-        this.props.getConversations(conversationId);
-        this.setState({ isGotoParticipantView: false, title: this.props.conversation.title });
-        let data = {
-            userId: userId,
-            conversationId: conversationId
-        };
-        this.props.updateUnreadCount(data);
-        this.props.openedAsyncPage('conversation');
+        if (conversationId) {
+            this.props.getConversations(conversationId);
+            this.setState({ isGotoParticipantView: false, title: this.props.conversation.title });
+            let data = {
+                userId: userId,
+                conversationId: conversationId
+            };
+            this.props.updateUnreadCount(data);
+            this.props.openedAsyncPage('conversation');
+            this.props.joinGroup(conversationId);
+        } else {
+            this.props.goToSummary();
+        }
     };
 
     onChangeTitle = (e) => {
@@ -361,6 +370,9 @@ function mapDispatchToProps(dispatch) {
         updateUnreadCount: (data) => dispatch(updateReadStatus(data)),
         openedAsyncPage: (data) => dispatch(openedAsyncPage(data)),
         setRemoveParticipantConcurrency: (data ) => dispatch(setRemoveParticipantConcurrency(data)),
+        joinGroup: (data) => dispatch(joinGroup(data)),
+        removeFromGroup: (data) => dispatch(removeFromGroup(data)),
+        goToSummary: () => dispatch(push(Path.messageSummary))
     }
 };
 
