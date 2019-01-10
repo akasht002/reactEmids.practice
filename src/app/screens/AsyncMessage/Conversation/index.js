@@ -125,7 +125,7 @@ class Conversation extends Component {
 
     onClickSendMessage = (picture) => {
         let participants = [];
-        let userId = this.props.loggedInUser.serviceProviderId;
+        let userId = this.props.loggedInUser.coreoHomeUserId;
         if (this.props.currentConversation && this.props.currentConversation.participantList) {
             this.props.currentConversation.participantList.map(participant => {
                 participants.push(participant.userId);

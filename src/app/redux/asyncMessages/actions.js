@@ -97,7 +97,7 @@ export function getConversationSummaryItemSignalR(conversationId){
         let state = getState();
         dispatch(getDashboardMessageCount());
         if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
-            let userId = getUserInfo().serviceProviderId;
+            let userId = getUserInfo().coreoHomeUserId;
             let userType = USERTYPES.SERVICE_PROVIDER;
             AsyncGet(API.getConversationSummary 
                 + conversationId + '/'
@@ -135,7 +135,7 @@ export function getConversationItemSignalR(conversationId, messageId){
         let state = getState();
         if(state.asyncMessageState.openedAsyncPage === 'conversation' 
         && state.asyncMessageState.currentConversation.conversationId === conversationId){
-            let userId = getUserInfo().serviceProviderId;
+            let userId = getUserInfo().coreoHomeUserId;
             let userType = USERTYPES.SERVICE_PROVIDER;
             let data = {conversationId: conversationId};
             AsyncGet(API.getConversationMessage 
@@ -159,7 +159,7 @@ export function getUnreadConversationByUserId(conversationId){
         let state = getState();
         if(state.asyncMessageState.openedAsyncPage === 'conversation' 
         && state.asyncMessageState.currentConversation.conversationId === conversationId){
-            let userId = getUserInfo().serviceProviderId;
+            let userId = getUserInfo().coreoHomeUserId;
             let userType = USERTYPES.SERVICE_PROVIDER;
             let data = {conversationId: conversationId};
             AsyncGet(API.getUnreadConversationsByUserId
@@ -218,7 +218,7 @@ export const openedAsyncPage = (data) =>{
 export function onFetchConversationSummary(pageNumber) {
     return (dispatch) => {
         dispatch(convLoadingStart());
-        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversationSummary 
             + USER_ID + '/'
@@ -241,12 +241,13 @@ export function onFetchConversation(id) {
         dispatch(convLoadingStart());
         let state = getState();
         let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
-        let USER_ID = getUserInfo().serviceProviderId;
+        let context = state.asyncMessageState.currentConversation.context
+        let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversation 
             + conversationId + '/' 
             + USER_ID + '/' 
-            + USER_TYPE + '/all'
+            + USER_TYPE + '/all/' + context
             )
             .then(resp => {
                 dispatch(setConversationData(resp.data));
@@ -335,13 +336,14 @@ export const setNewConversationId = id => {
 
 export function onSendNewMessage(data) {
     return (dispatch) => {
-        //dispatch(startLoading());
         AsyncPost(API.sendMessage, data)
             .then(resp => {
+                debugger;
                 let list = resp.data.result.participantList.map((participant) => {
                     return {
                         userId: participant.userId,
-                        participantType: participant.participantType
+                        participantType: participant.participantType,
+                        participantId: participant.participantId
                     }
                 });
                 const model = {
@@ -351,10 +353,9 @@ export function onSendNewMessage(data) {
                 }
                 invokeSignalr('UpdateChat', model)
                 dispatch(verifyIsConversationMessageExistSendMessage(resp.data.result));
-                //dispatch(endLoading());
             })
             .catch(err => {
-                //dispatch(endLoading())
+                console.log(err)
             })
     }
 };
@@ -405,7 +406,7 @@ export function onRemoveParticipant(data) {
 
 export function getUnreadMessageCounts() {
     return (dispatch) => {
-        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getUnreadCount + USER_ID + '/' + USER_TYPE)
             .then(resp => {
@@ -419,7 +420,7 @@ export function getUnreadMessageCounts() {
 
 export function updateReadStatus(data) {
     return (dispatch) => {
-        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncPutWithUrl(API.updateReadStatus + USER_ID + '/' + data.conversationId
             + '/' + USER_TYPE)
@@ -455,7 +456,7 @@ export function checkLatestMessages(conversationId){
             let messages = state.asyncMessageState.conversation && state.asyncMessageState.conversation.messages;
             let messageId = messages && messages.length > 0 && messages[messages.length - 1].conversationMessageId;
             let lastMessageId = messageId ? messageId : 0
-            let USER_ID = getUserInfo().serviceProviderId;
+            let USER_ID = getUserInfo().coreoHomeUserId;
             let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
             let data = {conversationId: conversationId};
             AsyncGet(API.getLatestMessages 
@@ -513,7 +514,7 @@ export const clearConversation = () => {
 export function leaveConversation(data) {
     return (dispatch) => {
         dispatch(startLoading())
-        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncPutWithUrl(API.leaveConversation 
             + USER_ID + '/' 
@@ -539,13 +540,12 @@ const getLinkedPatientsSuccess = data => {
 
 export function getLinkedParticipantsByPatients(data) {
     return (dispatch, getState) => {
-        //dispatch(startLoading())
         let serchText = data.searchText === "" ? null : data.searchText;
         let patients = getState().asyncMessageState.linkedPatients;
         let patient = patients.find((e) => {
             return e.userId === data.patientId
         });
-        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         data.firstName = patient.firstName;
         data.lastName = patient.lastName;
@@ -560,20 +560,19 @@ export function getLinkedParticipantsByPatients(data) {
             '/' + serchText)
             .then(resp => {
                 dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
-                //dispatch(endLoading())
             })
             .catch(err => {
-               // dispatch(endLoading())
+               console.log(err)
             })
     }
 };
 
 
 export function getLinkedParticipantsList(data) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading())
         let serchText = data.searchText === "" ? null : data.searchText;
-        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getParticipantsByContext 
                 + data.conversationId +
@@ -600,7 +599,7 @@ const getLinkedParticipantsByPatientsSuccess = data => {
 
 export function getDashboardMessageCount() {
     return (dispatch) => {
-        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_ID = getUserInfo().coreoHomeUserId;
         AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USERTYPES.SERVICE_PROVIDER)
             .then(resp => {
                 dispatch(getDashboardCountSuccess(resp.data));
@@ -633,7 +632,7 @@ const onClearLinkedParticipants = () => {
 
 
 export function getConversationImageWithImageId(messageId) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading());
         AsyncGet(API.getConversationImage + messageId).then(resp => {
             dispatch(endLoading());
@@ -654,7 +653,7 @@ const onGetConversationImageWithImageIdSuccess = (data) => {
 
 
 export function clearConversationImageUrl() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(onClearConversationImageUrl());
     }
 };
@@ -668,8 +667,8 @@ const onClearConversationImageUrl = () => {
 
 
 export function CanServiceProviderCreateMessage() {
-    return (dispatch, getState) => {
-        let USER_ID = getUserInfo().serviceProviderId;
+    return (dispatch) => {
+        let USER_ID = getUserInfo().coreoHomeUserId;
         AsyncGet(API.canCreateMessage + USER_ID).then(resp => {
             dispatch(CanServiceProviderCreateMessageSuccess(resp.data))
         }).catch(err => {
@@ -687,7 +686,7 @@ const CanServiceProviderCreateMessageSuccess = (data) =>{
 
 export function getLinkedPatients() {
         return (dispatch) => {
-        let USER_ID = getUserInfo().serviceProviderId;
+        let USER_ID = getUserInfo().coreoHomeUserId;
         AsyncGet(API.getContext + USER_ID)
             .then(resp => {
                 dispatch(getLinkedPatientsSuccess(resp.data));
@@ -699,7 +698,7 @@ export function getLinkedPatients() {
 
 
 export function ClearCurrentOpenConversation() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(onClearCurrentOpenConversation());
     }
 };
@@ -712,7 +711,7 @@ const onClearCurrentOpenConversation = () => {
 
 export function getConversationCount() {
     return (dispatch) => {
-    let USER_ID = getUserInfo().serviceProviderId;
+    let USER_ID = getUserInfo().coreoHomeUserId;
     let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
     AsyncGet(API.getConverstionCountByUserId 
         + USER_ID + '/'
