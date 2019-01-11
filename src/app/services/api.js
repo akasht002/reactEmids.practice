@@ -156,5 +156,6 @@ export const API = {
     getBuildVersion: 'Common/LookupConfig/BuildVersionSP',
     visitProcessingUpdateBilledDuration:'VisitProcessing/UpdateBilledDuration',
     getUnreadConversationsByUserId: 'Conversation/GetUnreadMessages/',
-    getLatestMessages: 'Conversation/GetNewPostedMessage/'
+    getLatestMessages: 'Conversation/GetNewPostedMessage/',
+    getMessageFallBackInterval: 'Common/LookupConfig/MessageFallBackInterval'
 }

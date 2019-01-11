@@ -40,8 +40,15 @@ export const AsyncMessageActions = {
     setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
     setActivePageNumber: 'setActivePageNumber/asyncMessage',
     updateTitle: 'updateTitle/asyncMessage',
-    pushUnreadConversation: 'pushUnreadConversation/asyncMessage'
-    
+    pushUnreadConversation: 'pushUnreadConversation/asyncMessage',
+    msgCallbackInterval: 'msgCallbackInterval/asyncMessage'
+};
+
+export const msgCallbackInterval = (data) => {
+    return {
+        type: AsyncMessageActions.msgCallbackInterval,
+        data
+    }
 };
 
 export const setConversationSummary = (data) => {
@@ -483,13 +490,14 @@ export function joinGroup(conversationId){
 };
 
 export function getLatestMessages(conversationId){
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        let state = getState();
         if (interval) {
             clearInterval(interval);
         }
         interval = setInterval(() => {
             dispatch(checkLatestMessages(conversationId));
-        }, 10000);
+        }, state.asyncMessageState.callbackInterval);
     }
 }
 
@@ -749,3 +757,14 @@ export function setRemoveParticipantConcurrency (data){
         data
     }
  };
+
+ export function getMessageFallBackInterval(){
+    return (dispatch) => {
+        AsyncGet(API.getMessageFallBackInterval)
+            .then(resp => {
+                resp.data && resp.data.length > 0 && dispatch(msgCallbackInterval(parseInt(resp.data[0].value, 10)))
+            })
+            .catch(err => {
+            })
+    }
+};
