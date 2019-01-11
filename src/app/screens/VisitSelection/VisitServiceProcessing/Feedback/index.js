@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
-import { Scrollbars, DashboardWizFlow, ModalPopup } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader } from '../../../../components';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
@@ -28,7 +28,8 @@ class Feedback extends Component {
             answerList: '',
             textareaValue: '',
             textareaData: '',
-            isDiscardModalOpen: false
+            isDiscardModalOpen: false,
+            isLoading: false
         };
         this.selectedAnswers = [];
     };
@@ -44,6 +45,12 @@ class Feedback extends Component {
         } else {
             this.props.history.push(Path.visitServiceList)
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            isLoading: nextProps.isLoading
+        })
     }
 
     handleSelected = (answer, id) => {
@@ -114,6 +121,7 @@ class Feedback extends Component {
     render() {
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+                {this.state.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
@@ -301,7 +309,8 @@ function mapStateToProps(state) {
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
-        VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback
+        VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback,
+        isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
     };
 };
 

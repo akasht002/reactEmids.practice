@@ -7,7 +7,9 @@ import { DEMO } from '../../../../constants/config';
 
 export const paymentsCardList = {
     getPaymentsCardListSuccess: 'get_paymentsCardList_success/payments',
-    updateServiceRequestId: 'updateServiceRequestId/payments'
+    updateServiceRequestId: 'updateServiceRequestId/payments',
+    startLoading: 'startLoading/payments',
+    endLoading: 'endLoading/payments'
 };
 
 export const getPaymentsCardListSuccess = (data) => {
@@ -24,6 +26,18 @@ export const updateServiceRequestId = (data) => {
     }
 }
 
+export const startLoadingProcessing = () => {
+    return {
+      type: paymentsCardList.startLoading,
+    }
+  };
+  
+  export const endLoadingProcessing = () => {
+    return {
+      type: paymentsCardList.endLoading,
+    }
+};
+
 export function getpaymentsCardList(data) {
     return (dispatch) => {
         dispatch(startLoading());
@@ -38,40 +52,40 @@ export function getpaymentsCardList(data) {
 
 export function createCharge(data, claimData) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ThirdPartyPost(API.createCharge, data).then((resp) => {
             if (resp.data === 'success') {
                 dispatch(push(Path.paymentsuccess))
                 dispatch(claimsSubmission(claimData))
             }
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
             if (DEMO === 'true') {
                 dispatch(push(Path.paymentsuccess))
             } else {
                 dispatch(push(Path.paymentfailure))
             }
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };
 
 export function chargeByCustomerId(data, claimData) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ThirdPartyPost(API.chargeByCustomerId, data).then((resp) => {
             if (resp.data === 'success') {
                 dispatch(push(Path.paymentsuccess))
                 dispatch(claimsSubmission(claimData))
             }
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
             if (DEMO === 'true') {
                 dispatch(push(Path.paymentsuccess))
             } else {
                 dispatch(push(Path.paymentfailure))
             }
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };

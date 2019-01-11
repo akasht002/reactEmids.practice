@@ -7,7 +7,7 @@ import moment from 'moment';
 import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button, Preloader } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
 import { SERVICE_STATES } from '../../../../constants/constants';
@@ -83,7 +83,7 @@ class PerformTasks extends Component {
                 return serviceType;
             });
         }
-        this.setState({ taskList: nextProps.PerformTasksList })
+        this.setState({ taskList: nextProps.PerformTasksList, isLoading :nextProps.isLoading })
     }
 
     handleChange = (taskList, e) => {
@@ -168,6 +168,7 @@ class PerformTasks extends Component {
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} >
+            {this.state.isLoading && <Preloader /> }
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ {this.state.taskList.serviceRequestId}</span></h5>
@@ -357,6 +358,7 @@ function mapStateToProps(state) {
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
+        isLoading: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.isLoading,
     };
 };
 

@@ -273,10 +273,10 @@ export function saveSignature(data) {
 
 export function getSavedSignature(data) {
     return (dispatch) => {
-        dispatch(startLoadingProcessing());
+        //dispatch(startLoadingProcessing());
         ServiceRequestGet(API.getSavedSignature + data).then((resp) => {
             dispatch(getSavedSignatureSuccess(resp.data));
-            dispatch(endLoadingProcessing());
+            //dispatch(endLoadingProcessing());
         }).catch((err) => {
             dispatch(endLoadingProcessing());
         })

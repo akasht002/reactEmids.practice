@@ -13,6 +13,7 @@ import { HIRED_STATUS_ID } from '../../constants/constants';
 import { ENTITY_USER } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
 import { isEntityServiceProvider } from '../../utils/userUtility';
+import { isFutureDay } from '../../utils/dateUtility'
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -111,7 +112,7 @@ export const serviceCalendar = (
               </span>
               {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
               <div className="EntityUServiceProf">
-               {conversations.providerId === getUserInfo().serviceProviderId ? 
+               {isFutureDay(conversations.visitDate) ? conversations.providerId === getUserInfo().serviceProviderId ? 
                <span><i className="assignSPLink"
                   onClick={e =>{
                     togglePersonalDetails({
@@ -152,7 +153,7 @@ export const serviceCalendar = (
                 {conversations.providerLastName && conversations.providerLastName}
               </span>
             </div>
-            </React.Fragment>}
+            </React.Fragment>:''}
               </div>
                 }
             </div>

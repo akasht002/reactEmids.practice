@@ -3,7 +3,6 @@ import { ServiceRequestGet, ServiceRequestPut } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
-import { startLoadingProcessing,endLoadingProcessing} from '../Summary/actions'
 
 export const PerformTasks = {
     getPerformTasksListSuccess: 'get_perform_tasks_list_success/performtasks',
@@ -11,7 +10,9 @@ export const PerformTasks = {
     saveStartedTime: 'save_started_time/performtasks',
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
     getVisitStatus: 'getVisitStatus/performtasks',
-    formDirtyPerformTask: 'formDirtyPerformTask/performtasks'
+    formDirtyPerformTask: 'formDirtyPerformTask/performtasks',
+    startLoading: 'startLoading/performtasks',
+    endLoading: 'endLoading/performtasks'
 };
 
 export const formDirtyPerformTask = () => {
@@ -55,6 +56,18 @@ export const getVisitStatus = (data) => {
     }
 }
 
+export const startLoadingProcessing = () => {
+    return {
+      type: PerformTasks.startLoading,
+    }
+  };
+  
+  export const endLoadingProcessing = () => {
+    return {
+      type: PerformTasks.endLoading,
+    }
+};
+
 export function getPerformTasksList(data, startOrStop) {
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))       
@@ -84,6 +97,7 @@ export function getServiceVisitId(data, startOrStop) {
             else {
                 dispatch(getPerformTasksListSuccess(resp.data))
             }
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
         })
     }
@@ -106,14 +120,14 @@ export function startOrStopService(data, visitId, startedTime) {
         // if (data === 0) {
         //     dispatch(getSummaryDetails(visitId));
         // }
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ServiceRequestPut(API.startOrStopService + visitId + '/' + data).then((resp) => {
             dispatch(saveStartedTime(startedTime))
             dispatch(getPerformTasksList(visitId, false));
             dispatch(getSummaryDetails(visitId));
-            //dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };

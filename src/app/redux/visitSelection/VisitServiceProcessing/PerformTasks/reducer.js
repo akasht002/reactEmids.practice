@@ -8,7 +8,8 @@ const defaultState = {
     ServiceRequestVisitId: '',
     startedTime: '',
     SummaryDetails: '',
-    visitStatus: ''
+    visitStatus: '',
+    isLoading: false
 };
 
 const PerformTasksState = (state = defaultState, action) => {
@@ -69,6 +70,17 @@ const PerformTasksState = (state = defaultState, action) => {
             return {
                 ...state,
                 PerformTasksList: {}
+            };
+
+        case PerformTasks.startLoading:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case PerformTasks.endLoading:
+            return {
+                ...state,
+                isLoading: false
             };
 
         default:

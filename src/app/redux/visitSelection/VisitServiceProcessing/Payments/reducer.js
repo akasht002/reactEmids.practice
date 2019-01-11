@@ -4,7 +4,8 @@ import {
 
 const defaultState = {
     CardList: '',
-    serviceRequestId: null
+    serviceRequestId: null,
+    isLoading: false
 };
 
 const PaymentsState = (state = defaultState, action) => {
@@ -21,6 +22,17 @@ const PaymentsState = (state = defaultState, action) => {
             return {
                 ...state,
                 serviceRequestId: action.data
+            };
+
+        case paymentsCardList.startLoading:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case paymentsCardList.endLoading:
+            return {
+                ...state,
+                isLoading: false
             };
 
         default:
