@@ -3,6 +3,7 @@ import { ServiceRequestGet, ServiceRequestPut } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
+import { startLoadingProcessing,endLoadingProcessing} from '../Summary/actions'
 
 export const PerformTasks = {
     getPerformTasksListSuccess: 'get_perform_tasks_list_success/performtasks',
@@ -56,8 +57,7 @@ export const getVisitStatus = (data) => {
 
 export function getPerformTasksList(data, startOrStop) {
     return (dispatch) => {
-        dispatch(getServiceRequestVisitId(data))
-        dispatch(startLoading());
+        dispatch(getServiceRequestVisitId(data))       
         ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
             if (startOrStop === false) {
                 dispatch(getVisitStatus(resp.data))
@@ -75,6 +75,7 @@ export function getPerformTasksList(data, startOrStop) {
 
 export function getServiceVisitId(data, startOrStop) {
     return (dispatch) => {
+        dispatch(startLoadingProcessing());
         dispatch(getServiceRequestVisitId(data))
         ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
             if (startOrStop === false) {

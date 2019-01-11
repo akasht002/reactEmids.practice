@@ -8,6 +8,7 @@ import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
 import { updateServiceRequestId } from '../Payments/actions';
 
+
 export const SummaryDetails = {
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
     getCalculationsData: 'get_calculations_data/summarydetails',
@@ -89,9 +90,9 @@ export function getSummaryDetails(data) {
             // dispatch(calculationsFirstTime(resp.data));
             dispatch(getVisitServiceEligibilityStatus(resp.data))
             // dispatch(push(Path.summary))
-            //dispatch(endLoading());
+            // dispatch(endLoadingProcessing());
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };
@@ -272,12 +273,12 @@ export function saveSignature(data) {
 
 export function getSavedSignature(data) {
     return (dispatch) => {
-        //dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ServiceRequestGet(API.getSavedSignature + data).then((resp) => {
             dispatch(getSavedSignatureSuccess(resp.data));
-            //dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
-            //dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };

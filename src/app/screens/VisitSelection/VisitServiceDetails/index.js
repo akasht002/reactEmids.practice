@@ -78,7 +78,8 @@ class VisitServiceDetails extends Component {
       conversationErrMsg: '',
       pageNumber: 1,
       disableShowMore: false,
-      standByModeAlertMsg: false
+      standByModeAlertMsg: false,
+      isLoading:false
     }
     this.alertModalMsg = ''
     this.status = {}
@@ -104,6 +105,7 @@ class VisitServiceDetails extends Component {
       serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
         nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
           .serviceRequestTypeDetailsId,
+          isLoading :nextProps.isLoading  
     })
     this.visitServiceScheduleData(nextProps);
   }
@@ -181,7 +183,7 @@ class VisitServiceDetails extends Component {
     }
   }
 
-  visitProcessingSummary = data => {
+  visitProcessingSummary = data => {    
     this.props.getServiceVisitId(data, true);
     this.props.getSummaryDetails(data);
     this.props.getSavedSignature(data);
@@ -271,16 +273,23 @@ class VisitServiceDetails extends Component {
   }
 
   showPhoneNumber = () => {
-    let data = this.props.VisitServiceDetails;
-    let phoneNumber = data.patient ? data.patient.phoneNumber : ''
-    this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    if (this.props.VisitServiceDetails.statusId !== 38) {
+      this.setState({
+        conversationsModal: true,
+        conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
+      })
+    } else {
+      let data = this.props.VisitServiceDetails;
+      let phoneNumber = data.patient ? data.patient.phoneNumber : ''
+      this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    }
   };
 
   onClickConversation = () => {
     if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You will be able to initiate a conversation once you are hired'
+        conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
       })
     } else {
       let userId = getUserInfo().serviceProviderId;
@@ -312,7 +321,7 @@ class VisitServiceDetails extends Component {
     if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You will be able to initiate a video call once you are hired'
+        conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
       })
     } else {
       let item = this.state.visitServiceDetails;
@@ -475,9 +484,11 @@ class VisitServiceDetails extends Component {
         this.state.visitServiceDetails.patient &&
         this.state.visitServiceDetails.patient.lastName.charAt(0)
     }
-    return (
+
+    return (     
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         {this.props.VisitServiceDetails.length === 0 && <Preloader />}
+        {this.state.isLoading && <Preloader /> }
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>Service Requests / {this.state.visitServiceDetails.serviceRequestId
@@ -999,6 +1010,7 @@ function mapStateToProps(state) {
     initiateConversation: state.visitSelectionState.VisitServiceDetailsState
       .canInitiateConversation,
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
+    isLoading:state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
   }
 }
 
