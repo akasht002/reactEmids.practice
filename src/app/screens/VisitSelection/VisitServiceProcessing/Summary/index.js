@@ -236,7 +236,8 @@ class Summary extends Component {
                             max={59}
                         />
                     </span>
-                    <span>
+                    {/* Dont Remove */}
+                    {/* <span>
                         SS <input
                             type="text"
                             value={checkNumber(this.state.updatedSec) ? this.state.updatedSec : ''}
@@ -249,7 +250,7 @@ class Summary extends Component {
                             min={0}
                             max={59}
                         />
-                    </span>
+                    </span> */}
                     <span className="mt-4 d-block text-danger">{this.state.timeErrMessage}</span>
                     <span className="mt-4 d-block text-danger">{this.state.emptyErrMessage}</span>
                 </p>
@@ -262,7 +263,7 @@ class Summary extends Component {
 
                     <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)} hr</span>
                     <span> {this.props.SummaryDetails.originalTotalDuration.substr(3, 2)} min</span>
-                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span>
+                    {/* <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span> */}
                 </p>
             </form>
         }
@@ -353,7 +354,7 @@ class Summary extends Component {
                                                     ''
                                                 }
                                                 <div className="col-md-8 CostTableContainer Label">
-                                                    <p><span>Total Chargeable Time</span>
+                                                    <p><span>Total Chargeable Time (HH:MM)</span>
                                                         <span>Hourly Rate</span></p>
                                                     <p className="TaxLabel"><span>Total Visit Cost </span>
                                                         <span>Taxes and Fees</span></p>

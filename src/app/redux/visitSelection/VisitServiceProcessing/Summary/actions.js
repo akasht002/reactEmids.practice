@@ -155,7 +155,7 @@ export function calculationActualData() {
 
         let sec = duration.seconds();
 
-        let totalChargableTime = hours + ":" + min + ":" + sec;
+        let totalChargableTime = hours + ":" + min;
 
         let hoursinMin = duration.asMinutes();
 
