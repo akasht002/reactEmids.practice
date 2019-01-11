@@ -15,6 +15,11 @@
     color: #b286bc;
 }
 
+span.ProfileCardHeaderLink:hover{
+    color: #7a329f;
+    cursor: pointer;
+}
+
 .topPalette{
 
 }

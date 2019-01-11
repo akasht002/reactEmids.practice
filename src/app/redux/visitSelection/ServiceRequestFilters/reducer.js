@@ -7,7 +7,9 @@ const defaultState = {
     ServiceType: [],
     ServiceStatus: [],
     ServiceAreaList: [],
-    FilterDataCount: ''
+    FilterDataCount: '',
+    isDashboardFilteredStatus: false,
+    status: 'All'
 };
 
 const ServiceRequestFilterState = (state = defaultState, action) => {
@@ -49,10 +51,10 @@ const ServiceRequestFilterState = (state = defaultState, action) => {
                 ServiceType: action.data
             };
         case ServiceRequestFiltersList.clearServiceType:
-        return {
-            ...state,
-            ServiceType: action.data
-        };
+            return {
+                ...state,
+                ServiceType: action.data
+            };
         case ServiceRequestFiltersList.clearServiceArea:
             return {
                 ...state,
@@ -63,7 +65,17 @@ const ServiceRequestFilterState = (state = defaultState, action) => {
                 ...state,
                 ServiceStatus: action.data
             };
-
+        case ServiceRequestFiltersList.setDefaultFilteredStatus:
+            return {
+                ...state,
+                isDashboardFilteredStatus: false
+            };
+        case ServiceRequestFiltersList.getDashboardStatusSuccess:
+            return {
+                ...state,
+                status: action.data.status,
+                isDashboardFilteredStatus: action.data.isDashboardFilteredStatus
+            };
         default:
             return state;
     }
