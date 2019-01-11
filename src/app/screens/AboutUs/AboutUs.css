@@ -110,11 +110,16 @@
     box-shadow: 0 0 8px 0 rgba(0,0,0,.1);
 }
 
+.AboutModalContent .AboutContentContainer .LinkCard a{
+    color: #7a329f;
+}
+
 .AboutContentContainer .LinkCard img{
     position: absolute;
     height: 42px;
     opacity: 0.15;
     left: 10px;
+    bottom: 10px;
 }
 
 .AboutContentContainer:first-child{
@@ -139,24 +144,25 @@
     padding: 10px 0 0 0;
 }
 
+.AboutModalContent {
+    display: block;
+  }
+
+.AboutModalContent .AboutContentContainer.Right
+    {
+    display: block;
+    clear: both;
+    width: 100%;
+    padding-left: 0;
+    }
+
 /*Resposive-bug-fixed*/
 @media only screen and (max-width: 766px) {
-    .AboutModalContent {
-      display: block;
-    }
 
     .AboutModal
     {
         margin: 0 auto !important;
         padding: 0px 8px !important;
         max-width: 100% !important;  
-    }
-
-    .AboutModalContent .AboutContentContainer.Right
-    {
-    display: block;
-    clear: both;
-    width: 100%;
-    padding-left: 0;
     }
 }

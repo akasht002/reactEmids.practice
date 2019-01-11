@@ -5,7 +5,7 @@ import moment from "moment";
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
-import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup,Preloader } from '../../../../components';
 import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
@@ -236,7 +236,8 @@ class Summary extends Component {
                             max={59}
                         />
                     </span>
-                    <span>
+                    {/* Dont Remove */}
+                    {/* <span>
                         SS <input
                             type="text"
                             value={checkNumber(this.state.updatedSec) ? this.state.updatedSec : ''}
@@ -249,7 +250,7 @@ class Summary extends Component {
                             min={0}
                             max={59}
                         />
-                    </span>
+                    </span> */}
                     <span className="mt-4 d-block text-danger">{this.state.timeErrMessage}</span>
                     <span className="mt-4 d-block text-danger">{this.state.emptyErrMessage}</span>
                 </p>
@@ -262,7 +263,7 @@ class Summary extends Component {
 
                     <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)} hr</span>
                     <span> {this.props.SummaryDetails.originalTotalDuration.substr(3, 2)} min</span>
-                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span>
+                    {/* <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span> */}
                 </p>
             </form>
         }
@@ -270,6 +271,7 @@ class Summary extends Component {
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+            {this.props.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
@@ -352,7 +354,7 @@ class Summary extends Component {
                                                     ''
                                                 }
                                                 <div className="col-md-8 CostTableContainer Label">
-                                                    <p><span>Total Chargeable Time</span>
+                                                    <p><span>Total Chargeable Time (HH:MM)</span>
                                                         <span>Hourly Rate</span></p>
                                                     <p className="TaxLabel"><span>Total Visit Cost </span>
                                                         <span>Taxes and Fees</span></p>
@@ -496,6 +498,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
+        isLoading:state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
         CalculationsData: state.visitSelectionState.VisitServiceProcessingState.SummaryState.CalculationsData,
         actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,

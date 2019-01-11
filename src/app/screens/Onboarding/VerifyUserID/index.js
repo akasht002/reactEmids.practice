@@ -102,14 +102,14 @@ class VerifyUserID extends React.Component {
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
-                                <h4 className="font-weight-normal mb-4 verify-title">Verify My User ID</h4>
+                                <h4 className="font-weight-normal mb-4 verify-title">Verify My Email Address</h4>
                                 <form className="form my-2 px-0 my-lg-0 col-md-6">
                                     <Input
                                         id="userId"
                                         autoComplete="off"
                                         type="text"
                                         placeholder="e.g. johndoe@xyz.com"
-                                        label="Enter Email ID"
+                                        label="Enter Email Address"
                                         className={"form-control " + (this.props.isEmailExist ? 'inputSuccess' : (!this.state.emailValid || this.state.isEmailNotExist) && 'inputFailure')}
                                         disabled={this.props.isEmailExist}
                                         value={checkSpace(this.state.email)}
@@ -129,13 +129,13 @@ class VerifyUserID extends React.Component {
                                     <span className="text-success d-block mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
                                 </div>}
                                 {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
-                                    <span className="text-danger d-block mb-2">We did not find your Email ID. Please retry or contact <a className="primaryColor px-1" href = {Help} target = "_blank">Support</a>.</span>
+                                    <span className="text-danger d-block mb-2">We did not find your Email Address. Please retry or contact <a className="primaryColor px-1" href = {Help} target = "_blank">Support</a>.</span>
                                 </div>}
                                 {!this.state.emailValid && <div className="MsgWithIcon MsgWrongIcon">
-                                    <span className="text-danger d-block mb-2">Please enter a valid email address. e.g. abc@xyz.com</span>
+                                    <span className="text-danger d-block mb-2">Please enter a valid Email Address. e.g. abc@xyz.com</span>
                                 </div>}
                                 {this.state.isAlreadyOnboarded && <div className={"MsgWithIcon MsgWrongIcon"}>
-                                    <span className="text-danger d-block mb-2">Sorry, you are already onboarded for this registered userId.</span>
+                                    <span className="text-danger d-block mb-2">Sorry, you are already onboarded for this registered Email Address.</span>
                                 </div>}
                             </div>
                         </div>

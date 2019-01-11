@@ -20,6 +20,7 @@ class VerifyContact extends React.Component {
             passCodeSentMsg: false,
             showModalOnCancel: false,
             mobileNumber: '',
+            clickHereResent: false
         };
     };
 
@@ -46,7 +47,20 @@ class VerifyContact extends React.Component {
             visible: 'd-none',
             invisible: 'd-block',
             passCodeSentMsg: true,
-            temporaryPassCode: ''
+            temporaryPassCode: '',
+            clickHereResent: false
+        });
+        this.props.sendPassCode(this.props.serviceProviderDetails);
+        this.props.formDirty();
+    };
+
+    onClickReSendPasscode = () => {
+        this.setState({
+            visible: 'd-none',
+            invisible: 'd-block',
+            passCodeSentMsg: true,
+            temporaryPassCode: '',
+            clickHereResent: true
         });
         this.props.sendPassCode(this.props.serviceProviderDetails);
         this.props.formDirty();
@@ -118,8 +132,8 @@ class VerifyContact extends React.Component {
                             </div>
                         </div>
                         <div className="row mt-auto verify-msgie11">
-                            {this.state.passCodeSentMsg && <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been sent to your registered Contact Number.</span>}
-                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
+                            {this.state.passCodeSentMsg && <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been {this.state.clickHereResent && <span>re</span>}sent to your registered Contact Number.</span>}
+                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickReSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
                         </div>
                     </div>
                 </CoreoWizScreen>

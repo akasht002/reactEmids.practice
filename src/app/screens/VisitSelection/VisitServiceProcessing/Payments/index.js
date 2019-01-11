@@ -6,7 +6,7 @@ import { StripeProvider } from 'react-stripe-elements';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getpaymentsCardList, chargeByCustomerId, claimsSubmission, captureAmount } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
-import { Scrollbars, DashboardWizFlow } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, Preloader } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { SAVEDCARDS, NEWCARDS } from '../../../../constants/constants'
 import { STRIPE_KEY } from "../../../../constants/config"
@@ -22,7 +22,8 @@ class Payments extends Component {
         this.state = {
             SelectedCard: '1',
             selectedCard: '',
-            // disabled: false
+            // disabled: false,
+            isLoading:false
         };
         this.Claimdata = {};
     };
@@ -41,6 +42,7 @@ class Payments extends Component {
         }else{
             this.setState({disabled: true})
         }
+        this.setState({isLoading :nextProps.isLoading  })
     }
 
     toggleCardSelection = (e) => {
@@ -235,6 +237,7 @@ class Payments extends Component {
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
                     className='ProfileContentWidget'>
+                    {this.state.isLoading && <Preloader /> }
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
@@ -339,7 +342,8 @@ function mapStateToProps(state) {
         summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState,
         CardList: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.CardList,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
-        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus
+        eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
+        isLoading: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.isLoading,
     };
 };
 

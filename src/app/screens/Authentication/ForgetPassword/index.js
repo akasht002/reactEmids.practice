@@ -48,14 +48,14 @@ export class ForgetPassword extends Component {
         return (
             <LoginCover isLoading={this.props.isLoading}>
                 <h3>Forgot your password ?</h3>
-                <p>Don't  worry. Resetting password is easy. Just tell us your Email ID registered with CoreoHome.</p>
+                <p>Don't  worry. Resetting password is easy. Just tell us your Email Address registered with CoreoHome.</p>
                 <div className="form-group text-center">
                     <Input
                         name="emailId"
                         autoComplete="off"
                         required="required"
                         type="email"
-                        placeholder="Enter User ID"
+                        placeholder="Enter Email Address"
                         maxlength={100}
                         className={"emailField " + (this.props.isSendResetPasswordLinkSuccess ? 'inputSuccess' : (!this.state.emailValid || this.props.isSendResetPasswordLinkError) && 'inputFailure')}
                         value={this.state.email}
@@ -63,10 +63,10 @@ export class ForgetPassword extends Component {
                     />
                 </div>
                 {!this.state.emailValid &&
-                    <p className="text-danger">Please enter a valid User ID(e.g. abc@xyz.com)</p>
+                    <p className="text-danger">Please enter a valid Email Address(e.g. abc@xyz.com)</p>
                 }
                 {this.props.isSendResetPasswordLinkError &&
-                    <p className="text-danger d-block mt-4 mb-2">Invalid User ID. Please try again</p>
+                    <p className="text-danger d-block mt-4 mb-2">Invalid Email Address. Please try again</p>
                 }
                 <Button
                     type="button"

@@ -21,6 +21,10 @@ import {
 import { Path } from '../../routes';
 import { push } from '../../redux/navigation/actions'
 import { setPatient } from "../../redux/patientProfile/actions";
+import { setServiceRequestStatus } from '../../redux/visitSelection/VisitServiceList/actions'
+import {
+  ServiceRequestStatus
+} from "../../redux/visitSelection/ServiceRequestFilters/actions";
 
 import { getLength } from '../../utils/validations'
 
@@ -40,6 +44,7 @@ class ServiceRequest extends React.Component {
   componentDidMount() {
     this.props.getPatientServiceRequestDetail(this.state.selectedValue.value)
     this.props.getServiceStatusDetail()
+    this.props.ServiceRequestStatus()
   }
 
   componentWillReceiveProps(nextProps) { }
@@ -88,7 +93,9 @@ class ServiceRequest extends React.Component {
     )
   }
 
-  
+  handleViewAll = () => {
+    this.props.setServiceRequestStatus({status: this.state.selectedValue.value, isDashboardFilteredStatus: true}) // Temporarily disabling the functionality till the pagination in SR listing screen is fixed.
+  }
 
   render() {
     const serviceStatusLookUp = this.props.serviceStatusLookUp.map(
@@ -125,7 +132,9 @@ class ServiceRequest extends React.Component {
               Service Requests
             </span>
             {getLength(serviceRequest) > VIEW_ALL_COUNT &&
-            <Link className='ProfileCardHeaderLink' to='/visitServiceList'>View all</Link>
+            <span className='ProfileCardHeaderLink'
+            onClick={e => this.handleViewAll()}
+            >View all</span>
             }
           </div>
           <div className='topPalette'>
@@ -190,6 +199,8 @@ function mapDispatchToProps(dispatch) {
     goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
     setPatient: data => dispatch(setPatient(data)),
+    setServiceRequestStatus: data => dispatch(setServiceRequestStatus(data)),
+    ServiceRequestStatus: () => dispatch(ServiceRequestStatus())
   }
 }
 

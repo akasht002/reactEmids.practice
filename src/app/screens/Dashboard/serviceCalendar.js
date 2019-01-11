@@ -648,7 +648,7 @@ class serviceCalendar extends React.Component {
          <ModalPopup
           isOpen={this.state.isAlertModalOpen}
           toggle={this.reset}
-          ModalBody={<span>Phone Number : +1 {this.state.phoneNumber}</span>}
+          ModalBody={<span>Phone Number : {this.state.phoneNumber}</span>}
           btn1='OK'
           className='modal-sm'
           headerFooter='d-none'

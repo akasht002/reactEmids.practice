@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getUserInfo } from '../../../utils/userUtility'
+import {isFutureDay} from '../../../utils/dateUtility'
 import { setESP } from "../../../redux/patientProfile/actions";
 import {  ModalPopup,Input } from '../../../components'
 import {    
@@ -111,14 +112,12 @@ class AssignServiceProvider extends Component {
           // !moment(this.props.sp.visitDate).isBefore(moment(new Date(), "MM-DD-YYYY")) 
          
   render () {
-    console.log(111111111111111111)
-    console.log(this.props.statusID)
     let modalTitle = "Assign Service Provider";
     let modalType = "";
     let modalContent = this.getModalContent(this.props.serviceProviderList)    
     return (
       <div className='EntityUServiceProf'>
-        {this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ? 
+        {isFutureDay(this.props.sp.visitDate)?this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ? 
           this.props.statusID === 38           
            ? <span>
             <i
@@ -168,7 +167,7 @@ class AssignServiceProvider extends Component {
               </span>
             </div>
           </Fragment>
-        )}
+        ):''}
 
         <ModalPopup
           isOpen={this.state.EditPersonalDetailModal}

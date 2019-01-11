@@ -8,6 +8,7 @@ import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
 import { updateServiceRequestId } from '../Payments/actions';
 
+
 export const SummaryDetails = {
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
     getCalculationsData: 'get_calculations_data/summarydetails',
@@ -16,6 +17,8 @@ export const SummaryDetails = {
     getSavedSignatureSuccess: 'getSavedSignatureSuccess/summarydetails',
     formDirtySummaryDetails: 'formDirtySummaryDetails/summarydetails',
     getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/summarydetails',
+    startLoading: 'startLoading/visitservice',
+    endLoading: 'endLoading/visitservice'
 };
 
 export const getSummaryDetailsSuccess = (data) => {
@@ -31,6 +34,19 @@ export const getVisitServiceEligibityStatusSuccess = data => {
         data
     }
 }
+
+export const startLoadingProcessing = () => {
+    return {
+      type: SummaryDetails.startLoading,
+    }
+  };
+  
+  export const endLoadingProcessing = () => {
+    return {
+      type: SummaryDetails.endLoading,
+    }
+};
+
 
 export const getCalculationsData = (data) => {
     return {
@@ -68,15 +84,15 @@ export const formDirtySummaryDetails = () => {
 
 export function getSummaryDetails(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             // dispatch(calculationsFirstTime(resp.data));
             dispatch(getVisitServiceEligibilityStatus(resp.data))
             // dispatch(push(Path.summary))
-            //dispatch(endLoading());
+            // dispatch(endLoadingProcessing());
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };
@@ -112,14 +128,14 @@ export function getVisitServiceEligibilityStatus(data) {
         serviceRequestId: data.serviceRequestId
     }
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
             dispatch(getVisitServiceEligibityStatusSuccess(resp.data));
             dispatch(calculationsFirstTime(data));
             dispatch(push(Path.summary))
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };
@@ -139,7 +155,7 @@ export function calculationActualData() {
 
         let sec = duration.seconds();
 
-        let totalChargableTime = hours + ":" + min + ":" + sec;
+        let totalChargableTime = hours + ":" + min;
 
         let hoursinMin = duration.asMinutes();
 
@@ -257,12 +273,12 @@ export function saveSignature(data) {
 
 export function getSavedSignature(data) {
     return (dispatch) => {
-        //dispatch(startLoading());
+        //dispatch(startLoadingProcessing());
         ServiceRequestGet(API.getSavedSignature + data).then((resp) => {
             dispatch(getSavedSignatureSuccess(resp.data));
-            //dispatch(endLoading());
+            //dispatch(endLoadingProcessing());
         }).catch((err) => {
-            //dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };

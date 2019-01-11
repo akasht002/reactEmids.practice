@@ -4,11 +4,12 @@ import { withRouter } from 'react-router-dom'
 import classnames from 'classnames'
 import Moment from 'react-moment'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import { Scrollbars, ModalPopup,Preloader } from '../../../components'
+import { Scrollbars, ModalPopup, Preloader } from '../../../components'
 import { goBack, push } from '../../../redux/navigation/actions'
 import { Path } from '../../../routes'
 import AssignServiceProvider from './AssignServiceProvider'
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getSpBusyInVisit } from '../../../redux/profile/PersonalDetail/actions';
 import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
@@ -77,6 +78,8 @@ class VisitServiceDetails extends Component {
       conversationErrMsg: '',
       pageNumber: 1,
       disableShowMore: false,
+      standByModeAlertMsg: false,
+      isLoading:false
     }
     this.alertModalMsg = ''
     this.status = {}
@@ -88,6 +91,7 @@ class VisitServiceDetails extends Component {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       // this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
       this.props.getDays();
+      this.props.getSpBusyInVisit();
     } else {
       this.props.history.push(Path.visitServiceList)
     }
@@ -96,11 +100,12 @@ class VisitServiceDetails extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       visitServiceDetails: nextProps.VisitServiceDetails,
-      patientId:  nextProps.VisitServiceDetails.patient &&
+      patientId: nextProps.VisitServiceDetails.patient &&
         nextProps.VisitServiceDetails.patientId,
-      serviceType:  nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
+      serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
         nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
           .serviceRequestTypeDetailsId,
+          isLoading :nextProps.isLoading  
     })
     this.visitServiceScheduleData(nextProps);
   }
@@ -167,13 +172,18 @@ class VisitServiceDetails extends Component {
   }
 
   visitProcessing = data => {
-    this.props.getPerformTasksList(data, true)
-    this.props.formDirty();
-    this.props.formDirtyFeedback();
-    this.props.formDirtyPerformTask();
+    {
+      this.props.isStandByModeOn.isServiceProviderInStandBy ?
+      this.setState({standByModeAlertMsg: true})
+      :
+      this.props.getPerformTasksList(data, true)
+      this.props.formDirty();
+      this.props.formDirtyFeedback();
+      this.props.formDirtyPerformTask();
+    }
   }
 
-  visitProcessingSummary = data => {
+  visitProcessingSummary = data => {    
     this.props.getServiceVisitId(data, true);
     this.props.getSummaryDetails(data);
     this.props.getSavedSignature(data);
@@ -182,12 +192,13 @@ class VisitServiceDetails extends Component {
     this.props.formDirtyFeedback();
   }
 
-  reset = () => {    
-    this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);   
+  reset = () => {
+    this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
     setTimeout(() => {
-    this.setState({
-      visitServiceSchedule: this.props.VisitServiceSchedule
-    }) }, 300)
+      this.setState({
+        visitServiceSchedule: this.props.VisitServiceSchedule
+      })
+    }, 300)
   }
 
   selectedServiceType = e => {
@@ -262,16 +273,23 @@ class VisitServiceDetails extends Component {
   }
 
   showPhoneNumber = () => {
-    let data = this.props.VisitServiceDetails;
-    let phoneNumber = data.patient ? data.patient.phoneNumber : ''
-    this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    if (this.props.VisitServiceDetails.statusId !== 38) {
+      this.setState({
+        conversationsModal: true,
+        conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
+      })
+    } else {
+      let data = this.props.VisitServiceDetails;
+      let phoneNumber = data.patient ? data.patient.phoneNumber : ''
+      this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    }
   };
 
   onClickConversation = () => {
     if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You will be able to initiate a conversation once you are hired'
+        conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
       })
     } else {
       let userId = getUserInfo().serviceProviderId;
@@ -303,7 +321,7 @@ class VisitServiceDetails extends Component {
     if (this.props.VisitServiceDetails.statusId !== 38) {
       this.setState({
         conversationsModal: true,
-        conversationErrMsg: 'You will be able to initiate a video call once you are hired'
+        conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
       })
     } else {
       let item = this.state.visitServiceDetails;
@@ -323,7 +341,7 @@ class VisitServiceDetails extends Component {
   render() {
     let defaultCheck = ''
     let sliderTypes =
-    this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
+      this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
       this.state.visitServiceDetails.serviceRequestTypeDetails.map(
         (serviceTypes, index) => {
           index === 0 ? (defaultCheck = true) : (defaultCheck = false)
@@ -359,7 +377,7 @@ class VisitServiceDetails extends Component {
       )
 
     let description =
-    this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
+      this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
       this.state.visitServiceDetails.serviceRequestTypeDetails.map(
         (typeDetails, index) => {
           return (
@@ -393,7 +411,7 @@ class VisitServiceDetails extends Component {
           day: day.keyValue,
           slotDescription: []
         }
-        this.state.visitServiceDetails &&  this.state.visitServiceDetails.serviceRequestSlot &&
+        this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestSlot &&
           this.state.visitServiceDetails.serviceRequestSlot.map(slotDay => {
             if (day.id === slotDay.dayOfWeek) {
               checkDay.slotDescription.push(slotDay.slotDescription)
@@ -446,7 +464,7 @@ class VisitServiceDetails extends Component {
       })
 
     let address =
-    this.state.visitServiceDetails && this.state.visitServiceDetails.patient &&
+      this.state.visitServiceDetails && this.state.visitServiceDetails.patient &&
       this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
         return obj.isPrimaryAddress === true
       })
@@ -466,9 +484,11 @@ class VisitServiceDetails extends Component {
         this.state.visitServiceDetails.patient &&
         this.state.visitServiceDetails.patient.lastName.charAt(0)
     }
-    return (
+
+    return (     
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-       {this.props.VisitServiceDetails.length === 0 && <Preloader />}
+        {this.props.VisitServiceDetails.length === 0 && <Preloader />}
+        {this.state.isLoading && <Preloader /> }
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>Service Requests / {this.state.visitServiceDetails.serviceRequestId
@@ -829,7 +849,7 @@ class VisitServiceDetails extends Component {
                               </div>
                               {
                                 getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
-                                <AssignServiceProvider sp={ScheduleList} reset={this.reset} statusID = {this.props.VisitServiceDetails.statusId} />
+                                <AssignServiceProvider sp={ScheduleList} reset={this.reset} statusID={this.props.VisitServiceDetails.statusId} />
                               }
                             </div>
                           )
@@ -894,7 +914,7 @@ class VisitServiceDetails extends Component {
           />
           <ModalPopup
             isOpen={this.state.phoneNumberModal}
-            ModalBody={<span> Phone Number : +1 {this.state.phoneNumber} </span>}
+            ModalBody={<span> Phone Number : {this.state.phoneNumber} </span>}
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'
@@ -916,6 +936,19 @@ class VisitServiceDetails extends Component {
             onConfirm={() =>
               this.setState({
                 conversationsModal: false
+              })}
+          />
+          <ModalPopup
+            isOpen={this.state.standByModeAlertMsg}
+            ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
+            btn1='OK'
+            className='modal-sm'
+            headerFooter='d-none'
+            footer='d-none'
+            centered='centered'
+            onConfirm={() =>
+              this.setState({
+                standByModeAlertMsg: false
               })}
           />
         </Scrollbars>
@@ -957,6 +990,7 @@ function mapDispatchToProps(dispatch) {
     formDirtyVisitServiceDetails: () => dispatch(formDirtyVisitServiceDetails()),
     getServiceRequestId: (data) => dispatch(getServiceRequestId(data)),
     goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
+    getSpBusyInVisit: () => dispatch(getSpBusyInVisit())
   }
 }
 
@@ -975,6 +1009,8 @@ function mapStateToProps(state) {
     daysType: state.visitSelectionState.VisitServiceDetailsState.daysType,
     initiateConversation: state.visitSelectionState.VisitServiceDetailsState
       .canInitiateConversation,
+    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
+    isLoading:state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
   }
 }
 
