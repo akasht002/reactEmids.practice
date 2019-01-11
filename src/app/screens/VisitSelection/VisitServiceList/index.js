@@ -21,7 +21,7 @@ import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import {
     getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea,
     clearServiceCategory, clearServiceType, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus,
-    getFilterDataCount, formDirty
+    getFilterDataCount, formDirty, setDefaultFilteredStatus
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
@@ -88,11 +88,28 @@ class VisitServiceList extends Component {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
         }
-        this.props.getVisitServiceList(data);
+        if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
+            let data = {
+                startDate: DEFAULT_FROM_DATE,
+                endDate: DEFAULT_TO_DATE,
+                serviceStatus: [this.props.status],
+                ServiceCategoryId: '',
+                serviceTypes: [],
+                ServiceAreas: {},
+                serviceProviderId: getUserInfo().serviceProviderId,
+                FromPage: PAGE_NO,
+                ToPage: SERVICE_REQUEST_PAGE_SIZE,
+            };
+            this.props.getFilter(data)
+            this.props.getFilterDataCount(data)
+        }
+        else {
+            this.props.getVisitServiceList(data);
+            this.props.getServiceRequestCount()
+        }
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
         this.props.getServiceArea();
-        this.props.getServiceRequestCount()
         this.props.clearServiceType()
     }
 
@@ -115,6 +132,8 @@ class VisitServiceList extends Component {
     componentWillUnmount() {
         console.log("Clock", "componentWillUnmount");
         this.props.clearVisitServiceList()
+        this.props.setDefaultFilteredStatus()
+        this.props.formDirty()
     }
 
     handleClick = (requestId) => {
@@ -184,7 +203,7 @@ class VisitServiceList extends Component {
         let serviceProviderId = getUserInfo().serviceProviderId;
         let data = {
             startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
-            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE: this.state.endDate,
+            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
             serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
             ServiceCategoryId: this.state.ServiceCategoryId,
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
@@ -205,17 +224,33 @@ class VisitServiceList extends Component {
     handleSortFilterChange = pageNumber => {
         this.setState({ pageNumber: pageNumber });
         let serviceProviderId = getUserInfo().serviceProviderId;
-        let data = {
-            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
-            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
-            serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
-            ServiceCategoryId: this.state.ServiceCategoryId,
-            serviceTypes: uniqElementOfArray(this.state.serviceTypes),
-            ServiceAreas: this.state.ServiceAreas,
-            serviceProviderId: serviceProviderId,
-            FromPage: pageNumber,
-            ToPage: 15,
-        };
+        let data;
+        if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
+            data = {
+                startDate: DEFAULT_FROM_DATE,
+                endDate: DEFAULT_TO_DATE,
+                serviceStatus: [this.props.status],
+                ServiceCategoryId: '',
+                serviceTypes: [],
+                ServiceAreas: {},
+                serviceProviderId: getUserInfo().serviceProviderId,
+                FromPage: PAGE_NO,
+                ToPage: SERVICE_REQUEST_PAGE_SIZE,
+            };
+        }
+        else {
+            data = {
+                startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
+                endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
+                serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
+                ServiceCategoryId: this.state.ServiceCategoryId,
+                serviceTypes: uniqElementOfArray(this.state.serviceTypes),
+                ServiceAreas: this.state.ServiceAreas,
+                serviceProviderId: serviceProviderId,
+                FromPage: pageNumber,
+                ToPage: 15,
+            };
+        }
         this.props.getFilter(data)
         this.props.getFilterDataCount(data)
         this.setState({ activePage: pageNumber });
@@ -567,6 +602,7 @@ function mapDispatchToProps(dispatch) {
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
         clearVisitServiceList: () => dispatch(clearVisitServiceList()),
+        setDefaultFilteredStatus: () => dispatch(setDefaultFilteredStatus())
     }
 };
 
@@ -582,6 +618,8 @@ function mapStateToProps(state) {
         ServiceAreaList: state.visitSelectionState.ServiceRequestFilterState.ServiceAreaList,
         serviceRequestCount: state.visitSelectionState.VisitServiceListState.serviceRequestCount,
         FilterDataCount: state.visitSelectionState.ServiceRequestFilterState.FilterDataCount,
+        status: state.visitSelectionState.ServiceRequestFilterState.status,
+        isDashboardFilteredStatus: state.visitSelectionState.ServiceRequestFilterState.isDashboardFilteredStatus
     };
 };
 

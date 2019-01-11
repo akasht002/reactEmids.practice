@@ -15,6 +15,8 @@ export const ServiceRequestFiltersList = {
     getFilterDataCountSuccess:'getFilterDataCountSuccess/servicerequestfilters',
     formDirty:'formDirty/servicerequestfilters',
     clearServiceType:'clear_service_type/servicerequestfilters',
+    setDefaultFilteredStatus: 'setDefaultFilteredStatus/servicerequestfilters',
+    getDashboardStatusSuccess: 'getDashboardStatusSuccess/servicerequestfilters'
 };
 
 export const clearServiceRequestStatus = (data) => {
@@ -81,6 +83,12 @@ export const getServiceRequestStatusSuccess = (data) => {
         data
     }
 }
+
+export const setDefaultFilteredStatus = () => {
+    return {
+        type: ServiceRequestFiltersList.setDefaultFilteredStatus,
+    }
+};
 
 export const getServiceAreaSuccess = (data) => {
     data.map((item) => {
@@ -240,3 +248,32 @@ export const checkAllServiceRequestStatus = (checked, data) => {
     }
 };
 
+export function getDashboardStatusSuccess (data) {
+    return {
+        type: ServiceRequestFiltersList.getDashboardStatusSuccess,
+        data
+    }
+}
+
+export function checkParticularServiceRequestStatus (updatedData) {
+    return (dispatch, getState) => {
+      let data = getState().visitSelectionState.ServiceRequestFilterState
+        .ServiceStatus
+      let finalData = data.map(item => {
+        if (item.id === updatedData.status) {
+          return {
+            ...item,
+            isChecked: true
+          }
+        } else {
+          return {
+            ...item,
+            isChecked: false
+          }
+        }
+      })
+      dispatch(getServiceRequestStatusSuccess(finalData))
+      dispatch(getDashboardStatusSuccess(updatedData))
+    }
+  }
+  
