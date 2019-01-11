@@ -63,7 +63,7 @@ class ConversationSummary extends Component {
     };
 
     onCreateConversation = () => {
-        let userId = this.props.loggedInUser.serviceProviderId;
+        let userId = this.props.loggedInUser.coreoHomeUserId;
         let data = {
             participants: this.state.participants.toString(),
             createdBy: userId,

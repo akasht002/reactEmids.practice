@@ -40,7 +40,8 @@ class ParticipantsContainer extends Component {
     onCheckParticipant = (participant, event) => {
         let selectedParticipant = {
             userId: participant.userId,
-            participantType: participant.participantType
+            participantType: participant.participantType,
+            participantId: participant.participantId
         };
         let updatedParticipants = [...this.state.selectedParticipants];
         const index = updatedParticipants.indexOf(
@@ -59,10 +60,11 @@ class ParticipantsContainer extends Component {
     onCreateConversation = () => {
         let data = {};
         let selectedParticipants = [];
-        let userId = this.props.loggedInUser.serviceProviderId;
+        let userId = this.props.loggedInUser.coreoHomeUserId;
         let loggedInUserData = {
             userId: userId,
-            participantType: USERTYPES.SERVICE_PROVIDER
+            participantType: USERTYPES.SERVICE_PROVIDER,
+            participantId: this.props.loggedInUser.serviceProviderId
         };
         selectedParticipants = [...this.state.selectedParticipants];
         selectedParticipants.push(loggedInUserData);
@@ -101,9 +103,9 @@ class ParticipantsContainer extends Component {
         this.onClearSelectedParticipants();
         if(patientId !== null){
             let patientData = {
-            userId: patientId,
-            participantType: USERTYPES.PATIENT
-        };
+                userId: patientId,
+                participantType: USERTYPES.PATIENT
+            };
         let userId = this.props.loggedInUser.serviceProviderId;
         this.setState({ selectedPatientDetails: patientData, selectedParticipants: [] });
         let data = {
