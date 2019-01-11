@@ -338,7 +338,6 @@ export function onSendNewMessage(data) {
     return (dispatch) => {
         AsyncPost(API.sendMessage, data)
             .then(resp => {
-                debugger;
                 let list = resp.data.result.participantList.map((participant) => {
                     return {
                         userId: participant.userId,

@@ -73,17 +73,13 @@ class MessageList extends Component {
             messageThreads = this.newConversation();
         } else {
             messageThreads = this.props.conversation.map((msgThread, index) => {
-                if (this.props.getUnreadMsgCounts.length > 0) {
-                    unreadMessages = "";
-                    msgClass = "readMsgs";
-                    this.props.getUnreadMsgCounts.map(unreadMsgCount => {
-                        if (msgThread.conversationId === unreadMsgCount.conversationId) {
-                            msgClass = "";
-                            return unreadMessages = <span className={"float-right count" + msgClass}>{unreadMsgCount.unreadMessageCount}</span>
-                        }
-                        return '';
-                    });
-                };
+                unreadMessages = "";
+                msgClass = "readMsgs";
+                if (msgThread.unreadCount > 0) {
+                    msgClass = "";
+                    unreadMessages = <span className={"float-right count" + msgClass}>{msgThread.unreadCount}</span>
+                }
+
                 !msgThread.title ? msgHeader = this.getPartcipitantHeader(msgThread.participantList) : msgHeader = msgThread.title;
                 return (
                     <li key={index} className="list-group-item">
