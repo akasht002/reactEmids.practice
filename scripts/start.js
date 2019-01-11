@@ -28,7 +28,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = "https://chqa-sp-api.coreoflowsandbox.com/api/";
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
   process.env.REACT_APP_SR_URL = "https://chqa-ui.coreoflowsandbox.com/api/";
-  process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3001/#/';
   process.env.REACT_APP_MSG_URL = "http://localhost:63631/api/";
   process.env.REACT_APP_ES_URL = 'https://chqa-ui.coreoflowsandbox.com/api/';
   process.env.REACT_APP_TP_URL = 'http://localhost:63631/api/';
