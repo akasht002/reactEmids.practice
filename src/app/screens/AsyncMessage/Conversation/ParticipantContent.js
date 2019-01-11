@@ -186,7 +186,7 @@ class ParticipantContent extends Component {
         let existingParticipants = [];
         let profileOptionClass = "";
         let loggedInUser = [];
-        let userId = this.props.loggedInUser.serviceProviderId;
+        let userId = this.props.loggedInUser.coreoHomeUserId;
         if (this.props.existingParticipants && this.props.existingParticipants.length > 0) {
              this.props.existingParticipants.map((participant, index) => {
                 if (userId !== participant.userId) {

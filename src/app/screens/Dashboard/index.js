@@ -14,6 +14,7 @@ import { getUserInformation } from '../../redux/auth/UserAgreement/actions';
 import {
   PROFILE_SERVICE_PROVIDER_TYPE_ID
 } from '../../constants/constants';
+import { getMessageFallBackInterval } from '../../redux/asyncMessages/actions';
 import './dashboard.css'
 import './ctdashboard.css'
 import './styles/toggleSwitch.css'
@@ -46,6 +47,7 @@ class Dashboard extends React.Component {
     this.props.getAboutUsContent();
     this.props.getBuildVersion();
     this.props.getUserInformation();
+    this.props.getMessageFallBackInterval()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -260,6 +262,7 @@ function mapDispatchToProps(dispatch) {
     getAboutUsContent: () => dispatch(getAboutUsContent()),
     getBuildVersion: () => dispatch(getBuildVersion()),
     getUserInformation: () => dispatch(getUserInformation()),
+    getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval())
   }
 }
 

@@ -319,14 +319,16 @@ class serviceCalendar extends React.Component {
     if (item) {
       let selectedParticipants = [
         {
-          userId: item.patientId,
-          participantType: USERTYPES.PATIENT
+          userId: item.coreoHomeUserId,
+          participantType: USERTYPES.PATIENT,
+          participantId: item.patientId
         }
       ];
-      let userId = this.props.loggedInUser.serviceProviderId;
+      let userId = this.props.loggedInUser.coreoHomeUserId;
       let loggedInUser = {
         userId: userId,
-        participantType: USERTYPES.SERVICE_PROVIDER
+        participantType: USERTYPES.SERVICE_PROVIDER,
+        participantId: this.props.loggedInUser.serviceProviderId
       };
       selectedParticipants.push(loggedInUser);
       let data = {

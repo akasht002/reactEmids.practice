@@ -148,7 +148,7 @@ class MessageContent extends Component {
                 let messageClass = "";
                 let imageClass = "";
                 let ordering = "";
-                let userId = this.props.loggedInUser.serviceProviderId;
+                let userId = this.props.loggedInUser.coreoHomeUserId;
                 if (conversation.createdBy === userId && conversation.createdByType === USERTYPES.SERVICE_PROVIDER) {
                     messageClass = "ml-auto yourChat";
                     ordering = "order-12"

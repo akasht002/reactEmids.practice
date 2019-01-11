@@ -73,8 +73,7 @@ export const Path = {
   paymentfailure: '/paymentfailure',
   teleHealth: '/teleHealth',
   messageSummary: '/messagesummary',
-  conversations: '/conversation/:id',
-  conversation: '/conversation/',
+  conversation: '/conversation',
   visitHistory: '/visitHistory',
   visitSummaryDetail: '/visitSummary',
   patientProfile: '/patientProfile',
@@ -116,7 +115,7 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.feedback} permission={SCREENS.SERVICE_REQUEST} component={Feedback} />
             <PrivateRoute path={Path.summary} permission={SCREENS.SERVICE_REQUEST} component={Summary} />
             <PrivateRoute path={Path.teleHealth} permission={SCREENS.TELEHEALTH} component={TeleHealth} />
-            <PrivateRoute path={Path.conversations} permission={SCREENS.ASYNC_MESSAGE} component={Conversation} />
+            <PrivateRoute path={Path.conversation} permission={SCREENS.ASYNC_MESSAGE} component={Conversation} />
             <PrivateRoute path={Path.messageSummary} permission={SCREENS.ASYNC_MESSAGE} component={ConversationSummary} />
             <PrivateRoute path={Path.profile} permission={SCREENS.PROFILE} component={Profile} />
             <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />

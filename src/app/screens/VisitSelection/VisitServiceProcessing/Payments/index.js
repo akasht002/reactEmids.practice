@@ -8,7 +8,7 @@ import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getpaymentsCardList, chargeByCustomerId, claimsSubmission, captureAmount } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 import { Scrollbars, DashboardWizFlow } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import { SAVEDCARDS, NEWCARDS, AUTHORIZEDCARD } from '../../../../constants/constants'
+import { SAVEDCARDS, NEWCARDS } from '../../../../constants/constants'
 import { STRIPE_KEY } from "../../../../constants/config"
 import CheckoutForm from './stripe';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";

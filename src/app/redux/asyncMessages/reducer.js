@@ -18,6 +18,7 @@ const defaultState = {
     removeParticipantConcurrencyExist: false,
     activePageNumber: 1,
     isLoading:false,
+    callbackInterval: 9000
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -189,6 +190,11 @@ const asyncMessageState = (state = defaultState, action) => {
             return{
             ...state,
                 isLoading: false
+            }
+        case AsyncMessageActions.msgCallbackInterval:
+            return {
+                ...state,
+                callbackInterval: action.data
             }
         default:
             return state;
