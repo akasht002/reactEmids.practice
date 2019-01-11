@@ -132,9 +132,9 @@ class ServiceRequest extends React.Component {
               Service Requests
             </span>
             {getLength(serviceRequest) > VIEW_ALL_COUNT &&
-            <a className='ProfileCardHeaderLink'
+            <span className='ProfileCardHeaderLink'
             onClick={e => this.handleViewAll()}
-            >View all</a>
+            >View all</span>
             }
           </div>
           <div className='topPalette'>
