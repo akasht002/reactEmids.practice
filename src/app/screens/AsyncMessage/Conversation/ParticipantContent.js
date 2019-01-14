@@ -219,7 +219,8 @@ class ParticipantContent extends Component {
                                     <a onClick={() => {
                                         if(participant.participantType !== USERTYPES.SERVICE_PROVIDER){
                                             let data = {
-                                                userId : participant.userId,
+                                                userId : participant.participantId,
+                                                // userId : participant.userId,
                                                 userType: participant.participantType,
                                                 isUser: false
                                             };
@@ -227,11 +228,11 @@ class ParticipantContent extends Component {
                                             this.props.goToPatientProfile();
                                         }
                                         else if (participant.isEntityServiceProvider && participant.serviceProviderTypeId === 1) {
-                                            this.props.setESP(participant.userId);
+                                            this.props.setESP(participant.participantId);
                                             this.props.goToESPProfile();
                                         } else {
                                             let data = {
-                                                userId: participant.userId,
+                                                userId: participant.participantId,
                                                 isEntityServiceProvider: participant.isEntityServiceProvider,
                                                 serviceProviderTypeId: participant.serviceProviderTypeId,
                                                 entityId: participant.entityId
