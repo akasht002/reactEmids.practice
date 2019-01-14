@@ -49,6 +49,7 @@ import {
   ORG_SERVICE_PROVIDER_TYPE_ID
 } from '../../../constants/constants'
 import { getLength } from '../../../utils/validations'
+import { formatPhoneNumber } from '../../../utils/formatName'
 import {
   getVisitServiceHistoryByIdDetail,
   clearVisitServiceHistoryByIdDetail
@@ -914,7 +915,7 @@ class VisitServiceDetails extends Component {
           />
           <ModalPopup
             isOpen={this.state.phoneNumberModal}
-            ModalBody={<span> Phone Number : {this.state.phoneNumber} </span>}
+            ModalBody={<span> Phone Number : {formatPhoneNumber(this.state.phoneNumber)} </span>}
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'

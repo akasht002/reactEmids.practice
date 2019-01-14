@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import { Scrollbars,Input } from "../../components";
 import "./ProfileMainPanel.css";
 import { convertStringToDate } from "../../utils/validations";
+import { formatPhoneNumber } from "../../utils/formatName"
 import {
   getServiceProviderVists,
   getServiceVisitCount,
@@ -245,7 +246,7 @@ class serviceCalendar extends React.Component {
 
   handlePhoneNumber = data =>{
     this.setState({isAlertModalOpen:!this.state.isAlertModalOpen,
-                  phoneNumber:data.phoneNumber})
+                  phoneNumber:formatPhoneNumber(data.phoneNumber)})
   }
 
   reset = () => {
