@@ -252,16 +252,16 @@ class VisitServiceDetails extends Component {
     this.props.history.push(Path.visitServiceList)
   }
 
-  showData = data => {
-    if (data.occurence !== 0) {
-      return '- ' + !!!data.occurence ? '' : data.occurence + ' occurrences'
+  showData = () => {
+    if (this.state.visitServiceDetails.occurence !== 0) {
+      return '- ' + this.state.visitServiceDetails.occurence + ' occurrences'
     } else {
       return (
         <React.Fragment>
           -
           &nbsp;
           <Moment format='DD MMM YYYY'>
-            {data.endDate}
+            {this.state.visitServiceDetails.endDate}
           </Moment>
         </React.Fragment>
       )
@@ -667,7 +667,7 @@ class VisitServiceDetails extends Component {
                               {this.state.visitServiceDetails
                                 .recurringPatternDescription !==
                                 RECURRING_PATTERN &&
-                                this.showData(this.state.visitServiceDetails)
+                                this.showData()
                                 // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
                               }
                             </span>
