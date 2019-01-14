@@ -501,10 +501,10 @@ class WorkHistory extends Component {
                             WorkHistoryList.description && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.description} length={"50"} />
                         } 
                     </div>
-                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
-                        onClick={(e) => this.isOnDeleteModalOpen(e)} />
-                    <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={WorkHistoryList.workHistoryId}
-                        onClick={(e) => this.editWorkHistory(e)} />
+                    {this.props.isUser &&  <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
+                    onClick={(e) => this.isOnDeleteModalOpen(e)} /> }
+                    {this.props.isUser &&  <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={WorkHistoryList.workHistoryId}
+                    onClick={(e) => this.editWorkHistory(e)} /> }
                 </li>
             )
         });
