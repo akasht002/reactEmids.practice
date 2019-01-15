@@ -4,7 +4,6 @@ import 'react-image-crop-component/style.css'
 import 'react-image-crop/dist/ReactCrop.css'
 import 'react-image-crop/lib/ReactCrop.scss'
 import { ProfileImage } from '../../../components'
-import { PHONE_NUMBER_CONST } from '../../../constants/constants'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 
 export const Details = props => {
@@ -119,7 +118,7 @@ export const Details = props => {
           <div className={'width100 d-flex'}>
             <span>
               {props.personalDetail.phoneNumber &&
-                PHONE_NUMBER_CONST + props.personalDetail.phoneNumber}
+                props.personalDetail.phoneNumber}
             </span>
           </div>
         </div>
