@@ -141,7 +141,7 @@ class MessageContent extends Component {
         };
 
         let conversations = "";
-        let accesDenied = !this.props.conversation.isActive || (this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId
+        let accesDenied = !this.props.conversation.isActive || (this.props.conversation.createdBy !== this.props.loggedInUser.coreoHomeUserId
              && this.props.conversation.createdByType !== this.props.loggedInUser.userType) ? true : false;
         if (this.props.conversation.messages && this.props.conversation.messages.length > 0) {
             conversations = this.props.conversation.messages.map((conversation, index) => {

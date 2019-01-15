@@ -279,17 +279,15 @@ class ParticipantContent extends Component {
         };
 
         if (!this.state.addParticipantView) {
-            let accesDenied = !this.props.isActive || (this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId
-                && this.props.conversation.createdByType !== this.props.loggedInUser.userType) ? true : false;
+            let accesDenied = (this.props.isActive && (this.props.conversation.createdBy === this.props.loggedInUser.coreoHomeUserId)) || this.props.loggedInUser.serviceProviderTypeId === 2  ? true : false;
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
                         <span className="mr-auto primaryColor sideParticipantsTitle">Participants</span>
                         <span className="ml-auto d-flex">
-                            { !accesDenied && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
+                            { accesDenied && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
                             <button className="ParticipantClose" onClick={this.props.toggleParticipantList} />
                         </span>
-
                     </div>
                 </td>;
 
