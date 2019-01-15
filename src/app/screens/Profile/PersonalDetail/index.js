@@ -22,7 +22,6 @@ import {
   getArrayLength,
   getLength,
 } from '../../../utils/validations'
-import { PHONE_NUMBER_CONST } from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 
@@ -635,7 +634,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail &&
-                  PHONE_NUMBER_CONST + this.props.personalDetail.phoneNumber}
+                  this.props.personalDetail.phoneNumber}
               </span>
             </div>
           </div>

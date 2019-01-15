@@ -19,7 +19,6 @@ import {
 } from '../../../components'
 import ImageModal from '../PersonalDetail/ImageModal';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
-import { PHONE_NUMBER_CONST } from '../../../constants/constants'
 import {
   checkTextNotStartWithNumber,
   getArrayLength,
@@ -473,7 +472,7 @@ class Organization extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail.phoneNumber &&
-                  PHONE_NUMBER_CONST + this.props.personalDetail.phoneNumber}
+                  this.props.personalDetail.phoneNumber}
               </span>
             </div>
           </div>
