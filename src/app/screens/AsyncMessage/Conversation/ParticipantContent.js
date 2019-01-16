@@ -140,7 +140,7 @@ class ParticipantContent extends Component {
     };
 
     onAddParticipants = () => {
-        let userId = this.props.loggedInUser.serviceProviderId;
+        let userId = this.props.loggedInUser.coreoHomeUserId;
         let data = {
             title: this.props.title,
             conversationId: this.props.conversationId,
