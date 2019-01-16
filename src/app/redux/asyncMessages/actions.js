@@ -501,6 +501,19 @@ export function getLatestMessages(conversationId){
     }
 }
 
+export function checkConversationExist(conversationId){
+    return (dispatch, getState) => {
+        let state = getState();
+        state && state.asyncMessageState && state.asyncMessageState.conversationSummary && 
+        state.asyncMessageState.conversationSummary.map((data) => {
+            if (data.conversationId === conversationId) {
+                dispatch(getConversationSummaryItemSignalR(conversationId))
+            }
+            return data;
+        });
+    }
+}
+
 export function removeFromGroup(conversationId){
     return () => {
         if (interval) {
