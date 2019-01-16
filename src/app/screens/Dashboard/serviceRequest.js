@@ -1,7 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 import { CSS_PROPS } from './css-data-props'
 import { Scrollbars } from '../../components'

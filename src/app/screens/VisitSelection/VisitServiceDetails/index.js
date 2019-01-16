@@ -173,15 +173,13 @@ class VisitServiceDetails extends Component {
   }
 
   visitProcessing = data => {
-    {
       this.props.isStandByModeOn.isServiceProviderInStandBy ?
-      this.setState({standByModeAlertMsg: true})
-      :
-      this.props.getPerformTasksList(data, true)
+        this.setState({standByModeAlertMsg: true})
+        :
+        this.props.getPerformTasksList(data, true)
       this.props.formDirty();
       this.props.formDirtyFeedback();
       this.props.formDirtyPerformTask();
-    }
   }
 
   visitProcessingSummary = data => {    

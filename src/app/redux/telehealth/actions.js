@@ -340,7 +340,7 @@ export function rejectConference() {
 export function getLinkedPatients() {
     return (dispatch) => {
           dispatch(startLoading());
-          AsyncGet(API.getContext +  getUserInfo().serviceProviderId).then((resp) => {
+          AsyncGet(API.getContext +  getUserInfo().coreoHomeUserId).then((resp) => {
               dispatch(getLinkedPatientsSuccess(resp.data));
               dispatch(endLoading());
           }).catch((err) => {

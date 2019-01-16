@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AppStackRoot from './routes';
 import {
-  getConversationItemSignalR,
-  getConversationSummaryItemSignalR,
-  getUnreadConversationByUserId,
-  getLatestMessages
+  getLatestMessages,
+  checkConversationExist
 } from './redux/asyncMessages/actions';
 import { getConversationSummaryDashboardSignalR } from './redux/dashboard/Dashboard/actions';
 import {
@@ -19,6 +17,12 @@ class App extends Component {
 
   componentDidMount() {
 
+    connection.on("UpdateMesssageCount", data => {
+      if (data) {
+        this.props.checkConversationExist(data)
+      }
+    });
+
     connection.on("UpdateChat", data => {
       if(data && getUserInfo()){
         let ParticipantList = data.result ? [...data.result.participantList] : [...data.participantList];
@@ -27,9 +31,6 @@ class App extends Component {
         );
         if(index !== -1){
           let conversationId = data.result ? data.result.conversationId : data.conversationId;
-          //let messageId = data.result ? data.result.conversationMessageId : data.conversationMessageId;
-          this.props.getConversationSummaryItemSignalR(conversationId);
-          //this.props.getUnreadConversationByUserId(conversationId)
           this.props.getLatestMessages(conversationId);
           this.props.getConversationSummaryDashboardSignalR(conversationId);
         };
@@ -61,12 +62,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getConversationItemSignalR: (conversationId, messageId) => dispatch(getConversationItemSignalR(conversationId, messageId)),
-    getConversationSummaryItemSignalR: (conversationId) => dispatch(getConversationSummaryItemSignalR(conversationId)),
     checkTeleHealth: (data) => dispatch(checkTeleHealth(data)),
     getConversationSummaryDashboardSignalR: (conversationId) => dispatch(getConversationSummaryDashboardSignalR(conversationId)),
-    getUnreadConversationByUserId: (conversationId) => dispatch(getUnreadConversationByUserId(conversationId)),
-    getLatestMessages: (conversationId) => dispatch(getLatestMessages(conversationId))
+    getLatestMessages: (conversationId) => dispatch(getLatestMessages(conversationId)),
+    checkConversationExist: (conversationId) => dispatch(checkConversationExist(conversationId)),
   }
 }
 
