@@ -279,7 +279,7 @@ class ParticipantContent extends Component {
         };
 
         if (!this.state.addParticipantView) {
-            let accesDenied = (this.props.isActive && (this.props.conversation.createdBy === this.props.loggedInUser.coreoHomeUserId)) || this.props.loggedInUser.serviceProviderTypeId === 2  ? true : false;
+            let accesDenied = (this.props.isActive && (this.props.conversation.createdBy === this.props.loggedInUser.coreoHomeUserId)) || (this.props.isActive && this.props.loggedInUser.serviceProviderTypeId === 2)  ? true : false;
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
