@@ -103,7 +103,7 @@ class VerifyContact extends React.Component {
                             <div className="col-md-12 py-5 px-0">
                                 <h4 className="font-weight-normal mb-4 verify-title">Verify My Mobile Number</h4>
                                 <p className="m-0 default-444">Your registered Contact Number</p>
-                                <p className="contactNumber default-444">+1 XXX XXX {this.state.mobileNumber}</p>
+                                <p className="contactNumber default-444">XXX XXX {this.state.mobileNumber}</p>
                                 <div className={"my-5 tempPassword " + this.state.visible}>
                                     <Button
                                         type="button"

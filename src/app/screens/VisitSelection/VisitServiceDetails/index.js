@@ -49,6 +49,7 @@ import {
   ORG_SERVICE_PROVIDER_TYPE_ID
 } from '../../../constants/constants'
 import { getLength } from '../../../utils/validations'
+import { formatPhoneNumber } from '../../../utils/formatName'
 import {
   getVisitServiceHistoryByIdDetail,
   clearVisitServiceHistoryByIdDetail
@@ -252,16 +253,16 @@ class VisitServiceDetails extends Component {
     this.props.history.push(Path.visitServiceList)
   }
 
-  showData = data => {
-    if (data.occurence !== 0) {
-      return '- ' + !!!data.occurence ? '' : data.occurence + ' occurrences'
+  showData = () => {
+    if (this.state.visitServiceDetails.occurence !== 0) {
+      return '- ' + this.state.visitServiceDetails.occurence + ' occurrences'
     } else {
       return (
         <React.Fragment>
           -
           &nbsp;
           <Moment format='DD MMM YYYY'>
-            {data.endDate}
+            {this.state.visitServiceDetails.endDate}
           </Moment>
         </React.Fragment>
       )
@@ -292,16 +293,19 @@ class VisitServiceDetails extends Component {
         conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
       })
     } else {
-      let userId = getUserInfo().serviceProviderId;
+      let userId = getUserInfo().coreoHomeUserId;
+      let participantId = getUserInfo().serviceProviderId;
       let item = this.state.visitServiceDetails;
       let selectedParticipants = [{
         userId: item.patient.patientId,
-        participantType: USERTYPES.PATIENT
+        participantType: USERTYPES.PATIENT,
+        participantId: item.patient.patientId
       }];
 
       let loggedInUser = {
         userId: userId,
-        participantType: USERTYPES.SERVICE_PROVIDER
+        participantType: USERTYPES.SERVICE_PROVIDER,
+        participantId: participantId
       }
 
       selectedParticipants.push(loggedInUser);
@@ -667,7 +671,7 @@ class VisitServiceDetails extends Component {
                               {this.state.visitServiceDetails
                                 .recurringPatternDescription !==
                                 RECURRING_PATTERN &&
-                                this.showData(this.state.visitServiceDetails)
+                                this.showData()
                                 // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
                               }
                             </span>
@@ -914,7 +918,7 @@ class VisitServiceDetails extends Component {
           />
           <ModalPopup
             isOpen={this.state.phoneNumberModal}
-            ModalBody={<span> Phone Number : {this.state.phoneNumber} </span>}
+            ModalBody={<span> Phone Number : {formatPhoneNumber(this.state.phoneNumber)} </span>}
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'

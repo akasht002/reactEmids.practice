@@ -328,7 +328,7 @@ a:focus, a:hover{
 }
 
 .PhoneInput:before{
-    content: '+1';
+    /* content: '+1'; */
     position: absolute;
     display: flex;
     align-items: center;
@@ -338,9 +338,9 @@ a:focus, a:hover{
     color: #444;
 }
 
-span.PhoneInput > input{
+/* span.PhoneInput > input{
     padding: 0 0 0 25px;
-}
+} */
 
 .sideContent{
     width: 490px;

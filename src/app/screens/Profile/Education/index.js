@@ -431,14 +431,14 @@ class Education extends React.Component {
                 <div className="SPCertificateContainer width100">
                     
                         {this.props.educationList.length > 0 ? <ul className="SPEducationList"> {educationList} </ul> :
-                        <ul className="SPEducationList">
+                       (this.props.isUser && <ul className="SPEducationList">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
                                       <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>  Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ IsEducationModalOpen: true , isAdd: true})}/> to add Education</span>
                                 </div>
                             </div>
-                            </ul>
+                            </ul>)
                         }
                 </div>
 

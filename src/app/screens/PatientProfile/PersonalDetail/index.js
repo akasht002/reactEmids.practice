@@ -73,7 +73,7 @@ class PersonalDetail extends React.PureComponent {
               <div className={'width100 d-flex'}>
                 <span>
                   {getLength(this.props.personalDetail.phoneNumber) > 0 ?
-                    '+1 ' + this.props.personalDetail.phoneNumber : ''}
+                    this.props.personalDetail.phoneNumber : ''}
                 </span>
               </div>
             </div>

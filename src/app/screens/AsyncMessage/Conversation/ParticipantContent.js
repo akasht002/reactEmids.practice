@@ -219,7 +219,8 @@ class ParticipantContent extends Component {
                                     <a onClick={() => {
                                         if(participant.participantType !== USERTYPES.SERVICE_PROVIDER){
                                             let data = {
-                                                userId : participant.userId,
+                                                userId : participant.participantId,
+                                                // userId : participant.userId,
                                                 userType: participant.participantType,
                                                 isUser: false
                                             };
@@ -227,11 +228,11 @@ class ParticipantContent extends Component {
                                             this.props.goToPatientProfile();
                                         }
                                         else if (participant.isEntityServiceProvider && participant.serviceProviderTypeId === 1) {
-                                            this.props.setESP(participant.userId);
+                                            this.props.setESP(participant.participantId);
                                             this.props.goToESPProfile();
                                         } else {
                                             let data = {
-                                                userId: participant.userId,
+                                                userId: participant.participantId,
                                                 isEntityServiceProvider: participant.isEntityServiceProvider,
                                                 serviceProviderTypeId: participant.serviceProviderTypeId,
                                                 entityId: participant.entityId
@@ -278,17 +279,15 @@ class ParticipantContent extends Component {
         };
 
         if (!this.state.addParticipantView) {
-            let accesDenied = !this.props.isActive || (this.props.conversation.createdBy !== this.props.loggedInUser.serviceProviderId
-                && this.props.conversation.createdByType !== this.props.loggedInUser.userType) ? true : false;
+            let accesDenied = (this.props.isActive && (this.props.conversation.createdBy === this.props.loggedInUser.coreoHomeUserId)) || this.props.loggedInUser.serviceProviderTypeId === 2  ? true : false;
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
                         <span className="mr-auto primaryColor sideParticipantsTitle">Participants</span>
                         <span className="ml-auto d-flex">
-                            { !accesDenied && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
+                            { accesDenied && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
                             <button className="ParticipantClose" onClick={this.props.toggleParticipantList} />
                         </span>
-
                     </div>
                 </td>;
 

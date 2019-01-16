@@ -281,12 +281,12 @@ class Certification extends Component {
                                 {certificationList}
                             </div>
                             :
-                            <div className='SPNoInfo'>
+                            (this.props.isUser &&  <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
                                     <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
                                 </div>
-                            </div>
+                            </div>)
                         }
                     </ul>
                 </div>
