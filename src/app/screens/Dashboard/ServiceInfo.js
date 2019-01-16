@@ -492,8 +492,8 @@ export const MyConversionDetail = props => {
               </p>
             </div>
             <div className='MsgCount ml-auto'>
-             { unreadMessages>0 && <span className={'float-right count' + MsgClass}>
-                {unreadMessages}
+             { conversations.unreadCount > 0 && <span className={'float-right count' + msgClass}>
+                {conversations.unreadCount}
               </span> }
               <span className='width100 d-block float-right MsgTime'>
                 <TimeAgo datetime={moment.utc(conversations.createdDate).local().format()} />
