@@ -565,7 +565,6 @@ export function getLinkedParticipantsByPatients(data) {
         let patient = patients.find((e) => {
             return e.userId === data.patientId
         });
-        debugger;
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         data.firstName = patient.firstName;
