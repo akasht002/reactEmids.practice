@@ -43,7 +43,8 @@ class ParticipantContent extends Component {
             userId: participant.userId,
             firstName: participant.firstName,
             lastName: participant.lastName,
-            participantType: participant.participantType
+            participantType: participant.participantType,
+            participantId: participant.participantId
         };
         if (event.target.checked) {
             this.setState({
