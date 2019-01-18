@@ -418,25 +418,21 @@ function getPartcipitantHeader(participants) {
 };
 
 export const MyConversionDetail = props => {
-  let MsgClass = ''
-  MsgClass = 'readMsgs'
   let conversation = props.conversation
-  let unreadMessages = ''
   let msgClass = ''
   let msgHeader = '';
   return conversation.slice(0, 4).map((conversations, index) => {
     !conversations.title ? msgHeader = getPartcipitantHeader(conversations.participantList) : msgHeader = conversations.title;
     if (props.getUnreadMsgCounts.length > 0) {
-      unreadMessages = ''
       msgClass = 'readMsgs'
       props.getUnreadMsgCounts.map(unreadMsgCount => {
         if (conversations.conversationId === unreadMsgCount.conversationId) {
           msgClass = ''
-          return (unreadMessages = (
+          return (
             <span className={'float-right count' + msgClass}>
               {unreadMsgCount.unreadMessageCount}
             </span>
-          ))
+          )
         }
         return '';
       })
