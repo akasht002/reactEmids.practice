@@ -329,7 +329,7 @@ class VisitServiceDetails extends Component {
         userId: item.patient.coreoHomeUserId,
         participantType: USERTYPES.PATIENT,
         participantId: item.patient.patientId,
-        firstName: item.patient.item.patient.patientId,
+        firstName: item.patient.firstName,
         lastName: item.patient.lastName,
         thumbNail: item.patient.imageString
       }];
