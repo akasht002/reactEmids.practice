@@ -328,7 +328,10 @@ class VisitServiceDetails extends Component {
       let selectedParticipants = [{
         userId: item.patient.coreoHomeUserId,
         participantType: USERTYPES.PATIENT,
-        participantId: item.patient.patientId
+        participantId: item.patient.patientId,
+        firstName: item.patient.item.patient.patientId,
+        lastName: item.patient.lastName,
+        thumbNail: item.patient.imageString
       }];
       this.props.createVideoConference(selectedParticipants);
     }

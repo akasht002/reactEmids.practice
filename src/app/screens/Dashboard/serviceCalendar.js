@@ -349,7 +349,10 @@ class serviceCalendar extends React.Component {
         {
           userId: item.coreoHomeUserId,
           participantType: USERTYPES.PATIENT,
-          participantId: item.patientId
+          participantId: item.patientId,
+          firstName: item.patientFirstName,
+          lastName: item.patientLastName,
+          thumbNail: item.patientImage
         }
       ];
       this.props.createVideoConference(selectedParticipants);
