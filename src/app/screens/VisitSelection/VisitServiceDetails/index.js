@@ -211,7 +211,6 @@ class VisitServiceDetails extends Component {
   }
 
   postServiceRequest = status => {
-    console.log(status)
     this.alertModalMsg = status.isInterested
       ? serviceRequestMessages.applyServiceProvider
       : (status.isCancel ? serviceRequestMessages[status.status] : serviceRequestMessages.notInterestedServiceProvider)
@@ -226,7 +225,6 @@ class VisitServiceDetails extends Component {
         type: status.isInterested ? 1 : 0
       }
       this.props.updateServiceRequestByServiceProvider(model)
-      console.log(this.props.updateServiceRequestMsgStatus)
       if (this.props.updateServiceRequestMsgStatus === 1) {
         this.setState({ isAlertModalopenConfirm: true })
       } else {
@@ -295,7 +293,7 @@ class VisitServiceDetails extends Component {
       let participantId = getUserInfo().serviceProviderId;
       let item = this.state.visitServiceDetails;
       let selectedParticipants = [{
-        userId: item.patient.patientId,
+        userId: item.patient.coreoHomeUserId,
         participantType: USERTYPES.PATIENT,
         participantId: item.patient.patientId
       }];
