@@ -326,8 +326,9 @@ class VisitServiceDetails extends Component {
     } else {
       let item = this.state.visitServiceDetails;
       let selectedParticipants = [{
-        userId: item.patient.patientId,
-        participantType: USERTYPES.PATIENT
+        userId: item.patient.coreoHomeUserId,
+        participantType: USERTYPES.PATIENT,
+        participantId: item.patient.patientId
       }];
       this.props.createVideoConference(selectedParticipants);
     }

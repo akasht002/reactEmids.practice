@@ -347,8 +347,9 @@ class serviceCalendar extends React.Component {
     if (item) {
       let selectedParticipants = [
         {
-          userId: item.patientId,
-          participantType: USERTYPES.PATIENT
+          userId: item.coreoHomeUserId,
+          participantType: USERTYPES.PATIENT,
+          participantId: item.patientId
         }
       ];
       this.props.createVideoConference(selectedParticipants);

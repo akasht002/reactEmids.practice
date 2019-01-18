@@ -87,10 +87,9 @@ export const clearInvitaion = () => {
 
 
 export function generateToken() {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(startLoading());
-        const user = getState().profileState.PersonalDetailState.personalDetail
-        AsyncGet(API.generateToken + user.serviceProviderId).then((resp) => {
+        AsyncGet(API.generateToken + getUserInfo().coreoHomeUserId).then((resp) => {
             if (resp && resp.data) {
                 dispatch(generateTokenSuccess(resp.data));
             }
@@ -119,7 +118,7 @@ export function getLinkedParticipantsByPatients(data) {
     return (dispatch, getState) => {
         let searchText = data ? data : null;
         AsyncGet(API.getParticipantsByContext +
-            '/0/' + getUserInfo().serviceProviderId +
+            '/0/' + getUserInfo().coreoHomeUserId +
             '/' + getState().telehealthState.contextId +
             '/S/' + searchText
         ).then((resp) => {
@@ -134,18 +133,19 @@ export function createVideoConference(data) {
         const userInfo = getUserInfo();
         const personalState = getState().profileState.PersonalDetailState.personalDetail
         let twilioData = {
-            createdBy: userInfo.serviceProviderId,
+            createdBy: userInfo.coreoHomeUserId,
             createdByType: 'S',
             createdByFirstName : personalState.firstName,
             createdByLastName  : personalState.lastName,
             context: getState().telehealthState.contextId,
             participantList: [
                 {
-                    userId: userInfo.serviceProviderId,
+                    userId: userInfo.coreoHomeUserId,
                     participantType: 'S',
                     firstName: personalState.firstName,
                     lastName: personalState.lastName,
-                    thumbNail: getState().profileState.PersonalDetailState.imageData.thumbnailImage
+                    thumbNail: getState().profileState.PersonalDetailState.imageData.thumbnailImage,
+                    participantId: userInfo.serviceProviderId
                 },
                 ...data
             ]
@@ -201,7 +201,7 @@ export function acceptVideoConference() {
         const telehealthState = getState().telehealthState;
         dispatch(startLoading());
         AsyncPutWithUrl(API.joinVideoConference 
-            + userInfo.serviceProviderId + '/S/'
+            + userInfo.coreoHomeUserId + '/S/'
             + roomNumber).then((resp) => {
             dispatch(clearInvitaion())
             if (telehealthState.isNewRequestCame) {
@@ -224,7 +224,7 @@ export function leaveVideoConference(checkRoute) {
         let state = getState();
         dispatch(startLoading());
         AsyncPutWithUrl(API.leaveVideoConference 
-            + userInfo.serviceProviderId + '/S/'
+            + userInfo.coreoHomeUserId + '/S/'
             + state.telehealthState.roomId).then((resp) => {
                 if (state.telehealthState.isNewRequestCame) {
                     dispatch(setRoomId(state.telehealthState.invitedRoomId))
@@ -253,10 +253,10 @@ export function GetParticipantByConferenceId() {
         const userInfo = getUserInfo();
         let state = getState();
         AsyncGet(API.getParticipantByConferenceId
-            + userInfo.serviceProviderId + '/S/'
+            + userInfo.coreoHomeUserId + '/S/'
             + state.telehealthState.roomId).then((resp) => {
                 var data = resp.data && resp.data.filter((participant) => {
-                    return userInfo.serviceProviderId !== participant.userId;
+                    return userInfo.coreoHomeUserId !== participant.userId;
                 }).map((participant) => {
                     return {
                         ...participant,
@@ -277,7 +277,7 @@ export function GetAllParticipants(data) {
         let roomId = state.telehealthState.roomId ? state.telehealthState.roomId : 0;
         let contextId = state.telehealthState.contextId ? state.telehealthState.contextId : 0;
         AsyncGet(API.getAllParticipants
-            + userInfo.serviceProviderId + '/S/'
+            + userInfo.coreoHomeUserId + '/S/'
             + contextId + '/'
             + roomId + '/'
             + searchText).then((resp) => {
@@ -320,7 +320,8 @@ export function rejectConference() {
           let data = {
             participantId: userInfo.serviceProviderId,
             participantType: USERTYPES.SERVICE_PROVIDER,
-            roomNumber: state.telehealthState.roomId
+            roomNumber: state.telehealthState.roomId,
+            userId: userInfo.coreoHomeUserId
           };
           dispatch(startLoading());
           AsyncPut(API.rejectConference, data).then((resp) => {
@@ -397,7 +398,7 @@ export function checkTeleHealth(data) {
         const userInfo = getUserInfo();
         const teleHealthState = getState().telehealthState;
         if (userInfo) {
-            const userId = userInfo.serviceProviderId;
+            const userId = userInfo.coreoHomeUserId;
             if (data.messageType === 'Invited') {
                 if (data.userId !== userId) {
                     data.participantList && data.participantList.map((participant) => {
