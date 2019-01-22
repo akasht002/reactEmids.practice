@@ -134,14 +134,14 @@ export function createVideoConference(data) {
         const personalState = getState().profileState.PersonalDetailState.personalDetail
         let twilioData = {
             createdBy: userInfo.coreoHomeUserId,
-            createdByType: 'S',
+            createdByType: USERTYPES.SERVICE_PROVIDER,
             createdByFirstName : personalState.firstName,
             createdByLastName  : personalState.lastName,
             context: getState().telehealthState.contextId,
             participantList: [
                 {
                     userId: userInfo.coreoHomeUserId,
-                    participantType: 'S',
+                    participantType: USERTYPES.SERVICE_PROVIDER,
                     firstName: personalState.firstName,
                     lastName: personalState.lastName,
                     thumbNail: getState().profileState.PersonalDetailState.imageData.thumbnailImage,
@@ -402,7 +402,7 @@ export function checkTeleHealth(data) {
             if (data.messageType === 'Invited') {
                 if (data.userId !== userId) {
                     data.participantList && data.participantList.map((participant) => {
-                        if (participant.participantType === 'S' && userId === participant.userId) {
+                        if (participant.participantType === USERTYPES.SERVICE_PROVIDER && userId === participant.userId) {
                             if (teleHealthState.token) {
                                 dispatch(setInvitedRoomId(data.roomID))
                             } else {
