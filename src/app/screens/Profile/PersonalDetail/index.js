@@ -239,7 +239,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   togglePersonalDetails = (action, e) => {
-    let checkStatus = this.checkAffiliationValue(this.state.selectedAffiliation.label);
+    let checkStatus = this.checkAffiliationValue(this.state.affiliationName);
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
       isDiscardModalOpen: false,
@@ -262,10 +262,10 @@ class PersonalDetail extends React.PureComponent {
           : '-' + getArrayLength(this.props.personalDetail.address) > 0 && this.props.personalDetail.address[0].state != null
             ? this.props.personalDetail.address[0].state.name : ''
       },
-      selectedAffiliation: {
-        label: this.props.personalDetail && this.props.personalDetail.affiliationName,
-        value: this.props.personalDetail && this.props.personalDetail.affiliationId + '-' + this.props.personalDetail && this.props.personalDetail.affiliationName
-      }
+      // selectedAffiliation: {
+      //   label: this.props.personalDetail && this.props.personalDetail.affiliationName,
+      //   value: this.props.personalDetail && this.props.personalDetail.affiliationId + '-' + this.props.personalDetail && this.props.personalDetail.affiliationName
+      // }
     })
     let old_data = {
       firstName: this.props.personalDetail.firstName,

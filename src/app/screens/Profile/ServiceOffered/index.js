@@ -18,6 +18,7 @@ class ServiceOffered extends React.Component {
             disabledSaveBtn: true,
             isAdd: false,
             serviceType: [],
+            isFormDirty: false
         };
     };
 
@@ -26,10 +27,16 @@ class ServiceOffered extends React.Component {
     }
 
     toggleServiceOffered = () => {
-        this.setState({
-            isModalOpen: !this.state.isModalOpen,
-            disabledSaveBtn: true,
-        })
+        if (this.state.isFormDirty) {
+            this.setState({
+                isDiscardModalOpen: !this.state.isDiscardModalOpen
+            })
+        } else {
+            this.setState({
+                isModalOpen: !this.state.isModalOpen,
+                disabledSaveBtn: true,
+            })
+        }
     }
 
     addIconServiceOffered = () => {
@@ -46,6 +53,7 @@ class ServiceOffered extends React.Component {
         this.setState({
             serviceType: serviceType,
             disabledSaveBtn: false,
+            isFormDirty: true
         })
     }
 
