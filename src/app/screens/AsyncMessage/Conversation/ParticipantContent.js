@@ -43,7 +43,8 @@ class ParticipantContent extends Component {
             userId: participant.userId,
             firstName: participant.firstName,
             lastName: participant.lastName,
-            participantType: participant.participantType
+            participantType: participant.participantType,
+            participantId: participant.participantId
         };
         if (event.target.checked) {
             this.setState({
@@ -140,7 +141,7 @@ class ParticipantContent extends Component {
     };
 
     onAddParticipants = () => {
-        let userId = this.props.loggedInUser.serviceProviderId;
+        let userId = this.props.loggedInUser.coreoHomeUserId;
         let data = {
             title: this.props.title,
             conversationId: this.props.conversationId,
@@ -279,7 +280,7 @@ class ParticipantContent extends Component {
         };
 
         if (!this.state.addParticipantView) {
-            let accesDenied = (this.props.isActive && (this.props.conversation.createdBy === this.props.loggedInUser.coreoHomeUserId)) || this.props.loggedInUser.serviceProviderTypeId === 2  ? true : false;
+            let accesDenied = (this.props.isActive && (this.props.conversation.createdBy === this.props.loggedInUser.coreoHomeUserId)) || (this.props.isActive && this.props.loggedInUser.serviceProviderTypeId === 2)  ? true : false;
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">

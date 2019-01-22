@@ -239,7 +239,7 @@ export function getConversationDetail (data) {
     dispatch(startLoading())
     MessageURLGet(
       API.getConversationSummary +
-        getUserInfo().serviceProviderId +
+        getUserInfo().coreoHomeUserId +
         '/' +
         USERTYPES.SERVICE_PROVIDER +
         '/' +

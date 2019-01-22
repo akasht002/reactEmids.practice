@@ -501,6 +501,19 @@ export function getLatestMessages(conversationId){
     }
 }
 
+export function checkConversationExist(conversationId){
+    return (dispatch, getState) => {
+        let state = getState();
+        state && state.asyncMessageState && state.asyncMessageState.conversationSummary && 
+        state.asyncMessageState.conversationSummary.map((data) => {
+            if (data.conversationId === conversationId) {
+                dispatch(getConversationSummaryItemSignalR(conversationId))
+            }
+            return data;
+        });
+    }
+}
+
 export function removeFromGroup(conversationId){
     return () => {
         if (interval) {
@@ -552,7 +565,6 @@ export function getLinkedParticipantsByPatients(data) {
         let patient = patients.find((e) => {
             return e.userId === data.patientId
         });
-        debugger;
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         data.firstName = patient.firstName;

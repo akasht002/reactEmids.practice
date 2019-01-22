@@ -18,7 +18,7 @@ export default class AboutContent extends React.Component {
                     <div className='AboutContentContainer Right'>
                         <h4>Reach out to us at</h4>
                         <span className="LinkCard"><img src={require('./images/about_translation.svg')} alt="translation" />
-                        <a href='https://www.navvishealthcare.com' target="_blank">www.navvishealthcare.com</a></span>
+                        <a rel="noopener noreferrer" href='https://www.navvishealthcare.com' target="_blank">www.navvishealthcare.com</a></span>
                         {/* <span className="LinkCard"><img src={require('./images/about_email.svg')} alt="email" />help@coreohomesupport.com</span>
                         <span className="LinkCard"><img src={require('./images/about_phone_call.svg')} alt="phoneCall" />+1 180 234 2300</span> */}
                     </div>

@@ -22,7 +22,8 @@ export default class TeleHealthInviteParticipants extends Component {
             participantType: participant.participantType,
             firstName: participant.firstName,
             lastName: participant.lastName,
-            thumbNail: participant.thumbNail
+            thumbNail: participant.thumbNail,
+            participantId: participant.participantId
         };
         let updatedParticipants = [...this.state.selectedParticipants];
         const index = updatedParticipants.indexOf(

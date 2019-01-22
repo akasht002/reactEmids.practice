@@ -173,15 +173,13 @@ class VisitServiceDetails extends Component {
   }
 
   visitProcessing = data => {
-    {
       this.props.isStandByModeOn.isServiceProviderInStandBy ?
-      this.setState({standByModeAlertMsg: true})
-      :
-      this.props.getPerformTasksList(data, true)
+        this.setState({standByModeAlertMsg: true})
+        :
+        this.props.getPerformTasksList(data, true)
       this.props.formDirty();
       this.props.formDirtyFeedback();
       this.props.formDirtyPerformTask();
-    }
   }
 
   visitProcessingSummary = data => {    
@@ -213,7 +211,6 @@ class VisitServiceDetails extends Component {
   }
 
   postServiceRequest = status => {
-    console.log(status)
     this.alertModalMsg = status.isInterested
       ? serviceRequestMessages.applyServiceProvider
       : (status.isCancel ? serviceRequestMessages[status.status] : serviceRequestMessages.notInterestedServiceProvider)
@@ -228,7 +225,6 @@ class VisitServiceDetails extends Component {
         type: status.isInterested ? 1 : 0
       }
       this.props.updateServiceRequestByServiceProvider(model)
-      console.log(this.props.updateServiceRequestMsgStatus)
       if (this.props.updateServiceRequestMsgStatus === 1) {
         this.setState({ isAlertModalopenConfirm: true })
       } else {
@@ -297,7 +293,7 @@ class VisitServiceDetails extends Component {
       let participantId = getUserInfo().serviceProviderId;
       let item = this.state.visitServiceDetails;
       let selectedParticipants = [{
-        userId: item.patient.patientId,
+        userId: item.patient.coreoHomeUserId,
         participantType: USERTYPES.PATIENT,
         participantId: item.patient.patientId
       }];
@@ -330,8 +326,12 @@ class VisitServiceDetails extends Component {
     } else {
       let item = this.state.visitServiceDetails;
       let selectedParticipants = [{
-        userId: item.patient.patientId,
-        participantType: USERTYPES.PATIENT
+        userId: item.patient.coreoHomeUserId,
+        participantType: USERTYPES.PATIENT,
+        participantId: item.patient.patientId,
+        firstName: item.patient.firstName,
+        lastName: item.patient.lastName,
+        thumbNail: item.patient.imageString
       }];
       this.props.createVideoConference(selectedParticipants);
     }
