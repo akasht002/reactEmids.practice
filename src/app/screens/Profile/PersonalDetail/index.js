@@ -1075,7 +1075,7 @@ class PersonalDetail extends React.PureComponent {
                     textChange={e => {
                       const onlyNums = e.target.value.replace(/[^0-9]/g, '')
                       if (onlyNums.length < 10) {
-                        this.setState({ phoneNumber: onlyNums })
+                        this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true })
                       } else if (onlyNums.length === 10) {
                         const number = onlyNums.replace(
                           /(\d{3})(\d{3})(\d{4})/,
