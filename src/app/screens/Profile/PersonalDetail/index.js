@@ -888,22 +888,25 @@ class PersonalDetail extends React.PureComponent {
             maxlength='7'
             textChange={e => {
               let onlyNums = e.target.value.replace(/[^0-9.]/g, '')
+              let values = onlyNums.split('.');
               let status = false;
-              if (onlyNums.length < 7 && !status) {
-                this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
-              } else if (onlyNums.length === 7) {
-                if (onlyNums.indexOf(".") > -1) {
-                  if ((onlyNums.split('.')[1].length > 1)) {
+              if (values[0].length <= 3 || (values[1] && values[1].length <= 2)) {
+                if (onlyNums.length < 7 && !status) {
+                  this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
+                } else if (onlyNums.length === 7) {
+                  if (onlyNums.indexOf(".") > -1) {
+                    if ((onlyNums.split('.')[1].length > 1)) {
+                      this.setState({
+                        hourlyRate: onlyNums.substr(0, (onlyNums.indexOf(".") + 3)),
+                        disabledSaveBtn: false, hourlyRateInvalid: false
+                      })
+                    }
+                  } else {
                     this.setState({
-                      hourlyRate: onlyNums.substr(0, (onlyNums.indexOf(".") + 3)),
+                      hourlyRate: onlyNums.substr(0, 3),
                       disabledSaveBtn: false, hourlyRateInvalid: false
                     })
                   }
-                } else {
-                  this.setState({
-                    hourlyRate: onlyNums.substr(0, 3),
-                    disabledSaveBtn: false, hourlyRateInvalid: false
-                  })
                 }
               }
             }
