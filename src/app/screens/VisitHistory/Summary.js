@@ -93,7 +93,7 @@ class VistSummary extends React.Component {
   getServiceDetails = lists => {
     if (lists) {
       return lists.map((list, index) => {
-        let image_url = getServiceTypeImage(list.serviceRequestTypeTaskVisits && list.serviceRequestTypeTaskVisits.length > 0 && list.serviceRequestTypeTaskVisits[0].serviceTypeId );
+        let image_url = getServiceTypeImage(list.serviceRequestTypeTaskVisits && list.serviceRequestTypeTaskVisits.length > 0 && list.serviceRequestTypeTaskVisits[0].serviceTypeId);
         return (
           <AccordionItem>
             <AccordionItemTitle className="TabContainer">
@@ -118,7 +118,7 @@ class VistSummary extends React.Component {
                   <i className="TotalTasks">
                     /{getLength(list.serviceRequestTypeTaskVisits)}
                   </i>{" "}
-                  tasks completed
+                  task(s) completed
                 </span>
               </div>
             </AccordionItemTitle>
@@ -401,9 +401,9 @@ class VistSummary extends React.Component {
                     </p>
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">
-                        Visit Length
+                        Visit Length (HH:MM)
                       </span>
-                      <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0,5)} hrs</span>
+                      <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0, 5)}</span>
                     </p>
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">Tasks</span>
@@ -448,7 +448,7 @@ class VistSummary extends React.Component {
                 <div className="row CostTableWidget">
                   <div className="col-md-8 CostTableContainer Label">
                     <p>
-                      <span>Billable Time (Hrs : Mins)</span>
+                      <span>Billable Time (HH:MM)</span>
                       <span>Hourly Rate</span>
                     </p>
                     <p className="TaxLabel">
@@ -458,16 +458,15 @@ class VistSummary extends React.Component {
                   </div>
                   <div className="col-md-4 CostTableContainer Cost">
                     <p>
-                      <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0,5)} hrs</span>
+                      <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0, 5)}</span>
                       <span>
-                        ${" "}{summaryDetail.hourlyRate}
-                        /hr
+                        ${summaryDetail.hourlyRate}
                       </span>
                     </p>
                     <p className="TaxCost">
                       {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
                         <span>
-                          ${" "}
+                          $
                           {(
                             summaryDetail.totalCost && summaryDetail.totalCost
                           ).toFixed(2)}
@@ -476,7 +475,7 @@ class VistSummary extends React.Component {
                         ''
                       }
                       {summaryDetail.taxPaid || summaryDetail.taxPaid === 0 ?
-                        <span>${" "}{(summaryDetail.taxPaid).toFixed(2)}</span>
+                        <span>${(summaryDetail.taxPaid).toFixed(2)}</span>
                         :
                         ''
                       }
@@ -489,7 +488,7 @@ class VistSummary extends React.Component {
                     <p className="TotalCost">
                       {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
                         <span>
-                          ${" "}{(summaryDetail.totalCost + summaryDetail.taxPaid).toFixed(2)}
+                          ${(summaryDetail.totalCost + summaryDetail.taxPaid).toFixed(2)}
                         </span>
                         :
                         ''
@@ -507,13 +506,16 @@ class VistSummary extends React.Component {
                   </div>
                   <div className="col-md-4 EstimatedCostContainer Cost">
                     <p>
+                      {summaryDetail.estimatedClaim === 0 ?
+                        <span>$0.00</span>
+                        :
+                        <span>
+                          ${summaryDetail.estimatedClaim &&
+                            summaryDetail.estimatedClaim.toFixed(2)}
+                        </span>
+                      }
                       <span>
-                        ${" "}
-                        {summaryDetail.estimatedClaim &&
-                          summaryDetail.estimatedClaim.toFixed(2)}
-                      </span>
-                      <span>
-                        ${" "}
+                        $
                         {summaryDetail.outOfPocketAmount &&
                           summaryDetail.outOfPocketAmount.toFixed(2)}
                       </span>
