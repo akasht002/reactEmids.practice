@@ -4,8 +4,8 @@ export function getMomentDate(date) {
     return date ? moment(new Date(date.toString())) : null;
 }
 
-export function formatDateSingle (data){
-   return data > 9  ? "" + data: "0" + data;
+export function formatDateSingle(data) {
+    return data > 9 ? "" + data : "0" + data;
 }
 
 export function formatDate(date, dateFormat) {
@@ -49,4 +49,12 @@ export function convertUTCTime(date, dateFormat = "HH:MM a") {
 export function isFutureDay(date) {
     let difference = moment(date).diff(moment(), "days")
     return difference >= 0
+}
+
+export function getDoubleDigitTime(value) {
+    let updatedValue =  value
+    if (updatedValue.toString().length < 2) {
+        updatedValue = "0" + updatedValue
+    }
+    return updatedValue
 }

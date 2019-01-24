@@ -23,7 +23,8 @@ import {
   getDays,
   dispatchServiceRequestByServiceProvider,
   formDirtyVisitServiceDetails
-} from '../../../redux/visitSelection/VisitServiceDetails/actions'
+} from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { setPatient } from '../../../redux/patientProfile/actions';
 import {
   getPerformTasksList,
   formDirtyPerformTask,
@@ -40,7 +41,9 @@ import {
   AFTERNOON,
   EVENING,
   HIRED_STATUS_ID,
-  USERTYPES
+  USERTYPES,
+  CONTACT_NOT_FOUND,
+  PHONE_NUMBER_TEXT
 } from '../../../constants/constants'
 import { ServiceStatus } from './ServiceRequestStatus'
 import {
@@ -80,7 +83,7 @@ class VisitServiceDetails extends Component {
       pageNumber: 1,
       disableShowMore: false,
       standByModeAlertMsg: false,
-      isLoading:false
+      isLoading: false
     }
     this.alertModalMsg = ''
     this.status = {}
@@ -106,7 +109,7 @@ class VisitServiceDetails extends Component {
       serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
         nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
           .serviceRequestTypeDetailsId,
-          isLoading :nextProps.isLoading  
+      isLoading: nextProps.isLoading
     })
     this.visitServiceScheduleData(nextProps);
   }
@@ -120,6 +123,11 @@ class VisitServiceDetails extends Component {
     this.setState({ pageNumber: this.state.pageNumber + 1 }, () => {
       this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
     })
+  }
+
+  handelPatientProfile = (data) => {
+    this.props.setPatient(data)
+    this.props.goToPatientProfile()
   }
 
   visitServiceScheduleData = (nextProps) => {
@@ -173,16 +181,16 @@ class VisitServiceDetails extends Component {
   }
 
   visitProcessing = data => {
-      this.props.isStandByModeOn.isServiceProviderInStandBy ?
-        this.setState({standByModeAlertMsg: true})
-        :
-        this.props.getPerformTasksList(data, true)
-      this.props.formDirty();
-      this.props.formDirtyFeedback();
-      this.props.formDirtyPerformTask();
+    this.props.isStandByModeOn.isServiceProviderInStandBy ?
+      this.setState({ standByModeAlertMsg: true })
+      :
+      this.props.getPerformTasksList(data, true)
+    this.props.formDirty();
+    this.props.formDirtyFeedback();
+    this.props.formDirtyPerformTask();
   }
 
-  visitProcessingSummary = data => {    
+  visitProcessingSummary = data => {
     this.props.getServiceVisitId(data, true);
     this.props.getSummaryDetails(data);
     this.props.getSavedSignature(data);
@@ -489,13 +497,13 @@ class VisitServiceDetails extends Component {
         this.state.visitServiceDetails.patient.lastName.charAt(0)
     }
 
-    return (     
+    return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         {this.props.VisitServiceDetails.length === 0 && <Preloader />}
-        {this.state.isLoading && <Preloader /> }
+        {this.state.isLoading && <Preloader />}
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Service Requests / {this.state.visitServiceDetails.serviceRequestId
+            <h5 className='primaryColor m-0'>Service Request / {this.state.visitServiceDetails.serviceRequestId
               ? this.state.visitServiceDetails.serviceRequestId
               : this.state.visitServiceDetails.ServiceRequestId}</h5>
           </div>
@@ -541,10 +549,11 @@ class VisitServiceDetails extends Component {
                       className='ProfileImage'
                       src={profileImage}
                       alt='patientImage'
+                      onClick={() => { this.state.visitServiceDetails.statusId === HIRED_STATUS_ID ? this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId) : '' }}
                     />
 
                     <div class='PostedByProfileDetails'>
-                      <div class='ProfileDetailsName'>
+                      <div class='ProfileDetailsName' onClick={() => { this.state.visitServiceDetails.statusId === HIRED_STATUS_ID ? this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId) : '' }}>
                         {getLength(this.state.visitServiceDetails.patient) >
                           0 && this.state.visitServiceDetails.patient.firstName}
                         {' '}
@@ -790,7 +799,7 @@ class VisitServiceDetails extends Component {
                               <div>
                                 {ScheduleList.originalTotalDuration
                                   ? <span>
-                                    {ScheduleList.originalTotalDuration} Hrs
+                                    {ScheduleList.originalTotalDuration.substring(0,5)} hrs
                                     </span>
                                   : <span> - </span>}
                               </div>
@@ -918,7 +927,11 @@ class VisitServiceDetails extends Component {
           />
           <ModalPopup
             isOpen={this.state.phoneNumberModal}
-            ModalBody={<span> Phone Number : {formatPhoneNumber(this.state.phoneNumber)} </span>}
+            ModalBody={<span> {this.state.phoneNumber
+              === null
+              ? CONTACT_NOT_FOUND
+              : `${PHONE_NUMBER_TEXT}
+              ${this.state.phoneNumber}`} </span>}
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'
@@ -994,7 +1007,9 @@ function mapDispatchToProps(dispatch) {
     formDirtyVisitServiceDetails: () => dispatch(formDirtyVisitServiceDetails()),
     getServiceRequestId: (data) => dispatch(getServiceRequestId(data)),
     goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
-    getSpBusyInVisit: () => dispatch(getSpBusyInVisit())
+    getSpBusyInVisit: () => dispatch(getSpBusyInVisit()),
+    setPatient: (data) => dispatch(setPatient(data)),
+    goToPatientProfile: () => dispatch(push(Path.patientProfile)),
   }
 }
 
@@ -1014,7 +1029,7 @@ function mapStateToProps(state) {
     initiateConversation: state.visitSelectionState.VisitServiceDetailsState
       .canInitiateConversation,
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
-    isLoading:state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
+    isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
   }
 }
 

@@ -9,11 +9,13 @@ import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingW
 import { getPerformTasksList, addPerformedTask, startOrStopService, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button, Preloader } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import { convertTime24to12, getFirstCharOfString } from '../../../../utils/stringHelper';
+import { convertTime24to12 } from '../../../../utils/stringHelper';
 import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
+import { push } from '../../../../redux/navigation/actions';
 import { getServiceTypeImage } from '../../../../utils/validations';
+import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 
 class PerformTasks extends Component {
@@ -83,7 +85,12 @@ class PerformTasks extends Component {
                 return serviceType;
             });
         }
-        this.setState({ taskList: nextProps.PerformTasksList, isLoading :nextProps.isLoading })
+        this.setState({ taskList: nextProps.PerformTasksList, isLoading: nextProps.isLoading })
+    }
+
+    handelPatientProfile = (data) => {
+        this.props.setPatient(data)
+        this.props.goToPatientProfile()
     }
 
     handleChange = (taskList, e) => {
@@ -168,7 +175,7 @@ class PerformTasks extends Component {
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} >
-            {this.state.isLoading && <Preloader /> }
+                {this.state.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ {this.state.taskList.serviceRequestId}</span></h5>
@@ -184,12 +191,13 @@ class PerformTasks extends Component {
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitId}</span>
                                     </div>
-                                    <div className='requestImageContent'>
+                                    <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.state.taskList.patient && this.state.taskList.patient.patientId)}>
                                         <span>
                                             <img
                                                 src={this.state.taskList.patient && this.state.taskList.patient.imageString}
                                                 className="avatarImage avatarImageBorder" alt="patientImage" />
-                                            <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {(this.state.taskList.patient && getFirstCharOfString(this.state.taskList.patient.lastName))}</i></span>
+                                            <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {this.state.taskList.patient && this.state.taskList.patient.lastName}</i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -332,7 +340,7 @@ class PerformTasks extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onConfirm={() => {this.setState({isStopModalOpen: !this.state.isStopModalOpen}); this.startService(0, this.state.taskList.serviceRequestVisitId)}}
+                        onConfirm={() => { this.setState({ isStopModalOpen: !this.state.isStopModalOpen }); this.startService(0, this.state.taskList.serviceRequestVisitId) }}
                         onCancel={() => this.setState({
                             isStopModalOpen: !this.state.isStopModalOpen,
                         })}
@@ -348,7 +356,9 @@ function mapDispatchToProps(dispatch) {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data, true)),
         addPerformedTask: (data, startServiceAction) => dispatch(addPerformedTask(data, startServiceAction)),
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
-        startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime))
+        startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime)),
+        setPatient: (data) => dispatch(setPatient(data)),
+        goToPatientProfile: () => dispatch(push(Path.patientProfile)),
     }
 };
 

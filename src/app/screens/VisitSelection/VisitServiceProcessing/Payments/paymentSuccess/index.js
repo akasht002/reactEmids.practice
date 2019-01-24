@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { VisitProcessingNavigationData } from '../../../../../data/VisitProcessingWizNavigationData'
-import { getFirstCharOfString } from '../../../../../utils/stringHelper'
 import { Scrollbars, DashboardWizFlow } from '../../../../../components';
 import { AsideScreenCover } from '../../../../ScreenCover/AsideScreenCover';
 import { getUTCFormatedDate } from "../../../../../utils/dateUtility";
 import { push } from '../../../../../redux/navigation/actions'
-import { Path } from '../../../../../routes'
+import { Path } from '../../../../../routes';
+import { setPatient } from '../../../../../redux/patientProfile/actions';
 import {updateServiceRequestId} from '../../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 
 import '../style.css'
@@ -43,6 +43,11 @@ class PaymentSuccess extends Component {
         this.setState({ collapse: !this.state.collapse });
     }
 
+    handelPatientProfile = (data) => {
+        this.props.setPatient(data)
+        this.props.goToPatientProfile()
+    }
+
     render() {
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -62,13 +67,13 @@ class PaymentSuccess extends Component {
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
                                     </div>
-                                    <div className='requestImageContent'>
+                                    <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
                                         {this.props.patientDetails.patient ?
                                             <span>
                                                 <img
                                                     src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
                                             :
                                             ''
                                         }
@@ -121,7 +126,9 @@ class PaymentSuccess extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         goVisitServiceList: () => dispatch(push(Path.visitServiceList)),
-        updateServiceRequestId: (data) => dispatch(updateServiceRequestId(data))
+        updateServiceRequestId: (data) => dispatch(updateServiceRequestId(data)),
+        setPatient: (data) => dispatch(setPatient(data)),
+        goToPatientProfile: () => dispatch(push(Path.patientProfile))
     }
 };
 
