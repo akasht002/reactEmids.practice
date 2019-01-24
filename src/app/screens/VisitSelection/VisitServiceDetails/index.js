@@ -263,9 +263,10 @@ class VisitServiceDetails extends Component {
     } else {
       return (
         <React.Fragment>
+          &nbsp;
           -
           &nbsp;
-          <Moment format='DD MMM YYYY'>
+          <Moment format='MM/DD/YYYY'>
             {this.state.visitServiceDetails.endDate}
           </Moment>
         </React.Fragment>
@@ -673,7 +674,7 @@ class VisitServiceDetails extends Component {
                             </span>
                             <span>
                               {this.state.visitServiceDetails.startDate &&
-                                <Moment format='DD MMM YYYY'>
+                                <Moment format='MM/DD/YYYY'>
                                   {this.state.visitServiceDetails.startDate}
                                 </Moment>}
 
