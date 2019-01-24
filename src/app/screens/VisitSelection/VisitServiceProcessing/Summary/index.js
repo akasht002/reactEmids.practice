@@ -5,17 +5,17 @@ import moment from "moment";
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
-import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup,Preloader } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup, Preloader } from '../../../../components';
 import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import { getFirstCharOfString } from '../../../../utils/stringHelper';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
-import { checkNumber } from '../../../../utils/validations';
-import { formatDateSingle } from '../../../../utils/dateUtility'
+import { checkNumber, getFields } from '../../../../utils/validations';
+import { formatDateSingle } from '../../../../utils/dateUtility';
+import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 
 class Summary extends Component {
@@ -66,6 +66,11 @@ class Summary extends Component {
             updatedMin: nextProps.CalculationsData.totalMinutes,
             updatedSec: nextProps.CalculationsData.totalSeconds
         })
+    }
+
+    handelPatientProfile = (data) => {
+        this.props.setPatient(data)
+        this.props.goToPatientProfile()
     }
 
     toggle = () => {
@@ -141,12 +146,12 @@ class Summary extends Component {
         this.setState({ isProccedModalOpen: true })
     }
 
-    timerErrMessage = () => {        
-        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");       
-        let hours = formatDateSingle(this.state.updatedHour)  
+    timerErrMessage = () => {
+        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");
+        let hours = formatDateSingle(this.state.updatedHour)
         let minutes = formatDateSingle(this.state.updatedMin)
         let seconds = formatDateSingle(this.state.updatedSec)
-        let newTime = hours +':'+ minutes+':'+seconds
+        let newTime = hours + ':' + minutes + ':' + seconds
         var endTime = moment(newTime, "HH:mm:ss");
 
         if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
@@ -261,8 +266,10 @@ class Summary extends Component {
                     <span> {this.props.CalculationsData.totalMinutes} min</span>
                     <span> {this.props.CalculationsData.totalSeconds} sec</span> */}
 
-                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)} hr</span>
-                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(3, 2)} min</span>
+                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)}</span>
+                    <span>:</span>
+                    <span>{this.props.SummaryDetails.originalTotalDuration.substr(3, 2)}</span>
+                    <span> (HH:MM)</span>
                     {/* <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span> */}
                 </p>
             </form>
@@ -271,7 +278,7 @@ class Summary extends Component {
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-            {this.props.isLoading && <Preloader />}
+                {this.props.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
@@ -287,14 +294,14 @@ class Summary extends Component {
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
                                     </div>
-                                    <div className='requestImageContent'>
+                                    <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
 
                                         {this.props.patientDetails.patient ?
                                             <span>
                                                 <img
                                                     src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
                                             </span>
                                             :
                                             ''
@@ -331,9 +338,11 @@ class Summary extends Component {
                                                 <div className="col-md-8">
                                                     <p className="CategoryName">
                                                         <span className="CategoryTitle">
-                                                            {this.props.SummaryDetails.serviceRequestTypeVisits && this.props.SummaryDetails.serviceRequestTypeVisits.map((serviceType) => {
-                                                                return serviceType.serviceTypeDescription + ', ';
-                                                            })}
+                                                            {this.props.SummaryDetails.serviceRequestTypeVisits &&
+                                                                getFields(
+                                                                    this.props.SummaryDetails.serviceRequestTypeVisits,
+                                                                    "serviceTypeDescription"
+                                                                )}
                                                         </span>
                                                         <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span></p>
                                                 </div>
@@ -360,8 +369,8 @@ class Summary extends Component {
                                                         <span>Taxes and Fees</span></p>
                                                 </div>
                                                 <div className="col-md-4 CostTableContainer Cost">
-                                                    <p><span>{this.props.CalculationsData.totalChargableTime} hrs</span>
-                                                        <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate}/hr</span></p>
+                                                    <p><span>{this.props.CalculationsData.totalChargableTime}</span>
+                                                        <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate}</span></p>
                                                     <p className="TaxCost"><span>${parseFloat(this.props.CalculationsData.totalVisitCost).toFixed(2)}</span>
                                                         <span>${parseFloat(this.props.CalculationsData.taxes).toFixed(2)}</span></p>
                                                 </div>
@@ -492,13 +501,15 @@ function mapDispatchToProps(dispatch) {
         saveSignature: (data) => dispatch(saveSignature(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
         goBack: () => dispatch(push(Path.feedback)),
+        setPatient: (data) => dispatch(setPatient(data)),
+        goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data))
     }
 };
 
 function mapStateToProps(state) {
     return {
-        isLoading:state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
+        isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
         CalculationsData: state.visitSelectionState.VisitServiceProcessingState.SummaryState.CalculationsData,
         actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,

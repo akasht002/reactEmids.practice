@@ -7,6 +7,7 @@ import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
 import { updateServiceRequestId } from '../Payments/actions';
+import { getDoubleDigitTime } from '../../../../utils/dateUtility'
 
 
 export const SummaryDetails = {
@@ -155,7 +156,7 @@ export function calculationActualData() {
 
         let sec = duration.seconds();
 
-        let totalChargableTime = hours + ":" + min;
+        let totalChargableTime = getDoubleDigitTime(hours) + ":" + getDoubleDigitTime(min);
 
         let hoursinMin = duration.asMinutes();
 

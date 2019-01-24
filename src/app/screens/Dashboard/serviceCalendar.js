@@ -4,7 +4,7 @@ import Select from "react-select";
 import _ from 'lodash'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Scrollbars,Input } from "../../components";
+import { Scrollbars, Input } from "../../components";
 import "./ProfileMainPanel.css";
 import { convertStringToDate } from "../../utils/validations";
 import { formatPhoneNumber } from "../../utils/formatName"
@@ -15,18 +15,18 @@ import {
   updateEntityServiceVisit,
   getEntityServiceProviderListSearch
 } from "../../redux/dashboard/Dashboard/actions";
-import { getServiceRequestId,setEntityServiceProvider } 
+import { getServiceRequestId, setEntityServiceProvider }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
 import { ServiceCalendarDefault, ShowIndicator } from "./ServiceInfo";
 import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
-import { setPatient,setESP } from "../../redux/patientProfile/actions";
+import { setPatient, setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
-import { USERTYPES } from "../../constants/constants";
+import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference } from "../../redux/telehealth/actions";
-import {  ModalPopup } from '../../components'
-import {MAX_MONTH_LIMIT,IN_MAX_ARRAY,COUNT_BASED_MONTH,LAST_MONTH_ARRAY,END_MONTH} from '../../constants/constants'
+import { ModalPopup } from '../../components'
+import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH } from '../../constants/constants'
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -54,11 +54,11 @@ class serviceCalendar extends React.Component {
       showMore: false,
       verticalScroll: true,
       width: window.innerWidth,
-      isAlertModalOpen : false,
-      phoneNumber:'',
-      selectedMonths:moment(today).format('M')
+      isAlertModalOpen: false,
+      phoneNumber: '',
+      selectedMonths: moment(today).format('M')
     };
-    
+
   }
 
   togglePersonalDetails = (action, e) => {
@@ -82,35 +82,35 @@ class serviceCalendar extends React.Component {
           serviceProviderId: this.state.selectedServiceProviderId
         }
       ]
-    };   
+    };
     this.props.updateEntityServiceVisit(model);
     this.initialCall()
     this.props.getServiceProviderVists(moment(this.data.visitDate).format("YYYY-MM-DD"));
   };
 
-  
+
   getYear = (selectMonth) => {
-    let  current_year =  moment().year()
-    let  current_month = parseInt(moment().month(),10)
-    if(_.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) && _.includes(END_MONTH, current_month) )
+    let current_year = moment().year()
+    let current_month = parseInt(moment().month(), 10)
+    if (_.includes(IN_MAX_ARRAY, parseInt(selectMonth, 10)) && _.includes(END_MONTH, current_month))
       return current_year + 1
-    else if(_.includes(LAST_MONTH_ARRAY, parseInt(selectMonth,10))) 
-      return parseInt(current_year,10) - 1
-    else 
+    else if (_.includes(LAST_MONTH_ARRAY, parseInt(selectMonth, 10)))
+      return parseInt(current_year, 10) - 1
+    else
       return current_year
   }
 
   MonthChange = e => {
     // let  current_month =  moment().month()
-    let selectMonth =  moment().month(e.value).format("M")
-    let year  = this.getYear(selectMonth)
-    let curDate = moment(year + '-' + moment().month(e.value).format("M") + '- 01',"YYYY-MM-DD")
+    let selectMonth = moment().month(e.value).format("M")
+    let year = this.getYear(selectMonth)
+    let curDate = moment(year + '-' + moment().month(e.value).format("M") + '- 01', "YYYY-MM-DD")
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
       selectedMonth: e.value,
-      startYear:year,
-      selectedMonths:moment().month(e.value).format("M")
+      startYear: year,
+      selectedMonths: moment().month(e.value).format("M")
     })
     this.startDateCalendar = moment(curDate).format('DD')
     this.endDateCalendar = moment(curDate).format('DD')
@@ -128,29 +128,29 @@ class serviceCalendar extends React.Component {
     }
     // let selectMonth =  updatedDay.format("M")
     // let  current_year =  updatedDay.year()
-    let prev_month = parseInt(moment(this.state.startDate).format('MM'),10)
-    let next_month = parseInt(moment(updatedDay).format('MM'),10)
+    let prev_month = parseInt(moment(this.state.startDate).format('MM'), 10)
+    let next_month = parseInt(moment(updatedDay).format('MM'), 10)
     // let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
     //           parseInt(current_year,10) + 1 : current_year
 
-    prev_month===next_month?this.setState({
+    prev_month === next_month ? this.setState({
       startDate: updatedDay.format(),
       startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
       startMonth: updatedDay.format("MMM"),
-      selectedMonths:updatedDay.format("M"),
+      selectedMonths: updatedDay.format("M"),
       selectedMonth: {
         label: updatedDay.format("MMM") + ' ' + updatedDay.format('YYYY'),
         value: updatedDay.format("MMM")
       }
     }) : this.setState({
-      startDate:moment(this.state.startDate).endOf('month').format(),
+      startDate: moment(this.state.startDate).endOf('month').format(),
       startYear: moment(this.state.startDate).format('YYYY'),
       reportDay: moment(this.state.startDate).format(),
-      startMonth:moment(this.state.startDate).format('MMM'),
-      selectedMonths:moment(this.state.startDate).format("M"),
+      startMonth: moment(this.state.startDate).format('MMM'),
+      selectedMonths: moment(this.state.startDate).format("M"),
       selectedMonth: {
-        label: moment(this.state.startDate).format('MMM') + ' ' +  moment(this.state.startDate).format('YYYY'),  
+        label: moment(this.state.startDate).format('MMM') + ' ' + moment(this.state.startDate).format('YYYY'),
         value: moment(this.state.startDate).format('MMM')
       }
     })
@@ -171,12 +171,12 @@ class serviceCalendar extends React.Component {
     // let next_month = parseInt(moment(updatedDay).format('MM'),10)
     // let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
     //           parseInt(current_year,10) + 1 : current_year
-     this.setState({
+    this.setState({
       startDate: updatedDay.format(),
       startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
       startMonth: updatedDay.format("MMM"),
-      selectedMonths:updatedDay.format("M"),
+      selectedMonths: updatedDay.format("M"),
       selectedMonth: {
         label: updatedDay.format("MMM") + ' ' + updatedDay.format('YYYY'),
         value: updatedDay.format("MMM")
@@ -185,17 +185,17 @@ class serviceCalendar extends React.Component {
   };
 
   todayDate = () => {
-    let selectMonth =  moment().month(today).format("M")
-    let  current_year =  moment().year()
-    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth,10)) ? 
-              parseInt(current_year,10) + 1 : current_year
+    let selectMonth = moment().month(today).format("M")
+    let current_year = moment().year()
+    let year = _.includes(IN_MAX_ARRAY, parseInt(selectMonth, 10)) ?
+      parseInt(current_year, 10) + 1 : current_year
     this.setState({
       startYear: moment(today).format("YYYY"),
       startDate: moment(today).format(),
       reportDay: moment(today).format(),
       startMonth: moment(today).format("MMM"),
       currentDate: moment().format("DD"),
-      selectedMonths:moment(today).format("M"),
+      selectedMonths: moment(today).format("M"),
       selectedMonth: {
         label: moment(today).format("MMM") + ' ' + year,
         value: moment(today).format("MMM")
@@ -236,21 +236,23 @@ class serviceCalendar extends React.Component {
     });
   };
 
-  initialCall = () => {   
+  initialCall = () => {
     const date_range = {
-      start_date:moment().subtract(3, 'months').format('YYYY-MM-DD'),
+      start_date: moment().subtract(3, 'months').format('YYYY-MM-DD'),
       end_date: moment().add(3, 'months').format('YYYY-MM-DD')
-    }    
+    }
     this.props.getServiceVisitCount(date_range)
   }
 
-  handlePhoneNumber = data =>{
-    this.setState({isAlertModalOpen:!this.state.isAlertModalOpen,
-                  phoneNumber:formatPhoneNumber(data.phoneNumber)})
+  handlePhoneNumber = data => {
+    this.setState({
+      isAlertModalOpen: !this.state.isAlertModalOpen,
+      phoneNumber: formatPhoneNumber(data.phoneNumber)
+    })
   }
 
   reset = () => {
-    this.setState({isAlertModalOpen:!this.state.isAlertModalOpen})
+    this.setState({ isAlertModalOpen: !this.state.isAlertModalOpen })
   }
 
 
@@ -261,9 +263,9 @@ class serviceCalendar extends React.Component {
       .replace(/-/g, "-");
     this.props.getServiceProviderVists(utc);
     let d = new Date(utc);
-    d.setMonth(d.getMonth() - 3);    
+    d.setMonth(d.getMonth() - 3);
     const date_range = {
-      start_date:moment().subtract(3, 'months').format('YYYY-MM-DD'),
+      start_date: moment().subtract(3, 'months').format('YYYY-MM-DD'),
       end_date: moment().add(3, 'months').format('YYYY-MM-DD')
     }
     this.props.getServiceVisitCount(date_range);
@@ -280,7 +282,7 @@ class serviceCalendar extends React.Component {
     this.setState({ width: window.innerWidth });
   };
 
-  SelectOnBlur(e) {}
+  SelectOnBlur(e) { }
 
   optionClicked = e => {
     let testDiv = document.getElementsByClassName("Select-menu-outer");
@@ -368,107 +370,108 @@ class serviceCalendar extends React.Component {
 
   getModalContent = (serviceProviderList) => {
     return (
-    <form className="assign-serviceproblock">
-      <Input
+      <form className="assign-serviceproblock">
+        <Input
           id='participantsSearch'
           autoComplete='false'
           required='required'
           type='text'
           placeholder='Search By First Name'
           className='form-control searchParticipants'
-          textChange = {(e)=>{
+          textChange={(e) => {
             this.onchangeSearchServiceProvider(e)
           }}
-      />
-      <div className="participantsSearchList">
-              {serviceProviderList.map((item, index) => {
-      // let catNum = index + 1;
-      return (
-        <fieldset>
-          <div className="CheckboxSet" key={item.id}>
-            <input
-              className="ServiceCheckbox"
-              name={"ServiceStatus"}
-              id={item.serviceProviderId}
-              type="radio"
-              value={item.serviceProviderId}
-              onChange={e => this.handleserviceType(item, e)}
-            />
-           <div className={"avatarContainer"}>
-              <img
-              alt={'NO_IMAGE'}
-              key={index}
-              className='avatarImage avatarImageBorder'
-                src={item.thumbnail?item.thumbnail:require('../../assets/images/Blank_Profile_icon.png')}
-                />
-            </div>
-            <label htmlFor={item.serviceProviderId}>
-              {item.firstName + " " + item.lastName}
-            </label>
-          </div>
-        </fieldset>)  })}
-       </div>
+        />
+        <div className="participantsSearchList">
+          {serviceProviderList.map((item, index) => {
+            // let catNum = index + 1;
+            return (
+              <fieldset>
+                <div className="CheckboxSet" key={item.id}>
+                  <input
+                    className="ServiceCheckbox"
+                    name={"ServiceStatus"}
+                    id={item.serviceProviderId}
+                    type="radio"
+                    value={item.serviceProviderId}
+                    onChange={e => this.handleserviceType(item, e)}
+                  />
+                  <div className={"avatarContainer"}>
+                    <img
+                      alt={'NO_IMAGE'}
+                      key={index}
+                      className='avatarImage avatarImageBorder'
+                      src={item.thumbnail ? item.thumbnail : require('../../assets/images/Blank_Profile_icon.png')}
+                    />
+                  </div>
+                  <label htmlFor={item.serviceProviderId}>
+                    {item.firstName + " " + item.lastName}
+                  </label>
+                </div>
+              </fieldset>)
+          })}
+        </div>
       </form>
-              )
+    )
   }
 
   getDates = selectedDate => {
     // let dates = [];
-   
+
     if (this.state.width > '1280')
-    return [
-      {
-        day: moment(selectedDate).subtract(3, 'days'),
-        date: moment(selectedDate).subtract(3, 'days')
-      },
-      {
-        day: moment(selectedDate).subtract(2, 'days'),
-        date: moment(selectedDate).subtract(2, 'days')
-      },
-      {
-        day: moment(selectedDate).subtract(1, 'days'),
-        date: moment(selectedDate).subtract(1, 'days')
-      },
-      {
-        day: moment(selectedDate),
-        date: moment(selectedDate)
-      },
-      {
-        day: moment(selectedDate).add(1, 'days'),
-        date: moment(selectedDate).add(1, 'days')
-      },
-      {
-        day: moment(selectedDate).add(2, 'days'),
-        date: moment(selectedDate).add(2, 'days')
-      },
-      {
-        day: moment(selectedDate).add(3, 'days'),
-        date: moment(selectedDate).add(3, 'days')
-      }
-    ]
+      return [
+        {
+          day: moment(selectedDate).subtract(3, 'days'),
+          date: moment(selectedDate).subtract(3, 'days')
+        },
+        {
+          day: moment(selectedDate).subtract(2, 'days'),
+          date: moment(selectedDate).subtract(2, 'days')
+        },
+        {
+          day: moment(selectedDate).subtract(1, 'days'),
+          date: moment(selectedDate).subtract(1, 'days')
+        },
+        {
+          day: moment(selectedDate),
+          date: moment(selectedDate)
+        },
+        {
+          day: moment(selectedDate).add(1, 'days'),
+          date: moment(selectedDate).add(1, 'days')
+        },
+        {
+          day: moment(selectedDate).add(2, 'days'),
+          date: moment(selectedDate).add(2, 'days')
+        },
+        {
+          day: moment(selectedDate).add(3, 'days'),
+          date: moment(selectedDate).add(3, 'days')
+        }
+      ]
     else
-    return [
-      {
-        day: moment(selectedDate).subtract(2, 'days'),
-        date: moment(selectedDate).subtract(2, 'days')
-      },
-      {
-        day: moment(selectedDate).subtract(1, 'days'),
-        date: moment(selectedDate).subtract(1, 'days')
-      },
-      {
-        day: moment(selectedDate),
-        date: moment(selectedDate)
-      },
-      {
-        day: moment(selectedDate).add(1, 'days'),
-        date: moment(selectedDate).add(1, 'days')
-      },
-      {
-        day: moment(selectedDate).add(2, 'days'),
-        date: moment(selectedDate).add(2, 'days')
-      }
-    ]   
+      return [
+        {
+          day: moment(selectedDate).subtract(2, 'days'),
+          date: moment(selectedDate).subtract(2, 'days')
+        },
+        {
+          day: moment(selectedDate).subtract(1, 'days'),
+          date: moment(selectedDate).subtract(1, 'days')
+        },
+        {
+          day: moment(selectedDate),
+          date: moment(selectedDate)
+        },
+        {
+          day: moment(selectedDate).add(1, 'days'),
+          date: moment(selectedDate).add(1, 'days')
+        },
+        {
+          day: moment(selectedDate).add(2, 'days'),
+          date: moment(selectedDate).add(2, 'days')
+        }
+      ]
   }
 
 
@@ -483,14 +486,14 @@ class serviceCalendar extends React.Component {
     let pervious_month = moment.months().splice(current_month - 3, 3);
     let next_month_list = moment.months().splice(current_month, 3);
 
-    let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month,10)]) 
-    let nextMonthLists =  current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
+    let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month, 10)])
+    let nextMonthLists = current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
 
     let monthLists = pervious_month.concat(nextMonthLists)
 
     let monthList = monthLists.map(month => {
-      let selectMonth =  moment().month(month).format("M")
-      let year  = this.getYear(selectMonth)
+      let selectMonth = moment().month(month).format("M")
+      let year = this.getYear(selectMonth)
       return { label: month.substring(0, 3) + ' ' + year, value: month };
     });
     let dateList = dates.map((daysMapping, i) => {
@@ -503,10 +506,10 @@ class serviceCalendar extends React.Component {
           obj.visitDate === daysMapping.date.format("YYYY-MM-DD") + "T00:00:00"
       )
         ? visitCount.find(
-            obj =>
-              obj.visitDate ===
-              daysMapping.date.format("YYYY-MM-DD") + "T00:00:00"
-          ).visits
+          obj =>
+            obj.visitDate ===
+            daysMapping.date.format("YYYY-MM-DD") + "T00:00:00"
+        ).visits
         : 0;
       return (
         <div className={"dateRow" + className}>
@@ -536,9 +539,9 @@ class serviceCalendar extends React.Component {
 
     let serviceVist = this.props.serviceVist;
 
-    let start_day_month = parseInt(dates[0].date.format('MM'),10)
-    let end_day_month = parseInt(dates[(count -1)].date.format('MM'),10)
-    let selectedMonth = parseInt(this.state.selectedMonths,10)
+    let start_day_month = parseInt(dates[0].date.format('MM'), 10)
+    let end_day_month = parseInt(dates[(count - 1)].date.format('MM'), 10)
+    let selectedMonth = parseInt(this.state.selectedMonths, 10)
     let visitData = (
       <ServiceCalendarDefault
         onClickConversation={data => this.onClickConversation(data)}
@@ -550,20 +553,20 @@ class serviceCalendar extends React.Component {
         goToPatientProfile={data => {
           this.props.setPatient(data);
           this.props.goToPatientProfile();
-        }}   
+        }}
         goToESPProfile={
           data => {
             this.props.setESP(data);
             this.props.goToESPProfile();
-        } 
-      }    
+          }
+        }
         handlePhoneNumber={this.handlePhoneNumber}
       />
     );
 
     let modalTitle = "Assign Service Provider";
     let modalType = "";
-    let modalContent = this.getModalContent(this.props.serviceProviderList)    
+    let modalContent = this.getModalContent(this.props.serviceProviderList)
     return (
       <div
         className={
@@ -600,17 +603,17 @@ class serviceCalendar extends React.Component {
           </div>
           <div className="middlePalette">
             <div className="datePalette">
-            { start_day_month === selectedMonth &&  <span
+              {start_day_month === selectedMonth && <span
                 className='ProfileCalendarCaret CaretPrev'
                 onClick={this.clickPrevWeek.bind(this)}
-           /> }
+              />}
               <div onChange={this.handleDayChange} className="datesList">
                 {dateList}
               </div>
-              { end_day_month === selectedMonth &&  <span
+              {end_day_month === selectedMonth && <span
                 className='ProfileCalendarCaret CaretNext'
                 onClick={this.clickNextWeek.bind(this)}
-              /> }
+              />}
             </div>
           </div>
           <Scrollbars
@@ -630,8 +633,8 @@ class serviceCalendar extends React.Component {
           >
             Show more <i className="ProfileIconShowMore" />
           </li>
-        </ul>        
-          <ModalPopup
+        </ul>
+        <ModalPopup
           isOpen={this.state.EditPersonalDetailModal}
           toggle={() => this.togglePersonalDetails(this, modalType)}
           ModalBody={modalContent}
@@ -643,35 +646,39 @@ class serviceCalendar extends React.Component {
           btn1='Assign'
           btn2='Cancel'
           onConfirm={this.onSubmit}
-          onCancel={() =>{
+          onCancel={() => {
             this.setState({
               EditPersonalDetailModal: false
             })
           }
-           }
+          }
         />
-         <ModalPopup
+        <ModalPopup
           isOpen={this.state.isAlertModalOpen}
           toggle={this.reset}
-          ModalBody={<span>Phone Number : {this.state.phoneNumber}</span>}
+          ModalBody={<span>{this.state.phoneNumber
+            === null
+            ? CONTACT_NOT_FOUND
+            : `${PHONE_NUMBER_TEXT}
+            ${this.state.phoneNumber}`}</span>}
           btn1='OK'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
-          onConfirm={() =>{
+          onConfirm={() => {
             this.setState({
               isAlertModalOpen: false,
-              phoneNumber:''
+              phoneNumber: ''
             })
           }
-           }
-          onCancel={() =>{
+          }
+          onCancel={() => {
             this.setState({
               isAlertModalOpen: false,
-              phoneNumber:''
+              phoneNumber: ''
             })
           }
-           }
+          }
         />
       </div>
     );
@@ -692,10 +699,10 @@ function mapDispatchToProps(dispatch) {
     createVideoConference: data => dispatch(createVideoConference(data)),
     goToServiceRequestDetailsPage: () =>
       dispatch(push(Path.visitServiceDetails)),
-    setEntityServiceProvider:data =>dispatch(setEntityServiceProvider(data)),
-    setESP:data=>dispatch(setESP(data)),
-    goToESPProfile:()=>dispatch(push(Path.ESPProfile)),
-    getEntityServiceProviderListSearch:(data)=>dispatch(getEntityServiceProviderListSearch(data))
+    setEntityServiceProvider: data => dispatch(setEntityServiceProvider(data)),
+    setESP: data => dispatch(setESP(data)),
+    goToESPProfile: () => dispatch(push(Path.ESPProfile)),
+    getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data))
   };
 }
 
