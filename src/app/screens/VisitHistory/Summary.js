@@ -460,7 +460,7 @@ class VistSummary extends React.Component {
                     <p>
                       <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0, 5)}</span>
                       <span>
-                        ${summaryDetail.hourlyRate}
+                        ${summaryDetail.hourlyRate && summaryDetail.hourlyRate.toFixed(2)}
                       </span>
                     </p>
                     <p className="TaxCost">
