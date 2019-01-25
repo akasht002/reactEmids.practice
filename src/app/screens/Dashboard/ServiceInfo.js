@@ -104,7 +104,7 @@ export const serviceCalendar = (
               }}>
               <span className='ServicesTitle'>
                 {conversations.serviceTypes &&
-                  conversations.serviceTypes.toString()}
+                  conversations.serviceTypes.join(', ')}
               </span>
               <span className='ServicesDesc' >
                 {conversations.serviceCategory && conversations.serviceCategory}
