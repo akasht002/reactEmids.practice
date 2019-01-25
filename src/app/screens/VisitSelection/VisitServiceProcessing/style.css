@@ -757,7 +757,7 @@ div.feedbackForm {
 }
 
 .form-radio-input:checked ~ label .RadioBoxIcon, .form-radio-input:checked ~ .form-radio-label {
-    border: 1px solid #7a329f;
+    border: 1px solid #7a329f !important;
 }
 
 .form-radio-input:checked ~ label .RadioBoxIcon:before {

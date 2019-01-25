@@ -210,3 +210,37 @@ span.NewCardButton{
         width: 100%;
     }
 }
+
+
+.FeedbackQuestionWidget .FeedbackAnswerWidget .form-radio .RadioBoxIcon
+{
+left: 25px;
+}
+.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label
+{
+    background-color: 	rgb(211,211,211,  0.3);
+    cursor: context-menu;
+}
+.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label:hover
+{
+    background-color: 	rgb(211,211,211,  0.3);
+    cursor: context-menu;
+    border: 1px solid #e1e1e1;
+}
+
+.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label+span.RadioBoxIcon::before
+
+{
+background:	rgba(0,0,0, 0.5);
+}
+
+
+.FeedbackWidget .FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label span.RadioBoxIcon
+{
+    border: 1px solid rgba(0,0,0, 0.5) !important;   
+}
+.FeedbackWidget .FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label span.RadioBoxIcon::before
+
+{
+background:	rgba(0,0,0, 0.5);
+}

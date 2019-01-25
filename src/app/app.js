@@ -27,7 +27,7 @@ class App extends Component {
       if(data && getUserInfo()){
         let ParticipantList = data.result ? [...data.result.participantList] : [...data.participantList];
         const index = ParticipantList.indexOf(
-          ParticipantList.filter(el => el.userId === getUserInfo().serviceProviderId && el.participantType === USERTYPES.SERVICE_PROVIDER)[0]
+          ParticipantList.filter(el => el.userId === getUserInfo().coreoHomeUserId && el.participantType === USERTYPES.SERVICE_PROVIDER)[0]
         );
         if(index !== -1){
           let conversationId = data.result ? data.result.conversationId : data.conversationId;
