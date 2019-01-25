@@ -7,11 +7,11 @@ import {
 
 class Languages extends React.Component {
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getSelectedLanguages()
   }
 
-  render () {
+  render() {
     let selectedItems =
       this.props.selectedLanguagesList.languages &&
       this.props.selectedLanguagesList.languages.map(item => {
@@ -37,24 +37,32 @@ class Languages extends React.Component {
             ? <ul className='SPSkillsList'>
               {selectedItems}
             </ul>
-            : <div className='SPNoInfo mb-5'>
-                <div className='SPNoInfoContent'>
-                  <div className='SPInfoContentImage' />
-                </div>
-              </div>}
+            :
+            // <div className='SPNoInfo mb-5'>
+            //     <div className='SPNoInfoContent'>
+            //       <div className='SPInfoContentImage' />
+            //     </div>
+            //   </div>
+            <div className='SPNoInfo'>
+              <div className='SPNoInfoContent'>
+                <div className='SPInfoContentImage' />
+                <span className='SPNoInfoDesc'>No data available</span>
+              </div>
+            </div>
+          }
         </div>
       </div>
     )
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getSelectedLanguages: () => dispatch(getSelectedLanguages())
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     selectedLanguagesList: state.patientProfileState.languageList
   }
