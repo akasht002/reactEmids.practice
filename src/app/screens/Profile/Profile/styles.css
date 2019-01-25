@@ -1144,6 +1144,7 @@ div.CertificationModal{
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
+    width: 40px;
 }
 
 .Select.ProfileImageMultiSelect div.Select-value{

@@ -4,6 +4,7 @@ import moment from 'moment';
 import './MessageCard.css';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import { formatName } from '../../../utils/formatName';
+import { isEntityServiceProvider } from '../../../utils/userUtility';
 
 class MessageList extends Component {
 
@@ -13,7 +14,7 @@ class MessageList extends Component {
                 <tr>
                     <td className={"align-middle text-center noMessageWidget"}>
                         <img alt="no content" className={"noMessageImg"} src={require("../../../assets/images/exclamation-mark.svg")} />
-                        <p className={"noMessageText"}>Click on "New Conversation" button to start.</p>
+                        {!isEntityServiceProvider() && <p className={"noMessageText"}>Click on "New Conversation" button to start.</p>}
                     </td>
                 </tr>
             </tbody>

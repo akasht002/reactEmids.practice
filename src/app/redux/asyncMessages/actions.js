@@ -495,6 +495,7 @@ export function getLatestMessages(conversationId){
         if (interval) {
             clearInterval(interval);
         }
+        dispatch(checkLatestMessages(conversationId));
         interval = setInterval(() => {
             dispatch(checkLatestMessages(conversationId));
         }, state.asyncMessageState.callbackInterval);
