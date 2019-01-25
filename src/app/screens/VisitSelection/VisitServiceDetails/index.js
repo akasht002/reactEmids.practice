@@ -753,7 +753,7 @@ class VisitServiceDetails extends Component {
                           <span>Visit Status</span>
                         </div>
                         <div>
-                          <span>Visit Length</span>
+                          <span>Visit Length (HH:MM)</span>
                         </div>
                         <div></div>
                         {
@@ -800,7 +800,7 @@ class VisitServiceDetails extends Component {
                               <div>
                                 {ScheduleList.originalTotalDuration
                                   ? <span>
-                                    {ScheduleList.originalTotalDuration.substring(0,5)} hrs
+                                    {ScheduleList.originalTotalDuration.substring(0,5)}
                                     </span>
                                   : <span> - </span>}
                               </div>
@@ -932,7 +932,7 @@ class VisitServiceDetails extends Component {
               === null
               ? CONTACT_NOT_FOUND
               : `${PHONE_NUMBER_TEXT}
-              ${this.state.phoneNumber}`} </span>}
+              ${formatPhoneNumber(this.state.phoneNumber)}`} </span>}
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'

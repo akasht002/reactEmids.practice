@@ -7,11 +7,11 @@ import {
 
 class ClinicalCondition extends React.Component {
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getSelectedClinicalCondition()
   }
 
-  render () {
+  render() {
     let selectedItems =
       this.props.selectedClinicalConditionsList &&
       this.props.selectedClinicalConditionsList.map(item => {
@@ -33,25 +33,33 @@ class ClinicalCondition extends React.Component {
             ? <ul className="SPSkillsList">
               {selectedItems}
             </ul>
-            : <div className='SPNoInfo mb-5'>
-                <div className='SPNoInfoContent'>
-                  <div className='SPInfoContentImage' />
-                </div>
-              </div>}
+            :
+            // <div className='SPNoInfo mb-5'>
+            //   <div className='SPNoInfoContent'>
+            //     <div className='SPInfoContentImage' />
+            //   </div>
+            // </div>
+            <div className='SPNoInfo'>
+              <div className='SPNoInfoContent'>
+                <div className='SPInfoContentImage' />
+                <span className='SPNoInfoDesc'>No data available</span>
+              </div>
+            </div>
+          }
         </div>
       </div>
     )
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getSelectedClinicalCondition: () =>
       dispatch(getSelectedClinicalCondition())
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     selectedClinicalConditionsList: state.patientProfileState.clinicalConditionList
   }

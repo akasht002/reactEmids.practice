@@ -25,6 +25,7 @@ import {
   getLength,
   isUrlValid
 } from '../../../utils/validations'
+import { formatPhoneNumber } from '../../../utils/formatName'
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
 
@@ -472,7 +473,7 @@ class Organization extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail.phoneNumber &&
-                  this.props.personalDetail.phoneNumber}
+                  formatPhoneNumber(this.props.personalDetail.phoneNumber)}
               </span>
             </div>
           </div>

@@ -6,6 +6,7 @@ import {
   getLength
 } from '../../../utils/validations'
 import { ProfileImage } from '../../../components'
+import { formatPhoneNumber } from '../../../utils/formatName'
 import './index.css'
 
 class PersonalDetail extends React.PureComponent {
@@ -73,7 +74,7 @@ class PersonalDetail extends React.PureComponent {
               <div className={'width100 d-flex'}>
                 <span>
                   {getLength(this.props.personalDetail.phoneNumber) > 0 ?
-                    this.props.personalDetail.phoneNumber : ''}
+                    formatPhoneNumber(this.props.personalDetail.phoneNumber) : ''}
                 </span>
               </div>
             </div>
