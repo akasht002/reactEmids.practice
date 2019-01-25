@@ -22,6 +22,7 @@ import {
   getArrayLength,
   getLength,
 } from '../../../utils/validations'
+import { formatPhoneNumber } from '../../../utils/formatName'
 import { SETTING } from '../../../services/api'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 
@@ -634,7 +635,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'width100 d-flex'}>
               <span>
                 {this.props.personalDetail &&
-                  this.props.personalDetail.phoneNumber}
+                  formatPhoneNumber(this.props.personalDetail.phoneNumber)}
               </span>
             </div>
           </div>
