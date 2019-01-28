@@ -22,7 +22,7 @@
 {
     .Loader
     {
-        width:87.20% !important;
+        width: calc(100% - 170px) !important;
     }
 } 
 
@@ -31,7 +31,7 @@
 
     .Loader
     {
-       width:86% !important;
+        width: calc(100% - 170px) !important;
     }
 
 }
@@ -43,7 +43,7 @@
 
     .Loader
     {
-       width:86% !important;
+        width: calc(100% - 150px) !important;
     }
 
 }

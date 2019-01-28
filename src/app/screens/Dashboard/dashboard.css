@@ -216,6 +216,7 @@ li div.dropdown-menu{
 .SPContentWidget .ProfileContainer.topProfile {
     /* height: calc(100vh - 140px); */
     height: 620px;
+    margin-bottom: 20px;
 }
 
 .SPContentWidget .ProfileContainer .card {
@@ -1913,5 +1914,32 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
   .mainWidgetOverflow::-webkit-scrollbar-thumb:hover {
     background: #8c8c8c; 
   }
+
+  .SPContentWidget .ProfileContainer.bottomProfile {
+    min-height:auto;
+    height: 620px;
+    z-index: 0;
+    margin-bottom: 20px;
+}
+
+.SPContentWidget .ProfileContainer.bottomProfile .ProfileCard
+{
+margin-bottom: 0px;
+}
+
+@media (min-width: 1367px)
+{
+    .SPContentWidget .ProfileContainer.bottomProfile {
+      
+        height: 713px;
+    
+    }
+
+    .SPContentWidget .ProfileContainer.bottomProfile .topPalette.ProfileConversation 
+    {
+        margin-bottom: 14px;
+    }
+}
+
 
     
