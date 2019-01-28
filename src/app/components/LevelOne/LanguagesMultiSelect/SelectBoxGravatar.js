@@ -31,7 +31,7 @@ class Gravatar extends Component {
         if (!modernBrowser && isRetina()) {
             return (
                 <img
-                    alt={`${formattedValue}`}
+                    alt={''}
                     style={this.props.style}
                     src={require('../../../assets/images/Flags/' + src)}
                     height={this.props.size}
@@ -43,7 +43,7 @@ class Gravatar extends Component {
         }
         return (
             <img
-                alt={`${formattedValue}`}
+                alt={''}
                 src={require('../../../assets/images/Flags/' + src)}
                 height={this.props.size}
                 width={this.props.size}

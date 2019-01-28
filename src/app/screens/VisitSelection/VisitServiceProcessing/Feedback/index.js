@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
-import { getFirstCharOfString } from '../../../../utils/stringHelper'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader } from '../../../../components';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
@@ -13,7 +12,8 @@ import { Path } from '../../../../routes'
 import { push } from '../../../../redux/navigation/actions'
 import {
     getVisitFeedBack
-} from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+} from '../../../../redux/visitHistory/VisitServiceDetails/actions';
+import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 
 import './style.css'
@@ -51,6 +51,11 @@ class Feedback extends Component {
         this.setState({
             isLoading: nextProps.isLoading
         })
+    }
+
+    handelPatientProfile = (data) => {
+        this.props.setPatient(data)
+        this.props.goToPatientProfile()
     }
 
     handleSelected = (answer, id) => {
@@ -137,13 +142,13 @@ class Feedback extends Component {
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
                                     </div>
-                                    <div className='requestImageContent'>
+                                    <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
                                         {this.props.patientDetails.patient ?
                                             <span>
                                                 <img
                                                     src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && getFirstCharOfString(this.props.patientDetails.patient.lastName)}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
                                             :
                                             ''
                                         }
@@ -298,7 +303,9 @@ function mapDispatchToProps(dispatch) {
         goToSummary: () => dispatch(push(Path.summary)),
         goBack: () => dispatch(push(Path.performTasks)),
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
-        getSavedSignature: (data) => dispatch(getSavedSignature(data))
+        getSavedSignature: (data) => dispatch(getSavedSignature(data)),
+        setPatient: (data) => dispatch(setPatient(data)),
+        goToPatientProfile: () => dispatch(push(Path.patientProfile)),
     }
 };
 
