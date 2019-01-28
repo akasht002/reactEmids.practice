@@ -550,11 +550,19 @@ class VisitServiceDetails extends Component {
                       className='ProfileImage'
                       src={profileImage}
                       alt='patientImage'
-                      onClick={() => { this.state.visitServiceDetails.statusId === HIRED_STATUS_ID ? this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId) : '' }}
+                      onClick={() => { 
+                        if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
+                          this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId)
+                        } 
+                      }}
                     />
 
                     <div class='PostedByProfileDetails'>
-                      <div class='ProfileDetailsName' onClick={() => { this.state.visitServiceDetails.statusId === HIRED_STATUS_ID ? this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId) : '' }}>
+                      <div class='ProfileDetailsName' onClick={() => { 
+                        if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
+                          this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId)
+                        }
+                      }}>
                         {getLength(this.state.visitServiceDetails.patient) >
                           0 && this.state.visitServiceDetails.patient.firstName}
                         {' '}
