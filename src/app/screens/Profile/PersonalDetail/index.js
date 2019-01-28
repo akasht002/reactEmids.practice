@@ -1070,7 +1070,7 @@ class PersonalDetail extends React.PureComponent {
                     autoComplete='off'
                     maxlength='10'
                     type='text'
-                    value={this.state.phoneNumber}
+                    value={formatPhoneNumber(this.state.phoneNumber)}
                     className={"form-control custome-placeholder " + (this.state.phoneNumberInvalid && 'inputFailure')}
 
                     textChange={e => {

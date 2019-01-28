@@ -334,7 +334,7 @@ class PerformTasks extends Component {
 
                     <ModalPopup
                         isOpen={this.state.isStopModalOpen}
-                        ModalBody={<span>Do you want to End the visit?</span>}
+                        ModalBody={<span>Do you want to End the Service?</span>}
                         btn1="Yes"
                         btn2="No"
                         className="modal-sm"

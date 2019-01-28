@@ -5,11 +5,11 @@ import * as action from '../../../redux/patientProfile/actions'
 
 class PointService extends React.Component {
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getPointService()
   }
 
-  render () {
+  render() {
 
     const PointServiceList =
       this.props.PointServiceList &&
@@ -48,7 +48,7 @@ class PointService extends React.Component {
             </div>
           </li>
         )
-    })
+      })
 
     return (
       <div className='col-md-12 card CardWidget SPCertificate'>
@@ -61,11 +61,19 @@ class PointService extends React.Component {
               ? <div>
                 {PointServiceList}
               </div>
-              : <div className='SPNoInfo mb-5'>
+              :
+              // <div className='SPNoInfo mb-5'>
+              //   <div className='SPNoInfoContent'>
+              //     <div className='SPInfoContentImage' />
+              //   </div>
+              // </div>
+              <div className='SPNoInfo'>
                 <div className='SPNoInfoContent'>
                   <div className='SPInfoContentImage' />
+                  <span className='SPNoInfoDesc'>No data available</span>
                 </div>
-              </div>}
+              </div>
+            }
           </ul>
         </div>
       </div>
@@ -73,13 +81,13 @@ class PointService extends React.Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getPointService: () => dispatch(action.getPointService())
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     PointServiceList: state.patientProfileState.pointOfServiceList
   }
