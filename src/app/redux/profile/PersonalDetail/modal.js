@@ -1,10 +1,12 @@
 import _ from 'lodash'
 import { getUserInfo } from '../../../services/http'
 import { getDataValueArray, getValueOfArray } from '../../../utils/validations'
+import { removeHyphenInPhoneNumber } from '../../../utils/formatName'
 import {
   PROFILE_SERVICE_PROVIDER_TYPE_ID,
   ORG_SERVICE_PROVIDER_TYPE_ID
 } from '../../../constants/constants'
+
 export const PERSONAL_DETAIL = {
   UPDATE_PERSONAL_DETAIL: 'UPDATE_PERSONAL_DETAIL',
   UPDATE_ORGANIZATION_DETAIL: 'UPDATE_ORGANIZATION_DETAIL',
@@ -12,12 +14,10 @@ export const PERSONAL_DETAIL = {
 }
 
 export const getModal = (data, action) => {
-  console.log(data)
   let affiliation = data.selectedAffiliation && data.selectedAffiliation.value
     ? getDataValueArray(data.selectedAffiliation.value, '-')
     : getValueOfArray(data.selectedAffiliation, '-')
   let dataList = _.filter(data.affiliationList, { 'name': affiliation[1]?affiliation[1]:affiliation[0] });  
-  console.log(dataList)
   let states = data.selectedState && data.selectedState.value
     ? getDataValueArray(data.selectedState.value, '-')
     : getValueOfArray(data.selectedState, '-')
@@ -66,7 +66,7 @@ export const getModal = (data, action) => {
             isActive: true
           }
         ],
-        phoneNumber: data.phoneNumber,
+        phoneNumber: removeHyphenInPhoneNumber(data.phoneNumber),
         isActive: true
       }
     case PERSONAL_DETAIL.UPDATE_ORGANIZATION_DETAIL:
@@ -112,7 +112,7 @@ export const getModal = (data, action) => {
             rowversionId: ''
           }
         ],
-        phoneNumber: data.phoneNumber,
+        phoneNumber: removeHyphenInPhoneNumber(data.phoneNumber),
         isActive: true,
         rowversionId: ''
       }
@@ -167,7 +167,7 @@ export const getModal = (data, action) => {
             isActive: true
           }
         ],
-        phoneNumber: data.phoneNumber,
+        phoneNumber: removeHyphenInPhoneNumber(data.phoneNumber),
         isActive: true,
         rowversionId: ''
       }

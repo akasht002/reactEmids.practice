@@ -5,7 +5,6 @@ class Gravatar extends Component {
 
     render() {
         var base = this.props.base;
-        const formattedValue = this.props.value;
 
         const src = base + '.' + this.props.extension;
 

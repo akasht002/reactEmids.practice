@@ -11,3 +11,17 @@
 .white-backgnd{
     background: white
 }
+
+.HomeLoader {
+    display: block;
+    position: absolute;
+    height: 100%;
+    right:0;
+    height: 100%;
+    width:100%;
+    background-image: url("../../../assets/images/loader.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1200;
+    margin: 0 auto;
+}
