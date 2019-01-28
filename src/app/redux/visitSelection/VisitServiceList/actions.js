@@ -46,7 +46,7 @@ export const clearVisitServiceList = () => {
     }
 }
 
-export function getVisitServiceList(data) {
+ export function  getVisitServiceList(data) {
     return (dispatch) => {
         let serviceProviderId = getUserInfo().serviceProviderId
         dispatch(startLoading());

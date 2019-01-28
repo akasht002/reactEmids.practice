@@ -232,11 +232,10 @@ class VisitServiceDetails extends Component {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
         type: status.isInterested ? 1 : 0
       }
-      this.props.updateServiceRequestByServiceProvider(model)
       if (this.props.updateServiceRequestMsgStatus === 1) {
         this.setState({ isAlertModalopenConfirm: true })
       } else {
-        this.props.history.push("/visitServiceList")
+        this.props.updateServiceRequestByServiceProvider(model)
       }
 
     } else {
