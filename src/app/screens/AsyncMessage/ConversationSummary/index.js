@@ -21,6 +21,7 @@ import '../styles.css';
 import './index.css';
 import { USERTYPES } from '../../../constants/constants';
 import { isEntityServiceProvider } from '../../../utils/userUtility';
+import {Preloader} from '../../../components';
 
 class ConversationSummary extends Component {
     constructor(props) {
@@ -152,6 +153,7 @@ class ConversationSummary extends Component {
                     headerFooter="d-none"
                     centered={true}
                 />
+                {this.props.isLoading && <Preloader/>}
             </AsideScreenCover>
         )
     }
