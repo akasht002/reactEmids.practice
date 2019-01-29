@@ -196,8 +196,8 @@ export function calculationActualData() {
             totalVisitCost: totalVisitCost,
             taxes: taxes,
             grandTotalAmount: grandTotalAmount,
-            totalHours: hours,
-            totalMinutes: min,
+            totalHours: getDoubleDigitTime(hours),
+            totalMinutes: getDoubleDigitTime(min),
             totalSeconds: sec,
             estimatedClaim: estimatedClaim,
             copayAmount: copayAmount
