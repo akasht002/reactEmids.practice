@@ -25,12 +25,14 @@ class LoginCallBack extends Component {
           errorCallback={error => {
             console.log(error)
           }}>
-          <div className="redirect-screen"><Navbar className="navbar-light boxShadowBottom white-backgnd" expand="md">
-                    <NavbarBrand className="text-uppercase px-3 onboardingLogo">
-                    <img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" />
-                    </NavbarBrand>
-                </Navbar>
-                </div>
+          <div className="redirect-screen">
+            <Navbar className="navbar-light boxShadowBottom white-backgnd" expand="md">
+              <NavbarBrand className="text-uppercase px-3 onboardingLogo">
+                <img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" />
+              </NavbarBrand>
+            </Navbar>
+            <div className="HomeLoader"></div>
+          </div>
         </CallbackComponent>
       </ScreenCover>
     );

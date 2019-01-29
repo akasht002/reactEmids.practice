@@ -103,11 +103,10 @@ export function updateServiceRequestByServiceProvider(data) {
     )
       .then(resp => {
         dispatch(endLoading())
-        // dispatch(push(Path.visitServiceList))
+        dispatch(push(Path.visitServiceList))
       })
       .catch(err => {
         dispatch(endLoading())
-        // dispatch(push(Path.visitServiceList))
       })
   }
 }

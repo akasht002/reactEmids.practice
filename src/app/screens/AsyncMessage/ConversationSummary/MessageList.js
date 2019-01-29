@@ -4,8 +4,13 @@ import moment from 'moment';
 import './MessageCard.css';
 import { MessageTypes } from '../../../data/AsyncMessage';
 import { formatName } from '../../../utils/formatName';
+import { isEntityServiceProvider } from '../../../utils/userUtility';
 
 class MessageList extends Component {
+
+    componentWillReceiveProps(nextProps) {
+        this.messagesStart.scrollIntoView({ behavior: "auto" });
+    }
 
     newConversation = () => {
         return (<table className="table noConversation">
@@ -13,7 +18,7 @@ class MessageList extends Component {
                 <tr>
                     <td className={"align-middle text-center noMessageWidget"}>
                         <img alt="no content" className={"noMessageImg"} src={require("../../../assets/images/exclamation-mark.svg")} />
-                        <p className={"noMessageText"}>Click on "New Conversation" button to start.</p>
+                        {!isEntityServiceProvider() && <p className={"noMessageText"}>Click on "New Conversation" button to start.</p>}
                     </td>
                 </tr>
             </tbody>
@@ -69,10 +74,10 @@ class MessageList extends Component {
         let msgHeader = "";
         let messageThreads = "";
         let unreadMessages = "";
-        if (this.props.conversation.length === 0) {
+        if (this.props.conversation && this.props.conversation.length === 0) {
             messageThreads = this.newConversation();
         } else {
-            messageThreads = this.props.conversation.map((msgThread, index) => {
+            messageThreads = this.props.conversation && this.props.conversation.map((msgThread, index) => {
                 unreadMessages = "";
                 msgClass = "readMsgs";
                 if (msgThread.unreadCount > 0) {
@@ -113,6 +118,9 @@ class MessageList extends Component {
         }
         return (
             <div className="col-md-12 MessageCard msgContainerWrapper">
+                <div
+                    ref={(el) => { this.messagesStart = el; }}>
+                </div>
                 <div className="msgContent col-md-12">
                     <ul className="list-group">
                         {messageThreads}

@@ -232,11 +232,10 @@ class VisitServiceDetails extends Component {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
         type: status.isInterested ? 1 : 0
       }
-      this.props.updateServiceRequestByServiceProvider(model)
       if (this.props.updateServiceRequestMsgStatus === 1) {
         this.setState({ isAlertModalopenConfirm: true })
       } else {
-        this.props.history.push("/visitServiceList")
+        this.props.updateServiceRequestByServiceProvider(model)
       }
 
     } else {
@@ -550,11 +549,19 @@ class VisitServiceDetails extends Component {
                       className='ProfileImage'
                       src={profileImage}
                       alt='patientImage'
-                      onClick={() => { this.state.visitServiceDetails.statusId === HIRED_STATUS_ID ? this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId) : '' }}
+                      onClick={() => { 
+                        if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
+                          this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId)
+                        } 
+                      }}
                     />
 
                     <div class='PostedByProfileDetails'>
-                      <div class='ProfileDetailsName' onClick={() => { this.state.visitServiceDetails.statusId === HIRED_STATUS_ID ? this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId) : '' }}>
+                      <div class='ProfileDetailsName' onClick={() => { 
+                        if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
+                          this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId)
+                        }
+                      }}>
                         {getLength(this.state.visitServiceDetails.patient) >
                           0 && this.state.visitServiceDetails.patient.firstName}
                         {' '}
