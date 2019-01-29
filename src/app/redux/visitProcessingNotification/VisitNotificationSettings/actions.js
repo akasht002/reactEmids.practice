@@ -8,8 +8,21 @@ export const VisitNotificationSettings = {
     updateVisitNotificationSettingsSuccess: 'update_visit_notification_list_success/VisitNotificationSettings',
     handlePushChangeSuccess: 'handlePushChangeSuccess/VisitNotificationSettings',
     handleEmailChangeSuccess: 'handleEmailChangeSuccess/VisitNotificationSettings',
-
+    startLoadingNotification : 'handleEmailChangeSuccess/startLoadingNotification',
+    endLoadingNotification : 'handleEmailChangeSuccess/endLoadingNotification',
 };
+
+export const startLoadingNotification = () =>{
+    return {
+        type: VisitNotificationSettings.startLoadingNotification
+    }
+}
+
+ export const endLoadingNotification = () =>{
+    return {
+        type: VisitNotificationSettings.endLoadingNotification
+    }
+}
 
 export const getVisitNotificationSettingsSuccess = (data) => {
     return {
@@ -28,12 +41,12 @@ export const updateVisitNotificationSettingsSuccess = (data) => {
 export function getVisitNotificationSettings() {
     return (dispatch) => {
         let userId = getUserInfo().serviceProviderId;
-        dispatch(startLoading());
+        dispatch(startLoadingNotification());
         Get(API.getNotificationSettings + userId).then((resp) => {
             dispatch(getVisitNotificationSettingsSuccess(resp.data))
-            dispatch(endLoading());
+            dispatch(endLoadingNotification());
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(endLoadingNotification());
         })
     }
 };

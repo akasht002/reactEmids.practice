@@ -4,7 +4,8 @@ import {
 
 const defaultState = {
     pushNotification: [],
-    emailNotification: []
+    emailNotification: [],
+    isLoading : false
 };
 
 const VisitNotificationSettingsState = (state = defaultState, action) => {
@@ -20,17 +21,26 @@ const VisitNotificationSettingsState = (state = defaultState, action) => {
             return {
                 ...state,
             };
-            case VisitNotificationSettings.handlePushChangeSuccess:
+        case VisitNotificationSettings.handlePushChangeSuccess:
             return {
                 ...state,
                 pushNotification: action.data
             };
-            case VisitNotificationSettings.handleEmailChangeSuccess:
+        case VisitNotificationSettings.handleEmailChangeSuccess:
             return {
                 ...state,
                 emailNotification: action.data
             };
-    
+        case VisitNotificationSettings.startLoadingNotification:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case VisitNotificationSettings.endLoadingNotification:
+            return {
+                ...state,
+                isLoading: false
+            };
         default:
             return state;
     }
