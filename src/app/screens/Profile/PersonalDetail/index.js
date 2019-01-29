@@ -891,10 +891,11 @@ class PersonalDetail extends React.PureComponent {
               let onlyNums = e.target.value.replace(/[^0-9.]/g, '')
               let values = onlyNums.split('.');
               let status = false;
+              // console.log( onlyNums.indexOf(".") > -1)
               if (values[0].length <= 3 || (values[1] && values[1].length <= 2)) {
                 if (onlyNums.length < 7 && !status) {
                   this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
-                } else if (onlyNums.length === 7) {
+                } else if (onlyNums.length === 7 ) {
                   if (onlyNums.indexOf(".") > -1) {
                     if ((onlyNums.split('.')[1].length > 1)) {
                       this.setState({
