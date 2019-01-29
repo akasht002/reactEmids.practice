@@ -7,6 +7,7 @@ import { getVisitNotificationSettings, updateVisitNotificationSettings, handlePu
 import './VisitNotificationSettings.css';
 import { NotificationCheckBox } from './NotificationCheckBox';
 import { setIsFormDirty } from '../../../redux/auth/user/actions';
+import { Preloader } from "../../../components"
 class VisitNotificationSettings extends React.Component {
 
     constructor(props) {
@@ -57,6 +58,7 @@ class VisitNotificationSettings extends React.Component {
                     </div>
                     <div className='NotificationsSettingsContainer'>
                         <h6 className='NotificationsListHeader'>Notifications</h6>
+                        {this.props.isLoading && <Preloader/>}
                         <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='NotificationsSettingsWidget'>
                             <div className='card NotificationsSettingsListBox'>
                                 <div className='NotificationsSettingsListItems'>
@@ -111,7 +113,8 @@ function mapStateToProps(state) {
     return {
         pushNotification: state.visitNotificationState.VisitNotificationSettingsState.pushNotification,
         emailNotification: state.visitNotificationState.VisitNotificationSettingsState.emailNotification,
-        userId: state.authState.userState.userData.userInfo.serviceProviderId
+        userId: state.authState.userState.userData.userInfo.serviceProviderId,
+        isLoading:state.visitNotificationState.VisitNotificationSettingsState.isLoading
     };
 };
 
