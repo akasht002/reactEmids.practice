@@ -724,16 +724,16 @@ class VisitServiceDetails extends Component {
                                     <p>
                                       <span>Street</span>
                                       {pointofservice.streetAddress}
+                                    </p>                                    
+
+                                    <p>
+                                      <span>City</span>
+                                      {pointofservice.city}
                                     </p>
 
                                     <p>
                                       <span>State</span>
                                       {pointofservice.stateName}
-                                    </p>
-
-                                    <p>
-                                      <span>City</span>
-                                      {pointofservice.city}
                                     </p>
 
                                     <p>
