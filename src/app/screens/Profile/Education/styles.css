@@ -122,6 +122,16 @@ button.CloseMsgModal span{
    height: 100px !important;
 }   */
 
+.educ-modpop .ServiceRequestSelect .Select-control .Select-multi-value-wrapper .Select-input
+{
+    padding-left: 0;
+}
+
+.educ-modpop .ServiceRequestSelect .Select-control .Select-multi-value-wrapper .Select-input input
+{
+    padding-left: 0;
+}
+
 
 
 
