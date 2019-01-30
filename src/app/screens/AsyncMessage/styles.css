@@ -1199,7 +1199,7 @@ span.chatHeaderText{
 }
 
 .ProfileImageMultiSelect .Select-control{
-    height: 52px;
+    height: 50px;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
@@ -1657,7 +1657,7 @@ user-select: none;
 outline:none !important;	
 display: block !important;	
 padding-left: 0;	
-height: auto;	
+height:50px;	
 }	
  .participantsSearchForm .form-group .Select-control .Select-multi-value-wrapper .Select-input input	
 {	
@@ -2037,6 +2037,11 @@ button:disabled {
 
   .wsnw {
       white-space: nowrap;
+  }
+
+  .participantsSearchForm .form-group .Select-control .Select-arrow-zone
+  {
+   text-align: right;
   }
   
      
