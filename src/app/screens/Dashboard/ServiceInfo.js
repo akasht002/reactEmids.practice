@@ -5,7 +5,7 @@ import { SelectField, Select, Item } from '@zendeskgarden/react-select'
 import _ from 'lodash'
 import TimeAgo from 'timeago-react'
 import moment from 'moment';
-import { getFields } from '../../utils/validations'
+import { getFields} from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
 import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
