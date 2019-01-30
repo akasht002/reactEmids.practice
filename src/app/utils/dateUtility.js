@@ -4,7 +4,8 @@ export function getMomentDate(date) {
     return date ? moment(new Date(date.toString())) : null;
 }
 
-export function formatDateSingle(data) {
+export function formatDateSingle(value) {
+    let data = parseInt(value, 10);
     return data > 9 ? "" + data : "0" + data;
 }
 
@@ -52,7 +53,7 @@ export function isFutureDay(date) {
 }
 
 export function getDoubleDigitTime(value) {
-    let updatedValue =  value
+    let updatedValue = value
     if (updatedValue.toString().length < 2) {
         updatedValue = "0" + updatedValue
     }
