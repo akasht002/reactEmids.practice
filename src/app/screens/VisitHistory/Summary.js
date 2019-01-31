@@ -19,7 +19,8 @@ import {
   getServiceProviderRating, getVisitFeedBack
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
-import { push } from '../../redux/navigation/actions'
+import { push } from '../../redux/navigation/actions';
+import {ORG_SERVICE_PROVIDER_TYPE_ID} from '../../constants/constants'
 class VistSummary extends React.Component {
   constructor(props) {
     super(props);
@@ -443,85 +444,90 @@ class VistSummary extends React.Component {
             </div>
             <div className="RightWidget">
               <div className="RightContent">
-                <p className="SummaryContentTitle">Payment Details</p>
-
-                <div className="row CostTableWidget">
-                  <div className="col-md-8 CostTableContainer Label">
-                    <p>
-                      <span>Billable Time (HH:MM)</span>
-                      <span>Hourly Rate</span>
-                    </p>
-                    <p className="TaxLabel">
-                      <span>Total Visit Cost </span>
-                      <span>Taxes and Fees</span>
-                    </p>
-                  </div>
-                  <div className="col-md-4 CostTableContainer Cost">
-                    <p>
-                      <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0, 5)}</span>
-                      <span>
-                        ${summaryDetail.hourlyRate && summaryDetail.hourlyRate.toFixed(2)}
-                      </span>
-                    </p>
-                    <p className="TaxCost">
-                      {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
-                        <span>
-                          $
-                          {(
-                            summaryDetail.totalCost && summaryDetail.totalCost
-                          ).toFixed(2)}
-                        </span>
-                        :
-                        ''
-                      }
-                      {summaryDetail.taxPaid || summaryDetail.taxPaid === 0 ?
-                        <span>${(summaryDetail.taxPaid).toFixed(2)}</span>
-                        :
-                        ''
-                      }
-                    </p>
-                  </div>
-                  <div className="col-md-12 CostTableContainer Total">
-                    <p className="TotalLabel">
-                      <span>Total Cost </span>
-                    </p>
-                    <p className="TotalCost">
-                      {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
-                        <span>
-                          ${(summaryDetail.totalCost + summaryDetail.taxPaid).toFixed(2)}
-                        </span>
-                        :
-                        ''
-                      }
-                    </p>
-                  </div>
-                </div>
-
-                <div className="row EstimatedCostWidget m-0 mb-4">
-                  <div className="col-md-8 EstimatedCostContainer Label">
-                    <p>
-                      <span>Estimated Claim</span>
-                      <span>Credit Card Payment</span>
-                    </p>
-                  </div>
-                  <div className="col-md-4 EstimatedCostContainer Cost">
-                    <p>
-                      {summaryDetail.estimatedClaim === 0 ?
-                        <span>$0.00</span>
-                        :
-                        <span>
-                          ${summaryDetail.estimatedClaim &&
-                            summaryDetail.estimatedClaim.toFixed(2)}
-                        </span>
-                      }
-                      <span>
-                        $
+                {getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID?
+                  ''
+                  :
+                  <Fragment>
+                    <p className="SummaryContentTitle">Payment Details</p>
+                    <div className="row CostTableWidget">
+                      <div className="col-md-8 CostTableContainer Label">
+                        <p>
+                          <span>Billable Time (HH:MM)</span>
+                          <span>Hourly Rate</span>
+                        </p>
+                        <p className="TaxLabel">
+                          <span>Total Visit Cost </span>
+                          <span>Taxes and Fees</span>
+                        </p>
+                      </div>
+                      <div className="col-md-4 CostTableContainer Cost">
+                        <p>
+                          <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0, 5)}</span>
+                          <span>
+                            ${summaryDetail.hourlyRate && summaryDetail.hourlyRate.toFixed(2)}
+                          </span>
+                        </p>
+                        <p className="TaxCost">
+                          {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
+                            <span>
+                              $
+                            {(summaryDetail.totalCost && summaryDetail.totalCost).toFixed(2)}
+                            </span>
+                            :
+                            ''
+                          }
+                          {summaryDetail.taxPaid || summaryDetail.taxPaid === 0 ?
+                            <span>${(summaryDetail.taxPaid).toFixed(2)}</span>
+                            :
+                            ''
+                          }
+                        </p>
+                      </div>
+                      <div className="col-md-12 CostTableContainer Total">
+                        <p className="TotalLabel">
+                          <span>Total Cost </span>
+                        </p>
+                        <p className="TotalCost">
+                          {summaryDetail.totalCost || summaryDetail.totalCost === 0 ?
+                            <span>
+                              ${(summaryDetail.totalCost + summaryDetail.taxPaid).toFixed(2)}
+                            </span>
+                            :
+                            ''
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row EstimatedCostWidget m-0 mb-4">
+                      <div className="col-md-8 EstimatedCostContainer Label">
+                        <p>
+                          <span>Estimated Claim</span>
+                          <span>Credit Card Payment</span>
+                        </p>
+                      </div>
+                      <div className="col-md-4 EstimatedCostContainer Cost">
+                        <p>
+                          {summaryDetail.estimatedClaim === 0 ?
+                            <span>$0.00</span>
+                            :
+                            <span>
+                              ${summaryDetail.estimatedClaim &&
+                                summaryDetail.estimatedClaim.toFixed(2)}
+                            </span>
+                          }
+                          <span>
+                            $
                         {summaryDetail.outOfPocketAmount &&
-                          summaryDetail.outOfPocketAmount.toFixed(2)}
-                      </span>
-                    </p>
-                  </div>
-                </div>
+                              summaryDetail.outOfPocketAmount.toFixed(2)}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </Fragment>
+                }
+
+
+
                 <p className="SummaryContentTitle mb-4">Feedback</p>
                 <div className="feedbackContainer">
                   {getLength(this.props.VisitFeedback) > 0 ? (

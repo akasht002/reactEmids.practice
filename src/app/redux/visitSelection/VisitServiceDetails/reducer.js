@@ -10,7 +10,8 @@ const defaultState = {
     daysType: [],
     updateServiceRequestMsgStatus: 0,
     entityServiceProviderId: 0,
-    canInitiateConversation: false
+    canInitiateConversation: false,
+    isScheduleLoading:false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -64,8 +65,15 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 canInitiateConversation: action.data
             };
 
+            case VisitServiceDetails.isScheduleLoading:
+            return {
+                ...state,
+                isScheduleLoading: action.data
+            };    
+
         case VisitServiceDetails.formDirtyVisitServiceDetails:
             return defaultState;
+            
         default:
             return state;
     }

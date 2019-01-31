@@ -115,6 +115,7 @@ class AssignServiceProvider extends Component {
     let modalTitle = "Assign Service Provider";
     let modalType = "";
     let modalContent = this.getModalContent(this.props.serviceProviderList)    
+    
     return (
       <div className='EntityUServiceProf'>
         {isFutureDay(this.props.sp.visitDate)?this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ? 
@@ -139,7 +140,7 @@ class AssignServiceProvider extends Component {
             <div
               className='ProfileCardImageContainer'
               onClick={() => {
-                this.goToESPProfile(this.props.sp.entityServiceProviderImage)
+                this.goToESPProfile(this.props.sp.entityServiceProviderId)
               }}
             >
               <img
