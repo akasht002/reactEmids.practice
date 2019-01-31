@@ -660,7 +660,7 @@ class VisitServiceDetails extends Component {
                           <h2 className='ServicesTitle'>
                             Additional Information
                           </h2>
-                          <p className='AdditionInfo mt-3 mb-5'>
+                          <p className='AdditionInfo mt-3 mb-4'>
                             {
                               this.state.visitServiceDetails
                                 .serviceRequestDescription
@@ -714,7 +714,7 @@ class VisitServiceDetails extends Component {
                             </div>
                           </div>
                           <h2 className='ServicesTitle'>Point of Service</h2>
-                          <div className='SummaryContent POS mt-3 mb-5'>
+                          <div className='SummaryContent POS mt-3 mb-4'>
 
                             {this.state.visitServiceDetails.patient &&
                               this.state.visitServiceDetails.patient

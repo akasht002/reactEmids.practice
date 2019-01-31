@@ -320,7 +320,7 @@ class PerformTasks extends Component {
                     <div className='cardBottom' />
                     <ModalPopup
                         isOpen={this.state.isModalOpen}
-                        ModalBody={<span>You have not completed {this.state.taskCount} no of task. Are you sure you want to proceed to the next step?</span>}
+                        ModalBody={<span>You have not completed {this.state.taskCount} task(s). Are you sure you want to proceed to the next step?</span>}
                         btn1="Confirm"
                         btn2="Cancel"
                         className="modal-sm"

@@ -61,3 +61,8 @@ li.SPAvailItems.disabled:hover{
     margin-left: 25px;
     cursor: pointer;
 }
+
+.availabilityModal .SPBlackoutDays .SPBlackoutItems .SPIconMedium
+{
+    right: -30px;
+}

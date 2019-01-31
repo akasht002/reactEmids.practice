@@ -56,3 +56,8 @@
 {
     padding-left: 0px;
 }
+
+.serviceAreaModal .modal-content .modal-body
+{
+    padding: 20px 30px;
+}
