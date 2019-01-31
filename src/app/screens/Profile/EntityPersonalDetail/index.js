@@ -519,7 +519,7 @@ class EntityPersonalDetail extends React.PureComponent {
             type='text'
             maxlength='40'
             value={this.state.url}
-            disabled={true}
+            disabled={false}
             textChange={e => {
               this.setState({
                 url: e.target.value,
