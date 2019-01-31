@@ -231,5 +231,5 @@ export function formatDateValue(date, dateFormat, outputFormat) {
 
 
 export const checkEmpty = (data) => {
-  return (typeof(data) === 'undefined' || data === null || data.lenght === 0 ) ? true : false
+  return (typeof(data) === 'undefined' || data === null || data.length === 0 ) ? true : false
 }
