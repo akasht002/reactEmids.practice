@@ -228,3 +228,8 @@ export function format_DDMMMYYYY_Value (date) {
 export function formatDateValue(date, dateFormat, outputFormat) {
   return date ? moment(date, dateFormat).format(outputFormat) : null
 }
+
+
+export const checkEmpty = (data) => {
+  return (typeof(data) === 'undefined' || data === null || data.length === 0 ) ? true : false
+}

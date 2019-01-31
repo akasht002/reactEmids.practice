@@ -6,6 +6,7 @@ import { TextArea } from "../../../components";
 import { Calendar } from "../../../components";
 import { compare } from "../../../utils/comparerUtility";
 import { changeDateFormat, formatDate } from '../../../utils/dateUtility';
+import { checkEmpty } from '../../../utils/validations'
 import { DATE_FORMAT } from '../../../constants/constants';
 import { formattedDateMoment, formattedDateMomentValue, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDateValue } from '../../../utils/validations';
 
@@ -20,13 +21,16 @@ class BlackoutModal extends Component {
         serviceProviderBlackoutDayId: "",
         isDiscardModalOpen: false
       },
-      isValid: true
+      isValid: false,
+      isFormDateInvalid:false,
+      isToDateInvalid:false,
     };
     this.fromMinDate = newDate();
     this.toMinDate = newDate();
     this.fromDateProps = "";
     this.toDateProps = "";
     this.remarksProps = "";
+    
   }
 
   dateChanged = (dateType, date) => {
@@ -39,15 +43,15 @@ class BlackoutModal extends Component {
         blackoutData: {
           ...prevState.blackoutData,
           fromDate: formattedDate
-        }
+        },isValid:true
       }));
      } else {
       this.fromMaxDate  = newDateValue(date);
       this.setState(prevState => ({
         blackoutData: {
           ...prevState.blackoutData,
-          toDate: formattedDate
-        }
+          toDate: formattedDate,          
+        },isValid:true
       }));
      }
   }
@@ -80,12 +84,21 @@ dateChangedRaw = (dateType, event) => {
       blackoutData: {
         ...prevState.blackoutData,
         remarks: value
-      }
-    }));
+      },
+    isValid:true}));
   };
 
   saveData = () => {
-     this.props.saveBlackout(this.state.blackoutData);
+    if(checkEmpty(this.state.blackoutData.fromDate)||
+    checkEmpty(this.state.blackoutData.toDate)){
+        this.setState({
+          isFormDateInvalid:checkEmpty(this.state.blackoutData.fromDate),
+          isToDateInvalid:checkEmpty(this.state.blackoutData.toDate),
+        })
+    }else{     
+      this.props.saveBlackout(this.state.blackoutData);
+    }
+    
   };
 
   componentWillReceiveProps(nextProps) {
@@ -104,7 +117,10 @@ dateChangedRaw = (dateType, event) => {
         toDate: toDate,
         remarks: remarks,
         serviceProviderBlackoutDayId: serviceProviderBlackoutDayId
-      }
+      },
+      isValid: false,
+      isFormDateInvalid:false,
+      isToDateInvalid:false
     }));
   }
 
@@ -178,6 +194,9 @@ dateChangedRaw = (dateType, event) => {
                       "form-control datePicker " 
                     }
                   />
+                   <small className="text-danger d-block OnboardingAlert">
+                    {this.state.isFormDateInvalid && 'Please enter from date'}
+                   </small>
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
@@ -192,6 +211,9 @@ dateChangedRaw = (dateType, event) => {
                       "form-control datePicker "
                     }
                   />
+                  <small className="text-danger d-block OnboardingAlert">
+                    {this.state.isToDateInvalid && 'Please enter to date'}
+                   </small>
                 </div>
                 <div className="col-md-12 mb-2">
                   <div className={"form-group"}>
@@ -210,7 +232,8 @@ dateChangedRaw = (dateType, event) => {
             </form>
           </ModalBody>
           <ModalFooter className={this.props.headerFooter}>
-            <Button className="" color="primary" onClick={this.saveData}>
+            <Button className="" color="primary" onClick={this.saveData} 
+              disabled = {!this.state.isValid}>
               Save
             </Button>
           </ModalFooter>
