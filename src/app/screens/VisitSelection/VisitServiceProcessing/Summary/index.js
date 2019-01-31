@@ -6,7 +6,7 @@ import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup, Preloader } from '../../../../components';
-import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration, calculationActualData } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getUserInfo } from '../../../../services/http';
@@ -78,7 +78,8 @@ class Summary extends Component {
     }
 
     togglePopup = () => {
-        this.setState({ isModalOpen: false })
+        this.setState({ isModalOpen: false, updatedHour: '', updatedMin: '', timeErrMessage: '', emptyErrMessage: ''})
+        this.props.calculationActualData();
     }
 
     AdjustTime = () => {
@@ -153,7 +154,6 @@ class Summary extends Component {
         let seconds = formatDateSingle(this.state.updatedSec)
         let newTime = hours + ':' + minutes + ':' + seconds
         var endTime = moment(newTime, "HH:mm:ss");
-
         if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
@@ -239,6 +239,7 @@ class Summary extends Component {
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={59}
+                            maxlength={2}
                         />
                     </span>
                     {/* Dont Remove */}
@@ -503,6 +504,7 @@ function mapDispatchToProps(dispatch) {
         goBack: () => dispatch(push(Path.feedback)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        calculationActualData: () => dispatch(calculationActualData()),
         updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data))
     }
 };
