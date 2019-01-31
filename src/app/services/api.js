@@ -40,7 +40,7 @@ export const API = {
     saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
     startOrStopService: 'VisitProcessing/ServiceRequestVisit/',
     SendResetPasswordLink: 'api/User/',
-    getEmailIdByUserId: 'user/verifypasswordlink/',
+    getEmailIdByUserId: 'api/user/verifypasswordlink/',
     resetPassword: 'api/user',
     getPersonalDetail: 'ServiceProvider/',
     updatePersonalDetail: 'ServiceProvider/',
