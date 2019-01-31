@@ -21,7 +21,8 @@ export const VisitServiceDetails = {
   updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails',
   setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
   canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails',
-  formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails'
+  formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails',
+  isScheduleLoading: 'isScheduleLoading/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -30,6 +31,14 @@ export const getVisitServiceDetailsSuccess = data => {
     data
   }
 }
+
+export const scheduleLoading = data => {
+  return {
+    type: VisitServiceDetails.isScheduleLoading,
+    data
+  }
+}
+
 
 export const setEntityServiceProviderSuccess = data => {
   return {
@@ -161,12 +170,14 @@ export function getVisitServiceSchedule(data, pageNumber) {
   let serviceProviderId = getUserInfo().serviceProviderId
   let pageSize = 10
   return dispatch => {
+    dispatch(scheduleLoading(true));
     ServiceRequestGet(API.getServiceRequestSchedule + `${data}/${serviceProviderId}/${pageNumber}/${pageSize}`)
       .then(resp => {
         dispatch(getVisitServiceScheduleSuccess(resp.data))
+        dispatch(scheduleLoading(false));
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(scheduleLoading(false));
       })
   }
 }

@@ -749,6 +749,7 @@ class VisitServiceDetails extends Component {
                       </form>
                     </TabPane>
                     <TabPane tabId='2' className='TabBody'>
+                    {this.props.isScheduleLoading && <Preloader/>}
                       <div className='ScheduleTableHeader primaryColor'>
                         <div>
                           <span>Date</span>
@@ -1038,6 +1039,7 @@ function mapStateToProps(state) {
       .canInitiateConversation,
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
     isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
+    isScheduleLoading: state.visitSelectionState.VisitServiceDetailsState.isScheduleLoading,
   }
 }
 
