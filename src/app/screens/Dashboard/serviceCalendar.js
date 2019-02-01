@@ -382,7 +382,6 @@ class serviceCalendar extends React.Component {
         />
         <div className="participantsSearchList">
           {serviceProviderList.map((item, index) => {
-            // let catNum = index + 1;
             return (
               <fieldset>
                 <div className="CheckboxSet" key={item.id}>

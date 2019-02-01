@@ -313,7 +313,7 @@ class EntityPersonalDetail extends React.PureComponent {
           toggle={this.reset}
           ModalBody={
             <span>
-              Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)
+              Please insert a image less than 2 MB and should be in the format of JPEG, PNG, GIF.
             </span>
           }
           btn1='OK'

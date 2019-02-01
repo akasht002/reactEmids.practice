@@ -133,7 +133,7 @@ class Profile extends Component {
               {' '}
               {this.props.personalDetail.firstName}
               {' '}
-              {this.props.personalDetail.lastName}
+              {this.props.personalDetail.lastName}.
             </span>
           }
           btn1='Accept'
