@@ -812,6 +812,8 @@ input.searchParticipants ~ small:before {
 
 .ParticipantSelectMsg {
     color: #8c8c8c;
+    padding-top: 5px;
+    display: block;
 }
 
 .full-blockvideoconf

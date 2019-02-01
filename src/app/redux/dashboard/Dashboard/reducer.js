@@ -8,7 +8,8 @@ const defaultState = {
   serviceVist:[],
   serviceStatusLookUp:[],
   serviceVistCount:[],
-  serviceProviderList:[]
+  serviceProviderList:[],
+  serviceVisitDate: null
 }
 
 const DashboardState = (state = defaultState, action) => {
@@ -52,6 +53,11 @@ const DashboardState = (state = defaultState, action) => {
       return{
         ...state,
         serviceProviderList:action.data
+      }
+    case DashboardDetail.setServiceVisitDate:
+      return {
+        ...state,
+        serviceVisitDate: action.data
       }
     default:
       return state

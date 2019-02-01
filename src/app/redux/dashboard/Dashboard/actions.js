@@ -40,7 +40,8 @@ export const DashboardDetail = {
   get_service_request: 'get_service_request/dashboard',
   get_service_visit_count: 'get_service_visit_count/dashboard',
   get_entity_service_provider_list:
-    'get_entity_service_provider_list/dashboard'
+    'get_entity_service_provider_list/dashboard',
+  setServiceVisitDate: 'setServiceVisitDate/dashboard'
 }
 
 export const getServiceStatusSuccess = data => {
@@ -120,6 +121,13 @@ export function getEntityServiceProviderList () {
       .catch(err => {
         // dispatch(endLoading())
       })
+  }
+}
+
+export const setServiceVisitDate = data => {
+  return {
+    type: DashboardDetail.setServiceVisitDate,
+    data
   }
 }
 

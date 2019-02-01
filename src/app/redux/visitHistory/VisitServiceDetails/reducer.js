@@ -21,8 +21,8 @@ const defaultState = {
     typeList: [],
     historyListCount: '',
     VisitFeedback: [],
-    PatientForServiceproviders: []
-
+    PatientForServiceproviders: [],
+    isLoading: false
 };
 
 const vistServiceHistoryState = (state = defaultState, action) => {
@@ -101,6 +101,11 @@ const vistServiceHistoryState = (state = defaultState, action) => {
             return {
                 ...state,
                 PatientForServiceproviders: action.data
+            };
+        case vistServiceHistoryDetails.visitHistoryLoading:
+            return {
+                ...state,
+                isLoading: action.data
             };
         default:
             return state;

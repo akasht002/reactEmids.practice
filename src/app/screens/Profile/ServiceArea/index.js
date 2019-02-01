@@ -126,7 +126,7 @@ class ServiceArea extends Component {
       this.state.street === '' ||
       this.state.city === '' ||
       this.state.selectedState.value === '' ||
-      this.state.zip === '')
+      this.state.zip === ''|| this.state.zipInvalid)
       this.setState({
         isValid: false
       })

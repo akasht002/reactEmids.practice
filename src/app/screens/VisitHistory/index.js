@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import moment from 'moment'
 import Pagination from 'react-js-pagination';
-import { Scrollbars } from '../../components'
+import { Scrollbars, Preloader } from '../../components'
 import {
   getVisitServiceLists,
   getVisitServiceHistoryByIdDetail,
@@ -280,6 +280,7 @@ class VisitHistory extends Component {
           applyFilter={this.applyFilter}
           applyReset={this.applyReset}
         />
+        {this.props.isLoading && <Preloader/>}
       </AsideScreenCover>
     )
   }
@@ -321,6 +322,7 @@ function mapStateToProps(state) {
       .historyListCount,
     PatientForServiceproviders: state.visitHistoryState.vistServiceHistoryState
       .PatientForServiceproviders,
+    isLoading: state.visitHistoryState.vistServiceHistoryState.isLoading,
   }
 }
 

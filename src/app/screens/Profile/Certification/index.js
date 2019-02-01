@@ -156,7 +156,7 @@ class Certification extends Component {
                 <div className="col-md-12 mb-2">
                     <Input
                         name="Certification"
-                        label="Certification"
+                        label="Certification/License"
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Home Care Aide Organization"
@@ -186,7 +186,7 @@ class Certification extends Component {
                 <div className="col-md-12 mb-2">
                     <Input
                         name="certificationAuthority"
-                        label="Certification Authority"
+                        label="Certification/License Authority"
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. California Associaion"
@@ -216,7 +216,7 @@ class Certification extends Component {
                 <div className="col-md-12 mb-2">
                     <Input
                         name="CertificateLicenceNum"
-                        label="Certificate / License Number"
+                        label="Certificate/License Number"
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. HCA7521698432"
@@ -284,7 +284,7 @@ class Certification extends Component {
                             (this.props.isUser &&  <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification</span>
+                                    <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ certificationModal: true,isAdd: true  })}/> to add Certification/License</span>
                                 </div>
                             </div>)
                         }

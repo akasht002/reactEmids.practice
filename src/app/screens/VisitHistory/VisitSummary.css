@@ -433,3 +433,8 @@ button.btn.CancelSignature{
 .requestImageContent {
     cursor: pointer;
 }
+
+.FeedbackModal
+{
+width: 100% !important;
+}
