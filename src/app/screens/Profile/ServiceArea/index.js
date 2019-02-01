@@ -375,7 +375,7 @@ class ServiceArea extends Component {
           <div className='col-md-6 mb-2'>
             <Input
               name='range_miles'
-              label='Range (in miles)'
+              label='Range(in miles)'
               className={"form-control custome-placeholder " + (this.state.coverageAreaInvalid && 'inputFailure')}
               autoComplete='off'
               type='text'

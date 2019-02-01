@@ -26,18 +26,18 @@ import {
   isUrlValid
 } from '../../../utils/validations'
 import { formatPhoneNumber } from '../../../utils/formatName'
-import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { SETTING } from '../../../services/api'
 
 class Organization extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       useEllipsis: true,
       EducationModal: false,
       isDiscardModalOpen: false,
       isAlertModalOpen: false,
-      urlInvaild:false,
+      urlInvaild: false,
       ModalOrg: true,
       src: null,
       crop: {
@@ -50,16 +50,16 @@ class Organization extends React.PureComponent {
     this.isImageSave = false;
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
     this.props.getImage()
   }
 
-  componentWillReceiveProps (nextProps) {
-    if(this.isImageSave === false) {
+  componentWillReceiveProps(nextProps) {
+    if (this.isImageSave === false) {
       this.setState({
-        organizationName:  nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.organization,
+        organizationName: nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.organization,
         url: nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
         description: nextProps.personalDetail.description,
         hourlyRate: nextProps.personalDetail.hourlyRate,
@@ -86,9 +86,9 @@ class Organization extends React.PureComponent {
             nextProps.personalDetail.address[0].state != null
             ? nextProps.personalDetail.address[0].state.id
             : '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
-                nextProps.personalDetail.address[0].state != null
-                ? nextProps.personalDetail.address[0].state.name
-                : ''
+              nextProps.personalDetail.address[0].state != null
+              ? nextProps.personalDetail.address[0].state.name
+              : ''
         }
       })
     }
@@ -159,16 +159,16 @@ class Organization extends React.PureComponent {
   }
 
   onSubmit = () => {
-    const {organizationNameInvaild, phoneNumberInvalid, urlInvaild, city, zipCode, streetAddress, selectedState } = this.state;
+    const { organizationNameInvaild, phoneNumberInvalid, urlInvaild, city, zipCode, streetAddress, selectedState } = this.state;
     this.isImageSave = false;
     if (
-     organizationNameInvaild ||
-     phoneNumberInvalid ||
-     urlInvaild ||
-     city === '' || city === null ||
-     zipCode === '' || zipCode === null ||
-     streetAddress === '' || streetAddress === null ||
-     selectedState === '' || selectedState === null
+      organizationNameInvaild ||
+      phoneNumberInvalid ||
+      urlInvaild ||
+      city === '' || city === null ||
+      zipCode === '' || zipCode === null ||
+      streetAddress === '' || streetAddress === null ||
+      selectedState === '' || selectedState === null
     ) {
       let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
       if (city === '' || city === null) {
@@ -180,15 +180,15 @@ class Organization extends React.PureComponent {
       if (streetAddress === '' || streetAddress === null) {
         streetInvalid = true;
       }
-      if(selectedState === '' || selectedState === null || selectedState === undefined) {
+      if (selectedState === '' || selectedState === null || selectedState === undefined) {
         stateInvalid = false;
       }
-      this.setState({ 
-          isValid: false, 
-          isStateInvalid: stateInvalid, 
-          isCityInvalid: cityInvalid, 
-          isZipInvalid: zipCodeInvalid, 
-          isStreetInvalid: streetInvalid 
+      this.setState({
+        isValid: false,
+        isStateInvalid: stateInvalid,
+        isCityInvalid: cityInvalid,
+        isZipInvalid: zipCodeInvalid,
+        isStreetInvalid: streetInvalid
       })
     } else {
       this.props.updateOrganizationDetail(this.state)
@@ -196,7 +196,7 @@ class Organization extends React.PureComponent {
         EditPersonalDetailModal: !this.state.EditPersonalDetailModal
       })
     }
-  } 
+  }
 
   closeImageUpload = () => {
     this.setState({
@@ -219,7 +219,7 @@ class Organization extends React.PureComponent {
     })
   }
 
-  render () {
+  render() {
     let modalContent
     let modalTitle = 'Edit Entity Details'
     let modalType = ''
@@ -320,7 +320,7 @@ class Organization extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
-            <li>Click on Change Photo</li>
+              <li>Click on Change Photo</li>
               <li>Select the image from your desktop/gallery</li>
               <li>The image should not exceed beyond 2MB.</li>
               <li>The image should be either of PNG or JPEG/JPG type only.</li>
@@ -362,7 +362,7 @@ class Organization extends React.PureComponent {
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
-            <li>1. Click on the Change Photo Button. </li>
+              <li>1. Click on the Change Photo Button. </li>
               <li>2. Select the image from your desktop/ gallery.</li>
               {/* <li>3. Click and drag the curser across the image to crop.</li> */}
               <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
@@ -381,10 +381,10 @@ class Organization extends React.PureComponent {
         </div>
       </div>
     )
-  } 
+  }
   renderDetails = () => {
     return (
-      <div className='col-md-12 card CardWidget SPDetails'>       
+      <div className='col-md-12 card CardWidget SPDetails'>
         <ProfileImage
           src={
             this.state.imageProfile
@@ -405,8 +405,8 @@ class Organization extends React.PureComponent {
                 {this.props.personalDetail && this.props.personalDetail.entity &&
                   `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
-              
-          </div>
+
+            </div>
             <div className={'col p-0'}>
               <h3 className={'ratePerHour primaryColor'}>
                 <span>
@@ -418,11 +418,11 @@ class Organization extends React.PureComponent {
           </div>
 
           <div className={'width100 url-separator'}>
-              <h3 className={'webUrl'}>
-                {(this.props.personalDetail && this.props.personalDetail.entity) && this.props.personalDetail.entity.websiteUrl ?
-                <a href={'https://'+this.props.personalDetail.entity.websiteUrl} target="_blank">{this.props.personalDetail.entity.websiteUrl}</a> : ''}
-              </h3>
-            </div>
+            <h3 className={'webUrl'}>
+              {(this.props.personalDetail && this.props.personalDetail.entity) && this.props.personalDetail.entity.websiteUrl ?
+                <a href={'https://' + this.props.personalDetail.entity.websiteUrl} target="_blank">{this.props.personalDetail.entity.websiteUrl}</a> : ''}
+            </h3>
+          </div>
           <div className={'width100'}>
             {this.props.personalDetail &&
               this.props.personalDetail.description !== ''
@@ -431,8 +431,8 @@ class Organization extends React.PureComponent {
                 name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
                 className={'SPDescriptionNone'}
                 onClick={this.togglePersonalDetails.bind(this)}
-                >
-                  Edit your profile here
+              >
+                Edit your profile here
                 </span>}
           </div>
         </div>
@@ -460,7 +460,7 @@ class Organization extends React.PureComponent {
               </span>
             </div>
             <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>ZIP</span>
+              <span className={'AddressContentLabel'}>Zip</span>
               <span className='AddressContentText'>
                 {this.props.personalDetail && this.zipCode}
               </span>
@@ -526,23 +526,23 @@ class Organization extends React.PureComponent {
                 value={this.state.organizationName}
                 className={"form-control custome-placeholder " + (this.state.organizationNameInvaild && 'inputFailure')}
 
-                textChange={(e)=>{
+                textChange={(e) => {
                   this.setState({
-                    organizationName:e.target.value,
+                    organizationName: e.target.value,
                     organizationNameInvaild: false,
-                    disabledSaveBtn:false
+                    disabledSaveBtn: false
 
                   })
                 }}
-               onBlur={(e) => {
-                   if (!checkTextNotStartWithNumber(e.target.value)) {
-                       this.setState({organizationNameInvaild: true});
-                   }
-               }}
-           />
-           <small className="text-danger d-block OnboardingAlert">
-               {this.state.organizationNameInvaild && 'Please enter valid Organization Name'}
-           </small>
+                onBlur={(e) => {
+                  if (!checkTextNotStartWithNumber(e.target.value)) {
+                    this.setState({ organizationNameInvaild: true });
+                  }
+                }}
+              />
+              <small className="text-danger d-block OnboardingAlert">
+                {this.state.organizationNameInvaild && 'Please enter valid Organization Name'}
+              </small>
             </div>
             <div className='col-md-12'>
               <Input
@@ -552,48 +552,50 @@ class Organization extends React.PureComponent {
                 type='text'
                 value={this.state.hourlyRate}
                 maxlength='6'
-            textChange={e => {
-              const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-              if (onlyNums.length < 5) {
-                this.setState({ hourlyRate: onlyNums, disabledSaveBtn:false })
-              } else if (onlyNums.length === 5) {
-                const number = onlyNums.replace(
-                  /(\d{3})(\d{2})/,
-                  '$1.$2'
-                )
-                this.setState({ hourlyRate: number,
-                 disabledSaveBtn:false })
-              }
-            }
-          }
+                textChange={e => {
+                  const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+                  if (onlyNums.length < 5) {
+                    this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false })
+                  } else if (onlyNums.length === 5) {
+                    const number = onlyNums.replace(
+                      /(\d{3})(\d{2})/,
+                      '$1.$2'
+                    )
+                    this.setState({
+                      hourlyRate: number,
+                      disabledSaveBtn: false
+                    })
+                  }
+                }
+                }
                 className='form-control'
               />
               <small className="text-danger d-block OnboardingAlert"></small>
             </div>
             <div className='col-md-12'>
-          <Input
-            name='url'
-            label='URL'
-            autoComplete='off'
-            required='required'
-            type='text'
-            maxlength='60'
-            value={this.state.url}
-            textChange={e => {
-              this.setState({ url: e.target.value, urlInvaild: false, disabledSaveBtn: false })
-            }}
-            onBlur={(e) => {
-              if (!isUrlValid(e.target.value)) {
-                  this.setState({urlInvaild: true});
-              }
-          }}
-            className={'form-control ' + (this.state.urlInvaild && 'inputFailure')}
-          />
-           <small className="text-danger d-block OnboardingAlert">
+              <Input
+                name='url'
+                label='URL'
+                autoComplete='off'
+                required='required'
+                type='text'
+                maxlength='60'
+                value={this.state.url}
+                textChange={e => {
+                  this.setState({ url: e.target.value, urlInvaild: false, disabledSaveBtn: false })
+                }}
+                onBlur={(e) => {
+                  if (!isUrlValid(e.target.value)) {
+                    this.setState({ urlInvaild: true });
+                  }
+                }}
+                className={'form-control ' + (this.state.urlInvaild && 'inputFailure')}
+              />
+              <small className="text-danger d-block OnboardingAlert">
                 {this.state.urlInvaild && 'Please enter valid Url'}
-                </small>
+              </small>
 
-        </div>
+            </div>
           </div>
         </div>
         <div className='col-md-12 mb-2'>
@@ -627,31 +629,33 @@ class Organization extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label>State</label>
-                    <SelectBox
-                      options={stateDetail}
-                      simpleValue
-                      placeholder='Select the state'
-                      onChange={value => {
+                    <Input
+                      name='Street'
+                      label='Street'
+                      autoComplete='off'
+                      type='text'
+                      maxlength='500'
+                      value={this.state.streetAddress}
+                      textChange={e =>
                         this.setState({
-                          selectedState: value,
+                          streetAddress: e.target.value,
                           disabledSaveBtn: false,
-                          isStateInvalid: false
-                        })
-                      }}
-                      onBlur={(e) => {
-                        if (this.state.selectedState.value === '') {
-                          this.setState({ isStateInvalid: true })
+                          isStreetInvalid: false
+                        })}
+                      onBlur={e => {
+                        if (!e.target.value) {
+                          this.setState({ isStreetInvalid: true })
                         }
                       }}
-                      selectedValue={this.state.selectedState}
-                      className={'inputFailure border-style'}
+                      className='form-control'
                     />
                     <small className="text-danger d-block OnboardingAlert">
-                    {this.state.isStateInvalid && 'Please select valid State'}
-                  </small>
+                      {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                    </small>
                   </div>
                 </div>
+
+
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
                     <Input
@@ -667,44 +671,44 @@ class Organization extends React.PureComponent {
                           disabledSaveBtn: false,
                           isCityInvalid: false
                         })}
-                        onBlur={e => {
-                          if (!e.target.value) {
-                            this.setState({ isCityInvalid: true })
-                          }
-                        }}
+                      onBlur={e => {
+                        if (!e.target.value) {
+                          this.setState({ isCityInvalid: true })
+                        }
+                      }}
                       className='form-control'
                     />
                     <small className="text-danger d-block OnboardingAlert">
-                    {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
-                  </small>
+                      {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
+                    </small>
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
                   <div className='row'>
                     <div className='col-md-6 mb-2'>
                       <div className='form-group'>
-                        <Input
-                          name='Street'
-                          label='Street'
-                          autoComplete='off'
-                          type='text'
-                          maxlength='500'
-                          value={this.state.streetAddress}
-                          textChange={e =>
+                        <label>State</label>
+                        <SelectBox
+                          options={stateDetail}
+                          simpleValue
+                          placeholder='Select the state'
+                          onChange={value => {
                             this.setState({
-                              streetAddress: e.target.value,
+                              selectedState: value,
                               disabledSaveBtn: false,
-                              isStreetInvalid: false
-                            })}
-                            onBlur={e => {
-                              if (!e.target.value) {
-                                this.setState({ isStreetInvalid: true })
-                              }
-                            }}
-                          className='form-control'
+                              isStateInvalid: false
+                            })
+                          }}
+                          onBlur={(e) => {
+                            if (this.state.selectedState.value === '') {
+                              this.setState({ isStateInvalid: true })
+                            }
+                          }}
+                          selectedValue={this.state.selectedState}
+                          className={'inputFailure border-style'}
                         />
                         <small className="text-danger d-block OnboardingAlert">
-                          {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                          {this.state.isStateInvalid && 'Please select valid State'}
                         </small>
                       </div>
                     </div>
@@ -738,8 +742,8 @@ class Organization extends React.PureComponent {
                         className='form-control'
                       />
                       <small className="text-danger d-block OnboardingAlert">
-                      {this.state.isZipInvalid && <span>Please enter valid Zipcode</span>}
-                    </small>
+                        {this.state.isZipInvalid && <span>Please enter valid Zipcode</span>}
+                      </small>
                     </div>
                   </div>
                 </div>
@@ -765,34 +769,36 @@ class Organization extends React.PureComponent {
                     autoComplete='off'
                     maxlength='15'
                     type='text'
-                    value={this.state.phoneNumber}
+                    value={formatPhoneNumber(this.state.phoneNumber)}
                     className={"form-control custome-placeholder " + (this.state.phoneNumberInvalid && 'inputFailure')}
 
                     textChange={e => {
-                  const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-                  if (onlyNums.length < 10) {
-                    this.setState({ phoneNumber: onlyNums })
-                  } else if (onlyNums.length === 10) {
-                    const number = onlyNums.replace(                             
-                      /(\d{3})(\d{3})(\d{4})/,
-                      '$1-$2-$3'
-                    )
-                    this.setState({ phoneNumber: number,
-                      phoneNumberInvalid: false,
-                      disabledSaveBtn:false })
-                  }
-                }
-              }
-    
-              onBlur={(e) => {
-                if (getLength(e.target.value) < 10 ) {
-                    this.setState({phoneNumberInvalid: true});
-                }
-            }}
+                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
+                      if (onlyNums.length < 10) {
+                        this.setState({ phoneNumber: onlyNums })
+                      } else if (onlyNums.length === 10) {
+                        const number = onlyNums.replace(
+                          /(\d{3})(\d{3})(\d{4})/,
+                          '$1-$2-$3'
+                        )
+                        this.setState({
+                          phoneNumber: number,
+                          phoneNumberInvalid: false,
+                          disabledSaveBtn: false
+                        })
+                      }
+                    }
+                    }
+
+                    onBlur={(e) => {
+                      if (getLength(e.target.value) < 10) {
+                        this.setState({ phoneNumberInvalid: true });
+                      }
+                    }}
                   />
-                    <small className="text-danger d-block OnboardingAlert">
+                  <small className="text-danger d-block OnboardingAlert">
                     {this.state.phoneNumberInvalid && 'Please enter valid Phone Number'}
-                </small>
+                  </small>
 
                 </div>
               </div>
@@ -803,7 +809,7 @@ class Organization extends React.PureComponent {
     )
   }
 
-  togglePersonalDetails (action, e) {
+  togglePersonalDetails(action, e) {
     this.isImageSave = false;
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
@@ -847,13 +853,13 @@ class Organization extends React.PureComponent {
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail.phoneNumber,
-      organizationNameInvaild:false,
-      phoneNumberInvalid:false
+      organizationNameInvaild: false,
+      phoneNumberInvalid: false
     })
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updateOrganizationDetail: data =>
@@ -864,7 +870,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

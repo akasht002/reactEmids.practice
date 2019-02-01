@@ -106,7 +106,7 @@ export const Details = props => {
             </span>
           </div>
           <div className={'width100 d-flex'}>
-            <span className={'AddressContentLabel'}>ZIP</span>
+            <span className={'AddressContentLabel'}>Zip</span>
             <span className='AddressContentText'>
               {props.personalDetail && props.zipCode}
             </span>
