@@ -25,7 +25,7 @@ span.ProfileCardHeaderLink:hover{
 }
 
 .bottomPalette{
-    margin: 0;
+    margin: 20px 0 0;
     height: 172px;
     overflow: hidden;
 }
