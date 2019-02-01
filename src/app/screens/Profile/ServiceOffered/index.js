@@ -70,7 +70,8 @@ class ServiceOffered extends React.Component {
         this.setState({
             isModalOpen: false,
             isDiscardModalOpen: false,
-            disabledSaveBtn: true
+            disabledSaveBtn: true,
+            isFormDirty: false
         });
     }
 
