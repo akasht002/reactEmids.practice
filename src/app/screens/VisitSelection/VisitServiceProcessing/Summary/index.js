@@ -78,7 +78,7 @@ class Summary extends Component {
     }
 
     togglePopup = () => {
-        this.setState({ isModalOpen: false, updatedHour: '', updatedMin: '', timeErrMessage: '', emptyErrMessage: ''})
+        this.setState({ isModalOpen: false, updatedHour: '', updatedMin: '', timeErrMessage: '', emptyErrMessage: '' })
         this.props.calculationActualData();
     }
 
@@ -371,7 +371,7 @@ class Summary extends Component {
                                                 </div>
                                                 <div className="col-md-4 CostTableContainer Cost">
                                                     <p><span>{this.props.CalculationsData.totalChargableTime}</span>
-                                                        <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate}</span></p>
+                                                        <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate.toFixed(2)}</span></p>
                                                     <p className="TaxCost"><span>${parseFloat(this.props.CalculationsData.totalVisitCost).toFixed(2)}</span>
                                                         <span>${parseFloat(this.props.CalculationsData.taxes).toFixed(2)}</span></p>
                                                 </div>
@@ -391,7 +391,15 @@ class Summary extends Component {
                                                         <p><span>Credit Card Payment</span></p>
                                                     </div>
                                                     <div className="col-md-4 EstimatedCostContainer Cost">
-                                                        <p><span>${this.props.CalculationsData.estimatedClaim}</span></p>
+                                                        <p>{this.props.CalculationsData.estimatedClaim === 0 ?
+                                                            <span>$0.00</span>
+                                                            :
+                                                            <span>
+                                                                ${this.props.CalculationsData.estimatedClaim &&
+                                                                    this.props.CalculationsData.estimatedClaim.toFixed(2)}
+                                                            </span>
+                                                        }
+                                                        </p>
                                                         <p><span>${this.props.CalculationsData.copayAmount && this.props.CalculationsData.copayAmount.toFixed(2)}</span></p>
                                                     </div>
                                                 </div>
