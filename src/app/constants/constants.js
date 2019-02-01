@@ -165,5 +165,5 @@ export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "N
 
 export const DEFAULT_FROM_DATE = '1900-01-01';
 export const DEFAULT_TO_DATE = '2100-01-01';
-export const CONTACT_NOT_FOUND = 'Phone Number Not Found'
+export const CONTACT_NOT_FOUND = 'Phone Number Not Found.'
 export const PHONE_NUMBER_TEXT = 'Phone Number:'
