@@ -37,7 +37,7 @@ class UserInactivityView extends Component {
                          })
                          this.props.inactiveUser();
                      }}
-                     ModalBody={<span>Your session has timed out due to inactivity. Please log in to continue</span>}
+                     ModalBody={<span>Your session has timed out due to inactivity. Please log in to continue.</span>}
                 />
             </IdleTimer>
         );

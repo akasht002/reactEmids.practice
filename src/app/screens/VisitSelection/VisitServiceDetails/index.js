@@ -87,7 +87,7 @@ class VisitServiceDetails extends Component {
     }
     this.alertModalMsg = ''
     this.status = {}
-    this.alertModalMsgstatus = 'Please apply for another service request.Service Provider is already been Hired for this request'
+    this.alertModalMsgstatus = 'Please apply for another service request. Service Provider is already been Hired for this request.'
   }
 
   componentDidMount() {

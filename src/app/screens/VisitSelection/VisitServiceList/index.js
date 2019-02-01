@@ -130,7 +130,6 @@ class VisitServiceList extends Component {
     }
 
     componentWillUnmount() {
-        console.log("Clock", "componentWillUnmount");
         this.props.clearVisitServiceList()
         this.props.setDefaultFilteredStatus()
         this.props.formDirty()
