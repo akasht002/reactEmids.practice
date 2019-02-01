@@ -624,7 +624,7 @@ class PersonalDetail extends React.PureComponent {
               <span className='AddressContentText'>{this.props.personalDetail && this.states}</span>
             </div>
             <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>ZIP</span>
+              <span className={'AddressContentLabel'}>Zip</span>
               <span className='AddressContentText'>{this.props.personalDetail && this.zipCode}</span>
             </div>
           </div>

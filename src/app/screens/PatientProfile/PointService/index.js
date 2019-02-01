@@ -18,7 +18,7 @@ class PointService extends React.Component {
           <li className='SPAddressItems' key={pointService.addressId}>
             <div className={'SPCertificateContent'}>
               <div className={'width100 d-flex'}>
-                <h5 className={'SPPOSHeader'}>Address {pointService.addressTypeId}</h5>
+                <h5 className={'SPPOSHeader'}>{pointService.addressTypeId}</h5>
                 {pointService.isPrimaryAddress &&
                   <span className={'ml-auto SPWorkYear PrimaryAddress'}>
                     Primary Address
@@ -42,7 +42,7 @@ class PointService extends React.Component {
                 </span>
               </div>
               <div className={'width100 d-flex'}>
-                <span className={'AddressContentLabel'}>ZIP</span>
+                <span className={'AddressContentLabel'}>Zip</span>
                 <span className={'SPCertificateDesc'}>{pointService.zip}</span>
               </div>
             </div>

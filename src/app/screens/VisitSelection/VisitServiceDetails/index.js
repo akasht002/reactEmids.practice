@@ -737,7 +737,7 @@ class VisitServiceDetails extends Component {
                                     </p>
 
                                     <p>
-                                      <span>ZIP</span>
+                                      <span>Zip</span>
                                       {pointofservice.zipCode}
                                     </p>
                                   </Fragment>
