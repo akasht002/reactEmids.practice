@@ -87,7 +87,7 @@ class VisitServiceDetails extends Component {
     }
     this.alertModalMsg = ''
     this.status = {}
-    this.alertModalMsgstatus = 'Please apply for another service request.Service Provider is already been Hired for this request'
+    this.alertModalMsgstatus = 'Please apply for another service request. Service Provider is already been Hired for this request.'
   }
 
   componentDidMount() {
@@ -737,7 +737,7 @@ class VisitServiceDetails extends Component {
                                     </p>
 
                                     <p>
-                                      <span>ZIP</span>
+                                      <span>Zip</span>
                                       {pointofservice.zipCode}
                                     </p>
                                   </Fragment>
@@ -749,6 +749,7 @@ class VisitServiceDetails extends Component {
                       </form>
                     </TabPane>
                     <TabPane tabId='2' className='TabBody'>
+                    {this.props.isScheduleLoading && <Preloader/>}
                       <div className='ScheduleTableHeader primaryColor'>
                         <div>
                           <span>Date</span>
@@ -1038,6 +1039,7 @@ function mapStateToProps(state) {
       .canInitiateConversation,
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
     isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
+    isScheduleLoading: state.visitSelectionState.VisitServiceDetailsState.isScheduleLoading,
   }
 }
 

@@ -433,7 +433,7 @@ class PersonalDetail extends React.PureComponent {
         <ModalPopup
           isOpen={this.state.isAlertModalOpen}
           toggle={this.reset}
-          ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)</span>}
+          ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG, PNG, GIF.</span>}
           btn1='OK'
           className='modal-sm'
           headerFooter='d-none'
@@ -624,7 +624,7 @@ class PersonalDetail extends React.PureComponent {
               <span className='AddressContentText'>{this.props.personalDetail && this.states}</span>
             </div>
             <div className={'width100 d-flex'}>
-              <span className={'AddressContentLabel'}>ZIP</span>
+              <span className={'AddressContentLabel'}>Zip</span>
               <span className='AddressContentText'>{this.props.personalDetail && this.zipCode}</span>
             </div>
           </div>

@@ -205,7 +205,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ModalPopup
                     isOpen={this.state.selectedLink === 'telehealth' && !this.props.canCreateConversation && !isIEBrowser && !isMobileBrowser}
-                    ModalBody={<span>You cannot initiate a video call as you have no current service requests</span>}
+                    ModalBody={<span>You cannot initiate a video call as you have no current service requests.</span>}
                     btn1="OK"
                     className="modal-sm"
                     headerFooter="d-none"
@@ -214,7 +214,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ModalPopup
                     isOpen={this.props.showTelehealthInvite}
-                    ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}</span>}
+                    ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}.</span>}
                     btn1="Accept"
                     btn2="Decline"
                     className="zh"

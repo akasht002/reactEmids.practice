@@ -136,9 +136,9 @@ export class ResetPassword extends Component {
                         <p className="text-danger d-block mt-4 mb-2">Invalid Password. The new password cannot be among the last 6 passwords used.</p>
                     }
                 </LoginCover> :
-                <h3 className="MsgWithIcon">
-                    Link is not active
-            </h3>
+                <LoginCover isLoading={this.props.isLoading}>
+                    <h3>Link is no longer valid. Please reset your password from the login screen.</h3>
+                </LoginCover>
         )
     }
 }

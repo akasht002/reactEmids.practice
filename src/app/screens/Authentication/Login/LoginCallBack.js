@@ -12,7 +12,7 @@ import {
 class LoginCallBack extends Component {
   render() {
     return (
-      <ScreenCover onPress={this.onBtnPress} isLoading={true}>
+      <ScreenCover onPress={this.onBtnPress}>
         <CallbackComponent
           userManager={ userManager }
           successCallback={(data) => {

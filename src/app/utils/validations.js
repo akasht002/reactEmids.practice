@@ -14,6 +14,17 @@ export function checkPassword (password) {
   return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/.test(password)
 }
 
+
+export function getFieldSortBy(input, field,orderBy) {
+  let sortedData =  _.orderBy(input, [field],[orderBy])
+  var output = []
+  for (var i = 0; i < sortedData.length; ++i) {
+    if (i === sortedData.length - 1) output.push(sortedData[i][field] + '')
+    else output.push(sortedData[i][field] + ', ')
+  }
+  return output
+}
+
 export function checkDate (date) {
   return /^(0[1-9]|1[0-2])-(0[1-9]|1\d|2\d|3[01])-(19|20)\d{2}$/.test(date)
 }
@@ -216,4 +227,9 @@ export function format_DDMMMYYYY_Value (date) {
 
 export function formatDateValue(date, dateFormat, outputFormat) {
   return date ? moment(date, dateFormat).format(outputFormat) : null
+}
+
+
+export const checkEmpty = (data) => {
+  return (typeof(data) === 'undefined' || data === null || data.length === 0 ) ? true : false
 }

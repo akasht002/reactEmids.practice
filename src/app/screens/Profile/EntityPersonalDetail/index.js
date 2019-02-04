@@ -22,11 +22,12 @@ import {
 } from '../../../utils/validations'
 import { Details, ProfileImageDetail } from './Details'
 import { SETTING } from '../../../services/api'
-import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import { SCREENS, PERMISSIONS } from '../../../constants/constants';
+import { formatPhoneNumber } from '../../../utils/formatName'
 import ImageModal from '../PersonalDetail/ImageModal';
 
 class EntityPersonalDetail extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       useEllipsis: true,
@@ -50,16 +51,16 @@ class EntityPersonalDetail extends React.PureComponent {
     this.isImageSave = false;
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getPersonalDetail()
     this.props.getCityDetail()
     this.props.getImage()
     this.props.getGender()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     console.log('nextProps.personalDetail........', nextProps.personalDetail);
-    if(this.isImageSave === false) {
+    if (this.isImageSave === false) {
       this.setState({
         firstName: nextProps.personalDetail.firstName,
         lastName: nextProps.personalDetail.lastName,
@@ -69,8 +70,8 @@ class EntityPersonalDetail extends React.PureComponent {
         yearOfExperience: nextProps.personalDetail.yearOfExperience,
         description: nextProps.personalDetail.description,
         hourlyRate: nextProps.personalDetail.hourlyRate,
-        url:nextProps.personalDetail.entity  && nextProps.personalDetail.entity.websiteUrl,
-        assigned_by: nextProps.personalDetail.entity  && nextProps.personalDetail.entity.assignedBy,
+        url: nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
+        assigned_by: nextProps.personalDetail.entity && nextProps.personalDetail.entity.assignedBy,
         city: getArrayLength(nextProps.personalDetail.address) > 0
           ? nextProps.personalDetail.address[0].city
           : '',
@@ -101,9 +102,9 @@ class EntityPersonalDetail extends React.PureComponent {
             nextProps.personalDetail.address[0].state != null
             ? nextProps.personalDetail.address[0].state.id
             : '-' + getArrayLength(nextProps.personalDetail.address) > 0 &&
-                nextProps.personalDetail.address[0].state != null
-                ? nextProps.personalDetail.address[0].state.name
-                : ''
+              nextProps.personalDetail.address[0].state != null
+              ? nextProps.personalDetail.address[0].state.name
+              : ''
         },
         addressId: getArrayLength(nextProps.personalDetail.address) > 0 &&
           nextProps.personalDetail.address[0].addressId != null
@@ -182,7 +183,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   onSubmit = () => {
-    const { firstName, lastName, phoneNumber, city, zipCode, streetAddress, selectedState} = this.state;
+    const { firstName, lastName, phoneNumber, city, zipCode, streetAddress, selectedState } = this.state;
     this.isImageSave = false;
     if (
       getLength(firstName) === 0 ||
@@ -236,14 +237,14 @@ class EntityPersonalDetail extends React.PureComponent {
     })
   }
 
-  render () {
+  render() {
     let modalContent
     let modalTitle = 'Edit Personal Details'
     let modalType = ''
     const cityDetail = this.props.cityDetail.map((city, i) => {
       return { label: city.name, value: city.id + '-' + city.name }
     })
-   
+
     const genderDetail = this.props.genderList && this.props.genderList.map((gender, i) => {
       return { label: gender.name, value: gender.id + '-' + gender.name }
     })
@@ -252,20 +253,20 @@ class EntityPersonalDetail extends React.PureComponent {
       <form className='form my-2 my-lg-0' onSubmit={this.onSubmit}>
         {this.getModalContent(cityDetail, genderDetail)}
         <ImageModal
-        isOpen={this.state.uploadImage}
-        toggle={this.closeImageUpload}
-        ModalBody={  
-          <ProfileImageDetail
-          uploadedImageFile={this.state.uploadedImageFile}
-          watch={this.watch}
-          onCroppeds={this.onCroppeds}
-          reUpload={this.reUpload}
-        />}
-        className='modal-lg asyncModal BlackoutModal'
-        modalTitle='Edit Profile Image'
-        centered='centered'
-        saveImage={this.saveImageUpload}
-      />
+          isOpen={this.state.uploadImage}
+          toggle={this.closeImageUpload}
+          ModalBody={
+            <ProfileImageDetail
+              uploadedImageFile={this.state.uploadedImageFile}
+              watch={this.watch}
+              onCroppeds={this.onCroppeds}
+              reUpload={this.reUpload}
+            />}
+          className='modal-lg asyncModal BlackoutModal'
+          modalTitle='Edit Profile Image'
+          centered='centered'
+          saveImage={this.saveImageUpload}
+        />
       </form>
     )
     modalContent = EducationModalContent
@@ -313,7 +314,7 @@ class EntityPersonalDetail extends React.PureComponent {
           toggle={this.reset}
           ModalBody={
             <span>
-              Please insert a image less than 2 MB and should be in the format of JPEG,PNG, Gif)
+              Please insert a image less than 2 MB and should be in the format of JPEG, PNG, GIF.
             </span>
           }
           btn1='OK'
@@ -332,7 +333,7 @@ class EntityPersonalDetail extends React.PureComponent {
         />
       </ScreenCover>
     )
-  } 
+  }
 
   getModalContent = (stateDetail, genderDetail) => {
     return (
@@ -372,9 +373,9 @@ class EntityPersonalDetail extends React.PureComponent {
                 value={this.state.firstName}
                 className={
                   'form-control ' +
-                    (!this.state.isValid &&
-                      !this.state.firstName &&
-                      'inputFailure')
+                  (!this.state.isValid &&
+                    !this.state.firstName &&
+                    'inputFailure')
                 }
                 textChange={e => {
                   this.setState({
@@ -404,9 +405,9 @@ class EntityPersonalDetail extends React.PureComponent {
                 value={this.state.lastName}
                 className={
                   'form-control ' +
-                    (!this.state.isValid &&
-                      !this.state.lastName &&
-                      'inputFailure')
+                  (!this.state.isValid &&
+                    !this.state.lastName &&
+                    'inputFailure')
                 }
                 textChange={e => {
                   this.setState({
@@ -519,7 +520,7 @@ class EntityPersonalDetail extends React.PureComponent {
             type='text'
             maxlength='40'
             value={this.state.url}
-            disabled={true}
+            disabled={false}
             textChange={e => {
               this.setState({
                 url: e.target.value,
@@ -559,28 +560,28 @@ class EntityPersonalDetail extends React.PureComponent {
               <div className='row'>
                 <div className='col-md-6 mb-2'>
                   <div className='form-group'>
-                    <label className="m-0">State</label>
-                    <SelectBox
-                      options={stateDetail}
-                      simpleValue
-                      placeholder='Select the state'
-                      onChange={value => {
+                    <Input
+                      name='Street'
+                      label='Street'
+                      autoComplete='off'
+                      type='text'
+                      maxlength='500'
+                      value={this.state.streetAddress}
+                      textChange={e =>
                         this.setState({
-                          selectedState: value,
+                          streetAddress: e.target.value,
                           disabledSaveBtn: false,
-                          isStateInvalid: false
-                        })
-                      }}
-                      onBlur={(e) => {
-                        if (this.state.selectedState === '') {
-                          this.setState({ isStateInvalid: true })
+                          isStreetInvalid: false
+                        })}
+                      onBlur={e => {
+                        if (!e.target.value) {
+                          this.setState({ isStreetInvalid: true })
                         }
                       }}
-                      selectedValue={this.state.selectedState}
-                      className='inputFailure ServiceRequestSelect'
+                      className='form-control'
                     />
                     <small className="text-danger d-block OnboardingAlert">
-                      {this.state.isStateInvalid && 'Please select valid State'}
+                      {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
                     </small>
                   </div>
                 </div>
@@ -599,44 +600,44 @@ class EntityPersonalDetail extends React.PureComponent {
                           disabledSaveBtn: false,
                           isCityInvalid: false
                         })}
-                        onBlur={e => {
-                          if (!e.target.value) {
-                            this.setState({ isCityInvalid: true })
-                          }
-                        }}
+                      onBlur={e => {
+                        if (!e.target.value) {
+                          this.setState({ isCityInvalid: true })
+                        }
+                      }}
                       className='form-control'
                     />
                     <small className="text-danger d-block OnboardingAlert">
-                    {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
-                  </small>
+                      {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
+                    </small>
                   </div>
                 </div>
                 <div className='col-md-12 mb-2'>
                   <div className='row'>
                     <div className='col-md-6 mb-2'>
                       <div className='form-group'>
-                        <Input
-                          name='Street'
-                          label='Street'
-                          autoComplete='off'
-                          type='text'
-                          maxlength='500'
-                          value={this.state.streetAddress}
-                          textChange={e =>
+                        <label className="m-0">State</label>
+                        <SelectBox
+                          options={stateDetail}
+                          simpleValue
+                          placeholder='Select the state'
+                          onChange={value => {
                             this.setState({
-                              streetAddress: e.target.value,
+                              selectedState: value,
                               disabledSaveBtn: false,
-                              isStreetInvalid: false
-                            })}
-                            onBlur={e => {
-                              if (!e.target.value) {
-                                this.setState({ isStreetInvalid: true })
-                              }
-                            }}
-                          className='form-control'
+                              isStateInvalid: false
+                            })
+                          }}
+                          onBlur={(e) => {
+                            if (this.state.selectedState === '') {
+                              this.setState({ isStateInvalid: true })
+                            }
+                          }}
+                          selectedValue={this.state.selectedState}
+                          className='inputFailure ServiceRequestSelect'
                         />
                         <small className="text-danger d-block OnboardingAlert">
-                          {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                          {this.state.isStateInvalid && 'Please select valid State'}
                         </small>
                       </div>
                     </div>
@@ -696,12 +697,12 @@ class EntityPersonalDetail extends React.PureComponent {
                     autoComplete='off'
                     maxlength='15'
                     type='text'
-                    value={this.state.phoneNumber}
+                    value={formatPhoneNumber(this.state.phoneNumber)}
                     className={
                       'form-control ' +
-                        (!this.state.isValid &&
-                          !this.state.phoneNumber &&
-                          'inputFailure')
+                      (!this.state.isValid &&
+                        !this.state.phoneNumber &&
+                        'inputFailure')
                     }
                     PhoneInput="PhoneInput"
                     textChange={e => {
@@ -761,8 +762,8 @@ class EntityPersonalDetail extends React.PureComponent {
       isZipInvalid: false,
       isStateInvalid: false,
       city: getArrayLength(this.props.personalDetail.address) > 0
-      ? this.props.personalDetail.address[0].city
-      : '',
+        ? this.props.personalDetail.address[0].city
+        : '',
       streetAddress: getArrayLength(this.props.personalDetail.address) > 0
         ? this.props.personalDetail.address[0].streetAddress
         : '',
@@ -778,9 +779,9 @@ class EntityPersonalDetail extends React.PureComponent {
           this.props.personalDetail.address[0].state != null
           ? this.props.personalDetail.address[0].state.id
           : '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
-              this.props.personalDetail.address[0].state != null
-              ? this.props.personalDetail.address[0].state.name
-              : ''
+            this.props.personalDetail.address[0].state != null
+            ? this.props.personalDetail.address[0].state.name
+            : ''
       }
     })
     let old_data = {
@@ -829,8 +830,8 @@ class EntityPersonalDetail extends React.PureComponent {
       isZipInvalid: false,
       isStateInvalid: false,
       city: getArrayLength(this.props.personalDetail.address) > 0
-      ? this.props.personalDetail.address[0].city
-      : '',
+        ? this.props.personalDetail.address[0].city
+        : '',
       streetAddress: getArrayLength(this.props.personalDetail.address) > 0
         ? this.props.personalDetail.address[0].streetAddress
         : '',
@@ -846,15 +847,15 @@ class EntityPersonalDetail extends React.PureComponent {
           this.props.personalDetail.address[0].state != null
           ? this.props.personalDetail.address[0].state.id
           : '-' + getArrayLength(this.props.personalDetail.address) > 0 &&
-              this.props.personalDetail.address[0].state != null
-              ? this.props.personalDetail.address[0].state.name
-              : ''
+            this.props.personalDetail.address[0].state != null
+            ? this.props.personalDetail.address[0].state.name
+            : ''
       }
     })
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updateEntityDetail: data => dispatch(action.updateEntityDetail(data)),
@@ -865,7 +866,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

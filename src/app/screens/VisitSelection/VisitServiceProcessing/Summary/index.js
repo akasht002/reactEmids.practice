@@ -6,7 +6,7 @@ import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup, Preloader } from '../../../../components';
-import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration, calculationActualData } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getUserInfo } from '../../../../services/http';
@@ -78,7 +78,8 @@ class Summary extends Component {
     }
 
     togglePopup = () => {
-        this.setState({ isModalOpen: false })
+        this.setState({ isModalOpen: false, updatedHour: '', updatedMin: '', timeErrMessage: '', emptyErrMessage: '' })
+        this.props.calculationActualData();
     }
 
     AdjustTime = () => {
@@ -153,7 +154,6 @@ class Summary extends Component {
         let seconds = formatDateSingle(this.state.updatedSec)
         let newTime = hours + ':' + minutes + ':' + seconds
         var endTime = moment(newTime, "HH:mm:ss");
-
         if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
@@ -239,6 +239,7 @@ class Summary extends Component {
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={59}
+                            maxlength={2}
                         />
                     </span>
                     {/* Dont Remove */}
@@ -370,7 +371,7 @@ class Summary extends Component {
                                                 </div>
                                                 <div className="col-md-4 CostTableContainer Cost">
                                                     <p><span>{this.props.CalculationsData.totalChargableTime}</span>
-                                                        <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate}</span></p>
+                                                        <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate.toFixed(2)}</span></p>
                                                     <p className="TaxCost"><span>${parseFloat(this.props.CalculationsData.totalVisitCost).toFixed(2)}</span>
                                                         <span>${parseFloat(this.props.CalculationsData.taxes).toFixed(2)}</span></p>
                                                 </div>
@@ -390,7 +391,15 @@ class Summary extends Component {
                                                         <p><span>Credit Card Payment</span></p>
                                                     </div>
                                                     <div className="col-md-4 EstimatedCostContainer Cost">
-                                                        <p><span>${this.props.CalculationsData.estimatedClaim}</span></p>
+                                                        <p>{this.props.CalculationsData.estimatedClaim === 0 ?
+                                                            <span>$0.00</span>
+                                                            :
+                                                            <span>
+                                                                ${this.props.CalculationsData.estimatedClaim &&
+                                                                    this.props.CalculationsData.estimatedClaim.toFixed(2)}
+                                                            </span>
+                                                        }
+                                                        </p>
                                                         <p><span>${this.props.CalculationsData.copayAmount && this.props.CalculationsData.copayAmount.toFixed(2)}</span></p>
                                                     </div>
                                                 </div>
@@ -503,6 +512,7 @@ function mapDispatchToProps(dispatch) {
         goBack: () => dispatch(push(Path.feedback)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        calculationActualData: () => dispatch(calculationActualData()),
         updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data))
     }
 };
