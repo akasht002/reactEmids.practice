@@ -6,7 +6,7 @@ import { TextArea } from "../../../components";
 import { Calendar } from "../../../components";
 import { compare } from "../../../utils/comparerUtility";
 import { changeDateFormat, formatDate } from '../../../utils/dateUtility';
-import { checkEmpty } from '../../../utils/validations'
+import { checkEmpty, getLength } from '../../../utils/validations'
 import { DATE_FORMAT } from '../../../constants/constants';
 import { formattedDateMoment, formattedDateMomentValue, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDateValue } from '../../../utils/validations';
 
@@ -22,60 +22,60 @@ class BlackoutModal extends Component {
         isDiscardModalOpen: false
       },
       isValid: false,
-      isFormDateInvalid:false,
-      isToDateInvalid:false,
+      isFormDateInvalid: false,
+      isToDateInvalid: false,
     };
     this.fromMinDate = newDate();
     this.toMinDate = newDate();
     this.fromDateProps = "";
     this.toDateProps = "";
     this.remarksProps = "";
-    
+
   }
 
   dateChanged = (dateType, date) => {
-     const formattedDate = formattedDateMomentValue(date);
-     this.stateChange = true;
+    const formattedDate = formattedDateMomentValue(date);
+    this.stateChange = true;
 
-     if (dateType === 'fromDate') {
+    if (dateType === 'fromDate') {
       this.toMinDate = newDateValue(date);
       this.setState(prevState => ({
         blackoutData: {
           ...prevState.blackoutData,
           fromDate: formattedDate
-        },isValid:true
+        }, isValid: true
       }));
-     } else {
-      this.fromMaxDate  = newDateValue(date);
+    } else {
+      this.fromMaxDate = newDateValue(date);
       this.setState(prevState => ({
         blackoutData: {
           ...prevState.blackoutData,
-          toDate: formattedDate,          
-        },isValid:true
+          toDate: formattedDate,
+        }, isValid: true
       }));
-     }
+    }
   }
 
-dateChangedRaw = (dateType, event) => {
+  dateChangedRaw = (dateType, event) => {
     if (event.target.value && (!checkDateFormatNumber(event.target.value))) {
-        event.preventDefault();
+      event.preventDefault();
     } else {
-     let fromDateVal = changeDateFormat(event.target.value);
-     let checkValue = checkFormatDate(fromDateVal);
-     const formattedDate = fromDateVal ? formatDate(fromDateVal, DATE_FORMAT) : null;
-     if (dateType === 'fromDate') {
-          this.toMinDate = newDateValue(fromDateVal);
-          if (checkValue) {
-              this.setState({ blackoutData: { ...this.state.blackoutData, fromDate: formattedDate } });
-          }
-        } else {
-          this.fromMaxDate = newDateValue(fromDateVal);
-          if (checkValue) {
-              this.setState({ blackoutData: { ...this.state.blackoutData, toDate: formattedDate } });
-          }
-     }
+      let fromDateVal = changeDateFormat(event.target.value);
+      let checkValue = checkFormatDate(fromDateVal);
+      const formattedDate = fromDateVal ? formatDate(fromDateVal, DATE_FORMAT) : null;
+      if (dateType === 'fromDate') {
+        this.toMinDate = newDateValue(fromDateVal);
+        if (checkValue) {
+          this.setState({ blackoutData: { ...this.state.blackoutData, fromDate: formattedDate } });
+        }
+      } else {
+        this.fromMaxDate = newDateValue(fromDateVal);
+        if (checkValue) {
+          this.setState({ blackoutData: { ...this.state.blackoutData, toDate: formattedDate } });
+        }
+      }
+    }
   }
-}
 
   remarksChange = e => {
     let value = e.target.value;
@@ -85,20 +85,21 @@ dateChangedRaw = (dateType, event) => {
         ...prevState.blackoutData,
         remarks: value
       },
-    isValid:true}));
+      isValid: true
+    }));
   };
 
   saveData = () => {
-    if(checkEmpty(this.state.blackoutData.fromDate)||
-    checkEmpty(this.state.blackoutData.toDate)){
-        this.setState({
-          isFormDateInvalid:checkEmpty(this.state.blackoutData.fromDate),
-          isToDateInvalid:checkEmpty(this.state.blackoutData.toDate),
-        })
-    }else{     
+    if (checkEmpty(this.state.blackoutData.fromDate) ||
+      checkEmpty(this.state.blackoutData.toDate)) {
+      this.setState({
+        isFormDateInvalid: checkEmpty(this.state.blackoutData.fromDate),
+        isToDateInvalid: checkEmpty(this.state.blackoutData.toDate),
+      })
+    } else {
       this.props.saveBlackout(this.state.blackoutData);
     }
-    
+
   };
 
   componentWillReceiveProps(nextProps) {
@@ -108,7 +109,7 @@ dateChangedRaw = (dateType, event) => {
     const serviceProviderBlackoutDayId = nextProps.itemData.serviceProviderBlackoutDayId;
     this.fromDateProps = formattedDateMoment(nextProps.itemData.startDate);
     this.toDateProps = formattedDateMoment(nextProps.itemData.endDate);
-    this.fromMaxDate  = newDateValue(this.toDateProps);
+    this.fromMaxDate = newDateValue(this.toDateProps);
     this.remarksProps = nextProps.itemData.remarks;
     this.setState(prevState => ({
       blackoutData: {
@@ -119,8 +120,8 @@ dateChangedRaw = (dateType, event) => {
         serviceProviderBlackoutDayId: serviceProviderBlackoutDayId
       },
       isValid: false,
-      isFormDateInvalid:false,
-      isToDateInvalid:false
+      isFormDateInvalid: false,
+      isToDateInvalid: false
     }));
   }
 
@@ -153,17 +154,17 @@ dateChangedRaw = (dateType, event) => {
   };
 
   reset = () => {
-      this.setState({
-          isDiscardModalOpen: false,
-          fromDate: this.state.fromDate,
-          toDate: this.state.toDate,
-          remarks: this.state.remarks
-      });
-      this.props.closeBlackoutModal();
+    this.setState({
+      isDiscardModalOpen: false,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      remarks: this.state.remarks
+    });
+    this.props.closeBlackoutModal();
   }
 
   render() {
-    const { fromDate, toDate, remarks } = this.state.blackoutData;    
+    const { fromDate, toDate, remarks } = this.state.blackoutData;
     return (
       <Fragment>
         <Modal
@@ -189,14 +190,19 @@ dateChangedRaw = (dateType, event) => {
                     value={fromDate}
                     disabled={this.props.disabledStartDate}
                     minDate={this.fromMinDate}
-                    maxDate={moment(fromDate).isBefore(moment(new Date(), "MM-DD-YYYY"))? fromDate && formateStateDateValue(fromDate):this.fromMaxDate}
-                    className={
-                      "form-control datePicker " 
-                    }
+                    maxDate={moment(fromDate).isBefore(moment(new Date(), "MM-DD-YYYY")) ? fromDate && formateStateDateValue(fromDate) : this.fromMaxDate}
+                    className={"form-control datePicker " + (this.state.isFormDateInvalid  && 'inputFailure')}
+                    onBlur={() => {
+                      if (fromDate) {
+                        this.setState({ isFormDateInvalid: false });
+                      } else {
+                        this.setState({ isFormDateInvalid: true });
+                      }
+                    }}
                   />
-                   <small className="text-danger d-block OnboardingAlert">
-                    {this.state.isFormDateInvalid && 'Please enter from date'}
-                   </small>
+                  <small className="text-danger d-block OnboardingAlert">
+                    {getLength(fromDate) === 0 && this.state.isFormDateInvalid && 'Please enter from date'}
+                  </small>
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
                   <Calendar
@@ -207,13 +213,18 @@ dateChangedRaw = (dateType, event) => {
                     onDateChangeRaw={this.dateChangedRaw.bind(this, 'toDate')}
                     value={toDate}
                     minDate={this.toMinDate}
-                    className={
-                      "form-control datePicker "
-                    }
+                    className={"form-control datePicker " + (this.state.isToDateInvalid  && 'inputFailure')}
+                    onBlur={() => {
+                      if (toDate) {
+                        this.setState({ isToDateInvalid: false });
+                      } else {
+                        this.setState({ isToDateInvalid: true });
+                      }
+                    }}
                   />
                   <small className="text-danger d-block OnboardingAlert">
-                    {this.state.isToDateInvalid && 'Please enter to date'}
-                   </small>
+                    {getLength(toDate) === 0 && this.state.isToDateInvalid && 'Please enter to date'}
+                  </small>
                 </div>
                 <div className="col-md-12 mb-2">
                   <div className={"form-group"}>
@@ -232,8 +243,8 @@ dateChangedRaw = (dateType, event) => {
             </form>
           </ModalBody>
           <ModalFooter className={this.props.headerFooter}>
-            <Button className="" color="primary" onClick={this.saveData} 
-              disabled = {!this.state.isValid}>
+            <Button className="" color="primary" onClick={this.saveData}
+              disabled={!this.state.isValid}>
               Save
             </Button>
           </ModalFooter>

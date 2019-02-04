@@ -1941,5 +1941,19 @@ margin-bottom: 0px;
     }
 }
 
+.rightPalette .TabBody .ScheduleTableRow .EntityUServiceProf
+{
+    line-height: 36px;
+    vertical-align: middle;
+}
+.rightPalette .TabBody .ScheduleTableRow span.EditIcon
+{
+    display: table-cell;
+    width: 10px;
+    position: relative;
+    right: 61px !important;
+    top: 0px;
+}
+
 
     

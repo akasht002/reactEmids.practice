@@ -110,6 +110,7 @@ export const PERMISSIONS = {
 }
 
 export const COMPLETED_TASK_STATUS_ID = 45
+export const VISIT_STATUS_ID = 43
 export const PAYMENT_PENDING_STATUS = 90
 export const SERVICE_STATES = {
     YET_TO_START: "YET_TO_START",
