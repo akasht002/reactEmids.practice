@@ -5,6 +5,7 @@ import { startLoading, endLoading } from '../../loading/actions'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 import { getUserInfo } from '../../../services/http';
 import { getServiceArea } from '../serviceArea/action';
+import { NO_STATE_ID } from '../../constants/constants';
 
 export const PersonalDetails = {
   get_personal_detail_success : "profile/get_personal_detail_success",
@@ -92,7 +93,8 @@ export function getCityDetail () {
     dispatch(startLoading())
     Get(API.getCity)
       .then(resp => {
-        dispatch(getCitySuccess(resp.data))
+        let data = resp.data && resp.data.filter(state =>  state.id !== NO_STATE_ID);
+        dispatch(getCitySuccess(data))
         dispatch(endLoading())
       })
       .catch(err => {
