@@ -23,3 +23,4 @@ export const RESPONSE_STATUS = {
     OK: 'OK',
     ALREADY_EXIST: 'Already Exist'
 }
+export const NO_STATE_ID = 0

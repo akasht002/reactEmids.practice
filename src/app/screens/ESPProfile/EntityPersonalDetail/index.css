@@ -86,3 +86,8 @@ display: inline-block;
 {
 padding-left:20px;
 }
+
+.LanguagesModal .SelectWithFlag .Select-control .Select-input
+{
+margin-left: 0px;
+}

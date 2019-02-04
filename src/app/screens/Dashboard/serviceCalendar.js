@@ -478,7 +478,7 @@ class serviceCalendar extends React.Component {
 
     let current_month = new Date().getMonth();
     let pervious_month = moment.months().splice(current_month - 3, 3);
-    let next_month_list = moment.months().splice(current_month, 3);
+    let next_month_list = moment.months().splice(current_month - 1, 3);
 
     let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month, 10)])
     let nextMonthLists = current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list

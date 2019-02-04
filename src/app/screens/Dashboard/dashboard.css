@@ -1941,5 +1941,39 @@ margin-bottom: 0px;
     }
 }
 
+/*cross-browser-compatibity-code*/
 
-    
+/*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .ProfileConversationWidget {height: auto; } /* IE10 */
+     *::-ms-backdrop,  .ProfileConversationWidget {height: auto; }  /* IE11 */
+     }
+
+/*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+    .ProfileConversationWidget {height: auto; }  
+
+}
+
+/*cross-browser*/
+.rightPalette .TabBody .ScheduleTableRow .EntityUServiceProf
+{
+position: relative;
+display: inline-block;
+left: 0px;
+}
+
+/*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .rightPalette .TabBody .ScheduleTableRow .EntityUServiceProf { position: relative;
+            display: inline-block;
+            padding-left: 10px; } /* IE10 */
+     *::-ms-backdrop, .rightPalette .TabBody .ScheduleTableRow .EntityUServiceProf { position: relative;
+        display: inline-block;
+        padding-left: 10px;} /* IE11 */
+     }
