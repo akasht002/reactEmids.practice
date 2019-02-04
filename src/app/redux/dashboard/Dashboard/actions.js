@@ -20,6 +20,9 @@ import {
 } from '../../../constants/constants'
 import { getUnreadMessageCounts } from '../../asyncMessages/actions'
 import { getUserInfo } from '../../../services/http'
+import {
+  getVisitServiceSchedule
+} from '../../visitSelection/VisitServiceDetails/actions';
 
 export const DashboardDetail = {
   get_conversation_detail_success: 'get_conversation_detail_success/dashboard',
@@ -204,6 +207,7 @@ export function updateEntityServiceVisit (data) {
     dispatch(startLoading())
     ServiceRequestPost(API.assignServiceVisit, data)
       .then(resp => {
+        dispatch(getVisitServiceSchedule(data.serviceRequestId, 1))
         dispatch(endLoading())
       })
       .catch(err => {

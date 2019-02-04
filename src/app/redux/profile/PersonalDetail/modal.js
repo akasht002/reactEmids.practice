@@ -92,7 +92,8 @@ export const getModal = (data, action) => {
           organization: data.organizationName ? data.organizationName : '',
           entityId: 0,
           websiteUrl: data.url,
-          hourlyRate: ''
+          hourlyRate: '',
+          yearsOfExperience: data.yearsOfExperience ? parseInt(data.yearsOfExperience, 10) : 0
         },
         description: data.description,
         hourlyRate: data.hourlyRate ? data.hourlyRate : 0,
