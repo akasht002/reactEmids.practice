@@ -1788,3 +1788,20 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         margin: 0 0 15px !important;
     }
 }
+
+/*cross-browser-compatibity-code*/
+
+/*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .ProfileConversationWidget {height: auto; } /* IE10 */
+     *::-ms-backdrop,  .ProfileConversationWidget {height: auto; }  /* IE11 */
+     }
+
+/*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+    .ProfileConversationWidget {height: auto; }  
+
+}
