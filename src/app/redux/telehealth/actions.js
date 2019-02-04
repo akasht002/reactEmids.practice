@@ -24,7 +24,8 @@ export const TeleHealth = {
     setInvitedRoomId: 'setInvitedRoomId/telehealth',
     clearExistingRoom: 'clearExistingRoom/telehealth',
     newRequestCame: 'NewRequestCame/telehealth',
-    clearInitiator: 'clearInitiator/telehealth'
+    clearInitiator: 'clearInitiator/telehealth',
+    createDataStore: 'createDataStore/telehealth'
 };
 
 export const setInvitedRoomId = data =>{
@@ -82,6 +83,13 @@ export const setInitiator = (data) => {
 export const clearInvitaion = () => {
     return {
         type: TeleHealth.clearInvitaion
+    }
+};
+
+export const createDataStore = data => {
+    return {
+        type: TeleHealth.createDataStore,
+        data
     }
 };
 

@@ -355,16 +355,13 @@ class serviceCalendar extends React.Component {
           thumbNail: item.patientImage
         }
       ];
-      this.props.createVideoConference(selectedParticipants);
+      this.props.createDataStore(selectedParticipants);
     }
   };
 
-
   onchangeSearchServiceProvider = e => {
     this.props.getEntityServiceProviderListSearch(e.target.value)
-    console.log(e.target.value)
   }
-
 
   getModalContent = (serviceProviderList) => {
     return (
