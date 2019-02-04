@@ -60,6 +60,7 @@ class Organization extends React.PureComponent {
     if (this.isImageSave === false) {
       this.setState({
         organizationName: nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.organization,
+        yearsOfExperience: nextProps.personalDetail && nextProps.personalDetail.yearOfExperience,
         url: nextProps.personalDetail && nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
         description: nextProps.personalDetail.description,
         hourlyRate: nextProps.personalDetail.hourlyRate,
@@ -159,12 +160,13 @@ class Organization extends React.PureComponent {
   }
 
   onSubmit = () => {
-    const { organizationNameInvaild, phoneNumberInvalid, urlInvaild, city, zipCode, streetAddress, selectedState } = this.state;
+    const { organizationNameInvaild, phoneNumberInvalid, urlInvaild, city, zipCode, streetAddress, selectedState, yearsOfExperienceInvalid } = this.state;
     this.isImageSave = false;
     if (
       organizationNameInvaild ||
       phoneNumberInvalid ||
       urlInvaild ||
+      yearsOfExperienceInvalid ||
       city === '' || city === null ||
       zipCode === '' || zipCode === null ||
       streetAddress === '' || streetAddress === null ||
@@ -405,16 +407,23 @@ class Organization extends React.PureComponent {
                 {this.props.personalDetail && this.props.personalDetail.entity &&
                   `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
-
+              <p className={'SPsubTitle'}>            
+                <span>
+                  {this.props.personalDetail &&
+                    this.props.personalDetail.yearOfExperience}
+                  {' '}
+                  Yrs in Business
+                </span>
+              </p>
             </div>
-            <div className={'col p-0'}>
+            {/* <div className={'col p-0'}>
               <h3 className={'ratePerHour primaryColor'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.hourlyRate}
                 </span>
               </h3>
-            </div>
+            </div> */}
           </div>
 
           <div className={'width100 url-separator'}>
@@ -487,8 +496,6 @@ class Organization extends React.PureComponent {
     )
   }
   getModalContent = stateDetail => {
-
-    console.log('getModalContent state value............', this.state.selectedState)
     return (
       <div className='row'>
         <div className='col-md-12'>
@@ -544,7 +551,7 @@ class Organization extends React.PureComponent {
                 {this.state.organizationNameInvaild && 'Please enter valid Organization Name'}
               </small>
             </div>
-            <div className='col-md-12'>
+            {/* <div className='col-md-12'>
               <Input
                 name='hourlyRate'
                 label='Hourly Rate ($/hr)'
@@ -571,7 +578,7 @@ class Organization extends React.PureComponent {
                 className='form-control'
               />
               <small className="text-danger d-block OnboardingAlert"></small>
-            </div>
+            </div> */}
             <div className='col-md-12'>
               <Input
                 name='url'
@@ -595,6 +602,32 @@ class Organization extends React.PureComponent {
                 {this.state.urlInvaild && 'Please enter valid Url'}
               </small>
 
+            </div>
+            <div className='col-md-12'>
+              <Input
+                name='YearsExperience'
+                label='Years in Business'
+                autoComplete='off'
+                required='required'
+                type='text'
+                maxlength='2'
+                value={this.state.yearsOfExperience}
+                textChange={e => {
+                  const re = /^[0-9\b]+$/;
+                  if (e.target.value === '' || re.test(e.target.value)) {
+                    this.setState({ yearsOfExperience: e.target.value, disabledSaveBtn: false, yearsOfExperienceInvalid: false })
+                  }
+                }}
+                onBlur={e => {
+                  if (!e.target.value) {
+                    this.setState({ yearsOfExperienceInvalid: true })
+                  }
+                }}
+                className={"form-control " + (this.state.yearsOfExperienceInvalid && 'inputFailure')}
+              />
+              <small className="text-danger d-block OnboardingAlert">
+                {this.state.yearsOfExperienceInvalid && 'Please enter valid Years of Business'}
+              </small>
             </div>
           </div>
         </div>
@@ -823,7 +856,8 @@ class Organization extends React.PureComponent {
       organizationName: this.props.personalDetail.entity.organization
         ? this.props.personalDetail.entity.organization
         : '',
-      phoneNumber: this.props.personalDetail.phoneNumber
+      phoneNumber: this.props.personalDetail.phoneNumber,
+      yearsOfExperience: this.props.personalDetail.yearOfExperience
     }
 
     let updated_data = {
@@ -832,7 +866,8 @@ class Organization extends React.PureComponent {
         : '',
       description: this.state.description,
       hourlyRate: this.state.hourlyRate,
-      phoneNumber: this.state.phoneNumber
+      phoneNumber: this.state.phoneNumber,
+      yearsOfExperience: this.state.yearsOfExperience
     }
 
     const fieldDifference = _.isEqual(old_data, updated_data)
@@ -854,7 +889,9 @@ class Organization extends React.PureComponent {
       hourlyRate: this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail.phoneNumber,
       organizationNameInvaild: false,
-      phoneNumberInvalid: false
+      phoneNumberInvalid: false,
+      yearsOfExperienceInvalid:false,
+      yearsOfExperience: this.props.personalDetail.yearOfExperience
     })
   }
 }

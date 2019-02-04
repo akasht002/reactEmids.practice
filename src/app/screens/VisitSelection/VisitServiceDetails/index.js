@@ -62,6 +62,9 @@ import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { createVideoConference } from '../../../redux/telehealth/actions';
 import { isFutureDay } from '../../../utils/dateUtility'
+import {
+  updateEntityServiceVisit
+} from "../../../redux/dashboard/Dashboard/actions";
 
 class VisitServiceDetails extends Component {
   constructor(props) {
@@ -86,6 +89,7 @@ class VisitServiceDetails extends Component {
       isLoading: false
     }
     this.alertModalMsg = ''
+    this.defualtPageNumber = 1
     this.status = {}
     this.alertModalMsgstatus = 'Please apply for another service request. Service Provider is already been Hired for this request.'
   }
@@ -348,6 +352,14 @@ class VisitServiceDetails extends Component {
   goBackToServiceRequest = () => {
     this.props.goBack();
     this.props.formDirtyVisitServiceDetails();
+  }
+
+  onSubmitAssignServiceProvider = (data) => {
+      this.props.updateEntityServiceVisit(data)
+      //  console.log(data)
+      //  setTimeout( () =>
+      //   this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.defualtPageNumber)
+      //   ,300)
   }
 
   render() {
@@ -871,7 +883,12 @@ class VisitServiceDetails extends Component {
                               </div>
                               {
                                 getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
-                                <AssignServiceProvider sp={ScheduleList} reset={this.reset} statusID={this.props.VisitServiceDetails.statusId} />
+                                <AssignServiceProvider 
+                                sp={ScheduleList} 
+                                reset={this.reset} 
+                                statusID={this.props.VisitServiceDetails.statusId} 
+                                onSubmit = {this.onSubmitAssignServiceProvider}
+                                />
                               }
                             </div>
                           )
@@ -1019,6 +1036,7 @@ function mapDispatchToProps(dispatch) {
     getSpBusyInVisit: () => dispatch(getSpBusyInVisit()),
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data))
   }
 }
 
