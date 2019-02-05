@@ -102,7 +102,6 @@ export const pushConversationMessage = (data) => {
 export function getConversationSummaryItemSignalR(conversationId){
     return (dispatch, getState) => {
         let state = getState();
-        dispatch(getDashboardMessageCount());
         if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
             let userId = getUserInfo().coreoHomeUserId;
             let userType = USERTYPES.SERVICE_PROVIDER;
@@ -504,6 +503,7 @@ export function getLatestMessages(conversationId){
 
 export function checkConversationExist(conversationId){
     return (dispatch, getState) => {
+        dispatch(getDashboardMessageCount());
         let state = getState();
         state && state.asyncMessageState && state.asyncMessageState.conversationSummary && 
         state.asyncMessageState.conversationSummary.map((data) => {
