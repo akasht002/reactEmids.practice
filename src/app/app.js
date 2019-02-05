@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import AppStackRoot from './routes';
 import {
   getLatestMessages,
-  checkConversationExist
+  checkConversationExist,
+  checkConversationCreated
 } from './redux/asyncMessages/actions';
 import { getConversationSummaryDashboardSignalR } from './redux/dashboard/Dashboard/actions';
 import {
@@ -16,6 +17,12 @@ import {connection, startConnection, onConnectionClosed} from './utils/signalrUt
 class App extends Component {
 
   componentDidMount() {
+
+    connection.on("ConversationCreated", data => {
+      if (data) {
+        this.props.checkConversationCreated(data)
+      }
+    });
 
     connection.on("UpdateMesssageCount", data => {
       if (data) {
@@ -66,6 +73,7 @@ function mapDispatchToProps(dispatch) {
     getConversationSummaryDashboardSignalR: (conversationId) => dispatch(getConversationSummaryDashboardSignalR(conversationId)),
     getLatestMessages: (conversationId) => dispatch(getLatestMessages(conversationId)),
     checkConversationExist: (conversationId) => dispatch(checkConversationExist(conversationId)),
+    checkConversationCreated: (data) => dispatch(checkConversationCreated(data))
   }
 }
 

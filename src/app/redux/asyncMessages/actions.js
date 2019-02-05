@@ -128,8 +128,16 @@ const getConversationSummaryItemSignalRSuceess = (data) => {
         );
         if(index !== -1){
             conversationSummaryData.splice(index, 1);
+            conversationSummaryData = [data, ...conversationSummaryData];
+        } else if (state.asyncMessageState.activePageNumber === 1) {
+            let userId = getUserInfo().coreoHomeUserId;
+            let userType = USERTYPES.SERVICE_PROVIDER;
+            data.participantList.map((participant) => {
+                if (participant.userId === userId && participant.participantType === userType) {
+                    conversationSummaryData = [data, ...conversationSummaryData];
+                }
+            });
         }
-        conversationSummaryData = [data, ...conversationSummaryData];
         dispatch(setConversationSummary(conversationSummaryData));
         dispatch(getUnreadMessageCounts());
     };
@@ -221,9 +229,9 @@ export const openedAsyncPage = (data) =>{
     };
 };
 
-export function onFetchConversationSummary(pageNumber) {
+export function onFetchConversationSummary(pageNumber, hideLoading = false) {
     return (dispatch) => {
-        dispatch(convLoadingStart());
+        hideLoading ? null : dispatch(convLoadingStart());
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversationSummary 
@@ -233,10 +241,10 @@ export function onFetchConversationSummary(pageNumber) {
             + Pagination.pageSize)
             .then(resp => {
                 dispatch(setConversationSummary(resp.data));
-                dispatch(convLoadingEnd());
+                hideLoading ? null : dispatch(convLoadingEnd());
             })
             .catch(err => {
-                dispatch(convLoadingEnd());
+                hideLoading ? null : dispatch(convLoadingEnd());
             })
     }
 };
@@ -501,10 +509,26 @@ export function getLatestMessages(conversationId){
     }
 }
 
+export function checkConversationCreated(conversation) {
+    return (dispatch, getState) => {
+        let state = getState();
+        dispatch(getDashboardMessageCount());
+        if (state.asyncMessageState.openedAsyncPage === 'conversationSummary' && state.asyncMessageState.activePageNumber === 1) {
+            let userId = getUserInfo().coreoHomeUserId;
+            let userType = USERTYPES.SERVICE_PROVIDER;
+            conversation.participantList.map((data) => {
+                if (data.userId === userId && data.participantType === userType) {
+                    dispatch(getConversationSummaryItemSignalR(conversation.conversationId))
+                }
+            });
+        }
+    }
+}
+
 export function checkConversationExist(conversationId){
     return (dispatch, getState) => {
-        dispatch(getDashboardMessageCount());
         let state = getState();
+        dispatch(getDashboardMessageCount());
         state && state.asyncMessageState && state.asyncMessageState.conversationSummary && 
         state.asyncMessageState.conversationSummary.map((data) => {
             if (data.conversationId === conversationId) {
