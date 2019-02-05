@@ -60,7 +60,7 @@ import {
 import { getUserInfo, isEntityServiceProvider } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-import { createVideoConference } from '../../../redux/telehealth/actions';
+import { createDataStore } from '../../../redux/telehealth/actions';
 import { isFutureDay } from '../../../utils/dateUtility'
 import {
   updateEntityServiceVisit
@@ -345,7 +345,7 @@ class VisitServiceDetails extends Component {
         lastName: item.patient.lastName,
         thumbNail: item.patient.imageString
       }];
-      this.props.createVideoConference(selectedParticipants);
+      this.props.createDataStore(selectedParticipants);
     }
   };
 
@@ -1023,7 +1023,7 @@ function mapDispatchToProps(dispatch) {
     dispatchServiceRequestByServiceProvider: () => dispatchServiceRequestByServiceProvider(),
     getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
-    createVideoConference: (data) => dispatch(createVideoConference(data)),
+    createDataStore: (data) => dispatch(createDataStore(data)),
     formDirty: () => dispatch(formDirty()),
     formDirtyFeedback: () => dispatch(formDirtyFeedback()),
     formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),

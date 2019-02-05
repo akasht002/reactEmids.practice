@@ -16,7 +16,8 @@ const defaultState = {
     initiatorLastName: '',
     contextId: 0,
     invitedRoomId: 0,
-    isNewRequestCame: false
+    isNewRequestCame: false,
+    createData: null
 };
 
 const telehealthState = (state = defaultState, action) => {
@@ -115,6 +116,11 @@ const telehealthState = (state = defaultState, action) => {
             return {
                 ...state,
                 initiator: false
+            }
+        case TeleHealth.createDataStore:
+            return {
+                ...state,
+                createData: action.data
             }
         default:
             return state;

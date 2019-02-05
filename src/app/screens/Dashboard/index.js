@@ -20,6 +20,7 @@ import './ctdashboard.css'
 import './styles/toggleSwitch.css'
 import './EntitySP/EntitySPDashboard.css'
 import moment from 'moment'
+import { createDataStore } from '../../redux/telehealth/actions'
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -184,7 +185,7 @@ class Dashboard extends React.Component {
         <div className="scrollarea SPContentWidget ScrollBar updated-scrll">
           <div className="scrollarea-content">
             <div className='ProfileContainer topProfile'>
-              <ServiceCalendar />
+              <ServiceCalendar createDataStore={this.props.createDataStore}/>
             </div>
             <div className='ProfileContainer bottomProfile'>
               {serviceRequestTemplate}
@@ -262,7 +263,8 @@ function mapDispatchToProps(dispatch) {
     getAboutUsContent: () => dispatch(getAboutUsContent()),
     getBuildVersion: () => dispatch(getBuildVersion()),
     getUserInformation: () => dispatch(getUserInformation()),
-    getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval())
+    getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval()),
+    createDataStore: data => dispatch(createDataStore(data)),
   }
 }
 

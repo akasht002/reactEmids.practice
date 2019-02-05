@@ -7,3 +7,8 @@ export const isMobileBrowser = (navigator.userAgent.match(/Android/i)
 || navigator.userAgent.match(/iPod/i)
 || navigator.userAgent.match(/BlackBerry/i)
 || navigator.userAgent.match(/Windows Phone/i))
+
+export const CHECK_DEVICE_MEDIA = (navigator.getUserMedia || // use the proper vendor prefix
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia);

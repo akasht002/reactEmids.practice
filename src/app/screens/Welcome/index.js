@@ -111,7 +111,6 @@ class Welcome extends Component {
                                     <span className="brandName text-uppercase">
                                         <img src={require('../../assets/images/logo/CoreoHomeWhite.png')} alt="coreoLogo" />
                                     </span>
-                                    {/* text-uppercase  */}
                                     <Button type="button" onClick={this.onLoginPress} classname="btn btn-outline-primary LoginButton change-f" label={"Login"} />
                                 </div>
                                 <div className="sliderWrapper" style={style3}>
@@ -148,7 +147,6 @@ class Welcome extends Component {
                                         </ul>
                                     </div>
                                     <div className="GetStartedBtnContainer">
-                                    {/*  text-uppercase */}
                                         <Link className="btn btn-outline-primary" to="/verifyemail">Get Started</Link>
                                     </div>
                                 </div>
