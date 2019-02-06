@@ -88,7 +88,6 @@ export function serviceRequestCountSuccess(data) {
 }
 
 export function setServiceRequestStatus(data) {
-    debugger
     return (dispatch, getState) => {
         let serviceStatus = getState().visitSelectionState.ServiceRequestFilterState
         .ServiceStatus
