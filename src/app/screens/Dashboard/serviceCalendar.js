@@ -27,7 +27,7 @@ import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from "../../constants
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
-import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH } from '../../constants/constants'
+import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
 
 const today = new Date();
 
@@ -83,8 +83,12 @@ class serviceCalendar extends React.Component {
       ]
     };
     this.props.updateEntityServiceVisit(model);
-    this.initialCall()
-    this.props.getServiceProviderVists(moment(this.data.visitDate).format("YYYY-MM-DD"));
+    // this.initialCall()
+    setTimeout(() => {
+      this.props.getServiceProviderVists(moment(this.data.visitDate).format("YYYY-MM-DD"));
+    }, DEFAULT_TIME)
+
+    
   };
 
 
