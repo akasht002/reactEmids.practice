@@ -632,3 +632,15 @@ padding-bottom: 5px;
 {
     padding-top: 4px !important;
 }
+
+.no-videoblock .modal-body p.text-center
+{
+text-align: left !important;
+display: block;
+color: #444;
+font-weight: 500;
+}
+.no-videoblock .modal-body p.text-right
+{
+margin-bottom: 0px;
+}
