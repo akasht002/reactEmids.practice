@@ -44,6 +44,7 @@ class PerformTasks extends Component {
         };
         this.checkedTask = [];
         this.checkedTaskInitial = [];
+        this.taskCount = '';
     };
 
     toggle = () => {
@@ -110,6 +111,7 @@ class PerformTasks extends Component {
             percentageCompletion: percentageCalculation,
             taskCount: (this.state.taskList.totalTask - (this.checkedTask).length)
         });
+        this.taskCount = (this.state.taskList.totalTask - (this.checkedTask).length);
     }
 
     startService = (data, visitId) => {
@@ -129,7 +131,8 @@ class PerformTasks extends Component {
 
     onClickNext = () => {
         this.setState({ taskCount: (this.state.taskList.totalTask - (this.checkedTask).length) })
-        if (this.state.taskCount > 0) {
+        this.taskCount = (this.state.taskList.totalTask - (this.checkedTask).length);
+        if (this.taskCount > 0) {
             this.setState({ isModalOpen: true })
         } else {
             this.saveData();
@@ -320,7 +323,7 @@ class PerformTasks extends Component {
                     <div className='cardBottom' />
                     <ModalPopup
                         isOpen={this.state.isModalOpen}
-                        ModalBody={<span>You have not completed {this.state.taskCount} task(s). Are you sure you want to proceed to the next step?</span>}
+                        ModalBody={<span>You have not completed {this.taskCount} task(s). Are you sure you want to proceed to the next step?</span>}
                         btn1="Confirm"
                         btn2="Cancel"
                         className="modal-sm"
