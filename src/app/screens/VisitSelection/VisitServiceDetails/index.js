@@ -355,11 +355,11 @@ class VisitServiceDetails extends Component {
   }
 
   onSubmitAssignServiceProvider = (data) => {
-      this.props.updateEntityServiceVisit(data)
-      //  console.log(data)
-      //  setTimeout( () =>
-      //   this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.defualtPageNumber)
-      //   ,300)
+    this.props.updateEntityServiceVisit(data)
+    //  console.log(data)
+    //  setTimeout( () =>
+    //   this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.defualtPageNumber)
+    //   ,300)
   }
 
   render() {
@@ -561,15 +561,15 @@ class VisitServiceDetails extends Component {
                       className='ProfileImage'
                       src={profileImage}
                       alt='patientImage'
-                      onClick={() => { 
+                      onClick={() => {
                         if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
                           this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId)
-                        } 
+                        }
                       }}
                     />
 
                     <div class='PostedByProfileDetails'>
-                      <div class='ProfileDetailsName' onClick={() => { 
+                      <div class='ProfileDetailsName' onClick={() => {
                         if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
                           this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId)
                         }
@@ -733,10 +733,16 @@ class VisitServiceDetails extends Component {
                               ? address.map(pointofservice => {
                                 return (
                                   <Fragment>
+                                    {pointofservice.addressTypeId &&
+                                      <p>
+                                        <span className="addresstype">Address Type</span>
+                                        {pointofservice.addressTypeId}
+                                      </p>
+                                    }
                                     <p>
                                       <span>Street</span>
                                       {pointofservice.streetAddress}
-                                    </p>                                    
+                                    </p>
 
                                     <p>
                                       <span>City</span>
@@ -761,7 +767,7 @@ class VisitServiceDetails extends Component {
                       </form>
                     </TabPane>
                     <TabPane tabId='2' className='TabBody'>
-                    {this.props.isScheduleLoading && <Preloader/>}
+                      {this.props.isScheduleLoading && <Preloader />}
                       <div className='ScheduleTableHeader primaryColor'>
                         <div>
                           <span>Date</span>
@@ -820,8 +826,8 @@ class VisitServiceDetails extends Component {
                               <div>
                                 {ScheduleList.originalTotalDuration
                                   ? <span>
-                                    {ScheduleList.originalTotalDuration.substring(0,5)}
-                                    </span>
+                                    {ScheduleList.originalTotalDuration.substring(0, 5)}
+                                  </span>
                                   : <span> - </span>}
                               </div>
                               <div>
@@ -883,11 +889,11 @@ class VisitServiceDetails extends Component {
                               </div>
                               {
                                 getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
-                                <AssignServiceProvider 
-                                sp={ScheduleList} 
-                                reset={this.reset} 
-                                statusID={this.props.VisitServiceDetails.statusId} 
-                                onSubmit = {this.onSubmitAssignServiceProvider}
+                                <AssignServiceProvider
+                                  sp={ScheduleList}
+                                  reset={this.reset}
+                                  statusID={this.props.VisitServiceDetails.statusId}
+                                  onSubmit={this.onSubmitAssignServiceProvider}
                                 />
                               }
                             </div>

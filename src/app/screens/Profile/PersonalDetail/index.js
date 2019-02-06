@@ -220,7 +220,11 @@ class PersonalDetail extends React.PureComponent {
 
   closeImageUpload = () => {
     this.setState({
-      uploadImage: !this.state.uploadImage
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
     });
   }
 

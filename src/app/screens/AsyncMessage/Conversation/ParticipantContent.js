@@ -318,9 +318,9 @@ class ParticipantContent extends Component {
 
             participants = <td className="participantsList">
                 <div className="Content">
-                    <form className="participantsSearchForm">
+                    <div className="participantsSearchForm">
                             {this.getNewParticipantList()}
-                    </form>
+                    </div>
                 </div>
             </td>;
             leaveBtn = <td colSpan="3" className="align-middle text-right AddParticipantsBtn">

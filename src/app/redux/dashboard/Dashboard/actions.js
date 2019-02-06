@@ -44,7 +44,7 @@ export const DashboardDetail = {
   get_service_visit_count: 'get_service_visit_count/dashboard',
   get_entity_service_provider_list:
     'get_entity_service_provider_list/dashboard',
-  setServiceVisitDate: 'setServiceVisitDate/dashboard'
+  setServiceVisitDate: 'setServiceVisitDate/dashboard',
 }
 
 export const getServiceStatusSuccess = data => {

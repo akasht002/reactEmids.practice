@@ -1362,3 +1362,8 @@ ul.sr-showmore-btn
 {
 padding-top: 80px;
 }
+
+.SummaryContent span.addresstype
+{
+width: 100px;
+}
