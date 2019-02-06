@@ -318,7 +318,7 @@ class AsideScreenCover extends React.Component {
                     }
                 />
                 <ModalPopup
-                    className="modal-sm"
+                    className="modal-lg no-videoblock"
                     headerFooter="d-none"
                     centered={true}
                     isOpen={!this.state.isTelehealthMediaAvailable && !isIEBrowser && !isMobileBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame || this.state.isCreateVideoConference)}
