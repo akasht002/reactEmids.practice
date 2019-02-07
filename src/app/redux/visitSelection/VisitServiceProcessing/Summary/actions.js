@@ -162,17 +162,11 @@ export function calculationActualData() {
 
         let totalVisitCost1 = (currState.hourlyRate / 60) * hoursinMin;
 
-        // if (totalVisitCost < 1 ) {
-        //     totalVisitCost = 1
-        // } else {
-        //     totalVisitCost = totalVisitCost
-        // }
-
         let totalVisitCost = totalVisitCost1 < 1 && !getUserInfo().isEntityServiceProvider && getUserInfo().serviceProviderTypeId === 1  ?  1 : totalVisitCost1
 
         let taxes = (totalVisitCost * currState.taxPaid) / 100;
 
-        let grandTotalAmount = totalVisitCost + taxes;
+        let grandTotalAmount = parseFloat(totalVisitCost.toFixed(2)) + parseFloat(taxes.toFixed(2));
 
         let estimatedClaim;
         let copayAmount;
@@ -187,20 +181,16 @@ export function calculationActualData() {
             :
             copayAmount = grandTotalAmount
 
-        // let estimatedClaim = DEMO === 'true' ? 12 : (grandTotalAmount - ((grandTotalAmount * ClaimState) / 100)).toFixed(2);
-
-        // let copayAmount = DEMO === 'true' ? 10 : (((grandTotalAmount * ClaimState) / 100)).toFixed(2);
-
         const calculationdata = {
             totalChargableTime: totalChargableTime,
-            totalVisitCost: totalVisitCost,
-            taxes: taxes,
-            grandTotalAmount: grandTotalAmount,
+            totalVisitCost: totalVisitCost.toFixed(2),
+            taxes: taxes.toFixed(2),
+            grandTotalAmount: grandTotalAmount.toFixed(2),
             totalHours: getDoubleDigitTime(hours),
             totalMinutes: getDoubleDigitTime(min),
             totalSeconds: sec,
-            estimatedClaim: estimatedClaim,
-            copayAmount: copayAmount
+            estimatedClaim: estimatedClaim.toFixed(2),
+            copayAmount: copayAmount.toFixed(2)
         }
         dispatch(getCalculationsData(calculationdata));
     }

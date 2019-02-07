@@ -96,7 +96,7 @@ class Payments extends Component {
         this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
             data.paymentAmount = this.props.summaryAmount.CalculationsData.copayAmount
             :
-            data.paymentAmount = this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2);
+            data.paymentAmount = this.props.summaryAmount.CalculationsData.grandTotalAmount;
 
         if (this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false) {
             this.props.chargeByCustomerId(data, this.Claimdata)
@@ -148,7 +148,7 @@ class Payments extends Component {
         this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
             data.amount = this.props.summaryAmount.CalculationsData.copayAmount
             :
-            data.amount = this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2);
+            data.amount = this.props.summaryAmount.CalculationsData.grandTotalAmount;
 
         this.props.captureAmount(data, this.Claimdata)
     }
@@ -291,7 +291,7 @@ class Payments extends Component {
                                     {this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
                                         <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.copayAmount}</i></p>
                                         :
-                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount && this.props.summaryAmount.CalculationsData.grandTotalAmount.toFixed(2)}</i></p>
+                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount && this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
                                     }
 
                                     <div className="FeedbackQuestionWidget form-group">
