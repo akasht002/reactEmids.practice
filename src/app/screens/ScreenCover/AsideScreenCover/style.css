@@ -638,9 +638,13 @@ padding-bottom: 5px;
 text-align: left !important;
 display: block;
 color: #444;
-font-weight: 500;
+font-weight: 500 !important;
+font-size: 1.25rem !important;
+padding: 1.5rem !important;
+margin-bottom: 0px;
 }
 .no-videoblock .modal-body p.text-right
 {
 margin-bottom: 0px;
+margin-top: 0px !important;
 }
