@@ -9,9 +9,9 @@ import { onLogout } from '../auth/logout/actions';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
-    setLinkedParticipants: 'set_linked_participants/asyncMessage',
-    setLinkedPatients: 'set_linked_patients/asyncMessage',
-    clearLinkedParticipants: 'clear_linked_participants/asyncMessage',
+    setLinkedParticipants: 'set_linked_participants/telehealth',
+    setLinkedPatients: 'set_linked_patients/telehealth',
+    clearLinkedParticipants: 'clear_linked_participants/telehealth',
     getRoomIdSuccess: 'getRoomIdSuccess/telehealth',
     getParticipantByConfernceIdSuccess: 'get_participant_by_confernceId_success/telehealth',
     getAllParticipantsSuccess: 'get_all_participants_success/telehealth',
