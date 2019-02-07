@@ -68,6 +68,14 @@ class ParticipantContent extends Component {
 
 
     toggleAddParticipantsView = () => {
+        if (!this.state.addParticipantView) {
+            let data = {
+                patientId: this.props.loggedInUser.userType !== USERTYPES.PATIENT ? this.props.context : this.props.loggedInUser.patientId,
+                conversationId: this.props.currentConversation.conversationId,
+                searchText: ''
+            }
+            this.props.getLinkedParticipantsByPatients(data);
+        }
         if (this.state.addParticipantView && this.state.selectedParticipantsList.length > 0) {
             this.props.isDirty(true, false);
         } else if (this.state.addParticipantView && this.state.selectedParticipantsList.length === 0) {
