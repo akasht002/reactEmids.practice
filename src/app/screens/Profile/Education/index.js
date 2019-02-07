@@ -132,7 +132,6 @@ class Education extends React.Component {
 
     addEducation = () => {        
         const {school,degree,fieldOfStudy,startYear,endYear} = this.state
-        console.log(checkEmpty(startYear))
         if( checkEmpty(school)  || checkEmpty(degree) || checkEmpty(fieldOfStudy) 
          || checkEmpty(startYear) || checkEmpty(endYear)){
               this.setState({
