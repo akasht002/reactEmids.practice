@@ -373,11 +373,11 @@ class Summary extends Component {
                                                     <p><span>{this.props.CalculationsData.totalChargableTime}</span>
                                                         <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate.toFixed(2)}</span></p>
                                                     <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
-                                                        <span>${parseFloat(this.props.CalculationsData.taxes)}</span></p>
+                                                        <span>${(this.props.CalculationsData.taxes)}</span></p>
                                                 </div>
                                                 <div className="col-md-12 CostTableContainer Total">
                                                     <p className="TotalLabel"><span>Total Cost </span></p>
-                                                    <p className="TotalCost"><span>${parseFloat(this.props.CalculationsData.grandTotalAmount)}</span></p>
+                                                    <p className="TotalCost"><span>${(this.props.CalculationsData.grandTotalAmount)}</span></p>
                                                 </div>
                                             </div>
 
