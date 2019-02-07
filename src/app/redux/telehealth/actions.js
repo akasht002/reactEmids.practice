@@ -329,7 +329,7 @@ export function rejectConference() {
             participantId: userInfo.serviceProviderId,
             participantType: USERTYPES.SERVICE_PROVIDER,
             roomNumber: state.telehealthState.roomId,
-            userId: userInfo.coreoHomeUserId
+            coreoHomeuserId: userInfo.coreoHomeUserId
           };
           dispatch(startLoading());
           AsyncPut(API.rejectConference, data).then((resp) => {
@@ -453,7 +453,7 @@ export function checkTeleHealth(data) {
             } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
                 if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
                     let participants = teleHealthState.participantsByConferenceId.map((participant) => {
-                        if (participant.userType === data.participantList[0].userType &&
+                        if (participant.participantType === data.participantList[0].participantType &&
                             participant.userId === data.participantList[0].userId) {
                                 return {
                                     ...participant,

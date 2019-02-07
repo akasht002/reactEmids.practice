@@ -598,3 +598,49 @@ section .ProfileRightWidget {
 {
     width: calc(100% - 170px) !important;
 } 
+
+/*view-only-IE-edge*/
+.edge-view-block
+{
+    display: block;
+    width: 100%;
+}
+.edge-view-block span.ProfileCardHeaderTitle
+{
+display: block;
+font-weight: 600;
+text-align: center;
+padding-bottom: 5px;
+}
+
+.edge-view-block span
+{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #444;
+}
+
+.edge-view-block .text-right 
+{
+    display: block;
+    margin: 0 auto;
+    width: 70px;
+}
+
+.edge-view-block p.text-center
+{
+    padding-top: 4px !important;
+}
+
+.no-videoblock .modal-body p.text-center
+{
+text-align: left !important;
+display: block;
+color: #444;
+font-weight: 500;
+}
+.no-videoblock .modal-body p.text-right
+{
+margin-bottom: 0px;
+}

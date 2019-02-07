@@ -88,10 +88,17 @@ class AsideScreenCover extends React.Component {
     }
 
     checkDeviceStatus = (link, join, createData) => {
-        navigator.getMedia = CHECK_DEVICE_MEDIA;
-        navigator.getMedia({video: true, audio: true}, () => {
+        // navigator.getMedia = CHECK_DEVICE_MEDIA;
+        // navigator.getMedia({video: true, audio: true}, () => {
+        //     this.successCallbackOnDeviceStatus(link, join, createData)
+        // }, () => {
+        //     this.errorCallbackOnDeviceStatus(link, join, createData)
+        // });
+        navigator.mediaDevices.getUserMedia({video: true, audio: true})
+        .then(() => {
             this.successCallbackOnDeviceStatus(link, join, createData)
-        }, () => {
+        })
+        .catch(() => {
             this.errorCallbackOnDeviceStatus(link, join, createData)
         });
     }
@@ -273,7 +280,7 @@ class AsideScreenCover extends React.Component {
                     onCancel={this.props.rejectConference}
                 />
                 <ModalPopup
-                    className="modal-sm"
+                    className="modal-sm edge-view-block"
                     headerFooter="d-none"
                     centered={true}
                     isOpen={isIEBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame || this.state.isCreateVideoConference)}
@@ -282,10 +289,17 @@ class AsideScreenCover extends React.Component {
                         this.setState({ selectedLink: null, isInvitationCame: false, isCreateVideoConference: false }) 
                         this.props.createDataStore(null)
                     }}
-                    ModalBody={<span>This browser doesn't support video conferencing. Please use a different browser.</span>}
+                    ModalBody={
+                        <div>
+                            <span className='ProfileCardHeaderTitle primaryColor'>
+                                Improve Your Experience
+                            </span>
+                            <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>
+                        </div>
+                    }
                 />
                 <ModalPopup
-                    className="modal-sm"
+                    className="modal-sm edge-view-block"
                     headerFooter="d-none"
                     centered={true}
                     isOpen={isMobileBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame || this.state.isCreateVideoConference)}
@@ -294,10 +308,17 @@ class AsideScreenCover extends React.Component {
                         this.setState({ selectedLink: null, isInvitationCame: false, isCreateVideoConference: false }) 
                         this.props.createDataStore(null)
                     }}
-                    ModalBody={<span>Video conferencing feature is only available in app version.</span>}
+                    ModalBody={
+                        <div>
+                            <span className='ProfileCardHeaderTitle primaryColor'>
+                                Improve Your Experience
+                            </span>
+                            <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>
+                        </div>
+                    }
                 />
                 <ModalPopup
-                    className="modal-sm"
+                    className="modal-lg no-videoblock"
                     headerFooter="d-none"
                     centered={true}
                     isOpen={!this.state.isTelehealthMediaAvailable && !isIEBrowser && !isMobileBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame || this.state.isCreateVideoConference)}
