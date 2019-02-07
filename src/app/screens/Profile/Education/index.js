@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input ,ProfileModalPopup, ModalPopup, SelectBox } from "../../../components";
-import {formateYearDate} from "../../../utils/validations";
+import { formateYearDate,checkEmpty } from "../../../utils/validations";
 import {compare} from "../../../utils/comparerUtility";
 import { getEducation, addEducation, editEducation, updateEducation, deleteEducation } from '../../../redux/profile/Education/actions';
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
@@ -130,8 +130,19 @@ class Education extends React.Component {
         }
     }
 
-    addEducation = () => {
-        if ((this.state.school) && (this.state.degree)&&(this.state.fieldOfStudy)&&(this.state.startYear)&&(this.state.endYear)) {
+    addEducation = () => {        
+        const {school,degree,fieldOfStudy,startYear,endYear} = this.state
+        if( checkEmpty(school)  || checkEmpty(degree) || checkEmpty(fieldOfStudy) 
+         || checkEmpty(startYear) || checkEmpty(endYear)){
+              this.setState({
+                schoolInvalid: checkEmpty(school) ,
+                degreeInvalid: checkEmpty(degree),
+                schoofieldOfStudyInvalid: checkEmpty(fieldOfStudy),
+                startYearInvalid: checkEmpty(startYear),
+                endYearInvalid: checkEmpty (endYear)
+              })
+
+        }else{
             const data = {
                 school: this.state.school,
                 degree: this.state.degree,
@@ -142,9 +153,7 @@ class Education extends React.Component {
             };
             this.props.addEducation(data);
             this.reset();
-        } else {
-            this.setState({ isValid: false });
-        }
+        }      
     }
 
     showModalOnDelete = (e) => {
@@ -342,7 +351,7 @@ class Education extends React.Component {
                          {getLength(this.state.startYear) === 0 && (this.state.startYearInvalid
                                     || !this.state.isValid) &&
                                     <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
-                                        Please Select start Year
+                                        Please Select From Year
                                 </small>
                                 }
                 </div>
@@ -372,7 +381,7 @@ class Education extends React.Component {
                       {getLength(this.state.endYear) === 0 && (this.state.endYearInvalid
                                 || !this.state.isValid) &&
                                 <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
-                                    Please Select End Year
+                                    Please Select To Year
                             </small>
                             }
                 </div>
