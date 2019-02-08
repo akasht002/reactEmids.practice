@@ -892,3 +892,11 @@ div.scrollarea .scrollbar-container.vertical
   .modal-body::-webkit-scrollbar-thumb:hover {
     background: #8c8c8c; 
   }
+
+
+  /*Background-scroll-hide*/
+.modal-open .scrollarea.ProfileContentWidget
+{
+    overflow-y: hidden;
+    height: inherit;
+}

@@ -1253,3 +1253,11 @@ div.AddressCardWidget {
         flex-direction: column;
     }
 }
+
+
+/*filter-address*/
+.FilterMiddleRight .tab-pane .AddressCardWidget .AddressPOS
+{
+    height: 130px;
+    padding-bottom: 10px;
+}
