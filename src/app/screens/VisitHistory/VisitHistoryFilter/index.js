@@ -303,7 +303,7 @@ class VisitFilter extends Component {
                 </TabPane>
                 <TabPane tabId='3'>
                   <div className='form-group'>
-                    <label>Select the Service Category</label>
+                    <label>Select Service Category</label>
                   </div>
                   <div className="form-group">
                     <ServiceCategory
@@ -311,7 +311,7 @@ class VisitFilter extends Component {
                       value={this.props.selectedOption}
                       closeOnSelect={true}
                       searchable={false}
-                      placeholder="Select the Service Category"
+                      placeholder="Select Service Category"
                       className='ServiceRequestSelect col-md-12 mb-4 p-0'
                       options={serviceCategories}
                       onChange={this.props.handleChangeServiceCategory}
