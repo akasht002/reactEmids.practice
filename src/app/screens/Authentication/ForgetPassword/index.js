@@ -47,7 +47,7 @@ export class ForgetPassword extends Component {
     render() {
         return (
             <LoginCover isLoading={this.props.isLoading}>
-                <h3>Forgot your password ?</h3>
+                <h3>Forgot your password?</h3>
                 <p>Don't  worry. Resetting password is easy. Just tell us your Email Address registered with CoreoHome.</p>
                 <div className="form-group text-center">
                     <Input

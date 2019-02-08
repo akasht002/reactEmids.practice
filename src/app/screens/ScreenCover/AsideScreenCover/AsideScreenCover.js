@@ -26,11 +26,11 @@ import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntitySPProfileHeaderMenu } from "../../../data/EntitySPProfileHeaderMenu";
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
-import { clearRoom, joinVideoConference, rejectConference } from '../../../redux/telehealth/actions';
+import { clearRoom, joinVideoConference, rejectConference, createVideoConference, createDataStore } from '../../../redux/telehealth/actions';
 // import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
 import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
 import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions';
-import {isIEBrowser, isMobileBrowser} from '../../../utils/browserUtility'
+import {isIEBrowser, isMobileBrowser, CHECK_DEVICE_MEDIA} from '../../../utils/browserUtility'
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -41,25 +41,66 @@ class AsideScreenCover extends React.Component {
             showNotification: false,
             displayWarningPopup: false,
             routeUrlLink: '/',
-            isInvitationCame: false
+            isInvitationCame: false,
+            isTelehealthMediaAvailable: false,
+            isCreateVideoConference: false
         }
     }
 
     componentDidMount() {
-        //commented because of unnecessery call.
-        // this.props.getProfilePercentage()
         this.props.getImage()
-        // this.props.getUserInformation();
         this.props.getPersonalDetail();
-        // this.props.getAboutUsContent();
         this.props.canServiceProviderCreateMessage();
-        // this.props.getBuildVersion();
         authorizePermission(SCREENS.DASHBOARD);
         authorizePermission(SCREENS.SERVICE_REQUEST);
         authorizePermission(SCREENS.VISIT_HISTORY);
         authorizePermission(SCREENS.TELEHEALTH);
         authorizePermission(SCREENS.ASYNC_MESSAGE);
         this.props.getDashboardMessageCount();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.createData !== nextProps.createData && nextProps.createData) {
+            this.checkVideoCompatibility(null, false, nextProps.createData)
+        }
+    }
+
+    successCallbackOnDeviceStatus = (link, join, createData) => {
+        if (link) {
+            this.setState({ selectedLink: link, isTelehealthMediaAvailable: true })
+        } else if (join) {
+            this.onSuccessJoiningVideo()
+        } else if (createData) {
+            this.setState({isCreateVideoConference: true, isTelehealthMediaAvailable: true })
+            this.props.createVideoConference(createData)
+            this.props.createDataStore(null)
+        }
+    }
+
+    errorCallbackOnDeviceStatus = (link, join, createData) => {
+        if (link) {
+            this.setState({ selectedLink: link, isTelehealthMediaAvailable: false })
+        } else if (join) {
+            this.onErrorJoiningVideo();
+        } else if (createData) {
+            this.setState({isCreateVideoConference: true, isTelehealthMediaAvailable: false })
+        }
+    }
+
+    checkDeviceStatus = (link, join, createData) => {
+        // navigator.getMedia = CHECK_DEVICE_MEDIA;
+        // navigator.getMedia({video: true, audio: true}, () => {
+        //     this.successCallbackOnDeviceStatus(link, join, createData)
+        // }, () => {
+        //     this.errorCallbackOnDeviceStatus(link, join, createData)
+        // });
+        navigator.mediaDevices.getUserMedia({video: true, audio: true})
+        .then(() => {
+            this.successCallbackOnDeviceStatus(link, join, createData)
+        })
+        .catch(() => {
+            this.errorCallbackOnDeviceStatus(link, join, createData)
+        });
     }
 
     onClickOk = () => {
@@ -79,7 +120,7 @@ class AsideScreenCover extends React.Component {
                 this.helpDocEl.click();
                 break;
             case 'telehealth':
-                this.setState({ selectedLink: link })
+                this.checkVideoCompatibility(link, false, null)
                 break;
             case 'logout':
                 this.props.onLogout();
@@ -118,12 +159,27 @@ class AsideScreenCover extends React.Component {
         }
     }
     
-    checkBrowserCompatibility = () => {
+    onErrorJoiningVideo = () => {
+        this.setState({isInvitationCame: true})
+        this.props.clearRoom();
+    }
+
+    onSuccessJoiningVideo = () => {
+        this.setState({ isInvitationCame: true, isTelehealthMediaAvailable: true })
+        this.props.joinVideoConference();
+    }
+
+    checkVideoCompatibility = (link, join, create) => {
         if (isIEBrowser || isMobileBrowser) {
-            this.setState({isInvitationCame: true})
-            this.props.clearRoom();
+            if (link) {
+                this.setState({ selectedLink: link })
+            } else if (join) {
+                this.onErrorJoiningVideo();
+            } else if (create) {
+                this.setState({isCreateVideoConference: true})
+            }
         } else {
-            this.props.joinVideoConference();
+            this.checkDeviceStatus(link, join, create)
         }
     }
 
@@ -188,7 +244,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ParticipantContainer
                     onRef={ref => (this.participantComponent = ref)}
-                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation && !this.props.telehealthToken && !isIEBrowser && !isMobileBrowser}
+                    isDisplayParticipantModal={this.state.selectedLink === 'telehealth' && this.props.match.url !== Path.teleHealth && this.props.canCreateConversation && !this.props.telehealthToken && !isIEBrowser && !isMobileBrowser && this.state.isTelehealthMediaAvailable}
                     onSetDisplayParticipantModal={() => { this.setState({ selectedLink: null }) }}
                     createConversation={() => { this.setState({ selectedLink: null }) }}
                 />
@@ -220,26 +276,58 @@ class AsideScreenCover extends React.Component {
                     className="zh"
                     headerFooter="d-none"
                     centered={true}
-                    onConfirm={this.checkBrowserCompatibility}
+                    onConfirm={() => {this.checkVideoCompatibility(null, true, null)}}
                     onCancel={this.props.rejectConference}
                 />
                 <ModalPopup
-                    className="modal-sm"
+                    className="modal-sm edge-view-block"
                     headerFooter="d-none"
                     centered={true}
-                    isOpen={isIEBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame)}
+                    isOpen={isIEBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame || this.state.isCreateVideoConference)}
                     btn1="OK"
-                    onConfirm={() => { this.setState({ selectedLink: null, isInvitationCame: false }) }}
-                    ModalBody={<span>This browser doesn't support video conferencing. Please use a different browser.</span>}
+                    onConfirm={() => { 
+                        this.setState({ selectedLink: null, isInvitationCame: false, isCreateVideoConference: false }) 
+                        this.props.createDataStore(null)
+                    }}
+                    ModalBody={
+                        <div>
+                            <span className='ProfileCardHeaderTitle primaryColor'>
+                                Improve Your Experience
+                            </span>
+                            <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>
+                        </div>
+                    }
                 />
                 <ModalPopup
-                    className="modal-sm"
+                    className="modal-sm edge-view-block"
                     headerFooter="d-none"
                     centered={true}
-                    isOpen={isMobileBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame)}
+                    isOpen={isMobileBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame || this.state.isCreateVideoConference)}
                     btn1="OK"
-                    onConfirm={() => { this.setState({ selectedLink: null, isInvitationCame: false }) }}
-                    ModalBody={<span>Video conferencing feature is only available in app version.</span>}
+                    onConfirm={() => { 
+                        this.setState({ selectedLink: null, isInvitationCame: false, isCreateVideoConference: false }) 
+                        this.props.createDataStore(null)
+                    }}
+                    ModalBody={
+                        <div>
+                            <span className='ProfileCardHeaderTitle primaryColor'>
+                                Improve Your Experience
+                            </span>
+                            <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>
+                        </div>
+                    }
+                />
+                <ModalPopup
+                    className="modal-lg no-videoblock"
+                    headerFooter="d-none"
+                    centered={true}
+                    isOpen={!this.state.isTelehealthMediaAvailable && !isIEBrowser && !isMobileBrowser && (this.state.selectedLink === 'telehealth' || this.state.isInvitationCame || this.state.isCreateVideoConference)}
+                    btn1="OK"
+                    onConfirm={() => { 
+                        this.setState({ selectedLink: null, isInvitationCame: false, isCreateVideoConference: false }) 
+                        this.props.createDataStore(null)
+                    }}
+                    ModalBody={<span>CoreoHome is unable to initiate video conferencing as camera / microphone is not detected in your device. To avail video conferencing feature, please allow access to your camera and microphone.</span>}
                 />
                 {//commented because we are not showing the notifications in this release
                     /* <VisitNotification
@@ -269,15 +357,11 @@ class AsideScreenCover extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        //commented because of unnecessery caLL.
-        // getProfilePercentage: () => dispatch(getProfilePercentage()),
         getImage: () => dispatch(action.getImage()),
-        // getUserInformation: () => dispatch(getUserInformation()),
         onClickOk: () => dispatch(updateEula()),
         goToProfile: () => dispatch(push(Path.profile)),
         getPersonalDetail: () => dispatch(action.getPersonalDetail()),
         navigateProfileHeader: (link) => dispatch(push(link)),
-        // getAboutUsContent: () => dispatch(getAboutUsContent()),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
         onLogout: () => dispatch(onLogout()),
         clearRoom: () => dispatch(clearRoom()),
@@ -285,8 +369,9 @@ function mapDispatchToProps(dispatch) {
         rejectConference: () => dispatch(rejectConference()),
         getDashboardMessageCount: () => dispatch(getDashboardMessageCount()),
         setMenuClicked: (data) => dispatch(setMenuClicked(data)),
-        // getBuildVersion: () => dispatch(getBuildVersion()),
-        setIsFormDirty: (data) => dispatch(setIsFormDirty(data))
+        setIsFormDirty: (data) => dispatch(setIsFormDirty(data)),
+        createVideoConference: (data) => dispatch(createVideoConference(data)),
+        createDataStore: data => dispatch(createDataStore(data)),
     }
 };
 
@@ -307,7 +392,8 @@ function mapStateToProps(state) {
         roomId: state.telehealthState.roomId,
         telehealthToken: state.telehealthState.token,
         buildVersion: state.aboutUsState.buildVersion,
-        isFormDirty: state.authState.userState.isFormDirty
+        isFormDirty: state.authState.userState.isFormDirty,
+        createData: state.telehealthState.createData
     };
 };
 

@@ -126,16 +126,16 @@ class Summary extends Component {
                 serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
                 ServiceProviderId: this.state.summaryDetails.serviceProviderId,
                 ServiceRequestId: this.state.summaryDetails.serviceRequestId,
-                EstimatedClaim: this.props.CalculationsData.estimatedClaim,
-                OutOfPocketAmount: this.props.CalculationsData.copayAmount,
+                EstimatedClaim: parseFloat(this.props.CalculationsData.estimatedClaim),
+                OutOfPocketAmount: parseFloat(this.props.CalculationsData.copayAmount),
                 HourlyRate: this.state.summaryDetails.hourlyRate,
                 OriginalTotalDuration: originalTotalDuration,
                 BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
-                TaxPaid: this.props.CalculationsData.taxes,
-                BilledPerService: this.props.CalculationsData.totalVisitCost,
-                TotalCost: this.props.CalculationsData.totalVisitCost,
+                TaxPaid: parseFloat(this.props.CalculationsData.taxes),
+                BilledPerService: parseFloat(this.props.CalculationsData.totalVisitCost),
+                TotalCost: parseFloat(this.props.CalculationsData.totalVisitCost),
                 Image: this.state.signatureImage,
-                TaxRate: this.state.summaryDetails.taxAmount
+                TaxRate: parseFloat(this.state.summaryDetails.taxAmount)
             }
             this.props.saveSummaryDetails(data);
         } else {
@@ -372,12 +372,12 @@ class Summary extends Component {
                                                 <div className="col-md-4 CostTableContainer Cost">
                                                     <p><span>{this.props.CalculationsData.totalChargableTime}</span>
                                                         <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate.toFixed(2)}</span></p>
-                                                    <p className="TaxCost"><span>${parseFloat(this.props.CalculationsData.totalVisitCost).toFixed(2)}</span>
-                                                        <span>${parseFloat(this.props.CalculationsData.taxes).toFixed(2)}</span></p>
+                                                    <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
+                                                        <span>${(this.props.CalculationsData.taxes)}</span></p>
                                                 </div>
                                                 <div className="col-md-12 CostTableContainer Total">
                                                     <p className="TotalLabel"><span>Total Cost </span></p>
-                                                    <p className="TotalCost"><span>${parseFloat(this.props.CalculationsData.grandTotalAmount).toFixed(2)}</span></p>
+                                                    <p className="TotalCost"><span>${(this.props.CalculationsData.grandTotalAmount)}</span></p>
                                                 </div>
                                             </div>
 
@@ -396,11 +396,11 @@ class Summary extends Component {
                                                             :
                                                             <span>
                                                                 ${this.props.CalculationsData.estimatedClaim &&
-                                                                    this.props.CalculationsData.estimatedClaim.toFixed(2)}
+                                                                    this.props.CalculationsData.estimatedClaim}
                                                             </span>
                                                         }
                                                         </p>
-                                                        <p><span>${this.props.CalculationsData.copayAmount && this.props.CalculationsData.copayAmount.toFixed(2)}</span></p>
+                                                        <p><span>${this.props.CalculationsData.copayAmount && this.props.CalculationsData.copayAmount}</span></p>
                                                     </div>
                                                 </div>
                                             }

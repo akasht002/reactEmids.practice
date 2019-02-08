@@ -9,9 +9,9 @@ import { onLogout } from '../auth/logout/actions';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
-    setLinkedParticipants: 'set_linked_participants/asyncMessage',
-    setLinkedPatients: 'set_linked_patients/asyncMessage',
-    clearLinkedParticipants: 'clear_linked_participants/asyncMessage',
+    setLinkedParticipants: 'set_linked_participants/telehealth',
+    setLinkedPatients: 'set_linked_patients/telehealth',
+    clearLinkedParticipants: 'clear_linked_participants/telehealth',
     getRoomIdSuccess: 'getRoomIdSuccess/telehealth',
     getParticipantByConfernceIdSuccess: 'get_participant_by_confernceId_success/telehealth',
     getAllParticipantsSuccess: 'get_all_participants_success/telehealth',
@@ -24,7 +24,8 @@ export const TeleHealth = {
     setInvitedRoomId: 'setInvitedRoomId/telehealth',
     clearExistingRoom: 'clearExistingRoom/telehealth',
     newRequestCame: 'NewRequestCame/telehealth',
-    clearInitiator: 'clearInitiator/telehealth'
+    clearInitiator: 'clearInitiator/telehealth',
+    createDataStore: 'createDataStore/telehealth'
 };
 
 export const setInvitedRoomId = data =>{
@@ -82,6 +83,13 @@ export const setInitiator = (data) => {
 export const clearInvitaion = () => {
     return {
         type: TeleHealth.clearInvitaion
+    }
+};
+
+export const createDataStore = data => {
+    return {
+        type: TeleHealth.createDataStore,
+        data
     }
 };
 
@@ -321,7 +329,7 @@ export function rejectConference() {
             participantId: userInfo.serviceProviderId,
             participantType: USERTYPES.SERVICE_PROVIDER,
             roomNumber: state.telehealthState.roomId,
-            userId: userInfo.coreoHomeUserId
+            coreoHomeuserId: userInfo.coreoHomeUserId
           };
           dispatch(startLoading());
           AsyncPut(API.rejectConference, data).then((resp) => {
@@ -445,7 +453,7 @@ export function checkTeleHealth(data) {
             } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
                 if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
                     let participants = teleHealthState.participantsByConferenceId.map((participant) => {
-                        if (participant.userType === data.participantList[0].userType &&
+                        if (participant.participantType === data.participantList[0].participantType &&
                             participant.userId === data.participantList[0].userId) {
                                 return {
                                     ...participant,

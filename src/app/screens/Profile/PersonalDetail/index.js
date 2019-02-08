@@ -220,7 +220,11 @@ class PersonalDetail extends React.PureComponent {
 
   closeImageUpload = () => {
     this.setState({
-      uploadImage: !this.state.uploadImage
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
     });
   }
 
@@ -889,28 +893,38 @@ class PersonalDetail extends React.PureComponent {
             maxlength='7'
             textChange={e => {
               let onlyNums = e.target.value.replace(/[^0-9.]/g, '')
-              let values = onlyNums.split('.');
-              let status = false;
-              // console.log( onlyNums.indexOf(".") > -1)
-              if (values[0].length <= 3 || (values[1] && values[1].length <= 2)) {
-                if (onlyNums.length < 7 && !status) {
-                  this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
-                } else if (onlyNums.length === 7 ) {
-                  if (onlyNums.indexOf(".") > -1) {
-                    if ((onlyNums.split('.')[1].length > 1)) {
+              let values = onlyNums.split('.');              
+                if (values[0].length <= 3 || (values[1] && values[1].length <= 2)) {
+                  if (onlyNums.length < 6) {
+                    this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
+                    if (onlyNums.indexOf(".") > -1) {
+                      if (values[1].length > 1) {
+                        let len = onlyNums.indexOf(".") + 3
+                        this.setState({
+                          hourlyRate: onlyNums.substr(0, len),
+                          disabledSaveBtn: false, hourlyRateInvalid: false
+                        })
+                      }
+                    }
+                  } else if (onlyNums.length === 6 ) {
+                    if (onlyNums.indexOf(".") > -1) {
+                      if ((onlyNums.split('.')[1].length > 1)) {
+                        let len = onlyNums.indexOf(".") + 3
+                        this.setState({
+                          hourlyRate: onlyNums.substr(0, len),
+                          disabledSaveBtn: false, hourlyRateInvalid: false
+                        })
+                      }
+                    } else {
                       this.setState({
-                        hourlyRate: onlyNums.substr(0, (onlyNums.indexOf(".") + 3)),
+                        hourlyRate: onlyNums.substr(0, 3),
                         disabledSaveBtn: false, hourlyRateInvalid: false
                       })
                     }
-                  } else {
-                    this.setState({
-                      hourlyRate: onlyNums.substr(0, 3),
-                      disabledSaveBtn: false, hourlyRateInvalid: false
-                    })
                   }
-                }
+               
               }
+              
             }
             }
             onBlur={e => {

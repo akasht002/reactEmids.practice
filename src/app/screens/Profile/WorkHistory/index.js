@@ -18,7 +18,7 @@ import "./styles.css";
 import EllipsisText from "react-ellipsis-text";
 import {
     getLength
-  } from '../../../utils/validations'
+} from '../../../utils/validations'
 
 class WorkHistory extends Component {
     constructor(props) {
@@ -40,11 +40,11 @@ class WorkHistory extends Component {
             disabledSaveBtn: true,
             isValidDate: true,
             isDiscardModalOpen: false,
-            designationInvalid:false,
-            companyInvalid:false,
-            locationInvalid:false,
-            fromDateInvalid:false,
-            toDateInvalid:false
+            designationInvalid: false,
+            companyInvalid: false,
+            locationInvalid: false,
+            fromDateInvalid: false,
+            toDateInvalid: false
         };
         this.isDisableCurrentlyWorking = true;
     }
@@ -63,7 +63,7 @@ class WorkHistory extends Component {
             designation: nextProps.workhistoyFieldDetails.designation || "",
             company: nextProps.workhistoyFieldDetails.company || "",
             location: nextProps.workhistoyFieldDetails.location || "",
-            fromDate: nextProps.workhistoyFieldDetails.fromDate  || null,
+            fromDate: nextProps.workhistoyFieldDetails.fromDate || null,
             toDate: nextProps.workhistoyFieldDetails.toDate || null,
             description: nextProps.workhistoyFieldDetails.description || "",
             currentlyWorking: nextProps.workhistoyFieldDetails.currentlyWorking,
@@ -86,11 +86,11 @@ class WorkHistory extends Component {
             isAdd: true,
             isValid: true,
             workHistoryId: '',
-            designationInvalid:false,
-            companyInvalid:false,
-            locationInvalid:false,
-            fromDateInvalid:false,
-            toDateInvalid:false
+            designationInvalid: false,
+            companyInvalid: false,
+            locationInvalid: false,
+            fromDateInvalid: false,
+            toDateInvalid: false
         })
     }
 
@@ -100,11 +100,11 @@ class WorkHistory extends Component {
             isValid: true,
             disabledSaveBtn: true,
             isDiscardModalOpen: false,
-            designationInvalid:false,
-            companyInvalid:false,
-            locationInvalid:false,
-            fromDateInvalid:false,
-            toDateInvalid:false
+            designationInvalid: false,
+            companyInvalid: false,
+            locationInvalid: false,
+            fromDateInvalid: false,
+            toDateInvalid: false
         })
         let workHistory = this.props.workhistoyFieldDetails;
         let workhistoryFielObject = {
@@ -144,15 +144,15 @@ class WorkHistory extends Component {
                 currentlyWorking: false
             })
         } else {
-            let status = this.checkValidation(this.state.isAdd, this.state.designation, 
+            let status = this.checkValidation(this.state.isAdd, this.state.designation,
                 this.state.company, this.state.location, this.state.fromDate, this.state.toDate, this.state.description);
             this.setState({ isDiscardModalOpen: status, isWorkHistoryModalOpen: status })
         }
     }
 
     checkValidation = (isAdd, designation, company, location, fromDate, toDate, description) => {
-        if(isAdd && designation === '' && company === '' && location === '' && 
-           fromDate === null && toDate === null && description === '') {
+        if (isAdd && designation === '' && company === '' && location === '' &&
+            fromDate === null && toDate === null && description === '') {
             return false;
         } else {
             return true;
@@ -193,9 +193,9 @@ class WorkHistory extends Component {
     updateWorkHistory = () => {
         if (this.state.designation && this.state.company && this.state.fromDate && (this.state.toDate || this.state.currentlyWorking)) {
             this.state.currentlyWorking ?
-            this.setState({ toDate: '' })
-            :
-            this.setState({ toDate: this.state.toDate })
+                this.setState({ toDate: '' })
+                :
+                this.setState({ toDate: this.state.toDate })
             const data = {
                 designation: this.state.designation,
                 company: this.state.company,
@@ -225,60 +225,60 @@ class WorkHistory extends Component {
         this.setState({ fromDate: formattedDate, disabledSaveBtn: false });
     };
 
-    dateChangedRaw = (event) => { 
+    dateChangedRaw = (event) => {
         if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
-          event.preventDefault();
+            event.preventDefault();
         } else {
             let dobVal = document.getElementById('fromDate');
             dobVal.value = changeDateFormat(event.target.value);
             const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
-            if(!formattedDate) {
-              this.setState({
-                fromDate: formattedDate
-              })
+            if (!formattedDate) {
+                this.setState({
+                    fromDate: formattedDate
+                })
             }
-          }
         }
+    }
 
-        todateChanged = (date) => {
-            const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
-            this.setState({ toDate: formattedDate, disabledSaveBtn: false });
-            
-        }
-    
-        todateChangedRaw = (event) => { 
-            if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
-              event.preventDefault();
-            } else {
-                let dobVal = document.getElementById('toDate');
-                dobVal.value = changeDateFormat(event.target.value);
-                const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
-                if(!formattedDate) {
-                  this.setState({
+    todateChanged = (date) => {
+        const formattedDate = date ? formatDateValue(date, DATE_FORMAT) : null;
+        this.setState({ toDate: formattedDate, disabledSaveBtn: false });
+
+    }
+
+    todateChangedRaw = (event) => {
+        if (event.target.value && (!checkDateFormatNumber(event.target.value) || event.target.value.length > 10)) {
+            event.preventDefault();
+        } else {
+            let dobVal = document.getElementById('toDate');
+            dobVal.value = changeDateFormat(event.target.value);
+            const formattedDate = dobVal.value ? formatDate(dobVal.value, DATE_FORMAT) : null;
+            if (!formattedDate) {
+                this.setState({
                     toDate: formattedDate
-                  })
-                }
-              }
+                })
             }
+        }
+    }
 
     render() {
         let modalContent;
         let modalTitle;
 
-        if(this.state.isAdd) {
+        if (this.state.isAdd) {
             this.isDisableCurrentlyWorking = this.props.workhistoryList.every(history => {
                 return history.currentlyWorking === false;
             });
         } else {
-           let working = this.props.workhistoryList.every(history => {
+            let working = this.props.workhistoryList.every(history => {
                 return history.currentlyWorking === false;
             });
-            if(working) {
+            if (working) {
                 this.isDisableCurrentlyWorking = true;
             } else {
                 this.isDisableCurrentlyWorking = this.props.workhistoyFieldDetails.currentlyWorking;
             }
-            
+
         }
         const WorkHistoryModalContent = <form className="form my-2 my-lg-0">
             <div className="row">
@@ -289,26 +289,26 @@ class WorkHistory extends Component {
                         autoComplete="off"
                         type="text"
                         placeholder="e.g. Car Provider"
-                        className={"form-control " + (!this.state.isValid && !this.state.designation && 'inputFailure')}                        value={this.state.designation}
+                        className={"form-control " + (!this.state.isValid && !this.state.designation && 'inputFailure')} value={this.state.designation}
                         maxlength={"100"}
                         textChange={(e) => this.setState({
                             designation: e.target.value,
                             disabledSaveBtn: false
                         })}
-                        onBlur={(e)=>{
-                            if(!(e.target.value)){
-                              this.setState({
-                                designationInvalid:true,
-                              })
+                        onBlur={(e) => {
+                            if (!(e.target.value)) {
+                                this.setState({
+                                    designationInvalid: true,
+                                })
                             }
-          
-                          }}
+
+                        }}
                     />
                     {!this.state.designation && (this.state.designationInvalid || !this.state.isValid) &&
-                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                                    Please enter Designation
+                        <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                            Please enter Designation
                                 </small>
-                            }
+                    }
                 </div>
                 <div className="col-md-12 mb-2">
                     <Input
@@ -325,21 +325,21 @@ class WorkHistory extends Component {
                             disabledSaveBtn: false
                         })}
 
-                        onBlur={(e)=>{
-                            if(!(e.target.value)){
-                              this.setState({
-                                companyInvalid:true,
-                              })
+                        onBlur={(e) => {
+                            if (!(e.target.value)) {
+                                this.setState({
+                                    companyInvalid: true,
+                                })
                             }
-          
-                          }}
+
+                        }}
                     />
                     {!this.state.company && (this.state.companyInvalid || !this.state.isValid) &&
-                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                                    Please enter Company Name
+                        <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                            Please enter Company Name
                                 </small>
-                            }
-                            </div>
+                    }
+                </div>
                 <div className="col-md-12 mb-2">
                     <Input
                         name="Location"
@@ -354,20 +354,20 @@ class WorkHistory extends Component {
                             location: e.target.value,
                             disabledSaveBtn: false
                         })}
-                        onBlur={(e)=>{
-                            if(!(e.target.value)){
-                              this.setState({
-                                locationInvalid:true,
-                              })
+                        onBlur={(e) => {
+                            if (!(e.target.value)) {
+                                this.setState({
+                                    locationInvalid: true,
+                                })
                             }
-          
-                          }}
+
+                        }}
                     />
                     {!this.state.location && (this.state.locationInvalid || !this.state.isValid) &&
-                                <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                                    Please enter Location
+                        <small className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                            Please enter Location
                                 </small>
-                            }
+                    }
                 </div>
                 <div className="col-md-6 MonthlyPicker mb-2">
                     <div className="form-group">
@@ -380,9 +380,9 @@ class WorkHistory extends Component {
                             mandatory={true}
                             maxDate={!this.state.currentlyWorking ? formateStateDate(this.state.toDate) : ''}
                             value={this.state.fromDate}
-                            className={"form-control datePicker " +  (getLength(this.state.fromDate) === 0 && (!this.state.isValid ||
-                                    this.state.fromDateInvalid) &&
-                                    'inputFailure')
+                            className={"form-control datePicker " + (getLength(this.state.fromDate) === 0 && (!this.state.isValid ||
+                                this.state.fromDateInvalid) &&
+                                'inputFailure')
                             }
 
                             onBlur={() => {
@@ -390,13 +390,13 @@ class WorkHistory extends Component {
                                     this.setState({ fromDateInvalid: true });
                                 }
                             }}
-                         />
-                         {getLength(this.state.fromDate) === 0 && (this.state.fromDateInvalid
-                                    || !this.state.isValid) &&
-                                    <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
-                                        Please select 'From Date'
+                        />
+                        {getLength(this.state.fromDate) === 0 && (this.state.fromDateInvalid
+                            || !this.state.isValid) &&
+                            <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
+                                Please select 'From Date'
                                 </small>
-                                }
+                        }
                     </div>
                 </div>
 
@@ -412,41 +412,41 @@ class WorkHistory extends Component {
                             minDate={this.state.fromDate && formateStateDate(this.state.fromDate)}
                             maxDate={moment()}
                             value={this.state.toDate}
-                            className={"form-control datePicker " +  (getLength(this.state.toDate) === 0 && (!this.state.isValid ||
+                            className={"form-control datePicker " + (getLength(this.state.toDate) === 0 && (!this.state.isValid ||
                                 this.state.toDateInvalid) &&
                                 'inputFailure')
-                        }
-                        onBlur={() => {
-                            if (!this.state.toDate) {
-                                this.setState({ toDateInvalid: true });
                             }
-                        }}
-                         />
-                         {getLength(this.state.toDate) === 0 && (this.state.toDateInvalid
-                                    || !this.state.isValid) &&
-                                    <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
-                                        Please select 'To Date'
-                                </small>
+                            onBlur={() => {
+                                if (!this.state.toDate) {
+                                    this.setState({ toDateInvalid: true });
                                 }
+                            }}
+                        />
+                        {getLength(this.state.toDate) === 0 && (this.state.toDateInvalid
+                            || !this.state.isValid) &&
+                            <small className='text-danger d-block mt-2 mb-2 MsgWithIcon MsgWrongIcon'>
+                                Please select 'To Date'
+                                </small>
+                        }
 
                     </div>}
                 </div>
                 {
                     <div className="col-md-12 mb-3">
-                    <div className="form-check">
-                        <label className="form-check-label">
-                            <input className="form-check-input" type="checkbox" disabled={!this.isDisableCurrentlyWorking} checked={this.state.currentlyWorking} id="defaultCheck1"
-                                onChange={(e) => 
-                                    this.setState({ currentlyWorking: e.target.checked, disabledSaveBtn: false, toDate: ''}
-                                )}
-                            />
-                            I am currently working here
+                        <div className="form-check">
+                            <label className="form-check-label">
+                                <input className="form-check-input" type="checkbox" disabled={!this.isDisableCurrentlyWorking} checked={this.state.currentlyWorking} id="defaultCheck1"
+                                    onChange={(e) =>
+                                        this.setState({ currentlyWorking: e.target.checked, disabledSaveBtn: false, toDate: '' }
+                                        )}
+                                />
+                                I am currently working here
                             <span className="CheckboxIcon" />
-                        </label>
+                            </label>
+                        </div>
                     </div>
-                  </div> 
                 }
-                
+
                 <div className="col-md-12">
                     <TextArea
                         name='Description'
@@ -473,20 +473,17 @@ class WorkHistory extends Component {
                     <div className="SPCertificateContent">
                         <div className="width100 d-flex">
                             <h5 className="SPCertificateHeader">
-                            {
-                                WorkHistoryList.designation && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.designation} length={"50"} />
-                            }
-                            {
-                                WorkHistoryList.company && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />  
-                            }                           
+                                {
+                                    WorkHistoryList.company && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.company} length={"50"} />
+                                }
                             </h5>
                             <span className="ml-auto SPWorkYear">
-                            <span>
-                                {formatMoment(WorkHistoryList.fromDate, 'MM-DD-YYYY', 'DD MMM YYYY')}
-                            </span>
+                                <span>
+                                    {formatMoment(WorkHistoryList.fromDate, 'MM-DD-YYYY', 'DD MMM YYYY')}
+                                </span>
 
-                               <span> - </span>
-                                 {WorkHistoryList.currentlyWorking === true ?
+                                <span> - </span>
+                                {WorkHistoryList.currentlyWorking === true ?
                                     <span>Present</span>
                                     :
                                     <span> { /* to do change removing className="ml-2" */}
@@ -495,118 +492,122 @@ class WorkHistory extends Component {
                                 }
                             </span>
                         </div>
-                        <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
-                        {/*<span className="SPCertificateDesc">{WorkHistoryList.description}</span>*/}
-                        {
-                            WorkHistoryList.description && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.description} length={"50"} />
-                        } 
+                        <h5>
+                            {
+                                WorkHistoryList.designation && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.designation} length={"50"} />
+                            }
+                            </h5>
+                            <span className="SPCertificateSubtle">{WorkHistoryList.location}</span>
+                            {
+                                WorkHistoryList.description && <EllipsisText className='SPCertificateDesc' text={WorkHistoryList.description} length={"50"} />
+                            }
                     </div>
-                    {this.props.isUser &&  <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
-                    onClick={(e) => this.isOnDeleteModalOpen(e)} /> }
-                    {this.props.isUser &&  <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={WorkHistoryList.workHistoryId}
-                    onClick={(e) => this.editWorkHistory(e)} /> }
+                        {this.props.isUser && <i name={SCREENS.PROFILE + '_' + PERMISSIONS.DELETE} className="SPIconMedium SPIconDelete mr-3" id={WorkHistoryList.workHistoryId}
+                            onClick={(e) => this.isOnDeleteModalOpen(e)} />}
+                        {this.props.isUser && <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" id={WorkHistoryList.workHistoryId}
+                            onClick={(e) => this.editWorkHistory(e)} />}
                 </li>
-            )
-        });
-
+                    )
+                });
+        
         if (this.state.isWorkHistoryModalOpen) {
             if (this.state.isAdd) {
-                modalTitle = 'Add Work History';
-            } else {
-                modalTitle = 'Edit Work History';
-            }
-            modalContent = WorkHistoryModalContent;
-        }
-
-
-        return (
+                        modalTitle = 'Add Work History';
+                    } else {
+                        modalTitle = 'Edit Work History';
+                    }
+                    modalContent = WorkHistoryModalContent;
+                }
+        
+        
+                return (
             <div className="col-md-12 card CardWidget SPWorkHistory">
-                <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Work History</h4>
-                    {this.props.isUser &&
-                    <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
-                        onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} />}
-                </div>
+                        <div className="SPCardTitle d-flex">
+                            <h4 className="primaryColor">Work History</h4>
+                            {this.props.isUser &&
+                                <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
+                                    onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} />}
+                        </div>
 
-                <div className="SPCertificateContainer width100">
+                        <div className="SPCertificateContainer width100">
 
-                    {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
-                        <ul className="SPCertificateList">
-                            <div className='SPNoInfo'>
-                                <div className='SPNoInfoContent'>
-                                    <div className='SPInfoContentImage' />
-                                    <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}> Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} /> to add Work History</span>
-                                </div>
-                            </div>
-                        </ul>
-                    }
-                </div>
+                            {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
+                                <ul className="SPCertificateList">
+                                    <div className='SPNoInfo'>
+                                        <div className='SPNoInfoContent'>
+                                            <div className='SPInfoContentImage' />
+                                            <span className='SPNoInfoDesc' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}> Click <i className="SPIconMedium SPIconAddGrayScale" onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} /> to add Work History</span>
+                                        </div>
+                                    </div>
+                                </ul>
+                            }
+                        </div>
 
-                <ProfileModalPopup
-                    isOpen={this.state.isWorkHistoryModalOpen}
-                    toggle={this.toggleWorkHistory}
-                    ModalBody={modalContent}
-                    className="modal-lg asyncModal CertificationModal"
-                    modalTitle={modalTitle}
-                    centered={true}
-                    disabled={this.state.disabledSaveBtn}
-                    onClick={this.state.isAdd ?
-                        this.addWorkhistory :
-                        this.updateWorkHistory
-                    }
-                />
+                        <ProfileModalPopup
+                            isOpen={this.state.isWorkHistoryModalOpen}
+                            toggle={this.toggleWorkHistory}
+                            ModalBody={modalContent}
+                            className="modal-lg asyncModal CertificationModal"
+                            modalTitle={modalTitle}
+                            centered={true}
+                            disabled={this.state.disabledSaveBtn}
+                            onClick={this.state.isAdd ?
+                                this.addWorkhistory :
+                                this.updateWorkHistory
+                            }
+                        />
 
-                <ModalPopup
-                    isOpen={this.state.isDiscardModalOpen}
-                    toggle={this.reset}
-                    ModalBody={<span>Do you want to discard the changes?</span>}
-                    btn1="YES"
-                    btn2="NO"
-                    className="modal-sm"
-                    headerFooter="d-none"
-                    centered={true}
-                    onConfirm={() => this.reset()}
-                    onCancel={() => this.setState({
-                        isDiscardModalOpen: false,
-                        disabledSaveBtn: false
-                    })}
-                />
+                        <ModalPopup
+                            isOpen={this.state.isDiscardModalOpen}
+                            toggle={this.reset}
+                            ModalBody={<span>Do you want to discard the changes?</span>}
+                            btn1="YES"
+                            btn2="NO"
+                            className="modal-sm"
+                            headerFooter="d-none"
+                            centered={true}
+                            onConfirm={() => this.reset()}
+                            onCancel={() => this.setState({
+                                isDiscardModalOpen: false,
+                                disabledSaveBtn: false
+                            })}
+                        />
 
-                <ModalPopup
-                    isOpen={this.state.isOnDeleteModalOpen}
-                    ModalBody={<span>Do you want to remove the Work History Details?</span>}
-                    btn1="YES"
-                    btn2="NO"
-                    className="modal-sm"
-                    headerFooter="d-none"
-                    centered={true}
-                    onConfirm={() => this.deleteWorkHistory()}
-                    onCancel={() => this.setState({
-                        isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen
-                    })}
-                />
-            </div>
-        )
-    }
-}
-
+                        <ModalPopup
+                            isOpen={this.state.isOnDeleteModalOpen}
+                            ModalBody={<span>Do you want to remove the Work History Details?</span>}
+                            btn1="YES"
+                            btn2="NO"
+                            className="modal-sm"
+                            headerFooter="d-none"
+                            centered={true}
+                            onConfirm={() => this.deleteWorkHistory()}
+                            onCancel={() => this.setState({
+                                isOnDeleteModalOpen: !this.state.isOnDeleteModalOpen
+                            })}
+                        />
+                    </div>
+                    )
+                }
+            }
+            
 function mapDispatchToProps(dispatch) {
     return {
-        getWorkHistory: () => dispatch(getWorkHistory()),
-        addWorkHistory: (data) => dispatch(addWorkHistory(data)),
-        editWorkHistory: (data) => dispatch(editWorkHistory(data)),
-        updateWorkHistory: (data) => dispatch(updateWorkHistory(data)),
-        deleteWorkHistory: (data) => dispatch(deleteWorkHistory(data))
-    }
-};
-
+                        getWorkHistory: () => dispatch(getWorkHistory()),
+                    addWorkHistory: (data) => dispatch(addWorkHistory(data)),
+                    editWorkHistory: (data) => dispatch(editWorkHistory(data)),
+                    updateWorkHistory: (data) => dispatch(updateWorkHistory(data)),
+                    deleteWorkHistory: (data) => dispatch(deleteWorkHistory(data))
+                }
+            };
+            
 function mapStateToProps(state) {
     return {
-        workhistoryList: state.profileState.WorkHistoryState.workhistoryList,
-        addeworkhistorySuccess: state.profileState.WorkHistoryState.addeworkhistorySuccess,
-        workhistoyFieldDetails: state.profileState.WorkHistoryState.workhistoyFieldDetails,
-        serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId,
-        isUser: state.profileState.PersonalDetailState.isUser,
-    }
-};
+                        workhistoryList: state.profileState.WorkHistoryState.workhistoryList,
+                    addeworkhistorySuccess: state.profileState.WorkHistoryState.addeworkhistorySuccess,
+                    workhistoyFieldDetails: state.profileState.WorkHistoryState.workhistoyFieldDetails,
+                    serviceProviderId: state.onboardingState.setPasswordState.serviceProviderDetails.serviceProviderId,
+                    isUser: state.profileState.PersonalDetailState.isUser,
+                }
+            };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkHistory));
