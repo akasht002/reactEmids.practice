@@ -171,7 +171,7 @@ class AssignServiceProvider extends Component {
                     this.props.sp.entityServiceProviderLastName}
                 </span>
               </div>
-              {this.props.sp.visitStatusId === VISIT_STATUS_ID &&
+              {this.props.sp.visitStatusId === VISIT_STATUS_ID && isFutureDay(this.props.sp.visitDate) &&
               <span
                 className="EditIcon"
                 onClick={e => {
