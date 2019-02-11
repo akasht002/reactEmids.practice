@@ -260,7 +260,7 @@ class Certification extends Component {
             if (this.state.isAdd) {
                 modalTitle = 'Add Certification/License';
             } else {
-                modalTitle = 'Edit Certification';
+                modalTitle = 'Edit Certification/License';
             }
             modalContent = CertificationModalContent;
         }
