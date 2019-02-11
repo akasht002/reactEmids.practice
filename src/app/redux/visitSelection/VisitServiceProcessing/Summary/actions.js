@@ -201,8 +201,8 @@ export function calculationsFirstTime(data) {
         const startTime = data.visitStartTime;
         const endTime = data.visitEndTime;
 
-        let startTimeinMs = moment(startTime);
-        let endTimeinMs = moment(endTime);
+        let startTimeinMs = moment(startTime).seconds(0).milliseconds(0);
+        let endTimeinMs = moment(endTime).seconds(0).milliseconds(0);
         let timediffms;
 
         if (data.billedTotalDuration !== "00:00:00") {
