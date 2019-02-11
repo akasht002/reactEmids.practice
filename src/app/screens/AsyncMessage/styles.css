@@ -2043,5 +2043,10 @@ button:disabled {
   {
    text-align: right;
   }
+
+  .box-modelnewsearch .Select.has-value.is-clearable.Select--single>.Select-control .Select-value
+  {
+      padding-top: 5px;
+  }
   
      

@@ -267,7 +267,7 @@ class ServiceArea extends Component {
               label='Street'
               autoComplete='off'
               type='text'
-              placeholder=''
+              placeholder='Enter Street Name'
               className={"form-control custome-placeholder " + (this.state.streetInvalid && 'inputFailure')}
               value={this.state.street}
               maxlength={'500'}
@@ -297,7 +297,7 @@ class ServiceArea extends Component {
               label='City'
               autoComplete='off'
               type='text'
-              placeholder=''
+              placeholder='Enter City Name'
               className={"form-control custome-placeholder " + (this.state.cityInvalid && 'inputFailure')}
               value={this.state.city}
               maxlength={'500'}
@@ -357,7 +357,7 @@ class ServiceArea extends Component {
               className={"form-control custome-placeholder " + (this.state.zipInvalid && 'inputFailure')}
               autoComplete='off'
               type='text'
-              placeholder=''
+              placeholder='Enter Zip Code'
               value={this.state.zip}
               textChange={this.textChangeValue}
               onBlur={(e) => {
@@ -379,7 +379,7 @@ class ServiceArea extends Component {
               className={"form-control custome-placeholder " + (this.state.coverageAreaInvalid && 'inputFailure')}
               autoComplete='off'
               type='text'
-              placeholder=''
+              placeholder='Enter Coverage Area'
               value={this.state.coverageArea}
               textChange={this.rangeChangeValue}
               onBlur={(e) => {
