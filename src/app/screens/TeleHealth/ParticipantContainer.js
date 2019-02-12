@@ -85,18 +85,23 @@ class ParticipantsContainer extends Component {
     };
 
     render() {
-        let participantModalData = <form className="participantsSearchForm">
+        let participantModalData = <form className="participantsSearchForm videoblock-upnew">
             <SelectPatient
                 onSelect={this.onSelectPatient}
                 patients={this.props.patients} />
-            <p className="primaryColor mb-0 mt-4">Invite Participants</p>
-            <ParticipantList
-                selectedParticipants={this.state.selectedParticipants}
-                onCheckParticipant={this.onCheckParticipant}
-                onSearchTextChange={this.onSearchTextChange}
-                selectedContext={this.state.selectedContext}
-                searchText={this.state.searchText}
-                participantList={this.props.participants} />
+                <div className="view-fullheight">
+                {this.props.contextId ? <div className="block-selectview">
+                    <p className="primaryColor mb-0 mt-4">Invite Participants</p>
+                    <p className="selctview">{this.state.selectedParticipants.length} selected</p>
+                </div> : null}
+                {this.props.contextId ? <ParticipantList
+                    selectedParticipants={this.state.selectedParticipants}
+                    onCheckParticipant={this.onCheckParticipant}
+                    onSearchTextChange={this.onSearchTextChange}
+                    selectedContext={this.state.selectedContext}
+                    searchText={this.state.searchText}
+                    participantList={this.props.participants} /> : null}
+                </div>
         </form>
 
         return (
@@ -128,7 +133,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         patients: state.telehealthState.linkedPatients,
-        participants: state.telehealthState.linkedParticipants
+        participants: state.telehealthState.linkedParticipants,
+        contextId: state.telehealthState.contextId
     }
 };
 

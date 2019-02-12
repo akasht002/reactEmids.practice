@@ -1,4 +1,4 @@
-import { push } from '../navigation/actions';
+import { push, goBack } from '../navigation/actions';
 import { API } from '../../services/api';
 import { Path } from '../../routes';
 import {
@@ -464,7 +464,7 @@ export function goToConversationSummary() {
         let conversatinId = getState().asyncMessageState.currentConversation.conversationId;
         dispatch(removeFromGroup(conversatinId));
         dispatch(clearConversation());
-        dispatch(push(Path.messageSummary));
+        dispatch(goBack())
     };
 };
 
