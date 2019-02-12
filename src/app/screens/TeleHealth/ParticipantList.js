@@ -38,7 +38,7 @@ class ParticipantsList extends Component {
                     textChange={this.props.onSearchTextChange}
                     iconStyle='icon-search'
                 />
-                <div className="participantsSearchList">
+                <div className="participantsSearchList pd-left0">
                     {this.participants()}
                 </div>
             </div>

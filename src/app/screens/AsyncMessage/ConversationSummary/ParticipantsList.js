@@ -48,12 +48,12 @@ class ParticipantsList extends Component {
                     id='participantsSearch'
                     autoComplete='false'
                     type='text'
-                    placeholder='search'
+                    placeholder='Search'
                     className='form-control searchParticipants ChatContainer'
                     textChange={this.props.onSearchTextChange}
                     iconStyle='icon-search'
                 />
-               <div className="participantsSearchList ChatContainer">
+               <div className="participantsSearchList pd-left0 ChatContainer">
                     {this.participants()}
                 </div>
             </div>
