@@ -25,7 +25,7 @@ import {
 import { formatPhoneNumber } from '../../../utils/formatName'
 import { SETTING } from '../../../services/api'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
-import { formateContactNumber, formateContactNumberValue } from '../../../utils/validations'
+import { formatContactNumber, formatContactNumberValue } from '../../../utils/validations'
 
 class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -330,11 +330,11 @@ class PersonalDetail extends React.PureComponent {
   }
 
   textChangeContactNumber = (e) => {
-    const onlyNums = formateContactNumber(e.target.value);
+    const onlyNums = formatContactNumber(e.target.value);
     if (onlyNums.length < 10) {
       this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true })
     } else if (onlyNums.length === 10) {
-      const number = formateContactNumberValue(onlyNums);
+      const number = formatContactNumberValue(onlyNums);
       this.setState({ phoneNumber: number })
     }
     this.setState({
@@ -1101,26 +1101,8 @@ class PersonalDetail extends React.PureComponent {
                     autoComplete='off'
                     maxlength='10'
                     type='text'
-                    value={formateContactNumberValue(this.state.phoneNumber)}
+                    value={formatContactNumberValue(this.state.phoneNumber)}
                     className={"form-control custome-placeholder " + (this.state.phoneNumberInvalid && 'inputFailure')}
-
-                    // textChange={e => {
-                    //   const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-                    //   if (onlyNums.length < 10) {
-                    //     this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true })
-                    //   } else if (onlyNums.length === 10) {
-                    //     const number = onlyNums.replace(
-                    //       /(\d{3})(\d{3})(\d{4})/,
-                    //       '$1-$2-$3'
-                    //     )
-                    //     this.setState({
-                    //       phoneNumber: number,
-                    //       phoneNumberInvalid: false,
-                    //       disabledSaveBtn: false
-                    //     })
-                    //   }
-                    // }                 
-                    // }
                     textChange={this.textChangeContactNumber}
                     onBlur={(e) => {
                       if (getLength(e.target.value) < 10) {

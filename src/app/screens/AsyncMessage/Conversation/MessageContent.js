@@ -172,8 +172,7 @@ class MessageContent extends Component {
                                 <span className="ml-auto messageTime"><TimeAgo datetime={moment.utc(conversation.createdDate).local().format()} /></span>
                             </div>
                             <div className="bubbleBody">
-                                {/* <span className="bubbleMsg">{(conversation.messageText)}</span> */}
-                                <span className={"bubbleMsg " + handelEnterSpace(conversation.messageText)}>{(conversation.messageText)}</span>
+                                <span className={"bubbleMsg " + handelEnterSpace(conversation.messageText)}>{conversation.messageText}</span>
                                 <span>{imageClass}</span>
                             </div>
                         </div>
