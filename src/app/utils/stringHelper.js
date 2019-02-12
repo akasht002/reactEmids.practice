@@ -27,3 +27,8 @@ export function convertTime24to12(time24) {
 export function getFirstCharOfString(string) {
     return string.charAt(0);
 }
+
+export function handelEnterSpace (str, is_xhtml) {
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br>' : '<br>';
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+ } 

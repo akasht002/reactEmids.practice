@@ -33,7 +33,7 @@ export default class SelectPatient extends Component {
                     listItems={this.state.Patients}
                     multi={false}
                     closeOnSelect={true}
-                    placeholder='Select Individual'
+                    placeholder=''
                     className="ProfileImageMultiSelect mt-2"
                     onSelect={this.props.onSelect} />
                 <span className="ParticipantSelectMsg">Only those related to selected individual will be potential participants.</span>

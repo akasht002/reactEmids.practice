@@ -25,6 +25,7 @@ import {
 import { formatPhoneNumber } from '../../../utils/formatName'
 import { SETTING } from '../../../services/api'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
+import { formatContactNumber, formatContactNumberValue } from '../../../utils/validations'
 
 class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -194,7 +195,8 @@ class PersonalDetail extends React.PureComponent {
       city === '' || this.state.city === null ||
       zipCode === '' || this.state.zipCode === null ||
       streetAddress === '' || this.state.streetAddress === null ||
-      selectedState === '' || this.state.selectedState === null
+      selectedState === '' || this.state.selectedState === null || 
+      this.state.phoneNumberInvalid 
     ) {
       let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
       if (city === '' || city === null) {
@@ -325,6 +327,21 @@ class PersonalDetail extends React.PureComponent {
     } else {
       return false;
     }
+  }
+
+  textChangeContactNumber = (e) => {
+    const onlyNums = formatContactNumber(e.target.value);
+    if (onlyNums.length < 10) {
+      this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true, phoneNumberInvalid: false })
+    } else if (onlyNums.length === 10) {
+      const number = formatContactNumberValue(onlyNums);
+      this.setState({
+        phoneNumber: number,
+        phoneNumberInvalid: false,
+        disabledSaveBtn: false
+      })
+    }
+    
   }
 
   reset = () => {
@@ -1085,26 +1102,9 @@ class PersonalDetail extends React.PureComponent {
                     autoComplete='off'
                     maxlength='10'
                     type='text'
-                    value={formatPhoneNumber(this.state.phoneNumber)}
+                    value={formatContactNumberValue(this.state.phoneNumber)}
                     className={"form-control custome-placeholder " + (this.state.phoneNumberInvalid && 'inputFailure')}
-
-                    textChange={e => {
-                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-                      if (onlyNums.length < 10) {
-                        this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true })
-                      } else if (onlyNums.length === 10) {
-                        const number = onlyNums.replace(
-                          /(\d{3})(\d{3})(\d{4})/,
-                          '$1-$2-$3'
-                        )
-                        this.setState({
-                          phoneNumber: number,
-                          phoneNumberInvalid: false,
-                          disabledSaveBtn: false
-                        })
-                      }
-                    }
-                    }
+                    textChange={this.textChangeContactNumber}
                     onBlur={(e) => {
                       if (getLength(e.target.value) < 10) {
                         this.setState({ phoneNumberInvalid: true });

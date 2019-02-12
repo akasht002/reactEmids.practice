@@ -1929,7 +1929,7 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
     display: block;
     width: 100%;
     height: calc;
-    height: calc(100vh - 522px);
+    height: calc(100vh - 400px);
 }
 
 
@@ -2048,5 +2048,13 @@ button:disabled {
   {
       padding-top: 5px;
   }
+
+  .chatMessage.yourChat .ChatBubble .bubbleBody .bubbleMsg {
+    white-space: pre;
+}
   
-     
+.chatMessage.mr-auto .ChatBubble .bubbleBody .bubbleMsg
+{
+white-space:pre;
+}
+  

@@ -529,14 +529,15 @@ class VisitServiceList extends Component {
                                     {this.state.selectedKey}
                                 </Select>
                             </SelectField>
-                        </ThemeProvider> */}
+                        </ThemeProvider> 
                         <Search
                             toggleSearch={this.toggleSearch}
                             searchOpen={this.state.searchOpen}
                             searchKeyword={this.state.searchKeyword}
                             handleSearchkeyword={this.handleSearchkeyword}
                             handleSearchData={this.handleSearchData}
-                         />
+                            handleSearchkeywordPress={this.handleSearchkeywordPress}
+                         /> */}
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>

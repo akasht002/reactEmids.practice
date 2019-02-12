@@ -28,7 +28,7 @@ import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
 import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
-
+import { PREVIOUS_MONTH,NEXT_MONTH } from './constant'
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -481,8 +481,8 @@ class serviceCalendar extends React.Component {
     let count = this.state.width > '1280' ? 7 : 5
 
     let current_month = new Date().getMonth();
-    let pervious_month = moment.months().splice(current_month - 3, 3);
-    let next_month_list = moment.months().splice(current_month - 1, 3);
+    let pervious_month = moment.months().splice(current_month - 3, PREVIOUS_MONTH);
+    let next_month_list = moment.months().splice(current_month - 1, NEXT_MONTH);
 
     let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month, 10)])
     let nextMonthLists = current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
