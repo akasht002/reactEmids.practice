@@ -136,6 +136,7 @@ const getConversationSummaryItemSignalRSuceess = (data) => {
                 if (participant.userId === userId && participant.participantType === userType) {
                     conversationSummaryData = [data, ...conversationSummaryData];
                 }
+                return participant;
             });
         }
         dispatch(setConversationSummary(conversationSummaryData));
@@ -231,7 +232,9 @@ export const openedAsyncPage = (data) =>{
 
 export function onFetchConversationSummary(pageNumber, hideLoading = false) {
     return (dispatch) => {
-        hideLoading ? null : dispatch(convLoadingStart());
+        if (!hideLoading) {
+            dispatch(convLoadingStart())
+        }
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversationSummary 
@@ -241,10 +244,14 @@ export function onFetchConversationSummary(pageNumber, hideLoading = false) {
             + Pagination.pageSize)
             .then(resp => {
                 dispatch(setConversationSummary(resp.data));
-                hideLoading ? null : dispatch(convLoadingEnd());
+                if (!hideLoading) {
+                    dispatch(convLoadingEnd())
+                }
             })
             .catch(err => {
-                hideLoading ? null : dispatch(convLoadingEnd());
+                if (!hideLoading) {
+                    dispatch(convLoadingEnd())
+                }
             })
     }
 };
@@ -520,6 +527,7 @@ export function checkConversationCreated(conversation) {
                 if (data.userId === userId && data.participantType === userType) {
                     dispatch(getConversationSummaryItemSignalR(conversation.conversationId))
                 }
+                return data;
             });
         }
     }

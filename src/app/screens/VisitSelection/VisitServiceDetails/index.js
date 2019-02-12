@@ -602,7 +602,7 @@ class VisitServiceDetails extends Component {
                       <i class='ProfileIcon IconConversations' />
                       <div class='PostedByProfileDetails'>
                         <div class='ProfileIconDetails'>
-                          Conversations
+                          Conversation
                       </div>
                       </div>
                     </div>}
