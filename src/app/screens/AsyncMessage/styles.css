@@ -2048,5 +2048,13 @@ button:disabled {
   {
       padding-top: 5px;
   }
+
+  .chatMessage.yourChat .ChatBubble .bubbleBody .bubbleMsg {
+    white-space: pre;
+}
   
-     
+.chatMessage.mr-auto .ChatBubble .bubbleBody .bubbleMsg
+{
+white-space:pre;
+}
+  
