@@ -99,16 +99,7 @@ class VisitServiceList extends Component {
             searchKeyword: e.target.value
         })
     }
-
-    handleSearchkeywordPress = event => {
-        if (event.charCode === 13) {
-           
-        }
-    }
-
-    handleSearchData = () => {
-
-    }
+    
 
     componentDidMount() {
         let data = {
@@ -520,7 +511,7 @@ class VisitServiceList extends Component {
                                     {this.state.selectedKey}
                                 </Select>
                             </SelectField>
-                        </ThemeProvider> */}
+                        </ThemeProvider> 
                         <Search
                             toggleSearch={this.toggleSearch}
                             searchOpen={this.state.searchOpen}
@@ -528,7 +519,7 @@ class VisitServiceList extends Component {
                             handleSearchkeyword={this.handleSearchkeyword}
                             handleSearchData={this.handleSearchData}
                             handleSearchkeywordPress={this.handleSearchkeywordPress}
-                         />
+                         /> */}
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
