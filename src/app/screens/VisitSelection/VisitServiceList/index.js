@@ -7,6 +7,7 @@ import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearV
     from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
+import  Search  from './Search'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import {
     VISIT_SERVICE_STATUS_OPEN,
@@ -70,7 +71,9 @@ class VisitServiceList extends Component {
             sort: 'false',
             sortByOrder: 'DESC',
             selectedKey: 'item-1',
-            serviceRequestList: []
+            serviceRequestList: [],
+            searchOpen:false,
+            searchKeyword:''
         };
         this.sort = false
         this.defaultStatus = ["Open", "Invited", "Applied", "Hired", "Not Hired", "Completed", "Closed", "Cancelled", "Not Interested"]
@@ -82,6 +85,21 @@ class VisitServiceList extends Component {
             isOpen: !this.state.isOpen
         });
     }
+
+    toggleSearch = () => {
+        this.setState({
+          searchOpen: !this.state.searchOpen,
+          searchKeyword: '',          
+        })
+        
+    }
+    
+    handleSearchkeyword = e => {
+        this.setState({
+            searchKeyword: e.target.value
+        })
+    }
+    
 
     componentDidMount() {
         let data = {
@@ -493,7 +511,15 @@ class VisitServiceList extends Component {
                                     {this.state.selectedKey}
                                 </Select>
                             </SelectField>
-                        </ThemeProvider> */}
+                        </ThemeProvider> 
+                        <Search
+                            toggleSearch={this.toggleSearch}
+                            searchOpen={this.state.searchOpen}
+                            searchKeyword={this.state.searchKeyword}
+                            handleSearchkeyword={this.handleSearchkeyword}
+                            handleSearchData={this.handleSearchData}
+                            handleSearchkeywordPress={this.handleSearchkeywordPress}
+                         /> */}
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>

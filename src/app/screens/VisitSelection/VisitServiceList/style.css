@@ -1301,3 +1301,34 @@ color: #444;
     text-align: center;
     margin: 0 auto;
 }
+
+.ProfileIconSearch:hover, .ProfileHeaderFilter:hover, .ProfileSearchContainer .closeBtn{
+    cursor: pointer;
+}
+
+
+div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearchContainer .form-control:focus, .ProfileSearchContainer .closeBtn{
+    background-color: #f8f8f8;
+}
+
+.ProfileSearchContainer .closeBtn{
+    display: inline;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border: 0;
+    padding: 0;
+}
+
+.ProfileSearchContainer .closeBtn:after{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-image: url("../../../assets/images/remove.png");
+}
