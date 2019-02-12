@@ -895,8 +895,10 @@ div.scrollarea .scrollbar-container.vertical
 
 
   /*Background-scroll-hide*/
-.modal-open .scrollarea.ProfileContentWidget
+.modal-open .scrollarea-content 
 {
     overflow-y: hidden;
-    height: inherit;
+    height: inherit !important;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
 }

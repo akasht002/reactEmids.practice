@@ -428,19 +428,22 @@ export function checkTeleHealth(data) {
                 if (teleHealthState.roomId === data.roomID) {
                     let modifiedParticipants = []
                     data.participantList && data.participantList.map((participant) => {
-                        let participantFound = false;
-                        teleHealthState.participantsByConferenceId.map((confParticipant) => {
-                            if (confParticipant.participantType === participant.participantType &&
-                                confParticipant.userId === participant.userId) {
-                                    participantFound = true;
-                            }
-                            return '';
-                        })
-                        if (!participantFound) {
-                            modifiedParticipants.push({
-                                ...participant,
-                                status: 'Invited'
+                        if (!(participant.participantType === USERTYPES.SERVICE_PROVIDER && userId === participant.userId)) {
+                            let participantFound = false;
+                            teleHealthState.participantsByConferenceId.map((confParticipant) => {
+                                if (confParticipant.participantType === participant.participantType &&
+                                    confParticipant.userId === participant.userId) {
+                                        participantFound = true;
+                                }
+                                return '';
                             })
+                            if (!participantFound) {
+                                modifiedParticipants.push({
+                                    ...participant,
+                                    thumbNail: participant.thumbnail,
+                                    status: 'Invited'
+                                })
+                            }
                         }
                         return ''
                     });
