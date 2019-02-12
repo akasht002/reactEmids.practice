@@ -858,3 +858,32 @@ padding-bottom: 50px;
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.block-selectview
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.block-selectview p
+{
+    display: flex;
+    width: 50%;
+    margin-top: 0px !important;
+    margin-bottom: 10px !important;
+}
+
+.block-selectview p.selctview
+{
+    display: block;
+    text-align: right;
+}
+
+.videoblock-upnew .view-fullheight
+{   
+    padding-bottom: 50px;
+    display: block;
+    width: 100%;
+    height: calc(100vh - 400px);
+}
