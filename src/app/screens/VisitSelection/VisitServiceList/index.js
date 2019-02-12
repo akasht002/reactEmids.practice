@@ -100,12 +100,6 @@ class VisitServiceList extends Component {
         })
     }
 
-    handleSearchkeywordPress = event => {
-        if (event.charCode === 13) {
-           
-        }
-    }
-
     handleSearchData = (e) => {
         e.preventDefault();
         let serviceProviderId = getUserInfo().serviceProviderId;
@@ -542,7 +536,6 @@ class VisitServiceList extends Component {
                             searchKeyword={this.state.searchKeyword}
                             handleSearchkeyword={this.handleSearchkeyword}
                             handleSearchData={this.handleSearchData}
-                            handleSearchkeywordPress={this.handleSearchkeywordPress}
                          />
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
