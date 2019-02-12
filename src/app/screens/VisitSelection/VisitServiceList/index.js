@@ -99,7 +99,25 @@ class VisitServiceList extends Component {
             searchKeyword: e.target.value
         })
     }
-    
+
+    handleSearchData = (e) => {
+        e.preventDefault();
+        let serviceProviderId = getUserInfo().serviceProviderId;
+        let data = {
+            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
+            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
+            serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
+            ServiceCategoryId: this.state.ServiceCategoryId,
+            serviceTypes: uniqElementOfArray(this.state.serviceTypes),
+            ServiceAreas: this.state.ServiceAreas,
+            serviceProviderId: serviceProviderId,
+            FromPage: PAGE_NO,
+            ToPage: SERVICE_REQUEST_PAGE_SIZE,
+            searchText: this.state.searchKeyword
+        };
+        this.props.getFilter(data)
+        this.props.getFilterDataCount(data)
+    }
 
     componentDidMount() {
         let data = {
