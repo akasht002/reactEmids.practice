@@ -332,15 +332,16 @@ class PersonalDetail extends React.PureComponent {
   textChangeContactNumber = (e) => {
     const onlyNums = formatContactNumber(e.target.value);
     if (onlyNums.length < 10) {
-      this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true })
+      this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true, phoneNumberInvalid: false })
     } else if (onlyNums.length === 10) {
       const number = formatContactNumberValue(onlyNums);
-      this.setState({ phoneNumber: number })
+      this.setState({
+        phoneNumber: number,
+        phoneNumberInvalid: false,
+        disabledSaveBtn: false
+      })
     }
-    this.setState({
-      phoneNumberInvalid: false,
-      disabledSaveBtn: false
-    })
+    
   }
 
   reset = () => {
