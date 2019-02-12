@@ -233,3 +233,11 @@ export function formatDateValue(date, dateFormat, outputFormat) {
 export const checkEmpty = (data) => {
   return (typeof(data) === 'undefined' || data === null || data.length === 0 ) ? true : false
 }
+
+export const formateContactNumber = data => {
+  return data ? data.replace(/[^0-9]/g, '') : ''
+}
+
+export const formateContactNumberValue = data => {
+  return data ? data.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : ''
+}

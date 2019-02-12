@@ -12,6 +12,7 @@ import {
 } from '../../../redux/asyncMessages/actions';
 import AsyncImgModalTemplate from "../Modals/ImageModal";
 import { USERTYPES, ImageFormats } from '../../../constants/constants';
+import { handelEnterSpace } from '../../../utils/stringHelper';
 
 class MessageContent extends Component {
 
@@ -171,7 +172,8 @@ class MessageContent extends Component {
                                 <span className="ml-auto messageTime"><TimeAgo datetime={moment.utc(conversation.createdDate).local().format()} /></span>
                             </div>
                             <div className="bubbleBody">
-                                <span className="bubbleMsg">{conversation.messageText}</span>
+                                {/* <span className="bubbleMsg">{(conversation.messageText)}</span> */}
+                                <span className={"bubbleMsg " + handelEnterSpace(conversation.messageText)}>{(conversation.messageText)}</span>
                                 <span>{imageClass}</span>
                             </div>
                         </div>

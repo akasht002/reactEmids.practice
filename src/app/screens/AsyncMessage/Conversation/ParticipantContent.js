@@ -71,7 +71,7 @@ class ParticipantContent extends Component {
         if (!this.state.addParticipantView) {
             let data = {
                 patientId: this.props.loggedInUser.userType !== USERTYPES.PATIENT ? this.props.context : this.props.loggedInUser.patientId,
-                conversationId: this.props.currentConversation.conversationId,
+                conversationId: this.props.currentConversation && this.props.currentConversation.conversationId,
                 searchText: ''
             }
             this.props.getLinkedParticipantsByPatients(data);
