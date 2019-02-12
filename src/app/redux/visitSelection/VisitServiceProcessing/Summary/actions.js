@@ -203,6 +203,7 @@ export function calculationsFirstTime(data) {
 
         let startTimeinMs = moment(startTime);
         let endTimeinMs = moment(endTime);
+
         let timediffms;
 
         if (data.billedTotalDuration !== "00:00:00") {
@@ -226,7 +227,7 @@ export function onUpdateTime(data, visitId) {
     return (dispatch) => {
         // let min = data.hour * 60 + data.min;
         // let timediffms = moment.duration(min, 'm').asMilliseconds();
-        let sec = data.hour * 60 * 60 + data.min * 60 // + data.sec;
+        let sec = data.hour * 60 * 60 + data.min * 60 + data.sec;
         let timediffms = moment.duration(sec, 's').asMilliseconds();
         dispatch(saveActualTimeDiff(timediffms));
         dispatch(calculationActualData());
