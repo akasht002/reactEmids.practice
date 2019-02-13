@@ -257,9 +257,11 @@ export function onFetchConversationSummary(pageNumber, hideLoading = false) {
 };
 
 
-export function onFetchConversation(id) {
+export function onFetchConversation(id, hideLoading = false) {
     return (dispatch, getState) => {
-        dispatch(convLoadingStart());
+        if (!hideLoading) {
+            dispatch(convLoadingStart());
+        }
         let state = getState();
         let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
         let context = state.asyncMessageState.currentConversation.context
@@ -273,10 +275,15 @@ export function onFetchConversation(id) {
             .then(resp => {
                 dispatch(setConversationData(resp.data));
                 dispatch(setCurrentOpenConversation(resp.data));
-                dispatch(convLoadingEnd());
+                if (!hideLoading) {
+                    dispatch(convLoadingEnd());
+                }
+                
             })
             .catch(err => {
-                dispatch(convLoadingEnd())
+                if (!hideLoading) {
+                    dispatch(convLoadingEnd())
+                }
             })
     }
 };
@@ -509,7 +516,7 @@ export function getLatestMessages(conversationId){
         if (interval) {
             clearInterval(interval);
         }
-        dispatch(checkLatestMessages(conversationId));
+        dispatch(onFetchConversation(conversationId, true));
         interval = setInterval(() => {
             dispatch(checkLatestMessages(conversationId));
         }, state.asyncMessageState.callbackInterval);
