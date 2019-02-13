@@ -471,6 +471,7 @@ export function checkTeleHealth(data) {
             }  else if (data.messageType === 'Ended') {
                 if (teleHealthState.roomId === data.roomID) {
                     dispatch(clearInvitaion())
+                    dispatch(setRoomId(0))
                     if (teleHealthState.token) {
                         dispatch(leaveVideoConference())
                     }
