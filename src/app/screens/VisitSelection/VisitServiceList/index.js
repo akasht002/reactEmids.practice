@@ -7,6 +7,7 @@ import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearV
     from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
+import  Search  from './Search'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import {
     VISIT_SERVICE_STATUS_OPEN,
@@ -70,7 +71,9 @@ class VisitServiceList extends Component {
             sort: 'false',
             sortByOrder: 'DESC',
             selectedKey: 'item-1',
-            serviceRequestList: []
+            serviceRequestList: [],
+            searchOpen:false,
+            searchKeyword:''
         };
         this.sort = false
         this.defaultStatus = ["Open", "Invited", "Applied", "Hired", "Not Hired", "Completed", "Closed", "Cancelled", "Not Interested"]
@@ -81,6 +84,39 @@ class VisitServiceList extends Component {
         this.setState({
             isOpen: !this.state.isOpen
         });
+    }
+
+    toggleSearch = () => {
+        this.setState({
+          searchOpen: !this.state.searchOpen,
+          searchKeyword: '',          
+        })
+        
+    }
+    
+    handleSearchkeyword = e => {
+        this.setState({
+            searchKeyword: e.target.value
+        })
+    }
+
+    handleSearchData = (e) => {
+        e.preventDefault();
+        let serviceProviderId = getUserInfo().serviceProviderId;
+        let data = {
+            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
+            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
+            serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
+            ServiceCategoryId: this.state.ServiceCategoryId,
+            serviceTypes: uniqElementOfArray(this.state.serviceTypes),
+            ServiceAreas: this.state.ServiceAreas,
+            serviceProviderId: serviceProviderId,
+            FromPage: PAGE_NO,
+            ToPage: SERVICE_REQUEST_PAGE_SIZE,
+            searchText: this.state.searchKeyword
+        };
+        this.props.getFilter(data)
+        this.props.getFilterDataCount(data)
     }
 
     componentDidMount() {
@@ -493,7 +529,15 @@ class VisitServiceList extends Component {
                                     {this.state.selectedKey}
                                 </Select>
                             </SelectField>
-                        </ThemeProvider> */}
+                        </ThemeProvider> 
+                        <Search
+                            toggleSearch={this.toggleSearch}
+                            searchOpen={this.state.searchOpen}
+                            searchKeyword={this.state.searchKeyword}
+                            handleSearchkeyword={this.handleSearchkeyword}
+                            handleSearchData={this.handleSearchData}
+                            handleSearchkeywordPress={this.handleSearchkeywordPress}
+                         /> */}
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>

@@ -63,7 +63,7 @@ class _CardForm extends Component {
                 this.props.eligibilityData.active === true && this.props.eligibilityData.authorizationRequired === false ?
                     data.amount = this.props.data.CalculationsData.copayAmount
                     :
-                    data.amount = this.props.data.CalculationsData.grandTotalAmount.toFixed(2);
+                    data.amount = this.props.data.CalculationsData.grandTotalAmount;
 
                 this.props.token(data);
 
