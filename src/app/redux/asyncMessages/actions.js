@@ -290,8 +290,23 @@ export function onFetchConversation(id, hideLoading = false) {
 
 export function onCreateNewConversation(data) {
     return (dispatch) => {
+        const userInfo = getUserInfo();
+        let asyncData = {
+            createdBy: userInfo.coreoHomeUserId,
+            createdByType: USERTYPES.SERVICE_PROVIDER,
+            title: data.title,
+            context: data.context,
+            participantList: [
+                {
+                    userId: userInfo.coreoHomeUserId,
+                    participantType: USERTYPES.SERVICE_PROVIDER,
+                    participantId: userInfo.serviceProviderId
+                },
+                ...data.participantList
+            ]
+        };
         dispatch(startLoading());
-        AsyncPost(API.createNewConversation, data)
+        AsyncPost(API.createNewConversation, asyncData)
             .then(resp => {
                 dispatch(setNewConversationSuccess(resp.data.conversationId));
                 dispatch(setCurrentOpenConversation(resp.data));

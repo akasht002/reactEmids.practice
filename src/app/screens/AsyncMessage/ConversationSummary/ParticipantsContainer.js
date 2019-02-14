@@ -58,20 +58,9 @@ class ParticipantsContainer extends Component {
     };
 
     onCreateConversation = () => {
-        let data = {};
-        let selectedParticipants = [];
-        let userId = this.props.loggedInUser.coreoHomeUserId;
-        let loggedInUserData = {
-            userId: userId,
-            participantType: USERTYPES.SERVICE_PROVIDER,
-            participantId: this.props.loggedInUser.serviceProviderId
-        };
-        selectedParticipants = [...this.state.selectedParticipants];
-        selectedParticipants.push(loggedInUserData);
-        data = {
+        let selectedParticipants = [...this.state.selectedParticipants];
+        let data = {
             participantList: selectedParticipants,
-            createdBy: userId,
-            createdByType: USERTYPES.SERVICE_PROVIDER,
             title: this.state.title.trim(),
             context: this.state.selectedPatientDetails.userId
         };
