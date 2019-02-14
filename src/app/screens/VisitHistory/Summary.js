@@ -205,7 +205,6 @@ class VistSummary extends React.Component {
   };
 
   getFeedback = () => {
-    console.log("aaa" + this.props.summaryDetails)
     return (
       <div className="FeedbackWidget py-4">
         <div className='FeedbackRating'>
