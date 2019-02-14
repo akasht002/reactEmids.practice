@@ -20,7 +20,7 @@ import {
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
-import {ORG_SERVICE_PROVIDER_TYPE_ID} from '../../constants/constants'
+import { ORG_SERVICE_PROVIDER_TYPE_ID } from '../../constants/constants'
 class VistSummary extends React.Component {
   constructor(props) {
     super(props);
@@ -205,8 +205,22 @@ class VistSummary extends React.Component {
   };
 
   getFeedback = () => {
+    console.log("aaa" + this.props.summaryDetails)
     return (
       <div className="FeedbackWidget py-4">
+        <div className='FeedbackRating'>
+          {this.props.SummaryDetails && this.props.SummaryDetails.patient
+            ? <p>
+              Please share your experience in engaging
+                {' '}
+              {this.props.SummaryDetails.patient.firstName}
+              {' '}
+              {this.props.SummaryDetails.patient.lastName &&
+                this.props.SummaryDetails.patient.lastName
+              }
+            </p>
+            : ''}
+        </div>
         {this.props.QuestionsList.length > 0 ? (
           <Fragment>
             {this.props.QuestionsList &&
@@ -444,7 +458,7 @@ class VistSummary extends React.Component {
             </div>
             <div className="RightWidget">
               <div className="RightContent">
-                {getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID?
+                {getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID ?
                   ''
                   :
                   <Fragment>
