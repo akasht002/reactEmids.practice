@@ -462,8 +462,8 @@ class VisitServiceList extends Component {
                                     <div className='BlockImageDetailsDate'>
                                         {serviceList.recurring}
                                         <span className='DetailsDateSeperator'>|</span>
-                                        <Moment format="MMM DD">{serviceList.startDate}</Moment>
-                                        {serviceList.recurring !== RECURRING_PATTERN && <React.Fragment>  - <Moment format="MMM DD">{serviceList.endDate}</Moment> </React.Fragment>}
+                                        <Moment format="DD MMM">{serviceList.startDate}</Moment>
+                                        {serviceList.recurring !== RECURRING_PATTERN && <React.Fragment>  - <Moment format="DD MMM">{serviceList.endDate}</Moment> </React.Fragment>}
                                     </div>
                                 </div>
                             </div>
@@ -479,7 +479,7 @@ class VisitServiceList extends Component {
                                         <span>{serviceList.patientFirstName} {patientLastName}</span>
                                     </div>
                                     <div className='BlockProfileDetailsActivity'>
-                                        <span>Posted on <Moment format="DD MMM">{serviceList.createDate}</Moment></span>
+                                        <span>Posted on <Moment format="MMM DD">{serviceList.createDate}</Moment></span>
                                     </div>
                                 </div>
                                 <div className='BlockProfileDetailsStatus'>
