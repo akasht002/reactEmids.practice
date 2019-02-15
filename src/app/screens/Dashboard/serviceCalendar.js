@@ -328,17 +328,8 @@ class serviceCalendar extends React.Component {
           participantId: item.patientId
         }
       ];
-      let userId = this.props.loggedInUser.coreoHomeUserId;
-      let loggedInUser = {
-        userId: userId,
-        participantType: USERTYPES.SERVICE_PROVIDER,
-        participantId: this.props.loggedInUser.serviceProviderId
-      };
-      selectedParticipants.push(loggedInUser);
       let data = {
         participantList: selectedParticipants,
-        createdBy: userId,
-        createdByType: USERTYPES.SERVICE_PROVIDER,
         title: "",
         context: item.patientId
       };

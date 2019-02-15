@@ -410,7 +410,7 @@ export function checkTeleHealth(data) {
             if (data.messageType === 'Invited') {
                 if (data.userId !== userId) {
                     data.participantList && data.participantList.map((participant) => {
-                        if (participant.participantType === USERTYPES.SERVICE_PROVIDER && userId === participant.userId) {
+                        if (userId === participant.userId) {
                             if (teleHealthState.token) {
                                 dispatch(setInvitedRoomId(data.roomID))
                             } else {
@@ -428,11 +428,10 @@ export function checkTeleHealth(data) {
                 if (teleHealthState.roomId === data.roomID) {
                     let modifiedParticipants = []
                     data.participantList && data.participantList.map((participant) => {
-                        if (!(participant.participantType === USERTYPES.SERVICE_PROVIDER && userId === participant.userId)) {
+                        if (userId !== participant.userId) {
                             let participantFound = false;
                             teleHealthState.participantsByConferenceId.map((confParticipant) => {
-                                if (confParticipant.participantType === participant.participantType &&
-                                    confParticipant.userId === participant.userId) {
+                                if (confParticipant.userId === participant.userId) {
                                         participantFound = true;
                                 }
                                 return '';
@@ -456,8 +455,7 @@ export function checkTeleHealth(data) {
             } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
                 if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
                     let participants = teleHealthState.participantsByConferenceId.map((participant) => {
-                        if (participant.participantType === data.participantList[0].participantType &&
-                            participant.userId === data.participantList[0].userId) {
+                        if (participant.userId === data.participantList[0].userId) {
                                 return {
                                     ...participant,
                                     status: data.messageType

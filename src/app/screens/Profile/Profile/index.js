@@ -287,7 +287,7 @@ class Profile extends Component {
         />
         <ModalPopup
           isOpen={this.props.showTelehealthInvite}
-          ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}.</span>}
+          ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference.</span>}
           btn1="Accept"
           btn2="Decline"
           className="zh"

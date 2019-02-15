@@ -301,26 +301,14 @@ class VisitServiceDetails extends Component {
         conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
       })
     } else {
-      let userId = getUserInfo().coreoHomeUserId;
-      let participantId = getUserInfo().serviceProviderId;
       let item = this.state.visitServiceDetails;
       let selectedParticipants = [{
         userId: item.patient.coreoHomeUserId,
         participantType: USERTYPES.PATIENT,
         participantId: item.patient.patientId
       }];
-
-      let loggedInUser = {
-        userId: userId,
-        participantType: USERTYPES.SERVICE_PROVIDER,
-        participantId: participantId
-      }
-
-      selectedParticipants.push(loggedInUser);
       let data = {
         participantList: selectedParticipants,
-        createdBy: userId,
-        createdByType: loggedInUser.participantType,
         title: '',
         context: item.patient.patientId
       };
