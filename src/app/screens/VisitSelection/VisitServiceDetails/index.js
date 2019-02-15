@@ -65,7 +65,7 @@ import { isFutureDay } from '../../../utils/dateUtility'
 import {
   updateEntityServiceVisit
 } from "../../../redux/dashboard/Dashboard/actions";
-
+import Slider from "react-slick";
 class VisitServiceDetails extends Component {
   constructor(props) {
     super(props)
@@ -363,6 +363,15 @@ class VisitServiceDetails extends Component {
   }
 
   render() {
+
+    const  ServiceTypeSettings = {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      variableWidth: true
+  }
     let defaultCheck = ''
     let sliderTypes =
       this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
@@ -658,9 +667,13 @@ class VisitServiceDetails extends Component {
                             }
                           </p>
                           <h2 className='ServicesTitle mt-4'>Service Types</h2>
-                          <div className='ServiceType'>
+                          <div className='ServiceType visit-srq-slider WhiteBG'>
                             <div className='ServiceTypesSlider Summary'>
-                              {sliderTypes}
+                              {/* {sliderTypes} */}
+
+                              <Slider {...ServiceTypeSettings} className="ServiceTypesSlider">
+                                                                {sliderTypes}
+                                                            </Slider>
                             </div>
                           </div>
                           <div className='ServiceTasks Summary'>

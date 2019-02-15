@@ -1367,3 +1367,20 @@ padding-top: 80px;
 {
 width: 100px;
 }
+
+.visit-srq-slider .ServiceTypesSlider .slick-list .slick-slide .ServiceTypeList {
+    position: relative;
+    width: 160px!important;
+    margin: 0 10px 20px;
+    text-align: center;
+}
+
+.visit-srq-slider .ServiceTypesSlider.Summary .slick-initialized
+{
+width: 100%;
+}
+
+.visit-srq-slider .ServiceTypesSlider.Summary .slick-initialized .slick-list
+{
+width: 100%;
+}
