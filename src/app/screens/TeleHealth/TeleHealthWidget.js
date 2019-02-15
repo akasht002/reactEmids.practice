@@ -177,11 +177,11 @@ class TeleHealthWidget extends Component {
         this.checkMaxVideoCallHour();
         this.checkTimeStarted()
         var previewContainer = this.refs.localMediaMe;
-        if (!previewContainer.querySelector('video')) {
+        if (previewContainer && !previewContainer.querySelector('video')) {
             this.attachParticipantTracks(room.localParticipant, previewContainer);
         }
         var fullWidthMediaContainer = this.refs.fullWidthMedia;
-        if (!fullWidthMediaContainer.querySelector('video')) {
+        if (fullWidthMediaContainer && !fullWidthMediaContainer.querySelector('video')) {
             this.attachParticipantTracks(room.localParticipant, fullWidthMediaContainer);
         }
 
