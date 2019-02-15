@@ -66,6 +66,11 @@ class TeleHealthWidget extends Component {
         clearTimeout(this.leaveTimeout);
         clearTimeout(this.inactiveSession);
         this.props.clearLinkedParticipants();
+        if (this.state.previewTracks) {
+            this.state.previewTracks.forEach(track => {
+                track.stop();
+            });
+        }
         if (this.state.hasJoinedRoom) {
             this.leaveRoom(this.state.hasJoinedRoom);
         }
