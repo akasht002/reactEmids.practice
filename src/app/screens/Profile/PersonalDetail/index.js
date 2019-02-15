@@ -257,6 +257,8 @@ class PersonalDetail extends React.PureComponent {
       isCityInvalid: false,
       isZipInvalid: false,
       isStateInvalid: false,
+      ageInvaild: false,
+      yearOfExpInvaild: false,
       zipCode: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].zipCode,
       city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
       streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress,
@@ -904,6 +906,7 @@ class PersonalDetail extends React.PureComponent {
           <Input
             name='hourlyRate'
             label='Hourly Rate ($/hr)'
+            placeholder="000.00"
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
@@ -955,7 +958,7 @@ class PersonalDetail extends React.PureComponent {
             className={"form-control " + (this.state.hourlyRateInvalid && 'inputFailure')}
           />
           <small className="text-danger d-block OnboardingAlert">
-            {this.state.hourlyRateInvalid && 'Please enter valid HourlyRate'}
+            {this.state.hourlyRateInvalid && 'Please enter valid Hourly Rate'}
           </small>
         </div>
         <div className='hrLine' />
