@@ -1,6 +1,5 @@
 import { API } from '../../../services/api';
 import { elasticSearchGet, ServiceRequestGet } from '../../../services/http';
-// import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http';
@@ -60,10 +59,24 @@ export const clearVisitServiceList = () => {
 };
 
 
+export function keywordSearchServiceRequest(data) {
+    return (dispatch)=>{
+        let serviceProviderId = getUserInfo().serviceProviderId
+        dispatch(startLoading())
+        ServiceRequestGet(API.keywordSearchServiceRequest + `${data.searchKeyword}/${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
+            dispatch(getVisitServiceListSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+
+    }
+}
+
+
 export function getServiceRequestCount() {
     return (dispatch, getState) => {
         let data = getState().visitSelectionState.VisitServiceListState.status
-        //   dispatch(startLoading())
         let serviceProviderId = getUserInfo().serviceProviderId
         ServiceRequestGet(
             API.getServiceRequestCount + serviceProviderId + '/' + data
@@ -71,11 +84,9 @@ export function getServiceRequestCount() {
             .then(resp => {
                 if (resp && resp.data) {
                     dispatch(serviceRequestCountSuccess(resp.data))
-                    // dispatch(endLoading())
                 }
             })
             .catch(() => {
-                //   dispatch(endLoading())
             })
     }
 };
@@ -97,7 +108,6 @@ export function setServiceRequestStatus(data) {
                 data.status = obj.keyValue;
             }
         });
-        // dispatch(setServiceRequestStatusSuccess(data))
         dispatch(checkParticularServiceRequestStatus(data))
         dispatch(push(Path.visitServiceList))
     }
