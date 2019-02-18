@@ -85,7 +85,7 @@ class AsideScreenCover extends React.Component {
     checkDeviceStatus = (link, join, createData) => {
         navigator.mediaDevices.getUserMedia({video: true, audio: true})
         .then((stream) => {
-            var tracks = stream.getTracks()
+            let tracks = stream.getTracks()
             tracks.forEach((track) => {
                 track.stop();
             });
