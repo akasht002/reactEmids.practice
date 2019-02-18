@@ -92,13 +92,7 @@ class VisitServiceList extends Component {
             searchKeyword: '',
         })
     }
-
-    handleSearchkeyword = e => {
-        this.setState({
-            searchKeyword: e.target.value
-        })
-    }
-
+    
     componentDidMount() {
         let data = {
             pageNumber: this.state.pageNumber,
