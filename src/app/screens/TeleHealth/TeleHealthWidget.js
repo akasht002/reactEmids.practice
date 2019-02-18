@@ -66,6 +66,11 @@ class TeleHealthWidget extends Component {
         clearTimeout(this.leaveTimeout);
         clearTimeout(this.inactiveSession);
         this.props.clearLinkedParticipants();
+        if (this.state.previewTracks) {
+            this.state.previewTracks.forEach(track => {
+                track.stop();
+            });
+        }
         if (this.state.hasJoinedRoom) {
             this.leaveRoom(this.state.hasJoinedRoom);
         }
@@ -177,11 +182,11 @@ class TeleHealthWidget extends Component {
         this.checkMaxVideoCallHour();
         this.checkTimeStarted()
         var previewContainer = this.refs.localMediaMe;
-        if (!previewContainer.querySelector('video')) {
+        if (previewContainer && !previewContainer.querySelector('video')) {
             this.attachParticipantTracks(room.localParticipant, previewContainer);
         }
         var fullWidthMediaContainer = this.refs.fullWidthMedia;
-        if (!fullWidthMediaContainer.querySelector('video')) {
+        if (fullWidthMediaContainer && !fullWidthMediaContainer.querySelector('video')) {
             this.attachParticipantTracks(room.localParticipant, fullWidthMediaContainer);
         }
 

@@ -7,7 +7,6 @@ import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearV
     from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
-import  Search  from './Search'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import {
     VISIT_SERVICE_STATUS_OPEN,
