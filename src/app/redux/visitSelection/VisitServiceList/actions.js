@@ -60,6 +60,21 @@ export const clearVisitServiceList = () => {
 };
 
 
+export function keywordSearchServiceRequest(data) {
+    return (dispatch)=>{
+        let serviceProviderId = getUserInfo().serviceProviderId
+        dispatch(startLoading())
+        ServiceRequestGet(API.searchServiceRequestWithQ + `${data.searchKeyword}/${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
+            dispatch(getVisitServiceListSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+
+    }
+}
+
+
 export function getServiceRequestCount() {
     return (dispatch, getState) => {
         let data = getState().visitSelectionState.VisitServiceListState.status

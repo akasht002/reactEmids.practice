@@ -157,5 +157,6 @@ export const API = {
     visitProcessingUpdateBilledDuration:'VisitProcessing/UpdateBilledDuration',
     getUnreadConversationsByUserId: 'Conversation/GetUnreadMessages/',
     getLatestMessages: 'Conversation/GetNewPostedMessage/',
-    getMessageFallBackInterval: 'Common/LookupConfig/MessageFallBackInterval'
+    getMessageFallBackInterval: 'Common/LookupConfig/MessageFallBackInterval',
+    searchServiceRequestWithQ: 'Search/SearchServiceRequestWithQ/'
 }

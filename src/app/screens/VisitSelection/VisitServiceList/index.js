@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import _ from 'lodash'
-import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearVisitServiceList }
+import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearVisitServiceList, keywordSearchServiceRequest }
     from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
@@ -86,11 +86,34 @@ class VisitServiceList extends Component {
         });
     }
 
-    toggleSearch = () => {
+    toggleSearch = () => {       
+        let data = {
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+        }
         this.setState({
-          searchOpen: !this.state.searchOpen,
-          searchKeyword: '',          
-        })
+            searchOpen: !this.state.searchOpen,
+            searchKeyword: '',          
+          })
+        if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
+            let data = {
+                startDate: DEFAULT_FROM_DATE,
+                endDate: DEFAULT_TO_DATE,
+                serviceStatus: [this.props.status],
+                ServiceCategoryId: '',
+                serviceTypes: [],
+                ServiceAreas: {},
+                serviceProviderId: getUserInfo().serviceProviderId,
+                FromPage: PAGE_NO,
+                ToPage: SERVICE_REQUEST_PAGE_SIZE,
+            };
+            this.props.getFilter(data)
+            this.props.getFilterDataCount(data)
+        }
+        else {
+            this.props.getVisitServiceList(data);
+            this.props.getServiceRequestCount()
+        }
         
     }
     
@@ -98,6 +121,7 @@ class VisitServiceList extends Component {
         this.setState({
             searchKeyword: e.target.value
         })
+        
     }
 
     handleSearchData = (e) => {
@@ -432,6 +456,35 @@ class VisitServiceList extends Component {
         this.props.formDirtyVisitList();
     }
 
+    handleSearchkeyword = e => {       
+          this.setState({
+            searchKeyword: e.target.value
+          })
+      }
+
+    handleSearchkeywordPress = event => {
+    if (event.charCode === 13) {         
+        let data = {
+            searchKeyword: this.state.searchKeyword,
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+        }
+        this.props.keywordSearchServiceRequest(data)
+        
+    }
+    }
+
+    handleSearchData = () => {
+        let data = {}
+        data = {
+            searchKeyword: this.state.searchKeyword,
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+          }
+          this.props.keywordSearchServiceRequest(data)
+    }
+    
+
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? (
             this.props.visitServiceList.map(serviceList => {
@@ -501,8 +554,7 @@ class VisitServiceList extends Component {
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}
                 patientImage={this.props.profileImgData.image ? this.props.profileImgData.image
-                    : require('./avatar/user-5.jpg')}>
-                {this.props.isLoading && <Preloader />}
+                    : require('./avatar/user-5.jpg')}>               
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests</h5>
@@ -529,7 +581,7 @@ class VisitServiceList extends Component {
                                     {this.state.selectedKey}
                                 </Select>
                             </SelectField>
-                        </ThemeProvider> 
+                        </ThemeProvider> */}
                         <Search
                             toggleSearch={this.toggleSearch}
                             searchOpen={this.state.searchOpen}
@@ -537,10 +589,11 @@ class VisitServiceList extends Component {
                             handleSearchkeyword={this.handleSearchkeyword}
                             handleSearchData={this.handleSearchData}
                             handleSearchkeywordPress={this.handleSearchkeywordPress}
-                         /> */}
+                         /> 
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
+                {this.props.isLoading && <Preloader />}
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='ServiceRequestsWidget'>
                     <div className='BoardContainer'>
                         {visitList}
@@ -645,7 +698,8 @@ function mapDispatchToProps(dispatch) {
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
         clearVisitServiceList: () => dispatch(clearVisitServiceList()),
-        setDefaultFilteredStatus: () => dispatch(setDefaultFilteredStatus())
+        setDefaultFilteredStatus: () => dispatch(setDefaultFilteredStatus()),
+        keywordSearchServiceRequest: data => dispatch(keywordSearchServiceRequest(data))
     }
 };
 
