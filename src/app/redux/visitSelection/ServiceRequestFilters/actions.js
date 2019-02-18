@@ -250,7 +250,7 @@ export function checkParticularServiceRequestStatus(updatedData) {
         let finalData = data.map(item => {
                  return {
                     ...item,
-                    isChecked: item.id === updatedData.status ? true : false
+                    isChecked: item.id === updatedData.status
                 }
         })
         dispatch(getServiceRequestStatusSuccess(finalData))
@@ -268,8 +268,7 @@ export const getSearchDataCountSuccess = (data) => {
 export function getSearchDataCount(data) {
     return (dispatch) => {
         let serviceProviderId = getUserInfo().serviceProviderId
-        let reqObj;
-        reqObj = {
+        let reqObj = {
             status: null,
             ServiceAreas: {},
             serviceProviderId: serviceProviderId,

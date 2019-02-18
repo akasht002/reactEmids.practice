@@ -412,8 +412,7 @@ class VisitServiceList extends Component {
     }
 
     handleSearchData = () => {
-        let data = {}
-        data = {
+        let data = {
             searchKeyword: this.state.searchKeyword,
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
@@ -432,7 +431,7 @@ class VisitServiceList extends Component {
             searchKeyword: '',          
           })
         if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
-            let data = {
+             data = {
                 startDate: DEFAULT_FROM_DATE,
                 endDate: DEFAULT_TO_DATE,
                 serviceStatus: [this.props.status],
