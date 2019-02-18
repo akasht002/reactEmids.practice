@@ -96,7 +96,7 @@ class Conversation extends Component {
     onSubmitChangeTitle = () => {
         let userId = this.props.loggedInUser.serviceProviderId;
         let title = this.state.title ? this.state.title.trim() : '';
-        if ((title !== this.props.currentConversation.title) || (title.length === 0 && this.props.currentConversation.title > 0)) {
+        if ((title !== this.props.currentConversation.title) || (title.length === 0 && this.props.currentConversation.title.length > 0)) {
             let data = {
                 conversationId: this.props.currentConversation.conversationId,
                 title: title,
