@@ -7,7 +7,7 @@ import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearV
     from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
-import  Search  from './Search'
+import Search from './Search'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 import {
     VISIT_SERVICE_STATUS_OPEN,
@@ -22,7 +22,7 @@ import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import {
     getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea,
     clearServiceCategory, clearServiceType, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus,
-    getFilterDataCount, formDirty, setDefaultFilteredStatus
+    getFilterDataCount, formDirty, setDefaultFilteredStatus, getSearchDataCount
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
@@ -72,8 +72,8 @@ class VisitServiceList extends Component {
             sortByOrder: 'DESC',
             selectedKey: 'item-1',
             serviceRequestList: [],
-            searchOpen:false,
-            searchKeyword:''
+            searchOpen: false,
+            searchKeyword: ''
         };
         this.sort = false
         this.defaultStatus = ["Open", "Invited", "Applied", "Hired", "Not Hired", "Completed", "Closed", "Cancelled", "Not Interested"]
@@ -86,61 +86,17 @@ class VisitServiceList extends Component {
         });
     }
 
-    toggleSearch = () => {       
-        let data = {
-            pageNumber: this.state.pageNumber,
-            pageSize: this.state.pageSize
-        }
+    toggleSearch = () => {
         this.setState({
             searchOpen: !this.state.searchOpen,
-            searchKeyword: '',          
-          })
-        if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
-            let data = {
-                startDate: DEFAULT_FROM_DATE,
-                endDate: DEFAULT_TO_DATE,
-                serviceStatus: [this.props.status],
-                ServiceCategoryId: '',
-                serviceTypes: [],
-                ServiceAreas: {},
-                serviceProviderId: getUserInfo().serviceProviderId,
-                FromPage: PAGE_NO,
-                ToPage: SERVICE_REQUEST_PAGE_SIZE,
-            };
-            this.props.getFilter(data)
-            this.props.getFilterDataCount(data)
-        }
-        else {
-            this.props.getVisitServiceList(data);
-            this.props.getServiceRequestCount()
-        }
-        
+            searchKeyword: '',
+        })
     }
-    
+
     handleSearchkeyword = e => {
         this.setState({
             searchKeyword: e.target.value
         })
-        
-    }
-
-    handleSearchData = (e) => {
-        e.preventDefault();
-        let serviceProviderId = getUserInfo().serviceProviderId;
-        let data = {
-            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
-            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
-            serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
-            ServiceCategoryId: this.state.ServiceCategoryId,
-            serviceTypes: uniqElementOfArray(this.state.serviceTypes),
-            ServiceAreas: this.state.ServiceAreas,
-            serviceProviderId: serviceProviderId,
-            FromPage: PAGE_NO,
-            ToPage: SERVICE_REQUEST_PAGE_SIZE,
-            searchText: this.state.searchKeyword
-        };
-        this.props.getFilter(data)
-        this.props.getFilterDataCount(data)
     }
 
     componentDidMount() {
@@ -456,22 +412,10 @@ class VisitServiceList extends Component {
         this.props.formDirtyVisitList();
     }
 
-    handleSearchkeyword = e => {       
-          this.setState({
+    handleSearchkeyword = e => {
+        this.setState({
             searchKeyword: e.target.value
-          })
-      }
-
-    handleSearchkeywordPress = event => {
-    if (event.charCode === 13) {         
-        let data = {
-            searchKeyword: this.state.searchKeyword,
-            pageNumber: this.state.pageNumber,
-            pageSize: this.state.pageSize
-        }
-        this.props.keywordSearchServiceRequest(data)
-        
-    }
+        })
     }
 
     handleSearchData = () => {
@@ -480,10 +424,40 @@ class VisitServiceList extends Component {
             searchKeyword: this.state.searchKeyword,
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
-          }
-          this.props.keywordSearchServiceRequest(data)
+        }
+        this.props.getSearchDataCount(data)
+        this.props.keywordSearchServiceRequest(data)
     }
-    
+
+    closeSearch = () => {
+        let data = {
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+        }
+        this.setState({
+            searchOpen: !this.state.searchOpen,
+            searchKeyword: '',          
+          })
+        if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
+            let data = {
+                startDate: DEFAULT_FROM_DATE,
+                endDate: DEFAULT_TO_DATE,
+                serviceStatus: [this.props.status],
+                ServiceCategoryId: '',
+                serviceTypes: [],
+                ServiceAreas: {},
+                serviceProviderId: getUserInfo().serviceProviderId,
+                FromPage: PAGE_NO,
+                ToPage: SERVICE_REQUEST_PAGE_SIZE,
+            };
+            this.props.getFilter(data)
+            this.props.getFilterDataCount(data)
+        }
+        else {
+            this.props.getVisitServiceList(data);
+            this.props.getServiceRequestCount()
+        }
+    }
 
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? (
@@ -554,7 +528,7 @@ class VisitServiceList extends Component {
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}
                 patientImage={this.props.profileImgData.image ? this.props.profileImgData.image
-                    : require('./avatar/user-5.jpg')}>               
+                    : require('./avatar/user-5.jpg')}>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests</h5>
@@ -588,8 +562,8 @@ class VisitServiceList extends Component {
                             searchKeyword={this.state.searchKeyword}
                             handleSearchkeyword={this.handleSearchkeyword}
                             handleSearchData={this.handleSearchData}
-                            handleSearchkeywordPress={this.handleSearchkeywordPress}
-                         /> 
+                            closeSearch={this.closeSearch}
+                        />
                         <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
@@ -598,12 +572,12 @@ class VisitServiceList extends Component {
                     <div className='BoardContainer'>
                         {visitList}
                     </div>
-                    {this.props.visitServiceList.length > 0 && !this.sort && !this.props.FilterDataCount && (
+                    {this.props.visitServiceList.length > 0 && !this.sort && (!this.props.FilterDataCount || this.props.SearchDataCount) && (
                         <div className="col-md-12 p-0 AsyncConversationPagination">
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
-                                totalItemsCount={this.props.serviceRequestCount}
+                                totalItemsCount={this.state.searchOpen ? this.props.SearchDataCount : this.props.serviceRequestCount}
                                 onChange={this.handlePageChange}
                                 itemClass="PaginationItem"
                                 itemClassFirst="PaginationIcon First"
@@ -699,7 +673,8 @@ function mapDispatchToProps(dispatch) {
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),
         clearVisitServiceList: () => dispatch(clearVisitServiceList()),
         setDefaultFilteredStatus: () => dispatch(setDefaultFilteredStatus()),
-        keywordSearchServiceRequest: data => dispatch(keywordSearchServiceRequest(data))
+        keywordSearchServiceRequest: data => dispatch(keywordSearchServiceRequest(data)),
+        getSearchDataCount: data => dispatch(getSearchDataCount(data))
     }
 };
 
@@ -716,7 +691,8 @@ function mapStateToProps(state) {
         serviceRequestCount: state.visitSelectionState.VisitServiceListState.serviceRequestCount,
         FilterDataCount: state.visitSelectionState.ServiceRequestFilterState.FilterDataCount,
         status: state.visitSelectionState.ServiceRequestFilterState.status,
-        isDashboardFilteredStatus: state.visitSelectionState.ServiceRequestFilterState.isDashboardFilteredStatus
+        isDashboardFilteredStatus: state.visitSelectionState.ServiceRequestFilterState.isDashboardFilteredStatus,
+        SearchDataCount: state.visitSelectionState.ServiceRequestFilterState.SearchDataCount,
     };
 };
 

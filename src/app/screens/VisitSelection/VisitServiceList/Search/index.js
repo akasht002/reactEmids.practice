@@ -11,7 +11,7 @@ function Search(props){
                 />
                 <input className='btn btn-primary' type='button' onClick={(e)=>props.handleSearchData(e)}
                  value="Search"/>
-                <i className='closeBtn' onClick={props.toggleSearch}/>
+                <i className='closeBtn' onClick={props.closeSearch}/>
             </form>
         </div>
         </Fragment>
