@@ -16,7 +16,8 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED,
     DEFAULT_FROM_DATE,
-    DEFAULT_TO_DATE
+    DEFAULT_TO_DATE,
+    DEFAULT_PAGE_NUMBER
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import {
@@ -39,6 +40,7 @@ import {
 } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
+import { defaultCoreCipherList } from "constants";
 class VisitServiceList extends Component {
 
     constructor(props) {
@@ -92,7 +94,6 @@ class VisitServiceList extends Component {
             searchKeyword: '',
         })
     }
-
     componentDidMount() {
         let data = {
             pageNumber: this.state.pageNumber,
@@ -289,7 +290,6 @@ class VisitServiceList extends Component {
         }
         this.props.getVisitServiceList(data);
         this.props.formDirty()
-        //this.props.formDirtyVisitList()
     }
 
     handleChangeServiceCategory = (selectedOption) => {
@@ -394,11 +394,10 @@ class VisitServiceList extends Component {
     };
 
     handleSearchPageChange = pageNumber => {
-        debugger
         this.setState({ pageNumber: pageNumber });
         let data = {
             searchKeyword: this.state.searchKeyword,
-            pageNumber: this.state.pageNumber,
+            pageNumber: pageNumber,
             pageSize: this.state.pageSize
         }
         this.props.keywordSearchServiceRequest(data)
@@ -425,7 +424,8 @@ class VisitServiceList extends Component {
         })
     }
 
-    handleSearchData = () => {
+    handleSearchData = (e) => {
+        e.preventDefault();
         this.props.formDirtyVisitList()
         let data = {
             searchKeyword: this.state.searchKeyword,
@@ -438,15 +438,16 @@ class VisitServiceList extends Component {
 
     closeSearch = () => {
         let data = {
-            pageNumber: this.state.pageNumber,
+            pageNumber: DEFAULT_PAGE_NUMBER,
             pageSize: this.state.pageSize
         }
         this.setState({
             searchOpen: !this.state.searchOpen,
-            searchKeyword: '',          
+            searchKeyword: '',   
+            activePage: DEFAULT_PAGE_NUMBER       
           })
         if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
-            let data = {
+             data = {
                 startDate: DEFAULT_FROM_DATE,
                 endDate: DEFAULT_TO_DATE,
                 serviceStatus: [this.props.status],
@@ -533,9 +534,7 @@ class VisitServiceList extends Component {
             )
 
         return (
-            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}
-                patientImage={this.props.profileImgData.image ? this.props.profileImgData.image
-                    : require('./avatar/user-5.jpg')}>
+            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>               
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests</h5>
