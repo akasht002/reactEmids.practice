@@ -16,7 +16,8 @@ import {
     VISIT_SERVICE_STATUS_HIRED,
     VISIT_SERVICE_STATUS_NOT_HIRED,
     DEFAULT_FROM_DATE,
-    DEFAULT_TO_DATE
+    DEFAULT_TO_DATE,
+    DEFAULT_PAGE_NUMBER
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import {
@@ -39,6 +40,7 @@ import {
 } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
+import { defaultCoreCipherList } from "constants";
 class VisitServiceList extends Component {
 
     constructor(props) {
@@ -92,7 +94,6 @@ class VisitServiceList extends Component {
             searchKeyword: '',
         })
     }
-    
     componentDidMount() {
         let data = {
             pageNumber: this.state.pageNumber,
@@ -392,6 +393,20 @@ class VisitServiceList extends Component {
         this.props.formDirtyVisitList()
     };
 
+    handleSearchPageChange = pageNumber => {
+        this.setState({ 
+            pageNumber: pageNumber,
+            activePage: pageNumber 
+        });
+        let data = {
+            searchKeyword: this.state.searchKeyword,
+            pageNumber: pageNumber,
+            pageSize: this.state.pageSize
+        }
+        this.props.keywordSearchServiceRequest(data)
+        this.props.formDirtyVisitList()
+    };
+
     selectedSort = (selectedKey) => {
         this.sort = true
         this.setState({ selectedKey: selectedKey })
@@ -411,7 +426,9 @@ class VisitServiceList extends Component {
         })
     }
 
-    handleSearchData = () => {
+    handleSearchData = (e) => {
+        e.preventDefault();
+        this.props.formDirtyVisitList()
         let data = {
             searchKeyword: this.state.searchKeyword,
             pageNumber: this.state.pageNumber,
@@ -423,12 +440,13 @@ class VisitServiceList extends Component {
 
     closeSearch = () => {
         let data = {
-            pageNumber: this.state.pageNumber,
+            pageNumber: DEFAULT_PAGE_NUMBER,
             pageSize: this.state.pageSize
         }
         this.setState({
             searchOpen: !this.state.searchOpen,
-            searchKeyword: '',          
+            searchKeyword: '',   
+            activePage: DEFAULT_PAGE_NUMBER       
           })
         if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
              data = {
@@ -568,7 +586,7 @@ class VisitServiceList extends Component {
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
                                 totalItemsCount={this.state.searchOpen ? this.props.SearchDataCount : this.props.serviceRequestCount}
-                                onChange={this.handlePageChange}
+                                onChange={this.state.searchOpen ? this.handleSearchPageChange : this.handlePageChange}
                                 itemClass="PaginationItem"
                                 itemClassFirst="PaginationIcon First"
                                 itemClassPrev="PaginationIcon Prev"

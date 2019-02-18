@@ -80,7 +80,7 @@ const ServiceRequestFilterState = (state = defaultState, action) => {
         case ServiceRequestFiltersList.getSearchDataCountSuccess:
             return {
                 ...state,
-                SearchDataCount: ''
+                SearchDataCount: action.data
             };
         default:
             return state;
