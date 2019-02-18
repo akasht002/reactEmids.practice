@@ -2,6 +2,7 @@ import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
 import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
 import _ from "lodash"
+import { SERVICE_REQ_STATUS } from '../../../constants/constants'
 
 export const ServiceRequestFiltersList = {
     getServiceCategoryListSuccess: 'get_service_request_filters_list_success/servicerequestfilters',
@@ -140,7 +141,8 @@ export function ServiceRequestStatus() {
             let newArr = _.map(resp.data, function (element) {
                 return _.extend({}, element, { isChecked: true });
             });
-            let listToDelete = [106, 107, 40];
+            let listToDelete = [SERVICE_REQ_STATUS.PENDING_APPROVAL, SERVICE_REQ_STATUS.DECLINED,  
+                                    SERVICE_REQ_STATUS.IN_PROGRESS];
             let data = newArr.filter(obj => !listToDelete.includes(obj.id));
             dispatch(getServiceRequestStatusSuccess(data))
         }).catch((err) => {
