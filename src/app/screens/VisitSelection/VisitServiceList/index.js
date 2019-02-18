@@ -93,12 +93,6 @@ class VisitServiceList extends Component {
         })
     }
 
-    handleSearchkeyword = e => {
-        this.setState({
-            searchKeyword: e.target.value
-        })
-    }
-
     componentDidMount() {
         let data = {
             pageNumber: this.state.pageNumber,
@@ -399,6 +393,19 @@ class VisitServiceList extends Component {
         this.props.formDirtyVisitList()
     };
 
+    handleSearchPageChange = pageNumber => {
+        debugger
+        this.setState({ pageNumber: pageNumber });
+        let data = {
+            searchKeyword: this.state.searchKeyword,
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+        }
+        this.props.keywordSearchServiceRequest(data)
+        this.setState({ activePage: pageNumber });
+        this.props.formDirtyVisitList()
+    };
+
     selectedSort = (selectedKey) => {
         this.sort = true
         this.setState({ selectedKey: selectedKey })
@@ -419,8 +426,8 @@ class VisitServiceList extends Component {
     }
 
     handleSearchData = () => {
-        let data = {}
-        data = {
+        this.props.formDirtyVisitList()
+        let data = {
             searchKeyword: this.state.searchKeyword,
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
@@ -578,7 +585,7 @@ class VisitServiceList extends Component {
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
                                 totalItemsCount={this.state.searchOpen ? this.props.SearchDataCount : this.props.serviceRequestCount}
-                                onChange={this.handlePageChange}
+                                onChange={this.state.searchOpen ? this.handleSearchPageChange : this.handlePageChange}
                                 itemClass="PaginationItem"
                                 itemClassFirst="PaginationIcon First"
                                 itemClassPrev="PaginationIcon Prev"
