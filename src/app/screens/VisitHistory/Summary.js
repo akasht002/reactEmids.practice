@@ -210,7 +210,7 @@ class VistSummary extends React.Component {
         <div className='FeedbackRating'>
           {this.props.SummaryDetails && this.props.SummaryDetails.patient
             ? <p>
-              Please share your experience in engaging
+              Please share your experience in engaging with
                 {' '}
               {this.props.SummaryDetails.patient.firstName}
               {' '}
