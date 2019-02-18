@@ -65,7 +65,7 @@ import { isFutureDay } from '../../../utils/dateUtility'
 import {
   updateEntityServiceVisit
 } from "../../../redux/dashboard/Dashboard/actions";
-import Slider from "react-slick";
+import { Carousel } from '../../../components';
 class VisitServiceDetails extends Component {
   constructor(props) {
     super(props)
@@ -97,7 +97,6 @@ class VisitServiceDetails extends Component {
   componentDidMount() {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
-      // this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
       this.props.getDays();
       this.props.getSpBusyInVisit();
     } else {
@@ -656,12 +655,10 @@ class VisitServiceDetails extends Component {
                           </p>
                           <h2 className='ServicesTitle mt-4'>Service Types</h2>
                           <div className='ServiceType visit-srq-slider WhiteBG'>
-                            <div className='ServiceTypesSlider Summary'>
-                              {/* {sliderTypes} */}
-
-                              <Slider {...ServiceTypeSettings} className="ServiceTypesSlider">
-                                                                {sliderTypes}
-                                                            </Slider>
+                            <div className='ServiceTypesSlider Summary'>                            
+                              <Carousel className="ServiceTypesSlider">
+                                {sliderTypes}
+                              </Carousel>                              
                             </div>
                           </div>
                           <div className='ServiceTasks Summary'>
