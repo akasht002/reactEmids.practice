@@ -394,14 +394,16 @@ class VisitServiceList extends Component {
     };
 
     handleSearchPageChange = pageNumber => {
-        this.setState({ pageNumber: pageNumber });
+        this.setState({ 
+            pageNumber: pageNumber,
+            activePage: pageNumber 
+        });
         let data = {
             searchKeyword: this.state.searchKeyword,
             pageNumber: pageNumber,
             pageSize: this.state.pageSize
         }
         this.props.keywordSearchServiceRequest(data)
-        this.setState({ activePage: pageNumber });
         this.props.formDirtyVisitList()
     };
 
