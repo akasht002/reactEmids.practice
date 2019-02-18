@@ -1,6 +1,6 @@
 import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
-import { getVisitServiceListSuccess,startLoading, endLoading } from '../VisitServiceList/actions';
+import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
 import _ from "lodash"
 
 export const ServiceRequestFiltersList = {
@@ -12,11 +12,12 @@ export const ServiceRequestFiltersList = {
     clearServiceArea: 'clear_service_area/servicerequestfilters',
     clearServiceRequestStatus: 'clear_servicerequest_status_success/servicerequestfilters',
     checkAllServiceRequestStatus: 'checkAllServiceRequestStatus/servicerequestfilters',
-    getFilterDataCountSuccess:'getFilterDataCountSuccess/servicerequestfilters',
-    formDirty:'formDirty/servicerequestfilters',
-    clearServiceType:'clear_service_type/servicerequestfilters',
+    getFilterDataCountSuccess: 'getFilterDataCountSuccess/servicerequestfilters',
+    formDirty: 'formDirty/servicerequestfilters',
+    clearServiceType: 'clear_service_type/servicerequestfilters',
     setDefaultFilteredStatus: 'setDefaultFilteredStatus/servicerequestfilters',
-    getDashboardStatusSuccess: 'getDashboardStatusSuccess/servicerequestfilters'
+    getDashboardStatusSuccess: 'getDashboardStatusSuccess/servicerequestfilters',
+    getSearchDataCountSuccess: 'getSearchDataCountSuccess/servicerequestfilters'
 };
 
 export const clearServiceRequestStatus = (data) => {
@@ -140,11 +141,11 @@ export function ServiceRequestStatus() {
     return (dispatch) => {
         // dispatch(startLoading());
         elasticSearchGet(API.getServiceRequestStatus).then((resp) => {
-            let newArr = _.map(resp.data, function(element) { 
-                return _.extend({}, element, {isChecked: true});
-           });
+            let newArr = _.map(resp.data, function (element) {
+                return _.extend({}, element, { isChecked: true });
+            });
             let listToDelete = [106, 107, 40];
-            let data =newArr.filter(obj => !listToDelete.includes(obj.id));
+            let data = newArr.filter(obj => !listToDelete.includes(obj.id));
             dispatch(getServiceRequestStatusSuccess(data))
             // dispatch(endLoading());
         }).catch((err) => {
@@ -208,19 +209,19 @@ export function getFilter(data) {
 
 export function getFilterDataCount(data) {
     return (dispatch) => {
-       // dispatch(startLoading());
+        // dispatch(startLoading());
         let reqObj;
-            reqObj = {
-                "Category": data.ServiceCategoryId,
-                "ServiceTypes": data.serviceTypes,
-                "Status": data.serviceStatus,
-                "FromPage": data.FromPage,
-                "ToPage": data.ToPage,
-                "FromDate": data.startDate,
-                "ToDate": data.endDate,
-                "ServiceAreas": data.ServiceAreas,
-                "serviceProviderId": data.serviceProviderId
-            }
+        reqObj = {
+            "Category": data.ServiceCategoryId,
+            "ServiceTypes": data.serviceTypes,
+            "Status": data.serviceStatus,
+            "FromPage": data.FromPage,
+            "ToPage": data.ToPage,
+            "FromDate": data.startDate,
+            "ToDate": data.endDate,
+            "ServiceAreas": data.ServiceAreas,
+            "serviceProviderId": data.serviceProviderId
+        }
         elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
             dispatch(getFilterDataCountSuccess(resp.data))
             //dispatch(endLoading());
@@ -248,32 +249,59 @@ export const checkAllServiceRequestStatus = (checked, data) => {
     }
 };
 
-export function getDashboardStatusSuccess (data) {
+export function getDashboardStatusSuccess(data) {
     return {
         type: ServiceRequestFiltersList.getDashboardStatusSuccess,
         data
     }
 }
 
-export function checkParticularServiceRequestStatus (updatedData) {
+export function checkParticularServiceRequestStatus(updatedData) {
     return (dispatch, getState) => {
-      let data = getState().visitSelectionState.ServiceRequestFilterState
-        .ServiceStatus
-      let finalData = data.map(item => {
-        if (item.id === updatedData.status) {
-          return {
-            ...item,
-            isChecked: true
-          }
-        } else {
-          return {
-            ...item,
-            isChecked: false
-          }
-        }
-      })
-      dispatch(getServiceRequestStatusSuccess(finalData))
-      dispatch(getDashboardStatusSuccess(updatedData))
+        let data = getState().visitSelectionState.ServiceRequestFilterState
+            .ServiceStatus
+        let finalData = data.map(item => {
+            if (item.id === updatedData.status) {
+                return {
+                    ...item,
+                    isChecked: true
+                }
+            } else {
+                return {
+                    ...item,
+                    isChecked: false
+                }
+            }
+        })
+        dispatch(getServiceRequestStatusSuccess(finalData))
+        dispatch(getDashboardStatusSuccess(updatedData))
     }
-  }
-  
+}
+
+export const getSearchDataCountSuccess = (data) => {
+    return {
+        type: ServiceRequestFiltersList.getSearchDataCountSuccess,
+        data
+    }
+}
+
+export function getSearchDataCount(data) {
+    return (dispatch) => {
+        // dispatch(startLoading());
+        let serviceProviderId = getUserInfo().serviceProviderId
+        let reqObj;
+        reqObj = {
+            status: null,
+            ServiceAreas: {},
+            serviceProviderId: serviceProviderId,
+            queryString: data.searchKeyword
+        }
+        elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
+            dispatch(getSearchDataCountSuccess(resp.data))
+            //dispatch(endLoading());
+        }).catch((err) => {
+            //dispatch(endLoading());
+        })
+
+    }
+};

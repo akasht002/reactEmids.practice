@@ -64,7 +64,7 @@ export function keywordSearchServiceRequest(data) {
     return (dispatch)=>{
         let serviceProviderId = getUserInfo().serviceProviderId
         dispatch(startLoading())
-        ServiceRequestGet(API.searchServiceRequestWithQ + `${data.searchKeyword}/${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
+        ServiceRequestGet(API.keywordSearchServiceRequest + `${data.searchKeyword}/${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
