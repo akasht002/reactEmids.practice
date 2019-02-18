@@ -1332,3 +1332,22 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     background-size: 100%;
     background-image: url("../../../assets/images/remove.png");
 }
+
+
+.ProfileHeaderOptions div.ProfileSearchContainer.true
+{
+    width: calc(100% - 28px);
+    right: 0px;
+    z-index: 99999;
+    background-color: #f8f8f8;
+    padding-right: 32px;
+}
+
+/*cross-browser-code-IE11*/
+/*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .ProfileHeaderOptions div.ProfileSearchContainer.true {height: 50px; top:0px; margin-top: 18px; } /* IE10 */
+     *::-ms-backdrop, .ProfileHeaderOptions div.ProfileSearchContainer.true { height: 50px; top:0px; margin-top: 18px;} /* IE11 */
+     }
