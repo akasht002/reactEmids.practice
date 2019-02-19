@@ -60,7 +60,7 @@ import {
 import { getUserInfo, isEntityServiceProvider } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-import { createDataStore } from '../../../redux/telehealth/actions';
+import { createDataStore, saveContextData } from '../../../redux/telehealth/actions';
 import { isFutureDay } from '../../../utils/dateUtility'
 import {
   updateEntityServiceVisit
@@ -333,6 +333,7 @@ class VisitServiceDetails extends Component {
         lastName: item.patient.lastName,
         thumbNail: item.patient.imageString
       }];
+      this.props.saveContextData(item.patient.patientId);
       this.props.createDataStore(selectedParticipants);
     }
   };
@@ -1030,7 +1031,8 @@ function mapDispatchToProps(dispatch) {
     getSpBusyInVisit: () => dispatch(getSpBusyInVisit()),
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
-    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data))
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
+    saveContextData: (data) => dispatch(saveContextData(data))
   }
 }
 
