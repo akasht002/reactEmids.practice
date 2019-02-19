@@ -239,6 +239,7 @@ export function leaveVideoConference(checkRoute) {
                     dispatch(setRoomId(state.telehealthState.invitedRoomId))
                     dispatch(acceptVideoConference())
                 } else if (state.authState.userState.menuClicked) {
+                    dispatch(clearExistingRoom())
                     if (state.authState.userState.menuClicked === 'logout') {
                         dispatch(onLogout())
                     } else {
@@ -246,6 +247,7 @@ export function leaveVideoConference(checkRoute) {
                     }
                     dispatch(setMenuClicked(null))
                 } else if (!checkRoute) {
+                    dispatch(clearExistingRoom())
                     dispatch(goBack())
                 }
             dispatch(endLoading());
@@ -306,6 +308,7 @@ export function endConference() {
                 dispatch(setRoomId(state.telehealthState.invitedRoomId))
                 dispatch(acceptVideoConference())
             } else if (state.authState.userState.menuClicked) {
+                dispatch(clearExistingRoom())
                 if (state.authState.userState.menuClicked === 'logout') {
                     dispatch(onLogout())
                 } else {
@@ -313,6 +316,7 @@ export function endConference() {
                 }
                 dispatch(setMenuClicked(null))
             } else {
+                dispatch(clearExistingRoom())
                 dispatch(goBack())
             }
             dispatch(endLoading());

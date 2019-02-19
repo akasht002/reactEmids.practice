@@ -22,6 +22,7 @@ import './SliderSlick.css';
 import { Path } from '../../routes';
 import {push} from '../../redux/navigation/actions'
 import {setMenuClicked} from '../../redux/auth/user/actions';
+import { getUserInfo } from '../../utils/userUtility';
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -129,10 +130,12 @@ class TeleHealthWidget extends Component {
             hasJoinedRoom: false,
             localMediaAvailable: false
         });
-        if (this.props.initiator) {
-            this.props.endConference();
-        } else {
-            this.props.leaveVideoConference(data);
+        if (this.props.telehealthToken) {
+            if (this.props.initiator) {
+                this.props.endConference();
+            } else {
+                this.props.leaveVideoConference(data);
+            }
         }
     }
 
@@ -416,7 +419,7 @@ class TeleHealthWidget extends Component {
                     <TeleHealthParticipants
                         participantList={this.props.existingParticipantList}
                         ToggleAddParticipantsListView={this.DisplayInviteParticipantsList}
-                        initiator={this.props.initiator}
+                        initiator={this.props.initiator || getUserInfo().serviceProviderTypeId === 2}
                     />
                     <TeleHealthInviteParticipants
                         participantList={this.props.conferenceParticipants}
@@ -492,7 +495,8 @@ function mapStateToProps(state) {
         conferenceParticipants: state.telehealthState.linkedParticipants,
         initiator: state.telehealthState.initiator,
         contextId: state.telehealthState.contextId,
-        menuClicked: state.authState.userState.menuClicked
+        menuClicked: state.authState.userState.menuClicked,
+        telehealthToken: state.telehealthState.token
     }
 };
 
