@@ -5,7 +5,7 @@ import PersonalDetail from '../PersonalDetail'
 import PointService from '../PointService'
 import Languages from '../Languages'
 import ClinicalCondition from '../ClinicalCondition'
-import { ScreenCover, Header, ModalPopup } from '../../../components';
+import { ScreenCover, Header, ModalPopup, Preloader } from '../../../components';
 import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
 import {goBack, push} from '../../../redux/navigation/actions';
 import Help from '../../../assets/HelpDoc/Help.pdf';
@@ -44,6 +44,7 @@ class Profile extends Component {
           />
           <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
+            {this.props.isLoading && <Preloader/>}
             <div className='width100 topWidgetBG' />
             <div className='container mainProfileContent bgWhite'>
               <div className='row d-flex justify-content-center m-auto'>
@@ -100,6 +101,7 @@ function mapStateToProps(state) {
     patientId: state.patientProfileState.patientId,
     isLoading: state.loadingState.isLoading,
     userType: state.patientProfileState.userType,
+    isLoading: state.loadingState.isLoading,
   };
 };
 
