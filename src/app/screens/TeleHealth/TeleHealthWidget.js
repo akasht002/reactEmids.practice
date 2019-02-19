@@ -23,7 +23,7 @@ import { Path } from '../../routes';
 import {push} from '../../redux/navigation/actions'
 import {setMenuClicked} from '../../redux/auth/user/actions';
 import { getUserInfo } from '../../utils/userUtility';
-import { USER_TYPE } from '../../constants/constants';
+import { SERVICE_PROVIDER_TYPES } from '../../constants/constants';
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -420,7 +420,7 @@ class TeleHealthWidget extends Component {
                     <TeleHealthParticipants
                         participantList={this.props.existingParticipantList}
                         ToggleAddParticipantsListView={this.DisplayInviteParticipantsList}
-                        initiator={this.props.initiator || getUserInfo().serviceProviderTypeId === USER_TYPE.SERVICE_PROVIDER_TYPE_ID}
+                        initiator={this.props.initiator || getUserInfo().serviceProviderTypeId === SERVICE_PROVIDER_TYPES.ENTITY_USER}
                     />
                     <TeleHealthInviteParticipants
                         participantList={this.props.conferenceParticipants}
