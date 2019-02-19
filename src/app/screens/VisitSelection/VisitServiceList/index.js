@@ -40,7 +40,6 @@ import {
 } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
-import { defaultCoreCipherList } from "constants";
 class VisitServiceList extends Component {
 
     constructor(props) {
