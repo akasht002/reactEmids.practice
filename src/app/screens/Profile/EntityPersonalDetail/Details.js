@@ -57,8 +57,8 @@ export const Details = props => {
        <div className={'width100'}>
         <div className={'SPAffiliatedList'}>
           <span>
-            {props.personalDetail.entity &&
-              props.personalDetail.entity.assignedBy}
+          Assigned by: <b>{props.personalDetail.entity &&
+              props.personalDetail.entity.assignedBy}</b>
           </span>
         </div>
       </div>
