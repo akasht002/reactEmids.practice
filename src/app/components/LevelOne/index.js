@@ -24,6 +24,7 @@ import {MultiSelectAvatar, GravatarOption, GravatarValue} from './AvatarMultiSel
 import {Gravatar} from './Gravatar';
 import {Progressbar} from './Progressbar'
 import UserAvatarMultiSelect from './UserAvatarMultiSelect';
+import {Carousel} from './Carousel'
 
 export {
     Calendar,
@@ -53,5 +54,6 @@ export {
     GravatarValue,
     Gravatar,
     Progressbar,
-    UserAvatarMultiSelect
+    UserAvatarMultiSelect,
+    Carousel
 };

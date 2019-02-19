@@ -9,7 +9,8 @@ const defaultState = {
     ServiceAreaList: [],
     FilterDataCount: '',
     isDashboardFilteredStatus: false,
-    status: 'All'
+    status: 'All',
+    SearchDataCount: '',
 };
 
 const ServiceRequestFilterState = (state = defaultState, action) => {
@@ -75,6 +76,11 @@ const ServiceRequestFilterState = (state = defaultState, action) => {
                 ...state,
                 status: action.data.status,
                 isDashboardFilteredStatus: action.data.isDashboardFilteredStatus
+            };
+        case ServiceRequestFiltersList.getSearchDataCountSuccess:
+            return {
+                ...state,
+                SearchDataCount: action.data
             };
         default:
             return state;
