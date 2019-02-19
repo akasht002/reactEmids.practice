@@ -6,6 +6,7 @@ import { Path } from '../../routes';
 import { USERTYPES } from '../../constants/constants';
 import { setMenuClicked } from '../auth/user/actions';
 import { onLogout } from '../auth/logout/actions';
+import { goBack } from '../navigation/actions';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
@@ -238,6 +239,7 @@ export function leaveVideoConference(checkRoute) {
                     dispatch(setRoomId(state.telehealthState.invitedRoomId))
                     dispatch(acceptVideoConference())
                 } else if (state.authState.userState.menuClicked) {
+                    dispatch(clearExistingRoom())
                     if (state.authState.userState.menuClicked === 'logout') {
                         dispatch(onLogout())
                     } else {
@@ -245,11 +247,12 @@ export function leaveVideoConference(checkRoute) {
                     }
                     dispatch(setMenuClicked(null))
                 } else if (!checkRoute) {
-                    dispatch(push(Path.dashboard))
+                    dispatch(clearExistingRoom())
+                    dispatch(goBack())
                 }
             dispatch(endLoading());
         }).catch((err) => {
-            dispatch(push(Path.dashboard))
+            dispatch(goBack())
             dispatch(endLoading());
         })
     }
@@ -305,6 +308,7 @@ export function endConference() {
                 dispatch(setRoomId(state.telehealthState.invitedRoomId))
                 dispatch(acceptVideoConference())
             } else if (state.authState.userState.menuClicked) {
+                dispatch(clearExistingRoom())
                 if (state.authState.userState.menuClicked === 'logout') {
                     dispatch(onLogout())
                 } else {
@@ -312,10 +316,12 @@ export function endConference() {
                 }
                 dispatch(setMenuClicked(null))
             } else {
-                dispatch(push(Path.dashboard))
+                dispatch(clearExistingRoom())
+                dispatch(goBack())
             }
             dispatch(endLoading());
         }).catch((err) => {
+            dispatch(goBack())
             dispatch(endLoading());
         })
     }
@@ -470,7 +476,7 @@ export function checkTeleHealth(data) {
                 if (teleHealthState.roomId === data.roomID) {
                     dispatch(clearInvitaion())
                     dispatch(setRoomId(0))
-                    if (teleHealthState.token) {
+                    if (teleHealthState.token && !teleHealthState.initiator) {
                         dispatch(leaveVideoConference())
                     }
                 }
