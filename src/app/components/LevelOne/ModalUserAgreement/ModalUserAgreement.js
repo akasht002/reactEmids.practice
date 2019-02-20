@@ -9,7 +9,7 @@ import './styles.css';
                     <ModalHeader className={"text-uppercase font-weight-light " + this.props.headerFooter}>{this.props.modalTitle}</ModalHeader>
                     <ModalBody>{this.props.ModalBody}</ModalBody>
                     <ModalFooter className={this.props.headerFooter}>
-                        <Button className="text-uppercase" color="primary" onClick={this.props.onClick}>OK</Button>
+                        <Button color="primary" onClick={this.props.onClick}>{this.props.isAgree ? 'Agree' : 'OK'}</Button>
                     </ModalFooter>
                 </Modal>
         );

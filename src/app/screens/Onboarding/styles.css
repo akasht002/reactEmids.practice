@@ -222,3 +222,8 @@ height: auto;
 
 /*cross-browser-code-for-IE11&IE-edge*/
 .tempPassForm input::-ms-clear, .tempPassForm input::-ms-reveal { display: none; }
+
+.EULA .EULAModal .EULAModalContent
+{
+color:#444;
+}
