@@ -938,9 +938,36 @@ overflow-y: auto;
 {
 .container-block .outer-shadow
 {
-height: 550px !important;
-overflow-y: auto;
+height:100% !important;
+padding-top: 90px;
 }
+
+.outer-shadow p
+{
+    text-align:justify; 
+}
+
+.container-block .outer-shadow
+{
+    box-shadow: none;
+    -webkit-box-shadow:none;
+}
+
+.container-block .outer-shadow .inner-block.ptb-15-10
+{
+    padding: 20px 0px;
+    height: 410px !important;
+    float: none;
+    overflow-y: auto;
+}
+
+.title-head
+{
+    text-align: left;
+    font-size: 18px;
+}
+
+
 }
 
 .container-block .outer-shadow
@@ -962,5 +989,18 @@ clear:both;
 -webkit-box-shadow: 0 0 20px rgba(0,0,0, 0.1);
 box-shadow: 0 0 20px rgba(0,0,0, 0.1);
 }
+
+.outer-shadow p
+{
+    text-align: justify;
+}
+
+/*IE_11_&_IE_10_for_EULA*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .EULA .modal-content .modal-footer .btn { position: relative;} /* IE10 */
+     *::-ms-backdrop, .EULA .modal-content .modal-footer .btn { position: relative; } /* IE11 */
+     }
 
 /*end-EULA-Code-for-onboarding*/
