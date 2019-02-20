@@ -832,3 +832,12 @@ and (orientation: landscape) {
   } 
   
 }
+
+
+@media only screen and (max-width: 480px) {
+    div.sideContent
+    {
+      top: 0px;
+    }
+
+}
