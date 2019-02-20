@@ -902,3 +902,65 @@ div.scrollarea .scrollbar-container.vertical
     margin-top: 0px !important;
     margin-left: 0px !important;
 }
+
+
+
+/*EULA-Code-for-onboarding*/
+@media (min-width: 1536px)
+{
+.container-block .outer-shadow
+{
+height: 782px !important;
+overflow-y: auto;
+}
+}
+
+@media (min-width: 1920px)
+{
+.container-block .outer-shadow
+{
+height: 890px !important;
+overflow-y: auto;
+}
+}
+
+
+@media only screen and (max-width: 1024px)
+{
+.container-block .outer-shadow
+{
+height: 690px !important;
+overflow-y: auto;
+}
+}
+
+@media only screen and (max-width: 480px)
+{
+.container-block .outer-shadow
+{
+height: 550px !important;
+overflow-y: auto;
+}
+}
+
+.container-block .outer-shadow
+{
+overflow-y: auto;
+height: 550px;
+}
+
+.full-block.eula-update
+{
+width:100%;
+display:block;
+float:left;
+clear:both;
+}
+.outer-shadow.eula-update
+{
+-moz-box-shadow: 0 0 20px rgba(0,0,0, 0.1);
+-webkit-box-shadow: 0 0 20px rgba(0,0,0, 0.1);
+box-shadow: 0 0 20px rgba(0,0,0, 0.1);
+}
+
+/*end-EULA-Code-for-onboarding*/
