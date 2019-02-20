@@ -197,7 +197,7 @@ class Dashboard extends React.Component {
         </div>
         <ModalPopup
           isOpen={this.state.showVisitModal}
-          ModalBody={<span className="default-444">Standby Mode cannot be switched on during a Visit processing.</span>}
+          ModalBody={<span className="default-444">Stand by Mode cannot be switched on during a Visit processing.</span>}
           btn1='OK'
           className='modal-sm'
           headerFooter='d-none'
@@ -209,7 +209,7 @@ class Dashboard extends React.Component {
         />
         <ModalPopup
           isOpen={this.state.showModalOnTurnOff}
-          ModalBody={<span>Are you sure you want to turn off the standby mode?</span>}
+          ModalBody={<span>Are you sure you want to turn off the stand by mode?</span>}
           btn1='YES'
           btn2='NO'
           className='modal-sm'
@@ -234,7 +234,7 @@ class Dashboard extends React.Component {
         />
         <ModalPopup
           isOpen={this.state.checkEightHour}
-          ModalBody={<span>You have reached the maximum time limit for Standby mode today. Standby mode will be enabled again tomorrow.</span>}
+          ModalBody={<span>You have reached the maximum time limit for Stand by mode today. Stand by mode will be enabled again tomorrow.</span>}
           btn1='OK'
           toggle={() =>
             this.setState({
