@@ -140,6 +140,10 @@ export const USER_TYPE = {
     SERVICE_PROVIDER_TYPE_ID: 2
 }
 
+export const SERVICE_PROVIDER_TYPES = {
+    ENTITY_USER: 2
+}
+
 export const serviceTypesImage = {
     1: 'ADL Ambulation & Mobility.svg',
     2: 'ADL Bathing.svg',

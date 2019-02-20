@@ -97,7 +97,7 @@ function mapStateToProps (state) {
   return {
     personalDetail: state.patientProfileState.personalDetail,
     profileImgData: state.patientProfileState.imageData,
-    profilePercentage: state.patientProfileState.profilePercentage
+    profilePercentage: state.patientProfileState.patientProfilePercentage
   }
 }
 

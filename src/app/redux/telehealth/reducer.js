@@ -7,7 +7,7 @@ const defaultState = {
     roomId: '',
     linkedParticipants: [],
     linkedPatients: [],
-    conferenceId: '',
+    conferenceId: 0,
     allParticipants: [],
     participantsByConferenceId: [],
     initiator: false,

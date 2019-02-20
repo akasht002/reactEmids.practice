@@ -25,7 +25,7 @@ import { setPatient, setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
 import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
-import { createVideoConference } from "../../redux/telehealth/actions";
+import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
 import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
 import { PREVIOUS_MONTH,NEXT_MONTH } from './constant'
@@ -350,6 +350,7 @@ class serviceCalendar extends React.Component {
           thumbNail: item.patientImage
         }
       ];
+      this.props.saveContextData(item.patientId);
       this.props.createDataStore(selectedParticipants);
     }
   };
@@ -693,7 +694,8 @@ function mapDispatchToProps(dispatch) {
     setESP: data => dispatch(setESP(data)),
     goToESPProfile: () => dispatch(push(Path.ESPProfile)),
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
-    setServiceVisitDate: (data) => dispatch(setServiceVisitDate(data))
+    setServiceVisitDate: (data) => dispatch(setServiceVisitDate(data)),
+    saveContextData: (data) => dispatch(saveContextData(data))
   };
 }
 
