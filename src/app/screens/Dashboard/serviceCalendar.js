@@ -25,10 +25,10 @@ import { setPatient, setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
 import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
-import { createVideoConference } from "../../redux/telehealth/actions";
+import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
 import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
-
+import { PREVIOUS_MONTH,NEXT_MONTH } from './constant'
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -328,17 +328,8 @@ class serviceCalendar extends React.Component {
           participantId: item.patientId
         }
       ];
-      let userId = this.props.loggedInUser.coreoHomeUserId;
-      let loggedInUser = {
-        userId: userId,
-        participantType: USERTYPES.SERVICE_PROVIDER,
-        participantId: this.props.loggedInUser.serviceProviderId
-      };
-      selectedParticipants.push(loggedInUser);
       let data = {
         participantList: selectedParticipants,
-        createdBy: userId,
-        createdByType: USERTYPES.SERVICE_PROVIDER,
         title: "",
         context: item.patientId
       };
@@ -359,6 +350,7 @@ class serviceCalendar extends React.Component {
           thumbNail: item.patientImage
         }
       ];
+      this.props.saveContextData(item.patientId);
       this.props.createDataStore(selectedParticipants);
     }
   };
@@ -481,8 +473,8 @@ class serviceCalendar extends React.Component {
     let count = this.state.width > '1280' ? 7 : 5
 
     let current_month = new Date().getMonth();
-    let pervious_month = moment.months().splice(current_month - 3, 3);
-    let next_month_list = moment.months().splice(current_month - 1, 3);
+    let pervious_month = moment.months().splice(current_month - 3, PREVIOUS_MONTH);
+    let next_month_list = moment.months().splice(current_month - 1, NEXT_MONTH);
 
     let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month, 10)])
     let nextMonthLists = current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
@@ -702,7 +694,8 @@ function mapDispatchToProps(dispatch) {
     setESP: data => dispatch(setESP(data)),
     goToESPProfile: () => dispatch(push(Path.ESPProfile)),
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
-    setServiceVisitDate: (data) => dispatch(setServiceVisitDate(data))
+    setServiceVisitDate: (data) => dispatch(setServiceVisitDate(data)),
+    saveContextData: (data) => dispatch(saveContextData(data))
   };
 }
 

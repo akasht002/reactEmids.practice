@@ -1,4 +1,4 @@
-import { push } from '../navigation/actions';
+import { push, goBack } from '../navigation/actions';
 import { API } from '../../services/api';
 import { Path } from '../../routes';
 import {
@@ -136,6 +136,7 @@ const getConversationSummaryItemSignalRSuceess = (data) => {
                 if (participant.userId === userId && participant.participantType === userType) {
                     conversationSummaryData = [data, ...conversationSummaryData];
                 }
+                return participant;
             });
         }
         dispatch(setConversationSummary(conversationSummaryData));
@@ -231,7 +232,9 @@ export const openedAsyncPage = (data) =>{
 
 export function onFetchConversationSummary(pageNumber, hideLoading = false) {
     return (dispatch) => {
-        hideLoading ? null : dispatch(convLoadingStart());
+        if (!hideLoading) {
+            dispatch(convLoadingStart())
+        }
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
         AsyncGet(API.getConversationSummary 
@@ -241,18 +244,24 @@ export function onFetchConversationSummary(pageNumber, hideLoading = false) {
             + Pagination.pageSize)
             .then(resp => {
                 dispatch(setConversationSummary(resp.data));
-                hideLoading ? null : dispatch(convLoadingEnd());
+                if (!hideLoading) {
+                    dispatch(convLoadingEnd())
+                }
             })
             .catch(err => {
-                hideLoading ? null : dispatch(convLoadingEnd());
+                if (!hideLoading) {
+                    dispatch(convLoadingEnd())
+                }
             })
     }
 };
 
 
-export function onFetchConversation(id) {
+export function onFetchConversation(id, hideLoading = false) {
     return (dispatch, getState) => {
-        dispatch(convLoadingStart());
+        if (!hideLoading) {
+            dispatch(convLoadingStart());
+        }
         let state = getState();
         let conversationId = id ? id : state.asyncMessageState.currentConversation.conversationId;
         let context = state.asyncMessageState.currentConversation.context
@@ -266,18 +275,38 @@ export function onFetchConversation(id) {
             .then(resp => {
                 dispatch(setConversationData(resp.data));
                 dispatch(setCurrentOpenConversation(resp.data));
-                dispatch(convLoadingEnd());
+                if (!hideLoading) {
+                    dispatch(convLoadingEnd());
+                }
+                
             })
             .catch(err => {
-                dispatch(convLoadingEnd())
+                if (!hideLoading) {
+                    dispatch(convLoadingEnd())
+                }
             })
     }
 };
 
 export function onCreateNewConversation(data) {
     return (dispatch) => {
+        const userInfo = getUserInfo();
+        let asyncData = {
+            createdBy: userInfo.coreoHomeUserId,
+            createdByType: USERTYPES.SERVICE_PROVIDER,
+            title: data.title,
+            context: data.context,
+            participantList: [
+                {
+                    userId: userInfo.coreoHomeUserId,
+                    participantType: USERTYPES.SERVICE_PROVIDER,
+                    participantId: userInfo.serviceProviderId
+                },
+                ...data.participantList
+            ]
+        };
         dispatch(startLoading());
-        AsyncPost(API.createNewConversation, data)
+        AsyncPost(API.createNewConversation, asyncData)
             .then(resp => {
                 dispatch(setNewConversationSuccess(resp.data.conversationId));
                 dispatch(setCurrentOpenConversation(resp.data));
@@ -457,7 +486,7 @@ export function goToConversationSummary() {
         let conversatinId = getState().asyncMessageState.currentConversation.conversationId;
         dispatch(removeFromGroup(conversatinId));
         dispatch(clearConversation());
-        dispatch(push(Path.messageSummary));
+        dispatch(goBack())
     };
 };
 
@@ -502,7 +531,7 @@ export function getLatestMessages(conversationId){
         if (interval) {
             clearInterval(interval);
         }
-        dispatch(checkLatestMessages(conversationId));
+        dispatch(onFetchConversation(conversationId, true));
         interval = setInterval(() => {
             dispatch(checkLatestMessages(conversationId));
         }, state.asyncMessageState.callbackInterval);
@@ -520,6 +549,7 @@ export function checkConversationCreated(conversation) {
                 if (data.userId === userId && data.participantType === userType) {
                     dispatch(getConversationSummaryItemSignalR(conversation.conversationId))
                 }
+                return data;
             });
         }
     }

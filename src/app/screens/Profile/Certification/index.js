@@ -258,9 +258,9 @@ class Certification extends Component {
 
         if (this.state.certificationModal) {
             if (this.state.isAdd) {
-                modalTitle = 'Add Certification';
+                modalTitle = 'Add Certification/License';
             } else {
-                modalTitle = 'Edit Certification';
+                modalTitle = 'Edit Certification/License';
             }
             modalContent = CertificationModalContent;
         }
@@ -324,7 +324,7 @@ class Certification extends Component {
 
                 <ModalPopup
                     isOpen={this.state.showModalOnDelete}
-                    ModalBody={<span>Do you really want to remove the certification?</span>}
+                    ModalBody={<span>Do you really want to remove the Certification?</span>}
                     btn1="YES"
                     btn2="NO"
                     className="modal-sm"

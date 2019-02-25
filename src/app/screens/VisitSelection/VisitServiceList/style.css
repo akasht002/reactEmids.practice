@@ -1301,3 +1301,53 @@ color: #444;
     text-align: center;
     margin: 0 auto;
 }
+
+.ProfileIconSearch:hover, .ProfileHeaderFilter:hover, .ProfileSearchContainer .closeBtn{
+    cursor: pointer;
+}
+
+
+div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearchContainer .form-control:focus, .ProfileSearchContainer .closeBtn{
+    background-color: #f8f8f8;
+}
+
+.ProfileSearchContainer .closeBtn{
+    display: inline;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border: 0;
+    padding: 0;
+}
+
+.ProfileSearchContainer .closeBtn:after{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-image: url("../../../assets/images/remove.png");
+}
+
+
+.ProfileHeaderOptions div.ProfileSearchContainer.true
+{
+    width: calc(100% - 28px);
+    right: 0px;
+    z-index: 99999;
+    background-color: #f8f8f8;
+    padding-right: 32px;
+}
+
+/*cross-browser-code-IE11*/
+/*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .ProfileHeaderOptions div.ProfileSearchContainer.true {height: 50px; top:0px; margin-top: 18px; } /* IE10 */
+     *::-ms-backdrop, .ProfileHeaderOptions div.ProfileSearchContainer.true { height: 50px; top:0px; margin-top: 18px;} /* IE11 */
+     }

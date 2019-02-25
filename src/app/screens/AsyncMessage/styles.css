@@ -1920,16 +1920,16 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
 {
     display: block;
     width: 100%;
-    height: auto;
+    height: calc(100vh - 481px);
     position: relative;
+    margin-bottom: 15px;
 }
 .participantsSearchForm .ParticipantsListContainer .participantsSearchList.ChatContainer
 {
     padding-bottom: 50px;
     display: block;
     width: 100%;
-    height: calc;
-    height: calc(100vh - 522px);
+    height:100%;
 }
 
 
@@ -2043,5 +2043,18 @@ button:disabled {
   {
    text-align: right;
   }
+
+  .box-modelnewsearch .Select.has-value.is-clearable.Select--single>.Select-control .Select-value
+  {
+      padding-top: 5px;
+  }
+
+  .chatMessage.yourChat .ChatBubble .bubbleBody .bubbleMsg {
+    white-space: pre;
+}
   
-     
+.chatMessage.mr-auto .ChatBubble .bubbleBody .bubbleMsg
+{
+white-space:pre;
+}
+  

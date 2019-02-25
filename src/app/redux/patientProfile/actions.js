@@ -126,7 +126,7 @@ export function getProfilePercentage() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
         PatientGet(API.getPatientProfilePercentage + patientId)
-        .then((resp) => {
+        .then((resp) => {            
             dispatch(getProfilePercentageSuccess(resp.data))
         }).catch((err) => {
         })

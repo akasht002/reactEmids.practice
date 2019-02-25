@@ -370,8 +370,18 @@ class Summary extends Component {
                                                         <span>Taxes and Fees</span></p>
                                                 </div>
                                                 <div className="col-md-4 CostTableContainer Cost">
-                                                    <p><span>{this.props.CalculationsData.totalChargableTime}</span>
-                                                        <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate.toFixed(2)}</span></p>
+                                                    <p>
+                                                        <span>{this.props.CalculationsData.totalChargableTime}</span>
+                                                        {this.props.SummaryDetails.hourlyRate === 0 ?
+                                                            <span>$0.00</span>
+                                                            :
+                                                            <span>
+                                                                ${this.props.SummaryDetails.hourlyRate &&
+                                                                    this.props.SummaryDetails.hourlyRate.toFixed(2)}
+                                                            </span>
+                                                        }
+                                                        {/* <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate.toFixed(2)}</span> */}
+                                                    </p>
                                                     <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
                                                         <span>${(this.props.CalculationsData.taxes)}</span></p>
                                                 </div>

@@ -6,6 +6,7 @@ import { ContactMenu } from '../../../data/HeaderMenu';
 import { getUserData, sendTemporaryPasscode, verifyTempPasscode, formDirty, onCancelClick, getEntityUserData } from '../../../redux/onboarding/VerifyContact/actions';
 import { Input, Button, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalPopup } from '../../../components';
 import { checkSpace } from '../../../utils/validations'
+import Help from '../../../assets/HelpDoc/Help.pdf';
 import '../styles.css';
 import { USERTYPES } from "../../../constants/constants";
 
@@ -133,7 +134,7 @@ class VerifyContact extends React.Component {
                         </div>
                         <div className="row mt-auto verify-msgie11">
                             {this.state.passCodeSentMsg && <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been {this.state.clickHereResent && <span>re</span>}sent to your registered Contact Number.</span>}
-                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickReSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <Link to="/verifycontact" className="primaryColor px-1">Support</Link></span>
+                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickReSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <a href = {Help} target = "_blank" className="primaryColor px-1">Support</a></span>
                         </div>
                     </div>
                 </CoreoWizScreen>

@@ -25,6 +25,7 @@ import {
 import { formatPhoneNumber } from '../../../utils/formatName'
 import { SETTING } from '../../../services/api'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
+import { formatContactNumber, formatContactNumberValue } from '../../../utils/validations'
 
 class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -194,7 +195,8 @@ class PersonalDetail extends React.PureComponent {
       city === '' || this.state.city === null ||
       zipCode === '' || this.state.zipCode === null ||
       streetAddress === '' || this.state.streetAddress === null ||
-      selectedState === '' || this.state.selectedState === null
+      selectedState === '' || this.state.selectedState === null || 
+      this.state.phoneNumberInvalid 
     ) {
       let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
       if (city === '' || city === null) {
@@ -255,6 +257,8 @@ class PersonalDetail extends React.PureComponent {
       isCityInvalid: false,
       isZipInvalid: false,
       isStateInvalid: false,
+      ageInvaild: false,
+      yearOfExpInvaild: false,
       zipCode: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].zipCode,
       city: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].city,
       streetAddress: this.props.personalDetail && this.props.personalDetail.address[0] && this.props.personalDetail.address[0].streetAddress,
@@ -325,6 +329,21 @@ class PersonalDetail extends React.PureComponent {
     } else {
       return false;
     }
+  }
+
+  textChangeContactNumber = (e) => {
+    const onlyNums = formatContactNumber(e.target.value);
+    if (onlyNums.length < 10) {
+      this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true, phoneNumberInvalid: false })
+    } else if (onlyNums.length === 10) {
+      const number = formatContactNumberValue(onlyNums);
+      this.setState({
+        phoneNumber: number,
+        phoneNumberInvalid: false,
+        disabledSaveBtn: false
+      })
+    }
+    
   }
 
   reset = () => {
@@ -887,6 +906,7 @@ class PersonalDetail extends React.PureComponent {
           <Input
             name='hourlyRate'
             label='Hourly Rate ($/hr)'
+            placeholder="000.00"
             autoComplete='off'
             type='text'
             value={this.state.hourlyRate}
@@ -938,7 +958,7 @@ class PersonalDetail extends React.PureComponent {
             className={"form-control " + (this.state.hourlyRateInvalid && 'inputFailure')}
           />
           <small className="text-danger d-block OnboardingAlert">
-            {this.state.hourlyRateInvalid && 'Please enter valid HourlyRate'}
+            {this.state.hourlyRateInvalid && 'Please enter valid Hourly Rate'}
           </small>
         </div>
         <div className='hrLine' />
@@ -1085,26 +1105,9 @@ class PersonalDetail extends React.PureComponent {
                     autoComplete='off'
                     maxlength='10'
                     type='text'
-                    value={formatPhoneNumber(this.state.phoneNumber)}
+                    value={formatContactNumberValue(this.state.phoneNumber)}
                     className={"form-control custome-placeholder " + (this.state.phoneNumberInvalid && 'inputFailure')}
-
-                    textChange={e => {
-                      const onlyNums = e.target.value.replace(/[^0-9]/g, '')
-                      if (onlyNums.length < 10) {
-                        this.setState({ phoneNumber: onlyNums, disabledSaveBtn: true })
-                      } else if (onlyNums.length === 10) {
-                        const number = onlyNums.replace(
-                          /(\d{3})(\d{3})(\d{4})/,
-                          '$1-$2-$3'
-                        )
-                        this.setState({
-                          phoneNumber: number,
-                          phoneNumberInvalid: false,
-                          disabledSaveBtn: false
-                        })
-                      }
-                    }
-                    }
+                    textChange={this.textChangeContactNumber}
                     onBlur={(e) => {
                       if (getLength(e.target.value) < 10) {
                         this.setState({ phoneNumberInvalid: true });

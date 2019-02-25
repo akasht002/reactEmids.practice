@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideMenu, ProfileHeader, ProfileImage, ScreenCover, ModalPopup } from '../../../components';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
-//commented because of unnecessery call.
-// import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import { MenuData } from '../../../data/MenuData';
 import { Path } from '../../../routes/';
 import { updateEula } from '../../../redux/auth/UserAgreement/actions';
@@ -12,8 +10,6 @@ import { ModalUserAgreement } from '../../../components';
 import { push } from '../../../redux/navigation/actions';
 import ParticipantContainer from '../../TeleHealth/ParticipantContainer';
 import Help from '../../../assets/HelpDoc/Help.pdf';
-//commented because of unnecessery call.
-// import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
 import AboutUs from '../../AboutUs';
 import AboutContent from '../../AboutUs/aboutContent';
 import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/actions';
@@ -27,10 +23,9 @@ import { EntitySPProfileHeaderMenu } from "../../../data/EntitySPProfileHeaderMe
 import { EntityMenuData } from '../../../data/EntityMenuData';
 import { getUserInfo } from '../../../services/http';
 import { clearRoom, joinVideoConference, rejectConference, createVideoConference, createDataStore } from '../../../redux/telehealth/actions';
-// import VisitNotification from '../../VisitProcessingNotification/VisitNotification';
 import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
 import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions';
-import {isIEBrowser, isMobileBrowser, CHECK_DEVICE_MEDIA} from '../../../utils/browserUtility'
+import {isIEBrowser, isMobileBrowser} from '../../../utils/browserUtility'
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -88,14 +83,12 @@ class AsideScreenCover extends React.Component {
     }
 
     checkDeviceStatus = (link, join, createData) => {
-        // navigator.getMedia = CHECK_DEVICE_MEDIA;
-        // navigator.getMedia({video: true, audio: true}, () => {
-        //     this.successCallbackOnDeviceStatus(link, join, createData)
-        // }, () => {
-        //     this.errorCallbackOnDeviceStatus(link, join, createData)
-        // });
         navigator.mediaDevices.getUserMedia({video: true, audio: true})
-        .then(() => {
+        .then((stream) => {
+            let tracks = stream.getTracks()
+            tracks.forEach((track) => {
+                track.stop();
+            });
             this.successCallbackOnDeviceStatus(link, join, createData)
         })
         .catch(() => {
@@ -238,9 +231,10 @@ class AsideScreenCover extends React.Component {
                 <ModalUserAgreement
                     isOpen={this.props.isEulaUpdated}
                     ModalBody={<div dangerouslySetInnerHTML={{ __html: this.props.eulaContent }} />}
-                    className="modal-lg"
+                    className="modal-lg EULA"
                     modalTitle="User Agreement has been updated, please accept to proceed."
                     onClick={this.onClickOk}
+                    isAgree={true}
                 />
                 <ParticipantContainer
                     onRef={ref => (this.participantComponent = ref)}
@@ -270,7 +264,7 @@ class AsideScreenCover extends React.Component {
                 />
                 <ModalPopup
                     isOpen={this.props.showTelehealthInvite}
-                    ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference for {this.props.personalDetail.firstName} {this.props.personalDetail.lastName}.</span>}
+                    ModalBody={<span>{this.props.initiatorFirstName} {this.props.initiatorLastName} is inviting you to join a video conference.</span>}
                     btn1="Accept"
                     btn2="Decline"
                     className="zh"

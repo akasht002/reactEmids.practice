@@ -11,7 +11,7 @@ export const MORNING = "Morning";
 export const AFTERNOON = "Afternoon";
 export const EVENING = "Evening";
 export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
-export const VIEW_ALL_COUNT = 4
+export const VIEW_ALL_COUNT = 5
 
 export const USER_LOCALSTORAGE = "CoreoSP";
 export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
@@ -140,6 +140,10 @@ export const USER_TYPE = {
     SERVICE_PROVIDER_TYPE_ID: 2
 }
 
+export const SERVICE_PROVIDER_TYPES = {
+    ENTITY_USER: 2
+}
+
 export const serviceTypesImage = {
     1: 'ADL Ambulation & Mobility.svg',
     2: 'ADL Bathing.svg',
@@ -163,9 +167,25 @@ export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_TIME = 200
 
+export const SERVICE_REQ_STATUS = {
+    OPEN: 35,
+    INVITED: 36,
+    APPLIED: 37,
+    HIRED: 38,
+    NOT_HIRED: 39,
+    IN_PROGRESS: 40,
+    COMPLETED: 41,
+    CLOSED: 42,
+    CANCELLED: 47,
+    NOT_INTERESTED: 58,
+    PENDING_APPROVAL: 106,
+    DECLINED: 107
+}
+
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
 
 export const DEFAULT_FROM_DATE = '1900-01-01';
 export const DEFAULT_TO_DATE = '2100-01-01';
 export const CONTACT_NOT_FOUND = 'Phone Number Not Found.'
 export const PHONE_NUMBER_TEXT = 'Phone Number:'
+

@@ -45,6 +45,7 @@ class PerformTasks extends Component {
         this.checkedTask = [];
         this.checkedTaskInitial = [];
         this.taskCount = '';
+        this.percentageCompletion = 0;
     };
 
     toggle = () => {
@@ -86,7 +87,10 @@ class PerformTasks extends Component {
                 return serviceType;
             });
         }
-        this.setState({ taskList: nextProps.PerformTasksList, isLoading: nextProps.isLoading })
+        this.setState({ 
+            taskList: nextProps.PerformTasksList, 
+            isLoading: nextProps.isLoading
+        })
     }
 
     handelPatientProfile = (data) => {
@@ -112,6 +116,7 @@ class PerformTasks extends Component {
             taskCount: (this.state.taskList.totalTask - (this.checkedTask).length)
         });
         this.taskCount = (this.state.taskList.totalTask - (this.checkedTask).length);
+        this.percentageCompletion = percentageCalculation;
     }
 
     startService = (data, visitId) => {
@@ -307,9 +312,9 @@ class PerformTasks extends Component {
                                     <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                                         <span className="bottomTaskName">Tasks</span>
                                         <span className="bottomTaskRange">
-                                            <i style={{ width: this.state.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
+                                            <i style={{ width: this.percentageCompletion && this.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
                                         </span>
-                                        <span className="bottomTaskPercentage">{this.state.percentageCompletion}%</span>
+                                        <span className="bottomTaskPercentage">{this.percentageCompletion && this.percentageCompletion}%</span>
                                     </div>
                                     <Button
                                         classname='btn btn-primary ml-auto'

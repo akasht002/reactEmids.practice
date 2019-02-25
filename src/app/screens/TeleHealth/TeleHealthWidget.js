@@ -22,6 +22,8 @@ import './SliderSlick.css';
 import { Path } from '../../routes';
 import {push} from '../../redux/navigation/actions'
 import {setMenuClicked} from '../../redux/auth/user/actions';
+import { getUserInfo } from '../../utils/userUtility';
+import { SERVICE_PROVIDER_TYPES } from '../../constants/constants';
 
 class TeleHealthWidget extends Component {
     constructor(props) {
@@ -66,6 +68,11 @@ class TeleHealthWidget extends Component {
         clearTimeout(this.leaveTimeout);
         clearTimeout(this.inactiveSession);
         this.props.clearLinkedParticipants();
+        if (this.state.previewTracks) {
+            this.state.previewTracks.forEach(track => {
+                track.stop();
+            });
+        }
         if (this.state.hasJoinedRoom) {
             this.leaveRoom(this.state.hasJoinedRoom);
         }
@@ -124,10 +131,12 @@ class TeleHealthWidget extends Component {
             hasJoinedRoom: false,
             localMediaAvailable: false
         });
-        if (this.props.initiator) {
-            this.props.endConference();
-        } else {
-            this.props.leaveVideoConference(data);
+        if (this.props.telehealthToken) {
+            if (this.props.initiator) {
+                this.props.endConference();
+            } else {
+                this.props.leaveVideoConference(data);
+            }
         }
     }
 
@@ -177,11 +186,11 @@ class TeleHealthWidget extends Component {
         this.checkMaxVideoCallHour();
         this.checkTimeStarted()
         var previewContainer = this.refs.localMediaMe;
-        if (!previewContainer.querySelector('video')) {
+        if (previewContainer && !previewContainer.querySelector('video')) {
             this.attachParticipantTracks(room.localParticipant, previewContainer);
         }
         var fullWidthMediaContainer = this.refs.fullWidthMedia;
-        if (!fullWidthMediaContainer.querySelector('video')) {
+        if (fullWidthMediaContainer && !fullWidthMediaContainer.querySelector('video')) {
             this.attachParticipantTracks(room.localParticipant, fullWidthMediaContainer);
         }
 
@@ -411,7 +420,7 @@ class TeleHealthWidget extends Component {
                     <TeleHealthParticipants
                         participantList={this.props.existingParticipantList}
                         ToggleAddParticipantsListView={this.DisplayInviteParticipantsList}
-                        initiator={this.props.initiator}
+                        initiator={this.props.initiator || getUserInfo().serviceProviderTypeId === SERVICE_PROVIDER_TYPES.ENTITY_USER}
                     />
                     <TeleHealthInviteParticipants
                         participantList={this.props.conferenceParticipants}
@@ -487,7 +496,8 @@ function mapStateToProps(state) {
         conferenceParticipants: state.telehealthState.linkedParticipants,
         initiator: state.telehealthState.initiator,
         contextId: state.telehealthState.contextId,
-        menuClicked: state.authState.userState.menuClicked
+        menuClicked: state.authState.userState.menuClicked,
+        telehealthToken: state.telehealthState.token
     }
 };
 

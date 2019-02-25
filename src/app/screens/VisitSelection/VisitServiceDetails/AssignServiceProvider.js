@@ -6,7 +6,8 @@ import { isFutureDay } from '../../../utils/dateUtility'
 import { setESP } from "../../../redux/patientProfile/actions";
 import { ModalPopup, Input } from '../../../components'
 import {
-  getEntityServiceProviderList
+  getEntityServiceProviderList,
+  getEntityServiceProviderListSearch,
 } from "../../../redux/dashboard/Dashboard/actions";
 import {
   getVisitServiceSchedule
@@ -30,6 +31,11 @@ class AssignServiceProvider extends Component {
     this.props.getEntityServiceProviderList();
   }
 
+  onchangeSearchServiceProvider = e => {
+    this.props.getEntityServiceProviderListSearch(e.target.value)
+  }
+
+
   getModalContent = (serviceProviderList) => {
     return (
       <form className="assign-serviceproblock">
@@ -40,6 +46,9 @@ class AssignServiceProvider extends Component {
           type='text'
           placeholder='search'
           className='form-control searchParticipants'
+          textChange={(e) => {
+            this.onchangeSearchServiceProvider(e)
+          }}
         />
         <div className="participantsSearchList">
           {serviceProviderList.map((item, index) => {
@@ -86,6 +95,7 @@ class AssignServiceProvider extends Component {
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
     });
+    this.props.getEntityServiceProviderList();
   };
 
   onSubmit = () => {
@@ -171,7 +181,7 @@ class AssignServiceProvider extends Component {
                     this.props.sp.entityServiceProviderLastName}
                 </span>
               </div>
-              {this.props.sp.visitStatusId === VISIT_STATUS_ID &&
+              {this.props.sp.visitStatusId === VISIT_STATUS_ID && isFutureDay(this.props.sp.visitDate) &&
               <span
                 className="EditIcon"
                 onClick={e => {
@@ -202,6 +212,7 @@ class AssignServiceProvider extends Component {
             this.setState({
               EditPersonalDetailModal: false
             })
+            this.props.getEntityServiceProviderList();
           }
           }
         />
@@ -216,6 +227,7 @@ function mapDispatchToProps(dispatch) {
     setESP: data => dispatch(setESP(data)),
     goToESPProfile: () => dispatch(push(Path.ESPProfile)),
     getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
+    getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
   }
 }
 
