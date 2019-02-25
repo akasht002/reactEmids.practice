@@ -9,6 +9,7 @@ import { checkPassword } from '../../../utils/validations'
 import { endUserAgreement } from '../../../assets/templates/EndUserAgreement';
 import '../styles.css';
 import { USERTYPES } from "../../../constants/constants";
+import {getEulaContent} from '../../../redux/auth/UserAgreement/actions'
 
 class SetPassword extends React.Component {
 
@@ -28,6 +29,7 @@ class SetPassword extends React.Component {
 
     componentDidMount(){
         this.props.getUserData()
+        this.props.getEulaContent();
     }
 
     validatePassword = () => {
@@ -163,7 +165,7 @@ class SetPassword extends React.Component {
                 />
                 <ModalUserAgreement
                     isOpen={this.state.agreementModal}
-                    ModalBody={endUserAgreement}
+                    ModalBody={<div dangerouslySetInnerHTML={{ __html: this.props.eulaContent }} />}
                     className="modal-lg EULA"
                     modalTitle="End User License Agreement"
                     onClick={() => this.setState({
@@ -179,7 +181,8 @@ function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onSetPassword: (data) => dispatch(setPassword(data)),
-        getUserData: () => dispatch(getUserData())
+        getUserData: () => dispatch(getUserData()),
+        getEulaContent: () => dispatch(getEulaContent())
     }
 };
 
@@ -188,7 +191,8 @@ function mapStateToProps(state) {
     return {
         userEmail: state.onboardingState.setPasswordState.userEmail,
         isLoading: state.onboardingState.setPasswordState.loading,
-        userType: state.onboardingState.verifyContactState.serviceProviderDetails.userType
+        userType: state.onboardingState.verifyContactState.serviceProviderDetails.userType,
+        eulaContent: state.authState.userAgreementState.eulaContent
     }
 };
 

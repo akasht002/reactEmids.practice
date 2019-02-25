@@ -231,9 +231,10 @@ class AsideScreenCover extends React.Component {
                 <ModalUserAgreement
                     isOpen={this.props.isEulaUpdated}
                     ModalBody={<div dangerouslySetInnerHTML={{ __html: this.props.eulaContent }} />}
-                    className="modal-lg"
+                    className="modal-lg EULA"
                     modalTitle="User Agreement has been updated, please accept to proceed."
                     onClick={this.onClickOk}
+                    isAgree={true}
                 />
                 <ParticipantContainer
                     onRef={ref => (this.participantComponent = ref)}
