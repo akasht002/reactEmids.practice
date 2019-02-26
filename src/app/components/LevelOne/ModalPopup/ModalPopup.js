@@ -35,7 +35,7 @@ class ModalPopup extends Component {
                 type='button'
                 classname='btn outline btn-primary mx-2 float-right'
                 label={this.props.btn1}
-                disable={false}
+                disable={this.props.btn1Disable ? this.props.btn1Disable : false}
                 onClick={this.props.onConfirm}
               />
             )}
