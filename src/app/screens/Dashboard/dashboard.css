@@ -2002,3 +2002,36 @@ vertical-align: middle;
     right: -5px;
     top: 0;
 }
+
+
+/*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices {display: block; width: calc(100% - 240px);} /* IE10 */
+     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices { display: block;  width: calc(100% - 240px);} /* IE11 */
+     }
+
+
+     @media all and (-ms-high-contrast:none)
+     {
+        .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf {display: table; max-width: calc(100% - 240px); } /* IE10 */
+     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf { display: table; max-width: calc(100% - 240px);} /* IE11 */
+     }
+
+     @media all and (-ms-high-contrast:none)
+     {
+        .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf  .ProfileCardImageContainer{display:table-cell;} /* IE10 */
+     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf .ProfileCardNameContainer { display: table-cell;} /* IE11 */
+     }
+
+    
+
+     @media all and (-ms-high-contrast:none)
+     {
+        .bottomProfile .ProfileCard .list-group .list-group-item.ProfileShowMore {z-index: 1000 !important;} 
+     *::-ms-backdrop, .bottomProfile .ProfileCard .list-group .list-group-item.ProfileShowMore {z-index: 1000 !important;}  
+     }
+
+     
+    
