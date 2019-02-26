@@ -41,7 +41,7 @@ export function getUTCTimeInLocal(startTime, endTime) {
     return localEndDate.diff(localStartDate, "seconds")
 }
 
-export function getUtcTimeDiff(startTime, endTime) {
+export function getUtcTimeDiff(startTime) {
     var gmtDateTime = moment.utc(startTime);
     var UTCtime = new Date().getTime();
     return UTCtime.diff(gmtDateTime, "seconds")
