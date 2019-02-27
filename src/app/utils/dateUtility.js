@@ -65,3 +65,7 @@ export function getDoubleDigitTime(value) {
     }
     return updatedValue
 }
+
+export function getTimeZoneOffset() {
+    return new Date().getTimezoneOffset()
+}
