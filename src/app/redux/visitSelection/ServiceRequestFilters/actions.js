@@ -1,8 +1,9 @@
 import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
 import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
-import _ from "lodash"
-import { SERVICE_REQ_STATUS } from '../../../constants/constants'
+import _ from "lodash";
+import { SERVICE_REQ_STATUS } from '../../../constants/constants';
+import { getTimeZoneOffset } from '../../../utils/dateUtility';
 
 export const ServiceRequestFiltersList = {
     getServiceCategoryListSuccess: 'get_service_request_filters_list_success/servicerequestfilters',
@@ -185,7 +186,8 @@ export function getFilter(data) {
                 "FromDate": data.startDate,
                 "ToDate": data.endDate,
                 "ServiceAreas": data.ServiceAreas,
-                "serviceProviderId": data.serviceProviderId
+                "serviceProviderId": data.serviceProviderId,
+                "offset": getTimeZoneOffset()
             }
         }
 
@@ -211,7 +213,8 @@ export function getFilterDataCount(data) {
             "FromDate": data.startDate,
             "ToDate": data.endDate,
             "ServiceAreas": data.ServiceAreas,
-            "serviceProviderId": data.serviceProviderId
+            "serviceProviderId": data.serviceProviderId,
+            "offset": getTimeZoneOffset()
         }
         elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
             dispatch(getFilterDataCountSuccess(resp.data))
