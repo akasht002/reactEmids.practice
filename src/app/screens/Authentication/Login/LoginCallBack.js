@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CallbackComponent } from "redux-oidc";
 import userManager from "../../../utils/userManager";
-import { ScreenCover } from '../../../components';
+import { ScreenCover, Preloader } from '../../../components';
 import { onLoginSuccess, onLoginFail } from '../../../redux/auth/login/actions';
 import {
   Navbar,
@@ -25,13 +25,16 @@ class LoginCallBack extends Component {
           errorCallback={error => {
             console.log(error)
           }}>
-          <div className="redirect-screen">
+          {/* <div className="redirect-screen">
             <Navbar className="navbar-light boxShadowBottom white-backgnd" expand="md">
               <NavbarBrand className="text-uppercase px-3 onboardingLogo">
                 <img src={require('../../../assets/images/logo/CoreoHomeGray.png')} alt="coreoLogo" />
               </NavbarBrand>
             </Navbar>
             <div className="HomeLoader"></div>
+          </div> */}
+          <div className="loginCallback">
+            <Preloader/>
           </div>
         </CallbackComponent>
       </ScreenCover>
