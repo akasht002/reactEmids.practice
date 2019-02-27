@@ -34,13 +34,13 @@ class Filter extends Component {
 
         return (
             <div className={"FilterWidget " + this.props.isOpen}>
-                <div className="FilterWidgetForm">
+                
+                <form className="FilterWidgetForm">
                     <div className="FilterContainer FilterTop">
                         <span>Filters</span>
                         <span className="FilterCloseIcon" onClick={this.props.toggle} />
                     </div>
-                    <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
-                        className="FilterContainer FilterMiddle">
+                    <div className="FilterContainer FilterMiddle">
                         <div className="FilterMiddleContent FilterMiddleLeft">
                             <span className={this.state.activeTab === '1' ? 'active' : ''}
                                 onClick={() => {
@@ -67,7 +67,14 @@ class Filter extends Component {
                                 Status
                             </span>
                         </div>
-                        <div className="FilterMiddleContent FilterMiddleRight">
+
+                        
+                        <Scrollbars
+              speed={2}
+              smoothScrolling
+              horizontal={false}
+              className='FilterMiddleContent FilterMiddleRight'
+            >
                             <TabContent activeTab={this.state.activeTab}>
                                 <TabPane tabId="1" id="Service_Category_tab">
                                     <div className="form-group">
@@ -146,8 +153,9 @@ class Filter extends Component {
                                     />
                                 </TabPane>
                             </TabContent>
+                        </Scrollbars>
                         </div>
-                    </Scrollbars>
+
                     <div className="FilterContainer FilterBottom">
                         <button className="btn btn-outline-primary mr-2"
                             onClick={() =>
@@ -157,7 +165,8 @@ class Filter extends Component {
                             this.props.applyFilter()
                         }}>Apply</button>
                     </div>
-                </div>
+                
+                </form>
             </div>
         )
     }
