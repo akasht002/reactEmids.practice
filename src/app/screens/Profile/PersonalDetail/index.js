@@ -223,6 +223,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   closeImageUpload = () => {
+    this.resetImage();
     !this.isChangePhoto ? this.setState({
       uploadImage: !this.state.uploadImage,
       imageProfile: this.props.profileImgData.image,
