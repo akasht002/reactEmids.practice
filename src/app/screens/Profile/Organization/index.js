@@ -40,6 +40,7 @@ class Organization extends React.PureComponent {
       urlInvaild: false,
       ModalOrg: true,
       src: null,
+      isAlertSaveModalOpen: false,
       crop: {
         x: 10,
         y: 10,
@@ -48,6 +49,7 @@ class Organization extends React.PureComponent {
       }
     }
     this.isImageSave = false;
+    this.isChangePhoto = false
   }
 
   componentDidMount() {
@@ -94,6 +96,12 @@ class Organization extends React.PureComponent {
       })
     }
     this.setState({
+      imageProfile: nextProps.profileImgData.image,
+      uploadedImageFile: nextProps.profileImgData.image
+        ? nextProps.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
+    })
+    this.setState({
       imageProfile: nextProps.profileImgData.image
     })
     this.styles = {
@@ -120,6 +128,7 @@ class Organization extends React.PureComponent {
   }
 
   reUpload = e => {
+    this.isChangePhoto = true
     if (
       e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE &&
       e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)
@@ -201,12 +210,30 @@ class Organization extends React.PureComponent {
   }
 
   closeImageUpload = () => {
+    this.resetImage();
+    !this.isChangePhoto ? this.setState({
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png'),
+    }) : this.setState({ isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen })
+  }
+
+  resetImage = () => {
+    this.isChangePhoto = false
     this.setState({
-      uploadImage: !this.state.uploadImage
+      isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen,
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
     })
   }
 
   saveImageUpload = () => {
+    this.isChangePhoto = false
     this.isImageSave = true;
     this.setState({
       uploadImage: !this.state.uploadImage
@@ -285,7 +312,6 @@ class Organization extends React.PureComponent {
             </span>
           }
           btn1='OK'
-          // btn2='OK'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -296,6 +322,22 @@ class Organization extends React.PureComponent {
           onCancel={() =>
             this.setState({
               isDiscardModalOpen: false
+            })}
+        />
+        <ModalPopup
+          isOpen={this.state.isAlertSaveModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Do you want to discard the changes?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          footer='d-none'
+          centered='centered'
+          onConfirm={() => this.resetImage()}
+          onCancel={() =>
+            this.setState({
+              isAlertSaveModalOpen: false
             })}
         />
       </ScreenCover>
@@ -344,6 +386,7 @@ class Organization extends React.PureComponent {
       </div>
     )
   }
+
   getBlackModalContent = () => {
     return (
       <div className={'UploadProfileImageWidget'}>
@@ -384,6 +427,7 @@ class Organization extends React.PureComponent {
       </div>
     )
   }
+
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
