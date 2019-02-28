@@ -41,6 +41,7 @@ class EntityPersonalDetail extends React.PureComponent {
       isStreetInvalid: false,
       ModalOrg: true,
       src: null,
+      isAlertSaveModalOpen: false,
       crop: {
         x: 10,
         y: 10,
@@ -49,6 +50,7 @@ class EntityPersonalDetail extends React.PureComponent {
       }
     };
     this.isImageSave = false;
+    this.isChangePhoto = false
   }
 
   componentDidMount() {
@@ -117,7 +119,10 @@ class EntityPersonalDetail extends React.PureComponent {
       })
     }
     this.setState({
-      imageProfile: nextProps.profileImgData.image
+      imageProfile: nextProps.profileImgData.image,
+      uploadedImageFile: nextProps.profileImgData.image
+        ? nextProps.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
     })
     this.styles = {
       height: 100,
@@ -143,6 +148,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   reUpload = e => {
+    this.isChangePhoto = true
     if (
       e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE &&
       e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)
@@ -217,13 +223,18 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   closeImageUpload = () => {
-    this.setState({
-      uploadImage: !this.state.uploadImage
-    })
+    !this.isChangePhoto ? this.setState({
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png'),
+    }) : this.setState({ isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen })
   }
 
   saveImageUpload = () => {
     this.isImageSave = true;
+    this.isChangePhoto = false
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -234,6 +245,18 @@ class EntityPersonalDetail extends React.PureComponent {
     let image = e.image
     this.setState({
       croppedImage: image
+    })
+  }
+
+  resetImage = () => {
+    this.isChangePhoto = false
+    this.setState({
+      isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen,
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
     })
   }
 
@@ -318,7 +341,6 @@ class EntityPersonalDetail extends React.PureComponent {
             </span>
           }
           btn1='OK'
-          // btn2='OK'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -329,6 +351,22 @@ class EntityPersonalDetail extends React.PureComponent {
           onCancel={() =>
             this.setState({
               isDiscardModalOpen: false
+            })}
+        />
+        <ModalPopup
+          isOpen={this.state.isAlertSaveModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Do you want to discard the changes?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          footer='d-none'
+          centered='centered'
+          onConfirm={() => this.resetImage()}
+          onCancel={() =>
+            this.setState({
+              isAlertSaveModalOpen: false
             })}
         />
       </ScreenCover>

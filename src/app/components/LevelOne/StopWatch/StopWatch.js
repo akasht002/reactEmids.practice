@@ -17,10 +17,7 @@ class StopWatch extends Component {
 
     constructor(props) {
         super(props);
-        let timer  = props.startTime ? convertUTCTime(props.startTime) : 0
-        if(props.stopTimer){
-            timer  = getUtcTimeDiff(props.startTime, props.endTime)
-        }
+        let timer  = props.duration
         this.state = {
             secondsElapsed: timer,
             laps: [],
