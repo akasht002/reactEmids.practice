@@ -14,7 +14,7 @@ import { getUserInfo } from './services/http';
 import { USERTYPES } from './constants/constants';
 import { connection, startConnection, onConnectionClosed } from './utils/signalrUtility';
 import { isMobileBrowser } from './utils/browserUtility';
-import {MobileLanding} from '../app/screens/index';
+import {MobileLanding} from '../app/screens';
 class App extends Component {
 
   componentDidMount() {
