@@ -60,12 +60,12 @@ import {
 import { getUserInfo, isEntityServiceProvider } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-import { createDataStore } from '../../../redux/telehealth/actions';
+import { createDataStore, saveContextData } from '../../../redux/telehealth/actions';
 import { isFutureDay } from '../../../utils/dateUtility'
 import {
   updateEntityServiceVisit
 } from "../../../redux/dashboard/Dashboard/actions";
-
+import { Carousel } from '../../../components';
 class VisitServiceDetails extends Component {
   constructor(props) {
     super(props)
@@ -97,7 +97,6 @@ class VisitServiceDetails extends Component {
   componentDidMount() {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
-      // this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
       this.props.getDays();
       this.props.getSpBusyInVisit();
     } else {
@@ -301,26 +300,14 @@ class VisitServiceDetails extends Component {
         conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
       })
     } else {
-      let userId = getUserInfo().coreoHomeUserId;
-      let participantId = getUserInfo().serviceProviderId;
       let item = this.state.visitServiceDetails;
       let selectedParticipants = [{
         userId: item.patient.coreoHomeUserId,
         participantType: USERTYPES.PATIENT,
         participantId: item.patient.patientId
       }];
-
-      let loggedInUser = {
-        userId: userId,
-        participantType: USERTYPES.SERVICE_PROVIDER,
-        participantId: participantId
-      }
-
-      selectedParticipants.push(loggedInUser);
       let data = {
         participantList: selectedParticipants,
-        createdBy: userId,
-        createdByType: loggedInUser.participantType,
         title: '',
         context: item.patient.patientId
       };
@@ -345,6 +332,7 @@ class VisitServiceDetails extends Component {
         lastName: item.patient.lastName,
         thumbNail: item.patient.imageString
       }];
+      this.props.saveContextData(item.patient.patientId);
       this.props.createDataStore(selectedParticipants);
     }
   };
@@ -363,6 +351,15 @@ class VisitServiceDetails extends Component {
   }
 
   render() {
+
+    const  ServiceTypeSettings = {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      variableWidth: true
+  }
     let defaultCheck = ''
     let sliderTypes =
       this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
@@ -658,9 +655,11 @@ class VisitServiceDetails extends Component {
                             }
                           </p>
                           <h2 className='ServicesTitle mt-4'>Service Types</h2>
-                          <div className='ServiceType'>
-                            <div className='ServiceTypesSlider Summary'>
-                              {sliderTypes}
+                          <div className='ServiceType visit-srq-slider WhiteBG'>
+                            <div className='ServiceTypesSlider Summary'>                            
+                              <Carousel className="ServiceTypesSlider">
+                                {sliderTypes}
+                              </Carousel>                              
                             </div>
                           </div>
                           <div className='ServiceTasks Summary'>
@@ -1042,7 +1041,8 @@ function mapDispatchToProps(dispatch) {
     getSpBusyInVisit: () => dispatch(getSpBusyInVisit()),
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
-    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data))
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
+    saveContextData: (data) => dispatch(saveContextData(data))
   }
 }
 

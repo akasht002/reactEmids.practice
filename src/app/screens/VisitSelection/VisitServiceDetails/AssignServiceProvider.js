@@ -206,6 +206,7 @@ class AssignServiceProvider extends Component {
           centered="centered"
           headerFooter='d-none'
           btn1='Assign'
+          btn1Disable={!this.state.selectedServiceProviderId}
           btn2='Cancel'
           onConfirm={this.onSubmit}
           onCancel={() => {

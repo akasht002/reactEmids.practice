@@ -10,10 +10,10 @@ export default class TeleHealthVideoControls extends Component {
                     <span className={"TeleHealthOptionLink " + (this.props.isMuteAudio ? 'off' : '')}><i className="TeleHealthIcons MuteAudio"/></span>
                     {this.props.isMuteAudio ? <span>Unmute Audio</span> : <span>Mute Audio</span>}
                 </div>
-                <div className="TeleHealthControlsItem" onClick={this.props.controlVideo}>
+                {/* <div className="TeleHealthControlsItem" onClick={this.props.controlVideo}>
                     <span className={"TeleHealthOptionLink " + (this.props.isHiddenVideo ? 'off' : '')}><i className="TeleHealthIcons HideVideo"/></span>
                     {this.props.isHiddenVideo ? <span>Show Video</span> : <span>Hide Video</span>}
-                </div>
+                </div> */}
                 <div className="TeleHealthControlsItem FullScreenBtn">
                     <span className={"TeleHealthOptionLink " + (this.props.FullScreen ? 'off' : '')} onClick={this.props.ToggleFullScreen}><i className="TeleHealthIcons NormalScreen"/></span> 
                     {this.props.FullScreen ? <span>Normal Screen</span> : <span>Full Screen</span>}

@@ -435,3 +435,53 @@ vertical-align: middle;
 }
 /*-/End-Responsive-for-mobile-devices*/
 /*********************************************************************************************************************/
+
+
+.visitListContent .right-uservisit-view
+{
+    align-items: center;
+    width: 200px;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    display: flex;
+    float: right;
+    flex-direction: row;
+    margin-right: -30px;
+    position: relative;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.visitListContent .right-uservisit-view .visitUserPic, .visitListContent .right-uservisit-view .visitUserName
+{
+display: table-cell;
+vertical-align: middle;
+}
+
+.visitListContent .right-uservisit-view .visitUserName
+{
+    position: relative;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+    width: 135px; 
+}
+
+
+/*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .visitListContent .right-uservisit-view .visitUserPic .avatarContainer {margin-right: 10px;} /* IE10 */
+     *::-ms-backdrop, .visitListContent .right-uservisit-view .visitUserPic .avatarContainer { margin-right: 10px;} /* IE11 */
+     }
+
+     @media all and (-ms-high-contrast:none)
+     {
+        .visitListContent .right-uservisit-view .visitUserName {display: block;} /* IE10 */
+     *::-ms-backdrop, .visitListContent .right-uservisit-view .visitUserName {display: block;} /* IE11 */
+     }

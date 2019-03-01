@@ -149,6 +149,7 @@ color:#7a329f !important;
 label.license-agreespan
 {
 margin-left: 5px !important;
+font-size: 16px;
 }
 
 .EULAModalContent h4, .EULAModalContent h5, .EULAModalContent p, .EULAModalContent .agreementList li
@@ -222,3 +223,14 @@ height: auto;
 
 /*cross-browser-code-for-IE11&IE-edge*/
 .tempPassForm input::-ms-clear, .tempPassForm input::-ms-reveal { display: none; }
+
+.EULA .EULAModal .EULAModalContent
+{
+color:#444;
+}
+
+
+.tempPassForm .form-group label
+{
+font-size: 16px;
+}

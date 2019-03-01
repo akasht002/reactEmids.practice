@@ -6,6 +6,7 @@ import { Path } from '../../routes';
 import { USERTYPES } from '../../constants/constants';
 import { setMenuClicked } from '../auth/user/actions';
 import { onLogout } from '../auth/logout/actions';
+import { goBack } from '../navigation/actions';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
@@ -238,6 +239,7 @@ export function leaveVideoConference(checkRoute) {
                     dispatch(setRoomId(state.telehealthState.invitedRoomId))
                     dispatch(acceptVideoConference())
                 } else if (state.authState.userState.menuClicked) {
+                    dispatch(clearExistingRoom())
                     if (state.authState.userState.menuClicked === 'logout') {
                         dispatch(onLogout())
                     } else {
@@ -245,11 +247,12 @@ export function leaveVideoConference(checkRoute) {
                     }
                     dispatch(setMenuClicked(null))
                 } else if (!checkRoute) {
-                    dispatch(push(Path.dashboard))
+                    dispatch(clearExistingRoom())
+                    dispatch(goBack())
                 }
             dispatch(endLoading());
         }).catch((err) => {
-            dispatch(push(Path.dashboard))
+            dispatch(goBack())
             dispatch(endLoading());
         })
     }
@@ -305,6 +308,7 @@ export function endConference() {
                 dispatch(setRoomId(state.telehealthState.invitedRoomId))
                 dispatch(acceptVideoConference())
             } else if (state.authState.userState.menuClicked) {
+                dispatch(clearExistingRoom())
                 if (state.authState.userState.menuClicked === 'logout') {
                     dispatch(onLogout())
                 } else {
@@ -312,10 +316,12 @@ export function endConference() {
                 }
                 dispatch(setMenuClicked(null))
             } else {
-                dispatch(push(Path.dashboard))
+                dispatch(clearExistingRoom())
+                dispatch(goBack())
             }
             dispatch(endLoading());
         }).catch((err) => {
+            dispatch(goBack())
             dispatch(endLoading());
         })
     }
@@ -410,7 +416,7 @@ export function checkTeleHealth(data) {
             if (data.messageType === 'Invited') {
                 if (data.userId !== userId) {
                     data.participantList && data.participantList.map((participant) => {
-                        if (participant.participantType === USERTYPES.SERVICE_PROVIDER && userId === participant.userId) {
+                        if (userId === participant.userId) {
                             if (teleHealthState.token) {
                                 dispatch(setInvitedRoomId(data.roomID))
                             } else {
@@ -428,11 +434,10 @@ export function checkTeleHealth(data) {
                 if (teleHealthState.roomId === data.roomID) {
                     let modifiedParticipants = []
                     data.participantList && data.participantList.map((participant) => {
-                        if (!(participant.participantType === USERTYPES.SERVICE_PROVIDER && userId === participant.userId)) {
+                        if (userId !== participant.userId) {
                             let participantFound = false;
                             teleHealthState.participantsByConferenceId.map((confParticipant) => {
-                                if (confParticipant.participantType === participant.participantType &&
-                                    confParticipant.userId === participant.userId) {
+                                if (confParticipant.userId === participant.userId) {
                                         participantFound = true;
                                 }
                                 return '';
@@ -456,8 +461,7 @@ export function checkTeleHealth(data) {
             } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
                 if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
                     let participants = teleHealthState.participantsByConferenceId.map((participant) => {
-                        if (participant.participantType === data.participantList[0].participantType &&
-                            participant.userId === data.participantList[0].userId) {
+                        if (participant.userId === data.participantList[0].userId) {
                                 return {
                                     ...participant,
                                     status: data.messageType
@@ -471,7 +475,8 @@ export function checkTeleHealth(data) {
             }  else if (data.messageType === 'Ended') {
                 if (teleHealthState.roomId === data.roomID) {
                     dispatch(clearInvitaion())
-                    if (teleHealthState.token) {
+                    dispatch(setRoomId(0))
+                    if (teleHealthState.token && !teleHealthState.initiator) {
                         dispatch(leaveVideoConference())
                     }
                 }
