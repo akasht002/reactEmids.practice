@@ -1,4 +1,5 @@
 import Welcome from './Welcome'
+import MobileLanding from './Welcome/Mobile'
 import VerifyContact from './Onboarding/VerifyContact'
 import SetPassword from './Onboarding/SetPassword'
 import VerifyUserID from './Onboarding/VerifyUserID'
@@ -67,5 +68,6 @@ export {
   PatientProfile,
   VisitNotification,
   VisitNotificationSettings,
-  ESPProfile
+  ESPProfile,
+  MobileLanding
 }

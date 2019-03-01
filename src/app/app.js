@@ -13,7 +13,8 @@ import {
 import { getUserInfo } from './services/http';
 import { USERTYPES } from './constants/constants';
 import { connection, startConnection, onConnectionClosed } from './utils/signalrUtility';
-import { isMobileBrowser } from './utils/browserUtility'
+import { isMobileBrowser } from './utils/browserUtility';
+import {MobileLanding} from '../app/screens/index';
 class App extends Component {
 
   componentDidMount() {
@@ -54,7 +55,7 @@ class App extends Component {
   }
 
   render() {
-    let view = isMobileBrowser ? <div>From your Mobile Device, please download the coreo home app from play store and app store!!!</div> : <AppStackRoot history={this.props.history} />
+    let view = isMobileBrowser ? <MobileLanding /> : <AppStackRoot history={this.props.history} />
     return (
       <div>
         {view}
