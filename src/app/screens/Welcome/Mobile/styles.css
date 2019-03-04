@@ -1,0 +1,101 @@
+@media only screen and (max-width: 1024px) {
+	.full-block-view {
+		width: 100%;
+		height: 600px;
+		margin: 0 auto;
+		display: block;
+		float: left;
+		background-image: url('../../../../app/assets/MobileBannerImages/Background.png');
+		background-position: center;
+		background-repeat: no-repeat;
+		overflow-y: auto;
+	}
+	.innerview-bg {
+		display: block;
+		position: relative;
+		width: 100%;
+		height: 100%;
+		float: left;
+		background-image: url('../../../../app/assets/MobileBannerImages/iPhoneX.png');
+		background-position: right bottom;
+		background-repeat: no-repeat;
+		overflow-y: auto;
+	}
+	.info-view {
+		display: block;
+		float: left;
+		clear: both;
+		width: auto;
+		padding-left: 70px;
+		position: absolute;
+		bottom: 0;
+		z-index: 1000;
+		padding-bottom: 70px;
+	}
+	.info-view p {
+		color: #fff;
+		font-size: 14px;
+		font-family: 'Open Sans', sans-serif;
+		line-height: 18px;
+		margin-bottom: 0px;
+		margin-top: 10px;
+		display: block;
+		text-align: left;
+	}
+	.view-appblock {
+		width: 100%;
+		display: block;
+		clear: both;
+	}
+	.view-appblock ul {
+		display: table;
+		list-style-type: none;
+		list-style: none;
+		padding-left: 0px;
+	}
+	.view-appblock ul li {
+		display: table-cell;
+		margin-right: 10px;
+	}
+	.view-appblock ul li img {
+		width: 145px;
+		display: block;
+		max-width: 100%;
+		height: auto;
+	}
+	.logo-coreo {
+		width: 202px;
+		height: auto;
+		display: block;
+		max-width: 100%;
+		margin-bottom: 15px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.innerview-bg {
+		background-position: bottom;
+	}
+	.info-view {
+		padding-left: 30px;
+	}
+	.full-block-view {
+		height: 1024px;
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	.full-block-view {
+		background-position: top;
+	}
+	.full-block-view {
+		height: 700px;
+	}
+	.info-view {
+		padding-bottom: 55px;
+	}
+	.innerview-bg {
+		background-position: -25px 205px;
+		background-size: 157%;
+	}
+}

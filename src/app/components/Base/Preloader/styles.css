@@ -18,6 +18,11 @@
     width:100% !important;
 }
 
+.loginCallback .Loader
+{
+    width:100% !important;
+}
+
 @media screen and (max-width: 1366px)
 {
     .Loader

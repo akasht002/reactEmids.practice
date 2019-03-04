@@ -10,10 +10,11 @@ import { getConversationSummaryDashboardSignalR } from './redux/dashboard/Dashbo
 import {
   checkTeleHealth
 } from './redux/telehealth/actions'
-import {getUserInfo} from './services/http';
+import { getUserInfo } from './services/http';
 import { USERTYPES } from './constants/constants';
-import {connection, startConnection, onConnectionClosed} from './utils/signalrUtility';
-
+import { connection, startConnection, onConnectionClosed } from './utils/signalrUtility';
+import { isMobileBrowser } from './utils/browserUtility';
+import {MobileLanding} from '../app/screens';
 class App extends Component {
 
   componentDidMount() {
@@ -31,12 +32,12 @@ class App extends Component {
     });
 
     connection.on("UpdateChat", data => {
-      if(data && getUserInfo()){
+      if (data && getUserInfo()) {
         let ParticipantList = data.result ? [...data.result.participantList] : [...data.participantList];
         const index = ParticipantList.indexOf(
           ParticipantList.filter(el => el.userId === getUserInfo().coreoHomeUserId && el.participantType === USERTYPES.SERVICE_PROVIDER)[0]
         );
-        if(index !== -1){
+        if (index !== -1) {
           let conversationId = data.result ? data.result.conversationId : data.conversationId;
           this.props.getLatestMessages(conversationId);
           this.props.getConversationSummaryDashboardSignalR(conversationId);
@@ -49,13 +50,16 @@ class App extends Component {
     });
 
     startConnection();
-    
+
     onConnectionClosed();
   }
 
   render() {
+    let view = isMobileBrowser ? <MobileLanding /> : <AppStackRoot history={this.props.history} />
     return (
-      <AppStackRoot history={this.props.history} />
+      <div>
+        {view}
+      </div>
     );
   }
 }

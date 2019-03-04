@@ -35,7 +35,7 @@ class Filter extends Component {
         return (
             <div className={"FilterWidget " + this.props.isOpen}>
                 
-                <form className="FilterWidgetForm">
+                <div className="FilterWidgetForm">
                     <div className="FilterContainer FilterTop">
                         <span>Filters</span>
                         <span className="FilterCloseIcon" onClick={this.props.toggle} />
@@ -166,7 +166,7 @@ class Filter extends Component {
                         }}>Apply</button>
                     </div>
                 
-                </form>
+                </div>
             </div>
         )
     }
