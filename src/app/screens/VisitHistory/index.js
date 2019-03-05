@@ -27,6 +27,7 @@ import './visitList.css'
 import '../../styles/SelectDropdown.css'
 import { push } from '../../redux/navigation/actions';
 import { Path } from "../../routes";
+import { getTimeZoneOffset } from '../../utils/dateUtility';
 
 class VisitHistory extends Component {
   constructor(props) {
@@ -116,7 +117,8 @@ class VisitHistory extends Component {
       individualList: selectedData.individualList,
       serviceProviderId: 0,
       pageNumber: 1,
-      pageSize: 10
+      pageSize: 10,
+      offset: getTimeZoneOffset()
     }
     this.props.getFilteredData(data)
     this.setState({
@@ -129,13 +131,13 @@ class VisitHistory extends Component {
   handlePageChange = (pageNumber) => {
     this.setState({ pageNumber: pageNumber, activePage: pageNumber })
     const data = {
-      fromDate: this.selectedData.searchData.startDate ?  this.selectedData.searchData.startDate : '1900-01-01',
-      toDate:  this.selectedData.searchData.endDate ?  this.selectedData.searchData.endDate : moment().toDate(),
+      fromDate: this.selectedData.searchData.startDate ? this.selectedData.searchData.startDate : '1900-01-01',
+      toDate: this.selectedData.searchData.endDate ? this.selectedData.searchData.endDate : moment().toDate(),
       serviceCategory: this.state.serviceCategoryId,
       serviceTypeList: this.state.serviceTypeIds,
       status: [],
-      serviceProviderList:  this.selectedData.serviceProviderArray,
-      individualList:  this.selectedData.individualList,
+      serviceProviderList: this.selectedData.serviceProviderArray,
+      individualList: this.selectedData.individualList,
       serviceProviderId: 0,
       pageNumber: pageNumber,
       pageSize: 10
@@ -280,7 +282,7 @@ class VisitHistory extends Component {
           applyFilter={this.applyFilter}
           applyReset={this.applyReset}
         />
-        {this.props.isLoading && <Preloader/>}
+        {this.props.isLoading && <Preloader />}
       </AsideScreenCover>
     )
   }

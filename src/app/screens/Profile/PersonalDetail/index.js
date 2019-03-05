@@ -43,6 +43,7 @@ class PersonalDetail extends React.PureComponent {
       selectedState: '',
       ModalOrg: true,
       src: null,
+      isAlertSaveModalOpen: false,
       crop: {
         x: 10,
         y: 10,
@@ -51,6 +52,7 @@ class PersonalDetail extends React.PureComponent {
       }
     };
     this.isImageSave = false;
+    this.isChangePhoto = false
   }
 
   componentDidMount() {
@@ -135,7 +137,6 @@ class PersonalDetail extends React.PureComponent {
     this.states = getArrayLength(nextProps.personalDetail.address) > 0 && nextProps.personalDetail.address[0].state != null
       ? nextProps.personalDetail.address[0].state.name
       : ''
-    console.log(this.state.selectedAffiliation)
   }
 
   handleChange = () => {
@@ -143,6 +144,7 @@ class PersonalDetail extends React.PureComponent {
   }
 
   reUpload = e => {
+    this.isChangePhoto = true
     if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE && e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
       this.setState({
         uploadedImageFile: URL.createObjectURL(e.target.files[0])
@@ -221,17 +223,30 @@ class PersonalDetail extends React.PureComponent {
   }
 
   closeImageUpload = () => {
+    !this.isChangePhoto ? this.setState({
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png'),
+    }) : this.setState({ isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen })
+  }
+
+  resetImage = () => {
+    this.isChangePhoto = false
     this.setState({
+      isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen,
       uploadImage: !this.state.uploadImage,
       imageProfile: this.props.profileImgData.image,
       uploadedImageFile: this.props.profileImgData.image
         ? this.props.profileImgData.image
         : require('../../../assets/images/Blank_Profile_icon.png')
-    });
+    })
   }
 
   saveImageUpload = () => {
     this.isImageSave = true;
+    this.isChangePhoto = false
     this.setState({
       uploadImage: !this.state.uploadImage
     })
@@ -468,6 +483,22 @@ class PersonalDetail extends React.PureComponent {
           onCancel={() =>
             this.setState({
               isDiscardModalOpen: false
+            })}
+        />
+        <ModalPopup
+          isOpen={this.state.isAlertSaveModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Do you want to discard the changes?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          footer='d-none'
+          centered='centered'
+          onConfirm={() => this.resetImage()}
+          onCancel={() =>
+            this.setState({
+              isAlertSaveModalOpen: false
             })}
         />
       </ScreenCover>

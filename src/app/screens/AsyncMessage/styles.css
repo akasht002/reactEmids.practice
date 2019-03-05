@@ -1920,16 +1920,16 @@ a.btn:not([href]):not([tabindex]), a.btn:not([href]):not([tabindex]):focus, a.bt
 {
     display: block;
     width: 100%;
-    height: auto;
+    height: calc(100vh - 481px);
     position: relative;
+    margin-bottom: 15px;
 }
 .participantsSearchForm .ParticipantsListContainer .participantsSearchList.ChatContainer
 {
     padding-bottom: 50px;
     display: block;
     width: 100%;
-    height: calc;
-    height: calc(100vh - 400px);
+    height:100%;
 }
 
 

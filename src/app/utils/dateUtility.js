@@ -41,6 +41,12 @@ export function getUTCTimeInLocal(startTime, endTime) {
     return localEndDate.diff(localStartDate, "seconds")
 }
 
+export function getUtcTimeDiff(startTime) {
+    var gmtDateTime = moment.utc(startTime);
+    var UTCtime = new Date().getTime();
+    return UTCtime.diff(gmtDateTime, "seconds")
+}
+
 export function convertUTCTime(date, dateFormat = "HH:MM a") {
     var gmtDateTime = moment.utc(date)
     var local = gmtDateTime.local().format();
@@ -58,4 +64,8 @@ export function getDoubleDigitTime(value) {
         updatedValue = "0" + updatedValue
     }
     return updatedValue
+}
+
+export function getTimeZoneOffset() {
+    return new Date().getTimezoneOffset()
 }
