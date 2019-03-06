@@ -466,7 +466,6 @@ class serviceCalendar extends React.Component {
 
 
   render() {
-    // let selectedDate = this.state.startDate;
     const visitCount = this.props.serviceVistCount;
     let pervious_months = []
     let dates = this.getDates(this.state.startDate)
