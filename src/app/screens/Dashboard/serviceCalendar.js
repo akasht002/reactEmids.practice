@@ -468,18 +468,29 @@ class serviceCalendar extends React.Component {
   render() {
     // let selectedDate = this.state.startDate;
     const visitCount = this.props.serviceVistCount;
+    let pervious_months = []
     let dates = this.getDates(this.state.startDate)
     let optionChecked = this.state.reportDay
     let count = this.state.width > '1280' ? 7 : 5
 
     let current_month = new Date().getMonth();
     let pervious_month = moment.months().splice(current_month - 3, PREVIOUS_MONTH);
+
+    if(pervious_month.length < 3 )
+      {
+        let len_month = PREVIOUS_MONTH - pervious_month.length
+        let months = moment.months("MMM YYYY").splice(current_month - len_month, NEXT_MONTH)
+        pervious_months =  pervious_month.concat(months)
+      }else{
+        pervious_months =  pervious_month
+      }
+
     let next_month_list = moment.months().splice(current_month - 1, NEXT_MONTH);
 
     let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month, 10)])
     let nextMonthLists = current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
 
-    let monthLists = pervious_month.concat(nextMonthLists)
+    let monthLists = _.uniq(pervious_months.concat(nextMonthLists))
 
     let monthList = monthLists.map(month => {
       let selectMonth = moment().month(month).format("M")
