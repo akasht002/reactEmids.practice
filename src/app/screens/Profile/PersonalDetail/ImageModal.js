@@ -9,7 +9,7 @@ class ImageModal extends Component {
                 </ModalHeader>
                 <ModalBody>{this.props.ModalBody}</ModalBody>
                 <ModalFooter className={this.props.headerFooter}>
-                    <Button className="" color="primary" onClick={this.props.saveImage}>Save</Button>
+                    <Button className="" disabled={this.props.buttonDisable} color="primary" onClick={this.props.saveImage}>Save</Button>
                 </ModalFooter>
             </Modal>
         );

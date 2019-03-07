@@ -15,9 +15,6 @@ export const Api = axios.create({
     baseURL: baseURL,
 });
 
-export const SETTING = {
-    FILE_UPLOAD_SIZE: 2097152
-}
 
 export const API = {
     sendEmailVerification: 'ServiceProviderOnBoarding/',
