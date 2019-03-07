@@ -238,64 +238,8 @@ class EntityPersonalDetail extends React.PureComponent {
     this.setState({ crop });
   };
 
-  onCropComplete = (crop, pixelCrop) => {
-    this.makeClientCrop(crop, pixelCrop);
-  };
-
-  async makeClientCrop(crop, pixelCrop) {
-    if (this.imageRef && crop.width && crop.height) {
-      const croppedImageUrl = await this.getCroppedImg(
-        this.imageRef,
-        pixelCrop
-      );
-      this.setState({ croppedImageUrl });
-    } else {
-      this.setState({ croppedImageUrl: null });
-    }
-  }
-
-  onImageLoaded = (image) => {
-    this.imageRef = image;
-  };
-
-  getCroppedImg(image, pixelCrop) {
-    const canvas = document.createElement('canvas');
-    let width = pixelCrop.width;
-    let height = pixelCrop.height;
-    const max_size = SETTING.RESIZE_IMAGE;
-    
-    if (width > height) {
-        if (width > max_size) {
-            height *= max_size / width;
-            width = max_size;
-        }
-    } else {
-        if (height > max_size) {
-            width *= max_size / height;
-            height = max_size;
-        }
-    }
-
-    canvas.width = width;
-    canvas.height = height;
-
-    const ctx = canvas.getContext('2d');
-
-    ctx.drawImage(
-      image,
-      pixelCrop.x,
-      pixelCrop.y,
-      pixelCrop.width,
-      pixelCrop.height,
-      0,
-      0,
-      width,
-      height,
-    );
-
-    return new Promise((resolve) => {
-      resolve(canvas.toDataURL('image/jpeg'))
-    });
+  changeCroppedImage = (croppedImage) => {
+    this.setState({croppedImageUrl: croppedImage})
   }
 
   render() {
@@ -320,8 +264,7 @@ class EntityPersonalDetail extends React.PureComponent {
             <ProfileImageDetail
               uploadedImageFile={this.state.uploadedImageFile}
               crop={this.state.crop}
-              onImageLoaded={this.onImageLoaded}
-              onCropComplete={this.onCropComplete}
+              changeCroppedImage={this.changeCroppedImage}
               onCropChange={this.onCropChange}
               reUpload={this.reUpload}
             />}
