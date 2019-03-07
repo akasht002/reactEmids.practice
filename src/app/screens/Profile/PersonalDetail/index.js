@@ -2,10 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
-import ImageCrop from 'react-image-crop-component'
-import 'react-image-crop-component/style.css'
-import 'react-image-crop/dist/ReactCrop.css'
-import 'react-image-crop/lib/ReactCrop.scss'
 import './index.css'
 import {
   Input,
@@ -23,9 +19,11 @@ import {
   getLength,
 } from '../../../utils/validations'
 import { formatPhoneNumber } from '../../../utils/formatName'
-import { SETTING } from '../../../services/api'
+import { SETTING } from '../../../constants/config'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatContactNumber, formatContactNumberValue } from '../../../utils/validations'
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 
 class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -44,12 +42,7 @@ class PersonalDetail extends React.PureComponent {
       ModalOrg: true,
       src: null,
       isAlertSaveModalOpen: false,
-      crop: {
-        x: 10,
-        y: 10,
-        width: 80,
-        height: 80
-      }
+      crop: SETTING.CROP_DEFAULT
     };
     this.isImageSave = false;
     this.isChangePhoto = false
@@ -145,40 +138,16 @@ class PersonalDetail extends React.PureComponent {
 
   reUpload = e => {
     this.isChangePhoto = true
-    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE && e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
+    if (e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
       this.setState({
-        uploadedImageFile: URL.createObjectURL(e.target.files[0])
+        uploadedImageFile: URL.createObjectURL(e.target.files[0]),
+        crop: SETTING.CROP_DEFAULT,
+        croppedImageUrl: null
       })
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
     } else {
       this.setState({
         isAlertModalOpen: !this.state.isAlertModalOpen
       })
-    }
-  }
-
-  onSelectFile = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
-
     }
   }
 
@@ -229,6 +198,8 @@ class PersonalDetail extends React.PureComponent {
       uploadedImageFile: this.props.profileImgData.image
         ? this.props.profileImgData.image
         : require('../../../assets/images/Blank_Profile_icon.png'),
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     }) : this.setState({ isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen })
   }
 
@@ -240,23 +211,28 @@ class PersonalDetail extends React.PureComponent {
       imageProfile: this.props.profileImgData.image,
       uploadedImageFile: this.props.profileImgData.image
         ? this.props.profileImgData.image
-        : require('../../../assets/images/Blank_Profile_icon.png')
+        : require('../../../assets/images/Blank_Profile_icon.png'),
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     })
   }
 
   saveImageUpload = () => {
     this.isImageSave = true;
     this.isChangePhoto = false
+    if (this.state.croppedImageUrl.length <= SETTING.FILE_UPLOAD_SIZE) {
+      this.props.uploadImg(this.state.croppedImageUrl)
+      this.setState({
+        uploadImage: !this.state.uploadImage
+      })
+    } else {
+      this.setState({
+        isAlertModalOpen: !this.state.isAlertModalOpen
+      })
+    }
     this.setState({
-      uploadImage: !this.state.uploadImage
-    })
-    this.props.uploadImg(this.state.src)
-  }
-
-  onCroppeds = e => {
-    let image = e.image
-    this.setState({
-      croppedImage: image
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     })
   }
 
@@ -432,6 +408,7 @@ class PersonalDetail extends React.PureComponent {
           modalTitle='Edit Profile Image'
           centered='centered'
           saveImage={this.saveImageUpload}
+          buttonDisable={!this.state.croppedImageUrl}
         />
       </form>
     )
@@ -505,20 +482,81 @@ class PersonalDetail extends React.PureComponent {
     )
   }
 
+  onCropChange = crop => {
+    this.setState({ crop });
+  };
+
+  onCropComplete = (crop, pixelCrop) => {
+    this.makeClientCrop(crop, pixelCrop);
+  };
+
+  async makeClientCrop(crop, pixelCrop) {
+    if (this.imageRef && crop.width && crop.height) {
+      const croppedImageUrl = await this.getCroppedImg(
+        this.imageRef,
+        pixelCrop
+      );
+      this.setState({ croppedImageUrl });
+    } else {
+      this.setState({ croppedImageUrl: null });
+    }
+  }
+
+  onImageLoaded = (image) => {
+    this.imageRef = image;
+  };
+
+  getCroppedImg(image, pixelCrop) {
+    const canvas = document.createElement('canvas');
+    let width = pixelCrop.width;
+    let height = pixelCrop.height;
+    const max_size = SETTING.RESIZE_IMAGE;
+    
+    if (width > height) {
+        if (width > max_size) {
+            height *= max_size / width;
+            width = max_size;
+        }
+    } else {
+        if (height > max_size) {
+            width *= max_size / height;
+            height = max_size;
+        }
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d');
+
+    ctx.drawImage(
+      image,
+      pixelCrop.x,
+      pixelCrop.y,
+      pixelCrop.width,
+      pixelCrop.height,
+      0,
+      0,
+      width,
+      height,
+    );
+
+    return new Promise((resolve) => {
+      resolve(canvas.toDataURL('image/jpeg'))
+    });
+  }
+
   getBlackModalContent = () => {
     return (
       <div className={'UploadProfileImageWidget'}>
         <div className={'width100 UploadProfileImageContainer'}>
-          <div style={{ width: '300px', height: '300px' }}>
-            <ImageCrop
-              src={this.state.uploadedImageFile}
-              setWidth={300}
-              setHeight={300}
-              square={false}
-              resize
-              border={'dashed #ffffff 2px'}
-              onCrop={this.onCroppeds}
-              watch={this.watch}
+          <div className={'cropper-style'}>
+            <ReactCrop 
+              src={this.state.uploadedImageFile} 
+              crop={this.state.crop}
+              onImageLoaded={this.onImageLoaded}
+              onComplete={this.onCropComplete}
+              onChange={this.onCropChange}
             />
           </div>
         </div>
@@ -527,7 +565,7 @@ class PersonalDetail extends React.PureComponent {
             <ul className={'UploadedImageLimitation'}>
               <li>1. Click on the Change Photo Button. </li>
               <li>2. Select the image from your desktop/ gallery.</li>
-              {/* <li>3. Click and drag the curser across the image to crop.</li> */}
+              <li>3. Click and drag the cursor across the image to crop.</li>
               <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
             </ul>
           </div>
@@ -545,46 +583,7 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
-  getBlackModalContent = () => {
-    return (
-      <div className={'UploadProfileImageWidget'}>
-        <div className={'width100 UploadProfileImageContainer'}>
-          <div style={{ width: '300px', height: '300px' }}>
-            <ImageCrop
-              src={this.state.uploadedImageFile}
-              setWidth={300}
-              setHeight={300}
-              square={false}
-              resize
-              border={'dashed #ffffff 2px'}
-              onCrop={this.onCroppeds}
-              watch={this.watch}
-            />
-          </div>
-        </div>
-        <div className={'row'}>
-          <div className={'col-md-8'}>
-            <ul className={'UploadedImageLimitation'}>
-              <li>1. Click on the Change Photo Button. </li>
-              <li>2. Select the image from your desktop/ gallery.</li>
-              {/* <li>3. Click and drag the curser across the image to crop.</li> */}
-              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
-            </ul>
-          </div>
-          <div className={'col-md-4 text-right'}>
-            <button className='btn btn-outline-primary UploadImageBtn'>
-              Change Photo
-            </button>
-            <input
-              className='addImageInput'
-              type='file'
-              onChange={this.reUpload}
-            />
-          </div>
-        </div>
-      </div>
-    )
-  }
+  
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>

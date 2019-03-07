@@ -32,3 +32,14 @@ export const TeleHealthSettings = {
 export const SLIDER_TIME = 10000;
 
 export const DEMO = 'false'
+
+export const SETTING = {
+    FILE_UPLOAD_SIZE: 2097152,
+    CROP_DEFAULT: {
+        aspect: 1,
+        width: 50,
+        x: 10,
+        y: 10,
+    },
+    RESIZE_IMAGE: 150
+}
