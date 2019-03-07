@@ -115,13 +115,15 @@ export function addPerformedTask(data, startServiceAction) {
     }
 };
 
+
 export function startOrStopService(data, visitId, startedTime) {
     return (dispatch) => {
-        // if (data === 0) {
-        //     dispatch(getSummaryDetails(visitId));
-        // }
+        const model = {
+            "serviceRequestVisitId": visitId,
+            "visitAction": data
+        }
         dispatch(startLoadingProcessing());
-        ServiceRequestPut(API.startOrStopService + visitId + '/' + data).then((resp) => {
+        ServiceRequestPut(API.startOrStopService, model).then((resp) => {
             dispatch(saveStartedTime(startedTime))
             dispatch(getPerformTasksList(visitId, false));
             dispatch(getSummaryDetails(visitId));
@@ -134,12 +136,12 @@ export function startOrStopService(data, visitId, startedTime) {
 
 export function getSummaryDetails(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };

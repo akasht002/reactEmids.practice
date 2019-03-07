@@ -38,7 +38,7 @@ export const API = {
     getQuestionsList: 'VisitProcessing/ServiceRequestVisitFeedback/49',
     savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/',
     saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
-    startOrStopService: 'VisitProcessing/ServiceRequestVisit/',
+    startOrStopService: 'VisitProcessing/ServiceRequestVisit',
     SendResetPasswordLink: 'api/User/',
     getEmailIdByUserId: 'api/user/verifypasswordlink/',
     resetPassword: 'api/user',

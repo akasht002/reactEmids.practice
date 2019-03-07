@@ -146,13 +146,13 @@ export const getServiceRequestId = (data) => {
 export function getVisitServiceHistoryByIdDetail(data) {
     return (dispatch) => {
         dispatch(getServiceRequestId(data))
-        dispatch(startLoading());
+        dispatch(visitHistoryLoading(true));
         ServiceRequestGet(API.getServiceVisitsHistoryById + data).then((resp) => {
             dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data))
             dispatch(push(Path.visitSummaryDetail))
-            dispatch(endLoading());
+            dispatch(visitHistoryLoading(false));
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(visitHistoryLoading(false));
         })
     }
 };
