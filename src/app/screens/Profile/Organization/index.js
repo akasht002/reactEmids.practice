@@ -271,9 +271,17 @@ class Organization extends React.PureComponent {
   saveImageUpload = () => {
     this.isChangePhoto = false
     this.isImageSave = true;
-    this.props.uploadImg(this.state.croppedImageUrl)
+    if (this.state.croppedImageUrl.length <= SETTING.FILE_UPLOAD_SIZE) {
+      this.props.uploadImg(this.state.croppedImageUrl)
+      this.setState({
+        uploadImage: !this.state.uploadImage
+      })
+    } else {
+      this.setState({
+        isAlertModalOpen: !this.state.isAlertModalOpen
+      })
+    }
     this.setState({
-      uploadImage: !this.state.uploadImage,
       crop: SETTING.CROP_DEFAULT,
       croppedImageUrl: null
     })
