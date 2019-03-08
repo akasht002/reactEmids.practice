@@ -1004,3 +1004,19 @@ box-shadow: 0 0 20px rgba(0,0,0, 0.1);
      }
 
 /*end-EULA-Code-for-onboarding*/
+
+.sideNavigation li.nav-item h5
+{
+    font-size: 1.25rem;
+}
+
+.sideNavigation li.nav-item p
+{
+font-size: 16px;
+}
+
+.cropper-style {
+    width: 300px;;
+    height: auto;
+    max-height: 300px;
+}

@@ -1139,7 +1139,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
         /* height: calc(100vh - 143px); */
-        height: 713px;
+        height: 713px !important;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
@@ -1943,7 +1943,7 @@ margin-bottom: 0px;
 {
     .SPContentWidget .ProfileContainer.bottomProfile {
       
-        height: 713px;
+        height: 713px !important;
     
     }
 
@@ -2002,3 +2002,74 @@ vertical-align: middle;
     right: -5px;
     top: 0;
 }
+
+
+/*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices {display: block; width: calc(100% - 240px);} /* IE10 */
+     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices { display: block;  width: calc(100% - 240px);} /* IE11 */
+     }
+
+
+     @media all and (-ms-high-contrast:none)
+     {
+        .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf {display: table; max-width: calc(100% - 240px); } /* IE10 */
+     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf { display: table; max-width: calc(100% - 240px);} /* IE11 */
+     }
+
+     @media all and (-ms-high-contrast:none)
+     {
+        .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf  .ProfileCardImageContainer{display:table-cell;} /* IE10 */
+     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf .ProfileCardNameContainer { display: table-cell;} /* IE11 */
+     }
+
+    
+
+     @media all and (-ms-high-contrast:none)
+     {
+        .bottomProfile .ProfileCard .list-group .list-group-item.ProfileShowMore {z-index: 1000 !important;} 
+     *::-ms-backdrop, .bottomProfile .ProfileCard .list-group .list-group-item.ProfileShowMore {z-index: 1000 !important;}  
+     }
+
+    
+
+     /*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+    .SPContentWidget .ProfileContainer.topProfile {
+          height:650px;
+    }
+  }
+  
+       /*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+    .SPContentWidget .ProfileContainer.bottomProfile {
+        height:650px;
+    }
+  }
+
+
+  /*cross-browser-fixes-mozila*/
+@-moz-document url-prefix() {
+    .SPContentWidget .ProfileContainer.topProfile 
+    {
+        height:650px;
+    }
+    .SPContentWidget .ProfileContainer.bottomProfile 
+    {
+        height:650px;
+    }
+ 
+    .FilterWidgetForm .scrollbar-container.vertical 
+    {
+        display: none;
+    }
+    .FilterWidgetForm .scrollbar-container.vertical .scrollbar
+    {
+    display: none;
+    }
+  }
+    

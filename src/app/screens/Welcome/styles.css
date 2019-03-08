@@ -222,3 +222,18 @@ li.activeIndicator {
         padding: 20px;
     }
 }
+
+
+/*cross-browser-fixes-IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+     {
+        .sliderContainer .slider { display: table; position: relative } /* IE10 */
+     *::-ms-backdrop, .sliderContainer .slider { display:table; position: relative; } /* IE11 */
+     }
+
+@media all and (-ms-high-contrast:none)
+     {
+        .sliderContainer .slider .slide1 { display:table; position: relative;} /* IE10 */
+     *::-ms-backdrop, .sliderContainer .slider  .slide1 { display:table; position: relative;} /* IE11 */
+     }

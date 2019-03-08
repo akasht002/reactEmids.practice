@@ -2,9 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
-import 'react-image-crop-component/style.css'
-import 'react-image-crop/dist/ReactCrop.css'
-import 'react-image-crop/lib/ReactCrop.scss'
 import './index.css'
 import {
   Input,
@@ -21,7 +18,7 @@ import {
   getLength
 } from '../../../utils/validations'
 import { Details, ProfileImageDetail } from './Details'
-import { SETTING } from '../../../services/api'
+import { SETTING } from '../../../constants/config'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatPhoneNumber } from '../../../utils/formatName'
 import ImageModal from '../PersonalDetail/ImageModal';
@@ -41,14 +38,11 @@ class EntityPersonalDetail extends React.PureComponent {
       isStreetInvalid: false,
       ModalOrg: true,
       src: null,
-      crop: {
-        x: 10,
-        y: 10,
-        width: 80,
-        height: 80
-      }
+      isAlertSaveModalOpen: false,
+      crop: SETTING.CROP_DEFAULT
     };
     this.isImageSave = false;
+    this.isChangePhoto = false
   }
 
   componentDidMount() {
@@ -59,7 +53,6 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps.personalDetail........', nextProps.personalDetail);
     if (this.isImageSave === false) {
       this.setState({
         firstName: nextProps.personalDetail.firstName,
@@ -117,7 +110,10 @@ class EntityPersonalDetail extends React.PureComponent {
       })
     }
     this.setState({
-      imageProfile: nextProps.profileImgData.image
+      imageProfile: nextProps.profileImgData.image,
+      uploadedImageFile: nextProps.profileImgData.image
+        ? nextProps.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png')
     })
     this.styles = {
       height: 100,
@@ -143,42 +139,19 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   reUpload = e => {
+    this.isChangePhoto = true
     if (
-      e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE &&
       e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)
     ) {
       this.setState({
-        uploadedImageFile: URL.createObjectURL(e.target.files[0])
+        uploadedImageFile: URL.createObjectURL(e.target.files[0]),
+        crop: SETTING.CROP_DEFAULT,
+        croppedImageUrl: null
       })
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
     } else {
       this.setState({
         isAlertModalOpen: !this.state.isAlertModalOpen
       })
-    }
-  }
-
-  onSelectFile = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
     }
   }
 
@@ -217,24 +190,112 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   closeImageUpload = () => {
-    this.setState({
-      uploadImage: !this.state.uploadImage
-    })
+    !this.isChangePhoto ? this.setState({
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png'),
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
+    }) : this.setState({ isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen })
   }
 
   saveImageUpload = () => {
     this.isImageSave = true;
+    this.isChangePhoto = false
+    if (this.state.croppedImageUrl.length <= SETTING.FILE_UPLOAD_SIZE) {
+      this.props.uploadImg(this.state.croppedImageUrl)
+      this.setState({
+        uploadImage: !this.state.uploadImage
+      })
+    } else {
+      this.setState({
+        isAlertModalOpen: !this.state.isAlertModalOpen
+      })
+    }
     this.setState({
-      uploadImage: !this.state.uploadImage
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     })
-    this.props.uploadImg(this.state.src)
   }
 
-  onCroppeds = e => {
-    let image = e.image
+  resetImage = () => {
+    this.isChangePhoto = false
     this.setState({
-      croppedImage: image
+      isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen,
+      uploadImage: !this.state.uploadImage,
+      imageProfile: this.props.profileImgData.image,
+      uploadedImageFile: this.props.profileImgData.image
+        ? this.props.profileImgData.image
+        : require('../../../assets/images/Blank_Profile_icon.png'),
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     })
+  }
+
+  onCropChange = crop => {
+    this.setState({ crop });
+  };
+
+  onCropComplete = (crop, pixelCrop) => {
+    this.makeClientCrop(crop, pixelCrop);
+  };
+
+  async makeClientCrop(crop, pixelCrop) {
+    if (this.imageRef && crop.width && crop.height) {
+      const croppedImageUrl = await this.getCroppedImg(
+        this.imageRef,
+        pixelCrop
+      );
+      this.setState({ croppedImageUrl });
+    } else {
+      this.setState({ croppedImageUrl: null });
+    }
+  }
+
+  onImageLoaded = (image) => {
+    this.imageRef = image;
+  };
+
+  getCroppedImg(image, pixelCrop) {
+    const canvas = document.createElement('canvas');
+    let width = pixelCrop.width;
+    let height = pixelCrop.height;
+    const max_size = SETTING.RESIZE_IMAGE;
+    
+    if (width > height) {
+        if (width > max_size) {
+            height *= max_size / width;
+            width = max_size;
+        }
+    } else {
+        if (height > max_size) {
+            width *= max_size / height;
+            height = max_size;
+        }
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d');
+
+    ctx.drawImage(
+      image,
+      pixelCrop.x,
+      pixelCrop.y,
+      pixelCrop.width,
+      pixelCrop.height,
+      0,
+      0,
+      width,
+      height,
+    );
+
+    return new Promise((resolve) => {
+      resolve(canvas.toDataURL('image/jpeg'))
+    });
   }
 
   render() {
@@ -258,14 +319,17 @@ class EntityPersonalDetail extends React.PureComponent {
           ModalBody={
             <ProfileImageDetail
               uploadedImageFile={this.state.uploadedImageFile}
-              watch={this.watch}
-              onCroppeds={this.onCroppeds}
+              crop={this.state.crop}
+              onImageLoaded={this.onImageLoaded}
+              onCropComplete={this.onCropComplete}
+              onCropChange={this.onCropChange}
               reUpload={this.reUpload}
             />}
           className='modal-lg asyncModal BlackoutModal'
           modalTitle='Edit Profile Image'
           centered='centered'
           saveImage={this.saveImageUpload}
+          buttonDisable={!this.state.croppedImageUrl}
         />
       </form>
     )
@@ -318,7 +382,6 @@ class EntityPersonalDetail extends React.PureComponent {
             </span>
           }
           btn1='OK'
-          // btn2='OK'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -329,6 +392,22 @@ class EntityPersonalDetail extends React.PureComponent {
           onCancel={() =>
             this.setState({
               isDiscardModalOpen: false
+            })}
+        />
+        <ModalPopup
+          isOpen={this.state.isAlertSaveModalOpen}
+          toggle={this.reset}
+          ModalBody={<span>Do you want to discard the changes?</span>}
+          btn1='YES'
+          btn2='NO'
+          className='modal-sm'
+          headerFooter='d-none'
+          footer='d-none'
+          centered='centered'
+          onConfirm={() => this.resetImage()}
+          onCancel={() =>
+            this.setState({
+              isAlertSaveModalOpen: false
             })}
         />
       </ScreenCover>

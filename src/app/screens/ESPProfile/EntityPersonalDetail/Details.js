@@ -1,8 +1,4 @@
 import React from 'react'
-import ImageCrop from 'react-image-crop-component'
-import 'react-image-crop-component/style.css'
-import 'react-image-crop/dist/ReactCrop.css'
-import 'react-image-crop/lib/ReactCrop.scss'
 import { ProfileImage } from '../../../components'
 import { formatPhoneNumber } from '../../../utils/formatName'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
@@ -122,50 +118,6 @@ export const Details = props => {
                 formatPhoneNumber(props.personalDetail.phoneNumber)}
             </span>
           </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-
-export const ProfileImageDetail = props => {
-  return (
-    <div className={'UploadProfileImageWidget'}>
-      <div className={'width100 UploadProfileImageContainer'}>
-        <div style={{ width: '300px', height: '300px' }}>
-          <ImageCrop
-            src={props.uploadedImageFile}
-            setWidth={300}
-            setHeight={300}
-            square={false}
-            resize
-            border={'dashed #ffffff 2px'}
-            onCrop={props.onCroppeds}
-            watch={props.watch}
-          />
-        </div>
-      </div>
-      <div className={'row'}>
-        <div className={'col-md-8'}>
-          <ul className={'UploadedImageLimitation'}>
-          <li>Click on Change Photo</li>
-              <li>Select the image from your desktop/gallery</li>
-              <li>The image should not exceed beyond 2MB.</li>
-              <li>The image should be either of PNG or JPEG/JPG type only.</li>
-              <li>Once select you can crop the image by dragging the cursor the image</li>
-              <li>Click on Save</li>
-          </ul>
-        </div>
-        <div className={'col-md-4 text-right'}>
-          <button className='btn btn-outline-primary UploadImageBtn'>
-            Change Photo
-            </button>
-          <input
-            className='addImageInput'
-            type='file'
-            onChange={props.reUpload}
-          />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { convertUTCTime, getUTCTimeInLocal } from '../../../utils/dateUtility'
+import { convertUTCTime, getUTCTimeInLocal, getUtcTimeDiff } from '../../../utils/dateUtility'
 
 function pad(num) {
     return ("0" + num).slice(-2);
@@ -17,10 +17,7 @@ class StopWatch extends Component {
 
     constructor(props) {
         super(props);
-        let timer  = props.startTime ? convertUTCTime(props.startTime) : 0
-        if(props.stopTimer){
-            timer  = getUTCTimeInLocal(props.startTime, props.endTime)
-        }
+        let timer  = props.duration
         this.state = {
             secondsElapsed: timer,
             laps: [],
@@ -41,6 +38,9 @@ class StopWatch extends Component {
             if (this.props.stopTimer) {
                 this.handleStopClick()
             }
+        }
+        if(this.props.duration !== nextProps.duration){
+            this.setState({secondsElapsed: nextProps.duration})
         }
     }
 

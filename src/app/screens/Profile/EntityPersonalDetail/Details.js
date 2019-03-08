@@ -1,11 +1,9 @@
 import React from 'react'
-import ImageCrop from 'react-image-crop-component'
-import 'react-image-crop-component/style.css'
-import 'react-image-crop/dist/ReactCrop.css'
-import 'react-image-crop/lib/ReactCrop.scss'
 import { ProfileImage } from '../../../components'
 import { formatPhoneNumber } from '../../../utils/formatName'
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 
 export const Details = props => {
   return (
@@ -29,7 +27,6 @@ export const Details = props => {
       </span>
       <div className={'SPDetailsContainer SPNameWidget'}>
         <div className={'d-flex'}>
-        {/* <div className={'col-md-7 p-0'}> */}
           <div className={'p-0'}>
             <h3 className={'SPName'}>
               {props.personalDetail &&
@@ -141,16 +138,13 @@ export const ProfileImageDetail = props => {
     return (
         <div className={'UploadProfileImageWidget'}>
         <div className={'width100 UploadProfileImageContainer'}>
-          <div style={{ width: '300px', height: '300px' }}>
-            <ImageCrop
-              src={props.uploadedImageFile}
-              setWidth={300}
-              setHeight={300}
-              square={false}
-              resize
-              border={'dashed #ffffff 2px'}
-              onCrop={props.onCroppeds}
-              watch={props.watch}
+          <div className={'cropper-style'}>
+            <ReactCrop 
+              src={props.uploadedImageFile} 
+              crop={props.crop}
+              onImageLoaded={props.onImageLoaded}
+              onComplete={props.onCropComplete}
+              onChange={props.onCropChange}
             />
           </div>
         </div>
@@ -159,7 +153,7 @@ export const ProfileImageDetail = props => {
             <ul className={'UploadedImageLimitation'}>
             <li>1. Click on the Change Photo Button. </li>
               <li>2. Select the image from your desktop/ gallery.</li>
-              {/* <li>3. Click and drag the curser across the image to crop.</li> */}
+              <li>3. Click and drag the cursor across the image to crop.</li>
               <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
             </ul>
           </div>
