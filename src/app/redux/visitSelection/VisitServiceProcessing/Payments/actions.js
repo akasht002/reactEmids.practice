@@ -40,12 +40,12 @@ export const startLoadingProcessing = () => {
 
 export function getpaymentsCardList(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(startLoadingProcessing());
         ThirdPartyGet(API.getPaymentCardList + data).then((resp) => {
             dispatch(getPaymentsCardListSuccess(resp.data))
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(endLoadingProcessing());
         })
     }
 };

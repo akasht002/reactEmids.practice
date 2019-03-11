@@ -10,7 +10,9 @@ import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSel
 
 export const QuestionsList = {
   getQuestionsListSuccess: 'get_questions_list_success/performtasks',
-  formDirtyFeedback: 'formDirtyFeedback/performtasks'
+  formDirtyFeedback: 'formDirtyFeedback/performtasks',
+  startLoading: 'startLoading/performtasks',
+  endLoading: 'endLoading/performtasks'
 }
 
 export const getQuestionsListSuccess = data => {
@@ -22,48 +24,57 @@ export const getQuestionsListSuccess = data => {
 
 export const formDirtyFeedback = () => {
   return {
-      type: QuestionsList.formDirtyFeedback,
+    type: QuestionsList.formDirtyFeedback,
   }
 }
 
+export const startLoadingProcessing = () => {
+  return {
+    type: QuestionsList.startLoading,
+  }
+};
 
-export function getQuestionsList () {
+export const endLoadingProcessing = () => {
+  return {
+    type: QuestionsList.endLoading,
+  }
+};
+
+
+export function getQuestionsList() {
   return dispatch => {
-    dispatch(startLoading())
+    dispatch(startLoadingProcessing())
     ServiceRequestGet(API.getQuestionsList)
       .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
-        dispatch(endLoading())
+        dispatch(endLoadingProcessing())
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(endLoadingProcessing())
       })
   }
 }
 
-export function saveAnswers (data) {
+export function saveAnswers(data) {
   return dispatch => {
-    dispatch(startLoading())
-    // let path = data.path ? data.path : Path.summary
+    dispatch(startLoadingProcessing())
     ServiceRequestPost(API.saveAnswers, data)
       .then(resp => {
-        //dispatch(push(path))
         dispatch(getSummaryDetails(data.serviceRequestVisitId));
-        dispatch(getSavedSignature(data.serviceRequestVisitId))
-        dispatch(endLoading())
+        dispatch(getSavedSignature(data.serviceRequestVisitId));
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(endLoadingProcessing())
         dispatch(push(Path.summary))
       })
   }
 }
-export function saveAnswerFeedback (data) {
+export function saveAnswerFeedback(data) {
   return dispatch => {
     dispatch(startLoading())
     ServiceRequestPost(API.saveAnswers, data)
       .then(resp => {
-        dispatch(endLoading())
+        dispatch(endLoadingProcessing())
       })
       .catch(err => {
         dispatch(endLoading())
