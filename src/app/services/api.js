@@ -15,9 +15,6 @@ export const Api = axios.create({
     baseURL: baseURL,
 });
 
-export const SETTING = {
-    FILE_UPLOAD_SIZE: 2097152
-}
 
 export const API = {
     sendEmailVerification: 'ServiceProviderOnBoarding/',
@@ -38,7 +35,7 @@ export const API = {
     getQuestionsList: 'VisitProcessing/ServiceRequestVisitFeedback/49',
     savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/',
     saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
-    startOrStopService: 'VisitProcessing/ServiceRequestVisit/',
+    startOrStopService: 'VisitProcessing/ServiceRequestVisit',
     SendResetPasswordLink: 'api/User/',
     getEmailIdByUserId: 'api/user/verifypasswordlink/',
     resetPassword: 'api/user',

@@ -176,6 +176,7 @@ export const SERVICE_REQ_STATUS = {
     IN_PROGRESS: 40,
     COMPLETED: 41,
     CLOSED: 42,
+    PROGRESS : 43,
     CANCELLED: 47,
     NOT_INTERESTED: 58,
     PENDING_APPROVAL: 106,
@@ -188,4 +189,6 @@ export const DEFAULT_FROM_DATE = '1900-01-01';
 export const DEFAULT_TO_DATE = '2100-01-01';
 export const CONTACT_NOT_FOUND = 'Phone Number Not Found.'
 export const PHONE_NUMBER_TEXT = 'Phone Number:'
+
+export const DEFAULT_VISIT_START_TIME = "0001-01-01T00:00:00"
 

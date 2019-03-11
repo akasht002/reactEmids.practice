@@ -1,9 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import 'react-image-crop-component/style.css'
-import 'react-image-crop/dist/ReactCrop.css'
-import 'react-image-crop/lib/ReactCrop.scss'
 import './index.css'
 import {  
   ScreenCover,Preloader
@@ -13,8 +10,8 @@ import {
   getArrayLength
 } from '../../../utils/validations'
 import { Details } from './Details'
-import { SETTING } from '../../../services/api'
 import { Path } from '../../../routes'
+
 class EntityPersonalDetail extends React.PureComponent {
   constructor (props) {
     super(props)
@@ -123,33 +120,7 @@ class EntityPersonalDetail extends React.PureComponent {
     this.setState({ uploadImage: true })
   }
 
-  reUpload = e => {
-    if (
-      e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE &&
-      e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)
-    ) {
-      this.setState({
-        uploadedImageFile: URL.createObjectURL(e.target.files[0])
-      })
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
-    } else {
-      this.setState({
-        isAlertModalOpen: !this.state.isAlertModalOpen
-      })
-    }
-  } 
-
   render () {
-    
     return (
       <ScreenCover isLoading={this.props.isLoading}>
       {this.props.personalDetail.lenght === 0 && <Preloader/>}

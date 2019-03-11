@@ -39,6 +39,9 @@ class StopWatch extends Component {
                 this.handleStopClick()
             }
         }
+        if(this.props.duration !== nextProps.duration){
+            this.setState({secondsElapsed: nextProps.duration})
+        }
     }
 
     handleStartClick() {
