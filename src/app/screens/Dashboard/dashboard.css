@@ -2072,4 +2072,22 @@ vertical-align: middle;
     display: none;
     }
   }
+
+
+
+  /*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+{
+   .topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu { min-width:128px !important; display:block !important; } /* IE10 */
+*::-ms-backdrop, .topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu { min-width:128px !important; display:block !important; } /* IE11 */
+}
+
+/*cross-browser-fixes-mozila*/
+@-moz-document url-prefix() {
+.topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu
+{
+min-width:128px !important; display:block !important;
+}    
+}
     
