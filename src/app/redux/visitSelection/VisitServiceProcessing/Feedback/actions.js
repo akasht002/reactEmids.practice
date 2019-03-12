@@ -7,6 +7,7 @@ import { startLoading, endLoading } from '../../../loading/actions'
 import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { visitHistoryLoading } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 
 export const QuestionsList = {
   getQuestionsListSuccess: 'get_questions_list_success/performtasks',
@@ -71,13 +72,13 @@ export function saveAnswers(data) {
 }
 export function saveAnswerFeedback(data) {
   return dispatch => {
-    dispatch(startLoading())
+    dispatch(visitHistoryLoading(true))
     ServiceRequestPost(API.saveAnswers, data)
       .then(resp => {
-        dispatch(endLoadingProcessing())
+        dispatch(visitHistoryLoading(false))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(visitHistoryLoading(false))
       })
   }
 }
