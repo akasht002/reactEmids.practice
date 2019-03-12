@@ -1,9 +1,7 @@
 import React from 'react'
-import { ProfileImage } from '../../../components'
+import { ProfileImage, ImageCropView } from '../../../components'
 import { formatPhoneNumber } from '../../../utils/formatName'
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 
 export const Details = props => {
   return (
@@ -137,17 +135,12 @@ export const Details = props => {
 export const ProfileImageDetail = props => {
     return (
         <div className={'UploadProfileImageWidget'}>
-        <div className={'width100 UploadProfileImageContainer'}>
-          <div className={'cropper-style'}>
-            <ReactCrop 
-              src={props.uploadedImageFile} 
-              crop={props.crop}
-              onImageLoaded={props.onImageLoaded}
-              onComplete={props.onCropComplete}
-              onChange={props.onCropChange}
-            />
-          </div>
-        </div>
+          <ImageCropView
+            uploadedImageFile={props.uploadedImageFile}
+            crop={props.crop}
+            onCropChange={props.onCropChange}
+            changeCroppedImage={props.changeCroppedImage}
+          />
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>

@@ -10,7 +10,8 @@ import {
   ProfileModalPopup,
   ModalPopup,
   ScreenCover,
-  ProfileImage
+  ProfileImage,
+  ImageCropView
 } from '../../../components'
 import ImageModal from '../PersonalDetail/ImageModal';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
@@ -23,8 +24,6 @@ import {
 import { formatPhoneNumber } from '../../../utils/formatName'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { SETTING } from '../../../constants/config'
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 
 class Organization extends React.PureComponent {
   constructor(props) {
@@ -139,67 +138,6 @@ class Organization extends React.PureComponent {
   onCropChange = crop => {
     this.setState({ crop });
   };
-
-  onCropComplete = (crop, pixelCrop) => {
-    this.makeClientCrop(crop, pixelCrop);
-  };
-
-  async makeClientCrop(crop, pixelCrop) {
-    if (this.imageRef && crop.width && crop.height) {
-      const croppedImageUrl = await this.getCroppedImg(
-        this.imageRef,
-        pixelCrop
-      );
-      this.setState({ croppedImageUrl });
-    } else {
-      this.setState({ croppedImageUrl: null });
-    }
-  }
-
-  onImageLoaded = (image) => {
-    this.imageRef = image;
-  };
-
-  getCroppedImg(image, pixelCrop) {
-    const canvas = document.createElement('canvas');
-    let width = pixelCrop.width;
-    let height = pixelCrop.height;
-    const max_size = SETTING.RESIZE_IMAGE;
-    
-    if (width > height) {
-        if (width > max_size) {
-            height *= max_size / width;
-            width = max_size;
-        }
-    } else {
-        if (height > max_size) {
-            width *= max_size / height;
-            height = max_size;
-        }
-    }
-
-    canvas.width = width;
-    canvas.height = height;
-
-    const ctx = canvas.getContext('2d');
-
-    ctx.drawImage(
-      image,
-      pixelCrop.x,
-      pixelCrop.y,
-      pixelCrop.width,
-      pixelCrop.height,
-      0,
-      0,
-      width,
-      height,
-    );
-
-    return new Promise((resolve) => {
-      resolve(canvas.toDataURL('image/jpeg'))
-    });
-  }
-
 
   onSubmit = () => {
     const { organizationNameInvaild, phoneNumberInvalid, urlInvaild, city, zipCode, streetAddress, selectedState, yearsOfExperienceInvalid } = this.state;
@@ -387,17 +325,14 @@ class Organization extends React.PureComponent {
   getBlackModalContent = () => {
     return (
       <div className={'UploadProfileImageWidget'}>
-        <div className={'width100 UploadProfileImageContainer'}>
-          <div className={'cropper-style'}>
-            <ReactCrop 
-              src={this.state.uploadedImageFile} 
-              crop={this.state.crop}
-              onImageLoaded={this.onImageLoaded}
-              onComplete={this.onCropComplete}
-              onChange={this.onCropChange}
-            />
-          </div>
-        </div>
+        <ImageCropView
+          uploadedImageFile={this.state.uploadedImageFile}
+          crop={this.state.crop}
+          onCropChange={this.onCropChange}
+          changeCroppedImage={(croppedImage) => {
+            this.setState({croppedImageUrl: croppedImage})
+          }}
+        />
         <div className={'row'}>
           <div className={'col-md-8'}>
             <ul className={'UploadedImageLimitation'}>
