@@ -238,7 +238,6 @@ export function cancelInvitedServiceProvider(data) {
 }
 
 export function cancelAppliedServiceProvider(data) {
-  console.log(data)
   let serviceProviderId = getUserInfo().serviceProviderId
   let model = {
     serviceRequestId: data.serviceRequestId,
