@@ -2050,11 +2050,11 @@ button:disabled {
   }
 
   .chatMessage.yourChat .ChatBubble .bubbleBody .bubbleMsg {
-    white-space: pre;
+    white-space: pre-wrap;
 }
   
 .chatMessage.mr-auto .ChatBubble .bubbleBody .bubbleMsg
 {
-white-space:pre;
+white-space:pre-wrap;
 }
   
