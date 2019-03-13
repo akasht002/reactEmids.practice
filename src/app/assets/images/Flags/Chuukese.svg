@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="256">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="256" viewBox="0 0 512 256">
 	<rect width="512" height="256" fill="#08298c"/>
 	<g id="half">
 		<polygon id="star" points="269.131,30.962 268.146,38.841 273.565,33.043 280.757,36.406 276.92,29.46 282.349,23.667 274.551,25.166 270.716,18.217 269.732,26.097 261.937,27.597" fill="#fff"/>
