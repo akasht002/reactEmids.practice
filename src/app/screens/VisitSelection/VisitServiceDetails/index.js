@@ -352,14 +352,14 @@ class VisitServiceDetails extends Component {
 
   render() {
 
-    const  ServiceTypeSettings = {
+    const ServiceTypeSettings = {
       dots: false,
       infinite: false,
       speed: 500,
       slidesToShow: 2,
       slidesToScroll: 2,
       variableWidth: true
-  }
+    }
     let defaultCheck = ''
     let sliderTypes =
       this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
@@ -656,10 +656,10 @@ class VisitServiceDetails extends Component {
                           </p>
                           <h2 className='ServicesTitle mt-4'>Service Types</h2>
                           <div className='ServiceType visit-srq-slider WhiteBG'>
-                            <div className='ServiceTypesSlider Summary'>                            
+                            <div className='ServiceTypesSlider Summary'>
                               <Carousel className="ServiceTypesSlider">
                                 {sliderTypes}
-                              </Carousel>                              
+                              </Carousel>
                             </div>
                           </div>
                           <div className='ServiceTasks Summary'>
@@ -823,11 +823,15 @@ class VisitServiceDetails extends Component {
                                 <span>{ScheduleList.visitStatusName}</span>
                               </div>
                               <div>
-                                {ScheduleList.originalTotalDuration
-                                  ? <span>
-                                    {ScheduleList.originalTotalDuration.substring(0, 5)}
+                                {ScheduleList.billedTotalDuration ?
+                                  <span>
+                                    {ScheduleList.billedTotalDuration.substring(0, 5)}
                                   </span>
-                                  : <span> - </span>}
+                                  :
+                                  <span>
+                                    {ScheduleList.originalTotalDuration ? ScheduleList.originalTotalDuration.substring(0, 5) : '-'}
+                                  </span>
+                                }
                               </div>
                               <div>
                                 <div class='ScheduleRowButton'>

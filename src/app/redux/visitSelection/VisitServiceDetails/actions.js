@@ -238,7 +238,6 @@ export function cancelInvitedServiceProvider(data) {
 }
 
 export function cancelAppliedServiceProvider(data) {
-  console.log(data)
   let serviceProviderId = getUserInfo().serviceProviderId
   let model = {
     serviceRequestId: data.serviceRequestId,
@@ -270,14 +269,14 @@ export function cancelHiredServiceProvider(data) {
     cancelledDescription: data.cancelledDescription
   }
   return dispatch => {
-    dispatch(startLoading())
+    dispatch(scheduleLoading(true))
     ServiceRequestPut(API.cancelHiredServiceProvider, model)
       .then(resp => {
-        dispatch(endLoading())
+        dispatch(scheduleLoading(false))
         dispatch(push(Path.visitServiceList))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(scheduleLoading(false))
         dispatch(push(Path.visitServiceList))
       })
   }
