@@ -41,7 +41,8 @@ export const AsyncMessageActions = {
     setActivePageNumber: 'setActivePageNumber/asyncMessage',
     updateTitle: 'updateTitle/asyncMessage',
     pushUnreadConversation: 'pushUnreadConversation/asyncMessage',
-    msgCallbackInterval: 'msgCallbackInterval/asyncMessage'
+    msgCallbackInterval: 'msgCallbackInterval/asyncMessage',
+    setConversationId: 'setConversationId/asyncMessage'
 };
 
 export const msgCallbackInterval = (data) => {
@@ -836,3 +837,10 @@ export function setRemoveParticipantConcurrency (data){
             })
     }
 };
+
+export function setConversationId (data){
+    return {
+        type: AsyncMessageActions.setConversationId,
+        data
+    }
+ };
