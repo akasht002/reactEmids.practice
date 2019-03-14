@@ -296,7 +296,7 @@ export function updateStandByMode (data) {
 
 export function getConversationSummaryDashboardSignalR (conversationId) {
   return (dispatch, getState) => {
-    let userId = getUserInfo().serviceProviderId
+    let userId = getUserInfo().coreoHomeUserId
     let userType = USERTYPES.SERVICE_PROVIDER
     MessageURLGet(
       API.getConversationSummary +

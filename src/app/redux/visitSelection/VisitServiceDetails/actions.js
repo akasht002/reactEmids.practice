@@ -269,14 +269,14 @@ export function cancelHiredServiceProvider(data) {
     cancelledDescription: data.cancelledDescription
   }
   return dispatch => {
-    dispatch(startLoading())
+    dispatch(scheduleLoading(true))
     ServiceRequestPut(API.cancelHiredServiceProvider, model)
       .then(resp => {
-        dispatch(endLoading())
+        dispatch(scheduleLoading(false))
         dispatch(push(Path.visitServiceList))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(scheduleLoading(false))
         dispatch(push(Path.visitServiceList))
       })
   }
