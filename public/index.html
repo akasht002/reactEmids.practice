@@ -21,6 +21,40 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+  <style>
+    .textloader:empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 350px;
+      height: 100px;
+      background-color: #fff;
+      border-radius: 4px;
+      margin: 0 AUTO;
+      border: 2px solid #ddd;
+      position: absolute;
+      top: 45%;
+      left: 0;
+      right: 0;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+    }
+
+    .textloader::after {
+      content: "Loading CoreoHome resources. This may take a moment.";
+      position: absolute;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 15px;
+      color: #999;
+      display: block;
+      width: 220px;
+      text-align: center;
+      line-height: 25px;
+      word-break: break-all;
+      white-space: pre-line;
+    }
+  </style>
   <title>Coreo Home</title>
 </head>
 
@@ -28,7 +62,7 @@
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
-  <div id="root"></div>
+  <div id="root" class="textloader"></div>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
