@@ -45,6 +45,9 @@ export const DashboardDetail = {
   get_entity_service_provider_list:
     'get_entity_service_provider_list/dashboard',
   setServiceVisitDate: 'setServiceVisitDate/dashboard',
+  setConversationLoader : 'setConversationLoader/dashboard',
+  setServiceRequestLoader : 'setServiceRequestLoader/dashboard',
+  setServiceVisitLoader : 'setServiceVisitLoader/dashboard'
 }
 
 export const getServiceStatusSuccess = data => {
@@ -56,15 +59,15 @@ export const getServiceStatusSuccess = data => {
 
 export function getServiceStatusDetail () {
   return (dispatch, getState) => {
-    dispatch(startLoading())
+    dispatch(setServiceRequestLoader(true))
     ServiceRequestGet(API.getServiceRequestStatus)
       .then(resp => {
         console.log(resp.data)
         dispatch(getServiceStatusSuccess(resp.data.slice(0, 5)))
-        dispatch(endLoading())
+        dispatch(setServiceRequestLoader(false))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(setServiceRequestLoader(false))
       })
   }
 }
@@ -136,7 +139,7 @@ export const setServiceVisitDate = data => {
 
 export function getEntityServiceProviderListSearch (data) {
   return (dispatch, getState) => {
-    dispatch(startLoading())
+    dispatch(setServiceVisitLoader(true))
     Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
       .then(resp => {
         const filtered = _.filter(resp.data, function (o) {
@@ -145,26 +148,26 @@ export function getEntityServiceProviderListSearch (data) {
           )
         })
         dispatch(getEntityServiceProviderListSuccess(filtered))
-        dispatch(endLoading())
+        dispatch(setServiceVisitLoader(false))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(setServiceVisitLoader(false))
       })
   }
 }
 
 export function getServiceProviderVists (data) {
   return (dispatch, getState) => {
-    dispatch(startLoading())
+    dispatch(setServiceVisitLoader(true))
     ServiceRequestGet(
       API.getServiceProviderVists + getUserInfo().serviceProviderId + '/' + data
     )
       .then(resp => {
         dispatch(getPatientVisitDetailSuccess(resp.data))
-        dispatch(endLoading())
+        dispatch(setServiceVisitLoader(false))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(setServiceVisitLoader(false))
       })
   }
 }
@@ -179,7 +182,7 @@ export const getPatientServiceRequestDetailSuccess = data => {
 export function getPatientServiceRequestDetail (data) {
   let id = data || DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD
   return (dispatch, getState) => {
-    dispatch(startLoading())
+    dispatch(setServiceRequestLoader(true))
     ServiceRequestGet(
       API.getServiceProviderRequests +
         getUserInfo().serviceProviderId +
@@ -188,10 +191,10 @@ export function getPatientServiceRequestDetail (data) {
     )
       .then(resp => {
         dispatch(getPatientServiceRequestDetailSuccess(resp.data))
-        dispatch(endLoading())
+        dispatch(setServiceRequestLoader(false))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(setServiceRequestLoader(false))
       })
   }
 }
@@ -248,7 +251,7 @@ export const getConversationDetailSuccess = data => {
 
 export function getConversationDetail (data) {
   return (dispatch, getState) => {
-    dispatch(startLoading())
+    dispatch(setConversationLoader(true))
     MessageURLGet(
       API.getConversationSummary +
         getUserInfo().coreoHomeUserId +
@@ -261,10 +264,10 @@ export function getConversationDetail (data) {
     )
       .then(resp => {
         dispatch(getConversationDetailSuccess(resp.data))
-        dispatch(endLoading())
+        dispatch(setConversationLoader(false))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(setConversationLoader(false))
       })
   }
 }
@@ -331,5 +334,26 @@ const getConversationSummaryItemSignalRSuceess = data => {
     conversationSummaryData = [data, ...conversationSummaryData]
     dispatch(getConversationDetailSuccess(conversationSummaryData))
     dispatch(getUnreadMessageCounts())
+  }
+}
+
+export const setConversationLoader =(data) =>{
+  return {
+    type: DashboardDetail.setConversationLoader,
+    data
+  } 
+}
+
+export const setServiceRequestLoader =(data) =>{
+  return {
+    type: DashboardDetail.setServiceRequestLoader,
+    data
+  }
+}
+
+export const setServiceVisitLoader =(data) =>{
+  return {
+    type: DashboardDetail.setServiceVisitLoader,
+    data
   }
 }
