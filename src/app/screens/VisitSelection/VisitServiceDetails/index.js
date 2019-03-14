@@ -510,6 +510,7 @@ class VisitServiceDetails extends Component {
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         {this.props.VisitServiceDetails.length === 0 && <Preloader />}
         {this.state.isLoading && <Preloader />}
+        {this.props.cancelHiredRequest && <Preloader />}
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>Service Request / {this.state.visitServiceDetails.serviceRequestId
@@ -1068,6 +1069,7 @@ function mapStateToProps(state) {
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
     isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
     isScheduleLoading: state.visitSelectionState.VisitServiceDetailsState.isScheduleLoading,
+    cancelHiredRequest: state.visitSelectionState.VisitServiceDetailsState.cancelHiredRequest,
   }
 }
 
