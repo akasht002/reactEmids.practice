@@ -2090,4 +2090,29 @@ vertical-align: middle;
 min-width:128px !important; display:block !important;
 }    
 }
+
+/*dashboard-loader*/
+.bottomProfile  .Loader
+{
+    width:100% !important;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-position:center;
+    margin: 0 auto;
+    display: block;
+}
+
+.topProfile  .Loader
+{
+    width:100% !important;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-position:center;
+    margin: 0 auto;
+    display: block;
+}
     

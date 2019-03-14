@@ -29,6 +29,7 @@ import { createVideoConference, saveContextData } from "../../redux/telehealth/a
 import { ModalPopup } from '../../components'
 import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
 import { PREVIOUS_MONTH,NEXT_MONTH } from './constant'
+import { Preloader } from '../../components'
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -624,6 +625,7 @@ class serviceCalendar extends React.Component {
             vertical={this.state.verticalScroll}
             className="bottomPalette"
           >
+          {this.props.isServiceVisitLoading && <Preloader/>}
             <ul className="list-group ProfileServicesVisitList">{visitData}</ul>
           </Scrollbars>
         </div>
@@ -717,7 +719,8 @@ function mapStateToProps(state) {
     serviceProviderList:
       state.dashboardState.dashboardState.serviceProviderList,
     loggedInUser: state.authState.userState.userData.userInfo,
-    serviceVisitDate: state.dashboardState.dashboardState.serviceVisitDate
+    serviceVisitDate: state.dashboardState.dashboardState.serviceVisitDate,
+    isServiceVisitLoading: state.dashboardState.dashboardState.isServiceVisitLoading,
   };
 }
 export default withRouter(

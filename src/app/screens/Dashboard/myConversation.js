@@ -12,6 +12,7 @@ import {
 } from '../../redux/dashboard/Dashboard/actions';
 import {getUnreadMessageCounts} from '../../redux/asyncMessages/actions';
 import { getUserInfo } from '../../services/http';
+import { Preloader } from '../../components';
 
 class MyConversation extends React.Component {
   componentDidMount() {
@@ -50,9 +51,9 @@ class MyConversation extends React.Component {
             </span>
            { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>}
           </div>
-          
           <div className='topPalette ProfileConversation'>
             <ul className='list-group ProfileConversationWidget'>
+            {this.props.isConversationLoading && <Preloader/>}
               {conversation_item}
             </ul>
           </div>
@@ -75,6 +76,7 @@ function mapStateToProps(state) {
     conversationDetail: state.dashboardState.dashboardState.conversationDetail,
     loggedInUser: state.authState.userState.userData.userInfo,
     unreadMsgCounts: state.asyncMessageState.unreadCounts,
+    isConversationLoading: state.dashboardState.dashboardState.isConversationLoading
   }
 }
 export default withRouter(

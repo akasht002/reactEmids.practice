@@ -4,12 +4,15 @@ const defaultState = {
   conversationDetail: [],
   unreadCounts: [],
   serviceProvider: [],
-  patientServiceRequest:null,
-  serviceVist:[],
-  serviceStatusLookUp:[],
-  serviceVistCount:[],
-  serviceProviderList:[],
-  serviceVisitDate: null
+  patientServiceRequest: null,
+  serviceVist: [],
+  serviceStatusLookUp: [],
+  serviceVistCount: [],
+  serviceProviderList: [],
+  serviceVisitDate: null,
+  isConversationLoading: false,
+  isServiceRequestLoading: false,
+  isServiceVisitLoading:false
 }
 
 const DashboardState = (state = defaultState, action) => {
@@ -29,35 +32,50 @@ const DashboardState = (state = defaultState, action) => {
         ...state,
         serviceProvider: action.data
       }
-      case DashboardDetail.get_patient_service_request_detail_success:
+    case DashboardDetail.get_patient_service_request_detail_success:
       return {
         ...state,
         patientServiceRequest: action.data
       }
-      case DashboardDetail.get_patient_visit_detail_success:
+    case DashboardDetail.get_patient_visit_detail_success:
       return {
         ...state,
         serviceVist: action.data
       }
-      case DashboardDetail.get_service_request_success:
+    case DashboardDetail.get_service_request_success:
       return {
         ...state,
         serviceStatusLookUp: action.data
       }
-      case DashboardDetail.get_service_visit_count:
-      return{
+    case DashboardDetail.get_service_visit_count:
+      return {
         ...state,
-        serviceVistCount:action.data
+        serviceVistCount: action.data
       }
-      case DashboardDetail.get_entity_service_provider_list:
-      return{
+    case DashboardDetail.get_entity_service_provider_list:
+      return {
         ...state,
-        serviceProviderList:action.data
+        serviceProviderList: action.data
       }
     case DashboardDetail.setServiceVisitDate:
       return {
         ...state,
         serviceVisitDate: action.data
+      }
+    case DashboardDetail.setConversationLoader:
+      return {
+        ...state,
+        isConversationLoading: action.data
+      }
+    case DashboardDetail.setServiceRequestLoader:
+      return {
+        ...state,
+        isServiceRequestLoading: action.data
+      }
+    case DashboardDetail.setServiceVisitLoader:
+      return {
+        ...state,
+        isServiceVisitLoading: action.data
       }
     default:
       return state
