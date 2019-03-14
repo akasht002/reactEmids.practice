@@ -83,7 +83,8 @@ export const SERVICE_VISIT_STATUS = {
     COMPLETED: 'Completed',
     SCHEDULED: 'Scheduled',
     INPROGRESS: 'In Progress',
-    PAYMENTPENDING: 'Payment Pending'
+    PAYMENTPENDING: 'Payment Pending',
+    CANCELLED: 'Cancelled'
 }
 
 

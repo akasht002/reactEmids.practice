@@ -66,6 +66,7 @@ import {
   updateEntityServiceVisit
 } from "../../../redux/dashboard/Dashboard/actions";
 import { Carousel } from '../../../components';
+
 class VisitServiceDetails extends Component {
   constructor(props) {
     super(props)
@@ -338,7 +339,12 @@ class VisitServiceDetails extends Component {
   };
 
   goBackToServiceRequest = () => {
-    this.props.goBack();
+    {
+      !isEntityServiceProvider() ?
+      this.props.goBack()
+      :
+      this.props.goToDashboard();
+    }
     this.props.formDirtyVisitServiceDetails();
   }
 
@@ -892,8 +898,8 @@ class VisitServiceDetails extends Component {
                                 </div>
                               </div>
                               {
-                                getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
-                                <AssignServiceProvider
+                                getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && ScheduleList.visitStatusName !== SERVICE_VISIT_STATUS.CANCELLED &&
+                                 <AssignServiceProvider
                                   sp={ScheduleList}
                                   reset={this.reset}
                                   statusID={this.props.VisitServiceDetails.statusId}
@@ -1047,7 +1053,8 @@ function mapDispatchToProps(dispatch) {
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
     updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
-    saveContextData: (data) => dispatch(saveContextData(data))
+    saveContextData: (data) => dispatch(saveContextData(data)),
+    goToDashboard: () => dispatch(push(Path.dashboard))
   }
 }
 
