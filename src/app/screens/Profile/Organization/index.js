@@ -453,11 +453,11 @@ class Organization extends React.PureComponent {
             </div>
           </div>
         </div>
-        <i
+        {this.props.isUser && <i
           name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
           className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
           onClick={this.togglePersonalDetails.bind(this)}
-        />
+        />}
       </div>
     )
   }
@@ -879,7 +879,8 @@ function mapStateToProps(state) {
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState
       .updatePersonalDetailSuccess,
     cityDetail: state.profileState.PersonalDetailState.cityDetail,
-    profileImgData: state.profileState.PersonalDetailState.imageData
+    profileImgData: state.profileState.PersonalDetailState.imageData,
+    isUser: state.profileState.PersonalDetailState.isUser
   }
 }
 export default withRouter(
