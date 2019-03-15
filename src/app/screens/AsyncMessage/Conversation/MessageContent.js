@@ -225,7 +225,7 @@ class MessageContent extends Component {
                                                     type='text'
                                                     className='form-control'
                                                     onChange={this.props.onChangeTitle}
-                                                    value={this.props.title}
+                                                    value={this.props.title ? this.props.title : ''}
                                                     maxLength="100"
                                                 />
                                                 <input
