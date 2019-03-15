@@ -43,3 +43,16 @@
     height: 100%;
     background-image: url("../../../assets/images/RatingFilledStar.svg");
 }
+
+
+.UploadProfileImageContainer > div{margin:0 auto; display: block;}
+.ReactCrop
+{
+    margin: 0 auto;
+    display: block;
+    background: transparent;
+}
+.ReactCrop__image
+{
+    margin: 0 auto;
+}
