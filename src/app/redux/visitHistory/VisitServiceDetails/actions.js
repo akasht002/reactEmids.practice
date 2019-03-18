@@ -159,13 +159,13 @@ export function getVisitServiceHistoryByIdDetail(data) {
 
 export function getFilteredData(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(visitHistoryLoading(true));
         let serviceProviderId = getUserInfo().serviceProviderId;
         ServiceRequestPost(API.getFilteredVisitHistory, { ...data, serviceProviderId }).then((resp) => {
             dispatch(getVisitServiceHistoryDetailsSuccess(resp.data))
-            dispatch(endLoading());
+            dispatch(visitHistoryLoading(false));
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(visitHistoryLoading(false));
         })
     }
 }

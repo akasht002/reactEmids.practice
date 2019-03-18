@@ -317,7 +317,7 @@ function mapStateToProps(state) {
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback,
-        isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
+        isLoading: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.isLoading,
     };
 };
 

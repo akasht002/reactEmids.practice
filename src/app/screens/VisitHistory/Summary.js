@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { getFields, getLength, getStatus, getServiceTypeImage } from "../../utils/validations";
-import { ProfileModalPopup } from "../../components";
+import { ProfileModalPopup, Preloader } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
@@ -385,6 +385,7 @@ class VistSummary extends React.Component {
 
     return (
       <React.Fragment>
+        {this.props.isLoading && <Preloader />}
         <form className="ServiceContent">
           <div className="VisitSummaryWidget">
             <div className="LeftWidget">
@@ -614,6 +615,7 @@ function mapStateToProps(state) {
       state.visitHistoryState.vistServiceHistoryState.ServiceRequestId,
     VisitFeedback: state.visitHistoryState.vistServiceHistoryState
       .VisitFeedback,
+    isLoading: state.visitHistoryState.vistServiceHistoryState.isLoading,
   };
 }
 

@@ -61,3 +61,15 @@
 {
     padding: 20px 30px;
 }
+
+
+
+.CertificationModal .Select-control .Select-multi-value-wrapper .Select-input
+{
+    padding-left: 0px;
+}
+
+.CertificationModal .Select-control .Select-multi-value-wrapper .Select-input input
+{
+    padding-left: 0px;
+}

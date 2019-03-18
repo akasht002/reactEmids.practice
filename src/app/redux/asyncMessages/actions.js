@@ -41,7 +41,8 @@ export const AsyncMessageActions = {
     setActivePageNumber: 'setActivePageNumber/asyncMessage',
     updateTitle: 'updateTitle/asyncMessage',
     pushUnreadConversation: 'pushUnreadConversation/asyncMessage',
-    msgCallbackInterval: 'msgCallbackInterval/asyncMessage'
+    msgCallbackInterval: 'msgCallbackInterval/asyncMessage',
+    setConversationId: 'setConversationId/asyncMessage'
 };
 
 export const msgCallbackInterval = (data) => {
@@ -531,12 +532,35 @@ export function getLatestMessages(conversationId){
         if (interval) {
             clearInterval(interval);
         }
-        dispatch(onFetchConversation(conversationId, true));
+        dispatch(onFetchExistingConversation(conversationId));
         interval = setInterval(() => {
             dispatch(checkLatestMessages(conversationId));
         }, state.asyncMessageState.callbackInterval);
     }
 }
+
+export function onFetchExistingConversation(id) {
+    return (dispatch, getState) => {
+        let state = getState();
+        if(state.asyncMessageState.currentConversation.conversationId && state.asyncMessageState.openedAsyncPage === 'conversation' 
+        && state.asyncMessageState.currentConversation.conversationId === id){
+            let context = state.asyncMessageState.currentConversation.context
+            let USER_ID = getUserInfo().coreoHomeUserId;
+            let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+            AsyncGet(API.getConversation 
+                + id + '/' 
+                + USER_ID + '/' 
+                + USER_TYPE + '/all/' + context
+                )
+                .then(resp => {
+                    dispatch(setConversationData(resp.data));
+                    dispatch(setCurrentOpenConversation(resp.data));
+                })
+                .catch(err => {
+                })
+            }
+    }
+};
 
 export function checkConversationCreated(conversation) {
     return (dispatch, getState) => {
@@ -836,3 +860,10 @@ export function setRemoveParticipantConcurrency (data){
             })
     }
 };
+
+export function setConversationId (data){
+    return {
+        type: AsyncMessageActions.setConversationId,
+        data
+    }
+ };

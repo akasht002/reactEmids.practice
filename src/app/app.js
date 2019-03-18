@@ -4,7 +4,8 @@ import AppStackRoot from './routes';
 import {
   getLatestMessages,
   checkConversationExist,
-  checkConversationCreated
+  checkConversationCreated,
+  setConversationId
 } from './redux/asyncMessages/actions';
 import { getConversationSummaryDashboardSignalR } from './redux/dashboard/Dashboard/actions';
 import {
@@ -41,6 +42,7 @@ class App extends Component {
           let conversationId = data.result ? data.result.conversationId : data.conversationId;
           this.props.getLatestMessages(conversationId);
           this.props.getConversationSummaryDashboardSignalR(conversationId);
+          this.props.setConversationId(conversationId);
         };
       };
     });
@@ -77,7 +79,8 @@ function mapDispatchToProps(dispatch) {
     getConversationSummaryDashboardSignalR: (conversationId) => dispatch(getConversationSummaryDashboardSignalR(conversationId)),
     getLatestMessages: (conversationId) => dispatch(getLatestMessages(conversationId)),
     checkConversationExist: (conversationId) => dispatch(checkConversationExist(conversationId)),
-    checkConversationCreated: (data) => dispatch(checkConversationCreated(data))
+    checkConversationCreated: (data) => dispatch(checkConversationCreated(data)),
+    setConversationId: (data) => dispatch(setConversationId(data))
   }
 }
 

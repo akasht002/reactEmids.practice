@@ -9,7 +9,8 @@ import {
   SelectBox,
   ProfileModalPopup,
   ModalPopup, ScreenCover,
-  ProfileImage
+  ProfileImage,
+  ImageCropView
 } from '../../../components'
 import ImageModal from './ImageModal';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
@@ -22,8 +23,7 @@ import { formatPhoneNumber } from '../../../utils/formatName'
 import { SETTING } from '../../../constants/config'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatContactNumber, formatContactNumberValue } from '../../../utils/validations'
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import { ImageInstruction } from '../Components/ImageInstruction'
 
 class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -166,8 +166,8 @@ class PersonalDetail extends React.PureComponent {
       city === '' || this.state.city === null ||
       zipCode === '' || this.state.zipCode === null ||
       streetAddress === '' || this.state.streetAddress === null ||
-      selectedState === '' || this.state.selectedState === null || 
-      this.state.phoneNumberInvalid 
+      selectedState === '' || this.state.selectedState === null ||
+      this.state.phoneNumberInvalid
     ) {
       let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
       if (city === '' || city === null) {
@@ -334,7 +334,7 @@ class PersonalDetail extends React.PureComponent {
         disabledSaveBtn: false
       })
     }
-    
+
   }
 
   reset = () => {
@@ -486,89 +486,19 @@ class PersonalDetail extends React.PureComponent {
     this.setState({ crop });
   };
 
-  onCropComplete = (crop, pixelCrop) => {
-    this.makeClientCrop(crop, pixelCrop);
-  };
-
-  async makeClientCrop(crop, pixelCrop) {
-    if (this.imageRef && crop.width && crop.height) {
-      const croppedImageUrl = await this.getCroppedImg(
-        this.imageRef,
-        pixelCrop
-      );
-      this.setState({ croppedImageUrl });
-    } else {
-      this.setState({ croppedImageUrl: null });
-    }
-  }
-
-  onImageLoaded = (image) => {
-    this.imageRef = image;
-  };
-
-  getCroppedImg(image, pixelCrop) {
-    const canvas = document.createElement('canvas');
-    let width = pixelCrop.width;
-    let height = pixelCrop.height;
-    const max_size = SETTING.RESIZE_IMAGE;
-    
-    if (width > height) {
-        if (width > max_size) {
-            height *= max_size / width;
-            width = max_size;
-        }
-    } else {
-        if (height > max_size) {
-            width *= max_size / height;
-            height = max_size;
-        }
-    }
-
-    canvas.width = width;
-    canvas.height = height;
-
-    const ctx = canvas.getContext('2d');
-
-    ctx.drawImage(
-      image,
-      pixelCrop.x,
-      pixelCrop.y,
-      pixelCrop.width,
-      pixelCrop.height,
-      0,
-      0,
-      width,
-      height,
-    );
-
-    return new Promise((resolve) => {
-      resolve(canvas.toDataURL('image/jpeg'))
-    });
-  }
-
   getBlackModalContent = () => {
     return (
       <div className={'UploadProfileImageWidget'}>
-        <div className={'width100 UploadProfileImageContainer'}>
-          <div className={'cropper-style'}>
-            <ReactCrop 
-              src={this.state.uploadedImageFile} 
-              crop={this.state.crop}
-              onImageLoaded={this.onImageLoaded}
-              onComplete={this.onCropComplete}
-              onChange={this.onCropChange}
-            />
-          </div>
-        </div>
+        <ImageCropView
+          uploadedImageFile={this.state.uploadedImageFile}
+          crop={this.state.crop}
+          onCropChange={this.onCropChange}
+          changeCroppedImage={(croppedImage) => {
+            this.setState({ croppedImageUrl: croppedImage })
+          }}
+        />
         <div className={'row'}>
-          <div className={'col-md-8'}>
-            <ul className={'UploadedImageLimitation'}>
-              <li>1. Click on the Change Photo Button. </li>
-              <li>2. Select the image from your desktop/ gallery.</li>
-              <li>3. Click and drag the cursor across the image to crop.</li>
-              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
-            </ul>
-          </div>
+          <ImageInstruction />
           <div className={'col-md-4 text-right'}>
             <button className='btn btn-outline-primary UploadImageBtn'>
               Change Photo
@@ -583,7 +513,7 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
-  
+
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
@@ -943,38 +873,38 @@ class PersonalDetail extends React.PureComponent {
             maxlength='7'
             textChange={e => {
               let onlyNums = e.target.value.replace(/[^0-9.]/g, '')
-              let values = onlyNums.split('.');              
-                if (values[0].length <= 3 || (values[1] && values[1].length <= 2)) {
-                  if (onlyNums.length < 6) {
-                    this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
-                    if (onlyNums.indexOf(".") > -1) {
-                      if (values[1].length > 1) {
-                        let len = onlyNums.indexOf(".") + 3
-                        this.setState({
-                          hourlyRate: onlyNums.substr(0, len),
-                          disabledSaveBtn: false, hourlyRateInvalid: false
-                        })
-                      }
-                    }
-                  } else if (onlyNums.length === 6 ) {
-                    if (onlyNums.indexOf(".") > -1) {
-                      if ((onlyNums.split('.')[1].length > 1)) {
-                        let len = onlyNums.indexOf(".") + 3
-                        this.setState({
-                          hourlyRate: onlyNums.substr(0, len),
-                          disabledSaveBtn: false, hourlyRateInvalid: false
-                        })
-                      }
-                    } else {
+              let values = onlyNums.split('.');
+              if (values[0].length <= 3 || (values[1] && values[1].length <= 2)) {
+                if (onlyNums.length < 6) {
+                  this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
+                  if (onlyNums.indexOf(".") > -1) {
+                    if (values[1].length > 1) {
+                      let len = onlyNums.indexOf(".") + 3
                       this.setState({
-                        hourlyRate: onlyNums.substr(0, 3),
+                        hourlyRate: onlyNums.substr(0, len),
                         disabledSaveBtn: false, hourlyRateInvalid: false
                       })
                     }
                   }
-               
+                } else if (onlyNums.length === 6) {
+                  if (onlyNums.indexOf(".") > -1) {
+                    if ((onlyNums.split('.')[1].length > 1)) {
+                      let len = onlyNums.indexOf(".") + 3
+                      this.setState({
+                        hourlyRate: onlyNums.substr(0, len),
+                        disabledSaveBtn: false, hourlyRateInvalid: false
+                      })
+                    }
+                  } else {
+                    this.setState({
+                      hourlyRate: onlyNums.substr(0, 3),
+                      disabledSaveBtn: false, hourlyRateInvalid: false
+                    })
+                  }
+                }
+
               }
-              
+
             }
             }
             onBlur={e => {

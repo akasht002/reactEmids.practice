@@ -22,7 +22,8 @@ export const VisitServiceDetails = {
   setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
   canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails',
   formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails',
-  isScheduleLoading: 'isScheduleLoading/visitservicedetails'
+  isScheduleLoading: 'isScheduleLoading/visitservicedetails',
+  cancelHiredRequest: 'cancelHiredRequest/visitservicedetails'
 }
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -35,6 +36,13 @@ export const getVisitServiceDetailsSuccess = data => {
 export const scheduleLoading = data => {
   return {
     type: VisitServiceDetails.isScheduleLoading,
+    data
+  }
+}
+
+export const cancelHiredRequest = data => {
+  return {
+    type: VisitServiceDetails.cancelHiredRequest,
     data
   }
 }
@@ -238,7 +246,6 @@ export function cancelInvitedServiceProvider(data) {
 }
 
 export function cancelAppliedServiceProvider(data) {
-  console.log(data)
   let serviceProviderId = getUserInfo().serviceProviderId
   let model = {
     serviceRequestId: data.serviceRequestId,
@@ -270,14 +277,14 @@ export function cancelHiredServiceProvider(data) {
     cancelledDescription: data.cancelledDescription
   }
   return dispatch => {
-    dispatch(startLoading())
+    dispatch(cancelHiredRequest(true))
     ServiceRequestPut(API.cancelHiredServiceProvider, model)
       .then(resp => {
-        dispatch(endLoading())
+        dispatch(cancelHiredRequest(false))
         dispatch(push(Path.visitServiceList))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(cancelHiredRequest(false))
         dispatch(push(Path.visitServiceList))
       })
   }
