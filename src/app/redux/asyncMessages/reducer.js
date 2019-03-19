@@ -14,11 +14,12 @@ const defaultState = {
     conversationImageUrl: '',
     canCreateConversation: false,
     conversationCount: 20,
-    openedAsyncPage : null,
+    openedAsyncPage: null,
     removeParticipantConcurrencyExist: false,
     activePageNumber: 1,
-    isLoading:false,
-    callbackInterval: 9000
+    isLoading: false,
+    callbackInterval: 9000,
+    conversationId: 0
 };
 
 const asyncMessageState = (state = defaultState, action) => {
@@ -67,12 +68,12 @@ const asyncMessageState = (state = defaultState, action) => {
                         ...state.conversation.messages,
                         action.data.messages[0]
                     ],
-                    participantList:  action.data.participantList,
+                    participantList: action.data.participantList,
                     title: action.data.title,
                     isActive: action.data.isActive,
                     canEdit: action.data.canEdit,
                 },
-                currentConversation:{
+                currentConversation: {
                     ...state.currentConversation,
                     title: action.data.title,
                     isActive: action.data.isActive,
@@ -135,8 +136,8 @@ const asyncMessageState = (state = defaultState, action) => {
                 ...state,
                 conversationCount: action.data
             };
-        case AsyncMessageActions.setopenedAsyncPage:{
-            return{
+        case AsyncMessageActions.setopenedAsyncPage: {
+            return {
                 ...state,
                 openedAsyncPage: action.data
             }
@@ -150,51 +151,56 @@ const asyncMessageState = (state = defaultState, action) => {
                         ...state.conversation.messages,
                         action.data
                     ],
-                    participantList:  action.data.participantList,
+                    participantList: action.data.participantList,
                 }
             };
         case AsyncMessageActions.setRemoveParticipantConcurrency:
-            return{
-            ...state,
-            removeParticipantConcurrencyExist: action.data
-        }
-        case AsyncMessageActions.clearConversation:
-            return{
-            ...state,
-            conversation: {},
-            currentConversation: {}
-        }
-        case AsyncMessageActions.setActivePageNumber:
-            return{
-            ...state,
-            activePageNumber: action.data
-        }
-        case AsyncMessageActions.updateTitle:
-            return{
-            ...state,
-            conversation:{
-                ...state.conversation,
-                title: action.data
-            },
-            currentConversation:{
-                ...state.currentConversation,
-                title: action.data
+            return {
+                ...state,
+                removeParticipantConcurrencyExist: action.data
             }
-        }
+        case AsyncMessageActions.clearConversation:
+            return {
+                ...state,
+                conversation: {},
+                currentConversation: {}
+            }
+        case AsyncMessageActions.setActivePageNumber:
+            return {
+                ...state,
+                activePageNumber: action.data
+            }
+        case AsyncMessageActions.updateTitle:
+            return {
+                ...state,
+                conversation: {
+                    ...state.conversation,
+                    title: action.data
+                },
+                currentConversation: {
+                    ...state.currentConversation,
+                    title: action.data
+                }
+            }
         case AsyncMessageActions.loadingStart:
-            return{
-            ...state,
-             isLoading: true
-        }
+            return {
+                ...state,
+                isLoading: true
+            }
         case AsyncMessageActions.loadingEnd:
-            return{
-            ...state,
+            return {
+                ...state,
                 isLoading: false
             }
         case AsyncMessageActions.msgCallbackInterval:
             return {
                 ...state,
                 callbackInterval: action.data
+            }
+        case AsyncMessageActions.setConversationId:
+            return {
+                ...state,
+                conversationId: action.data
             }
         default:
             return state;

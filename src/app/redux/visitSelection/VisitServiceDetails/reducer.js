@@ -11,7 +11,8 @@ const defaultState = {
     updateServiceRequestMsgStatus: 0,
     entityServiceProviderId: 0,
     canInitiateConversation: false,
-    isScheduleLoading:false
+    isScheduleLoading: false,
+    cancelHiredRequest: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -65,15 +66,21 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 canInitiateConversation: action.data
             };
 
-            case VisitServiceDetails.isScheduleLoading:
+        case VisitServiceDetails.isScheduleLoading:
             return {
                 ...state,
                 isScheduleLoading: action.data
-            };    
+            };
+
+        case VisitServiceDetails.cancelHiredRequest:
+            return {
+                ...state,
+                cancelHiredRequest: action.data
+            };
 
         case VisitServiceDetails.formDirtyVisitServiceDetails:
             return defaultState;
-            
+
         default:
             return state;
     }

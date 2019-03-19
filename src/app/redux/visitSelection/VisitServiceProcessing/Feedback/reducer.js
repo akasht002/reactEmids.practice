@@ -4,6 +4,7 @@ import {
 
 const defaultState = {
     QuestionsList: {},
+    isLoading: false
 };
 
 const FeedbackState = (state = defaultState, action) => {
@@ -19,6 +20,17 @@ const FeedbackState = (state = defaultState, action) => {
             return {
                 ...state,
                 QuestionsList: {}
+            };
+
+        case QuestionsList.startLoading:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case QuestionsList.endLoading:
+            return {
+                ...state,
+                isLoading: false
             };
 
         default:

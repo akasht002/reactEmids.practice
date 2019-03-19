@@ -25,8 +25,8 @@ import { setServiceRequestStatus } from '../../redux/visitSelection/VisitService
 import {
   ServiceRequestStatus
 } from "../../redux/visitSelection/ServiceRequestFilters/actions";
-
 import { getLength } from '../../utils/validations'
+import { Preloader } from '../../components'
 
 class ServiceRequest extends React.Component {
   constructor(props) {
@@ -119,7 +119,7 @@ class ServiceRequest extends React.Component {
           this.props.goToPatientProfile();
         }}   
       />
-      : <ServiceRequestDefault /> : <div>{''}</div>
+      : <ServiceRequestDefault /> : <Preloader/>
     return (
       <div
         className={
@@ -168,6 +168,7 @@ class ServiceRequest extends React.Component {
                 : CSS_PROPS.Scrollbars_With_Length
             + " scrollarea ProfileContentWidget ScrollBar"}>
             <div className="scrollarea-content">
+            {this.props.isServiceRequestLoading && <Preloader/>}
             <ul className='list-group ProfileServicesVisitList'>
               {serviceRequestItem}
             </ul>
@@ -210,7 +211,8 @@ function mapStateToProps(state) {
     patientServiceRequest: state.dashboardState.dashboardState
       .patientServiceRequest,
     serviceStatusLookUp: state.dashboardState.dashboardState
-      .serviceStatusLookUp
+      .serviceStatusLookUp,
+    isServiceRequestLoading: state.dashboardState.dashboardState.isServiceRequestLoading 
   }
 }
 export default withRouter(

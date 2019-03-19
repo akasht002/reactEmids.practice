@@ -223,8 +223,8 @@ class ParticipantContent extends Component {
                                     <a onClick={() => {
                                         if(participant.participantType !== USERTYPES.SERVICE_PROVIDER){
                                             let data = {
-                                                userId : participant.participantId,
-                                                // userId : participant.userId,
+                                                userId : participant.participantType === USERTYPES.GUARDIAN ? 
+                                                participant.userId : participant.participantId,
                                                 userType: participant.participantType,
                                                 isUser: false
                                             };

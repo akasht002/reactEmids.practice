@@ -8,7 +8,8 @@ import { MessageTypes } from '../../../data/AsyncMessage';
 import {
     goToConversationSummary,
     getConversationImageWithImageId,
-    clearConversationImageUrl
+    clearConversationImageUrl,
+    updateReadStatus
 } from '../../../redux/asyncMessages/actions';
 import AsyncImgModalTemplate from "../Modals/ImageModal";
 import { USERTYPES, ImageFormats } from '../../../constants/constants';
@@ -96,6 +97,7 @@ class MessageContent extends Component {
         if (this.state.imgName || this.props.messageText.trim().length > 0 || (this.props.title !== this.props.exististingTitle)) {
             this.props.isDirty(true, true);
         } else {
+            this.props.updateReadStatus({conversationId: this.props.conversationId})
             this.props.goToConversationSummary();
         }
     };
@@ -223,7 +225,7 @@ class MessageContent extends Component {
                                                     type='text'
                                                     className='form-control'
                                                     onChange={this.props.onChangeTitle}
-                                                    value={this.props.title}
+                                                    value={this.props.title ? this.props.title : ''}
                                                     maxLength="100"
                                                 />
                                                 <input
@@ -315,14 +317,16 @@ function mapDispatchToProps(dispatch) {
     return {
         goToConversationSummary: () => dispatch(goToConversationSummary()),
         getConversationImageWithImageId: (messageId) => dispatch(getConversationImageWithImageId(messageId)),
-        clearConversationImageUrl: () => dispatch(clearConversationImageUrl())
+        clearConversationImageUrl: () => dispatch(clearConversationImageUrl()),
+        updateReadStatus: (data) => dispatch(updateReadStatus(data))
     }
 };
 
 function mapStateToProps(state) {
     return {
         messageUrl: state.asyncMessageState.conversationImageUrl,
-        canCreateConversation : state.asyncMessageState.canCreateConversation
+        canCreateConversation : state.asyncMessageState.canCreateConversation,
+        conversationId: state.asyncMessageState.conversationId
     }
 };
 

@@ -14,7 +14,8 @@ import {
 } from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import { Path } from "../../../routes";
 import { push } from "../../../redux/navigation/actions";
-import { VISIT_STATUS_ID } from '../../../constants/constants'
+import { VISIT_STATUS_ID,SERVICE_REQ_STATUS,DEFAULT_VISIT_START_TIME } from '../../../constants/constants'
+import _ from 'lodash'
 
 class AssignServiceProvider extends Component {
   constructor(props) {
@@ -123,6 +124,12 @@ class AssignServiceProvider extends Component {
     this.props.goToESPProfile();
   }
 
+  isStatusInArray = data => {
+    let statusArray = [SERVICE_REQ_STATUS.HIRED]
+    if (_.indexOf(statusArray, data) !== -1) return true
+    return false
+  }
+
   // !moment(this.props.sp.visitDate).isBefore(moment(new Date(), "MM-DD-YYYY")) 
 
   render() {
@@ -132,8 +139,8 @@ class AssignServiceProvider extends Component {
 
     return (
       <div className='EntityUServiceProf'>
-        {isFutureDay(this.props.sp.visitDate) ? this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ?
-          this.props.statusID === 38
+        {(isFutureDay(this.props.sp.visitDate) && this.props.statusID === SERVICE_REQ_STATUS.HIRED)  ? this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ?
+          this.isStatusInArray(this.props.statusID)
             ? <span>
               <i
                 className='assignSPLink'
@@ -181,7 +188,7 @@ class AssignServiceProvider extends Component {
                     this.props.sp.entityServiceProviderLastName}
                 </span>
               </div>
-              {this.props.sp.visitStatusId === VISIT_STATUS_ID && isFutureDay(this.props.sp.visitDate) &&
+              {this.props.sp.visitStatusId === VISIT_STATUS_ID && isFutureDay(this.props.sp.visitDate) && this.props.sp.visitStartTime === DEFAULT_VISIT_START_TIME &&
               <span
                 className="EditIcon"
                 onClick={e => {

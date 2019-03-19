@@ -66,6 +66,7 @@ import {
   updateEntityServiceVisit
 } from "../../../redux/dashboard/Dashboard/actions";
 import { Carousel } from '../../../components';
+
 class VisitServiceDetails extends Component {
   constructor(props) {
     super(props)
@@ -338,7 +339,12 @@ class VisitServiceDetails extends Component {
   };
 
   goBackToServiceRequest = () => {
-    this.props.goBack();
+    {
+      !isEntityServiceProvider() ?
+      this.props.goBack()
+      :
+      this.props.goToDashboard();
+    }
     this.props.formDirtyVisitServiceDetails();
   }
 
@@ -352,14 +358,14 @@ class VisitServiceDetails extends Component {
 
   render() {
 
-    const  ServiceTypeSettings = {
+    const ServiceTypeSettings = {
       dots: false,
       infinite: false,
       speed: 500,
       slidesToShow: 2,
       slidesToScroll: 2,
       variableWidth: true
-  }
+    }
     let defaultCheck = ''
     let sliderTypes =
       this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
@@ -510,6 +516,7 @@ class VisitServiceDetails extends Component {
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         {this.props.VisitServiceDetails.length === 0 && <Preloader />}
         {this.state.isLoading && <Preloader />}
+        {this.props.cancelHiredRequest && <Preloader />}
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>Service Request / {this.state.visitServiceDetails.serviceRequestId
@@ -656,10 +663,10 @@ class VisitServiceDetails extends Component {
                           </p>
                           <h2 className='ServicesTitle mt-4'>Service Types</h2>
                           <div className='ServiceType visit-srq-slider WhiteBG'>
-                            <div className='ServiceTypesSlider Summary'>                            
+                            <div className='ServiceTypesSlider Summary'>
                               <Carousel className="ServiceTypesSlider">
                                 {sliderTypes}
-                              </Carousel>                              
+                              </Carousel>
                             </div>
                           </div>
                           <div className='ServiceTasks Summary'>
@@ -823,11 +830,15 @@ class VisitServiceDetails extends Component {
                                 <span>{ScheduleList.visitStatusName}</span>
                               </div>
                               <div>
-                                {ScheduleList.originalTotalDuration
-                                  ? <span>
-                                    {ScheduleList.originalTotalDuration.substring(0, 5)}
+                                {ScheduleList.billedTotalDuration ?
+                                  <span>
+                                    {ScheduleList.billedTotalDuration.substring(0, 5)}
                                   </span>
-                                  : <span> - </span>}
+                                  :
+                                  <span>
+                                    {ScheduleList.originalTotalDuration ? ScheduleList.originalTotalDuration.substring(0, 5) : '-'}
+                                  </span>
+                                }
                               </div>
                               <div>
                                 <div class='ScheduleRowButton'>
@@ -887,8 +898,8 @@ class VisitServiceDetails extends Component {
                                 </div>
                               </div>
                               {
-                                getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
-                                <AssignServiceProvider
+                                getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && ScheduleList.visitStatusName !== SERVICE_VISIT_STATUS.CANCELLED &&
+                                 <AssignServiceProvider
                                   sp={ScheduleList}
                                   reset={this.reset}
                                   statusID={this.props.VisitServiceDetails.statusId}
@@ -1042,7 +1053,8 @@ function mapDispatchToProps(dispatch) {
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
     updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
-    saveContextData: (data) => dispatch(saveContextData(data))
+    saveContextData: (data) => dispatch(saveContextData(data)),
+    goToDashboard: () => dispatch(push(Path.dashboard))
   }
 }
 
@@ -1064,6 +1076,7 @@ function mapStateToProps(state) {
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
     isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
     isScheduleLoading: state.visitSelectionState.VisitServiceDetailsState.isScheduleLoading,
+    cancelHiredRequest: state.visitSelectionState.VisitServiceDetailsState.cancelHiredRequest,
   }
 }
 

@@ -2,10 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
-import ImageCrop from 'react-image-crop-component'
-import 'react-image-crop-component/style.css'
-import 'react-image-crop/dist/ReactCrop.css'
-import 'react-image-crop/lib/ReactCrop.scss'
 import './index.css'
 import {
   Input,
@@ -13,7 +9,8 @@ import {
   SelectBox,
   ProfileModalPopup,
   ModalPopup, ScreenCover,
-  ProfileImage
+  ProfileImage,
+  ImageCropView
 } from '../../../components'
 import ImageModal from './ImageModal';
 import * as action from '../../../redux/profile/PersonalDetail/actions'
@@ -23,9 +20,10 @@ import {
   getLength,
 } from '../../../utils/validations'
 import { formatPhoneNumber } from '../../../utils/formatName'
-import { SETTING } from '../../../services/api'
+import { SETTING } from '../../../constants/config'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatContactNumber, formatContactNumberValue } from '../../../utils/validations'
+import { ImageInstruction } from '../Components/ImageInstruction'
 
 class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -44,12 +42,7 @@ class PersonalDetail extends React.PureComponent {
       ModalOrg: true,
       src: null,
       isAlertSaveModalOpen: false,
-      crop: {
-        x: 10,
-        y: 10,
-        width: 80,
-        height: 80
-      }
+      crop: SETTING.CROP_DEFAULT
     };
     this.isImageSave = false;
     this.isChangePhoto = false
@@ -145,40 +138,16 @@ class PersonalDetail extends React.PureComponent {
 
   reUpload = e => {
     this.isChangePhoto = true
-    if (e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE && e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
+    if (e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
       this.setState({
-        uploadedImageFile: URL.createObjectURL(e.target.files[0])
+        uploadedImageFile: URL.createObjectURL(e.target.files[0]),
+        crop: SETTING.CROP_DEFAULT,
+        croppedImageUrl: null
       })
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
     } else {
       this.setState({
         isAlertModalOpen: !this.state.isAlertModalOpen
       })
-    }
-  }
-
-  onSelectFile = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
-
     }
   }
 
@@ -197,8 +166,8 @@ class PersonalDetail extends React.PureComponent {
       city === '' || this.state.city === null ||
       zipCode === '' || this.state.zipCode === null ||
       streetAddress === '' || this.state.streetAddress === null ||
-      selectedState === '' || this.state.selectedState === null || 
-      this.state.phoneNumberInvalid 
+      selectedState === '' || this.state.selectedState === null ||
+      this.state.phoneNumberInvalid
     ) {
       let cityInvalid = false, zipCodeInvalid = false, streetInvalid = false, stateInvalid = false;
       if (city === '' || city === null) {
@@ -229,6 +198,8 @@ class PersonalDetail extends React.PureComponent {
       uploadedImageFile: this.props.profileImgData.image
         ? this.props.profileImgData.image
         : require('../../../assets/images/Blank_Profile_icon.png'),
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     }) : this.setState({ isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen })
   }
 
@@ -240,23 +211,28 @@ class PersonalDetail extends React.PureComponent {
       imageProfile: this.props.profileImgData.image,
       uploadedImageFile: this.props.profileImgData.image
         ? this.props.profileImgData.image
-        : require('../../../assets/images/Blank_Profile_icon.png')
+        : require('../../../assets/images/Blank_Profile_icon.png'),
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     })
   }
 
   saveImageUpload = () => {
     this.isImageSave = true;
     this.isChangePhoto = false
+    if (this.state.croppedImageUrl.length <= SETTING.FILE_UPLOAD_SIZE) {
+      this.props.uploadImg(this.state.croppedImageUrl)
+      this.setState({
+        uploadImage: !this.state.uploadImage
+      })
+    } else {
+      this.setState({
+        isAlertModalOpen: !this.state.isAlertModalOpen
+      })
+    }
     this.setState({
-      uploadImage: !this.state.uploadImage
-    })
-    this.props.uploadImg(this.state.src)
-  }
-
-  onCroppeds = e => {
-    let image = e.image
-    this.setState({
-      croppedImage: image
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     })
   }
 
@@ -358,7 +334,7 @@ class PersonalDetail extends React.PureComponent {
         disabledSaveBtn: false
       })
     }
-    
+
   }
 
   reset = () => {
@@ -432,6 +408,7 @@ class PersonalDetail extends React.PureComponent {
           modalTitle='Edit Profile Image'
           centered='centered'
           saveImage={this.saveImageUpload}
+          buttonDisable={!this.state.croppedImageUrl}
         />
       </form>
     )
@@ -505,32 +482,23 @@ class PersonalDetail extends React.PureComponent {
     )
   }
 
+  onCropChange = crop => {
+    this.setState({ crop });
+  };
+
   getBlackModalContent = () => {
     return (
       <div className={'UploadProfileImageWidget'}>
-        <div className={'width100 UploadProfileImageContainer'}>
-          <div style={{ width: '300px', height: '300px' }}>
-            <ImageCrop
-              src={this.state.uploadedImageFile}
-              setWidth={300}
-              setHeight={300}
-              square={false}
-              resize
-              border={'dashed #ffffff 2px'}
-              onCrop={this.onCroppeds}
-              watch={this.watch}
-            />
-          </div>
-        </div>
+        <ImageCropView
+          uploadedImageFile={this.state.uploadedImageFile}
+          crop={this.state.crop}
+          onCropChange={this.onCropChange}
+          changeCroppedImage={(croppedImage) => {
+            this.setState({ croppedImageUrl: croppedImage })
+          }}
+        />
         <div className={'row'}>
-          <div className={'col-md-8'}>
-            <ul className={'UploadedImageLimitation'}>
-              <li>1. Click on the Change Photo Button. </li>
-              <li>2. Select the image from your desktop/ gallery.</li>
-              {/* <li>3. Click and drag the curser across the image to crop.</li> */}
-              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
-            </ul>
-          </div>
+          <ImageInstruction />
           <div className={'col-md-4 text-right'}>
             <button className='btn btn-outline-primary UploadImageBtn'>
               Change Photo
@@ -545,46 +513,7 @@ class PersonalDetail extends React.PureComponent {
       </div>
     )
   }
-  getBlackModalContent = () => {
-    return (
-      <div className={'UploadProfileImageWidget'}>
-        <div className={'width100 UploadProfileImageContainer'}>
-          <div style={{ width: '300px', height: '300px' }}>
-            <ImageCrop
-              src={this.state.uploadedImageFile}
-              setWidth={300}
-              setHeight={300}
-              square={false}
-              resize
-              border={'dashed #ffffff 2px'}
-              onCrop={this.onCroppeds}
-              watch={this.watch}
-            />
-          </div>
-        </div>
-        <div className={'row'}>
-          <div className={'col-md-8'}>
-            <ul className={'UploadedImageLimitation'}>
-              <li>1. Click on the Change Photo Button. </li>
-              <li>2. Select the image from your desktop/ gallery.</li>
-              {/* <li>3. Click and drag the curser across the image to crop.</li> */}
-              <li className="pd-10"><strong>Note:</strong>&nbsp;Image should not exceed 2 MB either a PNG/JPEG/JPG format</li>
-            </ul>
-          </div>
-          <div className={'col-md-4 text-right'}>
-            <button className='btn btn-outline-primary UploadImageBtn'>
-              Change Photo
-            </button>
-            <input
-              className='addImageInput'
-              type='file'
-              onChange={this.reUpload}
-            />
-          </div>
-        </div>
-      </div>
-    )
-  }
+
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
@@ -944,38 +873,38 @@ class PersonalDetail extends React.PureComponent {
             maxlength='7'
             textChange={e => {
               let onlyNums = e.target.value.replace(/[^0-9.]/g, '')
-              let values = onlyNums.split('.');              
-                if (values[0].length <= 3 || (values[1] && values[1].length <= 2)) {
-                  if (onlyNums.length < 6) {
-                    this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
-                    if (onlyNums.indexOf(".") > -1) {
-                      if (values[1].length > 1) {
-                        let len = onlyNums.indexOf(".") + 3
-                        this.setState({
-                          hourlyRate: onlyNums.substr(0, len),
-                          disabledSaveBtn: false, hourlyRateInvalid: false
-                        })
-                      }
-                    }
-                  } else if (onlyNums.length === 6 ) {
-                    if (onlyNums.indexOf(".") > -1) {
-                      if ((onlyNums.split('.')[1].length > 1)) {
-                        let len = onlyNums.indexOf(".") + 3
-                        this.setState({
-                          hourlyRate: onlyNums.substr(0, len),
-                          disabledSaveBtn: false, hourlyRateInvalid: false
-                        })
-                      }
-                    } else {
+              let values = onlyNums.split('.');
+              if (values[0].length <= 3 || (values[1] && values[1].length <= 2)) {
+                if (onlyNums.length < 6) {
+                  this.setState({ hourlyRate: onlyNums, disabledSaveBtn: false, hourlyRateInvalid: false })
+                  if (onlyNums.indexOf(".") > -1) {
+                    if (values[1].length > 1) {
+                      let len = onlyNums.indexOf(".") + 3
                       this.setState({
-                        hourlyRate: onlyNums.substr(0, 3),
+                        hourlyRate: onlyNums.substr(0, len),
                         disabledSaveBtn: false, hourlyRateInvalid: false
                       })
                     }
                   }
-               
+                } else if (onlyNums.length === 6) {
+                  if (onlyNums.indexOf(".") > -1) {
+                    if ((onlyNums.split('.')[1].length > 1)) {
+                      let len = onlyNums.indexOf(".") + 3
+                      this.setState({
+                        hourlyRate: onlyNums.substr(0, len),
+                        disabledSaveBtn: false, hourlyRateInvalid: false
+                      })
+                    }
+                  } else {
+                    this.setState({
+                      hourlyRate: onlyNums.substr(0, 3),
+                      disabledSaveBtn: false, hourlyRateInvalid: false
+                    })
+                  }
+                }
+
               }
-              
+
             }
             }
             onBlur={e => {

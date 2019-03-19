@@ -4,7 +4,8 @@ import AppStackRoot from './routes';
 import {
   getLatestMessages,
   checkConversationExist,
-  checkConversationCreated
+  checkConversationCreated,
+  setConversationId
 } from './redux/asyncMessages/actions';
 import { getConversationSummaryDashboardSignalR } from './redux/dashboard/Dashboard/actions';
 import {
@@ -13,7 +14,8 @@ import {
 import { getUserInfo } from './services/http';
 import { USERTYPES } from './constants/constants';
 import { connection, startConnection, onConnectionClosed } from './utils/signalrUtility';
-import { isMobileBrowser } from './utils/browserUtility'
+import { isMobileBrowser } from './utils/browserUtility';
+import {MobileLanding} from '../app/screens';
 class App extends Component {
 
   componentDidMount() {
@@ -40,6 +42,7 @@ class App extends Component {
           let conversationId = data.result ? data.result.conversationId : data.conversationId;
           this.props.getLatestMessages(conversationId);
           this.props.getConversationSummaryDashboardSignalR(conversationId);
+          this.props.setConversationId(conversationId);
         };
       };
     });
@@ -54,7 +57,7 @@ class App extends Component {
   }
 
   render() {
-    let view = isMobileBrowser ? <div>From your Mobile Device, please download the coreo home app from play store and app store!!!</div> : <AppStackRoot history={this.props.history} />
+    let view = isMobileBrowser ? <MobileLanding /> : <AppStackRoot history={this.props.history} />
     return (
       <div>
         {view}
@@ -76,7 +79,8 @@ function mapDispatchToProps(dispatch) {
     getConversationSummaryDashboardSignalR: (conversationId) => dispatch(getConversationSummaryDashboardSignalR(conversationId)),
     getLatestMessages: (conversationId) => dispatch(getLatestMessages(conversationId)),
     checkConversationExist: (conversationId) => dispatch(checkConversationExist(conversationId)),
-    checkConversationCreated: (data) => dispatch(checkConversationCreated(data))
+    checkConversationCreated: (data) => dispatch(checkConversationCreated(data)),
+    setConversationId: (data) => dispatch(setConversationId(data))
   }
 }
 

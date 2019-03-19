@@ -2,9 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
-import 'react-image-crop-component/style.css'
-import 'react-image-crop/dist/ReactCrop.css'
-import 'react-image-crop/lib/ReactCrop.scss'
 import './index.css'
 import {
   Input,
@@ -21,7 +18,7 @@ import {
   getLength
 } from '../../../utils/validations'
 import { Details, ProfileImageDetail } from './Details'
-import { SETTING } from '../../../services/api'
+import { SETTING } from '../../../constants/config'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatPhoneNumber } from '../../../utils/formatName'
 import ImageModal from '../PersonalDetail/ImageModal';
@@ -42,12 +39,7 @@ class EntityPersonalDetail extends React.PureComponent {
       ModalOrg: true,
       src: null,
       isAlertSaveModalOpen: false,
-      crop: {
-        x: 10,
-        y: 10,
-        width: 80,
-        height: 80
-      }
+      crop: SETTING.CROP_DEFAULT
     };
     this.isImageSave = false;
     this.isChangePhoto = false
@@ -61,7 +53,6 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps.personalDetail........', nextProps.personalDetail);
     if (this.isImageSave === false) {
       this.setState({
         firstName: nextProps.personalDetail.firstName,
@@ -150,41 +141,17 @@ class EntityPersonalDetail extends React.PureComponent {
   reUpload = e => {
     this.isChangePhoto = true
     if (
-      e.target.files[0].size <= SETTING.FILE_UPLOAD_SIZE &&
       e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)
     ) {
       this.setState({
-        uploadedImageFile: URL.createObjectURL(e.target.files[0])
+        uploadedImageFile: URL.createObjectURL(e.target.files[0]),
+        crop: SETTING.CROP_DEFAULT,
+        croppedImageUrl: null
       })
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
     } else {
       this.setState({
         isAlertModalOpen: !this.state.isAlertModalOpen
       })
-    }
-  }
-
-  onSelectFile = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader()
-      reader.addEventListener(
-        'load',
-        () =>
-          this.setState({
-            src: reader.result
-          }),
-        false
-      )
-      reader.readAsDataURL(e.target.files[0])
     }
   }
 
@@ -229,22 +196,27 @@ class EntityPersonalDetail extends React.PureComponent {
       uploadedImageFile: this.props.profileImgData.image
         ? this.props.profileImgData.image
         : require('../../../assets/images/Blank_Profile_icon.png'),
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     }) : this.setState({ isAlertSaveModalOpen: !this.state.isAlertSaveModalOpen })
   }
 
   saveImageUpload = () => {
     this.isImageSave = true;
     this.isChangePhoto = false
+    if (this.state.croppedImageUrl.length <= SETTING.FILE_UPLOAD_SIZE) {
+      this.props.uploadImg(this.state.croppedImageUrl)
+      this.setState({
+        uploadImage: !this.state.uploadImage
+      })
+    } else {
+      this.setState({
+        isAlertModalOpen: !this.state.isAlertModalOpen
+      })
+    }
     this.setState({
-      uploadImage: !this.state.uploadImage
-    })
-    this.props.uploadImg(this.state.src)
-  }
-
-  onCroppeds = e => {
-    let image = e.image
-    this.setState({
-      croppedImage: image
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     })
   }
 
@@ -256,8 +228,18 @@ class EntityPersonalDetail extends React.PureComponent {
       imageProfile: this.props.profileImgData.image,
       uploadedImageFile: this.props.profileImgData.image
         ? this.props.profileImgData.image
-        : require('../../../assets/images/Blank_Profile_icon.png')
+        : require('../../../assets/images/Blank_Profile_icon.png'),
+      crop: SETTING.CROP_DEFAULT,
+      croppedImageUrl: null
     })
+  }
+
+  onCropChange = crop => {
+    this.setState({ crop });
+  };
+
+  changeCroppedImage = (croppedImage) => {
+    this.setState({croppedImageUrl: croppedImage})
   }
 
   render() {
@@ -281,14 +263,16 @@ class EntityPersonalDetail extends React.PureComponent {
           ModalBody={
             <ProfileImageDetail
               uploadedImageFile={this.state.uploadedImageFile}
-              watch={this.watch}
-              onCroppeds={this.onCroppeds}
+              crop={this.state.crop}
+              changeCroppedImage={this.changeCroppedImage}
+              onCropChange={this.onCropChange}
               reUpload={this.reUpload}
             />}
           className='modal-lg asyncModal BlackoutModal'
           modalTitle='Edit Profile Image'
           centered='centered'
           saveImage={this.saveImageUpload}
+          buttonDisable={!this.state.croppedImageUrl}
         />
       </form>
     )

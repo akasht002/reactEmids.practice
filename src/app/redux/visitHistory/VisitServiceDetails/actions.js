@@ -146,26 +146,26 @@ export const getServiceRequestId = (data) => {
 export function getVisitServiceHistoryByIdDetail(data) {
     return (dispatch) => {
         dispatch(getServiceRequestId(data))
-        dispatch(startLoading());
+        dispatch(visitHistoryLoading(true));
         ServiceRequestGet(API.getServiceVisitsHistoryById + data).then((resp) => {
             dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data))
             dispatch(push(Path.visitSummaryDetail))
-            dispatch(endLoading());
+            dispatch(visitHistoryLoading(false));
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(visitHistoryLoading(false));
         })
     }
 };
 
 export function getFilteredData(data) {
     return (dispatch) => {
-        dispatch(startLoading());
+        dispatch(visitHistoryLoading(true));
         let serviceProviderId = getUserInfo().serviceProviderId;
         ServiceRequestPost(API.getFilteredVisitHistory, { ...data, serviceProviderId }).then((resp) => {
             dispatch(getVisitServiceHistoryDetailsSuccess(resp.data))
-            dispatch(endLoading());
+            dispatch(visitHistoryLoading(false));
         }).catch((err) => {
-            dispatch(endLoading());
+            dispatch(visitHistoryLoading(false));
         })
     }
 }
