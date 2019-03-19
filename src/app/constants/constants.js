@@ -193,3 +193,4 @@ export const PHONE_NUMBER_TEXT = 'Phone Number:'
 
 export const DEFAULT_VISIT_START_TIME = "0001-01-01T00:00:00"
 
+export const NO_PARTICIPANTS_FOUND = 'No result found';

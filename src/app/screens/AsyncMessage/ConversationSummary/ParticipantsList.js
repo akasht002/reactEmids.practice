@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Checkbox from '../Components/checkbox';
 import { Input } from '../../../components';
 import { getLinkedParticipantsList } from '../../../redux/asyncMessages/actions';
-import { USERTYPES } from '../../../constants/constants';
+import { USERTYPES, NO_PARTICIPANTS_FOUND } from '../../../constants/constants';
 
 class ParticipantsList extends Component {
 
@@ -38,7 +38,10 @@ class ParticipantsList extends Component {
                     return (<Checkbox key={index} onCheckParticipant={this.props.onCheckParticipant} participant={participantData} />)
                 }
             });
-        };
+        }
+        else{
+            return NO_PARTICIPANTS_FOUND;
+         }
     };
 
     render() {
@@ -53,7 +56,7 @@ class ParticipantsList extends Component {
                     textChange={this.props.onSearchTextChange}
                     iconStyle='icon-search'
                 />
-               <div className="participantsSearchList pd-left0 ChatContainer">
+               <div className="participantsSearchList pd-left-10new ChatContainer">
                     {this.participants()}
                 </div>
             </div>
