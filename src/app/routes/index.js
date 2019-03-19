@@ -74,13 +74,13 @@ const VisitNotification = lazy(() => import('../screens/VisitProcessingNotificat
 const VisitNotificationSettings = lazy(() => import('../screens/VisitProcessingNotification/VisitNotificationSettings'));
 const ESPProfile = lazy(() => import('../screens/ESPProfile/Profile'));
 
-function Loading({ error }) {
-  if (error) {
-    return 'Oh nooess!';
-  } else {
-    return <h3>Loading...</h3>;
-  }
-}
+// function Loading({ error }) {
+//   if (error) {
+//     return 'Oh nooess!';
+//   } else {
+//     return <h3>Loading...</h3>;
+//   }
+// }
 
 // const LoginCallBack = Loadable({
 //   loader: () => import('../screens/Authentication/Login/LoginCallBack'),
@@ -133,7 +133,7 @@ class AppStackRoot extends Component {
     return (
       <ConnectedRouter history={this.props.history}>
       
-        <HashRouter><Suspense fallback={<h2>Product list is loading...</h2>}>
+        <HashRouter><Suspense fallback={<h2>Loading....</h2>}>
           <Switch>
             <Route exact path={Path.root} component={this.startPage} />
             <Route path={Path.setPassword} component={SetPassword} />
