@@ -12,3 +12,7 @@ export const isArrayEqual = function (x, y) {
     return _.difference(x, y)
 };
 
+export const emptyString = data => {
+    return data === undefined ? '' : data
+};
+
