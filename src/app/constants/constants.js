@@ -153,15 +153,16 @@ export const serviceTypesImage = {
     5: 'ADL Getting Dressed.svg',
     6: 'ADL Toileting.svg',
     7: 'ADL Transferring.svg',
-    // 10: 'G&N Grocery Delivery.svg',
-    // 11: 'G&N Meal Delivery.svg',
     8: 'HAH - Companionship & Errands.svg',
     9: 'HAH - Food Preparation.svg',
     10: 'HAH - Housekeeping.svg',
     11: 'HAH - Laundry.svg',
     12: 'HAH - Shopping.svg',
+    13: 'HAH - Help at Home.svg',
+    14: 'G&N Grocery Delivery.svg',
+    15: 'G&N Meal Delivery.svg',
+    16: 'Transportation - General Transportation.svg',
     // 17: 'HAH - Shopping.svg',
-    // 18: 'Transportation - General Transportation.svg'
 }
 
 export const DEFAULT_PAGE_SIZE = 10;

@@ -305,14 +305,6 @@
     background-image: url("../assets/ServiceTypes/ADL Transferring.svg");
 }
 
-/* .SPIconServices10:after{
-    background-image: url("../assets/ServiceTypes/G&N Grocery Delivery.svg");
-}
-
-.SPIconServices11:after{
-    background-image: url("../assets/ServiceTypes/G&N Meal Delivery.svg");
-} */
-
 .SPIconServices8:after{
     background-image: url("../assets/ServiceTypes/HAH - Companionship & Errands.svg");
 }
@@ -337,9 +329,17 @@
     background-image: url("../assets/ServiceTypes/HAH - Help at Home.svg");
 }
 
-/* .SPIconServices7:after{
+.SPIconServices14:after{
+    background-image: url("../assets/ServiceTypes/G&N Grocery Delivery.svg");
+}
+
+.SPIconServices15:after{
+    background-image: url("../assets/ServiceTypes/G&N Meal Delivery.svg");
+}
+
+.SPIconServices16:after{
     background-image: url("../assets/ServiceTypes/Transportation - General Transportation.svg");
-} */
+}
 
 .SPIconSlideArrow{
     display: block;
