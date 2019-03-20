@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Checkbox from './Components/checkbox';
 import { Input } from '../../components';
+import { NO_RESULT_FOUND, CONVERSATION_SUMMARY, NO_PARTICIPANTS_FOUND } from '../../constants/constants';
 import './styles.css';
 
 class ParticipantsList extends Component {
@@ -23,7 +24,10 @@ class ParticipantsList extends Component {
                     return (<Checkbox key={index} onCheckParticipant={this.props.onCheckParticipant} participant={participantData} />)
                 }
             });
-        };
+        }
+        else{
+            return this.props.openedAsyncPage === CONVERSATION_SUMMARY && NO_PARTICIPANTS_FOUND;
+         }
     };
 
     render() {
@@ -38,8 +42,9 @@ class ParticipantsList extends Component {
                     textChange={this.props.onSearchTextChange}
                     iconStyle='icon-search'
                 />
-                <div className="participantsSearchList pd-left0">
-                    {this.participants()}
+                <div className="participantsSearchList pd-left-10new">
+                {(this.props.searchText === '' ? 
+                this.participants() : NO_RESULT_FOUND)}
                 </div>
             </div>
         )

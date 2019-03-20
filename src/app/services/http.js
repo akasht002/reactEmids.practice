@@ -92,7 +92,7 @@ export const AsyncGet = (url) => {
 };
 
 export const AsyncPutWithUrl = (url) => {
-    return axios.put(asyncURL + url, getHeader()).then((resp) => {
+    return axios.put(asyncURL + url, {}, getHeader()).then((resp) => {
         return resp;
     }).catch((error) => {
         handleError(error);
