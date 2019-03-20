@@ -71,7 +71,11 @@ class PaymentSuccess extends Component {
                                         {this.props.patientDetails.patient ?
                                             <span>
                                                 <img
-                                                    src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
+                                                     src={
+                                                        this.props.patientDetails.patient && this.props.patientDetails.patient.imageString
+                                                            ? this.props.patientDetails.patient.imageString
+                                                            : require('../../../../../assets/images/Blank_Profile_icon.png')
+                                                    }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
                                             :

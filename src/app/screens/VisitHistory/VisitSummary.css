@@ -245,7 +245,7 @@ div.EstimatedCostWidget{
 
 .accordion .ServiceList.Summary label.ServicesLink .serviceName.non_completedtask
 {
-color: #b3b3b3;
+color: #444444;
 }
 
 .ServiceList.Summary:before {
@@ -253,7 +253,7 @@ color: #b3b3b3;
 }
 
 .ServicesLink.active{
-    color: #444444;
+    color: #28a745;
 }
 
 .SPRating{

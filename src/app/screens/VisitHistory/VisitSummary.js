@@ -94,7 +94,9 @@ class VisitSummary extends React.Component {
                         src={
                           visitSummary.patient &&
                           visitSummary.patient.imageString
-                        }
+                              ? visitSummary.patient.imageString
+                              : require('../../assets/images/Blank_Profile_icon.png')
+                      }
                         className='avatarImage avatarImageBorder'
                       />
                       <i className='requestName'>
