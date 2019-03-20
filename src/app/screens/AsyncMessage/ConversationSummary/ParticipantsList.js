@@ -39,9 +39,6 @@ class ParticipantsList extends Component {
                 }
             });
         }
-        else{
-            return this.props.openedAsyncPage !== CONVERSATION_SUMMARY && NO_PARTICIPANTS_FOUND;
-         }
     };
 
     render() {
@@ -56,9 +53,10 @@ class ParticipantsList extends Component {
                     textChange={this.props.onSearchTextChange}
                     iconStyle='icon-search'
                 />
-               <div className="participantsSearchList pd-left-10new ChatContainer">
-               {(this.props.searchText === '' ? 
-                this.participants() : NO_RESULT_FOUND)}
+                <div className="participantsSearchList pd-left-10new ChatContainer">
+                    {this.props.participantList.length > 0 ? this.participants() :
+                        (this.props.searchText === '' ? this.props.openedAsyncPage !== CONVERSATION_SUMMARY &&
+                         NO_PARTICIPANTS_FOUND : NO_RESULT_FOUND)}
                 </div>
             </div>
         )
