@@ -887,3 +887,11 @@ padding-bottom: 50px;
     width: 100%;
     height: calc(100vh - 400px);
 }
+
+.pd-left-10new
+{
+    padding-left: 12px;
+    padding-right: 12px;
+    text-align: center;
+    color: #acacac;
+}
