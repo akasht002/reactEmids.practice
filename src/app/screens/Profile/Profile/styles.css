@@ -1199,3 +1199,9 @@ div.CertificationModal{
         
     }
 }
+
+
+.UploadProfileImageWidget .row
+      {
+      z-index: 1000;
+      }

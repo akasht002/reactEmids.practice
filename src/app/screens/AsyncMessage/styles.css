@@ -2065,3 +2065,8 @@ white-space:pre-wrap;
     text-align: center;
     color: #acacac;
 }
+
+.ParticipantsListContainer .participantName.participantSearchName
+{
+text-align: left;
+}
