@@ -10,5 +10,4 @@ import './app/styles/icons.css';
 import './app/styles/componentStyles.css';
 
 ReactDOM.render(<React.StrictMode><App/></React.StrictMode>, document.getElementById('root'));
-//ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 registerServiceWorker();
