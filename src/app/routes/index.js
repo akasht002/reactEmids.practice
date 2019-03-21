@@ -1,46 +1,13 @@
-// import React, { Component } from 'react';
 import React, { Component, lazy, Suspense  } from 'react'
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
-// import Loadable from 'react-loadable';
 import {SCREENS,USER_LOCALSTORAGE} from '../constants/constants';
 import LoginCallBack from '../screens/Authentication/Login/LoginCallBack'
-import {
-  // VerifyContact,
-  // SetPassword,
-  // VerifyUserID,
-  // OnboardSuccess,
-  // Profile,
-  // VisitServiceList,
-  // VisitServiceDetails,
-  // PerformTasks,
-  // Feedback,
-  // Summary,
-  // ForgetPassword,
-  // ResetPassword,
-  // ResetPasswordSuccess,
-  // ResetPasswordConfirmation,
-  // Dashboard,
-  // VisitHistory,
-  // VistSummary,
-  
-  Welcome,
 
-  // Payments,
-  // PaymentSuccess,
-  // PaymentFailure,
-
-  // TeleHealth,
-  // ConversationSummary,
-  // Conversation,
-  // PatientProfile,
-  // VisitNotification,
-  // VisitNotificationSettings,
-  // ESPProfile
-} from '../screens';
 import PrivateRoute from './privateRouter';
 
+const Welcome = lazy(() => import('../screens/Welcome'));
 const Dashboard = lazy(() => import('../screens/Dashboard'));
 const VisitServiceList = lazy(() => import('../screens/VisitSelection/VisitServiceList'));
 const SetPassword = lazy(() => import('../screens/Onboarding/SetPassword'));
@@ -73,19 +40,6 @@ const PatientProfile = lazy(() => import('../screens/PatientProfile/Profile'));
 const VisitNotification = lazy(() => import('../screens/VisitProcessingNotification/VisitNotification'));
 const VisitNotificationSettings = lazy(() => import('../screens/VisitProcessingNotification/VisitNotificationSettings'));
 const ESPProfile = lazy(() => import('../screens/ESPProfile/Profile'));
-
-// function Loading({ error }) {
-//   if (error) {
-//     return 'Oh nooess!';
-//   } else {
-//     return <h3>Loading...</h3>;
-//   }
-// }
-
-// const LoginCallBack = Loadable({
-//   loader: () => import('../screens/Authentication/Login/LoginCallBack'),
-//   loading: Loading
-// });
 
 export const Path = {
   root: '/',
