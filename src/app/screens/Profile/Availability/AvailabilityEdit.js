@@ -155,7 +155,7 @@ class AvailabilityEdit extends Component {
                     {availableDays}
                 </div>
                 <div className={'SPAvailBlackOutWidget'}>
-                    <BlackoutDays/>
+                    <BlackoutDays isCanUpdateDelete={true}/>
                 </div>
              </div>
            </React.Fragment>     

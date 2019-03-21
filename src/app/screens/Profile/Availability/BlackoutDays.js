@@ -157,7 +157,7 @@ class BlackoutDays extends Component {
                 </div>
               </div>
               {
-                !this.props.showBalckout && (
+                this.props.isCanUpdateDelete && (
                   <i
                     className={"SPIconMedium SPIconEdit mr-2"}
                     onClick={this.toggleBlackout.bind(
@@ -170,7 +170,7 @@ class BlackoutDays extends Component {
                 )
               }
               {
-                !this.props.showBalckout && (
+                this.props.isCanUpdateDelete && (
                   <i
                     className={"SPIconMedium SPIconDelete"}
                     onClick={this.deleteBlackoutDays.bind(this, item)}
