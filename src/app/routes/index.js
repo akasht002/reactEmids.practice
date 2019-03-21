@@ -87,7 +87,7 @@ class AppStackRoot extends Component {
     return (
       <ConnectedRouter history={this.props.history}>
       
-        <HashRouter><Suspense fallback={<h2>Loading....</h2>}>
+        <HashRouter><Suspense fallback={<div></div>}>
           <Switch>
             <Route exact path={Path.root} component={this.startPage} />
             <Route path={Path.setPassword} component={SetPassword} />
