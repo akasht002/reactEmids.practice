@@ -23,6 +23,7 @@ import { formatPhoneNumber } from '../../../utils/formatName'
 import { SETTING } from '../../../constants/config'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatContactNumber, formatContactNumberValue } from '../../../utils/validations'
+import { emptyString } from '../../../utils/arrayUtility'
 import { ImageInstruction } from '../Components/ImageInstruction'
 
 class PersonalDetail extends React.PureComponent {
@@ -42,7 +43,10 @@ class PersonalDetail extends React.PureComponent {
       ModalOrg: true,
       src: null,
       isAlertSaveModalOpen: false,
-      crop: SETTING.CROP_DEFAULT
+      crop: SETTING.CROP_DEFAULT,
+      city: '',
+      streetAddress: '',
+      zipCode: ''
     };
     this.isImageSave = false;
     this.isChangePhoto = false
@@ -299,14 +303,13 @@ class PersonalDetail extends React.PureComponent {
       description: this.state.description,
       hourlyRate: this.state.hourlyRate,
       phoneNumber: this.state.phoneNumber,
-      city: this.state.city,
-      streetAddress: this.state.streetAddress,
-      zipCode: this.state.zipCode,
-      state_id: this.state.selectedState && this.state.selectedState.value
+      city: emptyString(this.state.city),
+      streetAddress: emptyString(this.state.streetAddress),
+      zipCode: emptyString(this.state.zipCode),
+      state_id: this.state.selectedState && emptyString(this.state.selectedState.value)
     }
 
     const fieldDifference = _.isEqual(old_data, updated_data)
-
     if (fieldDifference === true) {
       this.setState({ certificationModal: false, isDiscardModalOpen: false })
     } else {
@@ -954,7 +957,7 @@ class PersonalDetail extends React.PureComponent {
                       className={"form-control " + (this.state.isStreetInvalid && 'inputFailure')}
                     />
                     <small className="text-danger d-block OnboardingAlert">
-                      {this.state.isStreetInvalid && <span>Please enter valid {(this.state.streetAddress === '' || this.state.streetAddress === null) && 'Street'}</span>}
+                      {this.state.isStreetInvalid && <span>Please enter valid {'Street'}</span>}
                     </small>
                   </div>
                 </div>
@@ -981,7 +984,7 @@ class PersonalDetail extends React.PureComponent {
                       className={"form-control " + (this.state.isCityInvalid && 'inputFailure')}
                     />
                     <small className="text-danger d-block OnboardingAlert">
-                      {this.state.isCityInvalid && <span>Please enter valid {(this.state.city === '' || this.state.city === null) && 'City'}</span>}
+                      {this.state.isCityInvalid && <span>Please enter valid {'City'}</span>}
                     </small>
                   </div>
                 </div>
@@ -1038,7 +1041,7 @@ class PersonalDetail extends React.PureComponent {
                         className={"form-control " + (this.state.isZipInvalid && 'inputFailure')}
                       />
                       <small className="text-danger d-block OnboardingAlert">
-                        {this.state.isZipInvalid && <span>Please enter valid {(this.state.zipCode === '' || this.state.zipCode === null) && 'Zipcode'}</span>}
+                        {this.state.isZipInvalid && <span>Please enter valid {'Zipcode'}</span>}
                       </small>
                     </div>
                   </div>

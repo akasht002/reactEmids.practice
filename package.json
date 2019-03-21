@@ -2,6 +2,7 @@
   "name": "coreo-home",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://hmsa-uat-sp.coreodevserver.com/",
   "dependencies": {
     "@aspnet/signalr": "^1.0.4",
     "@zendeskgarden/react-select": "2.3.6",

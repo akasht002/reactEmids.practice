@@ -139,7 +139,8 @@ class ParticipantsContainer extends Component {
                 onCheckParticipant={this.onCheckParticipant}
                 onSearchTextChange={this.onSearchTextChange}
                 selectedContext={this.state.selectedContext}
-                searchText={this.state.searchText} />
+                searchText={this.state.searchText} 
+                />
 
         </form>
         return (

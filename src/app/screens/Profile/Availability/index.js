@@ -150,7 +150,7 @@ class Availability extends Component {
             modalTitle = 'Add Availability';
         }
         modalContent = <AvailabilityEdit storeData={this.storeData} closeModal={this.closeModal}/>;
-        blackoutModalContent = <BlackoutDays showBalckout="true"/>
+        blackoutModalContent = <BlackoutDays showBalckout="true" isCanUpdateDelete={true}/>
         return (
             <Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">

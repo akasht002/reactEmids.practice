@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Checkbox from '../Components/checkbox';
 import { Input } from '../../../components';
 import { getLinkedParticipantsList } from '../../../redux/asyncMessages/actions';
-import { USERTYPES } from '../../../constants/constants';
+import { USERTYPES, NO_PARTICIPANTS_FOUND, NO_RESULT_FOUND, CONVERSATION_SUMMARY } from '../../../constants/constants';
 
 class ParticipantsList extends Component {
 
@@ -38,7 +38,7 @@ class ParticipantsList extends Component {
                     return (<Checkbox key={index} onCheckParticipant={this.props.onCheckParticipant} participant={participantData} />)
                 }
             });
-        };
+        }
     };
 
     render() {
@@ -53,8 +53,10 @@ class ParticipantsList extends Component {
                     textChange={this.props.onSearchTextChange}
                     iconStyle='icon-search'
                 />
-               <div className="participantsSearchList pd-left0 ChatContainer">
-                    {this.participants()}
+                <div className="participantsSearchList pd-left-10new ChatContainer">
+                    {this.props.participantList.length > 0 ? this.participants() :
+                        (this.props.searchText === '' ? this.props.openedAsyncPage !== CONVERSATION_SUMMARY &&
+                         NO_PARTICIPANTS_FOUND : NO_RESULT_FOUND)}
                 </div>
             </div>
         )
@@ -72,7 +74,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         participantList: state.asyncMessageState.linkedParticipants,
-        loggedInUser: state.authState.userState.userData.userInfo
+        loggedInUser: state.authState.userState.userData.userInfo,
+        openedAsyncPage: state.asyncMessageState.openedAsyncPage
     }
 };
 

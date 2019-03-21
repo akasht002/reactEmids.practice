@@ -87,8 +87,8 @@ class PerformTasks extends Component {
                 return serviceType;
             });
         }
-        this.setState({ 
-            taskList: nextProps.PerformTasksList, 
+        this.setState({
+            taskList: nextProps.PerformTasksList,
             isLoading: nextProps.isLoading
         })
     }
@@ -203,7 +203,11 @@ class PerformTasks extends Component {
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.state.taskList.patient && this.state.taskList.patient.patientId)}>
                                         <span>
                                             <img
-                                                src={this.state.taskList.patient && this.state.taskList.patient.imageString}
+                                                src={
+                                                    this.state.taskList.patient && this.state.taskList.patient.imageString
+                                                        ? this.state.taskList.patient.imageString
+                                                        : require('../../../../assets/images/Blank_Profile_icon.png')
+                                                }
                                                 className="avatarImage avatarImageBorder" alt="patientImage" />
                                             <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {this.state.taskList.patient && this.state.taskList.patient.lastName}</i>
                                         </span>

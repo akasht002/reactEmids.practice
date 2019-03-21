@@ -484,6 +484,7 @@ export const onUnreadCountSuccess = data => {
 
 export function goToConversationSummary() {
     return (dispatch, getState) => {
+        dispatch(convLoadingStart())
         let conversatinId = getState().asyncMessageState.currentConversation.conversationId;
         dispatch(removeFromGroup(conversatinId));
         dispatch(clearConversation());

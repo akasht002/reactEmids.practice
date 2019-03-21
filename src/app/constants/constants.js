@@ -149,19 +149,20 @@ export const serviceTypesImage = {
     1: 'ADL Ambulation & Mobility.svg',
     2: 'ADL Bathing.svg',
     3: 'ADL Continence.svg',
-    6: 'ADL Eating.svg',
-    7: 'ADL Getting Dressed.svg',
-    8: 'ADL Toileting.svg',
-    9: 'ADL Transferring.svg',
-    10: 'G&N Grocery Delivery.svg',
-    11: 'G&N Meal Delivery.svg',
-    12: 'HAH - Companionship & Errands.svg',
-    13: 'HAH - Food Preparation.svg',
-    14: 'HAH - Housekeeping.svg',
-    16: 'HAH - Shopping.svg',
-    17: 'HAH - Shopping.svg',
-    15: 'HAH - Laundry.svg',
-    18: 'Transportation - General Transportation.svg'
+    4: 'ADL Eating.svg',
+    5: 'ADL Getting Dressed.svg',
+    6: 'ADL Toileting.svg',
+    7: 'ADL Transferring.svg',
+    8: 'HAH - Companionship & Errands.svg',
+    9: 'HAH - Food Preparation.svg',
+    10: 'HAH - Housekeeping.svg',
+    11: 'HAH - Laundry.svg',
+    12: 'HAH - Shopping.svg',
+    13: 'HAH - Help at Home.svg',
+    14: 'G&N Grocery Delivery.svg',
+    15: 'G&N Meal Delivery.svg',
+    16: 'Transportation - General Transportation.svg',
+    // 17: 'HAH - Shopping.svg',
 }
 
 export const DEFAULT_PAGE_SIZE = 10;
@@ -193,3 +194,8 @@ export const PHONE_NUMBER_TEXT = 'Phone Number:'
 
 export const DEFAULT_VISIT_START_TIME = "0001-01-01T00:00:00"
 
+export const NO_PARTICIPANTS_FOUND = 'No additional participants can be added to this conversation.';
+
+export const NO_RESULT_FOUND = 'No result found';
+
+export const CONVERSATION_SUMMARY = 'conversationSummary';
