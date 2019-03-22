@@ -1,45 +1,53 @@
-import React, { Component, lazy, Suspense  } from 'react'
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import {SCREENS,USER_LOCALSTORAGE} from '../constants/constants';
-import LoginCallBack from '../screens/Authentication/Login/LoginCallBack'
-
+import {
+  VerifyContact,
+  SetPassword,
+  VerifyUserID,
+  OnboardSuccess,
+  Profile,
+  VisitServiceList,
+  VisitServiceDetails,
+  PerformTasks,
+  Feedback,
+  Summary,
+  ForgetPassword,
+  ResetPassword,
+  ResetPasswordSuccess,
+  ResetPasswordConfirmation,
+  Dashboard,
+  VisitHistory,
+  VistSummary,
+  Welcome,
+  Payments,
+  PaymentSuccess,
+  PaymentFailure,
+  TeleHealth,
+  ConversationSummary,
+  Conversation,
+  PatientProfile,
+  VisitNotification,
+  VisitNotificationSettings,
+  ESPProfile
+} from '../screens';
 import PrivateRoute from './privateRouter';
 
-const Welcome = lazy(() => import('../screens/Welcome'));
-const Dashboard = lazy(() => import('../screens/Dashboard'));
-const VisitServiceList = lazy(() => import('../screens/VisitSelection/VisitServiceList'));
-const SetPassword = lazy(() => import('../screens/Onboarding/SetPassword'));
-const VerifyContact = lazy(() => import('../screens/Onboarding/VerifyContact'));
-const VerifyUserID = lazy(() => import('../screens/Onboarding/VerifyUserID'));
-const OnboardSuccess = lazy(() => import('../screens/Onboarding/OnboardSuccess'));
-const Profile = lazy(() => import('../screens/Profile/Profile'));
-const VisitServiceDetails = lazy(() => import('../screens/VisitSelection/VisitServiceDetails'));
-const PerformTasks = lazy(() => import('../screens/VisitSelection/VisitServiceProcessing/PerformTasks'));
-const Feedback = lazy(() => import('../screens/VisitSelection/VisitServiceProcessing/Feedback'));
-const Summary = lazy(() => import('../screens/VisitSelection/VisitServiceProcessing/Summary'));
+function Loading({ error }) {
+  if (error) {
+    return 'Oh nooess!';
+  } else {
+    return <h3>Loading...</h3>;
+  }
+}
 
-const ForgetPassword = lazy(() => import('../screens/Authentication/ForgetPassword'));
-const ResetPassword = lazy(() => import('../screens/Authentication/ResetPassword'));
-const ResetPasswordSuccess = lazy(() => import('../screens/Authentication/ResetPasswordSuccess'));
-const ResetPasswordConfirmation = lazy(() => import('../screens/Authentication/ResetPasswordConfirmation'));
-
-const VisitHistory = lazy(() => import('../screens/VisitHistory'));
-const VistSummary = lazy(() => import('../screens/VisitHistory/VisitSummary'));
-
-const Payments = lazy(() => import('../screens/VisitSelection/VisitServiceProcessing/Payments'));
-const PaymentSuccess = lazy(() => import('../screens/VisitSelection/VisitServiceProcessing/Payments/paymentSuccess'));
-const PaymentFailure = lazy(() => import('../screens/VisitSelection/VisitServiceProcessing/Payments/paymentFailure'));
-
-const TeleHealth = lazy(() => import('../screens/TeleHealth'));
-const ConversationSummary = lazy(() => import('../screens/AsyncMessage/ConversationSummary'));
-const Conversation = lazy(() => import('../screens/AsyncMessage/Conversation'));
-
-const PatientProfile = lazy(() => import('../screens/PatientProfile/Profile'));
-const VisitNotification = lazy(() => import('../screens/VisitProcessingNotification/VisitNotification'));
-const VisitNotificationSettings = lazy(() => import('../screens/VisitProcessingNotification/VisitNotificationSettings'));
-const ESPProfile = lazy(() => import('../screens/ESPProfile/Profile'));
+const LoginCallBack = Loadable({
+  loader: () => import('../screens/Authentication/Login/LoginCallBack'),
+  loading: Loading
+});
 
 export const Path = {
   root: '/',
@@ -87,7 +95,7 @@ class AppStackRoot extends Component {
     return (
       <ConnectedRouter history={this.props.history}>
       
-        <HashRouter><Suspense fallback={<div></div>}>
+        <HashRouter>
           <Switch>
             <Route exact path={Path.root} component={this.startPage} />
             <Route path={Path.setPassword} component={SetPassword} />
@@ -122,9 +130,8 @@ class AppStackRoot extends Component {
               path={Path.visitNotificationSettings}
               component={VisitNotificationSettings}
             />
-          </Switch></Suspense>
+          </Switch>
         </HashRouter>
-        
       </ConnectedRouter>
     );
   }

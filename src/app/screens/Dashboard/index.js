@@ -1,7 +1,10 @@
-import React, { lazy, Suspense  } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { ModalPopup } from '../../components'
+import ServiceCalendar from './serviceCalendar'
+import ServiceRequest from './serviceRequest'
+import MyConversation from './myConversation'
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover'
 import { getPersonalDetail, getSpBusyInVisit, clearSbMode, updateStandByMode } from '../../redux/profile/PersonalDetail/actions'
 import { getUserInfo } from '../../services/http'
@@ -19,11 +22,6 @@ import './EntitySP/EntitySPDashboard.css'
 import moment from 'moment'
 import { createDataStore } from '../../redux/telehealth/actions'
 import { Preloader } from '../../components/Base'
-
-const ServiceRequest = lazy(() => import('./serviceRequest'));
-const ServiceCalendar = lazy(() => import('./serviceCalendar'));
-const MyConversation = lazy(() => import('./myConversation'));
-
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -159,7 +157,7 @@ class Dashboard extends React.Component {
     let entityUser = getUserInfo().isEntityServiceProvider;
 
     let serviceRequestTemplate = entityUser ? "" :
-    <div className='innerWidget'><Suspense fallback={Preloader}><ServiceRequest /></Suspense></div>;
+    <div className='innerWidget'><ServiceRequest /></div>;
     return (
       <AsideScreenCover
         isOpen={this.state.isOpen}
@@ -188,12 +186,12 @@ class Dashboard extends React.Component {
         <div className="scrollarea SPContentWidget ScrollBar updated-scrll">
           <div className="scrollarea-content">
             <div className='ProfileContainer topProfile'>
-            <Suspense fallback={Preloader}><ServiceCalendar createDataStore={this.props.createDataStore}/></Suspense>
+              <ServiceCalendar createDataStore={this.props.createDataStore}/>
             </div>
             <div className='ProfileContainer bottomProfile'>
               {serviceRequestTemplate}
               <div className='innerWidget'>
-              <Suspense fallback={Preloader}><MyConversation /></Suspense>
+                <MyConversation />
               </div>
             </div>
           </div>
