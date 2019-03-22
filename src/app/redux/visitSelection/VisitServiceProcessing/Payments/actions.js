@@ -4,17 +4,26 @@ import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
+import { PAYMENT_ALREADY_DONE } from '../../../../constants/constants'
 
 export const paymentsCardList = {
     getPaymentsCardListSuccess: 'get_paymentsCardList_success/payments',
     updateServiceRequestId: 'updateServiceRequestId/payments',
     startLoading: 'startLoading/payments',
-    endLoading: 'endLoading/payments'
+    endLoading: 'endLoading/payments',
+    paymentSuccessOrFailure: 'paymentSuccessOrFailure/payments'
 };
 
 export const getPaymentsCardListSuccess = (data) => {
     return {
         type: paymentsCardList.getPaymentsCardListSuccess,
+        data
+    }
+}
+
+export const paymentSuccessOrFailure = (data) => {
+    return {
+        type: paymentsCardList.paymentSuccessOrFailure,
         data
     }
 }
@@ -28,13 +37,13 @@ export const updateServiceRequestId = (data) => {
 
 export const startLoadingProcessing = () => {
     return {
-      type: paymentsCardList.startLoading,
+        type: paymentsCardList.startLoading,
     }
-  };
-  
-  export const endLoadingProcessing = () => {
+};
+
+export const endLoadingProcessing = () => {
     return {
-      type: paymentsCardList.endLoading,
+        type: paymentsCardList.endLoading,
     }
 };
 
@@ -62,6 +71,8 @@ export function createCharge(data, claimData) {
         }).catch((err) => {
             if (DEMO === 'true') {
                 dispatch(push(Path.paymentsuccess))
+            } else if (err.response && err.response.data === PAYMENT_ALREADY_DONE) {
+                dispatch(paymentSuccessOrFailure(err.response.data))
             } else {
                 dispatch(push(Path.paymentfailure))
             }
@@ -82,6 +93,8 @@ export function chargeByCustomerId(data, claimData) {
         }).catch((err) => {
             if (DEMO === 'true') {
                 dispatch(push(Path.paymentsuccess))
+            } else if (err.response && err.response.data === PAYMENT_ALREADY_DONE) {
+                dispatch(paymentSuccessOrFailure(err.response.data))
             } else {
                 dispatch(push(Path.paymentfailure))
             }

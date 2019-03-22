@@ -126,7 +126,8 @@ class Feedback extends Component {
     render() {
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-                {this.state.isLoading && <Preloader />}
+                {/* {this.state.isLoading && <Preloader />} */}
+                {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
@@ -322,6 +323,7 @@ function mapStateToProps(state) {
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback,
         isLoading: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.isLoading,
+        eligibilityIsLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
     };
 };
 

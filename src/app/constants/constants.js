@@ -199,3 +199,6 @@ export const NO_PARTICIPANTS_FOUND = 'No additional participants can be added to
 export const NO_RESULT_FOUND = 'No result found';
 
 export const CONVERSATION_SUMMARY = 'conversationSummary';
+
+export const PAYMENT_ALREADY_DONE = 'Payment Already Done';
+
