@@ -4,10 +4,10 @@ import { withRouter, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { StripeProvider } from 'react-stripe-elements';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
-import { getpaymentsCardList, chargeByCustomerId, claimsSubmission, captureAmount } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
-import { Scrollbars, DashboardWizFlow, Preloader } from '../../../../components';
+import { getpaymentsCardList, chargeByCustomerId, claimsSubmission, captureAmount, paymentSuccessOrFailure } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
+import { Scrollbars, DashboardWizFlow, Preloader, ModalPopup } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import { SAVEDCARDS, NEWCARDS } from '../../../../constants/constants'
+import { SAVEDCARDS, NEWCARDS, PAYMENT_ALREADY_DONE } from '../../../../constants/constants'
 import { STRIPE_KEY } from "../../../../constants/config"
 import CheckoutForm from './stripe';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
@@ -24,7 +24,8 @@ class Payments extends Component {
             SelectedCard: '1',
             selectedCard: '',
             // disabled: false,
-            isLoading:false
+            isLoading:false,
+            isModalOpen: false
         };
         this.Claimdata = {};
     };
@@ -44,6 +45,12 @@ class Payments extends Component {
             this.setState({disabled: true})
         }
         this.setState({isLoading :nextProps.isLoading  })
+        // if(this.props.paymentSuccessOrFailure !== nextProps.paymentSuccessOrFailure && nextProps.paymentSuccessOrFailure === PAYMENT_ALREADY_DONE){
+        //     this.setState({isModalOpen: true})
+        // }
+        if(nextProps.paymentSuccessOrFailure === PAYMENT_ALREADY_DONE){
+            this.setState({isModalOpen: true})
+        }
     }
 
     toggleCardSelection = (e) => {
@@ -64,6 +71,12 @@ class Payments extends Component {
     handelPatientProfile = (data) => {
         this.props.setPatient(data)
         this.props.goToPatientProfile()
+    }
+
+    goToServiceDetailsPage = () => {
+        this.setState({isModalOpen: false})
+        this.props.paymentCheck();
+        this.props.goToServiceDetailsPage();
     }
 
     handleClick = () => {
@@ -329,6 +342,15 @@ class Payments extends Component {
                         </div>
                     </div>
                     <div className='cardBottom' />
+                    <ModalPopup
+                        isOpen={this.state.isModalOpen}
+                        ModalBody={<span>Payment is already completed for this visit. Click on ok to view the visit details.</span>}
+                        btn1="OK"
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                        onConfirm={() => this.goToServiceDetailsPage()}
+                    />
                 </Scrollbars>
             </AsideScreenCover>
         )
@@ -343,6 +365,8 @@ function mapDispatchToProps(dispatch) {
         captureAmount: (data, Claimdata) => dispatch(captureAmount(data, Claimdata)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        goToServiceDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
+        paymentCheck: () => dispatch(paymentSuccessOrFailure(null))
     }
 };
 
@@ -356,6 +380,7 @@ function mapStateToProps(state) {
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
         isLoading: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.isLoading,
+        paymentSuccessOrFailure: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.errorMessage
     };
 };
 

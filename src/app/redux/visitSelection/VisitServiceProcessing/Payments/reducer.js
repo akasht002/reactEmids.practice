@@ -5,7 +5,8 @@ import {
 const defaultState = {
     CardList: '',
     serviceRequestId: null,
-    isLoading: false
+    isLoading: false,
+    errorMessage: ''
 };
 
 const PaymentsState = (state = defaultState, action) => {
@@ -22,6 +23,12 @@ const PaymentsState = (state = defaultState, action) => {
             return {
                 ...state,
                 serviceRequestId: action.data
+            };
+
+        case paymentsCardList.paymentSuccessOrFailure:
+            return {
+                ...state,
+                errorMessage: action.data
             };
 
         case paymentsCardList.startLoading:
