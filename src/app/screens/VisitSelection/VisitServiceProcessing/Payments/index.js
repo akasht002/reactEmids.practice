@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { StripeProvider } from 'react-stripe-elements';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
-import { getpaymentsCardList, chargeByCustomerId, claimsSubmission, captureAmount, paymentSuccessOrFailure } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
+import { getpaymentsCardList, chargeByCustomerId, claimsSubmission, captureAmount, paymentSuccessOrFailure, paymentPathValid } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 import { Scrollbars, DashboardWizFlow, Preloader, ModalPopup } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { SAVEDCARDS, NEWCARDS, PAYMENT_ALREADY_DONE } from '../../../../constants/constants'
@@ -14,6 +14,9 @@ import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
 import { setPatient } from '../../../../redux/patientProfile/actions';
+import {
+    getVisitServiceHistoryByIdDetail
+  } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import './style.css'
 
 class Payments extends Component {
@@ -53,6 +56,13 @@ class Payments extends Component {
         }
     }
 
+    visitSummary = (data) => {
+        this.setState({isModalOpen: false})
+        this.props.paymentCheck();
+        this.props.isPaymentPathValid(true)
+        this.props.getVisitServiceHistoryByIdDetail(data)
+    }
+
     toggleCardSelection = (e) => {
         this.setState({
             SelectedCard: e.target.value,
@@ -71,12 +81,6 @@ class Payments extends Component {
     handelPatientProfile = (data) => {
         this.props.setPatient(data)
         this.props.goToPatientProfile()
-    }
-
-    goToServiceDetailsPage = () => {
-        this.setState({isModalOpen: false})
-        this.props.paymentCheck();
-        this.props.goToServiceDetailsPage();
     }
 
     handleClick = () => {
@@ -344,12 +348,12 @@ class Payments extends Component {
                     <div className='cardBottom' />
                     <ModalPopup
                         isOpen={this.state.isModalOpen}
-                        ModalBody={<span>Payment is already completed for this visit. Click on ok to view the visit details.</span>}
+                        ModalBody={<span>Payment is already completed for this visit. Click on ok to view the visit summary.</span>}
                         btn1="OK"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
-                        onConfirm={() => this.goToServiceDetailsPage()}
+                        onConfirm={() => this.visitSummary(this.props.patientDetails.serviceRequestVisitId)}
                     />
                 </Scrollbars>
             </AsideScreenCover>
@@ -365,8 +369,9 @@ function mapDispatchToProps(dispatch) {
         captureAmount: (data, Claimdata) => dispatch(captureAmount(data, Claimdata)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
-        goToServiceDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
-        paymentCheck: () => dispatch(paymentSuccessOrFailure(null))
+        paymentCheck: () => dispatch(paymentSuccessOrFailure(null)),
+        getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
+        isPaymentPathValid: (data) => dispatch(paymentPathValid(data))
     }
 };
 

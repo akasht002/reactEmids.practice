@@ -11,12 +11,20 @@ export const paymentsCardList = {
     updateServiceRequestId: 'updateServiceRequestId/payments',
     startLoading: 'startLoading/payments',
     endLoading: 'endLoading/payments',
-    paymentSuccessOrFailure: 'paymentSuccessOrFailure/payments'
+    paymentSuccessOrFailure: 'paymentSuccessOrFailure/payments',
+    isPaymentPathValid: 'isPaymentPathValid/payments'
 };
 
 export const getPaymentsCardListSuccess = (data) => {
     return {
         type: paymentsCardList.getPaymentsCardListSuccess,
+        data
+    }
+}
+
+export const paymentPathValid = (data) => {
+    return {
+        type: paymentsCardList.isPaymentPathValid,
         data
     }
 }

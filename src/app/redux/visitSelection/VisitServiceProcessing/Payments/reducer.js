@@ -6,7 +6,8 @@ const defaultState = {
     CardList: '',
     serviceRequestId: null,
     isLoading: false,
-    errorMessage: ''
+    errorMessage: '',
+    isPaymentPathValid: false
 };
 
 const PaymentsState = (state = defaultState, action) => {
@@ -40,6 +41,11 @@ const PaymentsState = (state = defaultState, action) => {
             return {
                 ...state,
                 isLoading: false
+            };
+        case paymentsCardList.isPaymentPathValid:
+            return {
+                ...state,
+                isPaymentPathValid: action.data
             };
 
         default:
