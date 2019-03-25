@@ -226,10 +226,7 @@ class serviceCalendar extends React.Component {
   };
 
   initialCall = () => {
-    let utc = new Date()
-      .toJSON()
-      .slice(0, 10)
-      .replace(/-/g, "-");
+    let utc = moment().format('YYYY-MM-DD');
     let d = new Date(utc);
     d.setMonth(d.getMonth() - 3);
     const date_range = {

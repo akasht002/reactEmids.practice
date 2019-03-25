@@ -94,6 +94,7 @@ class AppStackRoot extends Component {
   render() {
     return (
       <ConnectedRouter history={this.props.history}>
+      
         <HashRouter>
           <Switch>
             <Route exact path={Path.root} component={this.startPage} />

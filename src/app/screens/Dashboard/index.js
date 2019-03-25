@@ -21,6 +21,7 @@ import './styles/toggleSwitch.css'
 import './EntitySP/EntitySPDashboard.css'
 import moment from 'moment'
 import { createDataStore } from '../../redux/telehealth/actions'
+import { Preloader } from '../../components/Base'
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -156,7 +157,7 @@ class Dashboard extends React.Component {
     let entityUser = getUserInfo().isEntityServiceProvider;
 
     let serviceRequestTemplate = entityUser ? "" :
-      <div className='innerWidget'><ServiceRequest /></div>;
+    <div className='innerWidget'><ServiceRequest /></div>;
     return (
       <AsideScreenCover
         isOpen={this.state.isOpen}

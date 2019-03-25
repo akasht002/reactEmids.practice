@@ -285,59 +285,59 @@
     background-image: url("../assets/ServiceTypes/ADL Continence.svg");
 }
 
-.SPIconServices4:after{
+.SPIconServices10:after{
     background-image: url("../assets/ServiceTypes/HAH - Housekeeping.svg");
 }
 
-.SPIconServices6:after{
+.SPIconServices4:after{
     background-image: url("../assets/ServiceTypes/ADL Eating.svg");
 }
 
-.SPIconServices7:after{
+.SPIconServices5:after{
     background-image: url("../assets/ServiceTypes/ADL Getting Dressed.svg");
 }
 
-.SPIconServices8:after{
+.SPIconServices6:after{
     background-image: url("../assets/ServiceTypes/ADL Toileting.svg");
 }
 
-.SPIconServices9:after{
+.SPIconServices7:after{
     background-image: url("../assets/ServiceTypes/ADL Transferring.svg");
 }
 
-.SPIconServices10:after{
-    background-image: url("../assets/ServiceTypes/G&N Grocery Delivery.svg");
-}
-
-.SPIconServices11:after{
-    background-image: url("../assets/ServiceTypes/G&N Meal Delivery.svg");
-}
-
-.SPIconServices12:after{
+.SPIconServices8:after{
     background-image: url("../assets/ServiceTypes/HAH - Companionship & Errands.svg");
 }
 
-.SPIconServices13:after{
+.SPIconServices9:after{
     background-image: url("../assets/ServiceTypes/HAH - Food Preparation.svg");
 }
 
-.SPIconServices14:after{
+.SPIconServices10:after{
     background-image: url("../assets/ServiceTypes/HAH - Housekeeping.svg");
 }
 
-.SPIconServices15:after{
+.SPIconServices11:after{
     background-image: url("../assets/ServiceTypes/HAH - Laundry.svg");
 }
 
-.SPIconServices16:after{
+.SPIconServices12:after{
     background-image: url("../assets/ServiceTypes/HAH - Shopping.svg");
 }
 
-.SPIconServices17:after{
+.SPIconServices13:after{
     background-image: url("../assets/ServiceTypes/HAH - Help at Home.svg");
 }
 
-.SPIconServices18:after{
+.SPIconServices14:after{
+    background-image: url("../assets/ServiceTypes/G&N Grocery Delivery.svg");
+}
+
+.SPIconServices15:after{
+    background-image: url("../assets/ServiceTypes/G&N Meal Delivery.svg");
+}
+
+.SPIconServices16:after{
     background-image: url("../assets/ServiceTypes/Transportation - General Transportation.svg");
 }
 

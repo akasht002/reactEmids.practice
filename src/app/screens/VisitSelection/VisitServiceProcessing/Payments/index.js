@@ -4,16 +4,19 @@ import { withRouter, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { StripeProvider } from 'react-stripe-elements';
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
-import { getpaymentsCardList, chargeByCustomerId, claimsSubmission, captureAmount } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
-import { Scrollbars, DashboardWizFlow, Preloader } from '../../../../components';
+import { getpaymentsCardList, chargeByCustomerId, claimsSubmission, captureAmount, paymentSuccessOrFailure, paymentPathValid } from '../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
+import { Scrollbars, DashboardWizFlow, Preloader, ModalPopup } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import { SAVEDCARDS, NEWCARDS } from '../../../../constants/constants'
+import { SAVEDCARDS, NEWCARDS, PAYMENT_ALREADY_DONE } from '../../../../constants/constants'
 import { STRIPE_KEY } from "../../../../constants/config"
 import CheckoutForm from './stripe';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
 import { setPatient } from '../../../../redux/patientProfile/actions';
+import {
+    getVisitServiceHistoryByIdDetail
+  } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import './style.css'
 
 class Payments extends Component {
@@ -24,7 +27,8 @@ class Payments extends Component {
             SelectedCard: '1',
             selectedCard: '',
             // disabled: false,
-            isLoading:false
+            isLoading:false,
+            isModalOpen: false
         };
         this.Claimdata = {};
     };
@@ -44,6 +48,19 @@ class Payments extends Component {
             this.setState({disabled: true})
         }
         this.setState({isLoading :nextProps.isLoading  })
+        // if(this.props.paymentSuccessOrFailure !== nextProps.paymentSuccessOrFailure && nextProps.paymentSuccessOrFailure === PAYMENT_ALREADY_DONE){
+        //     this.setState({isModalOpen: true})
+        // }
+        if(nextProps.paymentSuccessOrFailure === PAYMENT_ALREADY_DONE){
+            this.setState({isModalOpen: true})
+        }
+    }
+
+    visitSummary = (data) => {
+        this.setState({isModalOpen: false})
+        this.props.paymentCheck();
+        this.props.isPaymentPathValid(true)
+        this.props.getVisitServiceHistoryByIdDetail(data)
     }
 
     toggleCardSelection = (e) => {
@@ -256,7 +273,11 @@ class Payments extends Component {
                                         {this.props.patientDetails.patient ?
                                             <span>
                                                 <img
-                                                    src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
+                                                     src={
+                                                        this.props.patientDetails.patient && this.props.patientDetails.patient.imageString
+                                                            ? this.props.patientDetails.patient.imageString
+                                                            : require('../../../../assets/images/Blank_Profile_icon.png')
+                                                    }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
                                             :
@@ -325,6 +346,15 @@ class Payments extends Component {
                         </div>
                     </div>
                     <div className='cardBottom' />
+                    <ModalPopup
+                        isOpen={this.state.isModalOpen}
+                        ModalBody={<span>Payment is already completed for this visit. Click on ok to view the visit summary.</span>}
+                        btn1="OK"
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                        onConfirm={() => this.visitSummary(this.props.patientDetails.serviceRequestVisitId)}
+                    />
                 </Scrollbars>
             </AsideScreenCover>
         )
@@ -339,6 +369,9 @@ function mapDispatchToProps(dispatch) {
         captureAmount: (data, Claimdata) => dispatch(captureAmount(data, Claimdata)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        paymentCheck: () => dispatch(paymentSuccessOrFailure(null)),
+        getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
+        isPaymentPathValid: (data) => dispatch(paymentPathValid(data))
     }
 };
 
@@ -352,6 +385,7 @@ function mapStateToProps(state) {
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
         isLoading: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.isLoading,
+        paymentSuccessOrFailure: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.errorMessage
     };
 };
 

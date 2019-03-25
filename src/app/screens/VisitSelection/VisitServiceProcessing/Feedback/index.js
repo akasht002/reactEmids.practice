@@ -126,7 +126,8 @@ class Feedback extends Component {
     render() {
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-                {this.state.isLoading && <Preloader />}
+                {/* {this.state.isLoading && <Preloader />} */}
+                {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
@@ -146,7 +147,11 @@ class Feedback extends Component {
                                         {this.props.patientDetails.patient ?
                                             <span>
                                                 <img
-                                                    src={this.props.patientDetails.patient && this.props.patientDetails.patient.imageString}
+                                                     src={
+                                                        this.props.patientDetails.patient && this.props.patientDetails.patient.imageString
+                                                            ? this.props.patientDetails.patient.imageString
+                                                            : require('../../../../assets/images/Blank_Profile_icon.png')
+                                                    }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
                                             :
@@ -318,6 +323,7 @@ function mapStateToProps(state) {
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback,
         isLoading: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.isLoading,
+        eligibilityIsLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
     };
 };
 

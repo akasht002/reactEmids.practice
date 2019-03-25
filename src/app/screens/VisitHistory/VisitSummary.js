@@ -13,6 +13,8 @@ import './VisitSummary.css'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import Summary from './Summary'
 import { setPatient } from '../../redux/patientProfile/actions';
+import {paymentPathValid } from '../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
+
 import './visitProcessing.css'
 
 class VisitSummary extends React.Component {
@@ -42,7 +44,12 @@ class VisitSummary extends React.Component {
   }
 
   handelBack = () => {
-    this.props.history.goBack()
+    if (this.props.isPaymentPathValid) {
+      this.props.paymentPathValid(false)
+      this.props.goToDetailsPage()
+    } else {
+      this.props.history.goBack()
+    }
   }
 
   onSubmitFeedback = () => {
@@ -94,7 +101,9 @@ class VisitSummary extends React.Component {
                         src={
                           visitSummary.patient &&
                           visitSummary.patient.imageString
-                        }
+                              ? visitSummary.patient.imageString
+                              : require('../../assets/images/Blank_Profile_icon.png')
+                      }
                         className='avatarImage avatarImageBorder'
                       />
                       <i className='requestName'>
@@ -131,6 +140,8 @@ function mapDispatchToProps(dispatch) {
     getVisitFeedBack: data => dispatch(getVisitFeedBack(data)),
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+    goToDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
+    paymentPathValid: (data) => dispatch(paymentPathValid(data))
   }
 }
 
@@ -138,7 +149,8 @@ function mapStateToProps(state) {
   return {
     Visits: state.visitHistoryState.vistServiceHistoryState,
     ServiceRequestId: state.visitHistoryState.vistServiceHistoryState
-      .ServiceRequestId
+      .ServiceRequestId,
+    isPaymentPathValid: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.isPaymentPathValid
   }
 }
 

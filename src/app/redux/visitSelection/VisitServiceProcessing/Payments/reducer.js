@@ -5,7 +5,9 @@ import {
 const defaultState = {
     CardList: '',
     serviceRequestId: null,
-    isLoading: false
+    isLoading: false,
+    errorMessage: '',
+    isPaymentPathValid: false
 };
 
 const PaymentsState = (state = defaultState, action) => {
@@ -24,6 +26,12 @@ const PaymentsState = (state = defaultState, action) => {
                 serviceRequestId: action.data
             };
 
+        case paymentsCardList.paymentSuccessOrFailure:
+            return {
+                ...state,
+                errorMessage: action.data
+            };
+
         case paymentsCardList.startLoading:
             return {
                 ...state,
@@ -33,6 +41,11 @@ const PaymentsState = (state = defaultState, action) => {
             return {
                 ...state,
                 isLoading: false
+            };
+        case paymentsCardList.isPaymentPathValid:
+            return {
+                ...state,
+                isPaymentPathValid: action.data
             };
 
         default:

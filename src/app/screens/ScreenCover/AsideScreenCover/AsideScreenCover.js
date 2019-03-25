@@ -26,6 +26,7 @@ import { clearRoom, joinVideoConference, rejectConference, createVideoConference
 import { getDashboardMessageCount } from '../../../redux/asyncMessages/actions';
 import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions';
 import {isIEBrowser, isMobileBrowser} from '../../../utils/browserUtility'
+import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import './style.css'
 
 class AsideScreenCover extends React.Component {
@@ -52,6 +53,7 @@ class AsideScreenCover extends React.Component {
         authorizePermission(SCREENS.TELEHEALTH);
         authorizePermission(SCREENS.ASYNC_MESSAGE);
         this.props.getDashboardMessageCount();
+        this.props.getProfilePercentage();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -366,6 +368,7 @@ function mapDispatchToProps(dispatch) {
         setIsFormDirty: (data) => dispatch(setIsFormDirty(data)),
         createVideoConference: (data) => dispatch(createVideoConference(data)),
         createDataStore: data => dispatch(createDataStore(data)),
+        getProfilePercentage: () => dispatch(getProfilePercentage())
     }
 };
 

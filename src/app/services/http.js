@@ -92,7 +92,7 @@ export const AsyncGet = (url) => {
 };
 
 export const AsyncPutWithUrl = (url) => {
-    return axios.put(asyncURL + url, getHeader()).then((resp) => {
+    return axios.put(asyncURL + url, {}, getHeader()).then((resp) => {
         return resp;
     }).catch((error) => {
         handleError(error);
@@ -190,7 +190,7 @@ export const handleError = err => {
 
 export const MessageURLGet = (url, data) => {
     return axios
-        .get(messageURL + url)
+        .get(messageURL + url, getHeader())
         .then(resp => {
             return resp
         })
