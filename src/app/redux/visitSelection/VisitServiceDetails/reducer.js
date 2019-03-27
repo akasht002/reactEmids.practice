@@ -12,7 +12,8 @@ const defaultState = {
     entityServiceProviderId: 0,
     canInitiateConversation: false,
     isScheduleLoading: false,
-    cancelHiredRequest: false
+    cancelHiredRequest: false,
+    disableShowMore: false,
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -39,8 +40,10 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         case VisitServiceDetails.getVisitServiceScheduleSuccess:
             return {
                 ...state,
-                VisitServiceSchedule: action.data
+                VisitServiceSchedule: action.data,
+                disableShowMore: action.disableShowMore
             };
+
 
         case VisitServiceDetails.getServiceRequestId:
             return {

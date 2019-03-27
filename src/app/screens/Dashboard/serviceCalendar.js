@@ -692,7 +692,7 @@ function mapDispatchToProps(dispatch) {
     getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
     getEntityServiceProviderList: () =>
       dispatch(getEntityServiceProviderList()),
-    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
+    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data, 1)),
     getServiceRequestId: data => dispatch(getServiceRequestId(data)),
     setPatient: data => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),

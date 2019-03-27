@@ -57,6 +57,9 @@ import {
   getVisitServiceHistoryByIdDetail,
   clearVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import {
+  getVisitServiceScheduleSuccess
+} from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import { getUserInfo, isEntityServiceProvider } from '../../../utils/userUtility';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
@@ -75,7 +78,6 @@ class VisitServiceDetails extends Component {
       width: window.innerWidth,
       activeTab: '1',
       visitServiceDetails: [],
-      visitServiceSchedule: [],
       isAlertModalOpen: false,
       patientId: '',
       serviceType: '',
@@ -115,7 +117,6 @@ class VisitServiceDetails extends Component {
           .serviceRequestTypeDetailsId,
       isLoading: nextProps.isLoading
     })
-    this.visitServiceScheduleData(nextProps);
   }
 
   componentWillUnmount() {
@@ -132,31 +133,6 @@ class VisitServiceDetails extends Component {
   handelPatientProfile = (data) => {
     this.props.setPatient(data)
     this.props.goToPatientProfile()
-  }
-
-  visitServiceScheduleData = (nextProps) => {
-    if (nextProps.VisitServiceSchedule.length) {
-      if (this.state.visitServiceSchedule.length === 0) {
-        this.setState({
-          visitServiceSchedule: this.state.visitServiceSchedule.concat(nextProps.VisitServiceSchedule)
-        })
-      }
-      else if (this.state.visitServiceSchedule[this.state.visitServiceSchedule.length - 1].serviceRequestVisitId !==
-        nextProps.VisitServiceSchedule[nextProps.VisitServiceSchedule.length - 1].serviceRequestVisitId) {
-        this.setState({
-          visitServiceSchedule: this.state.visitServiceSchedule.concat(nextProps.VisitServiceSchedule)
-        })
-      }
-      if (nextProps.VisitServiceSchedule.length === 10) {
-        this.setState({
-          disableShowMore: false
-        })
-      } else {
-        this.setState({ disableShowMore: true })
-      }
-    } else {
-      this.setState({ disableShowMore: true })
-    }
   }
 
   checkEligibility = () => {
@@ -177,6 +153,10 @@ class VisitServiceDetails extends Component {
       this.setState({
         activeTab: tab
       })
+      if(tab === '1') {
+        this.props.getVisitServiceScheduleSuccess('')
+        this.setState({pageNumber: 1})
+      }
     }
   }
 
@@ -349,7 +329,7 @@ class VisitServiceDetails extends Component {
   }
 
   onSubmitAssignServiceProvider = (data) => {
-    this.props.updateEntityServiceVisit(data)
+    this.props.updateEntityServiceVisit(data, this.state.pageNumber)
     //  console.log(data)
     //  setTimeout( () =>
     //   this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.defualtPageNumber)
@@ -810,8 +790,8 @@ class VisitServiceDetails extends Component {
                           </span>
                         </div>
                       }
-                      {this.state.visitServiceSchedule &&
-                        this.state.visitServiceSchedule.map(ScheduleList => {
+                      {this.props.VisitServiceSchedule &&
+                        this.props.VisitServiceSchedule.map(ScheduleList => {
                           return (
                             <div className='ScheduleTableRow'>
                               <div>
@@ -916,7 +896,7 @@ class VisitServiceDetails extends Component {
                       >
                         Show more
                                       </div> */}
-                      {!this.state.disableShowMore && <ul className="list-group list-group-flush sr-showmore-btn">
+                      {!this.props.disableShowMore && <ul className="list-group list-group-flush sr-showmore-btn">
                         <li
                           className="list-group-item ProfileShowMore"
                           onClick={this.clickShowMore}
@@ -1052,9 +1032,10 @@ function mapDispatchToProps(dispatch) {
     getSpBusyInVisit: () => dispatch(getSpBusyInVisit()),
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
-    updateEntityServiceVisit: data => dispatch(updateEntityServiceVisit(data)),
+    updateEntityServiceVisit: (data, pageNo) => dispatch(updateEntityServiceVisit(data, pageNo)),
     saveContextData: (data) => dispatch(saveContextData(data)),
-    goToDashboard: () => dispatch(push(Path.dashboard))
+    goToDashboard: () => dispatch(push(Path.dashboard)),
+    getVisitServiceScheduleSuccess: () => dispatch(getVisitServiceScheduleSuccess([], true))
   }
 }
 
@@ -1077,6 +1058,7 @@ function mapStateToProps(state) {
     isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
     isScheduleLoading: state.visitSelectionState.VisitServiceDetailsState.isScheduleLoading,
     cancelHiredRequest: state.visitSelectionState.VisitServiceDetailsState.cancelHiredRequest,
+    disableShowMore: state.visitSelectionState.VisitServiceDetailsState.disableShowMore
   }
 }
 
