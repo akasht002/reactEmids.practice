@@ -29,107 +29,89 @@
     You need to enable JavaScript to run this app.
   </noscript>
   <div id="root">
-      <style>
-        .textloader:empty {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 350px;
-          height: 100px;
-          background-color: #fff;
-          border-radius: 4px;
-          margin: 0 AUTO;
-          border: 2px solid #ddd;
-          position: absolute;
-          top: 45%;
-          left: 0;
-          right: 0;
-          -webkit-box-align: center;
-          -webkit-align-items: center;
-          -ms-flex-align: center;
-        }
+    <style>
+      .textloader{
+         display: flex;
+         flex-direction: column;
+         width: 350px;
+         height: 280px;
+         background-color: #fff;
+         margin:auto;
+       }
+       .textloader img
+       {
+       display: block;
+       margin:  0 auto;
+       max-width:100%;
+       height: auto;
+       }
+       /*IE_11_&_IE_10*/
+ @media all and (-ms-high-contrast:none)
+      {
+         .textloader {  width: 350px !important;
+     height: 120px !important;
+    flex-direction: column;
+     align-items: center;
+     justify-content: center; } /* IE10 */
+      *::-ms-backdrop, .textloader {   width: 350px !important;
+     height: 120px !important;
+    flex-direction: column;
+     align-items: center;
+     justify-content: center; } /* IE11 */
+      }
     
-        .textloader:empty::after {
-          content: "Loading CoreoHome resources. This may take a moment.";
-          position: absolute;
-          font-family: 'Open Sans', sans-serif;
-          font-size: 15px;
-          color: #999;
-          display: block;
-          width: 225px;
-          text-align: center;
-          line-height: 25px;
-          word-break: break-all;
-          white-space: pre-line;
-        }
+      @media all and (-ms-high-contrast:none)
+      {
+         .textloader img {  display: none;  } /* IE10 */
+      *::-ms-backdrop, .textloader img{   display: none; } /* IE11 */
+      }
+
+
+      @media all and (-ms-high-contrast:none)
+      {
+         .textloader p {  display: none;  } /* IE10 */
+      *::-ms-backdrop, .textloader p{   display: none; } /* IE11 */
+      }
+
+      @media all and (-ms-high-contrast:none)
+      {
+         .textloader  {   background-image: url("/loadingimg.gif") !important; background-repeat: no-repeat;
+                   background-position: top;  } /* IE10 */
+      *::-ms-backdrop, .textloader {   background-image: url("/loadingimg.gif") !important; background-repeat:  no-repeat;
+                   background-position: top; } /* IE11 */
+      }
     
-        /*cross-browser-fixes-mozila*/
-    
-        @-moz-document url-prefix() {
-          .textloader:empty::after {
-            width: 220px;
-          }
-        }
-    
-        /*IE_11_&_IE_10*/
-    
-        @media all and (-ms-high-contrast:none) {
-          .textloader {
-            border: none !important;
-            background: transparent !important;
-          }
-    
-    
-          .textloader:empty {
-            display: block;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
-            margin: auto;
-            text-align: center;
-            position: absolute;
-            padding-left: 80px;
-            padding-top: 30px;
-            height: 80px;
-            width: 300px;
-            font-size: 15px;
-            color: #999;
-            text-align: center;
-            line-height: 25px;
-            font-family: 'Open Sans', sans-serif;
-            border: none !important;
-    
-    
-          }
-    
-          /* IE10 */
-          *::-ms-backdrop,
-          .textloader:empty {
-            display: block;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
-            margin: auto;
-            text-align: center;
-            position: absolute;
-            padding-left: 80px;
-            padding-top: 30px;
-            height: 80px;
-            width: 300px;
-            font-size: 15px;
-            color: #999;
-            text-align: center;
-            line-height: 25px;
-            font-family: 'Open Sans', sans-serif;
-            border: none !important;
-          }
-    
-          /* IE11 */
-        }
-      </style>
-    <div class="textloader"></div>
+ /*IE-Edge*/
+ @supports (-ms-ime-align: auto) {
+   .textloader
+   {
+     width: 350px !important;
+     height: 120px !important;
+    flex-direction: column;
+     align-items: center;
+     justify-content: center;
+   }
+   .textloader p
+   {
+ display: none;
+   } 
+   .textloader  img{
+   display: none !important;
+   }
+   .textloader  {   
+     background-image: url("/loadingimg.gif") !important; 
+     background-repeat: no-repeat;
+     background-position: top;                   
+ }
+
+
+ }
+     </style>
+    <div style="width:90vw; height:90vh;display:flex; margin:auto;">
+      <div class="textloader">
+        <img src="textloader.svg" alt=""/>
+      </div>
+    </div>
   </div>
   <!--
       This HTML file is a template.
