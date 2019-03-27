@@ -12,7 +12,8 @@ const defaultState = {
   serviceVisitDate: null,
   isConversationLoading: false,
   isServiceRequestLoading: false,
-  isServiceVisitLoading:false
+  isServiceVisitLoading:false,
+  disableShowMore: false,
 }
 
 const DashboardState = (state = defaultState, action) => {

@@ -116,7 +116,6 @@ class AssignServiceProvider extends Component {
     };    
     this.props.onSubmit(model);
     this.selectedServiceProviderId = ''
-    this.props.reset()
   }
 
   goToESPProfile = (data) => {

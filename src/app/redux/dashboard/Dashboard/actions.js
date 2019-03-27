@@ -205,12 +205,12 @@ export const getServiceProviderDetailSuccess = data => {
     data
   }
 }
-export function updateEntityServiceVisit (data) {
+export function updateEntityServiceVisit (data, pageNo) {
   return (dispatch, getState) => {
     dispatch(startLoading())
     ServiceRequestPost(API.assignServiceVisit, data)
       .then(resp => {
-        dispatch(getVisitServiceSchedule(data.serviceRequestId, 1))
+        dispatch(getVisitServiceSchedule(data.serviceRequestId, pageNo, true))
         dispatch(endLoading())
       })
       .catch(err => {
