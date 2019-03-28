@@ -30,7 +30,7 @@
   </noscript>
   <div id="root">
     <style>
-      .textloader{
+      .apploader{
          display: flex;
          flex-direction: column;
          width: 350px;
@@ -38,7 +38,7 @@
          background-color:transparent !important;
          margin:auto;
        }
-       .textloader img
+       .apploader img
        {
        display: block;
        margin:  0 auto;
@@ -48,12 +48,12 @@
        /*IE_11_&_IE_10*/
  @media all and (-ms-high-contrast:none)
       {
-         .textloader {  width: 350px !important;
+         .apploader {  width: 350px !important;
      height: 120px !important;
     flex-direction: column;
      align-items: center;
      justify-content: center; } /* IE10 */
-      *::-ms-backdrop, .textloader {   width: 350px !important;
+      *::-ms-backdrop, .apploader {   width: 350px !important;
      height: 120px !important;
     flex-direction: column;
      align-items: center;
@@ -62,28 +62,23 @@
     
       @media all and (-ms-high-contrast:none)
       {
-         .textloader img {  display: none;  } /* IE10 */
-      *::-ms-backdrop, .textloader img{   display: none; } /* IE11 */
+         .apploader img {  display: none;  } /* IE10 */
+      *::-ms-backdrop, .apploader img{   display: none; } /* IE11 */
       }
 
 
+    
       @media all and (-ms-high-contrast:none)
       {
-         .textloader p {  display: none;  } /* IE10 */
-      *::-ms-backdrop, .textloader p{   display: none; } /* IE11 */
-      }
-
-      @media all and (-ms-high-contrast:none)
-      {
-         .textloader  {   background-image: url("/loadingimg.gif") !important; background-repeat: no-repeat;
+         .apploader  {   background-image: url("/loadingimg.gif") !important; background-repeat: no-repeat;
                    background-position: top;  } /* IE10 */
-      *::-ms-backdrop, .textloader {   background-image: url("/loadingimg.gif") !important; background-repeat:  no-repeat;
+      *::-ms-backdrop, .apploader {   background-image: url("/loadingimg.gif") !important; background-repeat:  no-repeat;
                    background-position: top; } /* IE11 */
       }
     
  /*IE-Edge*/
  @supports (-ms-ime-align: auto) {
-   .textloader
+   .apploader
    {
      width: 350px !important;
      height: 120px !important;
@@ -91,14 +86,11 @@
      align-items: center;
      justify-content: center;
    }
-   .textloader p
-   {
- display: none;
-   } 
-   .textloader  img{
+ 
+   .apploader  img{
    display: none !important;
    }
-   .textloader  {   
+   .apploader  {   
      background-image: url("/loadingimg.gif") !important; 
      background-repeat: no-repeat;
      background-position: top;                   
@@ -108,7 +100,7 @@
  }
      </style>
     <div style="width:90vw; height:90vh;display:flex; margin:auto;">
-      <div class="textloader">
+      <div class="apploader">
         <img src="apploader.svg" alt=""/>
       </div>
     </div>
