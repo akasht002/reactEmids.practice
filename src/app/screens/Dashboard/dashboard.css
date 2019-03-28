@@ -2102,6 +2102,7 @@ min-width:128px !important; display:block !important;
     background-position:center;
     margin: 0 auto;
     display: block;
+    padding-top: 60px;
 }
 
 .topProfile  .Loader
@@ -2116,3 +2117,75 @@ min-width:128px !important; display:block !important;
     display: block;
 }
 
+/*loading-bug_fixes*/
+
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2)
+{
+
+        height:289px;
+        width: 100%;
+        display: block;
+}
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
+{
+height: 100%;
+}
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
+{
+    display: block;
+    width: 100%;
+    height: 230px;
+    overflow-y: auto;
+}
+
+
+@media (min-width: 1367px)
+{
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
+    {
+        max-height: 265px !important;
+    }
+
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
+    {
+        display: block;
+        width: 100%;
+        height: 265px !important;
+        overflow-y: auto;
+    
+    }
+    
+
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
+{
+    min-height: 332px !important;
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+}
+
+
+/*IE-Edge*/
+@supports (-ms-ime-align: auto) {
+    .ProfileContainer.bottomProfile :nth-child(2).innerWidget .topPalette.ProfileConversation
+    {
+        height:100%;
+    }
+
+}
+
+
+ /*cross-browser-fixes-mozila*/
+ @-moz-document url-prefix() {
+    .ProfileContainer.bottomProfile :nth-child(2).innerWidget .topPalette.ProfileConversation
+    {
+        height:100%;
+    }
+
+
+ }
