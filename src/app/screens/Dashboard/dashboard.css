@@ -2128,28 +2128,6 @@ min-width:128px !important; display:block !important;
         display: block;
 }
 
-@media (min-width: 1367px)
-
-{
-    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
-{
-    max-height: 265px !important;
-}
-
-}
-@media (min-width: 1367px)
-{
-    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
-{
-    display: block;
-    width: 100%;
-    height: 265px !important;
-    overflow-y: auto;
-
-}
-
-}
-
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
 {
 height: 100%;
@@ -2166,6 +2144,21 @@ height: 100%;
 
 @media (min-width: 1367px)
 {
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
+    {
+        max-height: 265px !important;
+    }
+
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
+    {
+        display: block;
+        width: 100%;
+        height: 265px !important;
+        overflow-y: auto;
+    
+    }
+    
+
     .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
 {
     min-height: 332px !important;
