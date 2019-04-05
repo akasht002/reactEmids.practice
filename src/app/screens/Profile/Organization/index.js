@@ -330,7 +330,7 @@ class Organization extends React.PureComponent {
           crop={this.state.crop}
           onCropChange={this.onCropChange}
           changeCroppedImage={(croppedImage) => {
-            this.setState({croppedImageUrl: croppedImage})
+            this.setState({ croppedImageUrl: croppedImage })
           }}
         />
         <div className={'row'}>
@@ -353,6 +353,7 @@ class Organization extends React.PureComponent {
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
+       <div className="block-heightrating">
         <ProfileImage
           src={
             this.state.imageProfile
@@ -366,6 +367,11 @@ class Organization extends React.PureComponent {
           circle='SPdpCircle'
           profileImage='SPdpImage'
         />
+        <span className="rating-blockcustome">
+          <i className={"Icon iconFilledStar"} />
+          {this.props.personalDetail && Math.round(this.props.personalDetail.rating * 10)/10}
+        </span>
+      </div>  
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>
             <div className={'col-md-7 p-0'}>
@@ -373,7 +379,7 @@ class Organization extends React.PureComponent {
                 {this.props.personalDetail && this.props.personalDetail.entity &&
                   `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
-              <p className={'SPsubTitle'}>            
+              <p className={'SPsubTitle'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.yearOfExperience}
@@ -856,7 +862,7 @@ class Organization extends React.PureComponent {
       phoneNumber: this.props.personalDetail.phoneNumber,
       organizationNameInvaild: false,
       phoneNumberInvalid: false,
-      yearsOfExperienceInvalid:false,
+      yearsOfExperienceInvalid: false,
       yearsOfExperience: this.props.personalDetail.yearOfExperience
     })
   }
