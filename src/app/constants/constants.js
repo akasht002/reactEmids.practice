@@ -204,3 +204,4 @@ export const CONVERSATION_SUMMARY = 'conversationSummary';
 
 export const PAYMENT_ALREADY_DONE = 'Payment Already Done';
 
+export const DEFAULT_SEARCH_COUNT = '';

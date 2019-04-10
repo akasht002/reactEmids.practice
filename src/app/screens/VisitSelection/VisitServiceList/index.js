@@ -36,7 +36,7 @@ import './style.css'
 import { Path } from "../../../routes";
 import {
     SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN, PAGE_NO,
-    SERVICE_REQUEST_PAGE_SIZE,
+    SERVICE_REQUEST_PAGE_SIZE,DEFAULT_SEARCH_COUNT
 } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
@@ -686,7 +686,7 @@ function mapDispatchToProps(dispatch) {
         setDefaultFilteredStatus: () => dispatch(setDefaultFilteredStatus()),
         keywordSearchServiceRequest: data => dispatch(keywordSearchServiceRequest(data)),
         getSearchDataCount: data => dispatch(getSearchDataCount(data)),
-        getSearchDataCountSuccess: () => dispatch(getSearchDataCountSuccess(''))
+        getSearchDataCountSuccess: () => dispatch(getSearchDataCountSuccess(DEFAULT_SEARCH_COUNT))
     }
 };
 
