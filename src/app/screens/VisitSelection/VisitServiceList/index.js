@@ -23,7 +23,7 @@ import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import {
     getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea,
     clearServiceCategory, clearServiceType, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus,
-    getFilterDataCount, formDirty, setDefaultFilteredStatus, getSearchDataCount
+    getFilterDataCount, formDirty, setDefaultFilteredStatus, getSearchDataCount,getSearchDataCountSuccess
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
@@ -36,7 +36,7 @@ import './style.css'
 import { Path } from "../../../routes";
 import {
     SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN, PAGE_NO,
-    SERVICE_REQUEST_PAGE_SIZE,
+    SERVICE_REQUEST_PAGE_SIZE,DEFAULT_SEARCH_COUNT
 } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
@@ -228,6 +228,7 @@ class VisitServiceList extends Component {
             activePage: 1
         })
         this.props.formDirtyVisitList()
+        this.props.getSearchDataCountSuccess()
     }
 
     handleSortFilterChange = pageNumber => {
@@ -287,7 +288,9 @@ class VisitServiceList extends Component {
             pageNumber: PAGE_NO,
             pageSize: SERVICE_REQUEST_PAGE_SIZE
         }
-        this.props.getVisitServiceList(data);
+        if(!this.state.searchOpen) {
+            this.props.getVisitServiceList(data);
+        }
         this.props.formDirty()
     }
 
@@ -435,6 +438,7 @@ class VisitServiceList extends Component {
         }
         this.props.getSearchDataCount(data)
         this.props.keywordSearchServiceRequest(data)
+        this.applyReset();
     }
 
     closeSearch = () => {
@@ -681,7 +685,8 @@ function mapDispatchToProps(dispatch) {
         clearVisitServiceList: () => dispatch(clearVisitServiceList()),
         setDefaultFilteredStatus: () => dispatch(setDefaultFilteredStatus()),
         keywordSearchServiceRequest: data => dispatch(keywordSearchServiceRequest(data)),
-        getSearchDataCount: data => dispatch(getSearchDataCount(data))
+        getSearchDataCount: data => dispatch(getSearchDataCount(data)),
+        getSearchDataCountSuccess: () => dispatch(getSearchDataCountSuccess(DEFAULT_SEARCH_COUNT))
     }
 };
 
