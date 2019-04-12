@@ -419,7 +419,7 @@ class VistSummary extends React.Component {
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">Visit Date</span>
                       <span>
-                      <Moment format="ddd, DD MMM">{summaryDetail.visitDate}</Moment>
+                      <Moment format="ddd, DD MMM">{summaryDetail.visitStartTime}</Moment>
                       </span>
                     </p>
                     <p className="m-0">
