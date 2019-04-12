@@ -21,6 +21,8 @@ import {
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
 import { ORG_SERVICE_PROVIDER_TYPE_ID } from '../../constants/constants'
+import Moment from 'react-moment'
+
 class VistSummary extends React.Component {
   constructor(props) {
     super(props);
@@ -415,6 +417,12 @@ class VistSummary extends React.Component {
                       </span>
                     </p>
                     <p className="m-0">
+                      <span className="SummaryContentTableTitle">Visit Date</span>
+                      <span>
+                      <Moment format="ddd, DD MMM">{summaryDetail.visitDate}</Moment>
+                      </span>
+                    </p>
+                    <p className="m-0">
                       <span className="SummaryContentTableTitle">
                         Visit Length (HH:MM)
                       </span>
@@ -466,6 +474,7 @@ class VistSummary extends React.Component {
                     <div className="row CostTableWidget">
                       <div className="col-md-8 CostTableContainer Label">
                         <p>
+                          <span>Payment Date</span>
                           <span>Billable Time (HH:MM)</span>
                           <span>Hourly Rate</span>
                         </p>
@@ -476,6 +485,7 @@ class VistSummary extends React.Component {
                       </div>
                       <div className="col-md-4 CostTableContainer Cost">
                         <p>
+                          <span><Moment format="ddd, DD MMM">{summaryDetail.paymentDate}</Moment></span>
                           <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0, 5)}</span>
                           <span>
                             ${summaryDetail.hourlyRate && summaryDetail.hourlyRate.toFixed(2)}
