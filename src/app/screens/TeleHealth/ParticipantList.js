@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Checkbox from './Components/checkbox';
 import { Input } from '../../components';
-import { NO_RESULT_FOUND, CONVERSATION_SUMMARY, NO_PARTICIPANTS_FOUND } from '../../constants/constants';
+import { NO_RESULT_FOUND, NO_PARTICIPANTS_FOUND_CONFERENCE   } from '../../constants/constants';
 import './styles.css';
 
 class ParticipantsList extends Component {
@@ -41,7 +41,7 @@ class ParticipantsList extends Component {
                 />
                 <div className="participantsSearchList pd-left-10new">
                     {this.props.participantList.length > 0 ? this.participants() :
-                        (this.props.searchText === '' ? '' : NO_RESULT_FOUND)}
+                        (this.props.searchText.trim() === '' ? NO_PARTICIPANTS_FOUND_CONFERENCE  : NO_RESULT_FOUND)}
                 </div>
             </div>
         )
