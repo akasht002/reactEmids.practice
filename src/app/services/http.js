@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { store } from '../redux/store'
+import {getTimeZoneOffset} from '../utils/dateUtility';
 
 export const baseURL = process.env.REACT_APP_API_URL
 export const authURL = process.env.REACT_APP_AUTH_URL
@@ -217,7 +218,8 @@ export const getHeader = () => {
     let userState = store.getState().authState.userState;
     let token = userState && userState.userData && userState.userData.access_token;
     let authHeader = token ? {
-        Authorization: 'Bearer ' + token
+        Authorization: 'Bearer ' + token,
+        offset: getTimeZoneOffset()
     } : {}
     return {
         headers: authHeader
