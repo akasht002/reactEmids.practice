@@ -196,9 +196,12 @@ export const DEFAULT_VISIT_START_TIME = "0001-01-01T00:00:00"
 
 export const NO_PARTICIPANTS_FOUND = 'No additional participants can be added to this conversation.';
 
+export const NO_PARTICIPANTS_FOUND_CONFERENCE = 'No additional participants can be added to this conference.';
+
 export const NO_RESULT_FOUND = 'No result found';
 
 export const CONVERSATION_SUMMARY = 'conversationSummary';
 
 export const PAYMENT_ALREADY_DONE = 'Payment Already Done';
 
+export const DEFAULT_SEARCH_COUNT = '';
