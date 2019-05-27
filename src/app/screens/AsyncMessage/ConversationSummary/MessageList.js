@@ -117,6 +117,7 @@ class MessageList extends Component {
             });
         }
         return (
+            <div className="row">
             <div className="col-md-12 MessageCard msgContainerWrapper">
                 <div
                     ref={(el) => { this.messagesStart = el; }}>
@@ -127,6 +128,7 @@ class MessageList extends Component {
                     </ul>
                 </div>
             </div>
+             </div>
         );
     }
 };

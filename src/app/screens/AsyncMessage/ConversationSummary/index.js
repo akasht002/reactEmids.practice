@@ -121,6 +121,7 @@ class ConversationSummary extends Component {
                         conversation={this.props.conversation}
                         gotoConversations={this.onClickConversation}
                         getUnreadMsgCounts={this.props.unreadMsgCounts} />
+                <div className="row"> 
                     <div className="col-md-12 p-0 AsyncConversationPagination">
                         {this.props.conversation.length > 0 &&
                             <Pagination
@@ -137,6 +138,7 @@ class ConversationSummary extends Component {
                             />
                         }
                     </div>
+                </div>
                 </div>
 
                 <ParticipantsContainer
