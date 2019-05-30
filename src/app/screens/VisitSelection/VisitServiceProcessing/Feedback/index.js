@@ -18,7 +18,7 @@ import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSel
 
 import './style.css'
 
-class Feedback extends Component {
+export class Feedback extends Component {
 
     constructor(props) {
         super(props);

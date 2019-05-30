@@ -17,7 +17,7 @@ import {paymentPathValid } from '../../redux/visitSelection/VisitServiceProcessi
 
 import './visitProcessing.css'
 
-class VisitSummary extends React.Component {
+export class VisitSummary extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

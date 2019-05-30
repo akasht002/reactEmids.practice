@@ -7,8 +7,8 @@ import { onLogin } from '../../redux/auth/login/actions';
 import {SLIDER_TIME} from '../../constants/config';
 import './styles.css';
 
-const images = require.context('../../assets/images/home', true);
-const imagePath = (name) => images(name, true);
+// const images = require.context('../../assets/images/home', true);
+// const imagePath = (name) => images(name, true);
 
 class Welcome extends Component {
 
@@ -120,7 +120,7 @@ class Welcome extends Component {
                                                 const style1 = {
                                                     width: this.state.sliderWidth + 'px',
                                                     height: this.state.sliderHeight + 'px',
-                                                    backgroundImage: 'linear-gradient(rgba(60, 16, 83, .35), rgba(102, 48, 127, .35)), url(' + imagePath("./coverImg" + this.state.activeIndex + ".jpg") + ')'
+                                                    backgroundImage: 'linear-gradient(rgba(60, 16, 83, .35), rgba(102, 48, 127, .35)), url(' + require("../../assets/images/home/coverImg" + this.state.activeIndex + ".jpg") + ')'
                                                 };
                                                 return (
                                                     <div style={style1}

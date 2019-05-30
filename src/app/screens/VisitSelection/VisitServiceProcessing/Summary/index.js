@@ -18,7 +18,7 @@ import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 
-class Summary extends Component {
+export class Summary extends Component {
 
     constructor(props) {
         super(props);

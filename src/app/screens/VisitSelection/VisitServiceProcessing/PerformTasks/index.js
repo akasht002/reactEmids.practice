@@ -18,7 +18,7 @@ import { getServiceTypeImage } from '../../../../utils/validations';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 
-class PerformTasks extends Component {
+export class PerformTasks extends Component {
 
     constructor(props) {
         super(props);

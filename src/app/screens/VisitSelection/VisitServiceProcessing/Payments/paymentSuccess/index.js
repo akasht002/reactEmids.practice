@@ -13,7 +13,7 @@ import {updateServiceRequestId} from '../../../../../redux/visitSelection/VisitS
 
 import '../style.css'
 
-class PaymentSuccess extends Component {
+export class PaymentSuccess extends Component {
 
     constructor(props) {
         super(props);

@@ -70,7 +70,7 @@ import {
 } from "../../../redux/dashboard/Dashboard/actions";
 import { Carousel } from '../../../components';
 
-class VisitServiceDetails extends Component {
+export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {

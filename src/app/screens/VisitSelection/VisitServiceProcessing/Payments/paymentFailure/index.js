@@ -14,7 +14,7 @@ import {updateServiceRequestId} from '../../../../../redux/visitSelection/VisitS
 
 import '../style.css'
 
-class PaymentFailure extends Component {
+export class PaymentFailure extends Component {
 
     constructor(props) {
         super(props);
