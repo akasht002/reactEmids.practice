@@ -40,7 +40,7 @@ import { formDirtyFeedback } from '../../redux/visitSelection/VisitServiceProces
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 const today = new Date();
 
-class serviceCalendar extends React.Component {
+export class serviceCalendar extends React.Component {
 
   constructor(props) {
     super(props);
