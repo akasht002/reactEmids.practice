@@ -6,7 +6,7 @@ import { VisitProcessingNavigationData } from '../../../../../data/VisitProcessi
 import { Scrollbars, DashboardWizFlow } from '../../../../../components';
 import { AsideScreenCover } from '../../../../ScreenCover/AsideScreenCover';
 import { getUTCFormatedDate } from "../../../../../utils/dateUtility";
-import { push } from '../../../../../redux/navigation/actions'
+import { push, goBack } from '../../../../../redux/navigation/actions'
 import { Path } from '../../../../../routes';
 import { setPatient } from '../../../../../redux/patientProfile/actions';
 import {updateServiceRequestId} from '../../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
@@ -62,7 +62,7 @@ class PaymentSuccess extends Component {
 
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
@@ -132,7 +132,8 @@ function mapDispatchToProps(dispatch) {
         goVisitServiceList: () => dispatch(push(Path.visitServiceList)),
         updateServiceRequestId: (data) => dispatch(updateServiceRequestId(data)),
         setPatient: (data) => dispatch(setPatient(data)),
-        goToPatientProfile: () => dispatch(push(Path.patientProfile))
+        goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        goBack: () => dispatch(goBack())
     }
 };
 

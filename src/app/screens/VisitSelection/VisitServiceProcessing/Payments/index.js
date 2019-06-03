@@ -12,7 +12,7 @@ import { STRIPE_KEY } from "../../../../constants/config"
 import CheckoutForm from './stripe';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
-import { push } from '../../../../redux/navigation/actions';
+import { push, goBack } from '../../../../redux/navigation/actions';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import {
     getVisitServiceHistoryByIdDetail
@@ -264,7 +264,7 @@ class Payments extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
@@ -371,7 +371,8 @@ function mapDispatchToProps(dispatch) {
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         paymentCheck: () => dispatch(paymentSuccessOrFailure(null)),
         getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
-        isPaymentPathValid: (data) => dispatch(paymentPathValid(data))
+        isPaymentPathValid: (data) => dispatch(paymentPathValid(data)),
+        goBack: () => dispatch(goBack())
     }
 };
 

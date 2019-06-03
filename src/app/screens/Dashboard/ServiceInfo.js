@@ -7,13 +7,14 @@ import TimeAgo from 'timeago-react'
 import moment from 'moment';
 import { getFields} from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
-import { getUserInfo } from '../../services/http'
+// import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
-import { HIRED_STATUS_ID } from '../../constants/constants';
-import { ENTITY_USER } from '../../constants/constants';
+import { HIRED_STATUS_ID, ORG_SERVICE_PROVIDER_TYPE_ID, ENTITY_USER } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
-import { isEntityServiceProvider } from '../../utils/userUtility';
+import { isEntityServiceProvider, getUserInfo } from '../../utils/userUtility';
 import { isFutureDay } from '../../utils/dateUtility'
+import { SERVICE_VISIT } from './constant';
+import { START_VISIT, VISIT_SUMMARY } from './constant'
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -65,7 +66,13 @@ export const serviceCalendar = (
   if (newData.length > 0) {
     // return newData.slice(0, 3).map((conversations, index) => {
     return newData.map((conversations, index) => {  
-      let options = [
+      let options = []
+
+      !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
+      options = [
+        <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' onClick={(e) => {(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : props.goToServiceVisits(conversations)}}>
+                      <i className={conversations.visitStatusId?SERVICE_VISIT[conversations.visitStatusId].iconImage: SERVICE_VISIT[VISIT_SUMMARY].iconImage} /> {SERVICE_VISIT[conversations.visitStatusId].label}
+                      </Item>,
         <Item className='ListItem CTDashboard' key='item-1'
         onClick={(e) => { props.handlePhoneNumber(conversations) }}>
           <i className='iconPhone' /> Phone Call
@@ -78,9 +85,26 @@ export const serviceCalendar = (
           onClick={(e) => { props.onClickVideoConference(conversations) }}>
           <i className='iconVideoCon' /> Video Conference
       </Item>
-      ];
+      ]
+      :
+      options =[ <Item className='ListItem CTDashboard' key='item-1'
+        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+          <i className='iconPhone' /> Phone Call
+        </Item>,
+        <Item className='ListItem CTDashboard' key='item-2'
+          onClick={(e) => { props.onClickConversation(conversations) }}>
+          <i className='iconConversation' /> Conversation
+      </Item>,
+        <Item className='ListItem CTDashboard' key='item-3'
+          onClick={(e) => { props.onClickVideoConference(conversations) }}>
+          <i className='iconVideoCon' /> Video Conference
+      </Item>]
+
       if(isEntityServiceProvider()){
         options = [
+          <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' onClick={(e) => {(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : props.goToServiceVisits(conversations)}}>
+            <i className={conversations.visitStatusId?SERVICE_VISIT[conversations.visitStatusId].iconImage: SERVICE_VISIT[VISIT_SUMMARY].iconImage} /> {SERVICE_VISIT[conversations.visitStatusId].label}
+          </Item>,
           <Item className='ListItem CTDashboard' key='item-1'
           onClick={(e) => { props.handlePhoneNumber(conversations) }}>
             <i className='iconPhone' /> Phone Call

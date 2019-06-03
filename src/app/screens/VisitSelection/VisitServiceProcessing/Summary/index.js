@@ -12,7 +12,7 @@ import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
-import { push } from '../../../../redux/navigation/actions';
+import { push, goBack } from '../../../../redux/navigation/actions';
 import { checkNumber, getFields } from '../../../../utils/validations';
 import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
@@ -185,12 +185,12 @@ class Summary extends Component {
         if (!this.state.disableSignatureBtn && this.state.isSaveBtnShown) {
             this.setState({ isDiscardModalOpen: true })
         } else {
-            this.props.goBack();
+            this.props.goBackToFeedback();
         }
     }
 
-    goBack = () => {
-        this.props.goBack();
+    goBackToFeedback = () => {
+        this.props.goBackToFeedback();
     }
 
     render() {
@@ -290,7 +290,7 @@ class Summary extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
@@ -504,7 +504,7 @@ class Summary extends Component {
                         className='modal-sm'
                         headerFooter='d-none'
                         centered='centered'
-                        onConfirm={() => this.goBack()}
+                        onConfirm={() => this.goBackToFeedback()}
                         onCancel={() =>
                             this.setState({
                                 isDiscardModalOpen: false
@@ -523,11 +523,12 @@ function mapDispatchToProps(dispatch) {
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
-        goBack: () => dispatch(push(Path.feedback)),
+        goBackToFeedback: () => dispatch(push(Path.feedback)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         calculationActualData: () => dispatch(calculationActualData()),
-        updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data))
+        updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data)),
+        goBack: () => dispatch(goBack())
     }
 };
 

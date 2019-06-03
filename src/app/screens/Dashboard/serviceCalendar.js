@@ -28,8 +28,16 @@ import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
 import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
-import { PREVIOUS_MONTH,NEXT_MONTH } from './constant'
+import { PREVIOUS_MONTH,NEXT_MONTH, START_VISIT, IN_PROGRESS, VISIT_SUMMARY, PAYMENT_PENDING } from './constant'
 import { Preloader } from '../../components'
+import {
+  getPerformTasksList,
+  formDirtyPerformTask,
+  getServiceVisitId
+} from '../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { formDirty, getVisitServiceHistoryByIdDetail } from '../../redux/visitHistory/VisitServiceDetails/actions';
+import { formDirtyFeedback } from '../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
+import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 const today = new Date();
 
 class serviceCalendar extends React.Component {
@@ -56,7 +64,8 @@ class serviceCalendar extends React.Component {
       width: window.innerWidth,
       isAlertModalOpen: false,
       phoneNumber: '',
-      selectedMonths: moment(today).format('M')
+      selectedMonths: moment(today).format('M'),
+      standByModeAlertMsg: false
     };
 
   }
@@ -462,6 +471,43 @@ class serviceCalendar extends React.Component {
       ]
   }
 
+  goToServiceVisits = (data) => {
+    this.props.setServiceVisitDate(moment(this.state.reportDay))
+    switch (data.visitStatusId) {
+      case START_VISIT :
+        this.props.isStandByModeOn.isServiceProviderInStandBy ?
+        this.setState({ standByModeAlertMsg: true })
+        :
+        this.props.getPerformTasksList(data.serviceRequestVisitId, true)
+        this.props.formDirty();
+        this.props.formDirtyFeedback();
+        this.props.formDirtyPerformTask();
+        break;
+      case IN_PROGRESS :
+        this.props.isStandByModeOn.isServiceProviderInStandBy ?
+        this.setState({ standByModeAlertMsg: true })
+        :
+        this.props.getPerformTasksList(data.serviceRequestVisitId, true)
+        this.props.formDirty();
+        this.props.formDirtyFeedback();
+        this.props.formDirtyPerformTask();
+        break;
+      case PAYMENT_PENDING :
+        this.props.getServiceVisitId(data.serviceRequestVisitId, true);
+        this.props.getSummaryDetails(data.serviceRequestVisitId);
+        this.props.getSavedSignature(data.serviceRequestVisitId);
+        this.props.formDirtySummaryDetails();
+        this.props.formDirty();
+        this.props.formDirtyFeedback();
+        break;
+      case VISIT_SUMMARY :
+        this.props.getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId)
+        break;
+      default:
+    }
+  }
+
+
 
   render() {
     const visitCount = this.props.serviceVistCount;
@@ -560,6 +606,7 @@ class serviceCalendar extends React.Component {
           }
         }
         handlePhoneNumber={this.handlePhoneNumber}
+        goToServiceVisits = {data => this.goToServiceVisits(data)}
       />
     );
 
@@ -681,6 +728,19 @@ class serviceCalendar extends React.Component {
           }
           }
         />
+        <ModalPopup
+            isOpen={this.state.standByModeAlertMsg}
+            ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
+            btn1='OK'
+            className='modal-sm'
+            headerFooter='d-none'
+            footer='d-none'
+            centered='centered'
+            onConfirm={() =>
+              this.setState({
+                standByModeAlertMsg: false
+              })}
+          />
       </div>
     );
   }
@@ -705,7 +765,16 @@ function mapDispatchToProps(dispatch) {
     goToESPProfile: () => dispatch(push(Path.ESPProfile)),
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
     setServiceVisitDate: (data) => dispatch(setServiceVisitDate(data)),
-    saveContextData: (data) => dispatch(saveContextData(data))
+    saveContextData: (data) => dispatch(saveContextData(data)),
+    formDirty: () => dispatch(formDirty()),
+    formDirtyFeedback: () => dispatch(formDirtyFeedback()),
+    formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),
+    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
+    getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
+    getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
+    getSavedSignature: (data) => dispatch(getSavedSignature(data)),
+    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
+    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails())
   };
 }
 
@@ -718,6 +787,7 @@ function mapStateToProps(state) {
     loggedInUser: state.authState.userState.userData.userInfo,
     serviceVisitDate: state.dashboardState.dashboardState.serviceVisitDate,
     isServiceVisitLoading: state.dashboardState.dashboardState.isServiceVisitLoading,
+    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit
   };
 }
 export default withRouter(
