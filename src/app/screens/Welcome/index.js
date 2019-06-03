@@ -7,9 +7,6 @@ import { onLogin } from '../../redux/auth/login/actions';
 import {SLIDER_TIME} from '../../constants/config';
 import './styles.css';
 
-// const images = require.context('../../assets/images/home', true);
-// const imagePath = (name) => images(name, true);
-
 class Welcome extends Component {
 
     constructor(props) {
