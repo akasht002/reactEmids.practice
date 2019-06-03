@@ -18,7 +18,7 @@ import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSel
 
 import './style.css'
 
-class Feedback extends Component {
+export class Feedback extends Component {
 
     constructor(props) {
         super(props);
@@ -130,7 +130,7 @@ class Feedback extends Component {
                 {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
+                        <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -141,7 +141,7 @@ class Feedback extends Component {
                                 <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
                                         {this.props.patientDetails.patient ?

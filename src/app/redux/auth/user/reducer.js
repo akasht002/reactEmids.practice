@@ -1,4 +1,4 @@
-import { USER } from './actions';
+import {USER} from './bridge'
 
 const defaultState = {
     userData: {},

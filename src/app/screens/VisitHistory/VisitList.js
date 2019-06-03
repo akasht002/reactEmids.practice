@@ -21,7 +21,7 @@ export const VisitList = props => {
                     </Moment>, {vistList.slotDescription}
                   </span>
                   <span>{vistList.billedTotalDuration && vistList.billedTotalDuration.substring(0,5)} (HH:MM)</span>
-                  <span>{vistList.serviceRequestVisitId}</span>
+                  <span>{vistList.serviceRequestVisitNumber}</span>
                 </div>
               </div>
               <div className='visitListBottom'>

@@ -5,14 +5,7 @@ import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http';
 import { checkParticularServiceRequestStatus } from '../ServiceRequestFilters/actions';
 import _ from 'lodash';
-export const VisitServiceList = {
-    getVisitServiceListSuccess: 'get_visit_service_list_success/visitservice',
-    serviceRequestCount: 'serviceRequestCount/visitservice',
-    formDirtyVisitList: 'formDirtyVisitList/visitservice',
-    startLoading: 'startLoading/visitservice',
-    endLoading: 'endLoading/visitservice',
-    setServiceRequestStatus: 'setServiceRequestStatus/visitservice',
-};
+import { VisitServiceList } from './bridge';
 
 export const startLoading = () => {
     return {

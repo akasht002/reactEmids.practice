@@ -8,13 +8,7 @@ import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { visitHistoryLoading } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
-
-export const QuestionsList = {
-  getQuestionsListSuccess: 'get_questions_list_success/performtasks',
-  formDirtyFeedback: 'formDirtyFeedback/performtasks',
-  startLoading: 'startLoading/performtasks',
-  endLoading: 'endLoading/performtasks'
-}
+import {QuestionsList} from './bridge'
 
 export const getQuestionsListSuccess = data => {
   return {

@@ -14,7 +14,7 @@ import {updateServiceRequestId} from '../../../../../redux/visitSelection/VisitS
 
 import '../style.css'
 
-class PaymentFailure extends Component {
+export class PaymentFailure extends Component {
 
     constructor(props) {
         super(props);
@@ -56,7 +56,7 @@ class PaymentFailure extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
+                        <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -68,7 +68,7 @@ class PaymentFailure extends Component {
                                 <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
                                         {this.props.patientDetails.patient ?
