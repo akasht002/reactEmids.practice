@@ -17,7 +17,7 @@ import {paymentPathValid } from '../../redux/visitSelection/VisitServiceProcessi
 
 import './visitProcessing.css'
 
-class VisitSummary extends React.Component {
+export class VisitSummary extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -70,8 +70,6 @@ class VisitSummary extends React.Component {
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>
               Service Request
-                {' '}
-              <span>/ {visitSummary.serviceRequestId}</span>
             </h5>
           </div>
         </div>
@@ -92,7 +90,7 @@ class VisitSummary extends React.Component {
                 <div className='requestContent'>
                   <div className='requestNameContent'>
                     <span>
-                      <i className='requestName'><Moment format="ddd, DD MMM">{visitSummary.visitDate}</Moment>, {visitSummary.slotDescription}</i>{visitSummary.serviceRequestVisitId}</span>
+                      <i className='requestName'><Moment format="ddd, DD MMM">{visitSummary.visitDate}</Moment>, {visitSummary.slotDescription}</i>{visitSummary.serviceRequestVisitNumber}</span>
                   </div>
                   <div className='requestImageContent' onClick={() => this.handelPatientProfile(visitSummary.patient && visitSummary.patient.patientId)}>
                     <span className='IndividualName'>

@@ -70,7 +70,7 @@ import {
 } from "../../../redux/dashboard/Dashboard/actions";
 import { Carousel } from '../../../components';
 
-class VisitServiceDetails extends Component {
+export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -499,9 +499,7 @@ class VisitServiceDetails extends Component {
         {this.props.cancelHiredRequest && <Preloader />}
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Service Request / {this.state.visitServiceDetails.serviceRequestId
-              ? this.state.visitServiceDetails.serviceRequestId
-              : this.state.visitServiceDetails.ServiceRequestId}</h5>
+            <h5 className='primaryColor m-0'>Service Request</h5>
           </div>
         </div>
         <Scrollbars
@@ -521,9 +519,9 @@ class VisitServiceDetails extends Component {
                     Request ID
                   </span>
                   <span className='HeaderRequestLabelID'>
-                    {this.state.visitServiceDetails.serviceRequestId
-                      ? this.state.visitServiceDetails.serviceRequestId
-                      : this.state.visitServiceDetails.ServiceRequestId}
+                    {this.state.visitServiceDetails
+                      && this.state.visitServiceDetails.serviceRequestNumber
+                    }
                   </span>
                 </div>
                 <div className='ProfileHeaderButton'>

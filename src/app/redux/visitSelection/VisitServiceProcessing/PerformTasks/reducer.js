@@ -1,6 +1,4 @@
-import {
-    PerformTasks
-} from './actions'
+import {PerformTasks} from './bridge'
 import { SERVICE_STATES } from '../../../../constants/constants'
 
 const defaultState = {
