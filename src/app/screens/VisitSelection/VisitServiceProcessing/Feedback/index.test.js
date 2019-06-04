@@ -132,7 +132,11 @@ describe("VisitServiceProcessing - Feedback", function () {
         shallowWrapper.instance().handleTextarea(e, '123')
     });
 
-    it('Check the onClickNext', () => {
+    it('Check the onClickNext', () => { 
         shallowWrapper.instance().onClickNext();
+    });
+
+    it('Check the goBackToPerformTask', () => { 
+        shallowWrapper.instance().goBackToPerformTask();
     });
 });

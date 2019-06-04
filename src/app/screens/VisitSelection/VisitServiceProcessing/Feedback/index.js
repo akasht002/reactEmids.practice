@@ -9,7 +9,7 @@ import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader } from '../../../..
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
-import { push } from '../../../../redux/navigation/actions'
+import { push, goBack } from '../../../../redux/navigation/actions'
 import {
     getVisitFeedBack
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions';
@@ -112,13 +112,13 @@ export class Feedback extends Component {
             this.setState({ isDiscardModalOpen: true })
         } else {
             this.selectedAnswers = []
-            this.props.goBack();
+            this.props.goBackToPerformTask();
         }
     }
 
-    goBack = () => {
+    goBackToPerformTask = () => {
         this.selectedAnswers = []
-        this.props.goBack();
+        this.props.goBackToPerformTask();
         this.props.getQuestionsList();
         this.props.getVisitFeedBack(this.props.ServiceRequestVisitId)
     }
@@ -138,7 +138,7 @@ export class Feedback extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -287,7 +287,7 @@ export class Feedback extends Component {
                         className='modal-sm'
                         headerFooter='d-none'
                         centered='centered'
-                        onConfirm={() => this.goBack()}
+                        onConfirm={() => this.goBackToPerformTask()}
                         onCancel={() =>
                             this.setState({
                                 isDiscardModalOpen: false
@@ -306,11 +306,12 @@ function mapDispatchToProps(dispatch) {
         saveAnswers: (data) => dispatch(saveAnswers(data)),
         getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data)),
         goToSummary: () => dispatch(push(Path.summary)),
-        goBack: () => dispatch(push(Path.performTasks)),
+        goBackToPerformTask: () => dispatch(push(Path.performTasks)),
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        goBack: () => dispatch(goBack())
     }
 };
 

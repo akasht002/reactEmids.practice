@@ -64,4 +64,8 @@ describe("VisitServiceProcessing - Summary", function () {
     it('Check the Summary contains ProfileContentWidget', () => {
         expect(shallowWrapper.find('.ProfileContentWidget').length).toEqual(1);
     });
+
+    it('Check the goBackToFeedback', () => {
+        shallowWrapper.instance().goBackToFeedback()
+    });
 });
