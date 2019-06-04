@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { validateCoordinates } from '../../../utils/validations'
 
 export const Details = (props) => {
   return (
@@ -30,8 +31,8 @@ export const Details = (props) => {
               <span className={'AddressContentLabel'}>Range</span>
               <span className={'SPCertificateDesc'}>{serviceArea.coverageArea}</span>
             </div>
-            {(serviceArea.lat === 0 || serviceArea.lon === 0) &&
-                <div className="valdiationErrorMsg">Address details are not valid.</div>}
+            {validateCoordinates(serviceArea.lat, serviceArea.lon) &&
+                <div className="validationErrorMsg">Address details are not valid.</div>}
           </div>
           {
             props.isUser ? <Fragment>
