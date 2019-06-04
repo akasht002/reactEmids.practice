@@ -40,7 +40,7 @@ import { formDirtyFeedback } from '../../redux/visitSelection/VisitServiceProces
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 const today = new Date();
 
-export class serviceCalendar extends React.Component {
+export class ServiceCalendar extends React.Component {
 
   constructor(props) {
     super(props);
@@ -794,5 +794,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(serviceCalendar)
+  )(ServiceCalendar)
 );

@@ -69,20 +69,6 @@ const defaultState = {
 
 store = mockStore(defaultState)
 
-// const setUp = (props = {}) => {
-//     const component = mount(
-//      <Provider store={store}>
-//         <MemoryRouter>
-//           <ServiceCalendar dispatch={dispatch} store={store} {...props} />
-//         </MemoryRouter>
-//      </Provider>
-//     )
-
-//     return component
-//   }
-
-
-
 describe('Dashboard - Service Calendar', function () {
   let shallowWrapper;
   beforeEach(() => {

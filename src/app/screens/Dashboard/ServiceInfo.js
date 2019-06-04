@@ -7,7 +7,6 @@ import TimeAgo from 'timeago-react'
 import moment from 'moment';
 import { getFields} from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
-// import { getUserInfo } from '../../services/http'
 import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
 import { HIRED_STATUS_ID, ORG_SERVICE_PROVIDER_TYPE_ID, ENTITY_USER } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
@@ -64,7 +63,6 @@ export const serviceCalendar = (
   props
 ) => {
   if (newData.length > 0) {
-    // return newData.slice(0, 3).map((conversations, index) => {
     return newData.map((conversations, index) => {  
       let options = []
 
