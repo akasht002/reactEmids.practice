@@ -15,7 +15,7 @@ import { authorizePermission } from '../../../utils/roleUtility';
 import { Details } from './Details'
 import './style.css';
 
-class ServiceArea extends Component {
+export class ServiceArea extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -166,7 +166,7 @@ class ServiceArea extends Component {
     const onlyNums = e.target.value.replace(/[^0-9]/g, '');
     if (onlyNums.length <= 5) {
       this.setState({
-        zip: onlyNums,
+        zip: (onlyNums*1).toString(),
         zipInvalid: false,
         disabledSaveBtn: false,
         isChanged: true
@@ -511,6 +511,17 @@ class ServiceArea extends Component {
               showModalOnDelete: !this.state.showModalOnDelete
             })}
         />
+
+        <ModalPopup
+          isOpen={this.props.showModalOnPOS}
+          ModalBody={<span>{this.props.posInvalidAddressErrorMessage}</span>}
+          btn1='Ok'
+          className='modal-sm'
+          headerFooter='d-none'
+          footer='d-none'
+          centered
+          onConfirm={() => this.props.clearPOSErrorMessage()}
+        />
       </div>
     )
   }
@@ -523,7 +534,8 @@ function mapDispatchToProps(dispatch) {
     editServiceArea: data => dispatch(action.editServiceArea(data)),
     updateServiceArea: data => dispatch(action.updateServiceArea(data)),
     deletePointService: data => dispatch(action.deletePointService(data)),
-    getCityDetail: () => dispatch(getCityDetail())
+    getCityDetail: () => dispatch(getCityDetail()),
+    clearPOSErrorMessage: () => dispatch(action.clearPOSErrorMessage()),
   }
 }
 
@@ -536,6 +548,9 @@ function mapStateToProps(state) {
     ServiceAreaFieldDetails: state.profileState.ServiceAreaState
       .ServiceAreaFieldDetails,
     isUser: state.profileState.PersonalDetailState.isUser,
+    posInvalidAddressErrorMessage:
+    state.profileState.ServiceAreaState.posInvalidAddressErrorMessage,
+    showModalOnPOS: state.profileState.ServiceAreaState.showModalOnPOS
   }
 }
 

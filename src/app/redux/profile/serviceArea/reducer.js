@@ -1,9 +1,11 @@
-import { ServiceArea } from './action'
+import { ServiceArea } from './bridge'
 
 const defaultState = {
   ServiceAreaList: [],
   ServiceAreaFieldDetails:{},
-  addServiceAreaSuccess:false
+  addServiceAreaSuccess:false,
+  posInvalidAddressErrorMessage: '',
+  showModalOnPOS: false
 }
 
 const ServiceAreaState = (state = defaultState, action) => {
@@ -33,6 +35,18 @@ const ServiceAreaState = (state = defaultState, action) => {
           city: '',
           zip: ''
         }
+      }
+      case ServiceArea.setPointOfServiceErrorMessage:
+      return{
+        ...state,
+        posInvalidAddressErrorMessage: action.data,
+        showModalOnPOS: true,
+      }
+    case ServiceArea.clearPOSErrorMessage:
+      return{
+        ...state,
+        posInvalidAddressErrorMessage: '',
+        showModalOnPOS: false,
       }
     default:
       return state

@@ -241,3 +241,7 @@ export const formatContactNumber = data => {
 export const formatContactNumberValue = data => {
   return data ? data.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : ''
 }
+
+export const validateCoordinates = (lat, lon) => {
+  return (lat === 0 || lon === 0)
+}
