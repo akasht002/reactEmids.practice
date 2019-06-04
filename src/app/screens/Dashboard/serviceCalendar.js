@@ -14,7 +14,8 @@ import {
   getEntityServiceProviderList,
   updateEntityServiceVisit,
   getEntityServiceProviderListSearch,
-  setServiceVisitDate
+  setServiceVisitDate,
+  goToServiceVisitProcessing
 } from "../../redux/dashboard/Dashboard/actions";
 import { getServiceRequestId, setEntityServiceProvider }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
@@ -28,16 +29,8 @@ import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
 import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
-import { PREVIOUS_MONTH,NEXT_MONTH, START_VISIT, IN_PROGRESS, VISIT_SUMMARY, PAYMENT_PENDING } from './constant'
+import { PREVIOUS_MONTH,NEXT_MONTH, START_VISIT, IN_PROGRESS } from './constant'
 import { Preloader } from '../../components'
-import {
-  getPerformTasksList,
-  formDirtyPerformTask,
-  getServiceVisitId
-} from '../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { formDirty, getVisitServiceHistoryByIdDetail } from '../../redux/visitHistory/VisitServiceDetails/actions';
-import { formDirtyFeedback } from '../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
-import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 const today = new Date();
 
 export class ServiceCalendar extends React.Component {
@@ -473,38 +466,10 @@ export class ServiceCalendar extends React.Component {
 
   goToServiceVisits = (data) => {
     this.props.setServiceVisitDate(moment(this.state.reportDay))
-    switch (data.visitStatusId) {
-      case START_VISIT :
-        this.props.isStandByModeOn.isServiceProviderInStandBy ?
-        this.setState({ standByModeAlertMsg: true })
-        :
-        this.props.getPerformTasksList(data.serviceRequestVisitId, true)
-        this.props.formDirty();
-        this.props.formDirtyFeedback();
-        this.props.formDirtyPerformTask();
-        break;
-      case IN_PROGRESS :
-        this.props.isStandByModeOn.isServiceProviderInStandBy ?
-        this.setState({ standByModeAlertMsg: true })
-        :
-        this.props.getPerformTasksList(data.serviceRequestVisitId, true)
-        this.props.formDirty();
-        this.props.formDirtyFeedback();
-        this.props.formDirtyPerformTask();
-        break;
-      case PAYMENT_PENDING :
-        this.props.getServiceVisitId(data.serviceRequestVisitId, true);
-        this.props.getSummaryDetails(data.serviceRequestVisitId);
-        this.props.getSavedSignature(data.serviceRequestVisitId);
-        this.props.formDirtySummaryDetails();
-        this.props.formDirty();
-        this.props.formDirtyFeedback();
-        break;
-      case VISIT_SUMMARY :
-        this.props.getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId)
-        break;
-      default:
+    if((data.visitStatusId === START_VISIT || data.visitStatusId === IN_PROGRESS) && this.props.isStandByModeOn.isServiceProviderInStandBy) {
+      this.setState({ standByModeAlertMsg: true })
     }
+    else this.props.goToServiceVisitProcessing(data)
   }
 
 
@@ -606,7 +571,7 @@ export class ServiceCalendar extends React.Component {
           }
         }
         handlePhoneNumber={this.handlePhoneNumber}
-        goToServiceVisits = {data => this.goToServiceVisits(data)}
+        goToServiceVisits = {this.goToServiceVisits}
       />
     );
 
@@ -766,15 +731,7 @@ function mapDispatchToProps(dispatch) {
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
     setServiceVisitDate: (data) => dispatch(setServiceVisitDate(data)),
     saveContextData: (data) => dispatch(saveContextData(data)),
-    formDirty: () => dispatch(formDirty()),
-    formDirtyFeedback: () => dispatch(formDirtyFeedback()),
-    formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),
-    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
-    getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
-    getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
-    getSavedSignature: (data) => dispatch(getSavedSignature(data)),
-    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
-    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails())
+    goToServiceVisitProcessing: data => dispatch(goToServiceVisitProcessing(data))
   };
 }
 

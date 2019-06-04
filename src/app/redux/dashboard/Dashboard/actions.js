@@ -23,6 +23,15 @@ import { getUserInfo } from '../../../services/http'
 import {
   getVisitServiceSchedule
 } from '../../visitSelection/VisitServiceDetails/actions';
+import {
+  getPerformTasksList,
+  formDirtyPerformTask,
+  getServiceVisitId
+} from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { formDirty, getVisitServiceHistoryByIdDetail } from '../../visitHistory/VisitServiceDetails/actions';
+import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/Feedback/actions';
+import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../visitSelection/VisitServiceProcessing/Summary/actions';
+import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
 
 export const DashboardDetail = {
   get_conversation_detail_success: 'get_conversation_detail_success/dashboard',
@@ -355,5 +364,36 @@ export const setServiceVisitLoader =(data) =>{
   return {
     type: DashboardDetail.setServiceVisitLoader,
     data
+  }
+}
+
+export function goToServiceVisitProcessing(data){
+  return (dispatch) => {
+    switch (data.visitStatusId) {      
+      case START_VISIT :       
+        dispatch(getPerformTasksList(data.serviceRequestVisitId, true))
+        dispatch(formDirty());
+        dispatch(formDirtyFeedback());
+        dispatch(formDirtyPerformTask());
+        break;
+      case IN_PROGRESS :        
+        dispatch(getPerformTasksList(data.serviceRequestVisitId, true));
+        dispatch(formDirty());
+        dispatch(formDirtyFeedback());
+        dispatch(formDirtyPerformTask());
+        break;
+      case PAYMENT_PENDING :
+        dispatch(getServiceVisitId(data.serviceRequestVisitId, true));
+        dispatch(getSummaryDetails(data.serviceRequestVisitId));
+        dispatch(getSavedSignature(data.serviceRequestVisitId));
+        dispatch(formDirtySummaryDetails());
+        dispatch(formDirtyFeedback());
+        dispatch(formDirtyPerformTask());
+        break;
+      case VISIT_SUMMARY :
+        dispatch(getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId))
+        break;
+      default:
+    }
   }
 }

@@ -12,8 +12,7 @@ import { HIRED_STATUS_ID, ORG_SERVICE_PROVIDER_TYPE_ID, ENTITY_USER } from '../.
 import { MessageTypes } from '../../data/AsyncMessage';
 import { isEntityServiceProvider, getUserInfo } from '../../utils/userUtility';
 import { isFutureDay } from '../../utils/dateUtility'
-import { SERVICE_VISIT } from './constant';
-import { START_VISIT, VISIT_SUMMARY } from './constant'
+import { SERVICE_VISIT_STATUS,START_VISIT } from '../../redux/constants/constants'
 
 export const ShowIndicator = props => {
   if (props.count === 1) {
@@ -64,6 +63,10 @@ export const serviceCalendar = (
 ) => {
   if (newData.length > 0) {
     return newData.map((conversations, index) => {  
+      let visitList = SERVICE_VISIT_STATUS.filter((data) =>{
+        return data.id === conversations.visitStatusId
+    })
+    let list = visitList.length > 0 ? visitList[0] : SERVICE_VISIT_STATUS[0]
       let options = []
       let commonOptions = [<Item className='ListItem CTDashboard' key='item-1'
       onClick={(e) => { props.handlePhoneNumber(conversations) }}>
@@ -81,7 +84,7 @@ export const serviceCalendar = (
       !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
       options = [ 
         <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' onClick={(e) => {(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : props.goToServiceVisits(conversations)}}>
-              <i className={conversations.visitStatusId?SERVICE_VISIT[conversations.visitStatusId].iconImage: SERVICE_VISIT[VISIT_SUMMARY].iconImage} /> {SERVICE_VISIT[conversations.visitStatusId].label}
+              <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
         </Item>,   
         ...commonOptions,    
       ]
@@ -91,7 +94,7 @@ export const serviceCalendar = (
       if(isEntityServiceProvider()){
         options = [
           <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' onClick={(e) => {(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : props.goToServiceVisits(conversations)}}>
-            <i className={conversations.visitStatusId?SERVICE_VISIT[conversations.visitStatusId].iconImage: SERVICE_VISIT[VISIT_SUMMARY].iconImage} /> {SERVICE_VISIT[conversations.visitStatusId].label}
+            <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
           </Item>,
           <Item className='ListItem CTDashboard' key='item-1'
           onClick={(e) => { props.handlePhoneNumber(conversations) }}>
