@@ -206,4 +206,10 @@ export const PAYMENT_ALREADY_DONE = 'Payment Already Done';
 
 export const DEFAULT_SEARCH_COUNT = '';
 
-export const STANDBY_MODE_MSG = 'Please turn off the stand-by mode to start the visit.'
+export const STANDBY_MODE_MSG = 'Please turn off the stand-by mode to start the visit.';
+
+export const DD_FORMAT  = 'DD'
+export const M_FORMAT = "M"
+export const MM_FORMAT = "M"
+export const MMM_FORMAT = 'MMM'
+export const YYYY_MM_DD_FORMAT= 'YYYY-MM-DD'

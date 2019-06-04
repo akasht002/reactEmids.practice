@@ -53,7 +53,9 @@ export const splitSlots = (togglePersonalDetails, data, type, handleClick, props
   return serviceCalendar(togglePersonalDetails, newData, handleClick, props)
 }
 
-
+export const onClickServiceCalendarItems = (props,conversations) => {
+  (!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : props.goToServiceVisits(conversations)
+}
 
 export const serviceCalendar = (
   togglePersonalDetails,
@@ -67,33 +69,24 @@ export const serviceCalendar = (
         return data.id === conversations.visitStatusId
     })
     let list = visitList.length > 0 ? visitList[0] : SERVICE_VISIT_STATUS[0]
-      let options = []
-      let commonOptions = [<Item className='ListItem CTDashboard' key='item-1'
-      onClick={(e) => { props.handlePhoneNumber(conversations) }}>
-        <i className='iconPhone' /> Phone Call
+      let options = [];
+      const commonOptions = [<Item className='ListItem CTDashboard' key='item-1'
+        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+          <i className='iconPhone' /> Phone Call
+        </Item>,
+        <Item className='ListItem CTDashboard' key='item-2'
+          onClick={(e) => { props.onClickConversation(conversations) }}>
+          <i className='iconConversation' /> Conversation
       </Item>,
-      <Item className='ListItem CTDashboard' key='item-2'
-        onClick={(e) => { props.onClickConversation(conversations) }}>
-        <i className='iconConversation' /> Conversation
-    </Item>,
-      <Item className='ListItem CTDashboard' key='item-3'
-        onClick={(e) => { props.onClickVideoConference(conversations) }}>
-        <i className='iconVideoCon' /> Video Conference
-    </Item>]
-
-      !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
-      options = [ 
-        <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' onClick={(e) => {(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : props.goToServiceVisits(conversations)}}>
-              <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
-        </Item>,   
-        ...commonOptions,    
-      ]
-      :
-      options = commonOptions;
-
+        <Item className='ListItem CTDashboard' key='item-3'
+          onClick={(e) => { props.onClickVideoConference(conversations) }}>
+          <i className='iconVideoCon' /> Video Conference
+      </Item>]
+      
       if(isEntityServiceProvider()){
         options = [
-          <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' onClick={(e) => {(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : props.goToServiceVisits(conversations)}}>
+          <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
+            onClick={(e) => onClickServiceCalendarItems(props,conversations)}>
             <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
           </Item>,
           <Item className='ListItem CTDashboard' key='item-1'
@@ -101,7 +94,20 @@ export const serviceCalendar = (
             <i className='iconPhone' /> Phone Call
           </Item>
         ];
-      };
+      } else {
+        !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
+        options = [ 
+          <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
+          onClick={(e) => onClickServiceCalendarItems(props,conversations)}>
+                <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
+          </Item>,   
+          ...commonOptions,    
+        ]
+        :
+        options = commonOptions;
+      }      
+
+      
       return (
         <Fragment>
           <li
