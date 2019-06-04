@@ -31,7 +31,7 @@ export const Details = (props) => {
               <span className={'SPCertificateDesc'}>{serviceArea.coverageArea}</span>
             </div>
             {(serviceArea.lat === 0 || serviceArea.lon === 0) &&
-                <div className="valdiationErrorMsg">Please enter a valid address details</div>}
+                <div className="valdiationErrorMsg">Address details are not valid.</div>}
           </div>
           {
             props.isUser ? <Fragment>
