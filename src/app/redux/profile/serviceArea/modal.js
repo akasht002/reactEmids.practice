@@ -24,9 +24,10 @@ export const getModal = (data, action) => {
         "isActive": true,
         "rowversionId": [],
         "coverageArea": data.coverageArea,
-        "lat": 10,
-        "lon": 10,
-        "addressExternalId": 0
+        "lat": 0,
+        "lon": 0,
+        "addressExternalId": 0,
+        isAddressVerified: false
       }
     case ACTION_MODEL.UPDATE_DATA:
       return {
