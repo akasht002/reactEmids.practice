@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import moment from "moment";
 import Select from "react-select";
 import _ from 'lodash'
@@ -33,7 +33,7 @@ import { PREVIOUS_MONTH,NEXT_MONTH, START_VISIT, IN_PROGRESS } from './constant'
 import { Preloader } from '../../components'
 const today = new Date();
 
-export class ServiceCalendar extends React.Component {
+export class ServiceCalendar extends Component {
 
   constructor(props) {
     super(props);
