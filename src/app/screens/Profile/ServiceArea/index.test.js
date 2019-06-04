@@ -1,9 +1,7 @@
 import React from 'react';
-import Enzyme, { shallow, mount } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 
 import { ServiceArea } from './index'
@@ -60,22 +58,9 @@ const defaultState = {
 
 store = mockStore(defaultState);
 
-// const setUp = (props = {}) => {
-//     const wrapper = mount(
-//         <Provider store={store}>
-//             <MemoryRouter>
-//                 <ServiceArea dispatch={dispatch} store={store} {...props} />
-//             </MemoryRouter>
-//         </Provider>
-//     )
-//     return wrapper;
-// };
-
 describe("ServiceArea", function () {
-    let wrapper, shallowWrapper;
+    let shallowWrapper;
     beforeEach(() => {
-        // const props = defaultState;
-        // wrapper = setUp(props)
         shallowWrapper = shallow(
             <ServiceArea dispatch={dispatch} store={store} {...defaultState} />
         )
