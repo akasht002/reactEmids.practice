@@ -70,18 +70,6 @@ export const serviceCalendar = (
     })
     let list = visitList.length > 0 ? visitList[0] : SERVICE_VISIT_STATUS[0]
       let options = [];
-      const commonOptions = [<Item className='ListItem CTDashboard' key='item-1'
-        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
-          <i className='iconPhone' /> Phone Call
-        </Item>,
-        <Item className='ListItem CTDashboard' key='item-2'
-          onClick={(e) => { props.onClickConversation(conversations) }}>
-          <i className='iconConversation' /> Conversation
-      </Item>,
-        <Item className='ListItem CTDashboard' key='item-3'
-          onClick={(e) => { props.onClickVideoConference(conversations) }}>
-          <i className='iconVideoCon' /> Video Conference
-      </Item>]
       
       if(isEntityServiceProvider()){
         options = [
@@ -95,6 +83,19 @@ export const serviceCalendar = (
           </Item>
         ];
       } else {
+        const commonOptions = [<Item className='ListItem CTDashboard' key='item-1'
+        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+          <i className='iconPhone' /> Phone Call
+        </Item>,
+        <Item className='ListItem CTDashboard' key='item-2'
+          onClick={(e) => { props.onClickConversation(conversations) }}>
+          <i className='iconConversation' /> Conversation
+      </Item>,
+        <Item className='ListItem CTDashboard' key='item-3'
+          onClick={(e) => { props.onClickVideoConference(conversations) }}>
+          <i className='iconVideoCon' /> Video Conference
+      </Item>]
+      
         !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
         options = [ 
           <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
