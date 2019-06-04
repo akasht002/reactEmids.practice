@@ -23,7 +23,7 @@ import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
 import { setPatient, setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
-import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from "../../constants/constants";
+import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
@@ -730,7 +730,7 @@ export class ServiceCalendar extends React.Component {
         />
         <ModalPopup
             isOpen={this.state.standByModeAlertMsg}
-            ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
+            ModalBody={<span>{STANDBY_MODE_MSG}</span>}
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'

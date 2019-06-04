@@ -18,3 +18,4 @@ export const VISIT_SUMMARY = 45
 
 export const PAYMENT_PENDING = 90
 
+

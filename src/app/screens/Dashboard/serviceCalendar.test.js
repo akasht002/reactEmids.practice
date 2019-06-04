@@ -16,6 +16,12 @@ jest.mock('./ServiceInfo', () => ({
   })
 }))
 
+jest.mock('../../services/http', () => ({
+  getUserInfo: () => ({
+    isEntityServiceProvider: true
+  })
+}))
+
 Enzyme.configure({ adapter: new Adapter() })
 let store
 const mockStore = configureStore()
@@ -40,31 +46,38 @@ const defaultState = {
       serviceVisitDate: '2012-03-12',
     }
   },
-  getServiceRequestId: jest.fn(),
-  goToVisitServiceDetails: jest.fn(),
-  getProfilePercentage: jest.fn(),
-  setTab: jest.fn(),
-  setServiceProvider: jest.fn(),
-  goToSpProfile: jest.fn(),
-  createNewConversation: jest.fn(),
-  createVideoConference: jest.fn(),
-  createDataStore: jest.fn(),
+  isStandByModeOn: {
+        isServiceProviderInStandBy: false
+  },
   serviceVistCount: [{
     visitDate: '2019-05-27'
   }],
-  getPatientVisitDetail: jest.fn(),
+  serviceProviderList:[],
+  getServiceProviderVists: jest.fn(),
   getServiceVisitCount: jest.fn(),
-  clearImpersination: jest.fn(),
-  getVisitServiceDetails: jest.fn(),
-  getVisitServiceSchedule: jest.fn(),
+  getEntityServiceProviderList: jest.fn(),
+  getServiceRequestId: jest.fn(),
+  setPatient: jest.fn(),
+  goToPatientProfile: jest.fn(),
+  createNewConversation: jest.fn(),
+  createVideoConference: jest.fn(),
+  goToServiceRequestDetailsPage: jest.fn(),
+  setESP: jest.fn(),
+  goToESPProfile: jest.fn(),
+  getEntityServiceProviderListSearch: jest.fn(),
   setServiceVisitDate: jest.fn(),
-  navigateProfileHeader: jest.fn(),
+  saveContextData: jest.fn(),
+  formDirty: jest.fn(),
+  formDirtyFeedback: jest.fn(),
+  formDirtyPerformTask: jest.fn(),
   getPerformTasksList: jest.fn(),
-  getVisitServiceHistoryByIdDetail:jest.fn(),
-  getServiceVisitId:jest.fn(),
-  formDirtyFeedback:jest.fn(),
-  getSummaryDetails:jest.fn(),
-  formDirtySubmittedFeedback:jest.fn()
+  getServiceVisitId: jest.fn(),
+  getSummaryDetails: jest.fn(),
+  getSavedSignature: jest.fn(),
+  getVisitServiceHistoryByIdDetail: jest.fn(),
+  formDirtySummaryDetails: jest.fn(),
+  setEntityServiceProvider: jest.fn(),
+  createDataStore: jest.fn()
 }
 
 store = mockStore(defaultState)
@@ -87,15 +100,6 @@ describe('Dashboard - Service Calendar', function () {
 
   it('Check the updateWindowDimensions function', () => {
     shallowWrapper.instance().updateWindowDimensions()
-  });
-
-  it('Check the componentWillReceiveProps function', () => {
-    let nextProps = {
-      impersinated: true
-    }
-    shallowWrapper.instance().componentWillReceiveProps(nextProps)
-    nextProps.impersinated = false
-    shallowWrapper.instance().componentWillReceiveProps(nextProps)
   });
 
   it('Check the componentWillUnmount function', () => {
@@ -189,15 +193,6 @@ describe('Dashboard - Service Calendar', function () {
     shallowWrapper.instance().navigateProfileHeader(link.default)
   });
 
-  it('Check the showPhoneNumber function', () => {
-    let data = {
-      serviceProvider: {
-        phoneNumber: 9165648715
-      }
-    }
-    shallowWrapper.instance().showPhoneNumber(data)
-  });
-
   it('Check the onClickConversation function', () => {
     let item = {
       serviceProvider: {
@@ -216,10 +211,6 @@ describe('Dashboard - Service Calendar', function () {
     }
     shallowWrapper.instance().onClickVideoConference(item)
     shallowWrapper.instance().onClickVideoConference()
-  });
-
-  it('Check the setNavigator function', () => {
-    shallowWrapper.instance().setNavigator()
   });
 
   it('Check the goToServiceVisits function :=> SCHEDULED_VISIT_ID', () => {
@@ -262,10 +253,6 @@ describe('Dashboard - Service Calendar', function () {
                    serviceRequestId:34
                   }
     shallowWrapper.instance().goToServiceVisits(data)
-  });
-
-  it('Check the cancelVisit function', () => {    
-    shallowWrapper.instance().cancelVisit()
   });
 
 })

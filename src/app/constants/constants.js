@@ -205,3 +205,5 @@ export const CONVERSATION_SUMMARY = 'conversationSummary';
 export const PAYMENT_ALREADY_DONE = 'Payment Already Done';
 
 export const DEFAULT_SEARCH_COUNT = '';
+
+export const STANDBY_MODE_MSG = 'Please turn off the stand-by mode to start the visit.'

@@ -65,38 +65,28 @@ export const serviceCalendar = (
   if (newData.length > 0) {
     return newData.map((conversations, index) => {  
       let options = []
+      let commonOptions = [<Item className='ListItem CTDashboard' key='item-1'
+      onClick={(e) => { props.handlePhoneNumber(conversations) }}>
+        <i className='iconPhone' /> Phone Call
+      </Item>,
+      <Item className='ListItem CTDashboard' key='item-2'
+        onClick={(e) => { props.onClickConversation(conversations) }}>
+        <i className='iconConversation' /> Conversation
+    </Item>,
+      <Item className='ListItem CTDashboard' key='item-3'
+        onClick={(e) => { props.onClickVideoConference(conversations) }}>
+        <i className='iconVideoCon' /> Video Conference
+    </Item>]
 
       !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
-      options = [
+      options = [ 
         <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' onClick={(e) => {(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : props.goToServiceVisits(conversations)}}>
-                      <i className={conversations.visitStatusId?SERVICE_VISIT[conversations.visitStatusId].iconImage: SERVICE_VISIT[VISIT_SUMMARY].iconImage} /> {SERVICE_VISIT[conversations.visitStatusId].label}
-                      </Item>,
-        <Item className='ListItem CTDashboard' key='item-1'
-        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
-          <i className='iconPhone' /> Phone Call
-        </Item>,
-        <Item className='ListItem CTDashboard' key='item-2'
-          onClick={(e) => { props.onClickConversation(conversations) }}>
-          <i className='iconConversation' /> Conversation
-      </Item>,
-        <Item className='ListItem CTDashboard' key='item-3'
-          onClick={(e) => { props.onClickVideoConference(conversations) }}>
-          <i className='iconVideoCon' /> Video Conference
-      </Item>
+              <i className={conversations.visitStatusId?SERVICE_VISIT[conversations.visitStatusId].iconImage: SERVICE_VISIT[VISIT_SUMMARY].iconImage} /> {SERVICE_VISIT[conversations.visitStatusId].label}
+        </Item>,   
+        ...commonOptions,    
       ]
       :
-      options =[ <Item className='ListItem CTDashboard' key='item-1'
-        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
-          <i className='iconPhone' /> Phone Call
-        </Item>,
-        <Item className='ListItem CTDashboard' key='item-2'
-          onClick={(e) => { props.onClickConversation(conversations) }}>
-          <i className='iconConversation' /> Conversation
-      </Item>,
-        <Item className='ListItem CTDashboard' key='item-3'
-          onClick={(e) => { props.onClickVideoConference(conversations) }}>
-          <i className='iconVideoCon' /> Video Conference
-      </Item>]
+      options = commonOptions;
 
       if(isEntityServiceProvider()){
         options = [
