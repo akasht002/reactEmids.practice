@@ -20,7 +20,7 @@ import {
     getLength
 } from '../../../utils/validations'
 
-class WorkHistory extends Component {
+export class WorkHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {

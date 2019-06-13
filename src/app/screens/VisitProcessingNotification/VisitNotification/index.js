@@ -7,7 +7,7 @@ import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../../../constants/const
 import { getVisitNotification, getVisitNotificationCount } from '../../../redux/visitProcessingNotification/VisitNotification/actions';
 import './VisitNotification.css';
 
-class VisitNotification extends React.Component {
+export class VisitNotification extends React.Component {
 
     constructor(props) {
         super(props)

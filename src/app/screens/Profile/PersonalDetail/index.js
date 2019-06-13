@@ -26,7 +26,7 @@ import { formatContactNumber, formatContactNumberValue } from '../../../utils/va
 import { emptyString } from '../../../utils/arrayUtility'
 import { ImageInstruction } from '../Components/ImageInstruction'
 
-class PersonalDetail extends React.PureComponent {
+export class PersonalDetail extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {

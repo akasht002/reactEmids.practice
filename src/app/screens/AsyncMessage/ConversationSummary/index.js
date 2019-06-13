@@ -23,7 +23,7 @@ import { USERTYPES } from '../../../constants/constants';
 import { isEntityServiceProvider } from '../../../utils/userUtility';
 import {Preloader} from '../../../components';
 
-class ConversationSummary extends Component {
+export class ConversationSummary extends Component {
     constructor(props) {
         super(props);
         this.state = {

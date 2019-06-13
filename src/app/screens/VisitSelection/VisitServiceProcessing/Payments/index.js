@@ -19,7 +19,7 @@ import {
   } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import './style.css'
 
-class Payments extends Component {
+export class Payments extends Component {
 
     constructor(props) {
         super(props);

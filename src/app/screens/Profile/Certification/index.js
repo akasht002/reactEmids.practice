@@ -7,7 +7,7 @@ import {compare} from "../../../utils/comparerUtility";
 import { getCertification, addCertification, editCertification, updateCertification, deleteCertification } from '../../../redux/profile/Certification/actions';
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 import EllipsisText from "react-ellipsis-text";
-class Certification extends Component {
+export class Certification extends Component {
 
     constructor(props) {
         super(props);

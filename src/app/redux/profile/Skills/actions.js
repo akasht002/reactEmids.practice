@@ -3,11 +3,7 @@ import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
-
-export const Skills = {
-    getSkillsSuccess: 'get_skills_success/skills',
-    getSelectedSkillsDetails: 'get_selected_skills_details/skills'
-};
+import { Skills } from './bridge';
 
 export const getSkillsSuccess = (data) => {
     return {

@@ -12,7 +12,7 @@ import { DATE_FORMAT } from '../../../constants/constants';
 
 import './VisitFilter.css'
 
-class VisitFilter extends Component {
+export class VisitFilter extends Component {
   constructor(props) {
     super(props)
     this.state = {

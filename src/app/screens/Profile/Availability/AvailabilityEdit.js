@@ -5,7 +5,7 @@ import { weekdays } from '../../../data/Profle_Availability/weekdays';
 import './AvailabilityStyles.css';
 import BlackoutDays from './BlackoutDays';
 
-class AvailabilityEdit extends Component {
+export class AvailabilityEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {

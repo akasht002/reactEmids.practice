@@ -3,11 +3,7 @@ import { Get, Post } from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions'
 import { getUserInfo } from '../../../services/http'
-
-export const ServiceOffered = {
-  getServicesOfferedSuccess: 'get_certification_success/serviceoffered',
-  getServiceOfferedDetails: 'get_service_offered_details/serviceoffered'
-}
+import { ServiceOffered } from './bridge';
 
 export const getServicesOfferedSuccess = data => {
   return {

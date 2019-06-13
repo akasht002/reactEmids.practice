@@ -8,7 +8,7 @@ import './VisitNotificationSettings.css';
 import { NotificationCheckBox } from './NotificationCheckBox';
 import { setIsFormDirty } from '../../../redux/auth/user/actions';
 import { Preloader } from "../../../components"
-class VisitNotificationSettings extends React.Component {
+export class VisitNotificationSettings extends React.Component {
 
     constructor(props) {
         super(props);

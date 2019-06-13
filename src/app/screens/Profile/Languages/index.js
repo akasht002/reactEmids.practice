@@ -7,7 +7,7 @@ import { compare, difference } from "../../../utils/comparerUtility";
 import { stringConcat } from "../../../utils/stringHelper"; 
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
-class Languages extends React.Component {
+export class Languages extends React.Component {
 
     constructor(props) {
         super(props);

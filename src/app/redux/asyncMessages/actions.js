@@ -11,39 +11,9 @@ import {
 import { USERTYPES, Pagination } from '../../constants/constants';
 import { startLoading, endLoading } from '../loading/actions';
 import {invokeSignalr} from '../../utils/signalrUtility';
+import { AsyncMessageActions } from './bridge';
 
 let interval = null;
-
-export const AsyncMessageActions = {
-    setConversationSummary: 'set_conversation_summary/asyncMessage',
-    loadingStart: 'loading_start/asyncMessage',
-    loadingEnd: 'loading_end/asyncMessage',
-    setconversation: 'set_conversation/asyncMessage',
-    setNewConversationId: 'set_new_conversation/asyncMessage',
-    setCurrentOpenConversation: 'set_current_open_conversation/asyncMessage',
-    setUnreadCountDetails: 'set_unread_count/asyncMessage',
-    setLinkedPatients: 'set_linked_patients/asyncMessage',
-    setLinkedParticipants: 'set_linked_participants/asyncMessage',
-    pushConversation: 'push_conversation/asyncMessage/asyncMessage',
-    clearLinkedParticipants: 'clear_linked_participants/asyncMessage',
-    pushConversationSummary: 'push_conversation_summary/asyncMessage',
-    pushUnreadCount: 'push_unread_count/asyncMessage',
-    setConversationImage: 'set_conversation_image/asyncMessage',
-    clearConversationImageUrl: 'clear_conversation_image_url/asyncMessage',
-    setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
-    clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage',
-    setConversationCount: 'set_conversation_count/asyncMessage',
-    setopenedAsyncPage: 'set_opened_async_page/asynMessage',
-    pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
-    setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
-    clearConversation: 'clearConversation/asyncMessage',
-    setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
-    setActivePageNumber: 'setActivePageNumber/asyncMessage',
-    updateTitle: 'updateTitle/asyncMessage',
-    pushUnreadConversation: 'pushUnreadConversation/asyncMessage',
-    msgCallbackInterval: 'msgCallbackInterval/asyncMessage',
-    setConversationId: 'setConversationId/asyncMessage'
-};
 
 export const msgCallbackInterval = (data) => {
     return {

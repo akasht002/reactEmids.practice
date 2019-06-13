@@ -5,15 +5,7 @@ import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
 import { PAYMENT_ALREADY_DONE } from '../../../../constants/constants'
-
-export const paymentsCardList = {
-    getPaymentsCardListSuccess: 'get_paymentsCardList_success/payments',
-    updateServiceRequestId: 'updateServiceRequestId/payments',
-    startLoading: 'startLoading/payments',
-    endLoading: 'endLoading/payments',
-    paymentSuccessOrFailure: 'paymentSuccessOrFailure/payments',
-    isPaymentPathValid: 'isPaymentPathValid/payments'
-};
+import { paymentsCardList } from './bridge';
 
 export const getPaymentsCardListSuccess = (data) => {
     return {

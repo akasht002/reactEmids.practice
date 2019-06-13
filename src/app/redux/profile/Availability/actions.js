@@ -4,12 +4,7 @@ import { Get, Post} from '../../../services/http';
 import { getUserInfo } from '../../../services/http';
 
 import {unique} from '../../../utils/validations'
-
-export const AvailabilityActions = {
-   setAvailabilityDays : 'set_available_days',
-   setBlackoutDays: 'set_blackout_days',
-   setAllAvailabilitySlots: 'set_all_availability_slots'
-};
+import { AvailabilityActions } from './bridge';
 
 export const getAvailableDays = () => {
     return (dispatch, getState) => {

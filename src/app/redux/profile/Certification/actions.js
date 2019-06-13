@@ -3,12 +3,7 @@ import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
-
-export const Certification = {
-    getCertificationSuccess: 'get_certification_success/certification',
-    addCertificationSuccess: 'add_certifications_success/certification',
-    getCertificationFieldDetails: 'get_certification_field_details/certification'
-};
+import { Certification } from './bridge';
 
 export const getCertificationSuccess = (data) => {
     return {

@@ -31,7 +31,7 @@ import VisitNotification from '../../VisitProcessingNotification/VisitNotificati
 import Help from '../../../assets/HelpDoc/Help.pdf';
 import './styles.css'
 
-class Profile extends Component {
+export class Profile extends Component {
   state = {
     selectedLink: '',
     showValidationPopUp: false,

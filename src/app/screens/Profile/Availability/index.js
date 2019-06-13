@@ -13,7 +13,7 @@ import {
  } from '../../../redux/profile/Availability/actions';
  import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
-class Availability extends Component {
+export class Availability extends Component {
     constructor(props) {
         super(props);
         this.state = {

@@ -8,7 +8,7 @@ import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 import _ from 'lodash'
 
 
-class ServiceOffered extends React.Component {
+export class ServiceOffered extends React.Component {
 
     constructor(props) {
         super(props);

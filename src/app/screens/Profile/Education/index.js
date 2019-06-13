@@ -11,7 +11,7 @@ import "./styles.css";
 import {
     getLength
   } from '../../../utils/validations'
-class Education extends React.Component {
+export class Education extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

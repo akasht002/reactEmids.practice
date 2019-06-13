@@ -1,4 +1,4 @@
-import { AvailabilityActions } from './actions'
+import { AvailabilityActions } from './bridge';
 
 const defaultState = {
     availableDays: {},

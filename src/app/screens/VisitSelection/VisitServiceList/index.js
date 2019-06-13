@@ -40,7 +40,7 @@ import {
 } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
-class VisitServiceList extends Component {
+export class VisitServiceList extends Component {
 
     constructor(props) {
         super(props);

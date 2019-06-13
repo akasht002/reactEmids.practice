@@ -5,7 +5,7 @@ import {
   getSelectedLanguages
 } from '../../../redux/patientProfile/actions'
 
-class Languages extends React.Component {
+export class Languages extends React.Component {
 
   componentDidMount() {
     this.props.getSelectedLanguages()

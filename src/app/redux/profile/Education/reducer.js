@@ -1,6 +1,4 @@
-import {
-    Education
-} from './actions'
+import { Education } from './bridge';
 
 const defaultState = {
     educationList: [],

@@ -5,7 +5,7 @@ import {
   getSelectedClinicalCondition
 } from '../../../redux/patientProfile/actions'
 
-class ClinicalCondition extends React.Component {
+export class ClinicalCondition extends React.Component {
 
   componentDidMount() {
     this.props.getSelectedClinicalCondition()
