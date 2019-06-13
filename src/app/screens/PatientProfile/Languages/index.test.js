@@ -6,15 +6,17 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { Languages } from './index.js';
+import { Languages, mapDispatchToProps, mapStateToProps } from './index.js';
 
- Enzyme.configure({ adapter: new Adapter() })
+Enzyme.configure({ adapter: new Adapter() })
 
- let store;
+let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    selectedLanguagesList: [{languages : {id: '1', name: 'TEST'}}],
+    selectedLanguagesList: {
+        languages: [{ id: '1', name: 'TEST' }]
+    },
     authState: {
         userState: {
             userData: {
@@ -25,9 +27,9 @@ const defaultState = {
     getSelectedLanguages: jest.fn()
 }
 
- store = mockStore(defaultState);
+store = mockStore(defaultState);
 
- const setUp = (props = {}) => {
+const setUp = (props = {}) => {
     const wrapper = mount(
         <Provider store={store}>
             <MemoryRouter>
@@ -38,10 +40,10 @@ const defaultState = {
     return wrapper;
 };
 
- describe("Languages", function () {
+describe("Languages", function () {
     let wrapper, shallowWrapper;
 
-     beforeEach(() => {
+    beforeEach(() => {
         const props = defaultState;
         wrapper = setUp(props);
         shallowWrapper = shallow(
@@ -49,12 +51,40 @@ const defaultState = {
         )
     });
 
-     it('Check the Languages form body', () => {
+    it('Check the Languages form body', () => {
         expect(wrapper.find('.SPCardTitle').length).toEqual(1);
     });
 
-     it('Check the componentDidMount', () => {
+    it('Check the componentDidMount', () => {
         shallowWrapper.instance().componentDidMount();
     });
 
- }); 
+    it('Check the Empty languageList', () => {
+        shallowWrapper.setProps({ selectedLanguagesList: [] })
+    });
+
+    it('Check the languageList', () => {
+        shallowWrapper.setProps({
+            selectedLanguagesList: {
+                languages: [{ id: '1', name: 'TEST' }]
+            }
+        })
+    });
+
+    it('Check maptoprops', () => {
+        const initialState = {
+            patientProfileState:
+            {
+                languageList: []
+            }
+        }
+        expect(mapStateToProps(initialState)).toBeDefined();
+    });
+
+    it('Check mapDispatchToProps getSelectedLanguages', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getSelectedLanguages();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+}); 

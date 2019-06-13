@@ -52,14 +52,14 @@ export class ClinicalCondition extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getSelectedClinicalCondition: () =>
       dispatch(getSelectedClinicalCondition())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     selectedClinicalConditionsList: state.patientProfileState.clinicalConditionList
   }

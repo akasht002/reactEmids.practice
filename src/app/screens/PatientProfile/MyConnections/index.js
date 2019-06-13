@@ -6,7 +6,7 @@ import {
 } from '../../../redux/patientProfile/actions'
 import { USERTYPES } from '../../../constants/constants';
 
-class MyConnections extends React.Component {
+export class MyConnections extends React.Component {
 
     componentDidMount() {
         this.props.getManageConnection();
@@ -74,13 +74,13 @@ class MyConnections extends React.Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
     return {
         getManageConnection: () => dispatch(getManageConnection())
     }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
         manageConnection: state.patientProfileState.myConnectionList
     }

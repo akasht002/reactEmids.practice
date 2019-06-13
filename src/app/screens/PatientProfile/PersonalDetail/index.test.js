@@ -5,7 +5,8 @@ import configureStore from 'redux-mock-store'
 import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
-import { ClinicalCondition, mapDispatchToProps, mapStateToProps } from './index.js';
+
+import { PersonalDetail, mapDispatchToProps, mapStateToProps } from './index.js';
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -13,7 +14,13 @@ let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    selectedClinicalConditionsList: [{ attributeId: '1', attributeName: 'TEST' }],
+    patientProfileState: {
+        personalDetail: {},
+        profileImgData: {
+            image: ''
+        },
+        patientProfilePercentage: 100
+    },
     authState: {
         userState: {
             userData: {
@@ -21,7 +28,9 @@ const defaultState = {
             }
         }
     },
-    getSelectedClinicalCondition: jest.fn()
+    getPersonalDetail: jest.fn(),
+    getImage: jest.fn(),
+    getProfilePercentage: jest.fn()
 }
 
 store = mockStore(defaultState);
@@ -30,21 +39,21 @@ const setUp = (props = {}) => {
     const wrapper = mount(
         <Provider store={store}>
             <MemoryRouter>
-                <ClinicalCondition dispatch={dispatch} store={store} {...props} />
+                <PersonalDetail dispatch={dispatch} store={store} {...props} />
             </MemoryRouter>
         </Provider>
     )
     return wrapper;
 };
 
-describe("Certification", function () {
+describe("Languages", function () {
     let wrapper, shallowWrapper;
 
     beforeEach(() => {
         const props = defaultState;
         wrapper = setUp(props);
         shallowWrapper = shallow(
-            <ClinicalCondition dispatch={dispatch} store={store} {...defaultState} />
+            <PersonalDetail dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
@@ -56,24 +65,39 @@ describe("Certification", function () {
         shallowWrapper.instance().componentDidMount();
     });
 
-    it('Check the Empty selectedClinicalConditionsList', () => {
-        shallowWrapper.setProps({ selectedClinicalConditionsList: [] })
+    it('Check the Empty', () => {
+        shallowWrapper.setProps({
+            personalDetail: {},
+            profileImgData: '',
+            patientProfilePercentage: ''
+        })
+    });
+
+    it('Check the languageList', () => {
+        shallowWrapper.setProps({
+            personalDetail: {},
+            profileImgData: 'TTTTTTEEEEEEEEEE',
+            patientProfilePercentage: 100
+        })
     });
 
     it('Check maptoprops', () => {
         const initialState = {
-            patientProfileState:
-            {
-                clinicalConditionList: []
-
+            patientProfileState: {
+                personalDetail: {},
+                profileImgData: '',
+                patientProfilePercentage: 100
             }
         }
         expect(mapStateToProps(initialState)).toBeDefined();
     });
 
-    it('Check mapDispatchToProps getSelectedClinicalCondition', () => {
+    it('Check mapDispatchToProps', () => {
         const dispatch = jest.fn();
-        mapDispatchToProps(dispatch).getSelectedClinicalCondition();
+        mapDispatchToProps(dispatch).getPersonalDetail();
+        mapDispatchToProps(dispatch).getImage();
+        mapDispatchToProps(dispatch).getProfilePercentage();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
+
 }); 

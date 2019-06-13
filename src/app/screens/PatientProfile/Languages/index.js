@@ -56,13 +56,13 @@ export class Languages extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getSelectedLanguages: () => dispatch(getSelectedLanguages())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     selectedLanguagesList: state.patientProfileState.languageList
   }
