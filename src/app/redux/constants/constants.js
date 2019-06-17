@@ -24,3 +24,20 @@ export const RESPONSE_STATUS = {
     ALREADY_EXIST: 'Already Exist'
 }
 export const NO_STATE_ID = 0
+
+
+export const SERVICE_VISIT_STATUS = [
+    { id : 43,label: 'Start visit', iconImage: 'iconStartVisit' },
+    { id : 44,label: 'In-progress', iconImage: 'iconVisitInProgressDashboard' },
+    { id : 45,label: 'Visit Summary', iconImage: 'iconVisitSummary' },
+    { id : 46,label: 'Cancelled', iconImage: 'iconCancelVisit' },
+    { id : 90,label: 'Payment Pending', iconImage: 'iconPaymentPending' }
+]
+
+export const START_VISIT = 43
+
+export const IN_PROGRESS = 44
+ 
+export const VISIT_SUMMARY = 45
+
+export const PAYMENT_PENDING = 90

@@ -137,6 +137,57 @@ section .ProfileRightWidget {
     background-image: url('../../assets/images/TeleHealth_Purple.svg');
 }
 
+/*update-new-icons*/
+.iconVisitInProgressDashboard:before{
+    background-image: url('../../assets/images/visit-in-progress.svg');
+}
+
+.iconStartVisit:before{
+    background-image: url('../../assets/images/start-visit.svg');
+}
+
+.iconPaymentPending:before{
+    background-image: url('../../assets/images/payment-pending.svg');
+}
+
+.iconCancelVisit:before{
+    background-image: url('../../assets/images/cancel-visit.svg');
+}
+
+.iconVisitSummary:before{
+    background-image: url('../../assets/images/ViewEye.svg');
+}
+
+.iconCancelVisit:before, .iconPaymentPending:before, .iconStartVisit:before, .iconVisitInProgressDashboard:before, .iconVisitSummary:before {
+    top: 4px;
+}
+
+.iconStartVisit, .iconPaymentPending, .iconVisitInProgressDashboard, .iconVisitSummary, .iconCancelVisit {
+    display: inline-block;
+    position: relative;
+    margin-right: 1px;
+}
+
+.iconStartVisit, .iconPaymentPending, .iconVisitInProgressDashboard, .iconVisitSummary, .iconCancelVisit{
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.iconStartVisit:before, .iconPaymentPending:before, .iconVisitInProgressDashboard:before, .iconVisitSummary:before, .iconCancelVisit:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-position: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+
+
+
 .CTDashboardCard {
     position: relative;
     height: calc(100% - 60px);

@@ -73,3 +73,15 @@
 {
     padding-left: 0px;
 }
+
+/*Validation-Error*/
+.validationErrorMsg
+{
+margin-top: 7px;
+margin-bottom: 0px;
+Font-size: 17px;
+Color: #c04e59;
+font-weight: 600;
+display: block;
+text-align: center;
+}
