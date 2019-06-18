@@ -25,7 +25,7 @@ import { formatPhoneNumber } from '../../../utils/formatName'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { SETTING } from '../../../constants/config'
 import { ImageInstruction } from '../Components/ImageInstruction'
-class Organization extends React.PureComponent {
+export class Organization extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -868,7 +868,7 @@ class Organization extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updateOrganizationDetail: data =>
@@ -879,7 +879,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState
