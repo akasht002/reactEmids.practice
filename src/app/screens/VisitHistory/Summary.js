@@ -23,7 +23,7 @@ import { push } from '../../redux/navigation/actions';
 import { ORG_SERVICE_PROVIDER_TYPE_ID } from '../../constants/constants'
 import Moment from 'react-moment'
 
-class VistSummary extends React.Component {
+export class VistSummary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -603,7 +603,7 @@ class VistSummary extends React.Component {
     );
   }
 }
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getQuestionsList: () => dispatch(getQuestionsList()),
     saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data)),
@@ -613,7 +613,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     QuestionsList:
       state.visitSelectionState.VisitServiceProcessingState.FeedbackState

@@ -29,7 +29,7 @@ import { push } from '../../redux/navigation/actions';
 import { Path } from "../../routes";
 import { getTimeZoneOffset } from '../../utils/dateUtility';
 
-class VisitHistory extends Component {
+export class VisitHistory extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -288,7 +288,7 @@ class VisitHistory extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceLists: (data) => dispatch(getVisitServiceLists(data)),
     getVisitServiceHistoryByIdDetail: data =>
@@ -309,7 +309,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     VisitServiceHistory: state.visitHistoryState.vistServiceHistoryState
       .VisitServiceHistory,

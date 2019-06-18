@@ -4,7 +4,7 @@ import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Label, Hint, Select, Item } from '@zendeskgarden/react-select';
 import React from "react";
 
-class Sorting extends React.Component {
+export class Sorting extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

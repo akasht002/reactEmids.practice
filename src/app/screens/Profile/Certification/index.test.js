@@ -6,11 +6,11 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { Certification } from './index.js';
+import { Certification } from './index.js';
 
- Enzyme.configure({ adapter: new Adapter() })
+Enzyme.configure({ adapter: new Adapter() })
 
- let store;
+let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
@@ -34,9 +34,9 @@ const defaultState = {
     deleteCertification: jest.fn()
 }
 
- store = mockStore(defaultState);
+store = mockStore(defaultState);
 
- const setUp = (props = {}) => {
+const setUp = (props = {}) => {
     const wrapper = mount(
         <Provider store={store}>
             <MemoryRouter>
@@ -47,10 +47,10 @@ const defaultState = {
     return wrapper;
 };
 
- describe("Certification", function () {
+describe("Certification", function () {
     let wrapper, shallowWrapper;
 
-     beforeEach(() => {
+    beforeEach(() => {
         const props = defaultState;
         wrapper = setUp(props);
         shallowWrapper = shallow(
@@ -58,52 +58,52 @@ const defaultState = {
         )
     });
 
-     it('Check the Certification form body', () => {
+    it('Check the Certification form body', () => {
         expect(wrapper.find('.SPCardTitle').length).toEqual(1);
     });
 
-     it('Check the componentDidMount', () => {
+    it('Check the componentDidMount', () => {
         shallowWrapper.instance().componentDidMount();
     });
 
-     it('Check the reset', () => {
+    it('Check the reset', () => {
         shallowWrapper.instance().reset();
     });
 
-     it('Check the toggleCertification', () => {
+    it('Check the toggleCertification', () => {
         shallowWrapper.instance().toggleCertification();
     });
 
-     it('Check the checkValidation true', () => {
+    it('Check the checkValidation true', () => {
         shallowWrapper.instance().checkValidation(true, 'VTU', 'BE', '123');
     });
 
-     it('Check the checkValidation false', () => {
+    it('Check the checkValidation false', () => {
         shallowWrapper.instance().checkValidation(true, '', '', '');
     });
 
-     it('Check the addCertification', () => {
+    it('Check the addCertification', () => {
         shallowWrapper.instance().addCertification();
     });
 
-     it('Check the showModalOnDelete', () => {
+    it('Check the showModalOnDelete', () => {
         shallowWrapper.instance().showModalOnDelete({ target: { id: 1 } });
     });
 
-     it('Check the editCertification', () => {
+    it('Check the editCertification', () => {
         shallowWrapper.instance().editCertification({ target: { id: 1 } });
     });
 
-     it('Check the updateCertification', () => {
+    it('Check the updateCertification', () => {
         shallowWrapper.instance().updateCertification();
     });
 
-     it('Check the deleteCertification', () => {
+    it('Check the deleteCertification', () => {
         shallowWrapper.instance().deleteCertification();
     });
 
-     it('Check the CertificationModal form body', () => {
+    it('Check the CertificationModal form body', () => {
         expect(wrapper.find('.CertificationModal').length).toEqual(1);
     });
 
- }); 
+}); 
