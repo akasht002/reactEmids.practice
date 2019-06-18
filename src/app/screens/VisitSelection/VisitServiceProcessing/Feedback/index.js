@@ -102,7 +102,6 @@ export class Feedback extends Component {
 
     onClickConfirm = () => {
         this.selectedAnswers = [];
-        // this.props.goToSummary();
         this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
         this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
     }
@@ -273,7 +272,6 @@ export class Feedback extends Component {
                                             <a className='btn btn-outline-primary' onClick={this.onClickSkip}>Skip</a>
                                         </div>
                                     <div className='ml-auto'>
-                                        {/* <Link className='btn btn-outline-primary mr-3' to='/performtasks'>Previous</Link> */}
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         <a className='btn btn-primary' onClick={this.onClickNext}>Next</a>
                                     </div>
