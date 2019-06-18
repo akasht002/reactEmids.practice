@@ -61,6 +61,33 @@
     background-repeat: no-repeat;
 }
 
+.rating-blockcustom
+{
+    width: 100px;
+    height: 33px;
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    bottom: 58px;
+    margin-bottom: auto;
+    margin-top: 10px;
+    margin: 0 auto;
+    left: 76px;
+    display: block;
+    border-radius: 5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border:1px solid #ccc;
+    color: #6d6d6d;
+    font-size: 16px;
+    line-height: 33px;
+}
+
+.rating-blockcustom span
+{
+    display: inline-block;
+}
+
 .block-height-rating
 {
     max-height: 280px;

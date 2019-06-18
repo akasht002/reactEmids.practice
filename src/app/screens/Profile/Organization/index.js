@@ -22,6 +22,7 @@ import {
   isUrlValid
 } from '../../../utils/validations'
 import { formatPhoneNumber } from '../../../utils/formatName'
+import { calculateRating } from '../../../utils/calculation'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { SETTING } from '../../../constants/config'
 import { ImageInstruction } from '../Components/ImageInstruction'
@@ -372,7 +373,7 @@ export class Organization extends React.PureComponent {
         rating ?
           <span className="rating-blockcustom">
             <i className={"Icon iconFilledStar"} />
-            {Math.round(rating * 10)/10}
+            {calculateRating(rating)}
           </span> 
           :
           ''
