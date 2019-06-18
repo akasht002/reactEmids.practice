@@ -75,6 +75,9 @@ const defaultState = {
     cancelVisit: jest.fn(),
     clearScheduleListState: jest.fn(),
     setLoader: jest.fn(),
+    goBackToPerformTask: jest.fn(),
+    getQuestionsList: jest.fn(),
+    getVisitFeedBack: jest.fn(),
     profileImgData: {
         image: 'asda/daasd/dasd'
     },
@@ -132,11 +135,16 @@ describe("VisitServiceProcessing - Feedback", function () {
         shallowWrapper.instance().handleTextarea(e, '123')
     });
 
-    it('Check the onClickNext', () => { 
+    it('Check the onClickNext', () => {
         shallowWrapper.instance().onClickNext();
     });
 
-    it('Check the goBackToPerformTask', () => { 
+    it('Check the goBackToPerformTask', () => {
         shallowWrapper.instance().goBackToPerformTask();
+    });
+
+    it('Check the onClickSkip', () => {
+        shallowWrapper.setState({ isModalOpen: true })
+        shallowWrapper.instance().onClickSkip();
     });
 });
