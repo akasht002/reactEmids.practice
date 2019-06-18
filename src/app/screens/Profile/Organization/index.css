@@ -61,13 +61,13 @@
     background-repeat: no-repeat;
 }
 
-.block-heightrating
+.block-height-rating
 {
     max-height: 280px;
     min-height: 280px;
 }
 
-.block-heightrating .rating-blockcustome
+.block-height-rating .rating-blockcustom
 {
 position: relative;
 left: 0;

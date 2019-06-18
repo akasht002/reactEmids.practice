@@ -351,9 +351,10 @@ export class Organization extends React.PureComponent {
   }
 
   renderDetails = () => {
+    let rating = this.props.personalDetail && this.props.personalDetail.rating
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
-       <div className="block-heightrating">
+       <div className="block-height-rating">
         <ProfileImage
           src={
             this.state.imageProfile
@@ -367,10 +368,15 @@ export class Organization extends React.PureComponent {
           circle='SPdpCircle'
           profileImage='SPdpImage'
         />
-        <span className="rating-blockcustome">
-          <i className={"Icon iconFilledStar"} />
-          {this.props.personalDetail && Math.round(this.props.personalDetail.rating * 10)/10}
-        </span>
+        {
+        rating ?
+          <span className="rating-blockcustom">
+            <i className={"Icon iconFilledStar"} />
+            {Math.round(rating * 10)/10}
+          </span> 
+          :
+          ''
+        }
       </div>  
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>
