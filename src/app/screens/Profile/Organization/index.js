@@ -22,10 +22,11 @@ import {
   isUrlValid
 } from '../../../utils/validations'
 import { formatPhoneNumber } from '../../../utils/formatName'
+import { calculateRating } from '../../../utils/calculation'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { SETTING } from '../../../constants/config'
 import { ImageInstruction } from '../Components/ImageInstruction'
-class Organization extends React.PureComponent {
+export class Organization extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -330,7 +331,7 @@ class Organization extends React.PureComponent {
           crop={this.state.crop}
           onCropChange={this.onCropChange}
           changeCroppedImage={(croppedImage) => {
-            this.setState({croppedImageUrl: croppedImage})
+            this.setState({ croppedImageUrl: croppedImage })
           }}
         />
         <div className={'row'}>
@@ -351,8 +352,10 @@ class Organization extends React.PureComponent {
   }
 
   renderDetails = () => {
+    let rating = this.props.personalDetail && this.props.personalDetail.rating
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
+       <div className="block-height-rating">
         <ProfileImage
           src={
             this.state.imageProfile
@@ -366,6 +369,16 @@ class Organization extends React.PureComponent {
           circle='SPdpCircle'
           profileImage='SPdpImage'
         />
+        {
+        rating ?
+          <span className="rating-blockcustom">
+            <i className={"Icon iconFilledStar"} />
+            {calculateRating(rating)}
+          </span> 
+          :
+          ''
+        }
+      </div>  
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>
             <div className={'col-md-7 p-0'}>
@@ -373,7 +386,7 @@ class Organization extends React.PureComponent {
                 {this.props.personalDetail && this.props.personalDetail.entity &&
                   `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
-              <p className={'SPsubTitle'}>            
+              <p className={'SPsubTitle'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.yearOfExperience}
@@ -856,13 +869,13 @@ class Organization extends React.PureComponent {
       phoneNumber: this.props.personalDetail.phoneNumber,
       organizationNameInvaild: false,
       phoneNumberInvalid: false,
-      yearsOfExperienceInvalid:false,
+      yearsOfExperienceInvalid: false,
       yearsOfExperience: this.props.personalDetail.yearOfExperience
     })
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updateOrganizationDetail: data =>
@@ -873,7 +886,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState
