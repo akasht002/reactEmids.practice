@@ -26,6 +26,7 @@ import {Progressbar} from './Progressbar'
 import UserAvatarMultiSelect from './UserAvatarMultiSelect';
 import {Carousel} from './Carousel';
 import ImageCropView from './ImageCropView';
+import {AlertPopup} from './AlertPopup';
 
 export {
     Calendar,
@@ -57,5 +58,6 @@ export {
     Progressbar,
     UserAvatarMultiSelect,
     Carousel,
-    ImageCropView
+    ImageCropView,
+    AlertPopup
 };

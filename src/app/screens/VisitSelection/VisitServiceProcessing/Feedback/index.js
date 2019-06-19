@@ -15,8 +15,8 @@ import {
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-import _ from 'lodash';
 import './style.css'
+import { isNull } from '../../../../utils/validations'
 
 export class Feedback extends Component {
 
@@ -30,7 +30,7 @@ export class Feedback extends Component {
             textareaData: '',
             isDiscardModalOpen: false,
             isLoading: false,
-            isAlertedModal: false,
+            isAlertModalOpen: false,
             isSubmitButtonClicked: false
         };
         this.normalizedSelectedAnswers = {}
@@ -92,7 +92,7 @@ export class Feedback extends Component {
         if (this.props.QuestionsList.length === this.selectedAnswers.length || this.props.VisitFeedback.length > 0) {
             this.onSubmit();
         } else {
-            this.setState({ isAlertedModal: true, isSubmitButtonClicked: true })
+            this.setState({ isAlertModalOpen: true, isSubmitButtonClicked: true })
         }
     }
 
@@ -194,11 +194,11 @@ export class Feedback extends Component {
                                     {this.props.QuestionsList.length > 0 ?
                                         <div>
                                             {this.props.QuestionsList && this.props.QuestionsList.map((questionList, i) => {
-                                                let showError = this.state.isSubmitButtonClicked && _.isNil(this.normalizedSelectedAnswers[questionList.feedbackQuestionnaireId])
+                                                let showError = this.state.isSubmitButtonClicked && isNull(this.normalizedSelectedAnswers[questionList.feedbackQuestionnaireId])
                                                 if (questionList.answerTypeDescription === 'ChoiceBased') {
                                                     return (
                                                         <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
-                                                            <p className={showError ? 'AlertedQuestionnaire' : 'FeedbackQuestion'}>
+                                                            <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}>
                                                                 {i + 1}. {questionList.question}
                                                             </p>
                                                             <div className='FeedbackAnswerWidget'>
@@ -268,9 +268,13 @@ export class Feedback extends Component {
 
                                 </div>
                                 <div className='bottomButton'>
-                                        <div className='mr-auto'>
-                                            <a className='btn btn-outline-primary' onClick={this.onClickSkip}>Skip</a>
-                                        </div>
+                                {this.props.VisitFeedback.length > 0 ?
+                                    ''
+                                :
+                                    <div className='mr-auto'>
+                                         <a className='btn btn-outline-primary' onClick={this.onClickSkip}>Skip</a>
+                                    </div>
+                                }
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         <a className='btn btn-primary' onClick={this.onClickNext}>Next</a>

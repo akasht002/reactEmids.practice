@@ -8,8 +8,8 @@ import {
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { getFields, getLength, getStatus, getServiceTypeImage } from "../../utils/validations";
-import { ProfileModalPopup, Preloader, ModalPopup } from "../../components";
+import { getFields, getLength, getStatus, getServiceTypeImage, isNull } from "../../utils/validations";
+import { ProfileModalPopup, Preloader, AlertPopup } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
@@ -22,7 +22,6 @@ import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
 import { ORG_SERVICE_PROVIDER_TYPE_ID } from '../../constants/constants'
 import Moment from 'react-moment'
-import _ from 'lodash';
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -37,7 +36,7 @@ export class VistSummary extends React.Component {
       EditFeedbackDetailModal: false,
       ViewFeedbackDetailModal: false,
       disabled: true,
-      isAlertedModal: false,
+      isAlertModalOpen: false,
       isSubmitButtonClicked: false
     };
     this.selectedAnswers = []
@@ -139,11 +138,12 @@ export class VistSummary extends React.Component {
     }
   };
 
-  togglePersonalDetails(action, e) {
+  togglePersonalDetails() {
     this.setState({
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
       disabled: true,
-      isSubmitButtonClicked: false
+      isSubmitButtonClicked: false,
+      isAlertModalOpen: false
     });
     this.normalizedSelectedAnswers = {}
     this.selectedAnswers = []
@@ -169,9 +169,9 @@ export class VistSummary extends React.Component {
     this.setState({ answerList: filteredData });
   };
 
-  handleTextarea = (e, id) => {
+  handleTextarea = (value, id) => {
     this.setState({
-      textareaValue: e.target.value,
+      textareaValue: value,
       textareaData: {
         feedbackQuestionnaireId: id,
         answerName: this.state.textareaValue
@@ -187,7 +187,7 @@ export class VistSummary extends React.Component {
     if (this.props.QuestionsList.length === this.selectedAnswers.length) {
       this.onSubmit();
     } else {
-      this.setState({ isAlertedModal: true, isSubmitButtonClicked: true })
+      this.setState({ isAlertModalOpen: true, isSubmitButtonClicked: true })
     }
   };
 
@@ -228,14 +228,14 @@ export class VistSummary extends React.Component {
           <Fragment>
             {this.props.QuestionsList &&
               this.props.QuestionsList.map((questionList, i) => {
-                let showError = this.state.isSubmitButtonClicked && _.isNil(this.normalizedSelectedAnswers[questionList.feedbackQuestionnaireId])
+                let showError = this.state.isSubmitButtonClicked && isNull(this.normalizedSelectedAnswers[questionList.feedbackQuestionnaireId])
                 if (questionList.answerTypeDescription === "ChoiceBased") {
                   return (
                     <div
                       key={questionList.feedbackQuestionnaireId}
                       className="FeedbackQuestionWidget"
                     >
-                      <p className={showError ? 'AlertedQuestionnaire' : 'FeedbackQuestion'}> 
+                      <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}> 
                         {i + 1}. {questionList.question}
                       </p>
                       <div className="FeedbackAnswerWidget">
@@ -293,7 +293,7 @@ export class VistSummary extends React.Component {
                                 value={this.state.textareaValue}
                                 onChange={e =>
                                   this.handleTextarea(
-                                    e,
+                                    e.target.value,
                                     questionList.feedbackQuestionnaireId
                                   )
                                 }
@@ -589,6 +589,9 @@ export class VistSummary extends React.Component {
           modalTitle={modalTitle}
           centered="centered"
           onClick={this.onClickNext}
+          discardBtn={true}
+          discardbuttonLabel={'Cancel'}
+          onDiscard= {() => this.setState({ EditFeedbackDetailModal: false, isAlertModalOpen: false })}
         />
         <ProfileModalPopup
           isOpen={this.state.ViewFeedbackDetailModal}
@@ -601,18 +604,11 @@ export class VistSummary extends React.Component {
           buttonLabel={'OK'}
           disabled={this.state.disabledSaveBtn}
         />
-        <ModalPopup
-         isOpen={this.state.isAlertedModal}
-         toggle={this.toggleModal}
-         ModalBody={<span>Please answer all the above questionnaire.</span>}
-         className='modal-sm'
-         headerFooter="d-none"
-         footer="d-none"
-         modalTitle=''
-         btn1="OK"
-         centered
-         onConfirm={() => {this.setState({ isAlertedModal: false });}}
-     />         
+        <AlertPopup    
+           message= 'Please answer all the above questionnaire.'
+           isOpen= {this.state.isAlertModalOpen}
+           onClick = {() => this.setState({ isAlertModalOpen: false })}
+        />
       </React.Fragment>
     );
   }

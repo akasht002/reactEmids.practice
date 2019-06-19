@@ -1,0 +1,37 @@
+/************ MODAL BOX ************/
+.modal-content{
+    height: fit-content !important;
+}
+
+.modal-lg .modal-content{
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+.modal-sm{
+    min-width: 500px;
+}
+
+.modal-sm .modal-content{
+    width: 500px;
+}
+
+.modal-header{
+    height: auto;
+}
+
+.modal-lg .modal-body{
+    max-height: calc( 100vh - 220px );
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.modal-footer{
+    height: 60px;
+    padding: 10px 30px;
+}
+
+.lead {
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+}

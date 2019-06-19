@@ -39,7 +39,8 @@ import {
     Progressbar,
     UserAvatarMultiSelect,
     Carousel,
-    ImageCropView
+    ImageCropView,
+    AlertPopup
 } from './LevelOne';
 import {
     CarouselComp,
@@ -93,5 +94,6 @@ export {
     Progressbar,
     UserAvatarMultiSelect,
     Carousel,
-    ImageCropView
+    ImageCropView,
+    AlertPopup
 };
