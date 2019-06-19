@@ -607,7 +607,7 @@ export class VistSummary extends React.Component {
         <AlertPopup    
            message= 'Please answer all the above questionnaire.'
            isOpen= {this.state.isAlertModalOpen}
-           onClick = {() => this.setState({ isAlertModalOpen: false })}
+           onAcceptClick = {() => this.setState({ isAlertModalOpen: false })}
         />
       </React.Fragment>
     );

@@ -16,9 +16,9 @@ export class AlertPopup extends Component {
     })
   }
 
-  togglePopup = () => {
+  closePopup = () => {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: false
     });
   }
 
@@ -37,14 +37,14 @@ export class AlertPopup extends Component {
               type='button'
               classname={'btn outline btn-primary mx-2 float-right'}
               label={this.props.OkButtonTitle ? this.props.OkButtonTitle : "OK"}
-              onClick={this.props.onClick}
+              onClick={this.props.onAcceptClick}
             />
             {this.props.isCancel &&
               <Button
                 type='button'
                 classname={'btn outline btn-outline-primary mx-2 float-right'}
                 label={this.props.CancelButtonTitle ? this.props.CancelButtonTitle : "CANCEL"}
-                onClick={this.togglePopup}
+                onClick={this.closePopup}
               />}
           </p>
         </ModalBody>
