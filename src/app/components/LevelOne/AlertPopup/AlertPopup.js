@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Modal, ModalBody } from 'reactstrap'
 import { Button } from '../../'
-import './styles.css'
 
 export class AlertPopup extends Component {
   constructor(props) {
