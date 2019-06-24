@@ -245,3 +245,7 @@ export const formatContactNumberValue = data => {
 export const validateCoordinates = (lat, lon) => {
   return (lat === 0 || lon === 0)
 }
+
+export const isNull = (data) => {
+  return _.isNil(data)
+}

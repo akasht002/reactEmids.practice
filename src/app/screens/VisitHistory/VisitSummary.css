@@ -438,3 +438,7 @@ button.btn.CancelSignature{
 {
 width: 100% !important;
 }
+
+.alertedQuestionnaire{
+    color: #c04e59;
+}
