@@ -1,4 +1,4 @@
-import { UserAgreement } from './actions'
+import { UserAgreement } from './bridge'
 
 const defaultState = {
     isEulaUpdated: false,

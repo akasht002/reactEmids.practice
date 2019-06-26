@@ -5,14 +5,7 @@ import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import {RESPONSE_STATUS} from '../../../redux/constants/constants';
 import {encryptPassword} from '../../../utils/encryptPassword';
-
-export const ResetPassword = {
-    resetPasswordSuccess: 'set_password_success/ResetPassword',
-    resetPasswordError: 'set_password_error/ResetPassword',
-    getEmailIdSuccess: 'get_email_id_success/ResetPassword',
-    getEmailIdError: 'get_email_id_error/ResetPassword',
-    formDirty: 'form_dirty/ResetPassword'
-};
+import {ResetPassword} from './bridge';
 
 export const formDirty = () => {
     return {
@@ -53,7 +46,7 @@ export function getEmailId(data) {
         let url;
         url = API.getEmailIdByUserId + data.uid + '/' + data.tokenkey;
         dispatch(startLoading());
-        AuthGet(url).then((resp) => {
+        return AuthGet(url).then((resp) => {
             if (resp && resp.data && resp.data.result === RESPONSE_STATUS.LINK_ACTIVE) {
                 dispatch(getEmailIdSuccess(resp.data));
             } else {
@@ -86,7 +79,7 @@ export function resetPassword(data) {
             };
         }
         dispatch(startLoading());
-        AuthPut(API.resetPassword, userModel).then((resp) => {
+        return AuthPut(API.resetPassword, userModel).then((resp) => {
             if (resp && resp.statusText === RESPONSE_STATUS.OK) {
                 dispatch(resetPasswordSuccess(resp.data));
                 dispatch(push(Path.resetPasswordSuccess));

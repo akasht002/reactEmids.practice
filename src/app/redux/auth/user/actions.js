@@ -86,7 +86,7 @@ export function setServiceProviderDetails(emailID, autoLogoutTime){
 export function getUserRoles(userData) {
     return (dispatch) => {
         dispatch(startLoading());
-        CareTeamGet(API.getUserRoles).then((response) => {
+        return CareTeamGet(API.getUserRoles).then((response) => {
             if (response.data.length > 0) {
                 dispatch(setUserRoles(objectCreationRoles(response.data)));
                 userData.roles = objectCreationRoles(response.data);
@@ -104,7 +104,7 @@ export function getUserRoles(userData) {
 
 export function getUserInactiveTimeout(emailID) {
     return (dispatch) => {
-        Get(API.getTimeoutMilliseconds).then((response) => {
+        return Get(API.getTimeoutMilliseconds).then((response) => {
             dispatch(setServiceProviderDetails(emailID, parseInt(response.data[0].name, 10)));
         })
         .catch((error) => { });

@@ -1,6 +1,4 @@
-import {
-    VerifyContact
-} from './actions'
+import {VerifyContact} from './bridge';
 
 const defaultState = {
     loading: false,

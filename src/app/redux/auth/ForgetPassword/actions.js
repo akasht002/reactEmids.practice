@@ -4,12 +4,7 @@ import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import {RESPONSE_STATUS} from '../../../redux/constants/constants';
-
-export const ForgetPassword = {
-    sendResetPasswordLinkSuccess: 'send_verification_link_success/forgetPassword',
-    sendResetPasswordLinkError: 'send_verification_link_error/forgetPassword',
-    formDirty: 'form_dirty/forgetPassword'
-};
+import {ForgetPassword} from './bridge';
 
 export const formDirty = () => {
     return {
@@ -35,7 +30,7 @@ export function sendResetPasswordLink(data) {
     return (dispatch) => {
         let emailId = data && data.emailId;
         dispatch(startLoading());
-        AuthGet(
+        return AuthGet(
             API.SendResetPasswordLink + emailId
         ).then((resp) => {
             if (resp && resp.statusText === RESPONSE_STATUS.OK) {
