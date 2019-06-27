@@ -508,6 +508,7 @@ export class VisitServiceDetails extends Component {
           horizontal={false}
           className='ServiceRequestsWidget'
         >
+        {this.props.isScheduleLoading && <Preloader />}
           <div className='card mainProfileCard'>
             <div className='CardContainers'>
               <section className='ProfileCardHeader'>
@@ -751,7 +752,6 @@ export class VisitServiceDetails extends Component {
                       </form>
                     </TabPane>
                     <TabPane tabId='2' className='TabBody'>
-                      {this.props.isScheduleLoading && <Preloader />}
                       <div className='ScheduleTableHeader primaryColor'>
                         <div>
                           <span>Date</span>
