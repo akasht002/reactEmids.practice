@@ -15,7 +15,7 @@ import { checkEmail, checkSpace } from '../../../utils/validations'
 import Help from '../../../assets/HelpDoc/Help.pdf';
 import '../styles.css';
 
-class VerifyUserID extends React.Component {
+export class VerifyUserID extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -90,7 +90,7 @@ class VerifyUserID extends React.Component {
     render() {
         
         return (
-            <ScreenCover isLoading={this.props.isLoading}>
+            <ScreenCover isLoading={this.props.isLoading} test-verifyUserID='test-verifyUserID'>
                 <CoreoWizScreen 
                     menus={ContactMenu} 
                     activeCoreoWiz={0} 
@@ -160,7 +160,7 @@ class VerifyUserID extends React.Component {
     }
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onClickNext: (data) => dispatch(onUserEmailNext(data)),
@@ -171,7 +171,7 @@ function mapDispatchToProps(dispatch) {
 };
 
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         isLoading: state.onboardingState.verifyUserIDState.loading,
         isEmailExist: state.onboardingState.verifyUserIDState.isEmailExist,

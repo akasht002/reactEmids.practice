@@ -6,13 +6,7 @@ import { push } from '../../navigation/actions';
 import {Path} from '../../../routes';
 import {encryptPassword} from '../../../utils/encryptPassword';
 import { USERTYPES } from '../../../constants/constants';
-
-export const SetPassword = {
-    setPassword: 'set_password/setPassword',
-    onSetUserDetailsCompletion: 'set_user_details/setPassword',
-    cancelClick: 'cancel_click/setPassword',
-    clearOnboardingState: 'clear_state/setPassword',
-};
+import {SetPassword} from './bridge';
 
 export const cancelClick = () => {
     return {
