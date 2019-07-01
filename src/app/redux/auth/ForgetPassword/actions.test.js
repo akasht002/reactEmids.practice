@@ -38,7 +38,7 @@ describe('ForgetPassword actions', () => {
     })
 });
 
-describe('ForgetPassword actions', () => {
+describe('ForgetPassword async actions', () => {
     afterEach(() => {
       fetchMock.restore()
     })

@@ -71,7 +71,7 @@ export function setPasswordIndividual(data) {
             password: encryptPassword(data.password)
         };
         dispatch(startLoading());
-        Post(API.setPassword, body).then((resp) => {
+        return Post(API.setPassword, body).then((resp) => {
             dispatch(onboardSucess());
             dispatch(endLoading());
         }).catch((err) => {
@@ -93,7 +93,7 @@ export function setPasswordEntity(data) {
             token: token
         };
         dispatch(startLoading());
-        Post(API.setPasswordEntityUser, body).then((resp) => {
+        return Post(API.setPasswordEntityUser, body).then((resp) => {
             dispatch(onboardSucess());
             dispatch(endLoading());
         }).catch((err) => {

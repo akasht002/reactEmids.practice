@@ -72,6 +72,14 @@ describe('SetPassword Component', () => {
         expect(wrapper.find('[id="newPass"]').props().textChange(e));
         expect(wrapper.find('[id="newPass"]').props().onCopy(e));
         expect(wrapper.find('[id="newPass"]').props().onPaste(e));
+        expect(wrapper.find('[id="rePass"]').props().textChange(e));
+        expect(wrapper.find('[id="rePass"]').props().onPaste(e));
+        expect(wrapper.find('[id="rePass"]').props().onCopy(e));
+        expect(wrapper.find('[id="defaultCheck1"]').props().onChange(e));
+        expect(wrapper.find('.primaryColor').props().onClick());
+        expect(wrapper.find('.modal-sm').props().onConfirm());
+        expect(wrapper.find('.modal-sm').props().onCancel());
+        expect(wrapper.find('.modal-lg').props().onClick());
     });
 
     it('Check the validatePassword function', () => {
@@ -102,50 +110,6 @@ describe('SetPassword Component', () => {
     it('Check the onClickCancel function', () => {
         wrapper.instance().onClickCancel()
     });
-
-    // it('Check the validatePasscode function', () => {
-    //     wrapper.instance().validatePasscode()
-    // });
-
-    // it('Check the onClickButtonCancel function', () => {
-    //     wrapper.instance().onClickButtonCancel()
-    // });
-
-    // it('Check the componentDidMount function', () => {
-    //     wrapper.setProps({
-    //         match: {
-    //             params: {
-    //                 type: 'PG'
-    //             }
-    //         }
-    //     })
-    //     wrapper.instance().componentDidMount()
-    // });
-
-    // it('Check the onChangePassword function', () => {
-    //     let e = {
-    //         target: {
-    //             value: 'aa'
-    //         }
-    //     }
-    //     wrapper.instance().onChangePassword(e)
-    // });
-
-    // it('Check the componentWillReceiveProps function', () => {
-    //     let nextProps = {
-    //         serviceProviderDetails: {
-    //             mobileNumber: "9165648715"
-    //         }
-    //     }
-    //     wrapper.instance().componentWillReceiveProps(nextProps)
-    // });
-
-    // it('Check VerifyUserID Component contains test-forget-body', () => {
-    //     wrapper.setProps({
-    //         isPasscodeMatch: true,
-    //     })
-    //     expect(wrapper.find('[test-verifyContact="test-verifyContact"]').length).toEqual(1);
-    // })
 
     it('should test initial state', () => {
         expect(mapStateToProps(props)).toBeDefined();
