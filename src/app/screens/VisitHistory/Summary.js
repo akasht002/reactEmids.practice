@@ -390,7 +390,6 @@ export class VistSummary extends React.Component {
 
     return (
       <React.Fragment>
-        {this.props.isLoading && <Preloader />}
         <form className="ServiceContent">
           <div className="VisitSummaryWidget">
             <div className="LeftWidget">
