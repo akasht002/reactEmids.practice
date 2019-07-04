@@ -143,10 +143,6 @@ describe("VisitServiceDetails", function () {
     shallowWrapper.instance().todateChangedRaw({ target: { value: 1 } });
   });
 
-  // it('Check the applyFilter', () => {
-  //   shallowWrapper.instance().applyFilter();
-  // });
-
   it('Check the applyReset', () => {
     shallowWrapper.instance().applyReset();
   });
