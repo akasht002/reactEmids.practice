@@ -185,6 +185,10 @@ export const SERVICE_REQ_STATUS = {
     DECLINED: 107
 }
 
+export const DATE_FORMATS = {
+    monDD : "MMM DD"
+}
+
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
 
 export const DEFAULT_FROM_DATE = '1900-01-01';

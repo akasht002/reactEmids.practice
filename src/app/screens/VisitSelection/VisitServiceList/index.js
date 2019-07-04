@@ -36,7 +36,7 @@ import './style.css'
 import { Path } from "../../../routes";
 import {
     SHOW_IMAGES_SERVICE_REQUEST, PAGE_NO,
-    SERVICE_REQUEST_PAGE_SIZE,DEFAULT_SEARCH_COUNT, MMMDD_FORMAT
+    SERVICE_REQUEST_PAGE_SIZE,DEFAULT_SEARCH_COUNT, DATE_FORMATS
 } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
@@ -511,7 +511,7 @@ export class VisitServiceList extends Component {
                                     <div className='BlockImageDetailsDate'>
                                         {serviceList.recurring}
                                         <span className='DetailsDateSeperator'>|</span>
-                                        Posted on <Moment format={MMMDD_FORMAT}>{serviceList.createDate}</Moment>                                      
+                                        Posted on <Moment format={DATE_FORMATS.monDD}>{serviceList.createDate}</Moment>                                      
                                     </div>
                                 </div>
                             </div>
