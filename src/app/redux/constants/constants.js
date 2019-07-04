@@ -41,3 +41,58 @@ export const IN_PROGRESS = 44
 export const VISIT_SUMMARY = 45
 
 export const PAYMENT_PENDING = 90
+
+export const SERVICE_REQUEST_STATUS = {
+    all : {  
+       "id":0,
+       "keyValue":"All"
+    },
+    open: {  
+       "id":35,
+       "keyValue":"Open"
+    },
+    invited: {  
+       "id":36,
+       "keyValue":"Invited"
+    },
+    applied: {  
+       "id":37,
+       "keyValue":"Applied"
+    },
+    hired: {  
+       "id":38,    
+       "keyValue":"Hired"
+    },
+    notHired: {  
+       "id":39,     
+       "keyValue":"Not Hired"
+    },
+    indProgress:{  
+       "id":40,     
+       "keyValue":"InProgress"
+    },
+    completed: {  
+       "id":41,    
+       "keyValue":"Completed"
+    },
+    closed: {  
+       "id":42,     
+       "keyValue":"Closed"
+    },
+    cancelled: {  
+       "id":47,    
+       "keyValue":"Cancelled"
+    },
+    notInerested: {  
+       "id":58,    
+       "keyValue":"Not Interested"
+    },
+    pendingApproval:{  
+       "id":106,    
+       "keyValue":"Pending Approval"
+    },
+    declined: {  
+       "id":107,     
+       "keyValue":"Declined"
+    }
+  }
