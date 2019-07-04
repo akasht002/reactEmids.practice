@@ -191,10 +191,6 @@ describe("VisitServiceDetails", function () {
     shallowWrapper.instance().handleSearchkeyword({ target: { value: 10 } });
   });
 
-  // it('Check the handleSearchData', () => {
-  //   shallowWrapper.instance().handleSearchData('preventDefault()');
-  // });
-
   it('Check the closeSearch', () => {
     shallowWrapper.instance().closeSearch();
   });
