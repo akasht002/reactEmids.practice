@@ -213,3 +213,4 @@ export const M_FORMAT = "M"
 export const MM_FORMAT = "M"
 export const MMM_FORMAT = 'MMM'
 export const YYYY_MM_DD_FORMAT= 'YYYY-MM-DD'
+export const MMMDD_FORMAT = "MMM DD";
