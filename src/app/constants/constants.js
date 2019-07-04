@@ -33,7 +33,7 @@ export const END_MONTH = [9, 10, 11]
 
 export const COUNT_BASED_MONTH = { 9: 1, 10: 2, 11: 3 }
 export const PAGE_NO = 1;
-export const SERVICE_REQUEST_PAGE_SIZE = 15
+export const SERVICE_REQUEST_PAGE_SIZE = 10
 
 export const RESPONSE_STATUS = {
     VALID: "Valid",
