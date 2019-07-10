@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
-import { Feedback } from './index.js';
+import { Feedback, mapStateToProps, mapDispatchToProps } from './index.js';
 
 jest.mock('../../../ScreenCover/AsideScreenCover', () => ({
     AsideScreenCover: 'mockAsideScreenCover'
@@ -26,7 +26,10 @@ const defaultState = {
     serviceRequestId: 1,
     VisitFeedback: [],
     patientDetails: {
-        serviceRequestId: 1
+        serviceRequestId: 1,
+        patient: {
+            imageString: 'asdas/sadas'
+        }
     },
     SummaryDetails: {
         originalTotalDuration: ''
@@ -36,6 +39,28 @@ const defaultState = {
             userData: {
                 userInfo: {}
             }
+        }
+    },
+    visitSelectionState: {
+        VisitServiceProcessingState: {
+            FeedbackState: {
+                QuestionsList: [],
+                isLoading: true
+            },
+            PerformTasksState: {
+                PerformTasksList: [],
+                startedTime: '',
+                SummaryDetails: '',
+                ServiceRequestVisitId: 12
+            },
+            SummaryState: {
+                isLoading: true
+            }
+        }
+    },
+    visitHistoryState: {
+        vistServiceHistoryState: {
+            VisitFeedback: 'adsada'
         }
     },
     getQuestionsList: jest.fn(),
@@ -48,9 +73,11 @@ const defaultState = {
     setPatient: jest.fn(),
     goToPatientProfile: jest.fn(),
     push: jest.fn(),
+    goBackToPerformTask: jest.fn(),
     history: {
         push: jest.fn()
-    }
+    },
+    eligibilityIsLoading: true
 }
 
 store = mockStore(defaultState);
@@ -78,6 +105,32 @@ describe("Feedback", function () {
     });
 
     it('Check the Feedback form body', () => {
+        shallowWrapper.setProps({
+            patientDetails: {
+                serviceRequestId: 1,
+                patient: {
+                    lastName: 'AA'
+                }
+            },
+            VisitFeedback: [{
+                feedbackQuestionnaireId: 12
+            }],
+            QuestionsList: [{
+                feedbackQuestionnaireId: 12 
+            }]
+        })
+        shallowWrapper.setState({
+            isSubmitButtonClicked: true
+        })
+        expect(wrapper.find('.ProfileHeaderWidget').length).toEqual(1);
+    });
+
+    it('Check the Feedback form body for empty props', () => {
+        shallowWrapper.setProps({
+            patientDetails: {
+                serviceRequestId: 1
+            }
+        })
         expect(wrapper.find('.ProfileHeaderWidget').length).toEqual(1);
     });
 
@@ -87,14 +140,36 @@ describe("Feedback", function () {
     });
 
     it('Check the componentDidMount', () => {
+        shallowWrapper.setProps({
+            ServiceRequestVisitId: 12
+        })
         shallowWrapper.instance().componentDidMount();
     });
 
+    it('Check the events', () => {
+        let e ={
+            target: {
+                checked: true
+            }
+        }
+        expect(shallowWrapper.find('.TitleContent').props().onClick());
+        expect(shallowWrapper.find('.requestImageContent').props().onClick());
+        expect(shallowWrapper.find('[test-feedback="test-feedback"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-discard="test-discard"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-feedback="test-feedback"]').props().onCancel());
+        expect(shallowWrapper.find('[test-discard="test-discard"]').props().onCancel());
+        expect(shallowWrapper.find('[test-input="test-input"]').props().onChange(e));
+        // expect(enzymeWrapper.find('[name="newPass"]').props().onPaste(e));
+      });
+    
     it('Check the handelPatientProfile', () => {
         shallowWrapper.instance().handelPatientProfile(1);
     });
 
     it('Check the handleSelected', () => {
+        shallowWrapper.instance().selectedAnswers = [{
+            feedbackQuestionnaireId: 12
+        }]
         shallowWrapper.instance().handleSelected([], 10);
     });
 
@@ -103,6 +178,11 @@ describe("Feedback", function () {
     });
 
     it('Check the onClickNext', () => {
+        shallowWrapper.setProps({
+            VisitFeedback: [{
+                feedbackQuestionnaireId: 12
+            }],
+        })
         shallowWrapper.setState({textareaData: 'TEST'})
         shallowWrapper.instance().onClickNext();
     });
@@ -111,16 +191,51 @@ describe("Feedback", function () {
         shallowWrapper.instance().onClickConfirm();
     });
 
+    it('Check the onClickSkip', () => {
+        shallowWrapper.instance().onClickSkip();
+    });
+
     it('Check the onSubmit', () => {
         shallowWrapper.instance().onSubmit();
     });
 
     it('Check the onPreviousClick', () => {
+        shallowWrapper.instance().selectedAnswers = [{
+            feedbackQuestionnaireId: 12
+        }]
+        shallowWrapper.instance().onPreviousClick();
+        shallowWrapper.instance().selectedAnswers = []
         shallowWrapper.instance().onPreviousClick();
     });
 
-    it('Check the goBack', () => {
-        shallowWrapper.instance().goBack();
+    it('Check the goBackToPerformTask', () => {
+        shallowWrapper.instance().goBackToPerformTask();
+    });
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getQuestionsList();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).saveAnswers({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getVisitFeedBack({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToSummary();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goBackToPerformTask();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getSummaryDetails({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getSavedSignature({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setPatient({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToPatientProfile();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('should test mapStateToProps state', () => {
+        expect(mapStateToProps(defaultState)).toBeDefined();
     });
 
 });

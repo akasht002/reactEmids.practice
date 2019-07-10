@@ -7,7 +7,7 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
 
 import './style.css'
 
-class VisitServiceProcessing extends Component {
+export class VisitServiceProcessing extends Component {
 
     constructor(props) {
         super(props);
@@ -24,7 +24,7 @@ class VisitServiceProcessing extends Component {
 
     render() {
         return (
-            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
+            <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} test-VisitServiceProcessing='test-VisitServiceProcessing'>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
                         <h5 className='primaryColor m-0'>Service Requests <span>/ VID97531</span></h5>

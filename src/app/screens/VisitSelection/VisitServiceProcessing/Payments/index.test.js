@@ -28,7 +28,7 @@ const defaultState = {
     grandTotalAmount: 100,
     eligibilityCheck: {
         active: true,
-        authorizationRequired: true
+        authorizationRequired: false
     },
     SummaryDetails: {
         patient:{
@@ -66,7 +66,12 @@ const defaultState = {
     push: jest.fn(),
     history: {
         push: jest.fn()
-    }
+    },
+    ServiceRequestVisitId: 12,
+    CardList: [{
+        coreoHomeStripeCustomerId: 45,
+        ccType: 'aadsa'
+    }]
 }
 
  store = mockStore(defaultState);
@@ -103,6 +108,23 @@ const defaultState = {
 
      it('Check the toggleCardSelection', () => {
         shallowWrapper.instance().toggleCardSelection({ target: { value: 'TEST' } }, 1);
+    });
+
+    it('Check the componentDidMount', () => {
+        shallowWrapper.instance().componentDidMount();
+    });
+    
+    it('Check the componentWillReceiveProps', () => {
+        let nextProps = {
+            CardList: [{
+                coreoHomeStripeCustomerId: 45
+            }],
+            paymentSuccessOrFailure: 'Payment Already Done'
+        }
+        shallowWrapper.instance().componentWillReceiveProps(nextProps);
+        nextProps.CardList = [];
+        nextProps.paymentSuccessOrFailure = 'sdfsd';
+        shallowWrapper.instance().componentWillReceiveProps(nextProps);
     });
 
      it('Check the visitSummary', () => {
