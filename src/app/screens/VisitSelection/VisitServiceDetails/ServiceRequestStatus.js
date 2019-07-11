@@ -42,7 +42,7 @@ export const ServiceStatus = props => {
           {(props.status.id === NOT_INTERESTED || props.status.id === OPEN || props.status.id === INVITED) && (
           <Button
             classname='btn outline btn-primary'
-            label='Apply'
+            label='Engage'
             onClick={() => {
               props.postServiceRequest({ isInterested: true, isCancel: false,status:props.status.id })
             }}

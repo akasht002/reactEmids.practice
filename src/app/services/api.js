@@ -155,5 +155,6 @@ export const API = {
     getUnreadConversationsByUserId: 'Conversation/GetUnreadMessages/',
     getLatestMessages: 'Conversation/GetNewPostedMessage/',
     getMessageFallBackInterval: 'Common/LookupConfig/MessageFallBackInterval',
-    keywordSearchServiceRequest: 'Search/SearchServiceRequestWithQ/'
+    keywordSearchServiceRequest: 'Search/SearchServiceRequestWithQ/',
+    hireServiceProvider: 'ServiceRequest/Hire/'
 }

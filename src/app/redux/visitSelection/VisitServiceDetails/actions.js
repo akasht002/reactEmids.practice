@@ -335,3 +335,20 @@ export function canInitiateConversation(data) {
     })
   }
 };
+
+export function updateHireStatusForServiceRequest(data) {
+  return dispatch => {
+    dispatch(startLoading())
+    ServiceRequestPut(
+      API.hireServiceProvider +
+      `${data.serviceRequestId}/${getUserInfo().serviceProviderId}`
+    )
+      .then(resp => {
+        dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
