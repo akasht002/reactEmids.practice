@@ -212,7 +212,6 @@ export class VisitServiceDetails extends Component {
   }
 
   onConfirmSerivceRequest = status => {
-    debugger
     if (!status.isCancel) {
       let model = {
         serviceRequestId: this.state.visitServiceDetails.serviceRequestId,

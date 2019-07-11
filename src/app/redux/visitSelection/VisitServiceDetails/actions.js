@@ -341,7 +341,7 @@ export function updateHireStatusForServiceRequest(data) {
     dispatch(startLoading())
     ServiceRequestPut(
       API.hireServiceProvider +
-      `${data.serviceRequestId}/${getUserInfo().serviceProviderId}`
+      `${data.serviceRequestId}/${getUserInfo().serviceProviderId}/ServiceProvider`
     )
       .then(resp => {
         dispatch(endLoading())
