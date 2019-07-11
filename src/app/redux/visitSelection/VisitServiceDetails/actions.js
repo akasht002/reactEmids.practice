@@ -337,12 +337,14 @@ export function canInitiateConversation(data) {
 };
 
 export function updateHireStatusForServiceRequest(data) {
+  let model = {
+    serviceProviderId: getUserInfo().serviceProviderId,
+    serviceRequestId: data.serviceRequestId,
+    engagedBy: "ServiceProvider"
+  }
   return dispatch => {
     dispatch(startLoading())
-    ServiceRequestPut(
-      API.hireServiceProvider +
-      `${data.serviceRequestId}/${getUserInfo().serviceProviderId}/ServiceProvider`
-    )
+    ServiceRequestPut(API.hireServiceProvider, model)
       .then(resp => {
         dispatch(endLoading())
         dispatch(push(Path.visitServiceList))

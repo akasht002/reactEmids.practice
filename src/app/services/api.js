@@ -156,5 +156,5 @@ export const API = {
     getLatestMessages: 'Conversation/GetNewPostedMessage/',
     getMessageFallBackInterval: 'Common/LookupConfig/MessageFallBackInterval',
     keywordSearchServiceRequest: 'Search/SearchServiceRequestWithQ/',
-    hireServiceProvider: 'ServiceRequest/Hire/'
+    hireServiceProvider: 'ServiceRequest/Hire'
 }
