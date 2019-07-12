@@ -10,6 +10,7 @@ import { startLoading, endLoading } from '../../loading/actions'
 import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
+import {SERVICE_PROVIDER_APP} from '../../constants/constants'
 
 export const VisitServiceDetails = {
   getVisitServiceDetailsSuccess: 'get_visit_service_details_success/visitservicedetails',
@@ -340,7 +341,7 @@ export function updateHireStatusForServiceRequest(data) {
   let model = {
     serviceProviderId: getUserInfo().serviceProviderId,
     serviceRequestId: data.serviceRequestId,
-    engagedBy: "ServiceProvider"
+    engagedBy: SERVICE_PROVIDER_APP
   }
   return dispatch => {
     dispatch(startLoading())
