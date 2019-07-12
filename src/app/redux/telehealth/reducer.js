@@ -1,6 +1,5 @@
-import {
-    TeleHealth
-} from './actions'
+import { TeleHealth } from './bridge'
+
 
 const defaultState = {
     token: null,

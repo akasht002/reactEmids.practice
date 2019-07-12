@@ -5,14 +5,7 @@ import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import {RESPONSE_STATUS} from '../../../redux/constants/constants';
 import {encryptPassword} from '../../../utils/encryptPassword';
-
-export const ResetPassword = {
-    resetPasswordSuccess: 'set_password_success/ResetPassword',
-    resetPasswordError: 'set_password_error/ResetPassword',
-    getEmailIdSuccess: 'get_email_id_success/ResetPassword',
-    getEmailIdError: 'get_email_id_error/ResetPassword',
-    formDirty: 'form_dirty/ResetPassword'
-};
+import { ResetPassword } from './bridge'
 
 export const formDirty = () => {
     return {

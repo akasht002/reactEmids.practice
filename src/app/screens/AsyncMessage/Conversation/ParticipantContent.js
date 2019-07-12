@@ -13,7 +13,7 @@ import { setParticipantProfile, setESP} from '../../../redux/patientProfile/acti
 import { push } from '../../../redux/navigation/actions';
 import { setServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
 
-class ParticipantContent extends Component {
+export class ParticipantContent extends Component {
 
     constructor() {
         super();
@@ -355,7 +355,7 @@ class ParticipantContent extends Component {
 };
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         addParticipants: (data) => dispatch(onAddParticipant(data)),
         removeParticipant: (data) => dispatch(onRemoveParticipant(data)),
@@ -369,7 +369,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         loggedInUser: state.authState.userState.userData.userInfo,
     }

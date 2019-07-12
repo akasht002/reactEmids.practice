@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { UserAvatarMultiSelect } from "../../../components";
 
-export default class SelectPatient extends Component {
+export class SelectPatient extends Component {
     state = {
         Patients: []
     };
@@ -40,3 +40,5 @@ export default class SelectPatient extends Component {
         );
     };
 };
+
+export default  SelectPatient

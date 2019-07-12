@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-export default class ModalTemplate extends React.Component {
+export class ModalTemplate extends React.Component {
 
     render() {
         return (
@@ -15,3 +15,5 @@ export default class ModalTemplate extends React.Component {
         );
     }
 };
+
+export default ModalTemplate

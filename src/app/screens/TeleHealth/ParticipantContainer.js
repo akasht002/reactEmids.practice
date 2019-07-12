@@ -14,7 +14,7 @@ import SelectPatient from './SelectPatient';
 import {USERTYPES} from '../../constants/constants';
 import './styles.css';
 
-class ParticipantsContainer extends Component {
+export class ParticipantsContainer extends Component {
     state = {
         selectedParticipants: [],
         searchText: '',
@@ -120,7 +120,7 @@ class ParticipantsContainer extends Component {
 };
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
         clearLinkedParticipants: () => dispatch(clearLinkedParticipants()),
@@ -130,7 +130,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         patients: state.telehealthState.linkedPatients,
         participants: state.telehealthState.linkedParticipants,

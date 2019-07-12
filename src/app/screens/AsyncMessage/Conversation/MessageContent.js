@@ -81,7 +81,7 @@ export class MessageContent extends Component {
     };
 
     scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({ behavior: "auto" });
+        // this.messagesEnd.scrollIntoView({ behavior: "auto" });
     };
 
     onClickSendMessage = () => {

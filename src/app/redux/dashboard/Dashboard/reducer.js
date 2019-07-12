@@ -1,4 +1,4 @@
-import { DashboardDetail } from './actions'
+import { DashboardDetail } from './bridge'
 
 const defaultState = {
   conversationDetail: [],

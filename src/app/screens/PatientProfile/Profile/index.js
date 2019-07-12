@@ -14,7 +14,7 @@ import { Path } from '../../../routes';
 import {clearState} from '../../../redux/patientProfile/actions';
 import { USERTYPES} from '../../../constants/constants';
 
-class Profile extends Component {
+export class Profile extends Component {
 
   componentDidMount() {
     if (!this.props.patientId) { 
@@ -84,7 +84,7 @@ class Profile extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     clearInvitaion: () => dispatch(clearInvitaion()),
     joinVideoConference: () => dispatch(joinVideoConference()),
@@ -94,7 +94,7 @@ function mapDispatchToProps(dispatch) {
   }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     showTelehealthInvite: state.telehealthState.isInvitationCame,
     patientId: state.patientProfileState.patientId,

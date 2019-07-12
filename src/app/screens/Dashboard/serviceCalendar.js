@@ -711,7 +711,7 @@ export class ServiceCalendar extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getServiceProviderVists: data => dispatch(getServiceProviderVists(data)),
     getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
@@ -735,7 +735,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     serviceVist: state.dashboardState.dashboardState.serviceVist,
     serviceVistCount: state.dashboardState.dashboardState.serviceVistCount,
