@@ -12,7 +12,7 @@ import { formatDate } from '../../../utils/validations'
 import {
   PAGE_NO,
   PAGE_SIZE,
-  DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD
+  DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD,Pagination
 } from '../../constants/constants'
 import {
   DashboardConversationPagination,
@@ -55,8 +55,6 @@ export function getServiceStatusDetail () {
       })
   }
 }
-
-// export const updateStandByModeSuccess = () => {}
 
 export const getPatientVisitDetailSuccess = (data,disableShowMore) => {
   return {
@@ -142,10 +140,7 @@ export function getServiceProviderVists (data,pageNumber,flag) {
   return (dispatch, getState) => {
     dispatch(setServiceVisitLoader(true))
     return ServiceRequestGet(
-      API.getServiceProviderVists + getUserInfo().serviceProviderId +
-       '/' + data +
-       '/'+ pageNumber +
-      '/10'
+      `${ API.getServiceProviderVists}${getUserInfo().serviceProviderId}/${data}/${pageNumber}/${Pagination.pageSize}`
     )
       .then(resp => {
         let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];
@@ -287,7 +282,6 @@ export function updateStandByMode (data) {
 
     return Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
-        // dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
       })
       .catch(err => {

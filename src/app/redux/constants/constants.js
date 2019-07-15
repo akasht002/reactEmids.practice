@@ -18,6 +18,10 @@ export const EVENING =  'Evening'
 export const STATUS  = 0
 export const DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD  = 0
 
+export const Pagination = {
+    pageSize: 10
+};
+
 export const RESPONSE_STATUS = {
     LINK_ACTIVE: 'Link Active',
     OK: 'OK',
