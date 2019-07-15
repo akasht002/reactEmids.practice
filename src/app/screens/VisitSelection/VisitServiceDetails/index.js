@@ -22,7 +22,8 @@ import {
   getVisitServiceEligibilityStatus,
   getDays,
   dispatchServiceRequestByServiceProvider,
-  formDirtyVisitServiceDetails
+  formDirtyVisitServiceDetails,
+  updateHireStatusForServiceRequest
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { setPatient } from '../../../redux/patientProfile/actions';
 import {
@@ -204,7 +205,7 @@ export class VisitServiceDetails extends Component {
 
   postServiceRequest = status => {
     this.alertModalMsg = status.isInterested
-      ? serviceRequestMessages.applyServiceProvider
+      ? serviceRequestMessages.engageServiceProvider
       : (status.isCancel ? serviceRequestMessages[status.status] : serviceRequestMessages.notInterestedServiceProvider)
     this.setState({ isAlertModalOpen: true })
     this.status = status
@@ -219,7 +220,7 @@ export class VisitServiceDetails extends Component {
       if (this.props.updateServiceRequestMsgStatus === 1) {
         this.setState({ isAlertModalopenConfirm: true })
       } else {
-        this.props.updateServiceRequestByServiceProvider(model)
+        this.props.updateHireStatusForServiceRequest(model)
       }
 
     } else {
@@ -1033,7 +1034,8 @@ function mapDispatchToProps(dispatch) {
     updateEntityServiceVisit: (data, pageNo) => dispatch(updateEntityServiceVisit(data, pageNo)),
     saveContextData: (data) => dispatch(saveContextData(data)),
     goToDashboard: () => dispatch(push(Path.dashboard)),
-    getVisitServiceScheduleSuccess: () => dispatch(getVisitServiceScheduleSuccess([], true))
+    getVisitServiceScheduleSuccess: () => dispatch(getVisitServiceScheduleSuccess([], true)),
+    updateHireStatusForServiceRequest: (data) => dispatch(updateHireStatusForServiceRequest(data))
   }
 }
 
