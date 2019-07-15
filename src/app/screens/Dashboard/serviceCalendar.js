@@ -19,7 +19,8 @@ import {
 } from "../../redux/dashboard/Dashboard/actions";
 import { getServiceRequestId, setEntityServiceProvider }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
-import { ServiceCalendarDefault, ShowIndicator } from "./ServiceInfo";
+import { ServiceCalendarList, ShowIndicator } from './Components/CalendarList'
+import { CalendarDefault } from './Components/CalendarDefault'
 import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
 import { setPatient, setESP } from "../../redux/patientProfile/actions";
@@ -58,7 +59,8 @@ export class ServiceCalendar extends Component {
       isAlertModalOpen: false,
       phoneNumber: '',
       selectedMonths: moment(today).format('M'),
-      standByModeAlertMsg: false
+      standByModeAlertMsg: false,      
+      pageNumber:1
     };
 
   }
@@ -72,7 +74,8 @@ export class ServiceCalendar extends Component {
 
   onSubmit = () => {
     this.setState({
-      EditPersonalDetailModal: !this.state.EditPersonalDetailModal
+      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
+      pageNumber:1
     });
     let model = {
       serviceRequestId: this.data.serviceRequestId,
@@ -88,7 +91,7 @@ export class ServiceCalendar extends Component {
     this.props.updateEntityServiceVisit(model);
     // this.initialCall()
     setTimeout(() => {
-      this.props.getServiceProviderVists(moment(this.data.visitDate).format("YYYY-MM-DD"));
+      this.props.getServiceProviderVists(moment(this.data.visitDate).format("YYYY-MM-DD"),1,false);
     }, DEFAULT_TIME)
 
     
@@ -115,21 +118,22 @@ export class ServiceCalendar extends Component {
       reportDay: moment(curDate).format(),
       selectedMonth: e.value,
       startYear: year,
-      selectedMonths: moment().month(e.value).format(M_FORMAT)
+      selectedMonths: moment().month(e.value).format(M_FORMAT),
+      pageNumber:1
     })
     this.startDateCalendar = moment(curDate).format('DD')
     this.endDateCalendar = moment(curDate).format('DD')
-    this.props.getServiceProviderVists(moment(curDate).format("YYYY-MM-DD"));
+    this.props.getServiceProviderVists(moment(curDate).format("YYYY-MM-DD"),1,false);
   };
 
   clickNextWeek = () => {
     let updatedDay = "";
     if (this.state.width > "1280") {
       updatedDay = moment(this.state.startDate).add(7, "days");
-      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
+      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"),1,false)
     } else {
       updatedDay = moment(this.state.startDate).add(5, "days");
-      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
+      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"),1,false)
     }
     let prev_month = parseInt(moment(this.state.startDate).format('MM'), 10)
     let next_month = parseInt(moment(updatedDay).format('MM'), 10)
@@ -161,10 +165,10 @@ export class ServiceCalendar extends Component {
     let updatedDay = "";
     if (this.state.width > "1280") {
       updatedDay = moment(this.state.startDate).subtract(7, "days");
-      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
+      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"),1,false)
     } else {
       updatedDay = moment(this.state.startDate).subtract(5, "days");
-      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"));
+      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"),1,false)
     }
     this.setState({
       startDate: updatedDay.format(),
@@ -197,7 +201,7 @@ export class ServiceCalendar extends Component {
       }
     });
 
-    this.props.getServiceProviderVists(moment().format("YYYY-MM-DD"));
+    this.props.getServiceProviderVists(moment().format("YYYY-MM-DD"),1,false)
   };
 
   handleDayChange = e => {
@@ -215,10 +219,9 @@ export class ServiceCalendar extends Component {
   };
 
   clickShowMore = () => {
-    this.setState({
-      showMore: !this.state.showMore,
-      verticalScroll: !this.state.verticalScroll
-    });
+    this.setState({ pageNumber: this.state.pageNumber + 1 }, () => {
+      this.props.getServiceProviderVists(moment(this.state.startDate).format("YYYY-MM-DD"), this.state.pageNumber,true);
+  })
   };
 
   optionChanged = e => {
@@ -250,7 +253,7 @@ export class ServiceCalendar extends Component {
         selectedMonths: this.props.serviceVisitDate.format(M_FORMAT),
       })
     }
-    this.props.getServiceProviderVists(utc);
+    this.props.getServiceProviderVists(utc,1,false)
     this.props.getServiceVisitCount(date_range)
     this.props.setServiceVisitDate(null)
   }
@@ -291,7 +294,7 @@ export class ServiceCalendar extends Component {
 
   showServiceProviderList = data => {
     let date = convertStringToDate(data.target.value);
-    this.props.getServiceProviderVists(date);
+    this.props.getServiceProviderVists(date,1,false)
   };
 
   handleserviceType = (item, e) => {
@@ -551,8 +554,8 @@ export class ServiceCalendar extends Component {
     let start_day_month = parseInt(dates[0].date.format('MM'), 10)
     let end_day_month = parseInt(dates[(count - 1)].date.format('MM'), 10)
     let selectedMonth = parseInt(this.state.selectedMonths, 10)
-    let visitData = (
-      <ServiceCalendarDefault
+    let visitData = this.props.serviceVist.length > 0 ? (
+      <ServiceCalendarList
         onClickConversation={data => this.onClickConversation(data)}
         onClickVideoConference={data => this.onClickVideoConference(data)}
         Servicelist={serviceVist}
@@ -573,7 +576,7 @@ export class ServiceCalendar extends Component {
         handlePhoneNumber={this.handlePhoneNumber}
         goToServiceVisits = {this.goToServiceVisits}
       />
-    );
+    ):<CalendarDefault/>
 
     let modalTitle = "Assign Service Provider";
     let modalType = "";
@@ -585,13 +588,14 @@ export class ServiceCalendar extends Component {
         }
       >
         <div className="ProfileCardBody">
-          <div className="ProfileCardHeader">
+         <div className="ProfileCardHeader">
             <span className="ProfileCardHeaderTitle primaryColor">
               Service Visits
             </span>
-          </div>
+          </div>          
           <div className="topPalette">
-            <div className="monthPalette Center">
+            <div className="monthPalette">
+            <span>From :</span>
               <Select
                 id="ProfileMonth"
                 multiple={false}
@@ -635,7 +639,15 @@ export class ServiceCalendar extends Component {
             className="bottomPalette"
           >
           {this.props.isServiceVisitLoading && <Preloader/>}
-            <ul className="list-group ProfileServicesVisitList">{visitData}</ul>
+            <ul className="list-group ProfileServicesVisitList">
+              {visitData}
+              {(!this.props.disableShowMore || this.props.serviceVist.length >0) &&<li
+              className="list-group-item ProfileShowMore"
+              onClick={this.clickShowMore}
+              >
+                Show more <i className="ProfileIconShowMore" />
+              </li> }
+            </ul>
           </Scrollbars>
         </div>
         <ul className="list-group list-group-flush">
@@ -713,7 +725,7 @@ export class ServiceCalendar extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getServiceProviderVists: data => dispatch(getServiceProviderVists(data)),
+    getServiceProviderVists: (data,pageNumber,flag) => dispatch(getServiceProviderVists(data,pageNumber,flag)),
     getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
     getEntityServiceProviderList: () =>
       dispatch(getEntityServiceProviderList()),
@@ -744,7 +756,8 @@ function mapStateToProps(state) {
     loggedInUser: state.authState.userState.userData.userInfo,
     serviceVisitDate: state.dashboardState.dashboardState.serviceVisitDate,
     isServiceVisitLoading: state.dashboardState.dashboardState.isServiceVisitLoading,
-    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit
+    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,    
+    disableShowMore: state.dashboardState.dashboardState.disableShowMore
   };
 }
 export default withRouter(

@@ -186,7 +186,8 @@ export const SERVICE_REQ_STATUS = {
 }
 
 export const DATE_FORMATS = {
-    monDD : "MMM DD"
+    monDD : "MMM DD",
+    hhMinSession:"hh:mm A"
 }
 
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
