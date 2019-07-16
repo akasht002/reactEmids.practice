@@ -97,4 +97,4 @@ export const SERVICE_REQUEST_STATUS = {
     }
   }
 
-  export const SERVICE_PROVIDER_APP = 'ServiceProvider'
+  export const SERVICE_PROVIDER_APP = 'SP'
