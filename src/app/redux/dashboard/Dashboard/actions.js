@@ -136,37 +136,32 @@ export function getEntityServiceProviderListSearch (data) {
   }
 }
 
-export function getServiceProviderVists (data,pageNumber,flag) {
+export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
   return (dispatch, getState) => {
     dispatch(setServiceVisitLoader(true))
     return ServiceRequestGet(
-      `${ API.getServiceProviderVists}${getUserInfo().serviceProviderId}/${data}/${pageNumber}/${Pagination.pageSize}`
+      `${ API.getServiceProviderVisits}${getUserInfo().serviceProviderId}/${data}/${pageNumber}/${Pagination.pageSize}`
     )
       .then(resp => {
         let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];
-        let disableShowMore = false;
+        let disableShowMore = false ;
             let modifiedList = [
                 ...serviceVists
-            ];
-            if (resp.data.length === 0) {
-                disableShowMore = true
-            }
-            else {
-                if (serviceVists.length === 0) {
-                    modifiedList = [
-                        ...resp.data
-                    ];
-                    if (resp.data.length <= 3) {
-                        disableShowMore = true
-                    }
-                } else if (serviceVists.length > 0 || serviceVists[serviceVists.length - 1].serviceRequestVisitId !==
-                    resp.data[resp.data.length - 1].serviceRequestVisitId) {
-                    modifiedList = [
-                        ...serviceVists,
-                        ...resp.data
-                    ];
-                }
-            }
+            ];           
+              if (serviceVists.length === 0) {
+                  modifiedList = [
+                      ...resp.data
+                  ];
+                  if (resp.data.length <= 3) {
+                      disableShowMore = true
+                  }
+              } else if (serviceVists.length > 0 || serviceVists[serviceVists.length - 1].serviceRequestVisitId !==
+                  resp.data[resp.data.length - 1].serviceRequestVisitId) {
+                  modifiedList = [
+                      ...serviceVists,
+                      ...resp.data
+                  ];
+              }            
         dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
         dispatch(setServiceVisitLoader(false))
       })

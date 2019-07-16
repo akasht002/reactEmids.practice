@@ -25,7 +25,7 @@ import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
 import { setPatient, setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
-import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FORMAT } from "../../constants/constants";
+import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FORMAT,DATE_FORMATS } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
@@ -47,7 +47,7 @@ export class ServiceCalendar extends Component {
       DateDisable: false,
       selectedServiceProviderId: null,
       DateLabelClass: "DatePickerDisabled",
-      EditPersonalDetailModal: false,
+      editPersonalDetailModal: false,
       reportDay: moment(today).format(),
       selectedMonth: {
         label: moment(today).format("MMM") + ' ' + moment(today).format("YYYY"),
@@ -68,13 +68,13 @@ export class ServiceCalendar extends Component {
   togglePersonalDetails = (action, e) => {
     this.data = action;
     this.setState({
-      EditPersonalDetailModal: !this.state.EditPersonalDetailModal
+      editPersonalDetailModal: !this.state.editPersonalDetailModal
     });
   };
 
   onSubmit = () => {
     this.setState({
-      EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
+      editPersonalDetailModal: !this.state.editPersonalDetailModal,
       pageNumber:1
     });
     let model = {
@@ -91,7 +91,7 @@ export class ServiceCalendar extends Component {
     this.props.updateEntityServiceVisit(model);
     // this.initialCall()
     setTimeout(() => {
-      this.props.getServiceProviderVists(moment(this.data.visitDate).format("YYYY-MM-DD"),1,false);
+      this.props.getServiceProviderVists(moment(this.data.visitDate).format(DATE_FORMATS.yyyy_mm_dd));
     }, DEFAULT_TIME)
 
     
@@ -112,7 +112,7 @@ export class ServiceCalendar extends Component {
   MonthChange = e => {
     let selectMonth = moment().month(e.value).format(M_FORMAT)
     let year = this.getYear(selectMonth)
-    let curDate = moment(year + '-' + moment().month(e.value).format(M_FORMAT) + '- 01', "YYYY-MM-DD")
+    let curDate = moment(year + '-' + moment().month(e.value).format(M_FORMAT) + '- 01', DATE_FORMATS.yyyy_mm_dd)
     this.setState({
       startDate: moment(curDate).format(),
       reportDay: moment(curDate).format(),
@@ -123,53 +123,35 @@ export class ServiceCalendar extends Component {
     })
     this.startDateCalendar = moment(curDate).format('DD')
     this.endDateCalendar = moment(curDate).format('DD')
-    this.props.getServiceProviderVists(moment(curDate).format("YYYY-MM-DD"),1,false);
+    this.props.getServiceProviderVists(moment(curDate).format(DATE_FORMATS.yyyy_mm_dd));
   };
 
   clickNextWeek = () => {
     let updatedDay = "";
-    if (this.state.width > "1280") {
-      updatedDay = moment(this.state.startDate).add(7, "days");
-      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"),1,false)
-    } else {
-      updatedDay = moment(this.state.startDate).add(5, "days");
-      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"),1,false)
-    }
-    let prev_month = parseInt(moment(this.state.startDate).format('MM'), 10)
-    let next_month = parseInt(moment(updatedDay).format('MM'), 10)
+    let days = this.state.width > "1280" ? 7 : 5;
+    updatedDay = moment(this.state.startDate).add(days, DATE_FORMATS.days);
+    this.props.getServiceProviderVists(updatedDay.format(DATE_FORMATS.yyyy_mm_dd))
+    let prev_month = parseInt(moment(this.state.startDate).format(DATE_FORMATS.mm), 10)
+    let next_month = parseInt(moment(updatedDay).format(DATE_FORMATS.mm), 10)
 
-    prev_month === next_month ? this.setState({
-      startDate: updatedDay.format(),
-      startYear: updatedDay.format("YYYY"),
-      reportDay: updatedDay.format(),
-      startMonth: updatedDay.format("MMM"),
-      selectedMonths: updatedDay.format(M_FORMAT),
+    this.setState({
+      startDate:  prev_month === next_month ? updatedDay.format():moment(this.state.startDate).endOf(DATE_FORMATS.month).format(),
+      startYear: prev_month === next_month ? updatedDay.format(DATE_FORMATS.yyyy): moment(this.state.startDate).format(DATE_FORMATS.yyyy),
+      reportDay:  prev_month === next_month ? updatedDay.format():moment(this.state.startDate).format(),
+      startMonth:  prev_month === next_month ? updatedDay.format(DATE_FORMATS.mmm):moment(this.state.startDate).format(DATE_FORMATS.mmm),
+      selectedMonths:  prev_month === next_month ? updatedDay.format(M_FORMAT):moment(this.state.startDate).format(M_FORMAT),
       selectedMonth: {
-        label: updatedDay.format("MMM") + ' ' + updatedDay.format('YYYY'),
-        value: updatedDay.format("MMM")
-      }
-    }) : this.setState({
-      startDate: moment(this.state.startDate).endOf('month').format(),
-      startYear: moment(this.state.startDate).format('YYYY'),
-      reportDay: moment(this.state.startDate).format(),
-      startMonth: moment(this.state.startDate).format('MMM'),
-      selectedMonths: moment(this.state.startDate).format(M_FORMAT),
-      selectedMonth: {
-        label: moment(this.state.startDate).format('MMM') + ' ' + moment(this.state.startDate).format('YYYY'),
-        value: moment(this.state.startDate).format('MMM')
+        label:  prev_month === next_month ? updatedDay.format(DATE_FORMATS.mmm) + ' ' + updatedDay.format(DATE_FORMATS.yyyy):moment(this.state.startDate).format(DATE_FORMATS.mmm) + ' ' + moment(this.state.startDate).format(DATE_FORMATS.yyyy),
+        value:  prev_month === next_month ? updatedDay.format(DATE_FORMATS.mmm) + ' ' + updatedDay.format(DATE_FORMATS.yyyy):moment(this.state.startDate).format(DATE_FORMATS.mmm)
       }
     })
   };
 
   clickPrevWeek = () => {
     let updatedDay = "";
-    if (this.state.width > "1280") {
-      updatedDay = moment(this.state.startDate).subtract(7, "days");
-      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"),1,false)
-    } else {
-      updatedDay = moment(this.state.startDate).subtract(5, "days");
-      this.props.getServiceProviderVists(updatedDay.format("YYYY-MM-DD"),1,false)
-    }
+    let days = this.state.width > "1280" ? 7 : 5;
+    updatedDay = moment(this.state.startDate).subtract(days, "days");
+    this.props.getServiceProviderVists(updatedDay.format(DATE_FORMATS.yyyy_mm_dd))
     this.setState({
       startDate: updatedDay.format(),
       startYear: updatedDay.format("YYYY"),
@@ -201,7 +183,7 @@ export class ServiceCalendar extends Component {
       }
     });
 
-    this.props.getServiceProviderVists(moment().format("YYYY-MM-DD"),1,false)
+    this.props.getServiceProviderVists(moment().format(DATE_FORMATS.yyyy_mm_dd))
   };
 
   handleDayChange = e => {
@@ -220,7 +202,7 @@ export class ServiceCalendar extends Component {
 
   clickShowMore = () => {
     this.setState({ pageNumber: this.state.pageNumber + 1 }, () => {
-      this.props.getServiceProviderVists(moment(this.state.startDate).format("YYYY-MM-DD"), this.state.pageNumber,true);
+      this.props.getServiceProviderVists(moment(this.state.startDate).format(DATE_FORMATS.yyyy_mm_dd), this.state.pageNumber,true);
   })
   };
 
@@ -253,7 +235,7 @@ export class ServiceCalendar extends Component {
         selectedMonths: this.props.serviceVisitDate.format(M_FORMAT),
       })
     }
-    this.props.getServiceProviderVists(utc,1,false)
+    this.props.getServiceProviderVists(utc)
     this.props.getServiceVisitCount(date_range)
     this.props.setServiceVisitDate(null)
   }
@@ -294,7 +276,7 @@ export class ServiceCalendar extends Component {
 
   showServiceProviderList = data => {
     let date = convertStringToDate(data.target.value);
-    this.props.getServiceProviderVists(date,1,false)
+    this.props.getServiceProviderVists(date)
   };
 
   handleserviceType = (item, e) => {
@@ -515,12 +497,12 @@ export class ServiceCalendar extends Component {
       }
       let data = visitCount.find(
         obj =>
-          obj.visitDate === daysMapping.date.format("YYYY-MM-DD") + "T00:00:00"
+          obj.visitDate === daysMapping.date.format(DATE_FORMATS.yyyy_mm_dd) + "T00:00:00"
       )
         ? visitCount.find(
           obj =>
             obj.visitDate ===
-            daysMapping.date.format("YYYY-MM-DD") + "T00:00:00"
+            daysMapping.date.format(DATE_FORMATS.yyyy_mm_dd) + "T00:00:00"
         ).visits
         : 0;
       return (
@@ -543,7 +525,7 @@ export class ServiceCalendar extends Component {
             <span className="dateElement">{daysMapping.day.format("D")}</span>
           </label>
           <div className="eventIndicator">
-            <ShowIndicator count={data} />
+            <ShowIndicator count={data < 2 ? data : 3} />
           </div>
         </div>
       );
@@ -641,7 +623,7 @@ export class ServiceCalendar extends Component {
           {this.props.isServiceVisitLoading && <Preloader/>}
             <ul className="list-group ProfileServicesVisitList">
               {visitData}
-              {(!this.props.disableShowMore || this.props.serviceVist.length >0) &&<li
+              {(this.props.serviceVist.length >0) && <li
               className="list-group-item ProfileShowMore"
               onClick={this.clickShowMore}
               >
@@ -659,7 +641,7 @@ export class ServiceCalendar extends Component {
           </li>
         </ul>
         <ModalPopup
-          isOpen={this.state.EditPersonalDetailModal}
+          isOpen={this.state.editPersonalDetailModal}
           toggle={() => this.togglePersonalDetails(this, modalType)}
           ModalBody={modalContent}
           className="modal-lg asyncModal CertificationModal"
@@ -673,7 +655,7 @@ export class ServiceCalendar extends Component {
           onConfirm={this.onSubmit}
           onCancel={() => {
             this.setState({
-              EditPersonalDetailModal: false
+              editPersonalDetailModal: false
             })
           }
           }

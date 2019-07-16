@@ -5,7 +5,7 @@ import TimeAgo from 'timeago-react'
 import moment from 'moment';
 import { getFields } from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
-import { HIRED_STATUS_ID } from '../../constants/constants';
+import { SERVICE_REQUEST } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
 
 export const ServiceCalendarInfo = props => {
@@ -68,7 +68,7 @@ export const ServiceProviderRequestDetails = props => {
     .map((sp, index) => {
       let patientImage = '';
       let patientLastName = '';
-      if (sp.statusId === HIRED_STATUS_ID) {
+      if (sp.statusId === SERVICE_REQUEST.hiredId) {
         patientImage = sp && sp.image ? sp.image : require('../../assets/images/Blank_Profile_icon.png');
         patientLastName = sp && sp.patientLastName;
       } else {
@@ -119,7 +119,7 @@ export const ServiceProviderRequestDetails = props => {
             </div>
 
             <div className='ProfileApplicationNumbers Avatar'  onClick={() => {
-              if (sp.statusId === HIRED_STATUS_ID) {
+              if (sp.statusId === SERVICE_REQUEST.hiredId) {
                 props.goToPatientProfile(sp.patientId);
               }
             }}>

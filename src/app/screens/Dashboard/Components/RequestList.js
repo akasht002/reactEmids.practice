@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react'
 import Moment from 'react-moment'
 import { getFields } from '../../../utils/validations'
-import { HIRED_STATUS_ID } from '../../../constants/constants';
+import { SERVICE_REQUEST } from '../../../constants/constants';
+import { Avatar } from '../../../components'
+import { getFullName } from '../../../utils/stringHelper'
 
 export const ServiceProviderRequestDetails = props => {
     return props.serviceRequest
@@ -9,7 +11,7 @@ export const ServiceProviderRequestDetails = props => {
       .map((sp, index) => {
         let patientImage = '';
         let patientLastName = '';
-        if (sp.statusId === HIRED_STATUS_ID) {
+        if (sp.statusId === SERVICE_REQUEST.hiredId) {
           patientImage = sp && sp.image ? sp.image : require('../../../assets/images/Blank_Profile_icon.png');
           patientLastName = sp && sp.patientLastName;
         } else {
@@ -57,13 +59,13 @@ export const ServiceProviderRequestDetails = props => {
               </div>
   
               <div className='ProfileApplicationNumbers Avatar'  onClick={() => {
-                if (sp.statusId === HIRED_STATUS_ID) {
+                if (sp.statusId === SERVICE_REQUEST.hiredId) {
                   props.goToPatientProfile(sp.patientId);
                 }
               }}>
                 <div className='ProfileApplicationWidget'>
                   <div className='avatarContainer'>
-                    <img
+                    <Avatar
                       alt='NO'
                       className='avatarImage'
                       src={
@@ -73,9 +75,7 @@ export const ServiceProviderRequestDetails = props => {
                   </div>
                 </div>
                 <span className='AvatarName'>
-                  {sp.patientFirstName &&
-                    sp.patientFirstName + ' '}
-                  {patientLastName}
+                  {sp.patientFirstName && getFullName(sp.patientFirstName,sp.patientLastName)}
                 </span>
               </div>
             </li>

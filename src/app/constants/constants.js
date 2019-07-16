@@ -35,6 +35,10 @@ export const COUNT_BASED_MONTH = { 9: 1, 10: 2, 11: 3 }
 export const PAGE_NO = 1;
 export const SERVICE_REQUEST_PAGE_SIZE = 10
 
+export const SERVICE_REQUEST = {
+    hiredId : 38
+}
+
 export const RESPONSE_STATUS = {
     VALID: "Valid",
     INVALID: "Invalid",
@@ -187,7 +191,13 @@ export const SERVICE_REQ_STATUS = {
 
 export const DATE_FORMATS = {
     monDD : "MMM DD",
-    hhMinSession:"hh:mm A"
+    hhMinSession:"hh:mm A",
+    yyyy_mm_dd : 'YYYY-MM-DD',
+    mm:"MM",
+    mmm:"MMM",
+    yyyy:'YYYY',
+    month:'month',
+    days:'days'
 }
 
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
@@ -219,3 +229,4 @@ export const MM_FORMAT = "M"
 export const MMM_FORMAT = 'MMM'
 export const YYYY_MM_DD_FORMAT= 'YYYY-MM-DD'
 export const MMMDD_FORMAT = "MMM DD";
+

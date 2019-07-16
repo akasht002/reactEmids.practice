@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { DATE_FORMATS } from '../constants/constants'
 
 export function getMomentDate(date) {
     return date ? moment(new Date(date.toString())) : null;
@@ -68,4 +69,8 @@ export function getDoubleDigitTime(value) {
 
 export function getTimeZoneOffset() {
     return new Date().getTimezoneOffset()
+}
+
+export const getHHMinSession = (data) => {
+    return moment(data).format(DATE_FORMATS.hhMinSession)
 }

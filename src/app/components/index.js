@@ -8,7 +8,8 @@ import {
   Input,
   Preloader,
   Scrollbars,
-  ToggleSwitch
+  ToggleSwitch,
+  Avatar
 } from './Base'
 import {
     Calendar, 
@@ -95,5 +96,6 @@ export {
     UserAvatarMultiSelect,
     Carousel,
     ImageCropView,
-    AlertPopup
+    AlertPopup,
+    Avatar
 };
