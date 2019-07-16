@@ -96,5 +96,3 @@ export const SERVICE_REQUEST_STATUS = {
        "keyValue":"Declined"
     }
   }
-
-  export const SERVICE_PROVIDER_APP = 'SP'
