@@ -4,7 +4,7 @@ import {  getUserInfo } from '../../../utils/userUtility';
 import { isFutureDay,getHHMinSession } from '../../../utils/dateUtility'
 import { getFullName } from '../../../utils/stringHelper'
 import { Avatar } from '../../../components'
-import QuickMenu from '../../Components/QuikMenu'
+import QuickMenu from '../../Components/QuickMenu'
 
 
 export const calenderDetails = (props,conversations,options,index) => {

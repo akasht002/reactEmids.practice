@@ -27,7 +27,7 @@ import {
   import { createDataStore } from '../../redux/telehealth/actions'
 
 
-class QuikMenu extends Component {
+class QuickMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -64,7 +64,7 @@ class QuikMenu extends Component {
         else this.props.goToServiceVisitProcessing(data)
       }
 
-    onClickServiceCalendarItems = (conversations) => {
+    onClickServiceVisitAction = (conversations) => {
         (!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : this.goToServiceVisits(conversations)
       }
 
@@ -99,11 +99,11 @@ class QuikMenu extends Component {
         return data.id === conversations && conversations.visitStatusId
     })
     let list = visitList.length > 0 ? visitList[0] : SERVICE_VISIT_STATUS[0]
-      let options = [];
+    let options = [];
     if(isEntityServiceProvider()){
         options = [
           <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
-            onClick={(e) => this.onClickServiceCalendarItems(conversations)}>
+            onClick={(e) => this.onClickServiceVisitAction(conversations)}>
             <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
           </Item>,
           <Item className='ListItem CTDashboard' key='item-1'
@@ -128,7 +128,7 @@ class QuikMenu extends Component {
         !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
         options = [ 
           <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
-          onClick={(e) => this.onClickServiceCalendarItems(conversations)}>
+          onClick={(e) => this.onClickServiceVisitAction(conversations)}>
                 <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
           </Item>,   
           ...commonOptions,    
@@ -209,4 +209,4 @@ function mapStateToProps(state) {
     }
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(QuikMenu));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(QuickMenu));

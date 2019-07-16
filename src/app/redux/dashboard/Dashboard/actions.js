@@ -152,7 +152,7 @@ export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
                   modifiedList = [
                       ...resp.data
                   ];
-                  if (resp.data.length <= 3) {
+                  if (resp.data.length < 9) {
                       disableShowMore = true
                   }
               } else if (serviceVists.length > 0 || serviceVists[serviceVists.length - 1].serviceRequestVisitId !==
