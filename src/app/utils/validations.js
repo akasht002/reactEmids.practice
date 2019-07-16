@@ -249,3 +249,12 @@ export const validateCoordinates = (lat, lon) => {
 export const isNull = (data) => {
   return _.isNil(data)
 }
+
+export function getFieldsNoSeperater(input, field) {
+  var output = []
+  for (var i = 0; i < input.length; ++i) {
+    if (i === input.length - 1) output.push(input[i][field] + '')
+    else output.push(input[i][field])
+  }
+  return output
+}

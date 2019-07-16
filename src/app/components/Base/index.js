@@ -6,6 +6,7 @@ import { FloatLabelInput, Input, SearchInput } from './Input'
 import { Preloader } from './Preloader'
 import { Scrollbars } from './CSB'
 import { ToggleSwitch } from './ToggleSwitch'
+import { Avatar } from './Avatar'
 
 export {
   FloatLabelInput,
@@ -17,5 +18,6 @@ export {
   Input,
   Preloader,
   Scrollbars,
-  ToggleSwitch
+  ToggleSwitch,
+  Avatar
 }

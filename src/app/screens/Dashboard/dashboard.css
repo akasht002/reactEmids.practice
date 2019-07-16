@@ -840,7 +840,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
     /* height: calc(100vh - 430px); */
-    height: 330px;
+    height: 290px;
 }
 
 .BoardContainer{
@@ -1188,6 +1188,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
         margin-top: 0;
+    }
+
+    .bottomProfile .card.ProfileCard ul.list-group-flush
+    {
+        position: relative !important;
     }
 }
 
@@ -2016,7 +2021,7 @@ vertical-align: middle;
      @media all and (-ms-high-contrast:none)
      {
         .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf {display: table; max-width: calc(100% - 240px); } /* IE10 */
-     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf { display: table; max-width: calc(100% - 240px);} /* IE11 */
+     *::-ms-backdrop, .bottomPalette .VisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf { display: table; max-width: calc(100% - 240px);} /* IE11 */
      }
 
      @media all and (-ms-high-contrast:none)
@@ -2123,21 +2128,22 @@ min-width:128px !important; display:block !important;
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
 {
 
-        height:289px;
+        height:330px;
         width: 100%;
         display: block;
+        margin-top: 10px;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
 {
-height: 100%;
+    height: 100%;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
 {
     display: block;
     width: 100%;
-    height: 230px;
+    height:100%;
     overflow-y: auto;
 }
 
@@ -2208,7 +2214,7 @@ height: 100%;
      
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsName
      {
-      line-height: 19px;
+        line-height: 19px;
      }
      
       .ServiceRequestsWidget .ServiceRequestBoard  .BlockImageContainer
@@ -2218,3 +2224,27 @@ height: 100%;
          justify-content: center;
          vertical-align: middle;
      }
+
+
+     /*Update-css-july2019-dashboard*/
+     .bottomProfile .card.ProfileCard ul.list-group-flush
+     {
+        height: 40px;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        clear: both;
+     }
+
+     .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
+     {
+        color: #444;
+     }
+
+     .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span
+     {
+        color: #86868a;
+        padding-top: 2px;
+     }
+
+

@@ -1,4 +1,4 @@
-import { DashboardDetail } from './actions'
+import { DashboardDetail } from './bridge'
 
 const defaultState = {
   conversationDetail: [],
@@ -41,7 +41,8 @@ const DashboardState = (state = defaultState, action) => {
     case DashboardDetail.get_patient_visit_detail_success:
       return {
         ...state,
-        serviceVist: action.data
+        serviceVist: action.data,        
+        disableShowMore: action.disableShowMore
       }
     case DashboardDetail.get_service_request_success:
       return {

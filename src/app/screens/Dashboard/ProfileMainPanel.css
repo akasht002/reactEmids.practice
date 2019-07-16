@@ -369,7 +369,7 @@ span.ProfileCardHeaderLink:hover{
 
 .monthPalette > span{
     position: absolute;
-    top: 10px;
+    top: 3px;
     right: 20px;
     z-index: 0;
 }
@@ -521,7 +521,7 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
 }
 
 .ProfileServices{
-    max-width: calc(100% - 240px);
+    max-width: calc(100% - 315px);
     cursor: pointer;
 }
 
@@ -1118,3 +1118,88 @@ margin-left:0px;
 .ProfileContentWidget .ProfileServicesVisitContent .AvatarName { margin-left:15px; } /* IE10 */
 *::-ms-backdrop, .ProfileContentWidget .ProfileServicesVisitContent .AvatarName { margin-left:15px; } /* IE11 */
 }
+
+/*july2019-UI_updation*/
+
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent
+{
+    flex-direction: row;
+    align-items: left;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
+{
+    min-width: calc(100% - 360px);
+}
+
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span
+{
+    color: #444;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
+{
+    color: #444;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/*update-july2019-dashboard-calendor-view-top*/
+.topProfile .topPalette .monthPalette
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+.topProfile .topPalette .monthPalette span
+{
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    padding-right: 0px;
+    position: relative !important;
+    right: 0 !important;
+}
+
+.topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider
+{
+    background: #f7f7f7;
+    border-radius: 4px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: block;
+}
+
+
+.topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider span.clickView
+{
+    display: block;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    font-size: 15px;
+    font-weight: 500;
+    padding-bottom: 30px;
+}
+
+.topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top .a.NoServiceReq
+{
+    max-height: 100px;
+}
+
+
+

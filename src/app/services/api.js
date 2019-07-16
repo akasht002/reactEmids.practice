@@ -56,7 +56,7 @@ export const API = {
     getUnreadCount: 'Conversation/Unread/User/',
     getServiceProviders: 'Patient/FavouriteServiceProvider/',
     getServiceProviderRequests: 'ServiceRequest/ServiceRequests/ServiceProvider/',
-    getServiceProviderVists: 'VisitProcessing/ServiceProviderVisit/',
+    getServiceProviderVisits: 'VisitProcessing/ServiceProviderVisit/',
     getServiceRequestStatus: 'Servicerequest/LookUp/ServiceRequestStatus',
     getServiceVisitsCount: 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
     getServiceVisitsHistoryById: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',

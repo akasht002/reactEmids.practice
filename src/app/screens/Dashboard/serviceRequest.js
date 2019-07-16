@@ -7,9 +7,11 @@ import { CSS_PROPS } from './css-data-props'
 import { Scrollbars } from '../../components'
 import {VIEW_ALL_COUNT} from '../../constants/constants'
 import {
-  ServiceProviderRequestDetails,
+  ServiceProviderRequestDetails
+} from './Components/RequestList'
+import {
   ServiceRequestDefault
-} from './ServiceInfo'
+} from './Components/RequestDefault'
 import './ProfileMainPanel.css'
 import {
   getPatientServiceRequestDetail,
