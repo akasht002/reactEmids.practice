@@ -1,6 +1,6 @@
 import {
     VisitServiceDetails
-} from './actions'
+} from './bridge'
 
 const defaultState = {
     VisitServiceDetails: [],

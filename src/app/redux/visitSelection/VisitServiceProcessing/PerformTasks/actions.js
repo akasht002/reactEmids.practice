@@ -1,6 +1,6 @@
 import { API } from '../../../../services/api';
 import { ServiceRequestGet, ServiceRequestPut } from '../../../../services/http';
-import { startLoading, endLoading } from '../../../loading/actions';
+import { endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import {PerformTasks} from './bridge'
@@ -61,7 +61,7 @@ export const startLoadingProcessing = () => {
 export function getPerformTasksList(data, startOrStop) {
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))       
-        ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
+        return ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
             if (startOrStop === false) {
                 dispatch(getVisitStatus(resp.data))
             }
@@ -80,7 +80,7 @@ export function getServiceVisitId(data, startOrStop) {
     return (dispatch) => {
         dispatch(startLoadingProcessing());
         dispatch(getServiceRequestVisitId(data))
-        ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
+        return ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
             if (startOrStop === false) {
                 dispatch(getVisitStatus(resp.data))
             }
@@ -95,7 +95,7 @@ export function getServiceVisitId(data, startOrStop) {
 
 export function addPerformedTask(data, startServiceAction) {
     return (dispatch) => {
-        ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
+        return ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
             if (startServiceAction === 1 || startServiceAction === undefined) {
                 dispatch(push(Path.feedback))
             }
@@ -113,7 +113,7 @@ export function startOrStopService(data, visitId, startedTime) {
             "visitAction": data
         }
         dispatch(startLoadingProcessing());
-        ServiceRequestPut(API.startOrStopService, model).then((resp) => {
+        return ServiceRequestPut(API.startOrStopService, model).then((resp) => {
             dispatch(saveStartedTime(startedTime))
             dispatch(getPerformTasksList(visitId, false));
             dispatch(getSummaryDetails(visitId));
@@ -127,7 +127,7 @@ export function startOrStopService(data, visitId, startedTime) {
 export function getSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
+        return ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(endLoadingProcessing());
         }).catch((err) => {

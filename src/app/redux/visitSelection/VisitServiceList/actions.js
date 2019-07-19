@@ -42,7 +42,7 @@ export const clearVisitServiceList = () => {
     return (dispatch) => {
         let serviceProviderId = getUserInfo().serviceProviderId
         dispatch(startLoading());
-        elasticSearchGet(API.getServiceRequestList + `${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
+        return elasticSearchGet(API.getServiceRequestList + `${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

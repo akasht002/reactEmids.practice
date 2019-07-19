@@ -13,7 +13,7 @@ export const getAvailableDays = () => {
         if(getState().profileState.PersonalDetailState.serviceProviderId){
             serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
         };
-        Get(API.getAvailableDays + serviceProviderId + '/Available').then(resp => {   
+        return Get(API.getAvailableDays + serviceProviderId + '/Available').then(resp => {   
             dispatch(getAvailableDaysSuccess(resp.data[0]));
             dispatch(endLoading());
         }).catch(err => {
