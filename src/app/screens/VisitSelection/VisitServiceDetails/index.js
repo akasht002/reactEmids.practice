@@ -649,12 +649,6 @@ export class VisitServiceDetails extends Component {
                               </Carousel>
                             </div>
                           </div>
-                          <div className='ServiceTasks Summary'>
-                            <ul className='SelectedTask'>
-                              {description}
-
-                            </ul>
-                          </div>
                           <h2 className='ServicesTitle'>
                             Additional Information
                           </h2>
