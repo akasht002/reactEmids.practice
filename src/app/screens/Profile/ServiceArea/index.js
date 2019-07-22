@@ -166,7 +166,7 @@ export class ServiceArea extends Component {
     const onlyNums = e.target.value.replace(/[^0-9]/g, '');
     if (onlyNums.length <= 5) {
       this.setState({
-        zip: (onlyNums*1).toString(),
+        zip: onlyNums,
         zipInvalid: false,
         disabledSaveBtn: false,
         isChanged: true

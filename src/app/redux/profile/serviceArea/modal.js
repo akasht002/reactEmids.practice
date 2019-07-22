@@ -20,7 +20,7 @@ export const getModal = (data, action) => {
         "city": data.city,
         "stateId":states[0] ? parseInt(states[0],10):0 ,
         "stateName": states[1] ? states[1]:'' ,
-        "zipCode": data.zip,
+        "zipCode": (data.zip*1).toString(),
         "isActive": true,
         "rowversionId": [],
         "coverageArea": data.coverageArea,
