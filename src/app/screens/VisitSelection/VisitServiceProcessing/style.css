@@ -507,7 +507,6 @@ a.btn-primary{
 }
 
 .ServiceTypeList.selected input:checked + label:before, .ServiceTypeList input:checked + label:before, .ServiceTypeList label:hover:before, .ServiceTypeList .ServiceIndicatorBottom:after {
-    content: '';
     position: absolute;
     left: 0;
     right: 0;
