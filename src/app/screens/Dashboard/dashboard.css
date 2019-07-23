@@ -2011,11 +2011,6 @@ vertical-align: middle;
 
 /*IE_11_&_IE_10*/
 
-@media all and (-ms-high-contrast:none)
-     {
-        .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices {display: block; width: calc(100% - 240px);} /* IE10 */
-     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices { display: block;  width: calc(100% - 240px);} /* IE11 */
-     }
 
 
      @media all and (-ms-high-contrast:none)
@@ -2246,5 +2241,60 @@ min-width:128px !important; display:block !important;
         color: #86868a;
         padding-top: 2px;
      }
+
+     /*july2019-UI_fixes_dashboard*/
+     .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent
+{
+    flex-direction: row;
+    align-items: left;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.DashboardViewFirst
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 70%;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+
+}
+
+.DashboardViewFirst .ProfileServices
+{
+    max-width: 100%;
+    width: 100%;
+}
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
+{
+    width:30%;
+    min-width: auto;
+}
+
+
+
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span
+{
+    color: #444;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
+{
+    color: #444;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.topProfile .bottomPalette .ProfileServicesVisitList .ProfileShowMore
+{
+   line-height: 30px; 
+}
+
 
 
