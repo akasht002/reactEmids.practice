@@ -213,16 +213,16 @@ export class ServiceCalendar extends Component {
   };
 
   initialCall = () => {
-    let utc = moment().format('YYYY-MM-DD');
+    let utc = moment().format(DATE_FORMATS.yyyy_mm_dd);
     let d = new Date(utc);
     d.setMonth(d.getMonth() - 3);
     const date_range = {
-      start_date: moment().subtract(3, 'months').format('YYYY-MM-DD'),
-      end_date: moment().add(3, 'months').format('YYYY-MM-DD')
+      start_date: moment().subtract(3, 'months').format(DATE_FORMATS.yyyy_mm_dd),
+      end_date: moment().add(3, 'months').format(DATE_FORMATS.yyyy_mm_dd)
     }
     if (this.props.serviceVisitDate) {
       let serviceVisitDate = moment(this.props.serviceVisitDate);
-      utc = serviceVisitDate.format('YYYY-MM-DD');
+      utc = serviceVisitDate.format(DATE_FORMATS.yyyy_mm_dd);
       this.setState({
         startYear: serviceVisitDate.format('YYYY'),
         startDate: serviceVisitDate.format(),
