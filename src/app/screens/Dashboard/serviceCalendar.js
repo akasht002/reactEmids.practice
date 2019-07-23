@@ -213,31 +213,31 @@ export class ServiceCalendar extends Component {
   };
 
   initialCall = () => {
-    let utc = moment().format('YYYY-MM-DD');
+    let utc = moment().format(DATE_FORMATS.yyyy_mm_dd);
     let d = new Date(utc);
     d.setMonth(d.getMonth() - 3);
     const date_range = {
-      start_date: moment().subtract(3, 'months').format('YYYY-MM-DD'),
-      end_date: moment().add(3, 'months').format('YYYY-MM-DD')
+      start_date: moment().subtract(3, 'months').format(DATE_FORMATS.yyyy_mm_dd),
+      end_date: moment().add(3, 'months').format(DATE_FORMATS.yyyy_mm_dd)
     }
     if (this.props.serviceVisitDate) {
-      utc = this.props.serviceVisitDate.format('YYYY-MM-DD');
+      let serviceVisitDate = moment(this.props.serviceVisitDate);
+      utc = serviceVisitDate.format(DATE_FORMATS.yyyy_mm_dd);
       this.setState({
-        startYear: this.props.serviceVisitDate.format('YYYY'),
-        startDate: this.props.serviceVisitDate.format(),
-        reportDay: this.props.serviceVisitDate.format(),
-        startMonth: this.props.serviceVisitDate.format('MMM'),
-        currentDate: this.props.serviceVisitDate.format('DD'),
+        startYear: serviceVisitDate.format('YYYY'),
+        startDate: serviceVisitDate.format(),
+        reportDay: serviceVisitDate.format(),
+        startMonth: serviceVisitDate.format('MMM'),
+        currentDate: serviceVisitDate.format('DD'),
         selectedMonth: {
-          label: this.props.serviceVisitDate.format("MMM") + ' ' + this.props.serviceVisitDate.year(),
-          value: this.props.serviceVisitDate.format("MMM")
+          label: serviceVisitDate.format("MMM") + ' ' + serviceVisitDate.year(),
+          value: serviceVisitDate.format("MMM")
         },
-        selectedMonths: this.props.serviceVisitDate.format(M_FORMAT),
+        selectedMonths: serviceVisitDate.format(M_FORMAT),
       })
     }
     this.props.getServiceProviderVists(utc)
     this.props.getServiceVisitCount(date_range)
-    this.props.setServiceVisitDate(null)
   }
 
   handlePhoneNumber = data => {
@@ -277,6 +277,7 @@ export class ServiceCalendar extends Component {
   showServiceProviderList = data => {
     let date = convertStringToDate(data.target.value);
     this.props.getServiceProviderVists(date)
+    this.props.setServiceVisitDate(date)
   };
 
   handleserviceType = (item, e) => {
