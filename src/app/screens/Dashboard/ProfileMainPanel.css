@@ -694,51 +694,55 @@ div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent
 }
 
 .DashboardSPIconServices4{
-    background-image: url("../../assets/ServiceTypes/HAH - Housekeeping.svg");
-}
-
-.DashboardSPIconServices6{
     background-image: url("../../assets/ServiceTypes/ADL Eating.svg");
 }
 
-.DashboardSPIconServices7{
+.DashboardSPIconServices5{
     background-image: url("../../assets/ServiceTypes/ADL Getting Dressed.svg");
 }
 
-.DashboardSPIconServices8{
+.DashboardSPIconServices6{
     background-image: url("../../assets/ServiceTypes/ADL Toileting.svg");
 }
 
-.DashboardSPIconServices9{
+.DashboardSPIconServices7{
     background-image: url("../../assets/ServiceTypes/ADL Transferring.svg");
 }
 
-.DashboardSPIconServices10{
-    background-image: url("../../assets/ServiceTypes/G&N Grocery Delivery.svg");
-}
-
-.DashboardSPIconServices11{
-    background-image: url("../../assets/ServiceTypes/G&N Meal Delivery.svg");
-}
-
-.DashboardSPIconServices12{
+.DashboardSPIconServices8{
     background-image: url("../../assets/ServiceTypes/HAH - Companionship & Errands.svg");
 }
 
-.DashboardSPIconServices13{
+.DashboardSPIconServices9{
     background-image: url("../../assets/ServiceTypes/HAH - Food Preparation.svg");
 }
 
-.DashboardSPIconServices14{
+.DashboardSPIconServices10{
     background-image: url("../../assets/ServiceTypes/HAH - Housekeeping.svg");
 }
 
-.DashboardSPIconServices15{
+.DashboardSPIconServices11{
     background-image: url("../../assets/ServiceTypes/HAH - Laundry.svg");
 }
 
-.DashboardSPIconServices16{
+.DashboardSPIconServices12{
     background-image: url("../../assets/ServiceTypes/HAH - Shopping.svg");
+}
+
+.DashboardSPIconServices13{
+    background-image: url("../../assets/ServiceTypes/HAH - Help at Home.svg");
+}
+
+.DashboardSPIconServices14{
+    background-image: url("../../assets/ServiceTypes/G&N Grocery Delivery.svg");
+}
+
+.DashboardSPIconServices15{
+    background-image: url("../../assets/ServiceTypes/G&N Meal Delivery.svg");
+}
+
+.DashboardSPIconServices16{
+    background-image: url("../../assets/ServiceTypes/Transportation - General Transportation.svg");
 }
 
 .DashboardSPIconServices17{
