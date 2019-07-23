@@ -2296,5 +2296,43 @@ min-width:128px !important; display:block !important;
    line-height: 30px; 
 }
 
+.bottomPalette .ProfileConversationWidget .mySPContainer .options {
+    position: absolute;
+    right: 22px;
+}
+
+.bottomPalette .ProfileConversationWidget .mySPContainer:first-child .options {
+    top: 12px;
+}
+
+.bottomPalette .options:before, .ProfileServicesVisitContent .options:before, .ProfileSubOptions .Select-control .Select-arrow-zone .Select-arrow:before {
+    content: "...";
+    position: absolute;
+    color: #9f9f9f;
+    left: 4px;
+    top: -6px;
+    font-size: 24px;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.bottomPalette  .options div.SelectDropDown {
+    background-color: transparent;
+    font-size: 0;
+    border: 0;
+    width: 50px;
+    padding: 0;
+}
+
+.bottomPalette div.SelectDropDown:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    font-size: 14px;
+}
 
 
