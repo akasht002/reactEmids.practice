@@ -103,6 +103,27 @@
 
 } 
 
+/*cross-browser*/
+
+/*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+    .Loader {
+         background-image: url("../../../assets/images/loading-gif.gif") !important;
+    }
+
+  }
+
+  /*IE_11_&_IE_10*/
+
+@media all and (-ms-high-contrast:none)
+{
+   .Loader  { background-image: url("../../../assets/images/loading-gif.gif") !important; } /* IE10 */
+*::-ms-backdrop, .Loader {
+    background-image: url("../../../assets/images/loading-gif.gif") !important;} /* IE11 */
+}
+
+
 
 
 

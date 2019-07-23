@@ -1,6 +1,4 @@
-import {
-    QuestionsList
-} from './actions'
+import {QuestionsList} from './bridge'
 
 const defaultState = {
     QuestionsList: {},

@@ -13,7 +13,6 @@ import './styles.css'
 import { Path } from '../../../routes';
 import {clearState} from '../../../redux/patientProfile/actions';
 import { USERTYPES} from '../../../constants/constants';
-import { USER } from '../../../redux/auth/user/actions';
 
 class Profile extends Component {
 
@@ -57,7 +56,7 @@ class Profile extends Component {
                     Profile
                   </h4>
                 </div>
-                { (this.props.userType === USERTYPES.GUARDIAN || this.props.userType === USER.PATIENT_AND_GUARDIAN) ? 
+                { (this.props.userType === USERTYPES.GUARDIAN || this.props.userType === USERTYPES.PATIENT_AND_GUARDIAN) ? 
                 <PersonalDetail /> : <div>
                   <PersonalDetail />
                   <ClinicalCondition />

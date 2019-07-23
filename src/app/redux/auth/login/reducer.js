@@ -1,4 +1,4 @@
-import { LOGIN } from './actions'
+import { LOGIN } from './bridge'
 
 const defaultState = {
     loading: false,

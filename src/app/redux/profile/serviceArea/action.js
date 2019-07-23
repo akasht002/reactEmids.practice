@@ -3,13 +3,7 @@ import { Get,Post,Delete} from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
 import { ACTION_MODEL, getModal } from './modal'
 import { getUserInfo } from '../../../services/http'
-
-
-export const ServiceArea = {
-  getServiceAreaSuccess: 'get_ServiceArea_success/ServiceArea',
-   addServiceAreaSuccess: 'add_ServiceArea_success/ServiceArea',
-  getServiceAreaFieldDetails: 'get_ServiceArea_Field_Details/ServiceArea',
-}
+import { ServiceArea } from './bridge'
 
 export const getServiceAreaSuccess = data => {  
   return {
@@ -57,6 +51,11 @@ export function addServiceArea(data) {
       })
       .catch(err => {
         dispatch(endLoading())
+        if(err.response.status === 400){
+          dispatch(getServiceArea())
+          dispatch(addServiceAreaSuccess(true))
+          dispatch(setPointOfServiceErrorMessage(err.response.data));
+        }
       })
   }
 }
@@ -108,8 +107,18 @@ export function deletePointService(data) {
   }
 }
 
+export const setPointOfServiceErrorMessage = data => {
+  return {
+    type: ServiceArea.setPointOfServiceErrorMessage,
+    data
+  }
+}
 
-
+export function clearPOSErrorMessage() {
+  return {
+    type: ServiceArea.clearPOSErrorMessage
+  }
+};
 
    
 

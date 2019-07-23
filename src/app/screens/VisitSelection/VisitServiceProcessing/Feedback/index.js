@@ -9,16 +9,16 @@ import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader } from '../../../..
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
-import { push } from '../../../../redux/navigation/actions'
+import { push, goBack } from '../../../../redux/navigation/actions'
 import {
     getVisitFeedBack
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-
 import './style.css'
+import { isNull } from '../../../../utils/validations'
 
-class Feedback extends Component {
+export class Feedback extends Component {
 
     constructor(props) {
         super(props);
@@ -29,8 +29,11 @@ class Feedback extends Component {
             textareaValue: '',
             textareaData: '',
             isDiscardModalOpen: false,
-            isLoading: false
+            isLoading: false,
+            isAlertModalOpen: false,
+            isSubmitButtonClicked: false
         };
+        this.normalizedSelectedAnswers = {}
         this.selectedAnswers = [];
     };
 
@@ -65,6 +68,10 @@ class Feedback extends Component {
         });
         filteredData.push(answers);
         this.selectedAnswers = filteredData;
+        this.normalizedSelectedAnswers = {
+            ...this.normalizedSelectedAnswers,
+            [id]: id
+        }
         this.setState({ answerList: filteredData });
     }
 
@@ -85,13 +92,16 @@ class Feedback extends Component {
         if (this.props.QuestionsList.length === this.selectedAnswers.length || this.props.VisitFeedback.length > 0) {
             this.onSubmit();
         } else {
-            this.setState({ isModalOpen: true })
+            this.setState({ isAlertModalOpen: true, isSubmitButtonClicked: true })
         }
+    }
+
+    onClickSkip = () => {
+        this.setState({ isModalOpen: true })
     }
 
     onClickConfirm = () => {
         this.selectedAnswers = [];
-        // this.props.goToSummary();
         this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
         this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
     }
@@ -112,13 +122,13 @@ class Feedback extends Component {
             this.setState({ isDiscardModalOpen: true })
         } else {
             this.selectedAnswers = []
-            this.props.goBack();
+            this.props.goBackToPerformTask();
         }
     }
 
-    goBack = () => {
+    goBackToPerformTask = () => {
         this.selectedAnswers = []
-        this.props.goBack();
+        this.props.goBackToPerformTask();
         this.props.getQuestionsList();
         this.props.getVisitFeedBack(this.props.ServiceRequestVisitId)
     }
@@ -130,7 +140,7 @@ class Feedback extends Component {
                 {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests <span>/ {this.props.patientDetails.serviceRequestId}</span></h5>
+                        <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -138,10 +148,10 @@ class Feedback extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
                                         {this.props.patientDetails.patient ?
@@ -184,10 +194,13 @@ class Feedback extends Component {
                                     {this.props.QuestionsList.length > 0 ?
                                         <div>
                                             {this.props.QuestionsList && this.props.QuestionsList.map((questionList, i) => {
+                                                let showError = this.state.isSubmitButtonClicked && isNull(this.normalizedSelectedAnswers[questionList.feedbackQuestionnaireId])
                                                 if (questionList.answerTypeDescription === 'ChoiceBased') {
                                                     return (
                                                         <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
-                                                            <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
+                                                            <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}>
+                                                                {i + 1}. {questionList.question}
+                                                            </p>
                                                             <div className='FeedbackAnswerWidget'>
                                                                 {questionList.answers.map((answer) => {
                                                                     this.props.VisitFeedback.map((feedback) => {
@@ -255,8 +268,14 @@ class Feedback extends Component {
 
                                 </div>
                                 <div className='bottomButton'>
+                                {this.props.VisitFeedback.length > 0 ?
+                                    ''
+                                :
+                                    <div className='mr-auto'>
+                                         <a className='btn btn-outline-primary' onClick={this.onClickSkip}>Skip</a>
+                                    </div>
+                                }
                                     <div className='ml-auto'>
-                                        {/* <Link className='btn btn-outline-primary mr-3' to='/performtasks'>Previous</Link> */}
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         <a className='btn btn-primary' onClick={this.onClickNext}>Next</a>
                                     </div>
@@ -287,7 +306,7 @@ class Feedback extends Component {
                         className='modal-sm'
                         headerFooter='d-none'
                         centered='centered'
-                        onConfirm={() => this.goBack()}
+                        onConfirm={() => this.goBackToPerformTask()}
                         onCancel={() =>
                             this.setState({
                                 isDiscardModalOpen: false
@@ -306,11 +325,12 @@ function mapDispatchToProps(dispatch) {
         saveAnswers: (data) => dispatch(saveAnswers(data)),
         getVisitFeedBack: (data) => dispatch(getVisitFeedBack(data)),
         goToSummary: () => dispatch(push(Path.summary)),
-        goBack: () => dispatch(push(Path.performTasks)),
+        goBackToPerformTask: () => dispatch(push(Path.performTasks)),
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        goBack: () => dispatch(goBack())
     }
 };
 

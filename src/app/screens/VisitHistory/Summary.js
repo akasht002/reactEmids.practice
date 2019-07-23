@@ -8,8 +8,8 @@ import {
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { getFields, getLength, getStatus, getServiceTypeImage } from "../../utils/validations";
-import { ProfileModalPopup, Preloader } from "../../components";
+import { getFields, getLength, getStatus, getServiceTypeImage, isNull } from "../../utils/validations";
+import { ProfileModalPopup, Preloader, AlertPopup } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
@@ -23,7 +23,7 @@ import { push } from '../../redux/navigation/actions';
 import { ORG_SERVICE_PROVIDER_TYPE_ID } from '../../constants/constants'
 import Moment from 'react-moment'
 
-class VistSummary extends React.Component {
+export class VistSummary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,9 +35,12 @@ class VistSummary extends React.Component {
       textareaData: "",
       EditFeedbackDetailModal: false,
       ViewFeedbackDetailModal: false,
-      disabled: true
+      disabled: true,
+      isAlertModalOpen: false,
+      isSubmitButtonClicked: false
     };
-    this.selectedAnswers = [];
+    this.selectedAnswers = []
+    this.normalizedSelectedAnswers = {}
   }
 
   componentDidMount() {
@@ -135,11 +138,14 @@ class VistSummary extends React.Component {
     }
   };
 
-  togglePersonalDetails(action, e) {
+  togglePersonalDetails() {
     this.setState({
       EditFeedbackDetailModal: !this.state.EditFeedbackDetailModal,
-      disabled: true
+      disabled: true,
+      isSubmitButtonClicked: false,
+      isAlertModalOpen: false
     });
+    this.normalizedSelectedAnswers = {}
     this.selectedAnswers = []
   }
 
@@ -156,15 +162,16 @@ class VistSummary extends React.Component {
     });
     filteredData.push(answers);
     this.selectedAnswers = filteredData;
-    this.setState({ answerList: filteredData });
-    if (this.props.QuestionsList.length === this.selectedAnswers.length) {
-      this.setState({ disabled: false });
+    this.normalizedSelectedAnswers = {
+      ...this.normalizedSelectedAnswers,
+      [id]: id
     }
+    this.setState({ answerList: filteredData });
   };
 
-  handleTextarea = (e, id) => {
+  handleTextarea = (value, id) => {
     this.setState({
-      textareaValue: e.target.value,
+      textareaValue: value,
       textareaData: {
         feedbackQuestionnaireId: id,
         answerName: this.state.textareaValue
@@ -180,14 +187,9 @@ class VistSummary extends React.Component {
     if (this.props.QuestionsList.length === this.selectedAnswers.length) {
       this.onSubmit();
     } else {
-      this.onClickConfirm();
+      this.setState({ isAlertModalOpen: true, isSubmitButtonClicked: true })
     }
   };
-
-  onClickConfirm = () => {
-    this.selectedAnswers = [];
-    this.togglePersonalDetails();
-  }
 
   onSubmit = () => {
     this.props.getVisitFeedBack(this.props.SummaryDetails.serviceRequestVisitId)
@@ -226,13 +228,14 @@ class VistSummary extends React.Component {
           <Fragment>
             {this.props.QuestionsList &&
               this.props.QuestionsList.map((questionList, i) => {
+                let showError = this.state.isSubmitButtonClicked && isNull(this.normalizedSelectedAnswers[questionList.feedbackQuestionnaireId])
                 if (questionList.answerTypeDescription === "ChoiceBased") {
                   return (
                     <div
                       key={questionList.feedbackQuestionnaireId}
                       className="FeedbackQuestionWidget"
                     >
-                      <p className="FeedbackQuestion">
+                      <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}> 
                         {i + 1}. {questionList.question}
                       </p>
                       <div className="FeedbackAnswerWidget">
@@ -290,7 +293,7 @@ class VistSummary extends React.Component {
                                 value={this.state.textareaValue}
                                 onChange={e =>
                                   this.handleTextarea(
-                                    e,
+                                    e.target.value,
                                     questionList.feedbackQuestionnaireId
                                   )
                                 }
@@ -387,7 +390,6 @@ class VistSummary extends React.Component {
 
     return (
       <React.Fragment>
-        {this.props.isLoading && <Preloader />}
         <form className="ServiceContent">
           <div className="VisitSummaryWidget">
             <div className="LeftWidget">
@@ -586,7 +588,9 @@ class VistSummary extends React.Component {
           modalTitle={modalTitle}
           centered="centered"
           onClick={this.onClickNext}
-          disabled={this.state.disabled}
+          discardBtn={true}
+          discardbuttonLabel={'Cancel'}
+          onDiscard= {() => this.setState({ EditFeedbackDetailModal: false, isAlertModalOpen: false })}
         />
         <ProfileModalPopup
           isOpen={this.state.ViewFeedbackDetailModal}
@@ -599,11 +603,16 @@ class VistSummary extends React.Component {
           buttonLabel={'OK'}
           disabled={this.state.disabledSaveBtn}
         />
+        <AlertPopup    
+           message= 'Please answer all the above questionnaire.'
+           isOpen= {this.state.isAlertModalOpen}
+           onAcceptClick = {() => this.setState({ isAlertModalOpen: false })}
+        />
       </React.Fragment>
     );
   }
 }
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getQuestionsList: () => dispatch(getQuestionsList()),
     saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data)),
@@ -613,7 +622,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     QuestionsList:
       state.visitSelectionState.VisitServiceProcessingState.FeedbackState

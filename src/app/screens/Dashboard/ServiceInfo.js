@@ -1,216 +1,12 @@
 import React, { Fragment } from 'react'
 import Moment from 'react-moment'
-import { ThemeProvider } from '@zendeskgarden/react-theming'
-import { SelectField, Select, Item } from '@zendeskgarden/react-select'
-import _ from 'lodash'
+import {  Select } from '@zendeskgarden/react-select'
 import TimeAgo from 'timeago-react'
 import moment from 'moment';
-import { getFields} from '../../utils/validations'
+import { getFields } from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
-import { getUserInfo } from '../../services/http'
-import { MORNING, AFTERNOON, EVENING } from '../../redux/constants/constants'
-import { HIRED_STATUS_ID } from '../../constants/constants';
-import { ENTITY_USER } from '../../constants/constants';
+import { SERVICE_REQUEST } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
-import { isEntityServiceProvider } from '../../utils/userUtility';
-import { isFutureDay } from '../../utils/dateUtility'
-
-export const ShowIndicator = props => {
-  if (props.count === 1) {
-    return <React.Fragment>
-      <i className='indicator'/> 
-      </React.Fragment>
-  } else if (props.count === 2) {
-    return (
-      <React.Fragment> 
-        <i className='indicator' /><i className='indicator' />
-      </React.Fragment>
-    )
-  } else if (props.count >= 3) {
-    return (
-      <React.Fragment>
-        <i className='indicator' />
-        <i className='indicator' />
-        <i className='indicator' />
-      </React.Fragment>
-    )
-  } else {
-    return ' '
-  }
-}
-
-export const splitSlots = (togglePersonalDetails, data, type, handleClick, props) => {
-  let newData = _.reduce(
-    data,
-    function (arr, el) {
-      if (el.slotDescription === type) {
-        arr.push(el)
-      }
-      return arr
-    },
-    []
-  )
-
-  return serviceCalendar(togglePersonalDetails, newData, handleClick, props)
-}
-
-
-
-export const serviceCalendar = (
-  togglePersonalDetails,
-  newData,
-  handleClick,
-  props
-) => {
-  if (newData.length > 0) {
-    // return newData.slice(0, 3).map((conversations, index) => {
-    return newData.map((conversations, index) => {  
-      let options = [
-        <Item className='ListItem CTDashboard' key='item-1'
-        onClick={(e) => { props.handlePhoneNumber(conversations) }}>
-          <i className='iconPhone' /> Phone Call
-        </Item>,
-        <Item className='ListItem CTDashboard' key='item-2'
-          onClick={(e) => { props.onClickConversation(conversations) }}>
-          <i className='iconConversation' /> Conversation
-      </Item>,
-        <Item className='ListItem CTDashboard' key='item-3'
-          onClick={(e) => { props.onClickVideoConference(conversations) }}>
-          <i className='iconVideoCon' /> Video Conference
-      </Item>
-      ];
-      if(isEntityServiceProvider()){
-        options = [
-          <Item className='ListItem CTDashboard' key='item-1'
-          onClick={(e) => { props.handlePhoneNumber(conversations) }}>
-            <i className='iconPhone' /> Phone Call
-          </Item>
-        ];
-      };
-      return (
-        <Fragment>
-          <li
-            key={index}
-            className={'list-group-item ProfileServicesVisitContent ' + (getUserInfo().serviceProviderTypeId === ENTITY_USER && "EntityUDashboard") }
-          >
-            {/* <div className='ServicesTimeContainer'>
-              <i className={'ServicesTime ' + conversations.slotDescription} />
-            </div> */}
-            <div
-              className='ProfileServices'              
-            >
-            <span className="ServicesCalendarWidget" onClick={() => {
-                handleClick(conversations)
-              }}>
-              <span className='ServicesTitle'>
-                {conversations.serviceTypes &&
-                  conversations.serviceTypes.join(', ')}
-              </span>
-              <span className='ServicesDesc' >
-                {conversations.serviceCategory && conversations.serviceCategory}
-              </span>
-              </span>
-              {getUserInfo().serviceProviderTypeId === ENTITY_USER &&
-              <div className="EntityUServiceProf">
-               {isFutureDay(conversations.visitDate) ? conversations.providerId === getUserInfo().serviceProviderId ? 
-               <span><i className="assignSPLink"
-                  onClick={e =>{
-                    togglePersonalDetails({
-                      serviceRequestId: conversations.serviceRequestId,
-                      serviceRequestVisitid: conversations.serviceRequestVisitId,
-                      patientId: conversations.patientId,
-                      visitDate:conversations.visitDate
-                    })}
-                  }
-                >
-                  Assign Service Provider
-                  </i>
-                </span> :
-              <React.Fragment>
-                <div className='ProfileCardImageContainer' 
-                onClick={() => {
-                props.goToESPProfile(conversations.providerId);
-            }}>
-              <img
-                alt={'NO_IMAGE'}
-                key={index}
-                className='avatarImage avatarImageBorder'
-                src={
-                  conversations.providerImage
-                    ? conversations.providerImage
-                    : require('../../assets/images/Blank_Profile_icon.png')
-                }
-              />
-            </div>
-            <div className='ProfileCardNameContainer' onClick={() => {
-              props.goToESPProfile(conversations.providerId);
-            }}>
-              <span>
-                {conversations.providerFirstName &&
-                  conversations.providerFirstName +
-                  ' '}
-                {' '}
-                {conversations.providerLastName && conversations.providerLastName}
-              </span>
-            </div>
-            </React.Fragment>:''}
-              </div>
-                }
-            </div>
-      {/*Patient Profile*/}
-            <div className='ProfileCardImageContainer' 
-            onClick={() => {
-              props.goToPatientProfile(conversations.patientId);
-            }}>
-              <img
-                alt={'NO_IMAGE'}
-                key={index}
-                className='avatarImage avatarImageBorder'
-                src={
-                  conversations.patientImage
-                    ? conversations.patientImage
-                    : require('../../assets/images/Blank_Profile_icon.png')
-                }
-              />
-            </div>
-            <div className='ProfileCardNameContainer' onClick={() => {
-              props.goToPatientProfile(conversations.patientId);
-            }}>
-              <span>
-                {conversations.patientFirstName &&
-                  conversations.patientFirstName +
-                  ' '}
-                {' '}
-                {conversations.patientLastName && conversations.patientLastName}
-              </span>
-            </div>
-            <div className="options">
-              <ThemeProvider>
-                <SelectField>
-                  <Select
-                    placement='auto'
-                    options={options}
-                    className='SelectDropDown CTDashboard'
-                  />
-                </SelectField>
-              </ThemeProvider>
-            </div>
-          </li>
-        </Fragment>
-      )
-    })
-  } else {
-    return (
-      <Fragment>
-        <li className='list-group-item ProfileServicesVisitContent'>
-          <div className='NoProfileServices'>
-            <i className='NoInformationIcon' /><span>No Visits</span>
-          </div>
-        </li>
-      </Fragment>
-    )
-  }
-}
 
 export const ServiceCalendarInfo = props => {
   return props.Servicelist.slice(0, 3).map((conversations, index) => {
@@ -266,68 +62,13 @@ export const ServiceCalendarInfo = props => {
   })
 }
 
-export const calendarData = data => { }
-
-export const ServiceCalendarDefault = props => {
-  return (
-    <React.Fragment>
-      <h6 className='VisitScheduleTitle'>Morning</h6>
-      <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(
-          props.togglePersonalDetails,
-          props.Servicelist,
-          MORNING,
-          props.handleClick,
-          props
-        )}
-      </ul>
-      <h6 className='VisitScheduleTitle'>Afternoon</h6>
-      <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(
-          props.togglePersonalDetails,
-          props.Servicelist,
-          AFTERNOON,
-          props.handleClick,
-          props
-        )}
-      </ul>
-      <h6 className='VisitScheduleTitle'>Evening</h6>
-      <ul className='list-group ProfileServicesVisitList'>
-        {splitSlots(
-          props.togglePersonalDetails,
-          props.Servicelist,
-          EVENING,
-          props.handleClick,
-          props
-        )}
-      </ul>
-    </React.Fragment>
-  )
-}
-
-export const ServiceRequestDefault = () => {
-  return (
-    <div className='NoInformationServiceProvider'>
-      <span>
-        <img
-          alt={'N'}
-          src={require('../../assets/images/NoServiceRequest.svg')}
-        />
-      </span>
-      <span className='NoSRText'>
-        Browse Service Request
-      </span>
-    </div>
-  )
-}
-
 export const ServiceProviderRequestDetails = props => {
   return props.serviceRequest
     .slice(props.minVal, props.maxVal)
     .map((sp, index) => {
       let patientImage = '';
       let patientLastName = '';
-      if (sp.statusId === HIRED_STATUS_ID) {
+      if (sp.statusId === SERVICE_REQUEST.hiredId) {
         patientImage = sp && sp.image ? sp.image : require('../../assets/images/Blank_Profile_icon.png');
         patientLastName = sp && sp.patientLastName;
       } else {
@@ -378,7 +119,7 @@ export const ServiceProviderRequestDetails = props => {
             </div>
 
             <div className='ProfileApplicationNumbers Avatar'  onClick={() => {
-              if (sp.statusId === HIRED_STATUS_ID) {
+              if (sp.statusId === SERVICE_REQUEST.hiredId) {
                 props.goToPatientProfile(sp.patientId);
               }
             }}>

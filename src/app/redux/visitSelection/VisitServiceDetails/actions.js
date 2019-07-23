@@ -10,6 +10,7 @@ import { startLoading, endLoading } from '../../loading/actions'
 import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
+import { USERTYPES } from '../../../constants/constants'
 
 export const VisitServiceDetails = {
   getVisitServiceDetailsSuccess: 'get_visit_service_details_success/visitservicedetails',
@@ -55,12 +56,14 @@ export const setEntityServiceProviderSuccess = data => {
   }
 }
 
-export const getVisitServiceScheduleSuccess = data => {
+export const getVisitServiceScheduleSuccess = (data, disableShowMore) => {
   return {
-    type: VisitServiceDetails.getVisitServiceScheduleSuccess,
-    data
+      type: VisitServiceDetails.getVisitServiceScheduleSuccess,
+      data,
+      disableShowMore
   }
 }
+
 
 export const getServiceRequestId = data => {
   return {
@@ -174,14 +177,45 @@ export function clearVisitServiceSchedule() {
 }
 
 
-export function getVisitServiceSchedule(data, pageNumber) {
+export function getVisitServiceSchedule(data, pageNumber, isUpdateEntitySP = false) {
   let serviceProviderId = getUserInfo().serviceProviderId
-  let pageSize = 10
-  return dispatch => {
+  let pageSize = isUpdateEntitySP ? pageNumber * 10 : 10;
+  let pageNo = isUpdateEntitySP ? 1 : pageNumber;
+  return (dispatch, getState) => {
     dispatch(scheduleLoading(true));
-    ServiceRequestGet(API.getServiceRequestSchedule + `${data}/${serviceProviderId}/${pageNumber}/${pageSize}`)
+    ServiceRequestGet(API.getServiceRequestSchedule + `${data}/${serviceProviderId}/${pageNo}/${pageSize}`)
       .then(resp => {
-        dispatch(getVisitServiceScheduleSuccess(resp.data))
+        let modifiedList = resp.data;
+        let disableShowMore = false;
+        if (modifiedList.length < pageSize) {
+          disableShowMore = true;
+        }
+        if (!isUpdateEntitySP) {
+          let serviceSchedules = getState().visitSelectionState.VisitServiceDetailsState.VisitServiceSchedule;
+          modifiedList = [
+              ...serviceSchedules
+          ];
+          if (resp.data.length === 0) {
+              disableShowMore = true
+          }
+          else {
+              if (serviceSchedules.length === 0) {
+                  modifiedList = [
+                      ...resp.data
+                  ];
+                  if (resp.data.length <= 3) {
+                      disableShowMore = true
+                  }
+              } else if (serviceSchedules.length > 0 || serviceSchedules[serviceSchedules.length - 1].serviceRequestVisitId !==
+                  resp.data[resp.data.length - 1].serviceRequestVisitId) {
+                  modifiedList = [
+                      ...serviceSchedules,
+                      ...resp.data
+                  ];
+              }
+          }
+        }
+        dispatch(getVisitServiceScheduleSuccess(modifiedList, disableShowMore))
         dispatch(scheduleLoading(false));
       })
       .catch(err => {
@@ -302,3 +336,22 @@ export function canInitiateConversation(data) {
     })
   }
 };
+
+export function updateHireStatusForServiceRequest(data) {
+  let model = {
+    serviceProviderId: getUserInfo().serviceProviderId,
+    serviceRequestId: data.serviceRequestId,
+    engagedBy: USERTYPES.SERVICE_PROVIDER
+  }
+  return dispatch => {
+    dispatch(startLoading())
+    ServiceRequestPut(API.hireServiceProvider, model)
+      .then(resp => {
+        dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}

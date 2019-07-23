@@ -840,7 +840,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
     /* height: calc(100vh - 430px); */
-    height: 330px;
+    height: 290px;
 }
 
 .BoardContainer{
@@ -850,7 +850,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ServiceRequestBoard{
-    width: 33.33%;
+    width: 50%;
     margin-bottom: 20px;
     padding: 0 10px;
 }
@@ -1188,6 +1188,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
         margin-top: 0;
+    }
+
+    .bottomProfile .card.ProfileCard ul.list-group-flush
+    {
+        position: relative !important;
     }
 }
 
@@ -2016,7 +2021,7 @@ vertical-align: middle;
      @media all and (-ms-high-contrast:none)
      {
         .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf {display: table; max-width: calc(100% - 240px); } /* IE10 */
-     *::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf { display: table; max-width: calc(100% - 240px);} /* IE11 */
+     *::-ms-backdrop, .bottomPalette .VisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf { display: table; max-width: calc(100% - 240px);} /* IE11 */
      }
 
      @media all and (-ms-high-contrast:none)
@@ -2102,6 +2107,7 @@ min-width:128px !important; display:block !important;
     background-position:center;
     margin: 0 auto;
     display: block;
+    padding-top: 60px;
 }
 
 .topProfile  .Loader
@@ -2115,4 +2121,130 @@ min-width:128px !important; display:block !important;
     margin: 0 auto;
     display: block;
 }
+
+/*loading-bug_fixes*/
+
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2)
+{
+
+        height:330px;
+        width: 100%;
+        display: block;
+        margin-top: 10px;
+}
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
+{
+    height: 100%;
+}
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
+{
+    display: block;
+    width: 100%;
+    height:100%;
+    overflow-y: auto;
+}
+
+
+@media (min-width: 1367px)
+{
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
+    {
+        max-height: 265px !important;
+    }
+
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
+    {
+        display: block;
+        width: 100%;
+        height: 265px !important;
+        overflow-y: auto;
+    
+    }
+    
+
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
+{
+    min-height: 332px !important;
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+}
+
+
+/*IE-Edge*/
+@supports (-ms-ime-align: auto) {
+    .ProfileContainer.bottomProfile :nth-child(2).innerWidget .topPalette.ProfileConversation
+    {
+        height:100%;
+    }
+
+}
+
+
+ /*cross-browser-fixes-mozila*/
+ @-moz-document url-prefix() {
+    .ProfileContainer.bottomProfile :nth-child(2).innerWidget .topPalette.ProfileConversation
+    {
+        height:100%;
+    }
+
+
+ }
+
+
+     /*Updated-css-according-new-UI-july2019*/
+
+     .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate
+     {
+         font-size: 14px;
+         line-height: 14px;
+         color: #8c8c8c;
+         margin-bottom: 28px;
+     }
+     
+      .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate:after
+     {
+         margin-top: 29px;
+     }
+     
+      .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsName
+     {
+        line-height: 19px;
+     }
+     
+      .ServiceRequestsWidget .ServiceRequestBoard  .BlockImageContainer
+     {
+         display: flex;
+         flex-direction: row;
+         justify-content: center;
+         vertical-align: middle;
+     }
+
+
+     /*Update-css-july2019-dashboard*/
+     .bottomProfile .card.ProfileCard ul.list-group-flush
+     {
+        height: 40px;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        clear: both;
+     }
+
+     .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
+     {
+        color: #444;
+     }
+
+     .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span
+     {
+        color: #86868a;
+        padding-top: 2px;
+     }
+
 

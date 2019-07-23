@@ -13,12 +13,12 @@ import { convertTime24to12 } from '../../../../utils/stringHelper';
 import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
-import { push } from '../../../../redux/navigation/actions';
+import { push, goBack } from '../../../../redux/navigation/actions';
 import { getServiceTypeImage } from '../../../../utils/validations';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 
-class PerformTasks extends Component {
+export class PerformTasks extends Component {
 
     constructor(props) {
         super(props);
@@ -187,7 +187,7 @@ class PerformTasks extends Component {
                 {this.state.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests <span>/ {this.state.taskList.serviceRequestId}</span></h5>
+                        <h5 className='primaryColor m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -195,10 +195,10 @@ class PerformTasks extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <Link to="/visitServiceDetails" className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitId}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitNumber}</span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.state.taskList.patient && this.state.taskList.patient.patientId)}>
                                         <span>
@@ -372,6 +372,7 @@ function mapDispatchToProps(dispatch) {
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+        goBack: () => dispatch(goBack())
     }
 };
 

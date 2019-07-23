@@ -35,12 +35,12 @@ import Pagination from 'react-js-pagination';
 import './style.css'
 import { Path } from "../../../routes";
 import {
-    SHOW_IMAGES_SERVICE_REQUEST, RECURRING_PATTERN, PAGE_NO,
-    SERVICE_REQUEST_PAGE_SIZE,DEFAULT_SEARCH_COUNT
+    SHOW_IMAGES_SERVICE_REQUEST, PAGE_NO,
+    SERVICE_REQUEST_PAGE_SIZE,DEFAULT_SEARCH_COUNT, DATE_FORMATS
 } from '../../../constants/constants';
 import { getUserInfo } from '../../../services/http';
 import { Preloader } from '../../../components';
-class VisitServiceList extends Component {
+export class VisitServiceList extends Component {
 
     constructor(props) {
         super(props);
@@ -77,7 +77,7 @@ class VisitServiceList extends Component {
             searchKeyword: ''
         };
         this.sort = false
-        this.defaultStatus = ["Open", "Invited", "Applied", "Hired", "Not Hired", "Completed", "Closed", "Cancelled", "Not Interested"]
+        this.defaultStatus = ["Open", "Invited", "Applied", "Hired", "Not Hired", "Completed", "Cancelled", "Not Interested"]
         this.isStatusChanged = false
     };
 
@@ -208,12 +208,23 @@ class VisitServiceList extends Component {
         });
     }
 
+    getStatus = () => {
+        let status = []
+        this.props.ServiceStatus.forEach(obj => {
+          if (obj.isChecked) {
+            status.push(obj.keyValue)
+          }
+        });
+        return status
+      }
+
     applyFilter = () => {
+        let status = this.getStatus();
         let serviceProviderId = getUserInfo().serviceProviderId;
         let data = {
             startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
             endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
-            serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
+            serviceStatus: status,
             ServiceCategoryId: this.state.ServiceCategoryId,
             serviceTypes: uniqElementOfArray(this.state.serviceTypes),
             ServiceAreas: this.state.ServiceAreas,
@@ -232,6 +243,7 @@ class VisitServiceList extends Component {
     }
 
     handleSortFilterChange = pageNumber => {
+        let status = this.getStatus();
         this.setState({ pageNumber: pageNumber });
         let serviceProviderId = getUserInfo().serviceProviderId;
         let data;
@@ -239,7 +251,7 @@ class VisitServiceList extends Component {
             data = {
                 startDate: DEFAULT_FROM_DATE,
                 endDate: DEFAULT_TO_DATE,
-                serviceStatus: [this.props.status],
+                serviceStatus: status,
                 ServiceCategoryId: '',
                 serviceTypes: [],
                 ServiceAreas: {},
@@ -252,13 +264,13 @@ class VisitServiceList extends Component {
             data = {
                 startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
                 endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
-                serviceStatus: this.isStatusChanged ? uniqElementOfArray(this.state.serviceStatus) : this.defaultStatus,
+                serviceStatus: status,
                 ServiceCategoryId: this.state.ServiceCategoryId,
                 serviceTypes: uniqElementOfArray(this.state.serviceTypes),
                 ServiceAreas: this.state.ServiceAreas,
                 serviceProviderId: serviceProviderId,
                 FromPage: pageNumber,
-                ToPage: 15,
+                ToPage: SERVICE_REQUEST_PAGE_SIZE,
             };
         }
         this.props.getFilter(data)
@@ -377,7 +389,7 @@ class VisitServiceList extends Component {
             sortByOrder: this.state.selectedKey,
             sortByColumn: "MODIFIEDDATE",
             pageNumber: pageNumber,
-            PageSize: 15
+            PageSize: SERVICE_REQUEST_PAGE_SIZE
         }
         this.props.getSort(data);
         this.setState({ activePage: pageNumber });
@@ -416,7 +428,7 @@ class VisitServiceList extends Component {
             sortByOrder: selectedKey,
             sortByColumn: "MODIFIEDDATE",
             pageNumber: this.state.pageNumber,
-            PageSize: 15
+            PageSize: SERVICE_REQUEST_PAGE_SIZE
         }
         this.props.getSort(data);
         this.props.formDirtyVisitList();
@@ -496,14 +508,10 @@ class VisitServiceList extends Component {
                                     <div className='BlockImageDetailsName'>
                                         <span className="default-444">{serviceList.type}</span>
                                     </div>
-                                    <div className='BlockImageDetailsActivity'>
-                                        {serviceList.serviceCategoryDescription}
-                                    </div>
                                     <div className='BlockImageDetailsDate'>
                                         {serviceList.recurring}
                                         <span className='DetailsDateSeperator'>|</span>
-                                        <Moment format="DD MMM">{serviceList.startDate}</Moment>
-                                        {serviceList.recurring !== RECURRING_PATTERN && <React.Fragment>  - <Moment format="DD MMM">{serviceList.endDate}</Moment> </React.Fragment>}
+                                        Posted on <Moment format={DATE_FORMATS.monDD}>{serviceList.createDate}</Moment>                                      
                                     </div>
                                 </div>
                             </div>
@@ -517,9 +525,6 @@ class VisitServiceList extends Component {
                                 <div className='BlockProfileDetails'>
                                     <div className='BlockProfileDetailsName'>
                                         <span>{serviceList.patientFirstName} {patientLastName}</span>
-                                    </div>
-                                    <div className='BlockProfileDetailsActivity'>
-                                        <span>Posted on <Moment format="MMM DD">{serviceList.createDate}</Moment></span>
                                     </div>
                                 </div>
                                 <div className='BlockProfileDetailsStatus'>
