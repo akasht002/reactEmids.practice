@@ -18,6 +18,7 @@ export const calenderDetails = (props,conversations,options,index) => {
        {getHHMinSession(conversations.visitStartTime)}                 
        </span>
      </div>
+     <div className="DashboardViewFirst">
      <div
        className='ProfileServices'              
      >
@@ -76,6 +77,9 @@ export const calenderDetails = (props,conversations,options,index) => {
        </div>
          }
      </div>
+    </div>
+
+
  {/*Patient Profile*/}
      <div className='ProfileCardImageContainer' 
      onClick={() => {
