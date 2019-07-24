@@ -3,7 +3,7 @@ import { Scrollbars } from '../../components';
 import {getState} from '../../utils/userUtility';
 import './styles.css';
 
-export default class TeleHealthParticipants extends Component {
+export  class TeleHealthParticipants extends Component {
 
     getParticipants = () => {
         return [ 
@@ -60,3 +60,5 @@ export default class TeleHealthParticipants extends Component {
         );
     }
 }
+
+export default  TeleHealthParticipants 

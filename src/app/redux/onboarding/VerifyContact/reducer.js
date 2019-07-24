@@ -1,5 +1,4 @@
-import {VerifyContact} from './bridge';
-
+import { VerifyContact } from './bridge'
 const defaultState = {
     loading: false,
     isPasscodeSent: false,

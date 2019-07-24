@@ -6,11 +6,14 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { ConversationSummary } from './index.js';
+ import { ConversationSummary,mapDispatchToProps, mapStateToProps } from './index.js';
 
  jest.mock('../../../utils/userUtility', () => ({
     getUserInfo: () => ({
         serviceProviderTypeId: 'I'
+    }),
+    isEntityServiceProvider : () => ({
+
     })
 }))
 
@@ -21,17 +24,19 @@ const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
     conversation: [],
-    // certificationFieldDetails: {
-    //     authority: '',
-    //     certificationName: '',
-    //     licenceNumber: ''
-    // },
     authState: {
         userState: {
             userData: {
-                userInfo: {}
+                userInfo: {
+                    loggedInUser : {
+                        serviceProviderId:23
+                    }
+                }
             }
         }
+    },
+    loggedInUser : {
+        serviceProviderId:23
     },
     fetchConversationSummary: jest.fn(),
     createNewConversation: jest.fn(),
@@ -41,7 +46,9 @@ const defaultState = {
     getConversationCount: jest.fn(),
     openedAsyncPage: jest.fn(),
     clearCurrentOpenConversation: jest.fn(),
-    setActivePageNumber: jest.fn()
+    setActivePageNumber: jest.fn(),
+    onClearParticipantContainer:true,
+    onSetDisplayParticipantModal:jest.fn()
 }
 
  store = mockStore(defaultState);
@@ -58,62 +65,98 @@ const defaultState = {
 };
 
  describe("ConversationSummary", function () {
-    let wrapper, shallowWrapper;
+    let shallowWrapper;
 
      beforeEach(() => {
         const props = defaultState;
-        wrapper = setUp(props);
         shallowWrapper = shallow(
             <ConversationSummary dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
      it('Check the ConversationSummary form body', () => {
-        expect(wrapper.find('.ProfileHeaderWidget').length).toEqual(1);
+        expect(shallowWrapper).toBeDefined()
     });
+
+    
+    it('should test initial state', () => {
+        const initialState = defaultState
+        expect(mapStateToProps(initialState)).toBeDefined();
+    }); 
+
+    it('Check mapDispatchToProps', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).fetchConversationSummary();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).createNewConversation();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).gotoConversation();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getUnreadMsgCounts();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).canServiceProviderCreateMessage();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getConversationCount();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).openedAsyncPage();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getConversationCount();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).openedAsyncPage();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();     
+        mapDispatchToProps(dispatch).clearCurrentOpenConversation();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setActivePageNumber();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    })
 
      it('Check the componentDidMount', () => {
         shallowWrapper.instance().componentDidMount();
     });
 
-     // it('Check the reset', () => {
-    //     shallowWrapper.instance().reset();
-    // });
+    it('Check the componentWillUnmount function', () => {
+        shallowWrapper.instance().componentWillUnmount()
+   });
 
-     // it('Check the toggleCertification', () => {
-    //     shallowWrapper.instance().toggleCertification();
-    // });
+   it('Check the onClickConversation function', () => {
+    shallowWrapper.instance().onClickConversation({},{})
+   });
 
-     // it('Check the checkValidation true', () => {
-    //     shallowWrapper.instance().checkValidation(true, 'VTU', 'BE', '123');
-    // });
+   it('Check the onClickConversation function', () => {
+     shallowWrapper.instance().onClickConversation({},{})
+   });
 
-     // it('Check the checkValidation false', () => {
-    //     shallowWrapper.instance().checkValidation(true, '', '', '');
-    // });
+   it('Check the onSetDisplayParticipantModal function', () => {
+    shallowWrapper.setProps({canCreateConversation:true})
+    shallowWrapper.instance().onSetDisplayParticipantModal()
+   });
 
-     // it('Check the addCertification', () => {
-    //     shallowWrapper.instance().addCertification();
-    // });
+   it('Check the onSetDisplayParticipantModal function', () => {
+    shallowWrapper.setProps({canCreateConversation:false})
+    shallowWrapper.instance().onSetDisplayParticipantModal()
+   });
 
-     // it('Check the showModalOnDelete', () => {
-    //     shallowWrapper.instance().showModalOnDelete({ target: { id: 1 } });
-    // });
+   it('Check the onCreateConversation function', () => {
+    shallowWrapper.instance().onCreateConversation()
+   });
 
-     // it('Check the editCertification', () => {
-    //     shallowWrapper.instance().editCertification({ target: { id: 1 } });
-    // });
+   it('Check the gotoParticipantView function', () => {
+    shallowWrapper.instance().gotoParticipantView()
+   });
 
-     // it('Check the updateCertification', () => {
-    //     shallowWrapper.instance().updateCertification();
-    // });
+   it('Check the toggle function', () => {
+    shallowWrapper.instance().toggle()
+   });
 
-     // it('Check the deleteCertification', () => {
-    //     shallowWrapper.instance().deleteCertification();
-    // });
+   it('Check the onConfirmCreateConversationPermission  function', () => {
+    shallowWrapper.instance().onConfirmCreateConversationPermission ()
+   });
 
-     // it('Check the CertificationModal form body', () => {
-    //     expect(wrapper.find('.CertificationModal').length).toEqual(1);
-    // });
+   it('Check the handlePageChange function', () => {
+    shallowWrapper.instance().handlePageChange(23)
+   });
+
+
+
 
  }); 

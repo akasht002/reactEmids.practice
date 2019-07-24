@@ -9,7 +9,7 @@ import {
   NavbarBrand } from 'reactstrap';
   import './styles.css';
 
-class LoginCallBack extends Component {
+export class LoginCallBack extends Component {
   render() {
     return (
       <ScreenCover onPress={this.onBtnPress}>
