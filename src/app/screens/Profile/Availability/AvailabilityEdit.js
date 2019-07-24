@@ -163,7 +163,7 @@ export class AvailabilityEdit extends Component {
     }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
          existingAvailableDays: state.profileState.AvailabilityState.availableDays
     } 

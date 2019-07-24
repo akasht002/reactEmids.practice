@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { AvailabilityEdit } from './AvailabilityEdit.js';
+ import { AvailabilityEdit,mapStateToProps } from './AvailabilityEdit';
 
  Enzyme.configure({ adapter: new Adapter() })
 
@@ -14,7 +14,6 @@ import { Provider } from 'react-redux';
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    existingAvailableDays: [],
     blackoutDays: [],
     profileState: {
         AvailabilityState: {
@@ -28,6 +27,7 @@ const defaultState = {
             }
         }
     },
+    existingAvailableDays:{days:[{}]},
     getBlackOutDays: jest.fn(),
     addBlackOutDay: jest.fn(),
     updateBlackOutDay: jest.fn(),
@@ -58,32 +58,42 @@ const defaultState = {
         )
     });
 
-     it('Check the AvailabilityEdit form body', () => {
-        expect(wrapper.find('.SPCardTitle').length).toEqual(1);
+    it('Check the AvailabilityEdit Details body', () => {
+        expect(shallowWrapper).toBeDefined()
+    }); 
+
+    it('should test mapStateToProps state', () => {
+        expect(mapStateToProps(defaultState)).toBeDefined();
     });
 
-    //  it('Check the componentWillMount', () => {
-    //     shallowWrapper.instance().componentWillMount();
-    // });
+    it('Check the toggleCheckbox function', () => {
+        shallowWrapper.instance().toggleCheckbox([{slotName:'g'}],[{slotName:'g'}],{target:{checked:true}})
+    })
 
-    //  it('Check the toggleCheckbox', () => {
-    //     shallowWrapper.instance().toggleCheckbox([], [], { target: { checked: true } });
-    // });
+    it('Check the getSlots  function', () => {
+        shallowWrapper.instance().getSlots([{isActive :true}],2)
+    })
 
-    //  it('Check the getSlots', () => {
-    //     shallowWrapper.instance().getSlots([], 1);
-    // });
+    it('Check the componentWillMount function', () => {
+        shallowWrapper.instance().componentWillMount()
+    })
 
-    //  it('Check the checkBoxValue', () => {
-    //     shallowWrapper.instance().checkBoxValue([]);
-    // });
+    it('Check the checkBoxValue function', () => {
+        shallowWrapper.instance().checkBoxValue([{isActive :true}])
+    })
 
-    //  it('Check the getAllAvailableDays', () => {
-    //     shallowWrapper.instance().getAllAvailableDays();
-    // });
+    it('Check the getAllAvailableDays function', () => {
+        shallowWrapper.setState({
+            updatedAvailableDays :[{}]
+        })
+        shallowWrapper.instance().getAllAvailableDays()
+    })
 
-    //  it('Check the combineExistingAvailableData', () => {
-    //     shallowWrapper.instance().combineExistingAvailableData();
-    // });
-
+    it('Check the combineExistingAvailableData function', () => {
+        shallowWrapper.setState({
+            updatedAvailableDays :[{}],
+            isSetData:true
+        })
+        shallowWrapper.instance().combineExistingAvailableData()
+    })   
  }); 

@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
-import { Certification } from './index.js';
+import { Certification, mapDispatchToProps, mapStateToProps } from './index.js';
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -61,6 +61,37 @@ describe("Certification", function () {
     it('Check the Certification form body', () => {
         expect(wrapper.find('.SPCardTitle').length).toEqual(1);
     });
+
+    it('should test mapStateToProps state', () => {
+        expect(mapStateToProps(defaultState)).toBeDefined();
+     });
+  
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getCertification();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).addCertification();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).editCertification();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).updateCertification();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).deleteCertification();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('Check the componentWillReceiveProps function', () => {
+        wrapper.isImageSave = false
+        const nextProps = {
+            certificationFieldDetails:{ 
+                certificationName :'',
+                authority:'',
+                licenceNumber:'',
+                certificationId:''
+            }
+        }
+        wrapper.instance().componentWillReceiveProps(nextProps)
+   });
 
     it('Check the componentDidMount', () => {
         shallowWrapper.instance().componentDidMount();

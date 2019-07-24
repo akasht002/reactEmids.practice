@@ -591,7 +591,7 @@ export class WorkHistory extends Component {
                 }
             }
             
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
                         getWorkHistory: () => dispatch(getWorkHistory()),
                     addWorkHistory: (data) => dispatch(addWorkHistory(data)),
@@ -601,7 +601,7 @@ function mapDispatchToProps(dispatch) {
                 }
             };
             
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
                         workhistoryList: state.profileState.WorkHistoryState.workhistoryList,
                     addeworkhistorySuccess: state.profileState.WorkHistoryState.addeworkhistorySuccess,

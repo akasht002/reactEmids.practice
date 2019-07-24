@@ -340,7 +340,7 @@ export class Certification extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getCertification: () => dispatch(getCertification()),
         addCertification: (data) => dispatch(addCertification(data)),
@@ -350,7 +350,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         certificationList: state.profileState.CertificationState.certificationList,
         addCertificationSuccess: state.profileState.CertificationState.addCertificationSuccess,

@@ -1090,7 +1090,7 @@ export class PersonalDetail extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     getAffiliationDetail: () => dispatch(action.getAffiliationDetail()),
@@ -1102,7 +1102,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

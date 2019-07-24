@@ -6,7 +6,15 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { Profile } from './index.js';
+ import { Profile, mapDispatchToProps, mapStateToProps} from './index.js';
+
+ jest.mock('../../../services/http', () => ({
+    getUserInfo : () => ( {
+        serviceProviderTypeId  :1,
+        isEntityServiceProvider :true
+    })
+}))
+
 
  Enzyme.configure({ adapter: new Adapter() })
 
@@ -22,6 +30,24 @@ const defaultState = {
             }
         }
     },
+    personalDetail:{
+        serviceProviderTypeId:1
+    },
+    profileState:{
+        progressIndicatorState : {
+            profilePercentage:67, 
+        },
+        serviceOfferedState:{serviceOfferedList:[{}]},
+        LanguagesState:{selectedLanguagesList:[{}]},
+        PersonalDetailState:{personalDetail:{},isUser:true},
+
+    },
+    asyncMessageState:{
+        canCreateConversation:true
+    },
+    loadingState:{isLoading:true},
+    telehealthState:{ isInvitationCame : true,initiatorFirstName:true,initiatorLastName:''},
+    serviceProviderTypeId:1,
     getProfilePercentage: jest.fn(),
     navigateProfileHeader: jest.fn(),
     clearInvitaion: jest.fn(),
@@ -47,90 +73,165 @@ const defaultState = {
 };
 
  describe("Profile", function () {
-    let wrapper, shallowWrapper;
+    let wrapper;
 
-     beforeEach(() => {
+    beforeEach(() => {
         const props = defaultState;
-        wrapper = setUp(props);
-        shallowWrapper = shallow(
+        wrapper = shallow(
             <Profile dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
-     it('Check the Profile form body', () => {
-        expect(wrapper.find('.container-fluid').length).toEqual(1);
-    });
+    it('Check the Profile Details body', () => {
+        wrapper.setState({
+        })
+        expect(wrapper).toBeDefined()
+      }); 
+  
+      it('Check the mapDispatchToProps fn()', () => {
+          const dispatch = jest.fn();
+          mapDispatchToProps(dispatch).getProfilePercentage();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();
+          mapDispatchToProps(dispatch).navigateProfileHeader();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();
+          mapDispatchToProps(dispatch).clearInvitaion();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();
+          mapDispatchToProps(dispatch).joinVideoConference();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();
+          mapDispatchToProps(dispatch).goToDashboard();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();        
+          mapDispatchToProps(dispatch).rejectConference();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();                  
+          mapDispatchToProps(dispatch).goBack();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();       
+          mapDispatchToProps(dispatch).clearServiceProviderId();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();                
+          mapDispatchToProps(dispatch).getPersonalDetail();
+          expect(dispatch.mock.calls[0][0]).toBeDefined();
+      });
+  
+      it('should test mapStateToProps state', () => {
+            expect(mapStateToProps(defaultState)).toBeDefined();
+      });
 
-     it('Check the componentDidMount', () => {
-        shallowWrapper.instance().componentDidMount();
-    });
+      it('Check the getPersonalDetail function', () => {
+          wrapper.setProps({
+            personalDetail : { serviceProviderTypeId :1,serviceProviderType : "Individual" }
+          })
+          wrapper.instance().getPersonalDetail()
+      })
 
-     // it('Check the reset', () => {
-    //     shallowWrapper.instance().reset();
-    // });
+      it('Check the getPersonalDetail function', () => {
+        wrapper.setProps({
+          personalDetail : { serviceProviderTypeId :1,serviceProviderType : "EntityServiceProvider" }
+        })
+        wrapper.instance().getPersonalDetail()
+      })
 
-     // it('Check the toggleServiceArea', () => {
-    //     shallowWrapper.instance().toggleServiceArea();
-    // });
 
-     // it('Check the onClose', () => {
-    //     shallowWrapper.instance().onClose();
-    // });
+      it('Check the getAvailability function', () => {
+        wrapper.setProps({
+          personalDetail : { serviceProviderTypeId :1,serviceProviderType : "EntityServiceProvider" }
+        })
+        wrapper.instance().getAvailability()
+      })
 
-     // it('Check the addServiceArea', () => {
-    //     shallowWrapper.instance().addServiceArea();
-    // });
+      it('Check the getServiceOffered function', () => {
+        wrapper.setProps({
+          personalDetail : { serviceProviderTypeId :1,serviceProviderType : "EntityServiceProvider" }
+        })
+        wrapper.instance().getServiceOffered()
+      })
 
-     // it('Check the showModalOnDelete', () => {
-    //     shallowWrapper.instance().showModalOnDelete({ target: { id: 1 } });
-    // });
+      it('Check the getServiceArea function', () => {
+        wrapper.setProps({
+          personalDetail : { serviceProviderTypeId :1,serviceProviderType : "EntityServiceProvider" }
+        })
+        wrapper.instance().getServiceArea()
+      })
 
-     // it('Check the editServiceArea', () => {
-    //     shallowWrapper.instance().editServiceArea({ target: { id: 1 } });
-    // });
 
-     // it('Check the updateServiceArea', () => {
-    //     shallowWrapper.instance().updateServiceArea();
-    // });
+      it('Check the getSkills function', () => {
+        wrapper.setProps({
+          personalDetail : { serviceProviderTypeId :1,serviceProviderType : "EntityServiceProvider" }
+        })
+        wrapper.instance().getSkills()
+      })
 
-     // it('Check the deletePointService', () => {
-    //     shallowWrapper.instance().deletePointService();
-    // });
+      it('Check the getLanguages function', () => {
+        wrapper.setProps({
+          personalDetail : { serviceProviderTypeId :1,serviceProviderType : "EntityServiceProvider" }
+        })
+        wrapper.instance().getLanguages()
+      })
 
-     // it('Check the textChangeValue', () => {
-    //     shallowWrapper.instance().textChangeValue({ target: { value: 1 } });
-    // });
+      it('Check the getCertification function', () => {
+        wrapper.setProps({
+          personalDetail : { serviceProviderTypeId :1,serviceProviderType : "EntityServiceProvider" }
+        })
+        wrapper.instance().getCertification()
+      })
 
-     // it('Check the rangeChangeValue', () => {
-    //     shallowWrapper.instance().rangeChangeValue({ target: { value: 1 } });
-    // });
 
-     // it('Check the onClickHandleIncr', () => {
-    //     shallowWrapper.instance().onClickHandleIncr();
-    // });
+      it('Check the validationPopUp function', () => {
+        wrapper.setProps({
+            isUser :true
+        })
+        wrapper.instance().validationPopUp()
+      })
 
-     // it('Check the onClickHandleDecr', () => {
-    //     shallowWrapper.instance().onClickHandleDecr();
-    // });
+      it('Check the validationPopUp function', () => {
+        wrapper.setProps({
+            isUser :false,
+            serviceOfferedList:[],
+            LanguagesList:[]
+        })
+        wrapper.instance().validationPopUp()
+      })
 
-     // it('Check the checkLength', () => {
-    //     shallowWrapper.instance().checkLength([]);
-    // });
+      it('Check the validationPopUp function', () => {       
+        wrapper.instance().validationPopUp()
+      })
 
-     // it('Check the checkZipLength', () => {
-    //     shallowWrapper.instance().checkZipLength([]);
-    // });
 
-     // it('Check the checkFieldsOnEdit true', () => {
-    //     shallowWrapper.instance().checkFieldsOnEdit([1,2]);
-    // });
+      it('Check the stayOnProfile function', () => {       
+        wrapper.instance().stayOnProfile()
+      })
 
-     // it('Check the checkFieldsOnEdit false', () => {
-    //     shallowWrapper.instance().checkFieldsOnEdit();
-    // });
+      it('Check the componentWillUnmount function', () => {       
+        wrapper.instance().componentWillUnmount()
+      })
 
-     // it('Check the checkFiledLengths', () => {
-    //     shallowWrapper.instance().checkFiledLengths([]);
-    // });
+      it('Check the goToDashboard function', () => {       
+        wrapper.instance().goToDashboard()
+      })
+
+      it('Check the getEducation function', () => {
+        wrapper.setProps({
+            personalDetail :{serviceProviderTypeId :1}
+        })
+        wrapper.instance().getEducation()
+      })
+
+      it('Check the navigateProfileHeader function', () => {       
+        wrapper.instance().navigateProfileHeader('visitNotification')
+      })
+
+      it('Check the navigateProfileHeader function', () => {       
+        wrapper.instance().navigateProfileHeader('messagesummary')
+      })
+
+      it('Check the navigateProfileHeader function', () => {       
+        wrapper.instance().navigateProfileHeader('contact')
+      })
+
+      it('Check the navigateProfileHeader function', () => {       
+        wrapper.instance().navigateProfileHeader('logout')
+      })
+
+      it('Check the navigateProfileHeader function', () => {       
+        wrapper.instance().navigateProfileHeader('')
+      })
+
 
  }); 

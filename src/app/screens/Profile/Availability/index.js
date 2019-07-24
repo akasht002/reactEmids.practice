@@ -224,7 +224,7 @@ export class Availability extends Component {
     }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
         availableDays: state.profileState.AvailabilityState.availableDays,
         blackoutDays: state.profileState.AvailabilityState.blackoutDays,
@@ -232,7 +232,7 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
     return {
         updateAvailabilityDays: data => dispatch(updateAvailabilityDays(data)),
         getAvailableDays: () => dispatch(getAvailableDays()),

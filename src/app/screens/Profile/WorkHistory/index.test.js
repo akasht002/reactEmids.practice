@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { WorkHistory } from './index.js';
+ import { WorkHistory, mapDispatchToProps, mapStateToProps } from './index.js';
 
  Enzyme.configure({ adapter: new Adapter() })
 
@@ -52,15 +52,37 @@ const defaultState = {
     return wrapper;
 };
 
- describe("Certification", function () {
+ describe("WorkHistory", function () {
     let wrapper, shallowWrapper;
 
      beforeEach(() => {
-        const props = defaultState;
-        wrapper = setUp(props);
+        const props = defaultState;        
         shallowWrapper = shallow(
             <WorkHistory dispatch={dispatch} store={store} {...defaultState} />
         )
+    });
+
+    it('Check the WorkHistory Details body', () => {       
+        expect(shallowWrapper).toBeDefined()
+    }); 
+
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getWorkHistory();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).addWorkHistory([{}]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).editWorkHistory({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).updateWorkHistory({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).deleteWorkHistory({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('should test mapStateToProps state', () => {
+    expect(mapStateToProps(defaultState)).toBeDefined();
     });
 
      it('Check the Certification form body', () => {
@@ -69,6 +91,13 @@ const defaultState = {
 
      it('Check the componentDidMount', () => {
         shallowWrapper.instance().componentDidMount();
+    });
+
+    it('Check the componentWillReceiveProps', () => {
+        const nextProps = {
+            workhistoyFieldDetails : {currentlyWorking:true}
+        }
+        shallowWrapper.instance().componentWillReceiveProps(nextProps);
     });
 
      it('Check the reset', () => {
@@ -84,6 +113,10 @@ const defaultState = {
     });
 
      it('Check the checkValidation false', () => {
+        shallowWrapper.instance().checkValidation(true, '', '', '', null, null, '');
+    });
+
+    it('Check the checkValidation false', () => {
         shallowWrapper.instance().checkValidation(true, '', '', '', '', '', '');
     });
 

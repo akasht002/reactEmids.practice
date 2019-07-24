@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { Availability } from './index.js';
+ import { Availability, mapDispatchToProps, mapStateToProps  } from './index.js';
 
  Enzyme.configure({ adapter: new Adapter() })
 
@@ -54,6 +54,20 @@ const defaultState = {
 
      it('Check the Availability form body', () => {
         expect(wrapper.find('.SPCardTitle').length).toEqual(1);
+    });
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).updateAvailabilityDays();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getAvailableDays();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getBlackOutDays();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('should test mapStateToProps state', () => {
+    expect(mapStateToProps(defaultState)).toBeDefined();
     });
 
      it('Check the componentDidMount', () => {

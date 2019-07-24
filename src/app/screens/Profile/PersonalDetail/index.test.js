@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { PersonalDetail } from './index.js';
+ import { PersonalDetail, mapDispatchToProps, mapStateToProps  } from './index.js';
 
  jest.mock('../../../components', () => ({
     ScreenCover: 'mockScreenCover'
@@ -18,12 +18,12 @@ import { Provider } from 'react-redux';
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    personalDetail: [],
+    personalDetail: {},
     updatePersonalDetailSuccess: false,
-    cityDetail: [],
+    cityDetail: [{}],
     imageData: '',
-    genderList: [],
-    affiliationList: [],
+    genderList: [{}],
+    affiliationList:[{}],
     spBusyInVisit: null,
     sbModeClicked: false,
     serviceProviderId: null,
@@ -31,14 +31,15 @@ const defaultState = {
     serviceProviderTypeId: 0,
     isEntityServiceProvider: false,
     entityId: null,
+    profileImgData:'',
     profileState: {
         PersonalDetailState: {
             personalDetail: [],
             updatePersonalDetailSuccess: false,
-            cityDetail: [],
+            cityDetail: [{id :'',name:''}],
             imageData: '',
-            genderList: [],
-            affiliationList: [],
+            genderList: [{id :'',name:''}],
+            affiliationList: [{affiliationId :'',name:''}],
             spBusyInVisit: null,
             sbModeClicked: false,
             serviceProviderId: null,
@@ -55,6 +56,8 @@ const defaultState = {
             }
         }
     },
+    loadingState : { isLoading :true },
+    selectedAffiliation:[],
     getPersonalDetail: jest.fn(),
     getAffiliationDetail: jest.fn(),
     updatePersonalDetail: jest.fn(),
@@ -82,54 +85,164 @@ const defaultState = {
 
      beforeEach(() => {
         const props = defaultState;
-        wrapper = setUp(props);
-        shallowWrapper = shallow(
+        // wrapper = setUp(props);
+        wrapper = shallow(
             <PersonalDetail dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
+    it('Check the EntityPersonalDetail Details body', () => {
+        wrapper.setState({
+        })
+        expect(wrapper).toBeDefined()
+    }); 
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getPersonalDetail();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getAffiliationDetail();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).updatePersonalDetail();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getCityDetail();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).uploadImg();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();        
+        mapDispatchToProps(dispatch).getImage();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getGender();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('should test mapStateToProps state', () => {
+        expect(mapStateToProps(defaultState)).toBeDefined();
+    });
+
+    it('Check the componentWillReceiveProps function', () => {
+        wrapper.isImageSave = false
+        const nextProps = {
+            profileImgData:{ 
+                image :'',
+                firstName:'',
+                lastName:'',
+                age:'',
+                genderName:'',
+                address:[{
+                    city:'city',
+                    streetAddress:'streetAddress',
+                    zipCode:'zipCode',
+                    state:{name:''},
+                }]
+            }
+        }
+        wrapper.instance().componentWillReceiveProps(nextProps)
+   }); 
+
+   it('Check the componentWillReceiveProps function', () => {
+    wrapper.isImageSave = true
+    const nextProps = {
+        profileImgData:{ 
+            image :'',
+            firstName:'',
+            lastName:'',
+            age:'',
+            genderName:'',
+            address:[{
+                city:'city',
+                streetAddress:'streetAddress',
+                zipCode:'zipCode',
+                state:{name:''},
+            }]
+        }
+    }
+    wrapper.instance().componentWillReceiveProps(nextProps)
+   });
+
      it('Check the handleChange', () => {
-        shallowWrapper.instance().handleChange();
+        wrapper.instance().handleChange();
     });
 
      it('Check the reUpload', () => {
-        shallowWrapper.instance().reUpload({ target: { files: 1 } });
+        wrapper.instance().reUpload({ target: { files: [{name:'.jpg'}] } });
     });
 
-     it('Check the onSubmit', () => {
-        shallowWrapper.instance().onSubmit();
+    it('Check the reUpload', () => {
+        wrapper.instance().reUpload({ target: { files: [{name:'.jepg'}] } });
     });
 
-     it('Check the closeImageUpload', () => {
-        shallowWrapper.instance().closeImageUpload();
-    });
+    it('Check the onSubmit function', () => {
+        wrapper.instance().onSubmit()
+       })
+    
+    it('Check the onSubmit function', () => {
+        wrapper.setState({
+            firstName :"test", lastName:"test", phoneNumber :123456789, city:"test", zipCode:78967, streetAddress:"test", selectedState:'test'
+        })
+        wrapper.instance().onSubmit()
+    })
 
-     it('Check the resetImage', () => {
-        shallowWrapper.instance().resetImage();
-    });
+    it('Check the onSubmit function', () => {
+        wrapper.setState({
+            firstName :"", lastName:"", phoneNumber :123456789, city:"", zipCode:0, streetAddress:"", selectedState:''
+        })
+        wrapper.instance().onSubmit()
+    })
 
-     it('Check the saveImageUpload', () => {
-        shallowWrapper.instance().saveImageUpload();
-    });
+    it('Check the closeImageUpload function', () => {
+        wrapper.isChangePhoto  = false
+        wrapper.instance().closeImageUpload()
+    })
 
-     it('Check the togglePersonalDetails', () => {
-        shallowWrapper.instance().togglePersonalDetails();
+    it('Check the saveImageUpload function', () => {
+        wrapper.setState({
+            croppedImageUrl:'test'
+        })
+        wrapper.instance().saveImageUpload()
+    })
+
+    it('Check the saveImageUpload function', () => {
+        wrapper.setState({
+            croppedImageUrl:'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest'
+        })
+        wrapper.instance().saveImageUpload()
+    })
+
+    it('Check the resetImage function', () => {
+        wrapper.instance().resetImage()
+    })
+
+    it('Check the togglePersonalDetails', () => {
+        wrapper.instance().togglePersonalDetails({},{});
     });
 
      it('Check the checkAffiliationValue true', () => {
-        shallowWrapper.instance().checkAffiliationValue('TEST');
+        wrapper.instance().checkAffiliationValue('TEST');
     });
 
      it('Check the checkAffiliationValue false', () => {
-        shallowWrapper.instance().checkAffiliationValue('');
+        wrapper.instance().checkAffiliationValue('');
     });
 
      it('Check the textChangeContactNumber', () => {
-        shallowWrapper.instance().textChangeContactNumber({ target: { value: 1 } });
+        wrapper.instance().textChangeContactNumber({ target: { value: 122222222 } });
     });
 
      it('Check the reset', () => {
-        shallowWrapper.instance().reset();
+        wrapper.instance().reset();
     });
+
+    it('Check the onCropChange function', () => {
+        wrapper.instance().onCropChange({crop:'crop'})
+    })
+
+    it('Check the getBlackModalContent function', () => {
+        wrapper.instance().getBlackModalContent()
+    })
+
+    it('Check the renderDetails function', () => {
+        wrapper.instance().renderDetails()
+    })
+
 
  }); 

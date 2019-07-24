@@ -170,7 +170,7 @@ export class ServiceOffered extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getServiceOffered: () => dispatch(getServiceOffered()),
         addServiceOfferd: (data) => dispatch(addServiceOfferd(data)),
@@ -180,7 +180,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         serviceOfferedList: state.profileState.serviceOfferedState.serviceOfferedList,
         serviceOfferedDetails: state.profileState.serviceOfferedState.serviceOfferedDetails,

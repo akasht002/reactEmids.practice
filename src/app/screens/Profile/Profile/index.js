@@ -319,7 +319,7 @@ export class Profile extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getProfilePercentage: () => dispatch(getProfilePercentage()),
     navigateProfileHeader: (link) => dispatch(push(link)),
@@ -333,7 +333,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
     canCreateConversation: state.asyncMessageState.canCreateConversation,

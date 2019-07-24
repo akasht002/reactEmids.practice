@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { ServiceOffered } from './index.js';
+ import { ServiceOffered, mapDispatchToProps, mapStateToProps } from './index.js';
 
  Enzyme.configure({ adapter: new Adapter() })
 
@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    serviceOfferedList: [],
+    serviceOfferedList: [{}],
     serviceOfferedDetails: [],
     authState: {
         userState: {
@@ -22,6 +22,10 @@ const defaultState = {
                 userInfo: {}
             }
         }
+    },
+    profileState : {
+        serviceOfferedState: { serviceOfferedList : [],serviceOfferedDetails:{}},
+        PersonalDetailState:{isUser:true}
     },
     getServiceOffered: jest.fn(),
     addServiceOfferd: jest.fn(),
@@ -48,14 +52,37 @@ const defaultState = {
 
      beforeEach(() => {
         const props = defaultState;
-        wrapper = setUp(props);
+        // wrapper = setUp(props);
         shallowWrapper = shallow(
             <ServiceOffered dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
-     it('Check the ServiceOffered form body', () => {
-        expect(wrapper.find('.SPCardTitle').length).toEqual(1);
+    it('Check the ServiceOffered form body', () => {
+        expect(shallowWrapper.find('.SPCardTitle').length).toEqual(1);
+    });
+
+    it('Check the ServiceOffered Details body', () => {       
+        expect(shallowWrapper).toBeDefined()
+    }); 
+
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getServiceOffered();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).addServiceOfferd([{}]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).editServiceOffered();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).toggleCollapseCategory();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).toggleCollapseDetails();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('should test mapStateToProps state', () => {
+    expect(mapStateToProps(defaultState)).toBeDefined();
     });
 
      it('Check the componentDidMount', () => {
@@ -66,11 +93,18 @@ const defaultState = {
         shallowWrapper.instance().reset();
     });
 
-     it('Check the toggleServiceOffered', () => {
+    it('Check the toggleServiceOffered', () => {
         shallowWrapper.instance().toggleServiceOffered();
     });
 
-     it('Check the addIconServiceOffered', () => {
+    it('Check the toggleServiceOffered', () => {
+        shallowWrapper.setState({
+            isFormDirty:true 
+        })
+        shallowWrapper.instance().toggleServiceOffered();
+    });
+
+    it('Check the addIconServiceOffered', () => {
         shallowWrapper.instance().addIconServiceOffered();
     });
 
