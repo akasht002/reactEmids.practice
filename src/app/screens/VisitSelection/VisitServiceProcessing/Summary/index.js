@@ -479,6 +479,7 @@ export class Summary extends Component {
                         onConfirm={() => this.setState({
                             isSignatureModalOpen: !this.state.isSignatureModalOpen,
                         })}
+                        test-signModal="test-signModal"
                     />
 
                     <ModalPopup
@@ -494,6 +495,7 @@ export class Summary extends Component {
                             this.onClickNext();
                         }}
                         onCancel={() => this.setState({ isProccedModalOpen: false })}
+                        test-proceedModal="test-proceedModal"
                     />
 
                     <ModalPopup
@@ -509,6 +511,7 @@ export class Summary extends Component {
                             this.setState({
                                 isDiscardModalOpen: false
                             })}
+                        test-discardModal="test-discardModal"
                     />
                 </Scrollbars>
             </AsideScreenCover>
@@ -516,7 +519,7 @@ export class Summary extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetail: (data) => dispatch(getSummaryDetail(data)),
         onUpdateTime: (data, visitId) => dispatch(onUpdateTime(data, visitId)),
@@ -532,7 +535,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
