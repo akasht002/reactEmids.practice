@@ -7,27 +7,7 @@ import { USERTYPES } from '../../constants/constants';
 import { setMenuClicked } from '../auth/user/actions';
 import { onLogout } from '../auth/logout/actions';
 import { goBack } from '../navigation/actions';
-
-export const TeleHealth = {
-    generateTokenSuccess: 'generate_token_success/telehealth',
-    setLinkedParticipants: 'set_linked_participants/telehealth',
-    setLinkedPatients: 'set_linked_patients/telehealth',
-    clearLinkedParticipants: 'clear_linked_participants/telehealth',
-    getRoomIdSuccess: 'getRoomIdSuccess/telehealth',
-    getParticipantByConfernceIdSuccess: 'get_participant_by_confernceId_success/telehealth',
-    getAllParticipantsSuccess: 'get_all_participants_success/telehealth',
-    setRoomId : 'set_roomId/telehealth',
-    clearRoom: 'clear_room/telehealth',
-    invitaionCame: 'invitaion_came/telehealth',
-    clearInvitaion: 'clear_invitaion/telehealth',
-    setInitiator: 'setInitiator/telehealth',
-    saveContextData: 'saveContextData/telehealth',
-    setInvitedRoomId: 'setInvitedRoomId/telehealth',
-    clearExistingRoom: 'clearExistingRoom/telehealth',
-    newRequestCame: 'NewRequestCame/telehealth',
-    clearInitiator: 'clearInitiator/telehealth',
-    createDataStore: 'createDataStore/telehealth'
-};
+import { TeleHealth } from './bridge'
 
 export const setInvitedRoomId = data =>{
     return{
@@ -98,7 +78,7 @@ export const createDataStore = data => {
 export function generateToken() {
     return (dispatch) => {
         dispatch(startLoading());
-        AsyncGet(API.generateToken + getUserInfo().coreoHomeUserId).then((resp) => {
+        return AsyncGet(API.generateToken + getUserInfo().coreoHomeUserId).then((resp) => {
             if (resp && resp.data) {
                 dispatch(generateTokenSuccess(resp.data));
             }
@@ -126,7 +106,7 @@ export const saveContextData = data => {
 export function getLinkedParticipantsByPatients(data) {
     return (dispatch, getState) => {
         let searchText = data ? data : null;
-        AsyncGet(API.getParticipantsByContext +
+        return AsyncGet(API.getParticipantsByContext +
             '/0/' + getUserInfo().coreoHomeUserId +
             '/' + getState().telehealthState.contextId +
             '/S/' + searchText
@@ -160,7 +140,7 @@ export function createVideoConference(data) {
             ]
         };
         dispatch(startLoading());
-        AsyncPost(API.createRoomId, twilioData).then((resp) => {
+        return AsyncPost(API.createRoomId, twilioData).then((resp) => {
             dispatch(getRoomIdSuccess(resp.data));
             dispatch(push(Path.teleHealth));
             dispatch(endLoading());
@@ -209,7 +189,7 @@ export function acceptVideoConference() {
         const roomNumber = getState().telehealthState.roomId;
         const telehealthState = getState().telehealthState;
         dispatch(startLoading());
-        AsyncPutWithUrl(API.joinVideoConference 
+        return AsyncPutWithUrl(API.joinVideoConference 
             + userInfo.coreoHomeUserId + '/S/'
             + roomNumber).then((resp) => {
             dispatch(clearInvitaion())
@@ -232,7 +212,7 @@ export function leaveVideoConference(checkRoute) {
         const userInfo = getUserInfo();
         let state = getState();
         dispatch(startLoading());
-        AsyncPutWithUrl(API.leaveVideoConference 
+        return AsyncPutWithUrl(API.leaveVideoConference 
             + userInfo.coreoHomeUserId + '/S/'
             + state.telehealthState.roomId).then((resp) => {
                 if (state.telehealthState.isNewRequestCame) {
@@ -263,7 +243,7 @@ export function GetParticipantByConferenceId() {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         let state = getState();
-        AsyncGet(API.getParticipantByConferenceId
+        return AsyncGet(API.getParticipantByConferenceId
             + userInfo.coreoHomeUserId + '/S/'
             + state.telehealthState.roomId).then((resp) => {
                 var data = resp.data && resp.data.filter((participant) => {
@@ -287,7 +267,7 @@ export function GetAllParticipants(data) {
         let searchText = data ? data : null;
         let roomId = state.telehealthState.roomId ? state.telehealthState.roomId : 0;
         let contextId = state.telehealthState.contextId ? state.telehealthState.contextId : 0;
-        AsyncGet(API.getAllParticipants
+        return AsyncGet(API.getAllParticipants
             + userInfo.coreoHomeUserId + '/S/'
             + contextId + '/'
             + roomId + '/'
@@ -303,7 +283,7 @@ export function endConference() {
         let telehealthState = getState().telehealthState;
         let state = getState();
         dispatch(startLoading());
-        AsyncPost(API.endConference + telehealthState.roomId).then((resp) => {
+        return AsyncPost(API.endConference + telehealthState.roomId).then((resp) => {
             if (state.telehealthState.isNewRequestCame) {
                 dispatch(setRoomId(state.telehealthState.invitedRoomId))
                 dispatch(acceptVideoConference())
@@ -338,7 +318,7 @@ export function rejectConference() {
             coreoHomeuserId: userInfo.coreoHomeUserId
           };
           dispatch(startLoading());
-          AsyncPut(API.rejectConference, data).then((resp) => {
+          return AsyncPut(API.rejectConference, data).then((resp) => {
               dispatch(clearInvitaion());
               if (state.telehealthState.token) {
                 dispatch(setInvitedRoomId(0))
@@ -355,7 +335,7 @@ export function rejectConference() {
 export function getLinkedPatients() {
     return (dispatch) => {
           dispatch(startLoading());
-          AsyncGet(API.getContext +  getUserInfo().coreoHomeUserId).then((resp) => {
+          return AsyncGet(API.getContext +  getUserInfo().coreoHomeUserId).then((resp) => {
               dispatch(getLinkedPatientsSuccess(resp.data));
               dispatch(endLoading());
           }).catch((err) => {
@@ -401,7 +381,7 @@ export function AddParticipantsToVideoConference(data) {
             conferenceId: state.telehealthState.conferenceId,
             participants: data
         };
-        AsyncPost(API.addParticipants, twilioData).then((resp) => {
+        return AsyncPost(API.addParticipants, twilioData).then((resp) => {
         }).catch(() => {
         })
     }

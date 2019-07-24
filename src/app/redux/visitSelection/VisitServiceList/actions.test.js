@@ -75,29 +75,17 @@ describe('async actions', () => {
     })
 
     it('creates getVisitServiceList when fetching service content has been done', () => {
-        const data = {
-            pageNumber: 10,
-            pageSize: 1
-        }
-        fetchMock.get(API.getServiceRequestList, {
+        fetchMock.get(API.saveAnswers, {
             body: { data: [] },
             headers: { 'content-type': 'application/json' },
             resp: { data: [{ name: '' }] }
         })
-
-        const store = mockStore({
-            visitSelectionState: {
-                VisitServiceListState: {
-                    status: {}
-                }
-            }
-        })
-
-        return store.dispatch(actions.getVisitServiceList()).then((resp) => {
+        const store = mockStore({})
+        let data = ''
+        return store.dispatch(actions.getVisitServiceList(data)).then((resp) => {
             store.dispatch(actions.getVisitServiceListSuccess(resp.data))
             expect(store.getActions()).toBeDefined()
         }).catch(err => {
-
         })
     })
 

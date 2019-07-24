@@ -33,31 +33,7 @@ import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/F
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../visitSelection/VisitServiceProcessing/Summary/actions';
 import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
 
-export const DashboardDetail = {
-  get_conversation_detail_success: 'get_conversation_detail_success/dashboard',
-  get_conversation_detail: 'get_conversation_detail/dashboard',
-  set_unread_conversation_count_detail:
-    'set_unread_conversation_count_detail/dashboard',
-  get_service_provider_detail_success:
-    'get_service_provider_detail_success/dashboard',
-  get_service_provider_detail: 'get_service_provider_detail/dashboard',
-  get_patient_service_request_detail:
-    'get_patient_service_request_detail/dashboard',
-  get_patient_service_request_detail_success:
-    'get_patient_service_request_detail_success/dashboard',
-  get_patient_visit_detail: 'get_patient_visit_detail/dashboard',
-  get_patient_visit_detail_success:
-    'get_patient_visit_detail_success/dashboard',
-  get_service_request_success: 'get_service_request_success/dashboard',
-  get_service_request: 'get_service_request/dashboard',
-  get_service_visit_count: 'get_service_visit_count/dashboard',
-  get_entity_service_provider_list:
-    'get_entity_service_provider_list/dashboard',
-  setServiceVisitDate: 'setServiceVisitDate/dashboard',
-  setConversationLoader : 'setConversationLoader/dashboard',
-  setServiceRequestLoader : 'setServiceRequestLoader/dashboard',
-  setServiceVisitLoader : 'setServiceVisitLoader/dashboard'
-}
+import { DashboardDetail } from './bridge'
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -69,7 +45,7 @@ export const getServiceStatusSuccess = data => {
 export function getServiceStatusDetail () {
   return (dispatch, getState) => {
     dispatch(setServiceRequestLoader(true))
-    ServiceRequestGet(API.getServiceRequestStatus)
+    return ServiceRequestGet(API.getServiceRequestStatus)
       .then(resp => {
         console.log(resp.data)
         dispatch(getServiceStatusSuccess(resp.data.slice(0, 5)))
@@ -100,7 +76,7 @@ export const getServiceVisitCountSuccess = data => {
 export function getServiceVisitCount (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    ServiceRequestGet(
+    return ServiceRequestGet(
       API.getServiceVisitsCount +
         getUserInfo().serviceProviderId +
         '/' +
@@ -128,7 +104,7 @@ export const getEntityServiceProviderListSuccess = data => {
 export function getEntityServiceProviderList () {
   return (dispatch, getState) => {
     // dispatch(startLoading())
-    Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
+    return Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
       .then(resp => {
         dispatch(getEntityServiceProviderListSuccess(resp.data))
         // dispatch(endLoading())
@@ -149,7 +125,7 @@ export const setServiceVisitDate = data => {
 export function getEntityServiceProviderListSearch (data) {
   return (dispatch, getState) => {
     dispatch(setServiceVisitLoader(true))
-    Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
+    return Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
       .then(resp => {
         const filtered = _.filter(resp.data, function (o) {
           return (
@@ -168,7 +144,7 @@ export function getEntityServiceProviderListSearch (data) {
 export function getServiceProviderVists (data) {
   return (dispatch, getState) => {
     dispatch(setServiceVisitLoader(true))
-    ServiceRequestGet(
+    return ServiceRequestGet(
       API.getServiceProviderVists + getUserInfo().serviceProviderId + '/' + data
     )
       .then(resp => {
@@ -192,7 +168,7 @@ export function getPatientServiceRequestDetail (data) {
   let id = data || DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD
   return (dispatch, getState) => {
     dispatch(setServiceRequestLoader(true))
-    ServiceRequestGet(
+    return ServiceRequestGet(
       API.getServiceProviderRequests +
         getUserInfo().serviceProviderId +
         '/' +
@@ -217,7 +193,7 @@ export const getServiceProviderDetailSuccess = data => {
 export function updateEntityServiceVisit (data, pageNo) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    ServiceRequestPost(API.assignServiceVisit, data)
+    return ServiceRequestPost(API.assignServiceVisit, data)
       .then(resp => {
         dispatch(getVisitServiceSchedule(data.serviceRequestId, pageNo, true))
         dispatch(endLoading())
@@ -231,7 +207,7 @@ export function updateEntityServiceVisit (data, pageNo) {
 export function getServiceProviderDetail (data) {
   return (dispatch, getState) => {
     dispatch(startLoading())
-    ServiceRequestGet(
+    return ServiceRequestGet(
       API.getServiceProviders +
         getUserInfo().serviceProviderId +
         '/' +
@@ -261,7 +237,7 @@ export const getConversationDetailSuccess = data => {
 export function getConversationDetail (data) {
   return (dispatch, getState) => {
     dispatch(setConversationLoader(true))
-    MessageURLGet(
+    return MessageURLGet(
       API.getConversationSummary +
         getUserInfo().coreoHomeUserId +
         '/' +
@@ -285,7 +261,7 @@ export function updateStandByMode (data) {
   return dispatch => {
     dispatch(startLoading())
 
-    Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
+    return Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
         // dispatch(updateStandByModeSuccess())
         dispatch(endLoading())
@@ -310,7 +286,7 @@ export function getConversationSummaryDashboardSignalR (conversationId) {
   return (dispatch, getState) => {
     let userId = getUserInfo().coreoHomeUserId
     let userType = USERTYPES.SERVICE_PROVIDER
-    MessageURLGet(
+    return MessageURLGet(
       API.getConversationSummary +
         conversationId +
         '/' +
@@ -326,7 +302,7 @@ export function getConversationSummaryDashboardSignalR (conversationId) {
   }
 }
 
-const getConversationSummaryItemSignalRSuceess = data => {
+export const getConversationSummaryItemSignalRSuceess = data => {
   return (dispatch, getState) => {
     let state = getState()
     let conversationSummaryData = [

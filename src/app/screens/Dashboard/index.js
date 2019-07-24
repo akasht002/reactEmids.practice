@@ -23,7 +23,7 @@ import moment from 'moment'
 import { createDataStore } from '../../redux/telehealth/actions'
 import { Preloader } from '../../components/Base'
 
-class Dashboard extends React.Component {
+export class Dashboard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -254,7 +254,7 @@ class Dashboard extends React.Component {
     )
   }
 }
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     updateStandByMode: data => dispatch(updateStandByMode(data)),
     getPersonalDetail: () => dispatch(getPersonalDetail()),
@@ -269,7 +269,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     profileState: state.profileState.PersonalDetailState.personalDetail,
     busyInVisit: state.profileState.PersonalDetailState.spBusyInVisit,

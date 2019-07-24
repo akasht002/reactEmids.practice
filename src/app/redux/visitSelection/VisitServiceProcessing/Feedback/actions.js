@@ -39,7 +39,7 @@ export const endLoadingProcessing = () => {
 export function getQuestionsList() {
   return dispatch => {
     dispatch(startLoadingProcessing())
-    ServiceRequestGet(API.getQuestionsList)
+    return ServiceRequestGet(API.getQuestionsList)
       .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
         dispatch(endLoadingProcessing())
@@ -53,7 +53,7 @@ export function getQuestionsList() {
 export function saveAnswers(data) {
   return dispatch => {
     dispatch(startLoadingProcessing())
-    ServiceRequestPost(API.saveAnswers, data)
+    return ServiceRequestPost(API.saveAnswers, data)
       .then(resp => {
         dispatch(getSummaryDetails(data.serviceRequestVisitId));
         dispatch(getSavedSignature(data.serviceRequestVisitId));
@@ -67,7 +67,7 @@ export function saveAnswers(data) {
 export function saveAnswerFeedback(data) {
   return dispatch => {
     dispatch(visitHistoryLoading(true))
-    ServiceRequestPost(API.saveAnswers, data)
+    return ServiceRequestPost(API.saveAnswers, data)
       .then(resp => {
         dispatch(visitHistoryLoading(false))
       })

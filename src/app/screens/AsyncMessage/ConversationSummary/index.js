@@ -161,7 +161,7 @@ export class ConversationSummary extends Component {
     }
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         fetchConversationSummary: (pageNumber) => dispatch(onFetchConversationSummary(pageNumber)),
         createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
@@ -176,7 +176,7 @@ function mapDispatchToProps(dispatch) {
 };
 
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         conversation: state.asyncMessageState.conversationSummary,
         isLoading: state.asyncMessageState.isLoading,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-export default class ParticipantsListModal extends React.Component {
+export class ParticipantsListModal extends React.Component {
     render() {
         return (
                 <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className} centered backdrop="static" >
@@ -15,3 +15,5 @@ export default class ParticipantsListModal extends React.Component {
         );
     }
 };
+
+export default ParticipantsListModal

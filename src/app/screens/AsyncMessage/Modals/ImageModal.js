@@ -1,7 +1,7 @@
 import React from 'react';
 import {  Modal,  ModalBody, } from 'reactstrap';
 
-export default class AsyncImgModalTemplate extends React.Component {
+export class AsyncImgModalTemplate extends React.Component {
 
 
     render() {
@@ -20,3 +20,5 @@ export default class AsyncImgModalTemplate extends React.Component {
         );
     }
 }
+
+export default AsyncImgModalTemplate

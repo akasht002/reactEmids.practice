@@ -5,7 +5,7 @@ import { clearState as verifyUserIdClear } from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import { USERTYPES } from '../../../constants/constants';
-import {VerifyContact} from './bridge';
+import { VerifyContact } from './bridge'
 
 export const onSetUserId = (data) => {
     return {

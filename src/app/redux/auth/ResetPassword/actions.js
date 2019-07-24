@@ -5,7 +5,7 @@ import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import {RESPONSE_STATUS} from '../../../redux/constants/constants';
 import {encryptPassword} from '../../../utils/encryptPassword';
-import {ResetPassword} from './bridge';
+import { ResetPassword } from './bridge'
 
 export const formDirty = () => {
     return {

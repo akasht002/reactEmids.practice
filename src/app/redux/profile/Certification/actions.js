@@ -33,7 +33,7 @@ export function getCertification() {
             serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
           };
         dispatch(startLoading());
-        Get(API.certification + serviceProviderId + '/Certification').then((resp) => {
+        return Get(API.certification + serviceProviderId + '/Certification').then((resp) => {
             dispatch(getCertificationSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -53,7 +53,7 @@ export function addCertification(data) {
             isActive: true
         };
         dispatch(startLoading());
-        Post(API.certification + serviceProviderId + '/Certification', modal).then((resp) => {
+        return Post(API.certification + serviceProviderId + '/Certification', modal).then((resp) => {
             dispatch(addCertificationSuccess(true));
             dispatch(getCertification());
             dispatch(getProfilePercentage());

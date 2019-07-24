@@ -50,7 +50,7 @@ export const endLoadingProcessing = () => {
 export function getpaymentsCardList(data) {
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ThirdPartyGet(API.getPaymentCardList + data).then((resp) => {
+        return ThirdPartyGet(API.getPaymentCardList + data).then((resp) => {
             dispatch(getPaymentsCardListSuccess(resp.data))
             dispatch(endLoadingProcessing());
         }).catch((err) => {
@@ -62,7 +62,7 @@ export function getpaymentsCardList(data) {
 export function createCharge(data, claimData) {
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ThirdPartyPost(API.createCharge, data).then((resp) => {
+        return ThirdPartyPost(API.createCharge, data).then((resp) => {
             if (resp.data === 'success') {
                 dispatch(push(Path.paymentsuccess))
                 dispatch(claimsSubmission(claimData))
@@ -84,7 +84,7 @@ export function createCharge(data, claimData) {
 export function chargeByCustomerId(data, claimData) {
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ThirdPartyPost(API.chargeByCustomerId, data).then((resp) => {
+        return ThirdPartyPost(API.chargeByCustomerId, data).then((resp) => {
             if (resp.data === 'success') {
                 dispatch(push(Path.paymentsuccess))
                 dispatch(claimsSubmission(claimData))
@@ -106,7 +106,7 @@ export function chargeByCustomerId(data, claimData) {
 export function claimsSubmission(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        ThirdPartyPost(API.claimsSubmission, data).then((resp) => {
+        return ThirdPartyPost(API.claimsSubmission, data).then((resp) => {
             dispatch(endLoading());
             //dispatch(push(Path.paymentsuccess))
         }).catch((err) => {
@@ -123,7 +123,7 @@ export function claimsSubmission(data) {
 export function captureAmount(data, claimData) {
     return (dispatch) => {
         dispatch(startLoading());
-        ThirdPartyPut(API.captureAmount, data).then((resp) => {
+        return ThirdPartyPut(API.captureAmount, data).then((resp) => {
             dispatch(endLoading());
             dispatch(push(Path.paymentsuccess))
             dispatch(claimsSubmission(claimData))

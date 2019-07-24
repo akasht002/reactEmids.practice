@@ -1,4 +1,4 @@
-import {ResetPassword} from './bridge';
+import { ResetPassword } from './bridge'
 import {RESPONSE_STATUS} from '../../../redux/constants/constants';
 
 const defaultState = {

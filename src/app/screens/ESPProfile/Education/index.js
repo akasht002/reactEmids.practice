@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import {getESPEducation} from '../../../redux/patientProfile/actions'
 import EllipsisText from "react-ellipsis-text";
 import "./styles.css";
-class Education extends React.Component {
+export class Education extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -69,14 +69,14 @@ class Education extends React.Component {
 
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getEducation: () => dispatch(getESPEducation())
 
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         educationList: state.patientProfileState.espEducation,
     };
