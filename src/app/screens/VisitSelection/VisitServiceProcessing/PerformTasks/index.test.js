@@ -6,19 +6,19 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { PerformTasks } from './index.js';
+import { PerformTasks, mapDispatchToProps, mapStateToProps } from './index.js';
 
- jest.mock('../../../ScreenCover/AsideScreenCover', () => ({
+jest.mock('../../../ScreenCover/AsideScreenCover', () => ({
     AsideScreenCover: 'mockAsideScreenCover'
 }))
 
- jest.mock('../../../../redux/navigation/actions', () => ({
+jest.mock('../../../../redux/navigation/actions', () => ({
     push: jest.fn()
 }))
 
- Enzyme.configure({ adapter: new Adapter() })
+Enzyme.configure({ adapter: new Adapter() })
 
- let store;
+let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
@@ -46,12 +46,17 @@ const defaultState = {
     push: jest.fn(),
     history: {
         push: jest.fn()
-    }
+    },
+    SummaryDetails: {
+        originalTotalDuration: 500
+    },
+    isLoading : true,
+    goBack: jest.fn()
 }
 
- store = mockStore(defaultState);
+store = mockStore(defaultState);
 
- const setUp = (props = {}) => {
+const setUp = (props = {}) => {
     const wrapper = mount(
         <Provider store={store}>
             <MemoryRouter>
@@ -62,10 +67,10 @@ const defaultState = {
     return wrapper;
 };
 
- describe("PerformTasks", function () {
+describe("PerformTasks", function () {
     let wrapper, shallowWrapper;
 
-     beforeEach(() => {
+    beforeEach(() => {
         const props = defaultState;
         wrapper = setUp(props);
         shallowWrapper = shallow(
@@ -73,37 +78,130 @@ const defaultState = {
         )
     });
 
-     it('Check the Perform Task form body', () => {
+    it('Check the Perform Task form body', () => {
+        shallowWrapper.setProps({
+            PerformTasksList: {
+                serviceRequestTypeVisits: [{
+                    serviceRequestTypeTaskVisits: [{
+                        serviceTypeId: 123,
+                        checked: true,
+                        statusId: 90
+                    }],
+                    collapse: true
+                }]
+            }
+        })
         expect(wrapper.find('.ProfileHeaderWidget').length).toEqual(1);
     });
 
-     it('Check the toggle', () => {
+    it('Check the toggle', () => {
         shallowWrapper.instance().toggle();
         expect(shallowWrapper.instance().state.isOpen).toEqual(true);
     });
 
-     it('Check the componentDidMount', () => {
+    it('Check the componentDidMount', () => {
+        shallowWrapper.setProps({
+            ServiceRequestVisitId: 21321,
+            PerformTasksList: {
+                visitStatus: "COMPLETED",
+                serviceRequestTypeVisits: []
+            }
+        })
         shallowWrapper.instance().componentDidMount();
     });
 
-     it('Check the handelPatientProfile', () => {
+    it('Check the componentWillReceiveProps', () => {
+        let nextProps = {
+            PerformTasksList: {
+                serviceRequestTypeVisits: [{
+                    serviceRequestTypeTaskVisits: [{
+                        statusId: 90,
+                        checked: true
+                    }]
+                }]
+            }
+        }
+        shallowWrapper.instance().componentWillReceiveProps(nextProps);
+        nextProps.PerformTasksList.serviceRequestTypeVisits = [{
+            serviceRequestTypeTaskVisits: [{
+                statusId: 80,
+                checked: true
+            }]
+        }]
+        shallowWrapper.instance().componentWillReceiveProps(nextProps);
+    });
+
+    it('Check the handelPatientProfile', () => {
         shallowWrapper.instance().handelPatientProfile(1);
     });
 
-     it('Check the handleChange', () => {
+    it('Check the handleChange', () => {
         shallowWrapper.instance().handleChange('', { target: { checked: true } });
+        shallowWrapper.instance().handleChange('', { target: { checked: false } });
     });
 
-     it('Check the startService', () => {
+    it('Check the startService', () => {
         shallowWrapper.instance().startService(1, 2);
+        shallowWrapper.instance().startService(2, 2);
     });
 
-     it('Check the onClickNext', () => {
+    it('Check the onClickNext', () => {
+        shallowWrapper.setState({
+            taskList: {
+                totalTask: 20
+            }
+        })
+        shallowWrapper.instance().checkedTask = [{}]
+        shallowWrapper.instance().onClickNext();
+        shallowWrapper.setState({
+            taskList: {
+                totalTask: 1
+            }
+        })
+        shallowWrapper.instance().checkedTask = [{}]
         shallowWrapper.instance().onClickNext();
     });
 
-     it('Check the saveData', () => {
+    it('Check the saveData', () => {
         shallowWrapper.instance().saveData(true);
     });
 
- }); 
+    it('Check the events', () => {
+        shallowWrapper.setState({
+            taskList: {
+                patient: {
+                    patientId: 1213,
+                    imageString: 'asdas/afasf/afs'
+                }
+            } 
+        })
+        expect(shallowWrapper.find('.backProfileIcon').props().onClick());
+        expect(shallowWrapper.find('.requestImageContent').props().onClick());
+        expect(shallowWrapper.find('[test-endModal="test-endModal"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-proceedModal="test-proceedModal"]').props().onCancel());
+        expect(shallowWrapper.find('[test-endModal="test-endModal"]').props().onCancel());
+        expect(shallowWrapper.find('[test-proceedModal="test-proceedModal"]').props().onConfirm());
+    });
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getPerformTasksList({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).addPerformedTask({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getSummaryDetails({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).startOrStopService({}, 12, 23);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setPatient({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToPatientProfile();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goBack();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('should test mapStateToProps state', () => {
+        expect(mapStateToProps(defaultState)).toBeDefined();
+    });
+}); 

@@ -1,12 +1,10 @@
 import React from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
-import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
-import { Provider } from 'react-redux';
 
- import { Welcome } from './index.js';
+ import { Welcome, mapDispatchToProps } from './index.js';
 
  Enzyme.configure({ adapter: new Adapter() })
 
@@ -23,35 +21,60 @@ const defaultState = {
             }
         }
     },
-    getVisitNotification: jest.fn()
+    onLogin: jest.fn()
 }
 
  store = mockStore(defaultState);
 
- const setUp = (props = {}) => {
-    const wrapper = mount(
-        <Provider store={store}>
-            <MemoryRouter>
-                <Welcome dispatch={dispatch} store={store} {...props} />
-            </MemoryRouter>
-        </Provider>
-    )
-    return wrapper;
-};
-
  describe("Welcome", function () {
-    let wrapper, shallowWrapper;
+    let shallowWrapper;
 
      beforeEach(() => {
-        const props = defaultState;
-        wrapper = setUp(props);
         shallowWrapper = shallow(
             <Welcome dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
-     it('Check the Welcome form body', () => {
-        expect(wrapper.find('.NotificationsWidget').length).toEqual(1);
+     it('Check the Welcome body', () => {
+        expect(shallowWrapper.find('[test-welcome="test-welcome"]').length).toEqual(1);
     });
 
+    // it('Check the prevSlide', () => {
+    //     shallowWrapper.setState({
+    //         activeIndex: 1
+    //     })
+    //     shallowWrapper.instance().prevSlide();
+    // });
+
+    it('Check the nextSlide', () => {
+        shallowWrapper.setState({
+            activeIndex: 1,
+            slider: [{}]
+        })
+        shallowWrapper.instance().nextSlide();
+    });
+
+    
+    it('Check the clickIndicator', () => {
+        let e = {
+            target: {
+                textContent: 'asdsa'
+            }
+        }
+        shallowWrapper.instance().clickIndicator(e);
+    });
+
+    it('Check the componentWillUnmount', () => {
+        shallowWrapper.instance().componentWillUnmount();
+    });
+
+    it('Check the onLoginPress', () => {
+        shallowWrapper.instance().onLoginPress();
+    });
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).onLogin();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
  }); 

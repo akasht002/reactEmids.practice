@@ -7,7 +7,7 @@ import { onLogin } from '../../redux/auth/login/actions';
 import {SLIDER_TIME} from '../../constants/config';
 import './styles.css';
 
-class Welcome extends Component {
+export class Welcome extends Component {
 
     constructor(props) {
         super(props);
@@ -99,7 +99,7 @@ class Welcome extends Component {
             width: this.state.sliderWidth
         };
         return (
-            <ScreenCover menus={menus}>
+            <ScreenCover menus={menus} test-welcome='test-welcome'>
                 <div className="container-fluid p-0">
                     <div className="width100 onBoardingWidget">
                         <div className="container-fluid onBoardingContent">
@@ -156,7 +156,7 @@ class Welcome extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onLogin: () => dispatch(onLogin())
     }

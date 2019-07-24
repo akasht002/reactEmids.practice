@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import './styles.css';
 
-class MobileLanding extends Component {
+export class MobileLanding extends Component {
 
     render() {
         return (
