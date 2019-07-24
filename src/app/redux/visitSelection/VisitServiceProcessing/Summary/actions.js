@@ -8,19 +8,7 @@ import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
 import { updateServiceRequestId } from '../Payments/actions';
 import { getDoubleDigitTime } from '../../../../utils/dateUtility'
-
-
-export const SummaryDetails = {
-    getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
-    getCalculationsData: 'get_calculations_data/summarydetails',
-    saveOriginalTimeDiff: 'save_original_time_diff/summarydetails',
-    saveActualTimeDiff: 'save_actual_time_diff/summarydetails',
-    getSavedSignatureSuccess: 'getSavedSignatureSuccess/summarydetails',
-    formDirtySummaryDetails: 'formDirtySummaryDetails/summarydetails',
-    getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/summarydetails',
-    startLoading: 'startLoading/visitservice',
-    endLoading: 'endLoading/visitservice'
-};
+import {SummaryDetails} from './bridge'
 
 export const getSummaryDetailsSuccess = (data) => {
     return {
@@ -86,7 +74,7 @@ export const formDirtySummaryDetails = () => {
 export function getSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
+        return ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             // dispatch(calculationsFirstTime(resp.data));
             dispatch(getVisitServiceEligibilityStatus(resp.data))
@@ -101,7 +89,7 @@ export function getSummaryDetails(data) {
 export function getSummaryDetail(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
+        return ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(endLoading());
         }).catch((err) => {
@@ -114,7 +102,7 @@ export function updateVisitProcessingUpdateBilledDuration(data, visitId) {
     let calculate = (data / 1000) / 60
     return (dispatch) => {
         dispatch(startLoading());
-        ServiceRequestPut(API.visitProcessingUpdateBilledDuration + `/${visitId}/${calculate}`).then((resp) => {
+        return ServiceRequestPut(API.visitProcessingUpdateBilledDuration + `/${visitId}/${calculate}`).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -130,7 +118,7 @@ export function getVisitServiceEligibilityStatus(data) {
     }
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
+        return ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
             dispatch(getVisitServiceEligibityStatusSuccess(resp.data));
             dispatch(calculationsFirstTime(data));
             dispatch(push(Path.summary))
@@ -238,7 +226,7 @@ export function onUpdateTime(data, visitId) {
 export function saveSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        ServiceRequestPut(API.saveSummaryDetails + data.serviceRequestVisitId, data).then((resp) => {
+        return ServiceRequestPut(API.saveSummaryDetails + data.serviceRequestVisitId, data).then((resp) => {
             if (getUserInfo().isEntityServiceProvider) {
                 dispatch(push(Path.visitServiceDetails))
             } else {
@@ -255,7 +243,7 @@ export function saveSummaryDetails(data) {
 export function saveSignature(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        ServiceRequestPost(API.saveSignature, data).then((resp) => {
+        return ServiceRequestPost(API.saveSignature, data).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -266,7 +254,7 @@ export function saveSignature(data) {
 export function getSavedSignature(data) {
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ServiceRequestGet(API.getSavedSignature + data).then((resp) => {
+        return ServiceRequestGet(API.getSavedSignature + data).then((resp) => {
             dispatch(getSavedSignatureSuccess(resp.data));
             dispatch(endLoadingProcessing());
         }).catch((err) => {

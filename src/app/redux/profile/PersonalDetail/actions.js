@@ -62,7 +62,7 @@ export const clearSbMode = () => {
 export function getGender () {
   return (dispatch) => {
     dispatch(startLoading())
-    Get(API.getGender)
+    return Get(API.getGender)
       .then(resp => {
         dispatch(getGenderSuccess(resp.data))
         dispatch(endLoading())

@@ -10,21 +10,8 @@ import { startLoading, endLoading } from '../../loading/actions'
 import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
+import {VisitServiceDetails} from './bridge'
 
-export const VisitServiceDetails = {
-  getVisitServiceDetailsSuccess: 'get_visit_service_details_success/visitservicedetails',
-  getVisitServiceScheduleSuccess: 'get_visit_service_schedule_success/visitservicedetails',
-  getServiceRequestId: 'get_service_requestId/visitservicedetails',
-  updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails',
-  getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/visitservicedetails',
-  getDaysSuccess: 'getDaysSuccess/visitservicedetails',
-  updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails',
-  setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
-  canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails',
-  formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails',
-  isScheduleLoading: 'isScheduleLoading/visitservicedetails',
-  cancelHiredRequest: 'cancelHiredRequest/visitservicedetails'
-}
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -116,7 +103,7 @@ export function updateServiceRequestByServiceProvider(data) {
   }
   return dispatch => {
     dispatch(startLoading())
-    ServiceRequestPost(
+    return ServiceRequestPost(
       API.applyServiceRequestByServiceProvider,
       modelData
     )
@@ -159,7 +146,7 @@ export function getVisitServiceDetails(data) {
       : getUserInfo().serviceProviderId
     dispatch(getServiceRequestId(data));
     dispatch(startLoading())
-    ServiceRequestGet(API.getServiceRequestDetails + `${data}/${serviceProviderId}`)
+    return ServiceRequestGet(API.getServiceRequestDetails + `${data}/${serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data));
         dispatch(canInitiateConversation(resp.data));
@@ -245,7 +232,7 @@ export const getDaysSuccess = (data) => {
 export function getDays() {
   return (dispatch) => {
     dispatch(startLoading());
-    ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
+    return ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
       dispatch(getDaysSuccess(resp.data))
       dispatch(endLoading());
     }).catch((err) => {
