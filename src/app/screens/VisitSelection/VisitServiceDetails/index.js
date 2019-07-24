@@ -994,7 +994,7 @@ export class VisitServiceDetails extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
     getVisitServiceSchedule: (data, pgNumber) => dispatch(getVisitServiceSchedule(data, pgNumber)),
@@ -1037,7 +1037,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     VisitServiceDetails: state.visitSelectionState.VisitServiceDetailsState
       .VisitServiceDetails,

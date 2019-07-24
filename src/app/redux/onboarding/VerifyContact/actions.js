@@ -78,7 +78,7 @@ export function sendTemporaryPasscode(data) {
             serviceProviderId: data.serviceProviderId,
         }
         dispatch(startLoading());
-        Post(API.sendTemporaryPasscode, modal).then((resp) => {
+        return Post(API.sendTemporaryPasscode, modal).then((resp) => {
             if (resp && resp.data) {
                 dispatch(onPasscodeSent());
                 dispatch(endLoading());
@@ -99,7 +99,7 @@ export function verifyTempPasscode(data) {
             isActive: true
         };
         dispatch(startLoading());
-        Post(API.verifyTemporaryPasscode, modal).then((resp) => {
+        return Post(API.verifyTemporaryPasscode, modal).then((resp) => {
             if (resp && resp.data === 'Otp Matched') {
                 dispatch(verifyPasscodeSuccess());
                 dispatch(temporaryPasscodeSuccess());
@@ -141,7 +141,7 @@ export function getUserData() {
 export function getEntityUserData(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        Get(API.getEntityUserData + data.serviceProviderId + '/' + data.token).then((resp) => {
+        return Get(API.getEntityUserData + data.serviceProviderId + '/' + data.token).then((resp) => {
             let getUserData = {
                 serviceProviderId: resp.data.serviceProviderId,
                 memberId: '',
