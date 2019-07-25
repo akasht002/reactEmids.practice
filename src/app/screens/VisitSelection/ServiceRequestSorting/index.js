@@ -18,6 +18,7 @@ function Sorting (props) {
           <div
            className={props.PostedDate ? 'dropdown-item SortItem active' :'dropdown-item SortItem'}
             onClick={(e) => props.onSortChange(e,true, null)}
+            test-posted='test-posted'
           >
             Posted Date
           </div>
@@ -31,12 +32,14 @@ function Sorting (props) {
           <div
             className={props.Newest ? 'dropdown-item SortItem active' :'dropdown-item SortItem'}
             onClick={(e) => props.onSortChange(e,null, true)}
+            test-newest='test-newest'
           >
             Newest
           </div>
           <div
             className={props.Oldest ? 'dropdown-item SortItem active' :'dropdown-item SortItem'}
             onClick={(e) => props.onSortChange(e,null, false)}
+            test-oldest='test-oldest'
           >
             Oldest
           </div>
