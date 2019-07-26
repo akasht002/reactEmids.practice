@@ -96,7 +96,7 @@ class QuickMenu extends Component {
 
    getOptions = (conversations) => {
     let visitList = SERVICE_VISIT_STATUS.filter((data) =>{
-        return data.id === conversations && conversations.visitStatusId
+        return (data.id === (conversations && conversations.visitStatusId))
     })
     let list = visitList.length > 0 ? visitList[0] : SERVICE_VISIT_STATUS[0]
     let options = [];
