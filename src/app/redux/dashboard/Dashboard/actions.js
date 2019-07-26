@@ -143,29 +143,14 @@ export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
       `${ API.getServiceProviderVisits}${getUserInfo().serviceProviderId}/${data}/${pageNumber}/${Pagination.pageSize}`
     )
       .then(resp => {
-        let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];
-        let disableShowMore = false ;
-            let modifiedList = [
-                ...serviceVists
-            ];           
-              if (serviceVists.length === 0) {
-                  modifiedList = [
-                      ...resp.data
-                  ];
-                  if (resp.data.length < 9) {
-                      disableShowMore = true
-                  }
-              } else if (serviceVists.length > 0 || serviceVists[serviceVists.length - 1].serviceRequestVisitId !==
-                  resp.data[resp.data.length - 1].serviceRequestVisitId) {
-                  modifiedList = [
-                      ...serviceVists,
-                      ...resp.data
-                  ];
-              }            
+        let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];       
+        let modifiedList = [...serviceVists,...resp.data];
+        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;          
         dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
         dispatch(setServiceVisitLoader(false))
       })
       .catch(err => {
+        dispatch(getPatientVisitDetailSuccess([],true))
         dispatch(setServiceVisitLoader(false))
       })
   }
