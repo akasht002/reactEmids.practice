@@ -25,7 +25,7 @@ import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
 import { setPatient, setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
-import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FORMAT,DATE_FORMATS } from "../../constants/constants";
+import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FORMAT,DATE_FORMATS, PAGE_NO } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
@@ -135,6 +135,7 @@ export class ServiceCalendar extends Component {
     let next_month = parseInt(moment(updatedDay).format(DATE_FORMATS.mm), 10)
 
     this.setState({
+      pageNumber:PAGE_NO,
       startDate:  prev_month === next_month ? updatedDay.format():moment(this.state.startDate).endOf(DATE_FORMATS.month).format(),
       startYear: prev_month === next_month ? updatedDay.format(DATE_FORMATS.yyyy): moment(this.state.startDate).format(DATE_FORMATS.yyyy),
       reportDay:  prev_month === next_month ? updatedDay.format():moment(this.state.startDate).format(),
@@ -153,6 +154,7 @@ export class ServiceCalendar extends Component {
     updatedDay = moment(this.state.startDate).subtract(days, "days");
     this.props.getServiceProviderVists(updatedDay.format(DATE_FORMATS.yyyy_mm_dd))
     this.setState({
+      pageNumber:PAGE_NO,
       startDate: updatedDay.format(),
       startYear: updatedDay.format("YYYY"),
       reportDay: updatedDay.format(),
@@ -202,7 +204,7 @@ export class ServiceCalendar extends Component {
 
   clickShowMore = () => {
     this.setState({ pageNumber: this.state.pageNumber + 1 }, () => {
-      this.props.getServiceProviderVists(moment(this.state.startDate).format(DATE_FORMATS.yyyy_mm_dd), this.state.pageNumber,true);
+      this.props.getServiceProviderVists(moment(this.state.reportDay).format(DATE_FORMATS.yyyy_mm_dd), this.state.pageNumber,true);
   })
   };
 
@@ -238,6 +240,7 @@ export class ServiceCalendar extends Component {
     }
     this.props.getServiceProviderVists(utc)
     this.props.getServiceVisitCount(date_range)
+    this.props.setServiceVisitDate(null)
   }
 
   handlePhoneNumber = data => {
@@ -277,7 +280,6 @@ export class ServiceCalendar extends Component {
   showServiceProviderList = data => {
     let date = convertStringToDate(data.target.value);
     this.props.getServiceProviderVists(date)
-    this.props.setServiceVisitDate(date)
   };
 
   handleserviceType = (item, e) => {
@@ -628,14 +630,7 @@ export class ServiceCalendar extends Component {
             </ul>
           </Scrollbars>
         </div>
-        <ul className="list-group list-group-flush">
-          <li
-            className="list-group-item ProfileShowMore"
-            onClick={this.clickShowMore}
-          >
-            Show more <i className="ProfileIconShowMore" />
-          </li>
-        </ul>
+        
         <ModalPopup
           isOpen={this.state.editPersonalDetailModal}
           toggle={() => this.togglePersonalDetails(this, modalType)}

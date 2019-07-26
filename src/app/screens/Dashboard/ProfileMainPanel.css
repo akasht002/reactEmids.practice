@@ -203,6 +203,17 @@ span.ProfileCardHeaderLink:hover{
     align-items: center;
 }
 
+.NoInformationServiceProvider, .NoVisitsServiceProvider{
+    display: flex;
+    display: -moz-flex;
+    height: 100%;
+    width: 100%;
+    margin: 30px 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .ProfileServicesVisitList .NoInformationServiceProvider{
     width: 200px;
     margin: 0 auto;
@@ -243,7 +254,7 @@ span.ProfileCardHeaderLink:hover{
 }
 
 .NoServiceReq .NoInfoText{
-    font-size: 16px;
+    font-size: 14px;
     color: #373737;
     margin-top: 10px;
     text-align: center;
@@ -1205,5 +1216,19 @@ margin-left:0px;
     max-height: 100px;
 }
 
+.myPlanBlank {
+    background-image: url("../../assets/images/my_plan_blank.png");
+    background-position: center;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    height: 200px;
+}
+
+.NewSPReq{
+    background-image: url("../../assets/images/edit_pen.svg");
+    background-position: 50% 75%;
+    background-size: 70%;
+    background-repeat: no-repeat;
+}
 
 

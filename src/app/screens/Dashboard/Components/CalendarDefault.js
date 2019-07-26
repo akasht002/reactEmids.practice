@@ -3,30 +3,20 @@ import { Link } from 'react-router-dom'
 
 export const CalendarDefault = () => {
   return (
-    <Fragment>      
-      <li>
-        <div className='NoRequestServiceProvider'>  
-        <span className="clickView">Click below to get started.</span>
+    <Fragment>  
+        <div className='NoRequestServiceProvider '>  
+        <div className='myPlanBlank'></div>
+        <span className="clickView primaryColor">Click below to get started.</span>
             <div className="no-blockinfo-top">    
-          <Link className='NoServiceReq NewSPReq' to='/serviceRequest'>
-            <span><img alt="NI" src={require('../../../assets/images/NoServiceRequest.svg')} /></span>
+          <Link className='NoServiceReq NewSPReq' to='/Visitservicelist'>
             <span className='NoInfoText'>
               <span className="NoServiceInfoLink primaryColor">
-                New Service Request
+                View Request
               </span>
             </span>
-          </Link>
-          <Link className='NoServiceReq NewSPReq' to='/spSearch'>
-            <span><img alt="NI" src={require('../../../assets/images/BrowseServiceProviders.svg')} /></span>
-            <span className='NoInfoText'>
-              <span className="NoServiceInfoLink primaryColor">
-                Browse Service Providers
-              </span>
-            </span>
-          </Link>
+          </Link>         
             </div>
         </div>
-      </li>
     </Fragment>
   )
 }
