@@ -61,7 +61,7 @@ export const userEmailNotExist = (isExist) => {
 export function sendVerificationLink(emailData) {
     return (dispatch) => {
         dispatch(startLoading());
-        Get(API.sendEmailVerification + emailData.emailId).then((resp) => {
+        return Get(API.sendEmailVerification + emailData.emailId).then((resp) => {
             if (resp && resp.data) {
                 if (resp.data.isExist === VALID) {
                     dispatch(onSetUserIdCompletion(resp.data));
