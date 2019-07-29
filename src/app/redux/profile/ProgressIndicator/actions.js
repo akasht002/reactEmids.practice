@@ -3,9 +3,9 @@ import { Get } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 
-export const ProgressIndicator = {
-    getProfilePercentageSuccess: 'get_profile_percentage_success/progressIndicator',
-};
+import {
+    ProgressIndicator
+} from './bridge'
 
 export const getProfilePercentageSuccess = (data) => {
     return {
@@ -21,7 +21,7 @@ export function getProfilePercentage() {
         if(getState().profileState.PersonalDetailState.serviceProviderId){
             serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
         };
-        Get(API.getProfilePercentage + serviceProviderId).then((resp) => {
+        return Get(API.getProfilePercentage + serviceProviderId).then((resp) => {
             dispatch(getProfilePercentageSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

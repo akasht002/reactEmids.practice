@@ -22,7 +22,7 @@ export const getSelectedSkillsDetails = (data) => {
 export function getSkills() {
     return (dispatch) => {
         dispatch(startLoading());
-        Get(API.getSkills).then((resp) => {
+        return Get(API.getSkills).then((resp) => {
             dispatch(getSkillsSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -46,7 +46,7 @@ export function addSkills(data) {
 
         };
         dispatch(startLoading());
-        Post(API.addSkills + serviceProviderId + '/Skill', modal).then((resp) => {
+        return Post(API.addSkills + serviceProviderId + '/Skill', modal).then((resp) => {
             dispatch(getSelectedSkills());
             dispatch(getProfilePercentage());
             dispatch(endLoading());
@@ -63,7 +63,7 @@ export function getSelectedSkills() {
             serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
         };
         dispatch(startLoading());
-        Get(API.addSkills + serviceProviderId + '/Skills').then((resp) => {
+        return Get(API.addSkills + serviceProviderId + '/Skills').then((resp) => {
             dispatch(getSelectedSkillsDetails(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

@@ -33,7 +33,7 @@ export function getWorkHistory() {
             serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
         };
         dispatch(startLoading());
-        Get(API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
+        return Get(API.WorkHistory +`${serviceProviderId}/WorkHistory`).then((resp) => {
             dispatch(getWorkhistorySuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -59,7 +59,7 @@ export function addWorkHistory(data) {
             currentlyWorking: data.currentlyWorking
         };
         dispatch(startLoading());
-        Post(API.WorkHistory+`${serviceProviderId}/WorkHistory`, modal).then((resp) => {
+        return Post(API.WorkHistory+`${serviceProviderId}/WorkHistory`, modal).then((resp) => {
             dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory())
             dispatch(getProfilePercentage());
@@ -79,7 +79,7 @@ export function editWorkHistory(data) {
             workHistoryId
         };
         dispatch(startLoading());
-        Get(API.WorkHistory + `${serviceProviderId}/WorkHistory/${workHistoryId}`, modal).then((resp) => {
+        return Get(API.WorkHistory + `${serviceProviderId}/WorkHistory/${workHistoryId}`, modal).then((resp) => {
             dispatch(getWorkhistoryFieldDetails(resp.data));
             dispatch(getProfilePercentage());
             dispatch(endLoading());
@@ -105,7 +105,7 @@ export function updateWorkHistory(data) {
             currentlyWorking: data.currentlyWorking
         };
         dispatch(startLoading());
-        Put(API.WorkHistory + `${serviceProviderId}/WorkHistory`, modal).then((resp) => {
+        return Put(API.WorkHistory + `${serviceProviderId}/WorkHistory`, modal).then((resp) => {
             dispatch(addWorkhistorySuccess(true));
             dispatch(getWorkHistory());
             dispatch(getProfilePercentage());
@@ -121,7 +121,7 @@ export function deleteWorkHistory(data) {
         dispatch(startLoading());
         let serviceProviderId = getUserInfo().serviceProviderId;
         let id =data;
-        Delete(API.WorkHistory + `${serviceProviderId}/WorkHistory/${id}`, data).then((resp) => {
+        return Delete(API.WorkHistory + `${serviceProviderId}/WorkHistory/${id}`, data).then((resp) => {
             dispatch(getWorkHistory());
             dispatch(getProfilePercentage());
             dispatch(endLoading());
