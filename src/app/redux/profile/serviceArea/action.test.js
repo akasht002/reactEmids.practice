@@ -11,6 +11,12 @@ import thunk from 'redux-thunk'
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
+jest.mock('../../../services/http', () => ({
+  getUserInfo: () => ({
+      serviceProviderId:23
+  })
+}))
+
 describe('actions', () => {
 
   it('should create an action to getServiceAreaSuccess ', () => {
@@ -65,7 +71,7 @@ describe('ServiceArea async actions', () => {
   })
 
   it('call getServiceArea fn', () => {
-      fetchMock.post(API.getServiceArea, {
+      fetchMock.get(API.getServiceArea, {
           body: { data: {} },
           headers: { 'content-type': 'application/json' },
           response: { data: {} }
@@ -74,11 +80,75 @@ describe('ServiceArea async actions', () => {
       const store = mockStore({ data: '', setPasswordState: '' })
 
       return store.dispatch(actions.getServiceArea({})).then((response) => {
-          store.dispatch(actions.getWorkHistory())
+          store.dispatch(actions.getServiceAreaSuccess())
           expect(store.getActions()).toBeDefined()
       }).catch(err => {
       })
   });
 
-  
+  it('call addServiceArea fn', () => {
+    fetchMock.post(API.addServiceArea, {
+        body: { data: {} },
+        headers: { 'content-type': 'application/json' },
+        response: { data: {} }
+    })
+
+    const store = mockStore({ data: '', setPasswordState: '' })
+
+    return store.dispatch(actions.addServiceArea({})).then((response) => {
+        store.dispatch(actions.addServiceAreaSuccess())
+        expect(store.getActions()).toBeDefined()
+    }).catch(err => {
+    })
+  });
+
+  it('call editServiceArea fn', () => {
+    fetchMock.post(API.editServiceArea, {
+        body: { data: {} },
+        headers: { 'content-type': 'application/json' },
+        response: { data: {} }
+    })
+
+    const store = mockStore({ data: '', setPasswordState: '' })
+
+    return store.dispatch(actions.editServiceArea({})).then((response) => {
+        store.dispatch(actions.getServiceAreaFieldDetails())
+        expect(store.getActions()).toBeDefined()
+    }).catch(err => {
+    })
+  });
+
+  it('call updateServiceArea fn', () => {
+    fetchMock.get(API.addServiceArea, {
+        body: { data: {} },
+        headers: { 'content-type': 'application/json' },
+        response: { data: {} }
+    })
+
+    const store = mockStore({ data: '', setPasswordState: '' })
+
+    return store.dispatch(actions.updateServiceArea({})).then((response) => {
+        store.dispatch(actions.addServiceAreaSuccess())
+        expect(store.getActions()).toBeDefined()
+    }).catch(err => {
+    })
+});
+
+it('call deletePointService fn', () => {
+    fetchMock.delete(API.deletServiceArea, {
+        body: { data: {} },
+        headers: { 'content-type': 'application/json' },
+        response: { data: {} }
+    })
+
+    const store = mockStore({ data: '', setPasswordState: '' })
+
+    return store.dispatch(actions.deletePointService({})).then((response) => {
+        store.dispatch(actions.getServiceArea())
+        expect(store.getActions()).toBeDefined()
+    }).catch(err => {
+    })
+});
+
+
 });
