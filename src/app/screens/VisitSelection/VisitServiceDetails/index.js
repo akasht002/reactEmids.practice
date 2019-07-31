@@ -916,6 +916,7 @@ export class VisitServiceDetails extends Component {
             btn2='No'
             className='modal-sm'
             headerFooter='d-none'
+            test-msgModal="test-msgModal"
             centered='centered'
             onConfirm={() => {
               this.onConfirmSerivceRequest(this.status)
@@ -933,6 +934,7 @@ export class VisitServiceDetails extends Component {
             toggle={this.reset1}
             ModalBody={<span>{this.alertModalMsgstatus}</span>}
             btn1='Yes'
+            test-confirmModal="test-confirmModal"
             className='modal-sm'
             headerFooter='d-none'
             centered='centered'
@@ -954,6 +956,7 @@ export class VisitServiceDetails extends Component {
               ${formatPhoneNumber(this.state.phoneNumber)}`} </span>}
             btn1='OK'
             className='modal-sm'
+            test-phoneModal="test-phoneModal"
             headerFooter='d-none'
             footer='d-none'
             centered='centered'
@@ -968,6 +971,7 @@ export class VisitServiceDetails extends Component {
             btn1='OK'
             className='modal-sm'
             headerFooter='d-none'
+            test-conversationModal="test-conversationModal"
             footer='d-none'
             centered='centered'
             onConfirm={() =>
@@ -980,6 +984,7 @@ export class VisitServiceDetails extends Component {
             ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
             btn1='OK'
             className='modal-sm'
+            test-standByModal="test-standByModal"
             headerFooter='d-none'
             footer='d-none'
             centered='centered'

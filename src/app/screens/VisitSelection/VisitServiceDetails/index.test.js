@@ -129,7 +129,30 @@ const defaultState = {
     cancelServiceRequestByServiceProvide: jest.fn(),
     updateEntityServiceVisit: jest.fn(),
     goToDashboard: jest.fn(),
-    formDirtyVisitServiceDetails: jest.fn()
+    formDirtyVisitServiceDetails: jest.fn(),
+    visitServiceDetails: {
+        serviceRequestTypeDetails: [
+            {
+
+            }
+        ],
+        serviceRequestSlot: [{
+            dayOfWeek: 1
+        }]
+    },
+    daysType: [
+        {
+            keyValue: 'mon',
+            id: 1
+        }
+    ],
+    VisitServiceSchedule: [{
+        visitDate: '29-07-2019',
+        slot: 'mon',
+        visitStatusName: 'Open',
+        billedTotalDuration: '23:20:30',
+        originalTotalDuration: '23:20:30'
+    }]
 }
 
 store = mockStore(defaultState);
@@ -156,6 +179,9 @@ describe("VisitServiceDetails", function () {
                         ]
                     }
                 ],
+                serviceRequestSlot: [{
+                    dayOfWeek: 1
+                }],
                 patient: {
                     patientAddresses:[{
                         isPrimaryAddress: true
@@ -450,5 +476,17 @@ describe("VisitServiceDetails", function () {
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getVisitServiceScheduleSuccess();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('Check the events', () => {
+        expect(shallowWrapper.find('[test-msgModal="test-msgModal"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-msgModal="test-msgModal"]').props().onCancel());
+        expect(shallowWrapper.find('[test-confirmModal="test-confirmModal"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-confirmModal="test-confirmModal"]').props().onCancel());
+        expect(shallowWrapper.find('[test-phoneModal="test-phoneModal"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-conversationModal="test-conversationModal"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-standByModal="test-standByModal"]').props().onConfirm());
+        expect(shallowWrapper.find('[className="ProfileImage"]').props().onClick());
+        expect(shallowWrapper.find('[class="ProfileDetailsName"]').props().onClick());
     });
 });
