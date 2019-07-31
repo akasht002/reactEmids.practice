@@ -191,14 +191,15 @@ export class ServiceCalendar extends Component {
   handleDayChange = e => {
     let getDate = moment(e.target.getAttribute("data-date"));
     this.setState({
+      pageNumber:PAGE_NO,
       reportDay: e.target.getAttribute("data-date"),
-      startYear: getDate.format("YYYY"),
-      startMonth: getDate.format("MMM"),
+      startYear: getDate.format(DATE_FORMATS.yyyy),
+      startMonth: getDate.format(DATE_FORMATS.mmm),
       selectedMonth: {
-        label: getDate.format("MMM") + ' ' + getDate.format("YYYY"),
-        value: getDate.format("MMM")
+        label: getDate.format(DATE_FORMATS.mmm) + ' ' + getDate.format(DATE_FORMATS.yyyy),
+        value: getDate.format(DATE_FORMATS.mmm)
       },
-      currentDate: getDate.format("DD")
+      currentDate: getDate.format(DATE_FORMATS.dd)
     });
   };
 
