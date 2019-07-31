@@ -197,7 +197,8 @@ export const DATE_FORMATS = {
     mmm:"MMM",
     yyyy:'YYYY',
     month:'month',
-    days:'days'
+    days:'days',
+    dd:'DD'
 }
 
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
