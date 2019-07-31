@@ -25,7 +25,7 @@ export const ServiceStatus = props => {
   if (!isDisableInArray(props.status.id)) {
     if (!isStatusInArray(props.status.id)) {
       return (
-        <React.Fragment>
+        <React.Fragment test-serviceStatus="test-serviceStatus">
           {(props.status.id !== NOT_INTERESTED) && (
             <Button
               classname='btn btn-outline-primary mx-2 float-right'
@@ -52,7 +52,7 @@ export const ServiceStatus = props => {
     } else {
       // to do demo fix
       return (
-        <React.Fragment>
+        <React.Fragment test-else="test-else">
           <Button
             classname='btn btn-outline-primary mx-2 float-right'
             label={StatusLabel[props.status.id]}

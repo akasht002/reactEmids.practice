@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
-import { VisitServiceList } from './index.js';
+import { VisitServiceList, mapDispatchToProps, mapStateToProps } from './index.js';
 
 jest.mock('../../ScreenCover/AsideScreenCover', () => ({
   AsideScreenCover: 'mockAsideScreenCover'
@@ -27,6 +27,16 @@ const defaultState = {
       serviceRequestCount: 0,
       status: 0,
       isLoading: false
+    },
+    ServiceRequestFilterState: {
+      ServiceCategory: [],
+      ServiceStatus: [],
+      ServiceType: [],
+      ServiceAreaList: [],
+      FilterDataCount: 23,
+      SearchDataCount: 50,
+      isDashboardFilteredStatus: true,
+      status: 'Open'
     }
   },
   authState: {
@@ -34,6 +44,11 @@ const defaultState = {
       userData: {
         userInfo: {}
       }
+    }
+  },
+  profileState: {
+    PersonalDetailState: {
+      imageData: 'adas/asdasd'
     }
   },
   getVisitServiceList: jest.fn(),
@@ -202,4 +217,62 @@ describe("VisitServiceDetails", function () {
   it('Check the ProfileHeaderTitle form body', () => {
     expect(wrapper.find('.ProfileHeaderTitle').length).toEqual(1);
   });
+
+  it('Check mapStateToProps', () => {
+    expect(mapStateToProps(defaultState)).toBeDefined();
+});
+
+it('Check mapDispatchToProps actions', () => {
+    const dispatch = jest.fn();
+    mapDispatchToProps(dispatch).getVisitServiceList({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getServiceRequestId({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).goToServiceRequestDetailsPage();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getServiceCategory();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).ServiceRequestStatus();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getServiceType({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getFilter({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getSort({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getServiceArea({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).clearServiceCategory([]);
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).clearServiceArea([]);
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).clearServiceRequestStatus([]);
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).clearServiceType({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).setPatient({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).goToPatientProfile();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getServiceRequestCount();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getFilterDataCount({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).formDirty();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).formDirtyVisitList();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).checkAllServiceRequestStatus(true, []);
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).clearVisitServiceList();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).setDefaultFilteredStatus();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).keywordSearchServiceRequest({});
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getSearchDataCount([]);
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getSearchDataCountSuccess();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+});
 });

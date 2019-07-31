@@ -17,7 +17,7 @@ import { push } from "../../../redux/navigation/actions";
 import { VISIT_STATUS_ID,SERVICE_REQ_STATUS,DEFAULT_VISIT_START_TIME } from '../../../constants/constants'
 import _ from 'lodash'
 
-class AssignServiceProvider extends Component {
+export class AssignServiceProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -228,7 +228,7 @@ class AssignServiceProvider extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getEntityServiceProviderList: () => dispatch(getEntityServiceProviderList()),
     setESP: data => dispatch(setESP(data)),
@@ -238,7 +238,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     serviceProviderList: state.dashboardState.dashboardState.serviceProviderList,
   }
