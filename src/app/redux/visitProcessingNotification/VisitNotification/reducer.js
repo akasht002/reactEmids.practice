@@ -1,6 +1,6 @@
 import {
     VisitNotification
-} from './actions'
+} from './bridge'
 
 const defaultState = {
     VisitNotification: [],

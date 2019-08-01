@@ -3,14 +3,9 @@ import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import {getUserInfo} from '../../../utils/userUtility';
 
-export const VisitNotificationSettings = {
-    getVisitNotificationSettingsSuccess: 'get_visit_notification_list_success/VisitNotificationSettings',
-    updateVisitNotificationSettingsSuccess: 'update_visit_notification_list_success/VisitNotificationSettings',
-    handlePushChangeSuccess: 'handlePushChangeSuccess/VisitNotificationSettings',
-    handleEmailChangeSuccess: 'handleEmailChangeSuccess/VisitNotificationSettings',
-    startLoadingNotification : 'handleEmailChangeSuccess/startLoadingNotification',
-    endLoadingNotification : 'handleEmailChangeSuccess/endLoadingNotification',
-};
+import {
+    VisitNotificationSettings
+} from './bridge'
 
 export const startLoadingNotification = () =>{
     return {
