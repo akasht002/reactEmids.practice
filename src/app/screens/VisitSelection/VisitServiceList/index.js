@@ -547,7 +547,7 @@ export class VisitServiceList extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>               
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='primaryColor m-0'>View Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
                         {/* <ThemeProvider>

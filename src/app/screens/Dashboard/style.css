@@ -1806,4 +1806,9 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
 }
 
+.topProfile .ProfileCardHeaderTitle.primaryColor
+{
+padding-left: 20px;
+}
+
 
