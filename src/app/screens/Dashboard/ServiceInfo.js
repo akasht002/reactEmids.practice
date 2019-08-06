@@ -244,17 +244,21 @@ export const MyConversionDetail = props => {
 }
 
 export const MyConversionDefault = () => {
+  let style = {
+    display: 'none'
+  };
   return (
     <Fragment>
       <li className='list-group-item NoInformation myConversationContainer'>
         <div className='myConversationContent'>
-          <div className='avatarWidget'>
+          <div className='avatarWidget' style={style}>
             <div className='avatarContainer' />
           </div>
           <div className='MsgThreadContent m-auto'>
-            <div className='NoProfileServices'>
-              <i className='NoInformationIcon' /><span>No Conversations</span>
-            </div>
+          <div className="NoProfileServices No-Coverastion-Block">
+              <span><img  src={require('../../assets/images/conversation-icon.png')} alt="conversation" /></span>
+              <span className="No-SR-Text">New Conversations</span>
+              </div>
           </div>
         </div>
       </li>

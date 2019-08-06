@@ -2113,7 +2113,7 @@ min-width:128px !important; display:block !important;
     width:100% !important;
     position: absolute;
     right: 0;
-    height: 100%;
+    height: -webkit-fill-available;
     width: 100%;
     background-position:center;
     margin: 0 auto;
@@ -2126,10 +2126,15 @@ min-width:128px !important; display:block !important;
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
 {
 
-        height:330px;
+        height:300px;
         width: 100%;
         display: block;
-        margin-top: 10px;
+        margin-top: 12px;
+}
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .card.ProfileCard
+{
+height: 100%;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
@@ -2285,19 +2290,20 @@ min-width:128px !important; display:block !important;
 {
     color: #444;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
 {
     color: #444;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .ProfileShowMore
 {
-   line-height: 30px; 
+   line-height: 40px; 
+   border-top: none;
 }
 
 .bottomPalette .ProfileConversationWidget .mySPContainer .options {
