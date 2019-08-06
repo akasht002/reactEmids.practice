@@ -2270,8 +2270,14 @@ height: 100%;
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;
-
+    cursor: pointer;
 }
+
+.DashboardViewFirst .ServicesCalendarWidget:hover span
+{
+color:#444444;
+}
+
 
 .DashboardViewFirst .ProfileServices
 {
@@ -2282,6 +2288,7 @@ height: 100%;
 {
     width:30%;
     min-width: auto;
+    cursor: pointer;
 }
 
 
