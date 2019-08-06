@@ -1351,3 +1351,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         .ProfileHeaderOptions div.ProfileSearchContainer.true {height: 50px; top:0px; margin-top: 18px; } /* IE10 */
      *::-ms-backdrop, .ProfileHeaderOptions div.ProfileSearchContainer.true { height: 50px; top:0px; margin-top: 18px;} /* IE11 */
      }
+
+.BoardContainer .ServiceRequestBoard .BlockProfileContainer {
+    cursor: pointer;
+}

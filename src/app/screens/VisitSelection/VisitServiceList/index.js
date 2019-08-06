@@ -445,7 +445,7 @@ export class VisitServiceList extends Component {
         this.props.formDirtyVisitList()
         let data = {
             searchKeyword: this.state.searchKeyword,
-            pageNumber: this.state.pageNumber,
+            pageNumber: DEFAULT_PAGE_NUMBER,
             pageSize: this.state.pageSize
         }
         this.props.getSearchDataCount(data)
@@ -515,8 +515,8 @@ export class VisitServiceList extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Hired' ? '' : 'noArrow')} onClick={() => {
-                                if (serviceList.serviceRequestStatus === 'Hired') {
+                            <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Engaged' ? '' : 'noArrow')} onClick={() => {
+                                if (serviceList.serviceRequestStatus === 'Engaged') {
                                     this.props.setPatient(serviceList.patientId)
                                     this.props.goToPatientProfile()
                                 }

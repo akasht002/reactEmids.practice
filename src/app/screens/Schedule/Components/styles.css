@@ -3474,6 +3474,10 @@ background-color: #fff;
     width: 50%;
 }
 
+.BoardContainer .ServiceRequestBoard .BlockProfileContainer {
+    cursor: pointer;
+}
+
 
 
 
