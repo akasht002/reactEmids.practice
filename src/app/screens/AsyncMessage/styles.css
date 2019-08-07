@@ -131,6 +131,11 @@ a:hover {
     color: #aeaeae;
 }
 
+.myConversationContent .MsgContent
+{
+    font-size: 14px;
+}
+
 .MsgIndiTitle{
     font-weight: 600;
 }
