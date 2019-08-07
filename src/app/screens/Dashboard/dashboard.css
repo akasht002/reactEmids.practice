@@ -415,7 +415,7 @@ li div.dropdown-menu{
 }
 
 span.btn-hired, span.btn-hired:hover{
-    color: #007f84 !important;
+    color: #7a329f !important;
     /* border-color: #007f84 !important; */
     font-size: 12px !important;
     padding: 5px !important;
@@ -424,7 +424,7 @@ span.btn-hired, span.btn-hired:hover{
 }
 
 span.btn-applied, span.btn-applied:hover{
-    color: #3089df !important;
+    color: #8c8c8c !important;
     /* border-color: #3089df !important; */
     font-size: 12px !important;
     padding: 5px !important;
@@ -445,7 +445,7 @@ span.btn-invited, span.btn-invited:hover{
     font-size: 12px;
     line-height: 12px;
     display: inline-block;
-    color: #444444;
+    color: #8c8c8c;
 }
 
 .BlockProfileContainer.noArrow:after{
