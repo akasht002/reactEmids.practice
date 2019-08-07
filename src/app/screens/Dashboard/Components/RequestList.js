@@ -47,7 +47,7 @@ export const ServiceProviderRequestDetails = props => {
                   |
                   {'Posted on '}
                   <Moment format='MMM DD'>
-                    {sp.postedDate}
+                    {sp.date}
                   </Moment>
                 </span>
               </div>
