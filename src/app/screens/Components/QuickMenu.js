@@ -58,7 +58,7 @@ class QuickMenu extends Component {
 
     goToServiceVisits = (data) => {
         this.props.setServiceVisitDate(moment(this.state.reportDay))
-        if((data.visitStatusId === START_VISIT || data.visitStatusId === IN_PROGRESS) && this.props.isStandByModeOn.isServiceProviderInStandBy) {
+        if((data.visitStatusId === START_VISIT || data.visitStatusId === IN_PROGRESS) && ( this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy)) {
           this.setState({ standByModeAlertMsg: true })
         }
         else this.props.goToServiceVisitProcessing(data)

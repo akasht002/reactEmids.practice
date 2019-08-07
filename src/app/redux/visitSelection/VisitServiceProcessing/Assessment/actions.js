@@ -1,11 +1,11 @@
 import { API } from '../../../../services/api'
 import {
   ServiceRequestGet,
-  ServiceRequestPost
+  ServiceRequestPost,
+  getUserInfo
 } from '../../../../services/http'
 import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
-import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { visitHistoryLoading } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import {QuestionsList} from './bridge'
 
@@ -35,10 +35,11 @@ export const endLoadingProcessing = () => {
 };
 
 
-export function getQuestionsList() {
+export function getQuestionsList(data) {
   return dispatch => {
+    let serviceProviderId = getUserInfo().serviceProviderId
     dispatch(startLoadingProcessing())
-    ServiceRequestGet(API.getQuestionsList)
+    ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${serviceProviderId}/${data}`)
       .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
         dispatch(endLoadingProcessing())
@@ -52,14 +53,13 @@ export function getQuestionsList() {
 export function saveAnswers(data) {
   return dispatch => {
     dispatch(startLoadingProcessing())
-    ServiceRequestPost(API.saveAnswers, data)
+    ServiceRequestPost(API.visitProcessingAssessmentSave, data)
       .then(resp => {
-        dispatch(getSummaryDetails(data.serviceRequestVisitId));
-        dispatch(getSavedSignature(data.serviceRequestVisitId));
+        dispatch(push(Path.assessmentFeedback));
       })
       .catch(err => {
         dispatch(endLoadingProcessing())
-        dispatch(push(Path.summary))
+        dispatch(push(Path.assessmentFeedback))
       })
   }
 }

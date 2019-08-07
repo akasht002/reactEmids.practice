@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button, Preloader } from '../../../../components';
