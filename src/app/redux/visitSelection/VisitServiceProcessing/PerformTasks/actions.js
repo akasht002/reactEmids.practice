@@ -60,13 +60,13 @@ export const startLoadingProcessing = () => {
 
 export function getPerformTasksList(data, startOrStop,goToAssessment = false) {
     return (dispatch) => {
-        dispatch(getServiceRequestVisitId(data))      
-        let path =  goToAssessment ? Path.assessment :Path.performTasks;
+        dispatch(getServiceRequestVisitId(data))   
         ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
-            if (startOrStop === false) {
+            if (!startOrStop) {
                 dispatch(getVisitStatus(resp.data))
             }
             else {
+                let path =  goToAssessment ? Path.assessment :Path.performTasks;
                 dispatch(getPerformTasksListSuccess(resp.data))
                 dispatch(push(path))
             }

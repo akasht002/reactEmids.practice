@@ -189,6 +189,11 @@ export const SERVICE_REQ_STATUS = {
     DECLINED: 107
 }
 
+export const ERROR_MSG = {
+    timeErrMessage : 'Updated time cannot be greater than Maximum adjustable time.',
+    emptyErrMessage : 'Time field(s) cannot be empty.'
+}
+
 export const DATE_FORMATS = {
     monDD : "MMM DD",
     hhMinSession:"hh:mm A",
@@ -198,7 +203,8 @@ export const DATE_FORMATS = {
     yyyy:'YYYY',
     month:'month',
     days:'days',
-    dd:'DD'
+    dd:'DD',
+    hhMinSec:"HH:mm:ss"
 }
 
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
@@ -230,4 +236,10 @@ export const MM_FORMAT = "M"
 export const MMM_FORMAT = 'MMM'
 export const YYYY_MM_DD_FORMAT= 'YYYY-MM-DD'
 export const MMMDD_FORMAT = "MMM DD";
+
+
+export const QUESTION_TYPE = {
+    ChoiceBased:'ChoiceBased',
+    OpenText:'OpenText'
+}
 

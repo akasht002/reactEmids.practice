@@ -1,6 +1,6 @@
 export const QuestionsList = {
-    getQuestionsListSuccess: 'get_questions_list_success/performtasks',
-    formDirtyFeedback: 'formDirtyFeedback/performtasks',
-    startLoading: 'startLoading/performtasks',
-    endLoading: 'endLoading/performtasks'
+    getQuestionsListSuccess: 'get_questions_list_success/assessment',
+    formDirtyFeedback: 'formDirtyFeedback/assessment',
+    startLoading: 'startLoading/assessment',
+    endLoading: 'endLoading/assessment'
   }

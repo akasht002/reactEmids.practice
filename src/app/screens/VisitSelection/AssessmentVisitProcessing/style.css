@@ -883,16 +883,6 @@ label.form-check-label {
     display: block;
     position: relative;
 }
-
-/* .SPAvailTitle:after{
-    content: '___';
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 15px;
-    color: #7a329f;
-} */
-
 .SPAvailTitle:after{
     content: '';
     display: block;
@@ -901,17 +891,6 @@ label.form-check-label {
     left: 15px;
     color: #7a329f;
 }
-
-/* .SPAvailTitleText{
-    position: relative;
-    font-size: 16px;
-    color: #494949;
-    font-weight: 600;
-    display: block;
-    width: 100%;
-    padding: 15px;
-} */
-
 .SPAvailTitleText{
     position: relative;
     font-size: 16px;
@@ -940,7 +919,6 @@ label.form-check-label {
 .SPAvailContent {
     display: block;
     position: relative;
-    /* padding: 15px 0; */
     padding: 0;
 }
 
@@ -950,20 +928,14 @@ label.form-check-label {
     padding: 5px 15px 5px 40px;
     list-style: none;
     font-size: 16px;
-    /* margin: 1px 0; */
     margin: 0;
     color: #444444;
-    /* border-bottom: 1px solid #eaeaea; */
     border-top: 1px solid #eaeaea;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-.SPAvailItems:last-child{
-    /* border: 0; */
 }
 
 .availabilityCheck:checked ~ label, .SPAvailItems.active {
@@ -1062,10 +1034,6 @@ div.AddressCardWidget {
 .ServiceTypesSlider.Summary .ServiceTypeList:before {
     display: none;
 }
-
-/* .ServiceTypesSlider.Summary .ServiceTypeLink {
-    border-color: #7a329f;
-} */
 
 .ServiceTasks.Summary {
     padding: 0;

@@ -1,7 +1,7 @@
-import {QuestionsList} from './bridge'
+import { QuestionsList } from './bridge'
 
 const defaultState = {
-    QuestionsList: {},
+    questionsList: {},
     isLoading: false
 };
 
@@ -11,13 +11,13 @@ const AssessmentState = (state = defaultState, action) => {
         case QuestionsList.getQuestionsListSuccess:
             return {
                 ...state,
-                QuestionsList: action.data
+                questionsList: action.data
             };
 
         case QuestionsList.formDirtyFeedback:
             return {
                 ...state,
-                QuestionsList: {}
+                questionsList: {}
             };
 
         case QuestionsList.startLoading:

@@ -16,7 +16,7 @@ import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import './style.css'
 import { isNull } from '../../../../utils/validations'
-
+import { QUESTION_TYPE } from '../../../../constants/constants'
 export class AssessmentFeedback extends Component {
 
     constructor(props) {
@@ -47,11 +47,7 @@ export class AssessmentFeedback extends Component {
         } else {
             this.props.history.push(Path.visitServiceList)
         }
-    }
-
-    componentWillReceiveProps(nextProps) {
-       
-    }
+    }    
 
     handelPatientProfile = (data) => {
         this.props.setPatient(data)
@@ -77,7 +73,7 @@ export class AssessmentFeedback extends Component {
             textareaValue: e.target.value,
             textareaData: {
                 feedbackQuestionnaireId: id,
-                answerName: this.state.textareaValue
+                answerName: e.target.value
             }
         });
     }
@@ -86,7 +82,7 @@ export class AssessmentFeedback extends Component {
         if (this.state.textareaData) {
             this.selectedAnswers.push(this.state.textareaData);
         }
-        if (this.props.QuestionsList.length === this.selectedAnswers.length || this.props.VisitFeedback.length > 0) {
+        if (this.props.questionsList.length === this.selectedAnswers.length || this.props.VisitFeedback.length > 0) {
             this.onSubmit();
         } else {
             this.setState({ isAlertModalOpen: true, isSubmitButtonClicked: true })
@@ -135,7 +131,6 @@ export class AssessmentFeedback extends Component {
     render() {
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-                {/* {this.state.isLoading && <Preloader />} */}
                 {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
@@ -162,7 +157,7 @@ export class AssessmentFeedback extends Component {
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} { this.props.patientDetails.patient.lastName}</i></span>
                                             :
                                             ''
                                         }
@@ -190,11 +185,11 @@ export class AssessmentFeedback extends Component {
                         <div className='CardContainers'>
                             <form className='ServiceContent'>
                                 <div className="FeedbackWidget mt-5">
-                                    {this.props.QuestionsList.length > 0 ?
+                                    {this.props.questionsList.length > 0 ?
                                         <div>
-                                            {this.props.QuestionsList && this.props.QuestionsList.map((questionList, i) => {
+                                            {this.props.questionsList && this.props.questionsList.map((questionList, i) => {
                                                 let showError = this.state.isSubmitButtonClicked && isNull(this.normalizedSelectedAnswers[questionList.feedbackQuestionnaireId])
-                                                if (questionList.answerTypeDescription === 'ChoiceBased') {
+                                                if (questionList.answerTypeDescription === QUESTION_TYPE.ChoiceBased) {
                                                     return (
                                                         <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
                                                             <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}>
@@ -222,7 +217,7 @@ export class AssessmentFeedback extends Component {
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
                                                                                 checked={answer.checked}
-                                                                                disabled={this.props.VisitFeedback.length > 0 ? true : false}
+                                                                                disabled={this.props.VisitFeedback.length}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>
@@ -234,7 +229,7 @@ export class AssessmentFeedback extends Component {
                                                     )
                                                 }
 
-                                                if (questionList.answerTypeDescription === 'OpenText') {
+                                                if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
                                                     return (
                                                         <div className="FeedbackQuestionWidget" key={questionList.feedbackQuestionnaireId}>
                                                             <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
@@ -335,7 +330,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        QuestionsList: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.QuestionsList,
+        questionsList: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.QuestionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,

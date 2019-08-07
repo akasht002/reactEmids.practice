@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 import Moment from 'react-moment';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
-import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader } from '../../../../components';
-import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
 import { push, goBack } from '../../../../redux/navigation/actions'
@@ -17,6 +17,7 @@ import { getPerformTasksList, getSummaryDetails } from '../../../../redux/visitS
 import './style.css'
 import { isNull } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
+import { QUESTION_TYPE } from '../../../../constants/constants'
 
 export class Assessment extends Component {
 
@@ -31,12 +32,17 @@ export class Assessment extends Component {
             isDiscardModalOpen: false,
             isLoading: false,
             isAlertModalOpen: false,
-            isSubmitButtonClicked: false
+            isSubmitButtonClicked: false,
+            startService: true,
+            startedTime: '',
+            stopTime: false,
+            isStopModalOpen: false,
+            stopTimer: false
         };
         this.normalizedSelectedAnswers = {}
         this.selectedAnswers = [];
         this.percentageCompletion = 0;
-        this.checkedTask = 0;
+        this.checkedTask = -1;
         this.totalTask = 0;
         this.selectedTextArea ='';
         this.assessmentQuestionnaireId = '';
@@ -56,11 +62,10 @@ export class Assessment extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {       
-        if (this.props.QuestionsList !== nextProps.QuestionsList) {
-            nextProps.QuestionsList.map((questionList,index) => {
-                this.totalTask++
-                if (questionList.answerTypeDescription === 'ChoiceBased') {
+    componentWillReceiveProps(nextProps) { 
+        if (this.props.questionsList !== nextProps.questionsList) {
+            nextProps.questionsList.map((questionList,index) => {                
+                if (questionList.answerTypeDescription === QUESTION_TYPE.ChoiceBased) {
                     questionList.answers.map((answer) => {                                                               
                         if (questionList.selectedAnswer === answer.answerName) {
                             this.checkedTask ++
@@ -68,9 +73,9 @@ export class Assessment extends Component {
                         return ''   
                     })                    
                 }
-                if (questionList.answerTypeDescription === 'OpenText') {
+                if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
                     questionList.answers.map((answer) => {                                                               
-                        if (questionList.selectedAnswer.length >0) {
+                        if (!isNull(questionList.selectedAnswer)) {
                             this.checkedTask ++
                             this.selectedTextArea = questionList.selectedAnswer;
                             this.assessmentQuestionnaireId = questionList.assessmentQuestionnaireId
@@ -108,7 +113,7 @@ export class Assessment extends Component {
             textareaValue: e.target.value,
             textareaData: {
                 feedbackQuestionnaireId: id,
-                answerName: this.state.textareaValue
+                answerName: e.target.value
             }
         });
     }
@@ -117,7 +122,7 @@ export class Assessment extends Component {
         if (this.state.textareaData) {
             this.selectedAnswers.push(this.state.textareaData);
         }
-        if (this.props.QuestionsList.length === this.selectedAnswers.length) {
+        if (this.props.questionsList.length === this.selectedAnswers.length) {
             this.onSubmit();
         } else {
             this.setState({ isModalOpen: true})
@@ -134,7 +139,7 @@ export class Assessment extends Component {
 
     onSubmit = () => {
         let data = {
-            assessmentId: this.props.patientDetails.serviceRequestVisitId,
+            assessmentId: this.props.patientDetails.serviceRequestVisitId ? 323 :this.props.patientDetails.serviceRequestVisitId ,
             serviceProviderId: getUserInfo().serviceProviderId,
             answers: this.selectedAnswers
         }
@@ -142,11 +147,31 @@ export class Assessment extends Component {
         this.setState({ isModalOpen: false })
     }
    
-
-    render() {     
+    startService = (data, visitId) => {
+        let startServiceAction = 1;
+        let current_time;
+        if (data === startServiceAction) {
+            current_time = new moment().format("HH:mm");
+            this.setState({ startedTime: current_time, disabled: false, disableCheckbox: false, backDisabled: true })
+        } else {
+            current_time = this.state.startedTime;
+            this.setState({ stopTime: true, startService: true })
+            this.saveData(data);
+        }
+        this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
         
-        console.log(this.checkedTask)
-        console.log(this.totalTask)
+    }
+
+    render() { 
+        let startService = 1;
+        let time = <StopWatch
+        stopTimer={true}
+        startTime={'0001-01-01T00:00:00'}
+        endTime={'0001-01-01T00:00:00'}
+        duration={0}
+        />
+        this.totalTask = this.props.questionsList && this.props.questionsList.length
+        let  timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, this.props.ServiceRequestVisitId) }}>Start Service</a>
         this.percentageCompletion = Math.round((this.checkedTask / this.totalTask) * 100)
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -189,13 +214,13 @@ export class Assessment extends Component {
                                 <div className="col col-md-8 WizardContent">
                                     <DashboardWizFlow VisitProcessingNavigationData={AssessmentProcessingWizNavigationData} activeFlowId={1} />
                                 </div>
-                                <div className="col col-md-4 rightTimerWidget running">
+                                <div className="col col-md-4 rightTimerWidget">
                                     <div className="row rightTimerContainer">
                                         <div className="col-md-7 rightTimerContent FeedbackTimer">
-                                            <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
+                                            <span className="TimerContent">{ time }</span>
                                         </div>
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
+                                            <span className="TimerStarted running">{ timerBtn }</span>
                                         </div>
                                     </div>
                                 </div>
@@ -204,11 +229,11 @@ export class Assessment extends Component {
                         <div className='CardContainers'>
                             <form className='ServiceContent'>
                                 <div className="FeedbackWidget mt-5">
-                                    {this.props.QuestionsList.length > 0 ?
+                                    {this.props.questionsList && this.props.questionsList.length > 0 ?
                                         <div>
-                                            {this.props.QuestionsList && this.props.QuestionsList.map((questionList, i) => {
+                                            {this.props.questionsList && this.props.questionsList.map((questionList, i) => {
                                                 let showError = this.state.isSubmitButtonClicked && isNull(this.normalizedSelectedAnswers[questionList.assessmentQuestionnaireId])
-                                                if (questionList.answerTypeDescription === 'ChoiceBased') {
+                                                if (questionList.answerTypeDescription === QUESTION_TYPE.ChoiceBased) {
                                                     return (
                                                         <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget">
                                                             <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}>
@@ -233,7 +258,7 @@ export class Assessment extends Component {
                                                                                     this.handleSelected(answer.answerName, questionList.assessmentQuestionnaireId)
                                                                                 }}
                                                                                 defaultChecked= {answer.checked}
-                                                                                disabled={this.props.VisitFeedback.length > 0 ? true : false}
+                                                                                disabled={this.props.VisitFeedback.length > 0}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>
@@ -245,7 +270,7 @@ export class Assessment extends Component {
                                                     )
                                                 }
 
-                                                if (questionList.answerTypeDescription === 'OpenText') {
+                                                if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
                                                     return (
                                                         <div className="FeedbackQuestionWidget" key={questionList.assessmentQuestionnaireId}>
                                                             <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
@@ -281,7 +306,7 @@ export class Assessment extends Component {
                                     <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                                         <span className="bottomTaskName">Tasks</span>
                                         <span className="bottomTaskRange">
-                                            <i style={{ width: this.percentageCompletion && this.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
+                                            <i style={{ width: this.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
                                         </span>
                                         <span className="bottomTaskPercentage">{this.percentageCompletion && this.percentageCompletion}%</span>
                                     </div>
@@ -334,7 +359,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        QuestionsList: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.QuestionsList,
+        questionsList: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.questionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,

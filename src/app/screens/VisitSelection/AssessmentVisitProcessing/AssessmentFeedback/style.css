@@ -79,10 +79,6 @@
     margin: 0 0 15px 0;
 }
 
-/* .FeedbackAnswerWidget .form-radio .RadioBoxIcon{
-    left: 35px;
-} */
-
 .FeedbackAnswerWidget .feedbackForm{
     width: 100%;
     margin-bottom: 20px;
@@ -111,10 +107,6 @@
     .FeedbackAnswerWidget .form-radio{
         padding: 0;
     }
-
-    /* .FeedbackAnswerWidget .form-radio .RadioBoxIcon {
-        left: 20px;
-    } */
 
     .FeedbackAnswerWidget .feedbackForm {
         padding: 0;

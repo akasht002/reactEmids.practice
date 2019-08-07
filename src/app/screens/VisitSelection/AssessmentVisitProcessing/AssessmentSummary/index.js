@@ -16,6 +16,7 @@ import { checkNumber, getFields } from '../../../../utils/validations';
 import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
+import { DATE_FORMATS,ERROR_MSG } from '../../../../constants/constants'
 
 export class AssessmentSummary extends Component {
 
@@ -123,18 +124,18 @@ export class AssessmentSummary extends Component {
         if (this.state.signatureImage) {
             const data = {
                 serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
-                ServiceProviderId: this.state.summaryDetails.serviceProviderId,
-                ServiceRequestId: this.state.summaryDetails.serviceRequestId,
-                EstimatedClaim: parseFloat(this.props.CalculationsData.estimatedClaim),
-                OutOfPocketAmount: parseFloat(this.props.CalculationsData.copayAmount),
-                HourlyRate: this.state.summaryDetails.hourlyRate,
-                OriginalTotalDuration: originalTotalDuration,
-                BilledTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
-                TaxPaid: parseFloat(this.props.CalculationsData.taxes),
-                BilledPerService: parseFloat(this.props.CalculationsData.totalVisitCost),
-                TotalCost: parseFloat(this.props.CalculationsData.totalVisitCost),
-                Image: this.state.signatureImage,
-                TaxRate: parseFloat(this.state.summaryDetails.taxAmount)
+                serviceProviderId: this.state.summaryDetails.serviceProviderId,
+                serviceRequestId: this.state.summaryDetails.serviceRequestId,
+                estimatedClaim: parseFloat(this.props.CalculationsData.estimatedClaim),
+                outOfPocketAmount: parseFloat(this.props.CalculationsData.copayAmount),
+                hourlyRate: this.state.summaryDetails.hourlyRate,
+                originalTotalDuration: originalTotalDuration,
+                billedTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
+                taxPaid: parseFloat(this.props.CalculationsData.taxes),
+                billedPerService: parseFloat(this.props.CalculationsData.totalVisitCost),
+                totalCost: parseFloat(this.props.CalculationsData.totalVisitCost),
+                image: this.state.signatureImage,
+                taxRate: parseFloat(this.state.summaryDetails.taxAmount)
             }
             this.props.saveSummaryDetails(data);
         } else {
@@ -147,16 +148,16 @@ export class AssessmentSummary extends Component {
     }
 
     timerErrMessage = () => {
-        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");
+        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, DATE_FORMATS.hhMinSec);
         let hours = formatDateSingle(this.state.updatedHour)
         let minutes = formatDateSingle(this.state.updatedMin)
         let seconds = formatDateSingle(this.state.updatedSec)
         let newTime = hours + ':' + minutes + ':' + seconds
-        var endTime = moment(newTime, "HH:mm:ss");
+        var endTime = moment(newTime, DATE_FORMATS.hhMinSec);
         if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
-            this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
+            this.setState({ timeErrMessage: ERROR_MSG.timeErrMessage })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
-            this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
+            this.setState({ emptyErrMessage: ERROR_MSG.emptyErrMessage })
         } else {
             this.updateTime();
         }
@@ -261,16 +262,12 @@ export class AssessmentSummary extends Component {
                 </p>
 
                 <p className="AdjustTimeText">
-                    Note: Maximum adjustable time is
-                    {/* <span> {this.props.CalculationsData.totalHours} hr</span>
-                    <span> {this.props.CalculationsData.totalMinutes} min</span>
-                    <span> {this.props.CalculationsData.totalSeconds} sec</span> */}
+                    Note: Maximum adjustable time is                  
 
                     <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)}</span>
                     <span>:</span>
                     <span>{this.props.SummaryDetails.originalTotalDuration.substr(3, 2)}</span>
                     <span> (HH:MM)</span>
-                    {/* <span> {this.props.SummaryDetails.originalTotalDuration.substr(6, 2)} sec</span> */}
                 </p>
             </form>
         }
@@ -326,7 +323,7 @@ export class AssessmentSummary extends Component {
                                             <span className="TimerContent running">{this.props.SummaryDetails.originalTotalDuration}</span>
                                         </div>
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, "hh:mm a")}</span>
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.SummaryDetails.visitStartTime, DATE_FORMATS.hhMinSession)}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -361,10 +358,8 @@ export class AssessmentSummary extends Component {
                                             <p className="SummaryContentTitle">Payment Details</p>
 
                                             <div className="row CostTableWidget">
-                                                {!this.state.signatureImage ?
-                                                    <span className="EditIcon" onClick={this.AdjustTime} />
-                                                    :
-                                                    ''
+                                                {!this.state.signatureImage &&
+                                                    <span className="EditIcon" onClick={this.AdjustTime} />                                                    
                                                 }
                                                 <div className="col-md-8 CostTableContainer Label">
                                                     <p><span>Total Chargeable Time (HH:MM)</span>
@@ -382,8 +377,7 @@ export class AssessmentSummary extends Component {
                                                                 ${this.props.SummaryDetails.hourlyRate &&
                                                                     this.props.SummaryDetails.hourlyRate.toFixed(2)}
                                                             </span>
-                                                        }
-                                                        {/* <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate.toFixed(2)}</span> */}
+                                                        }                                                       
                                                     </p>
                                                     <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
                                                         <span>${(this.props.CalculationsData.taxes)}</span></p>
@@ -394,9 +388,7 @@ export class AssessmentSummary extends Component {
                                                 </div>
                                             </div>
 
-                                            {getUserInfo().isEntityServiceProvider ?
-                                                ''
-                                                :
+                                            {!getUserInfo().isEntityServiceProvider &&
                                                 <div className="row EstimatedCostWidget">
                                                     <div className="col-md-8 EstimatedCostContainer Label">
                                                         <p><span>Estimated Claim</span>
@@ -430,7 +422,7 @@ export class AssessmentSummary extends Component {
                                                     <SignaturePad ref={ref => this.signaturePad = ref} />
                                                 }
                                             </div>
-                                            {this.state.isSaveBtnShown && (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
+                                            { (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
                                                 <div className="SignatureButtons">
                                                     <button className="btn btn-outline-primary CancelSignature" disabled={this.state.disableSignatureBtn} onClick={this.saveSignature}>Save</button>
                                                     <button className="btn btn-outline-primary ResetSignature" onClick={this.resetSignature}>Reset Signature</button>
@@ -499,8 +491,8 @@ export class AssessmentSummary extends Component {
                     <ModalPopup
                         isOpen={this.state.isDiscardModalOpen}
                         ModalBody={<span>Do you want to discard the changes?</span>}
-                        btn1='YES'
-                        btn2='NO'
+                        btn1='Yes'
+                        btn2='No'
                         className='modal-sm'
                         headerFooter='d-none'
                         centered='centered'

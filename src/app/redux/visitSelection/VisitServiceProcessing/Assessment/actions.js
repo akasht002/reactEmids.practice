@@ -39,7 +39,7 @@ export function getQuestionsList(data) {
   return dispatch => {
     let serviceProviderId = getUserInfo().serviceProviderId
     dispatch(startLoadingProcessing())
-    ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${serviceProviderId}/${data}`)
+    ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${serviceProviderId}/${323}`)
       .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
         dispatch(endLoadingProcessing())
