@@ -36,6 +36,7 @@ import {
   VisitNotification,
   VisitNotificationSettings
   } from './VisitProcessingNotification'
+  import Schedule from './Schedule'
   
 export {
   Welcome,
@@ -69,5 +70,6 @@ export {
   VisitNotification,
   VisitNotificationSettings,
   ESPProfile,
-  MobileLanding
+  MobileLanding,
+  Schedule
 }

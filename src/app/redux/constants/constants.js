@@ -100,3 +100,7 @@ export const SERVICE_REQUEST_STATUS = {
        "keyValue":"Declined"
     }
   }
+
+  export const SELECTED_POS_ERROR_MSG = 'Please select valid address details.';
+
+ export const NEW_POS_ERROR_MSG = 'Please enter valid address details.'; 

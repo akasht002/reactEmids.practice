@@ -17,6 +17,7 @@ import telehealthState from '../telehealth/reducer';
 import aboutUsState from '../aboutUs/reducer';
 import patientProfileState from '../patientProfile/reducer';
 import {visitNotificationState} from '../visitProcessingNotification/reducer';
+import scheduleState from '../schedule/reducer';
 
 export default combineReducers({
     authState,
@@ -37,4 +38,5 @@ export default combineReducers({
     aboutUsState,
     patientProfileState,
     visitNotificationState,
+    scheduleState
 });

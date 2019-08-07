@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_FORMAT_MONTH, DATE_YEAR, serviceTypesImage } from '../constants/constants'
+import { DATE_FORMAT, DATE_FORMAT_MONTH, DATE_YEAR, serviceTypesImage, serviceCategoriesImage  } from '../constants/constants'
 import _ from 'lodash'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
@@ -257,4 +257,12 @@ export function getFieldsNoSeperater(input, field) {
     else output.push(input[i][field])
   }
   return output
+}
+
+export const getServiceCategoryImage = (serviceCategoryId) => {
+  return (serviceCategoriesImage[`${serviceCategoryId}`]) ? serviceCategoriesImage[`${serviceCategoryId}`] : 'ADL_1.jpg';
+}
+
+export function formattedTimeMoment(date) {
+  return date ? moment(new Date(date.toString())).format("HH:mm") : null
 }
