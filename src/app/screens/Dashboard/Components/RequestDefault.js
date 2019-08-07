@@ -10,7 +10,7 @@ export const ServiceRequestDefault = () => {
           />
         </span>
         <span className='NoSRText'>
-          Browse Service Request
+          View Request
         </span>
       </div>
     )

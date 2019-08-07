@@ -46,15 +46,9 @@ export const ServiceProviderRequestDetails = props => {
                   {' '}
                   |
                   {'Posted on '}
-                  <Moment format='DD MMM'>
-                    {sp.startDate}
+                  <Moment format='MMM DD'>
+                    {sp.date}
                   </Moment>
-                  {sp.recurringPattern !== 0 && <React.Fragment>
-                    { ' - '}
-                    <Moment format='DD MMM'>
-                    {sp.endDate}
-                  </Moment>
-                  </React.Fragment>}
                 </span>
               </div>
   
