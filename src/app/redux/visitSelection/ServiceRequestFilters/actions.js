@@ -143,7 +143,7 @@ export function ServiceRequestStatus() {
          resp.data.forEach(obj => {
             obj.isChecked = !(obj.keyValue === SERVICE_REQUEST_STATUS.closed.keyValue || obj.keyValue === SERVICE_REQUEST_STATUS.all.keyValue)              
             let listToDelete = [SERVICE_REQ_STATUS.PENDING_APPROVAL, SERVICE_REQ_STATUS.DECLINED,  
-                                    SERVICE_REQ_STATUS.IN_PROGRESS, SERVICE_REQ_STATUS.NOT_HIRED];
+                                    SERVICE_REQ_STATUS.IN_PROGRESS];
             let data = resp.data.filter(obj => !listToDelete.includes(obj.id));
             dispatch(getServiceRequestStatusSuccess(data))
         })
