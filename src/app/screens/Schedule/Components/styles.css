@@ -3272,7 +3272,7 @@ background:#fff;
 
 .full-block-scheduleDate .MsgWithIcon:before
 {
-margin-top: 2px;
+margin-top: 3px;
 }
 
 .full-block-scheduleDate .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item
@@ -3495,17 +3495,6 @@ background-color: #fff;
        }
 
 
-  
-  
-/*1920-screen-*/
-@media only screen and (min-width: 1367px) 
-{
-    .assign-sp-block {
-        max-height: calc(100vh - 600px);
-    }
-
-}
-
 .ServiceRequestsWidget .ServiceRequestBoard{
     width: 50%;
 }
@@ -3525,6 +3514,20 @@ ul.show-more-assignSP li
     padding: 0;
     text-align: center;
     width: 100%;
+}
+
+.CustomPOS .MsgWrongIcon:before
+{
+margin-top: 3px;
+}
+
+/*1920-screen-or-other-screens*/
+@media only screen and (min-width: 1367px) 
+{
+    .assign-sp-block {
+        max-height: calc(100vh - 417px);
+    }
+
 }
 
 

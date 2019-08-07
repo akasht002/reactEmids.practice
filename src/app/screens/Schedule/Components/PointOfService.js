@@ -153,11 +153,12 @@ export class PointOfService extends Component {
                             </ThemeProvider>
 
 
-                            {this.props.onClickSave && (!this.props.selectedStateName) &&
+                           
+                        </div>
+                        {this.props.onClickSave && (!this.props.selectedStateName) &&
                                 <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">
                                     Please select {this.props.selectedStateName === '' ? 'State' : 'State'}
                                 </span>}
-                        </div>
                     </div>
                     <div className={'col-md-4 mb-2'}>
                         <Input
