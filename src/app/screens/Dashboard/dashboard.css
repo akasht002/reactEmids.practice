@@ -2207,13 +2207,13 @@ height: 100%;
          font-size: 14px;
          line-height: 14px;
          color: #8c8c8c;
-         margin-bottom: 5px;
+         margin-bottom: 0px;
      }
      
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate:after
      {
-         margin-top: -13px;
-         right: -14px;
+        margin-top: -12px;
+        right: -26px;
      }
      
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsName
@@ -2271,6 +2271,7 @@ height: 100%;
     overflow-x: hidden;
     white-space: nowrap;
     cursor: pointer;
+    padding-right: 12px;
 }
 
 .DashboardViewFirst .ServicesCalendarWidget:hover span
@@ -2298,6 +2299,17 @@ color:#444444;
     color: #444;
     font-weight: 600;
     font-size: 14px;
+}
+
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span::after {
+    content: '';
+    position: absolute;
+    background: rgba(140,140,140, 0.3);
+    width: 1px;
+    height: 69px;
+    left: 99px;
+    display: block;
+    top: 0px;
 }
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
@@ -2328,7 +2340,7 @@ color:#444444;
     color: #9f9f9f;
     left: 4px;
     top: -6px;
-    font-size: 24px;
+    font-size: 25px;
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);

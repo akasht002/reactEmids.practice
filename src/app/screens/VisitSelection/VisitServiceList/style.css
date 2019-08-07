@@ -1355,3 +1355,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 .BoardContainer .ServiceRequestBoard .BlockProfileContainer {
     cursor: pointer;
 }
+
+.ServiceRequestBoard .BlockProfileContainer::after {
+    right: 15px;
+}

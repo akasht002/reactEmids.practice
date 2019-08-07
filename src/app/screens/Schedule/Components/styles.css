@@ -369,6 +369,13 @@ li div.dropdown-menu{
 .BlockProfileDetailsStatus{
     width: 65px;
     text-align: right;
+    display: block;
+    float: right;
+    min-width: auto;
+    width: auto;
+    position: absolute;
+    right: 0;
+    padding-right: 36px;
 }
 
 .BlockProfileDetailsStatus a.btn-hired:hover{
@@ -482,7 +489,7 @@ button.btn-invited, a.btn-invited{
     opacity: 0.5;
     content: '';
     position: absolute;
-    right: 12px;
+    right: 15px;
     width: 12px;
     height: 20px;
     top: 26px;
@@ -3223,7 +3230,7 @@ border: 1px solid #7a329f !important;
     top: 4px;
 }
 
-.options div.SelectDropDown:after {
+ div.SelectDropDown:after {
     content: "";
     position: absolute;
     width: 100%;
@@ -3476,6 +3483,10 @@ background-color: #fff;
 
 .BoardContainer .ServiceRequestBoard .BlockProfileContainer {
     cursor: pointer;
+}
+
+.ServiceRequestBoard .BlockProfileContainer::after {
+    right: 15px;
 }
 
 
