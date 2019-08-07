@@ -426,6 +426,7 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
     margin: 10px 0;
     z-index: auto;
     justify-content: flex-start;
+    padding-left: 0px;
 }
 
 div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent.EntityUDashboard{
