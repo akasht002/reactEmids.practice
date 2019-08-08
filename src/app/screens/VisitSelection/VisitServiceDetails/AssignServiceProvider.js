@@ -9,12 +9,9 @@ import {
   getEntityServiceProviderList,
   getEntityServiceProviderListSearch,
 } from "../../../redux/dashboard/Dashboard/actions";
-import {
-  getVisitServiceSchedule
-} from '../../../redux/visitSelection/VisitServiceDetails/actions'
 import { Path } from "../../../routes";
 import { push } from "../../../redux/navigation/actions";
-import { VISIT_STATUS_ID,SERVICE_REQ_STATUS,DEFAULT_VISIT_START_TIME } from '../../../constants/constants'
+import { VISIT_STATUS_ID, SERVICE_REQ_STATUS, DEFAULT_VISIT_START_TIME } from '../../../constants/constants'
 import _ from 'lodash'
 
 class AssignServiceProvider extends Component {
@@ -24,18 +21,13 @@ class AssignServiceProvider extends Component {
       EditPersonalDetailModal: false,
       selectedServiceProviderId: "",
     }
-    this.selectedServiceProviderId =""
+    this.selectedServiceProviderId = ""
     this.data = ""
-  }
-
-  componentDidMount() {
-    this.props.getEntityServiceProviderList();
   }
 
   onchangeSearchServiceProvider = e => {
     this.props.getEntityServiceProviderListSearch(e.target.value)
   }
-
 
   getModalContent = (serviceProviderList) => {
     return (
@@ -53,7 +45,6 @@ class AssignServiceProvider extends Component {
         />
         <div className="participantsSearchList">
           {serviceProviderList.map((item, index) => {
-            // let catNum = index + 1;
             return (
               <fieldset>
                 <div className="CheckboxSet" key={item.id}>
@@ -96,25 +87,17 @@ class AssignServiceProvider extends Component {
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
     });
-    this.props.getEntityServiceProviderList();
   };
 
   onSubmit = () => {
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
     });
-    let model = {
-      serviceRequestId: this.data.serviceRequestId,
-      serviceRequestVisitId: this.data.serviceRequestVisitid,
-      entityId: getUserInfo().entityId,
-      patientId: this.data.patientId,
-      visitAssignment: [
-        {
-          serviceProviderId: this.selectedServiceProviderId
-        }
-      ]
-    };    
-    this.props.onSubmit(model);
+    let data = {
+      servicePlanVisitId: this.props.getServicePlanVisitId,
+      assignedServiceProviderId: this.selectedServiceProviderId
+    }
+    this.props.onSubmit(data);
     this.selectedServiceProviderId = ''
   }
 
@@ -129,38 +112,19 @@ class AssignServiceProvider extends Component {
     return false
   }
 
-  // !moment(this.props.sp.visitDate).isBefore(moment(new Date(), "MM-DD-YYYY")) 
-
   render() {
     let modalTitle = "Assign Service Provider";
     let modalType = "";
-    let modalContent = this.getModalContent(this.props.serviceProviderList)
-
+    let modalContent = this.getModalContent(this.props.entityServiceProvidersList)
     return (
       <div className='EntityUServiceProf'>
-        {(isFutureDay(this.props.sp.visitDate) && this.props.statusID === SERVICE_REQ_STATUS.HIRED)  ? this.props.sp.entityServiceProviderId === getUserInfo().serviceProviderId ?
-          this.isStatusInArray(this.props.statusID)
-            ? <span>
-              <i
-                className='assignSPLink'
-                onClick={e => {
-                  this.togglePersonalDetails({
-                    serviceRequestId: this.props.sp.serviceRequestId,
-                    serviceRequestVisitid: this.props.sp.serviceRequestVisitId,
-                    patientId: this.data.patient ? this.data.patient.patientId : 0,
-                    visitDate: this.props.sp.visitDate
-                  })
-                }}
-              >
-                Assign Service Provider
-            </i>
-            </span> : <span> -- </span>
-          : (
+        {
+          this.props.visitList.assignedServiceProviderId ?
             <Fragment>
               <div
                 className='ProfileCardImageContainer'
                 onClick={() => {
-                  this.goToESPProfile(this.props.sp.entityServiceProviderId)
+                  this.goToESPProfile(this.props.visitList.assignedServiceProviderId)
                 }}
               >
                 <img
@@ -168,8 +132,8 @@ class AssignServiceProvider extends Component {
                   key={'SP_IMAGE'}
                   className='avatarImage avatarImageBorder'
                   src={
-                    this.props.sp.entityServiceProviderImage
-                      ? this.props.sp.entityServiceProviderImage
+                    this.props.visitList.assignedServiceProviderImage
+                      ? this.props.visitList.assignedServiceProviderImage
                       : require('../../../assets/images/Blank_Profile_icon.png')
                   }
                 />
@@ -177,31 +141,23 @@ class AssignServiceProvider extends Component {
               <div
                 className='ProfileCardNameContainer'
                 onClick={() => {
-                  this.goToESPProfile(this.props.sp.entityServiceProviderId)
+                  this.goToESPProfile(this.props.visitList.assignedServiceProviderId)
                 }}
               >
                 <span>
-                  {this.props.sp.entityServiceProviderFirstName &&
-                    this.props.sp.entityServiceProviderFirstName + ' '}{' '}
-                  {this.props.sp.entityServiceProviderLastName &&
-                    this.props.sp.entityServiceProviderLastName}
+                  {this.props.visitList.assignedServiceProviderFirstName &&
+                    this.props.visitList.assignedServiceProviderFirstName + ' '}{' '}
+                  {this.props.visitList.assignedServiceProviderLastName &&
+                    this.props.visitList.assignedServiceProviderLastName}
                 </span>
               </div>
-              {this.props.sp.visitStatusId === VISIT_STATUS_ID && isFutureDay(this.props.sp.visitDate) && this.props.sp.visitStartTime === DEFAULT_VISIT_START_TIME &&
-              <span
-                className="EditIcon"
-                onClick={e => {
-                  this.togglePersonalDetails({
-                    serviceRequestId: this.props.sp.serviceRequestId,
-                    serviceRequestVisitid: this.props.sp.serviceRequestVisitId,
-                    patientId: this.data.patient ? this.data.patient.patientId : 0,
-                    visitDate: this.props.sp.visitDate
-                  })
-                }}
-              /> }
             </Fragment>
-          ) : ''}
-
+            :
+            <span className="SP-viewplantable"  onClick={this.togglePersonalDetails}>
+              <img alt="" src={require('../../../assets/images/Blank_Profile_icon.png')}></img>
+              <span><a>Assign Provider</a></span>
+            </span>
+        }
         <ModalPopup
           isOpen={this.state.EditPersonalDetailModal}
           toggle={() => this.togglePersonalDetails(this, modalType)}
@@ -219,7 +175,6 @@ class AssignServiceProvider extends Component {
             this.setState({
               EditPersonalDetailModal: false
             })
-            this.props.getEntityServiceProviderList();
           }
           }
         />
@@ -230,10 +185,8 @@ class AssignServiceProvider extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getEntityServiceProviderList: () => dispatch(getEntityServiceProviderList()),
     setESP: data => dispatch(setESP(data)),
     goToESPProfile: () => dispatch(push(Path.ESPProfile)),
-    getVisitServiceSchedule: data => dispatch(getVisitServiceSchedule(data)),
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
   }
 }

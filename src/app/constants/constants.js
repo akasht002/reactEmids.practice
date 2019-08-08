@@ -220,6 +220,8 @@ export const MMM_FORMAT = 'MMM'
 export const YYYY_MM_DD_FORMAT= 'YYYY-MM-DD'
 export const MMMDD_FORMAT = "MMM DD";
 
+export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
+
 export const serviceCategoriesImage = {
     1: 'ADL_1.jpg',
     3: 'Food Delivery_1.jpg',

@@ -1,110 +1,81 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import classnames from 'classnames'
-import Moment from 'react-moment'
-import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import { Scrollbars, ModalPopup, Preloader } from '../../../components'
-import { goBack, push } from '../../../redux/navigation/actions'
-import { Path } from '../../../routes'
-import AssignServiceProvider from './AssignServiceProvider'
-import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import { getSpBusyInVisit } from '../../../redux/profile/PersonalDetail/actions';
-import {clearESPList} from '../../../redux/schedule/actions';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { TabContent } from 'reactstrap'
+import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
+import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, Preloader } from '../../../components';
 import {
+  getServiceRequestList,
   getVisitServiceDetails,
-  getVisitServiceSchedule,
-  clearVisitServiceSchedule,
-  updateServiceRequestByServiceProvider,
-  cancelServiceRequestByServiceProvider,
-  cancelInvitedServiceProvider,
-  cancelAppliedServiceProvider,
-  cancelHiredServiceProvider,
-  getVisitServiceEligibilityStatus,
-  getDays,
-  dispatchServiceRequestByServiceProvider,
-  formDirtyVisitServiceDetails,
-  updateHireStatusForServiceRequest
+  getSchedulesList,
+  getVisitList,
+  getVisitStatus,
+  getServiceVisitDetails,
+  updateServiceVisit,
+  assignESP,
+  getEntityServiceProviderListSearch, selectESP, clearESPList, getEntityServiceProviderList
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import { setPatient } from '../../../redux/patientProfile/actions';
 import {
-  getPerformTasksList,
-  formDirtyPerformTask,
-  getServiceVisitId
-} from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
-import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
-import { formDirtySummaryDetails } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions'
-import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
-import { serviceRequestMessages } from '../../../utils/messageUtility'
-import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
-import '../../../screens/VisitSelection/VisitServiceDetails/style.css'
+  getServiceCategory,
+  getServiceType,
+  ServiceRequestStatus
+} from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import { Path } from '../../../routes';
+import { push, goBack } from '../../../redux/navigation/actions';
+import { TabHeader } from './Components/TabHeader';
+import { RequestTab } from './ServiceRequest/RequestTab';
+import { PlanTab } from './MyPlan/PlanTab';
+import { PatientProfileTab } from './PatientProfile/PatientProfileTab';
 import {
-  MORNING,
-  AFTERNOON,
-  EVENING,
-  HIRED_STATUS_ID,
-  USERTYPES,
-  CONTACT_NOT_FOUND,
-  PHONE_NUMBER_TEXT
-} from '../../../constants/constants'
-import { ServiceStatus } from './ServiceRequestStatus'
-import {
-  SERVICE_VISIT_STATUS,
-  RECURRING_PATTERN,
-  ORG_SERVICE_PROVIDER_TYPE_ID
-} from '../../../constants/constants'
-import { getLength } from '../../../utils/validations'
-import { formatPhoneNumber } from '../../../utils/formatName'
-import {
-  getVisitServiceHistoryByIdDetail,
-  clearVisitServiceHistoryByIdDetail
-} from '../../../redux/visitHistory/VisitServiceDetails/actions'
-import {
-  getVisitServiceScheduleSuccess
-} from '../../../redux/visitSelection/VisitServiceDetails/actions'
-import { getUserInfo, isEntityServiceProvider } from '../../../utils/userUtility';
-import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
-import { getSummaryDetails, getSavedSignature } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-import { createDataStore, saveContextData } from '../../../redux/telehealth/actions';
-import { isFutureDay } from '../../../utils/dateUtility'
-import {
-  updateEntityServiceVisit
-} from "../../../redux/dashboard/Dashboard/actions";
-import { Carousel } from '../../../components';
+  PAGE_NO
+} from '../../../constants/constants';
+import './styles.css';
+import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
+import { getHourMin, getUtcTimeDiffInHHMMformat } from '../../../utils/dateUtility'
+import moment from 'moment';
+import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
+import Search from '../VisitServiceList/Search';
+import './customStyle.css'
 
 export class VisitServiceDetails extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      verticalScroll: false,
-      width: window.innerWidth,
       activeTab: '1',
-      visitServiceDetails: [],
-      isAlertModalOpen: false,
-      patientId: '',
-      serviceType: '',
-      isOpen: false,
-      isAlertModalopenConfirm: false,
-      conversationsModal: false,
-      canInitiateConversation: false,
-      conversationErrMsg: '',
-      pageNumber: 1,
-      disableShowMore: false,
-      standByModeAlertMsg: false,
-      isLoading: false
+      activePage: 1,
+      filterOpen: false,
+      serviceStatus: [],
+      serviceTypes: [],
+      startDate: null,
+      endDate: null,
+      editModal: false,
+      startDateEdit: null,
+      startTime: null,
+      timeDuration: null,
+      pageNumber: PAGE_NO,
+      pageSize: 9,
+      pageNumberESP: PAGE_NO,
+      pageSizeESP: 9,
+      rowPageSize: 10,
+      tooltipOpen: false
     }
-    this.alertModalMsg = ''
-    this.defualtPageNumber = 1
-    this.status = {}
-    this.alertModalMsgstatus = 'Please apply for another service request. Service Provider is already been Hired for this request.'
+    this.selectedSchedules = [];
+    this.espId = '';
   }
 
   componentDidMount() {
+    let data = {
+      pageNumber: this.state.pageNumber,
+      pageSize: this.state.pageSize
+    }
     if (this.props.ServiceRequestId) {
+      this.props.getServiceRequestList(this.props.ServiceRequestId);
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
-      this.props.getDays();
-      this.props.getSpBusyInVisit();
-      this.props.clearESPList();
+      this.props.getEntityServiceProviderList(data);
+      this.props.getServiceCategory();
+      this.props.ServiceRequestStatus();
+      this.props.getVisitStatus();
+      this.props.getSchedulesList(this.props.patientId)
     } else {
       this.props.history.push(Path.visitServiceList)
     }
@@ -112,939 +83,583 @@ export class VisitServiceDetails extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      visitServiceDetails: nextProps.VisitServiceDetails,
-      patientId: nextProps.VisitServiceDetails.patient &&
-        nextProps.VisitServiceDetails.patientId,
-      serviceType: nextProps.VisitServiceDetails.serviceRequestTypeDetails &&
-        nextProps.VisitServiceDetails.serviceRequestTypeDetails[0]
-          .serviceRequestTypeDetailsId,
-      isLoading: nextProps.isLoading
+      startDateEdit: nextProps.serviceVisitDetails.visitDate,
+      startTime: nextProps.serviceVisitDetails.startTime,
+      endTime: nextProps.serviceVisitDetails.endTime,
     })
   }
 
-  componentWillUnmount() {
-    this.props.clearVisitServiceHistoryByIdDetail();
-    this.props.clearVisitServiceSchedule();
+  toggleToolTip = () => {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
+  }
+
+  toggle = (tab) => {
+    // this.props.clearESPList()
+    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
+    if (this.state.activeTab !== tab) {
+      this.setState({ activeTab: tab, activePage: 1 })
+    }
+    if (tab === '2') {
+      this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
+      const data = {
+        planScheduleIds: this.selectedSchedules,
+        visitStatuses: [],
+        serviceTypes: [],
+        pageNumber: PAGE_NO,
+        pageSize: this.state.rowPageSize,
+        startDate: null,
+        endDate: null
+      }
+      this.props.getVisitList(data);
+    }
+  }
+
+  handelDetails = (serviceRequestId) => {
+    this.props.getVisitServiceDetails(serviceRequestId);
+  }
+
+  addSchedule = () => {
+    this.props.goToAddSchedule();
+  }
+
+  handleChangeSchedule = (e) => {
+    this.setState({ activePage: 1 })
+    if (e.target.checked) {
+      this.selectedSchedules.push(parseInt(e.target.id, 0))
+    }
+    else {
+      this.selectedSchedules.splice(this.selectedSchedules.findIndex(function (item) {
+        return item === parseInt(e.target.id, 0);
+      }), 1);
+    }
+
+    const data = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: [],
+      serviceTypes: [],
+      pageNumber: PAGE_NO,
+      pageSize: this.state.rowPageSize,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate
+    }
+    this.props.getVisitList(data);
+  }
+
+  pageNumberChange = (pageNumber) => {
+    this.setState({ activePage: pageNumber })
+    const data = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: this.state.serviceStatus,
+      serviceTypes: this.state.serviceTypes,
+      pageNumber: pageNumber,
+      pageSize: this.state.rowPageSize,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate
+    }
+    this.props.getVisitList(data);
+  }
+
+  toggleFilter = () => {
+    this.setState({
+      filterOpen: !this.state.filterOpen
+    })
+  }
+
+  handleChangeServiceCategory = (selectedOption) => {
+    this.setState({
+      ServiceCategoryId: selectedOption.label,
+      selectedOption: selectedOption,
+    });
+    this.props.getServiceType(selectedOption)
+    this.setState({ serviceTypes: [] })
+  }
+
+  handleserviceType = (item, e) => {
+    let serviceType = this.state.serviceTypes
+    if (e.target.checked) {
+      serviceType.push(item.serviceTypeId)
+    }
+    else {
+      serviceType.splice(serviceType.findIndex(function (item, index) {
+        return true;
+      }), 1);
+    }
+    this.setState({
+      serviceTypes: serviceType
+    })
+  }
+
+  dateChanged = (date) => {
+    const formattedDate = formattedDateMoment(date);
+    this.setState({
+      startDate: formattedDate
+    });
+  }
+
+  dateChangedRaw = (event) => {
+    const formattedDate = formattedDateChange(event);
+    this.setState({
+      startDate: formattedDate
+    });
+  }
+
+  todateChanged = (date) => {
+    const formattedDate = formattedDateMoment(date);
+    this.setState({
+      endDate: formattedDate
+    });
+  }
+
+  todateChangedRaw = (event) => {
+    const formattedDate = formattedDateChange(event);
+    this.setState({
+      endDate: formattedDate
+    });
+  }
+
+  handleChangeserviceStatus = (item, e) => {
+    let service = this.state.serviceStatus
+    if (e.target.checked) {
+      service.push(item.id)
+    } else {
+      let index = service.indexOf(item.id);
+      if (index > -1) {
+        service.splice(index, 1);
+      }
+    }
+    this.isStatusChanged = true;
+    this.setState({
+      serviceStatus: service,
+    });
+  }
+
+  applyFilter = () => {
+    this.setState({
+      filterOpen: !this.state.filterOpen,
+      activePage: 1,
+      filterApplied: true,
+      rowPageSize: 10
+    })
+    const data = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: this.state.serviceStatus,
+      serviceTypes: this.state.serviceTypes,
+      pageNumber: PAGE_NO,
+      pageSize: this.state.rowPageSize,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate
+    }
+    this.props.getVisitList(data);
+  }
+
+  applyReset = () => {
+    this.setState({
+      filterOpen: false,
+      serviceStatus: [],
+      serviceTypes: [],
+      startDate: null,
+      endDate: null,
+      rowPageSize: 10
+    })
+    const data = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: [],
+      serviceTypes: [],
+      pageNumber: PAGE_NO,
+      pageSize: 10,
+      startDate: null,
+      endDate: null,
+      rowPageSize: 10
+    }
+    this.props.getVisitList(data);
+  }
+
+  toggleEditModal = (visitId) => {
+    this.setState({ editModal: !this.state.editModal, visitId: visitId })
+    this.props.getServiceVisitDetails(visitId)
+    // if(this.state.editModal){
+    //   this.props.clearESPList()
+    // }
+  }
+
+
+  dateChangedEdit = (date) => {
+    const formattedDate = formattedDateMoment(date);
+    this.setState({
+      startDateEdit: formattedDate
+    });
+
+  }
+
+  dateChangedRawEdit = (event) => {
+    const formattedDate = formattedDateChange(event);
+    this.setState({
+      startDateEdit: formattedDate
+    });
+  }
+
+  handleChangeDuration = (event) => {
+    this.formatedStartTime = getHourMin(event)
+    this.setState({ timeDuration: event });
+  }
+
+  handleChangeSelectedSp = (selectedOptionState) => {
+    let selectedValue = '';
+    let valueData = parseInt(selectedOptionState, 10);
+    this.props.entityServiceProvidersList.map((item => {
+      return item.serviceProviderId === valueData ? selectedValue = item.firstName : ''
+    }))
+
+    this.setState({
+      selectedServiceProviderId: selectedOptionState,
+      selectedServiceProviderLabel: selectedValue
+    });
+  }
+
+
+  handleAssignServiceProvider = (id) => {
+    this.espId = parseInt(id, 0);
+    this.props.selectESP(id)
+  }
+
+  handleChangeEndTime = (event) => {
+    this.formatedEndTime = getHourMin(event)
+    this.setState({ endTime: event });
+  }
+
+  handleChangeStartTime = (event) => {
+    this.formatedStartTime = getHourMin(event)
+    this.setState({ startTime: event });
+  }
+
+  updateServiceVisits = async () => {
+    let model = {
+      serviceProviderId: this.espId ? this.espId : 0,
+      servicePlanVisitId: this.state.visitId,
+      planScheduleId: this.props.serviceVisitDetails.planScheduleId,
+      visitDate: this.state.startDateEdit,
+      startTime: this.formatedStartTime ? this.formatedStartTime : getHourMin(this.state.startTime),
+      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime),
+      endTime: this.formatedEndTime ? this.formatedEndTime : getHourMin(this.state.endTime),
+    }
+    await this.props.updateServiceVisit(model)
+    const data = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: [],
+      serviceTypes: [],
+      pageNumber: this.state.activePage,
+      pageSize: this.state.rowPageSize,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate
+    }
+    await this.props.getVisitList(data);
+    await this.setState({ editModal: false })
+  }
+
+  onSubmitAssignServiceProvider = async (data) => {
+    await this.props.assignESP(data)
+    const model = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: [],
+      serviceTypes: [],
+      pageNumber: this.state.activePage,
+      pageSize: this.state.rowPageSize,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate
+    }
+    await this.props.getVisitList(model);
+  }
+
+  toggleSearch = () => {
+    if (this.state.searchOpen) {
+      this.props.clearESPList()
+      let data = {
+        pageNumber: this.state.pageNumberESP,
+        pageSize: this.state.pageSizeESP
+      }
+      this.props.getEntityServiceProviderList(data);
+    }
+    this.setState({
+      searchOpen: !this.state.searchOpen,
+      searchKeyword: '',
+      pageNumberESP: 1,
+      pageSizeESP: 9
+    })
+  }
+
+  handleSearchkeyword = e => {
+    this.setState({
+      searchKeyword: e.target.value
+    })
+  }
+
+  handleSearchData = (e) => {
+    e.preventDefault();
+    let data = {
+      searchKeyword: this.state.searchKeyword,
+      pageNumber: this.state.pageNumberESP,
+      pageSize: this.state.pageSizeESP
+    }
+    this.props.getEntityServiceProviderListSearch(data)
   }
 
   clickShowMore = () => {
-    this.setState({ pageNumber: this.state.pageNumber + 1 }, () => {
-      this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
+    this.setState({ pageNumberESP: this.state.pageNumberESP + 1 }, () => {
+      let data = {
+        pageNumber: this.state.pageNumberESP,
+        pageSize: this.state.pageSizeESP
+      }
+      this.props.getEntityServiceProviderList(data)
     })
   }
 
-  handelPatientProfile = (data) => {
-    this.props.setPatient(data)
-    this.props.goToPatientProfile()
-  }
-
-  checkEligibility = () => {
-    const data = {
-      patientId: this.state.visitServiceDetails.patient.patientId,
-      serviceRequestId: this.props.ServiceRequestId,
-      serviceProviderId: this.state.visitServiceDetails.serviceProviderId
+  rowPageChange = (pageSize) => {
+    this.setState({ rowPageSize: pageSize, activePage: 1 })
+    const model = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: [],
+      serviceTypes: [],
+      pageNumber: this.state.activePage,
+      pageSize: pageSize,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate
     }
-    this.props.getVisitServiceEligibilityStatus(data)
-  }
-
-  visitService = () => {
-    this.props.visitService()
-  }
-
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      })
-      if(tab === '1') {
-        this.props.getVisitServiceScheduleSuccess('')
-        this.setState({pageNumber: 1})
-      }
-    }
-  }
-
-  onClickSchedule() {
-    this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
-  }
-
-  visitProcessing = data => {
-    this.props.isStandByModeOn.isServiceProviderInStandBy ?
-      this.setState({ standByModeAlertMsg: true })
-      :
-      this.props.getPerformTasksList(data, true)
-    this.props.formDirty();
-    this.props.formDirtyFeedback();
-    this.props.formDirtyPerformTask();
-  }
-
-  visitProcessingSummary = data => {
-    this.props.getServiceVisitId(data, true);
-    this.props.getSummaryDetails(data);
-    this.props.getSavedSignature(data);
-    this.props.formDirtySummaryDetails();
-    this.props.formDirty();
-    this.props.formDirtyFeedback();
-  }
-
-  reset = () => {
-    this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.state.pageNumber);
-    setTimeout(() => {
-      this.setState({
-        visitServiceSchedule: this.props.VisitServiceSchedule
-      })
-    }, 300)
-  }
-
-  selectedServiceType = e => {
-    this.setState({ serviceType: parseInt(e.target.id, 0) })
-  }
-
-  getSlotName = slot => {
-    if (slot === MORNING) return 'MORN'
-    else if (slot === AFTERNOON) return 'AFTE'
-    else if (slot === EVENING) return 'EVE'
-  }
-
-  postServiceRequest = status => {
-    this.alertModalMsg = status.isInterested
-      ? serviceRequestMessages.engageServiceProvider
-      : (status.isCancel ? serviceRequestMessages[status.status] : serviceRequestMessages.notInterestedServiceProvider)
-    this.setState({ isAlertModalOpen: true })
-    this.status = status
-  }
-
-  onConfirmSerivceRequest = status => {
-    if (!status.isCancel) {
-      let model = {
-        serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
-        type: status.isInterested ? 1 : 0
-      }
-      if (this.props.updateServiceRequestMsgStatus === 1) {
-        this.setState({ isAlertModalopenConfirm: true })
-      } else {
-        this.props.updateHireStatusForServiceRequest(model)
-      }
-
-    } else {
-      let model = {
-        serviceRequestId: this.state.visitServiceDetails.serviceRequestId,
-        patientId: this.state.visitServiceDetails.patient ? this.state.visitServiceDetails.patient.patientId : 0,
-        cancelledDescription: 'Canceled'
-      }
-      if (status.status === 36) this.props.cancelInvitedServiceProvider(model)
-      else if (status.status === 37) this.props.cancelAppliedServiceProvider(model)
-      else if (status.status === 38) this.props.cancelHiredServiceProvider(model)
-      else this.props.cancelServiceRequestByServiceProvider(model)
-    }
-  }
-
-  onConfirmSerivceRequestMsg = () => {
-    this.setState({ isAlertModalopenConfirm: false })
-    this.props.history.push(Path.visitServiceList)
-  }
-
-  showData = () => {
-    if (this.state.visitServiceDetails.occurence !== 0) {
-      return '- ' + this.state.visitServiceDetails.occurence + ' occurrences'
-    } else {
-      return (
-        <React.Fragment>
-          &nbsp;
-          -
-          &nbsp;
-          <Moment format='MM/DD/YYYY'>
-            {this.state.visitServiceDetails.endDate}
-          </Moment>
-        </React.Fragment>
-      )
-    }
-  }
-
-  visitSummary = (data) => {
-    this.props.getVisitServiceHistoryByIdDetail(data)
-  }
-
-  showPhoneNumber = () => {
-    if (this.props.VisitServiceDetails.statusId !== 38) {
-      this.setState({
-        conversationsModal: true,
-        conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
-      })
-    } else {
-      let data = this.props.VisitServiceDetails;
-      let phoneNumber = data.patient ? data.patient.phoneNumber : ''
-      this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
-    }
-  };
-
-  onClickConversation = () => {
-    if (this.props.VisitServiceDetails.statusId !== 38) {
-      this.setState({
-        conversationsModal: true,
-        conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
-      })
-    } else {
-      let item = this.state.visitServiceDetails;
-      let selectedParticipants = [{
-        userId: item.patient.coreoHomeUserId,
-        participantType: USERTYPES.PATIENT,
-        participantId: item.patient.patientId
-      }];
-      let data = {
-        participantList: selectedParticipants,
-        title: '',
-        context: item.patient.patientId
-      };
-      this.props.createNewConversation(data);
-    }
-  };
-
-
-  onClickVideoConference = () => {
-    if (this.props.VisitServiceDetails.statusId !== 38) {
-      this.setState({
-        conversationsModal: true,
-        conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
-      })
-    } else {
-      let item = this.state.visitServiceDetails;
-      let selectedParticipants = [{
-        userId: item.patient.coreoHomeUserId,
-        participantType: USERTYPES.PATIENT,
-        participantId: item.patient.patientId,
-        firstName: item.patient.firstName,
-        lastName: item.patient.lastName,
-        thumbNail: item.patient.imageString
-      }];
-      this.props.saveContextData(item.patient.patientId);
-      this.props.createDataStore(selectedParticipants);
-    }
-  };
-
-  goBackToServiceRequest = () => {
-    {
-      !isEntityServiceProvider() ?
-      this.props.goBack()
-      :
-      this.props.goToDashboard();
-    }
-    this.props.formDirtyVisitServiceDetails();
-  }
-
-  onSubmitAssignServiceProvider = (data) => {
-    this.props.updateEntityServiceVisit(data, this.state.pageNumber)
+    this.props.getVisitList(model);
   }
 
   render() {
-    let defaultCheck = ''
-    let sliderTypes =
-      this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
-      this.state.visitServiceDetails.serviceRequestTypeDetails.map(
-        (serviceTypes, index) => {
-          index === 0 ? (defaultCheck = true) : (defaultCheck = false)
-          let catNum = index + 1
-          return (
-            <div className='ServiceTypeList'>
-              <input
-                id={serviceTypes.serviceRequestTypeDetailsId}
-                type='radio'
-                defaultChecked={defaultCheck}
-                className='ServiceTypeInput'
-                name='serviceType'
-                value={catNum}
-                onChange={e => this.selectedServiceType(e)}
+    let modalContent =
+      <div className="row">
+        <div className="col-md-12 mb-2">
+          <div className="full-block-scheduleDate">
+            <div className="col-md-12  p-0 date-blockview">
+              <Calendar
+                startDate={this.state.startDateEdit && formateStateDateValue(this.state.startDateEdit)}
+                onDateChange={this.dateChangedEdit}
+                onDateChangeRaw={this.dateChangedRawEdit}
+                mandatory={false}
+                minDate={moment()}
+                value={this.state.startDateEdit}
+                className={"form-control datePicker"}
+                label="Start Date"
               />
-              <label
-                className='ServiceTypeLink'
-                htmlFor={serviceTypes.serviceRequestTypeDetailsId}
-              >
-                <span
-                  className={`ServiceTypeIcon SPIconServices${serviceTypes.serviceTypeId}`}
-                />
-                <div className='serviceTypeDesc'>
-                  <span className='serviceName'>
-                    {serviceTypes.serviceTypeDescription}
-                  </span>
+              <div className="form-group2block">
+                <div className="col-md-6 col-lg-6 pd-left-0">
+                  <CoreoTimePicker
+                    startTime={moment(this.state.startTime, 'h:mm a')}
+                    handleChange={this.handleChangeStartTime}
+                    value={this.state.startTime}
+                    label="Start Time"
+                    minTime={moment().hours(0).minutes(0)}
+                    maxTime={moment().hours(23).minutes(30)}
+                  />
                 </div>
-              </label>
-              <span className='ServiceIndicatorBottom' />
+                <div className="col-md-6 col-lg-6">
+                  <CoreoTimePicker
+                    startTime={moment(this.state.endTime, 'h:mm a')}
+                    handleChange={this.handleChangeEndTime}
+                    value={this.state.endTime}
+                    disabled={this.state.startTime ? false : true}
+                    label="End Time"
+                    minTime={moment().hours(moment(this.state.startTime).format("hh")).minutes(moment(this.state.startTime).format("mm"))}
+                    maxTime={moment().hours(23).minutes(30)}
+                  />
+                </div>
+              </div>
+              <h2 class="ServicesTitle">Assign Service Provider</h2>
+              <div className="search-block_SP">
+                <Search
+                  toggleSearch={this.toggleSearch}
+                  searchOpen={this.state.searchOpen}
+                  searchKeyword={this.state.searchKeyword}
+                  handleSearchkeyword={this.handleSearchkeyword}
+                  handleSearchData={this.handleSearchData}
+                  closeSearch={this.toggleSearch}
+                />
+              </div>
+              <AssignServiceProvider
+                entityServiceProvidersList={this.props.entityServiceProvidersList}
+                handleAssignServiceProvider={this.handleAssignServiceProvider}
+              />
+              {!this.props.disableShowmore &&
+                <ul className="show-more-assignSP">
+                  <li
+                    class="list-group-item ProfileShowMore"
+                    onClick={this.clickShowMore}
+                    disabled={this.props.disableShowmore}
+                  >
+                    Show more
+                                <i class="ProfileIconShowMore"></i>
+                  </li>
+                </ul>}
+
             </div>
-          )
-        }
-      )
-
-    let description =
-      this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
-      this.state.visitServiceDetails.serviceRequestTypeDetails.map(
-        (typeDetails, index) => {
-          return (
-            <div>
-              {typeDetails.serviceRequestTypeTaskDetails.map(
-                (taskDetails, i) => {
-                  if (
-                    this.state.serviceType &&
-                    this.state.serviceType ===
-                    taskDetails.serviceRequestTypeDetailsId
-                  ) {
-                    return (
-                      <li>
-                        <i>{i + 1}</i>{taskDetails.serviceTaskDescription}
-                      </li>
-                    )
-                  }
-                  return description
-                }
-              )}
-            </div>
-          )
-        }
-      )
-
-    let modifiedDays = []
-
-    this.props.daysType &&
-      this.props.daysType.map(day => {
-        let checkDay = {
-          day: day.keyValue,
-          slotDescription: []
-        }
-        this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestSlot &&
-          this.state.visitServiceDetails.serviceRequestSlot.map(slotDay => {
-            if (day.id === slotDay.dayOfWeek) {
-              checkDay.slotDescription.push(slotDay.slotDescription)
-            }
-            return '';
-          })
-        if (checkDay.slotDescription.length > 0) {
-          modifiedDays.push(checkDay)
-        }
-        return '';
-      })
-
-    let AvailDays =
-      modifiedDays &&
-      modifiedDays.map((days, index) => {
-        let Count = ''
-        return (
-          <div className={'SPAvailContainer ' + Count + 'Available'}>
-            <div className={'SPAvailTitle'}>
-              <label className='SPAvailTitleText'>{days.day}</label>
-            </div>
-            <div className={'SPAvailContent'}>
-              <label
-                className={
-                  'SPAvailItems ' +
-                  (days.slotDescription.includes('Morning') ? 'active' : '')
-                }
-              >
-                Morning
-              </label>
-              <label
-                className={
-                  'SPAvailItems ' +
-                  (days.slotDescription.includes('Afternoon') ? 'active' : '')
-                }
-              >
-                Afternoon
-              </label>
-              <label
-                className={
-                  'SPAvailItems ' +
-                  (days.slotDescription.includes('Evening') ? 'active' : '')
-                }
-              >
-                Evening
-              </label>
-            </div>
-          </div>
-        )
-      })
-
-    let address =
-      this.state.visitServiceDetails && this.state.visitServiceDetails.patient &&
-      this.state.visitServiceDetails.patient.patientAddresses.filter(obj => {
-        return obj.isPrimaryAddress === true
-      })
-    let profileImage = null
-    let patientLastName = ''
-    if (this.state.visitServiceDetails && this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
-      profileImage = this.state.visitServiceDetails.patient &&
-        this.state.visitServiceDetails.patient.imageString
-        ? this.state.visitServiceDetails.patient.imageString
-        : require('../../../assets/images/Blank_Profile_icon.png')
-      patientLastName =
-        this.state.visitServiceDetails.patient &&
-        this.state.visitServiceDetails.patient.lastName
-    } else {
-      profileImage = require('../../../assets/images/Blank_Profile_icon.png')
-      patientLastName =
-        this.state.visitServiceDetails.patient &&
-        this.state.visitServiceDetails.patient.lastName.charAt(0)
-    }
-
-    return (
-      <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
-        {this.props.VisitServiceDetails.length === 0 && <Preloader />}
-        {this.state.isLoading && <Preloader />}
-        {this.props.cancelHiredRequest && <Preloader />}
-        <div className='ProfileHeaderWidget'>
-          <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Service Request</h5>
           </div>
         </div>
-        <Scrollbars
-          speed={2}
-          smoothScrolling
-          horizontal={false}
-          className='ServiceRequestsWidget'
-        >
-        {this.props.isScheduleLoading && <Preloader />}
-          <div className='card mainProfileCard'>
-            <div className='CardContainers'>
-              <section className='ProfileCardHeader'>
-                <div className='primaryColor'>
-                  <span className='HeaderBackWrapper CursorPointer'>
-                    <a className={'HeaderBackButton'} onClick={this.goBackToServiceRequest}></a>
-                  </span>
-                  <span className='HeaderRequestLabel'>
-                    Request ID
-                  </span>
-                  <span className='HeaderRequestLabelID'>
-                    {this.state.visitServiceDetails
-                      && this.state.visitServiceDetails.serviceRequestNumber
-                    }
-                  </span>
-                </div>
-                <div className='ProfileHeaderButton'>
-                  {!getUserInfo().isEntityServiceProvider && <ServiceStatus
-                    status={{
-                      id: this.state.visitServiceDetails.statusId,
-                      name: this.state.visitServiceDetails.statusName,
-                      visitInProgress: this.state.visitServiceDetails.visitInProgress
-                    }}
-                    postServiceRequest={this.postServiceRequest}
-                  />}
-                </div>
-              </section>
-              <section class='LeftPalette'>
-                <div class='LeftPostedBy'>
-                  <h2 className='postdby-title'>Posted By</h2>
-                  <div class='PostedByImageContainer pt-0'>
-                    <img
-                      className='ProfileImage'
-                      src={profileImage}
-                      alt='patientImage'
-                      onClick={() => {
-                        if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
-                          this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId)
-                        }
-                      }}
-                    />
+      </div>
 
-                    <div class='PostedByProfileDetails'>
-                      <div class='ProfileDetailsName' onClick={() => {
-                        if (this.state.visitServiceDetails.statusId === HIRED_STATUS_ID) {
-                          this.handelPatientProfile(this.state.visitServiceDetails.patient && this.state.visitServiceDetails.patient.patientId)
-                        }
-                      }}>
-                        {getLength(this.state.visitServiceDetails.patient) >
-                          0 && this.state.visitServiceDetails.patient.firstName}
-                        {' '}
-                        {patientLastName}
-                      </div>
-                      <div class='ProfileDetailsDate'>
-                        Posted on
-                        {' '}
-                        {this.state.visitServiceDetails.postedDate &&
-                          <Moment format='DD MMM'>
-                            {this.state.visitServiceDetails.postedDate}
-                          </Moment>}
-                      </div>
-                    </div>
-                  </div>
-                  <div className='PostedByImageContainer CursorPointer' onClick={this.showPhoneNumber}>
-                    <i class='ProfileIcon IconCall' />
-                    <div class='PostedByProfileDetails'>
-                      <div class='ProfileIconDetails'>
-                        Phone Call
-                      </div>
-                    </div>
-                  </div>
-                  {!isEntityServiceProvider() &&
-                    <div className='PostedByImageContainer CursorPointer' onClick={this.onClickConversation}>
-                      <i class='ProfileIcon IconConversations' />
-                      <div class='PostedByProfileDetails'>
-                        <div class='ProfileIconDetails'>
-                          Conversation
-                      </div>
-                      </div>
-                    </div>}
-                  {!isEntityServiceProvider() &&
-                    <div className='PostedByImageContainer CursorPointer' onClick={this.onClickVideoConference}>
-                      <i class='ProfileIcon IconVideo' />
-                      <div class='PostedByProfileDetails'>
-                        <div class='ProfileIconDetails'>
-                          Video Conference
-                      </div>
-                      </div>
-                    </div>}
-                </div>
-              </section>
-              <section className='rightPalette'>
-                <div className='container-fluid'>
-                  <Nav tabs className='PaletteTabs'>
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: this.state.activeTab === '1'
-                        })}
-                        onClick={() => {
-                          this.toggle('1')
-                        }}
-                      >
-                        Details
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: this.state.activeTab === '2'
-                        })}
-                        onClick={() => {
-                          this.toggle('2')
-                          this.onClickSchedule()
-                        }}
-                      >
-                        Schedule
-                      </NavLink>
-                    </NavItem>
-                  </Nav>
-                  <TabContent activeTab={this.state.activeTab}>
-                    <TabPane tabId='1' className='TabBody'>
-                      <form className='ServiceContent'>
-                        <div className='ServiceCategoryContent'>
-                          <h2 className='ServicesTitle'>Service Category</h2>
-                          <p className='ScheduleTypeTitle'>
-                            {
-                              this.state.visitServiceDetails
-                                .serviceCategoryDescription
-                            }
-                          </p>
-                          <h2 className='ServicesTitle mt-4'>Service Types</h2>
-                          <div className='ServiceType visit-srq-slider WhiteBG'>
-                            <div className='ServiceTypesSlider Summary'>
-                              <Carousel className="ServiceTypesSlider">
-                                {sliderTypes}
-                              </Carousel>
-                            </div>
-                          </div>
-                          <h2 className='ServicesTitle'>
-                            Additional Information
-                          </h2>
-                          <p className='AdditionInfo mt-3 mb-4'>
-                            {
-                              this.state.visitServiceDetails
-                                .serviceRequestDescription
-                            }
-                          </p>
-                          <h2 className='ServicesTitle'>
-                            Schedule and Frequency
-                          </h2>
-                          <div className='ContentTitle Summary mt-3 mb-4'>
-                            <span className='ContentTitle Summary'>
-                              {this.state.visitServiceDetails
-                                .recurringPatternDescription ===
-                                RECURRING_PATTERN
-                                ? this.state.visitServiceDetails
-                                  .recurringPatternDescription + ' '
-                                : 'Recurring '}
-                              Schedule
-                            </span>
-                            <span>
-                              {this.state.visitServiceDetails.startDate &&
-                                <Moment format='MM/DD/YYYY'>
-                                  {this.state.visitServiceDetails.startDate}
-                                </Moment>}
+    let tabdata = [
+      {
+        id: '1',
+        label: 'Requests'
+      },
+      {
+        id: '2',
+        label: 'My Plan'
+      },
+      {
+        id: '3',
+        label: 'My Patient'
+      }
+    ]
 
-                              {this.state.visitServiceDetails
-                                .recurringPatternDescription !==
-                                RECURRING_PATTERN &&
-                                this.showData()
-                                // '- till ' +  this.state.visitServiceDetails.occurence + ' occurences'
-                              }
-                            </span>
-                            {this.state.visitServiceDetails
-                              .recurringPatternDescription !==
-                              RECURRING_PATTERN &&
-                              <React.Fragment>
-                                <span className='ContentTitle Summary'>
-                                  Recurring Pattern
-                                </span>
-                                <span>
-                                  {
-                                    this.state.visitServiceDetails
-                                      .recurringPatternDescription
-                                  }
-                                </span>
-                              </React.Fragment>}
-
-                          </div>
-                          <div className='AvailabilityWidget'>
-                            <div className='SPAvailWidget Summary'>
-                              {AvailDays}
-                            </div>
-                          </div>
-                          <h2 className='ServicesTitle'>Point of Service</h2>
-                          <div className='SummaryContent POS mt-3 mb-4'>
-
-                            {this.state.visitServiceDetails.patient &&
-                              this.state.visitServiceDetails.patient
-                              ? address.map(pointofservice => {
-                                return (
-                                  <Fragment>
-                                    {pointofservice.addressTypeId &&
-                                      <p>
-                                        <span className="addresstype">Address Type</span>
-                                        {pointofservice.addressTypeId}
-                                      </p>
-                                    }
-                                    <p>
-                                      <span>Street</span>
-                                      {pointofservice.streetAddress}
-                                    </p>
-
-                                    <p>
-                                      <span>City</span>
-                                      {pointofservice.city}
-                                    </p>
-
-                                    <p>
-                                      <span>State</span>
-                                      {pointofservice.stateName}
-                                    </p>
-
-                                    <p>
-                                      <span>Zip</span>
-                                      {pointofservice.zipCode}
-                                    </p>
-                                  </Fragment>
-                                )
-                              })
-                              : ''}
-                          </div>
-                        </div>
-                      </form>
-                    </TabPane>
-                    <TabPane tabId='2' className='TabBody'>
-                    <button onClick={() => this.props.goToAddSchedule()}> <span>+</span>Add New Schedule </button>
-                      <div className='ScheduleTableHeader primaryColor'>
-                        <div>
-                          <span>Date</span>
-                        </div>
-                        <div>
-                          <span>Time Slot</span>
-                        </div>
-                        <div>
-                          <span>Visit Status</span>
-                        </div>
-                        <div>
-                          <span>Visit Length (HH:MM)</span>
-                        </div>
-                        <div></div>
-                        {
-                          getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID &&
-                          <div>
-                            <span>Service Provider</span>
-                          </div>
-                        }
-                        <div />
-                      </div>
-                      {this.props.VisitServiceDetails &&
-                        (this.props.VisitServiceDetails.statusId === 35 ||
-                          this.props.VisitServiceDetails.statusId === 36 ||
-                          this.props.VisitServiceDetails.statusId === 37 ||
-                          this.props.VisitServiceDetails.statusId === 39 ||
-                          this.props.VisitServiceDetails.statusId === 58 ||
-                          this.props.VisitServiceDetails.statusId === 106 ||
-                          this.props.VisitServiceDetails.statusId === 107) &&
-                        <div className='BoardContainer noInfoBlock update-noblockinfo'>
-                          <span className="SPNoInfoDesc">
-                            Visit Schedule(s) will be displayed after the hiring is completed.
-                          </span>
-                        </div>
-                      }
-                      {this.props.VisitServiceSchedule &&
-                        this.props.VisitServiceSchedule.map(ScheduleList => {
-                          return (
-                            <div className='ScheduleTableRow'>
-                              <div>
-                                <span>
-                                  <Moment format='DD MMM'>
-                                    {ScheduleList.visitDate}
-                                  </Moment>
-                                </span>
-                              </div>
-                              <div>
-                                <span>
-                                  {this.getSlotName(ScheduleList.slot)}
-                                </span>
-                              </div>
-                              <div>
-                                <span>{ScheduleList.visitStatusName}</span>
-                              </div>
-                              <div>
-                                {ScheduleList.billedTotalDuration ?
-                                  <span>
-                                    {ScheduleList.billedTotalDuration.substring(0, 5)}
-                                  </span>
-                                  :
-                                  <span>
-                                    {ScheduleList.originalTotalDuration ? ScheduleList.originalTotalDuration.substring(0, 5) : '-'}
-                                  </span>
-                                }
-                              </div>
-                              <div>
-                                <div class='ScheduleRowButton'>
-                                  {ScheduleList.visitStatusName ===
-                                    SERVICE_VISIT_STATUS.COMPLETED
-                                    ? <a
-                                      className='btn btn-outline-primary'
-                                      onClick={() => this.visitSummary(ScheduleList.serviceRequestVisitId)}
-                                    >
-                                      <i className='ProfileIconEye' />Visit Summary
-                                      </a>
-                                    : ''}
-
-                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
-                                    ((ScheduleList.visitStatusName ===
-                                      SERVICE_VISIT_STATUS.SCHEDULED)
-                                      ? <button
-                                        className='btn btn-outline-primary start-visit-btn'
-                                        onClick={() =>
-                                          this.visitProcessing(
-                                            ScheduleList.serviceRequestVisitId
-                                          )}
-                                        disabled={!isFutureDay(ScheduleList.visitDate)}
-                                      >
-                                        Start Visit
-                                      </button>
-                                      : '') : '')}
-
-                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
-                                    ((ScheduleList.visitStatusName ===
-                                      SERVICE_VISIT_STATUS.INPROGRESS)
-                                      ? <a
-                                        className='btn btn-outline-primary'
-                                        onClick={() =>
-                                          this.visitProcessing(
-                                            ScheduleList.serviceRequestVisitId
-                                          )}
-                                      >
-                                        In Progress
-                                      </a>
-                                      : '') : '')}
-
-                                  {(!(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ?
-                                    ((ScheduleList.visitStatusName ===
-                                      SERVICE_VISIT_STATUS.PAYMENTPENDING)
-                                      ? <a
-                                        className='btn btn-outline-primary'
-                                        onClick={() =>
-                                          this.visitProcessingSummary(
-                                            ScheduleList.serviceRequestVisitId
-                                          )}
-                                      >
-                                        Payment Pending
-                                      </a>
-                                      : '') : '')}
-
-                                </div>
-                              </div>
-                              {
-                                getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID && ScheduleList.visitStatusName !== SERVICE_VISIT_STATUS.CANCELLED &&
-                                 <AssignServiceProvider
-                                  sp={ScheduleList}
-                                  reset={this.reset}
-                                  statusID={this.props.VisitServiceDetails.statusId}
-                                  onSubmit={this.onSubmitAssignServiceProvider}
-                                />
-                              }
-                            </div>
-                          )
-                        })}
-                      {/* <div
-                        className='sr-showmore-btn'
-                        onClick={() => this.clickShowMore()}
-                        disabled={this.state.disableShowMore}
-                      >
-                        Show more
-                                      </div> */}
-                      {!this.props.disableShowMore && <ul className="list-group list-group-flush sr-showmore-btn">
-                        <li
-                          className="list-group-item ProfileShowMore"
-                          onClick={this.clickShowMore}
-                        >
-                          Show more <i className="ProfileIconShowMore" />
-                        </li>
-                      </ul>}
-                    </TabPane>
-                  </TabContent>
-                </div>
-              </section>
+    let header = [
+      {
+        id: '1',
+        label: 'Date'
+      },
+      {
+        id: '2',
+        label: 'Start Time'
+      },
+      {
+        id: '3',
+        label: 'Duration(H)'
+      },
+      {
+        id: '4',
+        label: 'Services Types'
+      },
+      {
+        id: '5',
+        label: 'Service Provider'
+      },
+    ]
+    return (
+      <Fragment>
+        <AsideScreenCover>
+          <div className='ProfileHeaderWidget'>
+            <div className='ProfileHeaderTitle'>
+              <h5 className='primaryColor m-0'>View Request</h5>
             </div>
           </div>
-          <ModalPopup
-            isOpen={this.state.isAlertModalOpen}
-            toggle={this.reset}
-            ModalBody={<span>{this.alertModalMsg}</span>}
-            btn1='Yes'
-            btn2='No'
-            className='modal-sm'
-            headerFooter='d-none'
-            centered='centered'
-            onConfirm={() => {
-              this.onConfirmSerivceRequest(this.status)
-              this.setState({
-                isAlertModalOpen: false
-              })
-            }}
-            onCancel={() =>
-              this.setState({
-                isAlertModalOpen: false
-              })}
-          />
-          <ModalPopup
-            isOpen={this.state.isAlertModalopenConfirm}
-            toggle={this.reset1}
-            ModalBody={<span>{this.alertModalMsgstatus}</span>}
-            btn1='Yes'
-            className='modal-sm'
-            headerFooter='d-none'
-            centered='centered'
-            onConfirm={() => {
-              this.onConfirmSerivceRequestMsg()
-
-            }}
-            onCancel={() =>
-              this.setState({
-                isAlertModalopenConfirm: false
-              })}
-          />
-          <ModalPopup
-            isOpen={this.state.phoneNumberModal}
-            ModalBody={<span> {this.state.phoneNumber
-              === null
-              ? CONTACT_NOT_FOUND
-              : `${PHONE_NUMBER_TEXT}
-              ${formatPhoneNumber(this.state.phoneNumber)}`} </span>}
-            btn1='OK'
-            className='modal-sm'
-            headerFooter='d-none'
-            footer='d-none'
-            centered='centered'
-            onConfirm={() =>
-              this.setState({
-                phoneNumberModal: false
-              })}
-          />
-          <ModalPopup
-            isOpen={this.state.conversationsModal}
-            ModalBody={<span> {this.state.conversationErrMsg} </span>}
-            btn1='OK'
-            className='modal-sm'
-            headerFooter='d-none'
-            footer='d-none'
-            centered='centered'
-            onConfirm={() =>
-              this.setState({
-                conversationsModal: false
-              })}
-          />
-          <ModalPopup
-            isOpen={this.state.standByModeAlertMsg}
-            ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
-            btn1='OK'
-            className='modal-sm'
-            headerFooter='d-none'
-            footer='d-none'
-            centered='centered'
-            onConfirm={() =>
-              this.setState({
-                standByModeAlertMsg: false
-              })}
-          />
-        </Scrollbars>
-      </AsideScreenCover>
+          {this.props.isLoading && <Preloader />}
+          <Scrollbars speed={2}
+            smoothScrolling
+            horizontal={false}
+            className='ProfileContentWidget'>
+            <div class="tab_view">
+              <TabHeader
+                list={tabdata}
+                toggle={this.toggle}
+                activeTab={this.state.activeTab}
+                goBack={() => this.props.goBack()}
+              />
+              <TabContent activeTab={this.state.activeTab}>
+                <RequestTab
+                  visitServiceList={this.props.visitServiceList}
+                  VisitServiceDetails={this.props.VisitServiceDetails}
+                  handelDetails={this.handelDetails}
+                />
+                <PlanTab
+                  rowPageSize={this.state.rowPageSize}
+                  rowPageChange={this.rowPageChange}
+                  scheduleList={this.props.scheduleList}
+                  addSchedule={this.addSchedule}
+                  handleChangeSchedule={this.handleChangeSchedule}
+                  visitList={this.props.visitList}
+                  header={header}
+                  espList={this.props.entityServiceProvidersList}
+                  pageCount={this.props.visitListCount}
+                  pageNumberChange={this.pageNumberChange}
+                  activePage={this.state.activePage}
+                  isOpen={this.state.filterOpen}
+                  toggle={this.toggleFilter}
+                  applyFilter={this.applyFilter}
+                  applyReset={this.applyReset}
+                  startDate={this.state.startDate}
+                  dateChanged={this.dateChanged}
+                  dateChangedRaw={this.dateChangedRaw}
+                  todateChanged={this.todateChanged}
+                  todateChangedRaw={this.todateChangedRaw}
+                  endDate={this.state.endDate}
+                  isValid={this.state.isValid}
+                  ServiceCategory={this.props.ServiceCategory}
+                  handleChangeServiceCategory={this.handleChangeServiceCategory}
+                  ServiceCategoryId={this.state.ServiceCategoryId}
+                  selectedOption={this.state.selectedOption}
+                  ServiceType={this.props.ServiceType}
+                  handleserviceType={this.handleserviceType}
+                  ServiceStatus={this.props.visitStatusList}
+                  handleChangeserviceStatus={this.handleChangeserviceStatus}
+                  checked={this.state.isChecked}
+                  toggleEditModal={this.toggleEditModal}
+                  onSubmit={this.onSubmitAssignServiceProvider}
+                  entityServiceProvidersList={this.props.entityServiceProvidersList}
+                  tooltipOpen={this.state.tooltipOpen}
+                  toggleToolTip={this.toggleToolTip}
+                />
+                <PatientProfileTab />
+              </TabContent>
+            </div>
+            <ProfileModalPopup
+              isOpen={this.state.editModal}
+              toggle={this.toggleEditModal}
+              ModalBody={modalContent}
+              className="modal-lg asyncModal CertificationModal my-plan-editmodel"
+              modalTitle={'Edit Visit'}
+              disabled={this.state.disabledSaveBtn}
+              centered={true}
+              onClick={this.updateServiceVisits}
+            />
+          </Scrollbars>
+        </AsideScreenCover>
+      </Fragment>
     )
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    getServiceRequestList: (data) => dispatch(getServiceRequestList(data)),
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
-    getVisitServiceSchedule: (data, pgNumber) => dispatch(getVisitServiceSchedule(data, pgNumber)),
-    visitService: () => dispatch(push(Path.visitServiceList)),
-    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
-    updateServiceRequestByServiceProvider: data =>
-      dispatch(updateServiceRequestByServiceProvider(data)),
-    cancelServiceRequestByServiceProvider: data =>
-      dispatch(cancelServiceRequestByServiceProvider(data)),
-    getVisitServiceEligibilityStatus: data =>
-      dispatch(getVisitServiceEligibilityStatus(data)),
-    getDays: () => dispatch(getDays()),
     goBack: () => dispatch(goBack()),
-    dispatchServiceRequestByServiceProvider: () => dispatchServiceRequestByServiceProvider(),
-    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
-    createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
-    createDataStore: (data) => dispatch(createDataStore(data)),
-    formDirty: () => dispatch(formDirty()),
-    formDirtyFeedback: () => dispatch(formDirtyFeedback()),
-    formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),
-    getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
-    getSavedSignature: (data) => dispatch(getSavedSignature(data)),
-    getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
-    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails()),
-    cancelInvitedServiceProvider: (data) => dispatch(cancelInvitedServiceProvider(data)),
-    cancelAppliedServiceProvider: (data) => dispatch(cancelAppliedServiceProvider(data)),
-    cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
-    clearVisitServiceHistoryByIdDetail: () => dispatch(clearVisitServiceHistoryByIdDetail()),
-    clearVisitServiceSchedule: () => dispatch(clearVisitServiceSchedule()),
-    formDirtyVisitServiceDetails: () => dispatch(formDirtyVisitServiceDetails()),
-    getServiceRequestId: (data) => dispatch(getServiceRequestId(data)),
-    goToServiceRequestDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
-    getSpBusyInVisit: () => dispatch(getSpBusyInVisit()),
-    setPatient: (data) => dispatch(setPatient(data)),
-    goToPatientProfile: () => dispatch(push(Path.patientProfile)),
-    updateEntityServiceVisit: (data, pageNo) => dispatch(updateEntityServiceVisit(data, pageNo)),
-    saveContextData: (data) => dispatch(saveContextData(data)),
-    goToDashboard: () => dispatch(push(Path.dashboard)),
-    getVisitServiceScheduleSuccess: () => dispatch(getVisitServiceScheduleSuccess([], true)),
-    updateHireStatusForServiceRequest: (data) => dispatch(updateHireStatusForServiceRequest(data)),
+    getSchedulesList: (data) => dispatch(getSchedulesList(data)),
     goToAddSchedule: () => dispatch(push(Path.schedule)),
-    clearESPList: () => dispatch(clearESPList())
+    getVisitList: (data) => dispatch(getVisitList(data)),
+    getEntityServiceProviderList: (data) => dispatch(getEntityServiceProviderList(data)),
+    getServiceCategory: () => dispatch(getServiceCategory()),
+    getServiceType: (data) => dispatch(getServiceType(data)),
+    ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
+    getVisitStatus: () => dispatch(getVisitStatus()),
+    getServiceVisitDetails: (data) => dispatch(getServiceVisitDetails(data)),
+    updateServiceVisit: (data) => dispatch(updateServiceVisit(data)),
+    assignESP: (data) => dispatch(assignESP(data)),
+    selectESP: (data) => dispatch(selectESP(data)),
+    clearESPList: () => dispatch(clearESPList()),
+    getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data))
   }
 }
 
 function mapStateToProps(state) {
+  const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
   return {
-    VisitServiceDetails: state.visitSelectionState.VisitServiceDetailsState
-      .VisitServiceDetails,
-    VisitServiceSchedule: state.visitSelectionState.VisitServiceDetailsState
-      .VisitServiceSchedule,
-    ServiceRequestId: state.visitSelectionState.VisitServiceDetailsState
-      .ServiceRequestId,
-    updateServiceRequestMsgStatus: state.visitSelectionState
-      .VisitServiceDetailsState.updateServiceRequestMsgStatus,
-    VisitServiceElibilityStatus: state.visitSelectionState
-      .VisitServiceDetailsState.VisitServiceElibilityStatus,
-    daysType: state.visitSelectionState.VisitServiceDetailsState.daysType,
-    initiateConversation: state.visitSelectionState.VisitServiceDetailsState
-      .canInitiateConversation,
-    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
-    isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
-    isScheduleLoading: state.visitSelectionState.VisitServiceDetailsState.isScheduleLoading,
-    cancelHiredRequest: state.visitSelectionState.VisitServiceDetailsState.cancelHiredRequest,
-    disableShowMore: state.visitSelectionState.VisitServiceDetailsState.disableShowMore
+    visitServiceList: VisitServiceDetailsState.visitserviceList,
+    ServiceRequestId: VisitServiceDetailsState.ServiceRequestId,
+    VisitServiceDetails: VisitServiceDetailsState.VisitServiceDetails,
+    scheduleList: VisitServiceDetailsState.scheduleList,
+    visitList: VisitServiceDetailsState.visitList,
+    visitListCount: VisitServiceDetailsState.visitListCount,
+    entityServiceProvidersList: VisitServiceDetailsState.entityServiceProvidersList,
+    ServiceCategory: state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
+    ServiceType: state.visitSelectionState.ServiceRequestFilterState.ServiceType,
+    visitStatusList: state.visitSelectionState.VisitServiceDetailsState.visitStatus,
+    patientId: state.patientProfileState.patientId,
+    serviceVisitDetails: VisitServiceDetailsState.serviceVisitDetails,
+    isLoading: VisitServiceDetailsState.isLoading,
+    disableShowmore: VisitServiceDetailsState.disableShowmore
   }
 }
 

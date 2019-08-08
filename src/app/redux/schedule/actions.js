@@ -283,6 +283,7 @@ export function createOrEditSchedule(data) {
         ServiceRequestPost(API.createOrEditSchedule, modelData)
             .then(resp => {
                 dispatch(push(Path.visitServiceDetails))
+                dispatch(clearESPList())
                 dispatch(endLoading());
             })
             .catch(err => {

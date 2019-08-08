@@ -27,6 +27,7 @@ import UserAvatarMultiSelect from './UserAvatarMultiSelect';
 import {Carousel} from './Carousel';
 import ImageCropView from './ImageCropView';
 import {AlertPopup} from './AlertPopup';
+import {CoreoPagination} from './CoreoPagination';
 import {CoreoTimePicker} from './CoreoTimePicker';
 
 export {
@@ -61,5 +62,6 @@ export {
     Carousel,
     ImageCropView,
     AlertPopup,
+    CoreoPagination,
     CoreoTimePicker
 };

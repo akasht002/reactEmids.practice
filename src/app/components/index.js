@@ -42,6 +42,7 @@ import {
     Carousel,
     ImageCropView,
     AlertPopup,
+    CoreoPagination,
     CoreoTimePicker
 } from './LevelOne';
 import {
@@ -99,5 +100,6 @@ export {
     ImageCropView,
     AlertPopup,
     Avatar,
+    CoreoPagination,
     CoreoTimePicker
 };
