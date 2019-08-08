@@ -131,9 +131,6 @@ export class Assessment extends Component {
     }
 
     onClickNext = () => {
-        if (this.state.textareaData) {
-            this.selectedAnswers.push(this.state.textareaData);
-        }
         if (this.props.questionsList.length === this.selectedAnswers.length) {
             this.onSubmit();
         } else {
@@ -164,7 +161,7 @@ export class Assessment extends Component {
         let current_time;
         if (data === startServiceAction) {
             current_time = new moment().format("HH:mm");
-            this.setState({ startedTime: current_time, disabled: false, disableCheckbox: false, backDisabled: true })
+            this.setState({ startedTime: current_time, disableCheckbox: false, backDisabled: true })
         } else {
             current_time = this.state.startedTime;
             this.setState({ stopTime: true, startService: true })

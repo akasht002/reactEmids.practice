@@ -13,7 +13,7 @@ import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
 import { checkNumber, getFields } from '../../../../utils/validations';
-import { formatDateSingle } from '../../../../utils/dateUtility';
+import { formatDateSingle,getSecondsFromTime } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { DATE_FORMATS,ERROR_MSG } from '../../../../constants/constants'
@@ -84,11 +84,15 @@ export class AssessmentSummary extends Component {
         });
     }
 
+    signaturePad = () => {
+        this.setState({ isSaveBtnShown: false })
+        this.signaturePad.off();
+    }
+
     saveSignature = () => {
         const data = this.signaturePad.toDataURL();
         if (data !== '') {
-            this.setState({ isSaveBtnShown: false })
-            this.signaturePad.off();
+            this.signaturePad()
         }
         let signatureData = {
             "patientId": this.state.summaryDetails.patient.patientId,
@@ -113,7 +117,7 @@ export class AssessmentSummary extends Component {
 
     onClickNext = () => {
         let time = this.state.summaryDetails.originalTotalDuration;
-        let duration = time.split(':');
+        let duration = getSecondsFromTime(time);
         let seconds = (+duration[0]) * 60 * 60 + (+duration[1]) * 60 + (+duration[2]);
         let originalTotalDuration = (seconds / 60);
 
@@ -144,11 +148,11 @@ export class AssessmentSummary extends Component {
         let seconds = formatDateSingle(this.state.updatedSec)
         let newTime = hours + ':' + minutes + ':' + seconds
         var endTime = moment(newTime, DATE_FORMATS.hhMinSec);
-        if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
-            this.setState({ timeErrMessage: ERROR_MSG.timeErrMessage })
-        } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
+        if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: ERROR_MSG.emptyErrMessage })
-        } else {
+        }else if(currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
+            this.setState({ timeErrMessage: ERROR_MSG.timeErrMessage })
+        } else{
             this.updateTime();
         }
     }
@@ -196,6 +200,9 @@ export class AssessmentSummary extends Component {
 
         let completedTaskPercent = Math.round((this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100);
 
+        let hour = this.props.SummaryDetails.originalTotalDuration && this.props.SummaryDetails.originalTotalDuration.substr(0, 2);
+        let minutes = this.props.SummaryDetails.originalTotalDuration && this.props.SummaryDetails.originalTotalDuration.substr(3, 2);
+
         if (this.state.isModalOpen) {
             modalContent = <form className="AdjustTimeForm">
                 <p className="AdjustTimeText">
@@ -230,22 +237,7 @@ export class AssessmentSummary extends Component {
                             max={59}
                             maxlength={2}
                         />
-                    </span>
-                    {/* Dont Remove */}
-                    {/* <span>
-                        SS <input
-                            type="text"
-                            value={checkNumber(this.state.updatedSec) ? this.state.updatedSec : ''}
-                            onChange={(e) => {
-                                if (checkNumber(e.target.value)) {
-                                    this.setState({ updatedSec: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
-                                }
-                            }}
-                            style={{ width: 10 + '%' }}
-                            min={0}
-                            max={59}
-                        />
-                    </span> */}
+                    </span>                    
                     <span className="mt-4 d-block text-danger">{this.state.timeErrMessage}</span>
                     <span className="mt-4 d-block text-danger">{this.state.emptyErrMessage}</span>
                 </p>
@@ -253,9 +245,9 @@ export class AssessmentSummary extends Component {
                 <p className="AdjustTimeText">
                     Note: Maximum adjustable time is                  
 
-                    <span> {this.props.SummaryDetails.originalTotalDuration.substr(0, 2)}</span>
+                    <span> {hour}</span>
                     <span>:</span>
-                    <span>{this.props.SummaryDetails.originalTotalDuration.substr(3, 2)}</span>
+                    <span>{minutes}</span>
                     <span> (HH:MM)</span>
                 </p>
             </form>

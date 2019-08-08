@@ -74,3 +74,8 @@ export function getTimeZoneOffset() {
 export const getHHMinSession = (data) => {
     return moment(data).format(DATE_FORMATS.hhMinSession)
 }
+
+
+export const getSecondsFromTime = (data) =>{
+    return data.split(':')
+}
