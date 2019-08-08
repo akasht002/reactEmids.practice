@@ -5,8 +5,30 @@ import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
-import {PAGE_SIZE_OPTIONS} from '../../../../constants/constants'
+import { PAGE_SIZE_OPTIONS } from '../../../../constants/constants'
+import { getServiceTypeImage } from '../../../../utils/validations'
 import './style.css';
+
+const renderServiceTypeImages = serviceTypes => {
+    let updatedServiceTypes = serviceTypes.length > 3 ? serviceTypes.slice(0, 2) : serviceTypes
+    return (
+        updatedServiceTypes.slice(0, 3).map(type =>
+            <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" />
+        ))
+}
+
+const getServiceTypeImageBasedOnId = serviceTypeId => {
+    return getServiceTypeImage(serviceTypeId)
+}
+
+const renderServiceTypes = serviceTypes => {
+    serviceTypes.map(type =>
+        <div>
+            <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" />
+            <span>{type.serviceTypeDescription}</span>
+        </div>
+    )
+}
 
 export const Tabel = props => {
     return (
@@ -28,29 +50,10 @@ export const Tabel = props => {
                             <td>{item.startTime}</td>
                             <td>{item.duration}</td>
                             <td>
-
-                                {/* {item.serviceTypes.map(type => {
-                                    return type.serviceTypeDescription
-                                })} */}
-
                                 <span className="service-typesview-plan">
-                                    <img alt="" src={require('../../../../assets/ServiceTypes/ADL Eating.svg')}></img>
-                                    <img alt="" src={require('../../../../assets/ServiceTypes/HAH - Housekeeping.svg')}></img>
-                                    <img alt="" src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')}></img>
-                                    <div className="service-typesview-more tooltip">3+
-                                    <div class="bottom">
-                                    <h3>Service Types</h3>
-                                    <ul>
-                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
-                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
-                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
-                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
-                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
-                                       
-                                    </ul>
-                                    <i></i>
-                                    </div>
-                                    </div>
+                                    {renderServiceTypeImages(item.serviceTypes)}
+                                    {item.serviceTypes.length > 3 && <span className="service-typesview-more" onClick={props.toggleToolTip}>3+</span>}
+                                    {props.tooltipOpen && renderServiceTypes(item.serviceTypes)}
                                 </span>
                             </td>
                             <td>
@@ -96,9 +99,14 @@ export const Tabel = props => {
                 pageSize={props.rowPageSize}
                 pageSizeChange={props.rowPageChange}
                 pageSizeOption={PAGE_SIZE_OPTIONS}
+<<<<<<< HEAD
               />
               <span className="page-result">Total {props.totalResult} results</span>
               </div>
+=======
+            />
+            <span>Total {props.totalResult} results</span>
+>>>>>>> 99a30d022778b12980470bc27e3e57bbdfd3f476
         </Fragment>
     )
 }

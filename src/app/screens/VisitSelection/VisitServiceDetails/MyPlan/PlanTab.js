@@ -48,6 +48,8 @@ export const PlanTab = props => {
                             rowPageChange={props.rowPageChange}
                             rowPageSize={props.rowPageSize}
                             totalResult={props.pageCount}
+                            tooltipOpen={props.tooltipOpen}
+                            toggleToolTip={props.toggleToolTip}
                         />
                         <CoreoPagination
                             activePage={props.activePage}
