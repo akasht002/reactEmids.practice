@@ -53,7 +53,21 @@ export const Tabel = props => {
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
                                     {item.serviceTypes.length > 3 && <span className="service-typesview-more" onClick={props.toggleToolTip}>3+</span>}
-                                    {props.tooltipOpen && renderServiceTypes(item.serviceTypes)}
+                                    {/* {props.tooltipOpen && renderServiceTypes(item.serviceTypes)} */}
+                                    <div className="service-typesview-more tooltip">3+
+                                    <div class="bottom">
+                                    <h3>Service Types</h3>
+                                    <ul>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+
+                                    </ul>
+                                    <i></i>
+                                    </div>
+                                    </div>
                                 </span>
                             </td>
                             <td>
@@ -99,14 +113,9 @@ export const Tabel = props => {
                 pageSize={props.rowPageSize}
                 pageSizeChange={props.rowPageChange}
                 pageSizeOption={PAGE_SIZE_OPTIONS}
-<<<<<<< HEAD
               />
               <span className="page-result">Total {props.totalResult} results</span>
               </div>
-=======
-            />
-            <span>Total {props.totalResult} results</span>
->>>>>>> 99a30d022778b12980470bc27e3e57bbdfd3f476
         </Fragment>
     )
 }
