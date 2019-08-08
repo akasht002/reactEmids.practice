@@ -83,16 +83,22 @@ export class Schedule extends Component {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
         }
-        if (this.props.patientId) {
-            this.props.getServiceCategory();
-            this.props.getPatientAddress();
-            this.props.getStates();
-            this.props.getEntityServiceProviderList(data);
-            this.props.getRecurringPattern();
-            this.props.getDays();
-        } else {
-            this.props.history.push(Path.visitServiceList)
-        }
+        // if (this.props.patientId) {
+        //     this.props.getServiceCategory();
+        //     this.props.getPatientAddress(this.props.patientId);
+        //     this.props.getStates();
+        //     this.props.getEntityServiceProviderList(data);
+        //     this.props.getRecurringPattern();
+        //     this.props.getDays();
+        // } else {
+        //     this.props.history.push(Path.visitServiceList)
+        // }
+        this.props.getServiceCategory();
+        this.props.getPatientAddress(this.props.patientId);
+        this.props.getStates();
+        this.props.getEntityServiceProviderList(data);
+        this.props.getRecurringPattern();
+        this.props.getDays();
     }
 
     handleChangePlanType = (id) => {

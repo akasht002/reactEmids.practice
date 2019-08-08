@@ -189,18 +189,6 @@ export const SERVICE_REQ_STATUS = {
     DECLINED: 107
 }
 
-export const DATE_FORMATS = {
-    monDD : "MMM DD",
-    hhMinSession:"hh:mm A",
-    yyyy_mm_dd : 'YYYY-MM-DD',
-    mm:"MM",
-    mmm:"MMM",
-    yyyy:'YYYY',
-    month:'month',
-    days:'days',
-    dd:'DD'
-}
-
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
 
 export const DEFAULT_FROM_DATE = '1900-01-01';
@@ -236,4 +224,17 @@ export const serviceCategoriesImage = {
     3: 'Food Delivery_1.jpg',
     2: 'Housekeeping_1.jpg',
     4: 'Transportation_1.jpg',
+}
+
+export const DATE_FORMATS = {
+    monDD : "MMM DD",
+    hhMinSession:"hh:mm A",
+    yyyy_mm_dd : 'YYYY-MM-DD',
+    mm:"MM",
+    mmm:"MMM",
+    yyyy:'YYYY',
+    month:'month',
+    days:'days',
+    dd:'DD',
+    timeh_mm_a: 'h:mm a'
 }

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import DatePicker from 'react-datepicker';
-import moment from 'moment'
+import { DATE_FORMATS } from '../../../constants/constants'
 
 export const CoreoTimePicker = props => {
     return (
@@ -14,9 +14,9 @@ export const CoreoTimePicker = props => {
                         showTimeSelect
                         showTimeSelectOnly
                         timeIntervals={30}
-                        dateFormat={props.dateFormat ? props.dateFormat : "h:mm a"}
+                        dateFormat={props.dateFormat ? props.dateFormat : DATE_FORMATS.timeh_mm_a}
                         timeCaption="Time"
-                        timeFormat={props.dateFormat ? props.dateFormat : "h:mm a"}
+                        timeFormat={props.dateFormat ? props.dateFormat : DATE_FORMATS.timeh_mm_a}
                         value={props.startTime}
                         minTime={props.minTime}
                         maxTime={props.maxTime}
