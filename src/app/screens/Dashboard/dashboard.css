@@ -217,6 +217,8 @@ li div.dropdown-menu{
     
     height: 620px;
     margin-bottom: 20px;
+    width: calc(55% - 20px);
+
 }
 
 .SPContentWidget .ProfileContainer .card {
@@ -413,8 +415,7 @@ li div.dropdown-menu{
 }
 
 span.btn-hired, span.btn-hired:hover{
-    color: #007f84 !important;
-
+    color: #7a329f !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -422,8 +423,7 @@ span.btn-hired, span.btn-hired:hover{
 }
 
 span.btn-applied, span.btn-applied:hover{
-    color: #3089df !important;
-
+    color: #8c8c8c !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -443,7 +443,7 @@ span.btn-invited, span.btn-invited:hover{
     font-size: 12px;
     line-height: 12px;
     display: inline-block;
-    color: #444444;
+    color: #8c8c8c;
 }
 
 .BlockProfileContainer.noArrow:after{
@@ -1297,7 +1297,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
- */
         max-height: 485px;
         overflow: auto;
     }
@@ -1937,6 +1936,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     height: 620px;
     z-index: 0;
     margin-bottom: 20px;
+    width: calc(45% - 20px)
 }
 
 .SPContentWidget .ProfileContainer.bottomProfile .ProfileCard
@@ -2110,7 +2110,7 @@ min-width:128px !important; display:block !important;
     width:100% !important;
     position: absolute;
     right: 0;
-    height: 100%;
+    height: -webkit-fill-available;
     width: 100%;
     background-position:center;
     margin: 0 auto;
@@ -2123,10 +2123,15 @@ min-width:128px !important; display:block !important;
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
 {
 
-        height:330px;
+        height:300px;
         width: 100%;
         display: block;
-        margin-top: 10px;
+        margin-top: 12px;
+}
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .card.ProfileCard
+{
+height: 100%;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
@@ -2199,12 +2204,13 @@ min-width:128px !important; display:block !important;
          font-size: 14px;
          line-height: 14px;
          color: #8c8c8c;
-         margin-bottom: 28px;
+         margin-bottom: 0px;
      }
      
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate:after
      {
-         margin-top: 29px;
+        margin-top: -12px;
+        right: -26px;
      }
      
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsName
@@ -2261,8 +2267,16 @@ min-width:128px !important; display:block !important;
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;
-
+    cursor: pointer;
+    padding-right: 12px;
+    padding-left: 15px
 }
+
+.DashboardViewFirst .ServicesCalendarWidget:hover span
+{
+color:#444444;
+}
+
 
 .DashboardViewFirst .ProfileServices
 {
@@ -2271,8 +2285,10 @@ min-width:128px !important; display:block !important;
 }
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
 {
-    width:30%;
+    width:21%;
     min-width: auto;
+    cursor: pointer;
+    text-align: center;
 }
 
 
@@ -2281,19 +2297,31 @@ min-width:128px !important; display:block !important;
 {
     color: #444;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
+}
+
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span::after {
+    content: '';
+    position: absolute;
+    background: rgba(140,140,140, 0.3);
+    width: 1px;
+    height: 50px;
+    left: 99px;
+    display: block;
+    top: 10px;
 }
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
 {
     color: #444;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .ProfileShowMore
 {
-   line-height: 30px; 
+   line-height: 40px; 
+   border-top: none;
 }
 
 .bottomPalette .ProfileConversationWidget .mySPContainer .options {
@@ -2309,7 +2337,7 @@ min-width:128px !important; display:block !important;
     content: "...";
     position: absolute;
     color: #9f9f9f;
-    left: 4px;
+    left: 0px;
     top: -6px;
     font-size: 24px;
     -webkit-transform: rotate(90deg);
@@ -2335,4 +2363,9 @@ min-width:128px !important; display:block !important;
     font-size: 14px;
 }
 
+
+.bottomProfile .ProfileCardBody .bottomPalette
+{
+margin-top: 0px;
+}
 

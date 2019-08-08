@@ -47,7 +47,7 @@ export function getServiceStatusDetail () {
     return ServiceRequestGet(API.getServiceRequestStatus)
       .then(resp => {
         console.log(resp.data)
-        dispatch(getServiceStatusSuccess(resp.data.slice(0, 5)))
+        dispatch(getServiceStatusSuccess(resp.data.slice(0, 3)))
         dispatch(setServiceRequestLoader(false))
       })
       .catch(err => {

@@ -4,10 +4,6 @@ body {
     background-color: #f8f8f8 !important;
 }
 
-.navbar-brand {
-    /* display: none !important; */
-}
-
 section .ProfileRightWidget {
     width: calc(100% - 170px);
     padding: 0;
@@ -341,16 +337,16 @@ padding: 5px 0px;
 }
 
 a.btn-open, span.btn-open, a.btn-open:hover, span.btn-open:hover{
-    color: #ef6f48 !important;
-
+    color: #8c8c8c !important;
+    /* border-color: #ef6f48 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
 }
 
 span.btn-hired, span.btn-hired:hover{
-    color: #007f84 !important;
-
+    color: #7a329f !important;
+    /* border-color: #007f84 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -358,8 +354,8 @@ span.btn-hired, span.btn-hired:hover{
 }
 
 span.btn-applied, span.btn-applied:hover{
-    color: #3089df !important;
-
+    color: #8c8c8c !important;
+    /* border-color: #3089df !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -381,7 +377,7 @@ span.btn-invited, span.btn-invited:hover{
     line-height: 12px;
     margin: 10px 28px 5px 0;
     display: inline-block;
-    color: 444444;
+    color: #8c8c8c;
 }
 
 .BlockProfileContainer:after{
@@ -1351,3 +1347,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         .ProfileHeaderOptions div.ProfileSearchContainer.true {height: 50px; top:0px; margin-top: 18px; } /* IE10 */
      *::-ms-backdrop, .ProfileHeaderOptions div.ProfileSearchContainer.true { height: 50px; top:0px; margin-top: 18px;} /* IE11 */
      }
+
+.BoardContainer .ServiceRequestBoard .BlockProfileContainer {
+    cursor: pointer;
+}
+
+.ServiceRequestBoard .BlockProfileContainer::after {
+    right: 15px;
+}

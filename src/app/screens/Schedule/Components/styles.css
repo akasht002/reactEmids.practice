@@ -191,7 +191,6 @@ li div.dropdown-menu{
 }
 
 .SPContentWidget .ProfileContainer.topProfile {
-    
     height: 596px;
 }
 
@@ -369,6 +368,13 @@ li div.dropdown-menu{
 .BlockProfileDetailsStatus{
     width: 65px;
     text-align: right;
+    display: block;
+    float: right;
+    min-width: auto;
+    width: auto;
+    position: absolute;
+    right: 0;
+    padding-right: 36px;
 }
 
 .BlockProfileDetailsStatus a.btn-hired:hover{
@@ -376,8 +382,8 @@ li div.dropdown-menu{
 }
 
 a.btn-hired, a.btn-hired:hover {
-    color: #007f84 !important;
-
+    color: #7a329f !important;
+    /* border-color: #007f84 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -385,16 +391,16 @@ a.btn-hired, a.btn-hired:hover {
 }
 
 .btn-applied, .btn-applied:hover{
-    color: #3089df !important;
-
+    color: #8c8c8c !important;
+    /* border-color: #3089df !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
 }
 
 .btn-open, .btn-open:hover{
-    color: #ef6f48 !important;
-
+    color: #8c8c8c !important;
+    /* border-color: #ef6f48 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -402,7 +408,7 @@ a.btn-hired, a.btn-hired:hover {
 
 .btn-closed, .btn-closed:hover{
     color: #c80047 !important;
-
+    /* border-color: #c80047 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -422,7 +428,7 @@ button.btn-invited, a.btn-invited{
 }
 
 .BlockProfileMatching{
-    color: #444444;
+    color: #8c8c8c;
 }
 
 .BlockProfileApplied{
@@ -482,7 +488,7 @@ button.btn-invited, a.btn-invited{
     opacity: 0.5;
     content: '';
     position: absolute;
-    right: 12px;
+    right: 15px;
     width: 12px;
     height: 20px;
     top: 26px;
@@ -722,7 +728,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .SPContentWidget .ProfileContainer .ProfileCard.extended {
-    
+    /* height: calc(100vh - 140px); */
     height: 596px;
     z-index: 9;
 }
@@ -737,7 +743,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-
+    /* height: calc(100vh - 292px); */
     height: 445px;
 }
 
@@ -904,10 +910,6 @@ div.scrollarea .scrollbar-container.vertical {
 
 div.scrollarea .scrollbar-container.vertical .scrollbar{
     background: #8c8c8c;
-}
-
-.scrollarea-content {
-
 }
 
 .ProfileHeaderButton .standBy {
@@ -1107,17 +1109,14 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
-
         height: 615px;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-
         height: 464px;
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-
         height: 360px;
     }
 
@@ -1126,23 +1125,19 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-
         padding: 18px 20px;
         cursor: pointer;
     }
 
     div.ServiceProvider div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
-
         padding: 18px 20px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
-
         height: 200px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-
         height: 240px;
     }
 
@@ -1178,21 +1173,18 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-
-        height: 100vh; */
+        height: 100vh;
         max-height: 475px;
         height: auto;
         overflow: auto;
     }
 
     .ProfileCardBody .ServiceRequestPalette{
-
         height: 190px;
         margin: 0;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-
         height: 220px;
         margin: 20px 0 0;
     }
@@ -1211,7 +1203,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-
         padding: 18px 20px;
         cursor: pointer;
     }
@@ -1249,17 +1240,14 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-
         height: 407px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette{
-
         height: 176px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-
         height: 210px;
         margin-top: 10px;
     }
@@ -1278,13 +1266,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.bottomProfile .innerWidget:first-child, div.ProfileContainer.topProfile{
-
         height: 320px;
         
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-
         padding: 18px 20px;
         cursor: pointer;
     }
@@ -1294,8 +1280,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-
-        max-height: calc(100vh - 264px); */
+        max-height: calc(100vh - 264px);
         max-height: 435px;
         overflow: auto;
     }
@@ -1491,7 +1476,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
-
         padding: 18px 20px;
         cursor: pointer;
     }
@@ -2198,10 +2182,9 @@ margin-bottom: 0px;
 
 .schdule-typeblock
 {
-
     display: block;
     float: left;
-    position: relative; */
+    position: relative; 
     margin-bottom: 25px;
 }
 
@@ -2476,7 +2459,7 @@ margin-bottom: 15px;
 {
    display: table-cell;
    padding-right: 20px;
-   padding-bottom: 20px;
+   padding-bottom: 35px;
    width: auto;
 }
 
@@ -2536,7 +2519,7 @@ z-index: 1000;
 {
     display: block;
     width: 100%;
-    margin-top:0px;
+    margin-top: 20px;
     float: left;
 }
 
@@ -2731,8 +2714,8 @@ left: 0px;
     width: 100%;
     display: flex;
     position: relative;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
@@ -3219,7 +3202,7 @@ background:#fff;
 
 .full-block-scheduleDate .MsgWithIcon:before
 {
-margin-top: 3px;
+margin-top: 2px;
 }
 
 .full-block-scheduleDate .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item
