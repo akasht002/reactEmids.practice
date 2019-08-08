@@ -4,10 +4,6 @@ body {
     background-color: #f8f8f8 !important;
 }
 
-.navbar-brand {
-    /* display: none !important; */
-}
-
 section .ProfileRightWidget {
     width: calc(100% - 170px);
     padding: 0;
@@ -619,7 +615,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended {
-    /* height: calc(100vh - 140px); */
+    
     height: 683px;
     z-index: 9;
 }
@@ -845,7 +841,7 @@ color: #444;
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
-        /* height: calc(100vh - 143px); */
+
         height: 620px;
     }
 
@@ -881,7 +877,7 @@ color: #444;
 @media (max-width: 1366px) {
 
     .innerWidget .card.extended {
-        /* height: calc(100vh - 140px); */
+        
         height: 596px;
     }
 

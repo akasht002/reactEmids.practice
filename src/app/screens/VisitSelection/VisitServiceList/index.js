@@ -148,7 +148,7 @@ export class VisitServiceList extends Component {
     handleClick = (requestId, patientId) => {
         this.props.getServiceRequestId(requestId);
         this.props.goToServiceRequestDetailsPage();
-        this.props.setPatient(patientId);
+        this.props.setPatient(patientId)
     }
 
     renderStatusClassName = (status) => {

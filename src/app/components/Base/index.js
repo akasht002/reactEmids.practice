@@ -7,6 +7,7 @@ import { Preloader } from './Preloader'
 import { Scrollbars } from './CSB'
 import { ToggleSwitch } from './ToggleSwitch'
 import { Avatar } from './Avatar'
+import CustomTextArea from "./CustomTextArea";
 
 export {
   FloatLabelInput,
@@ -19,5 +20,6 @@ export {
   Preloader,
   Scrollbars,
   ToggleSwitch,
-  Avatar
+  Avatar,
+  CustomTextArea
 }

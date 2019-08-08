@@ -143,7 +143,7 @@ li div.dropdown-menu{
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    background-image: url('../../../assets/images/dashboard/Search.svg');
+    background-image: url('../../../assets/images/Search.svg');
 }
 
 .ProfileHeaderSort{
@@ -157,7 +157,7 @@ li div.dropdown-menu{
     top: 22px;
     width: 12px;
     height: 20px;
-    background-image: url("../../../assets/images/dashboard/caret_Dropdown_Purple.svg");
+    background-image: url("../../../assets/images/Caret_Dropdown_Purple.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -191,7 +191,6 @@ li div.dropdown-menu{
 }
 
 .SPContentWidget .ProfileContainer.topProfile {
-    /* height: calc(100vh - 140px); */
     height: 596px;
 }
 
@@ -229,7 +228,7 @@ li div.dropdown-menu{
     height: 15px;
     width: 18px;
     background-repeat: no-repeat;
-    background-image: url("../../../assets/images/dashboard/BackProfilePurple.svg");
+    background-image: url("../../../assets/images/BackProfilePurple.svg");
     background-size: 100%;
     background-position: center;
 }
@@ -324,7 +323,7 @@ li div.dropdown-menu{
     right: -9px;
     width: 12px;
     height: 20px;
-    background-image: url("../../../assets/images/dashboard/Caret.svg");
+    background-image: url("../../../assets/images/Caret.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -461,7 +460,7 @@ button.btn-invited, a.btn-invited{
     width: 12px;
     height: 20px;
     top: 0;
-    background-image: url("../../../assets/images/dashboard/Caret.svg");
+    background-image: url("../../../assets/images/Caret.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -493,7 +492,7 @@ button.btn-invited, a.btn-invited{
     width: 12px;
     height: 20px;
     top: 26px;
-    background-image: url("../../../assets/images/dashboard/Caret.svg");
+    background-image: url("../../../assets/images/Caret.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -585,15 +584,15 @@ button.btn-invited, a.btn-invited{
 }
 
 .IconCall{
-    background-image: url("../../../assets/images/dashboard/Call_Purple.svg");
+    background-image: url("../../../assets/images/Call_Purple.svg");
 }
 
 .IconConversations{
-    background-image: url("../../../assets/images/dashboard/Message_Purple.svg");
+    background-image: url("../../../assets/images/Message_Purple.svg");
 }
 
 .IconVideo{
-    background-image: url("../../../assets/images/dashboard/TeleHealth_Purple.svg");
+    background-image: url("../../../assets/images/TeleHealth_Purple.svg");
 }
 
 .PaletteTabs{
@@ -793,7 +792,7 @@ a.ProfileCardHeaderLink:hover{
     top: 1px;
     margin-left: 10px;
     background-repeat: no-repeat;
-    background-image: url("../../../assets/images/dashboard/caret_Dropdown_Purple.svg");
+    background-image: url("../../../assets/images/Caret_Dropdown_Purple.svg");
     background-size: 100%;
     background-position: center;
     transform: rotate(0deg);
@@ -913,10 +912,6 @@ div.scrollarea .scrollbar-container.vertical .scrollbar{
     background: #8c8c8c;
 }
 
-.scrollarea-content {
-    /* min-height: 100%; */
-}
-
 .ProfileHeaderButton .standBy {
     font-size: 14px;
     color: #444444;
@@ -1020,7 +1015,7 @@ div.scrollarea .scrollbar-container.vertical .scrollbar{
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../../assets/images/dashboard/ViewEye.svg");
+    background-image: url("../../../assets/images/ViewEye.svg");
 }
 
 div.ProfileSearchContainer form{
@@ -1093,7 +1088,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    background-image: url("../../../assets/images/dashboard/remove.png");
+    background-image: url("../../../assets/images/remove.png");
 }
 
 .ProfileServicesVisitList .NoRequestServiceProvider{
@@ -1114,17 +1109,14 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
-        /* height: calc(100vh - 143px); */
         height: 615px;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-        /* height: calc(100vh - 296px); */
         height: 464px;
     }
 
     .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        /* height: calc(100vh - 396px); */
         height: 360px;
     }
 
@@ -1133,23 +1125,19 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-        /* padding: 22px 20px; */
         padding: 18px 20px;
         cursor: pointer;
     }
 
     div.ServiceProvider div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
-        /* padding: 14px 20px; */
         padding: 18px 20px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
-        /* height: calc(100vh - 555px); */
         height: 200px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        /* height: calc(100vh - 520px); */
         height: 240px;
     }
 
@@ -1185,21 +1173,18 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        /* max-height: calc(100vh - 277px);
-        height: 100vh; */
+        height: 100vh;
         max-height: 475px;
         height: auto;
         overflow: auto;
     }
 
     .ProfileCardBody .ServiceRequestPalette{
-        /* height: calc(100vh - 556px); */
         height: 190px;
         margin: 0;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        /* height: calc(100vh - 500px); */
         height: 220px;
         margin: 20px 0 0;
     }
@@ -1218,7 +1203,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-        /* padding: 12px 20px; */
         padding: 18px 20px;
         cursor: pointer;
     }
@@ -1256,17 +1240,14 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-        /* height: calc(100vh - 295px); */
         height: 407px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette{
-        /* height: calc(100vh - 540px); */
         height: 176px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        /* height: calc(100vh - 485px); */
         height: 210px;
         margin-top: 10px;
     }
@@ -1285,13 +1266,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.bottomProfile .innerWidget:first-child, div.ProfileContainer.topProfile{
-        /* height: calc(100vh - 378px); */
         height: 320px;
         
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-        /* padding: 23px 20px; */
         padding: 18px 20px;
         cursor: pointer;
     }
@@ -1301,8 +1280,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        /* max-height: calc(100vh - 276px);
-        max-height: calc(100vh - 264px); */
+        max-height: calc(100vh - 264px);
         max-height: 435px;
         overflow: auto;
     }
@@ -1498,7 +1476,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
-        /* padding: 15px 20px; */
         padding: 18px 20px;
         cursor: pointer;
     }
@@ -2205,10 +2182,9 @@ margin-bottom: 0px;
 
 .schdule-typeblock
 {
-    /* width: 50%;
     display: block;
     float: left;
-    position: relative; */
+    position: relative; 
     margin-bottom: 25px;
 }
 
@@ -2372,18 +2348,6 @@ flex: inherit;
     flex:initial !important;
     max-width:100% !important;
 }
-
-/* .form-group2block .form-group:nth-child(1), .form-group2block .form-group:nth-child(2), .form-group2block .form-group:nth-child(3)
-{ 
-justify-content: space-between;
-margin-right: 30px;
-} */
-
-/* .start-rightdate .form-group:nth-child(1), .start-rightdate .form-group2block .form-group:nth-child(2), .start-rightdate .form-group:nth-child(3) {
-    margin-right: 39px;
-    width: 33.33%;
-
-} */
 
 .form-group2block .form-group:nth-child(3)
 {
@@ -2579,24 +2543,6 @@ z-index: 1000;
     position: relative;
 }
  
-
-
-/* .ServiceContent
-{
-    width: 100%;
-    display: block;
-    float: left;
-}
-
-.ServiceContent .ServiceCategoryContent
-{
-    width: 100%;
-    display: block;
-    float: left;
-    clear: both;
-    padding: 0;
-} */
-
  .ServiceTypesWidget.PostSR
 {
     background: #fff;
@@ -2708,14 +2654,6 @@ margin-right:20px;
 {
 width: 48% !important;
 }
-
-/*default-radio-input-view*/
-
-/* .recurr_pattern_radioblock .form-radio-input {
-    position: absolute;
-    left: 0;
-    opacity: 0;
-} */
 
 .form-radio-label {
     position: relative;
@@ -2871,12 +2809,6 @@ fieldset.right-colblock2
     margin-left: 0px;  
 }
 
-/* .left-radioblock fieldset
-{
-width: 100%;
-display: block;
-} */
-
 .left-radioblock fieldset .form-radio-label
 {
 padding: 13px;
@@ -2978,15 +2910,6 @@ display: table;
     color: #8c8c8c;
     font-weight: 500;  
 }
-
-
-/* .schedule-listblock fieldset span
-{
-    position: absolute;
-    right: 50px;
-    display: block;  
-    margin-top: -30px;
-} */
 
 .schedule-listblock fieldset span label
 {
@@ -3230,6 +3153,15 @@ border: 1px solid #7a329f !important;
     top: 4px;
 }
 
+.options div.SelectDropDown:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    font-size: 14px;
+}
 
 .search-block_SP
 {
@@ -3436,6 +3368,42 @@ background-color: #fff;
       float: left;
   }
 
+    /*my-plan-edit-model*/
+
+    .my-plan-editmodel .full-block-scheduleDate
+    {
+    padding: 0;
+    margin: 0;
+    border: none;
+    }
+
+    .my-plan-editmodel .full-block-scheduleDate .form-group:nth-child(1)
+    {
+        max-width: 100%;
+    }
+
+    .my-plan-editmodel .date-blockview .form-group2block
+    {
+        width: 100%;
+    }
+
+    .my-plan-editmodel  .form-group2block .react-datepicker-wrapper
+    {
+   margin-top: 5px;
+    }
+
+    .my-plan-editmodel .assign-SP-card
+    {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .my-plan-editmodel .assign-sp-block
+    {
+    z-index: 0;
+    }
+
+
        /*IE_11_&_IE_10*/
        @media all and (-ms-high-contrast:none)
        {
@@ -3457,27 +3425,45 @@ background-color: #fff;
        }
 
 
-  
-  
-/*1920-screen-*/
-@media only screen and (min-width: 1367px) 
-{
-    .assign-sp-block {
-        max-height: calc(100vh - 600px);
-    }
-
-}
-
 .ServiceRequestsWidget .ServiceRequestBoard{
     width: 50%;
 }
 
-.BoardContainer .ServiceRequestBoard .BlockProfileContainer {
-    cursor: pointer;
+ul.show-more-assignSP
+{
+    margin: 0 auto;
+    padding-left: 0;
+    width: 100%;
 }
 
-.ServiceRequestBoard .BlockProfileContainer::after {
-    right: 15px;
+ul.show-more-assignSP li
+{
+    height: 40px;
+    display: block;
+    line-height: 40px;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.CustomPOS .MsgWrongIcon:before
+{
+margin-top: 3px;
+}
+
+
+.full-block-scheduleDate .col-md-6 .MsgWrongIcon
+{
+clear: both;
+}
+
+/*1920-screen-or-other-screens*/
+@media only screen and (min-width: 1367px) 
+{
+    .assign-sp-block {
+        max-height: calc(100vh - 417px);
+    }
+
 }
 
 

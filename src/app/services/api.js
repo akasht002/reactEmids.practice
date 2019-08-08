@@ -156,7 +156,6 @@ export const API = {
     getLatestMessages: 'Conversation/GetNewPostedMessage/',
     getMessageFallBackInterval: 'Common/LookupConfig/MessageFallBackInterval',
     keywordSearchServiceRequest: 'Search/SearchServiceRequestWithQ/',
-    hireServiceProvider: 'ServiceRequest/Hire',
 
     //New API's
     getNewServiceRequestList: 'plan/servicerequestdetails/',
@@ -169,6 +168,7 @@ export const API = {
     getVisitList: 'plan/visitdetails',
     getVisitListCount: 'plan/visitdetailscount',
     getVisitStatus : 'Servicerequest/LookUp/VisitStatus',
+    hireServiceProvider: 'ServiceRequest/Hire',
     updateServiceVisit: 'servicevisit',
     getServiceVisitDetails: 'servicevisit/getvsitdetails/',
     assignESP: 'servicevisit/assignservicevisit',
