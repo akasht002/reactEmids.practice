@@ -61,7 +61,7 @@ span.title-view {
 {
     display: block;
     overflow-y: auto;
-    height: 260px;
+    height: 245px;
     width: 100%;
 }
 
@@ -133,6 +133,11 @@ margin-right: 0;
 {
 text-align: left;
 padding-left: 10px;
+}
+
+.plan-tableview .EntityUServiceProf  .ProfileCardNameContainer span
+{
+    white-space: pre !important;
 }
 
 .service-typesview {
@@ -263,6 +268,7 @@ padding-left: 10px;
     text-decoration: underline !important;
 	font-weight: 600;
 	font-size: 14px;
+	white-space: pre;
 }
 
 .left-customewidth
@@ -280,7 +286,7 @@ padding-left: 10px;
 .right-customewidth .right-tablelist
 {
 	padding: 20px 15px;
-	padding-bottom: 0px;
+	padding-bottom: 20px;
 }
 
 .right-customewidth .right-tablelist .ScheduleRowButton
@@ -301,9 +307,38 @@ font-size: 13px !important;
 
 .right-customewidth .right-tablelist .CoreoPagination
 {
-padding-top: 20px !important;
-margin-bottom: 15px;
 width: 100%;
+}
+
+.right-customewidth .right-tablelist .CoreoPagination ul.pagination
+{
+float: right;
+}
+
+.right-customewidth .right-tablelist .CoreoPagination, .right-customewidth .right-tablelist .table-result-block
+{
+display: block;
+width: 50%;
+max-width: 50%;
+float: left;
+position: relative;
+padding-top: 20px !important;
+font-size: 14px;
+color: #222;
+}
+
+.table-result-block .select-wrap-dahboard, .table-result-block .page-result
+{
+display: table-cell;
+padding-right:40px;
+}
+
+.table-result-block .select-wrap-dahboard select
+{
+	border: none;
+	padding-left: 10px;
+	font-size: 14px;
+	outline: none;
 }
 
 .edit-rightico
@@ -320,3 +355,127 @@ width: 100%;
 	z-index: 10;
 	cursor: pointer;
 }
+
+/*tool-tip-view*/
+.service-typesview-more.tooltip {
+    display:block;
+    position:relative;
+	text-align:center;
+	z-index: auto;
+	opacity: 10;
+}
+
+.service-typesview-more.tooltip .bottom {
+	min-width:200px;
+    top:40px;
+    left:50%;
+    transform:translate(-50%, 0);
+    padding:0;
+    color:#444444;
+    background-color:#fff;
+    font-weight:normal;
+    font-size:13px;
+    border-radius:8px;
+    position:absolute;
+    z-index:99999999;
+    box-sizing:border-box;
+    box-shadow:0 1px 8px rgba(0,0,0,0.1);
+	display:none;
+	border: 1px solid rgba(140,140,140, 0.4);
+	border-radius:3px;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+    cursor: pointer;
+}
+
+.service-typesview-more.tooltip:hover .bottom {
+    display:block;
+}
+
+.service-typesview-more.tooltip .bottom h3
+{
+	display: block;
+	color:#7a329f;
+	font-size: 14px;
+	background:#f2ebf3;
+	text-align: left;
+	padding:10px 15px;
+	line-height: 20px;
+	margin-bottom: 0px;
+}
+
+.service-typesview-more.tooltip .bottom i {
+    position:absolute;
+    bottom:100%;
+    left:50%;
+    margin-left:-12px;
+    width:24px;
+    height:12px;
+    overflow:hidden;
+}
+
+.service-typesview-more.tooltip .bottom i::after {
+    content:'';
+    position:absolute;
+    width:12px;
+    height:12px;
+    left:50%;
+    transform:translate(-50%,50%) rotate(45deg);
+    background-color:#fff;
+    box-shadow:0 1px 8px rgba(0,0,0,0.5);
+}
+.service-typesview-more.tooltip:hover > .bottom {
+    pointer-events: auto;
+    opacity: 1.0;
+}
+.service-typesview-more.tooltip .bottom ul
+{
+display: block;
+padding-left: 0px;
+margin-bottom: 0px;
+width: 100%;
+max-height: 150px;
+overflow-y: auto;
+z-index: 1000;
+cursor: pointer;
+}
+
+.service-typesview-more.tooltip .bottom ul li
+{
+display: block;
+border-bottom: 1px solid #f1f1f1;
+line-height: 40px;
+font-size: 14px;
+padding-left: 15px;
+padding-right: 10px;
+}
+
+.service-typesview-more.tooltip .bottom ul li span
+{
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+width: 100%;
+}
+
+.service-typesview-more.tooltip .bottom ul li span img
+{
+display: block;
+width: 25px;
+height: 25px;
+max-width: 100%;
+vertical-align: middle;
+margin-right: 10px;
+}
+
+.service-typesview-more.tooltip .bottom ul li span .SR-types-tooltip
+{
+overflow: hidden;
+white-space: nowrap;
+-o-text-overflow: ellipsis;
+text-overflow: ellipsis;
+width: 140px;
+text-align: left;
+}
+

@@ -37,7 +37,20 @@ export const Tabel = props => {
                                     <img alt="" src={require('../../../../assets/ServiceTypes/ADL Eating.svg')}></img>
                                     <img alt="" src={require('../../../../assets/ServiceTypes/HAH - Housekeeping.svg')}></img>
                                     <img alt="" src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')}></img>
-                                    <span className="service-typesview-more">3+</span>
+                                    <div className="service-typesview-more tooltip">3+
+                                    <div class="bottom">
+                                    <h3>Service Types</h3>
+                                    <ul>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                        <li><span><img src={require('../../../../assets/ServiceTypes/ADL Bathing.svg')} alt="coreoLogo" /><div className="SR-types-tooltip">Meal Preparation</div></span></li>
+                                       
+                                    </ul>
+                                    <i></i>
+                                    </div>
+                                    </div>
                                 </span>
                             </td>
                             <td>
@@ -78,12 +91,14 @@ export const Tabel = props => {
                     })}
                 </tbody>
             </table>
+            <div className="table-result-block">
             <RowPerPage
                 pageSize={props.rowPageSize}
                 pageSizeChange={props.rowPageChange}
                 pageSizeOption={PAGE_SIZE_OPTIONS}
               />
-              <span>Total {props.totalResult} results</span>
+              <span className="page-result">Total {props.totalResult} results</span>
+              </div>
         </Fragment>
     )
 }
