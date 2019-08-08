@@ -104,3 +104,9 @@ export const SERVICE_REQUEST_STATUS = {
   export const SELECTED_POS_ERROR_MSG = 'Please select valid address details.';
 
  export const NEW_POS_ERROR_MSG = 'Please enter valid address details.'; 
+
+ export const API_ERROR_CODE = {
+    badRequest: 400
+}
+
+export const DEFAULT_PAGE_SIZE_ESP_LIST = 9

@@ -15,6 +15,7 @@ import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
 import { orderBy } from 'lodash'
 import { startLoading, endLoading } from '../loading/actions';
+import { API_ERROR_CODE, DEFAULT_PAGE_SIZE_ESP_LIST } from "../constants/constants";
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -145,11 +146,8 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
                     return type
                 }
             });
-            if (isSelectAll) {
-                data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, selected: true }))
-            } else {
-                data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, selected: false }))
-            }
+
+            data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, selected: isSelectAll }))
 
             dispatch(getServiceTypeSuccess(data))
         }).catch((err) => {
@@ -202,7 +200,7 @@ export function getValidPatientAddress(data) {
             })
             .catch(err => {
                 dispatch(endLoading())
-                if (err.response.status === 400) {
+                if (err.response.status === API_ERROR_CODE.badRequest) {
                     dispatch(getValidPatientAddressSuccess(true))
                 }
             })
@@ -217,11 +215,7 @@ export function getEntityServiceProviderList(data) {
                 let oldEspList = getState().scheduleState.entityServiceProvidersList;
                 let modifiedList = [...oldEspList, ...resp.data];
                 dispatch(getEntityServiceProviderListSuccess(modifiedList))
-                if (resp.data.length < 9) {
-                    dispatch(disableShowmore(true))
-                } else if (resp.data.length === 9) {
-                    dispatch(disableShowmore(false))
-                }
+                dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
             })
             .catch(err => {
                 dispatch(endLoading())
@@ -250,11 +244,7 @@ export function getEntityServiceProviderListSearch(data) {
         Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}?searchtext=${data.searchKeyword}`)
             .then(resp => {
                 dispatch(getEntityServiceProviderListSuccess(resp.data))
-                if (resp.data.length < 9) {
-                    dispatch(disableShowmore(true))
-                } else if (resp.data.length === 9) {
-                    dispatch(disableShowmore(false))
-                }
+                dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
             })
             .catch(err => {
                 dispatch(endLoading())

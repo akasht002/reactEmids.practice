@@ -79,8 +79,7 @@ const scheduleState = (state = defaultState, action) => {
         case Schedule.clearESPList:
             return {
                 ...state,
-                entityServiceProvidersList: [],
-                // disableShowmore: false
+                entityServiceProvidersList: []
             };
         default:
             return state;

@@ -28,8 +28,8 @@ export const AssignServiceProvider = props => {
                                             <img className="ProfileImage" src={espImage} alt="espImage" />
                                             <div className="SP-nameblock">
                                                 <label htmlFor={"ServiceStatus" + item.serviceProviderId}>
-                                                    {item.firstName && item.firstName + ' '}{' '}
-                                                    {item.lastName && item.lastName}</label>
+                                                    {item.firstName + ' '}
+                                                    {item.lastName}</label>
                                                 <span>
                                                     {getStartRatings(item.rating)}
                                                 </span>

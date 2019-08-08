@@ -45,33 +45,3 @@ export const weekRecurring = [
         value: 'Fourth'
     }
 ]
-
-export const monthlyOptionsData = [
-    {
-        id: 1,
-        value: 1,
-    },
-    {
-        id: 2,
-        value: 2,
-    }
-]
-
-export const time = [
-    {
-        id: 0,
-        value: '00:00',
-    },
-    {
-        id: 1,
-        value: '00:30',
-    },
-    {
-        id: 2,
-        value: '01:00',
-    },
-    {
-        id: 3,
-        value: '01:30',
-    }
-]

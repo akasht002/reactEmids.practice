@@ -11,7 +11,7 @@ export const createScheduleModal = (data) => {
         description: data.description,
         serviceProviderId: data.serviceProviderId,
         patientId: data.patientId,
-        IsRecurring: data.IsRecurring,
+        isRecurring: data.IsRecurring,
         serviceTypes: data.serviceTypes,
         address: data.address,
         schedulePattern: data.schedulePattern,

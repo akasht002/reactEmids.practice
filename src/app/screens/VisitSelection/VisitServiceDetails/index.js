@@ -333,27 +333,9 @@ export class VisitServiceDetails extends Component {
 
   onSubmitAssignServiceProvider = (data) => {
     this.props.updateEntityServiceVisit(data, this.state.pageNumber)
-    //  console.log(data)
-    //  setTimeout( () =>
-    //   this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.defualtPageNumber)
-    //   ,300)
   }
-
-  addSchedule = () => {
-    this.props.goToAddSchedule();
-  }
-
 
   render() {
-
-    const ServiceTypeSettings = {
-      dots: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 2,
-      slidesToScroll: 2,
-      variableWidth: true
-    }
     let defaultCheck = ''
     let sliderTypes =
       this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
@@ -754,7 +736,7 @@ export class VisitServiceDetails extends Component {
                       </form>
                     </TabPane>
                     <TabPane tabId='2' className='TabBody'>
-                    <button onClick={() => this.addSchedule()}> <span>+</span>Add New Schedule </button>
+                    <button onClick={() => this.props.goToAddSchedule()}> <span>+</span>Add New Schedule </button>
                       <div className='ScheduleTableHeader primaryColor'>
                         <div>
                           <span>Date</span>

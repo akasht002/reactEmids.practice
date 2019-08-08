@@ -76,8 +76,8 @@ export const getHHMinSession = (data) => {
 }
 
 export function getDiffTime(startTimes, endTimes) {
-    let startTime = moment(startTimes, 'HH:mm');
-    let endTime = moment(endTimes, 'HH:mm');
+    let startTime = moment(startTimes, DATE_FORMATS.hh_mm);
+    let endTime = moment(endTimes, DATE_FORMATS.hh_mm);
     let seconds = endTime.diff(startTime, 'seconds');
     let format = val => `0${Math.floor(val)}`.slice(-2)
     let hours = seconds / 3600
@@ -86,7 +86,7 @@ export function getDiffTime(startTimes, endTimes) {
 }
 
  export function getHourMin(data) {
-    return data ? moment(data, 'HH:mm').format('HH:mm') : ''
+    return data ? moment(data, DATE_FORMATS.hh_mm).format(DATE_FORMATS.hh_mm) : ''
 }
 
 export function formateMDYY(date) {
@@ -109,8 +109,8 @@ export function formateMDYY(date) {
 }
 
  export const getUtcTimeDiffInHHMMformat = (strTime, edTime) => {
-    let startTime = moment(strTime, "h:mm a");
-    let endTime = moment(edTime, "h:mm a");
+    let startTime = moment(strTime, DATE_FORMATS.timeh_mm_a);
+    let endTime = moment(edTime, DATE_FORMATS.timeh_mm_a);
     let duration = moment.duration(endTime.diff(startTime));
     let hours = parseInt(duration.asHours(), 10);
     let minutes = parseInt(duration.asMinutes(), 10) - hours * 60;

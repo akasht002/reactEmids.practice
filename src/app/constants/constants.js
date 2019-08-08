@@ -33,6 +33,7 @@ export const END_MONTH = [9, 10, 11]
 
 export const COUNT_BASED_MONTH = { 9: 1, 10: 2, 11: 3 }
 export const PAGE_NO = 1;
+export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
 export const SERVICE_REQUEST_PAGE_SIZE = 10
 
 export const SERVICE_REQUEST = {
@@ -236,5 +237,24 @@ export const DATE_FORMATS = {
     month:'month',
     days:'days',
     dd:'DD',
-    timeh_mm_a: 'h:mm a'
+    timeh_mm_a: 'h:mm a',
+    m_d_yy: 'M/D/YY',
+    hh_mm:'HH:mm'
 }
+
+export const RECURRING_PATTERN_OPTIONS = {
+    daily: 17,
+    weekly: 18,
+    monthly: 19
+}
+
+export const SCHEDULE_TYPE_OPTIONS = {
+    assessment: 1,
+    standard: 2
+}
+
+export const DEFAULT_CATEGORY_IMAGE = {
+    ADL: 'ADL_1.jpg'
+}
+
+

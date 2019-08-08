@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AsideScreenCover } from '../ScreenCover/AsideScreenCover';
-import { Scrollbars, ModalPopup } from '../../components';
+import { Scrollbars, AlertPopup } from '../../components';
 import { PlanType } from './Components/PlanType';
 import ServiceCategory from './Components/ServiceCategory';
 import ServiceTypes from './Components/ServiceTypes';
@@ -11,7 +11,7 @@ import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
 import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty } from "../../utils/validations";
-import { checkLength, allEqual } from '../../utils/arrayUtility'
+import { checkLength, allEqual, numbersOnly } from '../../utils/arrayUtility';
 import {
     getServiceCategory,
     getServiceType,
@@ -31,11 +31,12 @@ import {
 } from '../../redux/schedule/actions';
 import { getDiffTime, getHourMin, formateMDYY } from "../../utils/dateUtility";
 import './Components/styles.css'
-import { PlanTypeData, ScheduleTypeData, weekRecurring, monthlyOptionsData } from './data/index'
+import { PlanTypeData, ScheduleTypeData, weekRecurring } from './data/index'
 import { validate } from './data/validate'
 import Search from '../VisitSelection/VisitServiceList/Search'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
+import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS } from '../../constants/constants'
 
 export class Schedule extends Component {
     constructor(props) {
@@ -43,15 +44,15 @@ export class Schedule extends Component {
         this.state = {
             checkedServiceCategoryId: 1,
             selectedServiceType: {},
-            SelectedPOS: '0',
+            selectedPOS: '0',
             state: '',
             startDate: '',
             endDate: '',
             startTime: null,
             endTime: null,
             durationTime: null,
-            IsRecurring: false,
-            selectedRecurringType: 18,
+            isRecurring: false,
+            selectedRecurringType: RECURRING_PATTERN_OPTIONS.weekly,
             monthlyDay: '',
             monthlyMonths: '',
             selectedWeeks: '',
@@ -64,8 +65,8 @@ export class Schedule extends Component {
             planType: 1,
             serviceTypeSelected: false,
             startDateSelected: false,
-            pageNumber: 1,
-            pageSize: 9,
+            pageNumber: PAGE_NO,
+            pageSize: DEFAULT_PAGE_SIZE_ESP_LIST,
             searchOpen: false,
             isModalOpen: false
         }
@@ -83,26 +84,19 @@ export class Schedule extends Component {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
         }
-        // if (this.props.patientId) {
-        //     this.props.getServiceCategory();
-        //     this.props.getPatientAddress(this.props.patientId);
-        //     this.props.getStates();
-        //     this.props.getEntityServiceProviderList(data);
-        //     this.props.getRecurringPattern();
-        //     this.props.getDays();
-        // } else {
-        //     this.props.history.push(Path.visitServiceList)
-        // }
-        this.props.getServiceCategory();
-        this.props.getPatientAddress(this.props.patientId);
-        this.props.getStates();
-        this.props.getEntityServiceProviderList(data);
-        this.props.getRecurringPattern();
-        this.props.getDays();
+        if (this.props.patientId) {
+            this.props.getServiceCategory();
+            this.props.getPatientAddress(this.props.patientId);
+            this.props.getStates();
+            this.props.getEntityServiceProviderList(data);
+            this.props.getRecurringPattern();
+            this.props.getDays();
+        } else {
+            this.props.history.push(Path.visitServiceList)
+        }
     }
 
     handleChangePlanType = (id) => {
-        console.log('handleChangePlanType', id)
         this.setState({ planType: id })
     }
 
@@ -119,7 +113,7 @@ export class Schedule extends Component {
         if (data.selected) {
             this.serviceTypes.push(data)
         } else {
-            this.serviceTypes.splice(this.serviceTypes.findIndex(function (item) {
+            this.serviceTypes.splice(this.serviceTypes.findIndex(item => {
                 return item.serviceTypeId === parseInt(e.target.value, 0);
             }), 1);
         }
@@ -142,7 +136,7 @@ export class Schedule extends Component {
         let currentValue = e.target.value
         this.setState({
             addressType: '',
-            SelectedPOS: currentValue,
+            selectedPOS: currentValue,
             street: '',
             city: '',
             zip: '',
@@ -159,7 +153,7 @@ export class Schedule extends Component {
         e.isPrimaryAddress = !e.isPrimaryAddress
         this.setState({
             patientAddressId: e.addressId,
-            SelectedPOS: e.addressId,
+            selectedPOS: e.addressId,
             street: e.street,
             city: e.city,
             zip: e.zip,
@@ -223,7 +217,7 @@ export class Schedule extends Component {
 
     handleChangeScheduleType = (data) => {
         this.setState({
-            IsRecurring: data,
+            isRecurring: data,
             onClickSave: false,
             startDate: null,
             endDate: null,
@@ -294,11 +288,11 @@ export class Schedule extends Component {
     }
 
     handleChangeDailyDayOccurence = (data) => {
-        this.setState({ dailyDayOccurence: data.replace(/[^0-9]/g, '') })
+        this.setState({ dailyDayOccurence: numbersOnly(data) })
     }
 
     handleChangeWeeklyDayOccurence = (data) => {
-        this.setState({ weeklyDayOccurence: data.replace(/[^0-9]/g, '') })
+        this.setState({ weeklyDayOccurence: numbersOnly(data) })
     }
 
     handleChangeDaysSelection = (e) => {
@@ -306,7 +300,7 @@ export class Schedule extends Component {
             this.weeklySelectedDays.push(parseInt(e.target.id, 0))
         }
         else {
-            this.weeklySelectedDays.splice(this.weeklySelectedDays.findIndex(function (item, index) {
+            this.weeklySelectedDays.splice(this.weeklySelectedDays.findIndex(item => {
                 return item.id === parseInt(e.target.id, 0);
             }), 1);
         }
@@ -321,11 +315,11 @@ export class Schedule extends Component {
     }
 
     handleChangeMonthlyDay = (data) => {
-        this.setState({ monthlyDay: data.replace(/[^1-9]/g, '') })
+        this.setState({ monthlyDay: numbersOnly(data) })
     }
 
     handleChangeMonthlyMonths = (data) => {
-        this.setState({ monthlyMonths: data.replace(/[^1-9]/g, '') })
+        this.setState({ monthlyMonths: numbersOnly(data) })
     }
 
     handleChangeSelectedWeeks = (selectedOptionId) => {
@@ -336,7 +330,7 @@ export class Schedule extends Component {
         }))
 
         this.setState({
-            selectedWeeksId: parseInt(selectedOptionId, 0),
+            selectedWeeksId: parseInt(selectedOptionId, 10),
             selectedWeeksLabel: selectedValue
         });
     }
@@ -355,7 +349,7 @@ export class Schedule extends Component {
     }
 
     handleChangeMonthlyMonthsSecond = (data) => {
-        this.setState({ monthlyMonthsSecond: data.replace(/[^1-9]/g, '') })
+        this.setState({ monthlyMonthsSecond: numbersOnly(data) })
     }
 
     toggleSearch = () => {
@@ -397,11 +391,11 @@ export class Schedule extends Component {
             let txt = d.isState ? this.state[d.key] : this[d.key]
             switch (d.validation) {
                 case 'required':
-                    checkEmpty(txt) === true ? value.push(true) : value.push(false)
-                    return true;
+                    value.push(checkEmpty(txt))
+                    break;
                 case 'checkLength':
-                    checkLength(txt) === true ? value.push(true) : value.push(false)
-                    return true;
+                    value.push(checkLength(txt))
+                    break;
                 default:
             }
         })
@@ -414,16 +408,16 @@ export class Schedule extends Component {
 
         let savePlan;
 
-        if (!this.state.IsRecurring) {
+        if (!this.state.isRecurring) {
             savePlan = this.validate(validate.oneTime)
-        } else if (this.state.selectedRecurringType === 17) {
+        } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.daily) {
             savePlan = this.validate(validate.recurring.daily)
-        } else if (this.state.selectedRecurringType === 18) {
+        } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.weekly) {
             savePlan = this.validate(validate.recurring.weekly)
-        } else if (this.state.selectedRecurringType === 19 && this.state.monthlyOptions === 1) {
-            savePlan = this.validate(validate.recurring.recurring.first)
-        } else if (this.state.selectedRecurringType === 19 && this.state.monthlyOptions === 2) {
-            savePlan = this.validate(validate.recurring.recurring.second)
+        } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly && this.state.monthlyOptions === 1) {
+            savePlan = this.validate(validate.recurring.monthly.first)
+        } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly && this.state.monthlyOptions === 2) {
+            savePlan = this.validate(validate.recurring.monthly.second)
         }
 
         let data = {
@@ -435,10 +429,6 @@ export class Schedule extends Component {
         }
     }
 
-    onClickConfirm = () => {
-        this.props.goToServicedetails();
-    }
-
     savePlan = () => {
         let {
             startDate,
@@ -446,7 +436,7 @@ export class Schedule extends Component {
             startTime,
             endTime,
             additionalDescription,
-            IsRecurring,
+            isRecurring,
             selectedRecurringType,
             monthlyDay,
             monthlyMonths,
@@ -469,19 +459,19 @@ export class Schedule extends Component {
             description: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
-            IsRecurring: IsRecurring,
+            isRecurring: isRecurring,
             serviceTypes: this.serviceTypes,
             address: this.address,
-            schedulePattern: selectedRecurringType ? selectedRecurringType : 31,
+            schedulePattern: isRecurring ? selectedRecurringType : 31,
             patientAddressId: 0,
-            daily: (weeklyDayOccurence || monthlyDay || selectedWeeksId || !IsRecurring) ? null : {
+            daily: (weeklyDayOccurence || monthlyDay || selectedWeeksId || !isRecurring) ? null : {
                 dayOccurence: dailyDayOccurence ? dailyDayOccurence : null
             },
-            weekly: (dailyDayOccurence || monthlyDay || selectedDaysId || !IsRecurring) ? null : {
+            weekly: (dailyDayOccurence || monthlyDay || selectedDaysId || !isRecurring) ? null : {
                 dayOccurence: weeklyDayOccurence ? weeklyDayOccurence : null,
                 days: this.weeklySelectedDays.length > 0 ? this.weeklySelectedDays : null
             },
-            monthly: (dailyDayOccurence || weeklyDayOccurence || !IsRecurring) ? null : {
+            monthly: (dailyDayOccurence || weeklyDayOccurence || !isRecurring) ? null : {
                 dayMonth: selectedDaysId ? null : {
                     day: monthlyDay ? monthlyDay : null,
                     month: monthlyMonths ? monthlyMonths : null
@@ -529,7 +519,7 @@ export class Schedule extends Component {
                                 planType={this.state.planType}
                                 handleChangePlanType={this.handleChangePlanType} />
                         </div>
-                        {parseInt(this.state.planType, 10) === 2 &&
+                        {parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                             <Fragment>
                                 <div className="Service-Cat-Typesblock">
                                     <div>
@@ -562,7 +552,7 @@ export class Schedule extends Component {
                                     </div>
                                 </div>
 
-                                <div className={"ServiceTypesWidget PostSR schdule-postblock " + (this.state.planType === 1 && 'left-block1-shedule')}>
+                                <div className={"ServiceTypesWidget PostSR schdule-postblock " + (this.state.planType === SCHEDULE_TYPE_OPTIONS.assessment && 'left-block1-shedule')}>
                                     <h2 className='ServicesTitle'>Schedule</h2>
                                     <div className="row">
                                         <ScheduleType
@@ -578,7 +568,7 @@ export class Schedule extends Component {
                                             handleChangeStartTime={this.handleChangeStartTime}
                                             endTime={this.state.endTime}
                                             handleChangeEndTime={this.handleChangeEndTime}
-                                            selectedType={this.state.IsRecurring}
+                                            selectedType={this.state.isRecurring}
                                             recurringPatternList={this.props.recurringPatternList}
                                             handleChangeRecurringPattern={this.handleChangeRecurringPattern}
                                             handleSelectDailyOptionField={this.handleSelectDailyOptionField}
@@ -590,7 +580,6 @@ export class Schedule extends Component {
                                             handleChangeDaysSelection={this.handleChangeDaysSelection}
                                             handleChangeMonthlySelectionFirst={this.handleChangeMonthlySelectionFirst}
                                             handleChangeMonthlySelectionSecond={this.handleChangeMonthlySelectionSecond}
-                                            monthlyOptionsData={monthlyOptionsData}
                                             monthlyDay={this.state.monthlyDay}
                                             monthlyMonths={this.state.monthlyMonths}
                                             handleChangeMonthlyDay={this.handleChangeMonthlyDay}
@@ -614,14 +603,14 @@ export class Schedule extends Component {
 
                                     </div>
                                 </div>
-                                <div className={"ServiceTypesWidget PostSR " + (this.state.planType === 1 && 'right-block2-shedule')}>
+                                <div className={"ServiceTypesWidget PostSR " + (this.state.planType === SCHEDULE_TYPE_OPTIONS.assessment && 'right-block2-shedule')}>
                                     <h2 className='ServicesTitle'>Point of Service</h2>
                                     <PointOfService
                                         patientAddressList={this.props.patientAddressList}
                                         stateList={this.props.stateList}
                                         handlePatientAddress={this.handlePatientAddress}
                                         handlePOSAddress={this.handlePOSAddress}
-                                        SelectedPOS={this.state.SelectedPOS}
+                                        selectedPOS={this.state.selectedPOS}
                                         handelNewAddress={this.handelNewAddress}
                                         statehandleChange={this.statehandleChange}
                                         selectedStateId={this.state.state}
@@ -679,18 +668,14 @@ export class Schedule extends Component {
                             </Fragment>
                         }
                     </div>
-                    <ModalPopup
+                    <AlertPopup
+                        message='Do you want to discard the changes?'
+                        OkButtonTitle={'Yes'}
+                        CancelButtonTitle={'No'}
+                        isCancel={true}
                         isOpen={this.state.isModalOpen}
-                        ModalBody={<span>Do you want to discard the changes?</span>}
-                        btn1="Yes"
-                        btn2="No"
-                        className="modal-sm"
-                        headerFooter="d-none"
-                        centered={true}
-                        onConfirm={() => this.onClickConfirm()}
-                        onCancel={() => this.setState({
-                            isModalOpen: !this.state.isModalOpen,
-                        })}
+                        closePopup={() => this.setState({ isModalOpen: false })}
+                        onAcceptClick={() => this.props.goToServicedetails()}
                     />
                 </Scrollbars>
             </AsideScreenCover>

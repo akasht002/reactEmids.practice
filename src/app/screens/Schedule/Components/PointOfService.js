@@ -47,9 +47,7 @@ export class PointOfService extends Component {
                         value={address.addressId}
                         onChange={(e) => {
                             this.props.handlePatientAddress(address)
-                        }}
-                        // defaultChecked={address.isPr}
-                        //checked={this.props.SelectedPOS === address.addressId}                      
+                        }}                  
                     />
                     <label className="form-radio-label AddressPOS"
                         htmlFor={"AddressPOS" + catNum}>
@@ -68,7 +66,7 @@ export class PointOfService extends Component {
             return <Item className='ListItem CTDashboard' key={type.id}>{type.name}</Item>;
         });
         let CustomPOSAddress = '';
-        if (this.props.SelectedPOS === '0') {
+        if (this.props.selectedPOS === '0') {
             CustomPOSAddress = <div className='CustomPOS'>
                 <h6>Enter a new location</h6>
                 <div className={'row'}>
@@ -157,7 +155,7 @@ export class PointOfService extends Component {
                         </div>
                         {this.props.onClickSave && (!this.props.selectedStateName) &&
                                 <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">
-                                    Please select {this.props.selectedStateName === '' ? 'State' : 'State'}
+                                    Please select State
                                 </span>}
                     </div>
                     <div className={'col-md-4 mb-2'}>
@@ -179,7 +177,7 @@ export class PointOfService extends Component {
                         />
                         {this.props.onClickSave && (!this.props.zip || this.props.zip.length !== 5) &&
                             <span className="text-danger d-block mb-2 MsgWithIcon MsgWrongIcon">
-                                Please enter valid {this.props.zip === '' ? 'Zip' : 'Zip'}
+                                Please enter valid Zip
                             </span>}
                     </div>
                 </div>
@@ -200,7 +198,7 @@ export class PointOfService extends Component {
                             value='0'
                             onClick={(e) => this.props.handlePOSAddress(e)}
                             defaultChecked={false}
-                            checked={this.props.SelectedPOS === '0'}
+                            checked={this.props.selectedPOS === '0'}
                         />
                         <label className="form-radio-label AddressPOS" htmlFor="AddressPOS0">
                             <span className='POSTitle'>New Address</span>

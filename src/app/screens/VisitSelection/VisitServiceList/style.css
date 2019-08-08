@@ -342,7 +342,7 @@ padding: 5px 0px;
 
 a.btn-open, span.btn-open, a.btn-open:hover, span.btn-open:hover{
     color: #ef6f48 !important;
-    /* border-color: #ef6f48 !important; */
+
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -350,7 +350,7 @@ a.btn-open, span.btn-open, a.btn-open:hover, span.btn-open:hover{
 
 span.btn-hired, span.btn-hired:hover{
     color: #007f84 !important;
-    /* border-color: #007f84 !important; */
+
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -359,7 +359,7 @@ span.btn-hired, span.btn-hired:hover{
 
 span.btn-applied, span.btn-applied:hover{
     color: #3089df !important;
-    /* border-color: #3089df !important; */
+
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -619,7 +619,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended {
-    /* height: calc(100vh - 140px); */
+    
     height: 683px;
     z-index: 9;
 }
@@ -845,7 +845,7 @@ color: #444;
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
-        /* height: calc(100vh - 143px); */
+
         height: 620px;
     }
 
@@ -881,7 +881,7 @@ color: #444;
 @media (max-width: 1366px) {
 
     .innerWidget .card.extended {
-        /* height: calc(100vh - 140px); */
+        
         height: 596px;
     }
 

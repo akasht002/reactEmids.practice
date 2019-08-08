@@ -4,14 +4,15 @@ import { formateStateDateValue } from "../../../utils/validations";
 import { getDiffTime } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
+import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS } from '../../../constants/constants'
 import moment from 'moment';
 
 export const ScheduleType = props => {
-    let days = props.daysList.map(function (type) {
+    let days = props.daysList.map(type => {
         return <Item className='ListItem CTDashboard' key={type.id}>{type.keyValue}</Item>;
-    });
+    })
 
-    let weekRecurrings = props.weekRecurring.map(function (type) {
+    let weekRecurrings = props.weekRecurring.map(type => {
         return <Item className='ListItem CTDashboard' key={type.id}>{type.value}</Item>;
     });
 
@@ -41,7 +42,7 @@ export const ScheduleType = props => {
                 })
             }
 
-            {props.selectedType === false &&
+            {!props.selectedType &&
 
                 <div className="full-block-scheduleDate">
                     <div className="col-md-12  p-0 date-blockview">
@@ -54,8 +55,8 @@ export const ScheduleType = props => {
                             value={props.startDate}
                             className={"form-control datePicker"}
                             label="Start Date"
-                            dateFormat={'M/D/YY'}
-                            placeholderText={'M/D/YY'}
+                            dateFormat={DATE_FORMATS.m_d_yy}
+                            placeholderText={DATE_FORMATS.m_d_yy}
                         />
                         {!props.startDate && props.onClickSave &&
                             <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -83,7 +84,7 @@ export const ScheduleType = props => {
                                     value={props.endTime}
                                     minDate={props.startTime}
                                     label="End Time"
-                                    disabled={props.startTime ? false : true}
+                                    disabled={!props.startTime}
                                     minTime={moment().hours(moment(props.startTime).format("hh")).minutes(moment(props.startTime).format("mm"))}
                                     maxTime={moment().hours(23).minutes(30)}
                                 />
@@ -108,7 +109,7 @@ export const ScheduleType = props => {
                 </div>
             }
 
-            {props.selectedType === true &&
+            {props.selectedType &&
                 <div className="full-block-scheduleDate">
                     <div className="col-md-6  p-6">
                         <div className="left-recurringpattern">
@@ -124,7 +125,7 @@ export const ScheduleType = props => {
                                                     name={'recurringPattern'}
                                                     value={item.keyValue}
                                                     className="form-radio-input"
-                                                    defaultChecked={item.id === 18}
+                                                    defaultChecked={item.id === RECURRING_PATTERN_OPTIONS.weekly}
                                                     onChange={() => { props.handleChangeRecurringPattern(item.id) }}
                                                 />
                                                 <label className="form-radio-label" htmlFor={item.id}>{item.keyValue} <span className="RadioBoxIcon" /></label>
@@ -134,7 +135,7 @@ export const ScheduleType = props => {
                                 })
                             }
 
-                            {props.selectedRecurringType === 17 &&
+                            {props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.daily &&
 
                                 <Fragment>
                                     <div className="right-monthblock">
@@ -166,7 +167,7 @@ export const ScheduleType = props => {
                                     </div>
                                 </Fragment>
                             }
-                            {props.selectedRecurringType === 18 &&
+                            {props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.weekly &&
                                 <Fragment>
                                     <div class="right-monthblock">
                                         <div className="left-radioblock">
@@ -218,30 +219,8 @@ export const ScheduleType = props => {
                                 </Fragment>
                             }
 
-                            {props.selectedRecurringType === 19 &&
+                            {props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly &&
                                 <Fragment>
-
-                                  <div>
-                                  {!props.dailyDayOccurence && props.onClickSave && props.selectedRecurringType === 17 &&
-                        <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                            Please Select daily recurring pattern
-                    </span>}
-
-                    {!props.weeklyDayOccurence && props.weeklySelectedDays.length === 0 && props.onClickSave && props.selectedRecurringType === 18 &&
-                        <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                            Please Select weekly recurring pattern
-                    </span>}
-
-                    {!props.monthlyMonthsSecond && props.onClickSave && props.selectedRecurringType === 19 &&
-                        <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
-                            Please Select the Monthly recurring pattern
-                    </span>}
-
-
-                                  </div>
-
-
-         
                                     <div className="right-monthblock">
                                         <div className="left-radioblock clearfix">
                                             <fieldset>
@@ -250,6 +229,7 @@ export const ScheduleType = props => {
                                                     type="radio"
                                                     name="monthly"
                                                     value={1}
+                                                    defaultChecked={props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly}
                                                     className="form-radio-input"
                                                     onChange={(e) => { props.handleChangeMonthlySelectionFirst(e.target.id) }}
                                                 />
@@ -336,11 +316,9 @@ export const ScheduleType = props => {
                                     </div>}
                                 </Fragment>
                             }
-
                         </div>
                     </div>
 
-                    
                     <div className="col-md-6 mb-4 p-0 start-rightdate">
                         <Calendar
                             startDate={props.startDate && formateStateDateValue(props.startDate)}
@@ -351,8 +329,8 @@ export const ScheduleType = props => {
                             value={props.startDate}
                             className={"form-control datePicker"}
                             label="Start Date"
-                            dateFormat={'M/D/YY'}
-                            placeholderText={'M/D/YY'}
+                            dateFormat={DATE_FORMATS.m_d_yy}
+                            placeholderText={DATE_FORMATS.m_d_yy}
                         />
                         {!props.startDate && props.onClickSave &&
                             <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -367,8 +345,8 @@ export const ScheduleType = props => {
                             value={props.endDate}
                             className={"form-control datePicker"}
                             label="End Date"
-                            dateFormat={'M/D/YY'}
-                            placeholderText={'M/D/YY'}
+                            dateFormat={DATE_FORMATS.m_d_yy}
+                            placeholderText={DATE_FORMATS.m_d_yy}
                         />
                         {!props.endDate && props.onClickSave &&
                             <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -392,7 +370,7 @@ export const ScheduleType = props => {
                                     startTime={props.endTime}
                                     handleChange={props.handleChangeEndTime}
                                     value={props.endTime}
-                                    disabled={props.startTime ? false : true}
+                                    disabled={!props.startTime}
                                     label="End Time"
                                     minTime={moment().hours(moment(props.startTime).format("hh")).minutes(moment(props.startTime).format("mm"))}
                                     maxTime={moment().hours(23).minutes(30)}
@@ -403,7 +381,7 @@ export const ScheduleType = props => {
                         </span>}
                             </div>
                             <div className="col-md-4">
-                                
+
                                 <div className="form-group">
                                     <h4>Duration</h4>
                                     {
