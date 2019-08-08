@@ -5,7 +5,7 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
-import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch } from '../../../../components';
+import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch,Button } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
 import { push, goBack } from '../../../../redux/navigation/actions'
@@ -13,12 +13,12 @@ import {
     getVisitFeedBack
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions';
 import { setPatient } from '../../../../redux/patientProfile/actions';
-import { getPerformTasksList, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { getPerformTasksList, getSummaryDetails,startOrStopService } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import './style.css'
 import { isNull } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
-import { QUESTION_TYPE } from '../../../../constants/constants'
-
+import { QUESTION_TYPE,SERVICE_STATES } from '../../../../constants/constants'
+import { convertTime24to12 } from '../../../../utils/stringHelper';
 export class Assessment extends Component {
 
     constructor(props) {
@@ -42,7 +42,7 @@ export class Assessment extends Component {
         this.normalizedSelectedAnswers = {}
         this.selectedAnswers = [];
         this.percentageCompletion = 0;
-        this.checkedTask = -1;
+        this.checkedTask = '';
         this.totalTask = 0;
         this.selectedTextArea ='';
         this.assessmentQuestionnaireId = '';
@@ -68,6 +68,12 @@ export class Assessment extends Component {
                 if (questionList.answerTypeDescription === QUESTION_TYPE.ChoiceBased) {
                     questionList.answers.map((answer) => {                                                               
                         if (questionList.selectedAnswer === answer.answerName) {
+                            let answers = { feedbackQuestionnaireId: questionList.assessmentQuestionnaireId, answerName: questionList.selectedAnswer }
+                            let filteredData = this.selectedAnswers.filter((answer) => {
+                                return answer.feedbackQuestionnaireId !== questionList.assessmentQuestionnaireId
+                            });
+                            filteredData.push(answers);
+                            this.selectedAnswers = filteredData;
                             this.checkedTask ++
                         } 
                         return ''   
@@ -92,9 +98,10 @@ export class Assessment extends Component {
     handelPatientProfile = (data) => {
         this.props.setPatient(data)
         this.props.goToPatientProfile()
-    }
+    }    
 
     handleSelected = (answer, id) => {
+        this.checkedTask = 0
         let answers = { feedbackQuestionnaireId: id, answerName: answer }
         let filteredData = this.selectedAnswers.filter((answer) => {
             return answer.feedbackQuestionnaireId !== id
@@ -105,10 +112,15 @@ export class Assessment extends Component {
             ...this.normalizedSelectedAnswers,
             [id]: id
         }
+        this.checkedTask = this.selectedAnswers.length
         this.setState({ answerList: filteredData });
     }
 
     handleTextarea = (e, id) => {
+        this.handleSelected({
+            feedbackQuestionnaireId: id,
+            answerName: e.target.value
+        })
         this.setState({
             textareaValue: e.target.value,
             textareaData: {
@@ -139,7 +151,7 @@ export class Assessment extends Component {
 
     onSubmit = () => {
         let data = {
-            assessmentId: this.props.patientDetails.serviceRequestVisitId ? 323 :this.props.patientDetails.serviceRequestVisitId ,
+            assessmentId: this.props.patientDetails.serviceRequestVisitId,
             serviceProviderId: getUserInfo().serviceProviderId,
             answers: this.selectedAnswers
         }
@@ -156,22 +168,34 @@ export class Assessment extends Component {
         } else {
             current_time = this.state.startedTime;
             this.setState({ stopTime: true, startService: true })
-            this.saveData(data);
         }
         this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
-        
+        this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
     }
 
-    render() { 
+    render() {
+        
         let startService = 1;
-        let time = <StopWatch
-        stopTimer={true}
-        startTime={'0001-01-01T00:00:00'}
-        endTime={'0001-01-01T00:00:00'}
-        duration={0}
-        />
+        let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
+        let timerBtn;
+        const { visitStatus, visitStartTime, visitEndTime, visitTimeDuration } = this.props.patientDetails
+        if (visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING) {
+            time = <StopWatch
+                stopTimer={visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING}
+                startTime={visitStartTime}
+                endTime={visitEndTime}
+                duration={visitTimeDuration}
+            />
+        }
+
+        if (visitStatus === SERVICE_STATES.YET_TO_START) {
+            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, this.props.ServiceRequestVisitId) }}>Start Service</a>
+        }
+
+        if (visitStatus === SERVICE_STATES.IN_PROGRESS) {
+            timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
+        }
         this.totalTask = this.props.questionsList && this.props.questionsList.length
-        let  timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, this.props.ServiceRequestVisitId) }}>Start Service</a>
         this.percentageCompletion = Math.round((this.checkedTask / this.totalTask) * 100)
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -227,7 +251,7 @@ export class Assessment extends Component {
                             </div>
                         </div>
                         <div className='CardContainers'>
-                            <form className='ServiceContent'>
+                            <div className='ServiceContent'>
                                 <div className="FeedbackWidget mt-5">
                                     {this.props.questionsList && this.props.questionsList.length > 0 ?
                                         <div>
@@ -258,7 +282,7 @@ export class Assessment extends Component {
                                                                                     this.handleSelected(answer.answerName, questionList.assessmentQuestionnaireId)
                                                                                 }}
                                                                                 defaultChecked= {answer.checked}
-                                                                                disabled={this.props.VisitFeedback.length > 0}
+                                                                                // disabled={this.props.VisitFeedback.length > 0}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>
@@ -310,11 +334,15 @@ export class Assessment extends Component {
                                         </span>
                                         <span className="bottomTaskPercentage">{this.percentageCompletion && this.percentageCompletion}%</span>
                                     </div>
-                                    <div className='ml-auto'>                                       
-                                        <a className='btn btn-primary' onClick={this.onClickNext}>Next</a>
-                                    </div>
+                                    <div className='ml-auto'>
+                                    <Button
+                                    classname='btn btn-primary ml-auto'
+                                    onClick={this.onClickNext}
+                                    disable={visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.YET_TO_START}
+                                    label={'Next'} />
+                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         
                             
@@ -332,6 +360,19 @@ export class Assessment extends Component {
                         onConfirm={() => this.onClickConfirm()}
                         onCancel={() => this.setState({
                             isModalOpen: !this.state.isModalOpen,
+                        })}
+                    />
+                    <ModalPopup
+                        isOpen={this.state.isStopModalOpen}
+                        ModalBody={<span>Do you want to End the Service?</span>}
+                        btn1="Yes"
+                        btn2="No"
+                        className="modal-sm"
+                        headerFooter="d-none"
+                        centered={true}
+                        onConfirm={() => { this.setState({ isStopModalOpen: !this.state.isStopModalOpen }); this.startService(0, this.props.ServiceRequestVisitId) }}
+                        onCancel={() => this.setState({
+                            isStopModalOpen: !this.state.isStopModalOpen,
                         })}
                     />
                     
@@ -353,7 +394,8 @@ function mapDispatchToProps(dispatch) {
         getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
-        goBack: () => dispatch(goBack())
+        goBack: () => dispatch(goBack()),
+        startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime)),
     }
 };
 

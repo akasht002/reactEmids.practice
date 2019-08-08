@@ -40,7 +40,7 @@ export class AssessmentSummary extends Component {
             timeErrMessage: '',
             emptyErrMessage: '',
             disableSignatureBtn: true,
-            isProccedModalOpen: false,
+            isProceedModalOpen: false,
             isDiscardModalOpen: false
         };
     };
@@ -54,13 +54,9 @@ export class AssessmentSummary extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.signatureImage.signature) {
-
-            this.setState({ signatureImage: nextProps.signatureImage.signature })
-
-        }
+    componentWillReceiveProps(nextProps) {        
         this.setState({
+            signatureImage: nextProps.signatureImage.signature && nextProps.signatureImage.signature,
             summaryDetails: nextProps.SummaryDetails,
             updatedHour: nextProps.CalculationsData.totalHours,
             updatedMin: nextProps.CalculationsData.totalMinutes,
@@ -68,7 +64,7 @@ export class AssessmentSummary extends Component {
         })
     }
 
-    handelPatientProfile = (data) => {
+    handlePatientProfile = (data) => {
         this.props.setPatient(data)
         this.props.goToPatientProfile()
     }
@@ -82,7 +78,7 @@ export class AssessmentSummary extends Component {
         this.props.calculationActualData();
     }
 
-    AdjustTime = () => {
+    adjustTime = () => {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
@@ -126,16 +122,10 @@ export class AssessmentSummary extends Component {
                 serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
                 serviceProviderId: this.state.summaryDetails.serviceProviderId,
                 serviceRequestId: this.state.summaryDetails.serviceRequestId,
-                estimatedClaim: parseFloat(this.props.CalculationsData.estimatedClaim),
-                outOfPocketAmount: parseFloat(this.props.CalculationsData.copayAmount),
                 hourlyRate: this.state.summaryDetails.hourlyRate,
                 originalTotalDuration: originalTotalDuration,
                 billedTotalDuration: (this.props.actualTimeDiff / 1000) / 60,
-                taxPaid: parseFloat(this.props.CalculationsData.taxes),
-                billedPerService: parseFloat(this.props.CalculationsData.totalVisitCost),
-                totalCost: parseFloat(this.props.CalculationsData.totalVisitCost),
                 image: this.state.signatureImage,
-                taxRate: parseFloat(this.state.summaryDetails.taxAmount)
             }
             this.props.saveSummaryDetails(data);
         } else {
@@ -144,7 +134,7 @@ export class AssessmentSummary extends Component {
     }
 
     onClickNextBtn = () => {
-        this.setState({ isProccedModalOpen: true })
+        this.setState({ isProceedModalOpen: true })
     }
 
     timerErrMessage = () => {
@@ -194,7 +184,6 @@ export class AssessmentSummary extends Component {
     }
 
     render() {
-
         let modalContent = '';
 
         let validationContent = '';
@@ -273,7 +262,7 @@ export class AssessmentSummary extends Component {
         }
 
 
-        return (
+        return (           
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 {this.props.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
@@ -291,7 +280,7 @@ export class AssessmentSummary extends Component {
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
                                     </div>
-                                    <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
+                                    <div className='requestImageContent' onClick={() => this.handlePatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
 
                                         {this.props.patientDetails.patient ?
                                             <span>
@@ -355,60 +344,9 @@ export class AssessmentSummary extends Component {
                                                     <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                 </div>
                                             </div>
-                                            <p className="SummaryContentTitle">Payment Details</p>
+                                            <p className="SummaryContentTitle">Payment Details</p>                                         
 
-                                            <div className="row CostTableWidget">
-                                                {!this.state.signatureImage &&
-                                                    <span className="EditIcon" onClick={this.AdjustTime} />                                                    
-                                                }
-                                                <div className="col-md-8 CostTableContainer Label">
-                                                    <p><span>Total Chargeable Time (HH:MM)</span>
-                                                        <span>Hourly Rate</span></p>
-                                                    <p className="TaxLabel"><span>Total Visit Cost </span>
-                                                        <span>Taxes and Fees</span></p>
-                                                </div>
-                                                <div className="col-md-4 CostTableContainer Cost">
-                                                    <p>
-                                                        <span>{this.props.CalculationsData.totalChargableTime}</span>
-                                                        {this.props.SummaryDetails.hourlyRate === 0 ?
-                                                            <span>$0.00</span>
-                                                            :
-                                                            <span>
-                                                                ${this.props.SummaryDetails.hourlyRate &&
-                                                                    this.props.SummaryDetails.hourlyRate.toFixed(2)}
-                                                            </span>
-                                                        }                                                       
-                                                    </p>
-                                                    <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
-                                                        <span>${(this.props.CalculationsData.taxes)}</span></p>
-                                                </div>
-                                                <div className="col-md-12 CostTableContainer Total">
-                                                    <p className="TotalLabel"><span>Total Cost </span></p>
-                                                    <p className="TotalCost"><span>${(this.props.CalculationsData.grandTotalAmount)}</span></p>
-                                                </div>
-                                            </div>
-
-                                            {!getUserInfo().isEntityServiceProvider &&
-                                                <div className="row EstimatedCostWidget">
-                                                    <div className="col-md-8 EstimatedCostContainer Label">
-                                                        <p><span>Estimated Claim</span>
-                                                        </p>
-                                                        <p><span>Credit Card Payment</span></p>
-                                                    </div>
-                                                    <div className="col-md-4 EstimatedCostContainer Cost">
-                                                        <p>{this.props.CalculationsData.estimatedClaim === 0 ?
-                                                            <span>$0.00</span>
-                                                            :
-                                                            <span>
-                                                                ${this.props.CalculationsData.estimatedClaim &&
-                                                                    this.props.CalculationsData.estimatedClaim}
-                                                            </span>
-                                                        }
-                                                        </p>
-                                                        <p><span>${this.props.CalculationsData.copayAmount && this.props.CalculationsData.copayAmount}</span></p>
-                                                    </div>
-                                                </div>
-                                            }
+                                           
                                             <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that any claim is an estimate pending the claim process</p>
                                         </div>
                                     </div>
@@ -436,10 +374,8 @@ export class AssessmentSummary extends Component {
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
-                                        {getUserInfo().isEntityServiceProvider ?
-                                            <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
-                                            :
-                                            <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
+                                        {getUserInfo().isEntityServiceProvider &&
+                                            <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>                                           
                                         }
                                     </div>
                                 </div>
@@ -474,7 +410,7 @@ export class AssessmentSummary extends Component {
                     />
 
                     <ModalPopup
-                        isOpen={this.state.isProccedModalOpen}
+                        isOpen={this.state.isProceedModalOpen}
                         ModalBody={<span>Do you want to proceed for payment?</span>}
                         btn1="Yes"
                         btn2="No"
@@ -482,10 +418,10 @@ export class AssessmentSummary extends Component {
                         headerFooter="d-none"
                         centered={true}
                         onConfirm={() => {
-                            this.setState({ isProccedModalOpen: !this.state.isProccedModalOpen });
+                            this.setState({ isProceedModalOpen: !this.state.isProceedModalOpen });
                             this.onClickNext();
                         }}
-                        onCancel={() => this.setState({ isProccedModalOpen: false })}
+                        onCancel={() => this.setState({ isProceedModalOpen: false })}
                     />
 
                     <ModalPopup
