@@ -145,9 +145,10 @@ export class VisitServiceList extends Component {
         this.props.formDirty()
     }
 
-    handleClick = (requestId) => {
+    handleClick = (requestId, patientId) => {
         this.props.getServiceRequestId(requestId);
         this.props.goToServiceRequestDetailsPage();
+        this.props.setPatient(patientId)
     }
 
     renderStatusClassName = (status) => {
@@ -502,7 +503,7 @@ export class VisitServiceList extends Component {
                     <div className='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                         <div className='card'>
                             <div className="BlockImageContainer" onClick={() =>
-                                this.handleClick(serviceList.serviceRequestId)}>
+                                this.handleClick(serviceList.serviceRequestId, serviceList.patientId)}>
                                 <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                                 <div className='BlockImageDetails'>
                                     <div className='BlockImageDetailsName'>

@@ -214,7 +214,7 @@ li div.dropdown-menu{
 }
 
 .SPContentWidget .ProfileContainer.topProfile {
-    /* height: calc(100vh - 140px); */
+    
     height: 620px;
     margin-bottom: 20px;
     width: calc(55% - 20px);
@@ -416,7 +416,6 @@ li div.dropdown-menu{
 
 span.btn-hired, span.btn-hired:hover{
     color: #7a329f !important;
-    /* border-color: #007f84 !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -425,7 +424,6 @@ span.btn-hired, span.btn-hired:hover{
 
 span.btn-applied, span.btn-applied:hover{
     color: #8c8c8c !important;
-    /* border-color: #3089df !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
@@ -752,7 +750,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .ProfileCard.extended {
-    /* height: calc(100vh - 140px); */
+    
     height: 683px;
     z-index: 9;
 }
@@ -767,7 +765,7 @@ a.ProfileCardHeaderLink:hover{
 }
 
 .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-    /* height: calc(100vh - 292px); */
+
     height: 470px;
 }
 
@@ -1140,7 +1138,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
-        /* height: calc(100vh - 143px); */
+
         height: 713px !important;
     }
 
@@ -1201,7 +1199,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 @media (max-width: 1366px) {
 
     .innerWidget .card.extended {
-        /* height: calc(100vh - 140px); */
+        
         /* height: 620px;
         z-index: 1; */
     }
@@ -1258,7 +1256,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .SPContentWidget .ProfileContainer.topProfile {
-        /* height: calc(100vh - 140px); */
+        
         height: 620px;
     }
 
@@ -1299,13 +1297,12 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        /* max-height: calc(100vh - 276px); */
         max-height: 485px;
         overflow: auto;
     }
 
     .innerWidget .card.extended {
-        /* height: calc(100vh - 140px); */
+        
         height: 596px;
     }
 

@@ -10,6 +10,7 @@ import { Path } from '../../../routes'
 import AssignServiceProvider from './AssignServiceProvider'
 import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getSpBusyInVisit } from '../../../redux/profile/PersonalDetail/actions';
+import {clearESPList} from '../../../redux/schedule/actions';
 import {
   getVisitServiceDetails,
   getVisitServiceSchedule,
@@ -103,6 +104,7 @@ export class VisitServiceDetails extends Component {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       this.props.getDays();
       this.props.getSpBusyInVisit();
+      this.props.clearESPList();
     } else {
       this.props.history.push(Path.visitServiceList)
     }
@@ -331,22 +333,9 @@ export class VisitServiceDetails extends Component {
 
   onSubmitAssignServiceProvider = (data) => {
     this.props.updateEntityServiceVisit(data, this.state.pageNumber)
-    //  console.log(data)
-    //  setTimeout( () =>
-    //   this.props.getVisitServiceSchedule(this.props.ServiceRequestId, this.defualtPageNumber)
-    //   ,300)
   }
 
   render() {
-
-    const ServiceTypeSettings = {
-      dots: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 2,
-      slidesToScroll: 2,
-      variableWidth: true
-    }
     let defaultCheck = ''
     let sliderTypes =
       this.state.visitServiceDetails && this.state.visitServiceDetails.serviceRequestTypeDetails &&
@@ -747,6 +736,7 @@ export class VisitServiceDetails extends Component {
                       </form>
                     </TabPane>
                     <TabPane tabId='2' className='TabBody'>
+                    <button onClick={() => this.props.goToAddSchedule()}> <span>+</span>Add New Schedule </button>
                       <div className='ScheduleTableHeader primaryColor'>
                         <div>
                           <span>Date</span>
@@ -1029,7 +1019,9 @@ function mapDispatchToProps(dispatch) {
     saveContextData: (data) => dispatch(saveContextData(data)),
     goToDashboard: () => dispatch(push(Path.dashboard)),
     getVisitServiceScheduleSuccess: () => dispatch(getVisitServiceScheduleSuccess([], true)),
-    updateHireStatusForServiceRequest: (data) => dispatch(updateHireStatusForServiceRequest(data))
+    updateHireStatusForServiceRequest: (data) => dispatch(updateHireStatusForServiceRequest(data)),
+    goToAddSchedule: () => dispatch(push(Path.schedule)),
+    clearESPList: () => dispatch(clearESPList())
   }
 }
 

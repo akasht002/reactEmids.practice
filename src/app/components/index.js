@@ -41,7 +41,8 @@ import {
     UserAvatarMultiSelect,
     Carousel,
     ImageCropView,
-    AlertPopup
+    AlertPopup,
+    CoreoTimePicker
 } from './LevelOne';
 import {
     CarouselComp,
@@ -97,5 +98,6 @@ export {
     Carousel,
     ImageCropView,
     AlertPopup,
-    Avatar
+    Avatar,
+    CoreoTimePicker
 };

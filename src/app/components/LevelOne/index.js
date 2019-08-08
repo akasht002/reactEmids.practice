@@ -27,6 +27,7 @@ import UserAvatarMultiSelect from './UserAvatarMultiSelect';
 import {Carousel} from './Carousel';
 import ImageCropView from './ImageCropView';
 import {AlertPopup} from './AlertPopup';
+import {CoreoTimePicker} from './CoreoTimePicker';
 
 export {
     Calendar,
@@ -59,5 +60,6 @@ export {
     UserAvatarMultiSelect,
     Carousel,
     ImageCropView,
-    AlertPopup
+    AlertPopup,
+    CoreoTimePicker
 };
