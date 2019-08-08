@@ -59,7 +59,8 @@ export class VisitServiceDetails extends Component {
       pageSize: 9,
       pageNumberESP: PAGE_NO,
       pageSizeESP: 9,
-      rowPageSize: 10
+      rowPageSize: 10,
+      tooltipOpen: false
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -89,6 +90,12 @@ export class VisitServiceDetails extends Component {
       startTime: nextProps.serviceVisitDetails.startTime,
       endTime: nextProps.serviceVisitDetails.endTime,
     })
+  }
+
+  toggleToolTip = () => {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
   }
 
   toggle = (tab) => {
@@ -245,7 +252,7 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate:  this.state.endDate
+      endDate: this.state.endDate
     }
     this.props.getVisitList(data);
   }
@@ -594,6 +601,8 @@ export class VisitServiceDetails extends Component {
                   toggleEditModal={this.toggleEditModal}
                   onSubmit={this.onSubmitAssignServiceProvider}
                   entityServiceProvidersList={this.props.entityServiceProvidersList}
+                  tooltipOpen={this.state.tooltipOpen}
+                  toggleToolTip={this.toggleToolTip}
                 />
                 <PatientProfileTab />
               </TabContent>
