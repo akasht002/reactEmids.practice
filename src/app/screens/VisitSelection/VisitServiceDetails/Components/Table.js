@@ -33,7 +33,7 @@ const renderServiceTypesInToolTip = serviceTypes => {
     ))
 }
 
-export const Tabel = props => {
+export const Table = props => {
     return (
         <Fragment>
             <table className="table-responsive plan-tableview" cellpadding="6" cellspacing="6">

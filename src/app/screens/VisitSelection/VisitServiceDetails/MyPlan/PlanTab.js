@@ -1,7 +1,7 @@
 import React from 'react';
 import { TabPane } from 'reactstrap';
 import { ScheduleList } from './ScheduleList';
-import { Tabel } from '../Components/Tabel';
+import { Table } from '../Components/Table';
 import { CoreoPagination } from '../../../../components';
 import Filter from "./Filter/index";
 
@@ -38,7 +38,7 @@ export const PlanTab = props => {
                 </div>
                 <div className="col-lg-8 col-md-8 right-customewidth">
                     <div className="full-block shadow-style right-tablelist">
-                        <Tabel
+                        <Table
                             visitList={props.visitList}
                             header={props.header}
                             espList={props.espList}
