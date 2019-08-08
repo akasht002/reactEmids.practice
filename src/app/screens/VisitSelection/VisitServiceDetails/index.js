@@ -20,7 +20,6 @@ import {
   getServiceType,
   ServiceRequestStatus
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
-// import { getEntityServiceProviderListSearch, selectESP, clearESPList, getEntityServiceProviderList } from '../../../redux/schedule/actions';
 import { Path } from '../../../routes';
 import { push, goBack } from '../../../redux/navigation/actions';
 import { TabHeader } from './Components/TabHeader';
@@ -32,10 +31,8 @@ import {
 } from '../../../constants/constants';
 import './styles.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
-import { getDiffTime, getHourMin, getUtcTimeDiffInHHMMformat } from '../../../utils/dateUtility'
+import { getHourMin, getUtcTimeDiffInHHMMformat } from '../../../utils/dateUtility'
 import moment from 'moment';
-import { ThemeProvider } from '@zendeskgarden/react-theming';
-import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
 import './customStyle.css'

@@ -23,7 +23,7 @@ export const ScheduleList = props => {
                                         {item.serviceTypes &&
                                             getFields(item.serviceTypes, 'serviceTypeDescription')}
                                     </div>                          
-                                    <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.scheduleValue}</label></span>
+                                    <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.schedulePatternType}</label></span>
                                     <span class="checkmark"></span>
                                 </label>
                             </fieldset>

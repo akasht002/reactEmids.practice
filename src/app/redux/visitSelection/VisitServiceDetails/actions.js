@@ -392,7 +392,7 @@ export const clearESPList = () => {
 
 export function selectESP(espId) {
   return (dispatch, getState) => {
-      let espList = getState().scheduleState.entityServiceProvidersList
+      let espList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
       let data = espList.map((value) => {
           return ({
               ...value,
@@ -410,7 +410,7 @@ export function getEntityServiceProviderList(data) {
       // dispatch(startLoading())
       Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
           .then(resp => {
-              let oldEspList = getState().scheduleState.entityServiceProvidersList;
+              let oldEspList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
               let modifiedList = [...oldEspList, ...resp.data];
               dispatch(getEntityServiceProviderListSuccess(modifiedList))
               if (resp.data.length < 9) {

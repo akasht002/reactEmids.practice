@@ -23,5 +23,5 @@ export const VisitServiceDetails = {
     endLoading: 'endLoading/visitservicedetails',
     disableShowmore: 'disableShowmore/visitservicedetails',
     clearESPList: 'clearESPList/visitservicedetails',
-    getEntityServiceProviderListSuccess: 'getEntityServiceProviderListSuccess/schedule'
+    getEntityServiceProviderListSuccess: 'getEntityServiceProviderListSuccess/visitservicedetails'
   }
