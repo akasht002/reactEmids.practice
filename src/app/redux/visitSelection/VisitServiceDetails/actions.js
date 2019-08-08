@@ -4,28 +4,16 @@ import {
   ThirdPartyGet,
   ServiceRequestPost,
   ThirdPartyPost,
-  ServiceRequestPut
+  ServiceRequestPut,
+  Get
 } from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
 import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
+import { VisitServiceDetails } from './bridge'
 import { USERTYPES } from '../../../constants/constants'
-
-export const VisitServiceDetails = {
-  getVisitServiceDetailsSuccess: 'get_visit_service_details_success/visitservicedetails',
-  getVisitServiceScheduleSuccess: 'get_visit_service_schedule_success/visitservicedetails',
-  getServiceRequestId: 'get_service_requestId/visitservicedetails',
-  updateHireServiceRequestByServiceProvider: 'updateHireServiceRequestByServiceProvider/visitservicedetails',
-  getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/visitservicedetails',
-  getDaysSuccess: 'getDaysSuccess/visitservicedetails',
-  updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails',
-  setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
-  canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails',
-  formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails',
-  isScheduleLoading: 'isScheduleLoading/visitservicedetails',
-  cancelHiredRequest: 'cancelHiredRequest/visitservicedetails'
-}
+import { orderBy } from 'lodash'
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -58,9 +46,9 @@ export const setEntityServiceProviderSuccess = data => {
 
 export const getVisitServiceScheduleSuccess = (data, disableShowMore) => {
   return {
-      type: VisitServiceDetails.getVisitServiceScheduleSuccess,
-      data,
-      disableShowMore
+    type: VisitServiceDetails.getVisitServiceScheduleSuccess,
+    data,
+    disableShowMore
   }
 }
 
@@ -193,26 +181,26 @@ export function getVisitServiceSchedule(data, pageNumber, isUpdateEntitySP = fal
         if (!isUpdateEntitySP) {
           let serviceSchedules = getState().visitSelectionState.VisitServiceDetailsState.VisitServiceSchedule;
           modifiedList = [
-              ...serviceSchedules
+            ...serviceSchedules
           ];
           if (resp.data.length === 0) {
-              disableShowMore = true
+            disableShowMore = true
           }
           else {
-              if (serviceSchedules.length === 0) {
-                  modifiedList = [
-                      ...resp.data
-                  ];
-                  if (resp.data.length <= 3) {
-                      disableShowMore = true
-                  }
-              } else if (serviceSchedules.length > 0 || serviceSchedules[serviceSchedules.length - 1].serviceRequestVisitId !==
-                  resp.data[resp.data.length - 1].serviceRequestVisitId) {
-                  modifiedList = [
-                      ...serviceSchedules,
-                      ...resp.data
-                  ];
+            if (serviceSchedules.length === 0) {
+              modifiedList = [
+                ...resp.data
+              ];
+              if (resp.data.length <= 3) {
+                disableShowMore = true
               }
+            } else if (serviceSchedules.length > 0 || serviceSchedules[serviceSchedules.length - 1].serviceRequestVisitId !==
+              resp.data[resp.data.length - 1].serviceRequestVisitId) {
+              modifiedList = [
+                ...serviceSchedules,
+                ...resp.data
+              ];
+            }
           }
         }
         dispatch(getVisitServiceScheduleSuccess(modifiedList, disableShowMore))
@@ -337,6 +325,215 @@ export function canInitiateConversation(data) {
   }
 };
 
+//New Integration
+
+export const getServiceRequestListSuccess = data => {
+  return {
+    type: VisitServiceDetails.getServiceRequestListSuccess,
+    data
+  }
+}
+
+export const getSchedulesListSuccess = (data) => {
+  return {
+    type: VisitServiceDetails.getSchedulesListSuccess,
+    data
+  }
+}
+
+export const getVisitListSuccess = (data) => {
+  return {
+    type: VisitServiceDetails.getVisitListSuccess,
+    data
+  }
+}
+
+export const getVisitListCountSuccess = (data) => {
+  return {
+    type: VisitServiceDetails.getVisitListCountSuccess,
+    data
+  }
+}
+
+export const getVisitStatusSuccess = data => {
+  return {
+    type: VisitServiceDetails.getVisitStatusSuccess,
+    data
+  }
+}
+
+export const getServiceVisitDetailsSuccess = data => {
+  return {
+    type: VisitServiceDetails.getServiceVisitDetailsSuccess,
+    data
+  }
+}
+
+export const getEntityServiceProviderListSuccess = (data) => {
+  return {
+      type: VisitServiceDetails.getEntityServiceProviderListSuccess,
+      data
+  }
+}
+
+export const disableShowmore = (data) => {
+  return {
+      type: VisitServiceDetails.disableShowmore,
+      data
+  }
+}
+
+export const clearESPList = () => {
+  return {
+      type: VisitServiceDetails.clearESPList
+  }
+}
+
+
+export function selectESP(espId) {
+  return (dispatch, getState) => {
+      let espList = getState().scheduleState.entityServiceProvidersList
+      let data = espList.map((value) => {
+          return ({
+              ...value,
+              selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10) ? 1 : 0
+          })
+      })
+      let list = orderBy(data, ['selected'], ['desc']);
+      dispatch(getEntityServiceProviderListSuccess(list))
+  }
+}
+
+
+export function getEntityServiceProviderList(data) {
+  return (dispatch, getState) => {
+      // dispatch(startLoading())
+      Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
+          .then(resp => {
+              let oldEspList = getState().scheduleState.entityServiceProvidersList;
+              let modifiedList = [...oldEspList, ...resp.data];
+              dispatch(getEntityServiceProviderListSuccess(modifiedList))
+              if (resp.data.length < 9) {
+                  dispatch(disableShowmore(true))
+              } else if (resp.data.length === 9) {
+                  dispatch(disableShowmore(false))
+              }
+          })
+          .catch(err => {
+              // dispatch(endLoading())
+          })
+  }
+}
+
+export function getEntityServiceProviderListSearch(data) {
+  return (dispatch, getState) => {
+      Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}?searchtext=${data.searchKeyword}`)
+          .then(resp => {
+              dispatch(getEntityServiceProviderListSuccess(resp.data))
+              if (resp.data.length < 9) {
+                  dispatch(disableShowmore(true))
+              } else if (resp.data.length === 9) {
+                  dispatch(disableShowmore(false))
+              }
+          })
+          .catch(err => {
+          })
+  }
+}
+
+export function getServiceRequestList(ServiceRequestId) {
+  let serviceProviderId = getUserInfo().serviceProviderId
+  return (dispatch) => {
+    dispatch(startLoading());
+    ServiceRequestGet(API.getNewServiceRequestList + `${ServiceRequestId}/${serviceProviderId}`).then((resp) => {
+      dispatch(getServiceRequestListSuccess(resp.data))
+      dispatch(endLoading());
+    }).catch((err) => {
+      dispatch(endLoading());
+    })
+  }
+};
+
+export function getSchedulesList(patientId) {
+  return (dispatch) => {
+    dispatch(startLoading());
+    let serviceProviderId = getUserInfo().serviceProviderId;
+    ServiceRequestGet(API.getSchedulesList + `${patientId}/${serviceProviderId}`)
+      .then(resp => {
+        let id = resp.data.map(item => item.planScheduleId);
+        const model = {
+          planScheduleIds: id,
+          visitStatuses: [],
+          serviceTypes: [],
+          pageNumber: 1,
+          pageSize: 10,
+          startDate: null,
+          endDate: null
+        }
+        dispatch(getSchedulesListSuccess(resp.data))
+        dispatch(getVisitList(model))
+      })
+      .catch(err => {
+
+      })
+  }
+};
+
+export function getVisitList(data) {
+  return (dispatch) => {
+    dispatch(startLoading());
+    ServiceRequestPost(API.getVisitList, data)
+      .then(resp => {
+        dispatch(getVisitListSuccess(resp.data))
+        dispatch(getVisitListCount(data))
+      })
+      .catch(err => {
+
+      })
+  }
+};
+
+export function getVisitListCount(data) {
+  return (dispatch) => {
+    dispatch(startLoading());
+    ServiceRequestPost(API.getVisitListCount, data)
+      .then(resp => {
+        dispatch(getVisitListCountSuccess(resp.data))
+        dispatch(endLoading());
+      })
+      .catch(err => {
+
+      })
+  }
+};
+
+export function getVisitStatus() {
+  return (dispatch) => {
+    dispatch(startLoading());
+    ServiceRequestGet(API.getVisitStatus).then((resp) => {
+      resp.data.forEach(obj => {
+        let listToDelete = [61, 90];
+        let deleatedData = resp.data.filter(obj => !listToDelete.includes(obj.id));
+        let data = deleatedData.map((item) => {
+          let value;
+          switch (item.keyValue) {
+            case 'InProgress': { value = 'In Progress'; break; }
+            case 'PaymentPending': { value = 'Payment Pending'; break; }
+            default: value = item.keyValue;
+          }
+          return {
+            ...item,
+            keyValue: value
+          }
+        });
+        dispatch(getVisitStatusSuccess(data))
+      })
+      dispatch(endLoading());
+    }).catch((err) => {
+      dispatch(endLoading());
+    })
+  }
+};
 export function updateHireStatusForServiceRequest(data) {
   let model = {
     serviceProviderId: getUserInfo().serviceProviderId,
@@ -355,3 +552,51 @@ export function updateHireStatusForServiceRequest(data) {
       })
   }
 }
+
+export function updateServiceVisit(data) {
+  let model = {
+    serviceProviderId: data.serviceProviderId,
+    servicePlanVisitId: data.servicePlanVisitId,
+    planScheduleId: data.planScheduleId,
+    visitDate: data.visitDate,
+    startTime: data.startTime,
+    duration: data.duration,
+    endTime: data.endTime
+  }
+  return dispatch => {
+    dispatch(startLoading())
+    ServiceRequestPut(API.updateServiceVisit, model)
+      .then(resp => {
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
+export function getServiceVisitDetails(visitId) {
+  return (dispatch) => {
+    ServiceRequestGet(API.getServiceVisitDetails + `${visitId}`)
+      .then(resp => {
+        dispatch(getServiceVisitDetailsSuccess(resp.data))
+      })
+      .catch(err => {
+
+      })
+  }
+};
+
+export function assignESP(data) {
+  return (dispatch) => {
+    ServiceRequestPost(API.assignESP, data)
+      .then(resp => {
+
+        // dispatch(getVisitListSuccess(resp.data))
+        // dispatch(getVisitListCount(data))
+      })
+      .catch(err => {
+
+      })
+  }
+};

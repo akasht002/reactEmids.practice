@@ -156,5 +156,21 @@ export const API = {
     getLatestMessages: 'Conversation/GetNewPostedMessage/',
     getMessageFallBackInterval: 'Common/LookupConfig/MessageFallBackInterval',
     keywordSearchServiceRequest: 'Search/SearchServiceRequestWithQ/',
-    hireServiceProvider: 'ServiceRequest/Hire'
+    hireServiceProvider: 'ServiceRequest/Hire',
+
+    //New API's
+    getNewServiceRequestList: 'plan/servicerequestdetails/',
+    GetServiceCategoryTypeTask: 'Common/GetServiceCategoryTypeTask',
+    getPatientAddressList: 'Patient/',
+    getState: 'ServiceProviderLookUp/GetState',
+    getValidPatientAddress: 'ServiceRequest/Patient/PosValidation',
+    createOrEditSchedule: 'plan',
+    getSchedulesList: 'plan/',
+    getVisitList: 'plan/visitdetails',
+    getVisitListCount: 'plan/visitdetailscount',
+    getVisitStatus : 'Servicerequest/LookUp/VisitStatus',
+    updateServiceVisit: 'servicevisit',
+    getServiceVisitDetails: 'servicevisit/getvsitdetails/',
+    assignESP: 'servicevisit/assignservicevisit',
+    searchESP: 'EntityServiceProvider/'
 }

@@ -1,6 +1,6 @@
 import {
     VisitServiceDetails
-} from './actions'
+} from './bridge'
 
 const defaultState = {
     VisitServiceDetails: [],
@@ -14,6 +14,17 @@ const defaultState = {
     isScheduleLoading: false,
     cancelHiredRequest: false,
     disableShowMore: false,
+
+    //New Integration
+    visitserviceList: [],
+    scheduleList: [],
+    visitList: [],
+    visitListCount: '',
+    visitStatus: [],
+    serviceVisitDetails: '',
+    isLoading: false,
+    entityServiceProvidersList: [],
+    disableShowmore: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -83,6 +94,75 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
 
         case VisitServiceDetails.formDirtyVisitServiceDetails:
             return defaultState;
+
+        //New Integration
+
+        case VisitServiceDetails.getServiceRequestListSuccess:
+            return {
+                ...state,
+                visitserviceList: action.data
+            };
+
+        case VisitServiceDetails.getSchedulesListSuccess:
+            return {
+                ...state,
+                scheduleList: action.data
+            };
+
+        case VisitServiceDetails.getVisitListSuccess:
+            return {
+                ...state,
+                visitList: action.data
+            };
+
+        case VisitServiceDetails.getVisitListCountSuccess:
+            return {
+                ...state,
+                visitListCount: action.data
+            };
+
+        case VisitServiceDetails.getVisitStatusSuccess:
+            return {
+                ...state,
+                visitStatus: action.data
+            };
+
+        case VisitServiceDetails.getServiceVisitDetailsSuccess:
+            return {
+                ...state,
+                serviceVisitDetails: action.data
+            };
+
+        case VisitServiceDetails.startLoading:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case VisitServiceDetails.endLoading:
+            return {
+                ...state,
+                isLoading: false
+            };
+
+
+        case VisitServiceDetails.getEntityServiceProviderListSuccess:
+            return {
+                ...state,
+                entityServiceProvidersList: action.data
+            };
+
+        case VisitServiceDetails.disableShowmore:
+            return {
+                ...state,
+                disableShowmore: action.data
+            };
+
+        case VisitServiceDetails.clearESPList:
+            return {
+                ...state,
+                entityServiceProvidersList: [],
+                // disableShowmore: false
+            };
 
         default:
             return state;

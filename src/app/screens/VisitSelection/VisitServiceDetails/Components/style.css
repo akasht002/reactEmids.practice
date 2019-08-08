@@ -1,0 +1,322 @@
+span.title-view {
+	display: block;
+	text-align: left;
+	color: #7a329f;
+	padding: 10px 0px;
+	padding-left: 4px;
+	font-size: 18px;
+}
+
+.plan-viewblock-full {
+	display: block;
+	position: relative;
+	width: 100%;
+	background: #fff;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+	margin-top: 15px;
+	padding: 25px 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 25px;
+	max-height: 380px;
+	overflow-y: auto;
+}
+
+.plan-tableview {
+	display: table !important;
+}
+
+.plan-tableview thead {
+	border-bottom: 1px solid #f1f1f1;
+	display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* .plan-tableview thead tr
+{
+    display: block;
+} */
+
+.plan-tableview td {
+	border-bottom: 1px solid #f1f1f1;
+}
+
+.plan-tableview th {
+	color: #7a329f;
+	font-weight: 500;
+	font-size: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-right: 0px;
+	padding-left: 0px;
+	text-align:center;
+}
+
+.plan-tableview tbody
+{
+    display: block;
+    overflow-y: auto;
+    height: 260px;
+    width: 100%;
+}
+
+.plan-tableview tbody tr
+{
+	display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.plan-tableview td {
+	color: #222;
+	font-weight: 500;
+	font-size: 14px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	padding-left: 0;
+    padding-right: 0;
+}
+
+.plan-tableview tbody tr:hover {
+	background: #f2ebf3;
+	border-left: 3px solid #702d8e;
+	border-top: 2px solid #bd9fcb;
+	border-bottom: 2px solid #bd9fcb;
+	cursor: pointer;
+}
+
+.plan-tableview th:nth-child(1), .plan-tableview td:nth-child(1)
+{
+width: 9%;
+}
+
+.plan-tableview th:nth-child(2), .plan-tableview th:nth-child(3),
+.plan-tableview td:nth-child(2), .plan-tableview td:nth-child(3)
+{
+width: 12%;
+}
+
+.plan-tableview th:nth-child(4), .plan-tableview th:nth-child(5),
+.plan-tableview td:nth-child(4), .plan-tableview td:nth-child(5)
+{
+width: 24%;
+}
+
+
+.plan-tableview .EntityUServiceProf
+{
+flex-direction: row;
+justify-content: flex-start;
+max-width: 130px;
+margin: 0 auto;
+padding-top: 0px;
+}
+
+.plan-tableview .EntityUServiceProf .ProfileCardImageContainer
+{
+margin-left: 0;
+margin-right: 0px;
+}
+
+.plan-tableview .EntityUServiceProf .ProfileCardImageContainer  img
+{
+margin-right: 0;
+}
+
+.plan-tableview .EntityUServiceProf  .ProfileCardNameContainer
+{
+text-align: left;
+padding-left: 10px;
+}
+
+.service-typesview {
+	display: flex;
+	max-width: 130px;
+	flex-direction: row;
+	align-content: center;
+	justify-content: center;
+	vertical-align: middle;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+.service-typesview span.SR-typesimg {
+	width: auto;
+	height: auto;
+	margin-right: 10px;
+}
+
+.service-typesview span.more-SRTypes {
+	width: 25px;
+	height: 25px;
+	display: block;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	color: #fff;
+	font-size: 14px;
+	line-height: 25px;
+	background: #7a329f;
+}
+
+.service-typesview span.SR-typesimg img {
+	width: 30px;
+	height: auto;
+	display: block;
+	max-width: 100%;
+	vertical-align: middle;
+}
+
+.visit-viewbtn {
+	display: block;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	width: 119px;
+	line-height: 25px;
+	text-align: center;
+	color: #7a329f;
+	font-size: 14px;
+	cursor: pointer;
+	border: 1px solid #7a329f;
+	background: #fff;
+}
+
+.service-typesview-plan
+{
+	display: flex;
+	max-width: 100%;
+	flex-direction: row;
+	align-content: center;
+	justify-content: center;
+	vertical-align: middle;
+	margin: 0 auto;
+	cursor: pointer;	
+}
+
+.service-typesview-plan img {
+	width: 28px;
+	height: 28px;
+	display: block;
+	max-width: 100%;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+.service-typesview-plan .service-typesview-more
+{
+	display: block;
+	border-radius:50%;
+	-moz-border-radius:50%;
+	-webkit-border-radius:50%;
+	width: 30px;
+	height: 30px;
+	line-height: 28px;
+	text-align: center;
+	color: #fff;
+	font-size: 14px;
+	cursor: pointer;
+	background:#7a329f;
+}
+
+.SP-viewplantable
+{
+	display: flex;
+	max-width: 100%;
+	flex-direction: row;
+	align-content: center;
+	justify-content: center;
+	vertical-align: middle;
+	margin: 0 auto;
+	cursor: pointer;	
+}
+
+.SP-viewplantable img
+{
+	width: 28px;
+	height: 28px;
+	display: block;
+	max-width: 100%;
+	vertical-align: middle;
+	margin-right: 10px;	
+}
+
+.SP-viewplantable span
+{
+	color: #222;
+	font-weight: 500;
+	font-size: 14px;
+	text-align: left;
+}
+
+.SP-viewplantable span a
+{
+	cursor: pointer;
+    color: #7a329f !important;
+    display: block;
+    text-decoration: underline !important;
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.left-customewidth
+{
+	max-width: 30% !important;
+	flex: 0 0 30% !important;
+	padding-right: 0px !important;
+}
+
+.right-customewidth
+{
+	max-width: 70% !important;
+    flex: 0 0 70% !important;
+}
+.right-customewidth .right-tablelist
+{
+	padding: 20px 15px;
+	padding-bottom: 0px;
+}
+
+.right-customewidth .right-tablelist .ScheduleRowButton
+{
+margin: 0 auto;
+display: block;
+width: 100%;
+}
+
+.right-customewidth .right-tablelist .ScheduleRowButton .btn
+{
+float: none;
+margin: 0 auto;
+display: block;
+padding: 5px 5px !important;
+font-size: 13px !important;
+}
+
+.right-customewidth .right-tablelist .CoreoPagination
+{
+padding-top: 20px !important;
+margin-bottom: 15px;
+width: 100%;
+}
+
+.edit-rightico
+{
+	background:url("../../../../assets/images/edit-new.png") no-repeat center;
+	width:20px;
+	height: 20px;
+	display: block;
+	background-size:contain;
+    height: auto;
+	border: none;
+	margin: 0 auto;
+	color: transparent;
+	z-index: 10;
+	cursor: pointer;
+}
