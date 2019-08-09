@@ -7,6 +7,7 @@ import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
 import { PAGE_SIZE_OPTIONS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
+import { getUserInfo } from '../../../../services/http'
 import './style.css';
 
 const renderServiceTypeImages = serviceTypes => {
@@ -59,7 +60,7 @@ export const Table = props => {
                                         <div class="bottom">
                                             <h3>Service Types</h3>
                                             <div className="inner-block-SRtypes">
-                                            {renderServiceTypesInToolTip(item.serviceTypes)}
+                                                {renderServiceTypesInToolTip(item.serviceTypes)}
                                             </div>
                                             <i></i>
                                         </div>
@@ -97,9 +98,12 @@ export const Table = props => {
                             <td>
                                 {/* <div class="ScheduleRowButton"><a class="btn btn-outline-primary">Start Visit</a></div> */}
                             </td>
-                            <td>
-                                <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
-                            </td>
+                            {
+                                !getUserInfo().isEntityServiceProvider &&
+                                <td>
+                                    <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
+                                </td>
+                            }
                         </tr>
                     })}
                 </tbody>

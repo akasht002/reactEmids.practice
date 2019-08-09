@@ -172,5 +172,7 @@ export const API = {
     updateServiceVisit: 'servicevisit',
     getServiceVisitDetails: 'servicevisit/getvsitdetails/',
     assignESP: 'servicevisit/assignservicevisit',
-    searchESP: 'EntityServiceProvider/'
+    searchESP: 'EntityServiceProvider/',
+    getEspVisitList : 'plan/GetVisitDetailsForEsp',
+    getEspVisitListCount: 'plan/getvisitdetailsforespcount'
 }
