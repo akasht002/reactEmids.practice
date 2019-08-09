@@ -58,7 +58,8 @@ export const Table = props => {
                         {props.header.map(item => {
                             return <th>{item.label}</th>
                         })}
-                        <th></th>
+                        {!getUserInfo().isEntityServiceProvider &&
+                        <th></th>}
                         <th></th>
                     </tr>
                 </thead>
@@ -93,26 +94,7 @@ export const Table = props => {
                                     />
                                 </td>
                             }
-                            <td>
-                                {/* <ThemeProvider>
-                                    <SelectField>
-                                        <Select
-                                            placement="bottom"
-                                            options={props.espList}
-                                            onChange={props.handleChangeSelectedDays}
-                                            selectedValue={props.selectedDays}
-                                            className='onBoardingSelect'
-                                        >
-                                            {props.selectedDaysLabel ? props.selectedDaysLabel : <span className="Select-placeholder pl-0">Select weekly</span>}
-                                        </Select>
-                                    </SelectField>
-                                </ThemeProvider> */}
-
-                                {/* <span className="SP-viewplantable">
-                             <img alt="" src={require('../../../../assets/images/Blank_Profile_icon.png')}></img>
-                             <span><a>Assign Provider</a></span>
-                             </span> */}
-                            </td>
+                          
                             <td>
                                 <div class="ScheduleRowButton"><button class="btn btn-outline-primary">{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
                             </td>
