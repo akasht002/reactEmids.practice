@@ -35,7 +35,8 @@ import {
   ESPProfile,
   Assessment,
   AssessmentFeedback,
-  AssessmentSummary
+  AssessmentSummary,
+  Schedule
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -85,7 +86,8 @@ export const Path = {
   ESPProfile:'/espProfile',
   assessment:'/assessment/processing',
   assessmentFeedback:'/assessment/feedback',
-  assessmentSummary:'/assessment/summary'
+  assessmentSummary:'/assessment/summary',
+  schedule: '/schedule'
 };
 
 class AppStackRoot extends Component {
@@ -132,6 +134,7 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.paymentsuccess} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentSuccess} />
             <PrivateRoute path={Path.paymentfailure} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentFailure} />
             <PrivateRoute path={Path.patientProfile} component={PatientProfile} />
+            <PrivateRoute path={Path.schedule} permission={SCREENS.VISIT_PROCESSING} component={Schedule} />
             <PrivateRoute
               path={Path.visitNotificationSettings}
               component={VisitNotificationSettings}

@@ -43,3 +43,86 @@ export const SETTING = {
     },
     RESIZE_IMAGE: 150
 }
+
+export const ServiceCategorySettings ={
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    variableWidth: true,
+    responsive: [
+        {
+            breakpoint: 1680,
+            settings: {
+              slidesToShow: 5,
+              slidesToScroll: 5,
+              infinite: false,
+              variableWidth: true,
+              speed: 500,
+              dots: false
+            }
+        },
+        {
+            breakpoint: 1280,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 4,
+              infinite: false,
+              variableWidth: true,
+              speed: 500,
+              dots: false
+            }
+        },
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: false,
+            variableWidth: true,
+            speed: 500,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            infinite: false,
+            variableWidth: true,
+            speed: 500,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: false,
+            variableWidth: true,
+            speed: 500,
+            dots: false
+          }
+        }
+      ]
+};
+
+ export const  Locationsettings = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToScroll: 1,
+  variableWidth: true,
+  responsive: [
+      {
+          breakpoint: 480,
+          settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+          }
+      }
+  ]
+}; 

@@ -145,9 +145,10 @@ export class VisitServiceList extends Component {
         this.props.formDirty()
     }
 
-    handleClick = (requestId) => {
+    handleClick = (requestId, patientId) => {
         this.props.getServiceRequestId(requestId);
         this.props.goToServiceRequestDetailsPage();
+        this.props.setPatient(patientId)
     }
 
     renderStatusClassName = (status) => {
@@ -445,7 +446,7 @@ export class VisitServiceList extends Component {
         this.props.formDirtyVisitList()
         let data = {
             searchKeyword: this.state.searchKeyword,
-            pageNumber: this.state.pageNumber,
+            pageNumber: DEFAULT_PAGE_NUMBER,
             pageSize: this.state.pageSize
         }
         this.props.getSearchDataCount(data)
@@ -502,7 +503,7 @@ export class VisitServiceList extends Component {
                     <div className='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                         <div className='card'>
                             <div className="BlockImageContainer" onClick={() =>
-                                this.handleClick(serviceList.serviceRequestId)}>
+                                this.handleClick(serviceList.serviceRequestId, serviceList.patientId)}>
                                 <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                                 <div className='BlockImageDetails'>
                                     <div className='BlockImageDetailsName'>
@@ -515,8 +516,8 @@ export class VisitServiceList extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Hired' ? '' : 'noArrow')} onClick={() => {
-                                if (serviceList.serviceRequestStatus === 'Hired') {
+                            <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Engaged' ? '' : 'noArrow')} onClick={() => {
+                                if (serviceList.serviceRequestStatus === 'Engaged') {
                                     this.props.setPatient(serviceList.patientId)
                                     this.props.goToPatientProfile()
                                 }
@@ -547,7 +548,7 @@ export class VisitServiceList extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>               
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='primaryColor m-0'>View Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
                         {/* <ThemeProvider>

@@ -27,12 +27,13 @@ export const ENTITY_USER = 2
 export const MONTH_LENGTH = 12
 export const MAX_MONTH_LIMIT = 9
 export const IN_MAX_ARRAY = [1, 2, 3]
-export const LAST_MONTH_ARRAY = [10, 11, 12]
+export const LAST_MONTH_ARRAY = [13]
 export const START_MONTH = [0, 1, 2]
 export const END_MONTH = [9, 10, 11]
 
 export const COUNT_BASED_MONTH = { 9: 1, 10: 2, 11: 3 }
 export const PAGE_NO = 1;
+export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
 export const SERVICE_REQUEST_PAGE_SIZE = 10
 
 export const SERVICE_REQUEST = {
@@ -193,20 +194,6 @@ export const ERROR_MSG = {
     timeErrMessage : 'Updated time cannot be greater than Maximum adjustable time.',
     emptyErrMessage : 'Time field(s) cannot be empty.'
 }
-
-export const DATE_FORMATS = {
-    monDD : "MMM DD",
-    hhMinSession:"hh:mm A",
-    yyyy_mm_dd : 'YYYY-MM-DD',
-    mm:"MM",
-    mmm:"MMM",
-    yyyy:'YYYY',
-    month:'month',
-    days:'days',
-    dd:'DD',
-    hhMinSec:"HH:mm:ss"
-}
-
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
 
 export const DEFAULT_FROM_DATE = '1900-01-01';
@@ -242,4 +229,46 @@ export const QUESTION_TYPE = {
     ChoiceBased:'ChoiceBased',
     OpenText:'OpenText'
 }
+
+export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
+
+export const serviceCategoriesImage = {
+    1: 'ADL_1.jpg',
+    3: 'Food Delivery_1.jpg',
+    2: 'Housekeeping_1.jpg',
+    4: 'Transportation_1.jpg',
+}
+
+export const DATE_FORMATS = {
+    monDD : "MMM DD",
+    hhMinSession:"hh:mm A",
+    yyyy_mm_dd : 'YYYY-MM-DD',
+    mm:"MM",
+    mmm:"MMM",
+    yyyy:'YYYY',
+    month:'month',
+    days:'days',
+    dd:'DD',
+    timeh_mm_a: 'h:mm a',
+    m_d_yy: 'M/D/YY',
+    hh_mm:'HH:mm',
+    hhMinSec:"HH:mm:ss"
+}
+
+
+export const RECURRING_PATTERN_OPTIONS = {
+    daily: 17,
+    weekly: 18,
+    monthly: 19
+}
+
+export const SCHEDULE_TYPE_OPTIONS = {
+    assessment: 1,
+    standard: 2
+}
+
+export const DEFAULT_CATEGORY_IMAGE = {
+    ADL: 'ADL_1.jpg'
+}
+
 

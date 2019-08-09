@@ -13,7 +13,9 @@ export const calenderDetails = (props,conversations,options,index) => {
      key={index}
      className={'list-group-item ProfileServicesVisitContent ' + (getUserInfo().serviceProviderTypeId === ENTITY_USER && "EntityUDashboard") }
      >
-     <div className="ProfileViewTime">
+     <div className="ProfileViewTime" onClick={() => {
+         props.handleClick(conversations)
+       }}>
        <span>
        {getHHMinSession(conversations.visitStartTime)}                 
        </span>

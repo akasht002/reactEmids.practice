@@ -574,6 +574,7 @@ export class ServiceCalendar extends Component {
         }
       >
         <div className="ProfileCardBody">
+        <span class="ProfileCardHeaderTitle primaryColor">Service Visits</span>
           <div className="topPalette">
             <div className="monthPalette">
             <span>From :</span>

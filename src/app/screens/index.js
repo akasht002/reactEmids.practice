@@ -36,10 +36,10 @@ import {
   VisitNotification,
   VisitNotificationSettings
   } from './VisitProcessingNotification'
-
 import Assessment from './VisitSelection/AssessmentVisitProcessing/Assessment'
 import AssessmentFeedback from './VisitSelection/AssessmentVisitProcessing/AssessmentFeedback'
 import AssessmentSummary from './VisitSelection/AssessmentVisitProcessing/AssessmentSummary'
+import Schedule from './Schedule'
   
 export {
   Welcome,
@@ -76,5 +76,6 @@ export {
   MobileLanding,
   Assessment,
   AssessmentFeedback,
-  AssessmentSummary
+  AssessmentSummary,
+  Schedule
 }

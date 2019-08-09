@@ -832,7 +832,9 @@ body{
 .topProfile .topPalette .ProfileMonthList.MonthName .Select-control .Select-value .Select-value-label
 {
     text-align: center;
-    padding: 10px 12px;
+    padding: 0px 12px;
+    font-size: 14px;
+    font-weight: 400;
 }
 .topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu
 {
@@ -1020,3 +1022,9 @@ font-size: 16px;
     height: auto;
     max-height: 300px;
 }
+
+.topProfile .ProfileCardBody .topPalette
+{
+    margin-bottom: 15px;
+}
+
