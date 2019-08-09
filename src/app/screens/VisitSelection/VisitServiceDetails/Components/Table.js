@@ -5,7 +5,7 @@ import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
-import { PAGE_SIZE_OPTIONS } from '../../../../constants/constants'
+import { PAGE_SIZE_OPTIONS, SERVICE_VISIT_STATUS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
 import './style.css';
@@ -32,6 +32,21 @@ const renderServiceTypesInToolTip = serviceTypes => {
             <i></i>
         </div>
     ))
+}
+
+const renderStatusBasedOnVisitStatus = visitStatusId => {
+   switch (visitStatusId) {
+       case VISIT_STATUS.startVisit.id:
+         return VISIT_STATUS.startVisit.keyValue  
+       case VISIT_STATUS.inProgress.keyValue.id:
+         return VISIT_STATUS.inProgress.keyValue
+       case VISIT_STATUS.completed.id:
+         return VISIT_STATUS.completed.keyValue
+       case VISIT_STATUS.paymentPending.id:
+         return VISIT_STATUS.paymentPending.keyValue    
+       default:
+         return ''
+   }
 }
 
 export const Table = props => {
@@ -67,14 +82,17 @@ export const Table = props => {
                                     </div>}
                                 </span>
                             </td>
-                            <td>
-                                <AssignServiceProvider
-                                    visitList={item}
-                                    getServicePlanVisitId={item.servicePlanVisitId}
-                                    onSubmit={props.onSubmit}
-                                    entityServiceProvidersList={props.entityServiceProvidersList}
-                                />
-                            </td>
+                            {
+                                !getUserInfo().isEntityServiceProvider &&
+                                <td>
+                                    <AssignServiceProvider
+                                        visitList={item}
+                                        getServicePlanVisitId={item.servicePlanVisitId}
+                                        onSubmit={props.onSubmit}
+                                        entityServiceProvidersList={props.entityServiceProvidersList}
+                                    />
+                                </td>
+                            }
                             <td>
                                 {/* <ThemeProvider>
                                     <SelectField>
@@ -96,7 +114,7 @@ export const Table = props => {
                              </span> */}
                             </td>
                             <td>
-                                {/* <div class="ScheduleRowButton"><a class="btn btn-outline-primary">Start Visit</a></div> */}
+                                <div class="ScheduleRowButton"><button class="btn btn-outline-primary">{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
                             </td>
                             {
                                 !getUserInfo().isEntityServiceProvider &&

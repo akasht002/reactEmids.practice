@@ -37,6 +37,10 @@ import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignS
 import Search from '../VisitServiceList/Search';
 import './customStyle.css'
 import { getUserInfo } from '../../../services/http';
+import {
+  getVisitServiceHistoryByIdDetail,
+  clearVisitServiceHistoryByIdDetail
+} from '../../../redux/visitHistory/VisitServiceDetails/actions'
 
 export class VisitServiceDetails extends Component {
   constructor(props) {
@@ -602,6 +606,7 @@ export class VisitServiceDetails extends Component {
                   entityServiceProvidersList={this.props.entityServiceProvidersList}
                   tooltipOpen={this.state.tooltipOpen}
                   toggleToolTip={this.toggleToolTip}
+                  visitSummary={this.props.getVisitServiceHistoryByIdDetail}
                 />
                 <PatientProfileTab />
               </TabContent>
@@ -641,7 +646,8 @@ function mapDispatchToProps(dispatch) {
     assignESP: (data) => dispatch(assignESP(data)),
     selectESP: (data) => dispatch(selectESP(data)),
     clearESPList: () => dispatch(clearESPList()),
-    getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data))
+    getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
+    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data))
   }
 }
 
