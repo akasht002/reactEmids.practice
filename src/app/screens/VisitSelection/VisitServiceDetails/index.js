@@ -36,6 +36,7 @@ import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
 import './customStyle.css'
+import { getUserInfo } from '../../../services/http';
 
 export class VisitServiceDetails extends Component {
   constructor(props) {
@@ -537,6 +538,7 @@ export class VisitServiceDetails extends Component {
         label: 'Service Provider'
       },
     ]
+    let updatedHeader = getUserInfo().isEntityServiceProvider ? header.slice(0,4) : header;
     return (
       <Fragment>
         <AsideScreenCover>
@@ -570,7 +572,7 @@ export class VisitServiceDetails extends Component {
                   addSchedule={this.addSchedule}
                   handleChangeSchedule={this.handleChangeSchedule}
                   visitList={this.props.visitList}
-                  header={header}
+                  header={updatedHeader}
                   espList={this.props.entityServiceProvidersList}
                   pageCount={this.props.visitListCount}
                   pageNumberChange={this.pageNumberChange}
