@@ -7,6 +7,7 @@ import { getUserInfo } from '../../../../services/http'
 import Filter from "./Filter/index";
 
 export const PlanTab = props => {
+    let renderPLanDetailsClass = getUserInfo().isEntityServiceProvider ? 'full-block-requestplan' : ''
     return (
         <TabPane tabId='2' className='TabBody'>
 
@@ -16,7 +17,7 @@ export const PlanTab = props => {
                     <span className="title-view">Schedule (s)</span>
                 </div>
                 }
-                <div className="col-lg-8 col-md-8 pd-15 right-customewidth">
+                <div className={`col-lg-8 col-md-8 pd-15 right-customewidth ${renderPLanDetailsClass}`}>
                     <div className="pull-left">
                         <span className="title-view">Visit (s)</span>
                     </div>
@@ -41,7 +42,7 @@ export const PlanTab = props => {
                         />
                     </div>
                 </div>}
-                <div className="col-lg-8 col-md-8 right-customewidth">
+                <div className={`col-lg-8 col-md-8 right-customewidth ${renderPLanDetailsClass}`}>
                     <div className="full-block shadow-style right-tablelist">
                         <Table
                             visitList={props.visitList}

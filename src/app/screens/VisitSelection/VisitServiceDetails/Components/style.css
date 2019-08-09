@@ -487,3 +487,9 @@ width: 140px;
 text-align: left;
 }
 
+.full-block-requestplan
+{
+	width: 100% !important;
+	max-width: 100% !important;
+	flex: 0 0 100% !important;
+}
