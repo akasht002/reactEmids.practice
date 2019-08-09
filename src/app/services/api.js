@@ -172,5 +172,7 @@ export const API = {
     updateServiceVisit: 'servicevisit',
     getServiceVisitDetails: 'servicevisit/getvsitdetails/',
     assignESP: 'servicevisit/assignservicevisit',
-    searchESP: 'EntityServiceProvider/'
+    searchESP: 'EntityServiceProvider/',
+    createOrEditAssessment:'assessment/create-assessment',
+    getAssessmentByAssessmentId:'assessment/get-assessment/',
 }

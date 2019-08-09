@@ -4,7 +4,7 @@ import { formateStateDateValue } from "../../../utils/validations";
 import { getDiffTime } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
-import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS } from '../../../constants/constants'
+import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS,SCHEDULE_TYPE_OPTIONS } from '../../../constants/constants'
 import moment from 'moment';
 
 export const ScheduleType = props => {
@@ -18,8 +18,7 @@ export const ScheduleType = props => {
 
     return (
         <Fragment>
-
-            {
+           { parseInt(props.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&            
                 props.options.map(item => {
                     return (
 

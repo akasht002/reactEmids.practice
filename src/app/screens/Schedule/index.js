@@ -27,7 +27,8 @@ import {
     createOrEditSchedule,
     getEntityServiceProviderListSearch,
     selectESP,
-    clearESPList
+    clearESPList,
+    createOrEditAssessment
 } from '../../redux/schedule/actions';
 import { getDiffTime, getHourMin, formateMDYY } from "../../utils/dateUtility";
 import './Components/styles.css'
@@ -403,30 +404,71 @@ export class Schedule extends Component {
     }
 
     checkValidAddress = () => {
-
+        
         this.setState({ onClickSave: true })
+        if( parseInt(this.state.planType,10) === SCHEDULE_TYPE_OPTIONS.standard ){          
 
-        let savePlan;
+            let savePlan;
 
-        if (!this.state.isRecurring) {
-            savePlan = this.validate(validate.oneTime)
-        } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.daily) {
-            savePlan = this.validate(validate.recurring.daily)
-        } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.weekly) {
-            savePlan = this.validate(validate.recurring.weekly)
-        } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly && this.state.monthlyOptions === 1) {
-            savePlan = this.validate(validate.recurring.monthly.first)
-        } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly && this.state.monthlyOptions === 2) {
-            savePlan = this.validate(validate.recurring.monthly.second)
+            if (!this.state.isRecurring) {
+                savePlan = this.validate(validate.oneTime)
+            } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.daily) {
+                savePlan = this.validate(validate.recurring.daily)
+            } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.weekly) {
+                savePlan = this.validate(validate.recurring.weekly)
+            } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly && this.state.monthlyOptions === 1) {
+                savePlan = this.validate(validate.recurring.monthly.first)
+            } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly && this.state.monthlyOptions === 2) {
+                savePlan = this.validate(validate.recurring.monthly.second)
+            }
+
+            let data = {
+                address: this.address
+            }
+            this.props.getValidPatientAddress(data)
+            if (!savePlan) {
+                this.savePlan();
+            }
+        } else {
+            this.saveAssessment()
         }
+    }
+
+    saveAssessment = () => {      
+
+        let {
+            startDate,
+            endDate,
+            startTime,
+            endTime,
+            additionalDescription,
+            selectedPOS,
+            latitude,
+            longitude
+        } = this.state       
 
         let data = {
-            address: this.address
-        }
-        this.props.getValidPatientAddress(data)
-        if (!savePlan) {
-            this.savePlan();
-        }
+            planScheduleId: 0,
+            startDate: startDate,
+            endDate: endDate ? endDate : startDate,
+            startTime: this.formatedStartTime,
+            endTime: this.formatedEndTime,
+            duration: getDiffTime(startTime, endTime),
+            description: additionalDescription,
+            serviceProviderId: this.espId ? this.espId : 0,
+            patientId: this.props.patientId,
+            address: this.address,
+            selectedPOS:selectedPOS,
+            patientAddressId: 0,
+            latitude:latitude,
+            longitude:longitude
+        } 
+        
+        this.props.getValidPatientAddress({address: this.address})
+        if(!this.validate(validate.assessment)){
+            this.props.createOrEditAssessment({data,address:this.address});
+        }       
+        
     }
 
     savePlan = () => {
@@ -518,9 +560,10 @@ export class Schedule extends Component {
                                 options={PlanTypeData}
                                 planType={this.state.planType}
                                 handleChangePlanType={this.handleChangePlanType} />
-                        </div>
-                        {parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
+                        </div>                       
                             <Fragment>
+                            {
+                                parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                                 <div className="Service-Cat-Typesblock">
                                     <div>
                                         <h2 className='ServicesTitle'>Service Category</h2>
@@ -551,8 +594,8 @@ export class Schedule extends Component {
                                         />
                                     </div>
                                 </div>
-
-                                <div className={"ServiceTypesWidget PostSR schdule-postblock " + (this.state.planType === SCHEDULE_TYPE_OPTIONS.assessment && 'left-block1-shedule')}>
+                            }
+                                <div className={"ServiceTypesWidget PostSR schdule-postblock " + (parseInt(this.state.planType,10) === SCHEDULE_TYPE_OPTIONS.assessment && 'left-block1-shedule')}>
                                     <h2 className='ServicesTitle'>Schedule</h2>
                                     <div className="row">
                                         <ScheduleType
@@ -599,11 +642,12 @@ export class Schedule extends Component {
                                             onClickSave={this.state.onClickSave}
                                             formatedStartTime={this.formatedStartTime}
                                             weeklySelectedDays={this.weeklySelectedDays}
+                                            planType={this.state.planType}
                                         />
 
                                     </div>
                                 </div>
-                                <div className={"ServiceTypesWidget PostSR " + (this.state.planType === SCHEDULE_TYPE_OPTIONS.assessment && 'right-block2-shedule')}>
+                                <div className={"ServiceTypesWidget PostSR " + (parseInt(this.state.planType,10) === SCHEDULE_TYPE_OPTIONS.assessment && 'right-block2-shedule')}>
                                     <h2 className='ServicesTitle'>Point of Service</h2>
                                     <PointOfService
                                         patientAddressList={this.props.patientAddressList}
@@ -666,7 +710,6 @@ export class Schedule extends Component {
                                     </div>
                                 </div>
                             </Fragment>
-                        }
                     </div>
                     <AlertPopup
                         message='Do you want to discard the changes?'
@@ -700,7 +743,9 @@ function mapDispatchToProps(dispatch) {
         getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
         selectESP: (data) => dispatch(selectESP(data)),
         clearESPList: () => dispatch(clearESPList()),
-        selectOrClearAllServiceType: (data, isSelectAll) => dispatch(selectOrClearAllServiceType(data, isSelectAll))
+        selectOrClearAllServiceType: (data, isSelectAll) => dispatch(selectOrClearAllServiceType(data, isSelectAll)),
+        createOrEditAssessment: data => dispatch(createOrEditAssessment(data))
+
     }
 }
 
