@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { Link } from "react-router-dom";
 import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button, Preloader } from '../../../../components';
@@ -160,7 +159,6 @@ export class PerformTasks extends Component {
 
     render() {
         let startService = 1;
-        // let stopService = 0;
         let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
         let timerBtn;
         const { visitStatus, visitStartTime, visitEndTime, visitTimeDuration } = this.props.PerformTasksList

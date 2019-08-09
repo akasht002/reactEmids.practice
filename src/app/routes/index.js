@@ -33,6 +33,9 @@ import {
   VisitNotification,
   VisitNotificationSettings,
   ESPProfile,
+  Assessment,
+  AssessmentFeedback,
+  AssessmentSummary,
   Schedule
 } from '../screens';
 import PrivateRoute from './privateRouter';
@@ -81,6 +84,9 @@ export const Path = {
   visitNotification: '/visitNotification',
   visitNotificationSettings: '/visitNotificationSettings',
   ESPProfile:'/espProfile',
+  assessment:'/assessment/processing',
+  assessmentFeedback:'/assessment/feedback',
+  assessmentSummary:'/assessment/summary',
   schedule: '/schedule'
 };
 
@@ -133,6 +139,9 @@ class AppStackRoot extends Component {
               path={Path.visitNotificationSettings}
               component={VisitNotificationSettings}
             />
+            <PrivateRoute path={Path.assessment} component={Assessment} />
+            <PrivateRoute path={Path.assessmentFeedback} component={AssessmentFeedback} />
+            <PrivateRoute path={Path.assessmentSummary} component={AssessmentSummary} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>
