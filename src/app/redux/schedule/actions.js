@@ -16,6 +16,7 @@ import { push } from '../../redux/navigation/actions'
 import { orderBy } from 'lodash'
 import { startLoading, endLoading } from '../loading/actions';
 import { API_ERROR_CODE, DEFAULT_PAGE_SIZE_ESP_LIST } from "../constants/constants";
+import { formatAssessmentData } from './modal/assessment'
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -92,6 +93,20 @@ export const disableShowmore = (data) => {
 export const clearESPList = () => {
     return {
         type: Schedule.clearESPList
+    }
+}
+
+export const getAssessmentDetailSuccess = (data) =>{
+    return {
+        type: Schedule.getAssessmentDetailSuccess,
+        data
+    }
+}
+
+export const createOrEditAssessmentSuccess = (data)=>{
+    return {
+        type : Schedule.createOrEditAssessmentSuccess,
+        data
     }
 }
 
@@ -200,9 +215,8 @@ export function getValidPatientAddress(data) {
             })
             .catch(err => {
                 dispatch(endLoading())
-                if (err.response.status === API_ERROR_CODE.badRequest) {
-                    dispatch(getValidPatientAddressSuccess(true))
-                }
+                err.response && err.response.status=== API_ERROR_CODE.badRequest &&  dispatch(getValidPatientAddressSuccess(true)) 
+                
             })
     }
 };
@@ -291,5 +305,35 @@ export function createOrEditSchedule(data) {
             })
     }
 };
+
+export function createOrEditAssessment(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        let modelData = formatAssessmentData(data)
+        ServiceRequestPost(API.createOrEditAssessment, modelData)
+            .then(resp => {
+                dispatch(push(Path.visitServiceDetails))
+                dispatch(clearESPList())
+                dispatch(endLoading());
+            })
+            .catch(err => {
+                dispatch(endLoading());
+            })
+    }
+};
+
+
+
+ export const getAssessmentById = (id) => {
+    return (dispatch) => {
+        ServiceRequestPost(API.getAssessmentByAssessmentId, id)
+            .then(resp => {
+                dispatch(getAssessmentDetailSuccess(resp.data))
+            })
+            .catch(err => {
+
+             })
+    }
+}
 
 

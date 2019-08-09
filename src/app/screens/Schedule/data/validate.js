@@ -71,6 +71,15 @@ export const validate = {
                 { key: 'state', validation: 'required', isState: true }
             ]
         }
-    }
+    },
+    assessment :[
+        { key: 'startDate', validation: 'required', isState: true },
+        { key: 'startTime', validation: 'required', isState: true },
+        { key: 'endTime', validation: 'required', isState: true },
+        { key: 'street', validation: 'required', isState: true },
+        { key: 'city', validation: 'required', isState: true },
+        { key: 'state', validation: 'required', isState: true },
+        { key: 'zip', validation: 'required', isState: true }
+    ]
 }
 

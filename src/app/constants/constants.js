@@ -271,4 +271,8 @@ export const DEFAULT_CATEGORY_IMAGE = {
     ADL: 'ADL_1.jpg'
 }
 
+export const PLAN_TYPE = {
+    assessment:116
+}
+
 
