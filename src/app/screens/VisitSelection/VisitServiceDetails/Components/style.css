@@ -103,11 +103,23 @@ width: 12%;
 }
 
 .plan-tableview th:nth-child(4), .plan-tableview th:nth-child(5),
-.plan-tableview td:nth-child(4), .plan-tableview td:nth-child(5)
+.plan-tableview td:nth-child(4), .plan-tableview td:nth-child(5),
+.plan-tableview th:nth-child(6), 
+.plan-tableview td:nth-child(6) 
 {
-width: 24%;
+width: 20%;
 }
 
+.plan-tableview th:nth-child(7), .plan-tableview td:nth-child(7)
+{
+width: 7%;
+}
+
+.plan-tableview td:nth-child(1) time
+{
+width: 24%;
+padding-left: 14px;
+}
 
 .plan-tableview .EntityUServiceProf
 {
@@ -339,6 +351,7 @@ padding-right:40px;
 	padding-left: 10px;
 	font-size: 14px;
 	outline: none;
+	cursor: pointer;
 }
 
 .edit-rightico

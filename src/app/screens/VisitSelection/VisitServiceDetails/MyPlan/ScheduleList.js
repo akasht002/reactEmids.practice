@@ -18,15 +18,19 @@ export const ScheduleList = props => {
                                         onChange={(e) => { props.handleChangeSchedule(e) }}
                                         defaultChecked={true}
                                     />
-                                    <div className='BlockImageDetailsName'>
+                                    <label className='SR-types-label'>
                                         {item.serviceTypes &&
                                             getFields(item.serviceTypes, 'serviceTypeDescription')}
-                                    </div>
+                                    </label>
                                     <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.schedulePatternType}</label></span>
                                     <span class="checkmark"></span>
                                 </label>
+
+                                <div className="edit-block">
+                                <button onClick={() => props.handelEditShedule(item.planScheduleId)}>Edit</button>
+                                </div>
                             </fieldset>
-                            <button onClick={() => props.handelEditShedule(item.planScheduleId)}>Edit</button>
+                          
                         </div>
                     )
                 })
