@@ -15,6 +15,7 @@ import {
   assignESP,
   getEntityServiceProviderListSearch, selectESP, clearESPList, getEntityServiceProviderList
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getIndividualSchedulesDetails } from '../../../redux/schedule/actions';
 import {
   getServiceCategory,
   getServiceType,
@@ -429,6 +430,10 @@ export class VisitServiceDetails extends Component {
     this.props.getVisitList(model);
   }
 
+  handelEditShedule = (scheduleId) => {
+    this.props.getIndividualSchedulesDetails(scheduleId)
+  }
+
   render() {
     let modalContent =
       <div className="row">
@@ -600,6 +605,7 @@ export class VisitServiceDetails extends Component {
                   entityServiceProvidersList={this.props.entityServiceProvidersList}
                   tooltipOpen={this.state.tooltipOpen}
                   toggleToolTip={this.toggleToolTip}
+                  handelEditShedule={this.handelEditShedule}
                 />
                 <PatientProfileTab />
               </TabContent>
@@ -639,7 +645,8 @@ function mapDispatchToProps(dispatch) {
     assignESP: (data) => dispatch(assignESP(data)),
     selectESP: (data) => dispatch(selectESP(data)),
     clearESPList: () => dispatch(clearESPList()),
-    getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data))
+    getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
+    getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data))
   }
 }
 

@@ -175,4 +175,5 @@ export const API = {
     searchESP: 'EntityServiceProvider/',
     createOrEditAssessment:'assessment/create-assessment',
     getAssessmentByAssessmentId:'assessment/get-assessment/',
+    getIndividualSchedulesDetails: 'plan/'
 }

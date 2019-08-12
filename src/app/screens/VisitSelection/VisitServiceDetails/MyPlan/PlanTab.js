@@ -33,6 +33,7 @@ export const PlanTab = props => {
                         <ScheduleList
                             list={props.scheduleList}
                             handleChangeSchedule={props.handleChangeSchedule}
+                            handelEditShedule={props.handelEditShedule}
                         />
                     </div>
                 </div>

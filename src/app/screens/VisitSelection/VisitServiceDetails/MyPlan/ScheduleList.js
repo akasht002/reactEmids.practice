@@ -8,7 +8,6 @@ export const ScheduleList = props => {
                 props.list.map(item => {
                     return (
                         <div className="schedule-listblock">
-
                             <fieldset>
                                 <label className="customechk">
                                     <input
@@ -22,12 +21,12 @@ export const ScheduleList = props => {
                                     <div className='BlockImageDetailsName'>
                                         {item.serviceTypes &&
                                             getFields(item.serviceTypes, 'serviceTypeDescription')}
-                                    </div>                          
+                                    </div>
                                     <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.schedulePatternType}</label></span>
                                     <span class="checkmark"></span>
                                 </label>
                             </fieldset>
-
+                            <button onClick={() => props.handelEditShedule(item.planScheduleId)}>Edit</button>
                         </div>
                     )
                 })

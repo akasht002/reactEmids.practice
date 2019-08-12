@@ -762,7 +762,8 @@ function mapStateToProps(state) {
         recurringPatternList: scheduleState.recurringPatternList,
         daysList: scheduleState.daysList,
         patientId: state.patientProfileState.patientId,
-        disableShowmore: scheduleState.disableShowmore
+        disableShowmore: scheduleState.disableShowmore,
+        individualSchedulesDetails: scheduleState.individualSchedulesDetails
     }
 }
 

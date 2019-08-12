@@ -96,16 +96,23 @@ export const clearESPList = () => {
     }
 }
 
-export const getAssessmentDetailSuccess = (data) =>{
+export const getAssessmentDetailSuccess = (data) => {
     return {
         type: Schedule.getAssessmentDetailSuccess,
         data
     }
 }
 
-export const createOrEditAssessmentSuccess = (data)=>{
+export const createOrEditAssessmentSuccess = (data) => {
     return {
-        type : Schedule.createOrEditAssessmentSuccess,
+        type: Schedule.createOrEditAssessmentSuccess,
+        data
+    }
+}
+
+export const getIndividualSchedulesDetailsSuccess = (data) => {
+    return {
+        type: Schedule.getIndividualSchedulesDetailsSuccess,
         data
     }
 }
@@ -215,8 +222,8 @@ export function getValidPatientAddress(data) {
             })
             .catch(err => {
                 dispatch(endLoading())
-                err.response && err.response.status=== API_ERROR_CODE.badRequest &&  dispatch(getValidPatientAddressSuccess(true)) 
-                
+                err.response && err.response.status === API_ERROR_CODE.badRequest && dispatch(getValidPatientAddressSuccess(true))
+
             })
     }
 };
@@ -324,7 +331,7 @@ export function createOrEditAssessment(data) {
 
 
 
- export const getAssessmentById = (id) => {
+export const getAssessmentById = (id) => {
     return (dispatch) => {
         ServiceRequestPost(API.getAssessmentByAssessmentId, id)
             .then(resp => {
@@ -332,8 +339,21 @@ export function createOrEditAssessment(data) {
             })
             .catch(err => {
 
-             })
+            })
     }
 }
+
+export function getIndividualSchedulesDetails(scheduleId) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ServiceRequestGet(API.getIndividualSchedulesDetails + scheduleId).then((resp) => {
+            dispatch(getIndividualSchedulesDetailsSuccess(resp.data));
+            dispatch(push(Path.schedule));
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
 
 
