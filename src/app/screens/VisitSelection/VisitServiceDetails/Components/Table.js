@@ -5,8 +5,9 @@ import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
-import { PAGE_SIZE_OPTIONS } from '../../../../constants/constants'
+import { PAGE_SIZE_OPTIONS, SERVICE_VISIT_STATUS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
+import { getUserInfo } from '../../../../services/http'
 import './style.css';
 
 const renderServiceTypeImages = serviceTypes => {
@@ -33,6 +34,21 @@ const renderServiceTypesInToolTip = serviceTypes => {
     ))
 }
 
+const renderStatusBasedOnVisitStatus = visitStatusId => {
+   switch (visitStatusId) {
+       case VISIT_STATUS.startVisit.id:
+         return VISIT_STATUS.startVisit.keyValue  
+       case VISIT_STATUS.inProgress.id:
+         return VISIT_STATUS.inProgress.keyValue
+       case VISIT_STATUS.completed.id:
+         return VISIT_STATUS.completed.keyValue
+       case VISIT_STATUS.paymentPending.id:
+         return VISIT_STATUS.paymentPending.keyValue    
+       default:
+         return null
+   }
+}
+
 export const Table = props => {
     return (
         <Fragment>
@@ -42,7 +58,8 @@ export const Table = props => {
                         {props.header.map(item => {
                             return <th>{item.label}</th>
                         })}
-                        <th></th>
+                        {!getUserInfo().isEntityServiceProvider &&
+                        <th></th>}
                         <th></th>
                     </tr>
                 </thead>
@@ -59,47 +76,36 @@ export const Table = props => {
                                         <div class="bottom">
                                             <h3>Service Types</h3>
                                             <div className="inner-block-SRtypes">
-                                            {renderServiceTypesInToolTip(item.serviceTypes)}
+                                                {renderServiceTypesInToolTip(item.serviceTypes)}
                                             </div>
                                             <i></i>
                                         </div>
                                     </div>}
                                 </span>
                             </td>
+                            {
+                                !getUserInfo().isEntityServiceProvider &&
+                                <td>
+                                    <AssignServiceProvider
+                                        visitList={item}
+                                        getServicePlanVisitId={item.servicePlanVisitId}
+                                        onSubmit={props.onSubmit}
+                                        entityServiceProvidersList={props.entityServiceProvidersList}
+                                    />
+                                </td>
+                            }
+                            {getUserInfo().isEntityServiceProvider &&
                             <td>
-                                <AssignServiceProvider
-                                    visitList={item}
-                                    getServicePlanVisitId={item.servicePlanVisitId}
-                                    onSubmit={props.onSubmit}
-                                    entityServiceProvidersList={props.entityServiceProvidersList}
-                                />
-                            </td>
-                            <td>
-                                {/* <ThemeProvider>
-                                    <SelectField>
-                                        <Select
-                                            placement="bottom"
-                                            options={props.espList}
-                                            onChange={props.handleChangeSelectedDays}
-                                            selectedValue={props.selectedDays}
-                                            className='onBoardingSelect'
-                                        >
-                                            {props.selectedDaysLabel ? props.selectedDaysLabel : <span className="Select-placeholder pl-0">Select weekly</span>}
-                                        </Select>
-                                    </SelectField>
-                                </ThemeProvider> */}
-
-                                {/* <span className="SP-viewplantable">
-                             <img alt="" src={require('../../../../assets/images/Blank_Profile_icon.png')}></img>
-                             <span><a>Assign Provider</a></span>
-                             </span> */}
-                            </td>
-                            <td>
-                                {/* <div class="ScheduleRowButton"><a class="btn btn-outline-primary">Start Visit</a></div> */}
-                            </td>
-                            <td>
-                                <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
-                            </td>
+                                <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
+                                onClick={() => props.navigateToparticularPageBasedonId(item)}
+                                >{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
+                            </td>}
+                            {
+                                !getUserInfo().isEntityServiceProvider &&
+                                <td>
+                                    <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
+                                </td>
+                            }
                         </tr>
                     })}
                 </tbody>

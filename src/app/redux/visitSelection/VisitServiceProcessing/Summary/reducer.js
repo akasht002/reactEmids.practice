@@ -1,6 +1,7 @@
 import {
     SummaryDetails
 } from './actions'
+import { getServiceTasks } from '../PerformTasks/actions'
 
 const defaultState = {
     SummaryDetails: {},
@@ -17,7 +18,10 @@ const SummaryState = (state = defaultState, action) => {
         case SummaryDetails.getSummaryDetailsSuccess:
             return {
                 ...state,
-                SummaryDetails: action.data
+                SummaryDetails: { ...action.data,
+                    serviceRequestTypeVisits: getServiceTasks(action.data && action.data.serviceTypes),
+                    serviceRequestVisitId: action.data && action.data.servicePlanVisitId
+                }
             };
 
         case SummaryDetails.getCalculationsData:

@@ -24,7 +24,8 @@ const defaultState = {
     serviceVisitDetails: '',
     isLoading: false,
     entityServiceProvidersList: [],
-    disableShowmore: false
+    disableShowmore: false,
+    patientId: 0
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -39,7 +40,8 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         case VisitServiceDetails.setEntityServiceProviderSuccess:
             return {
                 ...state,
-                entityServiceProviderId: action.data
+                entityServiceProviderId: action.data && action.data.serviceProviderId,
+                patientId: action.data && action.data.patientId 
             };
 
         case VisitServiceDetails.updateServiceRequestByServiceProviderSuccess:
