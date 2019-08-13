@@ -174,5 +174,14 @@ export const API = {
     assignESP: 'servicevisit/assignservicevisit',
     searchESP: 'EntityServiceProvider/',
     getEspVisitList : 'plan/GetVisitDetailsForEsp',
-    getEspVisitListCount: 'plan/getvisitdetailsforespcount'
+    getEspVisitListCount: 'plan/getvisitdetailsforespcount',
+    getServiceRequestPerformTasksForEsp: 'plan/servicerequestvisitdetails/',
+    startOrStopServiceForEsp: 'servicevisit/updatevisitstartendtime',
+    getSummaryDetailsForEsp: 'servicevisit/serviceplanvisitsummarydetails/',
+    savePerformedTaskForEsp: 'servicevisit/Serviceplantaskupdate',
+    saveAnswersForEsp: 'feedback/planserviceprovidervisitfeedbackresponse',
+    getSavedSignatureForEsp: 'servicevisit/servicerequestvisit/getcustomersignature/', 
+    visitProcessingUpdateBilledDurationForEsp:'servicevisit/updatebilledduration',
+    saveSignatureForEsp: 'servicevisit/serviceplanVisit/uploadsignature',
+    saveSummaryDetailsForEsp: 'servicevisit/submitbillingforvisit',
 }

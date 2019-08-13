@@ -38,14 +38,14 @@ const renderStatusBasedOnVisitStatus = visitStatusId => {
    switch (visitStatusId) {
        case VISIT_STATUS.startVisit.id:
          return VISIT_STATUS.startVisit.keyValue  
-       case VISIT_STATUS.inProgress.keyValue.id:
+       case VISIT_STATUS.inProgress.id:
          return VISIT_STATUS.inProgress.keyValue
        case VISIT_STATUS.completed.id:
          return VISIT_STATUS.completed.keyValue
        case VISIT_STATUS.paymentPending.id:
          return VISIT_STATUS.paymentPending.keyValue    
        default:
-         return ''
+         return null
    }
 }
 
@@ -94,10 +94,12 @@ export const Table = props => {
                                     />
                                 </td>
                             }
-                          
+                            {getUserInfo().isEntityServiceProvider &&
                             <td>
-                                <div class="ScheduleRowButton"><button class="btn btn-outline-primary">{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
-                            </td>
+                                <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
+                                onClick={() => props.navigateToparticularPageBasedonId(item)}
+                                >{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
+                            </td>}
                             {
                                 !getUserInfo().isEntityServiceProvider &&
                                 <td>

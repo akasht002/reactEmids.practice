@@ -56,6 +56,7 @@ export const PlanTab = props => {
                             totalResult={props.pageCount}
                             tooltipOpen={props.tooltipOpen}
                             toggleToolTip={props.toggleToolTip}
+                            navigateToparticularPageBasedonId={props.navigateToparticularPageBasedonId}
                         />
                         <CoreoPagination
                             activePage={props.activePage}

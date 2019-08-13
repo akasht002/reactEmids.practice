@@ -170,9 +170,9 @@ export class PerformTasks extends Component {
                 stopTimer={visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING}
                 startTime={visitStartTime}
                 endTime={visitEndTime}
-                duration={visitTimeDuration}
+                duration={parseInt(visitTimeDuration, 10)}
             />
-        }
+         }
 
         if (visitStatus === SERVICE_STATES.YET_TO_START) {
             timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, this.state.taskList.serviceRequestVisitId) }}>Start Service</a>

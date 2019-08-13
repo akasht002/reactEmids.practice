@@ -493,7 +493,7 @@ margin-top: 0 !important;
 }
 .plan-tableview tbody
 {
-    min-height: 480px;
+    min-height: 410px;
 }
 
 .right-customewidth .right-tablelist .table-result-block

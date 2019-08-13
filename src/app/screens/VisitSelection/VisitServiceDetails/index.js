@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { TabContent } from 'reactstrap'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
-import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, Preloader } from '../../../components';
+import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, Preloader, ModalPopup } from '../../../components';
 import {
   getServiceRequestList,
   getVisitServiceDetails,
@@ -27,7 +27,8 @@ import { RequestTab } from './ServiceRequest/RequestTab';
 import { PlanTab } from './MyPlan/PlanTab';
 import { PatientProfileTab } from './PatientProfile/PatientProfileTab';
 import {
-  PAGE_NO
+  PAGE_NO,
+  VISIT_STATUS
 } from '../../../constants/constants';
 import './styles.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
@@ -41,6 +42,14 @@ import {
   getVisitServiceHistoryByIdDetail,
   clearVisitServiceHistoryByIdDetail
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import {
+  getPerformTasksList,
+  formDirtyPerformTask,
+  getServiceVisitId
+} from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
+import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
+import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 
 export class VisitServiceDetails extends Component {
   constructor(props) {
@@ -62,7 +71,8 @@ export class VisitServiceDetails extends Component {
       pageNumberESP: PAGE_NO,
       pageSizeESP: 9,
       rowPageSize: 10,
-      tooltipOpen: false
+      tooltipOpen: false,
+      standByModeAlertMsg: false
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -434,6 +444,44 @@ export class VisitServiceDetails extends Component {
     this.props.getVisitList(model);
   }
 
+  visitProcessing = data => {
+    this.props.isStandByModeOn.isServiceProviderInStandBy ?
+      this.setState({ standByModeAlertMsg: true })
+      :
+      this.props.getPerformTasksList(data, true)
+    this.props.formDirty();
+    this.props.formDirtyFeedback();
+    this.props.formDirtyPerformTask();
+  }
+
+  visitProcessingSummary = data => {
+    this.props.getServiceVisitId(data, true);
+    this.props.getSummaryDetails(data);
+    this.props.getSavedSignature(data);
+    this.props.formDirtySummaryDetails();
+    this.props.formDirty();
+    this.props.formDirtyFeedback();
+  }
+
+  visitSummary = (data) => {
+    this.props.getVisitServiceHistoryByIdDetail(data)
+  }
+
+  navigateToparticularPageBasedonId = visitList => {
+    switch (visitList.visitStatusId) {
+        case VISIT_STATUS.startVisit.id:
+          return this.visitProcessing(visitList.servicePlanVisitId) 
+        case VISIT_STATUS.inProgress.id:
+          return this.visitProcessing(visitList.servicePlanVisitId) 
+        case VISIT_STATUS.completed.id:
+          return this.visitSummary(visitList.servicePlanVisitId)
+        case VISIT_STATUS.paymentPending.id:
+          return this.visitProcessingSummary(visitList.servicePlanVisitId)   
+        default:
+          return ''
+    }
+  }
+
   render() {
     let modalContent =
       <div className="row">
@@ -606,7 +654,7 @@ export class VisitServiceDetails extends Component {
                   entityServiceProvidersList={this.props.entityServiceProvidersList}
                   tooltipOpen={this.state.tooltipOpen}
                   toggleToolTip={this.toggleToolTip}
-                  visitSummary={this.props.getVisitServiceHistoryByIdDetail}
+                  navigateToparticularPageBasedonId={this.navigateToparticularPageBasedonId}
                 />
                 <PatientProfileTab />
               </TabContent>
@@ -621,6 +669,19 @@ export class VisitServiceDetails extends Component {
               centered={true}
               onClick={this.updateServiceVisits}
             />
+            <ModalPopup
+            isOpen={this.state.standByModeAlertMsg}
+            ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
+            btn1='OK'
+            className='modal-sm'
+            headerFooter='d-none'
+            footer='d-none'
+            centered='centered'
+            onConfirm={() =>
+              this.setState({
+                standByModeAlertMsg: false
+              })}
+          />
           </Scrollbars>
         </AsideScreenCover>
       </Fragment>
@@ -647,7 +708,15 @@ function mapDispatchToProps(dispatch) {
     selectESP: (data) => dispatch(selectESP(data)),
     clearESPList: () => dispatch(clearESPList()),
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
-    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data))
+    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
+    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
+    formDirty: () => dispatch(formDirty()),
+    formDirtyFeedback: () => dispatch(formDirtyFeedback()),
+    formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),
+    getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
+    getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
+    getSavedSignature: (data) => dispatch(getSavedSignature(data)),
+    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails())
   }
 }
 
@@ -667,7 +736,8 @@ function mapStateToProps(state) {
     patientId: state.patientProfileState.patientId,
     serviceVisitDetails: VisitServiceDetailsState.serviceVisitDetails,
     isLoading: VisitServiceDetailsState.isLoading,
-    disableShowmore: VisitServiceDetailsState.disableShowmore
+    disableShowmore: VisitServiceDetailsState.disableShowmore,
+    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit
   }
 }
 

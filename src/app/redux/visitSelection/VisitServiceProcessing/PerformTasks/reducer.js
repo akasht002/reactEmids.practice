@@ -1,6 +1,6 @@
 import {PerformTasks} from './bridge'
 import { SERVICE_STATES } from '../../../../constants/constants'
-
+import { getServiceTasks } from './actions'
 const defaultState = {
     PerformTasksList: {},
     ServiceRequestVisitId: '',
@@ -24,7 +24,10 @@ const PerformTasksState = (state = defaultState, action) => {
             }
             return {
                 ...state,
-                PerformTasksList: { ...action.data, visitStatus },
+                PerformTasksList: { ...action.data, visitStatus,
+                    serviceRequestTypeVisits: getServiceTasks(action.data && action.data.serviceTypes),
+                    serviceRequestVisitId: action.data && action.data.servicePlanVisitId
+                },
             };
 
         case PerformTasks.getVisitStatus:

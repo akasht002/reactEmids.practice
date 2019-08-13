@@ -1,15 +1,17 @@
 import { API } from '../../../../services/api';
-import { ServiceRequestGet, ServiceRequestPut } from '../../../../services/http';
+import { ServiceRequestGet, ServiceRequestPut, getUserInfo } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import {PerformTasks} from './bridge'
+import { getUserInformation } from '../../../auth/UserAgreement/actions';
 
 export const formDirtyPerformTask = () => {
     return {
         type: PerformTasks.formDirtyPerformTask,
     }
 }
+
 
 export const getPerformTasksListSuccess = (data) => {
     return {
@@ -59,9 +61,10 @@ export const startLoadingProcessing = () => {
 };
 
 export function getPerformTasksList(data, startOrStop) {
+    let getServiceRequestPerformTasks = getUserInfo().isEntityServiceProvider ? API.getServiceRequestPerformTasksForEsp : API.getServiceRequestPerformTasks
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))       
-        ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
+        ServiceRequestGet(getServiceRequestPerformTasks + data).then((resp) => {
             if (startOrStop === false) {
                 dispatch(getVisitStatus(resp.data))
             }
@@ -77,10 +80,11 @@ export function getPerformTasksList(data, startOrStop) {
 };
 
 export function getServiceVisitId(data, startOrStop) {
+    let getServiceRequestPerformTasks = getUserInfo().isEntityServiceProvider ? API.getServiceRequestPerformTasksForEsp : API.getServiceRequestPerformTasks
     return (dispatch) => {
         dispatch(startLoadingProcessing());
         dispatch(getServiceRequestVisitId(data))
-        ServiceRequestGet(API.getServiceRequestPerformTasks + data).then((resp) => {
+        ServiceRequestGet(getServiceRequestPerformTasks + data).then((resp) => {
             if (startOrStop === false) {
                 dispatch(getVisitStatus(resp.data))
             }
@@ -94,8 +98,17 @@ export function getServiceVisitId(data, startOrStop) {
 };
 
 export function addPerformedTask(data, startServiceAction) {
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let savePerformedTask = isEntityServiceProvider ? API.savePerformedTaskForEsp : API.savePerformedTask + data.serviceRequestVisitId
+    let model = isEntityServiceProvider ? {
+        serviceProviderId: data.serviceProviderId,
+        servicePlanVisitId: data.serviceRequestVisitId,
+        planVistTypeTaskDetailsId: data && data.serviceRequestTypeTaskVisits.map(taskVisitId => {
+         return taskVisitId.serviceRequestTypeTaskDetailsId
+        })
+    } : data
     return (dispatch) => {
-        ServiceRequestPut(API.savePerformedTask + data.serviceRequestVisitId, data).then((resp) => {
+        ServiceRequestPut(savePerformedTask, model).then((resp) => {
             if (startServiceAction === 1 || startServiceAction === undefined) {
                 dispatch(push(Path.feedback))
             }
@@ -107,13 +120,20 @@ export function addPerformedTask(data, startServiceAction) {
 
 
 export function startOrStopService(data, visitId, startedTime) {
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let startOrStopService = isEntityServiceProvider ? API.startOrStopServiceForEsp : API.startOrStopService
     return (dispatch) => {
-        const model = {
+        let  model = isEntityServiceProvider ? 
+        {
+            servicePlanVisitId: visitId,
+            visitAction: data
+        } :
+        {
             "serviceRequestVisitId": visitId,
             "visitAction": data
         }
         dispatch(startLoadingProcessing());
-        ServiceRequestPut(API.startOrStopService, model).then((resp) => {
+        ServiceRequestPut(startOrStopService, model).then((resp) => {
             dispatch(saveStartedTime(startedTime))
             dispatch(getPerformTasksList(visitId, false));
             dispatch(getSummaryDetails(visitId));
@@ -125,9 +145,10 @@ export function startOrStopService(data, visitId, startedTime) {
 };
 
 export function getSummaryDetails(data) {
+    let getSummaryDetails = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getSummaryDetails
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
+        ServiceRequestGet(getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(endLoadingProcessing());
         }).catch((err) => {
@@ -136,6 +157,27 @@ export function getSummaryDetails(data) {
     }
 };
 
-
+export const getServiceTasks = (serviceTypes) => {
+    return serviceTypes.map(type => {
+            return {
+                serviceRequestTypeTaskVisitId: type.planVisitTypeDetailsId,
+                serviceRequestTypeTaskDetails: type.planVisitTypeDetailsId,
+                serviceTypeDescription: type.serviceTypeDescription,
+                serviceRequestTypeDetailsId: type.planServiceTypeDetailsId,
+                isActive: true,
+                serviceRequestTypeTaskVisits: type.serviceTask.map((task, index) => {
+                    return {
+                        serviceRequestTypeTaskDetailsId: task.planVistTypeTaskDetailsId,
+                        serviceRequestTypeDetailsId: type.planVisitTypeDetailsId,
+                        serviceTaskDescription: task.serviceTaskDescription,
+                        serviceTypeId: type.serviceTypeId,
+                        isActive: true,
+                        statusId: task.taskStatusId,
+                        serviceRequestTypeTaskVisitId: task.planVistTypeTaskDetailsId
+                    }
+                })
+            }
+    })
+}
 
 
