@@ -162,7 +162,6 @@ export class PerformTasks extends Component {
         let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
         let timerBtn;
         const { visitStatus, visitStartTime, visitEndTime, visitTimeDuration } = this.props.PerformTasksList
-        console.log("PerformTasksList: ",this.props.PerformTasksList)
         if (visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING) {
             time = <StopWatch
                 stopTimer={visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING}

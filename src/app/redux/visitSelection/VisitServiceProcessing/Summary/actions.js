@@ -89,6 +89,7 @@ export function getSummaryDetails(data) {
         dispatch(startLoadingProcessing());
         ServiceRequestGet(getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
+            //This one we need when we have to give demo.
             // dispatch(calculationsFirstTime(resp.data));
            // dispatch(getVisitServiceEligibilityStatus(resp.data))
            dispatch(calculationsFirstTime(resp.data));

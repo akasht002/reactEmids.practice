@@ -485,7 +485,6 @@ export function getVisitList(data) {
   data.serviceProviderId = isEntityServiceProvider && getUserInfo().serviceProviderId
   return (dispatch, getState) => {
     data.patientId = isEntityServiceProvider && getState().visitSelectionState.VisitServiceDetailsState.patientId
-    // data.patientId = 1022
     dispatch(startLoading());
     ServiceRequestPost(getVisitList, data)
       .then(resp => {
