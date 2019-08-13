@@ -12,5 +12,6 @@ export const Schedule = {
     clearESPList: 'clearESPList/Schedule',
     createOrEditAssessmentSuccess:'schedule/assessmentCreateOrEditSuccess',
     getAssessmentDetailSuccess: 'Schedule/getAssessmentDetailSuccess',
-    getIndividualSchedulesDetailsSuccess: 'getIndividualSchedulesDetailsSuccess/Schedule'
+    getIndividualSchedulesDetailsSuccess: 'getIndividualSchedulesDetailsSuccess/Schedule',
+    isScheduleEdit: 'isScheduleEdit/Schedule'
 };

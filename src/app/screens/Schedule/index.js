@@ -28,7 +28,8 @@ import {
     getEntityServiceProviderListSearch,
     selectESP,
     clearESPList,
-    createOrEditAssessment
+    createOrEditAssessment,
+    isScheduleEdit
 } from '../../redux/schedule/actions';
 import { getDiffTime, getHourMin, formateMDYY } from "../../utils/dateUtility";
 import './Components/styles.css'
@@ -43,7 +44,7 @@ export class Schedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checkedServiceCategoryId: 1,
+            checkedServiceCategoryId: '',
             selectedServiceType: {},
             selectedPOS: '0',
             state: '',
@@ -72,7 +73,7 @@ export class Schedule extends Component {
             isModalOpen: false
         }
         this.serviceTypes = [];
-        this.categoryId = 1;
+        this.categoryId = '';
         this.address = {}
         this.espId = '';
         this.weeklySelectedDays = [];
@@ -80,13 +81,42 @@ export class Schedule extends Component {
         this.formatedEndTime = "";
     }
 
+    static getDerivedStateFromProps(props, state) {
+        if (props.isIndividualScheduleEdit === true) {
+            return null;
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.isIndividualScheduleEdit === true) {
+            this.selectNew();
+            this.props.isScheduleEdit(false)
+        }
+    }
+
+    selectNew = () => {
+        let data = this.props.individualSchedulesDetails;
+        this.categoryId = data.categoryId;
+        this.serviceTypes = data.serviceTypes;
+        this.props.getServiceCategory(data.categoryId, this.serviceTypes);
+        this.setState({
+            checkedServiceCategoryId: this.props.individualSchedulesDetails.categoryId
+        })
+    }
+
+    // componentWillReceiveProps(nextProps) {
+    //     this.setState({
+    //         checkedServiceCategoryId: nextProps.individualSchedulesDetails.categoryId
+    //     })
+    // }
+
     componentDidMount() {
         let data = {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
         }
         if (this.props.patientId) {
-            this.props.getServiceCategory();
+            this.props.getServiceCategory(this.categoryId);
             this.props.getPatientAddress(this.props.patientId);
             this.props.getStates();
             this.props.getEntityServiceProviderList(data);
@@ -105,6 +135,7 @@ export class Schedule extends Component {
         this.categoryId = id;
         this.serviceTypes = [];
         this.props.getServiceType(id);
+        // this.props.isScheduleEdit(false)
         this.setState({ checkedServiceCategoryId: id, serviceTypeSelected: false })
     }
 
@@ -404,9 +435,9 @@ export class Schedule extends Component {
     }
 
     checkValidAddress = () => {
-        
+
         this.setState({ onClickSave: true })
-        if( parseInt(this.state.planType,10) === SCHEDULE_TYPE_OPTIONS.standard ){          
+        if (parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard) {
 
             let savePlan;
 
@@ -434,7 +465,7 @@ export class Schedule extends Component {
         }
     }
 
-    saveAssessment = () => {      
+    saveAssessment = () => {
 
         let {
             startDate,
@@ -445,7 +476,7 @@ export class Schedule extends Component {
             selectedPOS,
             latitude,
             longitude
-        } = this.state       
+        } = this.state
 
         let data = {
             planScheduleId: 0,
@@ -458,17 +489,17 @@ export class Schedule extends Component {
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
             address: this.address,
-            selectedPOS:selectedPOS,
+            selectedPOS: selectedPOS,
             patientAddressId: 0,
-            latitude:latitude,
-            longitude:longitude
-        } 
-        
-        this.props.getValidPatientAddress({address: this.address})
-        if(!this.validate(validate.assessment)){
-            this.props.createOrEditAssessment({data,address:this.address});
-        }       
-        
+            latitude: latitude,
+            longitude: longitude
+        }
+
+        this.props.getValidPatientAddress({ address: this.address })
+        if (!this.validate(validate.assessment)) {
+            this.props.createOrEditAssessment({ data, address: this.address });
+        }
+
     }
 
     savePlan = () => {
@@ -560,8 +591,8 @@ export class Schedule extends Component {
                                 options={PlanTypeData}
                                 planType={this.state.planType}
                                 handleChangePlanType={this.handleChangePlanType} />
-                        </div>                       
-                            <Fragment>
+                        </div>
+                        <Fragment>
                             {
                                 parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                                 <div className="Service-Cat-Typesblock">
@@ -595,121 +626,121 @@ export class Schedule extends Component {
                                     </div>
                                 </div>
                             }
-                                <div className={"ServiceTypesWidget PostSR schdule-postblock " + (parseInt(this.state.planType,10) === SCHEDULE_TYPE_OPTIONS.assessment && 'left-block1-shedule')}>
-                                    <h2 className='ServicesTitle'>Schedule</h2>
-                                    <div className="row">
-                                        <ScheduleType
-                                            options={ScheduleTypeData}
-                                            handleChangeScheduleType={this.handleChangeScheduleType}
-                                            startDate={this.state.startDate}
-                                            dateChanged={this.dateChanged}
-                                            dateChangedRaw={this.dateChangedRaw}
-                                            todateChanged={this.todateChanged}
-                                            todateChangedRaw={this.todateChangedRaw}
-                                            endDate={this.state.endDate}
-                                            startTime={this.state.startTime}
-                                            handleChangeStartTime={this.handleChangeStartTime}
-                                            endTime={this.state.endTime}
-                                            handleChangeEndTime={this.handleChangeEndTime}
-                                            selectedType={this.state.isRecurring}
-                                            recurringPatternList={this.props.recurringPatternList}
-                                            handleChangeRecurringPattern={this.handleChangeRecurringPattern}
-                                            handleSelectDailyOptionField={this.handleSelectDailyOptionField}
-                                            handleSelectWeeklyOptionField={this.handleSelectWeeklyOptionField}
-                                            handleChangeDailyDayOccurence={this.handleChangeDailyDayOccurence}
-                                            dailyDayOccurence={this.state.dailyDayOccurence}
-                                            selectedRecurringType={this.state.selectedRecurringType}
-                                            daysList={this.props.daysList}
-                                            handleChangeDaysSelection={this.handleChangeDaysSelection}
-                                            handleChangeMonthlySelectionFirst={this.handleChangeMonthlySelectionFirst}
-                                            handleChangeMonthlySelectionSecond={this.handleChangeMonthlySelectionSecond}
-                                            monthlyDay={this.state.monthlyDay}
-                                            monthlyMonths={this.state.monthlyMonths}
-                                            handleChangeMonthlyDay={this.handleChangeMonthlyDay}
-                                            handleChangeMonthlyMonths={this.handleChangeMonthlyMonths}
-                                            selectedWeeks={this.state.selectedWeeksId}
-                                            selectedWeeksLabel={this.state.selectedWeeksLabel}
-                                            selectedDays={this.state.selectedDaysId}
-                                            selectedDaysLabel={this.state.selectedDaysLabel}
-                                            handleChangeSelectedDays={this.handleChangeSelectedDays}
-                                            handleChangeSelectedWeeks={this.handleChangeSelectedWeeks}
-                                            weekRecurring={weekRecurring}
-                                            handleChangeWeeklyDayOccurence={this.handleChangeWeeklyDayOccurence}
-                                            weeklyDayOccurence={this.state.weeklyDayOccurence}
-                                            handleChangeMonthlyMonthsSecond={this.handleChangeMonthlyMonthsSecond}
-                                            monthlyMonthsSecond={this.state.monthlyMonthsSecond}
-                                            startDateSelected={this.state.startDateSelected}
-                                            onClickSave={this.state.onClickSave}
-                                            formatedStartTime={this.formatedStartTime}
-                                            weeklySelectedDays={this.weeklySelectedDays}
-                                            planType={this.state.planType}
-                                        />
-
-                                    </div>
-                                </div>
-                                <div className={"ServiceTypesWidget PostSR " + (parseInt(this.state.planType,10) === SCHEDULE_TYPE_OPTIONS.assessment && 'right-block2-shedule')}>
-                                    <h2 className='ServicesTitle'>Point of Service</h2>
-                                    <PointOfService
-                                        patientAddressList={this.props.patientAddressList}
-                                        stateList={this.props.stateList}
-                                        handlePatientAddress={this.handlePatientAddress}
-                                        handlePOSAddress={this.handlePOSAddress}
-                                        selectedPOS={this.state.selectedPOS}
-                                        handelNewAddress={this.handelNewAddress}
-                                        statehandleChange={this.statehandleChange}
-                                        selectedStateId={this.state.state}
-                                        selectedStateName={this.state.statelabel}
-                                        isPosAddressValid={this.props.isPosAddressValid}
-                                        posErrorMessage={this.props.posErrorMessage}
+                            <div className={"ServiceTypesWidget PostSR schdule-postblock " + (parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.assessment && 'left-block1-shedule')}>
+                                <h2 className='ServicesTitle'>Schedule</h2>
+                                <div className="row">
+                                    <ScheduleType
+                                        options={ScheduleTypeData}
+                                        handleChangeScheduleType={this.handleChangeScheduleType}
+                                        startDate={this.state.startDate}
+                                        dateChanged={this.dateChanged}
+                                        dateChangedRaw={this.dateChangedRaw}
+                                        todateChanged={this.todateChanged}
+                                        todateChangedRaw={this.todateChangedRaw}
+                                        endDate={this.state.endDate}
+                                        startTime={this.state.startTime}
+                                        handleChangeStartTime={this.handleChangeStartTime}
+                                        endTime={this.state.endTime}
+                                        handleChangeEndTime={this.handleChangeEndTime}
+                                        selectedType={this.state.isRecurring}
+                                        recurringPatternList={this.props.recurringPatternList}
+                                        handleChangeRecurringPattern={this.handleChangeRecurringPattern}
+                                        handleSelectDailyOptionField={this.handleSelectDailyOptionField}
+                                        handleSelectWeeklyOptionField={this.handleSelectWeeklyOptionField}
+                                        handleChangeDailyDayOccurence={this.handleChangeDailyDayOccurence}
+                                        dailyDayOccurence={this.state.dailyDayOccurence}
+                                        selectedRecurringType={this.state.selectedRecurringType}
+                                        daysList={this.props.daysList}
+                                        handleChangeDaysSelection={this.handleChangeDaysSelection}
+                                        handleChangeMonthlySelectionFirst={this.handleChangeMonthlySelectionFirst}
+                                        handleChangeMonthlySelectionSecond={this.handleChangeMonthlySelectionSecond}
+                                        monthlyDay={this.state.monthlyDay}
+                                        monthlyMonths={this.state.monthlyMonths}
+                                        handleChangeMonthlyDay={this.handleChangeMonthlyDay}
+                                        handleChangeMonthlyMonths={this.handleChangeMonthlyMonths}
+                                        selectedWeeks={this.state.selectedWeeksId}
+                                        selectedWeeksLabel={this.state.selectedWeeksLabel}
+                                        selectedDays={this.state.selectedDaysId}
+                                        selectedDaysLabel={this.state.selectedDaysLabel}
+                                        handleChangeSelectedDays={this.handleChangeSelectedDays}
+                                        handleChangeSelectedWeeks={this.handleChangeSelectedWeeks}
+                                        weekRecurring={weekRecurring}
+                                        handleChangeWeeklyDayOccurence={this.handleChangeWeeklyDayOccurence}
+                                        weeklyDayOccurence={this.state.weeklyDayOccurence}
+                                        handleChangeMonthlyMonthsSecond={this.handleChangeMonthlyMonthsSecond}
+                                        monthlyMonthsSecond={this.state.monthlyMonthsSecond}
+                                        startDateSelected={this.state.startDateSelected}
                                         onClickSave={this.state.onClickSave}
-                                        street={this.state.street}
-                                        city={this.state.city}
-                                        zip={this.state.zip}
+                                        formatedStartTime={this.formatedStartTime}
+                                        weeklySelectedDays={this.weeklySelectedDays}
+                                        planType={this.state.planType}
                                     />
-                                </div>
-                                <div className="ServiceTypesWidget PostSR">
-                                    <h2 className='ServicesTitle'>Assign Service Provider</h2>
-                                    <div className="search-block_SP">
-                                        <Search
-                                            toggleSearch={this.toggleSearch}
-                                            searchOpen={this.state.searchOpen}
-                                            searchKeyword={this.state.searchKeyword}
-                                            handleSearchkeyword={this.handleSearchkeyword}
-                                            handleSearchData={this.handleSearchData}
-                                            closeSearch={this.toggleSearch}
-                                        />
-                                    </div>
-                                    <AssignServiceProvider
-                                        entityServiceProvidersList={this.props.entityServiceProvidersList}
-                                        handleAssignServiceProvider={this.handleAssignServiceProvider}
-                                    />
-                                    {!this.props.disableShowmore &&
-                                        <ul className="show-more-assignSP">
-                                            <li
-                                                class="list-group-item ProfileShowMore"
-                                                onClick={this.clickShowMore}
-                                                disabled={this.props.disableShowmore}
-                                            >
-                                                Show more
-                                <i class="ProfileIconShowMore"></i>
-                                            </li>
-                                        </ul>}
-                                </div>
-                                <div className="ServiceTypesWidget PostSR">
-                                    <h2 className='ServicesTitle'>Additional Information</h2>
-                                    <AdditionalInformation
-                                        handleAdditionInfo={this.handleAdditionInfo}
-                                        additionalDescription={this.state.additionalDescription}
-                                    />
-                                </div>
 
-                                <div className="ServiceTypesWidget PostSR bottom-blockbtn">
-                                    <button onClick={this.onClickCancel} type="button" class="btn btn-outline-primary pull-left btn btn-secondary">Cancel</button>
-                                    <div class="ml-auto">
-                                        <button onClick={this.checkValidAddress} type="button" class="btn btn-primary">Save</button>
-                                    </div>
                                 </div>
-                            </Fragment>
+                            </div>
+                            <div className={"ServiceTypesWidget PostSR " + (parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.assessment && 'right-block2-shedule')}>
+                                <h2 className='ServicesTitle'>Point of Service</h2>
+                                <PointOfService
+                                    patientAddressList={this.props.patientAddressList}
+                                    stateList={this.props.stateList}
+                                    handlePatientAddress={this.handlePatientAddress}
+                                    handlePOSAddress={this.handlePOSAddress}
+                                    selectedPOS={this.state.selectedPOS}
+                                    handelNewAddress={this.handelNewAddress}
+                                    statehandleChange={this.statehandleChange}
+                                    selectedStateId={this.state.state}
+                                    selectedStateName={this.state.statelabel}
+                                    isPosAddressValid={this.props.isPosAddressValid}
+                                    posErrorMessage={this.props.posErrorMessage}
+                                    onClickSave={this.state.onClickSave}
+                                    street={this.state.street}
+                                    city={this.state.city}
+                                    zip={this.state.zip}
+                                />
+                            </div>
+                            <div className="ServiceTypesWidget PostSR">
+                                <h2 className='ServicesTitle'>Assign Service Provider</h2>
+                                <div className="search-block_SP">
+                                    <Search
+                                        toggleSearch={this.toggleSearch}
+                                        searchOpen={this.state.searchOpen}
+                                        searchKeyword={this.state.searchKeyword}
+                                        handleSearchkeyword={this.handleSearchkeyword}
+                                        handleSearchData={this.handleSearchData}
+                                        closeSearch={this.toggleSearch}
+                                    />
+                                </div>
+                                <AssignServiceProvider
+                                    entityServiceProvidersList={this.props.entityServiceProvidersList}
+                                    handleAssignServiceProvider={this.handleAssignServiceProvider}
+                                />
+                                {!this.props.disableShowmore &&
+                                    <ul className="show-more-assignSP">
+                                        <li
+                                            class="list-group-item ProfileShowMore"
+                                            onClick={this.clickShowMore}
+                                            disabled={this.props.disableShowmore}
+                                        >
+                                            Show more
+                                <i class="ProfileIconShowMore"></i>
+                                        </li>
+                                    </ul>}
+                            </div>
+                            <div className="ServiceTypesWidget PostSR">
+                                <h2 className='ServicesTitle'>Additional Information</h2>
+                                <AdditionalInformation
+                                    handleAdditionInfo={this.handleAdditionInfo}
+                                    additionalDescription={this.state.additionalDescription}
+                                />
+                            </div>
+
+                            <div className="ServiceTypesWidget PostSR bottom-blockbtn">
+                                <button onClick={this.onClickCancel} type="button" class="btn btn-outline-primary pull-left btn btn-secondary">Cancel</button>
+                                <div class="ml-auto">
+                                    <button onClick={this.checkValidAddress} type="button" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </Fragment>
                     </div>
                     <AlertPopup
                         message='Do you want to discard the changes?'
@@ -728,8 +759,8 @@ export class Schedule extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getServiceCategory: () => dispatch(getServiceCategory()),
-        getServiceType: (data) => dispatch(getServiceType(data)),
+        getServiceCategory: (data, selectedData) => dispatch(getServiceCategory(data, selectedData)),
+        getServiceType: (data, selectedData) => dispatch(getServiceType(data, selectedData)),
         getPatientAddress: (data) => dispatch(getPatientAddress(data)),
         getStates: () => dispatch(getStates()),
         setSelectedPos: (data) => dispatch(setSelectedPos(data)),
@@ -744,7 +775,8 @@ function mapDispatchToProps(dispatch) {
         selectESP: (data) => dispatch(selectESP(data)),
         clearESPList: () => dispatch(clearESPList()),
         selectOrClearAllServiceType: (data, isSelectAll) => dispatch(selectOrClearAllServiceType(data, isSelectAll)),
-        createOrEditAssessment: data => dispatch(createOrEditAssessment(data))
+        createOrEditAssessment: data => dispatch(createOrEditAssessment(data)),
+        isScheduleEdit: data => dispatch(isScheduleEdit(data))
 
     }
 }
@@ -763,7 +795,8 @@ function mapStateToProps(state) {
         daysList: scheduleState.daysList,
         patientId: state.patientProfileState.patientId,
         disableShowmore: scheduleState.disableShowmore,
-        individualSchedulesDetails: scheduleState.individualSchedulesDetails
+        individualSchedulesDetails: scheduleState.individualSchedulesDetails,
+        isIndividualScheduleEdit: scheduleState.isIndividualScheduleEdit
     }
 }
 

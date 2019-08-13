@@ -117,23 +117,30 @@ export const getIndividualSchedulesDetailsSuccess = (data) => {
     }
 }
 
+export const isScheduleEdit = (data) => {
+    return {
+        type: Schedule.isScheduleEdit,
+        data
+    }
+}
 
-export function getServiceCategory() {
+
+
+export function getServiceCategory(id, selectedData) {
     return (dispatch) => {
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             dispatch(getServiceCategorySuccess(resp.data));
-            if (resp.data.length > 0) {
-                dispatch(getServiceType(resp.data[0].serviceCategoryId))
-            }
+            let categoryId = id ? id : 1
+            dispatch(getServiceType(categoryId, selectedData))
         }).catch((err) => {
         })
     }
 }
 
-export function getServiceType(data) {
+export function getServiceType(id, selectedData = []) {
     return (dispatch) => {
         dispatch(getServiceTypeSuccess([]))
-        let serviceCategoryId = data;
+        let serviceCategoryId = id;
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
             let type = resp.data.filter((type, i) => {
@@ -142,13 +149,12 @@ export function getServiceType(data) {
                 }
             });
             data = type[0].serviceTypeTaskViewModel.map((type, index) => {
-                if (index === 0) {
-                    return {
-                        ...type,
-                        selected: false
-                    }
+                return {
+                    ...type,
+                    selected: selectedData.some((selectedType) => {
+                        return selectedType.serviceTypeId === type.serviceTypeId
+                    })
                 }
-                return type;
             });
 
             dispatch(getServiceTypeSuccess(data))
@@ -348,6 +354,7 @@ export function getIndividualSchedulesDetails(scheduleId) {
         dispatch(startLoading());
         ServiceRequestGet(API.getIndividualSchedulesDetails + scheduleId).then((resp) => {
             dispatch(getIndividualSchedulesDetailsSuccess(resp.data));
+            dispatch(isScheduleEdit(true));
             dispatch(push(Path.schedule));
             dispatch(endLoading());
         }).catch((err) => {

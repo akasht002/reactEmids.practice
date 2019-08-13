@@ -12,7 +12,8 @@ const defaultState = {
     daysList: [],
     disableShowmore: false, assessmentDetails: {},
     assessmentSuccess: false,
-    individualSchedulesDetails: ''
+    individualSchedulesDetails: '',
+    isIndividualScheduleEdit: false
 };
 
 const scheduleState = (state = defaultState, action) => {
@@ -100,7 +101,13 @@ const scheduleState = (state = defaultState, action) => {
             return {
                 ...state,
                 individualSchedulesDetails: action.data
-            };
+            }; 
+
+        case Schedule.isScheduleEdit:
+            return {
+                ...state,
+                isIndividualScheduleEdit: action.data
+            }; 
 
         default:
             return state;
