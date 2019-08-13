@@ -36,7 +36,10 @@ import {
   VisitNotification,
   VisitNotificationSettings
   } from './VisitProcessingNotification'
-  import Schedule from './Schedule'
+import Assessment from './VisitSelection/AssessmentVisitProcessing/Assessment'
+import AssessmentFeedback from './VisitSelection/AssessmentVisitProcessing/AssessmentFeedback'
+import AssessmentSummary from './VisitSelection/AssessmentVisitProcessing/AssessmentSummary'
+import Schedule from './Schedule'
   
 export {
   Welcome,
@@ -71,5 +74,8 @@ export {
   VisitNotificationSettings,
   ESPProfile,
   MobileLanding,
+  Assessment,
+  AssessmentFeedback,
+  AssessmentSummary,
   Schedule
 }

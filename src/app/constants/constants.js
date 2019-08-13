@@ -190,6 +190,10 @@ export const SERVICE_REQ_STATUS = {
     DECLINED: 107
 }
 
+export const ERROR_MSG = {
+    timeErrMessage : 'Updated time cannot be greater than Maximum adjustable time.',
+    emptyErrMessage : 'Time field(s) cannot be empty.'
+}
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
 
 export const DEFAULT_FROM_DATE = '1900-01-01';
@@ -220,6 +224,12 @@ export const MMM_FORMAT = 'MMM'
 export const YYYY_MM_DD_FORMAT = 'YYYY-MM-DD'
 export const MMMDD_FORMAT = "MMM DD";
 
+
+export const QUESTION_TYPE = {
+    ChoiceBased:'ChoiceBased',
+    OpenText:'OpenText'
+}
+
 export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
 
 export const serviceCategoriesImage = {
@@ -241,8 +251,10 @@ export const DATE_FORMATS = {
     dd: 'DD',
     timeh_mm_a: 'h:mm a',
     m_d_yy: 'M/D/YY',
-    hh_mm: 'HH:mm'
+    hh_mm:'HH:mm',
+    hhMinSec:"HH:mm:ss"
 }
+
 
 export const RECURRING_PATTERN_OPTIONS = {
     daily: 17,
@@ -321,3 +333,8 @@ export const VISIT_STATUS = {
         "keyValue": "Payment Pending"
     }
 }
+export const PLAN_TYPE = {
+    assessment:116
+}
+
+

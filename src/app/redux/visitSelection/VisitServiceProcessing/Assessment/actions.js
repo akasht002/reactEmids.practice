@@ -6,7 +6,6 @@ import {
 } from '../../../../services/http'
 import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
-import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { visitHistoryLoading } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import {QuestionsList} from './bridge'
 
@@ -36,10 +35,11 @@ export const endLoadingProcessing = () => {
 };
 
 
-export function getQuestionsList() {
+export function getQuestionsList(data) {
   return dispatch => {
+    let serviceProviderId = getUserInfo().serviceProviderId
     dispatch(startLoadingProcessing())
-    ServiceRequestGet(API.getQuestionsList)
+    ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${serviceProviderId}/${data}`)
       .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
         dispatch(endLoadingProcessing())
@@ -51,23 +51,15 @@ export function getQuestionsList() {
 }
 
 export function saveAnswers(data) {
-  let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
-  let  saveAnswers  = isEntityServiceProvider ? API.saveAnswersForEsp : API.saveAnswers
-  let model = isEntityServiceProvider ? {
-    servicePlanVisitId: data.serviceRequestVisitId,
-    serviceProviderId: data.serviceProviderId,
-    answers: data.answers
-  } : data
   return dispatch => {
     dispatch(startLoadingProcessing())
-    ServiceRequestPost(saveAnswers, model)
+    ServiceRequestPost(API.visitProcessingAssessmentSave, data)
       .then(resp => {
-        dispatch(getSummaryDetails(data.serviceRequestVisitId));
-        dispatch(getSavedSignature(data.serviceRequestVisitId));
+        dispatch(push(Path.assessmentFeedback));
       })
       .catch(err => {
         dispatch(endLoadingProcessing())
-        dispatch(push(Path.summary))
+        dispatch(push(Path.assessmentFeedback))
       })
   }
 }

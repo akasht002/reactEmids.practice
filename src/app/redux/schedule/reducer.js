@@ -10,7 +10,8 @@ const defaultState = {
     entityServiceProvidersList: [],
     recurringPatternList: [],
     daysList: [],
-    disableShowmore: false
+    disableShowmore: false,assessmentDetails:{},
+    assessmentSuccess:false,
 };
 
 const scheduleState = (state = defaultState, action) => {
@@ -81,6 +82,19 @@ const scheduleState = (state = defaultState, action) => {
                 ...state,
                 entityServiceProvidersList: []
             };
+        
+        case Schedule.getAssessmentDetailSuccess:
+            return {
+                ...state,
+                assessmentDetails:action.data
+            };
+
+         case Schedule.createOrEditAssessmentSuccess:
+            return {
+                ...state,
+                assessmentSuccess:action.data
+            };
+
         default:
             return state;
     }

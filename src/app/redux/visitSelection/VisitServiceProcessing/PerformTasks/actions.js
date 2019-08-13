@@ -1,6 +1,6 @@
 import { API } from '../../../../services/api';
 import { ServiceRequestGet, ServiceRequestPut, getUserInfo } from '../../../../services/http';
-import { startLoading, endLoading } from '../../../loading/actions';
+import { endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import {PerformTasks} from './bridge'
@@ -60,17 +60,18 @@ export const startLoadingProcessing = () => {
     }
 };
 
-export function getPerformTasksList(data, startOrStop) {
+export function getPerformTasksList(data, startOrStop, goToAssessment = false) {
     let getServiceRequestPerformTasks = getUserInfo().isEntityServiceProvider ? API.getServiceRequestPerformTasksForEsp : API.getServiceRequestPerformTasks
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))       
         ServiceRequestGet(getServiceRequestPerformTasks + data).then((resp) => {
-            if (startOrStop === false) {
+            if (!startOrStop) {
                 dispatch(getVisitStatus(resp.data))
             }
             else {
+                let path =  goToAssessment ? Path.assessment :Path.performTasks;
                 dispatch(getPerformTasksListSuccess(resp.data))
-                dispatch(push(Path.performTasks))
+                dispatch(push(path))
             }
             dispatch(endLoading());
         }).catch((err) => {

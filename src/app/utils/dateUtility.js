@@ -75,6 +75,10 @@ export const getHHMinSession = (data) => {
     return moment(data).format(DATE_FORMATS.hhMinSession)
 }
 
+
+export const getSecondsFromTime = (data) =>{
+    return data.split(':')
+}
 export function getDiffTime(startTimes, endTimes) {
     let startTime = moment(startTimes, DATE_FORMATS.hh_mm);
     let endTime = moment(endTimes, DATE_FORMATS.hh_mm);

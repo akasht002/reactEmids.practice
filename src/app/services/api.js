@@ -156,8 +156,8 @@ export const API = {
     getLatestMessages: 'Conversation/GetNewPostedMessage/',
     getMessageFallBackInterval: 'Common/LookupConfig/MessageFallBackInterval',
     keywordSearchServiceRequest: 'Search/SearchServiceRequestWithQ/',
-
-    //New API's
+    getAssessmentQuestionsByEntityServiceProviderId:'assessment/get-assessment-visit/',
+    visitProcessingAssessmentSave:'assessment/assessment-visit/assessment',
     getNewServiceRequestList: 'plan/servicerequestdetails/',
     GetServiceCategoryTypeTask: 'Common/GetServiceCategoryTypeTask',
     getPatientAddressList: 'Patient/',
@@ -184,4 +184,6 @@ export const API = {
     visitProcessingUpdateBilledDurationForEsp:'servicevisit/updatebilledduration',
     saveSignatureForEsp: 'servicevisit/serviceplanVisit/uploadsignature',
     saveSummaryDetailsForEsp: 'servicevisit/submitbillingforvisit',
+    createOrEditAssessment:'assessment/create-assessment',
+    getAssessmentByAssessmentId:'assessment/get-assessment/',
 }
