@@ -86,7 +86,7 @@ export const SERVICE_STATUS = {
 
 export const SERVICE_VISIT_STATUS = {
     COMPLETED: 'Completed',
-    SCHEDULED: 'Start Visit',
+    SCHEDULED: 'Scheduled',
     INPROGRESS: 'In Progress',
     PAYMENTPENDING: 'Payment Pending',
     CANCELLED: 'Cancelled'

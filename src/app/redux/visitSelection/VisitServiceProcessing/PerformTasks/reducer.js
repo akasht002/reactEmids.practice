@@ -26,7 +26,8 @@ const PerformTasksState = (state = defaultState, action) => {
                 ...state,
                 PerformTasksList: { ...action.data, visitStatus,
                     serviceRequestTypeVisits: getServiceTasks(action.data && action.data.serviceTypes),
-                    serviceRequestVisitId: action.data && action.data.servicePlanVisitId
+                    serviceRequestVisitId: action.data && action.data.servicePlanVisitId,
+                    visitTimeDuration: parseInt(action.data && action.data.visitTimeDuration, 10)
                 },
             };
 
