@@ -4,7 +4,6 @@ import { endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import {PerformTasks} from './bridge'
-import { getUserInformation } from '../../../auth/UserAgreement/actions';
 
 export const formDirtyPerformTask = () => {
     return {
@@ -16,7 +15,7 @@ export const formDirtyPerformTask = () => {
 export const getPerformTasksListSuccess = (data) => {
     return {
         type: PerformTasks.getPerformTasksListSuccess,
-        data
+        data : getUpdatedPerformTasksList(data)
     }
 }
 
@@ -44,7 +43,7 @@ export const saveStartedTime = (data) => {
 export const getVisitStatus = (data) => {
     return {
         type: PerformTasks.getVisitStatus,
-        data
+        data : getUpdatedPerformTasksList(data)
     }
 }
 
@@ -179,6 +178,17 @@ export const getServiceTasks = (serviceTypes) => {
                 })
             }
     })
+}
+
+export const getUpdatedPerformTasksList = data => {
+    return {
+        ...data,
+        serviceRequestTypeVisits: getUserInfo().isEntityServiceProvider ? getServiceTasks(data && data.serviceTypes) 
+        : data && data.serviceRequestTypeVisits,
+        serviceRequestVisitId: getUserInfo().isEntityServiceProvider ? data && data.servicePlanVisitId :
+        data && data.serviceRequestVisitId,
+        visitTimeDuration: parseInt(data && data.visitTimeDuration, 10)
+    }
 }
 
 

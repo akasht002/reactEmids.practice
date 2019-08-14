@@ -309,7 +309,7 @@ export const VISIT_STATUS = {
         "keyValue": "Closed"
     },
     cancelled: {
-        "id": 47,
+        "id": 46,
         "keyValue": "Cancelled"
     },
     notInerested: {

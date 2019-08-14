@@ -89,7 +89,11 @@ export function dispatchServiceRequestByServiceProvider() {
 }
 
 export function setEntityServiceProvider(data) {
-  return dispatch => { dispatch(setEntityServiceProviderSuccess(data)) }
+  return dispatch => { 
+    if(data.serviceRequestId === 0){
+      dispatch(setActiveTab('2'))
+    }
+    dispatch(setEntityServiceProviderSuccess(data)) }
 }
 
 export function formDirtyVisitServiceDetails() {

@@ -55,7 +55,7 @@ export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: '1',
+      activeTab: this.props.activeTab,
       activePage: 1,
       filterOpen: false,
       serviceStatus: [],
@@ -84,19 +84,19 @@ export class VisitServiceDetails extends Component {
       pageSize: this.state.pageSize
     }
     if (this.props.ServiceRequestId) {
-       if(this.props.ServiceRequestId === 0) {
-         this.toggle('2')
-       }
-       else {
-        this.props.getVisitServiceDetails(this.props.ServiceRequestId);
-        this.props.getServiceRequestList(this.props.ServiceRequestId);
-       }
+      this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+      this.props.getServiceRequestList(this.props.ServiceRequestId);
       this.props.getEntityServiceProviderList(data);
       this.props.getServiceCategory();
       this.props.ServiceRequestStatus();
       this.props.getVisitStatus();
       this.props.getSchedulesList(this.props.patientId)
     } 
+    else {
+      if(this.props.ServiceRequestId === 0) {
+        this.getVisitList()
+       }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -113,24 +113,27 @@ export class VisitServiceDetails extends Component {
     });
   }
 
+  getVisitList = () => {
+    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
+    const data = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: [],
+      serviceTypes: [],
+      pageNumber: PAGE_NO,
+      pageSize: this.state.rowPageSize,
+      startDate: null,
+      endDate: null
+    }
+    this.props.getVisitList(data);
+  }
+
   toggle = (tab) => {
-    // this.props.clearESPList()
     this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     if (this.state.activeTab !== tab) {
       this.setState({ activeTab: tab, activePage: 1 })
     }
     if (tab === '2') {
-      this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
-      const data = {
-        planScheduleIds: this.selectedSchedules,
-        visitStatuses: [],
-        serviceTypes: [],
-        pageNumber: PAGE_NO,
-        pageSize: this.state.rowPageSize,
-        startDate: null,
-        endDate: null
-      }
-      this.props.getVisitList(data);
+      this.getVisitList()
     }
   }
 
@@ -471,15 +474,16 @@ export class VisitServiceDetails extends Component {
   }
 
   navigateToparticularPageBasedonId = visitList => {
+    let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
     switch (visitList.visitStatusId) {
         case VISIT_STATUS.startVisit.id:
-          return this.visitProcessing(visitList.servicePlanVisitId) 
+          return this.visitProcessing(visitId) 
         case VISIT_STATUS.inProgress.id:
-          return this.visitProcessing(visitList.servicePlanVisitId) 
+          return this.visitProcessing(visitId) 
         case VISIT_STATUS.completed.id:
-          return this.visitSummary(visitList.servicePlanVisitId)
+          return this.visitSummary(visitId)
         case VISIT_STATUS.paymentPending.id:
-          return this.visitProcessingSummary(visitList.servicePlanVisitId)   
+          return this.visitProcessingSummary(visitId)   
         default:
           return ''
     }
@@ -744,7 +748,8 @@ function mapStateToProps(state) {
     serviceVisitDetails: VisitServiceDetailsState.serviceVisitDetails,
     isLoading: VisitServiceDetailsState.isLoading,
     disableShowmore: VisitServiceDetailsState.disableShowmore,
-    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit
+    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
+    activeTab: VisitServiceDetailsState.activeTab
   }
 }
 

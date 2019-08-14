@@ -45,6 +45,8 @@ const renderStatusBasedOnVisitStatus = visitStatusId => {
          return VISIT_STATUS.completed.keyValue
        case VISIT_STATUS.paymentPending.id:
          return VISIT_STATUS.paymentPending.keyValue    
+       case VISIT_STATUS.cancelled.id:
+         return VISIT_STATUS.cancelled.keyValue    
        default:
          return null
    }
