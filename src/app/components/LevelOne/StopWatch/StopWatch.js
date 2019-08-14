@@ -34,10 +34,8 @@ class StopWatch extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.stopTimer !== nextProps.stopTimer) {
-            if (this.props.stopTimer) {
-                this.handleStopClick()
-            }
+        if (nextProps.stopTimer) {
+            this.handleStopClick()           
         }
         if(this.props.duration !== nextProps.duration){
             this.setState({secondsElapsed: nextProps.duration})
@@ -75,6 +73,7 @@ class StopWatch extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div className="stopwatch">
                 {/* {this.state.startTimer ?

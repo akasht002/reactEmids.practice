@@ -33,6 +33,7 @@ import { formDirty, getVisitServiceHistoryByIdDetail } from '../../visitHistory/
 import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/Feedback/actions';
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../visitSelection/VisitServiceProcessing/Summary/actions';
 import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
+import { dispatchToAssessmentProcessing,getServiceRequestVisitDeatilsSuccess } from '../../visitSelection/VisitServiceProcessing/Assessment/actions'
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -145,7 +146,7 @@ export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
       .then(resp => {
         let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];       
         let modifiedList = [...serviceVists,...resp.data];
-        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;          
+        let disableShowMore  = resp.data.length >= Pagination.pageSize ? false : true;          
         dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
         dispatch(setServiceVisitLoader(false))
       })
@@ -369,5 +370,18 @@ export function goToServiceVisitProcessing(data){
         break;
       default:
     }
+  }
+}
+
+export function goToAssessmentVisitProcessing(data){
+  let visitID = data.serviceRequestVisitId !==0 ? data.serviceRequestVisitId : data.servicePlanVisitId
+  return (dispatch) => {
+    dispatch(getServiceRequestVisitDeatilsSuccess(data))
+    switch (data.visitStatusId) { 
+      case START_VISIT :       
+        dispatch(dispatchToAssessmentProcessing(visitID))
+      break;
+      default:
+     }
   }
 }

@@ -36,6 +36,12 @@ export const PAGE_NO = 1;
 export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
 export const SERVICE_REQUEST_PAGE_SIZE = 10
 
+
+export const VISIT_TYPE = {
+    assessment : 114,
+    Scheduled : 115
+}
+
 export const SERVICE_REQUEST = {
     hiredId : 38
 }
@@ -272,7 +278,9 @@ export const DEFAULT_CATEGORY_IMAGE = {
 }
 
 export const PLAN_TYPE = {
-    assessment:116
+    assessment:114
 }
+
+
 
 

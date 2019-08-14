@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import Moment from 'react-moment';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData'
-import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
-import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch,Button } from '../../../../components';
+import { getQuestionsList, saveAnswers,startOrStopService,getServicePlanVisitSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
+import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch} from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
 import { push, goBack } from '../../../../redux/navigation/actions'
@@ -13,12 +13,13 @@ import {
     getVisitFeedBack
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions';
 import { setPatient } from '../../../../redux/patientProfile/actions';
-import { getPerformTasksList, getSummaryDetails,startOrStopService } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { getPerformTasksList, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import './style.css'
 import { isNull } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
 import { QUESTION_TYPE,SERVICE_STATES } from '../../../../constants/constants'
 import { convertTime24to12 } from '../../../../utils/stringHelper';
+import { Footer } from './Components/footer'
 export class Assessment extends Component {
 
     constructor(props) {
@@ -42,7 +43,7 @@ export class Assessment extends Component {
         this.normalizedSelectedAnswers = {}
         this.selectedAnswers = [];
         this.percentageCompletion = 0;
-        this.checkedTask = '';
+        this.checkedTask = 0;
         this.totalTask = 0;
         this.selectedTextArea ='';
         this.assessmentQuestionnaireId = '';
@@ -53,10 +54,9 @@ export class Assessment extends Component {
     }
 
     componentDidMount() {
-        if (this.props.ServiceRequestVisitId) {
-            this.props.getPerformTasksList(this.props.ServiceRequestVisitId, true,true);
-            this.props.getQuestionsList(this.props.ServiceRequestVisitId);
-            this.props.getVisitFeedBack(this.props.ServiceRequestVisitId)
+        if (this.props.ServiceRequestVisitId && this.props.patientDetails) {
+            this.props.getQuestionsList(this.props.ServiceRequestVisitId)
+            this.props.getServicePlanVisitSummaryDetails(this.props.ServiceRequestVisitId)
         } else {
             this.props.history.push(Path.visitServiceList)
         }
@@ -101,7 +101,7 @@ export class Assessment extends Component {
     }    
 
     handleSelected = (answer, id) => {
-        this.checkedTask = 0
+        let taskList = []
         let answers = { feedbackQuestionnaireId: id, answerName: answer }
         let filteredData = this.selectedAnswers.filter((answer) => {
             return answer.feedbackQuestionnaireId !== id
@@ -112,7 +112,10 @@ export class Assessment extends Component {
             ...this.normalizedSelectedAnswers,
             [id]: id
         }
-        this.checkedTask = this.selectedAnswers.length
+        taskList = this.selectedAnswers.filter((answer) => {
+            return answer.feedbackQuestionnaireId !== undefined
+        });
+        this.checkedTask = taskList.length;
         this.setState({ answerList: filteredData });
     }
 
@@ -121,6 +124,7 @@ export class Assessment extends Component {
             feedbackQuestionnaireId: id,
             answerName: e.target.value
         })
+        this.checkedTask =  e.target.value === '' ? this.checkedTask : this.selectedAnswers.length;
         this.setState({
             textareaValue: e.target.value,
             textareaData: {
@@ -148,7 +152,7 @@ export class Assessment extends Component {
 
     onSubmit = () => {
         let data = {
-            assessmentId: this.props.patientDetails.serviceRequestVisitId,
+            assessmentId: this.props.patientDetails.serviceRequestVisitId === 0 ? this.props.patientDetails.servicePlanVisitId : this.props. patientDetails.serviceRequestVisitId,
             serviceProviderId: getUserInfo().serviceProviderId,
             answers: this.selectedAnswers
         }
@@ -161,21 +165,21 @@ export class Assessment extends Component {
         let current_time;
         if (data === startServiceAction) {
             current_time = new moment().format("HH:mm");
-            this.setState({ startedTime: current_time, disableCheckbox: false, backDisabled: true })
+            this.setState({ startedTime: current_time, disabled: false, disableCheckbox: false, backDisabled: true })
         } else {
             current_time = this.state.startedTime;
             this.setState({ stopTime: true, startService: true })
         }
         this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
-        this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
+        this.props.startOrStopService(this.props.patientDetails, data, convertTime24to12(current_time));
     }
 
     render() {
-        
         let startService = 1;
+        let serviceRequestVisitId = this.props.patientDetails.serviceRequestVisitId === 0 ? this.props.patientDetails.servicePlanVisitId : this.props.patientDetails.serviceRequestVisitId
         let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
         let timerBtn;
-        const { visitStatus, visitStartTime, visitEndTime, visitTimeDuration } = this.props.patientDetails
+        const { visitStatus, visitStartTime, visitEndTime, visitTimeDuration } = this.props.requestDetails
         if (visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING) {
             time = <StopWatch
                 stopTimer={visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING}
@@ -186,7 +190,7 @@ export class Assessment extends Component {
         }
 
         if (visitStatus === SERVICE_STATES.YET_TO_START) {
-            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, this.props.ServiceRequestVisitId) }}>Start Service</a>
+            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, serviceRequestVisitId) }}>Start Service</a>
         }
 
         if (visitStatus === SERVICE_STATES.IN_PROGRESS) {
@@ -210,19 +214,19 @@ export class Assessment extends Component {
                                 <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slotDescription}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
                                     </div>
-                                    <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
-                                        {this.props.patientDetails.patient ?
+                                    <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patientId)}>
+                                        {this.props.patientDetails ?
                                             <span>
                                                 <img
                                                      src={
-                                                        this.props.patientDetails.patient && this.props.patientDetails.patient.imageString
-                                                            ? this.props.patientDetails.patient.imageString
+                                                        this.props.patientDetails.patient && this.props.patientDetails.patientImage
+                                                            ? this.props.patientDetails.patientImage
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patientFirstName} {this.props.patientDetails.patientFirstName && this.props.patientDetails.patientLastName}</i></span>
                                             :
                                             ''
                                         }
@@ -323,22 +327,12 @@ export class Assessment extends Component {
                                     }
 
                                 </div>
-                                <div className='bottomButton'>
-                                    <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
-                                        <span className="bottomTaskName">Tasks</span>
-                                        <span className="bottomTaskRange">
-                                            <i style={{ width: this.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
-                                        </span>
-                                        <span className="bottomTaskPercentage">{this.percentageCompletion && this.percentageCompletion}%</span>
-                                    </div>
-                                    <div className='ml-auto'>
-                                    <Button
-                                    classname='btn btn-primary ml-auto'
-                                    onClick={this.onClickNext}
-                                    disable={visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.YET_TO_START}
-                                    label={'Next'} />
-                                     </div>
-                                </div>
+                                <Footer
+                                percentageCompletion = {this.percentageCompletion}
+                                onClickNext={this.onClickNext}
+                                visitStatus={visitStatus}
+                                />
+                                
                             </div>
                         </div>
                         
@@ -393,14 +387,16 @@ function mapDispatchToProps(dispatch) {
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         goBack: () => dispatch(goBack()),
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime)),
+        getServicePlanVisitSummaryDetails:(data) => dispatch(getServicePlanVisitSummaryDetails(data))
     }
 };
 
 function mapStateToProps(state) {
     return {
         questionsList: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.questionsList,
-        patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
-        startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
+        patientDetails: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.planDetails,
+        requestDetails: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.requestDetails,
+        startedTime: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.startedTime,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback,

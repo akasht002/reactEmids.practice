@@ -2,12 +2,16 @@ import { API } from '../../../../services/api'
 import {
   ServiceRequestGet,
   ServiceRequestPost,
+  ServiceRequestPut,
   getUserInfo
 } from '../../../../services/http'
 import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
+import { getServiceRequestVisitId,getPerformTasksList } from '../PerformTasks/actions'
 import { visitHistoryLoading } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
-import {QuestionsList} from './bridge'
+import { QuestionsList } from './bridge'
+import { endLoading } from '../../../loading/actions';
+
 
 export const getQuestionsListSuccess = data => {
   return {
@@ -34,6 +38,42 @@ export const endLoadingProcessing = () => {
   }
 };
 
+export const getServiceRequestVisitDeatilsSuccess = (data) => {
+  return {
+    type: QuestionsList.getServiceRequestVisitDetialsSuccess,
+    data
+  }
+}
+
+export const saveStartedTime = (data) => {
+  return {
+      type: QuestionsList.saveStartedTime,
+      data
+  }
+}
+
+export const setServiceVisitPlanDetail = (data) =>{
+  return {
+    type: QuestionsList.setServiceVisitPlanDetail,
+    data
+  }
+}
+
+
+export const getServicePlanVisitSummaryDetails = (data) => {
+  return dispatch => {    
+    dispatch(startLoadingProcessing())
+    ServiceRequestGet(API.getServicePlanVisitSummaryDetails + `${data}`)
+      .then(resp => {
+        dispatch(setServiceVisitPlanDetail(resp.data))
+        dispatch(endLoadingProcessing())
+      })
+      .catch(err => {
+        dispatch(endLoadingProcessing())
+      })
+  }
+}
+
 
 export function getQuestionsList(data) {
   return dispatch => {
@@ -47,6 +87,14 @@ export function getQuestionsList(data) {
       .catch(err => {
         dispatch(endLoadingProcessing())
       })
+  }
+}
+
+export const dispatchToAssessmentProcessing = data =>{
+  return (dispatch) => {
+    dispatch(getServiceRequestVisitId(data)) 
+    dispatch(push(Path.assessment))
+    dispatch(endLoading()); 
   }
 }
 
@@ -75,3 +123,25 @@ export function saveAnswerFeedback(data) {
       })
   }
 }
+
+
+export function startOrStopService(data, visitAction, startedTime) { 
+  return (dispatch) => {
+      const model = {
+          servicePlanVisitId: data.servicePlanVisitId,
+          planScheduleId: data.planScheduleId,
+          serviceProviderId: getUserInfo().serviceProviderId,
+          offSet: -330,
+          visitAction: visitAction
+      }
+      dispatch(startLoadingProcessing());
+      ServiceRequestPut(API.updateAssessmentVisitStartEndTime, model).then((resp) => {
+          dispatch(saveStartedTime(startedTime))
+          dispatch(getServicePlanVisitSummaryDetails(data.servicePlanVisitId));
+          dispatch(endLoadingProcessing());
+      }).catch((err) => {
+          dispatch(getServicePlanVisitSummaryDetails(data.servicePlanVisitId)); 
+          dispatch(endLoadingProcessing());
+      })
+  }
+};

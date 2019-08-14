@@ -10,27 +10,27 @@ import {
     startDate: data.data.startDate,
     startTime: data.data.startTime,
     endTime: data.data.endTime,
-    duration: data.data.duration,
+    duration: parseFloat(data.data.duration,10),
     addInformation: data.data.additionalDescription,
     assessmentId: 0,
     patientAddress: {
       patientId: data.data.patientId,
-      patientAddressId: data.data.SelectedPOS ?  data.data.SelectedPOS : 0,
-      streetAddress: data.street,
+      patientAddressId: data.address.patientAddressId ?  data.address.patientAddressId : 411,
+      streetAddress: data.address.streetAddress ? data.address.streetAddress : '',
       city: data.address.city,
       stateName: data.address.stateName,
-       stateId : data.address.stateId,
-       zipCode : data.address.zip,
-       isPrimaryAddress : false,
-       state : {
-         id : data.data.address.stateId,
-         name : data.data.address.stateName
+      stateId : data.address.stateId,
+      zipCode : data.address.zip,
+      isPrimaryAddress : false,
+      state : {
+         id : data.address.stateId,
+         name : data.address.stateName
       },
-       isActive : true,
-       lat : data.latitude,
-       lon : data.longitude,
+      isActive : true,
+      lat : data.data.latitude?data.data.latitude:11.2,
+      lon : data.data.longitude?data.data.longitude:98.3,
     },
-     serviceProviderId : getUserInfo().serviceProviderId,
+     serviceProviderId : data.data.serviceProviderId,
      patientId : data.data.patientId
   }
 }
