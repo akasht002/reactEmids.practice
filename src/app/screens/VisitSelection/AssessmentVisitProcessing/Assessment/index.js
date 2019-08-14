@@ -15,7 +15,7 @@ import {
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getPerformTasksList, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import './style.css'
-import { isNull } from '../../../../utils/validations'
+import { isNull,checkEmpty } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
 import { QUESTION_TYPE,SERVICE_STATES } from '../../../../constants/constants'
 import { convertTime24to12 } from '../../../../utils/stringHelper';
@@ -91,9 +91,7 @@ export class Assessment extends Component {
                 return ''
             } ) 
         }               
-        this.checkedTask = this.selectedAnswers.filter((answer) => {
-            return answer.feedbackQuestionnaireId !== undefined
-        }).length;
+        
     }
 
     handelPatientProfile = (data) => {
@@ -134,7 +132,10 @@ export class Assessment extends Component {
     }
 
     onClickNext = () => {
-        if (this.props.questionsList.length === this.selectedAnswers.length) {
+        let selectedLength = this.selectedAnswers.filter((answer) => {
+            return !checkEmpty(answer.feedbackQuestionnaireId)
+        }).length;
+        if (this.props.questionsList.length === selectedLength) {
             this.onSubmit();
         } else {
             this.setState({ isModalOpen: true})
@@ -153,7 +154,9 @@ export class Assessment extends Component {
         let data = {
             assessmentId: this.props.patientDetails.serviceRequestVisitId === 0 ? this.props.patientDetails.servicePlanVisitId : this.props. patientDetails.serviceRequestVisitId,
             serviceProviderId: getUserInfo().serviceProviderId,
-            answers: this.selectedAnswers
+            answers: this.selectedAnswers.filter((answer) => {
+                return !checkEmpty(answer.feedbackQuestionnaireId)
+            })
         }
         this.props.saveAnswers(data);
         this.props.saveTaskPercentage(this.percentageCompletion);
@@ -178,7 +181,7 @@ export class Assessment extends Component {
         let startService = 1;
         let serviceRequestVisitId = this.props.patientDetails.serviceRequestVisitId === 0 ? this.props.patientDetails.servicePlanVisitId : this.props.patientDetails.serviceRequestVisitId
         let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
-        let timerBtn;
+        let timerBtn;        
         const { visitStatus, visitStartTime, visitEndTime, visitTimeDuration } = this.props.requestDetails
         if (visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING) {
             time = <StopWatch
@@ -196,6 +199,9 @@ export class Assessment extends Component {
         if (visitStatus === SERVICE_STATES.IN_PROGRESS) {
             timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
         }
+        this.checkedTask = this.selectedAnswers.filter((answer) => {
+            return !checkEmpty(answer.feedbackQuestionnaireId)
+        }).length;
         this.totalTask = this.props.questionsList && this.props.questionsList.length
         this.percentageCompletion = Math.round((this.checkedTask / this.totalTask) * 100)
         return (

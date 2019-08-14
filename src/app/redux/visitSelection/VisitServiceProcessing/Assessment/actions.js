@@ -7,7 +7,7 @@ import {
 } from '../../../../services/http'
 import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
-import { getServiceRequestVisitId,getPerformTasksList } from '../PerformTasks/actions'
+import { getServiceRequestVisitId } from '../PerformTasks/actions'
 import { visitHistoryLoading } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import { QuestionsList } from './bridge'
 import { endLoading } from '../../../loading/actions';

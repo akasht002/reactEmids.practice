@@ -73,7 +73,6 @@ class StopWatch extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className="stopwatch">
                 {/* {this.state.startTimer ?

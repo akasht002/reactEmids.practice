@@ -1,5 +1,5 @@
 import { QuestionsList } from './bridge'
-import { SERVICE_STATES } from '../../../../constants/constants'
+import { getVisitStatus } from '../../../../utils/userUtility'
 
 const defaultState = {
     questionsList: {},
@@ -49,31 +49,15 @@ const AssessmentState = (state = defaultState, action) => {
             };
 
         case QuestionsList.setServiceVisitPlanDetail:
-            let visitStatus1 = SERVICE_STATES.YET_TO_START
-            if (action.data.visitStatusId === 44) {
-                visitStatus1 = SERVICE_STATES.IN_PROGRESS
-            } else if (action.data.visitStatusId === 45) {
-                visitStatus1 = SERVICE_STATES.COMPLETED
-            } else if (action.data.visitStatusId === 90) {
-                visitStatus1 = SERVICE_STATES.PAYMENT_PENDING
-            }
             return {
                 ...state,
-                requestDetails: { ...action.data, visitStatus:visitStatus1 }
+                requestDetails: { ...action.data, visitStatus: getVisitStatus(action.data.visitStatusId) }
             };    
 
-        case QuestionsList.getServiceRequestVisitDetialsSuccess:
-            let visitStatus = SERVICE_STATES.YET_TO_START
-            if (action.data.visitStatusId === 44) {
-                visitStatus = SERVICE_STATES.IN_PROGRESS
-            } else if (action.data.visitStatusId === 45) {
-                visitStatus = SERVICE_STATES.COMPLETED
-            } else if (action.data.visitStatusId === 90) {
-                visitStatus = SERVICE_STATES.PAYMENT_PENDING
-            }
+        case QuestionsList.getServiceRequestVisitDetialsSuccess:          
             return {
                 ...state,
-                planDetails: { ...action.data, visitStatus }
+                planDetails: { ...action.data, visitStatus: getVisitStatus(action.data.visitStatusId) }
             };    
         default:
             return state;
