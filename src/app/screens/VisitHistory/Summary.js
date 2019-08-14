@@ -394,7 +394,7 @@ export class VistSummary extends React.Component {
           <div className="VisitSummaryWidget">
             <div className="LeftWidget">
               <div className="LeftContent">
-                <p className="SummaryContentTitle">Service Visit Details</p>
+                <p className="SummaryContentTitle">Visit Details</p>
                 <div className="row mb-3">
                   <div className="col-md-12 SummaryContentTable">
                     <p className="m-0">
