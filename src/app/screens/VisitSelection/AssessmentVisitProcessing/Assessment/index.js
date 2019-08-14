@@ -17,8 +17,8 @@ import { getPerformTasksList, getSummaryDetails } from '../../../../redux/visitS
 import './style.css'
 import { isNull,checkEmpty } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
-import { QUESTION_TYPE,SERVICE_STATES } from '../../../../constants/constants'
-import { convertTime24to12 } from '../../../../utils/stringHelper';
+import { QUESTION_TYPE,SERVICE_STATES,DATE_FORMATS } from '../../../../constants/constants'
+import { convertTime24to12,getFullName } from '../../../../utils/stringHelper';
 import { Footer } from './Components/footer'
 export class Assessment extends Component {
 
@@ -220,7 +220,7 @@ export class Assessment extends Component {
                                 <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slotDescription}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
+                                        <span><i className='requestName'><Moment format={DATE_FORMATS.visitFormat}>{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slotDescription}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patientId)}>
                                         {this.props.patientDetails ?
@@ -232,7 +232,7 @@ export class Assessment extends Component {
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patientFirstName} {this.props.patientDetails.patientFirstName && this.props.patientDetails.patientLastName}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patientFirstName && getFullName(this.props.patientDetails.patientFirstName,this.props.patientDetails.patientLastName)} </i></span>
                                             :
                                             ''
                                         }
