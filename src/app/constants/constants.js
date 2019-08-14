@@ -344,5 +344,11 @@ export const PLAN_TYPE = {
 }
 
 
+export const DEFAULT_ADDRESS_ID = 1
+
+export const LATITUDE = 0.0
+
+export const LONGITUDE = 0.0
+
 
 

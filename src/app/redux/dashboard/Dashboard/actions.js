@@ -146,7 +146,7 @@ export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
       .then(resp => {
         let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];       
         let modifiedList = [...serviceVists,...resp.data];
-        let disableShowMore  = resp.data.length >= Pagination.pageSize ? false : true;          
+        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;          
         dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
         dispatch(setServiceVisitLoader(false))
       })

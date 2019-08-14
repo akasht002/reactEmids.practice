@@ -1,4 +1,4 @@
-import { PLAN_TYPE } from '../../../constants/constants'
+import { PLAN_TYPE,DEFAULT_ADDRESS_ID,LATITUDE,LONGITUDE } from '../../../constants/constants'
 
  export const formatAssessmentData = (data) =>{
   return {
@@ -11,7 +11,7 @@ import { PLAN_TYPE } from '../../../constants/constants'
     assessmentId: 0,
     patientAddress: {
       patientId: data.data.patientId,
-      patientAddressId: data.address.patientAddressId ?  data.address.patientAddressId : 411,
+      patientAddressId: data.address.patientAddressId ?  data.address.patientAddressId : DEFAULT_ADDRESS_ID,
       streetAddress: data.address.streetAddress ? data.address.streetAddress : '',
       city: data.address.city,
       stateName: data.address.stateName,
@@ -23,8 +23,8 @@ import { PLAN_TYPE } from '../../../constants/constants'
          name : data.address.stateName
       },
       isActive : true,
-      lat : data.data.latitude?data.data.latitude:11.2,
-      lon : data.data.longitude?data.data.longitude:98.3,
+      lat : data.data.latitude?data.data.latitude:LATITUDE,
+      lon : data.data.longitude?data.data.longitude:LONGITUDE,
     },
      serviceProviderId : data.data.serviceProviderId,
      patientId : data.data.patientId
