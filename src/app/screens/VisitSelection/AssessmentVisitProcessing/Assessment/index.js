@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import Moment from 'react-moment';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData'
-import { getQuestionsList, saveAnswers,startOrStopService,getServicePlanVisitSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
+import { getQuestionsList, saveAnswers,startOrStopService,getServicePlanVisitSummaryDetails,saveTaskPercentage } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch} from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
@@ -74,7 +74,6 @@ export class Assessment extends Component {
                             });
                             filteredData.push(answers);
                             this.selectedAnswers = filteredData;
-                            this.checkedTask ++
                         } 
                         return ''   
                     })                    
@@ -82,17 +81,19 @@ export class Assessment extends Component {
                 if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
                     questionList.answers.map((answer) => {                                                               
                         if (!isNull(questionList.selectedAnswer)) {
-                            this.checkedTask ++
                             this.selectedTextArea = questionList.selectedAnswer;
                             this.assessmentQuestionnaireId = questionList.assessmentQuestionnaireId
                         } 
                     }) 
+                    this.handleTextarea({target:{value:this.selectedTextArea}}, this.assessmentQuestionnaireId) 
                     return ''                   
                 }
                 return ''
             } ) 
-        }
-        this.handleTextarea({target:{value:this.selectedTextArea}}, this.assessmentQuestionnaireId)
+        }               
+        this.checkedTask = this.selectedAnswers.filter((answer) => {
+            return answer.feedbackQuestionnaireId !== undefined
+        }).length;
     }
 
     handelPatientProfile = (data) => {
@@ -102,7 +103,7 @@ export class Assessment extends Component {
 
     handleSelected = (answer, id) => {
         let taskList = []
-        let answers = { feedbackQuestionnaireId: id, answerName: answer }
+        let answers = { feedbackQuestionnaireId: id, answerName: answer,id:id }
         let filteredData = this.selectedAnswers.filter((answer) => {
             return answer.feedbackQuestionnaireId !== id
         });
@@ -120,16 +121,14 @@ export class Assessment extends Component {
     }
 
     handleTextarea = (e, id) => {
-        this.handleSelected({
-            feedbackQuestionnaireId: id,
-            answerName: e.target.value
-        })
+        this.handleSelected(e.target.value,id)
         this.checkedTask =  e.target.value === '' ? this.checkedTask : this.selectedAnswers.length;
         this.setState({
             textareaValue: e.target.value,
             textareaData: {
                 feedbackQuestionnaireId: id,
-                answerName: e.target.value
+                answerName: e.target.value,
+                id:id
             }
         });
     }
@@ -157,6 +156,7 @@ export class Assessment extends Component {
             answers: this.selectedAnswers
         }
         this.props.saveAnswers(data);
+        this.props.saveTaskPercentage(this.percentageCompletion);
         this.setState({ isModalOpen: false })
     }
    
@@ -387,7 +387,8 @@ function mapDispatchToProps(dispatch) {
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         goBack: () => dispatch(goBack()),
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime)),
-        getServicePlanVisitSummaryDetails:(data) => dispatch(getServicePlanVisitSummaryDetails(data))
+        getServicePlanVisitSummaryDetails:(data) => dispatch(getServicePlanVisitSummaryDetails(data)),
+        saveTaskPercentage:(data) => dispatch(saveTaskPercentage(data))
     }
 };
 

@@ -102,6 +102,7 @@ export function getSummaryDetails(data) {
 };
 
 export function getSummaryDetail(data) {
+    console.log(data)
     let getSummaryDetails = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getSummaryDetails
     return (dispatch) => {
         dispatch(startLoading());

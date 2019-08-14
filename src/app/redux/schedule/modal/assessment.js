@@ -1,8 +1,4 @@
-import {    
-    getUserInfo
-} from '../../../services/http'
-
- import { PLAN_TYPE } from '../../../constants/constants'
+import { PLAN_TYPE } from '../../../constants/constants'
 
  export const formatAssessmentData = (data) =>{
   return {

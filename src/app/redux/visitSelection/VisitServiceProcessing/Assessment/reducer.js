@@ -6,7 +6,8 @@ const defaultState = {
     requestDetails:{},
     isLoading: false,
     startedTime: '',
-    planDetails: {}
+    planDetails: {},
+    taskPercentage: 0
 };
 
 const AssessmentState = (state = defaultState, action) => {
@@ -41,6 +42,12 @@ const AssessmentState = (state = defaultState, action) => {
                 isLoading: false
             };
         
+        case QuestionsList.saveTaskPercentage:
+            return {
+                ...state,
+                taskPercentage: action.data
+            };
+
         case QuestionsList.setServiceVisitPlanDetail:
             let visitStatus1 = SERVICE_STATES.YET_TO_START
             if (action.data.visitStatusId === 44) {

@@ -59,6 +59,12 @@ export const setServiceVisitPlanDetail = (data) =>{
   }
 }
 
+export const saveTaskPercentage = (data)=>{
+  return {
+    type: QuestionsList.saveTaskPercentage,
+    data
+  }
+}
 
 export const getServicePlanVisitSummaryDetails = (data) => {
   return dispatch => {    

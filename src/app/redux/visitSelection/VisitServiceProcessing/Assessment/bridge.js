@@ -5,5 +5,6 @@ export const QuestionsList = {
     startLoading: 'startLoading/assessment',
     endLoading: 'endLoading/assessment',    
     saveStartedTime: 'save_started_time/assessment',
-    setServiceVisitPlanDetail:'setServiceVisitPlanDetail/assessment'
+    setServiceVisitPlanDetail:'setServiceVisitPlanDetail/assessment',
+    saveTaskPercentage:'saveTaskPercentage/assessment'
   }
