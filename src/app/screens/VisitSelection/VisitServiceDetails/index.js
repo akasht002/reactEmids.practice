@@ -84,23 +84,29 @@ export class VisitServiceDetails extends Component {
       pageSize: this.state.pageSize
     }
     if (this.props.ServiceRequestId) {
-      this.props.getServiceRequestList(this.props.ServiceRequestId);
-      this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+       if(this.props.ServiceRequestId === 0) {
+         this.toggle('2')
+       }
+       else {
+        this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+        this.props.getServiceRequestList(this.props.ServiceRequestId);
+       }
       this.props.getEntityServiceProviderList(data);
       this.props.getServiceCategory();
       this.props.ServiceRequestStatus();
       this.props.getVisitStatus();
       this.props.getSchedulesList(this.props.patientId)
-    } else {
-      this.props.history.push(Path.visitServiceList)
-    }
+    } 
   }
 
   componentWillReceiveProps(nextProps) {
+    let {activeTab} = this.state
+    activeTab = this.props.ServiceRequestId === 0 ? '2' : activeTab
     this.setState({
       startDateEdit: nextProps.serviceVisitDetails.visitDate,
       startTime: nextProps.serviceVisitDetails.startTime,
       endTime: nextProps.serviceVisitDetails.endTime,
+      activeTab: activeTab
     })
   }
 
@@ -591,6 +597,7 @@ export class VisitServiceDetails extends Component {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0,4) : header;
+    let updatedTabdata = this.props.ServiceRequestId === 0 ? tabdata.slice(1,tabdata.length) : tabdata
     return (
       <Fragment>
         <AsideScreenCover>
@@ -606,17 +613,20 @@ export class VisitServiceDetails extends Component {
             className='ProfileContentWidget'>
             <div class="tab_view">
               <TabHeader
-                list={tabdata}
+                list={updatedTabdata}
                 toggle={this.toggle}
                 activeTab={this.state.activeTab}
                 goBack={() => this.props.goBack()}
               />
               <TabContent activeTab={this.state.activeTab}>
-                <RequestTab
+                {
+                  this.props.ServiceRequestId !== 0 &&
+                  <RequestTab
                   visitServiceList={this.props.visitServiceList}
                   VisitServiceDetails={this.props.VisitServiceDetails}
                   handelDetails={this.handelDetails}
                 />
+                }
                 <PlanTab
                   rowPageSize={this.state.rowPageSize}
                   rowPageChange={this.rowPageChange}
