@@ -100,13 +100,10 @@ export class VisitServiceDetails extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let {activeTab} = this.state
-    activeTab = this.props.ServiceRequestId === 0 ? '2' : activeTab
     this.setState({
       startDateEdit: nextProps.serviceVisitDetails.visitDate,
       startTime: nextProps.serviceVisitDetails.startTime,
-      endTime: nextProps.serviceVisitDetails.endTime,
-      activeTab: activeTab
+      endTime: nextProps.serviceVisitDetails.endTime
     })
   }
 

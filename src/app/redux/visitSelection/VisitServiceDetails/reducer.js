@@ -25,7 +25,8 @@ const defaultState = {
     isLoading: false,
     entityServiceProvidersList: [],
     disableShowmore: false,
-    patientId: 0
+    patientId: 0,
+    activeTab: '1'
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -145,8 +146,6 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 ...state,
                 isLoading: false
             };
-
-
         case VisitServiceDetails.getEntityServiceProviderListSuccess:
             return {
                 ...state,
@@ -165,7 +164,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 entityServiceProvidersList: [],
                 // disableShowmore: false
             };
-
+        case VisitServiceDetails.setActiveTab:
+        return {
+            ...state,
+            activeTab: action.data
+        };
         default:
             return state;
     }

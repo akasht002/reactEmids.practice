@@ -608,3 +608,10 @@ export function assignESP(data) {
       })
   }
 };
+
+export const setActiveTab = data => {
+  return {
+      type: VisitServiceDetails.setActiveTab,
+      data
+  }
+}
