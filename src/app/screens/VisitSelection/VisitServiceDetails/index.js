@@ -50,7 +50,7 @@ import {
 import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-
+import {isEntityUser} from '../../../utils/userUtility'
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -590,7 +590,7 @@ export class VisitServiceDetails extends Component {
         label: 'Service Provider'
       },
     ]
-    let updatedHeader = getUserInfo().isEntityServiceProvider ? header.slice(0,4) : header;
+    let updatedHeader = !isEntityUser() ? header.slice(0,4) : header;
     return (
       <Fragment>
         <AsideScreenCover>

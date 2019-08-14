@@ -13,6 +13,7 @@ import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
 import { VisitServiceDetails } from './bridge'
 import { USERTYPES } from '../../../constants/constants'
+import { isEntityUser} from '../../../utils/userUtility'
 import { orderBy } from 'lodash'
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -481,10 +482,12 @@ export function getSchedulesList(patientId) {
 
 export function getVisitList(data) {
   let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
-  let getVisitList = isEntityServiceProvider ? API.getEspVisitList : API.getVisitList
-  data.serviceProviderId = isEntityServiceProvider && getUserInfo().serviceProviderId
+  let getVisitList = isEntityServiceProvider ? API.getEspVisitList : (isEntityUser() ? API.getVisitList : API.getIspVisitList)
+  data.serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch, getState) => {
-    data.patientId = isEntityServiceProvider && getState().visitSelectionState.VisitServiceDetailsState.patientId
+    isEntityServiceProvider ? 
+      (data.patientId = getState().visitSelectionState.VisitServiceDetailsState.patientId) :
+      (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
     dispatch(startLoading());
     ServiceRequestPost(getVisitList, data)
       .then(resp => {
@@ -498,7 +501,7 @@ export function getVisitList(data) {
 };
 
 export function getVisitListCount(data) {
-  let getVisitListCount = getUserInfo().isEntityServiceProvider ? API.getEspVisitListCount : API.getVisitListCount
+  let getVisitListCount = getUserInfo().isEntityServiceProvider ? API.getEspVisitListCount : (isEntityUser() ? API.getVisitListCount : API.getIspVisitListCount)
   return (dispatch) => {
     dispatch(startLoading());
     ServiceRequestPost(getVisitListCount, data)

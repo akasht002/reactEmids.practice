@@ -8,6 +8,7 @@ import RowPerPage from './RowPerPage';
 import { PAGE_SIZE_OPTIONS, SERVICE_VISIT_STATUS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
+import {isEntityUser} from '../../../../utils/userUtility'
 import './style.css';
 
 const renderServiceTypeImages = serviceTypes => {
@@ -58,7 +59,7 @@ export const Table = props => {
                         {props.header.map(item => {
                             return <th>{item.label}</th>
                         })}
-                        {!getUserInfo().isEntityServiceProvider &&
+                        {isEntityUser() &&
                         <th></th>}
                         <th></th>
                     </tr>
@@ -84,7 +85,7 @@ export const Table = props => {
                                 </span>
                             </td>
                             {
-                                !getUserInfo().isEntityServiceProvider &&
+                                isEntityUser() &&
                                 <td>
                                     <AssignServiceProvider
                                         visitList={item}
@@ -94,14 +95,14 @@ export const Table = props => {
                                     />
                                 </td>
                             }
-                            {getUserInfo().isEntityServiceProvider &&
+                            {!isEntityUser() &&
                             <td>
                                 <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
                                 onClick={() => props.navigateToparticularPageBasedonId(item)}
                                 >{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
                             </td>}
                             {
-                                !getUserInfo().isEntityServiceProvider &&
+                                isEntityUser() &&
                                 <td>
                                     <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
                                 </td>

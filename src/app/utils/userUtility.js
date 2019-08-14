@@ -1,6 +1,5 @@
 import { store } from '../redux/store';
 import {USERTYPES, PROFILE_SERVICE_PROVIDER_TYPE_ID} from '../constants/constants';
-
 export const getState = () => {
     return store && store.getState();
 }
@@ -43,4 +42,8 @@ export const isUserIndividual = () => {
 
 export const getPersonalDetailsState = () => {
     return store && store.getState().profileState.PersonalDetailState;
+};
+
+export const isEntityUser = () => {
+    return getUserInfo().serviceProviderTypeId !== PROFILE_SERVICE_PROVIDER_TYPE_ID
 };
