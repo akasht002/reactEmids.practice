@@ -8,7 +8,7 @@ export const VisitList = props => {
   let visitHistoryListItem = ''
   if (visitHistoryList) {
     visitHistoryListItem = visitHistoryList.length > 0 ? visitHistoryList.map((vistList, index) => {
-      let visitId = getServiceTypeImage(vistList.serviceTypes && vistList.serviceTypes[0].serviceTypeId);
+      let visitId = getServiceTypeImage(vistList.serviceTypes && vistList.serviceTypes.length > 0 && vistList.serviceTypes[0].serviceTypeId);
       return (
         <div className='card mainProfileCard' key={index}>
           <div className='visitListWidget' key={index}>
@@ -43,9 +43,6 @@ export const VisitList = props => {
                               vistList.serviceTypes,
                               'serviceTypeDescription'
                             )}
-                        </div>
-                        <div className='visitListCategory'>
-                          {vistList.serviceCategory}
                         </div>
                         <Progressbar
                           totaltask={vistList.totalTask}
@@ -84,7 +81,7 @@ export const VisitList = props => {
               <i
                 className='visitListNavigation'
                 onClick={() =>
-                  props.handleClicks(vistList.serviceRequestVisitId)}
+                  props.handleClicks(vistList.serviceRequestVisitId === 0 ? vistList.servicePlanVisitId : vistList.serviceRequestVisitId)}
               />
             </div>
           </div>
