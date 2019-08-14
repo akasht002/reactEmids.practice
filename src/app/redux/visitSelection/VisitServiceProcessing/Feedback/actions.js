@@ -1,7 +1,8 @@
 import { API } from '../../../../services/api'
 import {
   ServiceRequestGet,
-  ServiceRequestPost
+  ServiceRequestPost,
+  getUserInfo
 } from '../../../../services/http'
 import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
@@ -50,9 +51,16 @@ export function getQuestionsList() {
 }
 
 export function saveAnswers(data) {
+  let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+  let  saveAnswers  = isEntityServiceProvider ? API.saveAnswersForEsp : API.saveAnswers
+  let model = isEntityServiceProvider ? {
+    servicePlanVisitId: data.serviceRequestVisitId,
+    serviceProviderId: data.serviceProviderId,
+    answers: data.answers
+  } : data
   return dispatch => {
     dispatch(startLoadingProcessing())
-    ServiceRequestPost(API.saveAnswers, data)
+    ServiceRequestPost(saveAnswers, model)
       .then(resp => {
         dispatch(getSummaryDetails(data.serviceRequestVisitId));
         dispatch(getSavedSignature(data.serviceRequestVisitId));

@@ -3,30 +3,36 @@ import { TabPane } from 'reactstrap';
 import { ScheduleList } from './ScheduleList';
 import { Table } from '../Components/Table';
 import { CoreoPagination } from '../../../../components';
+import { getUserInfo } from '../../../../services/http'
 import Filter from "./Filter/index";
 
 export const PlanTab = props => {
+    let renderPLanDetailsClass = getUserInfo().isEntityServiceProvider ? 'full-block-requestplan' : ''
     return (
         <TabPane tabId='2' className='TabBody'>
 
             <div className="row">
+              {!getUserInfo().isEntityServiceProvider &&
                 <div className="col-lg-4 col-md-4 pd-15 left-customewidth">
                     <span className="title-view">Schedule (s)</span>
                 </div>
-                <div className="col-lg-8 col-md-8 pd-15 right-customewidth">
+                }
+                <div className={`col-lg-8 col-md-8 pd-15 right-customewidth ${renderPLanDetailsClass}`}>
                     <div className="pull-left">
                         <span className="title-view">Visit (s)</span>
                     </div>
                     <div className="pull-right">
                         <div className="full-block filterblock">
                             <span className='primaryColor ProfileHeaderFilter' onClick={props.toggle}>Filters</span>
-                            <button onClick={() => props.addSchedule()}> <span>+</span>Add New Schedule </button>
+                            {!getUserInfo().isEntityServiceProvider &&
+                                <button onClick={() => props.addSchedule()}> <span>+</span>Add New Schedule </button>}
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="row">
+                {!getUserInfo().isEntityServiceProvider &&
                 <div className="col-lg-4 col-md-4 left-customewidth">
                     <div className="full-block shadow-style left-listblock">
 
@@ -35,8 +41,8 @@ export const PlanTab = props => {
                             handleChangeSchedule={props.handleChangeSchedule}
                         />
                     </div>
-                </div>
-                <div className="col-lg-8 col-md-8 right-customewidth">
+                </div>}
+                <div className={`col-lg-8 col-md-8 right-customewidth ${renderPLanDetailsClass}`}>
                     <div className="full-block shadow-style right-tablelist">
                         <Table
                             visitList={props.visitList}
@@ -50,6 +56,7 @@ export const PlanTab = props => {
                             totalResult={props.pageCount}
                             tooltipOpen={props.tooltipOpen}
                             toggleToolTip={props.toggleToolTip}
+                            navigateToparticularPageBasedonId={props.navigateToparticularPageBasedonId}
                         />
                         <CoreoPagination
                             activePage={props.activePage}

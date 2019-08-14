@@ -480,9 +480,13 @@ export function getSchedulesList(patientId) {
 };
 
 export function getVisitList(data) {
-  return (dispatch) => {
+  let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+  let getVisitList = isEntityServiceProvider ? API.getEspVisitList : API.getVisitList
+  data.serviceProviderId = isEntityServiceProvider && getUserInfo().serviceProviderId
+  return (dispatch, getState) => {
+    data.patientId = isEntityServiceProvider && getState().visitSelectionState.VisitServiceDetailsState.patientId
     dispatch(startLoading());
-    ServiceRequestPost(API.getVisitList, data)
+    ServiceRequestPost(getVisitList, data)
       .then(resp => {
         dispatch(getVisitListSuccess(resp.data))
         dispatch(getVisitListCount(data))
@@ -494,9 +498,10 @@ export function getVisitList(data) {
 };
 
 export function getVisitListCount(data) {
+  let getVisitListCount = getUserInfo().isEntityServiceProvider ? API.getEspVisitListCount : API.getVisitListCount
   return (dispatch) => {
     dispatch(startLoading());
-    ServiceRequestPost(API.getVisitListCount, data)
+    ServiceRequestPost(getVisitListCount, data)
       .then(resp => {
         dispatch(getVisitListCountSuccess(resp.data))
         dispatch(endLoading());

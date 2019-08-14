@@ -292,7 +292,7 @@ export class ServiceCalendar extends Component {
   handleClick = requestId => {
     this.props.setServiceVisitDate(moment(this.state.reportDay))
     this.props.getServiceRequestId(requestId.serviceRequestId);
-    getUserInfo().isEntityServiceProvider && this.props.setEntityServiceProvider(requestId.serviceProviderId)
+    getUserInfo().isEntityServiceProvider && this.props.setEntityServiceProvider(requestId)
     this.props.goToServiceRequestDetailsPage();
   };
 
