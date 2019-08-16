@@ -81,7 +81,7 @@ export const VisitList = props => {
               <i
                 className='visitListNavigation'
                 onClick={() =>
-                  props.handleClicks(vistList.serviceRequestVisitId === 0 ? vistList.servicePlanVisitId : vistList.serviceRequestVisitId)}
+                  props.handleClicks(vistList)}
               />
             </div>
           </div>

@@ -188,8 +188,10 @@ export function getSort(data) {
 
 export function getServiceProviderRating(data) {
     return (dispatch, getState) => {
+        let getRatingAndFeedback = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId === 0 ? 
+        API.getVisitFeedbackForEntity : API.getRatingAndFeedback
         dispatch(startLoading())
-        ServiceRequestGet(API.getRatingAndFeedback + data).then((resp) => {
+        ServiceRequestGet(getRatingAndFeedback + data).then((resp) => {
             dispatch(getSubmittedResponse(resp.data))
             dispatch(endLoading)
         }).catch((err) => {
@@ -286,9 +288,11 @@ export function getHistoryListCount() {
 }
 
 export function getVisitFeedBack(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        let getVisitFeedback = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId === 0 ? 
+        API.getVisitFeedbackForEntity : API.getVisitFeedback
         dispatch(startLoading());
-        ServiceRequestGet(API.getVisitFeedback + data).then((resp) => {
+        ServiceRequestGet(getVisitFeedback + data).then((resp) => {
             dispatch(getVisitFeedBackSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
