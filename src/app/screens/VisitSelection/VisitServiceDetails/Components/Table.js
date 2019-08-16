@@ -53,6 +53,7 @@ const renderStatusBasedOnVisitStatus = visitStatusId => {
 }
 
 export const Table = props => {
+    let isEntity = isEntityUser()
     return (
         <Fragment>
             <table className="table-responsive plan-tableview" cellpadding="6" cellspacing="6">
@@ -61,7 +62,7 @@ export const Table = props => {
                         {props.header.map(item => {
                             return <th>{item.label}</th>
                         })}
-                        {isEntityUser() &&
+                        {isEntity &&
                         <th></th>}
                         <th></th>
                     </tr>
@@ -87,7 +88,7 @@ export const Table = props => {
                                 </span>
                             </td>
                             {
-                                isEntityUser() &&
+                                isEntity &&
                                 <td>
                                     <AssignServiceProvider
                                         visitList={item}
@@ -97,14 +98,14 @@ export const Table = props => {
                                     />
                                 </td>
                             }
-                            {!isEntityUser() &&
+                            {!isEntity &&
                             <td>
                                 <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
                                 onClick={() => props.navigateToparticularPageBasedonId(item)}
                                 >{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
                             </td>}
                             {
-                                isEntityUser() &&
+                                isEntity &&
                                 <td>
                                     <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
                                 </td>

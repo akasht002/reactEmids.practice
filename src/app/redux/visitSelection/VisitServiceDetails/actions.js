@@ -14,6 +14,7 @@ import { getUserInfo } from '../../../services/http'
 import { VisitServiceDetails } from './bridge'
 import { USERTYPES } from '../../../constants/constants'
 import { isEntityUser} from '../../../utils/userUtility'
+import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy } from 'lodash'
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -91,7 +92,7 @@ export function dispatchServiceRequestByServiceProvider() {
 export function setEntityServiceProvider(data) {
   return dispatch => { 
     if(data.serviceRequestId === 0){
-      dispatch(setActiveTab('2'))
+      dispatch(setActiveTab(serviceRequestDetailsTab.myPlan))
     }
     dispatch(setEntityServiceProviderSuccess(data)) }
 }
@@ -489,8 +490,7 @@ export function getVisitList(data) {
   let getVisitList = isEntityServiceProvider ? API.getEspVisitList : (isEntityUser() ? API.getVisitList : API.getIspVisitList)
   data.serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch, getState) => {
-    isEntityServiceProvider ? 
-      (data.patientId = getState().visitSelectionState.VisitServiceDetailsState.patientId) :
+    !isEntityUser() && 
       (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
     dispatch(startLoading());
     ServiceRequestPost(getVisitList, data)

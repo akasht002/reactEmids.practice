@@ -1,7 +1,7 @@
 import {
     VisitServiceDetails
 } from './bridge'
-
+import { serviceRequestDetailsTab } from '../../constants/constants'
 const defaultState = {
     VisitServiceDetails: [],
     VisitServiceSchedule: [],
@@ -26,7 +26,7 @@ const defaultState = {
     entityServiceProvidersList: [],
     disableShowmore: false,
     patientId: 0,
-    activeTab: '1'
+    activeTab: serviceRequestDetailsTab.request
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
