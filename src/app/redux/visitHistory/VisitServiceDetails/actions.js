@@ -4,6 +4,7 @@ import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
+import {getUpdatedPerformTasksList} from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import _ from 'lodash';
 
 export const vistServiceHistoryDetails = {
@@ -72,7 +73,7 @@ export const getServiceProviders = (data) => {
 export const getVisitServiceHistoryByIdDetailSuccess = (data) => {
     return {
         type: vistServiceHistoryDetails.getVisitServiceHistoryByIdDetailSuccess,
-        data
+        data : getUpdatedPerformTasksList(data)
     }
 }
 
@@ -147,7 +148,8 @@ export function getVisitServiceHistoryByIdDetail(data) {
     return (dispatch) => {
         dispatch(getServiceRequestId(data))
         dispatch(visitHistoryLoading(true));
-        ServiceRequestGet(API.getServiceVisitsHistoryById + data).then((resp) => {
+        let getServiceVisitsHistoryById = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getServiceVisitsHistoryById
+        ServiceRequestGet(getServiceVisitsHistoryById + data).then((resp) => {
             dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data))
             resp.data && dispatch(push(Path.visitSummaryDetail))
             dispatch(visitHistoryLoading(false));
