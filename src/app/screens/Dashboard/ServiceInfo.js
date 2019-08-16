@@ -255,10 +255,11 @@ export const MyConversionDefault = () => {
             <div className='avatarContainer' />
           </div>
           <div className='MsgThreadContent m-auto'>
+          <div class="no-blockinfo-top">
           <div className="NoProfileServices No-Coverastion-Block">
-              <span><img  src={require('../../assets/images/conversation-icon.png')} alt="conversation" /></span>
-              <span className="No-SR-Text">New Conversations</span>
-              </div>
+          <span class="NoInfoText"><span class="NoServiceInfoLink primaryColor">New Coverastion</span></span>
+          </div>
+           </div>
           </div>
         </div>
       </li>

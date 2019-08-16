@@ -1190,10 +1190,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         margin-top: 0;
     }
 
-    .bottomProfile .card.ProfileCard ul.list-group-flush
-    {
-        position: relative !important;
-    }
+    
 }
 
 @media (max-width: 1366px) {
@@ -1933,7 +1930,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
   .SPContentWidget .ProfileContainer.bottomProfile {
     min-height:auto;
-    height: 620px;
+    height: 596px;
     z-index: 0;
     margin-bottom: 20px;
     width: calc(45% - 20px)
@@ -1942,6 +1939,17 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 .SPContentWidget .ProfileContainer.bottomProfile .ProfileCard
 {
 margin-bottom: 0px;
+width:100%;
+height:100%;
+}
+
+.bottomProfile .no-blockinfo-top
+{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+width:100%;
 }
 
 @media (min-width: 1367px)
@@ -1956,6 +1964,13 @@ margin-bottom: 0px;
     {
         margin-bottom: 14px;
     }
+
+    .SPContentWidget .ProfileContainer .ProfileCard.extended
+    {
+        height: 713px !important;
+    }
+
+
 }
 
 /*cross-browser-compatibity-code*/
@@ -2126,24 +2141,20 @@ min-width:128px !important; display:block !important;
         height:300px;
         width: 100%;
         display: block;
-        margin-top: 12px;
+        margin-top: 20px;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .card.ProfileCard
 {
-height: 100%;
+height:100%;
 }
 
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
-{
-    height: 100%;
-}
+
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
 {
     display: block;
     width: 100%;
-    height:100%;
     overflow-y: auto;
 }
 
@@ -2210,7 +2221,7 @@ height: 100%;
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate:after
      {
         margin-top: -12px;
-        right: -26px;
+        right: -25px;
      }
      
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsName
@@ -2240,6 +2251,7 @@ height: 100%;
      .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
      {
         color: #444;
+        margin-bottom: 0px;
      }
 
      .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span
@@ -2268,8 +2280,8 @@ height: 100%;
     overflow-x: hidden;
     white-space: nowrap;
     cursor: pointer;
-    padding-right: 12px;
-    padding-left: 15px
+    padding-right: 20px;
+    padding-left: 20px
 }
 
 .DashboardViewFirst .ServicesCalendarWidget:hover span
@@ -2282,15 +2294,33 @@ color:#444444;
 {
     max-width: 100%;
     width: 100%;
+    margin-right:0px;
 }
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
 {
-    width:21%;
+    width:23%;
     min-width: auto;
     cursor: pointer;
     text-align: center;
+    border-right: 1px solid rgba(140,140,140, 0.3);
+    line-height: 60px;
 }
 
+.topProfile .bottomPalette .ProfileServicesVisitContent .options
+{
+top: 0px;
+margin-left: 10px;
+}
+
+.DashboardViewFirst .ProfileServices
+{
+margin-right:0px;
+}
+
+.DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle
+{
+margin-bottom:0px;
+}
 
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span
@@ -2300,16 +2330,7 @@ color:#444444;
     font-size: 14px;
 }
 
-.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span::after {
-    content: '';
-    position: absolute;
-    background: rgba(140,140,140, 0.3);
-    width: 1px;
-    height: 50px;
-    left: 99px;
-    display: block;
-    top: 10px;
-}
+
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
 {

@@ -410,7 +410,35 @@ span.btn-invited, span.btn-invited:hover{
 
 .ServiceRequestsWidget .ServiceRequestBoard .BlockImageContainer
 {
-    border-bottom: 1px solid #e0e0e0;
+border-bottom: 1px solid #e0e0e0;
+}
+
+.ServiceRequestsWidget .ServiceRequestBoard .BlockImageContainer
+{
+padding: 25px 40px 25px 20px;
+border-bottom: 1px solid rgba(60,16,83,.1); 
+}
+
+.ServiceRequestsWidget .BoardContainer .ServiceRequestBoard .BlockProfileContainer {
+    -ms-flex-direction: row;
+    flex-direction: row;
+    min-height: 70px;
+    max-height: 70px;
+}
+
+.ServiceRequestsWidget .ServiceRequestBoard .BlockImageContainer .BlockImageDetails
+{
+margin: 0 auto;
+}
+
+.ServiceRequestsWidget .BoardContainer .ServiceRequestBoard .BlockProfileContainer .BlockProfileDetails {
+    display: flex;
+    padding-right: 0;
+    margin-left: 0px;
+}
+
+.ServiceRequestBoard .BlockProfileContainer::after {
+    right: 15px;
 }
 
 .BlockImageContainer .ProfileImage{

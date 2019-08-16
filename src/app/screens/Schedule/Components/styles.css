@@ -826,7 +826,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
     /* height: calc(100vh - 397px); */
-    height: 339px;
+    height: 280px;
 }
 
 .BoardContainer{
@@ -1107,6 +1107,12 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 }
 
 
+.no-blockinfo-top .NoServiceReq
+{
+width: calc(100vh - 380px);
+}
+
+
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
         height: 615px;
@@ -1142,8 +1148,10 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     .NoServiceReq{
-        max-width: 250px;
+        max-width: 300px;
     }
+
+  
 
     .ServiceProvider .ProfileCardBody .ServiceRequestPalette {
         height: 325px;
@@ -1163,6 +1171,12 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     .ProfileServicesVisitList .NoRequestServiceProvider{
         padding: 20px 0 0 0;
+    }
+
+    .No-Coverastion-Block
+    {
+      padding: 65px 8px;
+      max-width: 300px;
     }
 }
 
@@ -1191,7 +1205,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     a.NoServiceReq{
         padding: 40px 20px;
-        max-width: 210px;
     }
 
     a.NoServiceReq .NoInfoText{
@@ -3416,6 +3429,19 @@ background-color: #fff;
 
        .bottom-blockbtn .ml-auto{ float: right !important;  } 
        *::-ms-backdrop, .bottom-blockbtn .ml-auto{ float: right !important;  }
+
+       .No-Coverastion-Block{ position:absolute; margin: 0 auto; left: 0; right: 0;} 
+       *::-ms-backdrop, .No-Coverastion-Block{  position:absolute; margin: 0 auto; left: 0; right: 0;  }
+
+       .no-blockinfo-top .NoServiceReq{margin:0} 
+       *::-ms-backdrop, .no-blockinfo-top .NoServiceReq{ margin:0;}
+
+       .NewSPReq{background-position: 50% 60%; background-size:170%;} 
+       *::-ms-backdrop,.NewSPReq{background-position: 50% 60%; background-size:170%;}
+
+       .ProfileContainer.bottomProfile :nth-child(2).innerWidget .ProfileCardBody{height:100%;} 
+       *::-ms-backdrop, .ProfileContainer.bottomProfile :nth-child(2).innerWidget .ProfileCardBody{height:100%;}
+
        }
 
        .ProfileRightContainer .ProfileContentWidget .scrollarea-content 
@@ -3427,6 +3453,7 @@ background-color: #fff;
 
 .ServiceRequestsWidget .ServiceRequestBoard{
     width: 50%;
+    margin-bottom: 20px;
 }
 
 ul.show-more-assignSP
