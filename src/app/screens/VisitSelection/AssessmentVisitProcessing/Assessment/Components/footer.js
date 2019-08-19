@@ -1,6 +1,7 @@
 import React from 'react'
 import { SERVICE_STATES } from '../../../../../constants/constants'
 import { Button } from '../../../../../components';
+import { stringCaseInsensitive } from '../../../../../utils/stringHelper'
 
 export const Footer = (props) => {
     return (
@@ -16,7 +17,7 @@ export const Footer = (props) => {
             <Button
             classname='btn btn-primary ml-auto'
             onClick={props.onClickNext}
-            disable={props.visitStatus === SERVICE_STATES.IN_PROGRESS || props.visitStatus === SERVICE_STATES.YET_TO_START}
+            disable={stringCaseInsensitive(props.visitStatus,SERVICE_STATES.IN_PROGRESS) || stringCaseInsensitive(props.visitStatus,SERVICE_STATES.YET_TO_START)}
             label={'Next'} />
                 </div>
         </div>

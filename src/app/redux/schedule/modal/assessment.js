@@ -1,8 +1,8 @@
-import { PLAN_TYPE,DEFAULT_ADDRESS_ID,LATITUDE,LONGITUDE } from '../../../constants/constants'
+import { VISIT_TYPE,DEFAULT_ADDRESS_ID,LATITUDE,LONGITUDE } from '../../../constants/constants'
 
  export const formatAssessmentData = (data) =>{
   return {
-    scheduleTypeId: PLAN_TYPE.assessment,
+    scheduleTypeId: VISIT_TYPE.assessment,
     startDate: data.data.startDate,
     startTime: data.data.startTime,
     endTime: data.data.endTime,

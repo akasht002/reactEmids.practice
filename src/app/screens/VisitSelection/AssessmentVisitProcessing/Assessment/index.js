@@ -19,7 +19,7 @@ import { isNull,checkEmpty } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
 import { QUESTION_TYPE,SERVICE_STATES,DATE_FORMATS } from '../../../../constants/constants'
 import { convertTime24to12,getFullName } from '../../../../utils/stringHelper';
-import { Footer } from './Components/footer'
+import { Footer } from './Components/Footer'
 export class Assessment extends Component {
 
     constructor(props) {
@@ -168,12 +168,22 @@ export class Assessment extends Component {
         let current_time;
         if (data === startServiceAction) {
             current_time = new moment().format("HH:mm");
-            this.setState({ startedTime: current_time, disabled: false, disableCheckbox: false, backDisabled: true })
+            this.setState({ startedTime: current_time, 
+                            disabled: false, 
+                            disableCheckbox: false, 
+                            backDisabled: true,
+                            startService: !this.state.startService,
+                            stopTimer: !this.state.stopTimer
+                         })
         } else {
             current_time = this.state.startedTime;
-            this.setState({ stopTime: true, startService: true })
-        }
-        this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
+            this.setState({ stopTime: true, 
+                            startService: true,
+                            disabled: false,
+                            backDisabled: true,
+                            stopTimer: !this.state.stopTimer 
+                        })
+        }        
         this.props.startOrStopService(this.props.patientDetails, data, convertTime24to12(current_time));
     }
 
