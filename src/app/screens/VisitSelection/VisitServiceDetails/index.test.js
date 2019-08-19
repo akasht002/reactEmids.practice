@@ -17,6 +17,10 @@ jest.mock('../../../utils/userUtility', () => ({
     isEntityServiceProvider: () => ({})
 }))
 
+jest.mock('../../../utils/userUtility', () => ({
+    isEntityUser: () => ({})
+}))
+
 Enzyme.configure({ adapter: new Adapter() })
 
 let store;
@@ -84,7 +88,11 @@ const defaultState = {
     setLoader: jest.fn(),
     history: {
         push: jest.fn()
-    }
+    },
+    getVisitList: jest.fn(),
+    getServiceCategory: jest.fn(),
+    ServiceRequestStatus: jest.fn(),
+    getVisitStatus: jest.fn()
 }
 
 store = mockStore(defaultState);
@@ -153,6 +161,18 @@ describe("VisitServiceDetails", function () {
 
     it('Check the visitSummary', () => {
         shallowWrapper.instance().visitSummary({});
+    });
+
+    it('Check the pageNumberChange', () => {
+        shallowWrapper.instance().pageNumberChange(1);
+    });
+
+    it('Check the applyReset', () => {
+        shallowWrapper.instance().applyReset();
+    });
+
+    it('Check the clickShowMore', () => {
+        shallowWrapper.instance().clickShowMore();
     });
 
     it('Check the onClickConversation', () => {
