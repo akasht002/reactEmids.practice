@@ -39,7 +39,7 @@ export const SERVICE_REQUEST_PAGE_SIZE = 10
 
 export const VISIT_TYPE = {
     assessment : 114,
-    Scheduled : 115
+    scheduled : 115
 }
 
 export const SERVICE_REQUEST = {
@@ -339,10 +339,6 @@ export const VISIT_STATUS = {
         "keyValue": "Payment Pending"
     }
 }
-export const PLAN_TYPE = {
-    assessment:114
-}
-
 
 export const DEFAULT_ADDRESS_ID = 1
 
