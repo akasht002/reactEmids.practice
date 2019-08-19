@@ -137,7 +137,6 @@ export function startOrStopService(data, visitAction, startedTime) {
           servicePlanVisitId: data.servicePlanVisitId,
           planScheduleId: data.planScheduleId,
           serviceProviderId: getUserInfo().serviceProviderId,
-          offSet: -330,
           visitAction: visitAction
       }
       dispatch(startLoadingProcessing());

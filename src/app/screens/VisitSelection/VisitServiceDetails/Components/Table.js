@@ -8,6 +8,7 @@ import RowPerPage from './RowPerPage';
 import { PAGE_SIZE_OPTIONS, SERVICE_VISIT_STATUS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
+import {isEntityUser} from '../../../../utils/userUtility'
 import './style.css';
 
 const renderServiceTypeImages = serviceTypes => {
@@ -44,12 +45,15 @@ const renderStatusBasedOnVisitStatus = visitStatusId => {
          return VISIT_STATUS.completed.keyValue
        case VISIT_STATUS.paymentPending.id:
          return VISIT_STATUS.paymentPending.keyValue    
+       case VISIT_STATUS.cancelled.id:
+         return VISIT_STATUS.cancelled.keyValue    
        default:
          return null
    }
 }
 
 export const Table = props => {
+    let isEntity = isEntityUser()
     return (
         <Fragment>
             <table className="table-responsive plan-tableview" cellpadding="6" cellspacing="6">
@@ -58,7 +62,7 @@ export const Table = props => {
                         {props.header.map(item => {
                             return <th>{item.label}</th>
                         })}
-                        {!getUserInfo().isEntityServiceProvider &&
+                        {isEntity &&
                         <th></th>}
                         <th></th>
                     </tr>
@@ -84,7 +88,7 @@ export const Table = props => {
                                 </span>
                             </td>
                             {
-                                !getUserInfo().isEntityServiceProvider &&
+                                isEntity &&
                                 <td>
                                     <AssignServiceProvider
                                         visitList={item}
@@ -94,14 +98,14 @@ export const Table = props => {
                                     />
                                 </td>
                             }
-                            {getUserInfo().isEntityServiceProvider &&
+                            {!isEntity &&
                             <td>
                                 <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
                                 onClick={() => props.navigateToparticularPageBasedonId(item)}
                                 >{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
                             </td>}
                             {
-                                !getUserInfo().isEntityServiceProvider &&
+                                isEntity &&
                                 <td>
                                     <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
                                 </td>

@@ -60,3 +60,7 @@ export const getVisitStatus = (visitStatusId) => {
     }
    
 }
+
+export const isEntityUser = () => {
+    return getUserInfo().serviceProviderTypeId !== PROFILE_SERVICE_PROVIDER_TYPE_ID
+};

@@ -101,7 +101,7 @@ export class Assessment extends Component {
 
     handleSelected = (answer, id) => {
         let taskList = []
-        let answers = { feedbackQuestionnaireId: id, answerName: answer,id:id }
+        let answers = { feedbackQuestionnaireId: id, answerName: answer,id }
         let filteredData = this.selectedAnswers.filter((answer) => {
             return answer.feedbackQuestionnaireId !== id
         });
@@ -115,7 +115,6 @@ export class Assessment extends Component {
             return answer.feedbackQuestionnaireId !== undefined
         });
         this.checkedTask = taskList.length;
-        this.setState({ answerList: filteredData });
     }
 
     handleTextarea = (e, id) => {
@@ -152,7 +151,7 @@ export class Assessment extends Component {
 
     onSubmit = () => {
         let data = {
-            assessmentId: this.props.patientDetails.serviceRequestVisitId === 0 ? this.props.patientDetails.servicePlanVisitId : this.props. patientDetails.serviceRequestVisitId,
+            assessmentId: this.props.patientDetails.serviceRequestVisitId === 0 ? this.props.patientDetails.servicePlanVisitId : this.props.patientDetails.serviceRequestVisitId,
             serviceProviderId: getUserInfo().serviceProviderId,
             answers: this.selectedAnswers.filter((answer) => {
                 return !checkEmpty(answer.feedbackQuestionnaireId)

@@ -23,5 +23,6 @@ export const VisitServiceDetails = {
     endLoading: 'endLoading/visitservicedetails',
     disableShowmore: 'disableShowmore/visitservicedetails',
     clearESPList: 'clearESPList/visitservicedetails',
-    getEntityServiceProviderListSuccess: 'getEntityServiceProviderListSuccess/visitservicedetails'
+    getEntityServiceProviderListSuccess: 'getEntityServiceProviderListSuccess/visitservicedetails',
+    setActiveTab: 'setActiveTab/visitservicedetails'
   }

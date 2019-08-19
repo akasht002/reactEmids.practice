@@ -315,7 +315,7 @@ export const VISIT_STATUS = {
         "keyValue": "Closed"
     },
     cancelled: {
-        "id": 47,
+        "id": 46,
         "keyValue": "Cancelled"
     },
     notInerested: {
@@ -347,4 +347,8 @@ export const LATITUDE = 0.0
 export const LONGITUDE = 0.0
 
 
+export const serviceRequestDetailsTab = {
+    request: '1',
+    myPlan: '2'
+}
 
