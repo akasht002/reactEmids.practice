@@ -41,7 +41,6 @@ export class VisitSummary extends React.Component {
     this.props.ServiceRequestId
       ? this.props.getVisitServiceHistoryByIdDetail(this.props.ServiceRequestId)
       : this.props.history.push(Path.visitHistory)
-    this.props.getVisitServiceHistoryByIdDetail(this.props.ServiceRequestId)
   }
 
   handelBack = () => {
