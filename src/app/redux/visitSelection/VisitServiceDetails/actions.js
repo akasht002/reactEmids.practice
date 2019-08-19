@@ -474,7 +474,8 @@ export function getSchedulesList(patientId) {
           pageNumber: 1,
           pageSize: 10,
           startDate: null,
-          endDate: null
+          endDate: null,
+          patientId: patientId
         }
         dispatch(getSchedulesListSuccess(resp.data))
         dispatch(getVisitList(model))
