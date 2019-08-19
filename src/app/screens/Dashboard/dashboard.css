@@ -1190,10 +1190,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         margin-top: 0;
     }
 
-    .bottomProfile .card.ProfileCard ul.list-group-flush
-    {
-        position: relative !important;
-    }
+    
 }
 
 @media (max-width: 1366px) {
@@ -1931,31 +1928,47 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     background: #8c8c8c; 
   }
 
-  .SPContentWidget .ProfileContainer.bottomProfile {
-    min-height:auto;
-    height: 620px;
-    z-index: 0;
-    margin-bottom: 20px;
-    width: calc(45% - 20px)
+.SPContentWidget .ProfileContainer.bottomProfile {
+min-height:auto;
+height: 596px;
+z-index: 0;
+margin-bottom: 20px;
+width: calc(45% - 20px)
 }
 
 .SPContentWidget .ProfileContainer.bottomProfile .ProfileCard
 {
 margin-bottom: 0px;
+width:100%;
+height:100%;
+}
+
+.bottomProfile .no-blockinfo-top
+{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+width:100%;
 }
 
 @media (min-width: 1367px)
 {
-    .SPContentWidget .ProfileContainer.bottomProfile {
-      
-        height: 713px !important;
-    
-    }
+.SPContentWidget .ProfileContainer.bottomProfile {
+height: 713px !important;
+}
 
-    .SPContentWidget .ProfileContainer.bottomProfile .topPalette.ProfileConversation 
-    {
-        margin-bottom: 14px;
-    }
+.SPContentWidget .ProfileContainer.bottomProfile .topPalette.ProfileConversation 
+{
+margin-bottom: 14px;
+}
+
+.SPContentWidget .ProfileContainer .ProfileCard.extended
+{
+height: 713px !important;
+}
+
+
 }
 
 /*cross-browser-compatibity-code*/
@@ -2094,83 +2107,73 @@ min-width:128px !important; display:block !important;
 /*dashboard-loader*/
 .bottomProfile  .Loader
 {
-    width:100% !important;
-    position: absolute;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    background-position:center;
-    margin: 0 auto;
-    display: block;
-    padding-top: 60px;
+width:100% !important;
+position: absolute;
+right: 0;
+height: 100%;
+width: 100%;
+background-position:center;
+margin: 0 auto;
+display: block;
+padding-top: 60px;
 }
 
 .topProfile  .Loader
 {
-    width:100% !important;
-    position: absolute;
-    right: 0;
-    height: -webkit-fill-available;
-    width: 100%;
-    background-position:center;
-    margin: 0 auto;
-    display: block;
+width:100% !important;
+position: absolute;
+right: 0;
+height: -webkit-fill-available;
+width: 100%;
+background-position:center;
+margin: 0 auto;
+display: block;
 }
 
 /*loading-bug_fixes*/
 
-
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
 {
-
-        height:300px;
-        width: 100%;
-        display: block;
-        margin-top: 12px;
+height:300px;
+width: 100%;
+display: block;
+margin-top: 20px;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .card.ProfileCard
 {
-height: 100%;
-}
-
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
-{
-    height: 100%;
+height:100%;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
 {
-    display: block;
-    width: 100%;
-    height:100%;
-    overflow-y: auto;
+display: block;
+width: 100%;
+overflow-y: auto;
 }
 
 
 @media (min-width: 1367px)
 {
-    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
-    {
-        max-height: 265px !important;
-    }
-
-    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
-    {
-        display: block;
-        width: 100%;
-        height: 265px !important;
-        overflow-y: auto;
-    
-    }
-    
-
-    .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
 {
-    min-height: 332px !important;
-    width: 100%;
-    display: block;
-    position: relative;
+max-height: 265px !important;
+}
+
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
+{
+display: block;
+width: 100%;
+height: 265px !important;
+overflow-y: auto;
+}
+    
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2)
+{
+min-height: 332px !important;
+width: 100%;
+display: block;
+position: relative;
 }
 
 }
@@ -2210,7 +2213,7 @@ height: 100%;
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate:after
      {
         margin-top: -12px;
-        right: -26px;
+        right: -25px;
      }
      
       .ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsName
@@ -2240,6 +2243,7 @@ height: 100%;
      .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
      {
         color: #444;
+        margin-bottom: 0px;
      }
 
      .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span
@@ -2268,8 +2272,8 @@ height: 100%;
     overflow-x: hidden;
     white-space: nowrap;
     cursor: pointer;
-    padding-right: 12px;
-    padding-left: 15px
+    padding-right: 20px;
+    padding-left: 20px
 }
 
 .DashboardViewFirst .ServicesCalendarWidget:hover span
@@ -2282,85 +2286,91 @@ color:#444444;
 {
     max-width: 100%;
     width: 100%;
+    margin-right:0px;
 }
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
 {
-    width:21%;
+    width:23%;
     min-width: auto;
     cursor: pointer;
     text-align: center;
+    border-right: 1px solid rgba(140,140,140, 0.3);
+    line-height: 60px;
 }
 
+.topProfile .bottomPalette .ProfileServicesVisitContent .options
+{
+top: 0px;
+margin-left: 10px;
+}
 
+.DashboardViewFirst .ProfileServices
+{
+margin-right:0px;
+}
+
+.DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle
+{
+margin-bottom:0px;
+}
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span
 {
-    color: #444;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span::after {
-    content: '';
-    position: absolute;
-    background: rgba(140,140,140, 0.3);
-    width: 1px;
-    height: 50px;
-    left: 99px;
-    display: block;
-    top: 10px;
+color: #444;
+font-weight: 600;
+font-size: 14px;
 }
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
 {
-    color: #444;
-    font-weight: 600;
-    font-size: 14px;
+color: #444;
+font-weight: 600;
+font-size: 14px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .ProfileShowMore
 {
-   line-height: 40px; 
-   border-top: none;
+line-height: 40px; 
+border-top: none;
 }
 
 .bottomPalette .ProfileConversationWidget .mySPContainer .options {
-    position: absolute;
-    right: 22px;
+position: absolute;
+right: 22px;
 }
 
 .bottomPalette .ProfileConversationWidget .mySPContainer:first-child .options {
-    top: 12px;
+top: 12px;
 }
 
 .bottomPalette .options:before, .ProfileServicesVisitContent .options:before, .ProfileSubOptions .Select-control .Select-arrow-zone .Select-arrow:before {
-    content: "...";
-    position: absolute;
-    color: #9f9f9f;
-    left: 0px;
-    top: -6px;
-    font-size: 24px;
-    -webkit-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+content: "...";
+position: absolute;
+color: #9f9f9f;
+left: 0px;
+top: -6px;
+font-size: 24px;
+-webkit-transform: rotate(90deg);
+-ms-transform: rotate(90deg);
+transform: rotate(90deg);
 }
 
 .bottomPalette  .options div.SelectDropDown {
-    background-color: transparent;
-    font-size: 0;
-    border: 0;
-    width: 50px;
-    padding: 0;
+background-color: transparent;
+font-size: 0;
+border: 0;
+width: 50px;
+padding: 0;
 }
 
 .bottomPalette div.SelectDropDown:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    font-size: 14px;
+content: "";
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+font-size: 14px;
 }
 
 
