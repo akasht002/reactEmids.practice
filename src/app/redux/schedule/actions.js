@@ -4,7 +4,8 @@ import {
     Get,
     ServiceRequestPost,
     PatientGet,
-    getUserInfo
+    getUserInfo,
+    ServiceRequestPut
 } from '../../services/http'
 import { Schedule } from './bridge';
 import { SELECTED_POS_ERROR_MSG, NEW_POS_ERROR_MSG } from '../constants/constants';
@@ -234,14 +235,20 @@ export function getValidPatientAddress(data) {
     }
 };
 
-export function getEntityServiceProviderList(data) {
+export function getEntityServiceProviderList(data, selectedESPId = '') {
     return (dispatch, getState) => {
         dispatch(startLoading())
         Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
             .then(resp => {
                 let oldEspList = getState().scheduleState.entityServiceProvidersList;
                 let modifiedList = [...oldEspList, ...resp.data];
-                dispatch(getEntityServiceProviderListSuccess(modifiedList))
+                let selectedESP = modifiedList.map((type, index) => {
+                    return {
+                        ...type,
+                        selected: type.serviceProviderId === selectedESPId
+                    }
+                });
+                dispatch(getEntityServiceProviderListSuccess(selectedESP))
                 dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
             })
             .catch(err => {
@@ -303,11 +310,27 @@ export function getDays() {
     }
 };
 
-export function createOrEditSchedule(data) {
+export function createSchedule(data) {
     return (dispatch) => {
         dispatch(startLoading());
         let modelData = createScheduleModal(data)
         ServiceRequestPost(API.createOrEditSchedule, modelData)
+            .then(resp => {
+                dispatch(push(Path.visitServiceDetails))
+                dispatch(clearESPList())
+                dispatch(endLoading());
+            })
+            .catch(err => {
+                dispatch(endLoading());
+            })
+    }
+};
+
+export function editSchedule(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        let modelData = createScheduleModal(data)
+        ServiceRequestPut(API.createOrEditSchedule, modelData)
             .then(resp => {
                 dispatch(push(Path.visitServiceDetails))
                 dispatch(clearESPList())

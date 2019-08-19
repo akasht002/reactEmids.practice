@@ -24,7 +24,8 @@ import {
     getEntityServiceProviderList,
     getRecurringPattern,
     getDays,
-    createOrEditSchedule,
+    createSchedule,
+    editSchedule,
     getEntityServiceProviderListSearch,
     selectESP,
     clearESPList,
@@ -38,6 +39,7 @@ import { validate } from './data/validate'
 import Search from '../VisitSelection/VisitServiceList/Search'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
+import moment from 'moment'
 import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS } from '../../constants/constants'
 
 export class Schedule extends Component {
@@ -70,7 +72,8 @@ export class Schedule extends Component {
             pageNumber: PAGE_NO,
             pageSize: DEFAULT_PAGE_SIZE_ESP_LIST,
             searchOpen: false,
-            isModalOpen: false
+            isModalOpen: false,
+            isIndividualScheduleEdit: false
         }
         this.serviceTypes = [];
         this.categoryId = '';
@@ -89,6 +92,7 @@ export class Schedule extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.isIndividualScheduleEdit === true) {
+            this.setState({ isIndividualScheduleEdit: true })
             this.selectNew();
             this.props.isScheduleEdit(false)
         }
@@ -100,15 +104,16 @@ export class Schedule extends Component {
         this.serviceTypes = data.serviceTypes;
         this.props.getServiceCategory(data.categoryId, this.serviceTypes);
         this.setState({
-            checkedServiceCategoryId: this.props.individualSchedulesDetails.categoryId
+            planType: 2,
+            checkedServiceCategoryId: data.categoryId,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            startTime: moment(data.startTime, 'h:mm a'),
+            endTime: moment(data.endTime, 'h:mm a'),
+            description: data.additionalDescription,
+            patientAddressId: data.patientAddressId
         })
     }
-
-    // componentWillReceiveProps(nextProps) {
-    //     this.setState({
-    //         checkedServiceCategoryId: nextProps.individualSchedulesDetails.categoryId
-    //     })
-    // }
 
     componentDidMount() {
         let data = {
@@ -119,7 +124,7 @@ export class Schedule extends Component {
             this.props.getServiceCategory(this.categoryId);
             this.props.getPatientAddress(this.props.patientId);
             this.props.getStates();
-            this.props.getEntityServiceProviderList(data);
+            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
             this.props.getRecurringPattern();
             this.props.getDays();
         } else {
@@ -391,7 +396,7 @@ export class Schedule extends Component {
                 pageNumber: this.state.pageNumber,
                 pageSize: this.state.pageSize
             }
-            this.props.getEntityServiceProviderList(data);
+            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
         }
         this.setState({
             searchOpen: !this.state.searchOpen,
@@ -517,7 +522,8 @@ export class Schedule extends Component {
             selectedDaysId,
             dailyDayOccurence,
             weeklyDayOccurence,
-            monthlyMonthsSecond
+            monthlyMonthsSecond,
+            isIndividualScheduleEdit
         } = this.state
 
         let data = {
@@ -526,8 +532,8 @@ export class Schedule extends Component {
             categoryId: this.categoryId,
             startDate: startDate,
             endDate: endDate ? endDate : startDate,
-            startTime: this.formatedStartTime,
-            endTime: this.formatedEndTime,
+            startTime: isIndividualScheduleEdit ? startTime : this.formatedStartTime,
+            endTime: isIndividualScheduleEdit ? endTime : this.formatedEndTime,
             duration: getDiffTime(startTime, endTime),
             description: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
@@ -556,7 +562,12 @@ export class Schedule extends Component {
                 }
             }
         }
-        this.props.createOrEditSchedule(data);
+        if (isIndividualScheduleEdit) {
+            this.props.editSchedule(data);
+        } else {
+            this.props.createSchedule(data);
+        }
+        //this.props.createSchedule(data);
     }
 
     clickShowMore = () => {
@@ -565,7 +576,7 @@ export class Schedule extends Component {
                 pageNumber: this.state.pageNumber,
                 pageSize: this.state.pageSize
             }
-            this.props.getEntityServiceProviderList(data)
+            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId)
         })
     }
 
@@ -589,13 +600,15 @@ export class Schedule extends Component {
                         <div className="Plan-typebar">
                             <PlanType
                                 options={PlanTypeData}
-                                planType={this.state.planType}
-                                handleChangePlanType={this.handleChangePlanType} />
+                                planType={this.state.isIndividualScheduleEdit ? 2 : 1}
+                                handleChangePlanType={this.handleChangePlanType}
+                                isIndividualScheduleEdit={this.state.isIndividualScheduleEdit}
+                            />
                         </div>
                         <Fragment>
                             {
                                 parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
-                                <div className="Service-Cat-Typesblock">
+                                <div className={this.state.isIndividualScheduleEdit ? 'Service-Cat-Typesblock Service-Cat-Typesblock-Edit' : "Service-Cat-Typesblock"}>
                                     <div>
                                         <h2 className='ServicesTitle'>Service Category</h2>
                                         <ServiceCategory
@@ -696,6 +709,7 @@ export class Schedule extends Component {
                                     street={this.state.street}
                                     city={this.state.city}
                                     zip={this.state.zip}
+                                    patientAddressId={this.state.patientAddressId}
                                 />
                             </div>
                             <div className="ServiceTypesWidget PostSR">
@@ -766,10 +780,11 @@ function mapDispatchToProps(dispatch) {
         setSelectedPos: (data) => dispatch(setSelectedPos(data)),
         getValidPatientAddressSuccess: (data) => dispatch(getValidPatientAddressSuccess(data)),
         getValidPatientAddress: (data) => dispatch(getValidPatientAddress(data)),
-        getEntityServiceProviderList: (data) => dispatch(getEntityServiceProviderList(data)),
+        getEntityServiceProviderList: (data, selectedESPId) => dispatch(getEntityServiceProviderList(data, selectedESPId)),
         getRecurringPattern: () => dispatch(getRecurringPattern()),
         getDays: () => dispatch(getDays()),
-        createOrEditSchedule: (data) => dispatch(createOrEditSchedule(data)),
+        createSchedule: (data) => dispatch(createSchedule(data)),
+        editSchedule: (data) => dispatch(editSchedule(data)),
         goToServicedetails: () => dispatch(push(Path.visitServiceDetails)),
         getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
         selectESP: (data) => dispatch(selectESP(data)),

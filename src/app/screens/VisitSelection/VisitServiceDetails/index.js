@@ -111,7 +111,8 @@ export class VisitServiceDetails extends Component {
         pageNumber: PAGE_NO,
         pageSize: this.state.rowPageSize,
         startDate: null,
-        endDate: null
+        endDate: null,
+        patientId: this.props.patientId
       }
       this.props.getVisitList(data);
     }
@@ -143,7 +144,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
@@ -157,7 +159,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: pageNumber,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
@@ -250,7 +253,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
@@ -272,7 +276,8 @@ export class VisitServiceDetails extends Component {
       pageSize: 10,
       startDate: null,
       endDate: null,
-      rowPageSize: 10
+      rowPageSize: 10,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
@@ -353,7 +358,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.activePage,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     await this.props.getVisitList(data);
     await this.setState({ editModal: false })
@@ -368,7 +374,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.activePage,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     await this.props.getVisitList(model);
   }
@@ -425,7 +432,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.activePage,
       pageSize: pageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(model);
   }
