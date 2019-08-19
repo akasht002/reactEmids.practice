@@ -1129,44 +1129,44 @@ div.ProfileConversation{
 }
 
 .ProfileSubOptions .Select-control, .subOptions .Select-control .Select-input:focus{
-    background: rgba(0,0,0,0) !important;
-    border: 0;
+background: rgba(0,0,0,0) !important;
+border: 0;
 }
 
 .ProfileSubOptions .Select-control .Select-placeholder, .subOptions .Select-control .Select-value{
-    display: none;
+display: none;
 }
 
 .ProfileSubOptions .Select-control .Select-input{
-    padding: 0;
+padding: 0;
 }
 
 .ProfileSubOptions .Select-control{
-    height: auto;
+height: auto;
 }
 
 .ProfileSubOptions .Select-menu-outer{
-    top: 20px;
-    width: auto;
-    right: 0;
-    left: auto;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
+top: 20px;
+width: auto;
+right: 0;
+left: auto;
+-webkit-border-radius: 0;
+-moz-border-radius: 0;
+border-radius: 0;
 }
 
 .ProfileSubOptions .Select-menu-outer .Select-menu{
-    max-height: 100px;
+max-height: 100px;
 }
 
 .ProfileSubOptions .Select-menu-outer .Select-menu .Select-option{
-    padding: 5px 10px;
-    word-wrap: normal;
+padding: 5px 10px;
+word-wrap: normal;
 }
 
 .ProfileSubOptions .Select-control .Select-arrow-zone{
-    width: 10px;
-    padding: 0;
+width: 10px;
+padding: 0;
 }
 
 .EntityUDashboard .ProfileServices .ProfileCardImageContainer
@@ -1179,7 +1179,7 @@ margin-left:0px;
 
 @media all and (-ms-high-contrast:none)
 {
-   .topProfile .card { word-wrap:normal !important; } /* IE10 */
+.topProfile .card { word-wrap:normal !important; } /* IE10 */
 *::-ms-backdrop, .topProfile .card { word-wrap:normal !important; } /* IE11 */
 .ProfileContentWidget .ProfileServicesVisitContent .AvatarName { margin-left:15px; } /* IE10 */
 *::-ms-backdrop, .ProfileContentWidget .ProfileServicesVisitContent .AvatarName { margin-left:15px; } /* IE11 */
@@ -1189,122 +1189,122 @@ margin-left:0px;
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent
 {
-    flex-direction: row;
-    align-items: left;
-    justify-content: space-between;
-    align-items: center;
+flex-direction: row;
+align-items: left;
+justify-content: space-between;
+align-items: center;
 }
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
 {
-    min-width: calc(100% - 360px);
+min-width: calc(100% - 360px);
 }
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span
 {
-    color: #444;
-    font-weight: 600;
-    font-size: 14px;
+color: #444;
+font-weight: 600;
+font-size: 14px;
 }
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
 {
-    color: #444;
-    font-weight: 600;
-    font-size: 14px;
+color: #444;
+font-weight: 600;
+font-size: 14px;
 }
 
 /*update-july2019-dashboard-calendor-view-top*/
 .topProfile .topPalette .monthPalette
 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: left;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: left;
 }
 
 .topProfile .topPalette .monthPalette span
 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #444;
-    padding-right: 0px;
-    position: relative !important;
-    right: 0 !important;
+font-size: 14px;
+font-weight: 600;
+color: #444;
+padding-right: 0px;
+position: relative !important;
+right: 0 !important;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider
 {
-    background: #f7f7f7;
-    border-radius: 4px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    display: block;
+background: #f7f7f7;
+border-radius: 4px;
+padding-top: 30px;
+padding-bottom: 30px;
+display: block;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank::after
 {
-    content: 'No Result';
-    position: absolute;
-    display: block;
-    font-size: 14px;
-    color: #7a329f;
-    font-weight: 500;
-    left: 0;
-    right: 18px;
-    top: 48%;
-    text-align: center;
+content: 'No Result';
+position: absolute;
+display: block;
+font-size: 14px;
+color: #7a329f;
+font-weight: 500;
+left: 0;
+right: 18px;
+top: 48%;
+text-align: center;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider span.clickView
 {
-    display: block;
-    text-align: center;
-    position: relative;
-    z-index: 10;
-    font-size: 15px;
-    font-weight: 500;
-    padding-bottom: 30px;
-    margin-top: 70px;
+display: block;
+text-align: center;
+position: relative;
+z-index: 10;
+font-size: 15px;
+font-weight: 500;
+padding-bottom: 30px;
+margin-top: 70px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top
 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top .a.NoServiceReq
 {
-    max-height: 100px;
+max-height: 100px;
 }
 
 .myPlanBlank {
-    background-image: url("../../assets/images/my_plan_blank.png");
-    background-position: center;
-    background-size: 70%;
-    background-repeat: no-repeat;
-    height: 230px;
+background-image: url("../../assets/images/my_plan_blank.png");
+background-position: center;
+background-size: 70%;
+background-repeat: no-repeat;
+height: 230px;
 }
 
 .NewSPReq{
-    background:#f0e9f1  url("../../assets/images/edit_pen.svg");
-    background-position: 50% 60%;
-    background-size: 70%;
-    background-repeat: no-repeat;
+background:#f0e9f1  url("../../assets/images/edit_pen.svg");
+background-position: 50% 60%;
+background-size: 70%;
+background-repeat: no-repeat;
 }
 
 .NoInfoText .NoServiceInfoLink
 {
-    display: block;
-    position: absolute;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: #7a329f;
+display: block;
+position: absolute;
+margin: 0 auto;
+left: 0;
+right: 0;
+text-align: center;
+color: #7a329f;
 }
 
 .topProfile .ProfileCardHeaderTitle.primaryColor
@@ -1313,40 +1313,40 @@ padding-left: 20px;
 }
 
 @media only screen and (min-width: 1367px) {
-    .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank::after {
-        right: 33px;
-        top: 52%;
-    }
-  }
+.topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank::after {
+    right: 33px;
+    top: 52%;
+}
+}
 
-  .No-Coverastion-Block
-  {
-    background: #f0e9f1 url('../../assets/images/conversation-icon.png');
-    background-position: 50% 38%;
-    background-size: 11%;
-    background-repeat: no-repeat;
-    width:320px;
-    margin: 0 auto;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 55px 8px;
-    border: 1px solid #eaeaea;
-    -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
-    border-radius: 6px;
-    font-size: 14px;
-  }
+.No-Coverastion-Block
+{
+background: #f0e9f1 url('../../assets/images/conversation-icon.png');
+background-position: 50% 38%;
+background-size: 11%;
+background-repeat: no-repeat;
+width:320px;
+margin: 0 auto;
+display: -ms-flexbox;
+display: flex;
+-ms-flex-direction: column;
+flex-direction: column;
+-ms-flex-align: center;
+align-items: center;
+padding: 55px 8px;
+border: 1px solid #eaeaea;
+-webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+border-radius: 6px;
+font-size: 14px;
+}
 
-  .No-Coverastion-Block span.NoInfoText {
-    text-align: center;
-    display: block;
-    margin: 0 auto;
-    line-height: auto;
-    height:auto;
+.No-Coverastion-Block span.NoInfoText {
+text-align: center;
+display: block;
+margin: 0 auto;
+line-height: auto;
+height:auto;
 } 
 
 .No-Coverastion-Block .NoServiceInfoLink
