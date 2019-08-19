@@ -115,6 +115,7 @@ export class Assessment extends Component {
             return answer.feedbackQuestionnaireId !== undefined
         });
         this.checkedTask = taskList.length;
+        this.setState({answerList:this.checkedTask})
     }
 
     handleTextarea = (e, id) => {
