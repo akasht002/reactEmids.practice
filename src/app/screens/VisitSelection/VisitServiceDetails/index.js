@@ -94,6 +94,7 @@ export class VisitServiceDetails extends Component {
     } 
     else {
       if(this.props.ServiceRequestId === 0) {
+        this.props.getSchedulesList(this.props.patientId)
         this.getVisitList()
        }
     }
@@ -122,7 +123,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
       startDate: null,
-      endDate: null
+      endDate: null,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }

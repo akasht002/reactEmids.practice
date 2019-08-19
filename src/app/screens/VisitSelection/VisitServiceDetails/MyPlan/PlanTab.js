@@ -3,17 +3,17 @@ import { TabPane } from 'reactstrap';
 import { ScheduleList } from './ScheduleList';
 import { Table } from '../Components/Table';
 import { CoreoPagination } from '../../../../components';
-import { getUserInfo } from '../../../../services/http'
 import {isEntityUser} from '../../../../utils/userUtility'
 import Filter from "./Filter/index";
 
 export const PlanTab = props => {
-    let renderPLanDetailsClass = !isEntityUser() ? 'full-block-requestplan' : ''
+    let isEntity = isEntityUser()
+    let renderPLanDetailsClass = !isEntity ? 'full-block-requestplan' : ''
     return (
         <TabPane tabId='2' className='TabBody'>
 
             <div className="row">
-              {isEntityUser() &&
+              {isEntity &&
                 <div className="col-lg-4 col-md-4 pd-15 left-customewidth">
                     <span className="title-view">Schedule (s)</span>
                 </div>
@@ -25,7 +25,7 @@ export const PlanTab = props => {
                     <div className="pull-right">
                         <div className="full-block filterblock">
                             <span className='primaryColor ProfileHeaderFilter' onClick={props.toggle}>Filters</span>
-                            {isEntityUser() &&
+                            {isEntity &&
                                 <button onClick={() => props.addSchedule()}> <span>+</span>Add New Schedule </button>}
                         </div>
                     </div>
@@ -33,7 +33,7 @@ export const PlanTab = props => {
             </div>
 
             <div className="row">
-                {isEntityUser() &&
+                {isEntity &&
                 <div className="col-lg-4 col-md-4 left-customewidth">
                     <div className="full-block shadow-style left-listblock">
 
