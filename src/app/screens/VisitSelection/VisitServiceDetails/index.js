@@ -28,7 +28,8 @@ import { PlanTab } from './MyPlan/PlanTab';
 import { PatientProfileTab } from './PatientProfile/PatientProfileTab';
 import {
   PAGE_NO,
-  VISIT_STATUS
+  VISIT_STATUS,
+  DEFAULT_PAGE_SIZE
 } from '../../../constants/constants';
 import './styles.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
@@ -287,17 +288,17 @@ export class VisitServiceDetails extends Component {
       serviceTypes: [],
       startDate: null,
       endDate: null,
-      rowPageSize: 10
+      rowPageSize: DEFAULT_PAGE_SIZE
     })
     const data = {
       planScheduleIds: this.selectedSchedules,
       visitStatuses: [],
       serviceTypes: [],
       pageNumber: PAGE_NO,
-      pageSize: 10,
+      pageSize: DEFAULT_PAGE_SIZE,
       startDate: null,
       endDate: null,
-      rowPageSize: 10,
+      rowPageSize: DEFAULT_PAGE_SIZE,
       patientId: this.props.patientId
     }
     this.props.getVisitList(data);
