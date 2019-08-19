@@ -18,10 +18,7 @@ const SummaryState = (state = defaultState, action) => {
         case SummaryDetails.getSummaryDetailsSuccess:
             return {
                 ...state,
-                SummaryDetails: { ...action.data,
-                    serviceRequestTypeVisits: getServiceTasks(action.data && action.data.serviceTypes),
-                    serviceRequestVisitId: action.data && action.data.servicePlanVisitId
-                }
+                SummaryDetails: action.data
             };
 
         case SummaryDetails.getCalculationsData:
