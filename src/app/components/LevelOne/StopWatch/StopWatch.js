@@ -1,6 +1,5 @@
 
 import React, { Component } from "react";
-import { convertUTCTime, getUTCTimeInLocal, getUtcTimeDiff } from '../../../utils/dateUtility'
 
 function pad(num) {
     return ("0" + num).slice(-2);
@@ -45,7 +44,7 @@ class StopWatch extends Component {
     handleStartClick() {
         this.incrementer = setInterval(() =>
             this.setState({
-                secondsElapsed: this.state.secondsElapsed + 1,
+                secondsElapsed: parseInt(this.state.secondsElapsed,0) + 1,
                 startTimer: true
             })
             , 1000);
@@ -80,7 +79,7 @@ class StopWatch extends Component {
                     :
                     <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
                 } */}
-                <span className="TimerContent running">{formattedSeconds(this.state.secondsElapsed)}</span>
+                <span className="TimerContent running">{formattedSeconds(parseInt(this.state.secondsElapsed,10))}</span>
             </div>
         );
     }
