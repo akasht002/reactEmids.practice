@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { getFields, getLength, getStatus, getServiceTypeImage, isNull } from "../../utils/validations";
-import { ProfileModalPopup, Preloader, AlertPopup } from "../../components";
+import { ProfileModalPopup, AlertPopup } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,

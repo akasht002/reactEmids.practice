@@ -1,13 +1,10 @@
 import React, { Fragment } from 'react';
 import Moment from 'react-moment';
 import { DATE_FORMATS } from '../../../../constants/constants';
-import { ThemeProvider } from '@zendeskgarden/react-theming';
-import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
-import { PAGE_SIZE_OPTIONS, SERVICE_VISIT_STATUS, VISIT_STATUS } from '../../../../constants/constants'
+import { PAGE_SIZE_OPTIONS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
-import { getUserInfo } from '../../../../services/http'
 import {isEntityUser} from '../../../../utils/userUtility'
 import './style.css';
 

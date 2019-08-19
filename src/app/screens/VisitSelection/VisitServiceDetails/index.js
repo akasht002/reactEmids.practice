@@ -37,11 +37,8 @@ import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
 import './customStyle.css'
-import { getUserInfo } from '../../../services/http';
 import {
-  getVisitServiceHistoryByIdDetail,
-  clearVisitServiceHistoryByIdDetail
-} from '../../../redux/visitHistory/VisitServiceDetails/actions'
+  getVisitServiceHistoryByIdDetail} from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import {
   getPerformTasksList,
   formDirtyPerformTask,

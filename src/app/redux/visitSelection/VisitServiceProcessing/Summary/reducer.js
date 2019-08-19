@@ -1,7 +1,6 @@
 import {
     SummaryDetails
 } from './actions'
-import { getServiceTasks } from '../PerformTasks/actions'
 
 const defaultState = {
     SummaryDetails: {},

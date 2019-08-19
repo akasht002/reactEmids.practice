@@ -21,7 +21,6 @@ import './styles/toggleSwitch.css'
 import './EntitySP/EntitySPDashboard.css'
 import moment from 'moment'
 import { createDataStore } from '../../redux/telehealth/actions'
-import { Preloader } from '../../components/Base'
 
 class Dashboard extends React.Component {
   constructor(props) {

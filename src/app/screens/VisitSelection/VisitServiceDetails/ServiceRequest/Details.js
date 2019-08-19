@@ -24,12 +24,10 @@ export const Details = props => {
         }
     }
 
-    let defaultCheck = ''
     let sliderTypes =
         props.details && props.details.serviceRequestTypeDetails &&
         props.details.serviceRequestTypeDetails.map(
             (serviceTypes, index) => {
-                index === 0 ? (defaultCheck = true) : (defaultCheck = false)
                 let catNum = index + 1
                 return (
                     <div className='ServiceTypeList'>

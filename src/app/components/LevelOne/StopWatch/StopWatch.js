@@ -1,6 +1,5 @@
 
 import React, { Component } from "react";
-import { convertUTCTime, getUTCTimeInLocal, getUtcTimeDiff } from '../../../utils/dateUtility'
 
 function pad(num) {
     return ("0" + num).slice(-2);
