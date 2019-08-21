@@ -82,7 +82,8 @@ const scheduleState = (state = defaultState, action) => {
         case Schedule.clearESPList:
             return {
                 ...state,
-                entityServiceProvidersList: []
+                entityServiceProvidersList: [],
+                daysList: []
             };
 
         case Schedule.getAssessmentDetailSuccess:

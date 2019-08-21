@@ -56,7 +56,7 @@ export const PlanTab = props => {
                             activePage={props.activePage}
                             itemsCountPerPage={props.rowPageSize}
                             totalItemsCount={props.pageCount}
-                            pageRangeDisplayed={10}
+                            pageRangeDisplayed={5}
                             onChange={props.pageNumberChange}
                             itemClass='PaginationItem'
                             itemClassFirst='PaginationIcon First'

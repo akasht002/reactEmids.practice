@@ -12,6 +12,7 @@ import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
 import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty } from "../../utils/validations";
 import { checkLength, allEqual, numbersOnly } from '../../utils/arrayUtility';
+import { formatPhoneNumber } from '../../utils/formatName'
 import {
     getServiceCategory,
     getServiceType,
@@ -40,7 +41,7 @@ import Search from '../VisitSelection/VisitServiceList/Search'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
 import moment from 'moment'
-import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS } from '../../constants/constants'
+import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from '../../constants/constants'
 
 export class Schedule extends Component {
     constructor(props) {
@@ -73,7 +74,12 @@ export class Schedule extends Component {
             pageSize: DEFAULT_PAGE_SIZE_ESP_LIST,
             searchOpen: false,
             isModalOpen: false,
-            isIndividualScheduleEdit: false
+            isIndividualScheduleEdit: false,
+            patientAddressId: 0,
+            planScheduleId: 0,
+            description: '',
+            phoneNumberModal: false,
+            phoneNumber: ''
         }
         this.serviceTypes = [];
         this.categoryId = '';
@@ -82,6 +88,25 @@ export class Schedule extends Component {
         this.weeklySelectedDays = [];
         this.formatedStartTime = "";
         this.formatedEndTime = "";
+        this.selectedDaysLabel = "";
+        this.selectedWeeksLabel = "";
+    }
+
+    componentDidMount() {
+        let data = {
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+        }
+        if (this.props.patientId) {
+            this.props.getServiceCategory(this.categoryId);
+            this.props.getPatientAddress(this.props.patientId);
+            this.props.getStates();
+            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
+            this.props.getRecurringPattern();
+            this.props.getDays(this.props.individualSchedulesDetails.weekly && this.props.individualSchedulesDetails.weekly.days);
+        } else {
+            this.props.history.push(Path.visitServiceList)
+        }
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -103,6 +128,8 @@ export class Schedule extends Component {
         this.categoryId = data.categoryId;
         this.serviceTypes = data.serviceTypes;
         this.props.getServiceCategory(data.categoryId, this.serviceTypes);
+        data.monthly !== null && this.handleChangeSelectedDays(data.monthly.weekDayMonth && data.monthly.weekDayMonth.day);
+        data.monthly !== null && this.handleChangeSelectedWeeks(data.monthly.weekDayMonth && data.monthly.weekDayMonth.week);
         this.setState({
             planType: 2,
             checkedServiceCategoryId: data.categoryId,
@@ -110,25 +137,31 @@ export class Schedule extends Component {
             endDate: data.endDate,
             startTime: moment(data.startTime, 'h:mm a'),
             endTime: moment(data.endTime, 'h:mm a'),
-            description: data.additionalDescription,
-            patientAddressId: data.patientAddressId
+            additionalDescription: data.description,
+            patientAddressId: data.patientAddressId,
+            planScheduleId: data.planScheduleId,
+            isRecurring: data.isRecurring,
+            weeklyDayOccurence: data.weekly && data.weekly.dayOccurence,
+            dailyDayOccurence: data.daily && data.daily.dayOccurence,
+            selectedRecurringType: data.schedulePattern && data.schedulePattern,
+            monthlyDay: data.monthly !== null && data.monthly.dayMonth && data.monthly.dayMonth.day,
+            monthlyMonths: data.monthly !== null && data.monthly.dayMonth && data.monthly.dayMonth.month,
+            selectedDaysId: data.monthly !== null && data.monthly.weekDayMonth && data.monthly.weekDayMonth.day,
+            selectedDaysLabel: this.selectedDaysLabel,
+            selectedWeeks: data.monthly !== null && data.monthly.weekDayMonth && data.monthly.weekDayMonth.week,
+            selectedWeeksLabel: this.selectedWeeksLabel,
+            monthlyMonthsSecond: data.monthly !== null && data.monthly.weekDayMonth && data.monthly.weekDayMonth.month
         })
-    }
-
-    componentDidMount() {
-        let data = {
-            pageNumber: this.state.pageNumber,
-            pageSize: this.state.pageSize
-        }
-        if (this.props.patientId) {
-            this.props.getServiceCategory(this.categoryId);
-            this.props.getPatientAddress(this.props.patientId);
-            this.props.getStates();
-            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
-            this.props.getRecurringPattern();
-            this.props.getDays();
-        } else {
-            this.props.history.push(Path.visitServiceList)
+        this.weeklySelectedDays = data.weekly ? data.weekly.days : [];
+        this.espId = data.serviceProviderId;
+        this.address = {
+            patientAddressId: data.patientAddressId,
+            streetAddress: data.address && data.address.streetAddress,
+            city: data.address && data.address.city,
+            stateId: data.address && data.address.stateId,
+            stateName: data.address && data.address.stateName,
+            zip: data.address && data.address.zip,
+            addressType: this.state.addressType
         }
     }
 
@@ -281,8 +314,9 @@ export class Schedule extends Component {
 
     todateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
+        const formattedMDYY = formateMDYY(formattedDate)
         this.setState({
-            endDate: formattedDate
+            endDate: formattedMDYY
         });
     }
 
@@ -337,18 +371,30 @@ export class Schedule extends Component {
             this.weeklySelectedDays.push(parseInt(e.target.id, 0))
         }
         else {
-            this.weeklySelectedDays.splice(this.weeklySelectedDays.findIndex(item => {
-                return item.id === parseInt(e.target.id, 0);
-            }), 1);
+            this.weeklySelectedDays = this.weeklySelectedDays.filter(item => {
+                return item !== parseInt(e.target.id, 0);
+            })
         }
     }
 
     handleChangeMonthlySelectionFirst = (id) => {
-        this.setState({ monthlyOptions: id })
+        this.setState({
+            monthlyOptions: id,
+            selectedDaysLabel: '',
+            selectedWeeksLabel: '',
+            selectedDaysId: '',
+            selectedWeeks: ''
+        })
+        this.selectedDaysLabel = "";
+        this.selectedWeeksLabel = "";
     }
 
     handleChangeMonthlySelectionSecond = (id) => {
-        this.setState({ monthlyOptions: id })
+        this.setState({
+            monthlyOptions: id,
+            monthlyDay: '',
+            monthlyMonths: ''
+        })
     }
 
     handleChangeMonthlyDay = (data) => {
@@ -370,6 +416,7 @@ export class Schedule extends Component {
             selectedWeeksId: parseInt(selectedOptionId, 10),
             selectedWeeksLabel: selectedValue
         });
+        this.selectedWeeksLabel = selectedValue;
     }
 
     handleChangeSelectedDays = (selectedOptionId) => {
@@ -383,6 +430,7 @@ export class Schedule extends Component {
             selectedDaysId: parseInt(selectedOptionId, 0),
             selectedDaysLabel: selectedValue
         });
+        this.selectedDaysLabel = selectedValue;
     }
 
     handleChangeMonthlyMonthsSecond = (data) => {
@@ -527,13 +575,13 @@ export class Schedule extends Component {
         } = this.state
 
         let data = {
-            planScheduleId: 0,
+            planScheduleId: this.state.planScheduleId,
             name: "",
             categoryId: this.categoryId,
             startDate: startDate,
-            endDate: endDate ? endDate : startDate,
-            startTime: isIndividualScheduleEdit ? startTime : this.formatedStartTime,
-            endTime: isIndividualScheduleEdit ? endTime : this.formatedEndTime,
+            endDate: isRecurring ? endDate : startDate,
+            startTime: isIndividualScheduleEdit ? getHourMin(startTime) : this.formatedStartTime,
+            endTime: isIndividualScheduleEdit ? getHourMin(endTime) : this.formatedEndTime,
             duration: getDiffTime(startTime, endTime),
             description: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
@@ -542,7 +590,7 @@ export class Schedule extends Component {
             serviceTypes: this.serviceTypes,
             address: this.address,
             schedulePattern: isRecurring ? selectedRecurringType : 31,
-            patientAddressId: 0,
+            patientAddressId: this.state.patientAddressId,
             daily: (weeklyDayOccurence || monthlyDay || selectedWeeksId || !isRecurring) ? null : {
                 dayOccurence: dailyDayOccurence ? dailyDayOccurence : null
             },
@@ -567,7 +615,6 @@ export class Schedule extends Component {
         } else {
             this.props.createSchedule(data);
         }
-        //this.props.createSchedule(data);
     }
 
     clickShowMore = () => {
@@ -583,6 +630,18 @@ export class Schedule extends Component {
     onClickCancel = () => {
         this.setState({ isModalOpen: true })
     }
+
+    goToServicedetails = () => {
+        this.props.clearESPList();
+        this.props.goToServicedetails();
+    }
+
+    showPhoneNumber = (phoneNumber) => {
+        this.setState({
+            phoneNumber: formatPhoneNumber(phoneNumber),
+            phoneNumberModal: !this.state.phoneNumberModal
+        })
+    };
 
     render() {
         return (
@@ -727,6 +786,7 @@ export class Schedule extends Component {
                                 <AssignServiceProvider
                                     entityServiceProvidersList={this.props.entityServiceProvidersList}
                                     handleAssignServiceProvider={this.handleAssignServiceProvider}
+                                    showPhoneNumber={this.showPhoneNumber}
                                 />
                                 {!this.props.disableShowmore &&
                                     <ul className="show-more-assignSP">
@@ -763,7 +823,13 @@ export class Schedule extends Component {
                         isCancel={true}
                         isOpen={this.state.isModalOpen}
                         closePopup={() => this.setState({ isModalOpen: false })}
-                        onAcceptClick={() => this.props.goToServicedetails()}
+                        onAcceptClick={() => this.goToServicedetails()}
+                    />
+                    <AlertPopup
+                        message={ <span>{this.state.phoneNumber === null ? CONTACT_NOT_FOUND : `${PHONE_NUMBER_TEXT} ${formatPhoneNumber(this.state.phoneNumber)}`}</span> }
+                        OkButtonTitle={'Ok'}
+                        isOpen={this.state.phoneNumberModal}
+                        onAcceptClick={() => this.setState({ phoneNumberModal: false })}
                     />
                 </Scrollbars>
             </AsideScreenCover>
@@ -782,7 +848,7 @@ function mapDispatchToProps(dispatch) {
         getValidPatientAddress: (data) => dispatch(getValidPatientAddress(data)),
         getEntityServiceProviderList: (data, selectedESPId) => dispatch(getEntityServiceProviderList(data, selectedESPId)),
         getRecurringPattern: () => dispatch(getRecurringPattern()),
-        getDays: () => dispatch(getDays()),
+        getDays: (data) => dispatch(getDays(data)),
         createSchedule: (data) => dispatch(createSchedule(data)),
         editSchedule: (data) => dispatch(editSchedule(data)),
         goToServicedetails: () => dispatch(push(Path.visitServiceDetails)),
