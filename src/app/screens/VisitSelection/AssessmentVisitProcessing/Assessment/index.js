@@ -78,7 +78,7 @@ export class Assessment extends Component {
                         return ''   
                     })                    
                 }
-                if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
+                else if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
                     questionList.answers.map((answer) => {                                                               
                         if (!isNull(questionList.selectedAnswer)) {
                             this.selectedTextArea = questionList.selectedAnswer;
