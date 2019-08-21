@@ -515,7 +515,7 @@ export function getVisitListCount(data) {
         dispatch(endLoading());
       })
       .catch(err => {
-
+        dispatch(endLoading());
       })
   }
 };
