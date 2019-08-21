@@ -3418,13 +3418,7 @@ background-color: #fff;
        *::-ms-backdrop, .bottom-blockbtn .ml-auto{ float: right !important;  }
        }
 
-       .ProfileRightContainer .ProfileContentWidget .scrollarea-content 
-       {
-       overflow-y: auto;
-       height: 100%;
-       }
-
-
+  
 .ServiceRequestsWidget .ServiceRequestBoard{
     width: 50%;
 }

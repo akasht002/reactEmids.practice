@@ -3489,15 +3489,8 @@ background-color: #fff;
        *::-ms-backdrop, .bottom-blockbtn .ml-auto{ float: right !important;  }
        }
 
-       .ProfileRightContainer .ProfileContentWidget .scrollarea-content 
-       {
-       overflow-y: auto;
-       height: 100%;
-       }
 
 
-  
-  
 /*1920-screen-*/
 @media only screen and (min-width: 1367px) 
 {
