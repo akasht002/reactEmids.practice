@@ -36,6 +36,12 @@ export const PAGE_NO = 1;
 export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
 export const SERVICE_REQUEST_PAGE_SIZE = 10
 
+
+export const VISIT_TYPE = {
+    assessment : 114,
+    scheduled : 115
+}
+
 export const SERVICE_REQUEST = {
     hiredId: 38
 }
@@ -333,9 +339,13 @@ export const VISIT_STATUS = {
         "keyValue": "Payment Pending"
     }
 }
-export const PLAN_TYPE = {
-    assessment:116
-}
+
+export const DEFAULT_ADDRESS_ID = 1
+
+export const LATITUDE = 0.0
+
+export const LONGITUDE = 0.0
+
 
 export const serviceRequestDetailsTab = {
     request: '1',

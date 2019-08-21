@@ -69,7 +69,8 @@ export class Schedule extends Component {
             pageNumber: PAGE_NO,
             pageSize: DEFAULT_PAGE_SIZE_ESP_LIST,
             searchOpen: false,
-            isModalOpen: false
+            isModalOpen: false,
+            additionalDescription:''
         }
         this.serviceTypes = [];
         this.categoryId = 1;
@@ -454,7 +455,7 @@ export class Schedule extends Component {
             startTime: this.formatedStartTime,
             endTime: this.formatedEndTime,
             duration: getDiffTime(startTime, endTime),
-            description: additionalDescription,
+            additionalDescription: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
             address: this.address,

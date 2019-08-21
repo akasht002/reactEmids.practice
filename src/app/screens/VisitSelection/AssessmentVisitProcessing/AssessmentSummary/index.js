@@ -47,8 +47,8 @@ export class AssessmentSummary extends Component {
 
     componentDidMount() {
         if (this.props.ServiceRequestVisitId) {
-            this.props.getSummaryDetail(this.props.patientDetails.serviceRequestVisitId);
-            this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
+            this.props.getSummaryDetail(this.props.ServiceRequestVisitId);
+            this.props.getSavedSignature(this.props.ServiceRequestVisitId);
         } else {
             this.props.history.push(Path.visitServiceList)
         }
@@ -92,11 +92,12 @@ export class AssessmentSummary extends Component {
     saveSignature = () => {
         const data = this.signaturePad.toDataURL();
         if (data !== '') {
-            this.signaturePad()
+            this.setState({ isSaveBtnShown: false })
+            this.signaturePad.off();
         }
         let signatureData = {
             "patientId": this.state.summaryDetails.patient.patientId,
-            "serviceRequestVisitId": this.state.summaryDetails.serviceRequestVisitId,
+            "serviceRequestVisitId": this.state.summaryDetails.servicePlanVisitId,
             "serviceRequestId": this.state.summaryDetails.serviceRequestId,
             "rating": 0,
             "signature": data,
@@ -123,7 +124,7 @@ export class AssessmentSummary extends Component {
 
         if (this.state.signatureImage) {
             const data = {
-                serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
+                serviceRequestVisitId: this.state.summaryDetails.servicePlanVisitId,
                 serviceProviderId: this.state.summaryDetails.serviceProviderId,
                 serviceRequestId: this.state.summaryDetails.serviceRequestId,
                 hourlyRate: this.state.summaryDetails.hourlyRate,
@@ -331,9 +332,9 @@ export class AssessmentSummary extends Component {
                                                 <div className="col-md-4 SummaryRange">
                                                     <span className="bottomTaskName">Tasks</span>
                                                     <span className="bottomTaskRange">
-                                                        <i style={{ width: completedTaskPercent + '%' }} className="bottomTaskCompletedRange" />
+                                                        <i style={{ width: this.props.taskPercentage + '%' }} className="bottomTaskCompletedRange" />
                                                     </span>
-                                                    <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
+                                                    <span className="bottomTaskPercentage">{this.props.taskPercentage}%</span>
                                                 </div>
                                             </div>
                                             <p className="SummaryContentTitle">Payment Details</p>                                         
@@ -352,7 +353,7 @@ export class AssessmentSummary extends Component {
                                                     <SignaturePad ref={ref => this.signaturePad = ref} />
                                                 }
                                             </div>
-                                            { (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
+                                            { (this.props.signatureImage.signature === 'data:image/jpeg;base64,' || this.props.signatureImage.signature === '' || this.props.signatureImage.signature === null) ?
                                                 <div className="SignatureButtons">
                                                     <button className="btn btn-outline-primary CancelSignature" disabled={this.state.disableSignatureBtn} onClick={this.saveSignature}>Save</button>
                                                     <button className="btn btn-outline-primary ResetSignature" onClick={this.resetSignature}>Reset Signature</button>
@@ -458,11 +459,13 @@ function mapStateToProps(state) {
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
         CalculationsData: state.visitSelectionState.VisitServiceProcessingState.SummaryState.CalculationsData,
         actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,
-        patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
+        patientDetails: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.planDetails,
+        requestDetails: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.requestDetails,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
         signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature,
+        taskPercentage: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.taskPercentage,
     };
 };
 
