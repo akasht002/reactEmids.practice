@@ -40,8 +40,7 @@ export const AssignServiceProvider = props => {
                                             </div>
                                         </fieldset>
                                     </div>
-                                </div>
-                                <div>
+                                    <div className='options'>
                                     <ThemeProvider>
                                         <SelectField>
                                             <Select
@@ -56,6 +55,8 @@ export const AssignServiceProvider = props => {
                                         </SelectField>
                                     </ThemeProvider>
                                 </div>
+                                </div>
+                              
                             </Fragment>
                         )
                     })
