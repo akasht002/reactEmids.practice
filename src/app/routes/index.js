@@ -36,7 +36,8 @@ import {
   Assessment,
   AssessmentFeedback,
   AssessmentSummary,
-  Schedule
+  Schedule,
+  EntityDashboard
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -87,7 +88,8 @@ export const Path = {
   assessment:'/assessment/processing',
   assessmentFeedback:'/assessment/feedback',
   assessmentSummary:'/assessment/summary',
-  schedule: '/schedule'
+  schedule: '/schedule',
+  entityDashboard: '/entityDashboard'
 };
 
 class AppStackRoot extends Component {
@@ -142,6 +144,7 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.assessment} component={Assessment} />
             <PrivateRoute path={Path.assessmentFeedback} component={AssessmentFeedback} />
             <PrivateRoute path={Path.assessmentSummary} component={AssessmentSummary} />
+            <PrivateRoute path={Path.entityDashboard} component={EntityDashboard} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

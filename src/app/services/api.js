@@ -190,5 +190,7 @@ export const API = {
     getAssessmentByAssessmentId:'assessment/get-assessment/',
     getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
     getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
-    getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/'
+    getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/',
+    getIndividualsCount: 'entityuser/individual/totalcount',
+    getIndividualsList: 'entityuser/individual/list'
 }

@@ -1,0 +1,369 @@
+
+.entity-dashboard-section
+{
+position: relative;
+height: calc(100% - 60px);
+}
+
+.entity-dashboard-section .tab-content > .tab-pane
+{
+display:block !important;
+}
+
+.parent-fullblock
+{
+width:100%;
+display: block;
+float: left;
+position: relative;
+}
+.full-block-tableview
+{
+display: block;
+width:100%;
+clear: both;
+margin:0 auto;
+margin-top: 5px!important;
+min-height: calc(100vh - 380px);
+max-height: calc(100vh - 380px);
+position: relative;
+}
+
+table.individuals-tableblock
+{
+align-items: stretch;
+margin-top: 15px;
+border-collapse: collapse;
+overflow: auto;
+background-color: #fff;
+border-radius: 5px;
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+-webkit-box-shadow: 0 0 10px 1px rgba(0,0,0,.08);
+box-shadow: 0 0 10px 1px rgba(0,0,0,.08);
+}
+
+table.individuals-tableblock thead
+{
+border-bottom: 1px solid rgba(0,0,0,.15);
+padding: 0;
+display: table;
+width: 100%;
+table-layout: fixed;
+}
+
+table.individuals-tableblock thead th
+{
+color: #7a329f;
+font-weight: 500;
+font-size: 14px;
+padding: 11px 0px;
+text-align: center;
+overflow: visible;
+line-height: normal;
+position: relative;
+-webkit-transition: -webkit-box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+transition: -webkit-box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+-o-transition: box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+transition: box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+transition: box-shadow .3s cubic-bezier(.175,.885,.32,1.275),-webkit-box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+-webkit-box-shadow: inset 0 0 0 0 transparent;
+box-shadow: inset 0 0 0 0 transparent;
+}
+
+table.individuals-tableblock tbody
+{
+overflow-x: hidden;
+overflow-y: auto;
+display: block;
+overflow-y: auto;
+height: 245px;
+width: 100%;
+}
+
+table.individuals-tableblock tbody tr
+{
+border-left: 3px solid transparent;
+border-bottom: 1px solid rgba(0,0,0,.05);
+font-size: 14px;
+color: #444;
+display: table;
+width: 100%;
+table-layout: fixed
+}
+
+table.individuals-tableblock tbody td
+{
+font-weight: 500;
+font-size: 14px;
+text-align: center;
+white-space: nowrap;
+text-overflow: ellipsis;
+padding: 10px 10px;
+overflow: hidden;
+-webkit-transition: .3s ease;
+-o-transition: .3s ease;
+transition: .3s ease;
+-webkit-transition-property: width,min-width,padding,opacity;
+-o-transition-property: width,min-width,padding,opacity;
+transition-property: width,min-width,padding,opacity;
+}
+
+table.individuals-tableblock tbody tr:hover {
+    cursor: context-menu;
+    border-left: 3px solid #7a329f;
+    background-color: rgba(122,50,159,.05);
+}
+
+span.life-map-btn
+{
+width:100%;
+display:block;
+}
+
+span.life-map-btn .btn
+{
+font-size: 14px;
+padding: 0px 14px !important;
+width: 100%;
+height: 30px;
+line-height: 14px;
+display: block;
+}
+
+.actions-block
+{
+display: flex;
+padding: 0 10px 0 0;
+flex-direction:row;
+justify-content: center;
+align-items:center;
+}
+
+.actions-block .iconLogInto
+{
+cursor: pointer;
+width: 18px;
+height: 18px;
+margin-right: 10px;
+opacity: .5;
+display: inline-block;
+position: relative;
+}
+
+.actions-block .iconLogInto::before
+{
+background-image:url('../../../assets/images/icons/LogInto.svg');
+content: "";
+position: absolute;
+display: block;
+width: 100%;
+height: 100%;
+background-position: 50%;
+background-size: 100%;
+background-repeat: no-repeat;
+top: -2px;
+}
+
+.tab-link
+{
+padding: 0 30px;
+padding-left:30px !important;
+display: flex;
+-ms-flex-wrap: wrap;
+flex-wrap: wrap;
+margin-bottom: 0;
+list-style: none;
+border: none!important;
+}
+
+.tab-link .nav-item
+{
+margin-bottom: 6px !important;
+list-style: none;
+}
+
+.tab-link .nav-item .nav-link
+{
+font-size: 16px;
+margin-bottom: 0;
+padding: 0 0 5px!important;
+margin-right: 26px;
+border-top: 0;
+border-left: 0;
+border-right: 0;
+border-bottom: 1px solid transparent;
+color: #444!important;
+cursor:pointer;
+border:none;
+}
+
+.tab-link .nav-item .active.nav-link
+{
+color: #7a329f!important;
+border: none;
+border-bottom: 1px solid #7a329f!important;  
+}
+
+.tab-link .nav-link.active{
+    background-color: transparent;
+}
+
+.tab-content-block
+{
+overflow: auto!important;
+position: relative;
+padding: 0 30px;
+height: calc(100% - 0px)!important;
+}
+
+.tab-content-block .tab-pane
+{
+position: relative;
+height: calc(100% - 30px)!important;
+margin-top: 0;
+overflow-y:hidden;
+}
+
+.dashboard-tab-content
+{
+display: block;
+position: relative;
+height: calc(100% - 50px);
+margin-bottom: 22px;
+}
+
+.tab-filter-card
+{
+display: flex;
+flex-direction: row;
+justify-content:flex-start;
+align-items: center;
+margin-bottom: 30px;
+}
+
+.tab-table-view
+{
+position: relative;
+width: 100%;
+height: auto;
+margin-bottom: 30px;
+}
+
+.filter-card-content
+{
+position: relative;
+background-color: #fff;
+overflow: hidden;
+margin-right: 30px;
+width: 25%;
+border-radius: 5px;
+-webkit-box-shadow: 0 2px 8px 0 rgba(0,0,0,.1);
+box-shadow: 0 2px 8px 0 rgba(0,0,0,.1); 
+}
+
+.card-filter-input
+{
+position: absolute;
+top: 0;
+left: 0;
+opacity: 0;
+z-index: 1000;
+width: 100%;
+height: 100%;
+cursor: pointer;
+}
+
+.card-filter-label
+{
+display: flex;
+flex-direction: row;
+position: relative;
+overflow: hidden;
+padding: 15px;
+height: 100%;
+margin: 0;
+border: 1px solid transparent;
+border-radius: 6px;
+}
+
+.filter-card-content input:checked ~ label
+{
+border-color: #7a329f;
+background-color: #f1e7fb;
+}
+
+.dashboard-tab-content .tab-filter-card .filter-card-content input:checked ~ label {
+    border-color: #7a329f;
+    background-color: #f1e7fb;
+}
+
+.filter-label-content
+{
+width: calc(100% - 20px);
+padding: 0 8px 0 0;
+z-index: 999;    
+}
+
+.filter-label-content
+{
+width: calc(100% - 20px);
+padding: 0 8px 0 0;
+z-index: 999;
+}
+
+.filter-label-title
+{
+display: block;
+font-size: 16px;
+color: #7a329f;
+}
+
+.filter-label-title i
+{
+font-size: 24px;
+font-weight: 600;
+font-style: normal;
+}
+
+.filter-label-sub
+{
+display: inline-block;
+line-height: 18px;
+font-size: 14px;
+color: #8c8c8c;
+}
+
+.top-tabicons-block {
+display: block;
+width: 80px;
+top: 5px;
+position: absolute;
+right: -20px;
+}
+
+.top-tabicons-block img
+{
+display: block;
+max-width: 100%;
+height: auto;
+}
+
+.entity-dashboard-topview
+{
+display: flex;
+position: relative;
+width: 100%;
+justify-content: space-between;
+}
+
+.entity-dashboard-topview .ProfileHeaderRight {
+    display: block;
+    height: 24px;
+}
+
+.CTDateFilter .form-group, .entity-dashboard-topview .ProfileHeaderRight>div {
+    display: flex;
+}
+
+

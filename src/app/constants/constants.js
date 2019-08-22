@@ -352,3 +352,79 @@ export const serviceRequestDetailsTab = {
     myPlan: '2'
 }
 
+export const InddividualFilterActiveTab = {
+    "contracts": '1',
+    "cohorts": '2',
+    "attributedProviders": '3',
+    "clinicalConditions": '4',
+    "age": '5',
+    "gender": '6',
+    "location": '7'
+}
+
+export const NO_RECORDS_FOUND = 'No results found for the current criteria'
+
+export const ROW_MIN = 1;
+export const ROW_MAX = 10;
+
+export const entityCardImage = {
+    'IndividualsAll': 'individuals.svg',
+    'IndividualsInvalid': 'ind_ccard.svg',
+    'IndividualsVisit': 'ind_visits_in_period.svg',
+    'ProvidersTotalInTheNetwork': 'service_providers.svg',
+    'ProvidersLowRating': 'ind_low_rating.svg',
+    'ProvidersFeedbackAlerts': 'ind_feedback_alerts.svg',
+    'ProvidersVisitsInThePeriod': 'ind_visits_in_period.svg',
+    'ProvidersLowTaskCompletions': 'visits_low_task_completion.svg',
+    'RequestsCancelled': 'requests_cancelled.svg',
+    'RequestsAll': 'requests_low_matches.svg',
+    'RequestsOpen': 'requests_open_status.svg',
+    'RequestsNeedApproval': 'requests_needing_approval.svg',
+    'VisitsAll': 'visits_in_period.svg',
+    'VisitsCancel': 'visits_cancelled.svg',
+    'VisitsLowTask': 'visits_low_task_completion.svg',
+    'VisitsOverdue': 'visits_overdue.svg'
+}
+
+export const entityDashboardTab = {
+    "individuals": '1',
+    "serviceProviders": '2',
+    "serviceRequests": '3',
+    "serviceVisits": '4'
+}
+
+export const KEYPRESS_ENTER = 13;
+
+export const CARETEAM_DASHBOARD_TAB = {
+    serviceProvider: {
+        statCard: {
+            feedBack_alerts: 'FeedbackAlerts',
+            total_in_the_network: 'TotalInTheNetwork',
+            low_rating: 'LowRating',
+            low_task_completions: 'LowTaskCompletions',
+            visits_in_thePeriod: 'VisitsInThePeriod',
+        }
+    },
+    individuals: {
+        statCard: {
+            all: 'All',
+            invalid: 'Invalid',
+            visit: 'Visit',
+            feedback: 'Feedback'
+        }
+    }
+}
+
+export const OTHER = 'Others'
+export const OTHERS = 'Not Disclosed'
+
+export const CARETEAM_STATUS = {
+    FEEDBACK: 'feedback',
+    PENDING: 'Pending',
+    NEED_APPROVAL: 'Needing Approval'
+}
+
+export const SORT_ORDER = {
+    ASC: 'asc',
+    DESC: 'desc'
+}
