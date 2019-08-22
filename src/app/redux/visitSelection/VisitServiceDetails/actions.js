@@ -318,6 +318,24 @@ export function cancelHiredServiceProvider(data) {
   }
 }
 
+export function acceptservicerequest(data) {
+  let serviceProviderId = getUserInfo().serviceProviderId
+  let model = {
+    serviceRequestId: data.serviceRequestId,
+    serviceProviderId: serviceProviderId
+  }
+  return dispatch => {
+    dispatch(startLoading(true))
+    ServiceRequestPut(API.acceptservicerequest, model)
+      .then(resp => {
+        dispatch(push(Path.visitServiceList))
+      })
+      .catch(err => {
+        dispatch(push(Path.visitServiceList))
+      })
+  }
+}
+
 export function canInitiateConversation(data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch) => {

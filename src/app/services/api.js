@@ -189,5 +189,6 @@ export const API = {
     createOrEditAssessment:'assessment/create-assessment',
     getAssessmentByAssessmentId:'assessment/get-assessment/',
     getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
-    getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count'
+    getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
+    acceptservicerequest: 'servicerequest/acceptservicerequest'
 }
