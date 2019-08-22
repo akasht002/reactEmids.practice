@@ -21,22 +21,27 @@ export const RequestTab = props => {
                             />
                         </div>
                     }
-                    <div class="right-block-view">
+                    <div class={isEntity ? "right-block-view" : "individual-spblock-full"}>
                         {statusName === VISIT_STATUS.requested.keyValue &&
-                            <div>
-                                <button class="right_statusview" onClick={() => props.handelReject(props.VisitServiceDetails.serviceRequestId)}>Reject</button>
-                                <button class="right_statusview" onClick={() => props.handelAccept(props.VisitServiceDetails.serviceRequestId)}>Accept</button>
+                            <div className="btn-right-view">
+                                <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelReject(props.VisitServiceDetails.serviceRequestId)}>Reject</button>
+                                <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelAccept(props.VisitServiceDetails.serviceRequestId)}>Accept</button>
                             </div>
                         }
                         {statusName === VISIT_STATUS.open.keyValue &&
-                            <button class="right_statusview" onClick={() => props.handelEngage(props.VisitServiceDetails.serviceRequestId)}>Engage</button>
+                            <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelEngage(props.VisitServiceDetails.serviceRequestId)}>Engage</button>
                         }
                         {statusName === VISIT_STATUS.engaged.keyValue && !isEntitySP &&
-                            <button class="right_statusview" disabled={props.VisitServiceDetails.visitInProgress} onClick={() => props.handelCancel(props.VisitServiceDetails.serviceRequestId)}>Cancel Request</button>
+                            <button class="btn btn-outline-primary right_statusview" disabled={props.VisitServiceDetails.visitInProgress} onClick={() => props.handelCancel(props.VisitServiceDetails.serviceRequestId)}>Cancel Request</button>
                         }
                         <Details
                             details={props.VisitServiceDetails}
                         />
+                        {!isEntity &&
+                            <div className="sr-feature-pic">
+                                <img src={require('../../../../assets/images/service-request-feature.png')} alt=""></img>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
