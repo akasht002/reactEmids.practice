@@ -526,6 +526,11 @@ width: 100%;
 margin-left: 10px;
 }
 
+.btn-right-view .btn
+{
+    margin-left: 10px;
+}
+
 .individual-spblock-full .ServiceContent
 {
 display: block;

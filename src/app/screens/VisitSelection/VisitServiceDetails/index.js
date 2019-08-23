@@ -750,65 +750,42 @@ export class VisitServiceDetails extends Component {
                   standByModeAlertMsg: false
                 })}
             />
-            <ModalPopup
+
+            <AlertPopup
+              message='Are you sure you want to reject the request?'
+              OkButtonTitle={'Yes'}
+              CancelButtonTitle={'No'}
+              isCancel={true}
               isOpen={this.state.isRejectAlertPopupOpen}
-              ModalBody={'Are you sure you want to reject the request?'}
-              btn1='Yes'
-              btn2='No'
-              className='modal-sm'
-              headerFooter='d-none'
-              footer='d-none'
-              centered='centered'
-              onConfirm={() => this.reject()}
-              onCancel={() =>
-                this.setState({
-                  isRejectAlertPopupOpen: false
-                })}
+              closePopup={() => this.setState({ isRejectAlertPopupOpen: false })}
+              onAcceptClick={() => this.reject()}
             />
-            <ModalPopup
+            <AlertPopup
+              message='Are you sure you want to accept the request?'
+              OkButtonTitle={'Yes'}
+              CancelButtonTitle={'No'}
+              isCancel={true}
               isOpen={this.state.isAcceptAlertPopupOpen}
-              ModalBody={'Are you sure you want to accept the request?'}
-              btn1='Yes'
-              btn2='No'
-              className='modal-sm'
-              headerFooter='d-none'
-              footer='d-none'
-              centered='centered'
-              onConfirm={() => this.accept()}
-              onCancel={() =>
-                this.setState({
-                  isAcceptAlertPopupOpen: false
-                })}
+              closePopup={() => this.setState({ isAcceptAlertPopupOpen: false })}
+              onAcceptClick={() => this.accept()}
             />
-            <ModalPopup
+            <AlertPopup
+              message='Are you sure you want to cancel the request?'
+              OkButtonTitle={'Yes'}
+              CancelButtonTitle={'No'}
+              isCancel={true}
               isOpen={this.state.isCancelAlertPopupOpen}
-              ModalBody={'Are you sure you want to cancel the request?'}
-              btn1='Yes'
-              btn2='No'
-              className='modal-sm'
-              headerFooter='d-none'
-              footer='d-none'
-              centered='centered'
-              onConfirm={() => this.reject()}
-              onCancel={() =>
-                this.setState({
-                  isCancelAlertPopupOpen: false
-                })}
+              closePopup={() => this.setState({ isCancelAlertPopupOpen: false })}
+              onAcceptClick={() => this.reject()}
             />
-            <ModalPopup
+            <AlertPopup
+              message='Are you sure you want to engage the request?'
+              OkButtonTitle={'Yes'}
+              CancelButtonTitle={'No'}
+              isCancel={true}
               isOpen={this.state.isEngageAlertPopupOpen}
-              ModalBody={'Are you sure you want to engage the request?'}
-              btn1='Yes'
-              btn2='No'
-              className='modal-sm'
-              headerFooter='d-none'
-              footer='d-none'
-              centered='centered'
-              onConfirm={() => this.engage()}
-              onCancel={() =>
-                this.setState({
-                  isEngageAlertPopupOpen: false
-                })}
+              closePopup={() => this.setState({ isEngageAlertPopupOpen: false })}
+              onAcceptClick={() => this.engage()}
             />
           </Scrollbars>
         </AsideScreenCover>
