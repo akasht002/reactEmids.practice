@@ -40,7 +40,6 @@ export const Details = props => {
                             className='ServiceTypeInput'
                             name='serviceType'
                             value={catNum}
-                        // onChange={e => this.selectedServiceType(e)}
                         />
                         <label
                             className='ServiceTypeLink'
