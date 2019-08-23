@@ -104,8 +104,9 @@ export class VisitServiceDetails extends Component {
       if (this.props.ServiceRequestId === 0) {
         this.props.getSchedulesList(this.props.patientId)
         this.getVisitList()
+      }else{
+          this.props.history.push(Path.visitServiceList)
       }
-      this.props.history.push(Path.visitServiceList)
     }
   }
 
