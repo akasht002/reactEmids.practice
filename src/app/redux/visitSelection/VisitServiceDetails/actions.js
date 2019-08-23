@@ -579,6 +579,7 @@ export function updateHireStatusForServiceRequest(data) {
       })
       .catch(err => {
         dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
       })
   }
 }
