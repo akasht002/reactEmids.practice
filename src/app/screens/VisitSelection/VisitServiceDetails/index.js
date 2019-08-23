@@ -31,7 +31,8 @@ import { PlanTab } from './MyPlan/PlanTab';
 import { PatientProfileTab } from './PatientProfile/PatientProfileTab';
 import {
   PAGE_NO,
-  VISIT_STATUS
+  VISIT_STATUS,
+  DEFAULT_PAGE_SIZE
 } from '../../../constants/constants';
 import './styles.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
@@ -194,6 +195,20 @@ export class VisitServiceDetails extends Component {
     this.props.goToAddSchedule();
   }
 
+  getModalData = (pageNumber, pageSize) => {
+    let data = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: this.state.serviceStatus,
+      serviceTypes: this.state.serviceTypes,
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
+    }
+    this.props.getVisitList(data);
+  }
+
   handleChangeSchedule = (e) => {
     this.setState({ activePage: 1 })
     if (e.target.checked) {
@@ -212,23 +227,15 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
 
   pageNumberChange = (pageNumber) => {
     this.setState({ activePage: pageNumber })
-    const data = {
-      planScheduleIds: this.selectedSchedules,
-      visitStatuses: this.state.serviceStatus,
-      serviceTypes: this.state.serviceTypes,
-      pageNumber: pageNumber,
-      pageSize: this.state.rowPageSize,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
-    }
-    this.props.getVisitList(data);
+    this.getModalData(pageNumber, this.state.rowPageSize)
   }
 
   toggleFilter = () => {
@@ -308,20 +315,11 @@ export class VisitServiceDetails extends Component {
   applyFilter = () => {
     this.setState({
       filterOpen: !this.state.filterOpen,
-      activePage: 1,
+      activePage: PAGE_NO,
       filterApplied: true,
-      rowPageSize: 10
+      rowPageSize: DEFAULT_PAGE_SIZE
     })
-    const data = {
-      planScheduleIds: this.selectedSchedules,
-      visitStatuses: this.state.serviceStatus,
-      serviceTypes: this.state.serviceTypes,
-      pageNumber: PAGE_NO,
-      pageSize: this.state.rowPageSize,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
-    }
-    this.props.getVisitList(data);
+    this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE)
   }
 
   applyReset = () => {
@@ -333,25 +331,12 @@ export class VisitServiceDetails extends Component {
       endDate: null,
       rowPageSize: 10
     })
-    const data = {
-      planScheduleIds: this.selectedSchedules,
-      visitStatuses: [],
-      serviceTypes: [],
-      pageNumber: PAGE_NO,
-      pageSize: 10,
-      startDate: null,
-      endDate: null,
-      rowPageSize: 10
-    }
-    this.props.getVisitList(data);
+    this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE)
   }
 
   toggleEditModal = (visitId) => {
     this.setState({ editModal: !this.state.editModal, visitId: visitId })
     this.props.getServiceVisitDetails(visitId)
-    // if(this.state.editModal){
-    //   this.props.clearESPList()
-    // }
   }
 
 
@@ -415,31 +400,13 @@ export class VisitServiceDetails extends Component {
       endTime: this.formatedEndTime ? this.formatedEndTime : getHourMin(this.state.endTime),
     }
     await this.props.updateServiceVisit(model)
-    const data = {
-      planScheduleIds: this.selectedSchedules,
-      visitStatuses: [],
-      serviceTypes: [],
-      pageNumber: this.state.activePage,
-      pageSize: this.state.rowPageSize,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
-    }
-    await this.props.getVisitList(data);
+    await this.getModalData(this.state.activePage, this.state.rowPageSize)
     await this.setState({ editModal: false })
   }
 
   onSubmitAssignServiceProvider = async (data) => {
     await this.props.assignESP(data)
-    const model = {
-      planScheduleIds: this.selectedSchedules,
-      visitStatuses: [],
-      serviceTypes: [],
-      pageNumber: this.state.activePage,
-      pageSize: this.state.rowPageSize,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
-    }
-    await this.props.getVisitList(model);
+    await this.getModalData(this.state.activePage, this.state.rowPageSize)
   }
 
   toggleSearch = () => {
@@ -487,16 +454,7 @@ export class VisitServiceDetails extends Component {
 
   rowPageChange = (pageSize) => {
     this.setState({ rowPageSize: pageSize, activePage: 1 })
-    const model = {
-      planScheduleIds: this.selectedSchedules,
-      visitStatuses: [],
-      serviceTypes: [],
-      pageNumber: this.state.activePage,
-      pageSize: pageSize,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
-    }
-    this.props.getVisitList(model);
+    this.getModalData(PAGE_NO, pageSize)
   }
 
   visitProcessing = data => {
