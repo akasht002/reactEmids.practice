@@ -188,10 +188,8 @@ export const API = {
     saveSummaryDetailsForEsp: 'servicevisit/submitbillingforvisit',
     createOrEditAssessment:'assessment/create-assessment',
     getAssessmentByAssessmentId:'assessment/get-assessment/',
-<<<<<<< HEAD
-    getIndividualSchedulesDetails: 'plan/'
-=======
+    getIndividualSchedulesDetails: 'plan/',
     getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
-    getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count'
->>>>>>> e4b480b0ac76e766f3f09f4e7447eec6bfb72ed6
+    getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
+    acceptservicerequest: 'servicerequest/acceptservicerequest'
 }
