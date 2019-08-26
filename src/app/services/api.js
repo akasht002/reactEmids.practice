@@ -191,5 +191,6 @@ export const API = {
     getIndividualSchedulesDetails: 'plan/',
     getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
     getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
+    getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/',
     acceptservicerequest: 'servicerequest/acceptservicerequest'
 }

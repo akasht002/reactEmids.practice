@@ -96,9 +96,6 @@ export class VisitServiceDetails extends Component {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       this.props.getServiceRequestList(this.props.ServiceRequestId);
       this.props.getEntityServiceProviderList(data);
-      this.props.getServiceCategory();
-      this.props.ServiceRequestStatus();
-      this.props.getVisitStatus();
       this.props.getSchedulesList(this.props.patientId)
     }
     else {
@@ -109,6 +106,9 @@ export class VisitServiceDetails extends Component {
           this.props.history.push(Path.visitServiceList)
       }
     }
+    this.props.getServiceCategory();
+    this.props.ServiceRequestStatus();
+    this.props.getVisitStatus();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -331,7 +331,7 @@ export class VisitServiceDetails extends Component {
       serviceTypes: [],
       startDate: null,
       endDate: null,
-      rowPageSize: 10
+      rowPageSize: DEFAULT_PAGE_SIZE
     })
     this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE)
   }

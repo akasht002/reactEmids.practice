@@ -10,7 +10,7 @@ export const VisitList = props => {
     visitHistoryListItem = visitHistoryList.length > 0 ? visitHistoryList.map((vistList, index) => {
       let visitId = getServiceTypeImage(vistList.serviceTypes && vistList.serviceTypes.length > 0 && vistList.serviceTypes[0].serviceTypeId);
       return (
-        <div className='card mainProfileCard' key={index}>
+        <div className='card mainProfileCard' key={index} test-visitList='test-visitList'>
           <div className='visitListWidget' key={index}>
             <div className='visitListContainerLeft'>
               <div className='visitListTop'>
@@ -81,7 +81,7 @@ export const VisitList = props => {
               <i
                 className='visitListNavigation'
                 onClick={() =>
-                  props.handleClicks(vistList.serviceRequestVisitId === 0 ? vistList.servicePlanVisitId : vistList.serviceRequestVisitId)}
+                  props.handleClicks(vistList)}
               />
             </div>
           </div>
