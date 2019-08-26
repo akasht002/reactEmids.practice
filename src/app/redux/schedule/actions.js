@@ -357,6 +357,8 @@ export function createOrEditAssessment(data) {
             .then(resp => {
                 dispatch(push(Path.visitServiceDetails))
                 dispatch(clearESPList())
+                dispatch(isAssessmentEdit(false))
+                dispatch(getAssessmentDetailSuccess({}))
                 dispatch(endLoading());
             })
             .catch(err => {

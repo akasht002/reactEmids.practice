@@ -74,7 +74,8 @@ export class Schedule extends Component {
             searchOpen: false,
             isModalOpen: false,
             additionalDescription:'',
-            isIndividualScheduleEdit: false
+            isIndividualScheduleEdit: false,
+            assessmentId:0
         }
         this.serviceTypes = [];
         this.categoryId = '';
@@ -92,13 +93,24 @@ export class Schedule extends Component {
         if(props.isAssessmentEdit){
             let data = props.assessmentDetails;
             return { 
+                assessmentId:data.assessmentId,
                 checkedServiceCategoryId: data.categoryId,
                 startDate: moment(data.startDate),
-                endDate: moment(data.endDate),
-                startTime: moment(data.startTime, 'h:mm a'),
+                endDate: data.endDate,
+                startTime:moment(data.startTime, 'h:mm a'),
                 endTime: moment(data.endTime, 'h:mm a'),
+                duration:data.duration,
                 description: data.additionalDescription,
-                patientAddressId: data.patientAddressId
+                patientAddressId: data.patientAddressId,
+                addressType: '',
+                selectedPOS: data.patientAddressId,
+                street: data.city,
+                city: data.city,
+                zip: data.zipCode,
+                statelabel: data.stateName,
+                selectedOptionState: data.stateId,
+                latitude: data.latitude,
+                longitude: data.longitude,
             };
             
         }
@@ -508,16 +520,18 @@ export class Schedule extends Component {
             additionalDescription,
             selectedPOS,
             latitude,
-            longitude
+            longitude,
+            assessmentId,
+            duration
         } = this.state
 
         let data = {
             planScheduleId: 0,
             startDate: startDate,
             endDate: endDate ? endDate : startDate,
-            startTime: this.formatedStartTime,
-            endTime: this.formatedEndTime,
-            duration: getDiffTime(startTime, endTime),
+            startTime: this.props.isAssessmentEdit  ? startTime : this.formatedStartTime,
+            endTime: this.props.isAssessmentEdit  ? endTime : this.formatedEndTime,
+            duration: this.props.isAssessmentEdit  ? duration: getDiffTime(startTime, endTime),
             additionalDescription: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
@@ -525,11 +539,12 @@ export class Schedule extends Component {
             selectedPOS: selectedPOS,
             patientAddressId: 0,
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            assessmentId:assessmentId
         }
 
-        this.props.getValidPatientAddress({ address: this.address })
-        if (!this.validate(validate.assessment)) {
+        this.props.getValidPatientAddress({ address: this.address })        
+        if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
             this.props.createOrEditAssessment({ data, address: this.address });
         }
 
