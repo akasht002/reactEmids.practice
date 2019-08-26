@@ -357,6 +357,7 @@ export const LONGITUDE = 0.0
 
 export const serviceRequestDetailsTab = {
     request: '1',
-    myPlan: '2'
+    myPlan: '2',
+    profile: '3'
 }
 
