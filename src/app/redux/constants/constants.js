@@ -115,3 +115,7 @@ export const serviceRequestDetailsTab = {
     request: '1',
     myPlan: '2'
 }
+
+export const YEAR_MONTH_DAY = "YYYY-MM-DD";
+
+export const CARETEAM_SV_STATUS = ['ALL', 'Completed', 'Not Started', 'Over Due', 'Cancelled'];

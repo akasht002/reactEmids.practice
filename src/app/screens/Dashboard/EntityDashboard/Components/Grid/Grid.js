@@ -6,22 +6,26 @@ export const Grid = props => {
         <Fragment>
             <table className="table-responsive individuals-tableblock" cellpadding="4" cellspacing="4">
                 <thead>
-                    {props.header.map(item => {
-                        return <th>{item.label}</th>
-                    })}
+                    {
+                        Object.keys(props.header).map(key => {
+                            return <th>{props.header[key]}</th>
+                        })
+                    }
                 </thead>
                 <tbody>
-                {props.data.map(item => {
+                {props.data.map(item => {                    
                     return <tr>
-                        <td>{item.mpi}</td>
-                        <td>{`${item.firstName} ${item.lastName}`}</td>
-                        <td>{item.gender}</td>
-                        <td>{item.age}</td>
-                        <td>{item.contracts}</td>
-                        <td>{item.attributedProviders}</td>
-                        <td>{item.cohorts}</td>
-                        <td><span className="life-map-btn"><button className="btn btn-outline-primary">Life Map</button></span></td>
-                        <td><span className="actions-block"><i className="iconLogInto"></i></span></td>
+                    {Object.keys(props.header).map(key => {
+                        if(key === "button") {
+                            return <td><span className="life-map-btn"><button className="btn btn-outline-primary">Life Map</button></span></td>
+                        }
+                        else if(key === "icon") {
+                            return <td><span className="actions-block"><i className="iconLogInto" onClick={() => props.impersinate(item)}></i></span></td>
+                        }
+                        else {
+                            return <td>{item[key]}</td>
+                        }
+                        })}
                     </tr>
                 })}
                 </tbody>

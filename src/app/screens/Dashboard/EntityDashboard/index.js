@@ -5,9 +5,9 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import classnames from 'classnames'
 import moment from 'moment'
 import Individuals from './Individual'
-// import ServiceVisits from './ServiceVisits'
-// import ServiceProvider from './ServiceProvider'
-// import ServiceRequest from './ServiceRequest'
+import ServiceVisits from './ServiceVisits'
+import ServiceProvider from './ServiceProvider'
+import ServiceRequest from './ServiceRequest'
 import { Calendar } from '../../../components/LevelOne'
 import { formateStateDate } from '../../../utils/validations'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
@@ -178,7 +178,7 @@ class EntityDashboard extends Component {
                 Individuals
               </NavLink>
             </NavItem>
-            {/* <NavItem>
+            <NavItem>
               <NavLink
                 className={classnames({
                   active: this.state.activeTab === entityDashboardTab.serviceProviders
@@ -213,7 +213,7 @@ class EntityDashboard extends Component {
               >
                 Service Visits
               </NavLink>
-            </NavItem> */}
+            </NavItem>
           </Nav>
           <TabContent className='tab-content tab-content-block' activeTab={this.state.activeTab}>
             <TabPane tabId={entityDashboardTab.individuals} className='tab-pane TabBody'>
@@ -227,7 +227,7 @@ class EntityDashboard extends Component {
                 createDataStore={this.props.createDataStore}
               />}
             </TabPane>
-            {/* <TabPane tabId={entityDashboardTab.serviceProviders} className='TabBody'>
+            <TabPane tabId={entityDashboardTab.serviceProviders} className='tab-pane TabBody'>
             {this.state.activeTab === entityDashboardTab.serviceProviders && <ServiceProvider
                 fromDate={this.state.fromDate}
                 toDate={this.state.toDate}
@@ -257,7 +257,7 @@ class EntityDashboard extends Component {
                 toggleFilter={this.toggleFilter.bind(this)}
                 SearchOpen={this.state.SearchOpen} 
               />}
-            </TabPane> */}
+            </TabPane>
           </TabContent>
         </section>
 

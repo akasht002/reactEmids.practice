@@ -5,11 +5,6 @@ position: relative;
 height: calc(100% - 60px);
 }
 
-.entity-dashboard-section .tab-content > .tab-pane
-{
-display:block !important;
-}
-
 .parent-fullblock
 {
 width:100%;

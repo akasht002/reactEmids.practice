@@ -192,5 +192,9 @@ export const API = {
     getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
     getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/',
     getIndividualsCount: 'entityuser/individual/totalcount',
-    getIndividualsList: 'entityuser/individual/list'
+    getIndividualsList: 'entityuser/individual/list',
+    getVisitServiceProviderCount: 'EntityUser/ServiceProvider/totalcount',
+    getVisitServiceProviderTable: 'EntityUser/ServiceProvider/List',
+    getVisitServiceRequestTable: 'entityuser/servicerequest/list',
+    getVisitServiceRequestCount: 'entityuser/servicerequest/totalcount'
 }

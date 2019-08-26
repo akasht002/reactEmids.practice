@@ -179,6 +179,7 @@ export const serviceTypesImage = {
 export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_TIME = 200
+export const PAGE_RANGE = 5;
 
 export const SERVICE_REQ_STATUS = {
     OPEN: 35,
@@ -428,3 +429,9 @@ export const SORT_ORDER = {
     ASC: 'asc',
     DESC: 'desc'
 }
+
+export const DEFAULT_SERVICE_CATEGORY = 0
+
+export const YEAR_MONTH_DAY = "YYYY-MM-DD";
+
+export const LOWTASK = 'LowTask';

@@ -90,17 +90,9 @@ export function getIndividualsCountList(data) {
             if (resp && resp.data) {
                 let activeSubTab = getState().dashboardState.individualsListState.activeSubTab
                 let individualsCountList = getState().dashboardState.individualsListState.individualsCountList
-                let updatedData = resp.data;
                 let dataCount = (resp.data && resp.data[0].totalCount > 0) ? resp.data[0].totalCount : 0
                 dispatch(setPaginationRowCountSuccess(dataCount))
                 if (activeSubTab !== 'All') {
-                    // updatedData = individualsCountList.map(element => element.statusName === resp.data[0].statusName ?
-                    //     {
-                    //         label: resp.data[0].label,
-                    //         statusName: resp.data[0].statusName,
-                    //         subtext: resp.data[0].subtext,
-                    //         totalCount: resp.data[0].totalCount
-                    //     } : {...element});
                     let index = _.findIndex(individualsCountList, { statusName: resp.data[0].statusName });
                     individualsCountList.splice(index, 1, {
                         label: resp.data[0].label,
