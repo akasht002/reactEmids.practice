@@ -116,6 +116,11 @@ width: 7%;
 padding-left: 12px;
 }
 
+.plan-tableview td:nth-child(1) time
+{
+width: 24%;
+padding-left: 14px;
+}
 
 .plan-tableview .EntityUServiceProf
 {
@@ -350,6 +355,7 @@ padding-right:40px;
 	padding-left: 10px;
 	font-size: 14px;
 	outline: none;
+	cursor: pointer;
 }
 
 .edit-rightico

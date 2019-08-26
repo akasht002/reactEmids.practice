@@ -18,6 +18,7 @@ import {
   acceptservicerequest,
   updateHireStatusForServiceRequest
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getIndividualSchedulesDetails } from '../../../redux/schedule/actions';
 import {
   getServiceCategory,
   getServiceType,
@@ -458,6 +459,10 @@ export class VisitServiceDetails extends Component {
     this.getModalData(PAGE_NO, pageSize)
   }
 
+  handelEditShedule = (scheduleId) => {
+    this.props.getIndividualSchedulesDetails(scheduleId)
+  }
+
   visitProcessing = data => {
     this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy ?
       this.setState({ standByModeAlertMsg: true })
@@ -681,6 +686,7 @@ export class VisitServiceDetails extends Component {
                   entityServiceProvidersList={this.props.entityServiceProvidersList}
                   tooltipOpen={this.state.tooltipOpen}
                   toggleToolTip={this.toggleToolTip}
+                  handelEditShedule={this.handelEditShedule}
                   navigateToparticularPageBasedonId={this.navigateToparticularPageBasedonId}
                 />
                 <PatientProfileTab />
@@ -773,6 +779,7 @@ function mapDispatchToProps(dispatch) {
     selectESP: (data) => dispatch(selectESP(data)),
     clearESPList: () => dispatch(clearESPList()),
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
+    getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data)),
     getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
     getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
     formDirty: () => dispatch(formDirty()),

@@ -124,7 +124,7 @@ export const ScheduleType = props => {
                                                     name={'recurringPattern'}
                                                     value={item.keyValue}
                                                     className="form-radio-input"
-                                                    defaultChecked={item.id === RECURRING_PATTERN_OPTIONS.weekly}
+                                                    defaultChecked={item.id === props.selectedRecurringType}
                                                     onChange={() => { props.handleChangeRecurringPattern(item.id) }}
                                                 />
                                                 <label className="form-radio-label" htmlFor={item.id}>{item.keyValue} <span className="RadioBoxIcon" /></label>
@@ -142,7 +142,7 @@ export const ScheduleType = props => {
                                             <input
                                                 type="radio"
                                                 id={'Pattern2'}
-                                                name={'Pattern2'}
+                                                name={'Pattern2'}                       
                                                 value={1}
                                                 className="form-radio-input"
                                                 onChange={() => { props.handleSelectDailyOptionField(1) }}
@@ -157,7 +157,7 @@ export const ScheduleType = props => {
                                                     name={'recurringPattern'}
                                                     value={props.dailyDayOccurence}
                                                     maxLength={2}
-                                                    autoComplete='off'
+                                                    autoComplete='off'                           
                                                     onChange={(e) => { props.handleChangeDailyDayOccurence(e.target.value) }}
                                                 />
                                                 <label>{'Day(s)'}</label>
@@ -174,7 +174,7 @@ export const ScheduleType = props => {
                                                 type="radio"
                                                 id={'Pattern2'}
                                                 name={'Pattern2'}
-                                                value={1}
+                                                value={1}                                               
                                                 className="form-radio-input"
                                                 onChange={() => { props.handleSelectWeeklyOptionField(1) }}
                                             />
@@ -203,6 +203,7 @@ export const ScheduleType = props => {
                                                         <input
                                                             type="checkbox"
                                                             id={item.id}
+                                                            defaultChecked={item.selected}
                                                             className="form-radio-input"
                                                             name={item.keyValue}
                                                             value={item.keyValue}
@@ -228,7 +229,7 @@ export const ScheduleType = props => {
                                                     type="radio"
                                                     name="monthly"
                                                     value={1}
-                                                    defaultChecked={props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly}
+                                                    // defaultChecked={props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly}
                                                     className="form-radio-input"
                                                     onChange={(e) => { props.handleChangeMonthlySelectionFirst(e.target.id) }}
                                                 />
