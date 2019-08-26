@@ -3467,6 +3467,33 @@ margin-top: 3px;
 clear: both;
 }
 
+.assign-SP-card .options {
+top: 15px;
+position: absolute;
+right: 29px;
+display: block;
+height: 24px;
+width: 10px;
+overflow: hidden;
+background: none;
+list-style: none;
+z-index: 1000;;
+}
+
+.assign-SP-card .options:before{
+content: "...";
+position: absolute;
+color: #9f9f9f;
+left: 0;
+top: -6px;
+font-size: 24px;
+-webkit-transform: rotate(90deg);
+-ms-transform: rotate(90deg);
+ transform: rotate(90deg);
+}
+
+
+
 /*1920-screen-or-other-screens*/
 @media only screen and (min-width: 1367px) 
 {

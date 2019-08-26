@@ -44,7 +44,7 @@ export class AlertPopup extends Component {
                 type='button'
                 classname={'btn outline btn-outline-primary mx-2 float-right'}
                 label={this.props.CancelButtonTitle ? this.props.CancelButtonTitle : "CANCEL"}
-                onClick={this.closePopup}
+                onClick={this.props.closePopup}
               />}
           </p>
         </ModalBody>

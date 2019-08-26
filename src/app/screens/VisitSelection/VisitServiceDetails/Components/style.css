@@ -113,6 +113,11 @@ width: 7%;
 
 .plan-tableview td:nth-child(1) time
 {
+padding-left: 12px;
+}
+
+.plan-tableview td:nth-child(1) time
+{
 width: 24%;
 padding-left: 14px;
 }

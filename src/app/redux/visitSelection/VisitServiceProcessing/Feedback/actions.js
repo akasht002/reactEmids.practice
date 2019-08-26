@@ -72,9 +72,13 @@ export function saveAnswers(data) {
   }
 }
 export function saveAnswerFeedback(data) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    let isPlan = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId === 0 
+    let  saveAnswers  = isPlan ? API.saveAnswersForEsp : API.saveAnswers
+    data.servicePlanVisitId = isPlan && data.serviceRequestVisitId
+    data.serviceProviderId = getUserInfo().serviceProviderId 
     dispatch(visitHistoryLoading(true))
-    ServiceRequestPost(API.saveAnswers, data)
+    ServiceRequestPost(saveAnswers, data)
       .then(resp => {
         dispatch(visitHistoryLoading(false))
       })

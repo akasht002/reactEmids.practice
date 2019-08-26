@@ -4,6 +4,7 @@ import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
+import {getUpdatedPerformTasksList} from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import _ from 'lodash';
 
 export const vistServiceHistoryDetails = {
@@ -72,7 +73,7 @@ export const getServiceProviders = (data) => {
 export const getVisitServiceHistoryByIdDetailSuccess = (data) => {
     return {
         type: vistServiceHistoryDetails.getVisitServiceHistoryByIdDetailSuccess,
-        data
+        data : getUpdatedPerformTasksList(data)
     }
 }
 
@@ -147,7 +148,8 @@ export function getVisitServiceHistoryByIdDetail(data) {
     return (dispatch) => {
         dispatch(getServiceRequestId(data))
         dispatch(visitHistoryLoading(true));
-        ServiceRequestGet(API.getServiceVisitsHistoryById + data).then((resp) => {
+        let getServiceVisitsHistoryById = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getServiceVisitsHistoryById
+        ServiceRequestGet(getServiceVisitsHistoryById + data).then((resp) => {
             dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data))
             resp.data && dispatch(push(Path.visitSummaryDetail))
             dispatch(visitHistoryLoading(false));
@@ -186,8 +188,10 @@ export function getSort(data) {
 
 export function getServiceProviderRating(data) {
     return (dispatch, getState) => {
+        let getRatingAndFeedback = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId === 0 ? 
+        API.getVisitFeedbackForEntity : API.getRatingAndFeedback
         dispatch(startLoading())
-        ServiceRequestGet(API.getRatingAndFeedback + data).then((resp) => {
+        ServiceRequestGet(getRatingAndFeedback + data).then((resp) => {
             dispatch(getSubmittedResponse(resp.data))
             dispatch(endLoading)
         }).catch((err) => {
@@ -284,9 +288,11 @@ export function getHistoryListCount() {
 }
 
 export function getVisitFeedBack(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        let getVisitFeedback = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId === 0 ? 
+        API.getVisitFeedbackForEntity : API.getVisitFeedback
         dispatch(startLoading());
-        ServiceRequestGet(API.getVisitFeedback + data).then((resp) => {
+        ServiceRequestGet(getVisitFeedback + data).then((resp) => {
             dispatch(getVisitFeedBackSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

@@ -2938,7 +2938,8 @@ background:#f2ebf3;
 .schedule-listblock fieldset
 {
 width: 100%;
-display: table;
+display: block;
+position:relative;
 }
 
 .schedule-listblock fieldset input
@@ -3414,38 +3415,38 @@ background-color: #fff;
 
   .edit-block
   {
-    width: 10% !important;
-    display: inline-block;
-    position: absolute;
-    right: 20px !important;
-    padding-top: 6px;
-    cursor: pointer;
-    margin-top: -46px !important;
+width: 10% !important;
+display: inline-block;
+position: absolute;
+right: -8px !important;
+padding-top: 6px;
+cursor: pointer;
+margin-top: -46px !important;
   }
 
-  .edit-block img
+.edit-block img
   {
-    width: 14px;
-    float: right;
-    display: block;
-    height: auto;
-    max-width: 100%;
+width: 14px;
+float: right;
+display: block;
+height: auto;
+max-width: 100%;
   }
 
-  .edit-block button
+.edit-block button
 {
-	background:url("../../../assets/images/edit-new.png") no-repeat center;
-	width:16px;
-	height: 16px !important;
-	display: block;
-	background-size:contain;
-    height: auto;
-	border: none;
-	margin: 0 auto;
-	color: transparent;
-	z-index: 10;
-    cursor: pointer;
-    padding: 0px;
+background:url("../../../assets/images/edit-new.png") no-repeat center;
+width:16px;
+height: 16px !important;
+display: block;
+background-size:contain;
+height: auto;
+border: none;
+margin: 0 auto;
+color: transparent;
+z-index: 10;
+cursor: pointer;
+padding: 0px;
 }
 
   .full-block-view

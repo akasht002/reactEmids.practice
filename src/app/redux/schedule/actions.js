@@ -270,7 +270,7 @@ export function selectESP(espId) {
         let data = espList.map((value) => {
             return ({
                 ...value,
-                selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10) ? 1 : 0
+                selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10) ? true : false
             })
         })
         let list = orderBy(data, ['selected'], ['desc']);
@@ -305,11 +305,18 @@ export function getRecurringPattern() {
     }
 };
 
-export function getDays() {
+export function getDays(selectedDaysId = []) {
     return (dispatch) => {
+        let selectedDaysIds = selectedDaysId ? selectedDaysId : [];
         dispatch(startLoading());
         ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
-            dispatch(getDaysSuccess(resp.data))
+            let data = resp.data.map((value) => {
+                return ({
+                    ...value,
+                    selected: selectedDaysIds.indexOf(value.id) !== -1
+                })
+            })
+            dispatch(getDaysSuccess(data))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
