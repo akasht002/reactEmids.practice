@@ -108,7 +108,7 @@ function ServiceTypes(props) {
                 {serviceTypesTemplate}
             </Slider>
             {
-                props.serviceTypeSelected.length === 0 && props.onClickSave &&
+                props.serviceTypeSelected && props.serviceTypeSelected.length === 0 && props.onClickSave &&
                 <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                     Please select Service Type(s)
                 </span>

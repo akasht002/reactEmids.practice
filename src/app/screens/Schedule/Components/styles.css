@@ -1950,11 +1950,21 @@ border: none !important;
     width: 100%;
 }
 
+.Service-Cat-Typesblock-Edit{
+    pointer-events: none;
+    cursor: context-menu;
+}
+
 .Service-Cat-Typesblock .ServicesTitle {
     font-size: 18px;
     font-weight: 400;
     color: #7a329f;
     margin-bottom: 15px;
+}
+
+.Midddle-Viewtab-Edit{
+    pointer-events: none;
+    cursor: context-menu;
 }
 
  .ServiceCategory .slick-slider .slick-list {

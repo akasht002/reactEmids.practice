@@ -15,6 +15,7 @@ import {
   assignESP,
   getEntityServiceProviderListSearch, selectESP, clearESPList, getEntityServiceProviderList
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getIndividualSchedulesDetails,getAssessmentDetailsById } from '../../../redux/schedule/actions';
 import {
   getServiceCategory,
   getServiceType,
@@ -135,7 +136,18 @@ export class VisitServiceDetails extends Component {
       this.setState({ activeTab: tab, activePage: 1 })
     }
     if (tab === '2') {
-      this.getVisitList()
+      this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
+      const data = {
+        planScheduleIds: this.selectedSchedules,
+        visitStatuses: [],
+        serviceTypes: [],
+        pageNumber: PAGE_NO,
+        pageSize: this.state.rowPageSize,
+        startDate: null,
+        endDate: null,
+        patientId: this.props.patientId
+      }
+      this.props.getVisitList(data);
     }
   }
 
@@ -165,7 +177,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
@@ -179,7 +192,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: pageNumber,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
@@ -272,7 +286,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
@@ -294,7 +309,8 @@ export class VisitServiceDetails extends Component {
       pageSize: 10,
       startDate: null,
       endDate: null,
-      rowPageSize: 10
+      rowPageSize: 10,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(data);
   }
@@ -375,7 +391,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.activePage,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     await this.props.getVisitList(data);
     await this.setState({ editModal: false })
@@ -390,7 +407,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.activePage,
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     await this.props.getVisitList(model);
   }
@@ -447,7 +465,8 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.activePage,
       pageSize: pageSize,
       startDate: this.state.startDate,
-      endDate: this.state.endDate
+      endDate: this.state.endDate,
+      patientId: this.props.patientId
     }
     this.props.getVisitList(model);
   }
@@ -488,8 +507,16 @@ export class VisitServiceDetails extends Component {
           return this.visitProcessingSummary(visitId)   
         default:
           return ''
-    }
+    }  
   }
+
+handelEditShedule = (scheduleId) => {
+  this.props.getIndividualSchedulesDetails(scheduleId)
+}
+
+handelEditAssessment = (assessmentId) => {
+  this.props.getAssessmentDetailsById(assessmentId)
+}
 
   render() {
     let modalContent =
@@ -668,6 +695,8 @@ export class VisitServiceDetails extends Component {
                   tooltipOpen={this.state.tooltipOpen}
                   toggleToolTip={this.toggleToolTip}
                   navigateToparticularPageBasedonId={this.navigateToparticularPageBasedonId}
+                  handelEditShedule={this.handelEditShedule}
+                  handelEditAssessment={this.handelEditAssessment}
                 />
                 <PatientProfileTab />
               </TabContent>
@@ -729,7 +758,9 @@ function mapDispatchToProps(dispatch) {
     getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
     getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
     getSavedSignature: (data) => dispatch(getSavedSignature(data)),
-    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails())
+    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails()),
+    getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data)),
+    getAssessmentDetailsById: (data) => dispatch(getAssessmentDetailsById(data))
   }
 }
 

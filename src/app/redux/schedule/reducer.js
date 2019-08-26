@@ -10,8 +10,10 @@ const defaultState = {
     entityServiceProvidersList: [],
     recurringPatternList: [],
     daysList: [],
-    disableShowmore: false,assessmentDetails:{},
-    assessmentSuccess:false,
+    disableShowmore: false, assessmentDetails: {},
+    assessmentSuccess: false,
+    individualSchedulesDetails: '',
+    isAssessmentEdit: ''
 };
 
 const scheduleState = (state = defaultState, action) => {
@@ -82,17 +84,34 @@ const scheduleState = (state = defaultState, action) => {
                 ...state,
                 entityServiceProvidersList: []
             };
-        
+
         case Schedule.getAssessmentDetailSuccess:
             return {
                 ...state,
-                assessmentDetails:action.data
+                assessmentDetails: action.data
             };
 
-         case Schedule.createOrEditAssessmentSuccess:
+        case Schedule.createOrEditAssessmentSuccess:
             return {
                 ...state,
-                assessmentSuccess:action.data
+                assessmentSuccess: action.data
+            };
+
+        case Schedule.getIndividualSchedulesDetailsSuccess:
+            return {
+                ...state,
+                individualSchedulesDetails: action.data
+            }; 
+
+        case Schedule.isScheduleEdit:
+            return {
+                ...state,
+                isIndividualScheduleEdit: action.data
+            }; 
+        case Schedule.isAssessmentEdit:
+            return {
+                ...state,
+                isAssessmentEdit: action.data
             };
 
         default:
