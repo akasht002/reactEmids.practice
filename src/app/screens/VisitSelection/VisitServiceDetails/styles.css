@@ -465,7 +465,15 @@ margin-bottom: 1rem !important;
 margin-top: 0 !important;
 }
 
+.right-customewidth .right-tablelist .table-result-block
+{
+    padding-left: 18px;   
+}
 
+.full-block-requestplan .right-tablelist .table-result-block
+{
+    padding-left: 18px;   
+}
 
 /*1920-screen-*/
 @media only screen and (min-width: 1367px) 
@@ -485,9 +493,18 @@ margin-top: 0 !important;
 }
 .plan-tableview tbody
 {
-    min-height: 315px;
+    min-height: 410px;
 }
 
+.right-customewidth .right-tablelist .table-result-block
+{
+    padding-left: 36px;   
+}
+
+.full-block-requestplan .right-tablelist .table-result-block
+{
+    padding-left: 81px;   
+}
 
 }
 

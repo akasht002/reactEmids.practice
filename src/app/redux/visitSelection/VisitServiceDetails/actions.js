@@ -13,6 +13,8 @@ import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
 import { VisitServiceDetails } from './bridge'
 import { USERTYPES } from '../../../constants/constants'
+import { isEntityUser} from '../../../utils/userUtility'
+import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy } from 'lodash'
 
 export const getVisitServiceDetailsSuccess = data => {
@@ -88,7 +90,11 @@ export function dispatchServiceRequestByServiceProvider() {
 }
 
 export function setEntityServiceProvider(data) {
-  return dispatch => { dispatch(setEntityServiceProviderSuccess(data)) }
+  return dispatch => { 
+    if(data.serviceRequestId === 0){
+      dispatch(setActiveTab(serviceRequestDetailsTab.myPlan))
+    }
+    dispatch(setEntityServiceProviderSuccess(data)) }
 }
 
 export function formDirtyVisitServiceDetails() {
@@ -480,9 +486,14 @@ export function getSchedulesList(patientId) {
 };
 
 export function getVisitList(data) {
-  return (dispatch) => {
+  let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+  let getVisitList = isEntityServiceProvider ? API.getEspVisitList : (isEntityUser() ? API.getVisitList : API.getIspVisitList)
+  data.serviceProviderId = getUserInfo().serviceProviderId
+  return (dispatch, getState) => {
+    !isEntityUser() && 
+      (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
     dispatch(startLoading());
-    ServiceRequestPost(API.getVisitList, data)
+    ServiceRequestPost(getVisitList, data)
       .then(resp => {
         dispatch(getVisitListSuccess(resp.data))
         dispatch(getVisitListCount(data))
@@ -494,9 +505,10 @@ export function getVisitList(data) {
 };
 
 export function getVisitListCount(data) {
+  let getVisitListCount = getUserInfo().isEntityServiceProvider ? API.getEspVisitListCount : (isEntityUser() ? API.getVisitListCount : API.getIspVisitListCount)
   return (dispatch) => {
     dispatch(startLoading());
-    ServiceRequestPost(API.getVisitListCount, data)
+    ServiceRequestPost(getVisitListCount, data)
       .then(resp => {
         dispatch(getVisitListCountSuccess(resp.data))
         dispatch(endLoading());
@@ -600,3 +612,10 @@ export function assignESP(data) {
       })
   }
 };
+
+export const setActiveTab = data => {
+  return {
+      type: VisitServiceDetails.setActiveTab,
+      data
+  }
+}

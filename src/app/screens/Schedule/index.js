@@ -79,7 +79,8 @@ export class Schedule extends Component {
             planScheduleId: 0,
             description: '',
             phoneNumberModal: false,
-            phoneNumber: ''
+            phoneNumber: '',
+            additionalDescription:''
         }
         this.serviceTypes = [];
         this.categoryId = '';
@@ -538,7 +539,7 @@ export class Schedule extends Component {
             startTime: this.formatedStartTime,
             endTime: this.formatedEndTime,
             duration: getDiffTime(startTime, endTime),
-            description: additionalDescription,
+            additionalDescription: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
             address: this.address,

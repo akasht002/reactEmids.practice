@@ -1,7 +1,7 @@
 import {
     VisitServiceDetails
 } from './bridge'
-
+import { serviceRequestDetailsTab } from '../../constants/constants'
 const defaultState = {
     VisitServiceDetails: [],
     VisitServiceSchedule: [],
@@ -24,7 +24,9 @@ const defaultState = {
     serviceVisitDetails: '',
     isLoading: false,
     entityServiceProvidersList: [],
-    disableShowmore: false
+    disableShowmore: false,
+    patientId: 0,
+    activeTab: serviceRequestDetailsTab.request
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -39,7 +41,8 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         case VisitServiceDetails.setEntityServiceProviderSuccess:
             return {
                 ...state,
-                entityServiceProviderId: action.data
+                entityServiceProviderId: action.data && action.data.serviceProviderId,
+                patientId: action.data && action.data.patientId 
             };
 
         case VisitServiceDetails.updateServiceRequestByServiceProviderSuccess:
@@ -143,8 +146,6 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 ...state,
                 isLoading: false
             };
-
-
         case VisitServiceDetails.getEntityServiceProviderListSuccess:
             return {
                 ...state,
@@ -163,7 +164,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 entityServiceProvidersList: [],
                 // disableShowmore: false
             };
-
+        case VisitServiceDetails.setActiveTab:
+        return {
+            ...state,
+            activeTab: action.data
+        };
         default:
             return state;
     }

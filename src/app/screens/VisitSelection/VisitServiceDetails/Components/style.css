@@ -37,10 +37,6 @@ span.title-view {
     table-layout: fixed;
 }
 
-/* .plan-tableview thead tr
-{
-    display: block;
-} */
 
 .plan-tableview td {
 	border-bottom: 1px solid #f1f1f1;
@@ -113,6 +109,11 @@ width: 20%;
 .plan-tableview th:nth-child(7), .plan-tableview td:nth-child(7)
 {
 width: 7%;
+}
+
+.plan-tableview td:nth-child(1) time
+{
+padding-left: 12px;
 }
 
 .plan-tableview td:nth-child(1) time
@@ -313,8 +314,11 @@ width: 100%;
 float: none;
 margin: 0 auto;
 display: block;
-padding: 5px 5px !important;
-font-size: 13px !important;
+padding: 5px 10px !important;
+font-size: 14px !important;
+height:30px;
+white-space:pre;
+line-height: 18px;
 }
 
 .right-customewidth .right-tablelist .CoreoPagination
@@ -500,3 +504,9 @@ width: 140px;
 text-align: left;
 }
 
+.full-block-requestplan
+{
+	width: 100% !important;
+	max-width: 100% !important;
+	flex: 0 0 100% !important;
+}

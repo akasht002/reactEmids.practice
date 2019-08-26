@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { TabContent } from 'reactstrap'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
-import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, Preloader } from '../../../components';
+import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, Preloader, ModalPopup } from '../../../components';
 import {
   getServiceRequestList,
   getVisitServiceDetails,
@@ -28,7 +28,8 @@ import { RequestTab } from './ServiceRequest/RequestTab';
 import { PlanTab } from './MyPlan/PlanTab';
 import { PatientProfileTab } from './PatientProfile/PatientProfileTab';
 import {
-  PAGE_NO
+  PAGE_NO,
+  VISIT_STATUS
 } from '../../../constants/constants';
 import './styles.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
@@ -37,12 +38,25 @@ import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
 import './customStyle.css'
-
+import { getUserInfo } from '../../../services/http';
+import {
+  getVisitServiceHistoryByIdDetail,
+  clearVisitServiceHistoryByIdDetail
+} from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import {
+  getPerformTasksList,
+  formDirtyPerformTask,
+  getServiceVisitId
+} from '../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions'
+import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
+import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
+import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import {isEntityUser} from '../../../utils/userUtility'
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: '1',
+      activeTab: this.props.activeTab,
       activePage: 1,
       filterOpen: false,
       serviceStatus: [],
@@ -58,7 +72,8 @@ export class VisitServiceDetails extends Component {
       pageNumberESP: PAGE_NO,
       pageSizeESP: 9,
       rowPageSize: 10,
-      tooltipOpen: false
+      tooltipOpen: false,
+      standByModeAlertMsg: false
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -70,15 +85,19 @@ export class VisitServiceDetails extends Component {
       pageSize: this.state.pageSize
     }
     if (this.props.ServiceRequestId) {
-      this.props.getServiceRequestList(this.props.ServiceRequestId);
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+      this.props.getServiceRequestList(this.props.ServiceRequestId);
       this.props.getEntityServiceProviderList(data);
       this.props.getServiceCategory();
       this.props.ServiceRequestStatus();
       this.props.getVisitStatus();
       this.props.getSchedulesList(this.props.patientId)
-    } else {
-      this.props.history.push(Path.visitServiceList)
+    } 
+    else {
+      if(this.props.ServiceRequestId === 0) {
+        this.props.getSchedulesList(this.props.patientId)
+        this.getVisitList()
+       }
     }
   }
 
@@ -86,7 +105,7 @@ export class VisitServiceDetails extends Component {
     this.setState({
       startDateEdit: nextProps.serviceVisitDetails.visitDate,
       startTime: nextProps.serviceVisitDetails.startTime,
-      endTime: nextProps.serviceVisitDetails.endTime,
+      endTime: nextProps.serviceVisitDetails.endTime
     })
   }
 
@@ -96,25 +115,28 @@ export class VisitServiceDetails extends Component {
     });
   }
 
+  getVisitList = () => {
+    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
+    const data = {
+      planScheduleIds: this.selectedSchedules,
+      visitStatuses: [],
+      serviceTypes: [],
+      pageNumber: PAGE_NO,
+      pageSize: this.state.rowPageSize,
+      startDate: null,
+      endDate: null,
+      patientId: this.props.patientId
+    }
+    this.props.getVisitList(data);
+  }
+
   toggle = (tab) => {
-    // this.props.clearESPList()
     this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     if (this.state.activeTab !== tab) {
       this.setState({ activeTab: tab, activePage: 1 })
     }
     if (tab === '2') {
-      this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
-      const data = {
-        planScheduleIds: this.selectedSchedules,
-        visitStatuses: [],
-        serviceTypes: [],
-        pageNumber: PAGE_NO,
-        pageSize: this.state.rowPageSize,
-        startDate: null,
-        endDate: null,
-        patientId: this.props.patientId
-      }
-      this.props.getVisitList(data);
+      this.getVisitList()
     }
   }
 
@@ -442,6 +464,45 @@ export class VisitServiceDetails extends Component {
     this.props.getIndividualSchedulesDetails(scheduleId)
   }
 
+  visitProcessing = data => {
+    this.props.isStandByModeOn.isServiceProviderInStandBy ?
+      this.setState({ standByModeAlertMsg: true })
+      :
+      this.props.getPerformTasksList(data, true)
+    this.props.formDirty();
+    this.props.formDirtyFeedback();
+    this.props.formDirtyPerformTask();
+  }
+
+  visitProcessingSummary = data => {
+    this.props.getServiceVisitId(data, true);
+    this.props.getSummaryDetails(data);
+    this.props.getSavedSignature(data);
+    this.props.formDirtySummaryDetails();
+    this.props.formDirty();
+    this.props.formDirtyFeedback();
+  }
+
+  visitSummary = (data) => {
+    this.props.getVisitServiceHistoryByIdDetail(data)
+  }
+
+  navigateToparticularPageBasedonId = visitList => {
+    let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
+    switch (visitList.visitStatusId) {
+        case VISIT_STATUS.startVisit.id:
+          return this.visitProcessing(visitId) 
+        case VISIT_STATUS.inProgress.id:
+          return this.visitProcessing(visitId) 
+        case VISIT_STATUS.completed.id:
+          return this.visitSummary(visitId)
+        case VISIT_STATUS.paymentPending.id:
+          return this.visitProcessingSummary(visitId)   
+        default:
+          return ''
+    }
+  }
+
   render() {
     let modalContent =
       <div className="row">
@@ -550,6 +611,8 @@ export class VisitServiceDetails extends Component {
         label: 'Service Provider'
       },
     ]
+    let updatedHeader = !isEntityUser() ? header.slice(0,4) : header;
+    let updatedTabdata = this.props.ServiceRequestId === 0 ? tabdata.slice(1,tabdata.length) : tabdata
     return (
       <Fragment>
         <AsideScreenCover>
@@ -565,17 +628,20 @@ export class VisitServiceDetails extends Component {
             className='ProfileContentWidget'>
             <div class="tab_view">
               <TabHeader
-                list={tabdata}
+                list={updatedTabdata}
                 toggle={this.toggle}
                 activeTab={this.state.activeTab}
                 goBack={() => this.props.goBack()}
               />
               <TabContent activeTab={this.state.activeTab}>
-                <RequestTab
+                {
+                  this.props.ServiceRequestId !== 0 &&
+                  <RequestTab
                   visitServiceList={this.props.visitServiceList}
                   VisitServiceDetails={this.props.VisitServiceDetails}
                   handelDetails={this.handelDetails}
                 />
+                }
                 <PlanTab
                   rowPageSize={this.state.rowPageSize}
                   rowPageChange={this.rowPageChange}
@@ -583,7 +649,7 @@ export class VisitServiceDetails extends Component {
                   addSchedule={this.addSchedule}
                   handleChangeSchedule={this.handleChangeSchedule}
                   visitList={this.props.visitList}
-                  header={header}
+                  header={updatedHeader}
                   espList={this.props.entityServiceProvidersList}
                   pageCount={this.props.visitListCount}
                   pageNumberChange={this.pageNumberChange}
@@ -614,6 +680,7 @@ export class VisitServiceDetails extends Component {
                   tooltipOpen={this.state.tooltipOpen}
                   toggleToolTip={this.toggleToolTip}
                   handelEditShedule={this.handelEditShedule}
+                  navigateToparticularPageBasedonId={this.navigateToparticularPageBasedonId}
                 />
                 <PatientProfileTab />
               </TabContent>
@@ -628,6 +695,19 @@ export class VisitServiceDetails extends Component {
               centered={true}
               onClick={this.updateServiceVisits}
             />
+            <ModalPopup
+            isOpen={this.state.standByModeAlertMsg}
+            ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
+            btn1='OK'
+            className='modal-sm'
+            headerFooter='d-none'
+            footer='d-none'
+            centered='centered'
+            onConfirm={() =>
+              this.setState({
+                standByModeAlertMsg: false
+              })}
+          />
           </Scrollbars>
         </AsideScreenCover>
       </Fragment>
@@ -654,7 +734,16 @@ function mapDispatchToProps(dispatch) {
     selectESP: (data) => dispatch(selectESP(data)),
     clearESPList: () => dispatch(clearESPList()),
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
-    getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data))
+    getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data)),
+    getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
+    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
+    formDirty: () => dispatch(formDirty()),
+    formDirtyFeedback: () => dispatch(formDirtyFeedback()),
+    formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),
+    getServiceVisitId: (data) => dispatch(getServiceVisitId(data)),
+    getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
+    getSavedSignature: (data) => dispatch(getSavedSignature(data)),
+    formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails())
   }
 }
 
@@ -674,7 +763,9 @@ function mapStateToProps(state) {
     patientId: state.patientProfileState.patientId,
     serviceVisitDetails: VisitServiceDetailsState.serviceVisitDetails,
     isLoading: VisitServiceDetailsState.isLoading,
-    disableShowmore: VisitServiceDetailsState.disableShowmore
+    disableShowmore: VisitServiceDetailsState.disableShowmore,
+    isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
+    activeTab: VisitServiceDetailsState.activeTab
   }
 }
 

@@ -60,7 +60,9 @@ export const API = {
     getServiceRequestStatus: 'Servicerequest/LookUp/ServiceRequestStatus',
     getServiceVisitsCount: 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
     getServiceVisitsHistoryById: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
+    getServicePlanVisitSummaryDetails:'servicevisit/serviceplanvisitsummarydetails/',
     // getServiceVisitsHistoryById: 'ServiceRequest/VisitSummary/',
+    updateAssessmentVisitStartEndTime:'servicevisit/updatevisitstartendtime',
     getProfilePercentage: 'ServiceProvider/ProgressIndicator/',
     getBlackOutDays: 'ServiceProvider/',
     addBlackOutDay: 'ServiceProvider/',
@@ -173,7 +175,23 @@ export const API = {
     getServiceVisitDetails: 'servicevisit/getvsitdetails/',
     assignESP: 'servicevisit/assignservicevisit',
     searchESP: 'EntityServiceProvider/',
+    getEspVisitList : 'plan/GetVisitDetailsForEsp',
+    getEspVisitListCount: 'plan/getvisitdetailsforespcount',
+    getServiceRequestPerformTasksForEsp: 'plan/servicerequestvisitdetails/',
+    startOrStopServiceForEsp: 'servicevisit/updatevisitstartendtime',
+    getSummaryDetailsForEsp: 'servicevisit/serviceplanvisitsummarydetails/',
+    savePerformedTaskForEsp: 'servicevisit/Serviceplantaskupdate',
+    saveAnswersForEsp: 'feedback/planserviceprovidervisitfeedbackresponse',
+    getSavedSignatureForEsp: 'servicevisit/servicerequestvisit/getcustomersignature/', 
+    visitProcessingUpdateBilledDurationForEsp:'servicevisit/updatebilledduration',
+    saveSignatureForEsp: 'servicevisit/serviceplanVisit/uploadsignature',
+    saveSummaryDetailsForEsp: 'servicevisit/submitbillingforvisit',
     createOrEditAssessment:'assessment/create-assessment',
     getAssessmentByAssessmentId:'assessment/get-assessment/',
+<<<<<<< HEAD
     getIndividualSchedulesDetails: 'plan/'
+=======
+    getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
+    getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count'
+>>>>>>> e4b480b0ac76e766f3f09f4e7447eec6bfb72ed6
 }

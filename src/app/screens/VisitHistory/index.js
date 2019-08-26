@@ -46,13 +46,19 @@ class VisitHistory extends Component {
   }
 
   componentDidMount() {
-    let data = {
+    const data = {
+      fromDate: null,
+      toDate: null,
+      serviceTypeList: [],
+      status: [],
+      serviceProviderList: [],
+      individualList: [],
+      serviceProviderId: 0,
       pageNumber: 1,
       pageSize: 10,
-      sortOrder: 'asc',
-      sortName: 'visitdate'
+      offset: getTimeZoneOffset()
     }
-    this.props.getVisitServiceLists(data)
+    this.props.getFilteredData(data)
     this.props.getAllServiceProviders()
     this.props.getAllPatientForServiceProviders(data)
     this.props.getServiceCategory()
@@ -161,14 +167,19 @@ class VisitHistory extends Component {
     this.props.clearServiceTypes();
     this.props.clearServiceProviders(this.props.serviceProviders);
     this.props.clearPatientForServiceProviders(this.props.PatientForServiceproviders);
-    let data = {
+    const data = {
+      fromDate: null,
+      toDate: null,
+      serviceTypeList: [],
+      status: [],
+      serviceProviderList: [],
+      individualList: [],
+      serviceProviderId: 0,
       pageNumber: 1,
       pageSize: 10,
-      sortOrder: "asc",
-      sortName: "visitdate"
-    };
-    this.props.getVisitServiceLists(data);
-    this.props.getHistoryListCount();
+      offset: getTimeZoneOffset()
+    }
+    this.props.getFilteredData(data)
   }
 
   selectedSort = (selectedKey) => {
@@ -235,23 +246,7 @@ class VisitHistory extends Component {
             handleClicks={this.handleClick}
             handelPatientProfile={this.handelPatientProfile}
           />
-          {this.props.VisitServiceHistory.length > 0 && this.state.sort === true && (
-            <div class="col-md-12 p-0 AsyncConversationPagination">
-              <Pagination
-                activePage={this.state.activePage}
-                itemsCountPerPage={10}
-                totalItemsCount={this.props.historyListCount}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChangeList}
-                itemClass="PaginationItem"
-                itemClassFirst="PaginationIcon First"
-                itemClassPrev="PaginationIcon Prev"
-                itemClassNext="PaginationIcon Next"
-                itemClassLast="PaginationIcon Last"
-              />
-            </div>
-          )}
-          {this.props.VisitServiceHistory.length > 0 && this.state.sort === false && (
+          {this.props.VisitServiceHistory.length > 0 && (
             <div class="col-md-12 p-0 AsyncConversationPagination">
               <Pagination
                 activePage={this.state.activePage}

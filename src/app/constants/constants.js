@@ -36,8 +36,14 @@ export const PAGE_NO = 1;
 export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
 export const SERVICE_REQUEST_PAGE_SIZE = 10
 
+
+export const VISIT_TYPE = {
+    assessment : 114,
+    scheduled : 115
+}
+
 export const SERVICE_REQUEST = {
-    hiredId : 38
+    hiredId: 38
 }
 
 export const RESPONSE_STATUS = {
@@ -183,7 +189,7 @@ export const SERVICE_REQ_STATUS = {
     IN_PROGRESS: 40,
     COMPLETED: 41,
     CLOSED: 42,
-    PROGRESS : 43,
+    PROGRESS: 43,
     CANCELLED: 47,
     NOT_INTERESTED: 58,
     PENDING_APPROVAL: 106,
@@ -217,11 +223,11 @@ export const DEFAULT_SEARCH_COUNT = '';
 
 export const STANDBY_MODE_MSG = 'Please turn off the stand-by mode to start the visit.';
 
-export const DD_FORMAT  = 'DD'
+export const DD_FORMAT = 'DD'
 export const M_FORMAT = "M"
 export const MM_FORMAT = "M"
 export const MMM_FORMAT = 'MMM'
-export const YYYY_MM_DD_FORMAT= 'YYYY-MM-DD'
+export const YYYY_MM_DD_FORMAT = 'YYYY-MM-DD'
 export const MMMDD_FORMAT = "MMM DD";
 
 
@@ -240,15 +246,15 @@ export const serviceCategoriesImage = {
 }
 
 export const DATE_FORMATS = {
-    monDD : "MMM DD",
-    hhMinSession:"hh:mm A",
-    yyyy_mm_dd : 'YYYY-MM-DD',
-    mm:"MM",
-    mmm:"MMM",
-    yyyy:'YYYY',
-    month:'month',
-    days:'days',
-    dd:'DD',
+    monDD: "MMM DD",
+    hhMinSession: "hh:mm A",
+    yyyy_mm_dd: 'YYYY-MM-DD',
+    mm: "MM",
+    mmm: "MMM",
+    yyyy: 'YYYY',
+    month: 'month',
+    days: 'days',
+    dd: 'DD',
     timeh_mm_a: 'h:mm a',
     m_d_yy: 'M/D/YY',
     hh_mm:'HH:mm',
@@ -271,8 +277,78 @@ export const DEFAULT_CATEGORY_IMAGE = {
     ADL: 'ADL_1.jpg'
 }
 
-export const PLAN_TYPE = {
-    assessment:116
+export const VISIT_STATUS = {
+    all: {
+        "id": 0,
+        "keyValue": "All"
+    },
+    open: {
+        "id": 35,
+        "keyValue": "Open"
+    },
+    invited: {
+        "id": 36,
+        "keyValue": "Invited"
+    },
+    applied: {
+        "id": 37,
+        "keyValue": "Applied"
+    },
+    hired: {
+        "id": 38,
+        "keyValue": "Hired"
+    },
+    notHired: {
+        "id": 39,
+        "keyValue": "Not Hired"
+    },
+    inProgress: {
+        "id": 44,
+        "keyValue": "In-progress"
+    },
+    completed: {
+        "id": 45,
+        "keyValue": "Visit Summary"
+    },
+    closed: {
+        "id": 42,
+        "keyValue": "Closed"
+    },
+    cancelled: {
+        "id": 46,
+        "keyValue": "Cancelled"
+    },
+    notInerested: {
+        "id": 58,
+        "keyValue": "Not Interested"
+    },
+    pendingApproval: {
+        "id": 106,
+        "keyValue": "Pending Approval"
+    },
+    declined: {
+        "id": 107,
+        "keyValue": "Declined"
+    },
+    startVisit: {
+        "id": 43,
+        "keyValue": "Start Visit"
+    },
+    paymentPending: {
+        "id": 90,
+        "keyValue": "Payment Pending"
+    }
 }
 
+export const DEFAULT_ADDRESS_ID = 1
+
+export const LATITUDE = 0.0
+
+export const LONGITUDE = 0.0
+
+
+export const serviceRequestDetailsTab = {
+    request: '1',
+    myPlan: '2'
+}
 
