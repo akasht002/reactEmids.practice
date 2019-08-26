@@ -60,7 +60,9 @@ export const API = {
     getServiceRequestStatus: 'Servicerequest/LookUp/ServiceRequestStatus',
     getServiceVisitsCount: 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
     getServiceVisitsHistoryById: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
+    getServicePlanVisitSummaryDetails:'servicevisit/serviceplanvisitsummarydetails/',
     // getServiceVisitsHistoryById: 'ServiceRequest/VisitSummary/',
+    updateAssessmentVisitStartEndTime:'servicevisit/updatevisitstartendtime',
     getProfilePercentage: 'ServiceProvider/ProgressIndicator/',
     getBlackOutDays: 'ServiceProvider/',
     addBlackOutDay: 'ServiceProvider/',
@@ -186,7 +188,9 @@ export const API = {
     saveSummaryDetailsForEsp: 'servicevisit/submitbillingforvisit',
     createOrEditAssessment:'assessment/create-assessment',
     getAssessmentByAssessmentId:'assessment/get-assessment/',
+    getIndividualSchedulesDetails: 'plan/',
     getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
     getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
-    getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/'
+    getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/',
+    acceptservicerequest: 'servicerequest/acceptservicerequest'
 }

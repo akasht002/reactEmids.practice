@@ -33,6 +33,10 @@ export function handelEnterSpace (str, is_xhtml) {
     return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
  } 
 
- export function getFullName(firstName,lastName){
+export function getFullName(firstName,lastName){
    return `${firstName} ${lastName}`;
+}
+
+export function stringCaseInsensitive(str1,str2){
+    return str1 && str1.toUpperCase() === str2 && str2.toUpperCase()
 }
