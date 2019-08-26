@@ -38,8 +38,8 @@ export const SERVICE_REQUEST_PAGE_SIZE = 10
 
 
 export const VISIT_TYPE = {
-    assessment : 114,
-    scheduled : 115
+    assessment: 114,
+    scheduled: 115
 }
 
 export const SERVICE_REQUEST = {
@@ -198,8 +198,8 @@ export const SERVICE_REQ_STATUS = {
 }
 
 export const ERROR_MSG = {
-    timeErrMessage : 'Updated time cannot be greater than Maximum adjustable time.',
-    emptyErrMessage : 'Time field(s) cannot be empty.'
+    timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.',
+    emptyErrMessage: 'Time field(s) cannot be empty.'
 }
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
 
@@ -233,8 +233,8 @@ export const MMMDD_FORMAT = "MMM DD";
 
 
 export const QUESTION_TYPE = {
-    ChoiceBased:'ChoiceBased',
-    OpenText:'OpenText'
+    ChoiceBased: 'ChoiceBased',
+    OpenText: 'OpenText'
 }
 
 export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
@@ -258,8 +258,8 @@ export const DATE_FORMATS = {
     dd: 'DD',
     timeh_mm_a: 'h:mm a',
     m_d_yy: 'M/D/YY',
-    hh_mm:'HH:mm',
-    hhMinSec:"HH:mm:ss"
+    hh_mm: 'HH:mm',
+    hhMinSec: "HH:mm:ss"
 }
 
 
@@ -298,6 +298,14 @@ export const VISIT_STATUS = {
     hired: {
         "id": 38,
         "keyValue": "Hired"
+    },
+    requested: {
+        "id": 38,
+        "keyValue": "Requested"
+    },
+    engaged: {
+        "id": 38,
+        "keyValue": "Engaged"
     },
     notHired: {
         "id": 39,

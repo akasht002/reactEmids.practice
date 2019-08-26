@@ -8,7 +8,7 @@ import { VISIT_TYPE,DEFAULT_ADDRESS_ID,LATITUDE,LONGITUDE } from '../../../const
     endTime: data.data.endTime,
     duration: parseFloat(data.data.duration,10),
     addInformation: data.data.additionalDescription,
-    assessmentId: 0,
+    assessmentId: data.data.assessmentId,
     patientAddress: {
       patientId: data.data.patientId,
       patientAddressId: data.address.patientAddressId ?  data.address.patientAddressId : DEFAULT_ADDRESS_ID,

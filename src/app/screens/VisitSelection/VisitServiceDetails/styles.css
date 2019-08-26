@@ -508,6 +508,60 @@ margin-top: 0 !important;
 
 }
 
+.individual-spblock-full
+{
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0px 25px 25px 25px;
+}
+
+.individual-spblock-full .btn-right-view 
+{
+display: block;
+width: 100%;
+}
+
+.individual-spblock-full .btn-right-view .btn
+{
+margin-left: 10px;
+}
+
+.btn-right-view .btn
+{
+    margin-left: 10px;
+}
+
+.individual-spblock-full .ServiceContent
+{
+display: block;
+}
+
+.individual-spblock-full .ServiceCategoryContent
+{
+width:50%;
+float: left;
+}
+
+.individual-spblock-full .sr-feature-pic
+{
+width:50%;
+float: left;
+height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+position: relative;
+padding-top: 100px;
+}
+
+.individual-spblock-full .sr-feature-pic img
+{
+max-width: 100%;
+height: auto;
+display: block;
+margin: 0 auto;
+}
 
 
 

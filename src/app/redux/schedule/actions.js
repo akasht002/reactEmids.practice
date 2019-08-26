@@ -4,7 +4,8 @@ import {
     Get,
     ServiceRequestPost,
     PatientGet,
-    getUserInfo
+    getUserInfo,
+    ServiceRequestPut
 } from '../../services/http'
 import { Schedule } from './bridge';
 import { SELECTED_POS_ERROR_MSG, NEW_POS_ERROR_MSG } from '../constants/constants';
@@ -96,37 +97,51 @@ export const clearESPList = () => {
     }
 }
 
-export const getAssessmentDetailSuccess = (data) =>{
+export const getAssessmentDetailSuccess = (data) => {
     return {
         type: Schedule.getAssessmentDetailSuccess,
         data
     }
 }
 
-export const createOrEditAssessmentSuccess = (data)=>{
+export const createOrEditAssessmentSuccess = (data) => {
     return {
-        type : Schedule.createOrEditAssessmentSuccess,
+        type: Schedule.createOrEditAssessmentSuccess,
+        data
+    }
+}
+
+export const getIndividualSchedulesDetailsSuccess = (data) => {
+    return {
+        type: Schedule.getIndividualSchedulesDetailsSuccess,
+        data
+    }
+}
+
+export const isScheduleEdit = (data) => {
+    return {
+        type: Schedule.isScheduleEdit,
         data
     }
 }
 
 
-export function getServiceCategory() {
+
+export function getServiceCategory(id, selectedData) {
     return (dispatch) => {
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             dispatch(getServiceCategorySuccess(resp.data));
-            if (resp.data.length > 0) {
-                dispatch(getServiceType(resp.data[0].serviceCategoryId))
-            }
+            let categoryId = id ? id : 1
+            dispatch(getServiceType(categoryId, selectedData))
         }).catch((err) => {
         })
     }
 }
 
-export function getServiceType(data) {
+export function getServiceType(id, selectedData = []) {
     return (dispatch) => {
         dispatch(getServiceTypeSuccess([]))
-        let serviceCategoryId = data;
+        let serviceCategoryId = id;
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
             let type = resp.data.filter((type, i) => {
@@ -135,13 +150,12 @@ export function getServiceType(data) {
                 }
             });
             data = type[0].serviceTypeTaskViewModel.map((type, index) => {
-                if (index === 0) {
-                    return {
-                        ...type,
-                        selected: false
-                    }
+                return {
+                    ...type,
+                    selected: selectedData.some((selectedType) => {
+                        return selectedType.serviceTypeId === type.serviceTypeId
+                    })
                 }
-                return type;
             });
 
             dispatch(getServiceTypeSuccess(data))
@@ -215,20 +229,26 @@ export function getValidPatientAddress(data) {
             })
             .catch(err => {
                 dispatch(endLoading())
-                err.response && err.response.status=== API_ERROR_CODE.badRequest &&  dispatch(getValidPatientAddressSuccess(true)) 
-                
+                err.response && err.response.status === API_ERROR_CODE.badRequest && dispatch(getValidPatientAddressSuccess(true))
+
             })
     }
 };
 
-export function getEntityServiceProviderList(data) {
+export function getEntityServiceProviderList(data, selectedESPId = '') {
     return (dispatch, getState) => {
         dispatch(startLoading())
         Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
             .then(resp => {
                 let oldEspList = getState().scheduleState.entityServiceProvidersList;
                 let modifiedList = [...oldEspList, ...resp.data];
-                dispatch(getEntityServiceProviderListSuccess(modifiedList))
+                let selectedESP = modifiedList.map((type, index) => {
+                    return {
+                        ...type,
+                        selected: type.serviceProviderId === selectedESPId
+                    }
+                });
+                dispatch(getEntityServiceProviderListSuccess(selectedESP))
                 dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
             })
             .catch(err => {
@@ -243,7 +263,7 @@ export function selectESP(espId) {
         let data = espList.map((value) => {
             return ({
                 ...value,
-                selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10) ? 1 : 0
+                selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10) ? true : false
             })
         })
         let list = orderBy(data, ['selected'], ['desc']);
@@ -278,11 +298,18 @@ export function getRecurringPattern() {
     }
 };
 
-export function getDays() {
+export function getDays(selectedDaysId = []) {
     return (dispatch) => {
+        let selectedDaysIds = selectedDaysId ? selectedDaysId : [];
         dispatch(startLoading());
         ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
-            dispatch(getDaysSuccess(resp.data))
+            let data = resp.data.map((value) => {
+                return ({
+                    ...value,
+                    selected: selectedDaysIds.indexOf(value.id) !== -1
+                })
+            })
+            dispatch(getDaysSuccess(data))
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -290,11 +317,27 @@ export function getDays() {
     }
 };
 
-export function createOrEditSchedule(data) {
+export function createSchedule(data) {
     return (dispatch) => {
         dispatch(startLoading());
         let modelData = createScheduleModal(data)
         ServiceRequestPost(API.createOrEditSchedule, modelData)
+            .then(resp => {
+                dispatch(push(Path.visitServiceDetails))
+                dispatch(clearESPList())
+                dispatch(endLoading());
+            })
+            .catch(err => {
+                dispatch(endLoading());
+            })
+    }
+};
+
+export function editSchedule(data) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        let modelData = createScheduleModal(data)
+        ServiceRequestPut(API.createOrEditSchedule, modelData)
             .then(resp => {
                 dispatch(push(Path.visitServiceDetails))
                 dispatch(clearESPList())
@@ -324,7 +367,7 @@ export function createOrEditAssessment(data) {
 
 
 
- export const getAssessmentById = (id) => {
+export const getAssessmentById = (id) => {
     return (dispatch) => {
         ServiceRequestPost(API.getAssessmentByAssessmentId, id)
             .then(resp => {
@@ -332,8 +375,22 @@ export function createOrEditAssessment(data) {
             })
             .catch(err => {
 
-             })
+            })
     }
 }
+
+export function getIndividualSchedulesDetails(scheduleId) {
+    return (dispatch) => {
+        dispatch(startLoading());
+        ServiceRequestGet(API.getIndividualSchedulesDetails + scheduleId).then((resp) => {
+            dispatch(getIndividualSchedulesDetailsSuccess(resp.data));
+            dispatch(isScheduleEdit(true));
+            dispatch(push(Path.schedule));
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+};
 
 

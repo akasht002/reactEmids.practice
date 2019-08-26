@@ -69,7 +69,7 @@ export const saveTaskPercentage = (data)=>{
 export const getServicePlanVisitSummaryDetails = (data) => {
   return dispatch => {    
     dispatch(startLoadingProcessing())
-    ServiceRequestGet(API.getServicePlanVisitSummaryDetails + `${data}`)
+    return ServiceRequestGet(API.getServicePlanVisitSummaryDetails + `${data}`)
       .then(resp => {
         dispatch(setServiceVisitPlanDetail(resp.data))
         dispatch(endLoadingProcessing())
@@ -85,7 +85,7 @@ export function getQuestionsList(data) {
   return dispatch => {
     let serviceProviderId = getUserInfo().serviceProviderId
     dispatch(startLoadingProcessing())
-    ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${serviceProviderId}/${data}`)
+    return ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${serviceProviderId}/${data}`)
       .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
         dispatch(endLoadingProcessing())
@@ -107,7 +107,7 @@ export const dispatchToAssessmentProcessing = data =>{
 export function saveAnswers(data) {
   return dispatch => {
     dispatch(startLoadingProcessing())
-    ServiceRequestPost(API.visitProcessingAssessmentSave, data)
+    return ServiceRequestPost(API.visitProcessingAssessmentSave, data)
       .then(resp => {
         dispatch(push(Path.assessmentFeedback));
       })
@@ -120,7 +120,7 @@ export function saveAnswers(data) {
 export function saveAnswerFeedback(data) {
   return dispatch => {
     dispatch(visitHistoryLoading(true))
-    ServiceRequestPost(API.saveAnswers, data)
+    return ServiceRequestPost(API.saveAnswers, data)
       .then(resp => {
         dispatch(visitHistoryLoading(false))
       })
@@ -140,7 +140,7 @@ export function startOrStopService(data, visitAction, startedTime) {
           visitAction: visitAction
       }
       dispatch(startLoadingProcessing());
-      ServiceRequestPut(API.updateAssessmentVisitStartEndTime, model).then((resp) => {
+      return ServiceRequestPut(API.updateAssessmentVisitStartEndTime, model).then((resp) => {
           dispatch(saveStartedTime(startedTime))
           dispatch(getServicePlanVisitSummaryDetails(data.servicePlanVisitId));
           dispatch(endLoadingProcessing());

@@ -188,6 +188,7 @@ export const API = {
     saveSummaryDetailsForEsp: 'servicevisit/submitbillingforvisit',
     createOrEditAssessment:'assessment/create-assessment',
     getAssessmentByAssessmentId:'assessment/get-assessment/',
+    getIndividualSchedulesDetails: 'plan/',
     getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
     getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
     getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/',
@@ -196,5 +197,6 @@ export const API = {
     getVisitServiceProviderCount: 'EntityUser/ServiceProvider/totalcount',
     getVisitServiceProviderTable: 'EntityUser/ServiceProvider/List',
     getVisitServiceRequestTable: 'entityuser/servicerequest/list',
-    getVisitServiceRequestCount: 'entityuser/servicerequest/totalcount'
+    getVisitServiceRequestCount: 'entityuser/servicerequest/totalcount',
+    acceptservicerequest: 'servicerequest/acceptservicerequest'
 }

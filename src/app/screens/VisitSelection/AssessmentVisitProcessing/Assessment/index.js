@@ -78,7 +78,7 @@ export class Assessment extends Component {
                         return ''   
                     })                    
                 }
-                if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
+                else if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
                     questionList.answers.map((answer) => {                                                               
                         if (!isNull(questionList.selectedAnswer)) {
                             this.selectedTextArea = questionList.selectedAnswer;
@@ -115,7 +115,7 @@ export class Assessment extends Component {
             return answer.feedbackQuestionnaireId !== undefined
         });
         this.checkedTask = taskList.length;
-        this.setState({answerList:this.checkedTask})
+        this.setState({answerList:this.selectedAnswers})
     }
 
     handleTextarea = (e, id) => {
