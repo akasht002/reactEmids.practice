@@ -18,6 +18,7 @@ export const RequestTab = props => {
                             <List
                                 list={props.visitServiceList}
                                 handelDetails={props.handelDetails}
+                                serviceRequestId={props.VisitServiceDetails.serviceRequestId}
                             />
                         </div>
                     }
