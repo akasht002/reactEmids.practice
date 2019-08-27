@@ -12,7 +12,7 @@ import { Calendar } from '../../../components/LevelOne'
 import { formateStateDate } from '../../../utils/validations'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import { formatDate } from '../../../utils/dateUtility'
-import { DATE_FORMAT, entityDashboardTab } from '../../../constants/constants'
+import { DATE_FORMAT, entityDashboardTab, ENTITY_DASHBOARD_STATUS } from '../../../constants/constants'
 import {setActiveTab, setFromDate, setToDate} from '../../../redux/dashboard/EntityDashboard/Individuals/actions';
 // import { getUserInfo } from '../../../redux/auth/UserAgreement/actions';
 import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
@@ -137,6 +137,7 @@ class EntityDashboard extends Component {
                     value={this.state.fromDate}
                     className={'form-control datePicker'}
                     label='From'
+                    disabled={this.props.activeStatus === ENTITY_DASHBOARD_STATUS.individuals.statCard.all}
                   />
                 </div>
                 <div className='CTDateFilter'>
@@ -149,6 +150,7 @@ class EntityDashboard extends Component {
                     value={this.state.toDate}
                     className={'form-control datePicker'}
                     label='To'
+                    disabled={this.props.activeStatus === ENTITY_DASHBOARD_STATUS.individuals.statCard.all}
                   />
                 </div>
                 <div className='CTDateFilter'>
@@ -283,7 +285,8 @@ function mapStateToProps(state) {
   return {
     activeTab: state.dashboardState.individualsListState.activeTab,
     fromDate: state.dashboardState.individualsListState.fromDate,
-    toDate: state.dashboardState.individualsListState.toDate
+    toDate: state.dashboardState.individualsListState.toDate,
+    activeStatus: state.dashboardState.individualsListState.activeStatus
   }
 }
 

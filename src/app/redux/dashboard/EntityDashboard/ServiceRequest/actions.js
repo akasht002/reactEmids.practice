@@ -125,6 +125,7 @@ export function getServiceRequestCountList(data) {
               subtext: resp.data[0].subtext,
               totalCount: resp.data[0].totalCount
             })
+            dispatch(getServiceRequestCountListSuccess(visitServiceRequestCountList))
           }
           else {
             dispatch(getServiceRequestCountListSuccess(resp.data))

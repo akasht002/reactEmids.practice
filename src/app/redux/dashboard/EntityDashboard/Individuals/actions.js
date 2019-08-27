@@ -285,3 +285,10 @@ export const setToDate = (data) => {
         data
     }
 }
+
+export const setActiveStatusForAllTab = data => {
+    return {
+        type: IndividualsList.setActiveStatusForAllTab,
+        data
+    }
+}

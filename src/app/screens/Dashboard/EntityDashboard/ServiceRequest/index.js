@@ -35,6 +35,7 @@ import {
   setActiveTab
 } from '../../../../redux/visitSelection/VisitServiceDetails/actions'
 import { setPatient } from "../../../../redux/patientProfile/actions";
+import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 
 export class ServiceRequest extends Component {
   constructor(props) {
@@ -182,6 +183,7 @@ export class ServiceRequest extends Component {
     })
     this.serviceTypeIds = []
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
+    this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     let count = this.getCountData({
       fromDate: this.props.fromDate,
@@ -343,7 +345,8 @@ function mapDispatchToProps(dispatch) {
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     getServiceRequestId: data => dispatch(getServiceRequestId(data)),
     setActiveTab: (data) => dispatch(setActiveTab(data)),
-    setPatient: data => dispatch(setPatient(data))
+    setPatient: data => dispatch(setPatient(data)),
+    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data))
   }
 }
 

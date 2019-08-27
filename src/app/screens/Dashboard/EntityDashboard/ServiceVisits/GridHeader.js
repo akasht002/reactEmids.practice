@@ -1,47 +1,47 @@
 export let allServiceVisits = {
-    serviceRequestVisitNumber: 'SV ID',
+    servicePlanVisitId: 'SV ID',
     serviceRequestNumber: 'SR ID',
     serviceCategoryDescription: 'Service Category',
     patientFullName: 'Individuals',
-    status: 'Status',
+    visitStatus: 'Status',
     schedule: 'Schedule',
     task: 'Task',
-    name: 'Entity Service Provider',
+    providerFullName: 'Entity Service Provider',
     icon: 'Actions'
 }
 
 export let cancelledServiceVisits = {
-    serviceRequestVisitNumber: 'SV ID',
+    servicePlanVisitId: 'SV ID',
     serviceRequestNumber: 'SR ID',
     serviceCategoryDescription: 'Service Category',
     patientFullName: 'Individuals',
-    status: 'Status',
+    visitStatus: 'Status',
     schedule: 'Schedule',
     task: 'Task',
-    name: 'Entity Service Provider',
+    providerFullName: 'Entity Service Provider',
     icon: 'Actions'
 }
 
 export let lowTaskServiceVisits = {
-    serviceRequestVisitNumber: 'SV ID',
+    servicePlanVisitId: 'SV ID',
     serviceRequestNumber: 'SR ID',
     serviceCategoryDescription: 'Service Category',
     patientFullName: 'Individuals',
-    status: 'Status',
+    visitStatus: 'Status',
     schedule: 'Schedule',
     task: 'Task',
-    name: 'Entity Service Provider',
+    providerFullName: 'Entity Service Provider',
     icon: 'Actions'
 }
 
 export let overDueServiceVisits = {
-    serviceRequestVisitNumber: 'SV ID',
+    servicePlanVisitId: 'SV ID',
     serviceRequestNumber: 'SR ID',
     serviceCategoryDescription: 'Service Category',
     patientFullName: 'Individuals',
-    status: 'Status',
+    visitStatus: 'Status',
     schedule: 'Schedule',
     task: 'Task',
-    name: 'Entity Service Provider',
+    providerFullName: 'Entity Service Provider',
     icon: 'Actions'
 }

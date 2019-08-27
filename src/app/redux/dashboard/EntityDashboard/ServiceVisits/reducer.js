@@ -7,7 +7,7 @@ const defaultState = {
     visitServiceTableList: [],
     serviceVisitStatusList: [],
     serviceType: [],
-    paginationCount: '',
+    paginationCount: 0,
     activeSubTab: 'All'
 };
 

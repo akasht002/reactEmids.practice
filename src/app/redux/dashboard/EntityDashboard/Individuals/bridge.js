@@ -17,5 +17,6 @@ export const IndividualsList = {
     endLoadingFeedbackList: 'endLoadingFeedbackList/individual',
     savePaginationNumber: 'savePaginationNumber/individual',
     setFromDate: 'setFromDate/individual',
-    setToDate: 'setToDate/individual'
+    setToDate: 'setToDate/individual',
+    setActiveStatusForAllTab: 'setActiveStatusForAllTab/individual'
 }

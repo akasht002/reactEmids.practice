@@ -404,7 +404,7 @@ export const entityDashboardTab = {
 
 export const KEYPRESS_ENTER = 13;
 
-export const CARETEAM_DASHBOARD_TAB = {
+export const ENTITY_DASHBOARD_STATUS = {
     serviceProvider: {
         statCard: {
             feedBack_alerts: 'FeedbackAlerts',

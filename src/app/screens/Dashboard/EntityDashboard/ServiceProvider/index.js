@@ -11,6 +11,7 @@ import {
   savePaginationNumber
 } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions'
 // import { onCreateNewConversation } from '../../../../redux/asyncMessages/actions'
+import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   USERTYPES,
   DEFAULT_SERVICE_CATEGORY,
@@ -21,7 +22,7 @@ import {
   NO_RECORDS_FOUND,
   CONTACT_NOT_FOUND,
   PHONE_NUMBER_TEXT,
-  CARETEAM_DASHBOARD_TAB,
+  ENTITY_DASHBOARD_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
   YEAR_MONTH_DAY
@@ -182,7 +183,7 @@ export class ServiceProvider extends Component {
   //     toDate: moment(this.props.toDate).format(YEAR_MONTH_DAY)
   //   }
   //   this.props.getFeedbackAlertDetails(model)
-  //   if (caseInsensitiveComparer(this.state.status, CARETEAM_DASHBOARD_TAB.serviceProvider.statCard.feedBack_alerts)) {
+  //   if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack_alerts)) {
   //     this.setState({
   //       feedbackAlertModal: !this.state.feedbackAlertModal,
   //       serviceProviderId: data.serviceProviderId
@@ -262,6 +263,7 @@ export class ServiceProvider extends Component {
       selectedOptionState: null,
     })
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
+    this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     let count = this.getCountData({
       fromDate: this.props.fromDate,
@@ -296,12 +298,12 @@ export class ServiceProvider extends Component {
 
   getSortNameAndOrderBasedOnStatus = (status) => {
     switch (status) {
-      case CARETEAM_DASHBOARD_TAB.serviceProvider.statCard.low_rating:
+      case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.low_rating:
         return {
           sortName: SORT_NAME.RATING,
           sortOrder: SORT_ORDER.ASC
         }
-      case CARETEAM_DASHBOARD_TAB.serviceProvider.statCard.feedBack_alerts:
+      case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack_alerts:
         return {
           sortName: SORT_NAME.FEEDBACK,
           sortOrder: SORT_ORDER.DESC
@@ -444,7 +446,8 @@ function mapDispatchToProps(dispatch) {
     getVisitServiceHistoryByIdDetail: data =>
       dispatch(getVisitServiceHistoryByIdDetail(data)),
     getFeedbackAlertDetails: data => dispatch(getFeedbackAlertDetails(data)),
-    savePaginationNumber: (data) => dispatch(savePaginationNumber(data))
+    savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
+    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data))
   }
 }
 

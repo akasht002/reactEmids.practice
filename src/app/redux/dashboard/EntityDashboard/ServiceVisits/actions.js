@@ -1,9 +1,12 @@
 import { API } from '../../../../services/api';
-import { CareTeamPost, ServiceRequestGet } from '../../../../services/http';
+import { ServiceRequestGet, Post } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import _ from 'lodash';
-import { CARETEAM_SV_STATUS } from '../../../constants/constants';
+import { DATE_FORMATS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
+import { getValue } from '../../../../utils/userUtility'
+import {getFullName} from '../../../../utils/stringHelper'
+import moment from 'moment';
 
 export const VisitServiceList = {
     getVisitsCountListSuccess: 'get_visits_countList_success/visitservice',
@@ -42,22 +45,27 @@ export const setPaginationRowCountSuccess = data => {
     }
 }
 
-export const getServiceRequestVisitStatusSuccess = (data) => {
-    _.forEach(data, function (obj) { obj.isChecked = false; });
-    let updatedData = data.filter(itemX => CARETEAM_SV_STATUS.includes(itemX.keyValue));
-    return {
-        type: VisitServiceList.getServiceRequestVisitStatusSuccess,
-        updatedData
-    }
-}
-
 export function getVisitServiceCountList(data) {
-    return (dispatch) => {
-        data.offset = getTimeZoneOffset();
-        CareTeamPost(API.getVisitServiceCount, data).then((resp) => {
+    return (dispatch, getState) => {
+        Post(API.getVisitServiceCount, data).then((resp) => {
             if (resp && resp.data) {
-                dispatch(getVisitsCountListSuccess(resp.data))
-                dispatch(setPaginationRowCountSuccess(resp.data[0].dataCount));
+                let activeSubTab = getState().dashboardState.VisitServiceCountListState.activeSubTab
+                let visitServiceCountList = getState().dashboardState.VisitServiceCountListState.visitServiceCountList
+                let dataCount = (resp.data && resp.data[0].totalCount > 0) ? resp.data[0].totalCount : 0
+                dispatch(setPaginationRowCountSuccess(dataCount));
+                if (activeSubTab !== 'All') {
+                  let index = _.findIndex(visitServiceCountList, { statusName: resp.data[0].statusName });
+                  visitServiceCountList.splice(index, 1, {
+                    label: resp.data[0].label,
+                    statusName: resp.data[0].statusName,
+                    subtext: resp.data[0].subtext,
+                    totalCount: resp.data[0].totalCount
+                  })
+                  dispatch(getVisitsCountListSuccess(visitServiceCountList))
+                }
+                else {
+                    dispatch(getVisitsCountListSuccess(resp.data))
+                }
             }
         }).catch(() => {
         })
@@ -68,13 +76,22 @@ export function getVisitServiceTableList(data) {
     return (dispatch) => {
         dispatch(startLoading());
         data.offset = getTimeZoneOffset();
-        CareTeamPost(API.getVisitServiceTable, data).then((resp) => {
+        Post(API.getVisitServiceTable, data).then((resp) => {
             if (resp.statusText === 'No Content') {
                 dispatch(getVisitsTableListSuccess([]))
             }
             else {
                 if (resp && resp.data) {
-                    dispatch(getVisitsTableListSuccess(resp.data))
+                    let data = resp.data.map(res => {
+                        return {
+                          ...res,
+                          patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
+                          providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
+                          schedule: res.schedule && `${moment(res.schedule.split(' ,')[0], DATE_FORMATS.mm_dd_yyy).format(DATE_FORMATS.ddmm)}, ${res.schedule.split(' ,')[1].substring(0, 5).toUpperCase()}`,
+                          task: res.totalTaskCompleted && res.totalTask && `${Math.round(res.totalTaskCompleted / res.totalTask * 100)}%`
+                        }
+                      })
+                    dispatch(getVisitsTableListSuccess(data))
                 }
             }
             dispatch(endLoading());
@@ -83,18 +100,6 @@ export function getVisitServiceTableList(data) {
         })
     }
 }
-
-export function getServiceRequestVisitStatus() {
-    return (dispatch) => {
-        dispatch(startLoading());
-        ServiceRequestGet(API.getServiceRequestCardStatus).then((resp) => {
-            dispatch(getServiceRequestVisitStatusSuccess(resp.data))
-            dispatch(endLoading());
-        }).catch((err) => {
-            dispatch(endLoading());
-        })
-    }
-};
 
 export const clearRequestStatus = (data) => {
     _.forEach(data, function (obj) { obj.isChecked = false; });

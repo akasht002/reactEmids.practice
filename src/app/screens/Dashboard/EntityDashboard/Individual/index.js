@@ -6,7 +6,8 @@ import {
   getIndividualsList,
   setActiveSubTab,
   getIndividualsFeedbackList,
-  savePaginationNumber
+  savePaginationNumber,
+  setActiveStatusForAllTab
 } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import { getLength } from '../../../../utils/validations'
 // import { getPersonalDetailIndividual, impersinateCareTeamIndividual } from '../../../../redux/auth/user/actions'
@@ -22,11 +23,12 @@ import {
   CONTACT_NOT_FOUND,
   PHONE_NUMBER_TEXT,
   OTHER, OTHERS,
-  CARETEAM_DASHBOARD_TAB,
+  ENTITY_DASHBOARD_STATUS,
   KEYPRESS_ENTER,
   DATE_FORMAT,
   CARETEAM_STATUS,
-  SORT_ORDER
+  SORT_ORDER,
+  PAGE_RANGE
 } from '../../../../constants/constants'
 import Search from '../Components/Search';
 import RowPerPage from '../Components/RowPerPage';
@@ -130,8 +132,8 @@ export class Individuals extends Component {
       toDate: nextProps.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE,
-      sortName: caseInsensitiveComparer(this.props.activeSubTab, CARETEAM_DASHBOARD_TAB.individuals.statCard.feedback) ? CARETEAM_STATUS.FEEDBACK : this.state.sortName,
-      sortOrder: caseInsensitiveComparer(this.props.activeSubTab, CARETEAM_DASHBOARD_TAB.individuals.statCard.feedback) ? SORT_ORDER.DESC : this.state.sortOrder,
+      sortName: caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback) ? CARETEAM_STATUS.FEEDBACK : this.state.sortName,
+      sortOrder: caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback) ? SORT_ORDER.DESC : this.state.sortOrder,
       searchKeyword: this.state.searchKeyword,
       resetFilter: false
     })
@@ -172,7 +174,7 @@ export class Individuals extends Component {
   //     toDate: this.props.toDate
   //   }
   //   this.props.getIndividualsFeedbackList(model);
-  //   if (caseInsensitiveComparer(this.state.status, CARETEAM_DASHBOARD_TAB.individuals.statCard.feedback)) {
+  //   if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback)) {
   //     this.setState({
   //       feedbackAlertModal: !this.state.feedbackAlertModal,
   //       feedbackServiceVisits: this.props.individualsFeedbackList,
@@ -261,13 +263,6 @@ export class Individuals extends Component {
       filterOpen: false,
       selectedOptionState: null
     })
-    // this.props.resetFilter(
-    //   this.props.attributedProviders,
-    //   this.props.cohorts,
-    //   this.props.contracts
-    // )
-    // this.props.clearClinicalCondition(this.props.clinicalConditionList)
-    // this.props.clearGenderType(this.props.genderType)
     let data = this.getFilterData({
       fromDate: this.state.fromDate,
       toDate: this.state.toDate,
@@ -277,6 +272,7 @@ export class Individuals extends Component {
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: 1
     })
+    this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     let count = this.getCountData({
       fromDate: this.props.fromDate,
@@ -359,7 +355,7 @@ export class Individuals extends Component {
 
   getSortNameAndOrderBasedOnStatus = (status) => {
     switch (status) {
-      case CARETEAM_DASHBOARD_TAB.individuals.statCard.feedback:
+      case ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback:
         return {
           sortName: 'feedback',
           sortOrder: 'desc'
@@ -422,9 +418,9 @@ export class Individuals extends Component {
             </div>
             <CoreoPagination
               activePage={activePage}
-              itemsCountPerPage={DEFAULT_PAGE_NUMBER}
+              itemsCountPerPage={DEFAULT_PAGE_SIZE}
               totalItemsCount={this.props.paginationCount}
-              pageRangeDisplayed={2}
+              pageRangeDisplayed={PAGE_RANGE}
               onChange={this.pageNumberChange}
             />
           </div>
@@ -453,7 +449,8 @@ function mapDispatchToProps(dispatch) {
     //     clearState: () => dispatch(clearStates()),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     //     getIndividualsFeedbackList: (data) => dispatch(getIndividualsFeedbackList(data)),
-    savePaginationNumber: (data) => dispatch(savePaginationNumber(data))
+    savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
+    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data))
   }
 }
 

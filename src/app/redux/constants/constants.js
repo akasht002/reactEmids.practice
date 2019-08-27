@@ -119,3 +119,21 @@ export const serviceRequestDetailsTab = {
 export const YEAR_MONTH_DAY = "YYYY-MM-DD";
 
 export const CARETEAM_SV_STATUS = ['ALL', 'Completed', 'Not Started', 'Over Due', 'Cancelled'];
+
+export const DATE_FORMATS = {
+    monDD: "MMM DD",
+    hhMinSession: "hh:mm A",
+    yyyy_mm_dd: 'YYYY-MM-DD',
+    mm: "MM",
+    mmm: "MMM",
+    yyyy: 'YYYY',
+    month: 'month',
+    days: 'days',
+    dd: 'DD',
+    timeh_mm_a: 'h:mm a',
+    m_d_yy: 'M/D/YY',
+    hh_mm: 'HH:mm',
+    hhMinSec: "HH:mm:ss",
+    mm_dd_yyy: "MM-DD-YYYY",
+    ddmm: "DD MMM",
+}

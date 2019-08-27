@@ -19,7 +19,8 @@ const defaultState = {
     isLoadingFeedbackList: false,
     savedPaginationNumber: 1,
     fromDate: moment().subtract(3, 'months'),
-    toDate: moment().toDate()
+    toDate: moment().toDate(),
+    activeStatus: 'All'
 };
 
 const individualsListState = (state = defaultState, action) => {
@@ -28,7 +29,7 @@ const individualsListState = (state = defaultState, action) => {
         case IndividualsList.getIndividualsCountListSuccess:
             return {
                 ...state,
-                individualsCountList: action.data,   
+                individualsCountList: action.data,
             };
 
         case IndividualsList.getIndividualsListSuccess:
@@ -122,17 +123,22 @@ const individualsListState = (state = defaultState, action) => {
             return {
                 ...state,
                 savedPaginationNumber: action.data
-            }; 
+            };
         case IndividualsList.setFromDate:
-        return {
-            ...state,
-            fromDate: action.data
-        }; 
+            return {
+                ...state,
+                fromDate: action.data
+            };
         case IndividualsList.setToDate:
-        return {
-            ...state,
-            toDate: action.data
-        };        
+            return {
+                ...state,
+                toDate: action.data
+            };
+        case IndividualsList.setActiveStatusForAllTab:
+            return {
+                ...state,
+                activeStatus: action.data
+            };
         default:
             return state;
     }
