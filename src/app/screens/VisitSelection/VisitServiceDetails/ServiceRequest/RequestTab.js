@@ -37,6 +37,7 @@ export const RequestTab = props => {
                         }
                         <Details
                             details={props.VisitServiceDetails}
+                            daysType={props.daysType}
                         />
                         {!isEntity &&
                             <div className="sr-feature-pic">

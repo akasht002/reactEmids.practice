@@ -60,6 +60,72 @@ export const Details = props => {
             }
         )
 
+    let modifiedDays = []
+
+    props.daysType &&
+        props.daysType.map(day => {
+            let checkDay = {
+                day: day.keyValue,
+                slotDescription: []
+            }
+            props.details && props.details.serviceRequestSlot &&
+                props.details.serviceRequestSlot.map(slotDay => {
+                    if (day.id === slotDay.dayOfWeek) {
+                        checkDay.slotDescription.push(slotDay.slotDescription)
+                    }
+                    return '';
+                })
+            if (checkDay.slotDescription.length > 0) {
+                modifiedDays.push(checkDay)
+            }
+            return '';
+        })
+
+    let AvailDays =
+        modifiedDays &&
+        modifiedDays.map((days, index) => {
+            let Count = ''
+            return (
+                <div className={'SPAvailContainer ' + Count + 'Available'}>
+                    <div className={'SPAvailTitle'}>
+                        <label className='SPAvailTitleText'>{days.day}</label>
+                    </div>
+                    <div className={'SPAvailContent'}>
+                        <label
+                            className={
+                                'SPAvailItems ' +
+                                (days.slotDescription.includes('Morning') ? 'active' : '')
+                            }
+                        >
+                            Morning
+              </label>
+                        <label
+                            className={
+                                'SPAvailItems ' +
+                                (days.slotDescription.includes('Afternoon') ? 'active' : '')
+                            }
+                        >
+                            Afternoon
+              </label>
+                        <label
+                            className={
+                                'SPAvailItems ' +
+                                (days.slotDescription.includes('Evening') ? 'active' : '')
+                            }
+                        >
+                            Evening
+              </label>
+                    </div>
+                </div>
+            )
+        })
+
+    let address =
+        props.details && props.details.patient &&
+        props.details.patient.patientAddresses.filter(obj => {
+            return obj.isPrimaryAddress === true
+        })
+
     return (
         <Fragment>
             <div className='ServiceContent'>
@@ -126,6 +192,48 @@ export const Details = props => {
 
                             </div>
                         </span>
+                    </div>
+                    <div className='AvailabilityWidget'>
+                        <div className='SPAvailWidget Summary'>
+                            {AvailDays}
+                        </div>
+                    </div>
+                    <h2 className='ServicesTitle'>Point of Service</h2>
+                    <div className='SummaryContent POS mt-3 mb-4'>
+                        {props.details.patient &&
+                            props.details.patient
+                            ? address.map(pointofservice => {
+                                return (
+                                    <Fragment>
+                                        {pointofservice.addressTypeId &&
+                                            <p>
+                                                <span className="addresstype">Address Type</span>
+                                                {pointofservice.addressTypeId}
+                                            </p>
+                                        }
+                                        <p>
+                                            <span>Street</span>
+                                            {pointofservice.streetAddress}
+                                        </p>
+
+                                        <p>
+                                            <span>City</span>
+                                            {pointofservice.city}
+                                        </p>
+
+                                        <p>
+                                            <span>State</span>
+                                            {pointofservice.stateName}
+                                        </p>
+
+                                        <p>
+                                            <span>Zip</span>
+                                            {pointofservice.zipCode}
+                                        </p>
+                                    </Fragment>
+                                )
+                            })
+                            : ''}
                     </div>
                 </div>
             </div>
