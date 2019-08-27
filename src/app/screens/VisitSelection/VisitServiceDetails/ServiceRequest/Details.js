@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import { Carousel } from '../../../../components';
-import {
-    RECURRING_PATTERN,
-} from '../../../../constants/constants';
+import { RECURRING_PATTERN, MORNING, AFTERNOON, EVENING} from '../../../../constants/constants';
 import Moment from 'react-moment';
 
 export const Details = props => {
@@ -91,31 +89,10 @@ export const Details = props => {
                         <label className='SPAvailTitleText'>{days.day}</label>
                     </div>
                     <div className={'SPAvailContent'}>
-                        <label
-                            className={
-                                'SPAvailItems ' +
-                                (days.slotDescription.includes('Morning') ? 'active' : '')
-                            }
-                        >
-                            Morning
-              </label>
-                        <label
-                            className={
-                                'SPAvailItems ' +
-                                (days.slotDescription.includes('Afternoon') ? 'active' : '')
-                            }
-                        >
-                            Afternoon
-              </label>
-                        <label
-                            className={
-                                'SPAvailItems ' +
-                                (days.slotDescription.includes('Evening') ? 'active' : '')
-                            }
-                        >
-                            Evening
-              </label>
-                    </div>
+                        <label className={'SPAvailItems ' + (days.slotDescription.includes(MORNING) ? 'active' : '')}>{MORNING}</label>
+                        <label className={'SPAvailItems ' + (days.slotDescription.includes(AFTERNOON) ? 'active' : '')}>{AFTERNOON}</label>
+                        <label className={'SPAvailItems ' + (days.slotDescription.includes(EVENING) ? 'active' : '')}>{EVENING}</label>
+                </div>
                 </div>
             )
         })
