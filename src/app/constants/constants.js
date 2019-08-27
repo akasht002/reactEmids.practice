@@ -258,7 +258,8 @@ export const DATE_FORMATS = {
     timeh_mm_a: 'h:mm a',
     m_d_yy: 'M/D/YY',
     hh_mm: 'HH:mm',
-    hhMinSec: "HH:mm:ss"
+    hhMinSec: "HH:mm:ss",
+    hh_mm_a: 'hh:mm a'
 }
 
 

@@ -1,14 +1,12 @@
 import React, { Fragment } from 'react';
 import Moment from 'react-moment';
-import { DATE_FORMATS } from '../../../../constants/constants';
-import { ThemeProvider } from '@zendeskgarden/react-theming';
-import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
-import { PAGE_SIZE_OPTIONS, SERVICE_VISIT_STATUS, VISIT_STATUS } from '../../../../constants/constants'
+import { PAGE_SIZE_OPTIONS, VISIT_STATUS, DATE_FORMATS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
 import {isEntityUser} from '../../../../utils/userUtility'
+import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import './style.css';
 
 const renderServiceTypeImages = serviceTypes => {
@@ -71,8 +69,8 @@ export const Table = props => {
                     {props.visitList.map(item => {
                         return <tr>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
-                            <td>{item.startTime}</td>
-                            <td>{item.duration}</td>
+                            <td>{(isEntity || getUserInfo().isEntityServiceProvider) ? item.startTime : getUTCFormatedDate(item.visitStartTime, DATE_FORMATS.hh_mm_a)}</td>
+                            <td>{(isEntity || getUserInfo().isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)}</td>
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
