@@ -1908,7 +1908,7 @@ display: table-cell;
 .Plan-typebar
 {
     background: #fff;
-    min-height: 75px;
+    min-height: 60px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: row;
@@ -2913,21 +2913,21 @@ clear: both;
 /*my-plan-view*/
 .shadow-style
 {
-    box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    -moz-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    padding: 20px;
-    background: #fff;
+box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+-webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+-moz-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+padding: 20px;
+background: #fff;
 }
 
 .schedule-listblock
 {
-    display: block;
-    background: #f7f7f7;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    cursor: pointer;
+display: block;
+background: #f7f7f7;
+padding: 10px 10px;
+border-radius: 4px;
+margin-bottom: 10px;
+cursor: pointer;
 }
 
 .schedule-listblock:hover
@@ -2943,47 +2943,43 @@ display: table;
 
 .schedule-listblock fieldset input
 {
-    position: absolute;
+position: absolute;
 }
 .schedule-listblock fieldset label.SR-types-label
 {
-    width: 85%;
-    clear: both;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size:14px;
-    color: #7a329f;
-    font-weight: 600;
-    margin-bottom: 0px;
+width: 85%;
+clear: both;
+-o-text-overflow: ellipsis;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+font-size:14px;
+color: #7a329f;
+font-weight: 600;
+margin-bottom: 0px;
 }
 
 .schedule-listblock fieldset span.SR-cat
 {
-    width: 85%;
-    clear: both;
-    position: relative;
-    display: block;
-    float: left;
-    margin-left: 0;
-    font-size:14px;
-    color: #8c8c8c;
-    font-weight: 500;  
+width: 85%;
+clear: both;
+position: relative;
+display: block;
+float: left;
+margin-left: 0;
+font-size:14px;
+color: #8c8c8c;
+font-weight: 500;  
 }
 
 
-/* .schedule-listblock fieldset span
-{
-    position: absolute;
-    right: 50px;
-    display: block;  
-    margin-top: -30px;
-} */
-
 .schedule-listblock fieldset span label
 {
-width: 100% !important;
+width: 100%!important;
+margin-top: 0px;
+color: #8c8c8c;
+margin-bottom: 0;
+display: block;
 }
 
 /*assign-SP-card*/
@@ -3350,9 +3346,9 @@ background-color: #fff;
     display: block;
     position: relative;
     padding-left: 35px;
-    margin-bottom: 12px;
+    margin-bottom: 0px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 14px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -3372,7 +3368,7 @@ background-color: #fff;
   /* Create a custom checkbox */
   .checkmark {
     position: absolute;
-    top: 0px;
+    top: 3px;
     left: 0;
     height: 17px;
     width: 17px;
@@ -3489,11 +3485,7 @@ background-color: #fff;
        *::-ms-backdrop, .bottom-blockbtn .ml-auto{ float: right !important;  }
        }
 
-       .ProfileRightContainer .ProfileContentWidget .scrollarea-content 
-       {
-       overflow-y: auto;
-       height: 100%;
-       }
+  
 
 
   

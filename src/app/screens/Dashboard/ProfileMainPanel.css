@@ -429,10 +429,6 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
     padding-left: 0px;
 }
 
-div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent.EntityUDashboard{
-    height: 120px;
-}
-
 .EntityUServiceProf{
     display: flex;
     align-items: center;

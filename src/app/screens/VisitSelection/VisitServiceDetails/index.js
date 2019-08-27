@@ -30,7 +30,7 @@ import {
   PAGE_NO,
   VISIT_STATUS
 } from '../../../constants/constants';
-import './styles.css';
+import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
 import { getHourMin, getUtcTimeDiffInHHMMformat } from '../../../utils/dateUtility'
 import moment from 'moment';
@@ -604,16 +604,16 @@ export class VisitServiceDetails extends Component {
     return (
       <Fragment>
         <AsideScreenCover>
-          <div className='ProfileHeaderWidget'>
+          {/* <div className='ProfileHeaderWidget'>
             <div className='ProfileHeaderTitle'>
               <h5 className='primaryColor m-0'>View Request</h5>
             </div>
-          </div>
+          </div> */}
           {this.props.isLoading && <Preloader />}
           <Scrollbars speed={2}
             smoothScrolling
             horizontal={false}
-            className='ProfileContentWidget'>
+            className='ProfileContentWidget update-height-content'>
             <div class="tab_view">
               <TabHeader
                 list={updatedTabdata}

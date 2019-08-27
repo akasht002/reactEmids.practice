@@ -139,7 +139,7 @@ export const ScheduleType = props => {
                                 <Fragment>
                                     <div className="right-monthblock">
                                         <div className="left-radioblock">
-                                            <input
+                                            {/* <input
                                                 type="radio"
                                                 id={'Pattern2'}
                                                 name={'Pattern2'}
@@ -147,7 +147,7 @@ export const ScheduleType = props => {
                                                 className="form-radio-input"
                                                 onChange={() => { props.handleSelectDailyOptionField(1) }}
                                             />
-                                            <label className="form-radio-label" htmlFor={'Pattern2'}><span className="RadioBoxIcon" /></label>
+                                            <label className="form-radio-label" htmlFor={'Pattern2'}><span className="RadioBoxIcon" /></label> */}
                                         </div>
                                         <div className="every-dayblock">
                                             <fieldset>
@@ -170,7 +170,7 @@ export const ScheduleType = props => {
                                 <Fragment>
                                     <div class="right-monthblock">
                                         <div className="left-radioblock">
-                                            <input
+                                            {/* <input
                                                 type="radio"
                                                 id={'Pattern2'}
                                                 name={'Pattern2'}
@@ -178,7 +178,7 @@ export const ScheduleType = props => {
                                                 className="form-radio-input"
                                                 onChange={() => { props.handleSelectWeeklyOptionField(1) }}
                                             />
-                                            <label className="form-radio-label" htmlFor={'Pattern2'}><span className="RadioBoxIcon" /></label>
+                                            <label className="form-radio-label" htmlFor={'Pattern2'}><span className="RadioBoxIcon" /></label> */}
                                         </div>
                                         <div className="every-dayblock">
                                             <fieldset>

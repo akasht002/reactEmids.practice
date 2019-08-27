@@ -1933,15 +1933,20 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
   .SPContentWidget .ProfileContainer.bottomProfile {
     min-height:auto;
-    height: 620px;
+    height: 596px;
     z-index: 0;
     margin-bottom: 20px;
     width: calc(45% - 20px)
 }
 
-.SPContentWidget .ProfileContainer.bottomProfile .ProfileCard
+.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget .card.ProfileCard
 {
-margin-bottom: 0px;
+height:100%;
+}
+
+.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget
+{
+height: 100%;
 }
 
 @media (min-width: 1367px)

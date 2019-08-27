@@ -2,8 +2,7 @@ span.title-view {
 	display: block;
 	text-align: left;
 	color: #7a329f;
-	padding: 10px 0px;
-	padding-left: 4px;
+	padding: 12px 0px;
 	font-size: 18px;
 }
 
@@ -38,42 +37,41 @@ span.title-view {
 }
 
 
-.plan-tableview td {
-	border-bottom: 1px solid #f1f1f1;
-}
-
 .plan-tableview th {
-	color: #7a329f;
-	font-weight: 500;
-	font-size: 15px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-right: 0px;
-	padding-left: 0px;
-	text-align:center;
+color: #7a329f;
+font-weight: 500;
+font-size: 15px;
+padding-top: 15px;
+padding-bottom: 15px;
+padding-right: 0px;
+padding-left: 0px;
+text-align:center;
 }
 
 .plan-tableview tbody
 {
-    display: block;
-    overflow-y: auto;
-    height: 245px;
-    width: 100%;
+display: block;
+overflow-y: auto;
+height: calc(100vh - 313px);
+width: 100%;
 }
 
 .plan-tableview tbody tr
 {
-	display: table;
-    width: 100%;
-    table-layout: fixed;
+display: table;
+width: 100%;
+table-layout: fixed;
+border-bottom: 1px solid #f1f1f1;
+border-top: 1px solid #fff;
+border-left: 3px solid #fff;
 }
 
 .plan-tableview td {
 	color: #222;
 	font-weight: 500;
 	font-size: 14px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	text-align: center;
 	padding-left: 0;
     padding-right: 0;
@@ -84,6 +82,8 @@ span.title-view {
 	border-left: 3px solid #702d8e;
 	border-top: 2px solid #bd9fcb;
 	border-bottom: 2px solid #bd9fcb;
+	border-top: 1px solid #bd9fcb;
+	border-bottom: 1px solid #bd9fcb;
 	cursor: pointer;
 }
 
@@ -113,7 +113,7 @@ width: 7%;
 
 .plan-tableview td:nth-child(1) time
 {
-padding-left: 12px;
+padding-left: 0px;
 }
 
 
@@ -293,15 +293,14 @@ padding-left: 10px;
 }
 .right-customewidth .right-tablelist
 {
-	padding: 20px 15px;
-	padding-bottom: 20px;
+	padding: 0px 0px 20px 0px;
 }
 
 .right-customewidth .right-tablelist .ScheduleRowButton
 {
 margin: 0 auto;
 display: block;
-width: 100%;
+max-width: 140px;
 }
 
 .right-customewidth .right-tablelist .ScheduleRowButton .btn
@@ -309,11 +308,12 @@ width: 100%;
 float: none;
 margin: 0 auto;
 display: block;
-padding: 5px 10px !important;
+padding: 5px 0px !important;
 font-size: 14px !important;
 height:30px;
 white-space:pre;
 line-height: 18px;
+width: 100%;
 }
 
 .right-customewidth .right-tablelist .CoreoPagination
@@ -365,6 +365,8 @@ padding-right:40px;
 	color: transparent;
 	z-index: 10;
 	cursor: pointer;
+	position: relative;
+	right: -50px;
 }
 
 /*tool-tip-view*/
