@@ -83,7 +83,7 @@ export class ServiceProvider extends Component {
       rating: 0,
       rowCount: 0,
       searchOpen: false,
-      searchKeyword: '',
+      searchKeyword: 'default',
       resetFilter: true,
       feedbackAlertModal: false,
       pageNumberFeedback: DEFAULT_PAGE_NUMBER,
@@ -215,7 +215,7 @@ export class ServiceProvider extends Component {
       "sortOrder": data.sortOrder,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": data.status && data.status.toLowerCase(),
+      "tab": data.status,
       "gender": 0,
       "minimumExperience": this.state.minExperience,
       "maximumExperience": this.state.maxExperience,
@@ -275,6 +275,8 @@ export class ServiceProvider extends Component {
       status: this.state.status,
       sortName: sortName,
       sortOrder: sortOrder,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: DEFAULT_PAGE_SIZE
     })
     await this.props.getVisitServiceProviderCountList(count)
     await this.props.getVisitServiceProviderTableList(data)
@@ -394,7 +396,7 @@ export class ServiceProvider extends Component {
               status={status}
             />
           </div>
-          {this.props.visitServiceTableList && this.props.visitServiceTableList.length > 0 ?
+          {this.props.paginationCount > 0 ?
             <div>
               <RowPerPage
                 pageSize={pageSize}

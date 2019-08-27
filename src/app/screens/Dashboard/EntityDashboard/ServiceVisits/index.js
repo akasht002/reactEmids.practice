@@ -149,7 +149,7 @@ export class ServiceVisits extends Component {
       serviceTypeIds: this.serviceTypeIds,
       visitStatus: this.state.serviceRequestStatus,
       searchText: this.state.searchKeyword,
-      tab: this.state.status.toLowerCase()
+      tab: this.state.status
     }
   }
 
@@ -161,7 +161,7 @@ export class ServiceVisits extends Component {
       "sortOrder": data.sortOrder,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": data.status && data.status.toLowerCase(),
+      "tab": data.status,
       "searchText": this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "serviceTypeIds": this.serviceTypeIds,

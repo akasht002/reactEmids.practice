@@ -137,7 +137,7 @@ export class ServiceRequest extends Component {
     return {
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": this.state.status.toLowerCase(),
+      "tab": this.state.status,
       "searchText": "default",
       "serviceProviderId": getUserInfo().serviceProviderId,
       "isRecurring": 'both',
@@ -153,7 +153,7 @@ export class ServiceRequest extends Component {
       "sortOrder": this.state.sortOrder,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": data.status && data.status.toLowerCase(),
+      "tab": data.status,
       "searchText": this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "isRecurring": 'both',

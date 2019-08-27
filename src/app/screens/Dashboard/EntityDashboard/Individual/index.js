@@ -211,7 +211,7 @@ export class Individuals extends Component {
       "sortOrder": data.sortOrder,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": data.status && data.status.toLowerCase(),
+      "tab": data.status,
       "gender": 0,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
@@ -270,7 +270,7 @@ export class Individuals extends Component {
       sortName: sortName,
       sortOrder: sortOrder,
       pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: 1
+      pageSize: DEFAULT_PAGE_SIZE
     })
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
@@ -311,7 +311,7 @@ export class Individuals extends Component {
       sortName: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortName,
       sortOrder: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortOrder,
       pageNumber: pageNumber,
-      pageSize: 1
+      pageSize: DEFAULT_PAGE_SIZE
     })
     this.props.getIndividualsList(data)
     this.setState({
@@ -434,21 +434,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getIndividualsCountList: data => dispatch(getIndividualsCountList(data)),
     getIndividualsList: data => dispatch(getIndividualsList(data)),
-    //     // getServiceArea: () => dispatch(getServiceArea()),
-    //     // getGender: () => dispatch(getGender()),
-    //     // getSkill: () => dispatch(getSkill()),
-    //     // getClinicalCondition: () => dispatch(getClinicalCondition()),
-    //     getAttributedProviders: () => dispatch(getAttributedProviders()),
-    //     getAllCohorts: () => dispatch(getAllCohorts()),
-    //     getAllContracts: () => dispatch(getAllContracts()),
-    //     // clearClinicalCondition: data => dispatch(clearClinicalCondition(data)),
-    //     // clearGenderType: data => dispatch(clearGenderType(data)),
-    //     resetFilter: (attributedProviders, cohorts, contracts) =>
-    //       dispatch(resetFilter(attributedProviders, cohorts, contracts)),
-    //     getStates: () => dispatch(getStates()),
-    //     clearState: () => dispatch(clearStates()),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
-    //     getIndividualsFeedbackList: (data) => dispatch(getIndividualsFeedbackList(data)),
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
     setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data))
   }
@@ -460,17 +446,6 @@ function mapStateToProps(state) {
       .individualsCountList,
     individualsList: state.dashboardState.individualsListState
       .individualsList,
-    //     individualsVisitList: state.entityDashboard.individualsListState
-    //       .individualsVisitList,
-    //     attributedProviders: state.entityDashboard.individualsListState
-    //       .attributedProviders,
-    //     cohorts: state.entityDashboard.individualsListState.cohorts,
-    //     contracts: state.entityDashboard.individualsListState.contracts,
-    //     // serviceAreaList: state.spSearchState.FilterState.getServiceArea,
-    //     // genderType: state.spSearchState.FilterState.genderType,
-    //     // skillType: state.spSearchState.FilterState.skillType,
-    //     // clinicalConditionList: state.spSearchState.FilterState.clincalCondition,
-    //     // loggedInUser: state.authState.userState.userData.userInfo,
     paginationCount: state.dashboardState.individualsListState
       .paginationCount,
     //     states: state.entityDashboard.individualsListState.states,
