@@ -47,7 +47,7 @@ export class Schedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checkedServiceCategoryId: '',
+            checkedServiceCategoryId: 1,
             selectedServiceType: {},
             selectedPOS: '0',
             state: '',
@@ -84,7 +84,7 @@ export class Schedule extends Component {
             isDefaultAddress: false
         }
         this.serviceTypes = [];
-        this.categoryId = '';
+        this.categoryId = 1;
         this.address = {}
         this.espId = '';
         this.weeklySelectedDays = [];
