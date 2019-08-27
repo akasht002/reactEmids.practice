@@ -47,7 +47,9 @@ import {
   setActiveTab
 } from '../../../../redux/visitSelection/VisitServiceDetails/actions'
 import { setPatient } from "../../../../redux/patientProfile/actions";
-
+import {
+  getVisitServiceHistoryByIdDetail,
+} from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 export class ServiceVisits extends Component {
   constructor(props) {
     super(props)
@@ -269,10 +271,15 @@ export class ServiceVisits extends Component {
   }
 
   impersinateServiceVisit = data => {
-    this.props.getServiceRequestId(data.serviceRequestId);
-    this.props.setPatient(data.patientId)
-    this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
-    this.props.goToVisitServiceDetails();
+    if (this.state.status === 'LowTaskCompletions') {
+      this.props.getServiceRequestId(data.serviceRequestId)
+      this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
+    } else {
+      this.props.getServiceRequestId(data.serviceRequestId);
+      this.props.setPatient(data.patientId)
+      this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
+      this.props.goToVisitServiceDetails();
+    }
   }
 
   render() {
@@ -336,6 +343,8 @@ function mapDispatchToProps(dispatch) {
     getServiceRequestId: data => dispatch(getServiceRequestId(data)),
     setActiveTab: (data) => dispatch(setActiveTab(data)),
     setPatient: data => dispatch(setPatient(data)),
+    getVisitServiceHistoryByIdDetail: data =>
+    dispatch(getVisitServiceHistoryByIdDetail(data))
   }
 }
 
