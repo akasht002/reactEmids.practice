@@ -2348,7 +2348,7 @@ flex: inherit;
     justify-content: flex-start;
     align-items: center;
     clear: both;
-    margin-top: 15px;
+    margin-top: 0px;
     width: 50%;
     flex-wrap: wrap;
 }
@@ -3448,6 +3448,13 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
+width:100%;
+}
+
+.my-plan-editmodel .search-block_SP div.ProfileSearchContainer.true
+{
+width: 100%;
+right: 0;
 }
 
 

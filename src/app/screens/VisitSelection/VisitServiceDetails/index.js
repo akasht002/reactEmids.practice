@@ -545,6 +545,7 @@ export class VisitServiceDetails extends Component {
                   />
                 </div>
               </div>
+              <div className="top-search-blocksp">
               <h2 class="ServicesTitle">Assign Service Provider</h2>
               <div className="search-block_SP">
                 <Search
@@ -555,6 +556,7 @@ export class VisitServiceDetails extends Component {
                   handleSearchData={this.handleSearchData}
                   closeSearch={this.toggleSearch}
                 />
+              </div>
               </div>
               <AssignServiceProvider
                 entityServiceProvidersList={this.props.entityServiceProvidersList}

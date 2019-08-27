@@ -2343,7 +2343,7 @@ flex: inherit;
     justify-content: flex-start;
     align-items: center;
     clear: both;
-    margin-top: 15px;
+    margin-top: 0px;
     width: 50%;
     flex-wrap: wrap;
 }

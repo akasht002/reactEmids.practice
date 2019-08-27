@@ -773,6 +773,7 @@ export class Schedule extends Component {
                                 />
                             </div>
                             <div className="ServiceTypesWidget PostSR">
+                                <div className="top-search-blocksp">
                                 <h2 className='ServicesTitle'>Assign Service Provider</h2>
                                 <div className="search-block_SP">
                                     <Search
@@ -783,6 +784,7 @@ export class Schedule extends Component {
                                         handleSearchData={this.handleSearchData}
                                         closeSearch={this.toggleSearch}
                                     />
+                                </div>
                                 </div>
                                 <AssignServiceProvider
                                     entityServiceProvidersList={this.props.entityServiceProvidersList}
