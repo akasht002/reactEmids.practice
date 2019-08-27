@@ -40,7 +40,6 @@ export const Details = props => {
                             className='ServiceTypeInput'
                             name='serviceType'
                             value={catNum}
-                            // onChange={e => this.selectedServiceType(e)}
                         />
                         <label
                             className='ServiceTypeLink'
@@ -63,7 +62,7 @@ export const Details = props => {
 
     return (
         <Fragment>
-            <form className='ServiceContent'>
+            <div className='ServiceContent'>
                 <div className='ServiceCategoryContent'>
                     <h2 className='ServicesTitle'>Service Category</h2>
                     <p className='ScheduleTypeTitle'>
@@ -129,7 +128,7 @@ export const Details = props => {
                         </span>
                     </div>
                 </div>
-            </form>
+            </div>
         </Fragment>
     )
 }

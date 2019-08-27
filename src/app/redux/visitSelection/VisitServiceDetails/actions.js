@@ -318,6 +318,24 @@ export function cancelHiredServiceProvider(data) {
   }
 }
 
+export function acceptservicerequest(data) {
+  let serviceProviderId = getUserInfo().serviceProviderId
+  let model = {
+    serviceRequestId: data.serviceRequestId,
+    serviceProviderId: serviceProviderId
+  }
+  return dispatch => {
+    dispatch(startLoading(true))
+    ServiceRequestPut(API.acceptservicerequest, model)
+      .then(resp => {
+        dispatch(push(Path.visitServiceList))
+      })
+      .catch(err => {
+        dispatch(push(Path.visitServiceList))
+      })
+  }
+}
+
 export function canInitiateConversation(data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch) => {
@@ -474,7 +492,8 @@ export function getSchedulesList(patientId) {
           pageNumber: 1,
           pageSize: 10,
           startDate: null,
-          endDate: null
+          endDate: null,
+          patientId: patientId
         }
         dispatch(getSchedulesListSuccess(resp.data))
         dispatch(getVisitList(model))
@@ -561,6 +580,7 @@ export function updateHireStatusForServiceRequest(data) {
       })
       .catch(err => {
         dispatch(endLoading())
+        dispatch(push(Path.visitServiceList))
       })
   }
 }
