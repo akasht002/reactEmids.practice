@@ -80,7 +80,7 @@ export class Schedule extends Component {
             description: '',
             phoneNumberModal: false,
             phoneNumber: '',
-            additionalDescription:''
+            additionalDescription: ''
         }
         this.serviceTypes = [];
         this.categoryId = '';
@@ -744,28 +744,6 @@ export class Schedule extends Component {
                                         monthlyMonthsSecond={this.state.monthlyMonthsSecond}
                                         startDateSelected={this.state.startDateSelected}
                                         onClickSave={this.state.onClickSave}
-                                        street={this.state.street}
-                                        city={this.state.city}
-                                        zip={this.state.zip}
-                                    />
-                                </div>
-                                <div className="ServiceTypesWidget PostSR">
-                                   <div className="top-search-blocksp">
-                                    <h2 className='ServicesTitle'>Assign Service Provider</h2>
-                                    <div className="search-block_SP">
-                                        <Search
-                                            toggleSearch={this.toggleSearch}
-                                            searchOpen={this.state.searchOpen}
-                                            searchKeyword={this.state.searchKeyword}
-                                            handleSearchkeyword={this.handleSearchkeyword}
-                                            handleSearchData={this.handleSearchData}
-                                            closeSearch={this.toggleSearch}
-                                        />
-                                    </div>
-                                    </div>
-                                    <AssignServiceProvider
-                                        entityServiceProvidersList={this.props.entityServiceProvidersList}
-                                        handleAssignServiceProvider={this.handleAssignServiceProvider}
                                         formatedStartTime={this.formatedStartTime}
                                         weeklySelectedDays={this.weeklySelectedDays}
                                         planType={this.state.planType}
@@ -849,7 +827,7 @@ export class Schedule extends Component {
                         onAcceptClick={() => this.goToServicedetails()}
                     />
                     <AlertPopup
-                        message={ <span>{this.state.phoneNumber === null ? CONTACT_NOT_FOUND : `${PHONE_NUMBER_TEXT} ${formatPhoneNumber(this.state.phoneNumber)}`}</span> }
+                        message={<span>{this.state.phoneNumber === null ? CONTACT_NOT_FOUND : `${PHONE_NUMBER_TEXT} ${formatPhoneNumber(this.state.phoneNumber)}`}</span>}
                         OkButtonTitle={'Ok'}
                         isOpen={this.state.phoneNumberModal}
                         onAcceptClick={() => this.setState({ phoneNumberModal: false })}
