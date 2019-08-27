@@ -72,7 +72,7 @@ overflow-x: hidden;
 overflow-y: auto;
 display: block;
 overflow-y: auto;
-height: 245px;
+height: calc(100vh - 421px);
 width: 100%;
 }
 
@@ -264,9 +264,8 @@ top: 0;
 left: 0;
 opacity: 0;
 z-index: 1000;
-width: 100%;
-height: 100%;
 cursor: pointer;
+visibility:hidden;
 }
 
 .card-filter-label
@@ -358,7 +357,55 @@ justify-content: space-between;
 }
 
 .CTDateFilter .form-group, .entity-dashboard-topview .ProfileHeaderRight>div {
-    display: flex;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: flex-start;
+}
+
+.table-search-block
+{
+display:flex;
+flex-direction:row;
+justify-content:flex-start;
+align-items:center;
+}
+
+.table-search-block .select-wrap-dahboard span, .table-search-block .pagination-block .-pageInfo
+{
+font-size: 14px;
+color:#444;
+font-weight:400;
+}
+
+.table-search-block .select-wrap-dahboard>select{
+margin-left: 10px;
+background: none;
+border: none;
+font-size: 14px;
+}
+
+.table-search-block .pagination-block {
+margin-left: 10px;
+}
+
+.table-search-block .pagination-block .-center {
+position:relative;
+top: 0;
+width: auto;
+text-align: center;
+margin-bottom: 0;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+align-items: center;
+-ms-flex-pack: distribute;
+justify-content: space-around;
+}
+
+.entity-dashboard-topview .react-datepicker-popper[data-placement^="bottom"]
+{
+z-index:1000;
 }
 
 

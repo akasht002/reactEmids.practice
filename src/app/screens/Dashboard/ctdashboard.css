@@ -23,9 +23,13 @@
 }
 
 .CTDateFilter .form-group label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #7a329f;
+font-size: 14px;
+font-weight: 600;
+color: #7a329f;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
 }
 
 .CTDateFilter .form-group label span {
