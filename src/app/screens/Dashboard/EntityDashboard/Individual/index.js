@@ -393,13 +393,13 @@ export class Individuals extends Component {
             />
           </div>
           {this.props.individualsList && this.props.individualsList.length > 0 ?
-            <div>
+            <div className="table-search-block">
               <RowPerPage
                 pageSize={pageSize}
                 pageSizeChange={this.pageSizeChange}
                 pageSizeOption={PAGE_SIZE_OPTIONS}
               />
-              <div className="-pagination rowPerPage-pagniation"><div class="-center"><span className="-pageInfo p-0">
+              <div className="-pagination rowPerPage-pagniation pagination-block"><div class="-center"><span className="-pageInfo p-0">
                 {"Showing "}
                 <span className="-rowMin">{rowMin}</span>
                 {" - "}

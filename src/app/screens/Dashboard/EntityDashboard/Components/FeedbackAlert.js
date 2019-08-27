@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import ReactTable from 'react-table';
+// import ReactTable from 'react-table';
 import moment from 'moment';
 import { Preloader, CoreoPagination } from '../../../../components';
 import { DATE_FORMAT } from '../../../../constants/constants';
@@ -65,9 +65,10 @@ export const FeedbackAlert = (props) => {
     ]
 
     return (
+        
         <Fragment>
-            {props.isLoaded && <Preloader />}
-            <ReactTable
+            {props.isLoaded && < Preloader />}
+            {/* <ReactTable
                 pageSize={props.feedbackServiceVisits.length}
                 data={props.feedbackServiceVisits}
                 columns={columnsData}
@@ -78,7 +79,7 @@ export const FeedbackAlert = (props) => {
                     minHeight: 'calc(100vh - 240px)',
                     maxHeight: 'calc(100vh - 380px)'
                 }}
-            />
+        ></ReactTable> */}
             <CoreoPagination
                 activePage={props.activePageFeedback}
                 itemsCountPerPage={10}
@@ -92,7 +93,7 @@ export const FeedbackAlert = (props) => {
                 itemClassLast='PaginationIcon Last'
             />
         </Fragment>
-    )
+        )
 
 }
 
