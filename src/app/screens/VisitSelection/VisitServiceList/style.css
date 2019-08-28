@@ -410,8 +410,15 @@ span.btn-invited, span.btn-invited:hover{
 
 .ServiceRequestsWidget .ServiceRequestBoard .BlockImageContainer
 {
-    border-bottom: 1px solid #e0e0e0;
+border-bottom: 1px solid #e0e0e0;
 }
+
+.ServiceRequestsWidget .ServiceRequestBoard .BlockImageContainer .BlockImageDetails
+{
+margin:0 auto;
+}
+
+
 
 .BlockImageContainer .ProfileImage{
     width: 40px;
