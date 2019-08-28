@@ -4,6 +4,7 @@ import { endLoading } from '../../../loading/actions';
 import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import {PerformTasks} from './bridge'
+import { isEntityUser } from '../../../../utils/userUtility';
 
 export const formDirtyPerformTask = () => {
     return {
@@ -183,9 +184,9 @@ export const getServiceTasks = (serviceTypes) => {
 export const getUpdatedPerformTasksList = data => {
     return {
         ...data,
-        serviceRequestTypeVisits: getUserInfo().isEntityServiceProvider ? getServiceTasks(data && data.serviceTypes) 
+        serviceRequestTypeVisits: (getUserInfo().isEntityServiceProvider || isEntityUser) ? getServiceTasks(data && data.serviceTypes) 
         : data && data.serviceRequestTypeVisits,
-        serviceRequestVisitId: getUserInfo().isEntityServiceProvider ? data && data.servicePlanVisitId :
+        serviceRequestVisitId: (getUserInfo().isEntityServiceProvider || isEntityUser) ? data && data.servicePlanVisitId :
         data && data.serviceRequestVisitId,
         visitTimeDuration: parseInt(data && data.visitTimeDuration, 10)
     }

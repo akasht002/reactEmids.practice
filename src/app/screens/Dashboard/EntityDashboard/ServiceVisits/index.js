@@ -272,7 +272,7 @@ export class ServiceVisits extends Component {
 
   impersinateServiceVisit = data => {
     if (this.state.status === 'LowTaskCompletions') {
-      this.props.getServiceRequestId(data.serviceRequestId)
+      this.props.getServiceRequestId(0)
       this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
     } else {
       this.props.getServiceRequestId(data.serviceRequestId);
