@@ -1,7 +1,6 @@
 import { API } from '../../../../services/api';
-import { CareTeamPost, Get, CareTeamGet, Post } from '../../../../services/http';
+import { Get, Post } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
-import { formatCohorts } from "../../../../utils/formatCohorts";
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
 import { IndividualsList } from './bridge';
 import _ from 'lodash'

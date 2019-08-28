@@ -430,7 +430,7 @@ export class Individuals extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getIndividualsCountList: data => dispatch(getIndividualsCountList(data)),
     getIndividualsList: data => dispatch(getIndividualsList(data)),
@@ -440,7 +440,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     individualsCountList: state.dashboardState.individualsListState
       .individualsCountList,

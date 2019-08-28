@@ -1,6 +1,4 @@
-import {
-    VisitServiceList
-} from './actions'
+import { VisitServiceList } from './bridge'
 
 const defaultState = {
     visitServiceCountList: [],

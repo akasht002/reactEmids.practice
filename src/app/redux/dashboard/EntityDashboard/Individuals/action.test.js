@@ -4,10 +4,10 @@ import fetchMock from 'fetch-mock'
 import expect from 'expect'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { API } from '../../../services/api';
+import { API } from '../../../../services/api';
 import {
     Loading
-} from '../../loading/actions'
+} from '../../../loading/actions'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)

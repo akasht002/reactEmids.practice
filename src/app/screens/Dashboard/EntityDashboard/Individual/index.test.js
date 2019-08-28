@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
-import {Individuals, mapDispatchToProps, mapStateToProps} from './index';
+import { Individuals, mapDispatchToProps, mapStateToProps } from './index';
 
 jest.mock('../../../../utils/userUtility', () => ({
     getUserInfo: () => ({
@@ -20,7 +20,11 @@ jest.mock('../../../../utils/comparerUtility', () => ({
     })
 }))
 
-jest.mock('../StatCard', () => ({
+jest.mock('../Components/Grid/Grid', () => ({
+    Grid: 'mockGrid'
+}))
+
+jest.mock('../Components/StatCard', () => ({
     StatCard: 'mockStatCard'
 }))
 
@@ -30,7 +34,7 @@ let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    careteamDashboard: {
+    dashboardState: {
         individualsListState: {
             individualsList: [],
             individualsVisitList: [],
@@ -140,30 +144,7 @@ describe("Individuals", function () {
         )
     });
     it('Check the individuals section', () => {
-        expect(wrapper.find('.CTDashboardTabContent').length).toEqual(1);
-    });
-
-    it('Check the componentWillUnmount function', () => {
-        shallowWrapper.setProps({individualsList: []})
-        shallowWrapper.setState({phoneNumber: null})
-        shallowWrapper.instance().componentWillUnmount()
-    });
-
-    it('Check the componentWillReceiveProps function', () => {
-        const nextProps = {
-            fromDate: '04/24/2019',
-            toDate: '05/24/2019',
-            individualsList: [{
-                dataCount: 32,
-                gender: ''
-            }]
-        }
-        shallowWrapper.setProps({
-            fromDate: '03/24/2019',
-            toDate: '04/24/2019',
-            individualsList: []
-        })
-        shallowWrapper.instance().componentWillReceiveProps(nextProps)
+        expect(wrapper.find('.parent-fullblock').length).toEqual(1);
     });
 
     it('Check the getTable function', () => {
@@ -175,8 +156,8 @@ describe("Individuals", function () {
         shallowWrapper.setProps({
             individualsCountList: [
                 {
-                 totalCount: 40,
-                 statusName: 'Open'
+                    totalCount: 40,
+                    statusName: 'Open'
                 }
             ]
         })
@@ -184,94 +165,6 @@ describe("Individuals", function () {
             pageSize: 50
         })
         shallowWrapper.instance().getTable(e)
-    });
-
-    
-    it('Check the handleCohorts function', () => {
-        const e = {
-            target: {
-                checked: true
-            }
-        }
-        const item = {
-             id: 12,
-
-        }
-        shallowWrapper.instance().handleCohorts(item,e)
-        e.target.checked = false
-        shallowWrapper.instance().handleCohorts(item,e)
-    });
-
-    it('Check the handleAttributedProviders function', () => {
-        shallowWrapper.instance().handleAttributedProviders({})
-    });
-
-    it('Check the handleClinicalConditions function', () => {
-        const item = {
-            attributeId: 12 
-        }
-        const e = {
-            target: {
-                checked: true
-            }
-        }
-        shallowWrapper.instance().handleClinicalConditions(item, e)
-        e.target.checked = false
-        shallowWrapper.instance().handleClinicalConditions(item,e)
-    });
-
-    it('Check the handleGenderType function', () => {
-        shallowWrapper.instance().handleGenderType({})
-    });
-
-    it('Check the handleContracts function', () => {
-        const data = {
-            membershipName: 'sdas',
-            membershipId: 12
-        }
-        shallowWrapper.instance().handleContracts(data)
-    });
-
-    it('Check the handleState function', () => {
-        shallowWrapper.instance().handleState({})
-    });
-
-    it('Check the onChangeSlider function', () => {
-        shallowWrapper.instance().onChangeSlider({})
-    });
-
-    it('Check the handleServiceArea function', () => {
-        shallowWrapper.instance().handleServiceArea({})
-    });
-
-    it('Check the toggleFilter function', () => {
-        shallowWrapper.instance().toggleFilter()
-    });
-
-    it('Check the closeFIlter function', () => {
-        shallowWrapper.instance().closeFIlter()
-    });
-
-    it('Check the applyFilter function', () => {
-        shallowWrapper.instance().applyFilter()
-    });
-
-    it('Check the onClickConversation function', () => {
-        const item = {
-            coreoHomeUserId: 1,
-            individualId: 10,
-        }
-        shallowWrapper.instance().onClickConversation({}, item)
-    });
-
-    it('Check the onClickVideoConference function', () => {
-        const item = {
-            coreoHomeUserId: 1,
-            individualId: 10,
-            individualName: 'sasa',
-            thumbNail: 'asdsa'
-        }
-        shallowWrapper.instance().onClickVideoConference({}, item)
     });
 
     it('Check the pageNumberChange function', () => {
@@ -289,118 +182,6 @@ describe("Individuals", function () {
         shallowWrapper.instance().pageSizeChange(10)
     });
 
-    it('Check the onClickHandleIncr function', () => {
-        shallowWrapper.setState({
-            coverageArea: 20
-        })
-        shallowWrapper.instance().onClickHandleIncr()
-        shallowWrapper.setState({
-            coverageArea: 0
-        })
-        shallowWrapper.instance().onClickHandleIncr()
-    });
-
-    it('Check the onClickHandleDecr function', () => {
-        shallowWrapper.setState({
-            coverageArea: 20
-        })
-        shallowWrapper.instance().onClickHandleDecr()
-        shallowWrapper.setState({
-            coverageArea: 0
-        })
-        shallowWrapper.instance().onClickHandleDecr()
-    });
-
-    it('Check the handleStreet function', () => {
-        const e = {
-            target: {
-                valu: 'sdsd'
-            }
-        }
-        shallowWrapper.instance().handleStreet(e)
-    });
-
-    it('Check the handleCity function', () => {
-        const e = {
-            target: {
-                valu: 'sdsd'
-            }
-        }
-        shallowWrapper.instance().handleCity(e)
-    });
-
-    it('Check the onSortedChange function', () => {
-        const value = [
-            {
-                desc: 'desc',
-                id: 1
-            },
-            {
-                asc: 'asc',
-                id: 2
-            }
-        ]
-        shallowWrapper.instance().onSortedChange(value)
-    });
-
-    it('Check the showPhoneNumber function', () => {
-        const data = {
-            phoneNumber: 9165648715
-        }
-        shallowWrapper.instance().showPhoneNumber(data)
-    });
-
-    it('Check the toggleSearch function', () => {
-        shallowWrapper.instance().toggleSearch()
-    });
-
-    it('Check the handleSearchkeyword function', () => {
-        const e = {
-            target: {
-                value: 'zsdasd'
-            }
-        }
-        shallowWrapper.instance().handleSearchkeyword(e)
-    });
-
-    it('Check the handleSearchkeywordPress function', () => {
-        const event = {
-            charCode: 13
-        }
-        shallowWrapper.instance().handleSearchkeywordPress(event)
-        event.charCode = 0
-        shallowWrapper.instance().handleSearchkeywordPress(event)
-    });
-
-    it('Check the handleSearchData function', () => {
-        const event = {
-            preventDefault() {}
-        }
-        shallowWrapper.instance().handleSearchData(event)
-    });
-
-    it('Check the closeSearch function', () => {
-        shallowWrapper.instance().closeSearch()
-    });
-
-    it('Check the goToPg function', () => {
-        let data = {
-            individualId: 12312
-        }
-        shallowWrapper.instance().goToPg(data)
-    });
-
-    it('Check the applyReset function', () => {
-        shallowWrapper.instance().applyReset()
-    });
-
-    it('Check the applyReset function', () => {
-        shallowWrapper.setState({
-            searchOpen: false
-        })
-        shallowWrapper.instance().applyReset()
-    });
-
     it('Check the toggleFeedbaclAlert function', () => {
         shallowWrapper.instance().toggleFeedbaclAlert()
     });
@@ -415,9 +196,11 @@ describe("Individuals", function () {
     });
 
     it('Check the goToPgVisitSummary function', () => {
-        shallowWrapper.instance().goToPgVisitSummary({data: {
-            serviceRequestVisitId: 123
-        }})
+        shallowWrapper.instance().goToPgVisitSummary({
+            data: {
+                serviceRequestVisitId: 123
+            }
+        })
     });
 
     it('Check the getFilterData function', () => {
@@ -441,39 +224,31 @@ describe("Individuals", function () {
         data.resetFilter = true
         shallowWrapper.instance().getFilterData(data)
     });
-    
+
     it('Check mapStateToProps', () => {
-        const initialState = { 
-        careteamDashboard: {
-            individualsListState: {
-                individualsList: [],
-                individualsVisitList: [],
-                attributedProviders: [],
-                cohorts: [],
-                contracts: [],
-                paginationCount: 0,
-                states: [],
-                isLoaded: true,
-                activeSubTab: 1,
-                individualsFeedbackList: []
-            }
-        },
-        spSearchState: {
-            FilterState: {
-                getServiceArea: [],
-                genderType: [],
-                skillType: [],
-                clincalCondition: []
-            }
-        },
-        authState: {
-            userState: {
-                userData: {
-                    userInfo: {}
+        const initialState = {
+            dashboardState: {
+                individualsListState: {
+                    individualsList: [],
+                    individualsVisitList: [],
+                    attributedProviders: [],
+                    cohorts: [],
+                    contracts: [],
+                    paginationCount: 0,
+                    states: [],
+                    isLoaded: true,
+                    activeSubTab: 1,
+                    individualsFeedbackList: []
+                }
+            },
+            authState: {
+                userState: {
+                    userData: {
+                        userInfo: {}
+                    }
                 }
             }
-        }
-    };
+        };
         expect(mapStateToProps(initialState)).toBeDefined();
     });
 
@@ -483,45 +258,7 @@ describe("Individuals", function () {
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getIndividualsList({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getServiceArea();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getGender();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getSkill();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getClinicalCondition();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getAttributedProviders();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getAllCohorts();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getAllContracts();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).clearClinicalCondition([]);
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).clearGenderType([]);
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).resetFilter([],[],[]);
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).impersinateIndividual({});
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).createNewConversation({});
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).createVideoConference({});
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getStates();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).clearState();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).setActiveSubTab('1');
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).impersinateCareTeamIndividual({});
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).setContext({});
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getVisitServiceHistoryByIdDetail({});
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getIndividualsFeedbackList({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).savePaginationNumber({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();

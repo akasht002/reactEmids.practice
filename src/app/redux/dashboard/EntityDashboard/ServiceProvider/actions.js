@@ -1,10 +1,7 @@
 import { API } from '../../../../services/api'
 import { CareTeamPost, CareTeamGet, Post } from '../../../../services/http'
-import moment from 'moment'
 import { startLoading, endLoading } from '../../../loading/actions';
-import { getTimeZoneOffset } from '../../../../utils/dateUtility';
 import { VisitServiceProviderList } from './bridge';
-import { YEAR_MONTH_DAY } from '../../../constants/constants'
 import _ from 'lodash'
 
 export const setActiveSubTab = data => {

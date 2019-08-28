@@ -7,7 +7,11 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { ServiceVisits } from './index';
 
-jest.mock('../StatCard', () => ({
+jest.mock('../Components/Grid/Grid', () => ({
+    Grid: 'mockGrid'
+}))
+
+jest.mock('../Components/StatCard', () => ({
     StatCard: 'mockStatCard'
 }))
 
@@ -37,27 +41,16 @@ const defaultState = {
     goToVisitServiceDetails: jest.fn(),
     setTab: jest.fn(),
     setActiveSubTab: jest.fn(),
-    // serviceCategory: [],
-    // serviceType: [],
-    // serviceRequestStatusList: [],
+    getVisitServiceHistoryByIdDetail: jest.fn(),
+    setPatient: jest.fn(),
+    setActiveTab: jest.fn(),
     visitServiceTableList: [],
-    careteamDashboard: {
+    dashboardState: {
         VisitServiceCountListState: {
             visitServiceCountList: [],
             visitServiceTableList: [],
             serviceType: [],
             activeSubTab: 1
-        }
-    },
-    servicerequestState: {
-        requirementsState: {
-            requirementList: [],
-            serviceRequestStatus: []
-        }
-    },
-    spSearchState: {
-        FilterState: {
-            serviceType: []
         }
     },
     serviceCategory: [{
@@ -95,7 +88,7 @@ describe("ServiceVisits", function () {
     });
 
     it('Check the ServiceVisitis section', () => {
-        expect(wrapper.find('.CTDashboardTabContent').length).toEqual(1);
+        expect(wrapper.find('.parent-fullblock').length).toEqual(1);
     });
 
     it('Check the componentDidMount function', () => {
@@ -138,10 +131,6 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().componentWillReceiveProps(nextProps)
     });
 
-    it('Check the componentWillUnmount function', () => {
-        shallowWrapper.instance().componentWillUnmount()
-    });
-
     it('Check the getTable function', () => {
         const e = {
             target: {
@@ -166,64 +155,6 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().getTable(e)
     });
 
-    it('Check the handleServiceRequestStatus function', () => {
-        const item = {
-            id: 12
-        }
-        const e = {
-            target: {
-                checked: true
-            }
-        }
-        shallowWrapper.instance().handleServiceRequestStatus(item, e)
-        e.target.checked = false
-        shallowWrapper.instance().handleServiceRequestStatus(item, e)
-    });
-
-    it('Check the handleserviceType function', () => {
-        const item = {
-            id: 12
-        }
-        const e = {
-            target: {
-                checked: true
-            }
-        }
-        shallowWrapper.instance().handleserviceType(item, e)
-        e.target.checked = false
-        shallowWrapper.instance().handleserviceType(item, e)
-    });
-
-    it('Check the applyFilter function', () => {
-        shallowWrapper.setProps({
-            activeSubTab: ''
-        })
-        shallowWrapper.instance().applyFilter()
-        shallowWrapper.setProps({
-            activeSubTab: 'LowTask'
-        })
-        shallowWrapper.instance().applyFilter()
-    });
-
-    it('Check the toggleFilter function', () => {
-        shallowWrapper.instance().toggleFilter()
-    });
-
-    it('Check the handleChangeServiceCategory function', () => {
-        shallowWrapper.instance().handleChangeServiceCategory({})
-    });
-
-    it('Check the applyReset function', () => {
-        shallowWrapper.setProps({
-            activeSubTab: ''
-        })
-        shallowWrapper.instance().applyReset()
-        shallowWrapper.setProps({
-            activeSubTab: 'LowTask'
-        })
-        shallowWrapper.instance().applyReset()
-    });
-
     it('Check the pageNumberChange function', () => {
         shallowWrapper.setState({
             pageSize: 10,
@@ -239,11 +170,11 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().pageNumberChange(1)
     });
 
-    it('Check the impersinateIndividual function', () => {
+    it('Check the impersinateServiceVisit function', () => {
         const data = {
             serviceRequestId: 15
         }
-        shallowWrapper.instance().impersinateIndividual(data)
+        shallowWrapper.instance().impersinateServiceVisit(data)
     });
 
     it('Check the pageSizeChange function', () => {
@@ -260,75 +191,4 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().pageSizeChange(10)
     });
 
-    it('Check the toggleSearch function', () => {
-        shallowWrapper.instance().toggleSearch()
-    });
-
-    it('Check the handleSearchkeyword function', () => {
-        const e = {
-            target: {
-                value: 'zsdasd'
-            }
-        }
-        shallowWrapper.instance().handleSearchkeyword(e)
-    });
-
-    it('Check the handleSearchkeywordPress function', () => {
-        const event = {
-            charCode: 13
-        }
-        shallowWrapper.setProps({
-            activeSubTab: ''
-        })
-        shallowWrapper.instance().handleSearchkeywordPress(event)
-        shallowWrapper.setProps({
-            activeSubTab: 'LowTask'
-        })
-        shallowWrapper.instance().handleSearchkeywordPress(event)
-        event.charCode = 0
-        shallowWrapper.instance().handleSearchkeywordPress(event)
-    });
-
-    it('Check the handleSearchData function', () => {
-        const event = {
-            preventDefault() {}
-        }
-        shallowWrapper.setProps({
-            activeSubTab: ''
-        })
-        shallowWrapper.instance().handleSearchData(event)
-        shallowWrapper.setProps({
-            activeSubTab: 'LowTask'
-        })
-        shallowWrapper.instance().handleSearchData(event)
-    });
-
-    it('Check the closeSearch function', () => {
-        shallowWrapper.setProps({
-            activeSubTab: ''
-        })
-        shallowWrapper.instance().closeSearch()
-        shallowWrapper.setProps({
-            activeSubTab: 'LowTask'
-        })
-        shallowWrapper.instance().closeSearch()
-    });
-
-    it('Check the onSortedChange function', () => {
-        const value = [
-            {
-                desc: 'desc',
-                id: 1
-            },
-            {
-                asc: 'asc',
-                id: 2
-            }
-        ]
-        shallowWrapper.instance().onSortedChange(value)
-    });
-
-    it('Check the getServicesTypeId function', () => {
-        shallowWrapper.instance().getServicesTypeId()
-    });
 })

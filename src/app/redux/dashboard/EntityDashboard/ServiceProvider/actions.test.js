@@ -1,6 +1,6 @@
-import { API } from '../../../services/api'
+import { API } from '../../../../services/api'
 
-import { endLoading } from '../../loading/actions';
+import { endLoading } from '../../../loading/actions';
 import * as actions from './actions';
 import fetchMock from 'fetch-mock'
 import expect from 'expect'
