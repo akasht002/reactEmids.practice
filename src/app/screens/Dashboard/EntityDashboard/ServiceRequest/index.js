@@ -7,7 +7,8 @@ import {
   DEFAULT_PAGE_SIZE,
   ROW_MIN,
   PAGE_RANGE,
-  serviceRequestDetailsTab
+  serviceRequestDetailsTab,
+  ENTITY_DASHBOARD_STATUS
 } from '../../../../constants/constants'
 import {
   getServiceRequestCountList,
@@ -39,14 +40,7 @@ export class ServiceRequest extends Component {
       filterOpen: false,
       serviceRequestStatus: [],
       serviceTypes: [],
-      scheduleId: 0,
-      isChecked: false,
-      isActive: false,
-      modal: false,
-      icdModal: false,
-      patientId: '',
       serviceRequestId: '',
-      tabName: '',
       activePage: DEFAULT_PAGE_NUMBER,
       pageNumber: DEFAULT_PAGE_NUMBER,
       itemsCountPerPage: DEFAULT_PAGE_SIZE,
@@ -54,16 +48,7 @@ export class ServiceRequest extends Component {
       pageSize: DEFAULT_PAGE_SIZE,
       rowMin: DEFAULT_PAGE_NUMBER,
       rowMax: DEFAULT_PAGE_SIZE,
-      selectedIcd: '',
-      approvalServiceRequestId: '',
-      stateId: '',
-      stateName: '',
-      coverageArea: 0,
-      city: '',
-      street: '',
-      zip: '',
       selectedCheckbox: [],
-      isAuthorization: false,
       searchOpen: false,
       searchKeyword: 'default',
       resetFilter: true,
@@ -71,10 +56,7 @@ export class ServiceRequest extends Component {
       sortOrder: '',
       serviceCategoryId: ''
     }
-    this.data = 1
     this.selectedCheckbox = []
-    this.authorizationNumber = ''
-    this.authorizationNumbernew = ''
     this.serviceTypeIds = []
     this.gridHeader = allServiceRequests
   }
@@ -97,31 +79,11 @@ export class ServiceRequest extends Component {
     await this.props.getServiceRequestTableList(list)
   }
 
-  async componentWillReceiveProps(nextProps) {
-    this.setState({
-      fromDate: nextProps.fromDate,
-      toDate: nextProps.toDate,
-      rowCount: nextProps.paginationCount
-    })
-    const count = this.getCountData(nextProps)
-    const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: nextProps.fromDate,
-      toDate: nextProps.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword,
-      resetFilter: false
-    })
-    if (
-      nextProps.fromDate !== this.props.fromDate ||
-      nextProps.toDate !== this.props.toDate
-    ) {
-      await this.props.getServiceRequestCountList(count)
-      await this.props.getServiceRequestTableList(list)
+  static getDerivedStateFromProps(props) {
+    return {
+        fromDate: props.fromDate,
+        toDate: props.toDate,
+        rowCount: props.paginationCount
     }
   }
 
@@ -165,12 +127,6 @@ export class ServiceRequest extends Component {
       searchOpen: false,
       selectedOption: '',
       serviceRequestStatus: [],
-      scheduleId: 0,
-      street: '',
-      city: '',
-      state: '',
-      zip: '',
-      coverageArea: 0,
       selectedOptionState: null
     })
     this.serviceTypeIds = []
@@ -192,7 +148,7 @@ export class ServiceRequest extends Component {
     await this.props.getServiceRequestTableList(data)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const { pageSize, rowCount } = this.state;
     let rowMaxValue = pageSize;
     const newDataCount = this.props.paginationCount;
@@ -204,6 +160,29 @@ export class ServiceRequest extends Component {
         rowMax: rowMaxValue
       })
     }
+
+    const count = this.getCountData(this.props)
+    const list = this.getFilterData({
+      state: this.state,
+      status: this.state.status,
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate,
+      pageNumber: this.state.pageNumber,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+      searchKeyword: this.state.searchKeyword,
+      resetFilter: false
+    })
+
+    if (
+      prevProps.fromDate !== this.props.fromDate ||
+      prevProps.toDate !== this.props.toDate
+    ) {
+      await this.props.getServiceRequestCountList(count)
+      await this.props.getServiceRequestTableList(list)
+    }
+
   }
 
   pageNumberChange = pageNumber => {
@@ -234,7 +213,7 @@ export class ServiceRequest extends Component {
     })
   }
 
-  pageSizeChange = (pageSize) => {
+  pageSizeChange = async (pageSize) => {
     const { rowCount } = this.state;
     let rowMinValue = DEFAULT_PAGE_NUMBER;
     let rowMaxValue = pageSize;
@@ -252,15 +231,15 @@ export class ServiceRequest extends Component {
       sortOrder: this.state.sortOrder,
       searchKeyword: this.state.searchKeyword
     });
-    this.props.getServiceRequestTableList(list)
-    this.setState({ pageSize: pageSize, activePage: DEFAULT_PAGE_NUMBER, pageNumber: DEFAULT_PAGE_NUMBER, rowMin: rowMinValue, rowMax: rowMaxValue });
+    await this.props.getServiceRequestTableList(list)
+    await this.setState({ pageSize: pageSize, activePage: DEFAULT_PAGE_NUMBER, pageNumber: DEFAULT_PAGE_NUMBER, rowMin: rowMinValue, rowMax: rowMaxValue });
   }
 
   getHeaderBasedOnStatus = status => {
     switch (status) {
-      case 'open':
+      case ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.open:
         return openServiceRequests;
-      case 'cancelled':
+      case ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.cancelled:
         return cancelledServiceRequests;
       default:
         return allServiceRequests;
@@ -314,7 +293,7 @@ export class ServiceRequest extends Component {
             </div>
             <CoreoPagination
               activePage={activePage}
-              itemsCountPerPage={DEFAULT_PAGE_SIZE}
+              itemsCountPerPage={pageSize}
               totalItemsCount={pageSize > this.props.paginationCount ? 0 : this.props.paginationCount}
               pageRangeDisplayed={PAGE_RANGE}
               onChange={this.pageNumberChange}
@@ -347,13 +326,6 @@ function mapStateToProps(state) {
       .VisitServiceRequestState.visitServiceRequestCountList,
     visitServiceRequestTableList: state.dashboardState
       .VisitServiceRequestState.visitServiceRequestTableList,
-    serviceRequestStatusList: state.dashboardState.VisitServiceRequestState
-      .serviceRequestStatusList,
-    scheduleType: state.dashboardState.VisitServiceRequestState.scheduleType,
-    requestDetails: state.dashboardState.VisitServiceRequestState
-      .requestDetails,
-    diagnosisCode: state.dashboardState.VisitServiceRequestState
-      .diagnosisCode,
     paginationCount: state.dashboardState.VisitServiceRequestState
       .paginationCount,
     activeSubTab: state.dashboardState.VisitServiceRequestState.activeSubTab

@@ -10,7 +10,8 @@ import {
   LOWTASK,
   SORT_ORDER,
   PAGE_RANGE,
-  serviceRequestDetailsTab
+  serviceRequestDetailsTab,
+  ENTITY_DASHBOARD_STATUS
 } from '../../../../constants/constants'
 import {
   getVisitServiceCountList,
@@ -41,11 +42,8 @@ export class ServiceVisits extends Component {
       status: 'All',
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
-      filterOpen: false,
-      isChecked: false,
       serviceTypeIds: [],
       serviceRequestStatus: [],
-      serviceCategoryId: '',
       serviceTypes: [],
       activePage: DEFAULT_PAGE_NUMBER,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -54,14 +52,11 @@ export class ServiceVisits extends Component {
       pageSize: DEFAULT_PAGE_SIZE,
       rowMin: DEFAULT_PAGE_NUMBER,
       rowMax: DEFAULT_PAGE_SIZE,
-      searchOpen: false,
-      sortName: 'ModifiedDate',
-      sortOrder: 'desc',
+      sortName: '',
+      sortOrder: '',
       searchKeyword: 'default',
-      resetFilter: true
     }
     this.serviceTypeIds = []
-    this.IsSortIcon = false
     this.gridHeader = allServiceVisits
   }
 
@@ -113,7 +108,6 @@ export class ServiceVisits extends Component {
       pageSize: this.state.pageSize,
       sortName: nextProps.activeSubTab === LOWTASK ? LOWTASK : this.state.sortName,
       sortOrder: nextProps.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
-      resetFilter: false,
       searchKeyword: this.state.searchKeyword
     })
     if (
@@ -164,8 +158,7 @@ export class ServiceVisits extends Component {
       rowMin: ROW_MIN,
       rowMax: rowMaxValue,
       selectedOption: '',
-      serviceRequestStatus: [],
-      searchOpen: false
+      serviceRequestStatus: []
     })
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
     this.props.setActiveStatusForAllTab(this.state.status)
@@ -179,7 +172,6 @@ export class ServiceVisits extends Component {
       pageSize: this.state.pageSize,
       sortName: this.state.status === LOWTASK ? LOWTASK : this.state.sortName,
       sortOrder: this.state.status === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
-      resetFilter: true,
     })
     let count = this.getCountData({
       fromDate: this.props.fromDate,
@@ -191,11 +183,11 @@ export class ServiceVisits extends Component {
 
   getHeaderBasedOnStatus = status => {
     switch (status) {
-      case 'LowTaskCompletions':
+      case ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.lowTaskCompletions:
         return lowTaskServiceVisits;
-      case 'Cancelled':
+      case ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.cancelled:
         return cancelledServiceVisits;
-      case 'Overdue':
+      case ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.overDue:
         return overDueServiceVisits;
       default:
         return allServiceVisits;
@@ -339,8 +331,6 @@ function mapStateToProps(state) {
       .visitServiceCountList,
     visitServiceTableList: state.dashboardState.VisitServiceCountListState
       .visitServiceTableList,
-    updatedServiceType: state.dashboardState.VisitServiceCountListState
-      .serviceType,
     activeSubTab: state.dashboardState.VisitServiceCountListState.activeSubTab,
     paginationCount: state.dashboardState.VisitServiceCountListState.paginationCount
   }

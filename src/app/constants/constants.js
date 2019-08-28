@@ -420,7 +420,22 @@ export const ENTITY_DASHBOARD_STATUS = {
             invalid: 'Invalid',
             visit: 'Visit',
             feedback: 'Feedback'
-        }
+        },
+    },    
+    serviceRequests: {
+        statCard: {
+            all: 'All',
+            open: 'Open',
+            cancelled: 'Cancelled'
+        }    
+    },
+    serviceVisits: {
+        statCard: {
+            all: 'All',
+            lowTaskCompletions: 'LowTaskCompletions',
+            cancelled: 'Cancelled',
+            overDue: 'Overdue'
+        }    
     }
 }
 
