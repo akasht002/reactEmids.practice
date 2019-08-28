@@ -52,6 +52,7 @@ const renderStatusBasedOnVisitStatus = visitStatusId => {
 
 export const Table = props => {
     let isEntity = isEntityUser()
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
     return (
         <Fragment>
             <table className="table-responsive plan-tableview" cellpadding="6" cellspacing="6">
@@ -69,8 +70,8 @@ export const Table = props => {
                     {props.visitList.map(item => {
                         return <tr>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
-                            <td>{(isEntity || getUserInfo().isEntityServiceProvider) ? item.startTime : getUTCFormatedDate(item.visitStartTime, DATE_FORMATS.hh_mm_a)}</td>
-                            <td>{(isEntity || getUserInfo().isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)}</td>
+                            <td>{(isEntity || isEntityServiceProvider) ? item.startTime : getUTCFormatedDate(item.visitStartTime, DATE_FORMATS.hh_mm_a)}</td>
+                            <td>{(isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)}</td>
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
