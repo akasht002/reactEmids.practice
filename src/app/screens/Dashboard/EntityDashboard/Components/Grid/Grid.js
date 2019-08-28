@@ -40,7 +40,7 @@ export const Grid = props => {
                                 }
                             })}
                         </tr>
-                    }) : props.noRecordsFound}
+                    }) : <span className="no-recoord-table">{props.noRecordsFound}</span>}
                 </tbody>
             </table>
         </Fragment>
