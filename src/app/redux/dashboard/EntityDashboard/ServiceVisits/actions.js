@@ -1,5 +1,5 @@
 import { API } from '../../../../services/api';
-import { ServiceRequestGet, Post } from '../../../../services/http';
+import { Post } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import _ from 'lodash';
 import { DATE_FORMATS } from '../../../constants/constants';
@@ -98,13 +98,5 @@ export function getVisitServiceTableList(data) {
         }).catch(() => {
             dispatch(endLoading());
         })
-    }
-}
-
-export const clearRequestStatus = (data) => {
-    _.forEach(data, function (obj) { obj.isChecked = false; });
-    return {
-        type: VisitServiceList.clearRequestStatus,
-        data
     }
 }

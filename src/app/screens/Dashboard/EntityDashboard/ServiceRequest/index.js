@@ -7,24 +7,16 @@ import {
   DEFAULT_PAGE_SIZE,
   ROW_MIN,
   PAGE_RANGE,
-  NO_RECORDS_FOUND,
-  DEFAULT_SERVICE_CATEGORY,
-  YEAR_MONTH_DAY,
   serviceRequestDetailsTab
 } from '../../../../constants/constants'
 import {
   getServiceRequestCountList,
   getServiceRequestTableList,
-  getServiceRequestDetails,
   setActiveSubTab
 } from '../../../../redux/dashboard/EntityDashboard/ServiceRequest/actions'
-import { getPersonalDetailIndividual } from '../../../../redux/auth/user/actions'
 import { push } from '../../../../redux/navigation/actions';
 import { Path } from '../../../../routes';
 import { getUserInfo } from '../../../../utils/userUtility';
-import moment from 'moment';
-import { REVIEW } from './constants';
-import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import RowPerPage from '../Components/RowPerPage';
@@ -340,7 +332,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(getServiceRequestCountList(data)),
     getServiceRequestTableList: data =>
       dispatch(getServiceRequestTableList(data)),
-    getServiceRequestDetails: data => dispatch(getServiceRequestDetails(data)),
     goToVisitServiceDetails: () => dispatch(push(Path.visitServiceDetails)),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     getServiceRequestId: data => dispatch(getServiceRequestId(data)),

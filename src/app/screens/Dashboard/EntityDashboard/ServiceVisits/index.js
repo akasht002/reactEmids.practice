@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import moment from 'moment';
 import { withRouter } from 'react-router-dom'
 import {
   PAGE_SIZE_OPTIONS,
