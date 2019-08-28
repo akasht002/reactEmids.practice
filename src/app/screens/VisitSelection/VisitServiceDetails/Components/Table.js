@@ -68,10 +68,12 @@ export const Table = props => {
                 </thead>
                 <tbody>
                     {props.visitList.map(item => {
+                        let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : getUTCFormatedDate(item.visitStartTime, DATE_FORMATS.hh_mm_a)
+                        let duration = (isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)
                         return <tr>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
-                            <td>{(isEntity || isEntityServiceProvider) ? item.startTime : getUTCFormatedDate(item.visitStartTime, DATE_FORMATS.hh_mm_a)}</td>
-                            <td>{(isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)}</td>
+                            <td>{startTime}</td>
+                            <td>{duration}</td>
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
