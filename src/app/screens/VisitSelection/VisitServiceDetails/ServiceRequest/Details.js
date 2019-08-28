@@ -82,9 +82,8 @@ export const Details = props => {
     let availDays =
         modifiedDays &&
         modifiedDays.map((days, index) => {
-            let count = ''
             return (
-                <div className={'SPAvailContainer ' + count + 'Available'}>
+                <div className={'SPAvailContainer Available'}>
                     <div className={'SPAvailTitle'}>
                         <label className='SPAvailTitleText'>{days.day}</label>
                     </div>
