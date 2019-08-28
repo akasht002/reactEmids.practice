@@ -31,7 +31,8 @@ import {
     selectESP,
     clearESPList,
     createOrEditAssessment,
-    isScheduleEdit
+    isScheduleEdit,
+    isAssessmentEdit
 } from '../../redux/schedule/actions';
 import { getDiffTime, getHourMin, formateMDYY } from "../../utils/dateUtility";
 import './Components/styles.css'
@@ -74,14 +75,15 @@ export class Schedule extends Component {
             pageSize: DEFAULT_PAGE_SIZE_ESP_LIST,
             searchOpen: false,
             isModalOpen: false,
-            additionalDescription:'',
+            additionalDescription: '',
             isIndividualScheduleEdit: false,
-            assessmentId:0,
+            assessmentId: 0,
             patientAddressId: 0,
             planScheduleId: 0,
             description: '',
             phoneNumberModal: false,
-            phoneNumber: ''
+            phoneNumber: '',
+            isAssessmentEdit: false,
         }
         this.serviceTypes = [];
         this.categoryId = '';
@@ -103,7 +105,7 @@ export class Schedule extends Component {
             this.props.getServiceCategory(this.categoryId);
             this.props.getPatientAddress(this.props.patientId);
             this.props.getStates();
-            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
+            this.props.getEntityServiceProviderList(data, this.state.isIndividualScheduleEdit ? this.props.individualSchedulesDetails.serviceProviderId : this.props.assessmentDetails.serviceProviderId);
             this.props.getRecurringPattern();
             this.props.getDays(this.props.individualSchedulesDetails.weekly && this.props.individualSchedulesDetails.weekly.days);
         } else {
@@ -114,29 +116,9 @@ export class Schedule extends Component {
     static getDerivedStateFromProps(props, state) {
         if (props.isIndividualScheduleEdit === true) {
             return null;
-        }else if(props.isAssessmentEdit){           
-            let data = props.assessmentDetails;
-            return { 
-                assessmentId:data.assessmentId,
-                checkedServiceCategoryId: data.categoryId,
-                startDate: moment(data.startDate),
-                endDate: data.endDate,
-                startTime:moment(data.startTime, 'h:mm a'),
-                endTime: moment(data.endTime, 'h:mm a'),
-                duration:data.duration,
-                additionalDescription: data.addInformation,
-                patientAddressId: data.patientAddressId,
-                addressType: '',
-                selectedPOS: data.patientAddressId,
-                street: data.city,
-                city: data.city,
-                zip: data.zipCode,
-                statelabel: data.stateName,
-                selectedOptionState: data.stateId,
-                latitude: data.latitude,
-                longitude: data.longitude,
-            };
-            
+        }
+        else if(props.isAssessmentEdit){     
+            return null;      
         }
     }
 
@@ -145,13 +127,40 @@ export class Schedule extends Component {
             this.setState({ isIndividualScheduleEdit: true })
             this.selectNew();
             this.props.isScheduleEdit(false)
-        }else if(this.props.isAssessmentEdit){
-            this.espId = parseInt(this.props.assessmentDetails.serviceProviderId, 0);
+        } else if (this.props.isAssessmentEdit) {
+            this.setState({ isAssessmentEdit: true })
+            //this.espId = parseInt(this.props.assessmentDetails.serviceProviderId, 0);
+            this.selectForAssessment();
+            this.props.assessmentEdit(false)
         }
-        
     }
 
-  
+    selectForAssessment = () => {
+        let data = this.props.assessmentDetails;
+        this.setState({
+            assessmentId: data.assessmentId,
+            checkedServiceCategoryId: data.categoryId,
+            startDate: moment(data.startDate),
+            endDate: data.endDate,
+            startTime: moment(data.startTime, 'h:mm a'),
+            endTime: moment(data.endTime, 'h:mm a'),
+            duration: data.duration,
+            additionalDescription: data.addInformation,
+            patientAddressId: data.patientAddressId,
+            addressType: '',
+            selectedPOS: data.patientAddressId,
+            street: data.city,
+            city: data.city,
+            zip: data.zipCode,
+            statelabel: data.stateName,
+            selectedOptionState: data.stateId,
+            latitude: data.latitude,
+            longitude: data.longitude,
+        })
+        this.espId = data.serviceProviderId;
+    }
+
+
     selectNew = () => {
         let data = this.props.individualSchedulesDetails;
         this.categoryId = data.categoryId;
@@ -559,16 +568,17 @@ export class Schedule extends Component {
             latitude,
             longitude,
             assessmentId,
-            duration
+            duration,
+            isAssessmentEdit
         } = this.state
 
         let data = {
             planScheduleId: 0,
             startDate: startDate,
             endDate: endDate ? endDate : startDate,
-            startTime: this.props.isAssessmentEdit  ? startTime : this.formatedStartTime,
-            endTime: this.props.isAssessmentEdit  ? endTime : this.formatedEndTime,
-            duration: this.props.isAssessmentEdit  ? duration: getDiffTime(startTime, endTime),
+            startTime: isAssessmentEdit ? getHourMin(startTime) : this.formatedStartTime,
+            endTime: isAssessmentEdit ? getHourMin(endTime) : this.formatedEndTime,
+            duration: isAssessmentEdit ? duration : getDiffTime(startTime, endTime),
             additionalDescription: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
@@ -577,10 +587,10 @@ export class Schedule extends Component {
             patientAddressId: 0,
             latitude: latitude,
             longitude: longitude,
-            assessmentId:assessmentId
+            assessmentId: assessmentId
         }
 
-        this.props.getValidPatientAddress({ address: this.address })        
+        this.props.getValidPatientAddress({ address: this.address })
         if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
             this.props.createOrEditAssessment({ data, address: this.address });
         }
@@ -858,7 +868,7 @@ export class Schedule extends Component {
                         onAcceptClick={() => this.goToServicedetails()}
                     />
                     <AlertPopup
-                        message={ <span>{this.state.phoneNumber === null ? CONTACT_NOT_FOUND : `${PHONE_NUMBER_TEXT} ${formatPhoneNumber(this.state.phoneNumber)}`}</span> }
+                        message={<span>{this.state.phoneNumber === null ? CONTACT_NOT_FOUND : `${PHONE_NUMBER_TEXT} ${formatPhoneNumber(this.state.phoneNumber)}`}</span>}
                         OkButtonTitle={'Ok'}
                         isOpen={this.state.phoneNumberModal}
                         onAcceptClick={() => this.setState({ phoneNumberModal: false })}
@@ -889,7 +899,8 @@ function mapDispatchToProps(dispatch) {
         clearESPList: () => dispatch(clearESPList()),
         selectOrClearAllServiceType: (data, isSelectAll) => dispatch(selectOrClearAllServiceType(data, isSelectAll)),
         createOrEditAssessment: data => dispatch(createOrEditAssessment(data)),
-        isScheduleEdit: data => dispatch(isScheduleEdit(data))
+        isScheduleEdit: data => dispatch(isScheduleEdit(data)),
+        assessmentEdit: data => dispatch(isAssessmentEdit(data))
 
     }
 }
