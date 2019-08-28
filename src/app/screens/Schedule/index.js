@@ -41,13 +41,13 @@ import Search from '../VisitSelection/VisitServiceList/Search'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
 import moment from 'moment'
-import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from '../../constants/constants'
+import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, SERVICE_CATEGORY } from '../../constants/constants'
 
 export class Schedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checkedServiceCategoryId: 1,
+            checkedServiceCategoryId: SERVICE_CATEGORY.adl.id,
             selectedServiceType: {},
             selectedPOS: '0',
             state: '',
@@ -84,7 +84,7 @@ export class Schedule extends Component {
             isDefaultAddress: false
         }
         this.serviceTypes = [];
-        this.categoryId = 1;
+        this.categoryId = SERVICE_CATEGORY.adl.id;
         this.address = {}
         this.espId = '';
         this.weeklySelectedDays = [];
@@ -112,12 +112,13 @@ export class Schedule extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        let validAddress;
+        
         if (props.isIndividualScheduleEdit === true) {
             return null;
         }
 
             if (props.patientAddressList.length > 0 && !state.isDefaultAddress) {
+                let validAddress;
                 let address = props.patientAddressList.filter((add) => {
                     return add.isPrimaryAddress;
                 });
@@ -162,7 +163,7 @@ export class Schedule extends Component {
         data.monthly !== null && this.handleChangeSelectedWeeks(data.monthly.weekDayMonth && data.monthly.weekDayMonth.week);
         this.setState({
             selectedPOS: data.patientAddressId,
-            planType: 2,
+            planType: SCHEDULE_TYPE_OPTIONS.standard,
             checkedServiceCategoryId: data.categoryId,
             startDate: data.startDate,
             endDate: data.endDate,

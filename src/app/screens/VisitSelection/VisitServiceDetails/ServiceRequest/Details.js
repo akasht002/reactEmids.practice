@@ -79,12 +79,12 @@ export const Details = props => {
             return '';
         })
 
-    let AvailDays =
+    let availDays =
         modifiedDays &&
         modifiedDays.map((days, index) => {
-            let Count = ''
+            let count = ''
             return (
-                <div className={'SPAvailContainer ' + Count + 'Available'}>
+                <div className={'SPAvailContainer ' + count + 'Available'}>
                     <div className={'SPAvailTitle'}>
                         <label className='SPAvailTitleText'>{days.day}</label>
                     </div>
@@ -172,7 +172,7 @@ export const Details = props => {
                     </div>
                     <div className='AvailabilityWidget'>
                         <div className='SPAvailWidget Summary'>
-                            {AvailDays}
+                            {availDays}
                         </div>
                     </div>
                     <h2 className='ServicesTitle'>Point of Service</h2>
