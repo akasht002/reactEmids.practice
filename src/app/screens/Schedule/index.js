@@ -41,13 +41,13 @@ import Search from '../VisitSelection/VisitServiceList/Search'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
 import moment from 'moment'
-import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from '../../constants/constants'
+import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, SERVICE_CATEGORY } from '../../constants/constants'
 
 export class Schedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checkedServiceCategoryId: '',
+            checkedServiceCategoryId: SERVICE_CATEGORY.adl.id,
             selectedServiceType: {},
             selectedPOS: '0',
             state: '',
@@ -80,10 +80,11 @@ export class Schedule extends Component {
             description: '',
             phoneNumberModal: false,
             phoneNumber: '',
-            additionalDescription: ''
+            additionalDescription: '',
+            isDefaultAddress: false
         }
         this.serviceTypes = [];
-        this.categoryId = '';
+        this.categoryId = SERVICE_CATEGORY.adl.id;
         this.address = {}
         this.espId = '';
         this.weeklySelectedDays = [];
@@ -111,9 +112,38 @@ export class Schedule extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
+        
         if (props.isIndividualScheduleEdit === true) {
             return null;
         }
+
+            if (props.patientAddressList.length > 0 && !state.isDefaultAddress) {
+                let validAddress;
+                let address = props.patientAddressList.filter((add) => {
+                    return add.isPrimaryAddress;
+                });
+
+                if(address.length > 0) {
+                    validAddress = address[0] ;               
+                    if(validateCoordinates(validAddress.latitude,validAddress.longitude)){
+                        props.getValidPatientAddressSuccess(true)
+                    }
+                }
+                else {
+                    validAddress =  props.patientAddressList.length > 0 && props.patientAddressList[0];                   
+                }
+
+                return {
+                    addressType: validAddress.addressType,
+                    selectedPOS: validAddress.addressId,
+                    street: validAddress.street,
+                    city: validAddress.city,
+                    zip: validAddress.zip,
+                    state: validAddress.stateId,
+                    statelabel: validAddress.stateName,
+                    isDefaultAddress: true
+                }
+            }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -132,7 +162,8 @@ export class Schedule extends Component {
         data.monthly !== null && this.handleChangeSelectedDays(data.monthly.weekDayMonth && data.monthly.weekDayMonth.day);
         data.monthly !== null && this.handleChangeSelectedWeeks(data.monthly.weekDayMonth && data.monthly.weekDayMonth.week);
         this.setState({
-            planType: 2,
+            selectedPOS: data.patientAddressId,
+            planType: SCHEDULE_TYPE_OPTIONS.standard,
             checkedServiceCategoryId: data.categoryId,
             startDate: data.startDate,
             endDate: data.endDate,
@@ -212,7 +243,8 @@ export class Schedule extends Component {
             city: '',
             zip: '',
             statelabel: '',
-            selectedOptionState: null
+            selectedOptionState: null,
+            isDefaultAddress: true
         });
         this.props.setSelectedPos(e.target.value)
         if (e.target.value === '0') {
@@ -233,7 +265,8 @@ export class Schedule extends Component {
             addressType: e.addressTypeId,
             latitude: e.latitude,
             longitude: e.longitude,
-            state: e.stateId
+            state: e.stateId,
+            isDefaultAddress: true
         })
 
         this.address = {
@@ -250,7 +283,8 @@ export class Schedule extends Component {
 
     handelNewAddress = (e) => {
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: e.target.value,
+            isDefaultAddress: true
         })
         this.address = {
             patientAddressId: 0,
@@ -507,11 +541,7 @@ export class Schedule extends Component {
                 savePlan = this.validate(validate.recurring.monthly.second)
             }
 
-            let data = {
-                address: this.address
-            }
-            this.props.getValidPatientAddress(data)
-            if (!savePlan) {
+            if (!savePlan && this.state.latitude !== 0 && this.state.longitude !== 0) {
                 this.savePlan();
             }
         } else {
@@ -755,6 +785,7 @@ export class Schedule extends Component {
                                 <h2 className='ServicesTitle'>Point of Service</h2>
                                 <PointOfService
                                     patientAddressList={this.props.patientAddressList}
+                                    patientAddressId={this.state.selectedPOS}
                                     stateList={this.props.stateList}
                                     handlePatientAddress={this.handlePatientAddress}
                                     handlePOSAddress={this.handlePOSAddress}
@@ -769,7 +800,6 @@ export class Schedule extends Component {
                                     street={this.state.street}
                                     city={this.state.city}
                                     zip={this.state.zip}
-                                    patientAddressId={this.state.patientAddressId}
                                 />
                             </div>
                             <div className="ServiceTypesWidget PostSR">

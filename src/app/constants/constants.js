@@ -360,3 +360,23 @@ export const serviceRequestDetailsTab = {
     myPlan: '2'
 }
 
+export const SERVICE_CATEGORY = {
+    adl: {
+        "id": 1,
+        "keyValue": "Activities of Daily Living"
+    },
+    helpAtHome: {
+        "id": 2,
+        "keyValue": "Help at Home"
+    },
+    groceriesAndNutrition: {
+        "id": 3,
+        "keyValue": "Groceries and Nutrition"
+    },
+    transportation: {
+        "id": 4,
+        "keyValue": "Transportation"
+    }
+}
+
+

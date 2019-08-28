@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import { Carousel } from '../../../../components';
-import {
-    RECURRING_PATTERN,
-} from '../../../../constants/constants';
+import { RECURRING_PATTERN, MORNING, AFTERNOON, EVENING} from '../../../../constants/constants';
 import Moment from 'react-moment';
 
 export const Details = props => {
@@ -59,6 +57,50 @@ export const Details = props => {
                 )
             }
         )
+
+    let modifiedDays = []
+
+    props.daysType &&
+        props.daysType.map(day => {
+            let checkDay = {
+                day: day.keyValue,
+                slotDescription: []
+            }
+            props.details && props.details.serviceRequestSlot &&
+                props.details.serviceRequestSlot.map(slotDay => {
+                    if (day.id === slotDay.dayOfWeek) {
+                        checkDay.slotDescription.push(slotDay.slotDescription)
+                    }
+                    return '';
+                })
+            if (checkDay.slotDescription.length > 0) {
+                modifiedDays.push(checkDay)
+            }
+            return '';
+        })
+
+    let availDays =
+        modifiedDays &&
+        modifiedDays.map((days, index) => {
+            return (
+                <div className={'SPAvailContainer Available'}>
+                    <div className={'SPAvailTitle'}>
+                        <label className='SPAvailTitleText'>{days.day}</label>
+                    </div>
+                    <div className={'SPAvailContent'}>
+                        <label className={'SPAvailItems ' + (days.slotDescription.includes(MORNING) ? 'active' : '')}>{MORNING}</label>
+                        <label className={'SPAvailItems ' + (days.slotDescription.includes(AFTERNOON) ? 'active' : '')}>{AFTERNOON}</label>
+                        <label className={'SPAvailItems ' + (days.slotDescription.includes(EVENING) ? 'active' : '')}>{EVENING}</label>
+                </div>
+                </div>
+            )
+        })
+
+    let address =
+        props.details && props.details.patient &&
+        props.details.patient.patientAddresses.filter(obj => {
+            return obj.isPrimaryAddress === true
+        })
 
     return (
         <Fragment>
@@ -126,6 +168,48 @@ export const Details = props => {
 
                             </div>
                         </span>
+                    </div>
+                    <div className='AvailabilityWidget'>
+                        <div className='SPAvailWidget Summary'>
+                            {availDays}
+                        </div>
+                    </div>
+                    <h2 className='ServicesTitle'>Point of Service</h2>
+                    <div className='SummaryContent POS mt-3 mb-4'>
+                        {props.details.patient &&
+                            props.details.patient
+                            ? address.map(pointofservice => {
+                                return (
+                                    <Fragment>
+                                        {pointofservice.addressTypeId &&
+                                            <p>
+                                                <span className="addresstype">Address Type</span>
+                                                {pointofservice.addressTypeId}
+                                            </p>
+                                        }
+                                        <p>
+                                            <span>Street</span>
+                                            {pointofservice.streetAddress}
+                                        </p>
+
+                                        <p>
+                                            <span>City</span>
+                                            {pointofservice.city}
+                                        </p>
+
+                                        <p>
+                                            <span>State</span>
+                                            {pointofservice.stateName}
+                                        </p>
+
+                                        <p>
+                                            <span>Zip</span>
+                                            {pointofservice.zipCode}
+                                        </p>
+                                    </Fragment>
+                                )
+                            })
+                            : ''}
                     </div>
                 </div>
             </div>
