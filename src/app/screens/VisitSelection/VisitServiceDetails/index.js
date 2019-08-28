@@ -16,7 +16,8 @@ import {
   getEntityServiceProviderListSearch, selectESP, clearESPList, getEntityServiceProviderList,
   cancelHiredServiceProvider,
   acceptservicerequest,
-  updateHireStatusForServiceRequest
+  updateHireStatusForServiceRequest,
+  getDays
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails } from '../../../redux/schedule/actions';
 import {
@@ -96,7 +97,8 @@ export class VisitServiceDetails extends Component {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       this.props.getServiceRequestList(this.props.ServiceRequestId);
       this.props.getEntityServiceProviderList(data);
-      this.props.getSchedulesList(this.props.patientId)
+      this.props.getSchedulesList(this.props.patientId);
+      this.props.getDays();
     }
     else {
       if (this.props.ServiceRequestId === 0) {
@@ -642,6 +644,7 @@ export class VisitServiceDetails extends Component {
                   <RequestTab
                     visitServiceList={this.props.visitServiceList}
                     VisitServiceDetails={this.props.VisitServiceDetails}
+                    daysType={this.props.daysType}
                     handelDetails={this.handelDetails}
                     handelReject={this.handelReject}
                     handelAccept={this.handelAccept}
@@ -791,7 +794,8 @@ function mapDispatchToProps(dispatch) {
     formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails()),
     cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
     acceptservicerequest: (data) => dispatch(acceptservicerequest(data)),
-    updateHireStatusForServiceRequest: (data) => dispatch(updateHireStatusForServiceRequest(data))
+    updateHireStatusForServiceRequest: (data) => dispatch(updateHireStatusForServiceRequest(data)),
+    getDays: () => dispatch(getDays())
   }
 }
 
@@ -813,7 +817,8 @@ function mapStateToProps(state) {
     isLoading: VisitServiceDetailsState.isLoading,
     disableShowmore: VisitServiceDetailsState.disableShowmore,
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
-    activeTab: VisitServiceDetailsState.activeTab
+    activeTab: VisitServiceDetailsState.activeTab,
+    daysType: VisitServiceDetailsState.daysType,
   }
 }
 

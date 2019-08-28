@@ -18,6 +18,7 @@ export const RequestTab = props => {
                             <List
                                 list={props.visitServiceList}
                                 handelDetails={props.handelDetails}
+                                serviceRequestId={props.VisitServiceDetails.serviceRequestId}
                             />
                         </div>
                     }
@@ -36,6 +37,7 @@ export const RequestTab = props => {
                         }
                         <Details
                             details={props.VisitServiceDetails}
+                            daysType={props.daysType}
                         />
                         {!isEntity &&
                             <div className="sr-feature-pic">
