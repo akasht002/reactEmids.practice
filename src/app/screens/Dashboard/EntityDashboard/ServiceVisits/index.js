@@ -18,24 +18,9 @@ import {
   getVisitServiceTableList,
   setActiveSubTab
 } from '../../../../redux/dashboard/EntityDashboard/ServiceVisits/actions'
-// import {
-//   getServiceCategory,
-//   getServiceRequestVisitStatus,
-//   getServiceProviderVisitStatus,
-//   clearServiceProviderVisitStatuRequestStatus
-// } from '../../../../redux/servicerequest/Requirements/actions'
-// import { getPersonalDetailIndividual } from '../../../../redux/auth/user/actions'
-// import {
-//   getServiceRequestId,
-//   setTab
-// } from '../../../../redux/visitSelection/VisitServiceDetails/actions'
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
 import { getUserInfo } from '../../../../utils/userUtility';
-// import {
-//   getServiceType,
-//   clearServiceTypes
-// } from '../../../../redux/serviceproviders/Search/Filters/actions'
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import RowPerPage from '../Components/RowPerPage';
@@ -102,7 +87,7 @@ export class ServiceVisits extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { pageSize, rowCount } = this.state;
     let rowMaxValue = pageSize;
-    const newDataCount = this.props.visitServiceTableList && this.props.visitServiceTableList.length > 0 && this.props.visitServiceTableList[0].dataCount;
+    const newDataCount = this.props.paginationCount;
     if (prevState.rowCount !== rowCount) {
       if (rowMaxValue >= newDataCount) {
         rowMaxValue = newDataCount;
@@ -317,12 +302,13 @@ export class ServiceVisits extends Component {
                 data={this.props.visitServiceTableList}
                 header={this.gridHeader}
                 impersinate={this.impersinateServiceVisit}
+                noRecordsFound={NO_RECORDS_FOUND}
               />
             </div>
             <CoreoPagination
               activePage={activePage}
               itemsCountPerPage={DEFAULT_PAGE_SIZE}
-              totalItemsCount={this.props.paginationCount}
+              totalItemsCount={pageSize > this.props.paginationCount ? 0 : this.props.paginationCount}
               pageRangeDisplayed={PAGE_RANGE}
               onChange={this.pageNumberChange}
             />

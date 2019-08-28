@@ -6,6 +6,7 @@ import { DATE_FORMATS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
 import { getValue } from '../../../../utils/userUtility'
 import {getFullName} from '../../../../utils/stringHelper'
+import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import moment from 'moment';
 
 export const VisitServiceList = {
@@ -82,140 +83,12 @@ export function getVisitServiceTableList(data) {
             }
             else {
                 if (resp && resp.data) {
-                    // let sData = [
-                    //     {
-                    //       "serviceRequestId": 607,
-                    //       "serviceRequestNumber": "7MMBD2",
-                    //       "servicePlanVisitId": 1654,
-                    //       "servicePlanVisitNumber": "3",
-                    //       "patientId": 1083,
-                    //       "patientFirstName": "Jony",
-                    //       "patientLastName": "wills",
-                    //       "entityServiceProviderId": 74,
-                    //       "entityServiceProviderFirstName": "Alastor",
-                    //       "entityServiceProviderLastName": "Moody",
-                    //       "serviceCategoryId": 1,
-                    //       "serviceCategoryDescription": "Activities of Daily Living",
-                    //       "visitStatus": "Scheduled",
-                    //       "visitStatusId": 43,
-                    //       "visitDate": "2019-08-27T00:00:00",
-                    //       "totalCount": 0
-                    //     },
-                    //     {
-                    //       "serviceRequestId": 607,
-                    //       "serviceRequestNumber": "7MMBD2",
-                    //       "servicePlanVisitId": 1654,
-                    //       "servicePlanVisitNumber": "3",
-                    //       "patientId": 1083,
-                    //       "patientFirstName": "Jony",
-                    //       "patientLastName": "wills",
-                    //       "entityServiceProviderId": 74,
-                    //       "entityServiceProviderFirstName": "Alastor",
-                    //       "entityServiceProviderLastName": "Moody",
-                    //       "serviceCategoryId": 1,
-                    //       "serviceCategoryDescription": "Activities of Daily Living",
-                    //       "visitStatus": "Scheduled",
-                    //       "visitStatusId": 43,
-                    //       "visitDate": "2019-08-27T00:00:00",
-                    //       "totalCount": 0
-                    //     },
-                    //     {
-                    //       "serviceRequestId": 607,
-                    //       "serviceRequestNumber": "7MMBD2",
-                    //       "servicePlanVisitId": 1654,
-                    //       "servicePlanVisitNumber": "3",
-                    //       "patientId": 1083,
-                    //       "patientFirstName": "Jony",
-                    //       "patientLastName": "wills",
-                    //       "entityServiceProviderId": 74,
-                    //       "entityServiceProviderFirstName": "Alastor",
-                    //       "entityServiceProviderLastName": "Moody",
-                    //       "serviceCategoryId": 1,
-                    //       "serviceCategoryDescription": "Activities of Daily Living",
-                    //       "visitStatus": "Scheduled",
-                    //       "visitStatusId": 43,
-                    //       "visitDate": "2019-08-27T00:00:00",
-                    //       "totalCount": 0
-                    //     },
-                    //     {
-                    //       "serviceRequestId": 607,
-                    //       "serviceRequestNumber": "7MMBD2",
-                    //       "servicePlanVisitId": 1654,
-                    //       "servicePlanVisitNumber": "3",
-                    //       "patientId": 1083,
-                    //       "patientFirstName": "Jony",
-                    //       "patientLastName": "wills",
-                    //       "entityServiceProviderId": 74,
-                    //       "entityServiceProviderFirstName": "Alastor",
-                    //       "entityServiceProviderLastName": "Moody",
-                    //       "serviceCategoryId": 1,
-                    //       "serviceCategoryDescription": "Activities of Daily Living",
-                    //       "visitStatus": "Scheduled",
-                    //       "visitStatusId": 43,
-                    //       "visitDate": "2019-08-27T00:00:00",
-                    //       "totalCount": 0
-                    //     },
-                    //     {
-                    //       "serviceRequestId": 607,
-                    //       "serviceRequestNumber": "7MMBD2",
-                    //       "servicePlanVisitId": 1654,
-                    //       "servicePlanVisitNumber": "3",
-                    //       "patientId": 1083,
-                    //       "patientFirstName": "Jony",
-                    //       "patientLastName": "wills",
-                    //       "entityServiceProviderId": 74,
-                    //       "entityServiceProviderFirstName": "Alastor",
-                    //       "entityServiceProviderLastName": "Moody",
-                    //       "serviceCategoryId": 1,
-                    //       "serviceCategoryDescription": "Activities of Daily Living",
-                    //       "visitStatus": "Scheduled",
-                    //       "visitStatusId": 43,
-                    //       "visitDate": "2019-08-27T00:00:00",
-                    //       "totalCount": 0
-                    //     },
-                    //     {
-                    //       "serviceRequestId": 607,
-                    //       "serviceRequestNumber": "7MMBD2",
-                    //       "servicePlanVisitId": 1654,
-                    //       "servicePlanVisitNumber": "3",
-                    //       "patientId": 1083,
-                    //       "patientFirstName": "Jony",
-                    //       "patientLastName": "wills",
-                    //       "entityServiceProviderId": 74,
-                    //       "entityServiceProviderFirstName": "Alastor",
-                    //       "entityServiceProviderLastName": "Moody",
-                    //       "serviceCategoryId": 1,
-                    //       "serviceCategoryDescription": "Activities of Daily Living",
-                    //       "visitStatus": "Scheduled",
-                    //       "visitStatusId": 43,
-                    //       "visitDate": "2019-08-27T00:00:00",
-                    //       "totalCount": 0
-                    //     },
-                    //     {
-                    //       "serviceRequestId": 607,
-                    //       "serviceRequestNumber": "7MMBD2",
-                    //       "servicePlanVisitId": 1654,
-                    //       "servicePlanVisitNumber": "3",
-                    //       "patientId": 1083,
-                    //       "patientFirstName": "Jony",
-                    //       "patientLastName": "wills",
-                    //       "entityServiceProviderId": 74,
-                    //       "entityServiceProviderFirstName": "Alastor",
-                    //       "entityServiceProviderLastName": "Moody",
-                    //       "serviceCategoryId": 1,
-                    //       "serviceCategoryDescription": "Activities of Daily Living",
-                    //       "visitStatus": "Scheduled",
-                    //       "visitStatusId": 43,
-                    //       "visitDate": "2019-08-27T00:00:00",
-                    //       "totalCount": 0
-                    //     }]
                     let data = resp.data.map(res => {
-                        // let data = sData.map(res => {
                         return {
                           ...res,
                           patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
                           providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
-                          schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}`,
+                          schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getUTCFormatedDate(res.visitDate, 'hh:mm A')}`,
                         }
                       })
                     dispatch(getVisitsTableListSuccess(data))

@@ -12,37 +12,35 @@ export const Grid = props => {
                     }
                 </thead>
                 <tbody>
-                    {props.data.map(item => {
+                    {props.data.length > 0 ? props.data.map(item => {
                         return <tr>
                             {Object.keys(props.header).map(key => {
-                                if (key === "button") {
-                                    return <td><span className="life-map-btn"><button className="btn btn-outline-primary">Life Map</button></span></td>
-                                }
-                                else if (key === "icon") {
-                                    return <td><span className="actions-block"><i className="iconLogInto" onClick={() => props.impersinate(item)}></i></span></td>
-                                }
-                                else if (key === 'task') {
-                                    return <td>
-                                        <div className='SPTableTask'>
-                                            <div className='SPTableTaskWidget'>
-                                                <span className='SPTableTaskBarDown'>
-                                                    <span
-                                                        className='SPTableTaskBarUp'
-                                                        style={{
-                                                            width: `${item[key]}%`
-                                                        }}
-                                                    />
-                                                </span>
-                                            </div>
-                                            {`${item[key]} %`}
-                                        </div></td>
-                                }
-                                else {
-                                    return <td>{item[key]}</td>
+                                switch (key) {
+                                    case 'button':
+                                        return <td><span className="life-map-btn"><button className="btn btn-outline-primary">Life Map</button></span></td>
+                                    case 'icon':
+                                        return <td><span className="actions-block"><i className="iconLogInto" onClick={() => props.impersinate(item)}></i></span></td>
+                                    case 'task':
+                                        return <td>
+                                            <div className='SPTableTask'>
+                                                <div className='SPTableTaskWidget'>
+                                                    <span className='SPTableTaskBarDown'>
+                                                        <span
+                                                            className='SPTableTaskBarUp'
+                                                            style={{
+                                                                width: `${item[key]}%`
+                                                            }}
+                                                        />
+                                                    </span>
+                                                </div>
+                                                {`${item[key]} %`}
+                                            </div></td>
+                                    default:
+                                        return <td>{item[key]}</td>
                                 }
                             })}
                         </tr>
-                    })}
+                    }) : props.noRecordsFound}
                 </tbody>
             </table>
         </Fragment>

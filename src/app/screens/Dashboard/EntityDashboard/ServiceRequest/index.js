@@ -203,7 +203,7 @@ export class ServiceRequest extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { pageSize, rowCount } = this.state;
     let rowMaxValue = pageSize;
-    const newDataCount = this.props.visitServiceRequestTableList && this.props.visitServiceRequestTableList.length > 0 && this.props.visitServiceRequestTableList[0].dataCount;
+    const newDataCount = this.props.paginationCount;
     if (prevState.rowCount !== rowCount) {
       if (rowMaxValue >= newDataCount) {
         rowMaxValue = newDataCount;
@@ -323,7 +323,7 @@ export class ServiceRequest extends Component {
             <CoreoPagination
               activePage={activePage}
               itemsCountPerPage={DEFAULT_PAGE_SIZE}
-              totalItemsCount={this.props.paginationCount}
+              totalItemsCount={pageSize > this.props.paginationCount ? 0 : this.props.paginationCount}
               pageRangeDisplayed={PAGE_RANGE}
               onChange={this.pageNumberChange}
             />

@@ -34,7 +34,6 @@ import { getUserInfo } from '../../../../utils/userUtility';
 import {
   getVisitServiceHistoryByIdDetail,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
-import FeedbackAlert from "../Components/FeedbackAlert";
 import { SORT_NAME, SERVICE_PROVIDERS_TYPE } from './constants'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 // import { QuickMenu } from '../../../Components/QuickMenu'

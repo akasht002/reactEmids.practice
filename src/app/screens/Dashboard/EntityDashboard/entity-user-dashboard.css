@@ -53,7 +53,8 @@ color: #7a329f;
 font-weight: 500;
 font-size: 14px;
 padding: 5px 0px;
-text-align: center;
+padding-right:10px;
+text-align:left;
 overflow: visible;
 line-height: normal;
 position: relative;
@@ -87,14 +88,20 @@ width: 100%;
 table-layout: fixed
 }
 
+table.individuals-tableblock thead th:first-child
+{
+padding-left: 10px;
+}
+
 table.individuals-tableblock tbody td
 {
 font-weight: 500;
 font-size: 14px;
-text-align: center;
+text-align:left;
 white-space: nowrap;
 text-overflow: ellipsis;
-padding: 10px 10px;
+padding: 10px 0px;
+padding-right: 10px;
 overflow: hidden;
 -webkit-transition: .3s ease;
 -o-transition: .3s ease;
@@ -102,6 +109,11 @@ transition: .3s ease;
 -webkit-transition-property: width,min-width,padding,opacity;
 -o-transition-property: width,min-width,padding,opacity;
 transition-property: width,min-width,padding,opacity;
+}
+
+table.individuals-tableblock tbody td:first-child
+{
+padding-left: 10px;
 }
 
 table.individuals-tableblock tbody tr:hover {
@@ -131,8 +143,8 @@ display: block;
 display: flex;
 padding: 0 10px 0 0;
 flex-direction:row;
-justify-content: center;
-align-items:center;
+justify-content: flex-start;
+width: 100%;
 }
 
 .actions-block .iconLogInto
