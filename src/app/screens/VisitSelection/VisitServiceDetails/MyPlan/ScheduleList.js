@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { getFields } from "../../../../utils/validations";
-import { VISIT_TYPE } from "../../../../constants/constants"
+import {VISIT_TYPE} from "../../../../constants/constants"
 
 export const ScheduleList = props => {
     return (
