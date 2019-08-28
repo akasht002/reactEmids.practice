@@ -12,10 +12,10 @@ import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
 import { VisitServiceDetails } from './bridge'
-import { USERTYPES } from '../../../constants/constants'
+import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST } from '../../../constants/constants'
 import { isEntityUser} from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
-import { orderBy } from 'lodash'
+import { orderBy, uniqBy } from 'lodash'
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -420,7 +420,7 @@ export function selectESP(espId) {
       let data = espList.map((value) => {
           return ({
               ...value,
-              selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10) ? 1 : 0
+              selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10)
           })
       })
       let list = orderBy(data, ['selected'], ['desc']);
@@ -429,22 +429,28 @@ export function selectESP(espId) {
 }
 
 
-export function getEntityServiceProviderList(data) {
+export function getEntityServiceProviderList(data, selectedESPId = '') {
   return (dispatch, getState) => {
-      // dispatch(startLoading())
+      dispatch(startLoading())
       Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
           .then(resp => {
               let oldEspList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
               let modifiedList = [...oldEspList, ...resp.data];
-              dispatch(getEntityServiceProviderListSuccess(modifiedList))
-              if (resp.data.length < 9) {
-                  dispatch(disableShowmore(true))
-              } else if (resp.data.length === 9) {
-                  dispatch(disableShowmore(false))
-              }
+              let selectedESP = modifiedList.map((type, index) => {
+                  return {
+                      ...type,
+                      selected: type.serviceProviderId === selectedESPId
+                  }
+              });
+
+              let espList = uniqBy(selectedESP, function (x) {
+                return x.serviceProviderId;
+              });
+              dispatch(getEntityServiceProviderListSuccess(espList))
+              dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
           })
           .catch(err => {
-              // dispatch(endLoading())
+              dispatch(endLoading())
           })
   }
 }

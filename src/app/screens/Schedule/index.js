@@ -29,7 +29,7 @@ import {
     editSchedule,
     getEntityServiceProviderListSearch,
     selectESP,
-    clearESPList,
+    clearESPListSchedule,
     createOrEditAssessment,
     isScheduleEdit,
     isAssessmentEdit
@@ -106,7 +106,7 @@ export class Schedule extends Component {
             this.props.getServiceCategory(this.categoryId);
             this.props.getPatientAddress(this.props.patientId);
             this.props.getStates();
-            this.props.getEntityServiceProviderList(data, this.state.isIndividualScheduleEdit ? this.props.individualSchedulesDetails.serviceProviderId : this.props.assessmentDetails.serviceProviderId);
+            this.props.getEntityServiceProviderList(data);
             this.props.getRecurringPattern();
             this.props.getDays(this.props.individualSchedulesDetails.weekly && this.props.individualSchedulesDetails.weekly.days);
         } else {
@@ -115,24 +115,57 @@ export class Schedule extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        
+
         if (props.isIndividualScheduleEdit === true) {
             return null;
         }
-        else if(props.isAssessmentEdit){     
-            return null;      
+        else if (props.isAssessmentEdit) {
+            return null;
+        }
+
+        if (props.patientAddressList.length > 0 && !state.isDefaultAddress) {
+            let validAddress;
+            let address = props.patientAddressList.filter((add) => {
+                return add.isPrimaryAddress;
+            });
+
+            if (address.length > 0) {
+                validAddress = address[0];
+                if (validateCoordinates(validAddress.latitude, validAddress.longitude)) {
+                    props.getValidPatientAddressSuccess(true)
+                }
+            }
+            else {
+                validAddress = props.patientAddressList.length > 0 && props.patientAddressList[0];
+            }
+
+            return {
+                addressType: validAddress.addressType,
+                selectedPOS: validAddress.addressId,
+                street: validAddress.street,
+                city: validAddress.city,
+                zip: validAddress.zip,
+                state: validAddress.stateId,
+                statelabel: validAddress.stateName,
+                isDefaultAddress: true
+            }
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
+        let data = {
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+        }
         if (this.props.isIndividualScheduleEdit === true) {
-            this.setState({ isIndividualScheduleEdit: true })
+            this.setState({ isIndividualScheduleEdit: true, planType: SCHEDULE_TYPE_OPTIONS.standard })
             this.selectNew();
+            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
             this.props.isScheduleEdit(false)
         } else if (this.props.isAssessmentEdit) {
-            this.setState({ isAssessmentEdit: true })
-            //this.espId = parseInt(this.props.assessmentDetails.serviceProviderId, 0);
+            this.setState({ isAssessmentEdit: true, planType: SCHEDULE_TYPE_OPTIONS.assessment })
             this.selectForAssessment();
+            this.props.getEntityServiceProviderList(data, this.props.assessmentDetails.serviceProviderId);
             this.props.assessmentEdit(false)
         }
     }
@@ -150,15 +183,19 @@ export class Schedule extends Component {
             additionalDescription: data.addInformation,
             patientAddressId: data.patientAddressId,
             addressType: '',
-            selectedPOS: data.patientAddressId,
-            street: data.city,
-            city: data.city,
-            zip: data.zipCode,
-            statelabel: data.stateName,
-            selectedOptionState: data.stateId,
-            latitude: data.latitude,
-            longitude: data.longitude,
+            selectedPOS: data.patientAddressId
         })
+        this.address = {
+            patientAddressId: data.patientAddressId,
+            streetAddress: data && data.streetAddress,
+            city: data && data.city,
+            stateId: data && data.stateId,
+            stateName: data && data.stateName,
+            zip: data && data.zip,
+            addressType: this.state.addressType,
+            latitude: data.latitude,
+            longitude: data.longitude
+        }
         this.espId = data.serviceProviderId;
     }
 
@@ -202,6 +239,8 @@ export class Schedule extends Component {
             stateId: data.address && data.address.stateId,
             stateName: data.address && data.address.stateName,
             zip: data.address && data.address.zip,
+            latitude: data.address && data.address.latitue,
+            longitude: data.address && data.address.longitude,
             addressType: this.state.addressType
         }
     }
@@ -214,7 +253,6 @@ export class Schedule extends Component {
         this.categoryId = id;
         this.serviceTypes = [];
         this.props.getServiceType(id);
-        // this.props.isScheduleEdit(false)
         this.setState({ checkedServiceCategoryId: id, serviceTypeSelected: false })
     }
 
@@ -483,7 +521,7 @@ export class Schedule extends Component {
 
     toggleSearch = () => {
         if (this.state.searchOpen) {
-            this.props.clearESPList()
+            this.props.clearESPListSchedule()
             let data = {
                 pageNumber: this.state.pageNumber,
                 pageSize: this.state.pageSize
@@ -676,7 +714,7 @@ export class Schedule extends Component {
     }
 
     goToServicedetails = () => {
-        this.props.clearESPList();
+        this.props.clearESPListSchedule();
         this.props.goToServicedetails();
     }
 
@@ -703,9 +741,10 @@ export class Schedule extends Component {
                         <div className="Plan-typebar">
                             <PlanType
                                 options={PlanTypeData}
-                                planType={this.state.isIndividualScheduleEdit ? 2 : 1}
+                                planType={this.state.planType}
                                 handleChangePlanType={this.handleChangePlanType}
                                 isIndividualScheduleEdit={this.state.isIndividualScheduleEdit}
+                                isAssessmentEdit={this.state.isAssessmentEdit}
                             />
                         </div>
                         <Fragment>
@@ -898,7 +937,7 @@ function mapDispatchToProps(dispatch) {
         goToServicedetails: () => dispatch(push(Path.visitServiceDetails)),
         getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
         selectESP: (data) => dispatch(selectESP(data)),
-        clearESPList: () => dispatch(clearESPList()),
+        clearESPListSchedule: () => dispatch(clearESPListSchedule()),
         selectOrClearAllServiceType: (data, isSelectAll) => dispatch(selectOrClearAllServiceType(data, isSelectAll)),
         createOrEditAssessment: data => dispatch(createOrEditAssessment(data)),
         isScheduleEdit: data => dispatch(isScheduleEdit(data)),
@@ -924,7 +963,7 @@ function mapStateToProps(state) {
         individualSchedulesDetails: scheduleState.individualSchedulesDetails,
         isIndividualScheduleEdit: scheduleState.isIndividualScheduleEdit,
         isAssessmentEdit: scheduleState.isAssessmentEdit,
-        assessmentDetails: scheduleState.assessmentDetails,
+        assessmentDetails: scheduleState.assessmentDetails
     }
 }
 

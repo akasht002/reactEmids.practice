@@ -79,7 +79,7 @@ const scheduleState = (state = defaultState, action) => {
                 disableShowmore: action.data
             };
 
-        case Schedule.clearESPList:
+        case Schedule.clearESPListSchedule:
             return {
                 ...state,
                 entityServiceProvidersList: [],

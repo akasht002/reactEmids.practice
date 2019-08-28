@@ -18,6 +18,7 @@ import { orderBy } from 'lodash'
 import { startLoading, endLoading } from '../loading/actions';
 import { API_ERROR_CODE, DEFAULT_PAGE_SIZE_ESP_LIST } from "../constants/constants";
 import { formatAssessmentData } from './modal/assessment'
+import  {uniqBy} from 'lodash'
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -91,9 +92,9 @@ export const disableShowmore = (data) => {
 }
 
 
-export const clearESPList = () => {
+export const clearESPListSchedule = () => {
     return {
-        type: Schedule.clearESPList
+        type: Schedule.clearESPListSchedule
     }
 }
 
@@ -255,7 +256,11 @@ export function getEntityServiceProviderList(data, selectedESPId = '') {
                         selected: type.serviceProviderId === selectedESPId
                     }
                 });
-                dispatch(getEntityServiceProviderListSuccess(selectedESP))
+
+                let espList = uniqBy(selectedESP, function (x) {
+                    return x.serviceProviderId;
+                });
+                dispatch(getEntityServiceProviderListSuccess(espList))
                 dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
             })
             .catch(err => {
@@ -270,7 +275,7 @@ export function selectESP(espId) {
         let data = espList.map((value) => {
             return ({
                 ...value,
-                selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10) ? true : false
+                selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10)
             })
         })
         let list = orderBy(data, ['selected'], ['desc']);
@@ -331,7 +336,7 @@ export function createSchedule(data) {
         ServiceRequestPost(API.createOrEditSchedule, modelData)
             .then(resp => {
                 dispatch(push(Path.visitServiceDetails))
-                dispatch(clearESPList())
+                dispatch(clearESPListSchedule());
                 dispatch(endLoading());
             })
             .catch(err => {
@@ -347,7 +352,7 @@ export function editSchedule(data) {
         ServiceRequestPut(API.createOrEditSchedule, modelData)
             .then(resp => {
                 dispatch(push(Path.visitServiceDetails))
-                dispatch(clearESPList())
+                dispatch(clearESPListSchedule());
                 dispatch(endLoading());
             })
             .catch(err => {
@@ -363,8 +368,8 @@ export function createOrEditAssessment(data) {
         ServiceRequestPost(API.createOrEditAssessment, modelData)
             .then(resp => {
                 dispatch(push(Path.visitServiceDetails))
-                dispatch(clearESPList())
-                dispatch(isAssessmentEdit(false))
+                dispatch(clearESPListSchedule())
+                dispatch(isAssessmentEdit(false));
                 dispatch(getAssessmentDetailSuccess({}))
                 dispatch(endLoading());
             })

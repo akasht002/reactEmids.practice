@@ -7,10 +7,10 @@ export const PlanType = props => {
                 props.options.map(item => {
                     return (
                         <fieldset>
-                            <div className={props.isIndividualScheduleEdit ? "Midddle-Viewtab Midddle-Viewtab-Edit" : "Midddle-Viewtab"}>
+                            <div className={(props.isIndividualScheduleEdit || props.isAssessmentEdit) ? "Midddle-Viewtab Midddle-Viewtab-Edit" : "Midddle-Viewtab"}>
                             <input
                                 type="radio"
-                                defaultChecked={props.planType === item.id}
+                                checked={parseInt(props.planType, 0) === item.id ? 'checked' : ''}
                                 id={item.id}
                                 name={item.name}
                                 value={item.value}
