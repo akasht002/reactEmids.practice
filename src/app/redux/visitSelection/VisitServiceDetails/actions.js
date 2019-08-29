@@ -493,7 +493,8 @@ export function getSchedulesList(patientId) {
           pageSize: 10,
           startDate: null,
           endDate: null,
-          patientId: patientId
+          patientId: patientId,
+          entityServiceProviders: []
         }
         dispatch(getSchedulesListSuccess(resp.data))
         dispatch(getVisitList(model))

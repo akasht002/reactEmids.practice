@@ -82,7 +82,8 @@ export class VisitServiceDetails extends Component {
       isRejectAlertPopupOpen: false,
       isAcceptAlertPopupOpen: false,
       isCancelAlertPopupOpen: false,
-      isEngageAlertPopupOpen: false
+      isEngageAlertPopupOpen: false,
+      entityServiceProviders: []
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -137,7 +138,8 @@ export class VisitServiceDetails extends Component {
       pageSize: this.state.rowPageSize,
       startDate: null,
       endDate: null,
-      patientId: this.props.patientId
+      patientId: this.props.patientId,
+      entityServiceProviders: this.state.entityServiceProviders
     }
     this.props.getVisitList(data);
   }
@@ -208,7 +210,8 @@ export class VisitServiceDetails extends Component {
       pageSize: pageSize,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
-      patientId: this.props.patientId
+      patientId: this.props.patientId,
+      entityServiceProviders: this.state.entityServiceProviders
     }
     this.props.getVisitList(data);
   }
@@ -232,7 +235,8 @@ export class VisitServiceDetails extends Component {
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
-      patientId: this.props.patientId
+      patientId: this.props.patientId,
+      entityServiceProviders: this.state.entityServiceProviders
     }
     this.props.getVisitList(data);
   }
