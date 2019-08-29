@@ -1,8 +1,9 @@
 import { API } from '../../../../services/api'
-import { CareTeamPost, CareTeamGet, Post, Get } from '../../../../services/http'
+import { Post, Get } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions';
 import { VisitServiceProviderList } from './bridge';
 import _ from 'lodash'
+import { logError } from '../../../../utils/logError';
 
 export const setActiveSubTab = data => {
   return {
@@ -61,7 +62,8 @@ export function getVisitServiceProviderCountList(data) {
         }
         dispatch(endLoading())
       })
-      .catch(() => {
+      .catch((err) => {
+        logError(err)
         dispatch(endLoading())
       })
   }
@@ -86,7 +88,8 @@ export function getVisitServiceProviderTableList(data) {
         }
         dispatch(endLoading())
       })
-      .catch(() => {
+      .catch((err) => {
+        logError(err)
         dispatch(endLoading())
       })
   }
@@ -108,6 +111,7 @@ export function getPointofServicedata(data) {
         dispatch(getVisitServiceProviderTableList(data))
       })
       .catch(err => {
+        logError(err)
       })
   }
 }
@@ -129,7 +133,8 @@ export function getFeedbackAlertDetails(data) {
         }
         dispatch(endFeedbackAlertLoading())
       })
-      .catch(() => {
+      .catch((err) => {
+        logError(err)
         dispatch(endFeedbackAlertLoading())
       })
   }

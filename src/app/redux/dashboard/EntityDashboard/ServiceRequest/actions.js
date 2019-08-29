@@ -7,6 +7,7 @@ import { startLoading, endLoading } from '../../../loading/actions'
 import {getFullName} from '../../../../utils/stringHelper'
 import { getValue } from '../../../../utils/userUtility'
 import { VisitServiceRequestList } from './bridge'
+import { logError } from '../../../../utils/logError';
 
 export const setActiveSubTab = data => {
   return {
@@ -64,7 +65,8 @@ export function getServiceRequestCountList(data) {
         }
         dispatch(endLoading())
       })
-      .catch(() => {
+      .catch((err) => {
+        logError(err)
         dispatch(endLoading())
       })
   }
@@ -87,7 +89,8 @@ export function getServiceRequestTableList(data) {
         }
         dispatch(endLoading())
       })
-      .catch(() => {
+      .catch((err) => {
+        logError(err)
         dispatch(getServiceRequestTableListSuccess([]))
         dispatch(endLoading())
       })

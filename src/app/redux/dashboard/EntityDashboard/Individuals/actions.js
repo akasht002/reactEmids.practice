@@ -6,6 +6,7 @@ import { getFullName } from '../../../../utils/stringHelper'
 import { getValue } from '../../../../utils/userUtility'
 import { IndividualsList } from './bridge';
 import _ from 'lodash'
+import { logError } from '../../../../utils/logError';
 
 export const startLoadingFeedbackList = () => {
     return {
@@ -101,7 +102,8 @@ export function getIndividualsCountList(data) {
                 }
             }
             dispatch(endLoading());
-        }).catch(() => {
+        }).catch((err) => {
+            logError(err)
             dispatch(endLoading());
         })
     }
@@ -122,7 +124,8 @@ export function getIndividualsList(data) {
             }
             dispatch(endLoading());
             dispatch(updateLoader(true))
-        }).catch(() => {
+        }).catch((err) => {
+            logError(err)
             dispatch(updateLoader(true))
             dispatch(endLoading());
         })
@@ -142,6 +145,7 @@ export function getIndividualsFeedbackList(data) {
                 dispatch(getIndividualsFeedbackListSuccess(data))
                 dispatch(endLoadingFeedbackList());
             }).catch((err) => {
+                logError(err)
                 dispatch(endLoadingFeedbackList());
             })
     }

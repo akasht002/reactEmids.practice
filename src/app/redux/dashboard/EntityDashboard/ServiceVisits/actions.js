@@ -5,17 +5,18 @@ import _ from 'lodash';
 import { DATE_FORMATS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
 import { getValue } from '../../../../utils/userUtility'
-import {getFullName} from '../../../../utils/stringHelper'
+import { getFullName } from '../../../../utils/stringHelper'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import moment from 'moment';
 import { VisitServiceList } from './bridge'
+import { logError } from '../../../../utils/logError';
 
 export const setActiveSubTab = data => {
     return {
         type: VisitServiceList.setActiveSubTab,
         data
     }
-}  
+}
 
 export const getVisitsCountListSuccess = data => {
     return {
@@ -47,20 +48,21 @@ export function getVisitServiceCountList(data) {
                 let dataCount = (resp.data && resp.data[0].totalCount > 0) ? resp.data[0].totalCount : 0
                 dispatch(setPaginationRowCountSuccess(dataCount));
                 if (activeSubTab !== 'All') {
-                  let index = _.findIndex(visitServiceCountList, { statusName: resp.data[0].statusName });
-                  visitServiceCountList.splice(index, 1, {
-                    label: resp.data[0].label,
-                    statusName: resp.data[0].statusName,
-                    subtext: resp.data[0].subtext,
-                    totalCount: resp.data[0].totalCount
-                  })
-                  dispatch(getVisitsCountListSuccess(visitServiceCountList))
+                    let index = _.findIndex(visitServiceCountList, { statusName: resp.data[0].statusName });
+                    visitServiceCountList.splice(index, 1, {
+                        label: resp.data[0].label,
+                        statusName: resp.data[0].statusName,
+                        subtext: resp.data[0].subtext,
+                        totalCount: resp.data[0].totalCount
+                    })
+                    dispatch(getVisitsCountListSuccess(visitServiceCountList))
                 }
                 else {
                     dispatch(getVisitsCountListSuccess(resp.data))
                 }
             }
-        }).catch(() => {
+        }).catch((err) => {
+            logError(err)
         })
     }
 }
@@ -77,17 +79,18 @@ export function getVisitServiceTableList(data) {
                 if (resp && resp.data) {
                     let data = resp.data.map(res => {
                         return {
-                          ...res,
-                          patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
-                          providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
-                          schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getUTCFormatedDate(res.visitDate, 'hh:mm A')}`,
+                            ...res,
+                            patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
+                            providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
+                            schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getUTCFormatedDate(res.visitDate, 'hh:mm A')}`,
                         }
-                      })
+                    })
                     dispatch(getVisitsTableListSuccess(data))
                 }
             }
             dispatch(endLoading());
-        }).catch(() => {
+        }).catch((err) => {
+            logError(err)
             dispatch(endLoading());
         })
     }
