@@ -157,6 +157,7 @@ class EntityDashboard extends Component {
                   <button
                     className='btn btn-outline-primary CTHeaderFilterToday'
                     onClick={this.todaysDate}
+                    disabled={disableDate}
                   >
                     Today
                   </button>

@@ -48,8 +48,6 @@ export class Individuals extends Component {
       status: this.props.activeSubTab,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
-      filterOpen: false,
-      serviceArea: '',
       clinicalConditions: [],
       genderId: 0,
       cohorts: [],
@@ -68,17 +66,8 @@ export class Individuals extends Component {
       pageSize: DEFAULT_PAGE_SIZE,
       rowMin: DEFAULT_PAGE_NUMBER,
       rowMax: DEFAULT_PAGE_SIZE,
-      phoneNumberModal: false,
-      phoneNumber: '',
-      stateId: '',
-      stateName: '',
-      coverageArea: 0,
-      city: '',
-      street: '',
-      zip: '',
       sortName: '',
       sortOrder: '',
-      searchOpen: false,
       searchKeyword: 'default',
       feedbackAlertModal: false,
       feedbackServiceVisits: [],
@@ -136,7 +125,7 @@ export class Individuals extends Component {
 
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
-    
+
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
       state: this.state,
@@ -201,14 +190,11 @@ export class Individuals extends Component {
       pageSize: this.state.pageSize,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
-      resetFilter: true,
-      searchOpen: false,
       searchKeyword: 'default',
       attributedProviders: [],
       clinicalConditions: [],
       cohorts: [],
       memberContractId: 0,
-      serviceArea: '',
       genderId: 0,
       ageRange: {
         ...this.state.ageRange,
@@ -217,14 +203,6 @@ export class Individuals extends Component {
         isChanged: false
       },
       pageNumber: DEFAULT_PAGE_NUMBER,
-      street: '',
-      city: '',
-      stateName: '',
-      stateId: '',
-      zip: '',
-      coverageArea: 0,
-      filterOpen: false,
-      selectedOptionState: null
     })
     let data = this.getFilterData({
       fromDate: this.state.fromDate,

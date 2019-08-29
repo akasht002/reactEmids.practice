@@ -133,7 +133,13 @@ export function getIndividualsFeedbackList(data) {
     return (dispatch) => {
         dispatch(startLoadingFeedbackList());
         return Get(`${API.getindividualsFeedbackList}${data.patientId}/${data.serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
-                dispatch(getIndividualsFeedbackListSuccess(resp.data))
+                let data = resp.data.map(res => {
+                    return {
+                        ...res,
+                        serviceType: res.serviceType.join(', ')
+                    }
+                })
+                dispatch(getIndividualsFeedbackListSuccess(data))
                 dispatch(endLoadingFeedbackList());
             }).catch((err) => {
                 dispatch(endLoadingFeedbackList());
