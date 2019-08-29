@@ -10,7 +10,7 @@ import {
   LOWTASK,
   SORT_ORDER,
   PAGE_RANGE,
-  serviceRequestDetailsTab,
+  SERVICE_REQUEST_DETAILS_TAB,
   ENTITY_DASHBOARD_STATUS
 } from '../../../../constants/constants'
 import {
@@ -24,7 +24,7 @@ import { getUserInfo } from '../../../../utils/userUtility';
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import RowPerPage from '../Components/RowPerPage';
-import { allServiceVisits, cancelledServiceVisits, lowTaskServiceVisits, overDueServiceVisits } from './GridHeader'
+import { allServiceVisits, cancelledServiceVisits, lowTaskServiceVisits, overDueServiceVisits } from './gridHeader'
 import { StatCard } from '../Components/StatCard'
 import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
@@ -253,7 +253,7 @@ export class ServiceVisits extends Component {
     } else {
       this.props.getServiceRequestId(data.serviceRequestId);
       this.props.setPatient(data.patientId)
-      this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
+      this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
       this.props.goToVisitServiceDetails();
     }
   }
@@ -271,21 +271,17 @@ export class ServiceVisits extends Component {
             />
           </div>
           {this.props.paginationCount > 0 ?
-          <div className="table-search-block">
+            <div className="table-search-block">
               <RowPerPage
                 pageSize={pageSize}
                 pageSizeChange={this.pageSizeChange}
                 pageSizeOption={PAGE_SIZE_OPTIONS}
+                isEnabled={true}
+                rowMin={rowMin}
+                rowMax={rowMax}
+                rowCount={rowCount}
               />
-              <div className="-pagination rowPerPage-pagniation pagination-block"><div class="-center"><span className="-pageInfo p-0">
-                {"Showing "}
-                <span className="-rowMin">{rowMin}</span>
-                {" - "}
-                <span className="-rowMax">{rowMax}</span>
-                {" of "}
-                <span className="-rowCount">{rowCount}</span>
-                {" results"}
-              </span></div></div></div> : ''
+            </div> : ''
           }
           <div className="tab-table-view">
             <div className="full-block-tableview">
@@ -321,7 +317,7 @@ function mapDispatchToProps(dispatch) {
     setActiveTab: (data) => dispatch(setActiveTab(data)),
     setPatient: data => dispatch(setPatient(data)),
     getVisitServiceHistoryByIdDetail: data =>
-    dispatch(getVisitServiceHistoryByIdDetail(data))
+      dispatch(getVisitServiceHistoryByIdDetail(data))
   }
 }
 

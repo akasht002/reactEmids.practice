@@ -357,13 +357,13 @@ export const LATITUDE = 0.0
 export const LONGITUDE = 0.0
 
 
-export const serviceRequestDetailsTab = {
+export const SERVICE_REQUEST_DETAILS_TAB = {
     request: '1',
     myPlan: '2',
     myPatient: '3'
 }
 
-export const InddividualFilterActiveTab = {
+export const IndividualFilterActiveTab = {
     "contracts": '1',
     "cohorts": '2',
     "attributedProviders": '3',
@@ -378,7 +378,7 @@ export const NO_RECORDS_FOUND = 'No results found for the current criteria'
 export const ROW_MIN = 1;
 export const ROW_MAX = 10;
 
-export const entityCardImage = {
+export const ENTITY_CARD_IMAGE = {
     'IndividualsAll': 'individuals.svg',
     'IndividualsInvalid': 'ind_ccard.svg',
     'IndividualsVisit': 'ind_visits_in_period.svg',
@@ -410,10 +410,10 @@ export const ENTITY_DASHBOARD_STATUS = {
     serviceProvider: {
         statCard: {
             feedBack: 'Feedback',
-            total_in_the_network: 'TotalInTheNetwork',
-            low_rating: 'LowRating',
-            low_task_completions: 'LowTaskCompletions',
-            visits_in_thePeriod: 'VisitsInThePeriod',
+            all: 'All',
+            lowRating: 'LowRating',
+            lowTaskCompletions: 'LowTaskCompletions',
+            visit: 'Visit',
         }
     },
     individuals: {

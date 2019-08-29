@@ -34,7 +34,7 @@ import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import RowPerPage from '../Components/RowPerPage';
-import { allServiceProivders, visitServiceProivders, feedbackServiceProviders, lowRatingServiceProivders, lowTaskServiceProivders } from './GridHeader'
+import { allServiceProivders, visitServiceProivders, feedbackServiceProviders, lowRatingServiceProivders, lowTaskServiceProivders } from './gridHeader'
 import moment from 'moment'
 import { setESP } from '../../../../redux/patientProfile/actions';
 import { ProfileModalPopup } from '../../../../components'
@@ -231,13 +231,13 @@ export class ServiceProvider extends Component {
 
   getHeaderBasedOnStatus = status => {
     switch (status) {
-      case 'Feedback':
+      case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack:
         return feedbackServiceProviders;
-      case 'Visit':
+      case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.visit:
         return visitServiceProivders;
-      case 'LowRating':
+      case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.lowRating:
         return lowRatingServiceProivders;
-      case 'LowTaskCompletions':
+      case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.lowTaskCompletions:
         return lowTaskServiceProivders;
       default:
         return allServiceProivders;
@@ -380,16 +380,12 @@ export class ServiceProvider extends Component {
                 pageSize={pageSize}
                 pageSizeChange={this.pageSizeChange}
                 pageSizeOption={PAGE_SIZE_OPTIONS}
+                isEnabled={true}
+                rowMin={rowMin}
+                rowMax={rowMax}
+                rowCount={rowCount}
               />
-              <div className="-pagination rowPerPage-pagniation pagination-block"><div class="-center"><span className="-pageInfo p-0">
-                {"Showing "}
-                <span className="-rowMin">{rowMin}</span>
-                {" - "}
-                <span className="-rowMax">{rowMax}</span>
-                {" of "}
-                <span className="-rowCount">{rowCount}</span>
-                {" results"}
-              </span></div></div></div> : ''
+            </div> : ''
           }
           <div className="tab-table-view">
             <div className="full-block-tableview">

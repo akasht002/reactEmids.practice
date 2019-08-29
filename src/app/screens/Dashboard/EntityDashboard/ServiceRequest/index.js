@@ -7,8 +7,9 @@ import {
   DEFAULT_PAGE_SIZE,
   ROW_MIN,
   PAGE_RANGE,
-  serviceRequestDetailsTab,
-  ENTITY_DASHBOARD_STATUS
+  SERVICE_REQUEST_DETAILS_TAB,
+  ENTITY_DASHBOARD_STATUS,
+  NO_RECORDS_FOUND
 } from '../../../../constants/constants'
 import {
   getServiceRequestCountList,
@@ -21,7 +22,7 @@ import { getUserInfo } from '../../../../utils/userUtility';
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import RowPerPage from '../Components/RowPerPage';
-import { allServiceRequests, openServiceRequests, cancelledServiceRequests } from './GridHeader'
+import { allServiceRequests, openServiceRequests, cancelledServiceRequests } from './gridHeader'
 import { StatCard } from '../Components/StatCard'
 import {
   getServiceRequestId,
@@ -81,9 +82,9 @@ export class ServiceRequest extends Component {
 
   static getDerivedStateFromProps(props) {
     return {
-        fromDate: props.fromDate,
-        toDate: props.toDate,
-        rowCount: props.paginationCount
+      fromDate: props.fromDate,
+      toDate: props.toDate,
+      rowCount: props.paginationCount
     }
   }
 
@@ -163,7 +164,7 @@ export class ServiceRequest extends Component {
 
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
-    
+
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
       state: this.state,
@@ -252,10 +253,10 @@ export class ServiceRequest extends Component {
   impersinateServiceRequest = data => {
     this.props.getServiceRequestId(data.serviceRequestId);
     this.props.setPatient(data.patientId)
-    this.props.setActiveTab(serviceRequestDetailsTab.request)
+    this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.request)
     this.props.goToVisitServiceDetails();
   }
-  
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state
 
@@ -275,16 +276,12 @@ export class ServiceRequest extends Component {
                 pageSize={pageSize}
                 pageSizeChange={this.pageSizeChange}
                 pageSizeOption={PAGE_SIZE_OPTIONS}
+                isEnabled={true}
+                rowMin={rowMin}
+                rowMax={rowMax}
+                rowCount={rowCount}
               />
-              <div className="-pagination rowPerPage-pagniation pagination-block"><div class="-center"><span className="-pageInfo p-0">
-                {"Showing "}
-                <span className="-rowMin">{rowMin}</span>
-                {" - "}
-                <span className="-rowMax">{rowMax}</span>
-                {" of "}
-                <span className="-rowCount">{rowCount}</span>
-                {" results"}
-              </span></div></div></div> : ''
+            </div> : ''
           }
           <div className="tab-table-view">
             <div className="full-block-tableview">
@@ -292,6 +289,7 @@ export class ServiceRequest extends Component {
                 data={this.props.visitServiceRequestTableList}
                 header={this.gridHeader}
                 impersinate={this.impersinateServiceRequest}
+                noRecordsFound={NO_RECORDS_FOUND}
               />
             </div>
             <CoreoPagination

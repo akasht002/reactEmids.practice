@@ -2,8 +2,8 @@ import { API } from '../../../../services/api'
 import { Post, Get } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions';
 import { VisitServiceProviderList } from './bridge';
-import _ from 'lodash'
 import { logError } from '../../../../utils/logError';
+import { updateCountList, checkDataCount } from '../utilActions';
 
 export const setActiveSubTab = data => {
   return {
@@ -42,19 +42,11 @@ export function getVisitServiceProviderCountList(data) {
     )
       .then(resp => {
         if (resp && resp.data) {
-          let activeSubTab = getState().dashboardState.VisitServiceProviderState.activeSubTab
-          let visitServiceProviderCountList = getState().dashboardState.VisitServiceProviderState.visitServiceProviderCountList
-          let dataCount = (resp.data && resp.data[0].totalCount > 0) ? resp.data[0].totalCount : 0
+          let {activeSubTab, visitServiceProviderCountList} = getState().dashboardState.VisitServiceProviderState
+          let dataCount = checkDataCount(resp)
           dispatch(setPaginationRowCountSuccess(dataCount));
           if (activeSubTab !== 'All') {
-            let index = _.findIndex(visitServiceProviderCountList, { statusName: resp.data[0].statusName });
-            visitServiceProviderCountList.splice(index, 1, {
-              label: resp.data[0].label,
-              statusName: resp.data[0].statusName,
-              subtext: resp.data[0].subtext,
-              totalCount: resp.data[0].totalCount
-            })
-            dispatch(getServiceProviderCountListSuccess(visitServiceProviderCountList))
+            dispatch(getServiceProviderCountListSuccess(updateCountList(visitServiceProviderCountList, resp)))
           }
           else {
             dispatch(getServiceProviderCountListSuccess(resp.data))

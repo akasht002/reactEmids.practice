@@ -19,7 +19,7 @@ import {
   CARETEAM_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
-  serviceRequestDetailsTab
+  SERVICE_REQUEST_DETAILS_TAB
 } from '../../../../constants/constants'
 import RowPerPage from '../Components/RowPerPage';
 import { getUserInfo } from '../../../../utils/userUtility';
@@ -27,7 +27,7 @@ import { ProfileModalPopup } from '../../../../components'
 import { StatCard } from '../Components/StatCard'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
-import { allIndividuals, feedbackIndividuals, visitIndividuals } from './GridHeader'
+import { allIndividuals, feedbackIndividuals, visitIndividuals } from './gridHeader'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import {
   getServiceRequestId,
@@ -322,33 +322,35 @@ export class Individuals extends Component {
   }
 
   impersinateIndividual = data => {
-    if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.visit)) {
-      this.props.getServiceRequestId(0);
-      this.props.setPatient(data.patientId)
-      this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
-      this.props.goToVisitServiceDetails();
-    }
-    else if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.all)) {
-      this.props.getServiceRequestId(0);
-      this.props.setPatient(data.patientId)
-      this.props.setActiveTab(serviceRequestDetailsTab.myPatient)
-      this.props.goToVisitServiceDetails();
-    }
-    else if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback)) {
-      const model = {
-        patientId: data.patientId,
-        pageNumber: this.state.pageNumberFeedback,
-        pageSize: DEFAULT_PAGE_SIZE,
-        fromDate: this.props.fromDate,
-        toDate: this.props.toDate,
-        serviceProviderId: getUserInfo().serviceProviderId
-      }
-      this.props.getIndividualsFeedbackList(model);
-      this.setState({
-        feedbackAlertModal: !this.state.feedbackAlertModal,
-        feedbackServiceVisits: this.props.individualsFeedbackList,
-        patientId: data.individualId
-      })
+    switch (true) {
+      case caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.visit):
+        this.props.getServiceRequestId(0);
+        this.props.setPatient(data.patientId)
+        this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
+        this.props.goToVisitServiceDetails();
+        break;
+      case caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback):
+        const model = {
+          patientId: data.patientId,
+          pageNumber: this.state.pageNumberFeedback,
+          pageSize: DEFAULT_PAGE_SIZE,
+          fromDate: this.props.fromDate,
+          toDate: this.props.toDate,
+          serviceProviderId: getUserInfo().serviceProviderId
+        }
+        this.props.getIndividualsFeedbackList(model);
+        this.setState({
+          feedbackAlertModal: !this.state.feedbackAlertModal,
+          feedbackServiceVisits: this.props.individualsFeedbackList,
+          patientId: data.individualId
+        })
+        break;
+      default:
+        this.props.getServiceRequestId(0);
+        this.props.setPatient(data.patientId)
+        this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPatient)
+        this.props.goToVisitServiceDetails();
+        break;
     }
   }
 
@@ -393,16 +395,12 @@ export class Individuals extends Component {
                 pageSize={pageSize}
                 pageSizeChange={this.pageSizeChange}
                 pageSizeOption={PAGE_SIZE_OPTIONS}
+                isEnabled={true}
+                rowMin={rowMin}
+                rowMax={rowMax}
+                rowCount={rowCount}
               />
-              <div className="-pagination rowPerPage-pagniation pagination-block"><div class="-center"><span className="-pageInfo p-0">
-                {"Showing "}
-                <span className="-rowMin">{rowMin}</span>
-                {" - "}
-                <span className="-rowMax">{rowMax}</span>
-                {" of "}
-                <span className="-rowCount">{rowCount}</span>
-                {" results"}
-              </span></div></div></div> : ''
+            </div> : ''
           }
           <div className="tab-table-view">
             <div className="full-block-tableview">

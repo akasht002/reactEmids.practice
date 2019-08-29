@@ -10,6 +10,7 @@ import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import moment from 'moment';
 import { VisitServiceList } from './bridge'
 import { logError } from '../../../../utils/logError';
+import { updateCountList, checkDataCount } from '../utilActions';
 
 export const setActiveSubTab = data => {
     return {
@@ -43,19 +44,11 @@ export function getVisitServiceCountList(data) {
     return (dispatch, getState) => {
         Post(API.getVisitServiceCount, data).then((resp) => {
             if (resp && resp.data) {
-                let activeSubTab = getState().dashboardState.VisitServiceCountListState.activeSubTab
-                let visitServiceCountList = getState().dashboardState.VisitServiceCountListState.visitServiceCountList
-                let dataCount = (resp.data && resp.data[0].totalCount > 0) ? resp.data[0].totalCount : 0
+                let {activeSubTab, visitServiceCountList} = getState().dashboardState.VisitServiceCountListState.activeSubTab
+                let dataCount = checkDataCount(resp)
                 dispatch(setPaginationRowCountSuccess(dataCount));
                 if (activeSubTab !== 'All') {
-                    let index = _.findIndex(visitServiceCountList, { statusName: resp.data[0].statusName });
-                    visitServiceCountList.splice(index, 1, {
-                        label: resp.data[0].label,
-                        statusName: resp.data[0].statusName,
-                        subtext: resp.data[0].subtext,
-                        totalCount: resp.data[0].totalCount
-                    })
-                    dispatch(getVisitsCountListSuccess(visitServiceCountList))
+                    dispatch(getVisitsCountListSuccess(updateCountList(visitServiceCountList, resp)))
                 }
                 else {
                     dispatch(getVisitsCountListSuccess(resp.data))

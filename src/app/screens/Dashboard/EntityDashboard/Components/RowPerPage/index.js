@@ -1,7 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { PageResultCount } from "../PageResultCount/PageResultCount";
 
-function RowPerPage(props){
-        return (
+function RowPerPage(props) {
+    return (
+        <Fragment>
             <div className="select-wrap-dahboard">
                 <span>Rows Per Page</span>
                 <select onChange={e => props.pageSizeChange(Number(e.target.value))} value={props.pageSize}>
@@ -12,7 +14,12 @@ function RowPerPage(props){
                     ))}
                 </select>
             </div>
-        )
+            {
+                props.isEnabled &&
+                <PageResultCount {...props} />
+            }
+        </Fragment>
+    )
 }
 
 export default RowPerPage;

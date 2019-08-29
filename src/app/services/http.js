@@ -288,30 +288,3 @@ export const CareTeamGet = (url) => {
         handleError(error);
     })
 }
-
-export const CareTeamPost = (url, data) => {
-    return axios.post(careTeamURL + url, data, getHeader()).then((resp) => {
-        return resp;
-    }).catch((error) => {
-        handleError(error);
-    })
-}
-
-export const CareTeamPut = (url, data) => {
-    return axios.put(careTeamURL + url, data, getHeader()).then((resp) => {
-        return resp;
-    }).catch((error) => {
-        handleError(error);
-    })
-}
-
-export const entityPost = (url, data) => {
-    return axios
-        .post('https://chqa-pg-api.coreoflowsandbox.com/api/' + url, data, getHeader())
-        .then(resp => {
-            return resp
-        })
-        .catch(error => {
-            handleError(error)
-        })
-}

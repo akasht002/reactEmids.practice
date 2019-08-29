@@ -2,11 +2,11 @@ import { API } from '../../../../services/api';
 import { Post, Get } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
-import { getFullName } from '../../../../utils/stringHelper'
+import { getFullName, concatCommaWithSpace } from '../../../../utils/stringHelper'
 import { getValue } from '../../../../utils/userUtility'
 import { IndividualsList } from './bridge';
-import _ from 'lodash'
 import { logError } from '../../../../utils/logError';
+import { updateCountList, checkDataCount } from '../utilActions';
 
 export const startLoadingFeedbackList = () => {
     return {
@@ -83,19 +83,11 @@ export function getIndividualsCountList(data) {
         data.offset = getTimeZoneOffset();
         return Post(API.getIndividualsCount, data).then((resp) => {
             if (resp && resp.data) {
-                let activeSubTab = getState().dashboardState.individualsListState.activeSubTab
-                let individualsCountList = getState().dashboardState.individualsListState.individualsCountList
-                let dataCount = (resp.data && resp.data[0].totalCount > 0) ? resp.data[0].totalCount : 0
+                let {activeSubTab, individualsCountList} = getState().dashboardState.individualsListState
+                let dataCount = checkDataCount(resp)
                 dispatch(setPaginationRowCountSuccess(dataCount))
                 if (activeSubTab !== 'All') {
-                    let index = _.findIndex(individualsCountList, { statusName: resp.data[0].statusName });
-                    individualsCountList.splice(index, 1, {
-                        label: resp.data[0].label,
-                        statusName: resp.data[0].statusName,
-                        subtext: resp.data[0].subtext,
-                        totalCount: resp.data[0].totalCount
-                    })
-                    dispatch(getIndividualsCountListSuccess(individualsCountList))
+                    dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
                 }
                 else {
                     dispatch(getIndividualsCountListSuccess(resp.data))
@@ -136,18 +128,18 @@ export function getIndividualsFeedbackList(data) {
     return (dispatch) => {
         dispatch(startLoadingFeedbackList());
         return Get(`${API.getindividualsFeedbackList}${data.patientId}/${data.serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
-                let data = resp.data.map(res => {
-                    return {
-                        ...res,
-                        serviceType: res.serviceType.join(', ')
-                    }
-                })
-                dispatch(getIndividualsFeedbackListSuccess(data))
-                dispatch(endLoadingFeedbackList());
-            }).catch((err) => {
-                logError(err)
-                dispatch(endLoadingFeedbackList());
+            let data = resp.data.map(res => {
+                return {
+                    ...res,
+                    serviceType: concatCommaWithSpace(res.serviceType)
+                }
             })
+            dispatch(getIndividualsFeedbackListSuccess(data))
+            dispatch(endLoadingFeedbackList());
+        }).catch((err) => {
+            logError(err)
+            dispatch(endLoadingFeedbackList());
+        })
     }
 };
 

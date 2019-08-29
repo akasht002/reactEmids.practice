@@ -159,7 +159,7 @@ position: relative;
 
 .actions-block .iconLogInto::before
 {
-background-image:url('../../../assets/images/icons/LogInto.svg');
+background-image:url('../../../assets/images/icons/logInto.svg');
 content: "";
 position: absolute;
 display: block;
@@ -367,7 +367,7 @@ justify-content: space-between;
     height: 24px;
 }
 
-.CTDateFilter .form-group, .entity-dashboard-topview .ProfileHeaderRight>div {
+.entity-date-filter .form-group, .entity-dashboard-topview .ProfileHeaderRight>div {
 display: flex;
 flex-direction: row;
 justify-content: flex-start;

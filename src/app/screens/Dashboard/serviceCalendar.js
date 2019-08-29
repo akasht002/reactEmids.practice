@@ -25,7 +25,7 @@ import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
 import { setPatient, setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
-import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FORMAT,DATE_FORMATS, PAGE_NO, serviceRequestDetailsTab } from "../../constants/constants";
+import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FORMAT,DATE_FORMATS, PAGE_NO, SERVICE_REQUEST_DETAILS_TAB } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
@@ -294,7 +294,7 @@ export class ServiceCalendar extends Component {
     this.props.getServiceRequestId(data.serviceRequestId);
     getUserInfo().isEntityServiceProvider && this.props.setEntityServiceProvider(data)
     this.props.setPatient(data.patientId);
-    (data.serviceRequestId === 0) && this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
+    (data.serviceRequestId === 0) && this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
     this.props.goToServiceRequestDetailsPage();
   };
 

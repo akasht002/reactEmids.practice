@@ -13,14 +13,15 @@ import { formateStateDate } from '../../../utils/validations'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import { formatDate } from '../../../utils/dateUtility'
 import { DATE_FORMAT, entityDashboardTab, ENTITY_DASHBOARD_STATUS } from '../../../constants/constants'
-import {setActiveTab, setFromDate, setToDate} from '../../../redux/dashboard/EntityDashboard/Individuals/actions';
+import { setActiveTab, setFromDate, setToDate } from '../../../redux/dashboard/EntityDashboard/Individuals/actions';
 import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
 import { getMessageFallBackInterval } from '../../../redux/asyncMessages/actions';
 import { createDataStore } from '../../../redux/telehealth/actions'
 import './entity-user-dashboard.css'
+import { Tabs } from './Components/Tabs/Tabs';
 
 class EntityDashboard extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       isOpen: false,
@@ -33,13 +34,13 @@ class EntityDashboard extends Component {
     }
   }
 
-  toggle () {
+  toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     })
   }
 
-  toggleTabs (tab) {
+  toggleTabs = tab => {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab,
@@ -49,33 +50,33 @@ class EntityDashboard extends Component {
     }
   }
 
-  toggleFilter () {
+  toggleFilter() {
     this.setState({
       filterOpen: !this.state.filterOpen
     })
   }
 
-  toggleSearch () {
+  toggleSearch() {
     this.setState({
       SearchOpen: !this.state.SearchOpen
     })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getAboutUsContent();
     this.props.getBuildVersion();
     this.props.getMessageFallBackInterval();
-    this.setState({activeTab: this.props.activeTab})
+    this.setState({ activeTab: this.props.activeTab })
     this.updateHeight.bind(this)
     window.addEventListener('load', this.updateHeight.bind(this))
     window.addEventListener('resize', this.updateHeight.bind(this))
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     this.updateHeight.bind(this)
   }
 
-  updateHeight () {
+  updateHeight() {
     if (window.innerWidth >= '767') {
       this.setState({
         height: window.innerHeight
@@ -114,9 +115,9 @@ class EntityDashboard extends Component {
     this.props.setToDate(moment().toDate())
   }
 
-  render () {
+  render() {
     let disableDate = (this.props.activeStatus === ENTITY_DASHBOARD_STATUS.individuals.statCard.all) &&
-    (this.state.activeTab === entityDashboardTab.individuals || this.state.activeTab === entityDashboardTab.serviceProviders)
+      (this.state.activeTab === entityDashboardTab.individuals || this.state.activeTab === entityDashboardTab.serviceProviders)
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
@@ -126,11 +127,11 @@ class EntityDashboard extends Component {
             </div>
             <div className='ProfileHeaderRight'>
               <div>
-                <div className='CTDateFilter'>
+                <div className='entity-date-filter'>
                   <Calendar
                     startDate={
                       this.state.fromDate &&
-                        formateStateDate(this.state.fromDate)
+                      formateStateDate(this.state.fromDate)
                     }
                     onDateChange={this.fromDateChanged}
                     mandatory={false}
@@ -140,7 +141,7 @@ class EntityDashboard extends Component {
                     disabled={disableDate}
                   />
                 </div>
-                <div className='CTDateFilter'>
+                <div className='entity-date-filter'>
                   <Calendar
                     startDate={
                       this.state.toDate && formateStateDate(this.state.toDate)
@@ -153,7 +154,7 @@ class EntityDashboard extends Component {
                     disabled={disableDate}
                   />
                 </div>
-                <div className='CTDateFilter'>
+                <div className='entity-date-filter'>
                   <button
                     className='btn btn-outline-primary CTHeaderFilterToday'
                     onClick={this.todaysDate}
@@ -168,59 +169,13 @@ class EntityDashboard extends Component {
         </div>
 
         <section className='entity-dashboard-section'>
-          <Nav tabs className='tab-link'>
-            <NavItem>
-              <NavLink
-                className={classnames({
-                  active: this.state.activeTab === entityDashboardTab.individuals
-                })}
-                onClick={() => {                  
-                  this.toggleTabs(entityDashboardTab.individuals)
-                }}
-              >
-                Individuals
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({
-                  active: this.state.activeTab === entityDashboardTab.serviceProviders
-                })}
-                onClick={() => {
-                  this.toggleTabs(entityDashboardTab.serviceProviders)
-                }}
-              >
-                Service Providers
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({
-                  active: this.state.activeTab === entityDashboardTab.serviceRequests
-                })}
-                onClick={() => {
-                  this.toggleTabs(entityDashboardTab.serviceRequests)
-                }}
-              >
-                Service Requests
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({
-                  active: this.state.activeTab === entityDashboardTab.serviceVisits
-                })}
-                onClick={() => {
-                  this.toggleTabs(entityDashboardTab.serviceVisits)
-                }}
-              >
-                Service Visits
-              </NavLink>
-            </NavItem>
-          </Nav>
+          <Tabs
+            activeTab={this.state.activeTab}
+            toggleTabs={this.toggleTabs}
+          />
           <TabContent className='tab-content tab-content-block' activeTab={this.state.activeTab}>
             <TabPane tabId={entityDashboardTab.individuals} className='tab-pane TabBody'>
-            {this.state.activeTab === entityDashboardTab.individuals && <Individuals
+              {this.state.activeTab === entityDashboardTab.individuals && <Individuals
                 toggleSearch={this.toggleSearch.bind(this)}
                 toggleFilter={this.toggleFilter.bind(this)}
                 isOpenFilter={this.state.filterOpen}
@@ -231,7 +186,7 @@ class EntityDashboard extends Component {
               />}
             </TabPane>
             <TabPane tabId={entityDashboardTab.serviceProviders} className='tab-pane TabBody'>
-            {this.state.activeTab === entityDashboardTab.serviceProviders && <ServiceProvider
+              {this.state.activeTab === entityDashboardTab.serviceProviders && <ServiceProvider
                 fromDate={this.state.fromDate}
                 toDate={this.state.toDate}
                 isOpenFilter={this.state.filterOpen}
@@ -239,10 +194,10 @@ class EntityDashboard extends Component {
                 toggleFilter={this.toggleFilter.bind(this)}
                 SearchOpen={this.state.SearchOpen}
                 createDataStore={this.props.createDataStore}
-              /> }
+              />}
             </TabPane>
             <TabPane tabId={entityDashboardTab.serviceRequests} className='TabBody'>
-            {this.state.activeTab === entityDashboardTab.serviceRequests && <ServiceRequest
+              {this.state.activeTab === entityDashboardTab.serviceRequests && <ServiceRequest
                 fromDate={this.state.fromDate}
                 toDate={this.state.toDate}
                 isOpenFilter={this.state.filterOpen}
@@ -252,13 +207,13 @@ class EntityDashboard extends Component {
               />}
             </TabPane>
             <TabPane tabId={entityDashboardTab.serviceVisits} className='TabBody'>
-            {this.state.activeTab === entityDashboardTab.serviceVisits && <ServiceVisits
+              {this.state.activeTab === entityDashboardTab.serviceVisits && <ServiceVisits
                 fromDate={moment(this.state.fromDate).format('l')}
                 toDate={moment(this.state.toDate).format('l')}
                 isOpenFilter={this.state.filterOpen}
                 toggleSearch={this.toggleSearch.bind(this)}
                 toggleFilter={this.toggleFilter.bind(this)}
-                SearchOpen={this.state.SearchOpen} 
+                SearchOpen={this.state.SearchOpen}
               />}
             </TabPane>
           </TabContent>
@@ -269,7 +224,7 @@ class EntityDashboard extends Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     setActiveTab: data => dispatch(setActiveTab(data)),
     getBuildVersion: () => dispatch(getBuildVersion()),

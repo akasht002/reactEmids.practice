@@ -4,10 +4,11 @@ import {
   Post
 } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions'
-import {getFullName} from '../../../../utils/stringHelper'
+import {getFullName, concatCommaWithSpace} from '../../../../utils/stringHelper'
 import { getValue } from '../../../../utils/userUtility'
 import { VisitServiceRequestList } from './bridge'
 import { logError } from '../../../../utils/logError';
+import { updateCountList, checkDataCount } from '../utilActions';
 
 export const setActiveSubTab = data => {
   return {
@@ -45,19 +46,11 @@ export function getServiceRequestCountList(data) {
     )
       .then(resp => {
         if (resp && resp.data) {
-          let activeSubTab = getState().dashboardState.VisitServiceRequestState.activeSubTab
-          let visitServiceRequestCountList = getState().dashboardState.VisitServiceRequestState.visitServiceRequestCountList
-          let dataCount = (resp.data && resp.data[0].totalCount > 0) ? resp.data[0].totalCount : 0
+          let {activeSubTab, visitServiceRequestCountList} = getState().dashboardState.VisitServiceRequestState
+          let dataCount = checkDataCount(resp)
           dispatch(setPaginationRowCountSuccess(dataCount));
           if (activeSubTab !== 'All') {
-            let index = _.findIndex(visitServiceRequestCountList, { statusName: resp.data[0].statusName });
-            visitServiceRequestCountList.splice(index, 1, {
-              label: resp.data[0].label,
-              statusName: resp.data[0].statusName,
-              subtext: resp.data[0].subtext,
-              totalCount: resp.data[0].totalCount
-            })
-            dispatch(getServiceRequestCountListSuccess(visitServiceRequestCountList))
+            dispatch(getServiceRequestCountListSuccess(updateCountList(visitServiceRequestCountList, resp)))
           }
           else {
             dispatch(getServiceRequestCountListSuccess(resp.data))
@@ -82,7 +75,7 @@ export function getServiceRequestTableList(data) {
             return {
               ...res,
               patientFullName: getFullName(getValue(res.firstName), getValue(res.lastName)),
-              serviceType: res.serviceType.join(', ')
+              serviceType: concatCommaWithSpace(resp.serviceType)
             }
           })
           dispatch(getServiceRequestTableListSuccess(data))

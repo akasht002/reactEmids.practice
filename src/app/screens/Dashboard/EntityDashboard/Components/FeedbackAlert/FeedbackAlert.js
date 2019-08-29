@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Preloader, CoreoPagination } from '../../../../../components';
-import { feedBackAlert } from './GridHeader'
+import { feedBackAlert } from './gridHeader'
 import {Grid} from '../Grid/Grid'
 import { NO_RECORDS_FOUND } from '../../../../../constants/constants'
 

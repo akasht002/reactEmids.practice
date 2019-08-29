@@ -10,19 +10,19 @@
     height: 24px;
 }
 
-.ProfileHeaderTitle.CTDashboard .ProfileHeaderRight form, .CTDateFilter .form-group {
+.ProfileHeaderTitle.CTDashboard .ProfileHeaderRight form, .entity-date-filter .form-group {
     display: flex;
 }
 
-.CTDateFilter {
+.entity-date-filter {
     margin-right: 15px;
 }
 
-.CTDateFilter:last-child {
+.entity-date-filter:last-child {
     margin-right: 0;
 }
 
-.CTDateFilter .form-group label {
+.entity-date-filter .form-group label {
 font-size: 14px;
 font-weight: 600;
 color: #7a329f;
@@ -32,11 +32,11 @@ justify-content: flex-start;
 align-items: center;
 }
 
-.CTDateFilter .form-group label span {
+.entity-date-filter .form-group label span {
     margin: 0;
 }
 
-.CTDateFilter .form-group input.datePicker {
+.entity-date-filter .form-group input.datePicker {
     height: 24px;
     font-size: 14px;
     padding: 0 0 5px 0;
@@ -46,17 +46,17 @@ align-items: center;
     background-color: rgba(0, 0, 0, 0);
 }
 
-.CTDateFilter .form-group .react-datepicker__input-container:after {
+.entity-date-filter .form-group .react-datepicker__input-container:after {
     height: 15px;
     width: 15px;
     bottom: 5px;
 }
 
-.CTDateFilter .form-group .react-datepicker__input-container {
+.entity-date-filter .form-group .react-datepicker__input-container {
     margin: 0 15px;
 }
 
-.CTDateFilter .btn.CTHeaderFilterToday {
+.entity-date-filter .btn.CTHeaderFilterToday {
     font-size: 12px;
     padding: 5px 10px !important;
     height: 24px;
