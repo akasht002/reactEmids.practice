@@ -544,6 +544,8 @@ margin-left: 10px;
 .individual-spblock-full .ServiceContent
 {
 display: block;
+width:50%;
+float:left;
 }
 
 .individual-spblock-full .ServiceCategoryContent
@@ -559,8 +561,6 @@ float: left;
 height: 100%;
 display: flex;
 flex-direction: column;
-align-items: center;
-justify-content: center;
 position: relative;
 padding-top: 100px;
 }
@@ -591,6 +591,22 @@ margin-right: 0px;
 line-height: 24px;
 font-size: 18px;
 }
+
+.individual-spblock-full .ServiceCategoryContent .ServicesTitle
+{
+margin-bottom:10px;
+}
+
+.individual-spblock-full .ServiceCategoryContent .SPAvailContainer.Available
+{
+margin-bottom:0px;
+}
+
+.individual-spblock-full  .ContentTitle.Summary span.ContentTitle.Summary
+{
+margin-top:0px;
+}
+
 
 
 
