@@ -188,7 +188,7 @@ export const getUpdatedPerformTasksList = data => {
         : data && data.serviceRequestTypeVisits,
         serviceRequestVisitId: (getUserInfo().isEntityServiceProvider || isEntityUser) ? data && data.servicePlanVisitId :
         data && data.serviceRequestVisitId,
-        visitTimeDuration: parseInt(data && data.visitTimeDuration, 10)
+        visitTimeDuration: Number(data && data.visitTimeDuration)
     }
 }
 

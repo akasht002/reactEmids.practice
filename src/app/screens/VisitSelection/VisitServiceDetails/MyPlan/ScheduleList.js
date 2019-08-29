@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { getFields } from "../../../../utils/validations";
+import {VISIT_TYPE} from "../../../../constants/constants"
 
 export const ScheduleList = props => {
     return (
@@ -25,10 +26,11 @@ export const ScheduleList = props => {
                                     <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.schedulePatternType}</label></span>
                                     <span class="checkmark"></span>
                                 </label>
-
-                                <div className="edit-block">
-                                <button onClick={() => props.handelEditShedule(item.planScheduleId)}>Edit</button>
-                                </div>
+                                {item.scheduleTypeId === VISIT_TYPE.scheduled && 
+                                    <div className="edit-block">
+                                        <button onClick={() => props.handelEditShedule(item.planScheduleId)}>Edit</button>
+                                    </div>
+                                }
                             </fieldset>
                           
                         </div>
