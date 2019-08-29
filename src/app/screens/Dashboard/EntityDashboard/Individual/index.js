@@ -194,23 +194,14 @@ export class Individuals extends Component {
   }
 
   getTable = async e => {
-    const { pageSize } = this.state;
-    let rowMaxValue = pageSize;
     let sortName = this.getSortNameAndOrderBasedOnStatus(e.target.value).sortName;
     let sortOrder = this.getSortNameAndOrderBasedOnStatus(e.target.value).sortOrder;
-    let dataCount = this.props.individualsCountList && this.props.individualsCountList.filter(obj => {
-      return obj.statusName === e.target.value
-    })
-    if (pageSize >= (dataCount && dataCount.length > 0 && dataCount[0].totalCount)) {
-      rowMaxValue = dataCount[0].totalCount;
-    }
     this.IsSortIcon = false
     await this.setState({
       status: e.target.value,
       pageSize: this.state.pageSize,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
-      rowMax: rowMaxValue,
       resetFilter: true,
       searchOpen: false,
       searchKeyword: 'default',

@@ -109,7 +109,7 @@ export class ServiceProvider extends Component {
     this.props.getVisitServiceProviderTableList(list)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const { pageSize, rowCount } = this.state;
     let rowMaxValue = pageSize;
     const newDataCount = this.props.paginationCount;
@@ -121,20 +121,13 @@ export class ServiceProvider extends Component {
         rowMax: rowMaxValue
       })
     }
-  }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      fromDate: nextProps.fromDate,
-      toDate: nextProps.toDate,
-      rowCount: nextProps.paginationCount,
-    })
-    const count = this.getCountData(nextProps)
+    const count = this.getCountData(this.props)
     const list = this.getFilterData({
       state: this.state,
       status: this.state.status,
-      fromDate: nextProps.fromDate,
-      toDate: nextProps.toDate,
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE,
       searchKeyword: this.state.searchKeyword,
@@ -143,16 +136,24 @@ export class ServiceProvider extends Component {
       resetFilter: false
     })
     if (
-      nextProps.fromDate !== this.props.fromDate ||
-      nextProps.toDate !== this.props.toDate
+      prevProps.fromDate !== this.props.fromDate ||
+      prevProps.toDate !== this.props.toDate
     ) {
-      this.props.getVisitServiceProviderCountList(count)
-      this.props.getVisitServiceProviderTableList(list)
-      this.setState({
-        rowMin: DEFAULT_PAGE_NUMBER,
-        activePage: DEFAULT_PAGE_NUMBER,
-        rowMax: DEFAULT_PAGE_SIZE
-      })
+      await this.props.getVisitServiceProviderCountList(count)
+      await this.props.getVisitServiceProviderTableList(list)
+      // this.setState({
+      //   rowMin: DEFAULT_PAGE_NUMBER,
+      //   activePage: DEFAULT_PAGE_NUMBER,
+      //   rowMax: DEFAULT_PAGE_SIZE
+      // })
+    }
+  }
+
+  static getDerivedStateFromProps(props) {
+    return {
+      fromDate: props.fromDate,
+      toDate: props.toDate,
+      rowCount: props.paginationCount
     }
   }
 
@@ -201,8 +202,6 @@ export class ServiceProvider extends Component {
   }
 
   getTable = async e => {
-    const { pageSize } = this.state;
-    let rowMaxValue = pageSize;
     let sortName = this.getSortNameAndOrderBasedOnStatus(e.target.value).sortName;
     let sortOrder = this.getSortNameAndOrderBasedOnStatus(e.target.value).sortOrder;
     await this.setState({
@@ -210,7 +209,6 @@ export class ServiceProvider extends Component {
       pageSize: this.state.pageSize,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
-      rowMax: rowMaxValue,
       resetFilter: true,
       searchOpen: false,
       fromDate: this.props.fromDate,
