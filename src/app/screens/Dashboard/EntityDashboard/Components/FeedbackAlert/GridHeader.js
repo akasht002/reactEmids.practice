@@ -1,9 +1,9 @@
 export let feedBackAlert =
 {
     serviceRequestNumber: 'SR#',
-    serviceCategory: 'Service Category',
-    serviceTypes: 'Service Type',
+    serviceCategoryDescription: 'Service Category',
+    serviceType: 'Service Type',
     visitDate: 'Visit Date',
-    serviceRequestVisitNumber: 'Visit#',
+    servicePlanVisitNumber: 'Visit#',
     icon: 'Action'
 }

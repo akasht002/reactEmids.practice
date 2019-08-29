@@ -15,7 +15,7 @@ import AboutContent from '../../AboutUs/aboutContent';
 import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/actions';
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { extractRole, authorizePermission } from '../../../utils/roleUtility';
-import { isEntityServiceProvider } from '../../../utils/userUtility';
+import { isEntityServiceProvider, isEntityUser } from '../../../utils/userUtility';
 import { SCREENS } from '../../../constants/constants';
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
@@ -28,6 +28,7 @@ import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions
 import {isIEBrowser, isMobileBrowser} from '../../../utils/browserUtility'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import './style.css'
+import { EntityUserMenuData } from '../../../data/EntityUserMenuData';
 
 class AsideScreenCover extends React.Component {
     constructor(props) {
@@ -184,7 +185,7 @@ class AsideScreenCover extends React.Component {
         if (isEntityServiceProvider()) {
             headerMenu = EntitySPProfileHeaderMenu;
         };
-        let menuData = (!getUserInfo().isEntityServiceProvider) ? MenuData : EntityMenuData;
+        let menuData = (!getUserInfo().isEntityServiceProvider) ? (isEntityUser ? EntityUserMenuData : MenuData) : EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
                 <div className={"ProfileLeftWidget " + this.props.isOpen}>

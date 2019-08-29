@@ -112,11 +112,12 @@ export class Individuals extends Component {
     this.props.getIndividualsList(list)
   }
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props, state) {
     return {
       fromDate: props.fromDate,
       toDate: props.toDate,
-      rowCount: props.paginationCount
+      rowCount: props.paginationCount,
+      rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
     }
   }
 
@@ -133,6 +134,9 @@ export class Individuals extends Component {
       })
     }
 
+    this.props.setActiveStatusForAllTab(this.state.status)
+    this.props.setActiveSubTab(this.state.status)
+    
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
       state: this.state,
@@ -152,11 +156,6 @@ export class Individuals extends Component {
     ) {
       this.props.getIndividualsCountList(count)
       this.props.getIndividualsList(list)
-      this.setState({
-        rowMin: DEFAULT_PAGE_NUMBER,
-        activePage: DEFAULT_PAGE_NUMBER,
-        rowMax: DEFAULT_PAGE_SIZE
-      })
     }
   }
 
@@ -383,7 +382,7 @@ export class Individuals extends Component {
   }
 
   goToPgVisitSummary = (data) => {
-    this.props.getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId)
+    this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
   render() {

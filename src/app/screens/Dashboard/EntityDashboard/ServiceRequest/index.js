@@ -161,6 +161,9 @@ export class ServiceRequest extends Component {
       })
     }
 
+    this.props.setActiveStatusForAllTab(this.state.status)
+    this.props.setActiveSubTab(this.state.status)
+    
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
       state: this.state,

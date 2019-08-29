@@ -14,7 +14,6 @@ import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import { formatDate } from '../../../utils/dateUtility'
 import { DATE_FORMAT, entityDashboardTab, ENTITY_DASHBOARD_STATUS } from '../../../constants/constants'
 import {setActiveTab, setFromDate, setToDate} from '../../../redux/dashboard/EntityDashboard/Individuals/actions';
-// import { getUserInfo } from '../../../redux/auth/UserAgreement/actions';
 import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
 import { getMessageFallBackInterval } from '../../../redux/asyncMessages/actions';
 import { createDataStore } from '../../../redux/telehealth/actions'
@@ -63,10 +62,9 @@ class EntityDashboard extends Component {
   }
 
   componentDidMount () {
-    // this.props.getUserInfo();
-    // this.props.getAboutUsContent();
-    // this.props.getBuildVersion();
-    // this.props.getMessageFallBackInterval();
+    this.props.getAboutUsContent();
+    this.props.getBuildVersion();
+    this.props.getMessageFallBackInterval();
     this.setState({activeTab: this.props.activeTab})
     this.updateHeight.bind(this)
     window.addEventListener('load', this.updateHeight.bind(this))
@@ -117,6 +115,8 @@ class EntityDashboard extends Component {
   }
 
   render () {
+    let disableDate = (this.props.activeStatus === ENTITY_DASHBOARD_STATUS.individuals.statCard.all) &&
+    (this.state.activeTab === entityDashboardTab.individuals || this.state.activeTab === entityDashboardTab.serviceProviders)
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
@@ -137,7 +137,7 @@ class EntityDashboard extends Component {
                     value={this.state.fromDate}
                     className={'form-control datePicker'}
                     label='From'
-                    disabled={this.props.activeStatus === ENTITY_DASHBOARD_STATUS.individuals.statCard.all}
+                    disabled={disableDate}
                   />
                 </div>
                 <div className='CTDateFilter'>
@@ -150,7 +150,7 @@ class EntityDashboard extends Component {
                     value={this.state.toDate}
                     className={'form-control datePicker'}
                     label='To'
-                    disabled={this.props.activeStatus === ENTITY_DASHBOARD_STATUS.individuals.statCard.all}
+                    disabled={disableDate}
                   />
                 </div>
                 <div className='CTDateFilter'>
@@ -271,11 +271,10 @@ class EntityDashboard extends Component {
 function mapDispatchToProps (dispatch) {
   return {
     setActiveTab: data => dispatch(setActiveTab(data)),
-//     // getUserInfo: () => dispatch(getUserInfo()),
-//     getBuildVersion: () => dispatch(getBuildVersion()),
-//     getAboutUsContent: () => dispatch(getAboutUsContent()),
-//     getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval()),
-//     createDataStore: data => dispatch(createDataStore(data)),
+    getBuildVersion: () => dispatch(getBuildVersion()),
+    getAboutUsContent: () => dispatch(getAboutUsContent()),
+    getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval()),
+    createDataStore: data => dispatch(createDataStore(data)),
     setFromDate: data => dispatch(setFromDate(data)),
     setToDate: data => dispatch(setToDate(data)),
   }
