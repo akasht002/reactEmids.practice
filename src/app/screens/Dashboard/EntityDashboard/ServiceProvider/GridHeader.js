@@ -17,7 +17,7 @@ export let visitServiceProivders = {
 
 export let feedbackServiceProviders = {
     name: 'Service Provider',
-    alerts: 'Alerts',
+    totalCount: 'Alerts',
     phoneNumber: 'Contact',
     gender: 'Gender',
     rating: 'Rating',
