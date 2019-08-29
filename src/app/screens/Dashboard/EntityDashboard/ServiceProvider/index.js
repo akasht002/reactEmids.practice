@@ -47,17 +47,12 @@ export class ServiceProvider extends Component {
       status: this.props.activeSubTab,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
-      filterOpen: false,
-      loading: false,
-      dataSet: [],
       serviceTypes: [],
       serviceCategoryIds: 0,
       category: '',
       serviceArea: '',
       maxExperience: 50,
       minExperience: 0,
-      minHourlyRate: 0,
-      maxHourlyRate: 50,
       skillTypes: [],
       skillId: [],
       genderId: 0,
@@ -68,14 +63,6 @@ export class ServiceProvider extends Component {
       pageSize: DEFAULT_PAGE_SIZE,
       rowMin: DEFAULT_PAGE_NUMBER,
       rowMax: DEFAULT_PAGE_SIZE,
-      phoneNumber: '',
-      phoneNumberModal: false,
-      street: '',
-      city: '',
-      state: '',
-      zip: '',
-      selectedOption: null,
-      coverageArea: 0,
       rating: 0,
       rowCount: 0,
       searchOpen: false,
@@ -124,7 +111,7 @@ export class ServiceProvider extends Component {
 
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
-    
+
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
       state: this.state,
@@ -212,27 +199,14 @@ export class ServiceProvider extends Component {
       searchOpen: false,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
-      loading: false,
-      dataSet: [],
       serviceCategoryIds: [],
       serviceArea: '',
       maxExperience: 50,
       minExperience: 0,
-      minHourlyRate: 0,
-      maxHourlyRate: 50,
       skillTypes: [],
       skillId: [],
       genderId: 0,
-      street: '',
-      city: '',
-      state: '',
-      zip: '',
-      coverageArea: 0,
       rating: 0,
-      selectedOption: null,
-      isHourlyRateChanged: false,
-      isExperienceChanged: false,
-      selectedOptionState: null,
     })
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
     this.props.setActiveStatusForAllTab(this.state.status)
