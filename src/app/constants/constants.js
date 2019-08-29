@@ -358,7 +358,8 @@ export const LONGITUDE = 0.0
 
 export const serviceRequestDetailsTab = {
     request: '1',
-    myPlan: '2'
+    myPlan: '2',
+    myPatient: '3'
 }
 
 export const InddividualFilterActiveTab = {
@@ -407,7 +408,7 @@ export const KEYPRESS_ENTER = 13;
 export const ENTITY_DASHBOARD_STATUS = {
     serviceProvider: {
         statCard: {
-            feedBack_alerts: 'FeedbackAlerts',
+            feedBack: 'Feedback',
             total_in_the_network: 'TotalInTheNetwork',
             low_rating: 'LowRating',
             low_task_completions: 'LowTaskCompletions',

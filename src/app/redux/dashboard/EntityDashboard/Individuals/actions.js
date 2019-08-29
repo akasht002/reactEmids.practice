@@ -1,7 +1,9 @@
 import { API } from '../../../../services/api';
-import { Get, Post } from '../../../../services/http';
+import { Post, Get } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
+import { getFullName } from '../../../../utils/stringHelper'
+import { getValue } from '../../../../utils/userUtility'
 import { IndividualsList } from './bridge';
 import _ from 'lodash'
 
@@ -60,13 +62,6 @@ export const updateLoader = (data) => {
     }
 }
 
-export const getIndividualsVisitListSuccess = data => {
-    return {
-        type: IndividualsList.getIndividualsVisitListSuccess,
-        data
-    }
-}
-
 export const setPaginationRowCountSuccess = data => {
     return {
         type: IndividualsList.setPaginationRowCountSuccess,
@@ -117,8 +112,13 @@ export function getIndividualsList(data) {
         dispatch(startLoading());
         return Post(API.getIndividualsList, data).then((resp) => {
             if (resp && resp.data) {
-                //dispatch(getIndividualsListSuccess(formatCohorts(resp.data)));
-                dispatch(getIndividualsListSuccess(resp.data));
+                let data = resp.data.map(res => {
+                    return {
+                        ...res,
+                        name: getFullName(getValue(res.firstName), getValue(res.lastName))
+                    }
+                })
+                dispatch(getIndividualsListSuccess(data));
             }
             dispatch(endLoading());
             dispatch(updateLoader(true))
@@ -126,141 +126,18 @@ export function getIndividualsList(data) {
             dispatch(updateLoader(true))
             dispatch(endLoading());
         })
-    }
-}
-
-export function getIndividualsVisitList(data) {
-    return (dispatch) => {
-        dispatch(startLoading());
-        return CareTeamPost(API.getIndividualsVisitList, data).then((resp) => {
-            if (resp && resp.data) {
-                dispatch(getIndividualsVisitListSuccess(resp.data))
-            }
-            dispatch(endLoading());
-        }).catch(() => {
-            dispatch(endLoading());
-        })
-    }
-};
-
-export function getAttributedProviders() {
-    return (dispatch) => {
-        dispatch(startLoading());
-        return Get(API.getAttributedProviders).then((resp) => {
-            dispatch(getAttributedProvidersSuccess(resp.data))
-            dispatch(endLoading());
-        }).catch((err) => {
-            dispatch(endLoading());
-        })
-    }
-}
-
-export const getAttributedProvidersSuccess = (data) => {
-    data.forEach(function (obj) {
-        obj.isChecked = false
-    })
-    return {
-        type: IndividualsList.getAttributedProvidersSuccess,
-        data
-    }
-}
-
-export function getAllCohorts() {
-    return (dispatch) => {
-        dispatch(startLoading());
-        let pageNumber = 1;
-        let pageSize = 1000;
-        return Get(API.getAllCohorts
-            + pageNumber + '/'
-            + pageSize)
-            .then((resp) => {
-                dispatch(getAllCohortsSuccess(resp.data))
-                dispatch(endLoading())
-            })
-            .catch(err => {
-                dispatch(endLoading())
-            })
-    }
-};
-
-export const getAllCohortsSuccess = (data) => {
-    data.forEach(function (obj) {
-        obj.isChecked = false
-    })
-    return {
-        type: IndividualsList.getAllCohorts,
-        data
-    }
-}
-
-export function getAllContracts() {
-    return (dispatch) => {
-        dispatch(startLoading());
-        return Get(API.getAllContracts).then((resp) => {
-            dispatch(getAllContractsSuccess(resp.data))
-            dispatch(endLoading());
-        }).catch((err) => {
-            dispatch(endLoading());
-        })
-    }
-}
-
-export const getAllContractsSuccess = (data) => {
-    data.forEach(function (obj) {
-        obj.isChecked = false
-    })
-    return {
-        type: IndividualsList.getAllContractsSuccess,
-        data
-    }
-}
-
-export const resetFilter = (attributedProviders, cohorts, contracts) => {
-    attributedProviders.forEach(function (obj) {
-        obj.isChecked = false
-    })
-    cohorts.forEach(function (obj) {
-        obj.isChecked = false
-    })
-    contracts.forEach(function (obj) {
-        obj.isChecked = false
-    })
-    return {
-        type: IndividualsList.resetFilter,
-        attributedProviders,
-        cohorts,
-        contracts
-    }
-}
-
-export function getStates() {
-    return (dispatch) => {
-        dispatch(startLoading());
-        return Get(API.getStates).then((resp) => {
-            dispatch(getStatesSuccess(resp.data))
-            dispatch(endLoading());
-        }).catch((err) => {
-            dispatch(endLoading());
-        })
-    }
-};
-
-export const getStatesSuccess = (data) => {
-    return {
-        type: IndividualsList.getStatesSuccess,
-        data
     }
 }
 
 export function getIndividualsFeedbackList(data) {
     return (dispatch) => {
         dispatch(startLoadingFeedbackList());
-        return CareTeamPost(API.getindividualsFeedbackList, data).then((resp) => {
-            dispatch(getIndividualsFeedbackListSuccess(resp.data))
-            dispatch(endLoadingFeedbackList());
-        }).catch((err) => {
-            dispatch(endLoadingFeedbackList());
-        })
+        return Get(`${API.getindividualsFeedbackList}${data.patientId}/${data.serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
+                dispatch(getIndividualsFeedbackListSuccess(resp.data))
+                dispatch(endLoadingFeedbackList());
+            }).catch((err) => {
+                dispatch(endLoadingFeedbackList());
+            })
     }
 };
 

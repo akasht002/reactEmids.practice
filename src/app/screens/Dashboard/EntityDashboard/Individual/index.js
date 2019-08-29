@@ -9,42 +9,37 @@ import {
   savePaginationNumber,
   setActiveStatusForAllTab
 } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
-import { getLength } from '../../../../utils/validations'
-// import { getPersonalDetailIndividual, impersinateCareTeamIndividual } from '../../../../redux/auth/user/actions'
-// import { onCreateNewConversation } from '../../../../redux/asyncMessages/actions'
-// import { createVideoConference, setContext } from '../../../../redux/telehealth/actions'
 import {
-  USERTYPES,
   DEFAULT_PAGE_NUMBER,
   DEFAULT_PAGE_SIZE,
   ROW_MIN,
   PAGE_SIZE_OPTIONS,
   NO_RECORDS_FOUND,
-  CONTACT_NOT_FOUND,
-  PHONE_NUMBER_TEXT,
-  OTHER, OTHERS,
   ENTITY_DASHBOARD_STATUS,
-  KEYPRESS_ENTER,
-  DATE_FORMAT,
   CARETEAM_STATUS,
   SORT_ORDER,
-  PAGE_RANGE
+  PAGE_RANGE,
+  serviceRequestDetailsTab
 } from '../../../../constants/constants'
-import Search from '../Components/Search';
 import RowPerPage from '../Components/RowPerPage';
 import { getUserInfo } from '../../../../utils/userUtility';
-import { getInitializeFilterData } from './utility';
-import { formatPhoneNumber } from '../../../../utils/formatName';
-// import './style.css';
-// import FeedbackAlert from "../Components/FeedbackAlert";
-// import {
-//   getVisitServiceHistoryByIdDetail,
-// } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import { ProfileModalPopup } from '../../../../components'
 import { StatCard } from '../Components/StatCard'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
 import { allIndividuals, feedbackIndividuals, visitIndividuals } from './GridHeader'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
+import {
+  getServiceRequestId,
+  setActiveTab
+} from '../../../../redux/visitSelection/VisitServiceDetails/actions'
+import { Path } from '../../../../routes';
+import { push } from '../../../../redux/navigation/actions';
+import { setPatient } from "../../../../redux/patientProfile/actions";
+import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
+import {
+  getVisitServiceHistoryByIdDetail,
+} from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 
 export class Individuals extends Component {
   constructor(props) {
@@ -117,37 +112,11 @@ export class Individuals extends Component {
     this.props.getIndividualsList(list)
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      fromDate: nextProps.fromDate,
-      toDate: nextProps.toDate,
-      rowCount: nextProps.paginationCount,
-    })
-
-    const count = this.getCountData(nextProps)
-    const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: nextProps.fromDate,
-      toDate: nextProps.toDate,
-      pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: DEFAULT_PAGE_SIZE,
-      sortName: caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback) ? CARETEAM_STATUS.FEEDBACK : this.state.sortName,
-      sortOrder: caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback) ? SORT_ORDER.DESC : this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword,
-      resetFilter: false
-    })
-    if (
-      nextProps.fromDate !== this.props.fromDate ||
-      nextProps.toDate !== this.props.toDate
-    ) {
-      this.props.getIndividualsCountList(count)
-      this.props.getIndividualsList(list)
-      this.setState({
-        rowMin: DEFAULT_PAGE_NUMBER,
-        activePage: DEFAULT_PAGE_NUMBER,
-        rowMax: DEFAULT_PAGE_SIZE
-      })
+  static getDerivedStateFromProps(props) {
+    return {
+      fromDate: props.fromDate,
+      toDate: props.toDate,
+      rowCount: props.paginationCount
     }
   }
 
@@ -163,29 +132,33 @@ export class Individuals extends Component {
         rowMax: rowMaxValue
       })
     }
+
+    const count = this.getCountData(this.props)
+    const list = this.getFilterData({
+      state: this.state,
+      status: this.state.status,
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: DEFAULT_PAGE_SIZE,
+      sortName: caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback) ? CARETEAM_STATUS.FEEDBACK : this.state.sortName,
+      sortOrder: caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback) ? SORT_ORDER.DESC : this.state.sortOrder,
+      searchKeyword: this.state.searchKeyword,
+      resetFilter: false
+    })
+    if (
+      prevProps.fromDate !== this.props.fromDate ||
+      prevProps.toDate !== this.props.toDate
+    ) {
+      this.props.getIndividualsCountList(count)
+      this.props.getIndividualsList(list)
+      this.setState({
+        rowMin: DEFAULT_PAGE_NUMBER,
+        activePage: DEFAULT_PAGE_NUMBER,
+        rowMax: DEFAULT_PAGE_SIZE
+      })
+    }
   }
-
-  // goToPg = (data) => {
-  //   const model = {
-  //     patientId: data.individualId,
-  //     pageNumber: this.state.pageNumberFeedback,
-  //     pageSize: DEFAULT_PAGE_SIZE,
-  //     fromDate: this.props.fromDate,
-  //     toDate: this.props.toDate
-  //   }
-  //   this.props.getIndividualsFeedbackList(model);
-  //   if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback)) {
-  //     this.setState({
-  //       feedbackAlertModal: !this.state.feedbackAlertModal,
-  //       feedbackServiceVisits: this.props.individualsFeedbackList,
-  //       patientId: data.individualId
-  //     })
-  //   }
-  //   else {
-  //     this.props.impersinateCareTeamIndividual(data)
-  //   }
-  // }
-
 
   getCountData = data => {
     return {
@@ -357,8 +330,8 @@ export class Individuals extends Component {
     switch (status) {
       case ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback:
         return {
-          sortName: 'feedback',
-          sortOrder: 'desc'
+          sortName: '',
+          sortOrder: ''
         }
       default:
         return {
@@ -380,8 +353,62 @@ export class Individuals extends Component {
     this.props.getIndividualsFeedbackList(model);
   }
 
+  impersinateIndividual = data => {
+    if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.visit)) {
+      this.props.getServiceRequestId(0);
+      this.props.setPatient(data.patientId)
+      this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
+      this.props.goToVisitServiceDetails();
+    }
+    else if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.all)) {
+      this.props.getServiceRequestId(0);
+      this.props.setPatient(data.patientId)
+      this.props.setActiveTab(serviceRequestDetailsTab.myPatient)
+      this.props.goToVisitServiceDetails();
+    }
+    else if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback)) {
+      const model = {
+        patientId: data.patientId,
+        pageNumber: this.state.pageNumberFeedback,
+        pageSize: DEFAULT_PAGE_SIZE,
+        fromDate: this.props.fromDate,
+        toDate: this.props.toDate,
+        serviceProviderId: getUserInfo().serviceProviderId
+      }
+      this.props.getIndividualsFeedbackList(model);
+      this.setState({
+        feedbackAlertModal: !this.state.feedbackAlertModal,
+        feedbackServiceVisits: this.props.individualsFeedbackList,
+        patientId: data.individualId
+      })
+    }
+  }
+
+  toggleFeedbaclAlert = () => {
+    this.setState({
+      feedbackAlertModal: !this.state.feedbackAlertModal,
+      activePageFeedback: DEFAULT_PAGE_NUMBER
+    })
+  }
+
+  goToPgVisitSummary = (data) => {
+    this.props.getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId)
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state;
+
+    const FeedbackAlertContent = (
+      <FeedbackAlert
+        feedbackServiceVisits={this.props.individualsFeedbackList}
+        goToVisitSummary={this.goToPgVisitSummary}
+        pageCount={this.props.individualsFeedbackList.length > 0 && this.props.individualsFeedbackList[0].pageCount}
+        pageNumberChangeFeedback={this.pageNumberChangeFeedback}
+        activePageFeedback={this.state.activePageFeedback}
+        isLoaded={this.props.isLoadingFeedbackList}
+      />
+    )
+
     return (
       <div className="parent-fullblock">
         <div className="dashboard-tab-content">
@@ -414,6 +441,8 @@ export class Individuals extends Component {
               <Grid
                 data={this.props.individualsList}
                 header={this.gridHeader}
+                noRecordsFound={NO_RECORDS_FOUND}
+                impersinate={this.impersinateIndividual}
               />
             </div>
             <CoreoPagination
@@ -425,6 +454,15 @@ export class Individuals extends Component {
             />
           </div>
         </div>
+        <ProfileModalPopup
+          isOpen={this.state.feedbackAlertModal}
+          toggle={this.toggleFeedbaclAlert}
+          ModalBody={FeedbackAlertContent}
+          className='modal-lg CTDashboardApprove feedback-alertmodl'
+          buttonLabel='Close'
+          modalTitle='Feedback Alerts'
+          onClick={this.toggleFeedbaclAlert}
+        />
       </div>
     )
   }
@@ -436,7 +474,14 @@ export function mapDispatchToProps(dispatch) {
     getIndividualsList: data => dispatch(getIndividualsList(data)),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
-    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data))
+    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data)),
+    getServiceRequestId: data => dispatch(getServiceRequestId(data)),
+    setActiveTab: (data) => dispatch(setActiveTab(data)),
+    goToVisitServiceDetails: () => dispatch(push(Path.visitServiceDetails)),
+    setPatient: data => dispatch(setPatient(data)),
+    getIndividualsFeedbackList: (data) => dispatch(getIndividualsFeedbackList(data)),
+    getVisitServiceHistoryByIdDetail: data =>
+      dispatch(getVisitServiceHistoryByIdDetail(data))
   }
 }
 
@@ -448,11 +493,9 @@ export function mapStateToProps(state) {
       .individualsList,
     paginationCount: state.dashboardState.individualsListState
       .paginationCount,
-    //     states: state.entityDashboard.individualsListState.states,
-    //     isLoaded: state.entityDashboard.individualsListState.isLoaded,
     activeSubTab: state.dashboardState.individualsListState.activeSubTab,
-    //     individualsFeedbackList: state.entityDashboard.individualsListState.individualsFeedbackList,
-    //     isLoadingFeedbackList: state.entityDashboard.individualsListState.isLoadingFeedbackList,
+    individualsFeedbackList: state.dashboardState.individualsListState.individualsFeedbackList,
+    isLoadingFeedbackList: state.dashboardState.individualsListState.isLoadingFeedbackList,
     savedPageNumber: state.dashboardState.individualsListState.savedPaginationNumber
   }
 }

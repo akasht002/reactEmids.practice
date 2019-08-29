@@ -10,18 +10,13 @@ import {
   getFeedbackAlertDetails,
   savePaginationNumber
 } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions'
-// import { onCreateNewConversation } from '../../../../redux/asyncMessages/actions'
 import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
-  USERTYPES,
-  DEFAULT_SERVICE_CATEGORY,
   DEFAULT_PAGE_NUMBER,
   DEFAULT_PAGE_SIZE,
   ROW_MIN,
   PAGE_SIZE_OPTIONS,
   NO_RECORDS_FOUND,
-  CONTACT_NOT_FOUND,
-  PHONE_NUMBER_TEXT,
   ENTITY_DASHBOARD_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
@@ -34,14 +29,16 @@ import { getUserInfo } from '../../../../utils/userUtility';
 import {
   getVisitServiceHistoryByIdDetail,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
-import { SORT_NAME, SERVICE_PROVIDERS_TYPE } from './constants'
+import { SORT_NAME } from './constants'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
-// import { QuickMenu } from '../../../Components/QuickMenu'
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import RowPerPage from '../Components/RowPerPage';
 import { allServiceProivders, visitServiceProivders, feedbackServiceProviders, lowRatingServiceProivders, lowTaskServiceProivders } from './GridHeader'
 import moment from 'moment'
+import { setESP } from '../../../../redux/patientProfile/actions';
+import { ProfileModalPopup } from '../../../../components'
+import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
 
 export class ServiceProvider extends Component {
   constructor(props) {
@@ -172,27 +169,6 @@ export class ServiceProvider extends Component {
       "serviceProviderId": getUserInfo().serviceProviderId
     }
   }
-
-  // goToSp = (data) => {
-  //   const model = {
-  //     serviceProviderId: data.serviceProviderId,
-  //     pageNumber: this.state.pageNumberFeedback,
-  //     pageSize: DEFAULT_PAGE_SIZE,
-  //     fromDate: moment(this.props.fromDate).format(YEAR_MONTH_DAY),
-  //     toDate: moment(this.props.toDate).format(YEAR_MONTH_DAY)
-  //   }
-  //   this.props.getFeedbackAlertDetails(model)
-  //   if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack_alerts)) {
-  //     this.setState({
-  //       feedbackAlertModal: !this.state.feedbackAlertModal,
-  //       serviceProviderId: data.serviceProviderId
-  //     })
-  //   }
-  //   else {
-  //     this.props.setServiceProvider(data.serviceProviderId)
-  //     this.props.goToSpProfile()
-  //   }
-  // }
 
   pageNumberChangeFeedback = (pageNumber) => {
     this.setState({ activePageFeedback: pageNumber })
@@ -382,8 +358,40 @@ export class ServiceProvider extends Component {
     this.props.getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId)
   }
 
+  impersinateServiceProvider = data => {
+    const model = {
+      serviceProviderId: data.serviceProviderId,
+      pageNumber: this.state.pageNumberFeedback,
+      pageSize: DEFAULT_PAGE_SIZE,
+      fromDate: moment(this.props.fromDate).format(YEAR_MONTH_DAY),
+      toDate: moment(this.props.toDate).format(YEAR_MONTH_DAY)
+    }
+    this.props.getFeedbackAlertDetails(model)
+    if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack)) {
+      this.setState({
+        feedbackAlertModal: !this.state.feedbackAlertModal,
+        serviceProviderId: data.serviceProviderId
+      })
+    }
+    else {
+      this.props.setESP(data.serviceProviderId)
+      this.props.goToESPProfile()
+    }
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state
+
+    const FeedbackAlertContent = (
+      <FeedbackAlert
+        feedbackServiceVisits={this.props.feedbackServiceVisits}
+        goToVisitSummary={this.goToSpVisitSummary}
+        pageCount={this.props.feedbackServiceVisits.length > 0 && this.props.feedbackServiceVisits[0].pageCount}
+        pageNumberChangeFeedback={this.pageNumberChangeFeedback}
+        activePageFeedback={this.state.activePageFeedback}
+        isLoaded={this.props.isLoadingFeedbackList}
+      />
+    )
 
     return (
       <div className="parent-fullblock">
@@ -417,6 +425,8 @@ export class ServiceProvider extends Component {
               <Grid
                 data={this.props.visitServiceTableList}
                 header={this.gridHeader}
+                impersinate={this.impersinateServiceProvider}
+                noRecordsFound={NO_RECORDS_FOUND}
               />
             </div>
             <CoreoPagination
@@ -425,6 +435,15 @@ export class ServiceProvider extends Component {
               totalItemsCount={this.props.paginationCount}
               pageRangeDisplayed={PAGE_RANGE}
               onChange={this.pageNumberChange}
+            />
+            <ProfileModalPopup
+              isOpen={this.state.feedbackAlertModal}
+              toggle={this.toggleFeedbackAlert}
+              ModalBody={FeedbackAlertContent}
+              className='modal-lg CTDashboardApprove feedback-alertmodl'
+              buttonLabel='Close'
+              modalTitle='Feedback Alerts'
+              onClick={this.toggleFeedbackAlert}
             />
           </div>
         </div>
@@ -440,7 +459,6 @@ function mapDispatchToProps(dispatch) {
     getVisitServiceProviderTableList: data =>
       dispatch(getVisitServiceProviderTableList(data)),
     createVideoConference: data => dispatch(createVideoConference(data)),
-    // setServiceProvider: data => dispatch(setServiceProvider(data)),
     goToSpProfile: () => dispatch(push(Path.SpProfile)),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     getPointofServicedata: (data) => dispatch(getPointofServicedata(data)),
@@ -448,7 +466,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(getVisitServiceHistoryByIdDetail(data)),
     getFeedbackAlertDetails: data => dispatch(getFeedbackAlertDetails(data)),
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
-    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data))
+    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data)),
+    goToESPProfile: () => dispatch(push(Path.ESPProfile)),
+    setESP: data => dispatch(setESP(data))
   }
 }
 

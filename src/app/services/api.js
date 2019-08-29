@@ -200,5 +200,7 @@ export const API = {
     getVisitServiceRequestCount: 'entityuser/servicerequest/totalcount',
     acceptservicerequest: 'servicerequest/acceptservicerequest',
     getVisitServiceCount: 'entityuser/servicevisit/totalcount',
-    getVisitServiceTable: 'entityuser/servicevisit/list'
+    getVisitServiceTable: 'entityuser/servicevisit/list',
+    getindividualsFeedbackList: 'entityuser/Individual/FeedbackVisit/',
+    getServiceProviderFeedbackList: 'entityuser/serviceprovider/feedbackvisit/'
 }

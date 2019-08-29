@@ -1,5 +1,5 @@
 import { API } from '../../../../services/api'
-import { CareTeamPost, CareTeamGet, Post } from '../../../../services/http'
+import { CareTeamPost, CareTeamGet, Post, Get } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions';
 import { VisitServiceProviderList } from './bridge';
 import _ from 'lodash'
@@ -122,7 +122,7 @@ export const getGeologicalPositionSuccess = data => {
 export function getFeedbackAlertDetails(data) {
   return dispatch => {
     dispatch(startFeedbackAlertLoading())
-    return CareTeamPost(API.getFeedbackAlertDetails, data)
+    return Get(`${API.getServiceProviderFeedbackList}${data.serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
       .then(resp => {
         if (resp && resp.data) {
           dispatch(getFeedbackAlertDetailsSuccess(resp.data))
