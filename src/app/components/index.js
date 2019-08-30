@@ -9,7 +9,8 @@ import {
   Preloader,
   Scrollbars,
   ToggleSwitch,
-  Avatar
+  Avatar,
+  CoreoCheckBox
 } from './Base'
 import {
     Calendar, 
@@ -101,5 +102,6 @@ export {
     AlertPopup,
     Avatar,
     CoreoPagination,
-    CoreoTimePicker
+    CoreoTimePicker,
+    CoreoCheckBox
 };

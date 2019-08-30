@@ -29,9 +29,10 @@ import {
     editSchedule,
     getEntityServiceProviderListSearch,
     selectESP,
-    clearESPList,
+    clearESPListSchedule,
     createOrEditAssessment,
-    isScheduleEdit
+    isScheduleEdit,
+    isAssessmentEdit
 } from '../../redux/schedule/actions';
 import { getDiffTime, getHourMin, formateMDYY } from "../../utils/dateUtility";
 import './Components/styles.css'
@@ -74,13 +75,15 @@ export class Schedule extends Component {
             pageSize: DEFAULT_PAGE_SIZE_ESP_LIST,
             searchOpen: false,
             isModalOpen: false,
+            additionalDescription: '',
             isIndividualScheduleEdit: false,
+            assessmentId: 0,
             patientAddressId: 0,
             planScheduleId: 0,
             description: '',
             phoneNumberModal: false,
             phoneNumber: '',
-            additionalDescription: '',
+            isAssessmentEdit: false,
             isDefaultAddress: false
         }
         this.serviceTypes = [];
@@ -103,7 +106,7 @@ export class Schedule extends Component {
             this.props.getServiceCategory(this.categoryId);
             this.props.getPatientAddress(this.props.patientId);
             this.props.getStates();
-            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
+            this.props.getEntityServiceProviderList(data);
             this.props.getRecurringPattern();
             this.props.getDays(this.props.individualSchedulesDetails.weekly && this.props.individualSchedulesDetails.weekly.days);
         } else {
@@ -112,47 +115,90 @@ export class Schedule extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        
+
         if (props.isIndividualScheduleEdit === true) {
             return null;
         }
+        else if (props.isAssessmentEdit) {
+            return null;
+        }
 
-            if (props.patientAddressList.length > 0 && !state.isDefaultAddress) {
-                let validAddress;
-                let address = props.patientAddressList.filter((add) => {
-                    return add.isPrimaryAddress;
-                });
+        if (props.patientAddressList.length > 0 && !state.isDefaultAddress) {
+            let validAddress;
+            let address = props.patientAddressList.filter((add) => {
+                return add.isPrimaryAddress;
+            });
 
-                if(address.length > 0) {
-                    validAddress = address[0] ;               
-                    if(validateCoordinates(validAddress.latitude,validAddress.longitude)){
-                        props.getValidPatientAddressSuccess(true)
-                    }
-                }
-                else {
-                    validAddress =  props.patientAddressList.length > 0 && props.patientAddressList[0];                   
-                }
-
-                return {
-                    addressType: validAddress.addressType,
-                    selectedPOS: validAddress.addressId,
-                    street: validAddress.street,
-                    city: validAddress.city,
-                    zip: validAddress.zip,
-                    state: validAddress.stateId,
-                    statelabel: validAddress.stateName,
-                    isDefaultAddress: true
+            if (address.length > 0) {
+                validAddress = address[0];
+                if (validateCoordinates(validAddress.latitude, validAddress.longitude)) {
+                    props.getValidPatientAddressSuccess(true)
                 }
             }
+            else {
+                validAddress = props.patientAddressList.length > 0 && props.patientAddressList[0];
+            }
+
+            return {
+                addressType: validAddress.addressType,
+                selectedPOS: validAddress.addressId,
+                street: validAddress.street,
+                city: validAddress.city,
+                zip: validAddress.zip,
+                state: validAddress.stateId,
+                statelabel: validAddress.stateName,
+                isDefaultAddress: true
+            }
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
+        let data = {
+            pageNumber: this.state.pageNumber,
+            pageSize: this.state.pageSize
+        }
         if (this.props.isIndividualScheduleEdit === true) {
-            this.setState({ isIndividualScheduleEdit: true })
+            this.setState({ isIndividualScheduleEdit: true, planType: SCHEDULE_TYPE_OPTIONS.standard })
             this.selectNew();
+            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
             this.props.isScheduleEdit(false)
+        } else if (this.props.isAssessmentEdit) {
+            this.setState({ isAssessmentEdit: true, planType: SCHEDULE_TYPE_OPTIONS.assessment })
+            this.selectForAssessment();
+            this.props.getEntityServiceProviderList(data, this.props.assessmentDetails.serviceProviderId);
+            this.props.assessmentEdit(false)
         }
     }
+
+    selectForAssessment = () => {
+        let data = this.props.assessmentDetails;
+        this.setState({
+            assessmentId: data.assessmentId,
+            checkedServiceCategoryId: data.categoryId,
+            startDate: moment(data.startDate),
+            endDate: data.endDate,
+            startTime: moment(data.startTime, 'h:mm a'),
+            endTime: moment(data.endTime, 'h:mm a'),
+            duration: data.duration,
+            additionalDescription: data.addInformation,
+            patientAddressId: data.patientAddressId,
+            addressType: '',
+            selectedPOS: data.patientAddressId
+        })
+        this.address = {
+            patientAddressId: data.patientAddressId,
+            streetAddress: data && data.streetAddress,
+            city: data && data.city,
+            stateId: data && data.stateId,
+            stateName: data && data.stateName,
+            zip: data && data.zip,
+            addressType: this.state.addressType,
+            latitude: data.latitude,
+            longitude: data.longitude
+        }
+        this.espId = data.serviceProviderId;
+    }
+
 
     selectNew = () => {
         let data = this.props.individualSchedulesDetails;
@@ -193,6 +239,8 @@ export class Schedule extends Component {
             stateId: data.address && data.address.stateId,
             stateName: data.address && data.address.stateName,
             zip: data.address && data.address.zip,
+            latitude: data.address && data.address.latitue,
+            longitude: data.address && data.address.longitude,
             addressType: this.state.addressType
         }
     }
@@ -205,7 +253,6 @@ export class Schedule extends Component {
         this.categoryId = id;
         this.serviceTypes = [];
         this.props.getServiceType(id);
-        // this.props.isScheduleEdit(false)
         this.setState({ checkedServiceCategoryId: id, serviceTypeSelected: false })
     }
 
@@ -474,7 +521,7 @@ export class Schedule extends Component {
 
     toggleSearch = () => {
         if (this.state.searchOpen) {
-            this.props.clearESPList()
+            this.props.clearESPListSchedule()
             let data = {
                 pageNumber: this.state.pageNumber,
                 pageSize: this.state.pageSize
@@ -559,16 +606,19 @@ export class Schedule extends Component {
             additionalDescription,
             selectedPOS,
             latitude,
-            longitude
+            longitude,
+            assessmentId,
+            duration,
+            isAssessmentEdit
         } = this.state
 
         let data = {
             planScheduleId: 0,
             startDate: startDate,
             endDate: endDate ? endDate : startDate,
-            startTime: this.formatedStartTime,
-            endTime: this.formatedEndTime,
-            duration: getDiffTime(startTime, endTime),
+            startTime: isAssessmentEdit ? getHourMin(startTime) : this.formatedStartTime,
+            endTime: isAssessmentEdit ? getHourMin(endTime) : this.formatedEndTime,
+            duration: isAssessmentEdit ? duration : getDiffTime(startTime, endTime),
             additionalDescription: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
@@ -576,11 +626,12 @@ export class Schedule extends Component {
             selectedPOS: selectedPOS,
             patientAddressId: 0,
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            assessmentId: assessmentId
         }
 
         this.props.getValidPatientAddress({ address: this.address })
-        if (!this.validate(validate.assessment)) {
+        if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
             this.props.createOrEditAssessment({ data, address: this.address });
         }
 
@@ -663,7 +714,7 @@ export class Schedule extends Component {
     }
 
     goToServicedetails = () => {
-        this.props.clearESPList();
+        this.props.clearESPListSchedule();
         this.props.goToServicedetails();
     }
 
@@ -690,9 +741,10 @@ export class Schedule extends Component {
                         <div className="Plan-typebar">
                             <PlanType
                                 options={PlanTypeData}
-                                planType={this.state.isIndividualScheduleEdit ? 2 : 1}
+                                planType={this.state.planType}
                                 handleChangePlanType={this.handleChangePlanType}
                                 isIndividualScheduleEdit={this.state.isIndividualScheduleEdit}
+                                isAssessmentEdit={this.state.isAssessmentEdit}
                             />
                         </div>
                         <Fragment>
@@ -885,10 +937,11 @@ function mapDispatchToProps(dispatch) {
         goToServicedetails: () => dispatch(push(Path.visitServiceDetails)),
         getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
         selectESP: (data) => dispatch(selectESP(data)),
-        clearESPList: () => dispatch(clearESPList()),
+        clearESPListSchedule: () => dispatch(clearESPListSchedule()),
         selectOrClearAllServiceType: (data, isSelectAll) => dispatch(selectOrClearAllServiceType(data, isSelectAll)),
         createOrEditAssessment: data => dispatch(createOrEditAssessment(data)),
-        isScheduleEdit: data => dispatch(isScheduleEdit(data))
+        isScheduleEdit: data => dispatch(isScheduleEdit(data)),
+        assessmentEdit: data => dispatch(isAssessmentEdit(data))
 
     }
 }
@@ -908,7 +961,9 @@ function mapStateToProps(state) {
         patientId: state.patientProfileState.patientId,
         disableShowmore: scheduleState.disableShowmore,
         individualSchedulesDetails: scheduleState.individualSchedulesDetails,
-        isIndividualScheduleEdit: scheduleState.isIndividualScheduleEdit
+        isIndividualScheduleEdit: scheduleState.isIndividualScheduleEdit,
+        isAssessmentEdit: scheduleState.isAssessmentEdit,
+        assessmentDetails: scheduleState.assessmentDetails
     }
 }
 

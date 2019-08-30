@@ -80,6 +80,9 @@ export const validate = {
         { key: 'city', validation: 'required', isState: true },
         { key: 'state', validation: 'required', isState: true },
         { key: 'zip', validation: 'required', isState: true }
+    ],
+    assessment_edit :[
+        { key: 'startDate', validation: 'required', isState: true }
     ]
 }
 
