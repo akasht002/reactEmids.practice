@@ -188,7 +188,6 @@ export class PointOfService extends Component {
         return (
 
             <div className='ServiceType WhiteBG'>
-                {/* <h6 className='ScheduleTypeTitle m-0'>Select your location</h6> */}
                 <Slider {...Locationsettings} className="POSAddressSlider">
                     <div className="form-radio AddressCardWidget">
                         <input
