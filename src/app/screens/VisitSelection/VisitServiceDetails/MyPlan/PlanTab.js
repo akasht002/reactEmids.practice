@@ -41,6 +41,7 @@ export const PlanTab = props => {
                             list={props.scheduleList}
                             handleChangeSchedule={props.handleChangeSchedule}
                             handelEditShedule={props.handelEditShedule}
+                            handelEditAssessment={props.handelEditAssessment}
                         />
                     </div>
                 </div>}

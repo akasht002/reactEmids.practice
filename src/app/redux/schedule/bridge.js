@@ -9,9 +9,10 @@ export const Schedule = {
     getRecurringPatternSuccess: 'getRecurringPatternSuccess/schedule',
     getDaysSuccess: 'getDaysSuccess/Schedule',
     disableShowmore: 'disableShowmore/Schedule',
-    clearESPList: 'clearESPList/Schedule',
+    clearESPListSchedule: 'clearESPListSchedule/Schedule',
     createOrEditAssessmentSuccess:'schedule/assessmentCreateOrEditSuccess',
     getAssessmentDetailSuccess: 'Schedule/getAssessmentDetailSuccess',
     getIndividualSchedulesDetailsSuccess: 'getIndividualSchedulesDetailsSuccess/Schedule',
-    isScheduleEdit: 'isScheduleEdit/Schedule'
+    isScheduleEdit: 'isScheduleEdit/Schedule',
+    isAssessmentEdit:'isAssessmentEdit/Schedule'
 };

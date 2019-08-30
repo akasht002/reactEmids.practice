@@ -20,7 +20,7 @@ import {
   getDays,
   getfirstlastvisitdate
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import { getIndividualSchedulesDetails } from '../../../redux/schedule/actions';
+import { getIndividualSchedulesDetails,getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
   getServiceCategory,
   getServiceType,
@@ -110,7 +110,7 @@ export class VisitServiceDetails extends Component {
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       this.props.getServiceRequestList(this.props.ServiceRequestId);
-      this.props.getEntityServiceProviderList(data);
+      this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId);
       this.props.getSchedulesList(this.props.patientId);
       this.props.getDays();
     }
@@ -387,9 +387,14 @@ export class VisitServiceDetails extends Component {
     this.props.getEntityServiceProviderList(data);
   }
 
-  toggleEditModal = (visitId) => {
+  toggleEditModal = async(visitId) => {
+    let data = {
+      pageNumber: this.state.pageNumber,
+      pageSize: this.state.pageSize
+    }
     this.setState({ editModal: !this.state.editModal, visitId: visitId })
-    this.props.getServiceVisitDetails(visitId)
+    await this.props.getServiceVisitDetails(visitId)
+    await this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId);
   }
 
 
@@ -469,7 +474,7 @@ export class VisitServiceDetails extends Component {
         pageNumber: this.state.pageNumberESP,
         pageSize: this.state.pageSizeESP
       }
-      this.props.getEntityServiceProviderList(data);
+      this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId);
     }
     this.setState({
       searchOpen: !this.state.searchOpen,
@@ -501,7 +506,7 @@ export class VisitServiceDetails extends Component {
         pageNumber: this.state.pageNumberESP,
         pageSize: this.state.pageSizeESP
       }
-      this.props.getEntityServiceProviderList(data)
+      this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId)
     })
   }
 
@@ -510,9 +515,6 @@ export class VisitServiceDetails extends Component {
     this.getModalData(PAGE_NO, pageSize)
   }
 
-  handelEditShedule = (scheduleId) => {
-    this.props.getIndividualSchedulesDetails(scheduleId)
-  }
 
   visitProcessing = data => {
     this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy ?
@@ -556,6 +558,16 @@ export class VisitServiceDetails extends Component {
         return ''
     }
   }
+
+handelEditShedule = (scheduleId) => {
+  this.props.clearESPListSchedule()
+  this.props.getIndividualSchedulesDetails(scheduleId)
+}
+
+handelEditAssessment = (assessmentId) => {
+  this.props.clearESPListSchedule()
+  this.props.getAssessmentDetailsById(assessmentId)
+}
 
   render() {
     let modalContent =
@@ -740,6 +752,7 @@ export class VisitServiceDetails extends Component {
                   toggleToolTip={this.toggleToolTip}
                   handelEditShedule={this.handelEditShedule}
                   navigateToparticularPageBasedonId={this.navigateToparticularPageBasedonId}
+                  handelEditAssessment={this.handelEditAssessment}
                   handleEsp={this.handleEsp}
                   clickShowMore={this.clickShowMore}
                   disableShowmore={this.props.disableShowmore}
@@ -824,7 +837,7 @@ function mapDispatchToProps(dispatch) {
     getSchedulesList: (data) => dispatch(getSchedulesList(data)),
     goToAddSchedule: () => dispatch(push(Path.schedule)),
     getVisitList: (data) => dispatch(getVisitList(data)),
-    getEntityServiceProviderList: (data) => dispatch(getEntityServiceProviderList(data)),
+    getEntityServiceProviderList: (data, selectedESPId) => dispatch(getEntityServiceProviderList(data, selectedESPId)),
     getServiceCategory: () => dispatch(getServiceCategory()),
     getServiceType: (data) => dispatch(getServiceType(data)),
     ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
@@ -845,10 +858,12 @@ function mapDispatchToProps(dispatch) {
     getSummaryDetails: (data) => dispatch(getSummaryDetails(data)),
     getSavedSignature: (data) => dispatch(getSavedSignature(data)),
     formDirtySummaryDetails: () => dispatch(formDirtySummaryDetails()),
+    getAssessmentDetailsById: (data) => dispatch(getAssessmentDetailsById(data)),
     cancelHiredServiceProvider: (data) => dispatch(cancelHiredServiceProvider(data)),
     acceptservicerequest: (data) => dispatch(acceptservicerequest(data)),
     updateHireStatusForServiceRequest: (data) => dispatch(updateHireStatusForServiceRequest(data)),
     getDays: () => dispatch(getDays()),
+    clearESPListSchedule: () => dispatch(clearESPListSchedule()),
     clearServiceType: (data) => dispatch(clearServiceType(data)),
     clearServiceCategory: (data) => dispatch(clearServiceCategory(data)),
     getfirstlastvisitdate: (data) => dispatch(getfirstlastvisitdate(data))

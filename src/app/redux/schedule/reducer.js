@@ -13,7 +13,7 @@ const defaultState = {
     disableShowmore: false, assessmentDetails: {},
     assessmentSuccess: false,
     individualSchedulesDetails: '',
-    isIndividualScheduleEdit: false
+    isAssessmentEdit: ''
 };
 
 const scheduleState = (state = defaultState, action) => {
@@ -79,7 +79,7 @@ const scheduleState = (state = defaultState, action) => {
                 disableShowmore: action.data
             };
 
-        case Schedule.clearESPList:
+        case Schedule.clearESPListSchedule:
             return {
                 ...state,
                 entityServiceProvidersList: [],
@@ -109,6 +109,11 @@ const scheduleState = (state = defaultState, action) => {
                 ...state,
                 isIndividualScheduleEdit: action.data
             }; 
+        case Schedule.isAssessmentEdit:
+            return {
+                ...state,
+                isAssessmentEdit: action.data
+            };
 
         default:
             return state;
