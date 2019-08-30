@@ -149,7 +149,7 @@ export function getVisitServiceHistoryByIdDetail(data) {
     return (dispatch) => {
         dispatch(getServiceRequestId(data))
         dispatch(visitHistoryLoading(true));
-        let getServiceVisitsHistoryById = (getUserInfo().isEntityServiceProvider || isEntityUser) ? API.getSummaryDetailsForEsp : API.getServiceVisitsHistoryById
+        let getServiceVisitsHistoryById = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getSummaryDetailsForEsp : API.getServiceVisitsHistoryById
         ServiceRequestGet(getServiceVisitsHistoryById + data).then((resp) => {
             dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data))
             resp.data && dispatch(push(Path.visitSummaryDetail))
