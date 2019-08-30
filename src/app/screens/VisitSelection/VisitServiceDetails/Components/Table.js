@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
 import Moment from 'react-moment';
+import { DATE_FORMATS } from '../../../../constants/constants';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
-import { PAGE_SIZE_OPTIONS, VISIT_STATUS, DATE_FORMATS } from '../../../../constants/constants'
+import { PAGE_SIZE_OPTIONS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
+import {isEntityUser} from '../../../../utils/userUtility';
+import {isFutureDay} from '../../../../utils/dateUtility'
 import { getUserInfo } from '../../../../services/http'
-import {isEntityUser} from '../../../../utils/userUtility'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import './style.css';
 
@@ -105,10 +107,12 @@ export const Table = props => {
                                 >{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
                             </td>}
                             {
-                                isEntity &&
+                                isEntity && item.visitStatusId === VISIT_STATUS.startVisit.id && isFutureDay(item.visitDate) ?
                                 <td>
                                     <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
                                 </td>
+                                : 
+                                <td></td>
                             }
                         </tr>
                     })}

@@ -40,6 +40,7 @@ export const PlanTab = props => {
                             list={props.scheduleList}
                             handleChangeSchedule={props.handleChangeSchedule}
                             handelEditShedule={props.handelEditShedule}
+                            handelEditAssessment={props.handelEditAssessment}
                         />
                     </div>
                 </div>}
@@ -92,6 +93,11 @@ export const PlanTab = props => {
                             ServiceStatus={props.ServiceStatus}
                             handleChangeserviceStatus={props.handleChangeserviceStatus}
                             checked={props.checked}
+                            entityServiceProvidersList={props.entityServiceProvidersList}
+                            handleEsp={props.handleEsp}
+                            clickShowMore={props.clickShowMore}
+                            disableShowmore={props.disableShowmore}
+                            visitDate={props.visitDate}
                         />
                     </div>
                 </div>
