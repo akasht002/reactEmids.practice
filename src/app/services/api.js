@@ -192,5 +192,6 @@ export const API = {
     getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
     getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
     getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/',
-    acceptservicerequest: 'servicerequest/acceptservicerequest'
+    acceptservicerequest: 'servicerequest/acceptservicerequest',
+    getfirstlastvisitdate: 'plan/getfirstlastvisitdate'
 }
