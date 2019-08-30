@@ -348,8 +348,7 @@ export class Individuals extends Component {
       default:
         this.props.getServiceRequestId(0);
         this.props.setPatient(data.patientId)
-        this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPatient)
-        this.props.goToVisitServiceDetails();
+        this.props.goToPatientProfile()
         break;
     }
   }
@@ -447,7 +446,8 @@ export function mapDispatchToProps(dispatch) {
     setPatient: data => dispatch(setPatient(data)),
     getIndividualsFeedbackList: (data) => dispatch(getIndividualsFeedbackList(data)),
     getVisitServiceHistoryByIdDetail: data =>
-      dispatch(getVisitServiceHistoryByIdDetail(data))
+      dispatch(getVisitServiceHistoryByIdDetail(data)),
+    goToPatientProfile: () => dispatch(push(Path.patientProfile))  
   }
 }
 
