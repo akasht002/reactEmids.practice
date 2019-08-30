@@ -44,7 +44,7 @@ export function getVisitServiceCountList(data) {
     return (dispatch, getState) => {
         Post(API.getVisitServiceCount, data).then((resp) => {
             if (resp && resp.data) {
-                let {activeSubTab, visitServiceCountList} = getState().dashboardState.VisitServiceCountListState.activeSubTab
+                let {activeSubTab, visitServiceCountList} = getState().dashboardState.VisitServiceCountListState
                 let dataCount = checkDataCount(resp)
                 dispatch(setPaginationRowCountSuccess(dataCount));
                 if (activeSubTab !== 'All') {
