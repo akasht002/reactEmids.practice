@@ -26,7 +26,8 @@ const defaultState = {
     entityServiceProvidersList: [],
     disableShowmore: false,
     patientId: 0,
-    activeTab: serviceRequestDetailsTab.request
+    activeTab: serviceRequestDetailsTab.request,
+    visitDate: {}
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -168,6 +169,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         return {
             ...state,
             activeTab: action.data
+        };
+        case VisitServiceDetails.getfirstlastvisitdateSuccess:
+        return {
+            ...state,
+            visitDate: action.data
         };
         default:
             return state;

@@ -17,13 +17,16 @@ import {
   cancelHiredServiceProvider,
   acceptservicerequest,
   updateHireStatusForServiceRequest,
-  getDays
+  getDays,
+  getfirstlastvisitdate
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails,getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
   getServiceCategory,
   getServiceType,
-  ServiceRequestStatus
+  ServiceRequestStatus,
+  clearServiceType,
+  clearServiceCategory
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { Path } from '../../../routes';
 import { push, goBack } from '../../../redux/navigation/actions';
@@ -82,7 +85,8 @@ export class VisitServiceDetails extends Component {
       isRejectAlertPopupOpen: false,
       isAcceptAlertPopupOpen: false,
       isCancelAlertPopupOpen: false,
-      isEngageAlertPopupOpen: false
+      isEngageAlertPopupOpen: false,
+      entityServiceProviders: []
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -92,6 +96,16 @@ export class VisitServiceDetails extends Component {
     let data = {
       pageNumber: this.state.pageNumber,
       pageSize: this.state.pageSize
+    }
+    let getISPVisitDate = {
+      serviceRequestId: this.props.ServiceRequestId,
+      patientId: this.props.patientId,
+      serviceProviderId: getUserInfo().serviceProviderId
+    }
+    let getEuVisitDate = {
+      serviceRequestId: 0,
+      patientId: this.props.patientId,
+      serviceProviderId: getUserInfo().serviceProviderId
     }
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
@@ -104,9 +118,15 @@ export class VisitServiceDetails extends Component {
       if (this.props.ServiceRequestId === 0) {
         this.props.getSchedulesList(this.props.patientId)
         this.getVisitList()
-      }else{
-          this.props.history.push(Path.visitServiceList)
+      } else {
+        this.props.history.push(Path.visitServiceList)
       }
+    }
+
+    if(!isEntityUser()){
+      this.props.getfirstlastvisitdate(getISPVisitDate)
+    }else{
+      this.props.getfirstlastvisitdate(getEuVisitDate)
     }
     this.props.getServiceCategory();
     this.props.ServiceRequestStatus();
@@ -137,7 +157,8 @@ export class VisitServiceDetails extends Component {
       pageSize: this.state.rowPageSize,
       startDate: null,
       endDate: null,
-      patientId: this.props.patientId
+      patientId: this.props.patientId,
+      entityServiceProviders: this.state.entityServiceProviders
     }
     this.props.getVisitList(data);
   }
@@ -199,15 +220,16 @@ export class VisitServiceDetails extends Component {
     this.props.goToAddSchedule();
   }
 
-  getModalData = (pageNumber, pageSize) => {
+  getModalData = (pageNumber, pageSize, isReset = false) => {
     let data = {
       planScheduleIds: this.selectedSchedules,
-      visitStatuses: this.state.serviceStatus,
-      serviceTypes: this.state.serviceTypes,
+      visitStatuses: isReset ? [] : this.state.serviceStatus,
+      serviceTypes: isReset ? [] : this.state.serviceTypes,
       pageNumber: pageNumber,
       pageSize: pageSize,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
+      startDate: isReset ? null : this.state.startDate,
+      endDate: isReset ? null : this.state.endDate,
+      entityServiceProviders: isReset ? [] : this.state.entityServiceProviders,
       patientId: this.props.patientId
     }
     this.props.getVisitList(data);
@@ -232,7 +254,8 @@ export class VisitServiceDetails extends Component {
       pageSize: this.state.rowPageSize,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
-      patientId: this.props.patientId
+      patientId: this.props.patientId,
+      entityServiceProviders: this.state.entityServiceProviders
     }
     this.props.getVisitList(data);
   }
@@ -244,7 +267,9 @@ export class VisitServiceDetails extends Component {
 
   toggleFilter = () => {
     this.setState({
-      filterOpen: !this.state.filterOpen
+      filterOpen: !this.state.filterOpen,
+      startDate: this.props.visitDate.startVisitDateForWeb,
+      endDate: this.props.visitDate.endVisitDateForWeb
     })
   }
 
@@ -270,6 +295,19 @@ export class VisitServiceDetails extends Component {
     this.setState({
       serviceTypes: serviceType
     })
+  }
+
+  handleEsp = (item, e) => {
+    let entityServiceProviders = this.state.entityServiceProviders
+    if (e.target.checked) {
+      entityServiceProviders.push(item)
+    } else {
+      let index = entityServiceProviders.indexOf(item);
+      if (index > -1) {
+        entityServiceProviders.splice(index, 1);
+      }
+    }
+    this.setState({ entityServiceProviders: entityServiceProviders });
   }
 
   dateChanged = (date) => {
@@ -333,9 +371,20 @@ export class VisitServiceDetails extends Component {
       serviceTypes: [],
       startDate: null,
       endDate: null,
-      rowPageSize: DEFAULT_PAGE_SIZE
+      rowPageSize: DEFAULT_PAGE_SIZE,
+      activePage: PAGE_NO,
+      entityServiceProviders: [],
+      selectedOption: ''
     })
-    this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE)
+    let data = {
+      pageNumber: PAGE_NO,
+      pageSize: DEFAULT_PAGE_SIZE
+    }
+    this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, true);
+    this.props.getVisitStatus();
+    this.props.clearServiceCategory(this.props.ServiceType);
+    this.props.clearServiceType([]);
+    this.props.getEntityServiceProviderList(data);
   }
 
   toggleEditModal = async(visitId) => {
@@ -704,6 +753,10 @@ handelEditAssessment = (assessmentId) => {
                   handelEditShedule={this.handelEditShedule}
                   navigateToparticularPageBasedonId={this.navigateToparticularPageBasedonId}
                   handelEditAssessment={this.handelEditAssessment}
+                  handleEsp={this.handleEsp}
+                  clickShowMore={this.clickShowMore}
+                  disableShowmore={this.props.disableShowmore}
+                  visitDate={this.props.visitDate}
                 />
                 <PatientProfileTab />
               </TabContent>
@@ -810,7 +863,10 @@ function mapDispatchToProps(dispatch) {
     acceptservicerequest: (data) => dispatch(acceptservicerequest(data)),
     updateHireStatusForServiceRequest: (data) => dispatch(updateHireStatusForServiceRequest(data)),
     getDays: () => dispatch(getDays()),
-    clearESPListSchedule: () => dispatch(clearESPListSchedule())
+    clearESPListSchedule: () => dispatch(clearESPListSchedule()),
+    clearServiceType: (data) => dispatch(clearServiceType(data)),
+    clearServiceCategory: (data) => dispatch(clearServiceCategory(data)),
+    getfirstlastvisitdate: (data) => dispatch(getfirstlastvisitdate(data))
   }
 }
 
@@ -834,6 +890,7 @@ function mapStateToProps(state) {
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
     activeTab: VisitServiceDetailsState.activeTab,
     daysType: VisitServiceDetailsState.daysType,
+    visitDate: VisitServiceDetailsState.visitDate
   }
 }
 

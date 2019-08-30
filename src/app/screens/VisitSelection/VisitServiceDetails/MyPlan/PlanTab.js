@@ -94,6 +94,11 @@ export const PlanTab = props => {
                             ServiceStatus={props.ServiceStatus}
                             handleChangeserviceStatus={props.handleChangeserviceStatus}
                             checked={props.checked}
+                            entityServiceProvidersList={props.entityServiceProvidersList}
+                            handleEsp={props.handleEsp}
+                            clickShowMore={props.clickShowMore}
+                            disableShowmore={props.disableShowmore}
+                            visitDate={props.visitDate}
                         />
                     </div>
                 </div>
