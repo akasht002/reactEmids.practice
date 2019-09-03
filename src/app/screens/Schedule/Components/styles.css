@@ -2887,7 +2887,7 @@ background:#f2ebf3;
 .schedule-listblock fieldset
 {
 width: 100%;
-display: table;
+display: block;
 }
 
 .schedule-listblock fieldset input
