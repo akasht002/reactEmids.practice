@@ -478,3 +478,10 @@ export const SERVICE_CATEGORY = {
         "keyValue": "Transportation"
     }
 }
+
+export const InddividualFilterActiveTab = {
+    "contracts": '1',
+    "clinicalConditions": '2',
+    "age": '3',
+    "gender": '4',
+}

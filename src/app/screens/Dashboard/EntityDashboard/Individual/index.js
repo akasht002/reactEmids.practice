@@ -40,6 +40,7 @@ import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
 import {
   getVisitServiceHistoryByIdDetail,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import Filter from './Filters'
 
 export class Individuals extends Component {
   constructor(props) {
@@ -56,7 +57,6 @@ export class Individuals extends Component {
         maximumAge: 50,
         isChanged: false
       },
-      attributedProviders: [],
       memberContractId: 0,
       data: [],
       activePage: this.props.savedPageNumber,
@@ -73,13 +73,9 @@ export class Individuals extends Component {
       feedbackServiceVisits: [],
       pageNumberFeedback: DEFAULT_PAGE_NUMBER,
       pageSizeFeedback: DEFAULT_PAGE_SIZE,
-      activePageFeedback: DEFAULT_PAGE_NUMBER
+      activePageFeedback: DEFAULT_PAGE_NUMBER,
+      filterOpen: false
     }
-    this.dataSet = []
-    this.countValue = 0
-    this.sortName = 'ModifiedDate'
-    this.sortOrder = 'asc'
-    this.IsSortIcon = false
     this.gridHeader = allIndividuals
   }
 
@@ -184,14 +180,12 @@ export class Individuals extends Component {
   getTable = async e => {
     let sortName = this.getSortNameAndOrderBasedOnStatus(e.target.value).sortName;
     let sortOrder = this.getSortNameAndOrderBasedOnStatus(e.target.value).sortOrder;
-    this.IsSortIcon = false
     await this.setState({
       status: e.target.value,
       pageSize: this.state.pageSize,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
       searchKeyword: 'default',
-      attributedProviders: [],
       clinicalConditions: [],
       cohorts: [],
       memberContractId: 0,
@@ -364,6 +358,12 @@ export class Individuals extends Component {
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
+  toggleFilter = () => {
+    this.setState({
+      filterOpen: !this.state.filterOpen
+    })
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state;
 
@@ -388,6 +388,12 @@ export class Individuals extends Component {
               status={status}
             />
           </div>
+          <span
+              className='primaryColor ProfileHeaderFilter'
+              onClick={this.toggleFilter}
+            >
+              Filters
+            </span>
           {this.props.individualsList && this.props.individualsList.length > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -427,6 +433,46 @@ export class Individuals extends Component {
           buttonLabel='Close'
           modalTitle='Feedback Alerts'
           onClick={this.toggleFeedbaclAlert}
+        />
+        <Filter
+          isOpen={this.state.filterOpen}
+          toggle={this.toggleFilter}
+          closeFIlter={this.closeFIlter}
+          applyFilter={this.applyFilter}
+          applyReset={this.applyReset}
+          serviceType={this.props.serviceType}
+          handleserviceType={this.handleserviceType}
+          genderType={this.props.genderType}
+          handleGenderType={this.handleGenderType}
+          genderPreference={this.state.genderPreference}
+          onChangeSlider={this.onChangeSlider}
+          serviceAreaList={this.props.serviceAreaList}
+          handleServiceArea={this.handleServiceArea}
+          serviceArea={this.props.serviceArea}
+          clinicalConditionList={this.props.clinicalConditionList}
+          handleClinicalConditions={this.handleClinicalConditions}
+          checked={this.state.isChecked}
+          contracts={this.props.contracts}
+          cohorts={this.props.cohorts}
+          handleContracts={this.handleContracts}
+          handleCohorts={this.handleCohorts}
+          handleAttributedProviders={this.handleAttributedProviders}
+          ageRange={this.state.ageRange}
+          genderId={this.state.genderId}
+          handleState={this.handleState}
+          stateDetail={this.props.states}
+          selectedOptionState={this.state.selectedOptionState}
+          stateId={this.state.stateId}
+          onClickHandleIncr={this.onClickHandleIncr}
+          onClickHandleDecr={this.onClickHandleDecr}
+          coverageArea={this.state.coverageArea}
+          handleStreet={this.handleStreet}
+          handleCity={this.handleCity}
+          handleZip={this.handleZip}
+          zip={this.state.zip}
+          city={this.state.city}
+          street={this.state.street}
+          memberContractId={this.state.memberContractId}
         />
       </div>
     )
