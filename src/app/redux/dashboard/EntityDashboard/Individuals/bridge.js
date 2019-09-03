@@ -18,5 +18,10 @@ export const IndividualsList = {
     savePaginationNumber: 'savePaginationNumber/individual',
     setFromDate: 'setFromDate/individual',
     setToDate: 'setToDate/individual',
-    setActiveStatusForAllTab: 'setActiveStatusForAllTab/individual'
+    setActiveStatusForAllTab: 'setActiveStatusForAllTab/individual',
+    getClinicalConditionSuccess: 'getClinicalConditionSuccess/serviceprovidersfilters',
+    getGenderSuccess: 'get_gender_success/serviceprovidersfilters',
+    clearClinicalCondition: 'clearClinicalCondition/serviceprovidersfilters',
+    clearGenderType: 'clear_genderType/serviceprovidersfilters',
+    resetContracts: 'resetContracts/individual'
 }
