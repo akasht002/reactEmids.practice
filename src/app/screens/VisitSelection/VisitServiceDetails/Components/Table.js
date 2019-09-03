@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import Moment from 'react-moment';
 import { DATE_FORMATS } from '../../../../constants/constants';
-import { ThemeProvider } from '@zendeskgarden/react-theming';
-import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
-import { PAGE_SIZE_OPTIONS, SERVICE_VISIT_STATUS, VISIT_STATUS } from '../../../../constants/constants'
+import { PAGE_SIZE_OPTIONS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
+import {isEntityUser} from '../../../../utils/userUtility';
+import {isFutureDay} from '../../../../utils/dateUtility'
 import { getUserInfo } from '../../../../services/http'
-import {isEntityUser} from '../../../../utils/userUtility'
+import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import './style.css';
 
 const renderServiceTypeImages = serviceTypes => {
@@ -54,6 +54,7 @@ const renderStatusBasedOnVisitStatus = visitStatusId => {
 
 export const Table = props => {
     let isEntity = isEntityUser()
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
     return (
         <Fragment>
             <table className="table-responsive plan-tableview" cellpadding="6" cellspacing="6">
@@ -69,10 +70,12 @@ export const Table = props => {
                 </thead>
                 <tbody>
                     {props.visitList.map(item => {
+                        let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : getUTCFormatedDate(item.visitStartTime, DATE_FORMATS.hh_mm_a)
+                        let duration = (isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)
                         return <tr>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
-                            <td>{item.startTime}</td>
-                            <td>{item.duration}</td>
+                            <td>{startTime}</td>
+                            <td>{duration}</td>
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
@@ -105,10 +108,12 @@ export const Table = props => {
                                 >{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
                             </td>}
                             {
-                                isEntity &&
+                                isEntity && item.visitStatusId === VISIT_STATUS.startVisit.id && isFutureDay(item.visitDate) ?
                                 <td>
                                     <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
                                 </td>
+                                : 
+                                <td></td>
                             }
                         </tr>
                     })}

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { getFields } from "../../../../utils/validations";
+import {VISIT_TYPE} from "../../../../constants/constants"
 
 export const ScheduleList = props => {
     return (
@@ -27,7 +28,11 @@ export const ScheduleList = props => {
                                 </label>
 
                                 <div className="edit-block">
-                                <button onClick={() => props.handelEditShedule(item.planScheduleId)}>Edit</button>
+                                <button onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
+                                                props.handelEditShedule(item.planScheduleId): 
+                                                props.handelEditAssessment(item.planScheduleId)}>
+                                    Edit
+                                </button>
                                 </div>
                             </fieldset>
                           

@@ -343,30 +343,31 @@ export const setServiceVisitLoader =(data) =>{
 }
 
 export function goToServiceVisitProcessing(data){
+  let visitID = data.serviceRequestVisitId !==0 ? data.serviceRequestVisitId : data.servicePlanVisitId
   return (dispatch) => {
     switch (data.visitStatusId) {      
       case START_VISIT :       
-        dispatch(getPerformTasksList(data.serviceRequestVisitId, true))
+        dispatch(getPerformTasksList(visitID, true))
         dispatch(formDirty());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case IN_PROGRESS :        
-        dispatch(getPerformTasksList(data.serviceRequestVisitId, true));
+        dispatch(getPerformTasksList(visitID, true));
         dispatch(formDirty());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case PAYMENT_PENDING :
-        dispatch(getServiceVisitId(data.serviceRequestVisitId, true));
-        dispatch(getSummaryDetails(data.serviceRequestVisitId));
-        dispatch(getSavedSignature(data.serviceRequestVisitId));
+        dispatch(getServiceVisitId(visitID, true));
+        dispatch(getSummaryDetails(visitID));
+        dispatch(getSavedSignature(visitID));
         dispatch(formDirtySummaryDetails());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case VISIT_SUMMARY :
-        dispatch(getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId))
+        dispatch(getVisitServiceHistoryByIdDetail(visitID))
         break;
       default:
     }

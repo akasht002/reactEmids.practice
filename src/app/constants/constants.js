@@ -258,7 +258,8 @@ export const DATE_FORMATS = {
     timeh_mm_a: 'h:mm a',
     m_d_yy: 'M/D/YY',
     hh_mm: 'HH:mm',
-    hhMinSec: "HH:mm:ss"
+    hhMinSec: "HH:mm:ss",
+    hh_mm_a: 'hh:mm a'
 }
 
 
@@ -360,4 +361,24 @@ export const serviceRequestDetailsTab = {
     myPlan: '2',
     profile: '3'
 }
+
+export const SERVICE_CATEGORY = {
+    adl: {
+        "id": 1,
+        "keyValue": "Activities of Daily Living"
+    },
+    helpAtHome: {
+        "id": 2,
+        "keyValue": "Help at Home"
+    },
+    groceriesAndNutrition: {
+        "id": 3,
+        "keyValue": "Groceries and Nutrition"
+    },
+    transportation: {
+        "id": 4,
+        "keyValue": "Transportation"
+    }
+}
+
 

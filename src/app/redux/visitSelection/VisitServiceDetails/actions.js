@@ -12,10 +12,10 @@ import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
 import { VisitServiceDetails } from './bridge'
-import { USERTYPES } from '../../../constants/constants'
+import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST } from '../../../constants/constants'
 import { isEntityUser} from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
-import { orderBy } from 'lodash'
+import { orderBy, uniqBy } from 'lodash'
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -90,11 +90,12 @@ export function dispatchServiceRequestByServiceProvider() {
 }
 
 export function setEntityServiceProvider(data) {
-  return dispatch => { 
-    if(data.serviceRequestId === 0){
+  return dispatch => {
+    if (data.serviceRequestId === 0) {
       dispatch(setActiveTab(serviceRequestDetailsTab.myPlan))
     }
-    dispatch(setEntityServiceProviderSuccess(data)) }
+    dispatch(setEntityServiceProviderSuccess(data))
+  }
 }
 
 export function formDirtyVisitServiceDetails() {
@@ -395,73 +396,85 @@ export const getServiceVisitDetailsSuccess = data => {
 
 export const getEntityServiceProviderListSuccess = (data) => {
   return {
-      type: VisitServiceDetails.getEntityServiceProviderListSuccess,
-      data
+    type: VisitServiceDetails.getEntityServiceProviderListSuccess,
+    data
   }
 }
 
 export const disableShowmore = (data) => {
   return {
-      type: VisitServiceDetails.disableShowmore,
-      data
+    type: VisitServiceDetails.disableShowmore,
+    data
   }
 }
 
 export const clearESPList = () => {
   return {
-      type: VisitServiceDetails.clearESPList
+    type: VisitServiceDetails.clearESPList
   }
 }
 
+export const getfirstlastvisitdateSuccess = data => {
+  return {
+    type: VisitServiceDetails.getfirstlastvisitdateSuccess,
+    data
+  }
+}
 
 export function selectESP(espId) {
   return (dispatch, getState) => {
-      let espList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
-      let data = espList.map((value) => {
-          return ({
-              ...value,
-              selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10) ? 1 : 0
-          })
+    let espList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
+    let data = espList.map((value) => {
+      return ({
+        ...value,
+        selected: parseInt(value.serviceProviderId, 10) === parseInt(espId, 10)
       })
-      let list = orderBy(data, ['selected'], ['desc']);
-      dispatch(getEntityServiceProviderListSuccess(list))
+    })
+    let list = orderBy(data, ['selected'], ['desc']);
+    dispatch(getEntityServiceProviderListSuccess(list))
   }
 }
 
 
-export function getEntityServiceProviderList(data) {
+export function getEntityServiceProviderList(data, selectedESPId = '') {
   return (dispatch, getState) => {
-      // dispatch(startLoading())
+      dispatch(startLoading())
       Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
           .then(resp => {
               let oldEspList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
               let modifiedList = [...oldEspList, ...resp.data];
-              dispatch(getEntityServiceProviderListSuccess(modifiedList))
-              if (resp.data.length < 9) {
-                  dispatch(disableShowmore(true))
-              } else if (resp.data.length === 9) {
-                  dispatch(disableShowmore(false))
-              }
+              let selectedESP = modifiedList.map((type, index) => {
+                  return {
+                      ...type,
+                      selected: type.serviceProviderId === selectedESPId
+                  }
+              });
+
+              let espList = uniqBy(selectedESP, function (x) {
+                return x.serviceProviderId;
+              });
+              dispatch(getEntityServiceProviderListSuccess(espList))
+              dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
           })
           .catch(err => {
-              // dispatch(endLoading())
+              dispatch(endLoading())
           })
   }
 }
 
 export function getEntityServiceProviderListSearch(data) {
   return (dispatch, getState) => {
-      Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}?searchtext=${data.searchKeyword}`)
-          .then(resp => {
-              dispatch(getEntityServiceProviderListSuccess(resp.data))
-              if (resp.data.length < 9) {
-                  dispatch(disableShowmore(true))
-              } else if (resp.data.length === 9) {
-                  dispatch(disableShowmore(false))
-              }
-          })
-          .catch(err => {
-          })
+    Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}?searchtext=${data.searchKeyword}`)
+      .then(resp => {
+        dispatch(getEntityServiceProviderListSuccess(resp.data))
+        if (resp.data.length < 9) {
+          dispatch(disableShowmore(true))
+        } else if (resp.data.length === 9) {
+          dispatch(disableShowmore(false))
+        }
+      })
+      .catch(err => {
+      })
   }
 }
 
@@ -493,7 +506,8 @@ export function getSchedulesList(patientId) {
           pageSize: 10,
           startDate: null,
           endDate: null,
-          patientId: patientId
+          patientId: patientId,
+          entityServiceProviders: []
         }
         dispatch(getSchedulesListSuccess(resp.data))
         dispatch(getVisitList(model))
@@ -509,7 +523,7 @@ export function getVisitList(data) {
   let getVisitList = isEntityServiceProvider ? API.getEspVisitList : (isEntityUser() ? API.getVisitList : API.getIspVisitList)
   data.serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch, getState) => {
-    !isEntityUser() && 
+    !isEntityUser() &&
       (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
     dispatch(startLoading());
     ServiceRequestPost(getVisitList, data)
@@ -543,7 +557,7 @@ export function getVisitStatus() {
     dispatch(startLoading());
     ServiceRequestGet(API.getVisitStatus).then((resp) => {
       resp.data.forEach(obj => {
-        let listToDelete = [61, 90];
+        let listToDelete = [61, 60];
         let deleatedData = resp.data.filter(obj => !listToDelete.includes(obj.id));
         let data = deleatedData.map((item) => {
           let value;
@@ -635,7 +649,18 @@ export function assignESP(data) {
 
 export const setActiveTab = data => {
   return {
-      type: VisitServiceDetails.setActiveTab,
-      data
+    type: VisitServiceDetails.setActiveTab,
+    data
   }
 }
+
+export function getfirstlastvisitdate(data) {
+  return (dispatch) => {
+    dispatch(startLoading());
+    ServiceRequestPost(API.getfirstlastvisitdate, data)
+      .then(resp => {
+        dispatch(getfirstlastvisitdateSuccess(resp.data))
+        dispatch(endLoading());
+      })
+  }
+};
