@@ -31,12 +31,32 @@
     margin-top: 60px;
 }
 
-.FilterWidget.true{
+.parent-fullblock .FilterWidget.true{
     width: 660px;
+    position: fixed;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
 }
+
 
 .FilterWidgetForm{
     height: 100%;
+    z-index: 9999;
+}
+
+.entity-dashboard-section .FilterWidget.true .filterOverlay, .CTFilter.FilterWidget.true .filterOverlay {
+    position: fixed;
+    top: 0;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    background: transparent;
+}
+
+.CTFilter.FilterWidget {
+    position: fixed;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
 }
 
 .FilterContainer{
@@ -72,7 +92,7 @@
     height: 16px;
     width: 16px;
     top: 0;
-    background-image: url("../../../../assets/images/removeBlack.svg");
+    background-image: url("../../../../../assets/images/removeBlack.svg");
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -221,7 +241,7 @@
     background-color: #7a329f;
     border-color: #7a329f;
     background-repeat: no-repeat;
-    background-image: url("../../../../assets/images/checked.svg");
+    background-image: url("../../../../../assets/images/checked.svg");
     background-size: 11px;
     background-position: center;
 }

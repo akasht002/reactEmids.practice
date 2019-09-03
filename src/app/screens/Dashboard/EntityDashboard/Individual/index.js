@@ -388,13 +388,9 @@ export class Individuals extends Component {
               status={status}
             />
           </div>
-          <span
-              className='primaryColor ProfileHeaderFilter'
-              onClick={this.toggleFilter}
-            >
-              Filters
-            </span>
+          <div className="search-view-top">
           {this.props.individualsList && this.props.individualsList.length > 0 ?
+            
             <div className="table-search-block">
               <RowPerPage
                 pageSize={pageSize}
@@ -407,6 +403,26 @@ export class Individuals extends Component {
               />
             </div> : ''
           }
+
+          <div className="search-block-right">
+          <span className="profile-icon-search"></span>
+          <div className="search-container-block">
+          <div className="form-block">
+          <input className="form-control" type="text" placeholder="Enter keyword for global search" maxlength="256" value=""/>
+          <input className="btn btn-primary" type="button" value="Search"/>
+          <i className="close-btn"></i>
+          </div>
+          </div>
+          <span className='profile-header-filter'
+              onClick={this.toggleFilter}
+            >
+              Filters
+            </span>
+          </div>
+        
+
+
+          </div>
           <div className="tab-table-view">
             <div className="full-block-tableview">
               <Grid

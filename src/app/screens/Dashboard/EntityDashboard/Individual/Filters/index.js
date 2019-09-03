@@ -6,6 +6,7 @@ import Gender from "./Gender";
 import Contracts from "./Contracts";
 import ClinicalCondition from "./ClinicalCondition";
 import { InddividualFilterActiveTab } from "../../../../../constants/constants"
+import './style.css'
 
 class Filter extends Component {
 

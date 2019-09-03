@@ -126,7 +126,7 @@ section .ProfileRightWidget {
 }
 
 .iconLogInto:before {
-    background-image: url('../../assets/images/LogInto.svg');
+    background-image: url('../../assets/images/logInto.svg');
 }
 
 .iconPhone:before {
