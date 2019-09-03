@@ -1,5 +1,5 @@
 import { API } from '../../../../services/api';
-import { Post, Get } from '../../../../services/http';
+import { Post, Get, PatientGet } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
 import { getFullName, concatCommaWithSpace } from '../../../../utils/stringHelper'
@@ -7,6 +7,7 @@ import { getValue } from '../../../../utils/userUtility'
 import { IndividualsList } from './bridge';
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
+import _ from 'lodash'
 
 export const startLoadingFeedbackList = () => {
     return {
@@ -168,5 +169,101 @@ export const setActiveStatusForAllTab = data => {
     return {
         type: IndividualsList.setActiveStatusForAllTab,
         data
+    }
+}
+
+export function getAllContracts() {
+    return (dispatch) => {
+        dispatch(startLoading());
+        return PatientGet(API.getAllContracts).then((resp) => {
+            dispatch(getAllContractsSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+    }
+}
+
+export const getAllContractsSuccess = (data) => {
+    data.forEach(function (obj) {
+        obj.isChecked = false
+    })
+    return {
+        type: IndividualsList.getAllContractsSuccess,
+        data
+    }
+}
+
+export function getClinicalCondition () {
+    return dispatch => {
+      PatientGet(API.getAllClinicalCondition)
+        .then(resp => {
+          dispatch(getClinicalConditionSuccess(resp.data))
+        })
+        .catch(err => {
+        })
+    }
+}
+
+export const getClinicalConditionSuccess = data => {
+data.forEach(function (obj) {
+    obj.isChecked = false
+})
+return {
+    type: IndividualsList.getClinicalConditionSuccess,
+    data
+}
+}
+
+export function getGender () {
+    return dispatch => {
+      Get(API.getGender)
+        .then(resp => {
+          dispatch(getGenderSuccess(resp.data))
+        })
+        .catch(err => {
+        })
+    }
+}  
+
+export const getGenderSuccess = data => {
+    _.forEach(data, function (obj) {
+      obj.isChecked = false
+    })
+    return {
+      type: IndividualsList.getGenderSuccess,
+      data
+    }
+}
+
+export const clearClinicalCondition = data => {
+    data.map(item => {
+      return (item.isChecked = false)
+    })
+  
+    return {
+      type: IndividualsList.clearClinicalCondition,
+      data
+    }
+}
+
+export const clearGenderType = data => {
+    data.map(item => {
+      return (item.isChecked = false)
+    })
+  
+    return {
+      type: IndividualsList.clearGenderType,
+      data
+    }
+}
+
+export const resetContracts = contracts => {
+    contracts.forEach(function (obj) {
+        obj.isChecked = false
+    })
+    return {
+        type: IndividualsList.resetContracts,
+        contracts
     }
 }

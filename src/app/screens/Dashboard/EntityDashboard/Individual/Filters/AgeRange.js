@@ -1,5 +1,6 @@
 import React from 'react'
 import InputRange from 'react-input-range'
+import './rangeslider.css'
 
 class AgeRange extends React.Component {
   render () {

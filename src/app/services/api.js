@@ -203,5 +203,7 @@ export const API = {
     getindividualsFeedbackList: 'entityuser/Individual/FeedbackVisit/',
     getServiceProviderFeedbackList: 'entityuser/serviceprovider/feedbackvisit/',
     acceptservicerequest: 'servicerequest/acceptservicerequest',
-    getfirstlastvisitdate: 'plan/getfirstlastvisitdate'
+    getfirstlastvisitdate: 'plan/getfirstlastvisitdate',
+    getAllContracts: 'Membership/Get-all-contracts',
+    getAllClinicalCondition: 'Patient/get-all-clinical-conditions'
 }
