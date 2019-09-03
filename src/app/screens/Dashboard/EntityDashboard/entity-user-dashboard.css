@@ -19,9 +19,10 @@ width:100%;
 clear: both;
 margin:0 auto;
 margin-top: 5px!important;
+min-height: calc(100vh - 380px);
 max-height: calc(100vh - 380px);
 position: relative;
-overflow-y:auto;
+overflow-y:hidden;
 -webkit-box-shadow: 0 0 10px 1px rgba(0,0,0,.08);
 box-shadow: 0 0 10px 1px rgba(0,0,0,.08);
 }
@@ -76,6 +77,8 @@ overflow-y: auto;
 display: block;
 overflow-y: auto;
 width: 100%;
+height: calc(100vh - 425px);
+
 }
 
 table.individuals-tableblock tbody tr
@@ -336,9 +339,10 @@ font-style: normal;
 .filter-label-sub
 {
 display: inline-block;
-line-height: 18px;
+line-height: 20px;
 font-size: 14px;
 color: #8c8c8c;
+height: 36px;
 }
 
 .top-tabicons-block {
@@ -447,6 +451,7 @@ width: 20px;
 height: 20px;
 margin-right: 10px;
 right: 44px;
+position: absolute;
 }
 
 .profile-icon-search:after {
@@ -528,8 +533,9 @@ background-image: url('../../../assets/images/remove.png');
 color: #7a329f;
 margin-left: 15px;
 font-size:14px;
-    position: absolute;
-    right: 0;
+position:absolute;
+right: 0;
+cursor:pointer;
 }
 
 .search-view-top
@@ -540,4 +546,11 @@ align-items:center;
 justify-content:flex-start;
 position: relative;
 width:100%;
+}
+
+@media (min-width: 1367px)
+{
+table.individuals-tableblock tbody {
+height: calc(100vh - 450px)!important;
+}   
 }
