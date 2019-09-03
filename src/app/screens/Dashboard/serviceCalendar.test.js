@@ -1,8 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow, mount } from 'enzyme'
-import { Provider } from 'react-redux'
+import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { MemoryRouter } from 'react-router-dom'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon'
 import { ServiceCalendar } from './serviceCalendar'
@@ -27,6 +25,55 @@ let store
 const mockStore = configureStore()
 const dispatch = sinon.spy()
 const defaultState = {
+  serviceVist: [
+    {
+      "planScheduleId": 438,
+      "name": null,
+      "categoryId": 1,
+      "startDate": "8/30/2019 12:00:00 AM",
+      "endDate": "8/31/2020 12:00:00 AM",
+      "startTime": "16:30",
+      "endTime": "17:30",
+      "duration": null,
+      "isRecurring": true,
+      "description": null,
+      "serviceProviderId": 0,
+      "serviceTypes": [
+        {
+          "serviceTypeId": 2,
+          "serviceTypeDescription": "Bathing",
+          "planVisitTypeDetailsId": 0,
+          "planServiceTypeDetailsId": 0,
+          "serviceTask": null
+        },
+        {
+          "serviceTypeId": 3,
+          "serviceTypeDescription": "Continence",
+          "planVisitTypeDetailsId": 0,
+          "planServiceTypeDetailsId": 0,
+          "serviceTask": null
+        },
+        {
+          "serviceTypeId": 4,
+          "serviceTypeDescription": "Eating",
+          "planVisitTypeDetailsId": 0,
+          "planServiceTypeDetailsId": 0,
+          "serviceTask": null
+        }
+      ],
+      "patientAddressId": 0,
+      "patientId": 1083,
+      "address": null,
+      "schedulePattern": 19,
+      "daily": null,
+      "weekly": null,
+      "monthly": null,
+      "recurringDetails": null,
+      "scheduleType": null,
+      "scheduleTypeId": 115,
+      "schedulePatternType": "Monthly"
+    }
+  ],
   userType: 0,
   authState: {
     userState: {
@@ -44,15 +91,16 @@ const defaultState = {
       patientVisit: [],
       startDate: '2012-03-12',
       serviceVisitDate: '2012-03-12',
+      serviceVist: []
     }
   },
   isStandByModeOn: {
-        isServiceProviderInStandBy: false
+    isServiceProviderInStandBy: false
   },
   serviceVistCount: [{
     visitDate: '2019-05-27'
   }],
-  serviceProviderList:[],
+  serviceProviderList: [],
   getServiceProviderVists: jest.fn(),
   getServiceVisitCount: jest.fn(),
   getEntityServiceProviderList: jest.fn(),
@@ -77,7 +125,9 @@ const defaultState = {
   getVisitServiceHistoryByIdDetail: jest.fn(),
   formDirtySummaryDetails: jest.fn(),
   setEntityServiceProvider: jest.fn(),
-  createDataStore: jest.fn()
+  createDataStore: jest.fn(),
+  goToServiceVisitProcessing: jest.fn(),
+  setActiveTab: jest.fn()
 }
 
 store = mockStore(defaultState)
@@ -169,10 +219,6 @@ describe('Dashboard - Service Calendar', function () {
     shallowWrapper.instance().optionClicked({})
   });
 
-  it('Check the handleClick function', () => {
-    shallowWrapper.instance().handleClick(12123)
-  });
-
   it('Check the showServiceProviderList function', () => {
     let data = {
       target: {
@@ -214,45 +260,59 @@ describe('Dashboard - Service Calendar', function () {
   });
 
   it('Check the goToServiceVisits function :=> SCHEDULED_VISIT_ID', () => {
-    let  data  = { visitStatusId: 43,
-                   serviceRequestVisitId:34,
-                   serviceRequestId:34
-                  }
+    let data = {
+      visitStatusId: 43,
+      serviceRequestVisitId: 34,
+      serviceRequestId: 34
+    }
     shallowWrapper.instance().goToServiceVisits(data)
   });
 
   it('Check the goToServiceVisits function :=> IN_PROGRESS', () => {
-    let  data  = { visitStatusId: 44,
-                   serviceRequestVisitId:34,
-                   serviceRequestId:34
-                  }
+    let data = {
+      visitStatusId: 44,
+      serviceRequestVisitId: 34,
+      serviceRequestId: 34
+    }
     shallowWrapper.instance().goToServiceVisits(data)
   });
 
 
   it('Check the goToServiceVisits function :=> PAYMENT_PENDING', () => {
-    let  data  = { visitStatusId: 45,
-                   serviceRequestVisitId:34,
-                   serviceRequestId:34
-                  }
+    let data = {
+      visitStatusId: 45,
+      serviceRequestVisitId: 34,
+      serviceRequestId: 34
+    }
     shallowWrapper.instance().goToServiceVisits(data)
   });
 
 
   it('Check the goToServiceVisits function :=> VISIT_SUMMARY', () => {
-    let  data  = { visitStatusId: 90,
-                   serviceRequestVisitId:34,
-                   serviceRequestId:34
-                  }
+    let data = {
+      visitStatusId: 90,
+      serviceRequestVisitId: 34,
+      serviceRequestId: 34
+    }
     shallowWrapper.instance().goToServiceVisits(data)
   });
 
   it('Check the goToServiceVisits function :=> default', () => {
-    let  data  = { visitStatusId: 0,
-                   serviceRequestVisitId:34,
-                   serviceRequestId:34
-                  }
+    let data = {
+      visitStatusId: 0,
+      serviceRequestVisitId: 34,
+      serviceRequestId: 34
+    }
     shallowWrapper.instance().goToServiceVisits(data)
   });
+
+  it('Check the handleClick function EU', () => {
+    shallowWrapper.instance().handleClick(12123, 2, 'EU', 2)
+  });
+
+  it('Check the handleClick function SP', () => {
+    shallowWrapper.instance().handleClick(111, 3, 'SP', 2)
+  });
+
 
 })
