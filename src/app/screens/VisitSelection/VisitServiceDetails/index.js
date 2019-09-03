@@ -374,13 +374,15 @@ export class VisitServiceDetails extends Component {
       rowPageSize: DEFAULT_PAGE_SIZE,
       activePage: PAGE_NO,
       entityServiceProviders: [],
-      selectedOption: ''
+      selectedOption: '',
+      pageNumberESP: PAGE_NO
     })
     let data = {
       pageNumber: PAGE_NO,
       pageSize: DEFAULT_PAGE_SIZE
     }
     this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, true);
+    this.props.clearESPList();
     this.props.getVisitStatus();
     this.props.clearServiceCategory(this.props.ServiceType);
     this.props.clearServiceType([]);
