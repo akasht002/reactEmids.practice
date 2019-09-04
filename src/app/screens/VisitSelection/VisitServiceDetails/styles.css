@@ -373,7 +373,7 @@ margin-top: 0px;
     float: right!important;
 }
 
-.filterblock
+.filter-block
 {
 display: flex;
 align-content: center;
@@ -382,38 +382,41 @@ flex-direction: row;
 padding-top: 5px;
 }
 
-.filterblock .ProfileHeaderFilter
+.filter-block .profile-header-filter
 {
 margin-right: 15px;
 line-height: 34px;
+margin-left: 15px;
+cursor: pointer;
+font-size:14px;
 }
 
-.filterblock button
+.filter-block button
 {
-    display: block;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border: 1px solid #7a329f;
-    font-size: 15px;
-    line-height: 20px;
-    padding: 6px 12px;
-    background: #fff;
-    color: #7a329f;
-    cursor: pointer;
+display: block;
+border-radius: 4px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border: 1px solid #7a329f;
+font-size: 15px;
+line-height: 20px;
+padding: 6px 12px;
+background: #fff;
+color: #7a329f;
+cursor: pointer;
 }
 
-.filterblock button:hover
+.filter-block button:hover
 {
 background: #7a329f;
 color: #fff;
 }
 
-.filterblock button span
+.filter-block button span
 {
-    font-size: 18px;
-    display: inline;
-    padding-right: 5px;
+font-size: 18px;
+display: inline;
+padding-right: 5px;
 }
 
 .left-listblock

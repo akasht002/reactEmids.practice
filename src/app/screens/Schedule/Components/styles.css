@@ -1914,8 +1914,8 @@ vertical-align: middle;
 
 .Plan-typebar fieldset label
 {
-font-size: 17px;
-color:#7a329f;
+font-size: 16px;
+color:#444;
 font-weight: 500;
 border: none;
 }
@@ -1928,6 +1928,7 @@ border: none;
 .Plan-typebar fieldset .form-radio-input:checked ~ .form-radio-label
 {
 border: none !important;
+color:#7a329f;
 }
 
 .Plan-typebar fieldset  .Midddle-Viewtab
@@ -3412,6 +3413,11 @@ background-color: #fff;
     {
     z-index: 0;
     }
+
+.full-block-view .form-check textarea
+{
+color:#444;
+}
 
 
        /*IE_11_&_IE_10*/
