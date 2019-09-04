@@ -97,10 +97,10 @@
 }
 
 .FilterMiddleRight{
-    width: calc(100% - 230px);
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+width: calc(100% - 230px);
+height: 100%;
+overflow-x: hidden;
+overflow-y: hidden;
 }
 
 .FilterMiddleRight .tab-content{

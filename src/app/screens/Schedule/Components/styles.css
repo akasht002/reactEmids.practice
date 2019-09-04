@@ -1,826 +1,35 @@
 
-.nav-tabs .nav-item.show a.nav-link, .nav-tabs a.nav-link.active{
-    background-color: rgba(0,0,0,0);
-}
-
-.ProfileIconSearch:after{
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-    background-image: url('../../../assets/images/Search.svg');
-}
-
-.ProfileHeaderSort{
-    margin-right: 42px;
-}
-
-.ProfileHeaderSort:after{
-    content: '';
-    position: absolute;
-    right: 84px;
-    top: 22px;
-    width: 12px;
-    height: 20px;
-    background-image: url("../../../assets/images/Caret_Dropdown_Purple.svg");
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    -webkit-transform: rotate(0);
-    -moz-transform: rotate(0);
-    -ms-transform: rotate(0);
-    -o-transform: rotate(0);
-    transform: rotate(0);
-    -webkit-transition: all linear .3s;
-    -moz-transition: all linear .3s;
-    -o-transition: all linear .3s;
-    transition: all linear .3s;
-}
-
-.ProfileContentWidget, .SPContentWidget, .ServiceRequestsWidget {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 120px);
-    overflow: hidden;
-    padding: 0 20px;
-}
-
-.ProfileContentWidget.ScrollBar, .SPContentWidget.ScrollBar {
-    overflow: auto;
-}
-
-.SPContentWidget .ProfileContainer {
-    width: calc(50% - 20px);
-    float: left;
-    margin: 0 10px;
-}
-
-.SPContentWidget .ProfileContainer.topProfile {
-    height: 596px;
-}
-
-.SPContentWidget .ProfileContainer .card {
-    width: 100%;
-    margin: 0 0 20px 0;
-}
-
-.SPContentWidget .bottomProfile {
-    flex-direction: column;
-}
-
-.ServiceRequestsWidget .ProfileContainer {
-    width: calc(100% - 20px);
-    float: left;
-    height: 100%;
-}
-
-.ServiceRequestsWidget .ProfileCardHeader{
-    border-bottom: 1px solid #dcdcdc;
-    height: 72px;
-}
-
-.ServiceRequestsWidget .ProfileHeaderButton{
-    padding-right: 16px;
-}
-
-.HeaderRequestLabelID{
-    color: #444444;
-}
-
-.HeaderBackButton{
-    display: inline-block;
-    position: relative;
-    height: 15px;
-    width: 18px;
-    background-repeat: no-repeat;
-    background-image: url("../../../assets/images/BackProfilePurple.svg");
-    background-size: 100%;
-    background-position: center;
-}
-
-.HeaderRequestLabel{
-    padding: 0 20px;
-    font-size: 18px;
-}
-
-.HeaderBackWrapper{
-    border-right: 1px solid #dcdcdc;
-    padding: 25px 25px;
-}
-
-.BlockProfileMatching{
-    color: #8c8c8c;
-}
-
-.BlockProfileApplied{
-    color: #3089df;
-}
-
-.BlockProfileInvited{
-    color: #892abb;
-}
-
-.ProfileHeaderOptions a.NewSRBtn{
-    padding: 8px 10px !important;
-    line-height: 14px;
-    font-size: 14px;
-    margin-left: 15px;
-}
-
-.OpenServiceProviders{
-    display: inline;
-    font-size: 14px;
-    position: relative;
-    color: #7a329f;
-}
-
-.OpenServiceProviders:before{
-    content: '';
-    position: absolute;
-    right: -20px;
-    width: 12px;
-    height: 20px;
-    top: 0;
-    background-image: url("../../../assets/images/Caret.svg");
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    transform: rotate(180deg);
-}
-
-.BlockProfileContainer.open{
-    height: 70px;
-}
-
-.BlockProfileContainer.open .BlockProfileDetails{
-    padding: 0;
-    width: calc(100% - 65px);
-}
-
-.BlockProfileContainer.open:after{
-    display: none;
-}
-
-.BlockProfileContainer:after{
-    opacity: 0.5;
-    content: '';
-    position: absolute;
-    right: 15px;
-    width: 12px;
-    height: 20px;
-    top: 26px;
-    background-image: url("../../../assets/images/Caret.svg");
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    transform: rotate(180deg);
-    -webkit-transition: all linear .3s;
-    -moz-transition: all linear .3s;
-    -o-transition: all linear .3s;
-    transition: all linear .3s;
-}
-
-.BlockImageContainer{
-    padding: 25px 40px 25px 20px;
-    border-bottom: 1px solid rgba(60,16,83,0.1);
-}
-
-.BlockImageContainer:hover{
-    cursor: pointer;
-}
-
-.BlockImageContainer .ProfileImage{
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-}
-
-.BlockProfileContainer{
-    display: flex;
-    display: -moz-flex;
-    align-items: center;
-    position: relative;
-    padding: 15px 20px;
-}
-
-.BlockProfileContainer .ProfileImage, .BlockImageContainer .ServiceImage{
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-}
-
-.BlockProfileContainer .ProfileImage{
-    background-color: #f9f7fb;
-
-}
-
-.PostedByProfileDetails{
-    display: inline-block;
-    margin: 8px 10px;
-    vertical-align: middle;
-}
-
-.ProfileDetailsName{
-    font-size: 16px;
-    color: #444444;
-}
-
-.ProfileDetailsDate{
-    font-size: 14px;
-    color: rgba(68, 68, 68, 0.7);
-}
-
-.ProfileIcon{
-    display: inline-block;
-    position: relative;
-    height: 24px;
-    width: 24px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-}
-
-.ProfileIconDetails{
-    display: flex;
-    display: -moz-flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 14px;
-    color: #371047;
-}
-
-.ProfileContainer {
-    position: relative;
-    display: flex;
-    display: -moz-flex;
-    height: calc(100vh - 540px);
-}
-
-.IconCall{
-    background-image: url("../../../assets/images/Call_Purple.svg");
-}
-
-.IconConversations{
-    background-image: url("../../../assets/images/Message_Purple.svg");
-}
-
-.IconVideo{
-    background-image: url("../../../assets/images/TeleHealth_Purple.svg");
-}
-
-.PaletteTabs{
-    border: none !important;
-}
-
-.CardPalette .PaletteTabs, .CardPalette .tab-content{
-    padding: 0 30px;
-}
-
-.PaletteTabs .nav-item .nav-link{
-    font-size: 16px;
-    margin-bottom: 0;
-    padding: 0 0 5px 0 !important;
-    margin-right: 26px;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 1px solid rgba(0,0,0,0);
-}
-
-.PaletteTabs .nav-item .nav-link:hover{
-    cursor: pointer;
-    border-color: rgba(0,0,0,0);
-}
-
-.PaletteTabs .nav-item .active.nav-link{
-    color: #7a329f;
-    border: none;
-    border-bottom: 1px solid #7a329f;
-}
-
-.TabBody{
-    margin-top: 40px;
-}
-
-.ScheduleTableRow {
-    padding: 0;
-    font-size: 14px;
-    height: 60px;
-    border-bottom: 1px solid #dcdcdc;
-    clear: both;
-}
-
-.ScheduleTableHeader{
-    padding: 0;
-    height: 60px;
-    border-bottom: 1px solid #dcdcdc;
-    clear: both;
-}
-
-.ScheduleTableRow > div > span, .ScheduleTableHeader > div > span{
-    padding: 20px;
-    display: block;
-    white-space: nowrap;
-}
-
-.ScheduleRowButton a{
-    font-size: 14px !important;
-    margin: 10px 0;
-    padding: 5px 10px !important;
-    float: right;
-    height: 30px;
-    line-height: 18px !important;
-}
-
-.TabBody .ServiceCategoryContent{
-    padding: 10px 0;
-}
-
-.TabBody .ServiceTypesSlider div:first-child{
-    margin-left: 0;
-}
-
-.TabBody .ServiceTypesSlider div:last-child{
-    margin-right: 0;
-}
-
-.TabBody .ServiceTypeList{
-    height: 162px;
-}
-
-.TabBody .ServiceTasks.Summary{
-    margin: 10px 0 24px 0;
-}
-
-a.ProfileCardHeaderLink:hover{
-    text-decoration: none;
-    color: #7a329f !important;
-}
-
-.ProfileCard {
-    width: calc(50% - 20px);
-    margin: 0 10px 20px 10px;
-    padding: 0;
-    float: left;
-    -webkit-transition: all linear .2s;
-    -moz-transition: all linear .2s;
-    -ms-transition: all linear .2s;
-    -o-transition: all linear .2s;
-    transition: all linear .2s;
-}
-
-.ProfileCard .list-group .list-group-item {
-    display: flex;
-    align-items: center;
-    padding: 0;
-    justify-content: center;
-}
-
-.ProfileCard > .list-group {
-    height: 40px;
-}
-
-.ProfileCard.extended > .list-group {
-    height: 40px;
-}
-
-.ProfileCard > .list-group > .list-group-item {
-    height: 40px;
-}
-
-.myConversationContainer.list-group-item:focus, .myConversationContainer.list-group-item:hover, .mySPContainer.list-group-item:hover, .mySPContainer.list-group-item:focus {
-    z-index: auto;
-}
-
-.ProfileCardBody {
-    padding: 20px 0 0 0;
-}
-
-.ProfileCardBody > div {
-    padding: 0 20px;
-}
-
-.SPContentWidget .ProfileContainer .ProfileCard.extended {
-    /* height: calc(100vh - 140px); */
-    height: 596px;
-    z-index: 9;
-}
-
-.SPContentWidget .topProfile .ProfileCard {
-    height: 100%;
-    z-index: 9;
-}
-
-.SPContentWidget .topProfile .ProfileCard > .list-group {
-    display: none;
-}
-
-.SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-    /* height: calc(100vh - 292px); */
-    height: 445px;
-}
-
-.ProfileCard.extended .ProfileCardBody .bottomPalette {
-    max-height: calc(100vh - 324px);
-    overflow-y: hidden;
-    height: auto;
-}
-
-.ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content {
-    height: 100%;
-}
-
-.ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
-    height: auto;
-}
-
-.ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
-    height: 172px;
-}
-
-.ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-    max-height: calc(100vh - 277px);
-    height: 100vh;
-}
-
-.ProfileCard.extended .ProfileCardBody, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
-    height: calc(100% - 40px);
-}
-
-.ProfileShowMore {
-    font-size: 12px;
-    color: #b286bc;
-    -webkit-transition: all linear .2s;
-    -moz-transition: all linear .2s;
-    -ms-transition: all linear .2s;
-    -o-transition: all linear .2s;
-    transition: all linear .2s;
-}
-
-.ProfileIconShowMore {
-    display: inline-block;
-    position: relative;
-    height: 10px;
-    width: 10px;
-    top: 1px;
-    margin-left: 10px;
-    background-repeat: no-repeat;
-    background-image: url("../../../assets/images/Caret_Dropdown_Purple.svg");
-    background-size: 100%;
-    background-position: center;
-    transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -webkit-transition: all linear .2s;
-    -moz-transition: all linear .2s;
-    -ms-transition: all linear .2s;
-    -o-transition: all linear .2s;
-    transition: all linear .2s;
-}
-
-.ProfileCard.extended .ProfileIconShowMore{
-    transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-}
-
-.ProfileShowMore:hover {
-    color: #7a329f;
-    cursor: pointer;
-    background-color: #f1e7f7;
-    text-decoration: none;
-}
-
-.ProfileCard form {
-    height: 100%;
-}
-
-.ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
-    /* height: calc(100vh - 397px); */
-    height: 339px;
-}
-
-.BoardContainer{
-    display: flex !important;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.ServiceRequestBoard{
-    width: 33.333%;
-    margin-bottom: 15px;
-    padding: 0 10px;
-}
-
-.NewBoard {
-    border-width:2px 0;
-    position:absolute;
-    display:block;
-    font-size: 10px;
-    font-weight: 600;
-    color: #7a329f;
-    padding: 3px 8px 3px 16px;
-    top: 12px;
-    right: -5px;
-    background-color: #f4ecfc;
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-}
-
-.NewBoard:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 0 solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 3px solid #d9bdf5;
-    top: -3px;
-    right: 0;
-}
-
-.NewBoard:before {
-    content: "";
-    display:inline-block;
-    border-bottom-width:2px;
-    border-left-width:2px;
-    -webkit-transform: rotate(-135deg);
-    -moz-transform: rotate(-135deg);
-    -ms-transform: rotate(-135deg);
-    -o-transform: rotate(-135deg);
-    transform: rotate(-135deg);
-    -webkit-transform-origin: 0% 100%;
-    -moz-transform-origin: 0% 100%;
-    -ms-transform-origin: 0% 100%;
-    -o-transform-origin: 0% 100%;
-    transform-origin: 0% 100%;
-    position: absolute;
-    bottom: 0;
-    left: 11px;
-    width: 24px;
-    background-color: #ffffff;
-    top: -13px;
-    height: 24px;
-}
-
-.DetailsDateSeperator{
-    color: #a6a6a6;
-    margin: 0 10px;
-}
-
-.ProfileContainer.bottomProfile {
-    min-height: 300px;
-    height: calc(100vh - 140px);
-}
-
-div.scrollarea .scrollbar-container.vertical {
-    width: 7px;
-    z-index: 999;
-}
-
-div.scrollarea .scrollbar-container.vertical .scrollbar{
-    background: #8c8c8c;
-}
-
-.ProfileHeaderButton .standBy {
-    font-size: 14px;
-    color: #444444;
-    margin-right: 15px;
-}
-
-.FilterButton:hover{
-    cursor: pointer;
-}
-
-.hiddenScreen {
-    position: fixed;
-    height: 100%;
-    width: calc(100% - 180px);
-    background: rgba(0, 0, 0, .4);
-    opacity: 0;
-    visibility: hidden;
-    z-index: 100;
-}
-
-.hiddenScreen, .ProfileLeftWidget {
-    -webkit-transition: all ease-in-out 0.2s;
-    -moz-transition: all ease-in-out 0.2s;
-    -ms-transition: all ease-in-out 0.2s;
-    -o-transition: all ease-in-out 0.2s;
-    transition: all ease-in-out 0.2s;
-}
-
-.hiddenScreen.true {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* .ScheduleTableHeader, .ScheduleTableRow{
-    display: flex;
-    display: -moz-flex;
-    align-items: center;
-    height: auto;
-    flex-wrap: wrap;
-}
-
-.ScheduleTableRow{
-    border-left: 3px solid rgba(0,0,0,0);
-}
-
-.ScheduleTableRow:hover{
-    cursor: pointer;
-    border-left: 3px solid #7a329f;
-    background-color: #f4ecfc;
-}
-
-.ScheduleTableRow:hover i{
-    filter: brightness(100%);
-}
-
-.ScheduleTableHeader > div > span, .ScheduleTableRow > div > span{
-    padding: 5px 10px;
-    white-space: normal;
-}
-
-.ScheduleTableHeader > div.ScheduleContentDate, .ScheduleTableRow > div.ScheduleContentDate{
-    width: 14%;
-}
-
-.ScheduleTableHeader > div.ScheduleContentTime{
-    width: 20%;
-}
-
-.ScheduleTableRow > div.ScheduleContentTime{
-    font-size: 12px;
-    width: 16%;
-}
-
-.ScheduleTableHeader > div.ScheduleContentSession, .ScheduleTableRow > div.ScheduleContentSession{
-    width: 20%;
-}
-
-.ScheduleTableRow > div.ScheduleContentSession{
-    font-size: 12px;
-}
-
-.ScheduleTableHeader > div.ScheduleContentStatus, .ScheduleTableRow > div.ScheduleContentStatus{
-    width: 20%;
-}
-
-.ScheduleTableHeader > div.ScheduleContentButton, .ScheduleTableRow > div.ScheduleContentButton{
-    width: 30%;
-} */
-
-.slick-initialized .slick-slide {
-    display: block
-}
-
-.ProfileIconEye{
-    display: inline-block;
-    position: relative;
-    height: 20px;
-    width: 20px;
-    top: 5px;
-    margin-right: 5px;
-    background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url("../../../assets/images/ViewEye.svg");
-}
-
-div.ProfileSearchContainer form{
-    display: flex;
-    display: -moz-flex;
-    align-items: center;
-    width: 100%;
-    height: 30px;
-}
-
-div.ProfileSearchContainer{
-    position: absolute;
-    right: 75px;
-    height: 30px;
-    margin: 0;
-    width: 0;
-    overflow: hidden;
-    -webkit-transition: all linear 0.3s;
-    -moz-transition: all linear 0.3s;
-    -o-transition: all linear 0.3s;
-    transition: all linear 0.3s;
-}
-
-div.ProfileSearchContainer.true{
-    width: calc(100% - 110px);
-    right: 80px;
-}
-
-div.ProfileSearchContainer.CareTeam.true{
-    width: calc(100% - 230px);
-    right: 30px;
-    position: fixed;
-    z-index: 99999;
-    background-color: #f8f8f8;
-    padding-right: 15px;
-}
-
-.ProfileSearchContainer .btn{
-    font-size: 14px;
-    padding: 5px 10px !important;
-    height: 30px;
-    margin: 0 10px;
-    line-height: 14px !important;
-}
-
-.ProfileSearchContainer .form-control{
-    height: 100%;
-}
-
-div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearchContainer .form-control:focus, .ProfileSearchContainer .closeBtn{
-    background-color: #f8f8f8;
-}
-
-.ProfileSearchContainer .closeBtn{
-    display: inline;
-    position: relative;
-    width: 18px;
-    height: 18px;
-    border: 0;
-    padding: 0;
-}
-
-.ProfileSearchContainer .closeBtn:after{
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-    background-image: url("../../../assets/images/remove.png");
-}
-
-.ProfileServicesVisitList .NoRequestServiceProvider{
-    padding: 40px 0 0 0;
-}
-
-.ServiceRequestsWidget .ServiceRequestBoard .BlockProfileDetailsStatus
-{
-    display: block;
-    float: right;
-    min-width: auto;
-    width: auto;
-    position: absolute;
-    right: 0;
-    padding-right: 36px;
-}
-
 /*careteam-dashboard-filter-height*/
 .entity-height .FilterWidget.true
 {
-    margin-top: 60px;
-    position: fixed;
-    height: calc(100vh - 60px);
+margin-top: 60px;
+position: fixed;
+height: calc(100vh - 60px);
 }
 .entity-height .ServiceRequestsWidget
 {
-    height: calc(100vh - 180px);
+height: calc(100vh - 180px);
 }
 .update-viewcolor
 {
-    color: #8c8c8c;
-    font-size: 14px;
+color: #8c8c8c;
+font-size: 14px;
 }
 
 /*Update-UI-css-july2019*/
 .Plan-typebar
 {
-    background: #fff;
-    min-height: 60px;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -ms-flex-align: center;
-    align-items: center;
-    margin-bottom: 20px;
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+background: #fff;
+min-height: 60px;
+display: -ms-flexbox;
+display: flex;
+-ms-flex-direction: row;
+flex-direction: row;
+-ms-flex-align: center;
+align-items: center;
+margin-bottom: 20px;
+-webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+box-shadow: 0 0 10px rgba(0,0,0, 0.09);
 }
 
 .Plan-typebar fieldset
@@ -858,172 +67,172 @@ border: none !important;
 
 .Plan-typebar fieldset  .Midddle-Viewtab
 {
-    width: 40%;
-    display: block;
-    margin: 0 auto;
-    position: relative;
+width: 40%;
+display: block;
+margin: 0 auto;
+position: relative;
 }
 
 .Service-Cat-Typesblock
 {
-    background: #fff;
-    display: block;
-    margin-bottom: 20px;
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    padding: 30px;  
-    float: left;
-    width: 100%;
+background: #fff;
+display: block;
+margin-bottom: 20px;
+-webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+padding: 30px;  
+float: left;
+width: 100%;
 }
 
 .Service-Cat-Typesblock-Edit{
-    pointer-events: none;
-    cursor: context-menu;
+pointer-events: none;
+cursor: context-menu;
 }
 
 .Service-Cat-Typesblock .ServicesTitle {
-    font-size: 18px;
-    font-weight: 400;
-    color: #7a329f;
-    margin-bottom: 15px;
+font-size: 18px;
+font-weight: 400;
+color: #7a329f;
+margin-bottom: 15px;
 }
 
 .Midddle-Viewtab-Edit{
-    pointer-events: none;
-    cursor: context-menu;
+pointer-events: none;
+cursor: context-menu;
 }
 
  .ServiceCategory .slick-slider .slick-list {
-    width: 100%;
+width: 100%;
 }
 
- .ServiceCatList input+label:hover, .Service-Cat-Typesblock .ServiceCatList input:checked+label {
-    background-color: #7a329f;
+.ServiceCatList input+label:hover, .Service-Cat-Typesblock .ServiceCatList input:checked+label {
+background-color: #7a329f;
 }
 
  .ServiceCatLink.CardBoxes {
-    width: 160px;
-    height: 170px;
-    padding: 20px;
+width: 160px;
+height: 170px;
+padding: 20px;
 }
  .ServiceCatLink {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -ms-flex-align: end;
-    align-items: flex-end;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0 10px;
-    color: #fff;
-    border-radius: 8px;
+display: -ms-flexbox;
+display: flex;
+-ms-flex-pack: center;
+justify-content: center;
+-ms-flex-align: end;
+align-items: flex-end;
+text-align: center;
+font-size: 16px;
+font-weight: 600;
+margin: 0 10px;
+color: #fff;
+border-radius: 8px;
 }
 
  .ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input+label.ServiceCatLink.CardBoxes:hover:before, .ServiceCatList input:checked+label.ServiceCatLink:before, .ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before {
-    background-color: #7a329f;
-    opacity: .7;
-    background-image: none;
+background-color: #7a329f;
+opacity: .7;
+background-image: none;
 }
 
 .ServiceCatList input:checked + label.ServiceCatLink.CardBoxes:before, .ServiceCatList input:checked + label.ServiceCatLink.CardBoxes:hover:before{
-    background-color: #7a329f;
+background-color: #7a329f;
 }
 
 .ServiceCatList input:checked + label, .ServiceCatList input + label:hover {
-    background-color: #7a329f;
+background-color: #7a329f;
 }
 
 .ServiceCatList input:checked + label.ServiceCatLink.CardBoxes:after{
-    content: '';
-    position: absolute;
-    border: 1px solid #fff;
-    height: calc(100% - 14px);
-    width: calc(100% - 14px);
-    top: 7px;
-    left: 7px;
-    border-radius: 5px;
-    -ms-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    z-index: 2;
+content: '';
+position: absolute;
+border: 1px solid #fff;
+height: calc(100% - 14px);
+width: calc(100% - 14px);
+top: 7px;
+left: 7px;
+border-radius: 5px;
+-ms-border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+z-index: 2;
 }
 
- .ServiceCatLink.CardBoxes:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: -webkit-gradient(linear,left top,left bottom,from(transparent),color-stop(transparent),color-stop(rgba(0,0,0,.3)),to(rgba(0,0,0,.6)));
-    background-image: -webkit-linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
-    background-image: -o-linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
-    background-image: linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
-    z-index: 1;
+.ServiceCatLink.CardBoxes:before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: -webkit-gradient(linear,left top,left bottom,from(transparent),color-stop(transparent),color-stop(rgba(0,0,0,.3)),to(rgba(0,0,0,.6)));
+background-image: -webkit-linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
+background-image: -o-linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
+background-image: linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
+z-index: 1;
 }
 
- .ServiceCatLink.CardBoxes .SliderBtnImg {
-    height: 100%;
-    width: auto;
-    opacity: 1;
+.ServiceCatLink.CardBoxes .SliderBtnImg {
+height: 100%;
+width: auto;
+opacity: 1;
 }
+
 .SliderBtnImg {
-    position: absolute;
-    top: 0;
-    left: 0;
+position: absolute;
+top: 0;
+left: 0;
 }
 
 .ServiceCatLink>span {
-    position: relative;
-    z-index: 2;
+position: relative;
+z-index: 2;
 }
 
  
 
 .Service-Cat-Typesblock .slick-list:before {
-    background-image: -webkit-gradient(linear,left top,right top,from(hsla(0,0%,100%,0)),to(#fff));
-    background-image: -webkit-linear-gradient(left,hsla(0,0%,100%,0),#fff);
-    background-image: -o-linear-gradient(left,hsla(0,0%,100%,0),#fff);
-    background-image: linear-gradient(90deg,hsla(0,0%,100%,0),#fff);
+background-image: -webkit-gradient(linear,left top,right top,from(hsla(0,0%,100%,0)),to(#fff));
+background-image: -webkit-linear-gradient(left,hsla(0,0%,100%,0),#fff);
+background-image: -o-linear-gradient(left,hsla(0,0%,100%,0),#fff);
+background-image: linear-gradient(90deg,hsla(0,0%,100%,0),#fff);
 }
 
 .ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input:checked+label.ServiceCatLink:before, .ServiceCatList input:checked+label.ServiceCatLink:before {
-    background-color: #7a329f;
-    opacity: .7;
-    background-image: none;
+background-color: #7a329f;
+opacity: .7;
+background-image: none;
 }
 
 .ServiceCatList input+label:hover, .ServiceCatList input:checked+label {
-    background-color: #7a329f;
+background-color: #7a329f;
 }
 
 .ServiceCatLink {
-    position: relative;
-    overflow: hidden;
+position: relative;
+overflow: hidden;
 }
-
-
 
 .ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input:checked+label.ServiceCatLink:before, .ServiceCatList input:checked+label.ServiceCatLink:before {
-    background-color: #7a329f;
-    opacity: .7;
-    background-image: none;
+background-color: #7a329f;
+opacity: .7;
+background-image: none;
 }
+
 .ServiceCatList input:checked+label.ServiceCatLink:after {
-    content: "";
-    position: absolute;
-    border: 1px solid #fff;
-    height: calc(100% - 14px);
-    width: calc(100% - 14px);
-    top: 7px;
-    left: 7px;
-    border-radius: 5px;
-    -ms-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    z-index: 2;
+content: "";
+position: absolute;
+border: 1px solid #fff;
+height: calc(100% - 14px);
+width: calc(100% - 14px);
+top: 7px;
+left: 7px;
+border-radius: 5px;
+-ms-border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+z-index: 2;
 }
 
 .Service-Cat-Typesblock .ServiceCategory
@@ -1033,20 +242,20 @@ margin-bottom: 30px;
 
 .Service-typesTitle
 {
-    width: 100%;
-    display: block;
-    float: left;
+width: 100%;
+display: block;
+float: left;
 }
 
 .Service-typesTitle span:nth-child(1){
-  float: left;
-  width: 40%;
+float: left;
+width: 40%;
 }
 
 .Service-typesTitle  span:nth-child(2)
 {
-    float: right;
-    width: 14%;
+float: right;
+width: 14%;
 }
 
 .Service-typesTitle span h5
@@ -1060,6 +269,7 @@ cursor: pointer;
 width:50%;
 text-align: right;    
 }
+
 .ProfileContentWidget .ServiceTypesWidget.PostSR
 {
 width: 100%;
@@ -1068,38 +278,38 @@ float: left;
 }
 
 .ServiceTypeLink {
-    width: 100%;
-    padding: 90px 10px 20px;
-    background-color: #fff;
-    border: 1px solid #d1d1d1;
-    border-radius: 6px;
+width: 100%;
+padding: 90px 10px 20px;
+background-color: #fff;
+border: 1px solid #d1d1d1;
+border-radius: 6px;
 }
 
 .ServiceTypeImg img {
-    height: 100%;
-    width: 100%;
+height: 100%;
+width: 100%;
 }
 
 .ServiceTypeIcon:after, .ServiceTypeImg {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    top: 40px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
+position: absolute;
+width: 40px;
+height: 40px;
+top: 40px;
+margin: 0 auto;
+left: 0;
+right: 0;
 }
 
 .schdule-postblock
 {
-    background: #fff;
-    display: block;
-    margin-bottom: 20px;
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    padding: 30px;  
-    float: left;
-    width: 100%;  
+background: #fff;
+display: block;
+margin-bottom: 20px;
+-webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+padding: 30px;  
+float: left;
+width: 100%;  
 }
 
 .ServiceTypesSlider .slick-list .ServiceTypeList
@@ -1110,24 +320,24 @@ margin-bottom: 0px;
 
 .ServicesTitle
 {
-    font-size: 18px;
-    font-weight: 400;
-    color: #7a329f;
-    margin-bottom: 25px;
+font-size: 18px;
+font-weight: 400;
+color: #7a329f;
+margin-bottom: 25px;
 }
 
 .schdule-typeblock
 {
-    display: block;
-    float: left;
-    position: relative; 
-    margin-bottom: 25px;
+display: block;
+float: left;
+position: relative; 
+margin-bottom: 25px;
 }
 
 
 .schdule-typeblock.col-md-6:last-child
 {
-    padding-right: 0px;
+padding-right: 0px;
 }
 
 .schdule-typeblock fieldset
@@ -1136,71 +346,66 @@ width:100%;
 position: relative;
 }
 
- fieldset  .form-radio {
-    margin: 0;
+fieldset  .form-radio {
+margin: 0;
 }
 
-
 .form-radio-input:checked ~ .RadioBoxIcon, .form-radio-input:checked ~ .form-radio-label {
-    border: 1px solid #7a329f !important;
+border: 1px solid #7a329f !important;
 }
 
  .form-radio-input:checked~.form-radio-label,  .form-radio-input:checked~label .RadioBoxIcon, .form-radio-label:hover~label .RadioBoxIcon {
-    border: 1px solid #7a329f;
+border: 1px solid #7a329f;
 }
  .form-radio label .RadioBoxIcon {
-    position: absolute;
-    height: 15px;
-    width: 15px;
-    left: 20px;
-    top: 20px;
-    border: 1px solid #707070;
-    background-color: #fff;
-    border-radius: 100%;
+position: absolute;
+height: 15px;
+width: 15px;
+left: 20px;
+top: 20px;
+border: 1px solid #707070;
+background-color: #fff;
+border-radius: 100%;
 }
 
 .form-radio-input:checked~label .RadioBoxIcon:before {
-    content: "";
-    position: relative;
-    height: 7px;
-    width: 7px;
-    top: 3px;
-    left: 3px;
-    display: block;
-    background-color: #7a329f;
-    border-radius: 100%;
+content: "";
+position: relative;
+height: 7px;
+width: 7px;
+top: 3px;
+left: 3px;
+display: block;
+background-color: #7a329f;
+border-radius: 100%;
 }
 
 
 
 .form-radio-label:hover, .ServiceCatLink:hover, .ServiceTasks label:hover, .ServiceTypeLink:hover {
-    cursor: pointer;
+cursor: pointer;
 }
 
 .RadioBoxIcon {
-    position: absolute;
-    height: 15px;
-    width: 15px;
-    left: 20px;
-    top: 19px;
-    border: 1px solid #707070;
-    background-color: #fff;
-    border-radius: 100%;
+position: absolute;
+height: 15px;
+width: 15px;
+left: 20px;
+top: 19px;
+border: 1px solid #707070;
+background-color: #fff;
+border-radius: 100%;
 }
 
-
-
  .form-radio-input {
-    position: absolute;
-    left: 0;
-    opacity: 0;
-    z-index: 1000;
+position: absolute;
+left: 0;
+opacity: 0;
+z-index: 1000;
 } 
 
-
-
 .form-radio-label:hover {
-    border: 1px solid #7a329f;
+border: 1px solid #7a329f;
 }
 
 .full-block-scheduleDate
@@ -1230,23 +435,23 @@ display:none;
 
 
  .form-radio-input:checked ~ label .RadioBoxIcon:before {
-    content: '';
-    position: relative;
-    height: 7px;
-    width: 7px;
-    top: 3px;
-    left: 3px;
-    display: block;
-    background-color: #7a329f;
-    border-radius: 100%;
+content: '';
+position: relative;
+height: 7px;
+width: 7px;
+top: 3px;
+left: 3px;
+display: block;
+background-color: #7a329f;
+border-radius: 100%;
 }
 
 .date-blockview
 {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: flex-start;
 }
 
 .full-block-scheduleDate .form-group:nth-child(1)
@@ -1257,38 +462,34 @@ max-width: 50%;
 flex: inherit;
 }
 
-
-
-
-
 .form-group2block
 {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    clear: both;
-    margin-top: 0px;
-    width: 50%;
-    flex-wrap: wrap;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+clear: both;
+margin-top: 0px;
+width: 50%;
+flex-wrap: wrap;
 }
 
 .form-group2block .form-group
 {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
+flex: 0 0 33.333333%;
+max-width: 33.333333%;
 }
 
 .date-blockview .form-group2block .form-group
 {
-    flex:initial !important;
-    max-width:100% !important;
+flex:initial !important;
+max-width:100% !important;
 }
 
 .start-rightdate .full-block .form-group
 {
-    flex:initial !important;
-    max-width:100% !important;
+flex:initial !important;
+max-width:100% !important;
 }
 
 .form-group2block .form-group:nth-child(3)
@@ -1309,27 +510,27 @@ padding-left: 25px;
 
 .form-group2block .form-group h4
 {
-    color: #444444;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-    width: 100%;
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.5;
-    text-align: left;
-    font-family: 'Open Sans', sans-serif !important;
+color: #444444;
+display: inline-block;
+margin-bottom: 0.5rem;
+width: 100%;
+font-weight: 600;
+font-size: 1rem;
+line-height: 1.5;
+text-align: left;
+font-family: 'Open Sans', sans-serif !important;
 }
 
 .form-group2block .form-group h5
 {
-    color: #444444;
-    display: block;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: left;
-    font-family: 'Open Sans', sans-serif !important;
-    white-space: nowrap;
+color: #444444;
+display: block;
+font-weight: 400;
+font-size: 16px;
+line-height: 1.5;
+text-align: left;
+font-family: 'Open Sans', sans-serif !important;
+white-space: nowrap;
 }
 
 .form-group2block .form-group .react-datepicker__input-container input, .form-group2block .form-group .react-datepicker__input-container input:focus
@@ -1385,9 +586,10 @@ max-width: 100%;
 /*left-recurringpattern*/
 .left-recurringpattern
 {
-    width: 100%;
-    display: block;
+width: 100%;
+display: block;
 }
+
 .left-recurringpattern span.width100
 {
 font-weight: 600;
@@ -1399,10 +601,10 @@ margin-bottom: 15px;
 
 .recurr_pattern_radioblock
 {
-   display: table-cell;
-   padding-right: 20px;
-   padding-bottom: 15px;
-   width: auto;
+display: table-cell;
+padding-right: 20px;
+padding-bottom: 15px;
+width: auto;
 }
 
 
@@ -1428,12 +630,12 @@ padding-left:26px;
 
 .every-dayblock fieldset label
 {
-    color:#444;
-    font-size: 15px;
-    font-family: 'Open Sans', sans-serif !important;
-    font-weight: 500;
-    padding-left: 15px;
-    padding-right: 15px;
+color:#444;
+font-size: 15px;
+font-family: 'Open Sans', sans-serif !important;
+font-weight: 500;
+padding-left: 15px;
+padding-right: 15px;
 }
 
 .every-dayblock input, .right-monthblock input
@@ -1449,7 +651,7 @@ font-size: 15px;
 
 .every-dayblock input:focus, .right-monthblock input:focus
 {
-    border-bottom: 1px solid #7a329f;
+border-bottom: 1px solid #7a329f;
 }
 
 .right-monthblock input
@@ -1460,39 +662,39 @@ z-index: 1000;
 
 .week-column
 {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    float: left;
+display: block;
+width: 100%;
+margin-top: 20px;
+float: left;
 }
-
 
 .parent-col
 {
-    display: block !important;
-    width: 100% !important;
-    border-radius: 0px !important;
-    border: navajowhite !important;
-    margin-right: 0px !important;
-    height: auto !important; 
-    float: none;
+display: block !important;
+width: 100% !important;
+border-radius: 0px !important;
+border: navajowhite !important;
+margin-right: 0px !important;
+height: auto !important; 
+float: none;
 }
+
 .week-column fieldset
 {
-    display: block;
-    margin-right: 18px;
-    float: left;
-    cursor: pointer;
-    position: relative;
+display: block;
+margin-right: 18px;
+float: left;
+cursor: pointer;
+position: relative;
 }
  
  .ServiceTypesWidget.PostSR
 {
-    background: #fff;
-    margin-bottom: 20px;
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    padding: 30px;
+background: #fff;
+margin-bottom: 20px;
+-webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+padding: 30px;
 }
 
  .ServiceTypesWidget.PostSR .ServiceType.WhiteBG
@@ -1501,61 +703,73 @@ margin-bottom: 0px;
 margin-top: 10px;
 }
 
+.POSAddressSlider .slick-list .AddressCardWidget .AddressPOS span {
+display: table;
+}
+
+.POSAddressSlider .slick-list .AddressCardWidget .AddressPOS span i {
+display: table-cell;
+}
+
+.POSAddressSlider .slick-list .AddressCardWidget .AddressPOS span i {
+min-width: 100px;
+}
+
 /*Pont-of-service-css*/
 .updateBigAddress {
-    width: 100%;
-    overflow-x: hidden;
-    white-space: nowrap;
-    height: auto;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    display: table;
-    font-family: Open Sans,sans-serif;
-    color: #444;
-    font-size: 14px;
+width: 100%;
+overflow-x: hidden;
+white-space: nowrap;
+height: auto;
+-o-text-overflow: ellipsis;
+text-overflow: ellipsis;
+display: table;
+font-family: Open Sans,sans-serif;
+color: #444;
+font-size: 14px;
 }
 
 .updateBigAddress i {
-    display: table-cell;
-    min-width: 100px;
-    font-weight: 600;
-    font-style: normal;
+display: table-cell;
+min-width: 100px;
+font-weight: 600;
+font-style: normal;
 }
 
 .updateBigAddress div {
-    width: 188px;
-    overflow-x: hidden;
-    white-space: nowrap;
-    height: auto;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+width: 188px;
+overflow-x: hidden;
+white-space: nowrap;
+height: auto;
+-o-text-overflow: ellipsis;
+text-overflow: ellipsis;
 }
 
 .AddressCardWidget .AddressPOS span, .WizardList .WizardItems {
-    font-family: Open Sans,sans-serif;
+font-family: Open Sans,sans-serif;
 }
 
 .CustomPOS .form-group, .OccurrencesContent .form-group {
-    margin-top: 0!important;
+margin-top: 0!important;
 }
 
 .posAddressValidationError {
-    Font-size: 17px;
-    Color: #c04e59;
-    Font-weight: 600;
-    display: block;
-    margin-top: 7px;
-    margin-bottom: 16px;
-    padding-left: 26px;
+Font-size: 17px;
+Color: #c04e59;
+Font-weight: 600;
+display: block;
+margin-top: 7px;
+margin-bottom: 16px;
+padding-left: 26px;
 }
 
 .ServiceTypesWidget.PostSR .POSAddressSlider {
-    margin-bottom:20px;
+margin-bottom:20px;
 }
 
 .feedbackDesc {
-    color: #8c8c8c;
-    font-size: 14px;
+color: #8c8c8c;
+font-size: 14px;
 }
 
 .ServiceTypesWidget .feedbackForm .form-group label
@@ -1565,26 +779,26 @@ display: none;
 
 .bottom-blockbtn
 {
-    display: flex !important;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background: none!important;
-    box-shadow: none !important;
-    padding-top: 0px !important;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+display: flex !important;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+background: none!important;
+box-shadow: none !important;
+padding-top: 0px !important;
+padding-left: 0px !important;
+padding-right: 0px !important;
 }
 
 .Service-Cat-Typesblock .ServiceTypesWidget.PostSR
 {
-    padding: 0;
-    box-shadow: none;
-    width: 100%;
-    background: none;
-    float: left;
-    display: block;
-    margin-bottom: 0;
+padding: 0;
+box-shadow: none;
+width: 100%;
+background: none;
+float: left;
+display: block;
+margin-bottom: 0;
 }
 
 .left-block1-shedule
@@ -1601,27 +815,27 @@ padding-bottom:0px !important;
 }
 
 .form-radio-label {
-    position: relative;
-    font-size: 16px;
-    color: #444;
-    width: 100%;
-    padding: 15px 25px 15px 50px;
-    border: 1px solid #e1e1e1;
-    border-radius: 4px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+position: relative;
+font-size: 16px;
+color: #444;
+width: 100%;
+padding: 15px 25px 15px 50px;
+border: 1px solid #e1e1e1;
+border-radius: 4px;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }
 
 .recurr_pattern_radioblock .form-radio-input:checked~.form-radio-label {
-    border: none!important;
+border: none!important;
 }
 
 .recurr_pattern_radioblock .form-radio-label {
-    color: #444;
-    font-family: Open Sans,sans-serif;
+color: #444;
+font-family: Open Sans,sans-serif;
 }
 
 .recurr_pattern_radioblock .RadioBoxIcon
@@ -1629,55 +843,50 @@ padding-bottom:0px !important;
 left: 0px;
 }
 
-
 .recurr_pattern_radioblock  .form-radio-label:hover {
-    border:none;
+border:none;
 }
 
 
 .form-radio-input:checked~label .RadioBoxIcon:before {
-    content: "";
-    position: relative;
-    height: 7px;
-    width: 7px;
-    top: 3px;
-    left: 3px;
-    display: block;
-    background-color: #7a329f;
-    border-radius: 100%;
+content: "";
+position: relative;
+height: 7px;
+width: 7px;
+top: 3px;
+left: 3px;
+display: block;
+background-color: #7a329f;
+border-radius: 100%;
 }
 
 .right-monthblock .left-radioblock, .last-block-monthwise .left-radioblock  
 {
-    position: relative;
-    margin-bottom: 35px;
+position: relative;
+margin-bottom: 35px;
 }
 
 .right-monthblock, .last-block-monthwise
 {
-    max-width: 100%;
-    width: 100%;
-    display: flex;
-    position: relative;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
+max-width: 100%;
+width: 100%;
+display: flex;
+position: relative;
+margin-bottom: 15px;
+margin-top: 15px;
+flex-direction: row;
+justify-content: space-between;
+align-items: flex-start;
 }
-
-
-
 
 .last-block-monthwise fieldset label, .last-block-monthwise fieldset .text__c-txt___14ptu, .last-block-monthwise fieldset input
 {
-   
-    max-width: 16%;
-    display: block;
-    float: left;
-    position: relative;
-    margin-right: 18px;
-    font-size: 15px;
+max-width: 16%;
+display: block;
+float: left;
+position: relative;
+margin-right: 18px;
+font-size: 15px;
 } 
 
 .last-block-monthwise fieldset :last-child
@@ -1685,15 +894,14 @@ left: 0px;
 margin-right: 0px;
 }
 
-
 .last-block-monthwise fieldset .text__c-txt___14ptu .onBoardingSelect
 {
-    padding: 0px 80px;
-    min-height: 25px;
-    text-align: center;
-    padding-left: 0;
-    font-size: 14px;
-    line-height: 22px;
+padding: 0px 80px;
+min-height: 25px;
+text-align: center;
+padding-left: 0;
+font-size: 14px;
+line-height: 22px;
 }
 
 .last-block-monthwise fieldset .text__c-txt___14ptu .onBoardingSelect .Select-placeholder
@@ -1720,16 +928,16 @@ cursor: pointer;
 
 .last-block-monthwise fieldset input:focus
 {
-    border-bottom: 1px solid #7a329f;
+border-bottom: 1px solid #7a329f;
 }
 
 .right-monthblock fieldset label, .last-block-monthwise fieldset label
 {
-    color: #444;
-    font-size: 14px;
-    font-family: 'Open Sans', sans-serif !important;
-    font-weight: 500;
-    border: none;
+color: #444;
+font-size: 14px;
+font-family: 'Open Sans', sans-serif !important;
+font-weight: 500;
+border: none;
 }
 
 .right-monthblock fieldset, .last-block-monthwise fieldset
@@ -1746,12 +954,12 @@ max-width: 110px;
 
 fieldset.right-colblock
 {
-    margin-left: 27px;
+margin-left: 27px;
 }
 
 fieldset.right-colblock2
 {
-    margin-left: 0px;  
+margin-left: 0px;  
 }
 
 .left-radioblock fieldset .form-radio-label
@@ -1759,9 +967,10 @@ fieldset.right-colblock2
 padding: 13px;
 border: none;
 }
+
 .left-radioblock fieldset .form-radio-input:checked~.form-radio-label
 {
-    border: none !important;
+border: none !important;
 }
 
 .left-radioblock fieldset .form-radio-label:hover
@@ -1771,24 +980,26 @@ border: none !important;
 
 .left-radioblock fieldset .RadioBoxIcon
 {
-    left: 0;
-    right: 0;
-    margin-left: 0;
-    display: block;
-    position: absolute;
-    top: 5px;
-    cursor: pointer;
+left: 0;
+right: 0;
+margin-left: 0;
+display: block;
+position: absolute;
+top: 5px;
+cursor: pointer;
 }
 
 .last-block-monthwise fieldset .text__c-txt__input--select___7_VcN:not(select):before
 {
-    top: 4px;
-    width: 8px;
+top: 4px;
+width: 8px;
 }
+
 .last-block-monthwise fieldset .form-radio-label
 {
-    margin-top: -14px;
+margin-top: -14px;
 }
+
 .clearfix
 {
 clear: both;
@@ -1797,21 +1008,21 @@ clear: both;
 /*my-plan-view*/
 .shadow-style
 {
-    box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    -moz-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-    padding: 20px;
-    background: #fff;
+box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+-webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+-moz-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+padding: 20px;
+background: #fff;
 }
 
 .schedule-listblock
 {
-    display: block;
-    background: #f7f7f7;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    cursor: pointer;
+display: block;
+background: #f7f7f7;
+padding: 10px;
+border-radius: 4px;
+margin-bottom: 10px;
+cursor: pointer;
 }
 
 .schedule-listblock:hover
@@ -1827,33 +1038,34 @@ display: table;
 
 .schedule-listblock fieldset input
 {
-    position: absolute;
+position: absolute;
 }
+
 .schedule-listblock fieldset label.SR-types-label
 {
-    width: 85%;
-    clear: both;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size:14px;
-    color: #7a329f;
-    font-weight: 600;
-    margin-bottom: 0px;
+width: 85%;
+clear: both;
+-o-text-overflow: ellipsis;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+font-size:14px;
+color: #7a329f;
+font-weight: 600;
+margin-bottom: 0px;
 }
 
 .schedule-listblock fieldset span.SR-cat
 {
-    width: 85%;
-    clear: both;
-    position: relative;
-    display: block;
-    float: left;
-    margin-left: 0;
-    font-size:14px;
-    color: #8c8c8c;
-    font-weight: 500;  
+width: 85%;
+clear: both;
+position: relative;
+display: block;
+float: left;
+margin-left: 0;
+font-size:14px;
+color: #8c8c8c;
+font-weight: 500;  
 }
 
 .schedule-listblock fieldset span label
@@ -1865,22 +1077,22 @@ width: 100% !important;
 
 .assign-sp-block
 {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px !important;
-    margin-left: -15px !important;
-    max-height: calc(100vh - 300px);
-    overflow-y: auto
+display: flex;
+flex-wrap: wrap;
+margin-right: -15px !important;
+margin-left: -15px !important;
+max-height: calc(100vh - 300px);
+overflow-y: auto
 }
 .assign-SP-card
 {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-    position: relative;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-bottom: 15px;
+flex: 0 0 33.333333%;
+max-width: 33.333333%;
+position: relative;
+width: 100%;
+padding-right: 15px;
+padding-left: 15px;
+margin-bottom: 15px;
 }
 
 .assign-SP-card .card
@@ -1894,118 +1106,116 @@ border: 1px solid #7a329f !important;
 
 .assign-SP-card fieldset
 {
-    display: block;
-    width: 100%;
-    position: relative;
-    cursor: pointer;
-    z-index: 1000;
+display: block;
+width: 100%;
+position: relative;
+cursor: pointer;
+z-index: 1000;
 }
 .assign-SP-card  .checkblock
 {
-    float: left;
-    display: block;
+float: left;
+display: block;
 }
 
 .assign-SP-card .Spname-image-block
 {
-    width: 80%;
-    float: left;
-    display: flex;
-    padding-left: 50px;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-content: center;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+width: 80%;
+float: left;
+display: flex;
+padding-left: 50px;
+flex-direction: row;
+justify-content: flex-start;
+align-content: center;
+-o-text-overflow: ellipsis;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
 }
 
 .assign-SP-card fieldset .Spname-image-block label
 {
-    color: #212529;
-    font-size: 15px;
-    font-family: 'Open Sans', sans-serif !important;
-    font-weight: 600;
-    border: none;
-    padding-left: 15px;
-    display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    margin-bottom: 5px;
+color: #212529;
+font-size: 15px;
+font-family: 'Open Sans', sans-serif !important;
+font-weight: 600;
+border: none;
+padding-left: 15px;
+display: block;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+margin-bottom: 5px;
 }
 
 .assign-SP-card fieldset .Spname-image-block img
 {
-    width: 67px;
-    height: 67px;
-    max-width: 100%;
-    position: relative;
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    display: block;
+width: 67px;
+height: 67px;
+max-width: 100%;
+position: relative;
+border-radius: 50%;
+-moz-border-radius: 50%;
+-webkit-border-radius: 50%;
+display: block;
 
 }
 
 .assign-SP-card fieldset .SP-actionblock
 {
-    width: 10%;
-    float: left;
-    display: block;
+width: 10%;
+float: left;
+display: block;
 }
 
 
 .SP-nameblock
 {
-    position: relative;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    padding-top: 10px;
+position: relative;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+padding-top: 10px;
 }
 
 .SP-nameblock span
 {
-    display: block;
-    padding-left: 15px;
+display: block;
+padding-left: 15px;
 }
 /*default-css-for-radiobox-checkbox*/
 .checkblock input{
-    position: absolute;
-    opacity: 0;
-    z-index: 1000;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
+position: absolute;
+opacity: 0;
+z-index: 1000;
+cursor: pointer;
+width: 100%;
+height: 100%;
 }
 .checkblock .RadioBoxIcon
 {
-    left: 0;
-    top: 0;
-    /* width: 20px;
-    height: 20px; */
-    margin-top: 25px;
-    margin-left: 7px;
-    z-index: 1000;
-    cursor: pointer;
+left: 0;
+top: 0;
+margin-top: 25px;
+margin-left: 7px;
+z-index: 1000;
+cursor: pointer;
 }
 
 .checkblock .form-radio-input:checked~label .RadioBoxIcon:before {
-    content: '';
-    position: absolute;
-    height:20px;
-    width: 20px;
-    top: -4px;
-    left: -3px;
-    display: block;
-    border: none;
-    background-image: url('../../../assets/images/checked.svg');
-    background-size: 60%;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 100%;
+content: '';
+position: absolute;
+height:20px;
+width: 20px;
+top: -4px;
+left: -3px;
+display: block;
+border: none;
+background-image: url('../../../assets/images/checked.svg');
+background-size: 60%;
+background-position: center;
+background-repeat: no-repeat;
+border-radius: 100%;
 }
 
 .checkblock .form-radio-input:checked ~ .RadioBoxIcon{
@@ -2016,107 +1226,107 @@ border: 1px solid #7a329f !important;
 
  .week-column .parent-col fieldset .form-radio-label
 {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: block;
-    padding: 0;
-    text-align: center;
-    line-height: 50px;
-    cursor: pointer;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+display: block;
+padding: 0;
+text-align: center;
+line-height: 50px;
+cursor: pointer;
 }
 
 .week-column .parent-col .form-radio-input:checked ~ .form-radio-label {
-    border: 1px solid #7a329f !important;
-    color: #fff;
-    background: #793a95;
+border: 1px solid #7a329f !important;
+color: #fff;
+background: #793a95;
 }
 
 .left-radioblock .form-radio-input:checked~.form-radio-label {
-    border: none!important;
+border: none!important;
 }
 .left-radioblock  .RadioBoxIcon {
-    left: 0px;
-    right: 0;
-    margin-left: 0;
-    display: block;
-    position: absolute;
-    top: 5px;
-    cursor: pointer;
+left: 0px;
+right: 0;
+margin-left: 0;
+display: block;
+position: absolute;
+top: 5px;
+cursor: pointer;
 }
 
 .left-radioblock  label.form-radio-label {
-    font-size: 15px;
-    font-family: 'Open Sans', sans-serif !important;
-    font-weight: 500;
-    padding-left: 0px;
-    border: none;
+font-size: 15px;
+font-family: 'Open Sans', sans-serif !important;
+font-weight: 500;
+padding-left: 0px;
+border: none;
 }
 
 .left-radioblock  input {
-    margin: 0;
-    z-index: 1000;
+margin: 0;
+z-index: 1000;
 }
 
 .left-radioblock  input {
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #e1e1e1;
-    width: auto;
-    text-align: center;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
+outline: none;
+border: none;
+border-bottom: 1px solid #e1e1e1;
+width: auto;
+text-align: center;
+font-weight: 600;
+font-size: 15px;
+cursor: pointer;
 }
 
- .options {
-    top: 12px;
-    cursor: pointer;
+.options {
+top: 12px;
+cursor: pointer;
 }
 
 .options:before{
-    content: "...";
-    position: absolute;
-    color: #9f9f9f;
-    right: -15px;
-    top: -9px;
-    font-size: 24px;
-    -webkit-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+content: "...";
+position: absolute;
+color: #9f9f9f;
+right: -15px;
+top: -9px;
+font-size: 24px;
+-webkit-transform: rotate(90deg);
+-ms-transform: rotate(90deg);
+transform: rotate(90deg);
 }
 
 .options div.SelectDropDown {
-    background-color: transparent;
-    font-size: 0;
-    border: 0;
-    width: 50px;
-    padding: 0;
+background-color: transparent;
+font-size: 0;
+border: 0;
+width: 50px;
+padding: 0;
 }
 
 .options div.SelectDropDown:before {
-    top: 4px;
+top: 4px;
 }
 
 .options div.SelectDropDown:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    font-size: 14px;
+content: "";
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+font-size: 14px;
 }
 
 .search-block_SP
 {
-    display: flex;
-    align-items: center;
-    height: 30px;
-    color: #7a329f;
-    font-size: 14px;
-    margin-bottom: 25px;
-    padding-left: 10px;
+display: flex;
+align-items: center;
+height: 30px;
+color: #7a329f;
+font-size: 14px;
+margin-bottom: 25px;
+padding-left: 10px;
 }
 
 .search-block_SP span.ProfileIconSearch
@@ -2128,22 +1338,20 @@ margin-right: 33px;
 }
 
 .search-block_SP div.ProfileSearchContainer.true {
-    width: calc(100% - 66px);
-    right: 35px;
-    background:#fff;
+width: calc(100% - 66px);
+right: 35px;
+background:#fff;
 }
 
 .search-block_SP div.ProfileSearchContainer.true input
 {
-    background:#fff;
+background:#fff;
 }
 
 .search-block_SP .ProfileSearchContainer .closeBtn
 {
 background:#fff;
 }
-
-
 
 .full-block-scheduleDate .MsgWithIcon:before
 {
@@ -2152,13 +1360,13 @@ margin-top: 2px;
 
 .full-block-scheduleDate .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item
 {
-    padding: 5px 0px;
-    text-align: center;
+padding: 5px 0px;
+text-align: center;
 }
 
 .pd-left-0
 {
-    padding-left: 0px !important;
+padding-left: 0px !important;
 }
 
 .full-block-scheduleDate .react-datepicker__time-container
@@ -2168,7 +1376,7 @@ width: 80px;
 
 .full-block-scheduleDate  .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box
 {
-    width: 80px; 
+width: 80px; 
 }
 
 .tab-content .card.SPDetails
@@ -2176,37 +1384,34 @@ width: 80px;
 margin-top: 20px;
 }
 
-
-
 .my-patientblock
 {
-    width: 86%;
-    display: block;
-    position: relative;
-    margin: 0 auto;
-    margin-top: -126px;
+width: 86%;
+display: block;
+position: relative;
+margin: 0 auto;
+margin-top: -126px;
 }
 
 .colorblock
 {
-    width: 100%;
-    display: block;
-    background:#682d8b;
-    margin:0 auto;
-    height: 131px;
-    position: relative;
+width: 100%;
+display: block;
+background:#682d8b;
+margin:0 auto;
+height: 131px;
+position: relative;
 }
-
 
 .left-block1-shedule .full-block-scheduleDate
 {
-    padding: 0;
-    border: none;
+padding: 0;
+border: none;
 }
 
 .left-block1-shedule .full-block-scheduleDate .form-group:nth-child(1)
 {
-    max-width: 100%;
+max-width: 100%;
 }
 
 .left-block1-shedule .form-group2block
@@ -2225,90 +1430,90 @@ background-color: #fff;
 }
 
 .customechk {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 0px;
-    cursor: pointer;
-    font-size: 14px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+display: block;
+position: relative;
+padding-left: 35px;
+margin-bottom: 0px;
+cursor: pointer;
+font-size: 14px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
 
-  .customechk input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width:100%;
-    height: 100%;
-  }
+.customechk input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+height: 0;
+width:100%;
+height: 100%;
+}
   
   .checkmark {
-    position: absolute;
-    top: 3px;
-    left: 0;
-    height: 17px;
-    width: 17px;
-    border-radius: 4px;
-    border: 1px solid #7a329f;
-    background: #fff;
+position: absolute;
+top: 3px;
+left: 0;
+height: 17px;
+width: 17px;
+border-radius: 4px;
+border: 1px solid #7a329f;
+background: #fff;
   }
   
 
-  .customechk input:checked ~ .checkmark {
-    background-color: #fff;
+.customechk input:checked ~ .checkmark {
+background-color: #fff;
   }
   
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
+.checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}
   
-  .customechk input:checked ~ .checkmark:after {
-    display: block;
-  }
+.customechk input:checked ~ .checkmark:after {
+display: block;
+}
   
-  .customechk .checkmark:after {
-    left: 5px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-    border: solid #7a329f;
-    border-width: 0 2px 2px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
+.customechk .checkmark:after {
+left: 5px;
+top: 2px;
+width: 5px;
+height: 10px;
+border: solid #7a329f;
+border-width: 0 2px 2px 0;
+-webkit-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
+transform: rotate(45deg);
+}
 
-  .edit-block
+.edit-block
   {
-    width: 15%;
-    display: inline-block;
-    position: absolute;
-    right: 0;
-    padding-top: 6px;
-    cursor: pointer;
-  }
+width: 15%;
+display: inline-block;
+position: absolute;
+right: 0;
+padding-top: 6px;
+cursor: pointer;
+}
 
-  .edit-block img
+.edit-block img
   {
-    width: 14px;
-    float: right;
-    display: block;
-    height: auto;
-    max-width: 100%;
-  }
+width: 14px;
+float: right;
+display: block;
+height: auto;
+max-width: 100%;
+}
 
-  .full-block-view
-  {
-      display: block;
-      width: 100%;
-      float: left;
-  }
+.full-block-view
+{
+display: block;
+width: 100%;
+float: left;
+}
 
 .customechk .BlockImageDetailsName
   {
@@ -2319,43 +1524,43 @@ line-height: 20px;
   }
     /*my-plan-edit-model*/
 
-    .my-plan-editmodel .full-block-scheduleDate
-    {
-    padding: 0;
-    margin: 0;
-    border: none;
-    }
+.my-plan-editmodel .full-block-scheduleDate
+{
+padding: 0;
+margin: 0;
+border: none;
+}
 
-    .my-plan-editmodel .full-block-scheduleDate .form-group:nth-child(1)
-    {
-        max-width: 100%;
-    }
+.my-plan-editmodel .full-block-scheduleDate .form-group:nth-child(1)
+{
+max-width: 100%;
+}
 
-    .my-plan-editmodel .date-blockview .form-group2block
-    {
-        width: 100%;
-    }
+.my-plan-editmodel .date-blockview .form-group2block
+{
+width: 100%;
+}
 
-    .my-plan-editmodel  .form-group2block .react-datepicker-wrapper
-    {
-   margin-top: 5px;
-    }
+.my-plan-editmodel  .form-group2block .react-datepicker-wrapper
+{
+margin-top: 5px;
+}
 
-    .my-plan-editmodel .assign-SP-card
-    {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
+.my-plan-editmodel .assign-SP-card
+{
+flex: 0 0 50%;
+max-width: 50%;
+}
 
-    .my-plan-editmodel .assign-sp-block
-    {
-    z-index: 0;
-    }
+.my-plan-editmodel .assign-sp-block
+{
+z-index: 0;
+}
 
-    .form-group2block .react-datepicker-wrapper
-    {
-    margin-top: 5px;  
-    }
+.form-group2block .react-datepicker-wrapper
+{
+margin-top: 5px;  
+}
 .full-block-scheduleDate .react-datepicker-popper
 {
 z-index:10000;
@@ -2384,39 +1589,39 @@ right: 0;
 
 
 
-       /*IE_11_&_IE_10*/
-       @media all and (-ms-high-contrast:none)
-       {
-          .bottom-blockbtn { display: block !important;  } /* IE10 */
-       *::-ms-backdrop,  .bottom-blockbtn { display: block !important;  } /* IE11 */
+ /*IE_11_&_IE_10*/
+@media all and (-ms-high-contrast:none)
+{
+.bottom-blockbtn { display: block !important;  } /* IE10 */
+*::-ms-backdrop,  .bottom-blockbtn { display: block !important;  } /* IE11 */
 
-       .bottom-blockbtn .pull-left{ float: left !important;  }
-       *::-ms-backdrop, .bottom-blockbtn .pull-left{ float: left !important;  }
-       
+.bottom-blockbtn .pull-left{ float: left !important;  }
+*::-ms-backdrop, .bottom-blockbtn .pull-left{ float: left !important;  }
 
-       .bottom-blockbtn .ml-auto{ float: right !important;  } 
-       *::-ms-backdrop, .bottom-blockbtn .ml-auto{ float: right !important;  }
-       }
+
+.bottom-blockbtn .ml-auto{ float: right !important;  } 
+*::-ms-backdrop, .bottom-blockbtn .ml-auto{ float: right !important;  }
+}
 
 .ServiceRequestsWidget .ServiceRequestBoard{
-    width: 50%;
+width: 50%;
 }
 
 ul.show-more-assignSP
 {
-    margin: 0 auto;
-    padding-left: 0;
-    width: 100%;
+margin: 0 auto;
+padding-left: 0;
+width: 100%;
 }
 
 ul.show-more-assignSP li
 {
-    height: 40px;
-    display: block;
-    line-height: 40px;
-    padding: 0;
-    text-align: center;
-    width: 100%;
+height: 40px;
+display: block;
+line-height: 40px;
+padding: 0;
+text-align: center;
+width: 100%;
 }
 
 .CustomPOS .MsgWrongIcon:before
@@ -2472,7 +1677,7 @@ top: -6px;
 font-size: 24px;
 -webkit-transform: rotate(90deg);
 -ms-transform: rotate(90deg);
- transform: rotate(90deg);
+transform: rotate(90deg);
 }
 /*1920-screen-or-other-screens*/
 @media (min-width: 1367px)
