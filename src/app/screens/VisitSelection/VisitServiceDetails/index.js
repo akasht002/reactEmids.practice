@@ -373,13 +373,15 @@ export class VisitServiceDetails extends Component {
       rowPageSize: DEFAULT_PAGE_SIZE,
       activePage: PAGE_NO,
       entityServiceProviders: [],
-      selectedOption: ''
+      selectedOption: '',
+      pageNumberESP: PAGE_NO
     })
     let data = {
       pageNumber: PAGE_NO,
       pageSize: DEFAULT_PAGE_SIZE
     }
     this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, true);
+    this.props.clearESPList();
     this.props.getVisitStatus();
     this.props.clearServiceCategory(this.props.ServiceType);
     this.props.clearServiceType([]);
@@ -830,7 +832,7 @@ handelEditAssessment = (assessmentId) => {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getServiceRequestList: (data) => dispatch(getServiceRequestList(data)),
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
@@ -871,7 +873,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
   return {
     visitServiceList: VisitServiceDetailsState.visitserviceList,

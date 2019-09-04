@@ -922,7 +922,7 @@ export class Schedule extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getServiceCategory: (data, selectedData) => dispatch(getServiceCategory(data, selectedData)),
         getServiceType: (data, selectedData) => dispatch(getServiceType(data, selectedData)),
@@ -948,7 +948,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     let scheduleState = state.scheduleState
     return {
         serviceCategoryList: scheduleState.serviceCategoryList,
