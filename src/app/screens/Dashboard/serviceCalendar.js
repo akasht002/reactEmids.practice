@@ -289,12 +289,12 @@ export class ServiceCalendar extends Component {
     }
   };
 
-  handleClick = data => {
+  handleClick = (data, activeTab) => {
     this.props.setServiceVisitDate(moment(this.state.reportDay))
     this.props.getServiceRequestId(data.serviceRequestId);
     getUserInfo().isEntityServiceProvider && this.props.setEntityServiceProvider(data)
     this.props.setPatient(data.patientId);
-    (data.serviceRequestId === 0) && this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
+    this.props.setActiveTab(activeTab)
     this.props.goToServiceRequestDetailsPage();
   };
 
@@ -463,8 +463,6 @@ export class ServiceCalendar extends Component {
     else this.props.goToServiceVisitProcessing(data)
   }
 
-
-
   render() {
     const visitCount = this.props.serviceVistCount;
     let pervious_months = []
@@ -548,13 +546,9 @@ export class ServiceCalendar extends Component {
         onClickVideoConference={data => this.onClickVideoConference(data)}
         Servicelist={serviceVist}
         togglePersonalDetails={this.togglePersonalDetails}
-        handleClick={requestId => this.handleClick(requestId)}
+        handleClick={this.handleClick}
         onClick={link => this.navigateProfileHeader(link)}
-        goToPatientProfile={data => {
-          this.props.setServiceVisitDate(moment(this.state.reportDay))
-          this.props.setPatient(data);
-          this.props.goToPatientProfile();
-        }}
+        goToPatientProfile={this.handleClick}
         goToESPProfile={
           data => {
             this.props.setESP(data);
