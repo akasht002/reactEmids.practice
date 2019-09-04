@@ -48,6 +48,7 @@ import {
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
+import Search from '../Components/Search'
 
 export class Individuals extends Component {
   constructor(props) {
@@ -81,7 +82,8 @@ export class Individuals extends Component {
       pageNumberFeedback: DEFAULT_PAGE_NUMBER,
       pageSizeFeedback: DEFAULT_PAGE_SIZE,
       activePageFeedback: DEFAULT_PAGE_NUMBER,
-      filterOpen: false
+      filterOpen: false,
+      searchOpen: false
     }
     this.gridHeader = allIndividuals
   }
@@ -114,6 +116,27 @@ export class Individuals extends Component {
       rowCount: props.paginationCount,
       rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
     }
+  }
+
+  closeSearch = async () => {
+    this.setState({
+      searchOpen: !this.state.searchOpen,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      searchKeyword: 'default'
+    })
+    const data = this.getFilterData({
+      state: this.state,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+    })
+    this.props.getIndividualsList(data)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -479,6 +502,35 @@ export class Individuals extends Component {
     await this.props.getIndividualsList(data)
   }
 
+  toggleSearch = () => {
+    this.setState({
+      searchOpen: !this.state.searchOpen
+    })
+  }
+
+  handleSearchData = async (e) => {
+    e.preventDefault();
+    await this.setState({
+      activePage: DEFAULT_PAGE_NUMBER,
+    })
+    const data = this.getFilterData({
+      status: this.state.status,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+    })
+    this.props.getIndividualsList(data)
+  }
+
+  handleSearchkeyword = e => {
+    this.setState({
+      searchKeyword: e.target.value
+    })
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state;
 
@@ -503,12 +555,31 @@ export class Individuals extends Component {
               status={status}
             />
           </div>
-          <span
-              className='primaryColor ProfileHeaderFilter'
+          <div className="search-view-top">
+          <div className="search-block-right">
+          {/* <span className="profile-icon-search"></span>
+          <div className="search-container-block">
+          <div className="form-block">
+          <input className="form-control" type="text" placeholder="Enter keyword for global search" maxlength="256" value=""/>
+          <input className="btn btn-primary" type="button" value="Search"/>
+          <i className="close-btn"></i>
+          </div>
+          </div> */}
+          <Search
+              toggleSearch={this.toggleSearch}
+              searchOpen={this.state.searchOpen}
+              searchKeyword={this.state.searchKeyword}
+              handleSearchkeyword={this.handleSearchkeyword}
+              handleSearchData={this.handleSearchData}
+              handleSearchkeywordPress={this.handleSearchkeywordPress}
+              closeSearch={this.closeSearch}
+            />
+          <span className='profile-header-filter'
               onClick={this.toggleFilter}
             >
               Filters
             </span>
+          </div>
           {this.props.individualsList && this.props.individualsList.length > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -522,6 +593,7 @@ export class Individuals extends Component {
               />
             </div> : ''
           }
+          </div>
           <div className="tab-table-view">
             <div className="full-block-tableview">
               <Grid
