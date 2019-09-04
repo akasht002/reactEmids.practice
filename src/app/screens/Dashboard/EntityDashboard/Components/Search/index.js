@@ -7,7 +7,7 @@ function Search(props){
         <div className={'search-container-block ' + props.searchOpen}>
             <form onSubmit={(e)=>props.handleSearchData(e)} className="form-block">
                 <input className='form-control' type='text' value={props.searchKeyword} 
-                 onChange={(e)=>props.handleSearchkeyword(e)} placeholder='Enter keyword for global search'  //onKeyPress={(e) =>props.handleSearchkeywordPress(e)}
+                 onChange={(e)=>props.handleSearchkeyword(e)} placeholder='Enter keyword for global search'
                  maxLength='256'
                 />
                 <input className='btn btn-primary' type='button' onClick={(e)=>props.handleSearchData(e)}

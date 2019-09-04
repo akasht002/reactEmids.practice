@@ -25,14 +25,11 @@
     transition: all linear .3s;
 }
 
-
-.parent-fullblock .FilterWidget.true{
-    width: 660px;
+.entity-filter-block.true{
     position: fixed;
     height: calc(100vh - 60px);
     margin-top: 60px;
 }
-
 
 .FilterWidgetForm{
     height: 100%;

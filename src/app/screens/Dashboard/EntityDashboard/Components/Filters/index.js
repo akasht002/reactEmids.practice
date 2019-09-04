@@ -12,6 +12,7 @@ import ServiceTypeList from './ServiceTyplist'
 import Select from 'react-select';
 import ServiceRequestStatus from "./ServiceRequestStatus";
 import ScheduleType from "./ScheduleType";
+import './style.css'
 
 class Filter extends Component {
 
@@ -35,7 +36,7 @@ class Filter extends Component {
             return { "label": type.serviceCategoryDescription, "value": type.serviceCategoryId };
         });
         return (
-            <div className={"CTFilter FilterWidget " + this.props.isOpen}>
+            <div className={"CTFilter FilterWidget entity-filter-block " + this.props.isOpen}>
                 <div className="filterOverlay individual"></div>
                 <div className="FilterWidgetForm">
                     <div className="FilterContainer FilterTop">

@@ -46,6 +46,7 @@ import {
   getServiceType,
   clearServiceTypes
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import Search from '../Components/Search';
 
 export class ServiceVisits extends Component {
   constructor(props) {
@@ -340,7 +341,7 @@ export class ServiceVisits extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
-    await this.props.getVisitServiceCountList(count)
+    await this.props.getVisitServiceCountList(count, true)
     await this.props.getVisitServiceTableList(data)
     
   }
@@ -375,6 +376,68 @@ export class ServiceVisits extends Component {
     await this.props.getVisitServiceTableList(data)
   }
 
+  toggleSearch = () => {
+    this.setState({
+      searchOpen: !this.state.searchOpen,
+      searchKeyword: ''
+    })
+  }
+
+  handleSearchData = async (e) => {
+    e.preventDefault();
+    await this.setState({
+      activePage: DEFAULT_PAGE_NUMBER,
+    })
+    const data = this.getFilterData({
+      status: this.state.status,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+   await this.props.getVisitServiceCountList(count)
+   await this.props.getVisitServiceTableList(data)
+  }
+
+  handleSearchkeyword = e => {
+    this.setState({
+      searchKeyword: e.target.value
+    })
+  }
+
+  closeSearch = async () => {
+    await this.setState({
+      searchOpen: !this.state.searchOpen,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      searchKeyword: 'default'
+    })
+    const data = this.getFilterData({
+      state: this.state,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+      status: this.state.status
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getVisitServiceCountList(count)
+    await this.props.getVisitServiceTableList(data)
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state
     return (
@@ -387,12 +450,23 @@ export class ServiceVisits extends Component {
               status={status}
             />
           </div>
+          <div className="search-view-top">
+          <div className="search-block-right">
+          <Search
+              toggleSearch={this.toggleSearch}
+              searchOpen={this.state.searchOpen}
+              searchKeyword={this.state.searchKeyword}
+              handleSearchkeyword={this.handleSearchkeyword}
+              handleSearchData={this.handleSearchData}
+              closeSearch={this.closeSearch}
+            />
           <span
-              className='primaryColor ProfileHeaderFilter'
+              className='primaryColor profile-header-filter'
               onClick={this.toggleFilter}
             >
               Filters
             </span>
+            </div>
           {this.props.paginationCount > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -406,6 +480,7 @@ export class ServiceVisits extends Component {
               />
             </div> : ''
           }
+          </div>
           <div className="tab-table-view">
             <div className="full-block-tableview">
               <Grid
@@ -448,7 +523,7 @@ export class ServiceVisits extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getVisitServiceCountList: data => dispatch(getVisitServiceCountList(data)),
+    getVisitServiceCountList: (data, isFilterApplied) => dispatch(getVisitServiceCountList(data, isFilterApplied)),
     getVisitServiceTableList: data => dispatch(getVisitServiceTableList(data)),
     goToVisitServiceDetails: () => dispatch(push(Path.visitServiceDetails)),
     setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data)),

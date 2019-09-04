@@ -41,6 +41,7 @@ import { ProfileModalPopup } from '../../../../components'
 import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
 import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
+import Search from '../Components/Search';
  
 export class ServiceProvider extends Component {
   constructor(props) {
@@ -402,7 +403,7 @@ export class ServiceProvider extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderCountList(count, true)
     await this.props.getVisitServiceProviderTableList(data);
   }
 
@@ -442,6 +443,68 @@ export class ServiceProvider extends Component {
     await this.props.getVisitServiceProviderTableList(data)
   }
 
+  toggleSearch = () => {
+    this.setState({
+      searchOpen: !this.state.searchOpen,
+      searchKeyword: ''
+    })
+  }
+
+  handleSearchData = async (e) => {
+    e.preventDefault();
+    await this.setState({
+      activePage: DEFAULT_PAGE_NUMBER,
+    })
+    const data = this.getFilterData({
+      status: this.state.status,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderTableList(data)
+  }
+
+  handleSearchkeyword = e => {
+    this.setState({
+      searchKeyword: e.target.value
+    })
+  }
+
+  closeSearch = async () => {
+    await this.setState({
+      searchOpen: !this.state.searchOpen,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      searchKeyword: 'default'
+    })
+    const data = this.getFilterData({
+      state: this.state,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+      status: this.state.status
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderTableList(data)
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state
 
@@ -466,12 +529,23 @@ export class ServiceProvider extends Component {
               status={status}
             />
           </div>
+          <div className="search-view-top">
+          <div className="search-block-right">
+          <Search
+              toggleSearch={this.toggleSearch}
+              searchOpen={this.state.searchOpen}
+              searchKeyword={this.state.searchKeyword}
+              handleSearchkeyword={this.handleSearchkeyword}
+              handleSearchData={this.handleSearchData}
+              closeSearch={this.closeSearch}
+            />
           <span
-              className='primaryColor ProfileHeaderFilter'
+              className='primaryColor profile-header-filter'
               onClick={this.toggleFilter}
             >
               Filters
             </span>
+            </div>
           {this.props.paginationCount > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -485,6 +559,7 @@ export class ServiceProvider extends Component {
               />
             </div> : ''
           }
+          </div>
           <div className="tab-table-view">
             <div className="full-block-tableview">
               <Grid
@@ -543,8 +618,8 @@ export class ServiceProvider extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getVisitServiceProviderCountList: data =>
-      dispatch(getVisitServiceProviderCountList(data)),
+    getVisitServiceProviderCountList: (data, isFilterApplied) =>
+      dispatch(getVisitServiceProviderCountList(data, isFilterApplied)),
     getVisitServiceProviderTableList: data =>
       dispatch(getVisitServiceProviderTableList(data)),
     createVideoConference: data => dispatch(createVideoConference(data)),

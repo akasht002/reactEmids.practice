@@ -41,6 +41,7 @@ import {
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
+import Search from '../Components/Search';
 
 export class ServiceRequest extends Component {
   constructor(props) {
@@ -348,7 +349,7 @@ export class ServiceRequest extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: DEFAULT_PAGE_NUMBER,
     })
-    await this.props.getServiceRequestCountList(count)
+    await this.props.getServiceRequestCountList(count, true)
     await this.props.getServiceRequestTableList(data)
   }
 
@@ -383,6 +384,68 @@ export class ServiceRequest extends Component {
     await this.props.getServiceRequestTableList(data)
   }
 
+  toggleSearch = () => {
+    this.setState({
+      searchOpen: !this.state.searchOpen,
+      searchKeyword: ''
+    })
+  }
+
+  handleSearchData = async (e) => {
+    e.preventDefault();
+    await this.setState({
+      activePage: DEFAULT_PAGE_NUMBER,
+    })
+    const data = this.getFilterData({
+      status: this.state.status,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+  await this.props.getServiceRequestCountList(count)
+   await this.props.getServiceRequestTableList(data)
+  }
+
+  handleSearchkeyword = e => {
+    this.setState({
+      searchKeyword: e.target.value
+    })
+  }
+
+  closeSearch = async () => {
+    await this.setState({
+      searchOpen: !this.state.searchOpen,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      searchKeyword: 'default'
+    })
+    const data = this.getFilterData({
+      state: this.state,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+      status: this.state.status
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getServiceRequestCountList(count)
+    await this.props.getServiceRequestTableList(data)
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state
 
@@ -396,12 +459,23 @@ export class ServiceRequest extends Component {
               status={status}
             />
           </div>
+          <div className="search-view-top">
+          <div className="search-block-right">
+          <Search
+              toggleSearch={this.toggleSearch}
+              searchOpen={this.state.searchOpen}
+              searchKeyword={this.state.searchKeyword}
+              handleSearchkeyword={this.handleSearchkeyword}
+              handleSearchData={this.handleSearchData}
+              closeSearch={this.closeSearch}
+            />
           <span
-              className='primaryColor ProfileHeaderFilter'
+              className='primaryColor profile-header-filter'
               onClick={this.toggleFilter}
             >
               Filters
           </span>
+          </div>
           {this.props.paginationCount && this.props.paginationCount > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -415,6 +489,7 @@ export class ServiceRequest extends Component {
               />
             </div> : ''
           }
+          </div>
           <div className="tab-table-view">
             <div className="full-block-tableview">
               <Grid
@@ -462,8 +537,8 @@ export class ServiceRequest extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getServiceRequestCountList: data =>
-      dispatch(getServiceRequestCountList(data)),
+    getServiceRequestCountList: (data, isFilterApplied) =>
+      dispatch(getServiceRequestCountList(data, isFilterApplied)),
     getServiceRequestTableList: data =>
       dispatch(getServiceRequestTableList(data)),
     goToVisitServiceDetails: () => dispatch(push(Path.visitServiceDetails)),

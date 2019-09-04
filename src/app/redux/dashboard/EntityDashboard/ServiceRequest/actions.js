@@ -39,7 +39,7 @@ export const getServiceRequestTableListSuccess = data => {
   }
 }
 
-export function getServiceRequestCountList(data) {
+export function getServiceRequestCountList(data, isFilterApplied = false) {
   return (dispatch, getState) => {
     dispatch(startLoading())
     return Post(
@@ -50,13 +50,15 @@ export function getServiceRequestCountList(data) {
           let {activeSubTab, visitServiceRequestCountList} = getState().dashboardState.VisitServiceRequestState
           let dataCount = checkDataCount(resp)
           dispatch(setPaginationRowCountSuccess(dataCount));
+          if(!isFilterApplied) {
           if (activeSubTab !== 'All') {
             dispatch(getServiceRequestCountListSuccess(updateCountList(visitServiceRequestCountList, resp)))
           }
           else {
             dispatch(getServiceRequestCountListSuccess(resp.data))
           }
-        }
+         }
+      }
         dispatch(endLoading())
       })
       .catch((err) => {

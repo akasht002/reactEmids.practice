@@ -136,7 +136,12 @@ export class Individuals extends Component {
       sortName: this.state.sortName,
       sortOrder: this.state.sortOrder,
     })
-    this.props.getIndividualsList(data)
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsList(data)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -504,7 +509,8 @@ export class Individuals extends Component {
 
   toggleSearch = () => {
     this.setState({
-      searchOpen: !this.state.searchOpen
+      searchOpen: !this.state.searchOpen,
+      searchKeyword: ''
     })
   }
 
@@ -520,9 +526,14 @@ export class Individuals extends Component {
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: this.state.pageSize,
       sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
+      sortOrder: this.state.sortOrder
     })
-    this.props.getIndividualsList(data)
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsList(data)
   }
 
   handleSearchkeyword = e => {
@@ -557,21 +568,12 @@ export class Individuals extends Component {
           </div>
           <div className="search-view-top">
           <div className="search-block-right">
-          {/* <span className="profile-icon-search"></span>
-          <div className="search-container-block">
-          <div className="form-block">
-          <input className="form-control" type="text" placeholder="Enter keyword for global search" maxlength="256" value=""/>
-          <input className="btn btn-primary" type="button" value="Search"/>
-          <i className="close-btn"></i>
-          </div>
-          </div> */}
           <Search
               toggleSearch={this.toggleSearch}
               searchOpen={this.state.searchOpen}
               searchKeyword={this.state.searchKeyword}
               handleSearchkeyword={this.handleSearchkeyword}
               handleSearchData={this.handleSearchData}
-              handleSearchkeywordPress={this.handleSearchkeywordPress}
               closeSearch={this.closeSearch}
             />
           <span className='profile-header-filter'
