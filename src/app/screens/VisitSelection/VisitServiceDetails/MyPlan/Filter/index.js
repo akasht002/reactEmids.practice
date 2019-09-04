@@ -11,7 +11,7 @@ import { isEntityUser } from '../../../../../utils/userUtility'
 import { getUserInfo } from "../../../../../services/http";
 import "./style.css";
 
-class Filter extends Component {
+export class Filter extends Component {
 
     constructor(props) {
         super(props);
