@@ -831,7 +831,7 @@ handelEditAssessment = (assessmentId) => {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getServiceRequestList: (data) => dispatch(getServiceRequestList(data)),
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
@@ -872,7 +872,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
   return {
     visitServiceList: VisitServiceDetailsState.visitserviceList,
