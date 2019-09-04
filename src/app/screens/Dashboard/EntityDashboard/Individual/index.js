@@ -46,7 +46,8 @@ import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
 import {
   getVisitServiceHistoryByIdDetail,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
-import Filter from './Filters'
+import Filter from '../Components/Filters'
+import { filterTabs } from './filterTabs';
 
 export class Individuals extends Component {
   constructor(props) {
@@ -373,12 +374,6 @@ export class Individuals extends Component {
     })
   }
 
-  closeFIlter = () => {
-    this.setState({
-      filterOpen: !this.state.filterOpen    
-    })
-  }
-
   handleContracts = data => {
     this.setState({
       membershipName: data.membershipName,
@@ -436,6 +431,11 @@ export class Individuals extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: DEFAULT_PAGE_NUMBER
     })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getIndividualsCountList(count, true)
     await this.props.getIndividualsList(data)
   }
 
@@ -552,7 +552,6 @@ export class Individuals extends Component {
         <Filter
           isOpen={this.state.filterOpen}
           toggle={this.toggleFilter}
-          closeFIlter={this.closeFIlter}
           applyFilter={this.applyFilter}
           applyReset={this.applyReset}
           handleserviceType={this.handleserviceType}
@@ -568,6 +567,7 @@ export class Individuals extends Component {
           ageRange={this.state.ageRange}
           genderId={this.state.genderId}
           memberContractId={this.state.memberContractId}
+          filterTabs={filterTabs}
         />
       </div>
     )
@@ -576,7 +576,7 @@ export class Individuals extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getIndividualsCountList: data => dispatch(getIndividualsCountList(data)),
+    getIndividualsCountList: (data, isFilterApplied) => dispatch(getIndividualsCountList(data, isFilterApplied)),
     getIndividualsList: data => dispatch(getIndividualsList(data)),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),

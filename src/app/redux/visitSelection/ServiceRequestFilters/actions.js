@@ -122,9 +122,7 @@ export function getServiceCategory() {
 };
 
 export function getServiceType(data) {
-    data.isChecked = false;
     return (dispatch) => {
-
         dispatch(startLoading());
         let serviceCategoryId = data.value;
         elasticSearchGet(API.getServiceType + `${serviceCategoryId}`).then((resp) => {

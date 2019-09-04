@@ -44,7 +44,7 @@ const VisitServiceRequestState = (state = defaultState, action) => {
     case VisitServiceRequestList.getScheduleTypeSuccess:
       return {
         ...state,
-        scheduleType: action.data
+        scheduleType: action.updatedData
       }
     case VisitServiceRequestList.clearScheduleType:
       return {
@@ -71,7 +71,7 @@ const VisitServiceRequestState = (state = defaultState, action) => {
       return {
           ...state,
           activeSubTab: action.data
-      };    
+      }; 
     default:
       return state
   }

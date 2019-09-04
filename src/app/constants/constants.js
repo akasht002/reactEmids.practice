@@ -479,9 +479,18 @@ export const SERVICE_CATEGORY = {
     }
 }
 
-export const InddividualFilterActiveTab = {
-    "contracts": '1',
-    "clinicalConditions": '2',
+export const FilterActiveTab = {
+    "contracts": '2',
+    "clinicalConditions": '4',
     "age": '3',
-    "gender": '4',
+    "gender": '1',
+    "rating": '6',
+    "experience": '5',
+    "categories": '7',
+    "status": '8',
+    "recurring": '9' 
 }
+
+export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Pending Approval', 'Declined', 'Closed', 'Cancelled'];
+
+export const RECURRING_OPTIONS = [31, 32]

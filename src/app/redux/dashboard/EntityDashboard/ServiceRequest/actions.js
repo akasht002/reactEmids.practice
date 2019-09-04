@@ -1,7 +1,7 @@
 import { API } from '../../../../services/api'
 import _ from 'lodash'
 import {
-  Post
+  Post, PatientGet, ServiceRequestGet
 } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions'
 import {getFullName, concatCommaWithSpace} from '../../../../utils/stringHelper'
@@ -9,6 +9,7 @@ import { getValue } from '../../../../utils/userUtility'
 import { VisitServiceRequestList } from './bridge'
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
+import { CARETEAM_STATUS, ENTITY_SR_STATUS, RECURRING_OPTIONS } from '../../../../constants/constants';
 
 export const setActiveSubTab = data => {
   return {
@@ -87,5 +88,73 @@ export function getServiceRequestTableList(data) {
         dispatch(getServiceRequestTableListSuccess([]))
         dispatch(endLoading())
       })
+  }
+}
+
+export function getScheduleType() {
+  return dispatch => {
+    dispatch(startLoading())
+    return PatientGet(API.getScheduleType)
+      .then(resp => {
+        dispatch(getScheduleTypeSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
+export const getScheduleTypeSuccess = data => {
+  data.forEach(obj => {
+    obj.isChecked = false
+  })
+  let updatedData = data.filter(itemX => RECURRING_OPTIONS.includes(itemX.id));
+  return {
+    type: VisitServiceRequestList.getScheduleTypeSuccess,
+    updatedData
+  }
+}
+
+export const clearScheduleType = data => {
+  data.forEach(obj => {
+    obj.isChecked = false
+  })
+  return {
+    type: VisitServiceRequestList.clearScheduleType,
+    data
+  }
+}
+
+export function getServiceRequestStatus() {
+  return dispatch => {
+    dispatch(startLoading())
+    return ServiceRequestGet(API.getServiceStatus)
+      .then(resp => {
+        dispatch(getServiceRequestStatusSuccess(resp.data))
+        dispatch(endLoading())
+      })
+      .catch(err => {
+        dispatch(endLoading())
+      })
+  }
+}
+
+export const getServiceRequestStatusSuccess = data => {
+  _.forEach(data, function (obj) { obj.isActive = false; });
+  let updatedData = data.filter(itemX => ENTITY_SR_STATUS.includes(itemX.keyValue));
+return {
+    type: VisitServiceRequestList.getServiceRequestStatusSuccess,
+    updatedData
+  }
+}
+
+export const clearRequestStatus = data => {
+  data.forEach(obj => {
+      obj.isActive = false
+  });
+  return {
+    type: VisitServiceRequestList.clearRequestStatus,
+    data
   }
 }

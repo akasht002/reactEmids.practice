@@ -35,6 +35,18 @@ import { setPatient } from "../../../../redux/patientProfile/actions";
 import {
   getVisitServiceHistoryByIdDetail,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import Filter from '../Components/Filters'
+import { filterTabs } from './filterTabs';
+import {
+  getServiceRequestStatus,
+  clearRequestStatus
+} from '../../../../redux/dashboard/EntityDashboard/ServiceRequest/actions'
+import { getServiceCategory } from "../../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {  
+  getServiceType,
+  clearServiceTypes
+} from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+
 export class ServiceVisits extends Component {
   constructor(props) {
     super(props)
@@ -55,6 +67,7 @@ export class ServiceVisits extends Component {
       sortName: '',
       sortOrder: '',
       searchKeyword: 'default',
+      filterOpen: false
     }
     this.serviceTypeIds = []
     this.gridHeader = allServiceVisits
@@ -76,6 +89,8 @@ export class ServiceVisits extends Component {
     })
     await this.props.getVisitServiceCountList(count)
     await this.props.getVisitServiceTableList(list)
+    this.props.getServiceCategory()
+    this.props.getServiceRequestStatus()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -258,6 +273,108 @@ export class ServiceVisits extends Component {
     }
   }
 
+  toggleFilter = () => {
+    this.setState({
+      filterOpen: !this.state.filterOpen
+    })
+  }
+
+  handleServiceRequestStatus = (item, e) => {
+    let serviceRequestStatus = this.state.serviceRequestStatus
+    this.setState({
+      isChecked: !this.state.isChecked
+    })
+    if (e.target.checked) {
+      serviceRequestStatus.push(item.id)
+    } else {
+      let index = serviceRequestStatus.indexOf(item.id)
+      if (index > -1) {
+        serviceRequestStatus.splice(index, 1)
+      }
+    }
+    this.setState({
+      serviceRequestStatus: serviceRequestStatus
+    })
+  }
+
+  
+  handleChangeServiceCategory = selectedOption => {
+    this.setState({
+      serviceCategoryId: selectedOption.value,
+      selectedOption: selectedOption,
+    })
+    this.serviceTypeIds = []
+    this.props.clearServiceTypes()
+    this.props.getServiceType(selectedOption.value)
+  }
+
+  handleserviceType = (item, e) => {
+    let serviceType = this.serviceTypeIds
+    if (e.target.checked) {
+      serviceType.push(item.serviceTypeId)
+    } else {
+      let index = serviceType.indexOf(item.serviceTypeId)
+      if (index > -1) {
+        serviceType.splice(index, 1)
+      }
+    }
+    this.serviceTypeIds = serviceType
+  }
+
+  applyFilter = async () => {
+    this.setState({
+      filterOpen: !this.state.filterOpen,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER
+    })
+    let data = this.getFilterData({
+      status: this.state.status,
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder, 
+    })
+    let count = this.getCountData({
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate
+    })
+    await this.props.getVisitServiceCountList(count)
+    await this.props.getVisitServiceTableList(data)
+    
+  }
+
+  applyReset = async () => {
+    await this.setState({
+      selectedOption: '',
+      serviceRequestStatus: [],
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      filterOpen: false
+    })
+    this.serviceTypeIds = []
+    this.props.clearServiceTypes()
+    this.props.clearRequestStatus(this.props.serviceProviderVisitStatus)
+    const data = this.getFilterData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      pageNumber: this.state.pageNumber,
+      pageSize: this.state.pageSize,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
+      status: this.state.status
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getVisitServiceCountList(count)
+    await this.props.getVisitServiceTableList(data)
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state
     return (
@@ -270,6 +387,12 @@ export class ServiceVisits extends Component {
               status={status}
             />
           </div>
+          <span
+              className='primaryColor ProfileHeaderFilter'
+              onClick={this.toggleFilter}
+            >
+              Filters
+            </span>
           {this.props.paginationCount > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -300,6 +423,23 @@ export class ServiceVisits extends Component {
               onChange={this.pageNumberChange}
             />
           </div>
+          <Filter
+            isOpen={this.state.filterOpen}
+            toggle={this.toggleFilter}
+            serviceRequestStatusList={this.props.serviceProviderVisitStatus}
+            handleServiceRequestStatus={this.handleServiceRequestStatus}
+            serviceCategory={this.props.serviceCategory}
+            getServiceType={this.props.getServiceType}
+            handleChangeServiceCategory={this.handleChangeServiceCategory}
+            selectedOption={this.state.selectedOption}
+            serviceType={this.props.serviceType}
+            handleserviceType={this.handleserviceType}
+            applyFilter={this.applyFilter}
+            addChecked={this.props.addChecked}
+            applyReset={this.applyReset}
+            status={this.state.status}
+            filterTabs={filterTabs}
+        />
         </div>
       </div>
     )
@@ -317,7 +457,12 @@ function mapDispatchToProps(dispatch) {
     setActiveTab: (data) => dispatch(setActiveTab(data)),
     setPatient: data => dispatch(setPatient(data)),
     getVisitServiceHistoryByIdDetail: data =>
-      dispatch(getVisitServiceHistoryByIdDetail(data))
+      dispatch(getVisitServiceHistoryByIdDetail(data)),
+    getServiceRequestStatus: () => dispatch(getServiceRequestStatus()),
+    clearRequestStatus: data => dispatch(clearRequestStatus(data)),
+    getServiceType: (data) => dispatch(getServiceType(data)),
+    clearServiceTypes: (data) => dispatch(clearServiceTypes(data)),
+    getServiceCategory: () => dispatch(getServiceCategory())
   }
 }
 
@@ -328,7 +473,10 @@ function mapStateToProps(state) {
     visitServiceTableList: state.dashboardState.VisitServiceCountListState
       .visitServiceTableList,
     activeSubTab: state.dashboardState.VisitServiceCountListState.activeSubTab,
-    paginationCount: state.dashboardState.VisitServiceCountListState.paginationCount
+    paginationCount: state.dashboardState.VisitServiceCountListState.paginationCount,
+    serviceProviderVisitStatus: state.dashboardState.VisitServiceRequestState.serviceRequestStatusList,
+    serviceCategory: state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
+    serviceType: state.visitHistoryState.vistServiceHistoryState.typeList
   }
 }
 

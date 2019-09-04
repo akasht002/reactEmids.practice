@@ -205,5 +205,7 @@ export const API = {
     acceptservicerequest: 'servicerequest/acceptservicerequest',
     getfirstlastvisitdate: 'plan/getfirstlastvisitdate',
     getAllContracts: 'Membership/Get-all-contracts',
-    getAllClinicalCondition: 'Patient/get-all-clinical-conditions'
+    getAllClinicalCondition: 'Patient/get-all-clinical-conditions',
+    getScheduleType: 'Lookup/ScheduleType',
+    getServiceStatus: 'ServiceRequest/LookUp/servicerequeststatus'
 }

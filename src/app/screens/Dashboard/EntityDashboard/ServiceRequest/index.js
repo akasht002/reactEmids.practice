@@ -14,7 +14,11 @@ import {
 import {
   getServiceRequestCountList,
   getServiceRequestTableList,
-  setActiveSubTab
+  setActiveSubTab,
+  getScheduleType,
+  getServiceRequestStatus,
+  clearRequestStatus,
+  clearScheduleType
 } from '../../../../redux/dashboard/EntityDashboard/ServiceRequest/actions'
 import { push } from '../../../../redux/navigation/actions';
 import { Path } from '../../../../routes';
@@ -30,6 +34,13 @@ import {
 } from '../../../../redux/visitSelection/VisitServiceDetails/actions'
 import { setPatient } from "../../../../redux/patientProfile/actions";
 import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
+import { getServiceCategory } from "../../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {  
+  getServiceType,
+  clearServiceTypes
+} from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import Filter from '../Components/Filters'
+import { filterTabs } from './filterTabs';
 
 export class ServiceRequest extends Component {
   constructor(props) {
@@ -55,11 +66,14 @@ export class ServiceRequest extends Component {
       resetFilter: true,
       sortName: '',
       sortOrder: '',
-      serviceCategoryId: ''
+      serviceCategoryId: '',
+      scheduleType: 'both',
+      isChecked: false
     }
     this.selectedCheckbox = []
     this.serviceTypeIds = []
     this.gridHeader = allServiceRequests
+    this.filterTabs = filterTabs
   }
 
   async componentDidMount() {
@@ -78,6 +92,9 @@ export class ServiceRequest extends Component {
     })
     await this.props.getServiceRequestCountList(count)
     await this.props.getServiceRequestTableList(list)
+    this.props.getServiceCategory()
+    this.props.getServiceRequestStatus()
+    this.props.getScheduleType()
   }
 
   static getDerivedStateFromProps(props) {
@@ -93,10 +110,11 @@ export class ServiceRequest extends Component {
       "fromDate": data.fromDate,
       "toDate": data.toDate,
       "tab": this.state.status,
-      "searchText": "default",
+      "searchText": this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
-      "isRecurring": 'both',
-      "serviceTypeIds": this.serviceTypeIds
+      "isRecurring": this.state.scheduleType,
+      "serviceTypeIds": this.serviceTypeIds,
+      "status": this.state.serviceRequestStatus
     }
   }
 
@@ -111,8 +129,9 @@ export class ServiceRequest extends Component {
       "tab": data.status,
       "searchText": this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
-      "isRecurring": 'both',
-      "serviceTypeIds": this.serviceTypeIds
+      "isRecurring": this.state.scheduleType,
+      "serviceTypeIds": this.serviceTypeIds,
+      "status": this.state.serviceRequestStatus
     }
   }
 
@@ -257,6 +276,113 @@ export class ServiceRequest extends Component {
     this.props.goToVisitServiceDetails();
   }
 
+  handleChangeServiceCategory = selectedOption => {
+    this.setState({
+      serviceCategoryId: selectedOption.value,
+      selectedOption: selectedOption,
+    })
+    this.serviceTypeIds = []
+    this.props.clearServiceTypes()
+    this.props.getServiceType(selectedOption.value)
+  }
+
+  handleScheduleType = async (item, e) => {
+    let {scheduleType} = this.state
+    scheduleType = (item.id === 32 ) ? 'yes' : 'no'
+    await this.setState({
+       scheduleType
+    })
+  }
+
+  handleserviceType = (item, e) => {
+    let serviceType = this.serviceTypeIds
+    if (e.target.checked) {
+      serviceType.push(item.serviceTypeId)
+    } else {
+      let index = serviceType.indexOf(item.serviceTypeId)
+      if (index > -1) {
+        serviceType.splice(index, 1)
+      }
+    }
+    this.serviceTypeIds = serviceType
+  }
+
+  toggleFilter = () => {
+    this.setState({
+      filterOpen: !this.state.filterOpen
+    })
+  }
+
+  handleServiceRequestStatus = (item, e) => {
+    let serviceRequestStatus = this.state.serviceRequestStatus
+    this.setState({
+      isActive: !this.state.isActive
+    })
+    if (e.target.checked) {
+      serviceRequestStatus.push(item.id)
+    } else {
+      let index = serviceRequestStatus.indexOf(item.id)
+      if (index > -1) {
+        serviceRequestStatus.splice(index, 1)
+      }
+    }
+    this.setState({
+      serviceRequestStatus: serviceRequestStatus
+    })
+  }
+
+  applyFilter = async () => {
+    let count = this.getCountData({
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate
+    })
+    let data = this.getFilterData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      status: this.state.status,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: DEFAULT_PAGE_SIZE
+    })
+    await this.setState({
+      filterOpen: !this.state.filterOpen,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+    })
+    await this.props.getServiceRequestCountList(count)
+    await this.props.getServiceRequestTableList(data)
+  }
+
+  applyReset = async () => {
+    await this.setState({
+      selectedOption: '',
+      serviceRequestStatus: [],
+      scheduleType: 'both',
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      selectedOptionState: null,
+      filterOpen: false
+    })
+    this.serviceTypeIds = []
+    this.props.clearServiceTypes()
+    this.props.clearRequestStatus(this.props.serviceStatus)
+    this.props.clearScheduleType(this.props.scheduleType)
+    let data = this.getFilterData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      status: this.state.status,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: this.state.pageSize,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getServiceRequestCountList(count)
+    await this.props.getServiceRequestTableList(data)
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state
 
@@ -270,6 +396,12 @@ export class ServiceRequest extends Component {
               status={status}
             />
           </div>
+          <span
+              className='primaryColor ProfileHeaderFilter'
+              onClick={this.toggleFilter}
+            >
+              Filters
+          </span>
           {this.props.paginationCount && this.props.paginationCount > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -300,6 +432,28 @@ export class ServiceRequest extends Component {
               onChange={this.pageNumberChange}
             />
           </div>
+          <Filter
+            isOpen={this.state.filterOpen}
+            toggle={this.toggleFilter}
+            serviceRequestStatusList={this.props.serviceStatus}
+            handleServiceRequestStatus={this.handleServiceRequestStatus}
+            serviceCategory={this.props.serviceCategory}
+            getServiceType={this.props.getServiceType}
+            handleChangeServiceCategory={this.handleChangeServiceCategory}
+            selectedOption={this.state.selectedOption}
+            serviceType={this.props.serviceType}
+            handleserviceType={(item, e) => {
+              this.handleserviceType(item, e)
+            }}
+            applyFilter={this.applyFilter}
+            applyReset={this.applyReset}
+            scheduleType={this.props.scheduleType}
+            handleScheduleType={this.handleScheduleType}
+            stateDetail={this.props.statesType}
+            selectedOptionState={this.state.selectedOptionState}
+            status={this.state.status}
+            filterTabs={this.filterTabs}
+        />
         </div>
       </div>
     )
@@ -317,7 +471,14 @@ function mapDispatchToProps(dispatch) {
     getServiceRequestId: data => dispatch(getServiceRequestId(data)),
     setActiveTab: (data) => dispatch(setActiveTab(data)),
     setPatient: data => dispatch(setPatient(data)),
-    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data))
+    setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data)),
+    getServiceType: (data) => dispatch(getServiceType(data)),
+    clearServiceTypes: (data) => dispatch(clearServiceTypes(data)),
+    getServiceCategory: () => dispatch(getServiceCategory()),
+    getScheduleType: () => dispatch(getScheduleType()),
+    getServiceRequestStatus: () => dispatch(getServiceRequestStatus()),
+    clearRequestStatus: data => dispatch(clearRequestStatus(data)),
+    clearScheduleType: data => dispatch(clearScheduleType(data))
   }
 }
 
@@ -329,7 +490,11 @@ function mapStateToProps(state) {
       .VisitServiceRequestState.visitServiceRequestTableList,
     paginationCount: state.dashboardState.VisitServiceRequestState
       .paginationCount,
-    activeSubTab: state.dashboardState.VisitServiceRequestState.activeSubTab
+    activeSubTab: state.dashboardState.VisitServiceRequestState.activeSubTab,
+    serviceStatus: state.dashboardState.VisitServiceRequestState.serviceRequestStatusList,
+    serviceCategory: state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
+    scheduleType: state.dashboardState.VisitServiceRequestState.scheduleType,
+    serviceType: state.visitHistoryState.vistServiceHistoryState.typeList
   }
 }
 

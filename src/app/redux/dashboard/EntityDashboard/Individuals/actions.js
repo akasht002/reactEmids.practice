@@ -78,7 +78,7 @@ export const getIndividualsFeedbackListSuccess = data => {
     }
 }
 
-export function getIndividualsCountList(data) {
+export function getIndividualsCountList(data, isFilterApplied = false) {
     return (dispatch, getState) => {
         dispatch(startLoading());
         data.offset = getTimeZoneOffset();
@@ -87,11 +87,13 @@ export function getIndividualsCountList(data) {
                 let {activeSubTab, individualsCountList} = getState().dashboardState.individualsListState
                 let dataCount = checkDataCount(resp)
                 dispatch(setPaginationRowCountSuccess(dataCount))
-                if (activeSubTab !== 'All') {
-                    dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
-                }
-                else {
-                    dispatch(getIndividualsCountListSuccess(resp.data))
+                if(!isFilterApplied) {
+                    if (activeSubTab !== 'All') {
+                        dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
+                    }
+                    else {
+                        dispatch(getIndividualsCountListSuccess(resp.data))
+                    }    
                 }
             }
             dispatch(endLoading());
