@@ -1137,10 +1137,14 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 }
 
 @media (min-width: 1367px) {
-    .SPContentWidget .ProfileContainer.topProfile {
+.SPContentWidget .ProfileContainer.topProfile {
+height: 713px !important;
+}
 
-        height: 713px !important;
-    }
+.SPContentWidget .ProfileContainer .ProfileCard.extended
+{
+height: 713px !important;   
+}
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
         /* height: calc(100vh - 290px); */
@@ -1933,15 +1937,20 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
   .SPContentWidget .ProfileContainer.bottomProfile {
     min-height:auto;
-    height: 620px;
+    height: 596px;
     z-index: 0;
     margin-bottom: 20px;
     width: calc(45% - 20px)
 }
 
-.SPContentWidget .ProfileContainer.bottomProfile .ProfileCard
+.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget .card.ProfileCard
 {
-margin-bottom: 0px;
+height:100%;
+}
+
+.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget
+{
+height: 100%;
 }
 
 @media (min-width: 1367px)
@@ -2122,11 +2131,10 @@ min-width:128px !important; display:block !important;
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
 {
-
-        height:300px;
-        width: 100%;
-        display: block;
-        margin-top: 12px;
+height:340px;
+width: 100%;
+display: block;
+margin-top: 12px;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .card.ProfileCard
@@ -2134,45 +2142,29 @@ min-width:128px !important; display:block !important;
 height: 100%;
 }
 
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation .list-group.ProfileConversationWidget
-{
-    height: 100%;
-}
-
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
 {
-    display: block;
-    width: 100%;
-    height:100%;
-    overflow-y: auto;
+display: block;
+width: 100%;
+overflow-y: auto;
 }
 
 
 @media (min-width: 1367px)
 {
-    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
-    {
-        max-height: 265px !important;
-    }
-
-    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
-    {
-        display: block;
-        width: 100%;
-        height: 265px !important;
-        overflow-y: auto;
-    
-    }
-    
-
-    .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
 {
-    min-height: 332px !important;
-    width: 100%;
-    display: block;
-    position: relative;
+max-height: 265px !important;
 }
 
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
+{
+display: block;
+width: 100%;
+height: 265px !important;
+overflow-y: auto;
+}
+    
 }
 
 
@@ -2237,10 +2229,11 @@ height: 100%;
         clear: both;
      }
 
-     .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
-     {
-        color: #444;
-     }
+.bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
+{
+color:#444;
+margin-bottom:0px;
+}
 
      .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span
      {
@@ -2259,17 +2252,17 @@ height: 100%;
 
 .DashboardViewFirst
 {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: 70%;
-    text-overflow: ellipsis;
-    overflow-x: hidden;
-    white-space: nowrap;
-    cursor: pointer;
-    padding-right: 12px;
-    padding-left: 15px
+display:flex;
+flex-direction:row;
+justify-content:flex-start;
+align-items:center;
+width:55%;
+text-overflow: ellipsis;
+overflow-x:hidden;
+white-space:nowrap;
+cursor:pointer;
+padding-right:12px;
+padding-left:23px
 }
 
 .DashboardViewFirst .ServicesCalendarWidget:hover span
@@ -2277,18 +2270,34 @@ height: 100%;
 color:#444444;
 }
 
+.DashboardViewFirst .ServicesTitle
+{
+margin-bottom:0px;
+}
 
 .DashboardViewFirst .ProfileServices
 {
     max-width: 100%;
     width: 100%;
 }
+
+.profile-card-viewblock
+{
+width:25%;
+display:flex;
+flex-direction:row;
+justify-content:flex-start;
+align-items:center;
+}
+
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
 {
-    width:21%;
-    min-width: auto;
-    cursor: pointer;
-    text-align: center;
+width:20%;
+min-width: auto;
+cursor: pointer;
+text-align: center;
+border-right: 1px solid rgba(140,140,140, 0.3);
+line-height: 60px;
 }
 
 
@@ -2300,22 +2309,12 @@ color:#444444;
     font-size: 14px;
 }
 
-.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span::after {
-    content: '';
-    position: absolute;
-    background: rgba(140,140,140, 0.3);
-    width: 1px;
-    height: 50px;
-    left: 99px;
-    display: block;
-    top: 10px;
-}
-
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
 {
-    color: #444;
-    font-weight: 600;
-    font-size: 14px;
+color: #444;
+font-weight: 600;
+font-size: 14px;
+padding-right:10px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .ProfileShowMore

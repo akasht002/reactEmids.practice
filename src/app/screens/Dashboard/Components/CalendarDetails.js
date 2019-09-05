@@ -83,6 +83,7 @@ export const calenderDetails = (props,conversations,options,index) => {
 
 
  {/*Patient Profile*/}
+    <div className="profile-card-viewblock">
      <div className='ProfileCardImageContainer' 
      onClick={() => {
        props.goToPatientProfile(conversations, serviceRequestDetailsTab.profile);
@@ -107,7 +108,8 @@ export const calenderDetails = (props,conversations,options,index) => {
          }
        </span>
      </div>
-     <QuickMenu conversations = {conversations}/>     
+     <QuickMenu conversations = {conversations}/>   
+     </div>
    </li>
     )
  }
