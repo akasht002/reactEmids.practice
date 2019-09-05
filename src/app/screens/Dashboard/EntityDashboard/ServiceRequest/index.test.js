@@ -72,7 +72,10 @@ const defaultState = {
         FilterState: {
             serviceType: []
         }
-    }
+    },
+    setPatient: jest.fn(),
+    setActiveTab: jest.fn(),
+
 };
 
 store = mockStore(defaultState);
@@ -152,4 +155,81 @@ describe("ServiceRequest", function () {
         })
         shallowWrapper.instance().pageSizeChange(10)
     });
-})
+
+    it('Check the impersinateServiceRequest function', () => {
+        let data ={
+            serviceRequestId: 12
+        }
+        shallowWrapper.instance().impersinateServiceRequest(data)
+    });
+    
+    it('Check the handleChangeServiceCategory function', () => {
+        let selectedOption ={
+            value: 12
+        }
+        shallowWrapper.instance().handleChangeServiceCategory(selectedOption)
+    });
+
+    it('Check the handleScheduleType function', () => {
+        let item ={
+            id: 32
+        }
+        shallowWrapper.instance().handleScheduleType(item, {})
+    });
+
+    it('Check the handleserviceType function', () => {
+        let item ={
+            serviceTypeId: 32
+        }
+        const e = {
+            target: {
+                checked: true
+            }
+        }
+        shallowWrapper.instance().handleserviceType(item, e)
+    });
+
+    it('Check the toggleFilter function', () => {
+        shallowWrapper.instance().toggleFilter()
+    });
+    
+    it('Check the handleServiceRequestStatus function', () => {
+        let item ={
+            id: 32
+        }
+        const e = {
+            target: {
+                checked: true
+            }
+        }
+        shallowWrapper.instance().handleServiceRequestStatus(item, e)
+    });
+
+    it('Check the applyFilter function', () => {
+        shallowWrapper.instance().applyFilter()
+    });
+
+    it('Check the applyReset function', () => {
+        shallowWrapper.instance().applyReset()
+    });
+
+    it('Check the handleSearchData function', () => {
+        let e = {
+            preventDefault() {}  
+        }
+        shallowWrapper.instance().handleSearchData(e)
+    });
+
+    it('Check the handleSearchkeyword function', () => {
+        let e = {
+            target: {
+                value: 'asdasd'
+            }  
+        }
+        shallowWrapper.instance().handleSearchkeyword(e)
+    });
+
+    it('Check the closeSearch function', () => {
+        shallowWrapper.instance().closeSearch()
+    });
+});
