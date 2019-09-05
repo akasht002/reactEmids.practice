@@ -3,28 +3,28 @@ import { TabPane } from 'reactstrap';
 import { ScheduleList } from './ScheduleList';
 import { Table } from '../Components/Table';
 import { CoreoPagination } from '../../../../components';
-import { getUserInfo } from '../../../../services/http'
+import {isEntityUser} from '../../../../utils/userUtility'
 import Filter from "./Filter/index";
 
 export const PlanTab = props => {
-    let renderPLanDetailsClass = getUserInfo().isEntityServiceProvider ? 'full-block-requestplan' : ''
+    let isEntity = isEntityUser()
+    let renderPLanDetailsClass = !isEntity ? 'full-block-requestplan' : ''
     return (
         <TabPane tabId='2' className='TabBody'>
-
             <div className="row">
-              {!getUserInfo().isEntityServiceProvider &&
-                <div className="col-lg-4 col-md-4 pd-15 left-customewidth">
+              {isEntity &&
+                <div className="col-lg-4 col-md-4 left-customewidth">
                     <span className="title-view">Schedule (s)</span>
                 </div>
                 }
-                <div className={`col-lg-8 col-md-8 pd-15 right-customewidth ${renderPLanDetailsClass}`}>
+                <div className={`col-lg-8 col-md-8 right-customewidth ${renderPLanDetailsClass}`}>
                     <div className="pull-left">
                         <span className="title-view">Visit (s)</span>
                     </div>
                     <div className="pull-right">
                         <div className="full-block filterblock">
                             <span className='primaryColor ProfileHeaderFilter' onClick={props.toggle}>Filters</span>
-                            {!getUserInfo().isEntityServiceProvider &&
+                            {isEntity &&
                                 <button onClick={() => props.addSchedule()}> <span>+</span>Add New Schedule </button>}
                         </div>
                     </div>
@@ -32,13 +32,15 @@ export const PlanTab = props => {
             </div>
 
             <div className="row">
-                {!getUserInfo().isEntityServiceProvider &&
+                {isEntity &&
                 <div className="col-lg-4 col-md-4 left-customewidth">
                     <div className="full-block shadow-style left-listblock">
 
                         <ScheduleList
                             list={props.scheduleList}
                             handleChangeSchedule={props.handleChangeSchedule}
+                            handelEditShedule={props.handelEditShedule}
+                            handelEditAssessment={props.handelEditAssessment}
                         />
                     </div>
                 </div>}
@@ -62,7 +64,7 @@ export const PlanTab = props => {
                             activePage={props.activePage}
                             itemsCountPerPage={props.rowPageSize}
                             totalItemsCount={props.pageCount}
-                            pageRangeDisplayed={10}
+                            pageRangeDisplayed={5}
                             onChange={props.pageNumberChange}
                             itemClass='PaginationItem'
                             itemClassFirst='PaginationIcon First'
@@ -91,6 +93,11 @@ export const PlanTab = props => {
                             ServiceStatus={props.ServiceStatus}
                             handleChangeserviceStatus={props.handleChangeserviceStatus}
                             checked={props.checked}
+                            entityServiceProvidersList={props.entityServiceProvidersList}
+                            handleEsp={props.handleEsp}
+                            clickShowMore={props.clickShowMore}
+                            disableShowmore={props.disableShowmore}
+                            visitDate={props.visitDate}
                         />
                     </div>
                 </div>

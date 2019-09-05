@@ -8,7 +8,7 @@ import { isFutureDay} from '../../utils/dateUtility'
 import { isEntityServiceProvider, getUserInfo } from '../../utils/userUtility';
 import { ModalPopup } from '../../components'
 import { formatPhoneNumber } from "../../utils/formatName"
-import { CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from "../../constants/constants";
+import { CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT,VISIT_TYPE } from "../../constants/constants";
 import { SERVICE_VISIT_STATUS,START_VISIT } from '../../redux/constants/constants';
 import { IN_PROGRESS } from '../Dashboard/constant'
 import { USERTYPES } from "../../constants/constants";
@@ -21,7 +21,8 @@ import {
     updateEntityServiceVisit,
     getEntityServiceProviderListSearch,
     setServiceVisitDate,
-    goToServiceVisitProcessing
+    goToServiceVisitProcessing,
+    goToAssessmentVisitProcessing
   } from "../../redux/dashboard/Dashboard/actions";
   import { saveContextData } from "../../redux/telehealth/actions";
   import { createDataStore } from '../../redux/telehealth/actions'
@@ -61,7 +62,7 @@ class QuickMenu extends Component {
         if((data.visitStatusId === START_VISIT || data.visitStatusId === IN_PROGRESS) && ( this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy)) {
           this.setState({ standByModeAlertMsg: true })
         }
-        else this.props.goToServiceVisitProcessing(data)
+        else data.visitTypeId !== VISIT_TYPE.assessment ? this.props.goToServiceVisitProcessing(data) : this.props.goToAssessmentVisitProcessing(data)
       }
 
     onClickServiceVisitAction = (conversations) => {
@@ -200,6 +201,7 @@ function mapDispatchToProps(dispatch) {
         saveContextData: (data) => dispatch(saveContextData(data)),
         createNewConversation: data => dispatch(onCreateNewConversation(data)),
         createDataStore: data => dispatch(createDataStore(data)),
+        goToAssessmentVisitProcessing: data => dispatch(goToAssessmentVisitProcessing(data))
     }
 };
 

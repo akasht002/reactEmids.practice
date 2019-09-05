@@ -1,6 +1,6 @@
 
 
-import {CoreoTimePicker} from './CoreoTimePicker';
+import CoreoTimePicker from './CoreoTimePicker';
 
 export { CoreoTimePicker };
 

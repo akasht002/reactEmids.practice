@@ -16,7 +16,7 @@ export const AssignServiceProvider = props => {
                                             <input
                                                 type="radio"
                                                 className="form-radio-input"
-                                                checked={item.selected === 1}
+                                                checked={item.selected === true}
                                                 id={item.serviceProviderId}
                                                 name={'form-radio-input'}
                                                 value={item.serviceProviderId}

@@ -33,6 +33,7 @@ import { formDirty, getVisitServiceHistoryByIdDetail } from '../../visitHistory/
 import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/Feedback/actions';
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../visitSelection/VisitServiceProcessing/Summary/actions';
 import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
+import { dispatchToAssessmentProcessing,getServiceRequestVisitDeatilsSuccess } from '../../visitSelection/VisitServiceProcessing/Assessment/actions'
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -342,32 +343,46 @@ export const setServiceVisitLoader =(data) =>{
 }
 
 export function goToServiceVisitProcessing(data){
+  let visitID = data.serviceRequestVisitId !==0 ? data.serviceRequestVisitId : data.servicePlanVisitId
   return (dispatch) => {
     switch (data.visitStatusId) {      
       case START_VISIT :       
-        dispatch(getPerformTasksList(data.serviceRequestVisitId, true))
+        dispatch(getPerformTasksList(visitID, true))
         dispatch(formDirty());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case IN_PROGRESS :        
-        dispatch(getPerformTasksList(data.serviceRequestVisitId, true));
+        dispatch(getPerformTasksList(visitID, true));
         dispatch(formDirty());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case PAYMENT_PENDING :
-        dispatch(getServiceVisitId(data.serviceRequestVisitId, true));
-        dispatch(getSummaryDetails(data.serviceRequestVisitId));
-        dispatch(getSavedSignature(data.serviceRequestVisitId));
+        dispatch(getServiceVisitId(visitID, true));
+        dispatch(getSummaryDetails(visitID));
+        dispatch(getSavedSignature(visitID));
         dispatch(formDirtySummaryDetails());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case VISIT_SUMMARY :
-        dispatch(getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId))
+        dispatch(getVisitServiceHistoryByIdDetail(visitID))
         break;
       default:
     }
+  }
+}
+
+export function goToAssessmentVisitProcessing(data){
+  let visitID = data.serviceRequestVisitId !==0 ? data.serviceRequestVisitId : data.servicePlanVisitId
+  return (dispatch) => {
+    dispatch(getServiceRequestVisitDeatilsSuccess(data))
+    switch (data.visitStatusId) { 
+      case START_VISIT :       
+        dispatch(dispatchToAssessmentProcessing(visitID))
+      break;
+      default:
+     }
   }
 }

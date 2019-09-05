@@ -8,7 +8,7 @@ import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
 import { updateServiceRequestId } from '../Payments/actions';
 import { getDoubleDigitTime } from '../../../../utils/dateUtility'
-
+import { getUpdatedPerformTasksList } from '../PerformTasks/actions'
 
 export const SummaryDetails = {
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
@@ -25,7 +25,7 @@ export const SummaryDetails = {
 export const getSummaryDetailsSuccess = (data) => {
     return {
         type: SummaryDetails.getSummaryDetailsSuccess,
-        data
+        data : getUpdatedPerformTasksList(data)
     }
 }
 
@@ -113,6 +113,7 @@ export function getSummaryDetail(data) {
         })
     }
 };
+
 /* Added By Vimal on 24/12/2018 */
 export function updateVisitProcessingUpdateBilledDuration(data, visitId) {
     let calculate = (data / 1000) / 60

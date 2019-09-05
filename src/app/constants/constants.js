@@ -36,6 +36,12 @@ export const PAGE_NO = 1;
 export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
 export const SERVICE_REQUEST_PAGE_SIZE = 10
 
+
+export const VISIT_TYPE = {
+    assessment: 114,
+    scheduled: 115
+}
+
 export const SERVICE_REQUEST = {
     hiredId: 38
 }
@@ -191,8 +197,8 @@ export const SERVICE_REQ_STATUS = {
 }
 
 export const ERROR_MSG = {
-    timeErrMessage : 'Updated time cannot be greater than Maximum adjustable time.',
-    emptyErrMessage : 'Time field(s) cannot be empty.'
+    timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.',
+    emptyErrMessage: 'Time field(s) cannot be empty.'
 }
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
 
@@ -226,8 +232,8 @@ export const MMMDD_FORMAT = "MMM DD";
 
 
 export const QUESTION_TYPE = {
-    ChoiceBased:'ChoiceBased',
-    OpenText:'OpenText'
+    ChoiceBased: 'ChoiceBased',
+    OpenText: 'OpenText'
 }
 
 export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
@@ -251,8 +257,9 @@ export const DATE_FORMATS = {
     dd: 'DD',
     timeh_mm_a: 'h:mm a',
     m_d_yy: 'M/D/YY',
-    hh_mm:'HH:mm',
-    hhMinSec:"HH:mm:ss"
+    hh_mm: 'HH:mm',
+    hhMinSec: "HH:mm:ss",
+    hh_mm_a: 'hh:mm a'
 }
 
 
@@ -292,6 +299,14 @@ export const VISIT_STATUS = {
         "id": 38,
         "keyValue": "Hired"
     },
+    requested: {
+        "id": 38,
+        "keyValue": "Requested"
+    },
+    engaged: {
+        "id": 38,
+        "keyValue": "Engaged"
+    },
     notHired: {
         "id": 39,
         "keyValue": "Not Hired"
@@ -309,7 +324,7 @@ export const VISIT_STATUS = {
         "keyValue": "Closed"
     },
     cancelled: {
-        "id": 47,
+        "id": 46,
         "keyValue": "Cancelled"
     },
     notInerested: {
@@ -333,8 +348,37 @@ export const VISIT_STATUS = {
         "keyValue": "Payment Pending"
     }
 }
-export const PLAN_TYPE = {
-    assessment:116
+
+export const DEFAULT_ADDRESS_ID = 1
+
+export const LATITUDE = 0.0
+
+export const LONGITUDE = 0.0
+
+
+export const serviceRequestDetailsTab = {
+    request: '1',
+    myPlan: '2',
+    profile: '3'
+}
+
+export const SERVICE_CATEGORY = {
+    adl: {
+        "id": 1,
+        "keyValue": "Activities of Daily Living"
+    },
+    helpAtHome: {
+        "id": 2,
+        "keyValue": "Help at Home"
+    },
+    groceriesAndNutrition: {
+        "id": 3,
+        "keyValue": "Groceries and Nutrition"
+    },
+    transportation: {
+        "id": 4,
+        "keyValue": "Transportation"
+    }
 }
 
 

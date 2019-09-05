@@ -110,3 +110,9 @@ export const SERVICE_REQUEST_STATUS = {
 }
 
 export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
+
+export const serviceRequestDetailsTab = {
+    request: '1',
+    myPlan: '2',
+    profile: '3'
+}

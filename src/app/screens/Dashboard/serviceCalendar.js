@@ -17,7 +17,7 @@ import {
   setServiceVisitDate,
   goToServiceVisitProcessing
 } from "../../redux/dashboard/Dashboard/actions";
-import { getServiceRequestId, setEntityServiceProvider }
+import { getServiceRequestId, setEntityServiceProvider, setActiveTab }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
 import { ServiceCalendarList, ShowIndicator } from './Components/CalendarList'
 import { CalendarDefault } from './Components/CalendarDefault'
@@ -25,7 +25,7 @@ import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
 import { setPatient, setESP } from "../../redux/patientProfile/actions";
 import { push } from "../../redux/navigation/actions";
-import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FORMAT,DATE_FORMATS, PAGE_NO } from "../../constants/constants";
+import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FORMAT,DATE_FORMATS, PAGE_NO, serviceRequestDetailsTab } from "../../constants/constants";
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
@@ -289,10 +289,12 @@ export class ServiceCalendar extends Component {
     }
   };
 
-  handleClick = requestId => {
+  handleClick = (data, activeTab) => {
     this.props.setServiceVisitDate(moment(this.state.reportDay))
-    this.props.getServiceRequestId(requestId.serviceRequestId);
-    getUserInfo().isEntityServiceProvider && this.props.setEntityServiceProvider(requestId)
+    this.props.getServiceRequestId(data.serviceRequestId);
+    getUserInfo().isEntityServiceProvider && this.props.setEntityServiceProvider(data)
+    this.props.setPatient(data.patientId);
+    this.props.setActiveTab(activeTab)
     this.props.goToServiceRequestDetailsPage();
   };
 
@@ -461,8 +463,6 @@ export class ServiceCalendar extends Component {
     else this.props.goToServiceVisitProcessing(data)
   }
 
-
-
   render() {
     const visitCount = this.props.serviceVistCount;
     let pervious_months = []
@@ -546,13 +546,9 @@ export class ServiceCalendar extends Component {
         onClickVideoConference={data => this.onClickVideoConference(data)}
         Servicelist={serviceVist}
         togglePersonalDetails={this.togglePersonalDetails}
-        handleClick={requestId => this.handleClick(requestId)}
+        handleClick={this.handleClick}
         onClick={link => this.navigateProfileHeader(link)}
-        goToPatientProfile={data => {
-          this.props.setServiceVisitDate(moment(this.state.reportDay))
-          this.props.setPatient(data);
-          this.props.goToPatientProfile();
-        }}
+        goToPatientProfile={this.handleClick}
         goToESPProfile={
           data => {
             this.props.setESP(data);
@@ -718,7 +714,8 @@ function mapDispatchToProps(dispatch) {
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
     setServiceVisitDate: (data) => dispatch(setServiceVisitDate(data)),
     saveContextData: (data) => dispatch(saveContextData(data)),
-    goToServiceVisitProcessing: data => dispatch(goToServiceVisitProcessing(data))
+    goToServiceVisitProcessing: data => dispatch(goToServiceVisitProcessing(data)),
+    setActiveTab: data => dispatch(setActiveTab(data))
   };
 }
 
