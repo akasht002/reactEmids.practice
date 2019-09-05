@@ -33,11 +33,10 @@ import { SORT_NAME } from './constants'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
-import RowPerPage from '../Components/RowPerPage';
 import { allServiceProivders, visitServiceProviders, feedbackServiceProviders, lowRatingServiceProivders, lowTaskServiceProivders } from './gridHeader'
 import moment from 'moment'
 import { setESP } from '../../../../redux/patientProfile/actions';
-import { ProfileModalPopup } from '../../../../components'
+import { ProfileModalPopup, RowPerPage } from '../../../../components'
 import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
 
 export class ServiceProvider extends Component {

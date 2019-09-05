@@ -21,9 +21,8 @@ import {
   PAGE_RANGE,
   SERVICE_REQUEST_DETAILS_TAB
 } from '../../../../constants/constants'
-import RowPerPage from '../Components/RowPerPage';
 import { getUserInfo } from '../../../../utils/userUtility';
-import { ProfileModalPopup } from '../../../../components'
+import { ProfileModalPopup, RowPerPage } from '../../../../components'
 import { StatCard } from '../Components/StatCard'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
