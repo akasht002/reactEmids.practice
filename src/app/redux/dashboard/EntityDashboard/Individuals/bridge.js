@@ -1,0 +1,22 @@
+export const IndividualsList = {
+    getIndividualsCountListSuccess: 'getIndiviualsCountListSuccess/individual',
+    getIndividualsListSuccess: 'getIndiviualsListSuccess/individual',
+    getIndividualsVisitListSuccess: 'getIndiviualsVisitListSuccess/individual',
+    getAttributedProvidersSuccess: 'getAttributedProviders/individual',
+    getAllCohorts: 'set_cohorts/individual',
+    getAllContractsSuccess: 'getAllContracts/individual',
+    resetFilter: 'resetFilter/individual',
+    setPaginationRowCountSuccess: 'setPaginationRowCountSuccess/individual',
+    getStatesSuccess: 'getStatesSuccess/individual',
+    setActiveTab: 'setActiveTab/individual',
+    isLoading: 'isLoading/individual',
+    clearState: 'clearState/individual',
+    setActiveSubTab: 'setActiveSubTab/individual',
+    getIndividualsFeedbackListSuccess: 'getIndividualsFeedbackListSuccess/individual',
+    startLoadingFeedbackList: 'startLoadingFeedbackList/individual',
+    endLoadingFeedbackList: 'endLoadingFeedbackList/individual',
+    savePaginationNumber: 'savePaginationNumber/individual',
+    setFromDate: 'setFromDate/individual',
+    setToDate: 'setToDate/individual',
+    setActiveStatusForAllTab: 'setActiveStatusForAllTab/individual'
+}

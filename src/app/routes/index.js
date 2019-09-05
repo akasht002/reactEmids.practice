@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from "react-router-redux";
 import { HashRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import {SCREENS,USER_LOCALSTORAGE} from '../constants/constants';
+import {SCREENS,USER_LOCALSTORAGE, ENTITY_USER} from '../constants/constants';
 import {
   VerifyContact,
   SetPassword,
@@ -36,7 +36,8 @@ import {
   Assessment,
   AssessmentFeedback,
   AssessmentSummary,
-  Schedule
+  Schedule,
+  EntityDashboard
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -87,7 +88,8 @@ export const Path = {
   assessment:'/assessment/processing',
   assessmentFeedback:'/assessment/feedback',
   assessmentSummary:'/assessment/summary',
-  schedule: '/schedule'
+  schedule: '/schedule',
+  entityDashboard: '/entityDashboard'
 };
 
 class AppStackRoot extends Component {
@@ -95,7 +97,12 @@ class AppStackRoot extends Component {
   startPage = (props, context) => {
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
     if (localStorageData && localStorageData.data && localStorageData.data.access_token) {     
-      return <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />      
+      if (localStorageData.data.userInfo.serviceProviderTypeId === ENTITY_USER) {
+        return <PrivateRoute path={Path.entityDashboard} component={EntityDashboard} />
+      } else {
+      return <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />
+      
+      }      
     } else{ return <Welcome/>}      
    }
 
@@ -127,7 +134,9 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.conversation} permission={SCREENS.ASYNC_MESSAGE} component={Conversation} />
             <PrivateRoute path={Path.messageSummary} permission={SCREENS.ASYNC_MESSAGE} component={ConversationSummary} />
             <PrivateRoute path={Path.profile} permission={SCREENS.PROFILE} component={Profile} />
-            <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />
+            <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={
+              JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)) && JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)).data.userInfo.serviceProviderTypeId === ENTITY_USER ? EntityDashboard : Dashboard
+              } />
             <PrivateRoute path={Path.visitHistory} permission={SCREENS.VISIT_HISTORY} component={VisitHistory}/>            
             <PrivateRoute path={Path.visitSummaryDetail} permission={SCREENS.VISIT_HISTORY} component={VistSummary} />
             <PrivateRoute path={Path.payments} permission={SCREENS.PAYMENT_PROCESSING} component={Payments} />
@@ -142,6 +151,7 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.assessment} component={Assessment} />
             <PrivateRoute path={Path.assessmentFeedback} component={AssessmentFeedback} />
             <PrivateRoute path={Path.assessmentSummary} component={AssessmentSummary} />
+            <PrivateRoute path={Path.entityDashboard} component={EntityDashboard} />
           </Switch>
         </HashRouter>
       </ConnectedRouter>

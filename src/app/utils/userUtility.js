@@ -64,3 +64,7 @@ export const getVisitStatus = (visitStatusId) => {
 export const isEntityUser = () => {
     return getUserInfo().serviceProviderTypeId !== PROFILE_SERVICE_PROVIDER_TYPE_ID
 };
+
+export const getValue=(val)=>{
+    return (val === undefined || val == null || val.length <= 0) ? '' : val;
+}
