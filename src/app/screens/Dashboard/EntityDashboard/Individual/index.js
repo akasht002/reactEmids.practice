@@ -118,7 +118,7 @@ export class Individuals extends Component {
   }
 
   closeSearch = async () => {
-    this.setState({
+    await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
       activePage: DEFAULT_PAGE_NUMBER,
@@ -134,6 +134,7 @@ export class Individuals extends Component {
       pageSize: this.state.pageSize,
       sortName: this.state.sortName,
       sortOrder: this.state.sortOrder,
+      status: this.state.status
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
