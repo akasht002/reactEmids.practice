@@ -11,7 +11,7 @@ import { isEntityUser } from '../../../../../utils/userUtility'
 import { getUserInfo } from "../../../../../services/http";
 import "./style.css";
 
-class Filter extends Component {
+export class Filter extends Component {
 
     constructor(props) {
         super(props);
@@ -78,7 +78,7 @@ class Filter extends Component {
                                             onDateChangeRaw={this.props.dateChangedRaw}
                                             mandatory={false}
                                             minDate={this.props.visitDate.startVisitDateForWeb && formateStateDateValue(this.props.visitDate.startVisitDateForWeb)}
-                                            maxDate={this.props.visitDate.endVisitDateForWeb && formateStateDateValue(this.props.visitDate.endVisitDateForWeb)}
+                                            maxDate={this.props.endDate && formateStateDateValue(this.props.endDate)}
                                             value={this.props.startDate}
                                             className={"form-control datePicker"}
                                             label="From Date"

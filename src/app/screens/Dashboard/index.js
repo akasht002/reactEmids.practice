@@ -188,7 +188,7 @@ class Dashboard extends React.Component {
             <div className='ProfileContainer topProfile'>
               <ServiceCalendar createDataStore={this.props.createDataStore}/>
             </div>
-            <div className='ProfileContainer bottomProfile'>
+            <div className={entityUser ? "ProfileContainer bottomProfile entity-sp-block" : 'ProfileContainer bottomProfile'}>
               {serviceRequestTemplate}
               <div className='innerWidget'>
                 <MyConversation />

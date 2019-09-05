@@ -39,13 +39,12 @@ import {
   VISIT_STATUS,
   DEFAULT_PAGE_SIZE
 } from '../../../constants/constants';
-import './styles.css';
+import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
 import { getHourMin, getUtcTimeDiffInHHMMformat } from '../../../utils/dateUtility'
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
-import './customStyle.css'
 import { getUserInfo } from '../../../services/http';
 import {
   getVisitServiceHistoryByIdDetail,
@@ -374,13 +373,15 @@ export class VisitServiceDetails extends Component {
       rowPageSize: DEFAULT_PAGE_SIZE,
       activePage: PAGE_NO,
       entityServiceProviders: [],
-      selectedOption: ''
+      selectedOption: '',
+      pageNumberESP: PAGE_NO
     })
     let data = {
       pageNumber: PAGE_NO,
       pageSize: DEFAULT_PAGE_SIZE
     }
     this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, true);
+    this.props.clearESPList();
     this.props.getVisitStatus();
     this.props.clearServiceCategory(this.props.ServiceType);
     this.props.clearServiceType([]);
@@ -608,6 +609,7 @@ handelEditAssessment = (assessmentId) => {
                   />
                 </div>
               </div>
+              <div className="top-search-blocksp">
               <h2 class="ServicesTitle">Assign Service Provider</h2>
               <div className="search-block_SP">
                 <Search
@@ -618,6 +620,7 @@ handelEditAssessment = (assessmentId) => {
                   handleSearchData={this.handleSearchData}
                   closeSearch={this.toggleSearch}
                 />
+              </div>
               </div>
               <AssignServiceProvider
                 entityServiceProvidersList={this.props.entityServiceProvidersList}
@@ -682,16 +685,16 @@ handelEditAssessment = (assessmentId) => {
     return (
       <Fragment>
         <AsideScreenCover>
-          <div className='ProfileHeaderWidget'>
+          {/* <div className='ProfileHeaderWidget'>
             <div className='ProfileHeaderTitle'>
               <h5 className='primaryColor m-0'>View Request</h5>
             </div>
-          </div>
+          </div> */}
           {this.props.isLoading && <Preloader />}
           <Scrollbars speed={2}
             smoothScrolling
             horizontal={false}
-            className='ProfileContentWidget'>
+            className='ProfileContentWidget update-height-content'>
             <div class="tab_view">
               <TabHeader
                 list={updatedTabdata}
@@ -829,7 +832,7 @@ handelEditAssessment = (assessmentId) => {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getServiceRequestList: (data) => dispatch(getServiceRequestList(data)),
     getVisitServiceDetails: data => dispatch(getVisitServiceDetails(data)),
@@ -870,7 +873,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
   return {
     visitServiceList: VisitServiceDetailsState.visitserviceList,
