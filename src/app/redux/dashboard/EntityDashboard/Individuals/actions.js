@@ -7,7 +7,7 @@ import { getValue } from '../../../../utils/userUtility'
 import { IndividualsList } from './bridge';
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
-import _ from 'lodash'
+import { forEach } from 'lodash'
 
 export const startLoadingFeedbackList = () => {
     return {
@@ -229,7 +229,7 @@ export function getGender () {
 }  
 
 export const getGenderSuccess = data => {
-    _.forEach(data, function (obj) {
+    forEach(data, function (obj) {
       obj.isChecked = false
     })
     return {
