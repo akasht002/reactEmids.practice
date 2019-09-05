@@ -4,6 +4,8 @@ import { startLoading, endLoading } from '../../../loading/actions';
 import { VisitServiceProviderList } from './bridge';
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
+import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
+import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
 
 export const setActiveSubTab = data => {
   return {
@@ -45,7 +47,7 @@ export function getVisitServiceProviderCountList(data) {
           let {activeSubTab, visitServiceProviderCountList} = getState().dashboardState.VisitServiceProviderState
           let dataCount = checkDataCount(resp)
           dispatch(setPaginationRowCountSuccess(dataCount));
-          if (activeSubTab !== 'All') {
+          if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all))) {
             dispatch(getServiceProviderCountListSuccess(updateCountList(visitServiceProviderCountList, resp)))
           }
           else {

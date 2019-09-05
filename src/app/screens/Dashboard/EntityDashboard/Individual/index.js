@@ -93,8 +93,8 @@ export class Individuals extends Component {
       toDate: this.state.toDate,
       pageNumber: this.state.pageNumber,
       pageSize: this.state.pageSize,
-      sortName: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortName,
-      sortOrder: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortOrder,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
       searchKeyword: this.state.searchKeyword
     })
     this.props.getIndividualsCountList(count)
@@ -182,8 +182,8 @@ export class Individuals extends Component {
   }
 
   getTable = async e => {
-    let sortName = this.getSortNameAndOrderBasedOnStatus(e.target.value).sortName;
-    let sortOrder = this.getSortNameAndOrderBasedOnStatus(e.target.value).sortOrder;
+    let sortName = this.state.sortName;
+    let sortOrder = this.state.sortOrder;
     this.IsSortIcon = false
     await this.setState({
       status: e.target.value,
@@ -225,10 +225,10 @@ export class Individuals extends Component {
   }
 
   getHeaderBasedOnStatus = status => {
-    if (status === 'Feedback') {
+    if (caseInsensitiveComparer(status, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback)) {
       return feedbackIndividuals
     }
-    else if (status === 'Visit') {
+    else if (caseInsensitiveComparer(status, ENTITY_DASHBOARD_STATUS.individuals.statCard.visit)) {
       return visitIndividuals
     }
     else {
@@ -249,8 +249,8 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate,
       status: this.state.status,
-      sortName: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortName,
-      sortOrder: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortOrder,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
       pageNumber: pageNumber,
       pageSize: DEFAULT_PAGE_SIZE
     })
@@ -274,8 +274,8 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate,
       status: this.state.status,
-      sortName: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortName,
-      sortOrder: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortOrder,
+      sortName: this.state.sortName,
+      sortOrder: this.state.sortOrder,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: pageSize
     })
@@ -283,7 +283,7 @@ export class Individuals extends Component {
     this.setState({ pageSize: pageSize, activePage: DEFAULT_PAGE_NUMBER, pageNumber: DEFAULT_PAGE_NUMBER, rowMin: rowMinValue, rowMax: rowMaxValue });
   }
 
-  toggleFeedbaclAlert = () => {
+  toggleFeedbacAlert = () => {
     this.setState({
       feedbackAlertModal: !this.state.feedbackAlertModal,
       activePageFeedback: DEFAULT_PAGE_NUMBER
@@ -292,21 +292,6 @@ export class Individuals extends Component {
 
   goToPgVisitSummary = (data) => {
     this.props.getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId)
-  }
-
-  getSortNameAndOrderBasedOnStatus = (status) => {
-    switch (status) {
-      case ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback:
-        return {
-          sortName: '',
-          sortOrder: ''
-        }
-      default:
-        return {
-          sortName: '',
-          sortOrder: ''
-        }
-    }
   }
 
   pageNumberChangeFeedback = (pageNumber) => {
@@ -353,7 +338,7 @@ export class Individuals extends Component {
     }
   }
 
-  toggleFeedbaclAlert = () => {
+  toggleFeedbackAlert = () => {
     this.setState({
       feedbackAlertModal: !this.state.feedbackAlertModal,
       activePageFeedback: DEFAULT_PAGE_NUMBER
@@ -421,12 +406,12 @@ export class Individuals extends Component {
         </div>
         <ProfileModalPopup
           isOpen={this.state.feedbackAlertModal}
-          toggle={this.toggleFeedbaclAlert}
+          toggle={this.toggleFeedbackAlert}
           ModalBody={FeedbackAlertContent}
           className='modal-lg CTDashboardApprove feedback-alertmodl'
           buttonLabel='Close'
           modalTitle='Feedback Alerts'
-          onClick={this.toggleFeedbaclAlert}
+          onClick={this.toggleFeedbackAlert}
         />
       </div>
     )

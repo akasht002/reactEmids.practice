@@ -20,7 +20,7 @@ import {
   ENTITY_DASHBOARD_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
-  YEAR_MONTH_DAY
+  DATE_FORMATS
 } from '../../../../constants/constants'
 import { createVideoConference } from '../../../../redux/telehealth/actions'
 import { Path } from '../../../../routes';
@@ -34,7 +34,7 @@ import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import RowPerPage from '../Components/RowPerPage';
-import { allServiceProivders, visitServiceProivders, feedbackServiceProviders, lowRatingServiceProivders, lowTaskServiceProivders } from './gridHeader'
+import { allServiceProivders, visitServiceProviders, feedbackServiceProviders, lowRatingServiceProivders, lowTaskServiceProivders } from './gridHeader'
 import moment from 'moment'
 import { setESP } from '../../../../redux/patientProfile/actions';
 import { ProfileModalPopup } from '../../../../components'
@@ -234,7 +234,7 @@ export class ServiceProvider extends Component {
       case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack:
         return feedbackServiceProviders;
       case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.visit:
-        return visitServiceProivders;
+        return visitServiceProviders;
       case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.lowRating:
         return lowRatingServiceProivders;
       case ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.lowTaskCompletions:
@@ -334,8 +334,8 @@ export class ServiceProvider extends Component {
       serviceProviderId: data.serviceProviderId,
       pageNumber: this.state.pageNumberFeedback,
       pageSize: DEFAULT_PAGE_SIZE,
-      fromDate: moment(this.props.fromDate).format(YEAR_MONTH_DAY),
-      toDate: moment(this.props.toDate).format(YEAR_MONTH_DAY)
+      fromDate: moment(this.props.fromDate).format(DATE_FORMATS.yyyy_mm_dd),
+      toDate: moment(this.props.toDate).format(DATE_FORMATS.yyyy_mm_dd)
     }
     this.props.getFeedbackAlertDetails(model)
     if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack)) {

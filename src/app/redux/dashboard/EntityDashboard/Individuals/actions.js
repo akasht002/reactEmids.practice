@@ -7,6 +7,8 @@ import { getValue } from '../../../../utils/userUtility'
 import { IndividualsList } from './bridge';
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
+import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
+import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
 
 export const startLoadingFeedbackList = () => {
     return {
@@ -86,7 +88,7 @@ export function getIndividualsCountList(data) {
                 let {activeSubTab, individualsCountList} = getState().dashboardState.individualsListState
                 let dataCount = checkDataCount(resp)
                 dispatch(setPaginationRowCountSuccess(dataCount))
-                if (activeSubTab !== 'All') {
+                if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.all))) {
                     dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
                 }
                 else {

@@ -56,7 +56,7 @@ class EntityDashboard extends Component {
     })
   }
 
-  toggleSearch() {
+  toggleSearch = () => {
     this.setState({
       SearchOpen: !this.state.SearchOpen
     })
@@ -67,31 +67,6 @@ class EntityDashboard extends Component {
     this.props.getBuildVersion();
     this.props.getMessageFallBackInterval();
     this.setState({ activeTab: this.props.activeTab })
-    this.updateHeight.bind(this)
-    window.addEventListener('load', this.updateHeight.bind(this))
-    window.addEventListener('resize', this.updateHeight.bind(this))
-  }
-
-  componentDidUpdate() {
-    this.updateHeight.bind(this)
-  }
-
-  updateHeight() {
-    if (window.innerWidth >= '767') {
-      this.setState({
-        height: window.innerHeight
-      })
-    }
-    if (window.innerWidth <= '768' && window.innerWidth >= '479') {
-      this.setState({
-        height: window.innerHeight
-      })
-    }
-    if (window.innerWidth <= '480') {
-      this.setState({
-        height: window.innerHeight + 30
-      })
-    }
   }
 
   fromDateChanged = date => {
@@ -176,8 +151,8 @@ class EntityDashboard extends Component {
           <TabContent className='tab-content tab-content-block' activeTab={this.state.activeTab}>
             <TabPane tabId={entityDashboardTab.individuals} className='tab-pane TabBody'>
               {this.state.activeTab === entityDashboardTab.individuals && <Individuals
-                toggleSearch={this.toggleSearch.bind(this)}
-                toggleFilter={this.toggleFilter.bind(this)}
+                toggleSearch={this.toggleSearch}
+                toggleFilter={this.toggleFilter}
                 isOpenFilter={this.state.filterOpen}
                 SearchOpen={this.state.SearchOpen}
                 fromDate={moment(this.state.fromDate).format('l')}
@@ -190,8 +165,8 @@ class EntityDashboard extends Component {
                 fromDate={this.state.fromDate}
                 toDate={this.state.toDate}
                 isOpenFilter={this.state.filterOpen}
-                toggleSearch={this.toggleSearch.bind(this)}
-                toggleFilter={this.toggleFilter.bind(this)}
+                toggleSearch={this.toggleSearch}
+                toggleFilter={this.toggleFilter}
                 SearchOpen={this.state.SearchOpen}
                 createDataStore={this.props.createDataStore}
               />}
@@ -201,8 +176,8 @@ class EntityDashboard extends Component {
                 fromDate={this.state.fromDate}
                 toDate={this.state.toDate}
                 isOpenFilter={this.state.filterOpen}
-                toggleSearch={this.toggleSearch.bind(this)}
-                toggleFilter={this.toggleFilter.bind(this)}
+                toggleSearch={this.toggleSearch}
+                toggleFilter={this.toggleFilter}
                 SearchOpen={this.state.SearchOpen}
               />}
             </TabPane>
@@ -211,8 +186,8 @@ class EntityDashboard extends Component {
                 fromDate={moment(this.state.fromDate).format('l')}
                 toDate={moment(this.state.toDate).format('l')}
                 isOpenFilter={this.state.filterOpen}
-                toggleSearch={this.toggleSearch.bind(this)}
-                toggleFilter={this.toggleFilter.bind(this)}
+                toggleSearch={this.toggleSearch}
+                toggleFilter={this.toggleFilter}
                 SearchOpen={this.state.SearchOpen}
               />}
             </TabPane>

@@ -441,7 +441,6 @@ export const ENTITY_DASHBOARD_STATUS = {
     }
 }
 
-export const OTHER = 'Others'
 export const OTHERS = 'Not Disclosed'
 
 export const CARETEAM_STATUS = {
@@ -457,9 +456,8 @@ export const SORT_ORDER = {
 
 export const DEFAULT_SERVICE_CATEGORY = 0
 
-export const YEAR_MONTH_DAY = "YYYY-MM-DD";
-
 export const LOWTASK = 'LowTask';
+
 export const SERVICE_CATEGORY = {
     adl: {
         "id": 1,

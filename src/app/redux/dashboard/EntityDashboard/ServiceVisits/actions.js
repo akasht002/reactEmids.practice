@@ -2,7 +2,7 @@ import { API } from '../../../../services/api';
 import { Post } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import _ from 'lodash';
-import { DATE_FORMATS } from '../../../constants/constants';
+import { DATE_FORMATS, API_RESPONSE } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
 import { getValue } from '../../../../utils/userUtility'
 import { getFullName } from '../../../../utils/stringHelper'
@@ -11,6 +11,8 @@ import moment from 'moment';
 import { VisitServiceList } from './bridge'
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
+import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
+import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
 
 export const setActiveSubTab = data => {
     return {
@@ -47,7 +49,7 @@ export function getVisitServiceCountList(data) {
                 let {activeSubTab, visitServiceCountList} = getState().dashboardState.VisitServiceCountListState
                 let dataCount = checkDataCount(resp)
                 dispatch(setPaginationRowCountSuccess(dataCount));
-                if (activeSubTab !== 'All') {
+                if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all))) {
                     dispatch(getVisitsCountListSuccess(updateCountList(visitServiceCountList, resp)))
                 }
                 else {
@@ -65,7 +67,7 @@ export function getVisitServiceTableList(data) {
         dispatch(startLoading());
         data.offset = getTimeZoneOffset();
         Post(API.getVisitServiceTable, data).then((resp) => {
-            if (resp.statusText === 'No Content') {
+            if ((caseInsensitiveComparer(resp.statusText, API_RESPONSE.statusText))) {
                 dispatch(getVisitsTableListSuccess([]))
             }
             else {
@@ -75,7 +77,7 @@ export function getVisitServiceTableList(data) {
                             ...res,
                             patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
                             providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
-                            schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getUTCFormatedDate(res.visitDate, 'hh:mm A')}`,
+                            schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getUTCFormatedDate(res.visitDate, DATE_FORMATS.hhMinSession)}`,
                         }
                     })
                     dispatch(getVisitsTableListSuccess(data))
