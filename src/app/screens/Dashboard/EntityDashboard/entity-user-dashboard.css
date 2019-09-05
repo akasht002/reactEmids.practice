@@ -19,6 +19,7 @@ width:100%;
 clear: both;
 margin:0 auto;
 margin-top: 5px!important;
+min-height: calc(100vh - 380px);
 max-height: calc(100vh - 380px);
 position: relative;
 overflow-y:auto; 
@@ -220,13 +221,11 @@ border-bottom: 1px solid #7a329f!important;
 overflow: auto!important;
 position: relative;
 padding: 0 30px;
-height: calc(100% - 0px)!important;
 }
 
 .tab-content-block .tab-pane
 {
 position: relative;
-height: calc(100% - 30px)!important;
 margin-top: 0;
 overflow-y:hidden;
 }
@@ -235,7 +234,6 @@ overflow-y:hidden;
 {
 display: block;
 position: relative;
-height: calc(100% - 50px);
 margin-bottom: 22px;
 }
 
@@ -299,8 +297,8 @@ background-color: #f1e7fb;
 }
 
 .dashboard-tab-content .tab-filter-card .filter-card-content input:checked ~ label {
-    border-color: #7a329f;
-    background-color: #f1e7fb;
+border-color: #7a329f;
+background-color: #f1e7fb;
 }
 
 .filter-label-content
@@ -337,6 +335,7 @@ display: inline-block;
 line-height: 18px;
 font-size: 14px;
 color: #8c8c8c;
+height:36px;
 }
 
 .top-tabicons-block {
