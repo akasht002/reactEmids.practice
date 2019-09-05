@@ -311,10 +311,40 @@ div.vMpca {
 z-index: 9999!important;
 }
 
+.entity-filter-block .FilterMiddle 
+{
+overflow-y:hidden;
+}
+
+.entity-filter-block .scrollarea-content
+{
+display: block;
+}
+
+.entity-filter-block .FilterContainer .scrollarea-content .FilterMiddleLeft {
+position: fixed;
+float: left;
+}
+
+.entity-filter-block .FilterContainer .scrollarea-content .FilterMiddleRight {
+position: relative;
+float: right;
+height: 100%;
+z-index: 1000;
+}
+
+
 .entity-filter-block .FilterMiddleRight .tab-content
 {
 overflow-y: auto;
-height:100%;
+height: calc(100% - 0px)!important;
+}
+
+
+.entity-filter-block .FilterMiddleRight .tab-pane
+{
+overflow-y:initial;
+height: calc(100% - 30px)!important;
 }
 
 .entity-filter-block .FilterMiddleRight
