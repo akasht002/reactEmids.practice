@@ -1,107 +1,107 @@
 .FilterWidget {
-    position: absolute;
-    right: 0;
-    width: 0;
-    height: 100%;
-    top: 0;
-    background-color: #ffffff;
-    z-index: 9999;
-    display: flex;
-    display: -moz-flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid #eaeaea;
-    overflow: hidden;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
-    box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
-    -webkit-transition: all linear .3s;
-    -moz-transition: all linear .3s;
-    -o-transition: all linear .3s;
-    transition: all linear .3s;
+position: absolute;
+right: 0;
+width: 0;
+height: 100%;
+top: 0;
+background-color: #ffffff;
+z-index: 9999;
+display: flex;
+display: -moz-flex;
+flex-direction: column;
+justify-content: space-between;
+border: 1px solid #eaeaea;
+overflow: hidden;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+-webkit-box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
+-moz-box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
+box-shadow: 5px 10px 25px -2px rgba(0, 0, 0, 0.3);
+-webkit-transition: all linear .3s;
+-moz-transition: all linear .3s;
+-o-transition: all linear .3s;
+transition: all linear .3s;
 }
 
 .entity-filter-block.true{
-    position: fixed;
-    height: calc(100vh - 60px);
-    margin-top: 60px;
+position: fixed;
+height: calc(100vh - 60px);
+margin-top: 60px;
 }
 
 .FilterWidgetForm{
-    height: 100%;
-    z-index: 9999;
+height: 100%;
+z-index: 9999;
 }
 
 .entity-dashboard-section .FilterWidget.true .filterOverlay, .CTFilter.FilterWidget.true .filterOverlay {
-    position: fixed;
-    top: 0;
-    bottom: 50px;
-    left: 0;
-    right: 0;
-    background: transparent;
+position: fixed;
+top: 0;
+bottom: 50px;
+left: 0;
+right: 0;
+background: transparent;
 }
 
 .CTFilter.FilterWidget {
-    position: fixed;
-    height: calc(100vh - 60px);
-    margin-top: 60px;
+position: fixed;
+height: calc(100vh - 60px);
+margin-top: 60px;
 }
 
 .FilterContainer{
-    width: 100%;
+width: 100%;
 }
 
 .FilterTop{
-    display: flex;
-    display: -moz-flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 76px;
-    background-color: #f4ecfc;
-    padding: 20px;
-    font-size: 20px;
-    color: #7a329f;
-    font-weight: 600;
+display: flex;
+display: -moz-flex;
+justify-content: space-between;
+align-items: center;
+height: 76px;
+background-color: #f4ecfc;
+padding: 20px;
+font-size: 20px;
+color: #7a329f;
+font-weight: 600;
 }
 
 .FilterCloseIcon{
-    position: relative;
-    height: 16px;
-    width: 16px;
+position: relative;
+height: 16px;
+width: 16px;
 }
 
 .FilterMiddleLeft span:hover, .FilterCloseIcon:hover, .CheckboxSet label:hover{
-    cursor: pointer;
+cursor: pointer;
 }
 
 .FilterCloseIcon:before{
-    content: '';
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    top: 0;
-    background-image: url("../../../../../assets/images/removeBlack.svg");
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
+content: '';
+position: absolute;
+height: 16px;
+width: 16px;
+top: 0;
+background-image: url("../../../../../assets/images/removeBlack.svg");
+background-position: center;
+background-size: 100%;
+background-repeat: no-repeat;
 }
 
 .FilterMiddle{
-    display: flex;
-    height: 100%;
-    max-height: calc(100% - 136px);
-    overflow: auto;
+display: flex;
+height: 100%;
+max-height: calc(100% - 136px);
+overflow: auto;
 }
 
 .FilterMiddle .scrollarea-content{
-    display: flex;
-    display: -moz-flex;
-    flex-direction: row;
-    width: 100%;
+display: flex;
+display: -moz-flex;
+flex-direction: row;
+width: 100%;
 }
 
 .FilterMiddleContent{
@@ -109,312 +109,215 @@
 }
 
 .FilterMiddleLeft{
-    width: 230px;
-    -webkit-box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
-    -moz-box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
-    box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
+width: 230px;
+-webkit-box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
+-moz-box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
+box-shadow: 0 0 8px 2px rgba(0,0,0,0.03);
 }
 
 .FilterMiddleRight{
-    width: calc(100% - 230px);
+width: calc(100% - 230px);
 }
 
 .FilterMiddleRight .tab-content{
-    width: 100%;
-    padding: 30px;
+width: 100%;
+padding: 30px;
 }
 
 .FilterBottom{
-    display: flex;
-    display: -moz-flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 60px;
-    padding: 10px 20px;
-    -webkit-box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
-    -moz-box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
-    box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
+display: flex;
+display: -moz-flex;
+justify-content: flex-end;
+align-items: center;
+height: 60px;
+padding: 10px 20px;
+-webkit-box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
+-moz-box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
+box-shadow: 0 5px 5px 9px rgba(0,0,0,0.03);
 }
 
 .FilterMiddleLeft span{
-    display: block;
-    padding: 16px 20px;
-    color: #444444;
-    border: 1px solid transparent;
+display: block;
+padding: 16px 20px;
+color: #444444;
+border: 1px solid transparent;
 }
 
 .FilterMiddleLeft span:hover{
-    border-top: 1px solid #eaeaea;
-    border-bottom: 1px solid #eaeaea;
+border-top: 1px solid #eaeaea;
+border-bottom: 1px solid #eaeaea;
 }
 
 .FilterMiddleLeft span:hover, .FilterMiddleLeft span.active{
-    background-color: #f9f7fb;
+background-color: #f9f7fb;
 }
 
 .tab-pane .form-group > label{
-    font-size: 16px;
+font-size: 16px;
 }
 
 .tab-pane .form-group > label.DatePickerLabel{
-    font-weight: 400;
+font-weight: 400;
 }
 
 .CheckSet{
-    display: inline-block;
-    position: relative;
-    margin-right: 10px;
-    margin-bottom: 10px;
+display: inline-block;
+position: relative;
+margin-right: 10px;
+margin-bottom: 10px;
 }
 
 .CheckboxSet input, .CheckSet input{
-    position: absolute;
-    opacity: 0;
+position: absolute;
+opacity: 0;
 }
 
 .CheckSet label{
-    font-size: 14px;
-    font-weight: 400;
-    margin: 0;
-    padding: 5px 15px;
-    border: 1px solid #b7b7b7;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+font-size: 14px;
+font-weight: 400;
+margin: 0;
+padding: 5px 15px;
+border: 1px solid #b7b7b7;
+-webkit-border-radius: 15px;
+-moz-border-radius: 15px;
+border-radius: 15px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }
 
 .CheckSet label:hover{
-    cursor: pointer;
+cursor: pointer;
 }
 
 .CheckSet input:checked ~ label{
-    background-color: #f4ecfc;
-    border: 1px solid #7a329f;
+background-color: #f4ecfc;
+border: 1px solid #7a329f;
 }
 
 .CheckboxSet{
-    display: block;
-    position: relative;
+display: block;
+position: relative;
 }
 
 .CheckboxSet label{
-    position: relative;
-    font-weight: 400;
-    padding-left: 24px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+position: relative;
+font-weight: 400;
+padding-left: 24px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }
 
 .CheckboxSet label:before{
-    content: '';
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    top: 4px;
-    left: 0;
-    border: 1px solid #b7b7b7;
-    background-color: #ffffff;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+content: '';
+position: absolute;
+height: 16px;
+width: 16px;
+top: 4px;
+left: 0;
+border: 1px solid #b7b7b7;
+background-color: #ffffff;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
 }
 
 .CheckboxSet:hover label:before, .CheckboxSet:focus label:before{
-    border-color: #7a329f;
+border-color: #7a329f;
 }
 
 .CheckboxSet input:checked ~ label:before{
-    background-color: #7a329f;
-    border-color: #7a329f;
-    background-repeat: no-repeat;
-    background-image: url("../../../../../assets/images/checked.svg");
-    background-size: 11px;
-    background-position: center;
+background-color: #7a329f;
+border-color: #7a329f;
+background-repeat: no-repeat;
+background-image: url("../../../../../assets/images/checked.svg");
+background-size: 11px;
+background-position: center;
 }
 
 .AddressCardWidget.All, .AddressCardWidget.All .AddressPOS{
-    min-height: auto;
-    height: auto;
+min-height: auto;
+height: auto;
 }
 
 .CheckboxSetImage label:before{
-    top: 12px;
+top: 12px;
 }
 
 .ServiceCheckboxLabel{
-    display: flex;
-    display: -moz-flex;
-    align-items: center;
+display: flex;
+display: -moz-flex;
+align-items: center;
 }
 
 .ServiceCheckboxImage{
-    height: 40px;
-    width: 40px;
-    margin: 0 15px;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
+height: 40px;
+width: 40px;
+margin: 0 15px;
+-webkit-border-radius: 100%;
+-moz-border-radius: 100%;
+border-radius: 100%;
 }
 
 .form-group label{
-    font-weight: 600;
+font-weight: 600;
 }
 
 .InputInDeWidget{
-    display: flex;
-    color: #7a329f;
+display: flex;
+color: #7a329f;
 }
 
 .InputInDeWidget input{
-    text-align: center;
-    width: 50px;
-    margin: 0 10px;
-    opacity: 1;
-    position: relative;
+text-align: center;
+width: 50px;
+margin: 0 10px;
+opacity: 1;
+position: relative;
 }
 
 .InputInDeWidget span{
-    font-size: 26px;
-    height: 25px;
-    width: 25px;
-    padding: 3px;
-    border: 1px solid #7a329f;
-    line-height: 14px;
-    text-align: center;
-    top: 10px;
-    position: relative;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+font-size: 26px;
+height: 25px;
+width: 25px;
+padding: 3px;
+border: 1px solid #7a329f;
+line-height: 14px;
+text-align: center;
+top: 10px;
+position: relative;
+-webkit-border-radius: 100%;
+-moz-border-radius: 100%;
+border-radius: 100%;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }
 
 .InputInDeWidget span:first-child{
-    padding: 1px;
+padding: 1px;
 }
 
 .InputInDeWidget span:hover{
-    cursor: pointer;
-    background-color: #f4ecfc;
+cursor: pointer;
+background-color: #f4ecfc;
 }
 
 div.vMpca {
-    z-index: 9999!important;
+z-index: 9999!important;
 }
 
-@media (max-width: 768px){
-
-    .FilterWidget.true{
-        width: 100%;
-    }
-
-    div.visitListTop, div.visitListBottom .visitListContent {
-        padding: 10px 20px;
-    }
-
-    img.visitListImage{
-        top: 6px;
-        position: relative;
-    }
+.entity-filter-block .FilterMiddleRight .tab-content
+{
+overflow-y: auto;
+height:100%;
 }
 
-@media (max-width: 480px){
-
-    .FilterTop{
-        height: 50px;
-        padding: 15px;
-    }
-
-    .FilterBottom{
-        padding: 10px 15px;
-    }
-
-    .FilterMiddle{
-        max-height: calc(100% - 110px);
-    }
-
-    .FilterMiddleLeft span{
-        font-size: 14px;
-        padding: 10px 15px;
-    }
-
-    .FilterMiddleLeft{
-        width: 120px;
-    }
-
-    .FilterMiddleRight{
-        width: calc(100% - 120px);
-    }
-
-    .FilterMiddleRight .tab-content{
-        padding: 15px;
-    }
-
-    .form-group div.ServiceRequestSelect{
-        padding: 0 !important;
-    }
-
-    .tab-pane .form-group > label{
-        font-size: 12px;
-        margin: 0;
-    }
-
-    .Select--single>.Select-control .Select-value, .Select-placeholder{
-        font-size: 14px;
-    }
-
-    .CheckSet label{
-        font-size: 12px;
-    }
-
-    .tab-pane .AddressCardWidget .AddressPOS{
-        padding: 15px 15px 15px 35px;
-        height: auto;
-    }
-
-    .tab-pane .AddressCardWidget.form-radio .RadioBoxIcon{
-        left: 12px;
-    }
-
-    .CheckboxSet label {
-        font-size: 14px;
-    }
-
-    .CheckboxSet label:before {
-        height: 14px;
-        width: 14px;
-    }
-
-    .CheckboxSet input:checked~label:before {
-        background-size: 8px;
-    }
-
-    .visitListNameContainer{
-        display: flex;
-        display: -moz-flex;
-        flex-direction: column;
-        position: relative;
-        width: calc(100% - 60px);
-    }
-
-    div.visitListTop span {
-        padding: 0 8px;
-    }
-
-    div.ProfileHeaderRight span {
-        margin-left: 10px;
-    }
-
-    .ServiceCheckboxImage {
-        margin: 0 10px;
-    }
+.entity-filter-block .FilterMiddleRight
+{
+overflow: auto;
 }
