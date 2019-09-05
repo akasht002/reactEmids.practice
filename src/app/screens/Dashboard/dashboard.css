@@ -1137,10 +1137,14 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 }
 
 @media (min-width: 1367px) {
-    .SPContentWidget .ProfileContainer.topProfile {
+.SPContentWidget .ProfileContainer.topProfile {
+height: 713px !important;
+}
 
-        height: 713px !important;
-    }
+.SPContentWidget .ProfileContainer .ProfileCard.extended
+{
+height: 713px !important;   
+}
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
         /* height: calc(100vh - 290px); */
@@ -1936,20 +1940,14 @@ margin-bottom: 20px;
 width: calc(45% - 20px)
 }
 
-.SPContentWidget .ProfileContainer.bottomProfile .ProfileCard
+.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget .card.ProfileCard
 {
-margin-bottom: 0px;
-width:100%;
 height:100%;
 }
 
-.bottomProfile .no-blockinfo-top
+.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget
 {
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-width:100%;
+height: 100%;
 }
 
 @media (min-width: 1367px)
@@ -2134,15 +2132,15 @@ display: block;
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
 {
-height:300px;
+height:340px;
 width: 100%;
 display: block;
-margin-top: 20px;
+margin-top: 12px;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .card.ProfileCard
 {
-height:100%;
+height: 100%;
 }
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
@@ -2168,14 +2166,6 @@ height: 265px !important;
 overflow-y: auto;
 }
     
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2)
-{
-min-height: 332px !important;
-width: 100%;
-display: block;
-position: relative;
-}
-
 }
 
 
@@ -2240,11 +2230,11 @@ position: relative;
         clear: both;
      }
 
-     .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
-     {
-        color: #444;
-        margin-bottom: 0px;
-     }
+.bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
+{
+color:#444;
+margin-bottom:0px;
+}
 
      .bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span
      {
@@ -2263,17 +2253,17 @@ position: relative;
 
 .DashboardViewFirst
 {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: 70%;
-    text-overflow: ellipsis;
-    overflow-x: hidden;
-    white-space: nowrap;
-    cursor: pointer;
-    padding-right: 20px;
-    padding-left: 20px
+display:flex;
+flex-direction:row;
+justify-content:flex-start;
+align-items:center;
+width:55%;
+text-overflow: ellipsis;
+overflow-x:hidden;
+white-space:nowrap;
+cursor:pointer;
+padding-right:12px;
+padding-left:23px
 }
 
 .DashboardViewFirst .ServicesCalendarWidget:hover span
@@ -2281,6 +2271,10 @@ position: relative;
 color:#444444;
 }
 
+.DashboardViewFirst .ServicesTitle
+{
+margin-bottom:0px;
+}
 
 .DashboardViewFirst .ProfileServices
 {
@@ -2288,14 +2282,24 @@ color:#444444;
     width: 100%;
     margin-right:0px;
 }
+
+.profile-card-viewblock
+{
+width:25%;
+display:flex;
+flex-direction:row;
+justify-content:flex-start;
+align-items:center;
+}
+
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
 {
-    width:23%;
-    min-width: auto;
-    cursor: pointer;
-    text-align: center;
-    border-right: 1px solid rgba(140,140,140, 0.3);
-    line-height: 60px;
+width:20%;
+min-width: auto;
+cursor: pointer;
+text-align: center;
+border-right: 1px solid rgba(140,140,140, 0.3);
+line-height: 60px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitContent .options
@@ -2314,18 +2318,12 @@ margin-right:0px;
 margin-bottom:0px;
 }
 
-.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime span
-{
-color: #444;
-font-weight: 600;
-font-size: 14px;
-}
-
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
 {
 color: #444;
 font-weight: 600;
 font-size: 14px;
+padding-right:10px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .ProfileShowMore

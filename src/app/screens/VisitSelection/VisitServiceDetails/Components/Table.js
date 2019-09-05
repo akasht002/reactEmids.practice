@@ -65,7 +65,6 @@ export const Table = props => {
                         })}
                         {isEntity &&
                         <th></th>}
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

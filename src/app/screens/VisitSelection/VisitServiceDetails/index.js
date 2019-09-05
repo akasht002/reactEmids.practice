@@ -39,13 +39,12 @@ import {
   VISIT_STATUS,
   DEFAULT_PAGE_SIZE
 } from '../../../constants/constants';
-import './styles.css';
+import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
 import { getHourMin, getUtcTimeDiffInHHMMformat } from '../../../utils/dateUtility'
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
-import './customStyle.css'
 import { getUserInfo } from '../../../services/http';
 import {
   getVisitServiceHistoryByIdDetail,
@@ -610,6 +609,7 @@ handelEditAssessment = (assessmentId) => {
                   />
                 </div>
               </div>
+              <div className="top-search-blocksp">
               <h2 class="ServicesTitle">Assign Service Provider</h2>
               <div className="search-block_SP">
                 <Search
@@ -620,6 +620,7 @@ handelEditAssessment = (assessmentId) => {
                   handleSearchData={this.handleSearchData}
                   closeSearch={this.toggleSearch}
                 />
+              </div>
               </div>
               <AssignServiceProvider
                 entityServiceProvidersList={this.props.entityServiceProvidersList}
@@ -684,16 +685,16 @@ handelEditAssessment = (assessmentId) => {
     return (
       <Fragment>
         <AsideScreenCover>
-          <div className='ProfileHeaderWidget'>
+          {/* <div className='ProfileHeaderWidget'>
             <div className='ProfileHeaderTitle'>
               <h5 className='primaryColor m-0'>View Request</h5>
             </div>
-          </div>
+          </div> */}
           {this.props.isLoading && <Preloader />}
           <Scrollbars speed={2}
             smoothScrolling
             horizontal={false}
-            className='ProfileContentWidget'>
+            className='ProfileContentWidget update-height-content'>
             <div class="tab_view">
               <TabHeader
                 list={updatedTabdata}

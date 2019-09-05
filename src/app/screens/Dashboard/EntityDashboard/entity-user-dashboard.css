@@ -208,7 +208,8 @@ border:none;
 {
 color: #7a329f!important;
 border: none;
-border-bottom: 1px solid #7a329f!important;  
+border-bottom: 1px solid #7a329f!important;
+background:transparent;  
 }
 
 .tab-link .nav-link.active{
