@@ -6,7 +6,7 @@ export let allServiceProivders = {
     icon: 'Actions'
 }
 
-export let visitServiceProivders = {
+export let visitServiceProviders = {
     name: 'Service Provider',
     phoneNumber: 'Contact',
     gender: 'Gender',

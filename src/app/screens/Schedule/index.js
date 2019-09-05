@@ -855,6 +855,7 @@ export class Schedule extends Component {
                                 />
                             </div>
                             <div className="ServiceTypesWidget PostSR">
+                                <div className="top-search-blocksp">
                                 <h2 className='ServicesTitle'>Assign Service Provider</h2>
                                 <div className="search-block_SP">
                                     <Search
@@ -865,6 +866,7 @@ export class Schedule extends Component {
                                         handleSearchData={this.handleSearchData}
                                         closeSearch={this.toggleSearch}
                                     />
+                                </div>
                                 </div>
                                 <AssignServiceProvider
                                     entityServiceProvidersList={this.props.entityServiceProvidersList}
@@ -920,7 +922,7 @@ export class Schedule extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getServiceCategory: (data, selectedData) => dispatch(getServiceCategory(data, selectedData)),
         getServiceType: (data, selectedData) => dispatch(getServiceType(data, selectedData)),
@@ -946,7 +948,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     let scheduleState = state.scheduleState
     return {
         serviceCategoryList: scheduleState.serviceCategoryList,

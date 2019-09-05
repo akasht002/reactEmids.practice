@@ -25,7 +25,6 @@ import { Path } from '../../../../routes';
 import { getUserInfo } from '../../../../utils/userUtility';
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
-import RowPerPage from '../Components/RowPerPage';
 import { allServiceRequests, openServiceRequests, cancelledServiceRequests } from './gridHeader'
 import { StatCard } from '../Components/StatCard'
 import {
@@ -42,6 +41,7 @@ import {
 import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
 import Search from '../Components/Search';
+import { RowPerPage } from '../../../../components';
 
 export class ServiceRequest extends Component {
   constructor(props) {

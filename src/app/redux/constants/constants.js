@@ -116,8 +116,6 @@ export const serviceRequestDetailsTab = {
     myPlan: '2'
 }
 
-export const YEAR_MONTH_DAY = "YYYY-MM-DD";
-
 export const CARETEAM_SV_STATUS = ['ALL', 'Completed', 'Not Started', 'Over Due', 'Cancelled'];
 
 export const DATE_FORMATS = {
@@ -136,4 +134,8 @@ export const DATE_FORMATS = {
     hhMinSec: "HH:mm:ss",
     mm_dd_yyy: "MM-DD-YYYY",
     ddmm: "DD MMM",
+}
+
+export const API_RESPONSE = {
+    statusText: 'No Content'
 }

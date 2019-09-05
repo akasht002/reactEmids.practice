@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { OTHER,OTHERS } from '../../../../../constants/constants'
+import { GENDER_TYPE } from '../../../../../constants/constants'
 
 class Gender extends Component {
 
@@ -22,7 +22,7 @@ class Gender extends Component {
                         }
                         }
                     />
-                    <label className="form-radio-label" htmlFor={"Gender" + catNum}>{item.name !== OTHER ? item.name:OTHERS }
+                    <label className="form-radio-label" htmlFor={"Gender" + catNum}>{item.name !== GENDER_TYPE.other ? item.name:GENDER_TYPE.notDisclosed }
                         <span className="RadioBoxIcon" /></label>
                 </div>
             )

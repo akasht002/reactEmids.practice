@@ -213,7 +213,8 @@ border:none;
 {
 color: #7a329f!important;
 border: none;
-border-bottom: 1px solid #7a329f!important;  
+border-bottom: 1px solid #7a329f!important;
+background:transparent;  
 }
 
 .tab-link .nav-link.active{
@@ -225,13 +226,11 @@ border-bottom: 1px solid #7a329f!important;
 overflow: auto!important;
 position: relative;
 padding: 0 30px;
-height: calc(100% - 0px)!important;
 }
 
 .tab-content-block .tab-pane
 {
 position: relative;
-height: calc(100% - 30px)!important;
 margin-top: 0;
 overflow-y:hidden;
 }
@@ -240,7 +239,6 @@ overflow-y:hidden;
 {
 display: block;
 position: relative;
-height: calc(100% - 50px);
 margin-bottom: 22px;
 }
 
@@ -304,8 +302,8 @@ background-color: #f1e7fb;
 }
 
 .dashboard-tab-content .tab-filter-card .filter-card-content input:checked ~ label {
-    border-color: #7a329f;
-    background-color: #f1e7fb;
+border-color: #7a329f;
+background-color: #f1e7fb;
 }
 
 .filter-label-content

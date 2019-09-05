@@ -1,4 +1,4 @@
-import { PatientProfile } from './actions'
+import { PatientProfile } from './bridge'
 
 const defaultState = {
   patientId: null,

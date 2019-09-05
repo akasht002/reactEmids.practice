@@ -127,9 +127,9 @@ export const Details = props => {
                     <h2 className='ServicesTitle'>
                         Schedule and Frequency
                           </h2>
-                    <div className='ContentTitle Summary mt-3 mb-4'>
+                    <div className='ContentTitle Summary'>
                         <span>
-                            <div className='ContentTitle Summary mt-3 mb-4'>
+                            <div className='ContentTitle Summary mb-4'>
                                 <span className='ContentTitle Summary'>
                                     {props.details
                                         .recurringPatternDescription ===
@@ -175,7 +175,7 @@ export const Details = props => {
                         </div>
                     </div>
                     <h2 className='ServicesTitle'>Point of Service</h2>
-                    <div className='SummaryContent POS mt-3 mb-4'>
+                    <div className='SummaryContent POS mb-4'>
                         {props.details.patient &&
                             props.details.patient
                             ? address.map(pointofservice => {

@@ -9,7 +9,9 @@ import { getValue } from '../../../../utils/userUtility'
 import { VisitServiceRequestList } from './bridge'
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
-import { CARETEAM_STATUS, ENTITY_SR_STATUS, RECURRING_OPTIONS } from '../../../../constants/constants';
+import { ENTITY_SR_STATUS, RECURRING_OPTIONS } from '../../../../constants/constants';
+import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
+import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
 
 export const setActiveSubTab = data => {
   return {
@@ -51,7 +53,7 @@ export function getServiceRequestCountList(data, isFilterApplied = false) {
           let dataCount = checkDataCount(resp)
           dispatch(setPaginationRowCountSuccess(dataCount));
           if(!isFilterApplied) {
-          if (activeSubTab !== 'All') {
+            if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all))) {
             dispatch(getServiceRequestCountListSuccess(updateCountList(visitServiceRequestCountList, resp)))
           }
           else {

@@ -8,6 +8,8 @@ import { IndividualsList } from './bridge';
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { forEach } from 'lodash'
+import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
+import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
 
 export const startLoadingFeedbackList = () => {
     return {
@@ -88,7 +90,7 @@ export function getIndividualsCountList(data, isFilterApplied = false) {
                 let dataCount = checkDataCount(resp)
                 dispatch(setPaginationRowCountSuccess(dataCount))
                 if(!isFilterApplied) {
-                    if (activeSubTab !== 'All') {
+                    if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.all))) {
                         dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
                     }
                     else {

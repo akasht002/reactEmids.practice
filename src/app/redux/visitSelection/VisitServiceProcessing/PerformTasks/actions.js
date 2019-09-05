@@ -182,11 +182,12 @@ export const getServiceTasks = (serviceTypes) => {
 }
 
 export const getUpdatedPerformTasksList = data => {
+    let isEntity = getUserInfo().isEntityServiceProvider || isEntityUser()
     return {
         ...data,
-        serviceRequestTypeVisits: (getUserInfo().isEntityServiceProvider || isEntityUser()) ? getServiceTasks(data && data.serviceTypes) 
+        serviceRequestTypeVisits: isEntity ? getServiceTasks(data && data.serviceTypes) 
         : data && data.serviceRequestTypeVisits,
-        serviceRequestVisitId: (getUserInfo().isEntityServiceProvider || isEntityUser()) ? data && data.servicePlanVisitId :
+        serviceRequestVisitId: isEntity ? data && data.servicePlanVisitId :
         data && data.serviceRequestVisitId,
         visitTimeDuration: Number(data && data.visitTimeDuration)
     }
