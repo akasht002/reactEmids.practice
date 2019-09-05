@@ -429,10 +429,6 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
     padding-left: 0px;
 }
 
-div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent.EntityUDashboard{
-    height: 120px;
-}
-
 .EntityUServiceProf{
     display: flex;
     align-items: center;
@@ -478,6 +474,11 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
     overflow: hidden;
     background: none;
     list-style: none;
+}
+
+.bottomPalette .ProfileServicesVisitList .options
+{
+top:0px;
 }
 
 .bottomPalette .ProfileServicesVisitContent .options .text__c-txt__input--select___7_VcN:not(select):before {

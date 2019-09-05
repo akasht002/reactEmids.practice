@@ -47,7 +47,8 @@ export class PointOfService extends Component {
                         value={address.addressId}
                         onChange={(e) => {
                             this.props.handlePatientAddress(address)
-                        }}                  
+                        }}       
+                        checked={this.props.selectedPOS === address.addressId}        
                     />
                     <label className="form-radio-label AddressPOS"
                         htmlFor={"AddressPOS" + catNum}>
@@ -187,7 +188,6 @@ export class PointOfService extends Component {
         return (
 
             <div className='ServiceType WhiteBG'>
-                <h6 className='ScheduleTypeTitle m-0'>Select your location</h6>
                 <Slider {...Locationsettings} className="POSAddressSlider">
                     <div className="form-radio AddressCardWidget">
                         <input

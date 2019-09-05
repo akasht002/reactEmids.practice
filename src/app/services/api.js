@@ -189,5 +189,9 @@ export const API = {
     createOrEditAssessment:'assessment/create-assessment',
     getAssessmentByAssessmentId:'assessment/get-assessment/',
     getIspVisitList : 'plan/serviceprovider/filtered-servicerequestvisit',
-    getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count'
+    getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
+    getIndividualSchedulesDetails: 'plan/',
+    getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/',
+    acceptservicerequest: 'servicerequest/acceptservicerequest',
+    getfirstlastvisitdate: 'plan/getfirstlastvisitdate'
 }

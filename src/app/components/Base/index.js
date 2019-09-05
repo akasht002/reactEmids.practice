@@ -7,6 +7,7 @@ import { Preloader } from './Preloader'
 import { Scrollbars } from './CSB'
 import { ToggleSwitch } from './ToggleSwitch'
 import { Avatar } from './Avatar'
+import{CoreoCheckBox} from './CoreoCheckBox'
 import CustomTextArea from "./CustomTextArea";
 
 export {
@@ -21,5 +22,6 @@ export {
   Scrollbars,
   ToggleSwitch,
   Avatar,
-  CustomTextArea
+  CustomTextArea,
+  CoreoCheckBox
 }
