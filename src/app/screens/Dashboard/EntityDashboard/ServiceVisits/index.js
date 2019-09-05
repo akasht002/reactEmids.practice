@@ -23,7 +23,6 @@ import { push } from '../../../../redux/navigation/actions';
 import { getUserInfo } from '../../../../utils/userUtility';
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
-import RowPerPage from '../Components/RowPerPage';
 import { allServiceVisits, cancelledServiceVisits, lowTaskServiceVisits, overDueServiceVisits } from './gridHeader'
 import { StatCard } from '../Components/StatCard'
 import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
@@ -35,6 +34,7 @@ import { setPatient } from "../../../../redux/patientProfile/actions";
 import {
   getVisitServiceHistoryByIdDetail,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import { RowPerPage } from '../../../../components';
 export class ServiceVisits extends Component {
   constructor(props) {
     super(props)

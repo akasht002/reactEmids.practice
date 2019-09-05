@@ -21,7 +21,6 @@ import { Path } from '../../../../routes';
 import { getUserInfo } from '../../../../utils/userUtility';
 import { Grid } from '../Components/Grid/Grid'
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
-import RowPerPage from '../Components/RowPerPage';
 import { allServiceRequests, openServiceRequests, cancelledServiceRequests } from './gridHeader'
 import { StatCard } from '../Components/StatCard'
 import {
@@ -30,6 +29,7 @@ import {
 } from '../../../../redux/visitSelection/VisitServiceDetails/actions'
 import { setPatient } from "../../../../redux/patientProfile/actions";
 import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
+import { RowPerPage } from '../../../../components';
 
 export class ServiceRequest extends Component {
   constructor(props) {
