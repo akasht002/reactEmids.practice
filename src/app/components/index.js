@@ -44,7 +44,9 @@ import {
     ImageCropView,
     AlertPopup,
     CoreoPagination,
-    CoreoTimePicker
+    CoreoTimePicker,
+    RowPerPage,
+    PageResultCount
 } from './LevelOne';
 import {
     CarouselComp,
@@ -103,5 +105,7 @@ export {
     Avatar,
     CoreoPagination,
     CoreoTimePicker,
-    CoreoCheckBox
+    CoreoCheckBox,
+    RowPerPage,
+    PageResultCount
 };

@@ -42,8 +42,8 @@ vertical-align: middle;
 
 .Plan-typebar fieldset label
 {
-font-size: 17px;
-color:#7a329f;
+font-size: 16px;
+color:#444;
 font-weight: 500;
 border: none;
 padding: 14px 25px 14px 50px;
@@ -63,6 +63,7 @@ top: 17px;
 .Plan-typebar fieldset .form-radio-input:checked ~ .form-radio-label
 {
 border: none !important;
+color:#7a329f;
 }
 
 .Plan-typebar fieldset  .Midddle-Viewtab
@@ -1033,7 +1034,7 @@ background:#f2ebf3;
 .schedule-listblock fieldset
 {
 width: 100%;
-display: table;
+display: block;
 }
 
 .schedule-listblock fieldset input
@@ -1587,6 +1588,11 @@ right: 0;
 }
 
 
+.full-block-view .form-check textarea
+{
+color:#444;
+}
+
 
 
  /*IE_11_&_IE_10*/
@@ -1598,11 +1604,7 @@ right: 0;
 .bottom-blockbtn .pull-left{ float: left !important;  }
 *::-ms-backdrop, .bottom-blockbtn .pull-left{ float: left !important;  }
 
-
-.bottom-blockbtn .ml-auto{ float: right !important;  } 
-*::-ms-backdrop, .bottom-blockbtn .ml-auto{ float: right !important;  }
-}
-
+} 
 .ServiceRequestsWidget .ServiceRequestBoard{
 width: 50%;
 }

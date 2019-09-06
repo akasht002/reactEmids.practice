@@ -40,3 +40,7 @@ export function getFullName(firstName,lastName){
 export function stringCaseInsensitive(str1,str2){
     return str1 && str1.toUpperCase() === str2 && str2.toUpperCase()
 }
+
+export function concatCommaWithSpace(text){
+    return text.join(", ")
+}
