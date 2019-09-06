@@ -48,6 +48,7 @@ import {
 import Search from '../Components/Search';
 
 import { RowPerPage } from '../../../../components';
+import { pushSpliceHandler } from '../../../../utils/stringHelper';
 export class ServiceVisits extends Component {
   constructor(props) {
     super(props)
@@ -78,15 +79,9 @@ export class ServiceVisits extends Component {
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
-      state: this.state,
       status: this.props.activeSubTab,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
       sortName: this.props.activeSubTab === LOWTASK ? LOWTASK : this.state.sortName,
       sortOrder: this.props.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword
     })
     await this.props.getVisitServiceCountList(count)
     await this.props.getVisitServiceTableList(list)
@@ -94,7 +89,16 @@ export class ServiceVisits extends Component {
     this.props.getServiceRequestStatus()
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  static getDerivedStateFromProps(props, state) {
+    return {
+      fromDate: props.fromDate,
+      toDate: props.toDate,
+      rowCount: props.paginationCount,
+      rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
+    }
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
     const { pageSize, rowCount } = this.state;
     let rowMaxValue = pageSize;
     const newDataCount = this.props.paginationCount;
@@ -102,36 +106,29 @@ export class ServiceVisits extends Component {
       if (rowMaxValue >= newDataCount) {
         rowMaxValue = newDataCount;
       }
-      this.setState({
+      await this.setState({
         rowMax: rowMaxValue
       })
     }
-  }
 
-  async componentWillReceiveProps(nextProps) {
-    this.setState({
-      fromDate: nextProps.fromDate,
-      toDate: nextProps.toDate,
-      rowCount: nextProps.paginationCount
-    })
-    const count = this.getCountData(nextProps)
+    const count = this.getCountData(this.props)
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: nextProps.fromDate,
-      toDate: nextProps.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
-      sortName: nextProps.activeSubTab === LOWTASK ? LOWTASK : this.state.sortName,
-      sortOrder: nextProps.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate,
+      sortName: this.props.activeSubTab === LOWTASK ? LOWTASK : this.state.sortName,
+      sortOrder: this.props.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: DEFAULT_PAGE_SIZE
     })
     if (
-      nextProps.fromDate !== this.props.fromDate ||
-      nextProps.toDate !== this.props.toDate
+      prevProps.fromDate !== this.props.fromDate ||
+      prevProps.toDate !== this.props.toDate
     ) {
       await this.props.getVisitServiceCountList(count)
       await this.props.getVisitServiceTableList(list)
+      await this.setState({
+        rowMin: DEFAULT_PAGE_NUMBER,
+        activePage: DEFAULT_PAGE_NUMBER})
     }
   }
 
@@ -149,13 +146,13 @@ export class ServiceVisits extends Component {
 
   getFilterData = data => {
     return {
-      "pageNumber": data.pageNumber,
-      "pageSize": data.pageSize,
-      "sortColumn": data.sortName,
-      "sortOrder": data.sortOrder,
-      "fromDate": data.fromDate,
-      "toDate": data.toDate,
-      "tab": data.status,
+      "pageNumber": data.pageNumber ? data.pageNumber : this.state.pageNumber,
+      "pageSize": data.pageSize ? data.pageSize : this.state.pageSize,
+      "sortColumn": data.sortName ? data.sortName : this.state.sortName,
+      "sortOrder": data.sortOrder ? data.sortOrder : this.state.sortOrder,
+      "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
+      "toDate": data.toDate ? data.toDate : this.state.toDate,
+      "tab": data.status ? data.status : this.state.status,
       "searchText": this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "serviceTypeIds": this.serviceTypeIds,
@@ -180,12 +177,7 @@ export class ServiceVisits extends Component {
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     const data = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
       sortName: this.state.status === LOWTASK ? LOWTASK : this.state.sortName,
       sortOrder: this.state.status === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
     })
@@ -219,15 +211,10 @@ export class ServiceVisits extends Component {
       rowMaxValue = rowCount
     }
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: pageNumber,
       sortName: this.props.activeSubTab === LOWTASK ? LOWTASK : this.state.sortName,
       sortOrder: this.props.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
-      pageSize: pageSize,
-      searchKeyword: this.state.searchKeyword
+      pageSize: pageSize
     })
     this.props.getVisitServiceTableList(list)
     this.setState({
@@ -246,15 +233,10 @@ export class ServiceVisits extends Component {
       rowMaxValue = rowCount;
     }
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
       sortName: this.props.activeSubTab === LOWTASK ? LOWTASK : this.state.sortName,
       sortOrder: this.props.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
-      pageSize: pageSize,
-      searchKeyword: this.state.searchKeyword
+      pageSize: pageSize
     });
     this.props.getVisitServiceTableList(list);
     this.setState({
@@ -281,20 +263,8 @@ export class ServiceVisits extends Component {
   }
 
   handleServiceRequestStatus = (item, e) => {
-    let serviceRequestStatus = this.state.serviceRequestStatus
     this.setState({
-      isChecked: !this.state.isChecked
-    })
-    if (e.target.checked) {
-      serviceRequestStatus.push(item.id)
-    } else {
-      let index = serviceRequestStatus.indexOf(item.id)
-      if (index > -1) {
-        serviceRequestStatus.splice(index, 1)
-      }
-    }
-    this.setState({
-      serviceRequestStatus: serviceRequestStatus
+      serviceRequestStatus: pushSpliceHandler(this.state.serviceRequestStatus, item.id)
     })
   }
 
@@ -309,17 +279,8 @@ export class ServiceVisits extends Component {
     this.props.getServiceType(selectedOption.value)
   }
 
-  handleserviceType = (item, e) => {
-    let serviceType = this.serviceTypeIds
-    if (e.target.checked) {
-      serviceType.push(item.serviceTypeId)
-    } else {
-      let index = serviceType.indexOf(item.serviceTypeId)
-      if (index > -1) {
-        serviceType.splice(index, 1)
-      }
-    }
-    this.serviceTypeIds = serviceType
+  handleServiceType  = (item, e) => {
+    this.serviceTypeIds = pushSpliceHandler(this.serviceTypeIds, item.serviceTypeId)
   }
 
   applyFilter = async () => {
@@ -329,13 +290,7 @@ export class ServiceVisits extends Component {
       rowMin: DEFAULT_PAGE_NUMBER
     })
     let data = this.getFilterData({
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder, 
     })
     let count = this.getCountData({
       fromDate: this.props.fromDate,
@@ -360,13 +315,7 @@ export class ServiceVisits extends Component {
     this.props.clearServiceTypes()
     this.props.clearRequestStatus(this.props.serviceProviderVisitStatus)
     const data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      status: this.state.status
+      pageNumber: DEFAULT_PAGE_NUMBER
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
@@ -389,13 +338,7 @@ export class ServiceVisits extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
     })
     const data = this.getFilterData({
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
+      pageNumber: DEFAULT_PAGE_NUMBER
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
@@ -421,14 +364,7 @@ export class ServiceVisits extends Component {
       searchKeyword: 'default'
     })
     const data = this.getFilterData({
-      state: this.state,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      status: this.state.status
+      pageNumber: DEFAULT_PAGE_NUMBER
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
@@ -508,7 +444,7 @@ export class ServiceVisits extends Component {
             handleChangeServiceCategory={this.handleChangeServiceCategory}
             selectedOption={this.state.selectedOption}
             serviceType={this.props.serviceType}
-            handleserviceType={this.handleserviceType}
+            handleServiceType ={this.handleServiceType }
             applyFilter={this.applyFilter}
             addChecked={this.props.addChecked}
             applyReset={this.applyReset}

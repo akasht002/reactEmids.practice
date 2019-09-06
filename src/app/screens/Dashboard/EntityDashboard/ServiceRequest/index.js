@@ -9,7 +9,8 @@ import {
   PAGE_RANGE,
   SERVICE_REQUEST_DETAILS_TAB,
   ENTITY_DASHBOARD_STATUS,
-  NO_RECORDS_FOUND
+  NO_RECORDS_FOUND,
+  SCHEDULE_TYPE
 } from '../../../../constants/constants'
 import {
   getServiceRequestCountList,
@@ -42,6 +43,7 @@ import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
 import Search from '../Components/Search';
 import { RowPerPage } from '../../../../components';
+import { pushSpliceHandler } from '../../../../utils/stringHelper';
 
 export class ServiceRequest extends Component {
   constructor(props) {
@@ -81,15 +83,7 @@ export class ServiceRequest extends Component {
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
-      state: this.state,
       status: this.props.activeSubTab,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword
     })
     await this.props.getServiceRequestCountList(count)
     await this.props.getServiceRequestTableList(list)
@@ -121,13 +115,13 @@ export class ServiceRequest extends Component {
 
   getFilterData = data => {
     return {
-      "pageNumber": data.pageNumber,
-      "pageSize": data.pageSize,
+      "pageNumber": data.pageNumber ? data.pageNumber : this.state.pageNumber,
+      "pageSize": data.pageSize ? data.pageSize : this.state.pageSize,
       "sortColumn": this.state.sortName,
       "sortOrder": this.state.sortOrder,
-      "fromDate": data.fromDate,
-      "toDate": data.toDate,
-      "tab": data.status,
+      "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
+      "toDate": data.toDate ? data.toDate : this.state.toDate,
+      "tab": data.status ? data.status : this.state.status,
       "searchText": this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "isRecurring": this.state.scheduleType,
@@ -148,20 +142,21 @@ export class ServiceRequest extends Component {
       searchOpen: false,
       selectedOption: '',
       serviceRequestStatus: [],
-      selectedOptionState: null
+      selectedOptionState: null,
+      scheduleType: 'both'
     })
     this.serviceTypeIds = []
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
+    this.props.clearServiceTypes()
+    this.props.clearRequestStatus(this.props.serviceStatus)
+    this.props.clearScheduleType(this.props.scheduleType)
     let count = this.getCountData({
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
     let data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      status: this.state.status,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE
     })
@@ -187,16 +182,10 @@ export class ServiceRequest extends Component {
 
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword,
-      resetFilter: false
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      pageSize: DEFAULT_PAGE_SIZE
     })
 
     if (
@@ -205,8 +194,10 @@ export class ServiceRequest extends Component {
     ) {
       await this.props.getServiceRequestCountList(count)
       await this.props.getServiceRequestTableList(list)
+      await this.setState({
+        rowMin: DEFAULT_PAGE_NUMBER,
+        activePage: DEFAULT_PAGE_NUMBER})
     }
-
   }
 
   pageNumberChange = pageNumber => {
@@ -218,15 +209,8 @@ export class ServiceRequest extends Component {
       rowMaxValue = rowCount
     }
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: pageNumber,
-      pageSize: pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword
+      pageSize: pageSize
     })
     this.props.getServiceRequestTableList(list)
     this.setState({
@@ -245,15 +229,8 @@ export class ServiceRequest extends Component {
       rowMaxValue = rowCount;
     }
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword
+      pageSize: pageSize
     });
     await this.props.getServiceRequestTableList(list)
     await this.setState({ pageSize: pageSize, activePage: DEFAULT_PAGE_NUMBER, pageNumber: DEFAULT_PAGE_NUMBER, rowMin: rowMinValue, rowMax: rowMaxValue });
@@ -289,23 +266,15 @@ export class ServiceRequest extends Component {
 
   handleScheduleType = async (item, e) => {
     let {scheduleType} = this.state
-    scheduleType = (item.id === 32 ) ? 'yes' : 'no'
+    scheduleType = (item.id === SCHEDULE_TYPE.recurring.id ) ? 
+    SCHEDULE_TYPE.recurring.value : SCHEDULE_TYPE.oneTime.value
     await this.setState({
        scheduleType
     })
   }
 
-  handleserviceType = (item, e) => {
-    let serviceType = this.serviceTypeIds
-    if (e.target.checked) {
-      serviceType.push(item.serviceTypeId)
-    } else {
-      let index = serviceType.indexOf(item.serviceTypeId)
-      if (index > -1) {
-        serviceType.splice(index, 1)
-      }
-    }
-    this.serviceTypeIds = serviceType
+  handleServiceType = item => {
+    this.serviceTypeIds = pushSpliceHandler(this.serviceTypeIds, item.serviceTypeId)
   }
 
   toggleFilter = () => {
@@ -314,21 +283,9 @@ export class ServiceRequest extends Component {
     })
   }
 
-  handleServiceRequestStatus = (item, e) => {
-    let serviceRequestStatus = this.state.serviceRequestStatus
+  handleServiceRequestStatus = item => {
     this.setState({
-      isActive: !this.state.isActive
-    })
-    if (e.target.checked) {
-      serviceRequestStatus.push(item.id)
-    } else {
-      let index = serviceRequestStatus.indexOf(item.id)
-      if (index > -1) {
-        serviceRequestStatus.splice(index, 1)
-      }
-    }
-    this.setState({
-      serviceRequestStatus: serviceRequestStatus
+      serviceRequestStatus: pushSpliceHandler(this.state.serviceRequestStatus, item.id)
     })
   }
 
@@ -338,9 +295,6 @@ export class ServiceRequest extends Component {
       toDate: this.props.toDate
     })
     let data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      status: this.state.status,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE
     })
@@ -370,11 +324,7 @@ export class ServiceRequest extends Component {
     this.props.clearRequestStatus(this.props.serviceStatus)
     this.props.clearScheduleType(this.props.scheduleType)
     let data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      status: this.state.status,
-      pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
+      pageNumber: DEFAULT_PAGE_NUMBER
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
@@ -397,13 +347,7 @@ export class ServiceRequest extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
     })
     const data = this.getFilterData({
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
+      pageNumber: DEFAULT_PAGE_NUMBER
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
@@ -429,14 +373,7 @@ export class ServiceRequest extends Component {
       searchKeyword: 'default'
     })
     const data = this.getFilterData({
-      state: this.state,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      status: this.state.status
+      pageNumber: DEFAULT_PAGE_NUMBER
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
@@ -517,8 +454,8 @@ export class ServiceRequest extends Component {
             handleChangeServiceCategory={this.handleChangeServiceCategory}
             selectedOption={this.state.selectedOption}
             serviceType={this.props.serviceType}
-            handleserviceType={(item, e) => {
-              this.handleserviceType(item, e)
+            handleServiceType  ={(item, e) => {
+              this.handleServiceType  (item, e)
             }}
             applyFilter={this.applyFilter}
             applyReset={this.applyReset}

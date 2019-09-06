@@ -484,9 +484,9 @@ export const FilterActiveTab = {
     "contracts": '2',
     "clinicalConditions": '4',
     "age": '3',
-    "gender": '1',
     "rating": '6',
     "experience": '5',
+    "gender": '1',
     "categories": '7',
     "status": '8',
     "recurring": '9' 
@@ -494,4 +494,20 @@ export const FilterActiveTab = {
 
 export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Pending Approval', 'Declined', 'Closed', 'Cancelled'];
 
+export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'PaymentPending', 'OverDue'];
+
 export const RECURRING_OPTIONS = [31, 32]
+
+export const SCHEDULE_TYPE = {
+    oneTime: {
+        id: 31,
+        name: 'One Time',
+        value: 'no'
+    },
+    recurring: {
+        id: 32,
+        name: 'Recurring',
+        value: 'yes'
+    },
+
+}

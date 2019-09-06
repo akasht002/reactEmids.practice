@@ -34,7 +34,7 @@ const VisitServiceRequestState = (state = defaultState, action) => {
     case VisitServiceRequestList.getServiceRequestStatusSuccess:
       return {
         ...state,
-        serviceRequestStatusList: action.updatedData
+        serviceRequestStatusList: action.data
       }
     case VisitServiceRequestList.clearRequestStatus:
       return {

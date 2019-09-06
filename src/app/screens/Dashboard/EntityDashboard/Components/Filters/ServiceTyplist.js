@@ -1,4 +1,5 @@
 import React from "react";
+import { CoreoCheckBox } from "../../../../../components";
 
 const ServiceTypeList = (props) => {
 
@@ -6,14 +7,13 @@ const ServiceTypeList = (props) => {
         let catNum = index + 1;
         return (
             <div className="CheckSet" key={catNum}>
-                <input
+                <CoreoCheckBox
                     className="ServiceCheckbox"
                     name={"CTServiceRequest"}
                     id={"CTServiceRequest" + catNum}
-                    type="checkbox"
                     checked={props.checked}
                     value={props.serviceType}
-                    onChange = {(e) => {props.handleserviceType(item,e)}} />
+                    onChange = {(e) => {props.handleServiceType (item,e)}} />
                 <label htmlFor={"CTServiceRequest" + catNum}>{item.serviceTypeDescription}</label>
             </div>
         )

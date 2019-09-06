@@ -10,7 +10,8 @@ import {
   Scrollbars,
   ToggleSwitch,
   Avatar,
-  CoreoCheckBox
+  CoreoCheckBox,
+  CoreoRadio
 } from './Base'
 import {
     Calendar, 
@@ -107,5 +108,6 @@ export {
     CoreoTimePicker,
     CoreoCheckBox,
     RowPerPage,
-    PageResultCount
+    PageResultCount,
+    CoreoRadio
 };

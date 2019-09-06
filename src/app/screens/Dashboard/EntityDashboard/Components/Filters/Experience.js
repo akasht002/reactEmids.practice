@@ -6,25 +6,21 @@ class Experience extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: {
-                min: this.props.minExperience,
-                max: this.props.maxExperience
-            },
+            min: this.props.minExperience,
+            max: this.props.maxExperience
         };
-
     }
 
-    componentWillReceiveProps(nextProps) {
-     this.setState({
-        value: {
-            ...this.state.value,
-            min: nextProps.minExperience,
-            max: nextProps.maxExperience
-          }
-     })
+    onChange = value => {
+        this.setState({ value })
+        this.props.onChangeExperinceSlider(value)
     }
 
     render() {
+        let value = {
+            min: this.props.minExperience,
+            max: this.props.maxExperience
+        }
         return (
             <div className="col-md-12 RangeSliderWidget">
                 <div className='RangeLimitIndicator'>
@@ -36,15 +32,13 @@ class Experience extends React.Component {
                         maxValue={50}
                         minValue={0}
                         formatLabel={value => `${value}`}
-                        value={this.state.value}
-                        onChange={value => {
-                            this.setState({ value: value })
-                            this.props.onChangeExperinceSlider(this.state.value)
-                        }}
-                        onChangeComplete={value => value} />
-                        <div className='RangeLimitIndicator textCenter'>
-          <span>{this.state.value.min} years - {this.state.value.max} years</span>
-        </div>
+                        value={value}
+                        onChange={value => this.onChange(value)}
+                        onChangeComplete={value => value}
+                    />
+                    <div className='RangeLimitIndicator textCenter'>
+                        <span>{this.props.minExperience} years - {this.props.maxExperience} years</span>
+                    </div>
                 </div>
             </div>
         );

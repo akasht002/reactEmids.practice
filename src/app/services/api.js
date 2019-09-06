@@ -207,5 +207,6 @@ export const API = {
     getAllContracts: 'Membership/Get-all-contracts',
     getAllClinicalCondition: 'Patient/get-all-clinical-conditions',
     getScheduleType: 'Lookup/ScheduleType',
-    getServiceStatus: 'ServiceRequest/LookUp/servicerequeststatus'
+    getServiceStatus: 'ServiceRequest/LookUp/servicerequeststatus',
+    getServiceProviderVisitStatus: 'ServiceProviderLookUp/visitstatus'
 }

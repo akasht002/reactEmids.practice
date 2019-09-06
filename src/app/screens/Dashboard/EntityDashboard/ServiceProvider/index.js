@@ -85,15 +85,9 @@ export class ServiceProvider extends Component {
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
-      state: this.state,
       status: this.props.activeSubTab,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
       sortName: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortName,
       sortOrder: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortOrder,
-      searchKeyword: this.state.searchKeyword
     })
     this.props.getVisitServiceProviderCountList(count)
     this.props.getVisitServiceProviderTableList(list)
@@ -118,16 +112,10 @@ export class ServiceProvider extends Component {
 
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE,
-      searchKeyword: this.state.searchKeyword,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      resetFilter: false
     })
     if (
       prevProps.fromDate !== this.props.fromDate ||
@@ -135,6 +123,9 @@ export class ServiceProvider extends Component {
     ) {
       await this.props.getVisitServiceProviderCountList(count)
       await this.props.getVisitServiceProviderTableList(list)
+      await this.setState({
+        rowMin: DEFAULT_PAGE_NUMBER,
+        activePage: DEFAULT_PAGE_NUMBER})      
     }
   }
 
@@ -175,13 +166,13 @@ export class ServiceProvider extends Component {
 
   getFilterData = data => {
     return {
-      "pageNumber": data.pageNumber,
-      "pageSize": data.pageSize,
-      "sortColumn": data.sortName,
-      "sortOrder": data.sortOrder,
-      "fromDate": data.fromDate,
-      "toDate": data.toDate,
-      "tab": data.status,
+      "pageNumber": data.pageNumber ? data.pageNumber : this.state.pageNumber,
+      "pageSize": data.pageSize ? data.pageSize : this.state.pageSize,
+      "sortColumn": data.sortName ? data.sortName : this.state.sortName,
+      "sortOrder": data.sortOrder ? data.sortOrder : this.state.sortOrder,
+      "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
+      "toDate": data.toDate ? data.toDate : this.state.toDate,
+      "tab": data.status ? data.status : this.state.status,
       "gender": this.state.genderId,
       "minimumExperience": this.state.minExperience,
       "maximumExperience": this.state.maxExperience,
@@ -220,9 +211,6 @@ export class ServiceProvider extends Component {
       toDate: this.props.toDate
     })
     let data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      status: this.state.status,
       sortName: sortName,
       sortOrder: sortOrder,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -280,16 +268,10 @@ export class ServiceProvider extends Component {
       rowMaxValue = rowCount
     }
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: pageNumber,
       pageSize: pageSize,
       sortName: sortName,
       sortOrder: sortOrder,
-      searchKeyword: this.state.searchKeyword,
-      resetFilter: this.state.resetFilter
     })
     this.props.getVisitServiceProviderTableList(list)
     this.setState({
@@ -308,15 +290,10 @@ export class ServiceProvider extends Component {
       rowMaxValue = rowCount;
     }
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: pageSize,
       sortName: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortName,
       sortOrder: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortOrder,
-      searchKeyword: this.state.searchKeyword
     });
     this.props.getVisitServiceProviderTableList(list);
     this.setState({ pageSize: pageSize, activePage: DEFAULT_PAGE_NUMBER, pageNumber: DEFAULT_PAGE_NUMBER, rowMin: rowMinValue, rowMax: rowMaxValue });
@@ -383,15 +360,7 @@ export class ServiceProvider extends Component {
 
   applyFilter = async () => {
     let data = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      searchKeyword: this.state.searchKeyword,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder
     })
     await this.setState({
       filterOpen: !this.state.filterOpen,
@@ -424,15 +393,7 @@ export class ServiceProvider extends Component {
     this.serviceTypeId = []
     await this.props.clearGenderType(this.props.genderType)
     let data = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      searchKeyword: this.state.searchKeyword,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
@@ -455,13 +416,7 @@ export class ServiceProvider extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
     })
     const data = this.getFilterData({
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,
@@ -487,14 +442,7 @@ export class ServiceProvider extends Component {
       searchKeyword: 'default'
     })
     const data = this.getFilterData({
-      state: this.state,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: DEFAULT_PAGE_NUMBER,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      status: this.state.status
+      pageNumber: DEFAULT_PAGE_NUMBER
     })
     let count = this.getCountData({
       fromDate: this.state.fromDate,

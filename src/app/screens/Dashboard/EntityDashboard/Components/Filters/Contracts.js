@@ -1,6 +1,12 @@
 import React, { Component } from "react";
+import { CoreoRadio } from "../../../../../components";
 
 class Contracts extends Component {
+
+    onChange = (item, e) => {
+        item.isChecked = e.target.checked;
+        this.props.handleContracts(item)
+    }
 
     render() {
 
@@ -8,18 +14,13 @@ class Contracts extends Component {
             let catNum = index + 1;
             return (
                 <div className="form-radio col-md-12 p-0" key={catNum}>
-                    <input
+                    <CoreoRadio
                         className="form-radio-input"
                         name={"Contracts"}
                         id={"Contracts" + catNum}
-                        type="radio"
                         checked={this.props.memberContractId === item.membershipId}
                         value={item.membershipId}
-                        onChange={(e) => {
-                            item.isChecked = e.target.checked;
-                            this.props.handleContracts(item, e)
-                        }
-                        }
+                        onChange={e => this.onChange(item, e)}
                     />
                     <label className="form-radio-label" htmlFor={"Contracts" + catNum}>{item.membershipName}
                         <span className="RadioBoxIcon" /></label>

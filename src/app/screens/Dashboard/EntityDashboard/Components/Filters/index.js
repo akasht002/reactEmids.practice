@@ -131,7 +131,7 @@ class Filter extends Component {
                                         <label className="mb-3">Select the Service Type(s)</label>
                                         <ServiceTypeList
                                             serviceType={this.props.serviceType}
-                                            handleserviceType={(item, e) => { this.props.handleserviceType(item, e) }}
+                                            handleServiceType  ={(item, e) => { this.props.handleServiceType  (item, e) }}
                                         />
                                     </div>
                                 </TabPane>

@@ -1,7 +1,7 @@
 import { API } from '../../../../services/api'
 import _ from 'lodash'
 import {
-  Post, PatientGet, ServiceRequestGet
+  Post, PatientGet, ServiceRequestGet, Get
 } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions'
 import {getFullName, concatCommaWithSpace} from '../../../../utils/stringHelper'
@@ -9,7 +9,7 @@ import { getValue } from '../../../../utils/userUtility'
 import { VisitServiceRequestList } from './bridge'
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
-import { ENTITY_SR_STATUS, RECURRING_OPTIONS } from '../../../../constants/constants';
+import { ENTITY_SR_STATUS, RECURRING_OPTIONS, entityDashboardTab, ENTITY_SV_STATUS } from '../../../../constants/constants';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
 
@@ -131,11 +131,14 @@ export const clearScheduleType = data => {
 }
 
 export function getServiceRequestStatus() {
-  return dispatch => {
+  return (dispatch, getState) => {
+    let {activeTab} = getState().dashboardState.individualsListState
+    let get = (activeTab === entityDashboardTab.serviceRequests) ? ServiceRequestGet(API.getServiceStatus) : Get(API.getServiceProviderVisitStatus)
     dispatch(startLoading())
-    return ServiceRequestGet(API.getServiceStatus)
+    return get
       .then(resp => {
-        dispatch(getServiceRequestStatusSuccess(resp.data))
+        // dispatch(getUpdatedStatus(resp.data, activeTab))
+        dispatch(getServiceRequestStatusSuccess(getUpdatedStatusForSrSv(resp.data, activeTab)))
         dispatch(endLoading())
       })
       .catch(err => {
@@ -144,12 +147,26 @@ export function getServiceRequestStatus() {
   }
 }
 
+export const getUpdatedStatusForSrSv = (data, activeTab) => {
+  let isServiceRequestTab = (activeTab === entityDashboardTab.serviceRequests)
+  let statusToFilter = isServiceRequestTab ? ENTITY_SR_STATUS : ENTITY_SV_STATUS
+
+  _.forEach(data, function (obj) { 
+    obj.isActive = false; 
+      if(!isServiceRequestTab) {
+        obj.keyValue = obj.name
+      }
+  });
+
+  let updatedData = data.filter(itemX => statusToFilter.includes(itemX.keyValue));
+
+  return updatedData
+}
+
 export const getServiceRequestStatusSuccess = data => {
-  _.forEach(data, function (obj) { obj.isActive = false; });
-  let updatedData = data.filter(itemX => ENTITY_SR_STATUS.includes(itemX.keyValue));
 return {
     type: VisitServiceRequestList.getServiceRequestStatusSuccess,
-    updatedData
+    data
   }
 }
 
