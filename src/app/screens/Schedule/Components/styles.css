@@ -1604,11 +1604,7 @@ color:#444;
 .bottom-blockbtn .pull-left{ float: left !important;  }
 *::-ms-backdrop, .bottom-blockbtn .pull-left{ float: left !important;  }
 
-
-.bottom-blockbtn .ml-auto{ float: right !important;  } 
-*::-ms-backdrop, .bottom-blockbtn .ml-auto{ float: right !important;  }
-}
-
+} 
 .ServiceRequestsWidget .ServiceRequestBoard{
 width: 50%;
 }
