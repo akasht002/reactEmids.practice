@@ -266,3 +266,12 @@ export const getServiceCategoryImage = (serviceCategoryId) => {
 export function formattedTimeMoment(date) {
   return date ? moment(new Date(date.toString())).format(DATE_FORMATS.hh_mm) : null
 }
+
+export function divideIfNotZero(numerator, denominator) {
+  if (denominator === 0 || isNaN(denominator)) {
+        return 0;
+  }
+  else {
+        return  Math.round(numerator / denominator *100)
+  }
+}

@@ -26,8 +26,11 @@ import {
 import {
   getPerformTasksList,
   formDirtyPerformTask,
-  getServiceVisitId
+  getServiceVisitId,
+  getServiceRequestVisitId
 } from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions';
+import { push } from '../../navigation/actions';
+import { Path } from '../../../routes';
 import { DashboardDetail } from './bridge'
 import { formDirty, getVisitServiceHistoryByIdDetail } from '../../visitHistory/VisitServiceDetails/actions';
 import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/Feedback/actions';
@@ -378,10 +381,20 @@ export function goToAssessmentVisitProcessing(data){
   let visitID = data.serviceRequestVisitId !==0 ? data.serviceRequestVisitId : data.servicePlanVisitId
   return (dispatch) => {
     dispatch(getServiceRequestVisitDeatilsSuccess(data))
+    dispatch(getServiceRequestVisitId(visitID))
     switch (data.visitStatusId) { 
       case START_VISIT :       
         dispatch(dispatchToAssessmentProcessing(visitID))
-      break;
+      break;  
+      case IN_PROGRESS :       
+       dispatch(dispatchToAssessmentProcessing(visitID))
+      break; 
+      case PAYMENT_PENDING :       
+        dispatch(push(Path.assessmentSummary))
+      break; 
+      case VISIT_SUMMARY :       
+        dispatch(push(Path.assessmentSummary))
+      break; 
       default:
      }
   }

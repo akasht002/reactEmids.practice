@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import Moment from 'react-moment';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData'
-import { getQuestionsList, saveAnswers,startOrStopService,getServicePlanVisitSummaryDetails,saveTaskPercentage } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
+import { getQuestionsList, saveAnswers,startOrStopService,getServicePlanVisitSummaryDetails,
+    saveTaskPercentage,getQuestionsListSuccess } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch} from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
@@ -15,7 +16,7 @@ import {
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getPerformTasksList, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import './style.css'
-import { isNull,checkEmpty } from '../../../../utils/validations'
+import { isNull,checkEmpty,divideIfNotZero } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
 import { QUESTION_TYPE,SERVICE_STATES,DATE_FORMATS } from '../../../../constants/constants'
 import { convertTime24to12,getFullName } from '../../../../utils/stringHelper';
@@ -61,6 +62,7 @@ export class Assessment extends Component {
             this.props.history.push(Path.visitServiceList)
         }
     }
+   
 
     componentWillReceiveProps(nextProps) { 
         if (this.props.questionsList !== nextProps.questionsList) {
@@ -213,7 +215,7 @@ export class Assessment extends Component {
             return !checkEmpty(answer.feedbackQuestionnaireId)
         }).length;
         this.totalTask = this.props.questionsList && this.props.questionsList.length
-        this.percentageCompletion = Math.round((this.checkedTask / this.totalTask) * 100)
+        this.percentageCompletion = divideIfNotZero(this.checkedTask,this.totalTask)
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
@@ -230,14 +232,20 @@ export class Assessment extends Component {
                                 <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format={DATE_FORMATS.visitFormat}>{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slotDescription}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
+                                        <span>
+                                            <i className='requestName'>
+                                                <Moment format={DATE_FORMATS.visitFormat}>{this.props.patientDetails.visitDate}</Moment>, 
+                                                {this.props.patientDetails.slotDescription}
+                                            </i>
+                                            {this.props.patientDetails.serviceRequestVisitNumber}
+                                        </span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patientId)}>
                                         {this.props.patientDetails ?
                                             <span>
                                                 <img
                                                      src={
-                                                        this.props.patientDetails.patient && this.props.patientDetails.patientImage
+                                                        this.props.patientDetails && this.props.patientDetails.patientImage
                                                             ? this.props.patientDetails.patientImage
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
@@ -253,7 +261,7 @@ export class Assessment extends Component {
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
                                 <div className="col col-md-8 WizardContent">
-                                    <DashboardWizFlow VisitProcessingNavigationData={AssessmentProcessingWizNavigationData} activeFlowId={1} />
+                                    <DashboardWizFlow VisitProcessingNavigationData={AssessmentProcessingWizNavigationData} activeFlowId={0} />
                                 </div>
                                 <div className="col col-md-4 rightTimerWidget">
                                     <div className="row rightTimerContainer">
@@ -404,7 +412,8 @@ function mapDispatchToProps(dispatch) {
         goBack: () => dispatch(goBack()),
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime)),
         getServicePlanVisitSummaryDetails:(data) => dispatch(getServicePlanVisitSummaryDetails(data)),
-        saveTaskPercentage:(data) => dispatch(saveTaskPercentage(data))
+        saveTaskPercentage:(data) => dispatch(saveTaskPercentage(data)),
+        getQuestionsListSuccess:(data) => dispatch(getQuestionsListSuccess(data))
     }
 };
 

@@ -259,7 +259,8 @@ export const DATE_FORMATS = {
     m_d_yy: 'M/D/YY',
     hh_mm: 'HH:mm',
     hhMinSec: "HH:mm:ss",
-    hh_mm_a: 'hh:mm a'
+    hh_mm_a: 'hh:mm a',
+    visitFormat:'ddd, DD MMM'
 }
 
 
