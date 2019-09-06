@@ -46,7 +46,7 @@ export class Filter extends Component {
         return (
             <div className={"FilterWidget " + this.props.isOpen}>
 
-                <div className="FilterWidgetForm">
+                <div className="FilterWidgetForm my-plan-filter">
                     <div className="FilterContainer FilterTop">
                         <span>Filters</span>
                         <span className="FilterCloseIcon" onClick={this.props.toggle} />
