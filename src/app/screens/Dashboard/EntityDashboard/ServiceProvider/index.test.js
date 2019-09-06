@@ -64,7 +64,11 @@ const defaultState = {
     getPointofServicedata: jest.fn(),
     createDataStore: jest.fn(),
     getFeedbackAlertDetails: jest.fn(),
-    savePaginationNumber: jest.fn()
+    savePaginationNumber: jest.fn(),
+    setActiveStatusForAllTab: jest.fn(),
+    getVisitServiceHistoryByIdDetail: jest.fn(),
+    setESP: jest.fn(),
+    goToESPProfile: jest.fn()
 };
 
 store = mockStore(defaultState);
@@ -77,21 +81,6 @@ describe("ServiceProvider", function () {
 
     it('Check the ServiceProvider section', () => {
         expect(shallowWrapper.find('.parent-fullblock').length).toEqual(1);
-    });
-
-    it('Check the componentWillReceiveProps function', () => {
-        const nextProps = {
-            fromDate: '04/24/2019',
-            toDate: '05/24/2019',
-            individualsList: [{
-                dataCount: 32
-            }]
-        }
-        shallowWrapper.setProps({
-            fromDate: '03/24/2019',
-            toDate: '04/24/2019'  
-        })
-        shallowWrapper.instance().componentWillReceiveProps(nextProps)
     });
 
     it('Check the getTable function', () => {
@@ -129,4 +118,101 @@ describe("ServiceProvider", function () {
         shallowWrapper.instance().pageSizeChange(10)
     });
 
+    it('Check the pageSizeChange function', () => {
+        shallowWrapper.setState({
+            rowCount: 5
+        })
+        shallowWrapper.instance().pageSizeChange(10)
+    });
+
+    it('Check the pageNumberChangeFeedback function', () => {
+        shallowWrapper.instance().pageNumberChangeFeedback(10)
+    });
+
+    it('Check the getHeaderBasedOnStatus function', () => {
+        shallowWrapper.instance().getHeaderBasedOnStatus('Feedback')
+        shallowWrapper.instance().getHeaderBasedOnStatus('Visit')
+        shallowWrapper.instance().getHeaderBasedOnStatus('LowRating')
+        shallowWrapper.instance().getHeaderBasedOnStatus('LowTaskCompletions')
+    });
+
+    it('Check the toggleFeedbackAlert function', () => {
+        shallowWrapper.instance().toggleFeedbackAlert()
+    });
+
+    it('Check the goToSpVisitSummary function', () => {
+        let data = {
+            servicePlanVisitId: 12
+        }
+        shallowWrapper.instance().goToSpVisitSummary(data)
+    });
+
+    it('Check the impersinateServiceProvider function', () => {
+        let data = {
+            serviceProviderId: 12
+        }
+        shallowWrapper.instance().impersinateServiceProvider(data)
+    });
+
+    it('Check the toggleFilter function', () => {
+        shallowWrapper.instance().toggleFilter()
+    });
+
+    it('Check the handleGenderType function', () => {
+        let data = {
+            name: 'male',
+            id: 1
+        }
+        shallowWrapper.instance().handleGenderType(data)
+    });
+
+    
+    it('Check the onChangeExperinceSlider function', () => {
+        let data = {
+            min: 0,
+            max: 50
+        }
+        shallowWrapper.instance().onChangeExperinceSlider(data)
+    });
+
+    it('Check the handleSelectedRating function', () => {
+        let item = {
+            target: {
+                value: '5'
+            }
+        }
+        shallowWrapper.instance().handleSelectedRating(item)
+    });
+
+    it('Check the applyReset function', () => {
+        shallowWrapper.instance().applyReset()
+    });
+
+    it('Check the applyFilter function', () => {
+        shallowWrapper.instance().applyFilter()
+    });
+
+    it('Check the toggleSearch function', () => {
+        shallowWrapper.instance().toggleSearch()
+    });
+
+    it('Check the handleSearchData function', () => {
+        let e = {
+            preventDefault() {}
+        }
+        shallowWrapper.instance().handleSearchData(e)
+    });
+
+    it('Check the handleSearchkeyword function', () => {
+        let e = {
+            target: {
+                value: 'adasd'
+            }
+        }
+        shallowWrapper.instance().handleSearchkeyword(e)
+    });
+
+    it('Check the closeSearch function', () => {
+        shallowWrapper.instance().closeSearch()
+    });
 })

@@ -9,6 +9,7 @@ import { ToggleSwitch } from './ToggleSwitch'
 import { Avatar } from './Avatar'
 import{CoreoCheckBox} from './CoreoCheckBox'
 import CustomTextArea from "./CustomTextArea";
+import{CoreoRadio} from './CoreoRadio'
 
 export {
   FloatLabelInput,
@@ -23,5 +24,6 @@ export {
   ToggleSwitch,
   Avatar,
   CustomTextArea,
-  CoreoCheckBox
+  CoreoCheckBox,
+  CoreoRadio
 }

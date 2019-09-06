@@ -117,7 +117,8 @@ const defaultState = {
     getVisitServiceHistoryByIdDetail: jest.fn(),
     individualsFeedbackList: [{
         pageCount: 12
-    }]
+    }],
+    setActiveStatusForAllTab: jest.fn()
 };
 
 store = mockStore(defaultState);
@@ -193,6 +194,82 @@ describe("Individuals", function () {
 
     it('Check the pageNumberChangeFeedback function', () => {
         shallowWrapper.instance().pageNumberChangeFeedback(1)
+    });
+
+    it('Check the closeSearch function', () => {
+        shallowWrapper.instance().closeSearch()
+    });
+
+    it('Check the toggleFeedbackAlert  function', () => {
+        shallowWrapper.instance().toggleFeedbackAlert()
+    });
+
+    it('Check the toggleFilter  function', () => {
+        shallowWrapper.instance().toggleFilter()
+    });
+
+    it('Check the impersinateIndividual  function', () => {
+        let data = {
+            patientId: 12   
+        }
+        shallowWrapper.instance().impersinateIndividual(data)
+    });
+
+    it('Check the handleClinicalConditions  function', () => {
+        let item = {
+            attributeId: 12   
+        }
+        let e = {
+            target: {
+                checked: true
+            }
+        }
+        shallowWrapper.instance().handleClinicalConditions(item, e)
+    });
+
+    it('Check the handleContracts  function', () => {
+        let data = {
+            membershipName: 'asd',
+            membershipId: 12313
+        }
+        shallowWrapper.instance().handleContracts(data)
+    });
+
+    it('Check the onChangeSlider  function', () => {
+        let data = {
+            min: 10,
+            max: 50
+        }
+        shallowWrapper.instance().onChangeSlider(data)
+    });
+
+    it('Check the handleGenderType  function', () => {
+        let data = {
+            name: 'male',
+            id: 1
+        }
+        shallowWrapper.instance().handleGenderType(data)
+    });
+
+    it('Check the applyFilter  function', () => {
+        shallowWrapper.instance().applyFilter()
+    });
+
+    it('Check the applyReset  function', () => {
+        shallowWrapper.instance().applyReset()
+    });
+
+    it('Check the goToPgVisitSummary function', () => {
+        let data = {
+            servicePlanVisitId: 12
+        }
+        shallowWrapper.instance().goToPgVisitSummary(data)
+    });
+
+    it('Check the getHeaderBasedOnStatus function', () => {
+        shallowWrapper.instance().getHeaderBasedOnStatus('Feedback')
+        shallowWrapper.instance().getHeaderBasedOnStatus('Visit')
+        shallowWrapper.instance().getHeaderBasedOnStatus('')
     });
 
     it('Check the goToPgVisitSummary function', () => {

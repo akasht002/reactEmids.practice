@@ -7,7 +7,13 @@ import {
   setActiveSubTab,
   getIndividualsFeedbackList,
   savePaginationNumber,
-  setActiveStatusForAllTab
+  setActiveStatusForAllTab,
+  getClinicalCondition,
+  clearClinicalCondition,
+  getGender,
+  getAllContracts,
+  clearGenderType,
+  resetContracts
 } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   DEFAULT_PAGE_NUMBER,
@@ -39,6 +45,9 @@ import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
 import {
   getVisitServiceHistoryByIdDetail,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
+import Filter from '../Components/Filters'
+import { filterTabs } from './filterTabs';
+import Search from '../Components/Search'
 
 export class Individuals extends Component {
   constructor(props) {
@@ -52,10 +61,9 @@ export class Individuals extends Component {
       cohorts: [],
       ageRange: {
         minimumAge: 0,
-        maximumAge: 50,
+        maximumAge: 120,
         isChanged: false
       },
-      attributedProviders: [],
       memberContractId: 0,
       data: [],
       activePage: this.props.savedPageNumber,
@@ -72,13 +80,10 @@ export class Individuals extends Component {
       feedbackServiceVisits: [],
       pageNumberFeedback: DEFAULT_PAGE_NUMBER,
       pageSizeFeedback: DEFAULT_PAGE_SIZE,
-      activePageFeedback: DEFAULT_PAGE_NUMBER
+      activePageFeedback: DEFAULT_PAGE_NUMBER,
+      filterOpen: false,
+      searchOpen: false
     }
-    this.dataSet = []
-    this.countValue = 0
-    this.sortName = 'ModifiedDate'
-    this.sortOrder = 'asc'
-    this.IsSortIcon = false
     this.gridHeader = allIndividuals
   }
 
@@ -86,18 +91,13 @@ export class Individuals extends Component {
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
-      state: this.state,
-      status: this.props.activeSubTab,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword
+      status: this.props.activeSubTab
     })
     this.props.getIndividualsCountList(count)
     this.props.getIndividualsList(list)
+    this.props.getGender()
+    this.props.getClinicalCondition()
+    this.props.getAllContracts()
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -109,7 +109,27 @@ export class Individuals extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  closeSearch = async () => {
+    await this.setState({
+      searchOpen: !this.state.searchOpen,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      searchKeyword: 'default'
+    })
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsList(data)
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
     const { pageSize, rowCount } = this.state;
     let rowMaxValue = pageSize;
     const newDataCount = this.props.paginationCount;
@@ -127,23 +147,22 @@ export class Individuals extends Component {
 
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE,
       sortName: caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback) ? CARETEAM_STATUS.FEEDBACK : this.state.sortName,
       sortOrder: caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback) ? SORT_ORDER.DESC : this.state.sortOrder,
-      searchKeyword: this.state.searchKeyword,
-      resetFilter: false
     })
     if (
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
-      this.props.getIndividualsCountList(count)
-      this.props.getIndividualsList(list)
+      await this.props.getIndividualsCountList(count)
+      await this.props.getIndividualsList(list)
+      await this.setState({
+        rowMin: DEFAULT_PAGE_NUMBER,
+        activePage: DEFAULT_PAGE_NUMBER})
     }
   }
 
@@ -153,30 +172,31 @@ export class Individuals extends Component {
       "fromDate": data.fromDate,
       "toDate": data.toDate,
       "tab": this.state.status,
-      "gender": 0,
-      "minimumAge": 0,
-      "maximumAge": 50,
-      "searchText": "default",
-      "serviceProviderId": getUserInfo().serviceProviderId
+      "gender": this.state.genderId,
+      "minimumAge": this.state.ageRange.minimumAge,
+      "maximumAge": this.state.ageRange.maximumAge,
+      "searchText": this.state.searchKeyword,
+      "serviceProviderId": getUserInfo().serviceProviderId,
+      "contractId": this.state.memberContractId
     }
   }
 
   getFilterData = data => {
     return {
-      "clinicalCondition": [
-      ],
-      "pageNumber": data.pageNumber,
-      "pageSize": data.pageSize,
-      "sortColumn": data.sortName,
-      "sortOrder": data.sortOrder,
-      "fromDate": data.fromDate,
-      "toDate": data.toDate,
-      "tab": data.status,
-      "gender": 0,
+      "clinicalCondition": this.state.clinicalConditions,
+      "pageNumber": data.pageNumber ? data.pageNumber : this.state.pageNumber,
+      "pageSize": data.pageSize ? data.pageSize: this.state.pageSize,
+      "sortColumn": data.sortName ? data.sortName : this.state.sortName,
+      "sortOrder": data.sortOrder ? data.sortOrder : this.state.sortOrder,
+      "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
+      "toDate": data.toDate ? data.toDate : this.state.toDate,
+      "tab": data.status ? data.status : this.state.status,
+      "gender": this.state.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
       "searchText": this.state.searchKeyword,
-      "serviceProviderId": getUserInfo().serviceProviderId
+      "serviceProviderId": getUserInfo().serviceProviderId,
+      "contractId": this.state.memberContractId
     }
   }
 
@@ -190,7 +210,6 @@ export class Individuals extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
       searchKeyword: 'default',
-      attributedProviders: [],
       clinicalConditions: [],
       cohorts: [],
       memberContractId: 0,
@@ -198,15 +217,12 @@ export class Individuals extends Component {
       ageRange: {
         ...this.state.ageRange,
         minimumAge: 0,
-        maximumAge: 50,
+        maximumAge: 120,
         isChanged: false
       },
       pageNumber: DEFAULT_PAGE_NUMBER,
     })
     let data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      status: this.state.status,
       sortName: sortName,
       sortOrder: sortOrder,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -214,6 +230,7 @@ export class Individuals extends Component {
     })
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
+    this.props.clearClinicalCondition(this.props.clinicalConditionList)
     let count = this.getCountData({
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
@@ -245,11 +262,6 @@ export class Individuals extends Component {
       rowMaxValue = rowCount
     }
     let data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      status: this.state.status,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
       pageNumber: pageNumber,
       pageSize: DEFAULT_PAGE_SIZE
     })
@@ -270,11 +282,6 @@ export class Individuals extends Component {
       rowMaxValue = rowCount;
     }
     let data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      status: this.state.status,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: pageSize
     })
@@ -348,6 +355,132 @@ export class Individuals extends Component {
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
+  toggleFilter = () => {
+    this.setState({
+      filterOpen: !this.state.filterOpen
+    })
+  }
+
+  handleContracts = async data => {
+    await this.setState({
+      membershipName: data.membershipName,
+      memberContractId: data.membershipId
+    })
+  }
+
+  handleClinicalConditions = (item, e) => {
+    let clinicalConditions = this.state.clinicalConditions
+    if (e.target.checked) {
+      clinicalConditions.push(item.attributeId)
+    } else {
+      let index = clinicalConditions.indexOf(item.attributeId)
+      if (index > -1) {
+        clinicalConditions.splice(index, 1)
+      }
+    }
+    this.setState({
+      clinicalConditions: clinicalConditions
+    })
+  }
+
+  onChangeSlider = data => {
+    this.setState({
+      ageRange: {
+        ...this.state.ageRange,
+        minimumAge: data.min,
+        maximumAge: data.max,
+        isChanged: true
+      }
+    })
+  }
+
+  handleGenderType = data => {
+    this.setState({
+      genderLabel: data.name,
+      genderId: data.id
+    })
+  }
+
+  applyFilter = async () => {
+    let data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    await this.setState({
+      filterOpen: !this.state.filterOpen,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getIndividualsCountList(count, true)
+    await this.props.getIndividualsList(data)
+  }
+
+  applyReset = async () => {
+    await this.setState({
+      attributedProviders: [],
+      clinicalConditions: [],
+      memberContractId: 0,
+      genderId: 0,
+      ageRange: {
+        ...this.state.ageRange,
+        minimumAge: 0,
+        maximumAge: 120,
+        isChanged: false
+      },
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      filterOpen: false
+    })
+    await this.props.resetContracts(
+      this.props.contracts
+    )
+    await this.props.clearClinicalCondition(this.props.clinicalConditionList)
+    await this.props.clearGenderType(this.props.genderType)
+    let data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsList(data)
+  }
+
+  toggleSearch = () => {
+    this.setState({
+      searchOpen: !this.state.searchOpen,
+      searchKeyword: ''
+    })
+  }
+
+  handleSearchData = async (e) => {
+    e.preventDefault();
+    await this.setState({
+      activePage: DEFAULT_PAGE_NUMBER,
+    })
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsList(data)
+  }
+
+  handleSearchkeyword = e => {
+    this.setState({
+      searchKeyword: e.target.value
+    })
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state;
 
@@ -372,6 +505,22 @@ export class Individuals extends Component {
               status={status}
             />
           </div>
+          <div className="search-view-top">
+          <div className="search-block-right">
+          <Search
+              toggleSearch={this.toggleSearch}
+              searchOpen={this.state.searchOpen}
+              searchKeyword={this.state.searchKeyword}
+              handleSearchkeyword={this.handleSearchkeyword}
+              handleSearchData={this.handleSearchData}
+              closeSearch={this.closeSearch}
+            />
+          <span className='profile-header-filter'
+              onClick={this.toggleFilter}
+            >
+              Filters
+            </span>
+          </div>
           {this.props.individualsList && this.props.individualsList.length > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -385,6 +534,7 @@ export class Individuals extends Component {
               />
             </div> : ''
           }
+          </div>
           <div className="tab-table-view">
             <div className="full-block-tableview">
               <Grid
@@ -412,6 +562,26 @@ export class Individuals extends Component {
           modalTitle='Feedback Alerts'
           onClick={this.toggleFeedbackAlert}
         />
+        <Filter
+          isOpen={this.state.filterOpen}
+          toggle={this.toggleFilter}
+          applyFilter={this.applyFilter}
+          applyReset={this.applyReset}
+          handleserviceType={this.handleserviceType}
+          genderType={this.props.genderType}
+          handleGenderType={this.handleGenderType}
+          genderPreference={this.state.genderPreference}
+          onChangeSlider={this.onChangeSlider}
+          clinicalConditionList={this.props.clinicalConditionList}
+          handleClinicalConditions={this.handleClinicalConditions}
+          checked={this.state.isChecked}
+          contracts={this.props.contracts}
+          handleContracts={this.handleContracts}
+          ageRange={this.state.ageRange}
+          genderId={this.state.genderId}
+          memberContractId={this.state.memberContractId}
+          filterTabs={filterTabs}
+        />
       </div>
     )
   }
@@ -419,7 +589,7 @@ export class Individuals extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getIndividualsCountList: data => dispatch(getIndividualsCountList(data)),
+    getIndividualsCountList: (data, isFilterApplied) => dispatch(getIndividualsCountList(data, isFilterApplied)),
     getIndividualsList: data => dispatch(getIndividualsList(data)),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
@@ -431,7 +601,13 @@ export function mapDispatchToProps(dispatch) {
     getIndividualsFeedbackList: (data) => dispatch(getIndividualsFeedbackList(data)),
     getVisitServiceHistoryByIdDetail: data =>
       dispatch(getVisitServiceHistoryByIdDetail(data)),
-    goToPatientProfile: () => dispatch(push(Path.patientProfile))  
+    goToPatientProfile: () => dispatch(push(Path.patientProfile)),
+    getClinicalCondition: () => dispatch(getClinicalCondition()),
+    getAllContracts: () => dispatch(getAllContracts()),
+    clearClinicalCondition: data => dispatch(clearClinicalCondition(data)),  
+    getGender: () => dispatch(getGender()),
+    clearGenderType: data => dispatch(clearGenderType(data)),
+    resetContracts: data => dispatch(resetContracts(data))
   }
 }
 
@@ -446,7 +622,10 @@ export function mapStateToProps(state) {
     activeSubTab: state.dashboardState.individualsListState.activeSubTab,
     individualsFeedbackList: state.dashboardState.individualsListState.individualsFeedbackList,
     isLoadingFeedbackList: state.dashboardState.individualsListState.isLoadingFeedbackList,
-    savedPageNumber: state.dashboardState.individualsListState.savedPaginationNumber
+    savedPageNumber: state.dashboardState.individualsListState.savedPaginationNumber,
+    clinicalConditionList: state.dashboardState.individualsListState.clincalCondition,
+    contracts: state.dashboardState.individualsListState.contracts,
+    genderType: state.dashboardState.individualsListState.genderType
   }
 }
 

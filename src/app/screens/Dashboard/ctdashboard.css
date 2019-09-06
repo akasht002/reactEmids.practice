@@ -103,7 +103,7 @@ background-repeat: no-repeat;
 }
 
 .iconLogInto:before {
-background-image: url('../../assets/images/logInto.svg');
+    background-image: url('../../assets/images/logInto.svg');
 }
 
 .iconPhone:before {

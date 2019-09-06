@@ -9,7 +9,6 @@ const defaultState = {
     individualsVisitList: [],
     attributedProviders: [],
     contracts: [],
-    cohorts: [],
     paginationCount: 0,
     states: [],
     activeTab: '1',
@@ -20,7 +19,9 @@ const defaultState = {
     savedPaginationNumber: 1,
     fromDate: moment().subtract(3, 'months'),
     toDate: moment().toDate(),
-    activeStatus: 'All'
+    activeStatus: 'All',
+    clincalCondition: [],
+    genderType: []
 };
 
 const individualsListState = (state = defaultState, action) => {
@@ -60,9 +61,7 @@ const individualsListState = (state = defaultState, action) => {
         case IndividualsList.resetFilter:
             return {
                 ...state,
-                contracts: action.contracts,
-                cohorts: action.cohorts,
-                attributedProviders: action.attributedProviders
+                contracts: action.contracts
             }
         case IndividualsList.setPaginationRowCountSuccess:
             return {
@@ -139,6 +138,26 @@ const individualsListState = (state = defaultState, action) => {
                 ...state,
                 activeStatus: action.data
             };
+        case IndividualsList.getClinicalConditionSuccess:
+            return {
+                ...state,
+                clincalCondition: action.data
+            } 
+        case IndividualsList.getGenderSuccess:
+            return {
+                ...state,
+                genderType: action.data
+            }
+        case IndividualsList.clearClinicalCondition:
+            return {
+                ...state,
+                clincalCondition: action.data
+            }    
+        case IndividualsList.clearGenderType:
+            return {
+                ...state,
+                genderType: action.data
+            }                
         default:
             return state;
     }

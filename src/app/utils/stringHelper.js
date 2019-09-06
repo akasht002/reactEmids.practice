@@ -1,8 +1,8 @@
-export function makeProperCase(text){
+export function makeProperCase(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-export function stringConcat(text){
+export function stringConcat(text) {
     return text.join(",")
 }
 
@@ -28,19 +28,26 @@ export function getFirstCharOfString(string) {
     return string.charAt(0);
 }
 
-export function handelEnterSpace (str, is_xhtml) {
+export function handelEnterSpace(str, is_xhtml) {
     var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br>' : '<br>';
     return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
- } 
-
-export function getFullName(firstName,lastName){
-   return `${firstName} ${lastName}`;
 }
 
-export function stringCaseInsensitive(str1,str2){
+export function getFullName(firstName, lastName) {
+    return `${firstName} ${lastName}`;
+}
+
+export function stringCaseInsensitive(str1, str2) {
     return str1 && str1.toUpperCase() === str2 && str2.toUpperCase()
 }
 
-export function concatCommaWithSpace(text){
+export function concatCommaWithSpace(text) {
     return text.join(", ")
+}
+
+export function pushSpliceHandler(arr, value) {
+    let data = [...arr]
+    let index = data.indexOf(value);
+    (index > -1) ? data.splice(index,1) : data.push(value)
+    return data
 }

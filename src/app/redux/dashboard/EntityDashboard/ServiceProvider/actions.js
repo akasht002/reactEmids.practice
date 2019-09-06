@@ -35,7 +35,7 @@ export const setPaginationRowCountSuccess = data => {
   }
 }
 
-export function getVisitServiceProviderCountList(data) {
+export function getVisitServiceProviderCountList(data, isFilterApplied = false) {
   return (dispatch, getState) => {
     dispatch(startLoading());
     return Post(
@@ -47,11 +47,13 @@ export function getVisitServiceProviderCountList(data) {
           let {activeSubTab, visitServiceProviderCountList} = getState().dashboardState.VisitServiceProviderState
           let dataCount = checkDataCount(resp)
           dispatch(setPaginationRowCountSuccess(dataCount));
-          if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all))) {
-            dispatch(getServiceProviderCountListSuccess(updateCountList(visitServiceProviderCountList, resp)))
-          }
-          else {
-            dispatch(getServiceProviderCountListSuccess(resp.data))
+          if(!isFilterApplied) {
+            if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all))) {
+              dispatch(getServiceProviderCountListSuccess(updateCountList(visitServiceProviderCountList, resp)))
+            }
+            else {
+              dispatch(getServiceProviderCountListSuccess(resp.data))
+            }
           }
         }
         dispatch(endLoading())

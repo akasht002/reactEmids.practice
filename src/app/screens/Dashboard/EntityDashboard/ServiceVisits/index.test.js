@@ -60,7 +60,9 @@ const defaultState = {
     serviceType: [{
         serviceTypeId: 1
     }],
-    activeSubTab: 'LowTask'
+    activeSubTab: 'LowTask',
+    getServiceRequestStatus: jest.fn(),
+    setActiveStatusForAllTab: jest.fn()
 };
 
 store = mockStore(defaultState);
@@ -177,6 +179,13 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().impersinateServiceVisit(data)
     });
 
+    it('Check the impersinateServiceVisit function', () => {
+        const data = {
+            serviceRequestId: 15
+        }
+        shallowWrapper.instance().impersinateServiceVisit(data)
+    });
+
     it('Check the pageSizeChange function', () => {
         shallowWrapper.setState({
             rowCount: 5
@@ -191,4 +200,61 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().pageSizeChange(10)
     });
 
+    it('Check the toggleFilter function', () => {
+        shallowWrapper.instance().toggleFilter()
+    });
+    
+    it('Check the handleServiceRequestStatus function', () => {
+        const item = {
+            id: 15
+        }
+        let e = {
+            target: {
+                checked: true
+            }
+        }
+        shallowWrapper.instance().handleServiceRequestStatus(item, e)
+    });
+
+    it('Check the handleChangeServiceCategory function', () => {
+        const selectedOption  = {
+            value: 'sadsa'
+        }
+        shallowWrapper.instance().handleChangeServiceCategory(selectedOption)
+    });
+
+    it('Check the handleserviceType  function', () => {
+        const item = {
+            serviceTypeId: 15
+        }
+        let e = {
+            target: {
+                checked: true
+            }
+        }
+        shallowWrapper.instance().handleserviceType(item, e)
+    });
+
+    it('Check the applyFilter function', () => {
+        shallowWrapper.instance().applyFilter()
+    });
+
+    it('Check the applyReset function', () => {
+        shallowWrapper.instance().applyReset()
+    });
+
+    it('Check the toggleSearch function', () => {
+        shallowWrapper.instance().toggleSearch()
+    });
+
+    it('Check the handleSearchData function', () => {
+        let e = {
+            preventDefault() {}
+        }
+        shallowWrapper.instance().handleSearchData(e)
+    });
+
+    it('Check the closeSearch function', () => {
+        shallowWrapper.instance().closeSearch()
+    });
 })

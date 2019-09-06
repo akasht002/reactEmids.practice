@@ -42,18 +42,20 @@ export const setPaginationRowCountSuccess = data => {
     }
 }
 
-export function getVisitServiceCountList(data) {
+export function getVisitServiceCountList(data, isFilterApplied = false) {
     return (dispatch, getState) => {
         Post(API.getVisitServiceCount, data).then((resp) => {
             if (resp && resp.data) {
                 let {activeSubTab, visitServiceCountList} = getState().dashboardState.VisitServiceCountListState
                 let dataCount = checkDataCount(resp)
                 dispatch(setPaginationRowCountSuccess(dataCount));
-                if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all))) {
-                    dispatch(getVisitsCountListSuccess(updateCountList(visitServiceCountList, resp)))
-                }
-                else {
-                    dispatch(getVisitsCountListSuccess(resp.data))
+                if(!isFilterApplied) {
+                    if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all))) {
+                        dispatch(getVisitsCountListSuccess(updateCountList(visitServiceCountList, resp)))
+                    }
+                    else {
+                        dispatch(getVisitsCountListSuccess(resp.data))
+                    }
                 }
             }
         }).catch((err) => {

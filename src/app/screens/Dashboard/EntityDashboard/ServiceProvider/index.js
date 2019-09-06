@@ -10,7 +10,7 @@ import {
   getFeedbackAlertDetails,
   savePaginationNumber
 } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions'
-import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
+import { setActiveStatusForAllTab, getGender, clearGenderType } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   DEFAULT_PAGE_NUMBER,
   DEFAULT_PAGE_SIZE,
@@ -38,7 +38,10 @@ import moment from 'moment'
 import { setESP } from '../../../../redux/patientProfile/actions';
 import { ProfileModalPopup, RowPerPage } from '../../../../components'
 import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
-
+import Filter from '../Components/Filters'
+import { filterTabs } from './filterTabs';
+import Search from '../Components/Search';
+ 
 export class ServiceProvider extends Component {
   constructor(props) {
     super(props)
@@ -70,7 +73,8 @@ export class ServiceProvider extends Component {
       feedbackAlertModal: false,
       pageNumberFeedback: DEFAULT_PAGE_NUMBER,
       pageSizeFeedback: DEFAULT_PAGE_SIZE,
-      activePageFeedback: DEFAULT_PAGE_NUMBER
+      activePageFeedback: DEFAULT_PAGE_NUMBER,
+      filterOpen: false
     }
     this.serviceTypes = []
     this.serviceTypeId = []
@@ -81,18 +85,13 @@ export class ServiceProvider extends Component {
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
-      state: this.state,
       status: this.props.activeSubTab,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      pageNumber: this.state.pageNumber,
-      pageSize: this.state.pageSize,
       sortName: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortName,
       sortOrder: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortOrder,
-      searchKeyword: this.state.searchKeyword
     })
     this.props.getVisitServiceProviderCountList(count)
     this.props.getVisitServiceProviderTableList(list)
+    this.props.getGender()
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -113,16 +112,10 @@ export class ServiceProvider extends Component {
 
     const count = this.getCountData(this.props)
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE,
-      searchKeyword: this.state.searchKeyword,
-      sortName: this.state.sortName,
-      sortOrder: this.state.sortOrder,
-      resetFilter: false
     })
     if (
       prevProps.fromDate !== this.props.fromDate ||
@@ -130,6 +123,9 @@ export class ServiceProvider extends Component {
     ) {
       await this.props.getVisitServiceProviderCountList(count)
       await this.props.getVisitServiceProviderTableList(list)
+      await this.setState({
+        rowMin: DEFAULT_PAGE_NUMBER,
+        activePage: DEFAULT_PAGE_NUMBER})      
     }
   }
 
@@ -144,14 +140,14 @@ export class ServiceProvider extends Component {
 
   getCountData = data => {
     return {
-      "gender": 0,
+      "gender": this.state.genderId,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
       "tab": this.state.status,
-      "rating": 0,
-      "minimumExperience": 0,
-      "maximumExperience": 50,
-      "searchText": "default",
+      "rating": this.state.rating,
+      "minimumExperience": this.state.minExperience,
+      "maximumExperience": this.state.maxExperience,
+      "searchText": this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId
     }
   }
@@ -170,14 +166,14 @@ export class ServiceProvider extends Component {
 
   getFilterData = data => {
     return {
-      "pageNumber": data.pageNumber,
-      "pageSize": data.pageSize,
-      "sortColumn": data.sortName,
-      "sortOrder": data.sortOrder,
-      "fromDate": data.fromDate,
-      "toDate": data.toDate,
-      "tab": data.status,
-      "gender": 0,
+      "pageNumber": data.pageNumber ? data.pageNumber : this.state.pageNumber,
+      "pageSize": data.pageSize ? data.pageSize : this.state.pageSize,
+      "sortColumn": data.sortName ? data.sortName : this.state.sortName,
+      "sortOrder": data.sortOrder ? data.sortOrder : this.state.sortOrder,
+      "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
+      "toDate": data.toDate ? data.toDate : this.state.toDate,
+      "tab": data.status ? data.status : this.state.status,
+      "gender": this.state.genderId,
       "minimumExperience": this.state.minExperience,
       "maximumExperience": this.state.maxExperience,
       "searchText": this.state.searchKeyword,
@@ -215,9 +211,6 @@ export class ServiceProvider extends Component {
       toDate: this.props.toDate
     })
     let data = this.getFilterData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
-      status: this.state.status,
       sortName: sortName,
       sortOrder: sortOrder,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -275,16 +268,10 @@ export class ServiceProvider extends Component {
       rowMaxValue = rowCount
     }
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: pageNumber,
       pageSize: pageSize,
       sortName: sortName,
       sortOrder: sortOrder,
-      searchKeyword: this.state.searchKeyword,
-      resetFilter: this.state.resetFilter
     })
     this.props.getVisitServiceProviderTableList(list)
     this.setState({
@@ -303,15 +290,10 @@ export class ServiceProvider extends Component {
       rowMaxValue = rowCount;
     }
     const list = this.getFilterData({
-      state: this.state,
-      status: this.state.status,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: pageSize,
       sortName: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortName,
       sortOrder: this.getSortNameAndOrderBasedOnStatus(this.state.status).sortOrder,
-      searchKeyword: this.state.searchKeyword
     });
     this.props.getVisitServiceProviderTableList(list);
     this.setState({ pageSize: pageSize, activePage: DEFAULT_PAGE_NUMBER, pageNumber: DEFAULT_PAGE_NUMBER, rowMin: rowMinValue, rowMax: rowMaxValue });
@@ -349,6 +331,127 @@ export class ServiceProvider extends Component {
     }
   }
 
+  toggleFilter = () => {
+    this.setState({
+      filterOpen: !this.state.filterOpen
+    })
+  }
+
+  handleGenderType = data => {
+    this.setState({
+      genderLabel: data.name,
+      genderId: data.id
+    })
+  }
+
+  onChangeExperinceSlider = data => {
+    this.setState({
+      minExperience: data.min,
+      maxExperience: data.max,
+      isExperienceChanged: true
+    })
+  }
+
+  handleSelectedRating = item => {
+    this.setState({
+      rating: parseInt(item.target.value, 10)
+    })
+  }
+
+  applyFilter = async () => {
+    let data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    await this.setState({
+      filterOpen: !this.state.filterOpen,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getVisitServiceProviderCountList(count, true)
+    await this.props.getVisitServiceProviderTableList(data);
+  }
+
+  applyReset = async () => {
+    await this.setState({
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate,
+      maxExperience: 50,
+      minExperience: 0,
+      genderId: 0,
+      rating: 0,
+      status: this.state.status,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      filterOpen: false
+    })
+    this.serviceTypeId = []
+    await this.props.clearGenderType(this.props.genderType)
+    let data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderTableList(data)
+  }
+
+  toggleSearch = () => {
+    this.setState({
+      searchOpen: !this.state.searchOpen,
+      searchKeyword: ''
+    })
+  }
+
+  handleSearchData = async (e) => {
+    e.preventDefault();
+    await this.setState({
+      activePage: DEFAULT_PAGE_NUMBER,
+    })
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderTableList(data)
+  }
+
+  handleSearchkeyword = e => {
+    this.setState({
+      searchKeyword: e.target.value
+    })
+  }
+
+  closeSearch = async () => {
+    await this.setState({
+      searchOpen: !this.state.searchOpen,
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      activePage: DEFAULT_PAGE_NUMBER,
+      rowMin: DEFAULT_PAGE_NUMBER,
+      rowMax: DEFAULT_PAGE_SIZE,
+      searchKeyword: 'default'
+    })
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate
+    })
+    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderTableList(data)
+  }
+
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state
 
@@ -373,6 +476,23 @@ export class ServiceProvider extends Component {
               status={status}
             />
           </div>
+          <div className="search-view-top">
+          <div className="search-block-right">
+          <Search
+              toggleSearch={this.toggleSearch}
+              searchOpen={this.state.searchOpen}
+              searchKeyword={this.state.searchKeyword}
+              handleSearchkeyword={this.handleSearchkeyword}
+              handleSearchData={this.handleSearchData}
+              closeSearch={this.closeSearch}
+            />
+          <span
+              className='primaryColor profile-header-filter'
+              onClick={this.toggleFilter}
+            >
+              Filters
+            </span>
+            </div>
           {this.props.paginationCount > 0 ?
             <div className="table-search-block">
               <RowPerPage
@@ -386,6 +506,7 @@ export class ServiceProvider extends Component {
               />
             </div> : ''
           }
+          </div>
           <div className="tab-table-view">
             <div className="full-block-tableview">
               <Grid
@@ -411,6 +532,30 @@ export class ServiceProvider extends Component {
               modalTitle='Feedback Alerts'
               onClick={this.toggleFeedbackAlert}
             />
+            <Filter
+              isOpen={this.state.filterOpen}
+              toggle={this.toggleFilter}
+              applyFilter={this.applyFilter}
+              applyReset={this.applyReset}
+              serviceCategory={this.props.serviceCategory}
+              serviceCategoryId={this.state.serviceCategoryId}
+              handleChangeServiceCategory={this.handleChangeServiceCategory}
+              selectedOption={this.state.selectedOption}
+              genderType={this.props.genderType}
+              handleGenderType={this.handleGenderType}
+              genderPreference={this.state.genderPreference}
+              onChangeSlider={this.onChangeSlider}
+              minValue={this.state.minimumExperience}
+              maxValue={this.state.maximumExperience}
+              onChangeExperinceSlider={this.onChangeExperinceSlider}
+              handleSelectedRating={this.handleSelectedRating}
+              checked={this.state.isChecked}
+              rating={this.state.rating}
+              genderId={this.state.genderId}
+              minExperience={this.state.minExperience}
+              maxExperience={this.state.maxExperience}
+              filterTabs={filterTabs}
+            />
           </div>
         </div>
       </div>
@@ -420,8 +565,8 @@ export class ServiceProvider extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getVisitServiceProviderCountList: data =>
-      dispatch(getVisitServiceProviderCountList(data)),
+    getVisitServiceProviderCountList: (data, isFilterApplied) =>
+      dispatch(getVisitServiceProviderCountList(data, isFilterApplied)),
     getVisitServiceProviderTableList: data =>
       dispatch(getVisitServiceProviderTableList(data)),
     createVideoConference: data => dispatch(createVideoConference(data)),
@@ -434,7 +579,9 @@ function mapDispatchToProps(dispatch) {
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
     setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data)),
     goToESPProfile: () => dispatch(push(Path.ESPProfile)),
-    setESP: data => dispatch(setESP(data))
+    setESP: data => dispatch(setESP(data)),
+    getGender: () => dispatch(getGender()),
+    clearGenderType: data => dispatch(clearGenderType(data)),
   }
 }
 
@@ -452,7 +599,8 @@ function mapStateToProps(state) {
       .feedbackServiceVisits,
     isLoadingFeedbackList: VisitServiceProviderState
       .isLoadingFeedbackList,
-    savedPageNumber: VisitServiceProviderState.savedPaginationNumber
+    savedPageNumber: VisitServiceProviderState.savedPaginationNumber,
+    genderType: state.dashboardState.individualsListState.genderType
   }
 }
 
