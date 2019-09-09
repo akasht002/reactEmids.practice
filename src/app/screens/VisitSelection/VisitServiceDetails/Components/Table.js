@@ -70,7 +70,7 @@ export const Table = props => {
                         })}
                         {isEntity &&
                             <th></th>}
-                        <th></th>
+                        {!isEntity && <th></th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -118,7 +118,7 @@ export const Table = props => {
                                         <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
                                     </td>
                                     :
-                                    <td></td>
+                                    (isEntity ? <td></td> : null)
                             }
                         </tr>
                     })}

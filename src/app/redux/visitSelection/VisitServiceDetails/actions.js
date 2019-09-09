@@ -455,6 +455,7 @@ export function getEntityServiceProviderList(data, selectedESPId = '') {
               });
               dispatch(getEntityServiceProviderListSuccess(espList))
               dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
+              dispatch(endLoading())
           })
           .catch(err => {
               dispatch(endLoading())
@@ -626,9 +627,10 @@ export function getServiceVisitDetails(visitId) {
     ServiceRequestGet(API.getServiceVisitDetails + `${visitId}`)
       .then(resp => {
         dispatch(getServiceVisitDetailsSuccess(resp.data))
+        dispatch(endLoading())
       })
       .catch(err => {
-
+        dispatch(endLoading())
       })
   }
 };
