@@ -208,5 +208,6 @@ export const API = {
     getAllClinicalCondition: 'Patient/get-all-clinical-conditions',
     getScheduleType: 'Lookup/ScheduleType',
     getServiceStatus: 'ServiceRequest/LookUp/servicerequeststatus',
-    getServiceProviderVisitStatus: 'ServiceProviderLookUp/visitstatus'
+    getServiceProviderVisitStatus: 'ServiceProviderLookUp/visitstatus',
+    getPatientVitals: 'patient/get-patient-coreo-association/'
 }

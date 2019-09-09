@@ -274,3 +274,23 @@ export function getSelectedClinicalCondition() {
         })
     }
 };
+
+export function getPatientVitals() {
+    return (dispatch, getState) => {
+        let patientId = getState().patientProfileState.patientId;
+        dispatch(startLoading());
+        PatientGet(API.getPatientVitals + patientId).then((resp) => {
+            dispatch(getPatientVitalsSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch(() => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export const getPatientVitalsSuccess = (data) => {
+    return {
+        type: PatientProfile.getPatientVitalsSuccess,
+        data
+    }
+}
