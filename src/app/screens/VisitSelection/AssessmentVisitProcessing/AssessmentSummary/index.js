@@ -12,11 +12,12 @@ import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
-import { checkNumber, getFields } from '../../../../utils/validations';
+import { checkNumber, getFields,divideIfNotZero } from '../../../../utils/validations';
 import { formatDateSingle,getSecondsFromTime } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { DATE_FORMATS,ERROR_MSG } from '../../../../constants/constants'
+import { VISIT_SUMMARY } from '../../../../redux/constants/constants'
 
 export class AssessmentSummary extends Component {
 
@@ -199,7 +200,7 @@ export class AssessmentSummary extends Component {
             validationContent = <span>Please save the customer signature.</span>
         }
 
-        let completedTaskPercent = Math.round((this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100);
+        let completedTaskPercent =divideIfNotZero(this.props.SummaryDetails.totalTaskCompleted,this.props.SummaryDetails.totalTask) 
 
         let hour = this.props.SummaryDetails.originalTotalDuration && this.props.SummaryDetails.originalTotalDuration.substr(0, 2);
         let minutes = this.props.SummaryDetails.originalTotalDuration && this.props.SummaryDetails.originalTotalDuration.substr(3, 2);
@@ -260,7 +261,7 @@ export class AssessmentSummary extends Component {
                 {this.props.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='primaryColor m-0'>Visit Processing</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -321,26 +322,39 @@ export class AssessmentSummary extends Component {
                                                 <div className="col-md-8">
                                                     <p className="CategoryName">
                                                         <span className="CategoryTitle">
-                                                            {this.props.SummaryDetails.serviceRequestTypeVisits &&
-                                                                getFields(
-                                                                    this.props.SummaryDetails.serviceRequestTypeVisits,
-                                                                    "serviceTypeDescription"
-                                                                )}
+                                                            Assessment
                                                         </span>
-                                                        <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span></p>
+                                                        <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span>
+                                                    </p>
                                                 </div>
                                                 <div className="col-md-4 SummaryRange">
                                                     <span className="bottomTaskName">Tasks</span>
                                                     <span className="bottomTaskRange">
-                                                        <i style={{ width: this.props.taskPercentage + '%' }} className="bottomTaskCompletedRange" />
+                                                        <i style={{ width: completedTaskPercent + '%' }} className="bottomTaskCompletedRange" />
                                                     </span>
-                                                    <span className="bottomTaskPercentage">{this.props.taskPercentage}%</span>
+                                                    <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                 </div>
                                             </div>
                                             <p className="SummaryContentTitle">Payment Details</p>                                         
 
                                            
-                                            <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that any claim is an estimate pending the claim process</p>
+                                           <div className="row CostTableWidget">
+                                                {this.props.SummaryDetails.visitStatusId !== VISIT_SUMMARY  ?
+                                                    <span className="EditIcon" onClick={this.adjustTime} />
+                                                    :
+                                                    ''
+                                                } 
+                                                <div className="col-md-8 CostTableContainer Label">
+                                                    <p>
+                                                        <span>Total Chargeable Time (HH:MM)</span>
+                                                    </p>
+                                                </div>
+                                                <div className="col-md-4 CostTableContainer Cost">
+                                                    <p>
+                                                        <span>{this.props.SummaryDetails.originalTotalDuration}</span>                                                       
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="RightWidget">
@@ -364,14 +378,15 @@ export class AssessmentSummary extends Component {
                                         </div>
                                     </div>
                                 </div>
+                                {this.props.SummaryDetails.visitStatusId !== VISIT_SUMMARY  ? 
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         {getUserInfo().isEntityServiceProvider &&
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>                                           
                                         }
-                                    </div>
-                                </div>
+                                    </div> 
+                                </div> : '' }
                             </div>
                         </div>
                         

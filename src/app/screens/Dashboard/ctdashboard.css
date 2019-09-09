@@ -91,7 +91,7 @@ top: 4px;
 top: -2px;
 }
 
-.iconLogInto:before, .iconPhone:before, .iconConversation:before, .iconVideoCon:before {
+.iconLogInto:before, .iconPhone:before, .iconConversation:before, .iconVideoCon:before, .iconPaymentPending:before, .iconStartVisit:before, .iconCancelVisit:before  {
 content: "";
 position: absolute;
 display: block;
@@ -143,19 +143,19 @@ background-image: url('../../assets/images/ViewEye.svg');
 top: 4px;
 }
 
-.iconStartVisit, .iconPaymentPending, .iconVisitInProgressDashboard, .iconVisitSummary, .iconCancelVisit {
+.iconStartVisit, .iconPaymentPending, .iconVisitInProgressDashboard, .iconVisitSummary, .iconCancelVisit, .iconPhone, .iconConversation, .iconVideoCon {
 display: inline-block;
 position: relative;
 margin-right: 1px;
 }
 
-.iconStartVisit, .iconPaymentPending, .iconVisitInProgressDashboard, .iconVisitSummary, .iconCancelVisit{
+.iconStartVisit, .iconPaymentPending, .iconVisitInProgressDashboard, .iconVisitSummary, .iconCancelVisit, .iconPhone, .iconConversation, .iconVideoCon{
 width: 18px;
 height: 18px;
 margin-right: 10px;
 }
 
-.iconStartVisit:before, .iconPaymentPending:before, .iconVisitInProgressDashboard:before, .iconVisitSummary:before, .iconCancelVisit:before {
+.iconStartVisit:before, .iconPaymentPending:before, .iconVisitInProgressDashboard:before, .iconVisitSummary:before, .iconCancelVisit:before,  {
 content: "";
 position: absolute;
 display: block;

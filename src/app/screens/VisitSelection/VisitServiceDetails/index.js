@@ -28,6 +28,9 @@ import {
   clearServiceType,
   clearServiceCategory
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {
+  goToAssessmentVisitProcessing
+} from "../../../redux/dashboard/Dashboard/actions";
 import { Path } from '../../../routes';
 import { push, goBack } from '../../../redux/navigation/actions';
 import { TabHeader } from './Components/TabHeader';
@@ -37,7 +40,8 @@ import { PatientProfileTab } from './PatientProfile/PatientProfileTab';
 import {
   PAGE_NO,
   VISIT_STATUS,
-  DEFAULT_PAGE_SIZE
+  DEFAULT_PAGE_SIZE,
+  VISIT_TYPE
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
@@ -544,20 +548,29 @@ export class VisitServiceDetails extends Component {
     this.setState({ isEngageAlertPopupOpen: false })
   }
 
+  gotoAssessmentVisit = (data) => {
+    this.props.goToAssessmentVisitProcessing({...data,serviceRequestVisitId:0})
+  }
+
   navigateToparticularPageBasedonId = visitList => {
-    let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
-    switch (visitList.visitStatusId) {
-      case VISIT_STATUS.startVisit.id:
-        return this.visitProcessing(visitId)
-      case VISIT_STATUS.inProgress.id:
-        return this.visitProcessing(visitId)
-      case VISIT_STATUS.completed.id:
-        return this.visitSummary(visitId)
-      case VISIT_STATUS.paymentPending.id:
-        return this.visitProcessingSummary(visitId)
-      default:
-        return ''
+    if(visitList.scheduleTypeId === VISIT_TYPE.assessment){
+        this.gotoAssessmentVisit(visitList)  
+    }else{
+      let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
+      switch (visitList.visitStatusId) {
+        case VISIT_STATUS.startVisit.id:
+          return this.visitProcessing(visitId)
+        case VISIT_STATUS.inProgress.id:
+          return this.visitProcessing(visitId)
+        case VISIT_STATUS.completed.id:
+          return this.visitSummary(visitId)
+        case VISIT_STATUS.paymentPending.id:
+          return this.visitProcessingSummary(visitId)
+        default:
+          return ''
+      }
     }
+    
   }
 
 handelEditShedule = (scheduleId) => {
@@ -869,7 +882,8 @@ export function mapDispatchToProps(dispatch) {
     clearESPListSchedule: () => dispatch(clearESPListSchedule()),
     clearServiceType: (data) => dispatch(clearServiceType(data)),
     clearServiceCategory: (data) => dispatch(clearServiceCategory(data)),
-    getfirstlastvisitdate: (data) => dispatch(getfirstlastvisitdate(data))
+    getfirstlastvisitdate: (data) => dispatch(getfirstlastvisitdate(data)),
+    goToAssessmentVisitProcessing:(data)=>dispatch(goToAssessmentVisitProcessing(data))
   }
 }
 

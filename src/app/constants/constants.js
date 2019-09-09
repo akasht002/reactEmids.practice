@@ -260,7 +260,8 @@ export const DATE_FORMATS = {
     m_d_yy: 'M/D/YY',
     hh_mm: 'HH:mm',
     hhMinSec: "HH:mm:ss",
-    hh_mm_a: 'hh:mm a'
+    hh_mm_a: 'hh:mm a',
+    visitFormat:'ddd, DD MMM'
 }
 
 
@@ -479,6 +480,30 @@ export const SERVICE_CATEGORY = {
         "keyValue": "Transportation"
     }
 }
+
+export const VISIT_PROCESSING_STATUS = {
+    scheduled: {
+        id: 43,
+        title: 'Scheduled'
+    },
+    inProgress: {
+        id: 44,
+        title: 'InProgress'
+    },
+    completed: {
+        id: 45,
+        title: 'Completed'
+    },
+    cancelled: {
+        id: 46,
+        title: 'Cancelled'
+    },
+    paymentPending: {
+        "id": 90,
+        "keyValue": "Payment Pending"
+    }
+}
+
 
 export const FilterActiveTab = {
     "contracts": '2',

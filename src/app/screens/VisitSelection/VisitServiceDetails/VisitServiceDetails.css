@@ -378,7 +378,7 @@ float: left!important;
 float: right!important;
 }
 
-.filterblock
+.filter-block
 {
 display: flex;
 align-content: center;
@@ -387,13 +387,14 @@ flex-direction: row;
 padding-top: 8px;
 }
 
-.filterblock .ProfileHeaderFilter
+.filter-block .profile-header-filter
 {
 margin-right: 15px;
 line-height: 34px;
+cursor:pointer;
 }
 
-.filterblock button
+.filter-block button
 {
 display: block;
 border-radius: 4px;
@@ -408,17 +409,22 @@ color: #7a329f;
 cursor: pointer;
 }
 
-.filterblock button:hover
+.filter-block button:hover
 {
 background: #7a329f;
 color: #fff;
 }
 
-.filterblock button span
+.filter-block button span
 {
 font-size: 18px;
 display: inline;
 padding-right: 5px;
+}
+
+.filter-block .profile-header-filter {
+    margin-right: 15px;
+    line-height: 34px;
 }
 
 .left-listblock
