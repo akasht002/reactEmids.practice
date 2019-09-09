@@ -5,10 +5,11 @@ import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
 import { PAGE_SIZE_OPTIONS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
-import {isEntityUser} from '../../../../utils/userUtility';
-import {isFutureDay} from '../../../../utils/dateUtility'
+import { isEntityUser } from '../../../../utils/userUtility';
+import { isFutureDay } from '../../../../utils/dateUtility'
 import { getUserInfo } from '../../../../services/http'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { getEntityProcessingStatus } from '../../../../utils/validations'
 import './style.css';
 
 const renderServiceTypeImages = serviceTypes => {
@@ -35,21 +36,25 @@ const renderServiceTypesInToolTip = serviceTypes => {
     ))
 }
 
-const renderStatusBasedOnVisitStatus = visitStatusId => {
-   switch (visitStatusId) {
-       case VISIT_STATUS.startVisit.id:
-         return VISIT_STATUS.startVisit.keyValue  
-       case VISIT_STATUS.inProgress.id:
-         return VISIT_STATUS.inProgress.keyValue
-       case VISIT_STATUS.completed.id:
-         return VISIT_STATUS.completed.keyValue
-       case VISIT_STATUS.paymentPending.id:
-         return VISIT_STATUS.paymentPending.keyValue    
-       case VISIT_STATUS.cancelled.id:
-         return VISIT_STATUS.cancelled.keyValue    
-       default:
-         return null
-   }
+const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
+    const data = {
+        visitStatusId: visitStatusId,
+        isPaymentModeEnabled: isPaymentModeEnabled,
+    }
+    switch (visitStatusId) {
+        case VISIT_STATUS.startVisit.id:
+            return VISIT_STATUS.startVisit.keyValue
+        case VISIT_STATUS.inProgress.id:
+            return VISIT_STATUS.inProgress.keyValue
+        case VISIT_STATUS.completed.id:
+            return VISIT_STATUS.completed.keyValue
+        case VISIT_STATUS.paymentPending.id:            
+            return getEntityProcessingStatus(data)
+        case VISIT_STATUS.cancelled.id:
+            return VISIT_STATUS.cancelled.keyValue
+        default:
+            return null
+    }
 }
 
 export const Table = props => {
@@ -64,7 +69,7 @@ export const Table = props => {
                             return <th>{item.label}</th>
                         })}
                         {isEntity &&
-                        <th></th>}
+                            <th></th>}
                         <th></th>
                     </tr>
                 </thead>
@@ -102,18 +107,18 @@ export const Table = props => {
                                 </td>
                             }
                             {!isEntity &&
-                            <td>
-                                <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
-                                onClick={() => props.navigateToparticularPageBasedonId(item)}
-                                >{renderStatusBasedOnVisitStatus(item.visitStatusId)}</button></div>
-                            </td>}
+                                <td>
+                                    <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
+                                        onClick={() => props.navigateToparticularPageBasedonId(item)}
+                                    >{renderStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}</button></div>
+                                </td>}
                             {
                                 isEntity && item.visitStatusId === VISIT_STATUS.startVisit.id && isFutureDay(item.visitDate) ?
-                                <td>
-                                    <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
-                                </td>
-                                : 
-                                <td></td>
+                                    <td>
+                                        <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
+                                    </td>
+                                    :
+                                    <td></td>
                             }
                         </tr>
                     })}

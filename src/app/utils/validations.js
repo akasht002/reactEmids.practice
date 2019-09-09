@@ -275,3 +275,18 @@ export function divideIfNotZero(numerator, denominator) {
         return  Math.round(numerator / denominator *100)
   }
 }
+
+export function getEntityProcessingStatus(data) {
+  if (data && data.visitStatusId === 43)
+    return 'Start Visit'
+  else if (data && data.visitStatusId === 44)
+    return 'In Progress'
+  else if (data && data.visitStatusId === 90 && !data.isPaymentModeEnabled)
+    return 'In Progress'
+  else if (data && data.visitStatusId === 90 && data.isPaymentModeEnabled)
+    return 'Payment Pending'
+  else if (data && data.visitStatusId === 45)
+    return 'Visit Summary'
+  else if (data && data.visitStatusId === 46)
+    return 'Cancelled'
+}
