@@ -13,4 +13,5 @@ export const PatientProfile = {
     upload_esp_img_success:'upload_esp_img_success/PatientProfile',
     getESPEducationSuccess:'getESPEducationSuccess/PatientProfile',
     setParticipantProfile: 'setParticipantProfile/PatientProfile',
+    getPatientVitalsSuccess: 'getPatientVitalsSuccess/PatientProfile'
 };

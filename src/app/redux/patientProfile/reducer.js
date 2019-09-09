@@ -14,7 +14,8 @@ const defaultState = {
   espimageData: {},
   espEducation: [],
   userType: '',
-  patientProfilePercentage:0
+  patientProfilePercentage:0,
+  vitalDetails: {}
 }
 
 const patientProfileState = (state = defaultState, action) => {
@@ -84,6 +85,11 @@ const patientProfileState = (state = defaultState, action) => {
       return {
         ...state,
         patientProfilePercentage: action.data
+      }  
+      case PatientProfile.getPatientVitalsSuccess:
+      return {
+        ...state,
+        vitalDetails: action.data
       }  
     case PatientProfile.clearState:
       return defaultState
