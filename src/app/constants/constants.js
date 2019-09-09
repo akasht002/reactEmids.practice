@@ -179,6 +179,7 @@ export const serviceTypesImage = {
 export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_TIME = 200
+export const PAGE_RANGE = 5;
 
 export const SERVICE_REQ_STATUS = {
     OPEN: 35,
@@ -357,10 +358,109 @@ export const LATITUDE = 0.0
 export const LONGITUDE = 0.0
 
 
-export const serviceRequestDetailsTab = {
+export const SERVICE_REQUEST_DETAILS_TAB = {
     request: '1',
-    myPlan: '2'
+    myPlan: '2',
+    myPatient: '3'
 }
+
+export const IndividualFilterActiveTab = {
+    "contracts": '1',
+    "cohorts": '2',
+    "attributedProviders": '3',
+    "clinicalConditions": '4',
+    "age": '5',
+    "gender": '6',
+    "location": '7'
+}
+
+export const NO_RECORDS_FOUND = 'No results found for the current criteria'
+
+export const ROW_MIN = 1;
+export const ROW_MAX = 10;
+
+export const ENTITY_CARD_IMAGE = {
+    'IndividualsAll': 'individuals.svg',
+    'IndividualsInvalid': 'ind_ccard.svg',
+    'IndividualsVisit': 'ind_visits_in_period.svg',
+    'ProvidersAll': 'service_providers.svg',
+    'ProvidersLowRating': 'ind_low_rating.svg',
+    'ProvidersFeedback': 'ind_feedback_alerts.svg',
+    'ProvidersVisit': 'ind_visits_in_period.svg',
+    'ProvidersLowTaskCompletions': 'visits_low_task_completion.svg',
+    'RequestsCancelled': 'requests_cancelled.svg',
+    'RequestsAll': 'requests_low_matches.svg',
+    'RequestsOpen': 'requests_open_status.svg',
+    'RequestsNeedApproval': 'requests_needing_approval.svg',
+    'VisitsAll': 'visits_in_period.svg',
+    'VisitsCancel': 'visits_cancelled.svg',
+    'VisitsLowTask': 'visits_low_task_completion.svg',
+    'VisitsOverdue': 'visits_overdue.svg'
+}
+
+export const entityDashboardTab = {
+    "individuals": '1',
+    "serviceProviders": '2',
+    "serviceRequests": '3',
+    "serviceVisits": '4'
+}
+
+export const KEYPRESS_ENTER = 13;
+
+export const ENTITY_DASHBOARD_STATUS = {
+    serviceProvider: {
+        statCard: {
+            feedBack: 'Feedback',
+            all: 'All',
+            lowRating: 'LowRating',
+            lowTaskCompletions: 'LowTaskCompletions',
+            visit: 'Visit',
+        }
+    },
+    individuals: {
+        statCard: {
+            all: 'All',
+            invalid: 'Invalid',
+            visit: 'Visit',
+            feedback: 'Feedback'
+        },
+    },    
+    serviceRequests: {
+        statCard: {
+            all: 'All',
+            open: 'Open',
+            cancelled: 'Cancelled'
+        }    
+    },
+    serviceVisits: {
+        statCard: {
+            all: 'All',
+            lowTaskCompletions: 'LowTaskCompletions',
+            cancelled: 'Cancelled',
+            overDue: 'Overdue'
+        }    
+    }
+}
+
+export const GENDER_TYPE = {
+    notDisclosed: 'Not Disclosed',
+    other: 'Other'
+}
+
+export const CARETEAM_STATUS = {
+    FEEDBACK: 'feedback',
+    PENDING: 'Pending',
+    NEED_APPROVAL: 'Needing Approval'
+}
+
+export const SORT_ORDER = {
+    ASC: 'asc',
+    DESC: 'desc'
+}
+
+export const DEFAULT_SERVICE_CATEGORY = 0
+
+export const LOWTASK = 'LowTask';
 
 export const SERVICE_CATEGORY = {
     adl: {
@@ -405,4 +505,34 @@ export const VISIT_PROCESSING_STATUS = {
 }
 
 
+export const FilterActiveTab = {
+    "contracts": '2',
+    "clinicalConditions": '4',
+    "age": '3',
+    "rating": '6',
+    "experience": '5',
+    "gender": '1',
+    "categories": '7',
+    "status": '8',
+    "recurring": '9' 
+}
 
+export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Pending Approval', 'Declined', 'Closed', 'Cancelled'];
+
+export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'PaymentPending', 'OverDue'];
+
+export const RECURRING_OPTIONS = [31, 32]
+
+export const SCHEDULE_TYPE = {
+    oneTime: {
+        id: 31,
+        name: 'One Time',
+        value: 'no'
+    },
+    recurring: {
+        id: 32,
+        name: 'Recurring',
+        value: 'yes'
+    },
+
+}

@@ -29,6 +29,8 @@ import ImageCropView from './ImageCropView';
 import {AlertPopup} from './AlertPopup';
 import {CoreoPagination} from './CoreoPagination';
 import {CoreoTimePicker} from './CoreoTimePicker';
+import {PageResultCount} from './PageResultCount';
+import {RowPerPage} from './RowPerPage';
 
 export {
     Calendar,
@@ -63,5 +65,7 @@ export {
     ImageCropView,
     AlertPopup,
     CoreoPagination,
-    CoreoTimePicker
+    CoreoTimePicker,
+    PageResultCount,
+    RowPerPage
 };

@@ -6,6 +6,7 @@ import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import {getUpdatedPerformTasksList} from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import _ from 'lodash';
+import { isEntityUser } from '../../../utils/userUtility';
 
 export const vistServiceHistoryDetails = {
     getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
@@ -148,7 +149,7 @@ export function getVisitServiceHistoryByIdDetail(data) {
     return (dispatch) => {
         dispatch(getServiceRequestId(data))
         dispatch(visitHistoryLoading(true));
-        let getServiceVisitsHistoryById = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getServiceVisitsHistoryById
+        let getServiceVisitsHistoryById = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getSummaryDetailsForEsp : API.getServiceVisitsHistoryById
         ServiceRequestGet(getServiceVisitsHistoryById + data).then((resp) => {
             dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data))
             resp.data && dispatch(push(Path.visitSummaryDetail))

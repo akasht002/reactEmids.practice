@@ -138,17 +138,7 @@ export const ScheduleType = props => {
 
                                 <Fragment>
                                     <div className="right-monthblock">
-                                        <div className="left-radioblock">
-                                            <input
-                                                type="radio"
-                                                id={'Pattern2'}
-                                                name={'Pattern2'}                       
-                                                value={1}
-                                                className="form-radio-input"
-                                                onChange={() => { props.handleSelectDailyOptionField(1) }}
-                                            />
-                                            <label className="form-radio-label" htmlFor={'Pattern2'}><span className="RadioBoxIcon" /></label>
-                                        </div>
+                                        
                                         <div className="every-dayblock">
                                             <fieldset>
                                                 <label>Every</label>
@@ -169,17 +159,7 @@ export const ScheduleType = props => {
                             {props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.weekly &&
                                 <Fragment>
                                     <div class="right-monthblock">
-                                        <div className="left-radioblock">
-                                            <input
-                                                type="radio"
-                                                id={'Pattern2'}
-                                                name={'Pattern2'}
-                                                value={1}                                               
-                                                className="form-radio-input"
-                                                onChange={() => { props.handleSelectWeeklyOptionField(1) }}
-                                            />
-                                            <label className="form-radio-label" htmlFor={'Pattern2'}><span className="RadioBoxIcon" /></label>
-                                        </div>
+                                       
                                         <div className="every-dayblock">
                                             <fieldset>
                                                 <label>Every</label>
@@ -229,7 +209,6 @@ export const ScheduleType = props => {
                                                     type="radio"
                                                     name="monthly"
                                                     value={1}
-                                                    // defaultChecked={props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly}
                                                     className="form-radio-input"
                                                     onChange={(e) => { props.handleChangeMonthlySelectionFirst(e.target.id) }}
                                                 />

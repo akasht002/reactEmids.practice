@@ -15,7 +15,7 @@ export const AdditionalInformation = props => {
                     textChange={props.handleAdditionInfo}
                 />
             </div>
-            <div className='feedbackDesc default-222'>Disclaimer: Please note that this information will be available to Service Providers prior to hiring</div>
+            <div className='feedbackDesc default-222'>Disclaimer: Please note that this information will be available to Service Providers prior to hiring.</div>
         </Fragment>
     )
 }

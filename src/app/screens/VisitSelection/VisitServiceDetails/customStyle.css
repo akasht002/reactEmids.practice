@@ -820,7 +820,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
     /* height: calc(100vh - 397px); */
-    height: 339px;
+    height: 280px;
 }
 
 .BoardContainer{
@@ -1199,7 +1199,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     a.NoServiceReq{
         padding: 40px 20px;
-        max-width: 210px;
     }
 
     a.NoServiceReq .NoInfoText{

@@ -192,6 +192,22 @@ export const API = {
     getIspVisitListCount: 'plan/serviceprovider/totalFiltered-servicerequestvisit-count',
     getIndividualSchedulesDetails: 'plan/',
     getVisitFeedbackForEntity: 'feedback/serviceprovider/feedbackdetails/',
+    getIndividualsCount: 'entityuser/individual/totalcount',
+    getIndividualsList: 'entityuser/individual/list',
+    getVisitServiceProviderCount: 'EntityUser/ServiceProvider/totalcount',
+    getVisitServiceProviderTable: 'EntityUser/ServiceProvider/List',
+    getVisitServiceRequestTable: 'entityuser/servicerequest/list',
+    getVisitServiceRequestCount: 'entityuser/servicerequest/totalcount',
+    getVisitServiceCount: 'entityuser/servicevisit/totalcount',
+    getVisitServiceTable: 'entityuser/servicevisit/list',
+    getindividualsFeedbackList: 'entityuser/Individual/FeedbackVisit/',
+    getServiceProviderFeedbackList: 'entityuser/serviceprovider/feedbackvisit/',
     acceptservicerequest: 'servicerequest/acceptservicerequest',
-    getfirstlastvisitdate: 'plan/getfirstlastvisitdate'
+    getfirstlastvisitdate: 'plan/getfirstlastvisitdate',
+    getAllContracts: 'Membership/Get-all-contracts',
+    getAllClinicalCondition: 'Patient/get-all-clinical-conditions',
+    getScheduleType: 'Lookup/ScheduleType',
+    getServiceStatus: 'ServiceRequest/LookUp/servicerequeststatus',
+    getServiceProviderVisitStatus: 'ServiceProviderLookUp/visitstatus',
+    getPatientVitals: 'patient/get-patient-coreo-association/'
 }
