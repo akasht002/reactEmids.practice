@@ -21,6 +21,7 @@ import { getUserInfo } from '../../../../services/http'
 import { QUESTION_TYPE,SERVICE_STATES,DATE_FORMATS } from '../../../../constants/constants'
 import { convertTime24to12,getFullName } from '../../../../utils/stringHelper';
 import { Footer } from './Components/Footer'
+import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 export class Assessment extends Component {
 
     constructor(props) {
@@ -270,6 +271,9 @@ export class Assessment extends Component {
                                         </div>
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerStarted running">{ timerBtn }</span>
+                                        </div>
+                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.requestDetails.startedTime, "hh:mm a")}</span>
                                         </div>
                                     </div>
                                 </div>
