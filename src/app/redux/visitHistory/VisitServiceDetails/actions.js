@@ -289,7 +289,7 @@ export function getHistoryListCount() {
 
 export function getVisitFeedBack(data) {
     return (dispatch, getState) => {
-        let getVisitFeedback = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId === 0 ? 
+        let getVisitFeedback = getUserInfo().isEntityServiceProvider ? 
         API.getVisitFeedbackForEntity : API.getVisitFeedback
         dispatch(startLoading());
         ServiceRequestGet(getVisitFeedback + data).then((resp) => {

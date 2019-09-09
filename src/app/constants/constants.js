@@ -381,4 +381,28 @@ export const SERVICE_CATEGORY = {
     }
 }
 
+export const VISIT_PROCESSING_STATUS = {
+    scheduled: {
+        id: 43,
+        title: 'Scheduled'
+    },
+    inProgress: {
+        id: 44,
+        title: 'InProgress'
+    },
+    completed: {
+        id: 45,
+        title: 'Completed'
+    },
+    cancelled: {
+        id: 46,
+        title: 'Cancelled'
+    },
+    paymentPending: {
+        "id": 90,
+        "keyValue": "Payment Pending"
+    }
+}
+
+
 

@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_FORMAT_MONTH,DATE_FORMATS, DATE_YEAR, serviceTypesImage, serviceCategoriesImage,DEFAULT_CATEGORY_IMAGE  } from '../constants/constants'
+import { DATE_FORMAT, DATE_FORMAT_MONTH,DATE_FORMATS, DATE_YEAR, serviceTypesImage, serviceCategoriesImage,DEFAULT_CATEGORY_IMAGE, VISIT_PROCESSING_STATUS  } from '../constants/constants'
 import _ from 'lodash'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
@@ -277,16 +277,16 @@ export function divideIfNotZero(numerator, denominator) {
 }
 
 export function getEntityProcessingStatus(data) {
-  if (data && data.visitStatusId === 43)
+  if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.scheduled.id)
     return 'Start Visit'
-  else if (data && data.visitStatusId === 44)
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.inProgress.id)
     return 'In Progress'
-  else if (data && data.visitStatusId === 90 && !data.isPaymentModeEnabled)
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.paymentPending.id && !data.isPaymentModeEnabled)
     return 'In Progress'
-  else if (data && data.visitStatusId === 90 && data.isPaymentModeEnabled)
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.paymentPending.id && data.isPaymentModeEnabled)
     return 'Payment Pending'
-  else if (data && data.visitStatusId === 45)
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.completed.id)
     return 'Visit Summary'
-  else if (data && data.visitStatusId === 46)
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.cancelled.id)
     return 'Cancelled'
 }
