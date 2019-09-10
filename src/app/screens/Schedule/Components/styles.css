@@ -1556,6 +1556,7 @@ max-width: 50%;
 .my-plan-editmodel .assign-sp-block
 {
 z-index: 0;
+width:100%;
 }
 
 .form-group2block .react-datepicker-wrapper
