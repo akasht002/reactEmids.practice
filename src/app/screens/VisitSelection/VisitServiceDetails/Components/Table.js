@@ -16,7 +16,10 @@ const renderServiceTypeImages = serviceTypes => {
     let updatedServiceTypes = serviceTypes.length > 3 ? serviceTypes.slice(0, 2) : serviceTypes
     return (
         updatedServiceTypes.slice(0, 3).map(type =>
-            <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" />
+            <div>
+                <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" />
+                <p>{type.serviceTypeDescription}</p>
+            </div>
         ))
 }
 
@@ -48,7 +51,7 @@ const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => 
             return VISIT_STATUS.inProgress.keyValue
         case VISIT_STATUS.completed.id:
             return VISIT_STATUS.completed.keyValue
-        case VISIT_STATUS.paymentPending.id:            
+        case VISIT_STATUS.paymentPending.id:
             return getEntityProcessingStatus(data)
         case VISIT_STATUS.cancelled.id:
             return VISIT_STATUS.cancelled.keyValue
