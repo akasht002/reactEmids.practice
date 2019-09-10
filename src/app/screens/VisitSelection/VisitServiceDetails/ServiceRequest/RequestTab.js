@@ -32,7 +32,7 @@ export const RequestTab = props => {
                         {statusName === VISIT_STATUS.open.keyValue &&
                             <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelEngage(props.VisitServiceDetails.serviceRequestId)}>Engage</button>
                         }
-                        {statusName === VISIT_STATUS.engaged.keyValue && !isEntitySP &&
+                         {(statusName === VISIT_STATUS.engaged.keyValue) && !isEntity &&
                             <button class="btn btn-outline-primary right_statusview" disabled={props.VisitServiceDetails.visitInProgress} onClick={() => props.handelCancel(props.VisitServiceDetails.serviceRequestId)}>Cancel Request</button>
                         }
                         <Details
