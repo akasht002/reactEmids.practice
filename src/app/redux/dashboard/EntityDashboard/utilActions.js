@@ -11,7 +11,7 @@ export const updateCountList = (countList, resp) => {
     return countList;
 }
 
-export const checkDataCount = resp => {
-    let firstElement = resp.data && resp.data[0];
+export const checkDataCount = arr => {
+    let firstElement = arr && arr.length > 0 && arr[0];
     return (firstElement.totalCount > 0) ? firstElement.totalCount : 0
 }
