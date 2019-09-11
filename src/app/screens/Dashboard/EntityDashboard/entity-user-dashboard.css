@@ -78,7 +78,6 @@ display: block;
 overflow-y: auto;
 width: 100%;
 height: calc(100vh - 425px);
-
 }
 
 table.individuals-tableblock tbody tr
@@ -129,6 +128,7 @@ table.individuals-tableblock tbody tr:hover {
 span.life-map-btn
 {
 width:100%;
+max-width:90px;
 display:block;
 }
 
@@ -149,6 +149,7 @@ padding: 0 10px 0 0;
 flex-direction:row;
 justify-content: flex-start;
 width: 100%;
+padding-left:30px;
 }
 
 .actions-block .iconLogInto
@@ -552,9 +553,16 @@ position: relative;
 width:100%;
 }
 
+
+table.individuals-tableblock th:nth-child(1), table.individuals-tableblock td:nth-child(1)
+{
+width:14%;
+}
+
+
 @media (min-width: 1367px)
 {
 table.individuals-tableblock tbody {
-height: calc(100vh - 450px)!important;
+height: calc(100vh - 420px)!important;
 }   
 }

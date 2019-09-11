@@ -7,7 +7,7 @@ export let allIndividuals =
     contracts: 'Contracts',
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
-    button: 'Life Map (Button)',
+    button: 'Life Map',
     icon: 'Action'
 }
 export let visitIndividuals = {
@@ -18,7 +18,7 @@ export let visitIndividuals = {
     contracts: 'Contracts',
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
-    button: 'Life Map (Button)',
+    button: 'Life Map',
     icon: 'Action'
 }
 
@@ -30,6 +30,6 @@ export let feedbackIndividuals = {
     contracts: 'Contracts',
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
-    button: 'Life Map (Button)',
+    button: 'Life Map',
     icon: 'Action'
 }
