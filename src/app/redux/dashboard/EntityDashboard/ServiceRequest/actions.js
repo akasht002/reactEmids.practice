@@ -50,17 +50,18 @@ export function getServiceRequestCountList(data, isFilterApplied = false) {
       .then(resp => {
         if (resp && resp.data) {
           let {activeSubTab, visitServiceRequestCountList} = getState().dashboardState.VisitServiceRequestState
-          let dataCount = checkDataCount(resp)
+          let filteredArray = resp.data.filter(item => {
+            return caseInsensitiveComparer(activeSubTab, item.statusName)
+          });
+          let dataCount = checkDataCount(filteredArray)
           dispatch(setPaginationRowCountSuccess(dataCount));
-          if(!isFilterApplied) {
-            if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all))) {
-            dispatch(getServiceRequestCountListSuccess(updateCountList(visitServiceRequestCountList, resp)))
+            if(caseInsensitiveComparer(data.tab, ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all) && !isFilterApplied) {
+              dispatch(getServiceRequestCountListSuccess(resp.data))
           }
           else {
-            dispatch(getServiceRequestCountListSuccess(resp.data))
+            dispatch(getServiceRequestCountListSuccess(updateCountList(visitServiceRequestCountList, resp)))
           }
          }
-      }
         dispatch(endLoading())
       })
       .catch((err) => {

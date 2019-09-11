@@ -43,8 +43,6 @@ export const clearStates = () => {
     }
 }
 
-
-
 export const getIndividualsCountListSuccess = data => {
     return {
         type: IndividualsList.getIndividualsCountListSuccess,
@@ -87,17 +85,18 @@ export function getIndividualsCountList(data, isFilterApplied = false) {
         return Post(API.getIndividualsCount, data).then((resp) => {
             if (resp && resp.data) {
                 let {activeSubTab, individualsCountList} = getState().dashboardState.individualsListState
-                let dataCount = checkDataCount(resp)
+                let filteredArray = resp.data.filter(item => {
+                    return caseInsensitiveComparer(activeSubTab, item.statusName)
+                  });
+                let dataCount = checkDataCount(filteredArray)
                 dispatch(setPaginationRowCountSuccess(dataCount))
-                if(!isFilterApplied) {
-                    if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.all))) {
-                        dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
+                if(caseInsensitiveComparer(data.tab, ENTITY_DASHBOARD_STATUS.individuals.statCard.all) && !isFilterApplied) {
+                        dispatch(getIndividualsCountListSuccess(resp.data))
                     }
                     else {
-                        dispatch(getIndividualsCountListSuccess(resp.data))
+                        dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
                     }    
                 }
-            }
             dispatch(endLoading());
         }).catch((err) => {
             logError(err)

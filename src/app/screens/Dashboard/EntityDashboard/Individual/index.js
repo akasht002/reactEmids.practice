@@ -85,6 +85,7 @@ export class Individuals extends Component {
       searchOpen: false
     }
     this.gridHeader = allIndividuals
+    this.filterApplied = false
   }
 
   componentDidMount() {
@@ -93,7 +94,7 @@ export class Individuals extends Component {
     const list = this.getFilterData({
       status: this.props.activeSubTab
     })
-    this.props.getIndividualsCountList(count)
+    this.props.getIndividualsCountList(count, this.filterApplied)
     this.props.getIndividualsList(list)
     this.props.getGender()
     this.props.getClinicalCondition()
@@ -110,6 +111,19 @@ export class Individuals extends Component {
   }
 
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsList(data)
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -118,15 +132,6 @@ export class Individuals extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER,
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getIndividualsCountList(count)
-    await this.props.getIndividualsList(data)
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -171,11 +176,11 @@ export class Individuals extends Component {
       "clinicalCondition": this.state.clinicalConditions,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": this.state.status,
+      "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.individuals.statCard.all : this.state.status,
       "gender": this.state.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "contractId": this.state.memberContractId
     }
@@ -194,7 +199,7 @@ export class Individuals extends Component {
       "gender": this.state.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "contractId": this.state.memberContractId
     }
@@ -221,6 +226,7 @@ export class Individuals extends Component {
         isChanged: false
       },
       pageNumber: DEFAULT_PAGE_NUMBER,
+      searchOpen: false
     })
     let data = this.getFilterData({
       sortName: sortName,
@@ -235,8 +241,9 @@ export class Individuals extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
+    count.tab = ENTITY_DASHBOARD_STATUS.individuals.statCard.all
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
-    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -402,6 +409,7 @@ export class Individuals extends Component {
   }
 
   applyFilter = async () => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER,
     })
@@ -414,7 +422,7 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getIndividualsCountList(count, true)
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -460,6 +468,7 @@ export class Individuals extends Component {
   }
 
   handleSearchData = async (e) => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -471,7 +480,7 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -589,7 +598,7 @@ export class Individuals extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getIndividualsCountList: (data, isFilterApplied) => dispatch(getIndividualsCountList(data, isFilterApplied)),
+    getIndividualsCountList: (data, filterApplied) => dispatch(getIndividualsCountList(data, filterApplied)),
     getIndividualsList: data => dispatch(getIndividualsList(data)),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
