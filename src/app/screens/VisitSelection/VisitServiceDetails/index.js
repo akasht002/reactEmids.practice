@@ -562,11 +562,7 @@ export class VisitServiceDetails extends Component {
   }
 
   navigateToparticularPageBasedonId = visitList => {
-    let isVisitPlan = ((visitList.scheduleTypeId === VISIT_TYPE.scheduled) || (visitList.scheduleTypeId, 10) === VISIT_TYPE.assessment)
     this.props.saveScheduleType(visitList.scheduleTypeId)
-    // if(visitList.scheduleTypeId === VISIT_TYPE.assessment){
-    //     this.gotoAssessmentVisit(visitList)  
-    // }else{
       let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
       switch (visitList.visitStatusId) {
         case VISIT_STATUS.startVisit.id:
@@ -580,8 +576,6 @@ export class VisitServiceDetails extends Component {
         default:
           return ''
       }
-    //}
-    
   }
 
 handelEditShedule = (scheduleId) => {

@@ -2,6 +2,7 @@ import React from 'react'
 import { getFields, getServiceTypeImage } from '../../utils/validations'
 import Moment from 'react-moment'
 import { Progressbar } from '../../components'
+import { VISIT_TYPE } from '../../constants/constants';
 
 export const VisitList = props => {
   let visitHistoryList = props.visitHistoryList
@@ -37,7 +38,7 @@ export const VisitList = props => {
                         />
                       </div>
                       <div className='visitListNameContainer'>
-                        {vistList.visitTypeId !== 114 ?
+                        {vistList.visitTypeId !== VISIT_TYPE.assessment ?
                           vistList.serviceTypes && getFields(vistList.serviceTypes, 'serviceTypeDescription')
                           :
                           vistList.visitType
