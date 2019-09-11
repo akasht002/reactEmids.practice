@@ -666,3 +666,10 @@ export function getfirstlastvisitdate(data) {
       })
   }
 };
+
+export const saveScheduleType = data => {
+  return {
+      type: VisitServiceDetails.saveScheduleType,
+      data
+  }
+}

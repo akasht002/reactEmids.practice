@@ -11,6 +11,7 @@ class CoreoRadio extends Component {
                 checked={this.props.checked}
                 value={this.props.value}
                 onChange={this.props.onChange}
+                disabled={this.props.disabled}
             />
         );
     }

@@ -37,13 +37,11 @@ export const VisitList = props => {
                         />
                       </div>
                       <div className='visitListNameContainer'>
-                        <div className='visitListType'>
-                          {vistList.serviceTypes &&
-                            getFields(
-                              vistList.serviceTypes,
-                              'serviceTypeDescription'
-                            )}
-                        </div>
+                        {vistList.visitTypeId !== 114 ?
+                          vistList.serviceTypes && getFields(vistList.serviceTypes, 'serviceTypeDescription')
+                          :
+                          vistList.visitType
+                        }
                         <Progressbar
                           totaltask={vistList.totalTask}
                           taskCompleted={vistList.totalTaskCompleted}
@@ -88,8 +86,8 @@ export const VisitList = props => {
 
         </div>
       )
-    }) : 
-        <span className="no-resultblock">No results found for the current criteria</span>
+    }) :
+      <span className="no-resultblock">No results found for the current criteria</span>
   }
   return visitHistoryListItem
 }
