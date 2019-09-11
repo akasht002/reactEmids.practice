@@ -140,7 +140,7 @@ export class ServiceVisits extends Component {
       serviceProviderId: getUserInfo().serviceProviderId,
       serviceTypeIds: this.serviceTypeIds,
       visitStatus: this.state.serviceRequestStatus,
-      searchText: this.state.searchKeyword,
+      searchText: data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       tab: this.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all : this.state.status
     }
   }
@@ -154,7 +154,7 @@ export class ServiceVisits extends Component {
       "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
       "toDate": data.toDate ? data.toDate : this.state.toDate,
       "tab": data.status ? data.status : this.state.status,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "serviceTypeIds": this.serviceTypeIds,
       "visitStatus": this.state.serviceRequestStatus
@@ -364,6 +364,19 @@ export class ServiceVisits extends Component {
   }
 
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+      await this.props.getVisitServiceCountList(count)
+      await this.props.getVisitServiceTableList(data)  
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -372,15 +385,6 @@ export class ServiceVisits extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getVisitServiceCountList(count)
-    await this.props.getVisitServiceTableList(data)
   }
 
   render() {

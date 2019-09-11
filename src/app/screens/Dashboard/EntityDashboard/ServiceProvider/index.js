@@ -148,7 +148,7 @@ export class ServiceProvider extends Component {
       "rating": this.state.rating,
       "minimumExperience": this.state.minExperience,
       "maximumExperience": this.state.maxExperience,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId
     }
   }
@@ -177,7 +177,7 @@ export class ServiceProvider extends Component {
       "gender": this.state.genderId,
       "minimumExperience": this.state.minExperience,
       "maximumExperience": this.state.maxExperience,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "rating": this.state.rating
     }
@@ -437,6 +437,19 @@ export class ServiceProvider extends Component {
   }
 
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderTableList(data)
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -445,15 +458,6 @@ export class ServiceProvider extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getVisitServiceProviderCountList(count)
-    await this.props.getVisitServiceProviderTableList(data)
   }
 
   render() {

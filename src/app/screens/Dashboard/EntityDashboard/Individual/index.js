@@ -111,6 +111,19 @@ export class Individuals extends Component {
   }
 
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsList(data)
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -119,15 +132,6 @@ export class Individuals extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER,
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getIndividualsCountList(count)
-    await this.props.getIndividualsList(data)
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -176,7 +180,7 @@ export class Individuals extends Component {
       "gender": this.state.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "contractId": this.state.memberContractId
     }
@@ -195,7 +199,7 @@ export class Individuals extends Component {
       "gender": this.state.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "contractId": this.state.memberContractId
     }

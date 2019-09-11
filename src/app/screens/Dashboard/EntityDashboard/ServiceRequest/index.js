@@ -106,7 +106,7 @@ export class ServiceRequest extends Component {
       "fromDate": data.fromDate,
       "toDate": data.toDate,
       "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all : this.state.status,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "isRecurring": this.state.scheduleType,
       "serviceTypeIds": this.serviceTypeIds,
@@ -123,7 +123,7 @@ export class ServiceRequest extends Component {
       "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
       "toDate": data.toDate ? data.toDate : this.state.toDate,
       "tab": data.status ? data.status : this.state.status,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "isRecurring": this.state.scheduleType,
       "serviceTypeIds": this.serviceTypeIds,
@@ -369,6 +369,19 @@ export class ServiceRequest extends Component {
   }
 
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+    await this.props.getServiceRequestCountList(count)
+    await this.props.getServiceRequestTableList(data)
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -377,15 +390,6 @@ export class ServiceRequest extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getServiceRequestCountList(count)
-    await this.props.getServiceRequestTableList(data)
   }
 
   render() {
