@@ -85,6 +85,7 @@ export class Individuals extends Component {
       searchOpen: false
     }
     this.gridHeader = allIndividuals
+    this.filterApplied = false
   }
 
   componentDidMount() {
@@ -93,7 +94,7 @@ export class Individuals extends Component {
     const list = this.getFilterData({
       status: this.props.activeSubTab
     })
-    this.props.getIndividualsCountList(count)
+    this.props.getIndividualsCountList(count, this.filterApplied)
     this.props.getIndividualsList(list)
     this.props.getGender()
     this.props.getClinicalCondition()
@@ -171,7 +172,7 @@ export class Individuals extends Component {
       "clinicalCondition": this.state.clinicalConditions,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": this.state.status,
+      "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.individuals.statCard.all : this.state.status,
       "gender": this.state.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
@@ -221,6 +222,7 @@ export class Individuals extends Component {
         isChanged: false
       },
       pageNumber: DEFAULT_PAGE_NUMBER,
+      searchOpen: false
     })
     let data = this.getFilterData({
       sortName: sortName,
@@ -235,8 +237,9 @@ export class Individuals extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
+    count.tab = ENTITY_DASHBOARD_STATUS.individuals.statCard.all
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
-    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -402,6 +405,7 @@ export class Individuals extends Component {
   }
 
   applyFilter = async () => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER,
     })
@@ -414,7 +418,7 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getIndividualsCountList(count, true)
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -460,6 +464,7 @@ export class Individuals extends Component {
   }
 
   handleSearchData = async (e) => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -471,7 +476,7 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -589,7 +594,7 @@ export class Individuals extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getIndividualsCountList: (data, isFilterApplied) => dispatch(getIndividualsCountList(data, isFilterApplied)),
+    getIndividualsCountList: (data, filterApplied) => dispatch(getIndividualsCountList(data, filterApplied)),
     getIndividualsList: data => dispatch(getIndividualsList(data)),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),

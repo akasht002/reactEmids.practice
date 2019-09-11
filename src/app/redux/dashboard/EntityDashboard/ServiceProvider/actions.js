@@ -45,17 +45,18 @@ export function getVisitServiceProviderCountList(data, isFilterApplied = false) 
       .then(resp => {
         if (resp && resp.data) {
           let {activeSubTab, visitServiceProviderCountList} = getState().dashboardState.VisitServiceProviderState
-          let dataCount = checkDataCount(resp)
+          let filteredArray = resp.data.filter(item => {
+            return caseInsensitiveComparer(activeSubTab, item.statusName)
+          });
+          let dataCount = checkDataCount(filteredArray)
           dispatch(setPaginationRowCountSuccess(dataCount));
-          if(!isFilterApplied) {
-            if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all))) {
-              dispatch(getServiceProviderCountListSuccess(updateCountList(visitServiceProviderCountList, resp)))
-            }
-            else {
+            if(caseInsensitiveComparer(data.tab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all) && !isFilterApplied) {
               dispatch(getServiceProviderCountListSuccess(resp.data))
             }
+            else {
+              dispatch(getServiceProviderCountListSuccess(updateCountList(visitServiceProviderCountList, resp)))
+            }
           }
-        }
         dispatch(endLoading())
       })
       .catch((err) => {
