@@ -91,7 +91,7 @@ top: 4px;
 top: -2px;
 }
 
-.iconLogInto:before, .iconPhone:before, .iconConversation:before, .iconVideoCon:before, .iconPaymentPending:before, .iconStartVisit:before, .iconCancelVisit:before  {
+.iconLogInto:before, .iconPhone:before, .iconConversation:before, .iconVideoCon:before, .iconPaymentPending:before, .iconStartVisit:before, .iconCancelVisit:before, .iconVisitSummary:before, .iconVisitInProgressDashboard:before   {
 content: "";
 position: absolute;
 display: block;

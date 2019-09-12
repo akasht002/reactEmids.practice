@@ -537,3 +537,8 @@ export const SCHEDULE_TYPE = {
     },
 
 }
+
+export const FEEDBACK_QUESTION_TYPE = {
+    CHOICEBASED: 'ChoiceBased',
+    OPENTEXT: 'OpenText'
+}
