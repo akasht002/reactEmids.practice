@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from "moment";
 import Moment from 'react-moment';
-import { Link } from "react-router-dom";
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup, Preloader } from '../../../../components';
 import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration, calculationActualData } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
@@ -17,6 +15,7 @@ import { checkNumber, getFields } from '../../../../utils/validations';
 import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
+import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 
 export class Summary extends Component {
 
@@ -277,7 +276,7 @@ export class Summary extends Component {
         }
 
         let isEntity = this.props.patientDetails.serviceProvider && this.props.patientDetails.serviceProvider.isEntityUser;
-
+        let updatedIndicatorData = visitProcessingNavigationData(isEntity)
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -321,7 +320,7 @@ export class Summary extends Component {
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
                                 <div className="col col-md-8 WizardContent">
-                                    <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={2} />
+                                    <DashboardWizFlow VisitProcessingNavigationData={updatedIndicatorData} activeFlowId={2} />
                                 </div>
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
