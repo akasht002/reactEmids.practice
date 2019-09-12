@@ -317,7 +317,7 @@ export class AssessmentSummary extends Component {
                                 <div className="VisitSummaryWidget">
                                     <div className="LeftWidget">
                                         <div className="LeftContent">
-                                            <p className="SummaryContentTitle">Service Visit Details</p>
+                                            <p className="SummaryContentTitle">Service Details</p>
                                             <div className="row">
                                                 <div className="col-md-8">
                                                     <p className="CategoryName">
@@ -335,7 +335,7 @@ export class AssessmentSummary extends Component {
                                                     <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                 </div>
                                             </div>
-                                            <p className="SummaryContentTitle">Payment Details</p>                                         
+                                            <p className="SummaryContentTitle">Visit Details</p>                                         
 
                                            
                                            <div className="row CostTableWidget">

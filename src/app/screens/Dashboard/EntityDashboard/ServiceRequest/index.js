@@ -149,6 +149,7 @@ export class ServiceRequest extends Component {
     })
     this.serviceTypeIds = []
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
+    this.filterTabs = this.getFilterTabBasedOnStatus(this.state.status)
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     this.props.clearServiceTypes()
@@ -390,6 +391,15 @@ export class ServiceRequest extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
+  }
+
+  getFilterTabBasedOnStatus = status => {
+    switch (status) {
+      case ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all:
+        return filterTabs;
+      default:
+        return filterTabs.filter(item => item.id !== '8');
+    }
   }
 
   render() {
