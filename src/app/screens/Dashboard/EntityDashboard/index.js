@@ -72,13 +72,13 @@ class EntityDashboard extends Component {
   fromDateChanged = date => {
     const formattedDate = date ? formatDate(date, DATE_FORMAT) : null
     this.setState({ fromDate: formattedDate })
-    this.props.setFromDate(formattedDate)
+    // this.props.setFromDate(formattedDate)
   }
 
   toDateChanged = date => {
     const formattedDate = date ? formatDate(date, DATE_FORMAT) : null
     this.setState({ toDate: formattedDate })
-    this.props.setToDate(formattedDate)
+    // this.props.setToDate(formattedDate)
   }
 
   todaysDate = () => {
@@ -86,8 +86,8 @@ class EntityDashboard extends Component {
       fromDate: moment().toDate(),
       toDate: moment().toDate()
     })
-    this.props.setFromDate(moment().toDate())
-    this.props.setToDate(moment().toDate())
+    // this.props.setFromDate(moment().toDate())
+    // this.props.setToDate(moment().toDate())
   }
 
   render() {
@@ -150,7 +150,7 @@ class EntityDashboard extends Component {
           />
           <TabContent className='tab-content tab-content-block' activeTab={this.state.activeTab}>
             <TabPane tabId={entityDashboardTab.individuals} className='tab-pane TabBody'>
-              {this.state.activeTab === entityDashboardTab.individuals && <Individuals
+              {this.props.activeTab === entityDashboardTab.individuals && <Individuals
                 toggleSearch={this.toggleSearch}
                 toggleFilter={this.toggleFilter}
                 isOpenFilter={this.state.filterOpen}
@@ -161,7 +161,7 @@ class EntityDashboard extends Component {
               />}
             </TabPane>
             <TabPane tabId={entityDashboardTab.serviceProviders} className='tab-pane TabBody'>
-              {this.state.activeTab === entityDashboardTab.serviceProviders && <ServiceProvider
+              {this.props.activeTab === entityDashboardTab.serviceProviders && <ServiceProvider
                 fromDate={this.state.fromDate}
                 toDate={this.state.toDate}
                 isOpenFilter={this.state.filterOpen}
@@ -172,7 +172,7 @@ class EntityDashboard extends Component {
               />}
             </TabPane>
             <TabPane tabId={entityDashboardTab.serviceRequests} className='TabBody'>
-              {this.state.activeTab === entityDashboardTab.serviceRequests && <ServiceRequest
+              {this.props.activeTab === entityDashboardTab.serviceRequests && <ServiceRequest
                 fromDate={this.state.fromDate}
                 toDate={this.state.toDate}
                 isOpenFilter={this.state.filterOpen}
@@ -182,7 +182,7 @@ class EntityDashboard extends Component {
               />}
             </TabPane>
             <TabPane tabId={entityDashboardTab.serviceVisits} className='TabBody'>
-              {this.state.activeTab === entityDashboardTab.serviceVisits && <ServiceVisits
+              {this.props.activeTab === entityDashboardTab.serviceVisits && <ServiceVisits
                 fromDate={moment(this.state.fromDate).format('l')}
                 toDate={moment(this.state.toDate).format('l')}
                 isOpenFilter={this.state.filterOpen}
@@ -206,8 +206,8 @@ function mapDispatchToProps(dispatch) {
     getAboutUsContent: () => dispatch(getAboutUsContent()),
     getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval()),
     createDataStore: data => dispatch(createDataStore(data)),
-    setFromDate: data => dispatch(setFromDate(data)),
-    setToDate: data => dispatch(setToDate(data)),
+    // setFromDate: data => dispatch(setFromDate(data)),
+    // setToDate: data => dispatch(setToDate(data)),
   }
 }
 

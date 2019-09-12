@@ -13,7 +13,8 @@ import {
   getGender,
   getAllContracts,
   clearGenderType,
-  resetContracts
+  resetContracts,
+  clearStates
 } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   DEFAULT_PAGE_NUMBER,
@@ -28,7 +29,7 @@ import {
   SERVICE_REQUEST_DETAILS_TAB
 } from '../../../../constants/constants'
 import { getUserInfo } from '../../../../utils/userUtility';
-import { ProfileModalPopup, RowPerPage } from '../../../../components'
+import { ProfileModalPopup, RowPerPage, Preloader } from '../../../../components'
 import { StatCard } from '../Components/StatCard'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
@@ -94,11 +95,11 @@ export class Individuals extends Component {
     const list = this.getFilterData({
       status: this.props.activeSubTab
     })
-    this.props.getIndividualsCountList(count, this.filterApplied)
-    this.props.getIndividualsList(list)
     this.props.getGender()
     this.props.getClinicalCondition()
     this.props.getAllContracts()
+    this.props.getIndividualsCountList(count, this.filterApplied)
+    this.props.getIndividualsList(list)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -108,6 +109,10 @@ export class Individuals extends Component {
       rowCount: props.paginationCount,
       rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearStates()
   }
 
   closeSearch = async () => {
@@ -242,7 +247,6 @@ export class Individuals extends Component {
       toDate: this.props.toDate
     })
     count.tab = ENTITY_DASHBOARD_STATUS.individuals.statCard.all
-    this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
     await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
@@ -514,6 +518,7 @@ export class Individuals extends Component {
               status={status}
             />
           </div>
+          {!this.props.isLoaded && <Preloader />}
           <div className="search-view-top">
           <div className="search-block-right">
           <Search
@@ -548,7 +553,7 @@ export class Individuals extends Component {
             <div className="full-block-tableview">
               <Grid
                 data={this.props.individualsList}
-                header={this.gridHeader}
+                header={this.getHeaderBasedOnStatus(this.state.status)}
                 noRecordsFound={NO_RECORDS_FOUND}
                 impersinate={this.impersinateIndividual}
               />
@@ -616,7 +621,8 @@ export function mapDispatchToProps(dispatch) {
     clearClinicalCondition: data => dispatch(clearClinicalCondition(data)),  
     getGender: () => dispatch(getGender()),
     clearGenderType: data => dispatch(clearGenderType(data)),
-    resetContracts: data => dispatch(resetContracts(data))
+    resetContracts: data => dispatch(resetContracts(data)),
+    clearStates: () => dispatch(clearStates())
   }
 }
 
@@ -634,7 +640,8 @@ export function mapStateToProps(state) {
     savedPageNumber: state.dashboardState.individualsListState.savedPaginationNumber,
     clinicalConditionList: state.dashboardState.individualsListState.clincalCondition,
     contracts: state.dashboardState.individualsListState.contracts,
-    genderType: state.dashboardState.individualsListState.genderType
+    genderType: state.dashboardState.individualsListState.genderType,
+    isLoaded: state.dashboardState.individualsListState.isLoaded
   }
 }
 

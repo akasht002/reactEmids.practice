@@ -553,6 +553,12 @@ position: relative;
 width:100%;
 }
 
+.feedback-alertmodl .Loader
+{
+width:100% !important;
+position:absolute;
+}
+
 
 table.individuals-tableblock th:nth-child(1), table.individuals-tableblock td:nth-child(1)
 {

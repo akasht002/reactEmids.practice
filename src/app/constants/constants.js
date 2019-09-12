@@ -261,7 +261,8 @@ export const DATE_FORMATS = {
     hh_mm: 'HH:mm',
     hhMinSec: "HH:mm:ss",
     hh_mm_a: 'hh:mm a',
-    visitFormat:'ddd, DD MMM'
+    visitFormat:'ddd, DD MMM',
+    mm_dd_yyy: 'MM/DD/YYYY'
 }
 
 
@@ -517,7 +518,7 @@ export const FilterActiveTab = {
     "recurring": '9' 
 }
 
-export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Pending Approval', 'Declined', 'Closed', 'Cancelled'];
+export const ENTITY_SR_STATUS = ['Open', 'Engaged'];
 
 export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'PaymentPending', 'OverDue'];
 
