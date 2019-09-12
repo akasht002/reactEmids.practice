@@ -16,7 +16,8 @@ import {
   getFilteredData,
   getHistoryListCount,
   getAllPatientForServiceProviders,
-  clearPatientForServiceProviders
+  clearPatientForServiceProviders,
+  getAssessmentQuestionsList
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { VisitList } from './VisitList'
 import Filter from './VisitHistoryFilter'
@@ -28,9 +29,9 @@ import '../../styles/SelectDropdown.css'
 import { push } from '../../redux/navigation/actions';
 import { Path } from "../../routes";
 import { getTimeZoneOffset } from '../../utils/dateUtility';
-import { getServiceRequestId }
+import { getServiceRequestId, saveScheduleType }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
-import {DEFAULT_FROM_DATE, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE} from '../../constants/constants'
+import {DEFAULT_FROM_DATE, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, VISIT_TYPE} from '../../constants/constants'
 export class VisitHistory extends Component {
   constructor(props) {
     super(props)
@@ -98,9 +99,17 @@ export class VisitHistory extends Component {
   }
 
   handleClick = data => {
+    this.props.saveScheduleType(data.visitTypeId)
     let serviceRequestVisitId = (data.serviceRequestVisitId === 0) ? data.servicePlanVisitId : data.serviceRequestVisitId
     this.props.getServiceRequestId(data.serviceRequestId)
     this.props.getVisitServiceHistoryByIdDetail(serviceRequestVisitId)
+    const model = {
+      serviceProviderId: data.assignedProviderId,
+      visitId: serviceRequestVisitId
+    }
+    if(data.visitTypeId === VISIT_TYPE.assessment){
+      this.props.getAssessmentQuestionsList(model)
+    }
   }
 
   handleChangeServiceCategory = (selectedOption) => {
@@ -314,7 +323,9 @@ export function mapDispatchToProps(dispatch) {
     clearPatientForServiceProviders: (data) => dispatch(clearPatientForServiceProviders(data)),
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
-    getServiceRequestId: data => dispatch(getServiceRequestId(data))
+    getServiceRequestId: data => dispatch(getServiceRequestId(data)),
+    saveScheduleType: (data) => dispatch(saveScheduleType(data)),
+    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data))
   }
 }
 

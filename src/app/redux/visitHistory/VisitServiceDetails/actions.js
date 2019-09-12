@@ -25,7 +25,8 @@ export const vistServiceHistoryDetails = {
     getAllPatientForServiceProviders: "getAllPatientForServiceProviders/visitHistory",
     clearPatientForServiceProviders: "clearPatientForServiceProviders/visitHistory",
     formDirty: 'formDirty/visitHistory',
-    visitHistoryLoading: 'visitHistoryLoading/visitHistory'
+    visitHistoryLoading: 'visitHistoryLoading/visitHistory',
+    getAssessmentQuestionsListSuccess: 'getAssessmentQuestionsListSuccess/visitHistory'
 };
 
 export const visitHistoryLoading = (data) => {
@@ -320,3 +321,24 @@ export const getAllPatientForServiceProvidersSuccess = (data) => {
         data
     }
 }
+
+export const getAssessmentQuestionsListSuccess = data => {
+    return {
+        type: vistServiceHistoryDetails.getAssessmentQuestionsListSuccess,
+        data
+    }
+}
+
+export function getAssessmentQuestionsList(data) {
+    return dispatch => {
+      dispatch(startLoading())
+      return ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${data.serviceProviderId}/${data.visitId}`)
+        .then(resp => {
+          dispatch(getAssessmentQuestionsListSuccess(resp.data));
+          dispatch(endLoading())
+        })
+        .catch(err => {
+          dispatch(endLoading())
+        })
+    }
+  }
