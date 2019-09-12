@@ -46,7 +46,7 @@ import {
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
-import { getHourMin, getUtcTimeDiffInHHMMformat } from '../../../utils/dateUtility'
+import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat } from '../../../utils/dateUtility'
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
@@ -460,9 +460,9 @@ export class VisitServiceDetails extends Component {
       servicePlanVisitId: this.state.visitId,
       planScheduleId: this.props.serviceVisitDetails.planScheduleId,
       visitDate: this.state.startDateEdit,
-      startTime: this.formatedStartTime ? this.formatedStartTime : getHourMin(this.state.startTime),
-      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime),
-      endTime: this.formatedEndTime ? this.formatedEndTime : getHourMin(this.state.endTime),
+      startTime: this.formatedStartTime ? this.formatedStartTime : getHHMMformat(this.state.startTime),
+      endTime: this.formatedEndTime ? this.formatedEndTime : getHHMMformat(this.state.endTime),
+      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime)
     }
     await this.props.updateServiceVisit(model)
     await this.getModalData(this.state.activePage, this.state.rowPageSize)
@@ -699,7 +699,9 @@ handelEditAssessment = (assessmentId) => {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let updatedTabdata = this.props.ServiceRequestId === 0 ? tabdata.slice(1, tabdata.length) : tabdata
+    let updatedTabdata = this.props.ServiceRequestId === 0 ? tabdata.slice(1, tabdata.length) : tabdata;
+    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : false;
+
     return (
       <Fragment>
         <AsideScreenCover>
@@ -735,6 +737,7 @@ handelEditAssessment = (assessmentId) => {
                   />
                 }
                 <PlanTab
+                  isDisabledAddSchedule={isDisabledAddSchedule}
                   rowPageSize={this.state.rowPageSize}
                   rowPageChange={this.rowPageChange}
                   scheduleList={this.props.scheduleList}
