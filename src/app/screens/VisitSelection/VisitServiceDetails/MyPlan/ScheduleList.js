@@ -28,11 +28,11 @@ export const ScheduleList = props => {
                                 </label>
 
                                 <div className="edit-block">
-                                <button onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
+                                {item.isAnyAvailableScheduleVisit && <button onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
                                                 props.handelEditShedule(item.planScheduleId): 
                                                 props.handelEditAssessment(item.planScheduleId)}>
                                     Edit
-                                </button>
+                                </button>}
                                 </div>
                             </fieldset>
                           
