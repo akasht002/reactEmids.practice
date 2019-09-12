@@ -72,13 +72,13 @@ class EntityDashboard extends Component {
   fromDateChanged = date => {
     const formattedDate = date ? formatDate(date, DATE_FORMAT) : null
     this.setState({ fromDate: formattedDate })
-    // this.props.setFromDate(formattedDate)
+    this.props.setFromDate(formattedDate)
   }
 
   toDateChanged = date => {
     const formattedDate = date ? formatDate(date, DATE_FORMAT) : null
     this.setState({ toDate: formattedDate })
-    // this.props.setToDate(formattedDate)
+    this.props.setToDate(formattedDate)
   }
 
   todaysDate = () => {
@@ -86,8 +86,8 @@ class EntityDashboard extends Component {
       fromDate: moment().toDate(),
       toDate: moment().toDate()
     })
-    // this.props.setFromDate(moment().toDate())
-    // this.props.setToDate(moment().toDate())
+    this.props.setFromDate(moment().toDate())
+    this.props.setToDate(moment().toDate())
   }
 
   render() {
@@ -206,8 +206,8 @@ function mapDispatchToProps(dispatch) {
     getAboutUsContent: () => dispatch(getAboutUsContent()),
     getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval()),
     createDataStore: data => dispatch(createDataStore(data)),
-    // setFromDate: data => dispatch(setFromDate(data)),
-    // setToDate: data => dispatch(setToDate(data)),
+    setFromDate: data => dispatch(setFromDate(data)),
+    setToDate: data => dispatch(setToDate(data)),
   }
 }
 
