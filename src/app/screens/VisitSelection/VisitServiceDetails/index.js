@@ -791,6 +791,9 @@ handelEditAssessment = (assessmentId) => {
               disabled={this.state.disabledSaveBtn}
               centered={true}
               onClick={this.updateServiceVisits}
+              discardBtn={true}
+              discardbuttonLabel={'Cancel'}
+              onDiscard={() => this.setState({editModal: !this.state.editModal})}
             />
             <ModalPopup
               isOpen={this.state.standByModeAlertMsg}

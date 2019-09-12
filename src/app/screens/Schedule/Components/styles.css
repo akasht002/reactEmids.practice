@@ -1595,6 +1595,20 @@ color:#444;
 }
 
 
+.full-block-scheduleDate .react-datepicker__input-container input::placeholder {
+color: #8c8c8c;
+opacity: 1;
+}
+
+.full-block-scheduleDate .react-datepicker__input-container input:-ms-input-placeholder {
+color: #8c8c8c;
+}
+
+.full-block-scheduleDate .react-datepicker__input-container input::-ms-input-placeholder { 
+color: #8c8c8c;
+}
+
+
 
  /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none)
@@ -1604,6 +1618,15 @@ color:#444;
 
 .bottom-blockbtn .pull-left{ float: left !important;  }
 *::-ms-backdrop, .bottom-blockbtn .pull-left{ float: left !important;  }
+
+.full-block-scheduleDate :nth-child(1).form-group{ flex:none !important}
+*::-ms-backdrop, .full-block-scheduleDate :nth-child(1).form-group{flex:none !important;}
+
+.form-group2block .react-datepicker__input-container input {height:calc(2.25rem + 2px);} 
+*::-ms-backdrop, .form-group2block .react-datepicker__input-container input{height:calc(2.25rem + 2px);} 
+
+.bottom-blockbtn .ml-auto {float:right;} 
+*::-ms-backdrop, .bottom-blockbtn .ml-auto {float:right;} 
 
 } 
 .ServiceRequestsWidget .ServiceRequestBoard{
