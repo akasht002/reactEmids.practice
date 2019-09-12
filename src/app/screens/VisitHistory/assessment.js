@@ -20,7 +20,6 @@ export const Assessment = props => {
                                     return (
                                         <div className="form-radio col-md-3" key={answer.id}>
                                             <CoreoRadio 
-                                                className="form-radio-input"
                                                 id={answer.id}
                                                 value={answer.answerName}
                                                 name={questionList.feedbackQuestionnaireId}                                               

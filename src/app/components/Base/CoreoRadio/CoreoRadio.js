@@ -4,7 +4,7 @@ class CoreoRadio extends Component {
     render() {
         return (
             <input
-                className={this.props.className}
+                className={this.props.className ? this.props.className : 'form-radio-input'}
                 name={this.props.name}
                 id={this.props.id}
                 type="radio"
