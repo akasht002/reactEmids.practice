@@ -664,7 +664,7 @@ handelEditAssessment = (assessmentId) => {
     let tabdata = [
       {
         id: '1',
-        label: 'Requests'
+        label: 'Request'
       },
       {
         id: '2',
@@ -699,9 +699,11 @@ handelEditAssessment = (assessmentId) => {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let updatedTabdata = this.props.ServiceRequestId === 0 ? tabdata.slice(1, tabdata.length) : tabdata;
     let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : false;
-
+    let updatedTabdata = this.props.ServiceRequestId === 0 ? 
+                         tabdata.slice(1, tabdata.length) : 
+                         isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
+  
     return (
       <Fragment>
         <AsideScreenCover>
