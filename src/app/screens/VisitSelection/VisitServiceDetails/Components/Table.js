@@ -80,8 +80,8 @@ export const Table = props => {
                         let duration = (isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)
                         return <tr>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
-                            <td>{startTime}</td>
-                            <td>{duration}</td>
+                            <td>{!(item.visitStatusId === VISIT_STATUS.startVisit.id) && startTime}</td>
+                            <td>{!(item.visitStatusId === VISIT_STATUS.startVisit.id) && duration}</td>
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}

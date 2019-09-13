@@ -17,7 +17,7 @@ export let visitServiceProviders = {
 
 export let feedbackServiceProviders = {
     name: 'Service Provider',
-    totalCount: 'Alerts',
+    feedbackCount: 'Alerts',
     phoneNumber: 'Contact',
     gender: 'Gender',
     rating: 'Rating',
@@ -27,14 +27,14 @@ export let feedbackServiceProviders = {
 export let lowRatingServiceProivders = {
     name: 'Service Provider',
     phoneNumber: 'Contact',
-    age: 'Age',
+    gender: 'Gender',
     rating: 'Rating',
     icon: 'Actions'
 }
 
 export let lowTaskServiceProivders = {
     name: 'Service Provider',
-    taskPercentage: 'Task %',
+    task: 'Task %',
     phoneNumber: 'Contact',
     gender: 'Gender',
     rating: 'Rating',
