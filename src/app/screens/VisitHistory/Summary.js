@@ -20,8 +20,9 @@ import {
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
-import { ORG_SERVICE_PROVIDER_TYPE_ID } from '../../constants/constants'
+import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE } from '../../constants/constants'
 import Moment from 'react-moment'
+import { Assessment } from "./assessment";
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -235,7 +236,7 @@ export class VistSummary extends React.Component {
                       key={questionList.feedbackQuestionnaireId}
                       className="FeedbackQuestionWidget"
                     >
-                      <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}> 
+                      <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}>
                         {i + 1}. {questionList.question}
                       </p>
                       <div className="FeedbackAnswerWidget">
@@ -387,6 +388,8 @@ export class VistSummary extends React.Component {
     let modalTitle = "Feedback";
     let modalType = "";
     let feedbackContent = this.getFeedbackContent(this.props.VisitFeedback)
+    let isAssessment = this.props.savedScheduleType === VISIT_TYPE.assessment;
+    let isEntity = getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID;
 
     return (
       <React.Fragment>
@@ -401,32 +404,39 @@ export class VistSummary extends React.Component {
                       <span className="SummaryContentTableTitle">
                         Service Type(s)
                       </span>
-                      <span>
-                        {summaryDetail.serviceRequestTypeVisits &&
-                          getFields(
-                            summaryDetail.serviceRequestTypeVisits,
-                            "serviceTypeDescription"
-                          )}
-                      </span>
+                      {isAssessment ?
+                        <span className='CategoryTitle'>
+                          Assessment
+                        </span>
+                        :
+                        <span className='CategoryTitle'>
+                          {this.props.SummaryDetails.serviceRequestTypeVisits &&
+                            getFields(
+                              this.props.SummaryDetails.serviceRequestTypeVisits,
+                              'serviceTypeDescription'
+                            )}
+                        </span>
+                      }
                     </p>
-                    <p>
-                      <span className="SummaryContentTableTitle">
-                        Service Category
+                    {!isEntity &&
+                      <p>
+                        <span className="SummaryContentTableTitle">
+                          Service Category
                       </span>
-                      <span>
-                        {summaryDetail.serviceCategoryDescription &&
-                          summaryDetail.serviceCategoryDescription}
-                      </span>
-                    </p>
+                        <span>
+                          {summaryDetail.serviceCategoryDescription &&
+                            summaryDetail.serviceCategoryDescription}
+                        </span>
+                      </p>}
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">Visit Date</span>
                       <span>
-                      <Moment format="ddd, DD MMM">{summaryDetail.visitStartTime}</Moment>
+                        <Moment format="ddd, DD MMM">{summaryDetail.visitStartTime}</Moment>
                       </span>
                     </p>
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">
-                        Visit Length (HH:MM)
+                        Visit Duration (HH:MM)
                       </span>
                       <span>{summaryDetail.billedTotalDuration && summaryDetail.billedTotalDuration.substring(0, 5)}</span>
                     </p>
@@ -458,19 +468,21 @@ export class VistSummary extends React.Component {
                 </div>
 
                 <div className="TabContainerWidget Individual">
-                  <Accordion>
-                    {this.getServiceDetails(
-                      summaryDetail.serviceRequestTypeVisits
-                    )}
-                  </Accordion>
+                  {isAssessment ?
+                    <Assessment questionsList={this.props.assessmentQuestionsList} />
+                    :
+                    <Accordion>
+                      {this.getServiceDetails(
+                        summaryDetail.serviceRequestTypeVisits
+                      )}
+                    </Accordion>
+                  }
                 </div>
               </div>
             </div>
             <div className="RightWidget">
               <div className="RightContent">
-                {getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID ?
-                  ''
-                  :
+                {!isEntity &&
                   <Fragment>
                     <p className="SummaryContentTitle">Payment Details</p>
                     <div className="row CostTableWidget">
@@ -590,7 +602,7 @@ export class VistSummary extends React.Component {
           onClick={this.onClickNext}
           discardBtn={true}
           discardbuttonLabel={'Cancel'}
-          onDiscard= {() => this.setState({ EditFeedbackDetailModal: false, isAlertModalOpen: false })}
+          onDiscard={() => this.setState({ EditFeedbackDetailModal: false, isAlertModalOpen: false })}
         />
         <ProfileModalPopup
           isOpen={this.state.ViewFeedbackDetailModal}
@@ -603,10 +615,10 @@ export class VistSummary extends React.Component {
           buttonLabel={'OK'}
           disabled={this.state.disabledSaveBtn}
         />
-        <AlertPopup    
-           message= 'Please answer all the above questionnaire.'
-           isOpen= {this.state.isAlertModalOpen}
-           onAcceptClick = {() => this.setState({ isAlertModalOpen: false })}
+        <AlertPopup
+          message='Please answer all the above questionnaire.'
+          isOpen={this.state.isAlertModalOpen}
+          onAcceptClick={() => this.setState({ isAlertModalOpen: false })}
         />
       </React.Fragment>
     );
@@ -635,6 +647,8 @@ export function mapStateToProps(state) {
     VisitFeedback: state.visitHistoryState.vistServiceHistoryState
       .VisitFeedback,
     isLoading: state.visitHistoryState.vistServiceHistoryState.isLoading,
+    savedScheduleType: state.visitSelectionState.VisitServiceDetailsState.savedScheduleType,
+    assessmentQuestionsList: state.visitHistoryState.vistServiceHistoryState.assessmentQuestionsList
   };
 }
 

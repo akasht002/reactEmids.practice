@@ -86,15 +86,8 @@ const individualsListState = (state = defaultState, action) => {
         case IndividualsList.clearState:
             return {
                 ...state,
-                individualsCountList: [],
-                individualsList: [],
-                individualsVisitList: [],
-                attributedProviders: [],
-                contracts: [],
-                cohorts: [],
-                paginationCount: 0,
-                states: [],
-                isLoaded: false
+                fromDate: moment().subtract(3, 'months'),
+                toDate: moment().toDate()
             };
         case IndividualsList.setActiveSubTab:
             return {

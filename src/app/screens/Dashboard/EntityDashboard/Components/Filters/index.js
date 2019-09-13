@@ -30,6 +30,14 @@ class Filter extends Component {
             });
         }
     }
+    
+    componentDidUpdate(prevProps) {
+        if(prevProps.filterTabs !== this.props.filterTabs) {
+            this.setState({
+                activeTab: this.props.filterTabs[0].id
+            })
+        }
+    }
 
     render() {
         const serviceCategories = this.props.serviceCategory && this.props.serviceCategory.map(function (type) {

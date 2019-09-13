@@ -73,6 +73,7 @@ export class ServiceVisits extends Component {
     }
     this.serviceTypeIds = []
     this.gridHeader = allServiceVisits
+    this.filterApplied = false
   }
 
   async componentDidMount() {
@@ -83,7 +84,7 @@ export class ServiceVisits extends Component {
       sortName: this.props.activeSubTab === LOWTASK ? LOWTASK : this.state.sortName,
       sortOrder: this.props.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
     })
-    await this.props.getVisitServiceCountList(count)
+    await this.props.getVisitServiceCountList(count, this.filterApplied)
     await this.props.getVisitServiceTableList(list)
     this.props.getServiceCategory()
     this.props.getServiceRequestStatus()
@@ -139,8 +140,8 @@ export class ServiceVisits extends Component {
       serviceProviderId: getUserInfo().serviceProviderId,
       serviceTypeIds: this.serviceTypeIds,
       visitStatus: this.state.serviceRequestStatus,
-      searchText: this.state.searchKeyword,
-      tab: this.state.status
+      searchText: data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
+      tab: this.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all : this.state.status
     }
   }
 
@@ -153,7 +154,7 @@ export class ServiceVisits extends Component {
       "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
       "toDate": data.toDate ? data.toDate : this.state.toDate,
       "tab": data.status ? data.status : this.state.status,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "serviceTypeIds": this.serviceTypeIds,
       "visitStatus": this.state.serviceRequestStatus
@@ -171,8 +172,13 @@ export class ServiceVisits extends Component {
       rowMin: ROW_MIN,
       rowMax: rowMaxValue,
       selectedOption: '',
-      serviceRequestStatus: []
+      serviceRequestStatus: [],
+      searchKeyword: 'default',
+      searchOpen: false
     })
+    this.serviceTypeIds = []
+    this.props.clearServiceTypes()
+    this.props.clearRequestStatus(this.props.serviceProviderVisitStatus)
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
@@ -185,7 +191,8 @@ export class ServiceVisits extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
-    await this.props.getVisitServiceCountList(count)
+    count.tab = ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all
+    await this.props.getVisitServiceCountList(count, this.filterApplied)
     await this.props.getVisitServiceTableList(data)
   }
 
@@ -284,6 +291,7 @@ export class ServiceVisits extends Component {
   }
 
   applyFilter = async () => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all)
     this.setState({
       filterOpen: !this.state.filterOpen,
       activePage: DEFAULT_PAGE_NUMBER,
@@ -296,7 +304,7 @@ export class ServiceVisits extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
-    await this.props.getVisitServiceCountList(count, true)
+    await this.props.getVisitServiceCountList(count, this.filterApplied)
     await this.props.getVisitServiceTableList(data)
     
   }
@@ -333,6 +341,7 @@ export class ServiceVisits extends Component {
   }
 
   handleSearchData = async (e) => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -344,7 +353,7 @@ export class ServiceVisits extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-   await this.props.getVisitServiceCountList(count)
+   await this.props.getVisitServiceCountList(count, this.filterApplied)
    await this.props.getVisitServiceTableList(data)
   }
 
@@ -355,6 +364,19 @@ export class ServiceVisits extends Component {
   }
 
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+      await this.props.getVisitServiceCountList(count)
+      await this.props.getVisitServiceTableList(data)  
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -363,15 +385,6 @@ export class ServiceVisits extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getVisitServiceCountList(count)
-    await this.props.getVisitServiceTableList(data)
   }
 
   render() {
@@ -459,7 +472,7 @@ export class ServiceVisits extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getVisitServiceCountList: (data, isFilterApplied) => dispatch(getVisitServiceCountList(data, isFilterApplied)),
+    getVisitServiceCountList: (data, filterApplied) => dispatch(getVisitServiceCountList(data, filterApplied)),
     getVisitServiceTableList: data => dispatch(getVisitServiceTableList(data)),
     goToVisitServiceDetails: () => dispatch(push(Path.visitServiceDetails)),
     setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data)),

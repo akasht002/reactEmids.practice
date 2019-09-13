@@ -27,6 +27,7 @@ import {
   import { saveContextData } from "../../redux/telehealth/actions";
   import { createDataStore } from '../../redux/telehealth/actions'
   import { getEntityProcessingStatus } from '../../utils/validations'
+  import { saveScheduleType } from '../../redux/visitSelection/VisitServiceDetails/actions';
 
 
 class QuickMenu extends Component {
@@ -59,11 +60,16 @@ class QuickMenu extends Component {
 
 
     goToServiceVisits = (data) => {
+        this.props.saveScheduleType(data.visitTypeId)
         this.props.setServiceVisitDate(moment(this.state.reportDay))
         if((data.visitStatusId === START_VISIT || data.visitStatusId === IN_PROGRESS) && ( this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy)) {
           this.setState({ standByModeAlertMsg: true })
         }
-        else data.visitTypeId !== VISIT_TYPE.assessment ? this.props.goToServiceVisitProcessing(data) : this.props.goToAssessmentVisitProcessing(data)
+        else  data.visitTypeId !== VISIT_TYPE.assessment 
+        ? 
+        this.props.goToServiceVisitProcessing(data)
+         : 
+        this.props.goToAssessmentVisitProcessing(data)
       }
 
     onClickServiceVisitAction = (conversations) => {
@@ -135,7 +141,7 @@ class QuickMenu extends Component {
         options = [ 
           <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
           onClick={(e) => this.onClickServiceVisitAction(conversations)}>
-                <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} />
+                <i className={conversations.visitStatusId && list.iconImage} />
                 {getEntityProcessingStatus(data)} 
           </Item>,   
           ...commonOptions,    
@@ -207,7 +213,8 @@ function mapDispatchToProps(dispatch) {
         saveContextData: (data) => dispatch(saveContextData(data)),
         createNewConversation: data => dispatch(onCreateNewConversation(data)),
         createDataStore: data => dispatch(createDataStore(data)),
-        goToAssessmentVisitProcessing: data => dispatch(goToAssessmentVisitProcessing(data))
+        goToAssessmentVisitProcessing: data => dispatch(goToAssessmentVisitProcessing(data)),
+        saveScheduleType: (data) => dispatch(saveScheduleType(data))
     }
 };
 

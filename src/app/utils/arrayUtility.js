@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import { VisitProcessingNavigationData } from '../data/VisitProcessingWizNavigationData'
 
 export const uniqElementOfArray = data => {
     let uniqueArray = data.filter(function (item, pos) {
@@ -41,3 +42,8 @@ export const allEqual = values => {
 export const numbersOnly = data => {
     return data.replace(/[^0-9]/g, '')
 }
+
+export const visitProcessingNavigationData = isEntity => {
+    return isEntity ? VisitProcessingNavigationData.slice(0, 3) : VisitProcessingNavigationData;
+}
+

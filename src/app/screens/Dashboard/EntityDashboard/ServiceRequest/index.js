@@ -77,6 +77,7 @@ export class ServiceRequest extends Component {
     this.serviceTypeIds = []
     this.gridHeader = allServiceRequests
     this.filterTabs = filterTabs
+    this.filterApplied = false
   }
 
   async componentDidMount() {
@@ -85,7 +86,7 @@ export class ServiceRequest extends Component {
     const list = this.getFilterData({
       status: this.props.activeSubTab,
     })
-    await this.props.getServiceRequestCountList(count)
+    await this.props.getServiceRequestCountList(count, this.filterApplied)
     await this.props.getServiceRequestTableList(list)
     this.props.getServiceCategory()
     this.props.getServiceRequestStatus()
@@ -104,8 +105,8 @@ export class ServiceRequest extends Component {
     return {
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": this.state.status,
-      "searchText": this.state.searchKeyword,
+      "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all : this.state.status,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "isRecurring": this.state.scheduleType,
       "serviceTypeIds": this.serviceTypeIds,
@@ -122,7 +123,7 @@ export class ServiceRequest extends Component {
       "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
       "toDate": data.toDate ? data.toDate : this.state.toDate,
       "tab": data.status ? data.status : this.state.status,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "isRecurring": this.state.scheduleType,
       "serviceTypeIds": this.serviceTypeIds,
@@ -143,10 +144,12 @@ export class ServiceRequest extends Component {
       selectedOption: '',
       serviceRequestStatus: [],
       selectedOptionState: null,
-      scheduleType: 'both'
+      scheduleType: 'both',
+      searchKeyword: 'default'
     })
     this.serviceTypeIds = []
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
+    this.filterTabs = this.getFilterTabBasedOnStatus(this.state.status)
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     this.props.clearServiceTypes()
@@ -160,7 +163,8 @@ export class ServiceRequest extends Component {
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE
     })
-    await this.props.getServiceRequestCountList(count)
+    count.tab = ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all
+    await this.props.getServiceRequestCountList(count, this.filterApplied)
     await this.props.getServiceRequestTableList(data)
   }
 
@@ -290,6 +294,7 @@ export class ServiceRequest extends Component {
   }
 
   applyFilter = async () => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all)
     let count = this.getCountData({
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
@@ -303,7 +308,7 @@ export class ServiceRequest extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: DEFAULT_PAGE_NUMBER,
     })
-    await this.props.getServiceRequestCountList(count, true)
+    await this.props.getServiceRequestCountList(count, this.filterApplied)
     await this.props.getServiceRequestTableList(data)
   }
 
@@ -342,6 +347,7 @@ export class ServiceRequest extends Component {
   }
 
   handleSearchData = async (e) => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -353,7 +359,7 @@ export class ServiceRequest extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-  await this.props.getServiceRequestCountList(count)
+  await this.props.getServiceRequestCountList(count, this.filterApplied)
    await this.props.getServiceRequestTableList(data)
   }
 
@@ -364,6 +370,19 @@ export class ServiceRequest extends Component {
   }
 
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+    await this.props.getServiceRequestCountList(count)
+    await this.props.getServiceRequestTableList(data)
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -372,15 +391,15 @@ export class ServiceRequest extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getServiceRequestCountList(count)
-    await this.props.getServiceRequestTableList(data)
+  }
+
+  getFilterTabBasedOnStatus = status => {
+    switch (status) {
+      case ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all:
+        return filterTabs;
+      default:
+        return filterTabs.filter(item => item.id !== '8');
+    }
   }
 
   render() {
@@ -474,8 +493,8 @@ export class ServiceRequest extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getServiceRequestCountList: (data, isFilterApplied) =>
-      dispatch(getServiceRequestCountList(data, isFilterApplied)),
+    getServiceRequestCountList: (data, filterApplied) =>
+      dispatch(getServiceRequestCountList(data, filterApplied)),
     getServiceRequestTableList: data =>
       dispatch(getServiceRequestTableList(data)),
     goToVisitServiceDetails: () => dispatch(push(Path.visitServiceDetails)),

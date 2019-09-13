@@ -6,7 +6,6 @@ import RowPerPage from './RowPerPage';
 import { PAGE_SIZE_OPTIONS, VISIT_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
 import { isEntityUser } from '../../../../utils/userUtility';
-import { isFutureDay } from '../../../../utils/dateUtility'
 import { getUserInfo } from '../../../../services/http'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { getEntityProcessingStatus } from '../../../../utils/validations'
@@ -116,7 +115,7 @@ export const Table = props => {
                                     >{renderStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}</button></div>
                                 </td>}
                             {
-                                isEntity && item.visitStatusId === VISIT_STATUS.startVisit.id && isFutureDay(item.visitDate) ?
+                                isEntity && item.visitStatusId === VISIT_STATUS.startVisit.id ?
                                     <td>
                                         <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
                                     </td>

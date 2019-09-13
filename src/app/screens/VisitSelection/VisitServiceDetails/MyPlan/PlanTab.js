@@ -14,18 +14,23 @@ export const PlanTab = props => {
             <div className="row">
               {isEntity &&
                 <div className="col-lg-4 col-md-4 left-customewidth">
-                    <span className="title-view">Schedule (s)</span>
+                    <span className="title-view">Schedule(s)</span>
                 </div>
                 }
                 <div className={`col-lg-8 col-md-8 right-customewidth ${renderPLanDetailsClass}`}>
                     <div className="pull-left">
-                        <span className="title-view">Visit (s)</span>
+                        <span className="title-view">Visit(s)</span>
                     </div>
                     <div className="pull-right">
                         <div className="full-block filter-block">
                             <span className='primaryColor profile-header-filter' onClick={props.toggle}>Filters</span>
                             {isEntity &&
-                                <button onClick={() => props.addSchedule()}> <span>+</span>Add New Schedule </button>}
+                                <button 
+                                    onClick={() => props.addSchedule()}
+                                    disabled={!props.isDisabledAddSchedule}
+                                    > 
+                                    <span>+</span>Add New Schedule 
+                                </button>}
                         </div>
                     </div>
                 </div>
