@@ -69,7 +69,7 @@ export class VisitSummary extends React.Component {
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>
-              Service Request
+              View Request
             </h5>
           </div>
         </div>

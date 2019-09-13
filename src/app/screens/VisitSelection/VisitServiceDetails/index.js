@@ -19,7 +19,9 @@ import {
   updateHireStatusForServiceRequest,
   getDays,
   getfirstlastvisitdate,
-  saveScheduleType
+  saveScheduleType,
+  setAddNewScheduledClicked,
+  setActiveTab
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails,getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
@@ -42,7 +44,8 @@ import {
   PAGE_NO,
   VISIT_STATUS,
   DEFAULT_PAGE_SIZE,
-  VISIT_TYPE
+  VISIT_TYPE,
+  SERVICE_REQUEST_DETAILS_TAB
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
@@ -173,7 +176,7 @@ export class VisitServiceDetails extends Component {
     if (this.state.activeTab !== tab) {
       this.setState({ activeTab: tab, activePage: 1 })
     }
-    if (tab === '2') {
+    if (tab === SERVICE_REQUEST_DETAILS_TAB.myPlan) {
       this.getVisitList()
     }
   }
@@ -223,6 +226,8 @@ export class VisitServiceDetails extends Component {
 
   addSchedule = () => {
     this.props.goToAddSchedule();
+    this.props.setAddNewScheduledClicked(true);
+    this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
   }
 
   getModalData = (pageNumber, pageSize, isReset = false) => {
@@ -581,11 +586,21 @@ export class VisitServiceDetails extends Component {
 handelEditShedule = (scheduleId) => {
   this.props.clearESPListSchedule()
   this.props.getIndividualSchedulesDetails(scheduleId)
+  this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
 }
 
 handelEditAssessment = (assessmentId) => {
   this.props.clearESPListSchedule()
   this.props.getAssessmentDetailsById(assessmentId)
+  this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
+}
+
+goBackToParticularPage = () => {
+  if(this.props.isAddNewScheduleClicked){
+    this.props.goToVisitList()
+  }else{
+    this.props.goBack();
+  }
 }
 
   render() {
@@ -664,7 +679,7 @@ handelEditAssessment = (assessmentId) => {
     let tabdata = [
       {
         id: '1',
-        label: 'Requests'
+        label: 'Request'
       },
       {
         id: '2',
@@ -699,9 +714,11 @@ handelEditAssessment = (assessmentId) => {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let updatedTabdata = this.props.ServiceRequestId === 0 ? tabdata.slice(1, tabdata.length) : tabdata;
-    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : false;
-
+    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : this.props.VisitServiceDetails.statusId === 38 ? true : false;
+    let updatedTabdata = this.props.ServiceRequestId === 0 ? 
+                         tabdata.slice(1, tabdata.length) : 
+                         isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
+  
     return (
       <Fragment>
         <AsideScreenCover>
@@ -720,7 +737,7 @@ handelEditAssessment = (assessmentId) => {
                 list={updatedTabdata}
                 toggle={this.toggle}
                 activeTab={this.state.activeTab}
-                goBack={() => this.props.goBack()}
+                goBack={() => this.goBackToParticularPage()}
               />
               <TabContent activeTab={this.state.activeTab}>
                 {
@@ -893,7 +910,10 @@ export function mapDispatchToProps(dispatch) {
     getfirstlastvisitdate: (data) => dispatch(getfirstlastvisitdate(data)),
     goToAssessmentVisitProcessing:(data)=>dispatch(goToAssessmentVisitProcessing(data)),
     saveScheduleType: (data) => dispatch(saveScheduleType(data)),
-    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data))
+    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data)),
+    goToVisitList: () => dispatch(push(Path.visitServiceList)),
+    setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data)),
+    setActiveTab: data => dispatch(setActiveTab(data))
   }
 }
 
@@ -917,7 +937,8 @@ export function mapStateToProps(state) {
     isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
     activeTab: VisitServiceDetailsState.activeTab,
     daysType: VisitServiceDetailsState.daysType,
-    visitDate: VisitServiceDetailsState.visitDate
+    visitDate: VisitServiceDetailsState.visitDate,
+    isAddNewScheduleClicked: VisitServiceDetailsState.isAddNewScheduleClicked
   }
 }
 

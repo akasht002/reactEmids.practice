@@ -330,6 +330,11 @@ position: relative;
 width: 100%;
 }
 
+.VisitSummaryWidget .LeftWidget .bottomTaskCompletedRange
+{
+background-color: #7A329F;
+}
+
 
 /*********************************************************************************************************************/
 
