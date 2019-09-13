@@ -27,7 +27,7 @@ export let feedbackServiceProviders = {
 export let lowRatingServiceProivders = {
     name: 'Service Provider',
     phoneNumber: 'Contact',
-    age: 'Age',
+    gender: 'Gender',
     rating: 'Rating',
     icon: 'Actions'
 }
