@@ -204,7 +204,6 @@ export class ServiceProvider extends Component {
       rating: 0,
       searchKeyword: 'default'
     })
-    this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     let count = this.getCountData({
@@ -519,7 +518,7 @@ export class ServiceProvider extends Component {
             <div className="full-block-tableview">
               <Grid
                 data={this.props.visitServiceTableList}
-                header={this.gridHeader}
+                header={this.getHeaderBasedOnStatus(this.state.status)}
                 impersinate={this.impersinateServiceProvider}
                 noRecordsFound={NO_RECORDS_FOUND}
               />

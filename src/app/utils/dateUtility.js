@@ -121,3 +121,7 @@ export function formateMDYY(date) {
     let result = `${hours}:${minutes}`
     return result;
 } 
+
+export const getHHMMformat = (data) => {
+    return moment(data).format(DATE_FORMATS.hh_mm)
+}

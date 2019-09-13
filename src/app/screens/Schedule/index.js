@@ -95,6 +95,7 @@ export class Schedule extends Component {
         this.formatedEndTime = "";
         this.selectedDaysLabel = "";
         this.selectedWeeksLabel = "";
+        this.isDataEntered = false
     }
 
     componentDidMount() {
@@ -253,6 +254,7 @@ export class Schedule extends Component {
         this.categoryId = id;
         this.serviceTypes = [];
         this.props.getServiceType(id);
+        this.isDataEntered = true;
         this.setState({ checkedServiceCategoryId: id, serviceTypeSelected: false })
     }
 
@@ -270,6 +272,7 @@ export class Schedule extends Component {
             serviceTypeId: this.serviceTypes,
             serviceTypeSelected: false
         })
+        this.isDataEntered = true;
     }
 
     selectAllTypes = (isSelectAll) => {
@@ -279,6 +282,7 @@ export class Schedule extends Component {
         } else {
             this.serviceTypes = [];
         }
+        this.isDataEntered = true;
     }
 
     handlePOSAddress = (e) => {
@@ -297,6 +301,7 @@ export class Schedule extends Component {
         if (e.target.value === '0') {
             this.props.getValidPatientAddressSuccess(false)
         }
+        this.isDataEntered = true;
     }
 
     handlePatientAddress = (e) => {
@@ -326,6 +331,7 @@ export class Schedule extends Component {
         }
         this.props.setSelectedPos(e.addressId)
         this.props.getValidPatientAddressSuccess(validateCoordinates(e.latitude, e.longitude))
+        this.isDataEntered = true;
     }
 
     handelNewAddress = (e) => {
@@ -342,6 +348,7 @@ export class Schedule extends Component {
             zip: this.state.zip,
             addressType: this.state.addressType
         }
+        this.isDataEntered = true;
     }
 
     statehandleChange = (selectedOptionState) => {
@@ -356,15 +363,19 @@ export class Schedule extends Component {
             statelabel: selectedValue,
             stateId: selectedOptionState
         });
+
+        this.isDataEntered = true;
     }
 
     handleAssignServiceProvider = (id) => {
         this.espId = parseInt(id, 0);
         this.props.selectESP(id)
+        this.isDataEntered = true;
     }
 
     handleAdditionInfo = e => {
         this.setState({ additionalDescription: e.target.value })
+        this.isDataEntered = true;
     }
 
     handleChangeScheduleType = (data) => {
@@ -376,6 +387,7 @@ export class Schedule extends Component {
             startTime: null,
             endTime: null
         })
+        this.isDataEntered = true;
     }
 
     dateChanged = (date) => {
@@ -384,7 +396,7 @@ export class Schedule extends Component {
         this.setState({
             startDate: formattedMDYY
         });
-
+        this.isDataEntered = true;
     }
 
     dateChangedRaw = (event) => {
@@ -392,6 +404,7 @@ export class Schedule extends Component {
         this.setState({
             startDate: formattedDate
         });
+        this.isDataEntered = true;
     }
 
     todateChanged = (date) => {
@@ -400,6 +413,7 @@ export class Schedule extends Component {
         this.setState({
             endDate: formattedMDYY
         });
+        this.isDataEntered = true;
     }
 
     todateChangedRaw = (event) => {
@@ -407,16 +421,19 @@ export class Schedule extends Component {
         this.setState({
             endDate: formattedDate
         });
+        this.isDataEntered = true;
     }
 
     handleChangeStartTime = (event) => {
         this.formatedStartTime = getHourMin(event)
         this.setState({ startTime: event });
+        this.isDataEntered = true;
     }
 
     handleChangeEndTime = (event) => {
         this.formatedEndTime = getHourMin(event)
         this.setState({ endTime: event });
+        this.isDataEntered = true;
     }
 
     handleChangeRecurringPattern = (id) => {
@@ -432,20 +449,25 @@ export class Schedule extends Component {
             selectedDaysLabel: '',
             selectedWeeksLabel: '',
         })
+        this.isDataEntered = true;
     }
 
     handleSelectDailyOptionField = (id) => {
+        this.isDataEntered = true;
     }
 
     handleSelectWeeklyOptionField = (id) => {
+        this.isDataEntered = true;
     }
 
     handleChangeDailyDayOccurence = (data) => {
         this.setState({ dailyDayOccurence: numbersOnly(data) })
+        this.isDataEntered = true;
     }
 
     handleChangeWeeklyDayOccurence = (data) => {
         this.setState({ weeklyDayOccurence: numbersOnly(data) })
+        this.isDataEntered = true;
     }
 
     handleChangeDaysSelection = (e) => {
@@ -457,6 +479,7 @@ export class Schedule extends Component {
                 return item !== parseInt(e.target.id, 0);
             })
         }
+        this.isDataEntered = true;
     }
 
     handleChangeMonthlySelectionFirst = (id) => {
@@ -469,6 +492,7 @@ export class Schedule extends Component {
         })
         this.selectedDaysLabel = "";
         this.selectedWeeksLabel = "";
+        this.isDataEntered = true;
     }
 
     handleChangeMonthlySelectionSecond = (id) => {
@@ -477,14 +501,17 @@ export class Schedule extends Component {
             monthlyDay: '',
             monthlyMonths: ''
         })
+        this.isDataEntered = true;
     }
 
     handleChangeMonthlyDay = (data) => {
         this.setState({ monthlyDay: numbersOnly(data) })
+        this.isDataEntered = true;
     }
 
     handleChangeMonthlyMonths = (data) => {
         this.setState({ monthlyMonths: numbersOnly(data) })
+        this.isDataEntered = true;
     }
 
     handleChangeSelectedWeeks = (selectedOptionId) => {
@@ -499,6 +526,7 @@ export class Schedule extends Component {
             selectedWeeksLabel: selectedValue
         });
         this.selectedWeeksLabel = selectedValue;
+        this.isDataEntered = true;
     }
 
     handleChangeSelectedDays = (selectedOptionId) => {
@@ -513,10 +541,12 @@ export class Schedule extends Component {
             selectedDaysLabel: selectedValue
         });
         this.selectedDaysLabel = selectedValue;
+        this.isDataEntered = true;
     }
 
     handleChangeMonthlyMonthsSecond = (data) => {
         this.setState({ monthlyMonthsSecond: numbersOnly(data) })
+        this.isDataEntered = true;
     }
 
     toggleSearch = () => {
@@ -710,7 +740,11 @@ export class Schedule extends Component {
     }
 
     onClickCancel = () => {
-        this.setState({ isModalOpen: true })
+        if(this.isDataEntered){
+            this.setState({ isModalOpen: true })
+        }else{
+            this.goToServicedetails();
+        }
     }
 
     goToServicedetails = () => {
