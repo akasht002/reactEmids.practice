@@ -561,7 +561,7 @@ export class Individuals extends Component {
             </div>
             <CoreoPagination
               activePage={activePage}
-              itemsCountPerPage={DEFAULT_PAGE_SIZE}
+              itemsCountPerPage={pageSize}
               totalItemsCount={this.props.paginationCount}
               pageRangeDisplayed={PAGE_RANGE}
               onChange={this.pageNumberChange}

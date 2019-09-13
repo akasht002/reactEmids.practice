@@ -5,63 +5,66 @@ import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 
 export const AssignServiceProvider = props => {
     return (
-        <Fragment>
-            <div className="assign-sp-block">
-                {
-                    props.entityServiceProvidersList.map(item => {
-                        let espImage = item.thumbnail ? item.thumbnail : require('../../../assets/images/Blank_Profile_icon.png');
-                        return (
-                            <Fragment>
-                                <div className="assign-SP-card">
-                                    <div className="card">
-                                        <fieldset>
-                                            <div className="checkblock">
-                                                <input
-                                                    type="radio"
-                                                    className="form-radio-input"
-                                                    checked={item.selected === true}
-                                                    id={item.serviceProviderId}
-                                                    name={'form-radio-input'}
-                                                    value={item.serviceProviderId}
-                                                    onChange={(e) => { props.handleAssignServiceProvider(e.target.id) }}
-                                                />
-                                                <label className="" htmlFor={item.serviceProviderId}><span className="RadioBoxIcon" /></label>
-                                            </div>
-                                            <div className="Spname-image-block">
-                                                <img className="ProfileImage" src={espImage} alt="espImage" />
-                                                <div className="SP-nameblock">
-                                                    <label htmlFor={"ServiceStatus" + item.serviceProviderId}>
-                                                        {item.firstName + ' '}
-                                                        {item.lastName}</label>
-                                                    <span>
-                                                        {getStartRatings(item.rating)}
-                                                    </span>
+        props.entityServiceProvidersList.length > 0 ?
+            <Fragment>
+                <div className="assign-sp-block">
+                    {
+                        props.entityServiceProvidersList.map(item => {
+                            let espImage = item.thumbnail ? item.thumbnail : require('../../../assets/images/Blank_Profile_icon.png');
+                            return (
+                                <Fragment>
+                                    <div className="assign-SP-card">
+                                        <div className="card">
+                                            <fieldset>
+                                                <div className="checkblock">
+                                                    <input
+                                                        type="radio"
+                                                        className="form-radio-input"
+                                                        checked={item.selected === true}
+                                                        id={item.serviceProviderId}
+                                                        name={'form-radio-input'}
+                                                        value={item.serviceProviderId}
+                                                        onChange={(e) => { props.handleAssignServiceProvider(e.target.id) }}
+                                                    />
+                                                    <label className="" htmlFor={item.serviceProviderId}><span className="RadioBoxIcon" /></label>
                                                 </div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <div className='options'>
-                                    <ThemeProvider>
-                                        <SelectField>
-                                            <Select
-                                                placement='auto'
-                                                options={[
-                                                    <Item className='ListItem CTDashboard' key='phone' onClick={() => { props.showPhoneNumber(item.phoneNumber) }}>
-                                                        <i className='iconPhone' /> Phone Call
+                                                <div className="Spname-image-block">
+                                                    <img className="ProfileImage" src={espImage} alt="espImage" />
+                                                    <div className="SP-nameblock">
+                                                        <label htmlFor={"ServiceStatus" + item.serviceProviderId}>
+                                                            {item.firstName + ' '}
+                                                            {item.lastName}</label>
+                                                        <span>
+                                                            {getStartRatings(item.rating)}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div className='options'>
+                                            <ThemeProvider>
+                                                <SelectField>
+                                                    <Select
+                                                        placement='auto'
+                                                        options={[
+                                                            <Item className='ListItem CTDashboard' key='phone' onClick={() => { props.showPhoneNumber(item.phoneNumber) }}>
+                                                                <i className='iconPhone' /> Phone Call
                                                     </Item>
-                                                ]}
-                                                className='SelectDropDown Dashboard'
-                                            />
-                                        </SelectField>
-                                    </ThemeProvider>
-                                </div>
-                                </div>
-                              
-                            </Fragment>
-                        )
-                    })
-                }
-            </div>
-        </Fragment>
+                                                        ]}
+                                                        className='SelectDropDown Dashboard'
+                                                    />
+                                                </SelectField>
+                                            </ThemeProvider>
+                                        </div>
+                                    </div>
+
+                                </Fragment>
+                            )
+                        })
+                    }
+                </div>
+            </Fragment>
+            :
+            <p>No results found</p>
     )
 }

@@ -18,6 +18,7 @@ export let visitIndividuals = {
     contracts: 'Contracts',
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
+    visitCount: 'Visits',
     button: 'Life Map',
     icon: 'Action'
 }
@@ -25,6 +26,7 @@ export let visitIndividuals = {
 export let feedbackIndividuals = {
     mpi: 'MPI',
     name: 'Name',
+    alerts: 'Alerts',
     gender: 'Gender',
     age: 'Age',
     contracts: 'Contracts',
