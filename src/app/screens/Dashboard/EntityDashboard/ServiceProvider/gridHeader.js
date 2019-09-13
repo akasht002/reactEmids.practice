@@ -34,7 +34,7 @@ export let lowRatingServiceProivders = {
 
 export let lowTaskServiceProivders = {
     name: 'Service Provider',
-    taskPercentage: 'Task %',
+    task: 'Task %',
     phoneNumber: 'Contact',
     gender: 'Gender',
     rating: 'Rating',

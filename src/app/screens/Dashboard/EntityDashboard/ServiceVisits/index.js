@@ -162,15 +162,12 @@ export class ServiceVisits extends Component {
   }
 
   getTable = async e => {
-    const { pageSize } = this.state;
-    let rowMaxValue = pageSize;
     this.serviceTypeIds = []
     await this.setState({
       status: e.target.value,
       pageSize: this.state.pageSize,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
-      rowMax: rowMaxValue,
       selectedOption: '',
       serviceRequestStatus: [],
       searchKeyword: 'default',
@@ -292,21 +289,20 @@ export class ServiceVisits extends Component {
 
   applyFilter = async () => {
     this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all)
-    this.setState({
+    let data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER
+    })
+    await this.setState({
       filterOpen: !this.state.filterOpen,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: DEFAULT_PAGE_NUMBER
-    })
-    let data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER,
     })
     let count = this.getCountData({
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
     await this.props.getVisitServiceCountList(count, this.filterApplied)
-    await this.props.getVisitServiceTableList(data)
-    
+    await this.props.getVisitServiceTableList(data)  
   }
 
   applyReset = async () => {
@@ -441,7 +437,7 @@ export class ServiceVisits extends Component {
             </div>
             <CoreoPagination
               activePage={activePage}
-              itemsCountPerPage={DEFAULT_PAGE_SIZE}
+              itemsCountPerPage={pageSize}
               totalItemsCount={pageSize > this.props.paginationCount ? 0 : this.props.paginationCount}
               pageRangeDisplayed={PAGE_RANGE}
               onChange={this.pageNumberChange}
