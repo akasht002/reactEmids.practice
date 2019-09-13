@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { getStartRatings } from '../../../../utils/arrayUtility';
 
 export const AssignServiceProvider = props => {
     return (
-        <Fragment>
+        props.entityServiceProvidersList.length > 0 ?
             <div className="assign-sp-block">
                 {
                     props.entityServiceProvidersList.map(item => {
@@ -42,6 +42,7 @@ export const AssignServiceProvider = props => {
                     })
                 }
             </div>
-        </Fragment>
+            :
+            <p>No results found</p>
     )
 }
