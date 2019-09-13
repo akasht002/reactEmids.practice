@@ -25,7 +25,12 @@ export const PlanTab = props => {
                         <div className="full-block filter-block">
                             <span className='primaryColor profile-header-filter' onClick={props.toggle}>Filters</span>
                             {isEntity &&
-                                <button onClick={() => props.addSchedule()}> <span>+</span>Add New Schedule </button>}
+                                <button 
+                                    onClick={() => props.addSchedule()}
+                                    disabled={!props.isDisabledAddSchedule}
+                                    > 
+                                    <span>+</span>Add New Schedule 
+                                </button>}
                         </div>
                     </div>
                 </div>
