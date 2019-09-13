@@ -16,8 +16,7 @@ const renderServiceTypeImages = serviceTypes => {
     return (
         updatedServiceTypes.slice(0, 3).map(type =>
             <div>
-                <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" />
-                <p>{type.serviceTypeDescription}</p>
+                <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />
             </div>
         ))
 }
