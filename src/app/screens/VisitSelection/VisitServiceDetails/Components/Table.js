@@ -15,7 +15,9 @@ const renderServiceTypeImages = serviceTypes => {
     let updatedServiceTypes = serviceTypes.length > 3 ? serviceTypes.slice(0, 2) : serviceTypes
     return (
         updatedServiceTypes.slice(0, 3).map(type =>
-            <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" />
+            <div>
+                <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />
+            </div>
         ))
 }
 
