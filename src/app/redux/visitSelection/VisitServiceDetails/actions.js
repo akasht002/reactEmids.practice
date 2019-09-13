@@ -673,3 +673,10 @@ export const saveScheduleType = data => {
       data
   }
 }
+
+export const setAddNewScheduledClicked = data => {
+  return {
+    type: VisitServiceDetails.setAddNewScheduledClicked,
+    data
+  }
+}

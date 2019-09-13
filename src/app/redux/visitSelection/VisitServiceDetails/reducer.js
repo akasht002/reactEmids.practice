@@ -28,7 +28,8 @@ const defaultState = {
     patientId: 0,
     activeTab: serviceRequestDetailsTab.request,
     visitDate: {},
-    savedScheduleType: ''
+    savedScheduleType: '',
+    isAddNewScheduleClicked: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -180,6 +181,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         return {
             ...state,
             savedScheduleType: action.data
+        };
+        case VisitServiceDetails.setAddNewScheduledClicked:
+        return {
+            ...state,
+            isAddNewScheduleClicked: action.data
         };
         default:
             return state;

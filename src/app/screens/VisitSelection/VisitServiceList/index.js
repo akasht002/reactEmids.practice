@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import _ from 'lodash'
 import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearVisitServiceList, keywordSearchServiceRequest }
     from '../../../redux/visitSelection/VisitServiceList/actions';
-import { getServiceRequestId } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getServiceRequestId, setActiveTab } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import Search from './Search'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
@@ -149,6 +149,7 @@ export class VisitServiceList extends Component {
         this.props.getServiceRequestId(requestId);
         this.props.goToServiceRequestDetailsPage();
         this.props.setPatient(patientId)
+        this.props.setActiveTab('1')
     }
 
     renderStatusClassName = (status) => {
@@ -692,7 +693,8 @@ function mapDispatchToProps(dispatch) {
         setDefaultFilteredStatus: () => dispatch(setDefaultFilteredStatus()),
         keywordSearchServiceRequest: data => dispatch(keywordSearchServiceRequest(data)),
         getSearchDataCount: data => dispatch(getSearchDataCount(data)),
-        getSearchDataCountSuccess: () => dispatch(getSearchDataCountSuccess(DEFAULT_SEARCH_COUNT))
+        getSearchDataCountSuccess: () => dispatch(getSearchDataCountSuccess(DEFAULT_SEARCH_COUNT)),
+        setActiveTab: data => dispatch(setActiveTab(data))
     }
 };
 

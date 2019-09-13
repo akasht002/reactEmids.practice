@@ -311,7 +311,7 @@ export class Assessment extends Component {
                                                                                     this.handleSelected(answer.answerName, questionList.assessmentQuestionnaireId)
                                                                                 }}
                                                                                 defaultChecked= {answer.checked}
-                                                                                // disabled={this.props.VisitFeedback.length > 0}
+                                                                                disabled={this.props.requestDetails.visitStatusId === 43}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>
@@ -338,6 +338,7 @@ export class Assessment extends Component {
                                                                                 value={this.state.textareaValue }
                                                                                 onChange={(e) => this.handleTextarea(e, questionList.assessmentQuestionnaireId)}
                                                                                 maxLength={1000}
+                                                                                disabled={this.props.requestDetails.visitStatusId === 43}
                                                                             />
                                                                         </div>
                                                                     )

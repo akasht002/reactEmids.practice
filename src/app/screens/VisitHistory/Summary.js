@@ -397,7 +397,7 @@ export class VistSummary extends React.Component {
           <div className="VisitSummaryWidget">
             <div className="LeftWidget">
               <div className="LeftContent">
-                <p className="SummaryContentTitle">Visit Details</p>
+                <p className="SummaryContentTitle">Service Details</p>
                 <div className="row mb-3">
                   <div className="col-md-12 SummaryContentTable">
                     <p className="m-0">
@@ -418,7 +418,8 @@ export class VistSummary extends React.Component {
                         </span>
                       }
                     </p>
-                    {!isEntity &&
+                    {/* It may required in future */}
+                    {/* {!isEntity &&
                       <p>
                         <span className="SummaryContentTableTitle">
                           Service Category
@@ -427,9 +428,9 @@ export class VistSummary extends React.Component {
                           {summaryDetail.serviceCategoryDescription &&
                             summaryDetail.serviceCategoryDescription}
                         </span>
-                      </p>}
+                      </p>} */}
                     <p className="m-0">
-                      <span className="SummaryContentTableTitle">Visit Date</span>
+                      <span className="SummaryContentTableTitle">Actual Visit Date</span>
                       <span>
                         <Moment format="ddd, DD MMM">{summaryDetail.visitStartTime}</Moment>
                       </span>
@@ -582,7 +583,7 @@ export class VistSummary extends React.Component {
                           className="FeedbackLink"
                           onClick={this.togglePersonalDetails.bind(this)}
                         >
-                          Here
+                          HERE
                       </span>{" "}
                         to submit feedback.
                     </p>
