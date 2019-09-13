@@ -79,6 +79,7 @@ export class ServiceProvider extends Component {
     this.serviceTypes = []
     this.serviceTypeId = []
     this.gridHeader = allServiceProivders
+    this.filterApplied = false
   }
 
   componentDidMount() {
@@ -89,7 +90,7 @@ export class ServiceProvider extends Component {
       sortName: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortName,
       sortOrder: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortOrder,
     })
-    this.props.getVisitServiceProviderCountList(count)
+    this.props.getVisitServiceProviderCountList(count, this.filterApplied)
     this.props.getVisitServiceProviderTableList(list)
     this.props.getGender()
   }
@@ -143,11 +144,11 @@ export class ServiceProvider extends Component {
       "gender": this.state.genderId,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": this.state.status,
+      "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all : this.state.status,
       "rating": this.state.rating,
       "minimumExperience": this.state.minExperience,
       "maximumExperience": this.state.maxExperience,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId
     }
   }
@@ -176,7 +177,7 @@ export class ServiceProvider extends Component {
       "gender": this.state.genderId,
       "minimumExperience": this.state.minExperience,
       "maximumExperience": this.state.maxExperience,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "rating": this.state.rating
     }
@@ -190,7 +191,6 @@ export class ServiceProvider extends Component {
       pageSize: this.state.pageSize,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
-      resetFilter: true,
       searchOpen: false,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
@@ -202,21 +202,22 @@ export class ServiceProvider extends Component {
       skillId: [],
       genderId: 0,
       rating: 0,
+      searchKeyword: 'default'
     })
-    this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     let count = this.getCountData({
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
+    count.tab = ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all
     let data = this.getFilterData({
       sortName: sortName,
       sortOrder: sortOrder,
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE
     })
-    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderCountList(count, this.filterApplied)
     await this.props.getVisitServiceProviderTableList(data)
 
   }
@@ -359,6 +360,7 @@ export class ServiceProvider extends Component {
   }
 
   applyFilter = async () => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER,
     })
@@ -371,7 +373,7 @@ export class ServiceProvider extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getVisitServiceProviderCountList(count, true)
+    await this.props.getVisitServiceProviderCountList(count, this.filterApplied)
     await this.props.getVisitServiceProviderTableList(data);
   }
 
@@ -411,6 +413,7 @@ export class ServiceProvider extends Component {
   }
 
   handleSearchData = async (e) => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -422,7 +425,7 @@ export class ServiceProvider extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderCountList(count, this.filterApplied)
     await this.props.getVisitServiceProviderTableList(data)
   }
 
@@ -433,6 +436,19 @@ export class ServiceProvider extends Component {
   }
 
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+    await this.props.getVisitServiceProviderCountList(count)
+    await this.props.getVisitServiceProviderTableList(data)
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -441,15 +457,6 @@ export class ServiceProvider extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getVisitServiceProviderCountList(count)
-    await this.props.getVisitServiceProviderTableList(data)
   }
 
   render() {
@@ -511,7 +518,7 @@ export class ServiceProvider extends Component {
             <div className="full-block-tableview">
               <Grid
                 data={this.props.visitServiceTableList}
-                header={this.gridHeader}
+                header={this.getHeaderBasedOnStatus(this.state.status)}
                 impersinate={this.impersinateServiceProvider}
                 noRecordsFound={NO_RECORDS_FOUND}
               />
@@ -565,8 +572,8 @@ export class ServiceProvider extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getVisitServiceProviderCountList: (data, isFilterApplied) =>
-      dispatch(getVisitServiceProviderCountList(data, isFilterApplied)),
+    getVisitServiceProviderCountList: (data, filterApplied) =>
+      dispatch(getVisitServiceProviderCountList(data, filterApplied)),
     getVisitServiceProviderTableList: data =>
       dispatch(getVisitServiceProviderTableList(data)),
     createVideoConference: data => dispatch(createVideoConference(data)),

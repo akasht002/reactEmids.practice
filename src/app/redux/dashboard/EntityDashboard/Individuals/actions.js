@@ -9,7 +9,8 @@ import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { forEach } from 'lodash'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
-import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
+import { ENTITY_DASHBOARD_STATUS, DATE_FORMATS } from '../../../../constants/constants';
+import moment from 'moment';
 
 export const startLoadingFeedbackList = () => {
     return {
@@ -42,8 +43,6 @@ export const clearStates = () => {
         type: IndividualsList.clearState
     }
 }
-
-
 
 export const getIndividualsCountListSuccess = data => {
     return {
@@ -87,21 +86,24 @@ export function getIndividualsCountList(data, isFilterApplied = false) {
         return Post(API.getIndividualsCount, data).then((resp) => {
             if (resp && resp.data) {
                 let {activeSubTab, individualsCountList} = getState().dashboardState.individualsListState
-                let dataCount = checkDataCount(resp)
+                let filteredArray = resp.data.filter(item => {
+                    return caseInsensitiveComparer(activeSubTab, item.statusName)
+                  });
+                let dataCount = checkDataCount(filteredArray)
                 dispatch(setPaginationRowCountSuccess(dataCount))
-                if(!isFilterApplied) {
-                    if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.individuals.statCard.all))) {
-                        dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
+                if(caseInsensitiveComparer(data.tab, ENTITY_DASHBOARD_STATUS.individuals.statCard.all) && !isFilterApplied) {
+                        dispatch(getIndividualsCountListSuccess(resp.data))
                     }
                     else {
-                        dispatch(getIndividualsCountListSuccess(resp.data))
+                        dispatch(getIndividualsCountListSuccess(updateCountList(individualsCountList, resp)))
                     }    
                 }
-            }
-            dispatch(endLoading());
+             dispatch(endLoading());
+             dispatch(updateLoader(true))
         }).catch((err) => {
             logError(err)
             dispatch(endLoading());
+            dispatch(updateLoader(true))
         })
     }
 }
@@ -136,7 +138,8 @@ export function getIndividualsFeedbackList(data) {
             let data = resp.data.map(res => {
                 return {
                     ...res,
-                    serviceType: concatCommaWithSpace(res.serviceType)
+                    serviceType: concatCommaWithSpace(res.serviceType),
+                    visitDate: moment(res.visitDate).format(DATE_FORMATS.mm_dd_yyy)
                 }
             })
             dispatch(getIndividualsFeedbackListSuccess(data))
@@ -178,12 +181,10 @@ export const setActiveStatusForAllTab = data => {
 
 export function getAllContracts() {
     return (dispatch) => {
-        dispatch(startLoading());
         return PatientGet(API.getAllContracts).then((resp) => {
             dispatch(getAllContractsSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            logError(err)
         })
     }
 }

@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button, Preloader } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
@@ -16,6 +15,8 @@ import { push, goBack } from '../../../../redux/navigation/actions';
 import { getServiceTypeImage } from '../../../../utils/validations';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
+import { getUserInfo } from "../../../../services/http";
+import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 
 export class PerformTasks extends Component {
 
@@ -179,6 +180,9 @@ export class PerformTasks extends Component {
             timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
         }
 
+        let isEntity = getUserInfo().isEntityServiceProvider;
+        let updatedIndicatorData = visitProcessingNavigationData(isEntity)
+
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} >
                 {this.state.isLoading && <Preloader />}
@@ -215,7 +219,7 @@ export class PerformTasks extends Component {
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
                                 <div className="col col-md-8 WizardContent">
-                                    <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={0} />
+                                    <DashboardWizFlow VisitProcessingNavigationData={updatedIndicatorData} activeFlowId={0} />
                                 </div>
 
                                 {visitStatus === SERVICE_STATES.PAYMENT_PENDING || visitStatus === SERVICE_STATES.COMPLETED ?

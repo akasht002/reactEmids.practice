@@ -16,7 +16,8 @@ import {
 } from '../../constants/constants'
 import {
   DashboardConversationPagination,
-  USERTYPES
+  USERTYPES,
+  VISIT_TYPE
 } from '../../../constants/constants'
 import { getUnreadMessageCounts } from '../../asyncMessages/actions'
 import { getUserInfo } from '../../../services/http'
@@ -32,7 +33,7 @@ import {
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import { DashboardDetail } from './bridge'
-import { formDirty, getVisitServiceHistoryByIdDetail } from '../../visitHistory/VisitServiceDetails/actions';
+import { formDirty, getVisitServiceHistoryByIdDetail, getAssessmentQuestionsList } from '../../visitHistory/VisitServiceDetails/actions';
 import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/Feedback/actions';
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../visitSelection/VisitServiceProcessing/Summary/actions';
 import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
@@ -371,6 +372,13 @@ export function goToServiceVisitProcessing(data){
         break;
       case VISIT_SUMMARY :
         dispatch(getVisitServiceHistoryByIdDetail(visitId))
+        const assessmentQuestionList = {
+          serviceProviderId: parseInt(data.providerId, 10),
+          visitId: visitId
+        }
+        if(data.visitTypeId === VISIT_TYPE.assessment){
+          dispatch(getAssessmentQuestionsList(assessmentQuestionList))
+        }
         break;
       default:
     }
@@ -393,7 +401,14 @@ export function goToAssessmentVisitProcessing(data){
         dispatch(push(Path.assessmentSummary))
       break; 
       case VISIT_SUMMARY :       
-        dispatch(push(Path.assessmentSummary))
+        dispatch(getVisitServiceHistoryByIdDetail(visitID))
+        const assessmentQuestionList = {
+          serviceProviderId: parseInt(data.providerId, 10),
+          visitId: visitID
+        }
+        if(data.visitTypeId === VISIT_TYPE.assessment){
+          dispatch(getAssessmentQuestionsList(assessmentQuestionList))
+        }
       break; 
       default:
      }

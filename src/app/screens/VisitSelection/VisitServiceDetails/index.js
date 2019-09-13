@@ -18,7 +18,8 @@ import {
   acceptservicerequest,
   updateHireStatusForServiceRequest,
   getDays,
-  getfirstlastvisitdate
+  getfirstlastvisitdate,
+  saveScheduleType
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails,getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
@@ -45,14 +46,15 @@ import {
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
-import { getHourMin, getUtcTimeDiffInHHMMformat } from '../../../utils/dateUtility'
+import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat } from '../../../utils/dateUtility'
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
 import { getUserInfo } from '../../../services/http';
 import {
   getVisitServiceHistoryByIdDetail,
-  clearVisitServiceHistoryByIdDetail
+  clearVisitServiceHistoryByIdDetail,
+  getAssessmentQuestionsList
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import {
   getPerformTasksList,
@@ -458,9 +460,9 @@ export class VisitServiceDetails extends Component {
       servicePlanVisitId: this.state.visitId,
       planScheduleId: this.props.serviceVisitDetails.planScheduleId,
       visitDate: this.state.startDateEdit,
-      startTime: this.formatedStartTime ? this.formatedStartTime : getHourMin(this.state.startTime),
-      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime),
-      endTime: this.formatedEndTime ? this.formatedEndTime : getHourMin(this.state.endTime),
+      startTime: this.formatedStartTime ? this.formatedStartTime : getHHMMformat(this.state.startTime),
+      endTime: this.formatedEndTime ? this.formatedEndTime : getHHMMformat(this.state.endTime),
+      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime)
     }
     await this.props.updateServiceVisit(model)
     await this.getModalData(this.state.activePage, this.state.rowPageSize)
@@ -540,8 +542,15 @@ export class VisitServiceDetails extends Component {
     this.props.formDirtyFeedback();
   }
 
-  visitSummary = (data) => {
+  visitSummary = (data, espId, scheduleTypeId) => {
+    const model = {
+      serviceProviderId: parseInt(espId, 10),
+      visitId: data
+    }
     this.props.getVisitServiceHistoryByIdDetail(data)
+    if(scheduleTypeId === VISIT_TYPE.assessment){
+      this.props.getAssessmentQuestionsList(model)
+    }
   }
 
   close = () => {
@@ -553,9 +562,7 @@ export class VisitServiceDetails extends Component {
   }
 
   navigateToparticularPageBasedonId = visitList => {
-    if(visitList.scheduleTypeId === VISIT_TYPE.assessment){
-        this.gotoAssessmentVisit(visitList)  
-    }else{
+    this.props.saveScheduleType(visitList.scheduleTypeId)
       let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
       switch (visitList.visitStatusId) {
         case VISIT_STATUS.startVisit.id:
@@ -563,14 +570,12 @@ export class VisitServiceDetails extends Component {
         case VISIT_STATUS.inProgress.id:
           return this.visitProcessing(visitId)
         case VISIT_STATUS.completed.id:
-          return this.visitSummary(visitId)
+          return this.visitSummary(visitId, visitList.assignedServiceProviderId, visitList.scheduleTypeId)
         case VISIT_STATUS.paymentPending.id:
           return this.visitProcessingSummary(visitId)
         default:
           return ''
       }
-    }
-    
   }
 
 handelEditShedule = (scheduleId) => {
@@ -694,7 +699,9 @@ handelEditAssessment = (assessmentId) => {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let updatedTabdata = this.props.ServiceRequestId === 0 ? tabdata.slice(1, tabdata.length) : tabdata
+    let updatedTabdata = this.props.ServiceRequestId === 0 ? tabdata.slice(1, tabdata.length) : tabdata;
+    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : false;
+
     return (
       <Fragment>
         <AsideScreenCover>
@@ -730,6 +737,7 @@ handelEditAssessment = (assessmentId) => {
                   />
                 }
                 <PlanTab
+                  isDisabledAddSchedule={isDisabledAddSchedule}
                   rowPageSize={this.state.rowPageSize}
                   rowPageChange={this.rowPageChange}
                   scheduleList={this.props.scheduleList}
@@ -883,7 +891,9 @@ export function mapDispatchToProps(dispatch) {
     clearServiceType: (data) => dispatch(clearServiceType(data)),
     clearServiceCategory: (data) => dispatch(clearServiceCategory(data)),
     getfirstlastvisitdate: (data) => dispatch(getfirstlastvisitdate(data)),
-    goToAssessmentVisitProcessing:(data)=>dispatch(goToAssessmentVisitProcessing(data))
+    goToAssessmentVisitProcessing:(data)=>dispatch(goToAssessmentVisitProcessing(data)),
+    saveScheduleType: (data) => dispatch(saveScheduleType(data)),
+    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data))
   }
 }
 

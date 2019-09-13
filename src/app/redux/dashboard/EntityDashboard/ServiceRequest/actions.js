@@ -50,17 +50,18 @@ export function getServiceRequestCountList(data, isFilterApplied = false) {
       .then(resp => {
         if (resp && resp.data) {
           let {activeSubTab, visitServiceRequestCountList} = getState().dashboardState.VisitServiceRequestState
-          let dataCount = checkDataCount(resp)
+          let filteredArray = resp.data.filter(item => {
+            return caseInsensitiveComparer(activeSubTab, item.statusName)
+          });
+          let dataCount = checkDataCount(filteredArray)
           dispatch(setPaginationRowCountSuccess(dataCount));
-          if(!isFilterApplied) {
-            if (!(caseInsensitiveComparer(activeSubTab, ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all))) {
-            dispatch(getServiceRequestCountListSuccess(updateCountList(visitServiceRequestCountList, resp)))
+            if(caseInsensitiveComparer(data.tab, ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all) && !isFilterApplied) {
+              dispatch(getServiceRequestCountListSuccess(resp.data))
           }
           else {
-            dispatch(getServiceRequestCountListSuccess(resp.data))
+            dispatch(getServiceRequestCountListSuccess(updateCountList(visitServiceRequestCountList, resp)))
           }
          }
-      }
         dispatch(endLoading())
       })
       .catch((err) => {
@@ -97,14 +98,12 @@ export function getServiceRequestTableList(data) {
 
 export function getScheduleType() {
   return dispatch => {
-    dispatch(startLoading())
     return PatientGet(API.getScheduleType)
       .then(resp => {
         dispatch(getScheduleTypeSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        logError(err)
       })
   }
 }
@@ -134,15 +133,12 @@ export function getServiceRequestStatus() {
   return (dispatch, getState) => {
     let {activeTab} = getState().dashboardState.individualsListState
     let get = (activeTab === entityDashboardTab.serviceRequests) ? ServiceRequestGet(API.getServiceStatus) : Get(API.getServiceProviderVisitStatus)
-    dispatch(startLoading())
     return get
       .then(resp => {
-        // dispatch(getUpdatedStatus(resp.data, activeTab))
         dispatch(getServiceRequestStatusSuccess(getUpdatedStatusForSrSv(resp.data, activeTab)))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        logError(err)
       })
   }
 }

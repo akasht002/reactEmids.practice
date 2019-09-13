@@ -13,7 +13,8 @@ import {
   getGender,
   getAllContracts,
   clearGenderType,
-  resetContracts
+  resetContracts,
+  clearStates
 } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   DEFAULT_PAGE_NUMBER,
@@ -28,7 +29,7 @@ import {
   SERVICE_REQUEST_DETAILS_TAB
 } from '../../../../constants/constants'
 import { getUserInfo } from '../../../../utils/userUtility';
-import { ProfileModalPopup, RowPerPage } from '../../../../components'
+import { ProfileModalPopup, RowPerPage, Preloader } from '../../../../components'
 import { StatCard } from '../Components/StatCard'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
 import { Grid } from '../Components/Grid/Grid'
@@ -85,6 +86,7 @@ export class Individuals extends Component {
       searchOpen: false
     }
     this.gridHeader = allIndividuals
+    this.filterApplied = false
   }
 
   componentDidMount() {
@@ -93,11 +95,11 @@ export class Individuals extends Component {
     const list = this.getFilterData({
       status: this.props.activeSubTab
     })
-    this.props.getIndividualsCountList(count)
-    this.props.getIndividualsList(list)
     this.props.getGender()
     this.props.getClinicalCondition()
     this.props.getAllContracts()
+    this.props.getIndividualsCountList(count, this.filterApplied)
+    this.props.getIndividualsList(list)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -109,7 +111,24 @@ export class Individuals extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.clearStates()
+  }
+
   closeSearch = async () => {
+    const data = this.getFilterData({
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      searchKeyword: 'default'
+    })
+    let count = this.getCountData({
+      fromDate: this.state.fromDate,
+      toDate: this.state.toDate,
+      searchKeyword: 'default'
+    })
+    if(this.state.searchKeyword !== '') {
+    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsList(data)
+    }
     await this.setState({
       searchOpen: !this.state.searchOpen,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -118,15 +137,6 @@ export class Individuals extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       searchKeyword: 'default'
     })
-    const data = this.getFilterData({
-      pageNumber: DEFAULT_PAGE_NUMBER,
-    })
-    let count = this.getCountData({
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
-    })
-    await this.props.getIndividualsCountList(count)
-    await this.props.getIndividualsList(data)
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -171,11 +181,11 @@ export class Individuals extends Component {
       "clinicalCondition": this.state.clinicalConditions,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": this.state.status,
+      "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.individuals.statCard.all : this.state.status,
       "gender": this.state.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "contractId": this.state.memberContractId
     }
@@ -194,7 +204,7 @@ export class Individuals extends Component {
       "gender": this.state.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
-      "searchText": this.state.searchKeyword,
+      "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
       "contractId": this.state.memberContractId
     }
@@ -221,6 +231,7 @@ export class Individuals extends Component {
         isChanged: false
       },
       pageNumber: DEFAULT_PAGE_NUMBER,
+      searchOpen: false
     })
     let data = this.getFilterData({
       sortName: sortName,
@@ -235,8 +246,8 @@ export class Individuals extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
-    this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
-    await this.props.getIndividualsCountList(count)
+    count.tab = ENTITY_DASHBOARD_STATUS.individuals.statCard.all
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -402,6 +413,7 @@ export class Individuals extends Component {
   }
 
   applyFilter = async () => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER,
     })
@@ -414,7 +426,7 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getIndividualsCountList(count, true)
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -460,6 +472,7 @@ export class Individuals extends Component {
   }
 
   handleSearchData = async (e) => {
+    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -471,7 +484,7 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getIndividualsCountList(count)
+    await this.props.getIndividualsCountList(count, this.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -505,6 +518,7 @@ export class Individuals extends Component {
               status={status}
             />
           </div>
+          {!this.props.isLoaded && <Preloader />}
           <div className="search-view-top">
           <div className="search-block-right">
           <Search
@@ -539,7 +553,7 @@ export class Individuals extends Component {
             <div className="full-block-tableview">
               <Grid
                 data={this.props.individualsList}
-                header={this.gridHeader}
+                header={this.getHeaderBasedOnStatus(this.state.status)}
                 noRecordsFound={NO_RECORDS_FOUND}
                 impersinate={this.impersinateIndividual}
               />
@@ -589,7 +603,7 @@ export class Individuals extends Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getIndividualsCountList: (data, isFilterApplied) => dispatch(getIndividualsCountList(data, isFilterApplied)),
+    getIndividualsCountList: (data, filterApplied) => dispatch(getIndividualsCountList(data, filterApplied)),
     getIndividualsList: data => dispatch(getIndividualsList(data)),
     setActiveSubTab: (data) => dispatch(setActiveSubTab(data)),
     savePaginationNumber: (data) => dispatch(savePaginationNumber(data)),
@@ -607,7 +621,8 @@ export function mapDispatchToProps(dispatch) {
     clearClinicalCondition: data => dispatch(clearClinicalCondition(data)),  
     getGender: () => dispatch(getGender()),
     clearGenderType: data => dispatch(clearGenderType(data)),
-    resetContracts: data => dispatch(resetContracts(data))
+    resetContracts: data => dispatch(resetContracts(data)),
+    clearStates: () => dispatch(clearStates())
   }
 }
 
@@ -625,7 +640,8 @@ export function mapStateToProps(state) {
     savedPageNumber: state.dashboardState.individualsListState.savedPaginationNumber,
     clinicalConditionList: state.dashboardState.individualsListState.clincalCondition,
     contracts: state.dashboardState.individualsListState.contracts,
-    genderType: state.dashboardState.individualsListState.genderType
+    genderType: state.dashboardState.individualsListState.genderType,
+    isLoaded: state.dashboardState.individualsListState.isLoaded
   }
 }
 

@@ -27,7 +27,8 @@ const defaultState = {
     disableShowmore: false,
     patientId: 0,
     activeTab: serviceRequestDetailsTab.request,
-    visitDate: {}
+    visitDate: {},
+    savedScheduleType: ''
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -174,6 +175,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         return {
             ...state,
             visitDate: action.data
+        };
+        case VisitServiceDetails.saveScheduleType:
+        return {
+            ...state,
+            savedScheduleType: action.data
         };
         default:
             return state;
