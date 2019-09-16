@@ -123,7 +123,7 @@ export const getGeologicalPositionSuccess = data => {
 export function getFeedbackAlertDetails(data) {
   return dispatch => {
     dispatch(startFeedbackAlertLoading())
-    return Get(`${API.getServiceProviderFeedbackList}${data.serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
+    return Post(API.getServiceProviderFeedbackList, data)
       .then(resp => {
         if (resp && resp.data) {
           dispatch(getFeedbackAlertDetailsSuccess(resp.data))
