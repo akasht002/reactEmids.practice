@@ -82,7 +82,7 @@ text-decoration: none;
 color: #444;
 display: block;
 padding: 0px 30px;
-font-size: 15px;
+font-size: 16px;
 line-height:54px;
 }
 
@@ -537,6 +537,17 @@ padding-left: 81px;
 flex: 0 0 100%;
 max-width: 100%;
 padding: 0px 25px 25px 25px;
+}
+
+.individual-spblock-full .ServiceTypeLink
+{
+border: 1px solid #d1d1d1 !important;
+cursor: context-menu !important;
+}
+
+.individual-spblock-full .ContentTitle.Summary span time
+{
+padding-right: 5px;
 }
 
 .individual-spblock-full .btn-right-view 

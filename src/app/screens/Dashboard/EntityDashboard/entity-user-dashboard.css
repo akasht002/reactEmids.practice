@@ -499,7 +499,15 @@ height: 30px;
 margin: 0 10px;
 line-height: 14px!important;
 cursor:pointer;
+white-space: normal;
 }
+
+.search-container-block .btn:hover
+{
+background-color: #3b1a53;
+color:#fff;
+}
+
 
 .search-container-block .close-btn {
 display: inline;
@@ -559,12 +567,15 @@ width:100% !important;
 position:absolute;
 }
 
-
 table.individuals-tableblock th:nth-child(1), table.individuals-tableblock td:nth-child(1)
 {
 width:14%;
 }
 
+.top-view-margin
+{
+margin-top:30px;
+}
 
 @media (min-width: 1367px)
 {

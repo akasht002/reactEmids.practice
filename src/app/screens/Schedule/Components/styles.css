@@ -42,7 +42,7 @@ vertical-align: middle;
 
 .Plan-typebar fieldset label
 {
-font-size: 16px;
+font-size: 18px;
 color:#444;
 font-weight: 500;
 border: none;
@@ -57,7 +57,7 @@ top: 17px;
 
 .Plan-typebar fieldset label:hover
 {
-    border: none;
+  border: none;
 }
 
 .Plan-typebar fieldset .form-radio-input:checked ~ .form-radio-label
@@ -103,7 +103,7 @@ pointer-events: none;
 cursor: context-menu;
 }
 
- .ServiceCategory .slick-slider .slick-list {
+.ServiceCategory .slick-slider .slick-list {
 width: 100%;
 }
 
@@ -111,12 +111,12 @@ width: 100%;
 background-color: #7a329f;
 }
 
- .ServiceCatLink.CardBoxes {
+.ServiceCatLink.CardBoxes {
 width: 160px;
 height: 170px;
 padding: 20px;
 }
- .ServiceCatLink {
+.ServiceCatLink {
 display: -ms-flexbox;
 display: flex;
 -ms-flex-pack: center;
@@ -131,7 +131,7 @@ color: #fff;
 border-radius: 8px;
 }
 
- .ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input+label.ServiceCatLink.CardBoxes:hover:before, .ServiceCatList input:checked+label.ServiceCatLink:before, .ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before {
+.ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input+label.ServiceCatLink.CardBoxes:hover:before, .ServiceCatList input:checked+label.ServiceCatLink:before, .ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before {
 background-color: #7a329f;
 opacity: .7;
 background-image: none;
@@ -191,7 +191,7 @@ position: relative;
 z-index: 2;
 }
 
- 
+
 
 .Service-Cat-Typesblock .slick-list:before {
 background-image: -webkit-gradient(linear,left top,right top,from(hsla(0,0%,100%,0)),to(#fff));
@@ -355,10 +355,10 @@ margin: 0;
 border: 1px solid #7a329f !important;
 }
 
- .form-radio-input:checked~.form-radio-label,  .form-radio-input:checked~label .RadioBoxIcon, .form-radio-label:hover~label .RadioBoxIcon {
+.form-radio-input:checked~.form-radio-label,  .form-radio-input:checked~label .RadioBoxIcon, .form-radio-label:hover~label .RadioBoxIcon {
 border: 1px solid #7a329f;
 }
- .form-radio label .RadioBoxIcon {
+.form-radio label .RadioBoxIcon {
 position: absolute;
 height: 15px;
 width: 15px;
@@ -398,7 +398,7 @@ background-color: #fff;
 border-radius: 100%;
 }
 
- .form-radio-input {
+.form-radio-input {
 position: absolute;
 left: 0;
 opacity: 0;
@@ -435,7 +435,7 @@ display:none;
 }
 
 
- .form-radio-input:checked ~ label .RadioBoxIcon:before {
+.form-radio-input:checked ~ label .RadioBoxIcon:before {
 content: '';
 position: relative;
 height: 7px;
@@ -688,8 +688,8 @@ float: left;
 cursor: pointer;
 position: relative;
 }
- 
- .ServiceTypesWidget.PostSR
+
+.ServiceTypesWidget.PostSR
 {
 background: #fff;
 margin-bottom: 20px;
@@ -698,7 +698,7 @@ box-shadow: 0 0 10px rgba(0,0,0, 0.09);
 padding: 30px;
 }
 
- .ServiceTypesWidget.PostSR .ServiceType.WhiteBG
+.ServiceTypesWidget.PostSR .ServiceType.WhiteBG
 {
 margin-bottom: 0px;
 margin-top: 10px;
@@ -806,13 +806,21 @@ margin-bottom: 0;
 {
 width: 50% !important;
 margin-right:20px;
-padding-bottom:0px !important;
+padding-bottom:7px !important;
+height: calc(100% - 358px);
 }
 
 .right-block2-shedule
 {
 width: 48% !important;
 padding-bottom:0px !important;
+}
+
+.right-block2-shedule .slick-list .slick-track
+{
+display:flex;
+flex-direction:row;
+justify-content:flex-start;
 }
 
 .form-radio-label {
@@ -911,7 +919,7 @@ line-height: 25px;
 font-size: 14px;
 font-weight: 400;
 color: #8c8c8c;
-text-align: center;
+text-align:left;
 }
 
 .last-block-monthwise fieldset input
@@ -1220,12 +1228,12 @@ border-radius: 100%;
 }
 
 .checkblock .form-radio-input:checked ~ .RadioBoxIcon{
-    border:none !important;
+  border:none !important;
 }
 
 /*end-default-css-for-radiobox-checkbox*/
 
- .week-column .parent-col fieldset .form-radio-label
+.week-column .parent-col fieldset .form-radio-label
 {
 width: 50px;
 height: 50px;
@@ -1420,11 +1428,6 @@ max-width: 100%;
 width: 100%;
 }
 
-.left-block1-shedule .form-group2block .form-group
-{
-margin-bottom:0px;
-}
-
 .form-group2block .form-group .react-datepicker__input-container input:disabled
 {
 background-color: #fff;
@@ -1451,8 +1454,8 @@ height: 0;
 width:100%;
 height: 100%;
 }
-  
-  .checkmark {
+
+.checkmark {
 position: absolute;
 top: 3px;
 left: 0;
@@ -1461,23 +1464,23 @@ width: 17px;
 border-radius: 4px;
 border: 1px solid #7a329f;
 background: #fff;
-  }
-  
+}
+
 
 .customechk input:checked ~ .checkmark {
 background-color: #fff;
-  }
-  
+}
+
 .checkmark:after {
 content: "";
 position: absolute;
 display: none;
 }
-  
+
 .customechk input:checked ~ .checkmark:after {
 display: block;
 }
-  
+
 .customechk .checkmark:after {
 left: 5px;
 top: 2px;
@@ -1491,7 +1494,7 @@ transform: rotate(45deg);
 }
 
 .edit-block
-  {
+{
 width: 15%;
 display: inline-block;
 position: absolute;
@@ -1501,7 +1504,7 @@ cursor: pointer;
 }
 
 .edit-block img
-  {
+{
 width: 14px;
 float: right;
 display: block;
@@ -1517,13 +1520,13 @@ float: left;
 }
 
 .customechk .BlockImageDetailsName
-  {
+{
 font-size: 14px;
 font-weight: 600;
 padding-bottom: 0px;
 line-height: 20px;
-  }
-    /*my-plan-edit-model*/
+}
+  /*my-plan-edit-model*/
 
 .my-plan-editmodel .full-block-scheduleDate
 {
@@ -1594,10 +1597,25 @@ right: 0;
 color:#444;
 }
 
+.CustomPOS input.form-control::placeholder {
+color:#8c8c8c;
+font-size:16px;
+opacity: 1;
+}
+
+.CustomPOS  input.form-control:-ms-input-placeholder {
+color:#8c8c8c;
+}
+
+.CustomPOS  input.::-ms-input-placeholder { 
+color:#8c8c8c;
+}
+
 
 .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
 color: #8c8c8c;
 opacity: 1;
+font-size:16px;
 }
 
 .full-block-scheduleDate .react-datepicker__input-container input:-ms-input-placeholder {
@@ -1608,9 +1626,7 @@ color: #8c8c8c;
 color: #8c8c8c;
 }
 
-
-
- /*IE_11_&_IE_10*/
+/*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none)
 {
 .bottom-blockbtn { display: block !important;  } /* IE10 */
@@ -1628,7 +1644,15 @@ color: #8c8c8c;
 .bottom-blockbtn .ml-auto {float:right;} 
 *::-ms-backdrop, .bottom-blockbtn .ml-auto {float:right;} 
 
+.last-block-monthwise .left-radioblock  fieldset .form-radio-input {margin-right:0px;} 
+*::-ms-backdrop, .last-block-monthwise .left-radioblock  fieldset .form-radio-input {margin-right:0px;} 
+
+.last-block-monthwise .right-colblock2 {padding-left:18px; margin-top: -10px;} 
+*::-ms-backdrop, .last-block-monthwise .right-colblock2 {padding-left:18px; margin-top: -10px;} 
+
 } 
+
+
 .ServiceRequestsWidget .ServiceRequestBoard{
 width: 50%;
 }
@@ -1710,6 +1734,11 @@ transform: rotate(90deg);
 {
 .assign-sp-block {
 max-height: calc(100vh - 417px);
+}
+
+.left-block1-shedule
+{
+height: calc(100% - 671px);
 }
 
 }
