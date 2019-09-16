@@ -889,11 +889,6 @@ div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-c
 
 @media (max-width: 1366px) {
 
-.innerWidget .card.extended {
-    
-    height: 596px;
-}
-
 .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
     /* height: calc(100vh - 276px); */
     max-height: 485px;

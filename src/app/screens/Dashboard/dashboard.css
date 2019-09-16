@@ -1136,6 +1136,11 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     right: 0;
 }
 
+.innerWidget .card.extended
+{
+height:620px;
+}
+
 @media (min-width: 1367px) {
 .SPContentWidget .ProfileContainer.topProfile {
 height: 713px !important;
@@ -1198,12 +1203,6 @@ height: 713px !important;
 }
 
 @media (max-width: 1366px) {
-
-    .innerWidget .card.extended {
-        
-        /* height: 620px;
-        z-index: 1; */
-    }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
         /* height: calc(100vh - 276px); */
@@ -1934,7 +1933,7 @@ height: 713px !important;
 
 .SPContentWidget .ProfileContainer.bottomProfile {
 min-height:auto;
-height: 596px;
+height: 620px;
 z-index: 0;
 margin-bottom: 20px;
 width: calc(45% - 20px)
