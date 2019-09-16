@@ -73,7 +73,7 @@ export function saveAnswers(data) {
 }
 export function saveAnswerFeedback(data) {
   return (dispatch, getState) => {
-    let isPlan = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId === 0 
+    let isPlan = getUserInfo().isEntityServiceProvider
     let  saveAnswers  = isPlan ? API.saveAnswersForEsp : API.saveAnswers
     data.servicePlanVisitId = isPlan && data.serviceRequestVisitId
     data.serviceProviderId = getUserInfo().serviceProviderId 

@@ -29,6 +29,7 @@ class CoreoTimePicker extends Component {
                         maxTime={this.props.maxTime}
                         onClickOutside={this.clickOutside}
                         ref={r => this.calendar = r}
+                        placeholderText={this.props.placeholderText}
                     />
                 </label>
             </div>

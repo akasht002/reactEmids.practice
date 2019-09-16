@@ -70,6 +70,7 @@ export const ScheduleType = props => {
                                     label="Start Time"
                                     minTime={moment().hours(0).minutes(0)}
                                     maxTime={moment().hours(23).minutes(30)}
+                                    placeholderText={'Start Time'}
                                 />
                                 {!props.startTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -86,6 +87,7 @@ export const ScheduleType = props => {
                                     disabled={!props.startTime}
                                     minTime={moment().hours(moment(props.startTime).format("hh")).minutes(moment(props.startTime).format("mm"))}
                                     maxTime={moment().hours(23).minutes(30)}
+                                    placeholderText={'End Time'}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
