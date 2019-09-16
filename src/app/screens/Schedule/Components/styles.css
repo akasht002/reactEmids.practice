@@ -86,6 +86,14 @@ float: left;
 width: 100%;
 }
 
+
+.Service-Cat-Typesblock .slick-list .slick-track
+{
+display:flex;
+flex-direction: row;
+justify-content:flex-start;
+}
+
 .Service-Cat-Typesblock-Edit{
 pointer-events: none;
 cursor: context-menu;
@@ -1728,6 +1736,12 @@ font-size: 24px;
 -webkit-transform: rotate(90deg);
 -ms-transform: rotate(90deg);
 transform: rotate(90deg);
+}
+
+.add-new-scheduleblock .scrollarea-content 
+{
+height:100%;
+overflow-y:auto;
 }
 /*1920-screen-or-other-screens*/
 @media (min-width: 1367px)

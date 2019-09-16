@@ -760,12 +760,33 @@ min-height: 300px;
 height: auto;
 }
 
-div.scrollarea .scrollbar-container.vertical {
-width: 7px;
-}
-
 .scrollarea-content {
 min-height: 100%;
+}
+.add-new-scheduleblock
+{
+padding: 0px 0px;
+}
+
+.add-new-scheduleblock .scrollarea-content
+{
+padding:0 20px;
+}
+
+.add-new-scheduleblock .scrollarea-content .scrollbar-container.vertical
+{
+width: 8px !important;
+opacity: 0.9 !important;
+}
+
+.add-new-scheduleblock .scrollarea-content .scrollbar-container
+{
+opacity: 0.9 !important;
+}
+.add-new-scheduleblock .scrollarea-content .scrollbar-container.vertical .scrollbar
+{
+background: #8c8c8c !important;
+width: 6px !important;
 }
 
 .ProfileHeaderButton .standBy {

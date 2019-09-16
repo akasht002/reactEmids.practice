@@ -770,7 +770,7 @@ export class Schedule extends Component {
                 <Scrollbars speed={2}
                     smoothScrolling
                     horizontal={false}
-                    className='ProfileContentWidget'>
+                    className='ProfileContentWidget add-new-scheduleblock'>
                     <div className="full-block-view">
                         <div className="Plan-typebar">
                             <PlanType
