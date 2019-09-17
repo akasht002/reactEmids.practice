@@ -57,7 +57,8 @@ class PersonalDetail extends React.PureComponent {
             <div className={'width100'}>
               <div className={'SPAffiliatedList'} />
             </div>
-            <div className={'width100'}>
+            <div className={'width100 description-block-profile'}>
+            <span className={'primaryColor'}>Description</span>
               <div className='SPDesc'>
                 {this.props.personalDetail &&
                   this.props.personalDetail.description}

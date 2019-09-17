@@ -585,9 +585,11 @@ class PersonalDetail extends React.PureComponent {
                 </span>}
             </div>
           </div>
-          <div className={'width100'}>
-            {(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
-              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails.bind(this)}>Edit your profile here</span>}
+          <div className={'width100 description-block-profile'}>
+          <span className={'primaryColor'}>Description</span>
+
+            <span>{(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
+              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails.bind(this)}>Edit your profile here</span>}</span>
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>

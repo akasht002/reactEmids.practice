@@ -41,7 +41,7 @@
 }
 
 .url-separator:after{
-    content: '____';
+    /* content: '____'; */
     display: block;
     color: #7a329f;
 }
