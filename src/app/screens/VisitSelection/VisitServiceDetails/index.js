@@ -48,7 +48,7 @@ import {
   SERVICE_REQUEST_DETAILS_TAB
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
-import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
+import { formattedDateMoment, formattedDateChange, formateStateDateValue, checkEmpty } from "../../../utils/validations";
 import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat } from '../../../utils/dateUtility'
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
@@ -67,7 +67,10 @@ import {
 import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-import { isEntityUser } from '../../../utils/userUtility'
+import { isEntityUser } from '../../../utils/userUtility';
+import { validate } from './validate'
+import { allEqual } from '../../../utils/arrayUtility';
+
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -459,21 +462,6 @@ export class VisitServiceDetails extends Component {
     this.setState({ startTime: event });
   }
 
-  updateServiceVisits = async () => {
-    let model = {
-      serviceProviderId: this.espId ? this.espId : 0,
-      servicePlanVisitId: this.state.visitId,
-      planScheduleId: this.props.serviceVisitDetails.planScheduleId,
-      visitDate: this.state.startDateEdit,
-      startTime: this.formatedStartTime ? this.formatedStartTime : getHHMMformat(this.state.startTime),
-      endTime: this.formatedEndTime ? this.formatedEndTime : getHHMMformat(this.state.endTime),
-      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime)
-    }
-    await this.props.updateServiceVisit(model)
-    await this.getModalData(this.state.activePage, this.state.rowPageSize)
-    await this.setState({ editModal: false })
-  }
-
   onSubmitAssignServiceProvider = async (data) => {
     await this.props.assignESP(data)
     await this.getModalData(this.state.activePage, this.state.rowPageSize)
@@ -563,45 +551,79 @@ export class VisitServiceDetails extends Component {
   }
 
   gotoAssessmentVisit = (data) => {
-    this.props.goToAssessmentVisitProcessing({...data,serviceRequestVisitId:0})
+    this.props.goToAssessmentVisitProcessing({ ...data, serviceRequestVisitId: 0 })
   }
 
   navigateToparticularPageBasedonId = visitList => {
     this.props.saveScheduleType(visitList.scheduleTypeId)
-      let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
-      switch (visitList.visitStatusId) {
-        case VISIT_STATUS.startVisit.id:
-          return this.visitProcessing(visitId)
-        case VISIT_STATUS.inProgress.id:
-          return this.visitProcessing(visitId)
-        case VISIT_STATUS.completed.id:
-          return this.visitSummary(visitId, visitList.assignedServiceProviderId, visitList.scheduleTypeId)
-        case VISIT_STATUS.paymentPending.id:
-          return this.visitProcessingSummary(visitId)
+    let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
+    switch (visitList.visitStatusId) {
+      case VISIT_STATUS.startVisit.id:
+        return this.visitProcessing(visitId)
+      case VISIT_STATUS.inProgress.id:
+        return this.visitProcessing(visitId)
+      case VISIT_STATUS.completed.id:
+        return this.visitSummary(visitId, visitList.assignedServiceProviderId, visitList.scheduleTypeId)
+      case VISIT_STATUS.paymentPending.id:
+        return this.visitProcessingSummary(visitId)
+      default:
+        return ''
+    }
+  }
+
+  handelEditShedule = (scheduleId) => {
+    this.props.clearESPListSchedule()
+    this.props.getIndividualSchedulesDetails(scheduleId)
+    this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
+  }
+
+  handelEditAssessment = (assessmentId) => {
+    this.props.clearESPListSchedule()
+    this.props.getAssessmentDetailsById(assessmentId)
+    this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
+  }
+
+  goBackToParticularPage = () => {
+    if(this.props.isAddNewScheduleClicked){
+      this.props.goToVisitList()
+    }else{
+      this.props.goBack();
+    }
+  }
+
+  validate = (data) => {
+    let value = []
+    data.map((d) => {
+      let txt = d.isState ? this.state[d.key] : this[d.key]
+      switch (d.validation) {
+        case 'required':
+          value.push(checkEmpty(txt))
+          break;
         default:
-          return ''
       }
+    })
+    return allEqual(value);
   }
 
-handelEditShedule = (scheduleId) => {
-  this.props.clearESPListSchedule()
-  this.props.getIndividualSchedulesDetails(scheduleId)
-  this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
-}
+  updateServiceVisits = async () => {
+    this.setState({ onVisitEdit: true })
+    let saveVisitEdit = this.validate(validate.editVisit)
 
-handelEditAssessment = (assessmentId) => {
-  this.props.clearESPListSchedule()
-  this.props.getAssessmentDetailsById(assessmentId)
-  this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
-}
-
-goBackToParticularPage = () => {
-  if(this.props.isAddNewScheduleClicked){
-    this.props.goToVisitList()
-  }else{
-    this.props.goBack();
+    let model = {
+      serviceProviderId: this.espId ? this.espId : 0,
+      servicePlanVisitId: this.state.visitId,
+      planScheduleId: this.props.serviceVisitDetails.planScheduleId,
+      visitDate: this.state.startDateEdit,
+      startTime: this.formatedStartTime ? this.formatedStartTime : getHHMMformat(this.state.startTime),
+      endTime: this.formatedEndTime ? this.formatedEndTime : getHHMMformat(this.state.endTime),
+      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime)
+    }
+    if (!saveVisitEdit) {
+      await this.props.updateServiceVisit(model)
+      await this.getModalData(this.state.activePage, this.state.rowPageSize)
+      await this.setState({ editModal: false, onVisitEdit: false })
+    }
   }
-}
 
   render() {
     let modalContent =
@@ -619,6 +641,10 @@ goBackToParticularPage = () => {
                 className={"form-control datePicker"}
                 label="Start Date"
               />
+              {!this.state.startDateEdit && this.state.onVisitEdit &&
+                <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                  Please select Start Date
+                            </span>}
               <div className="form-group2block">
                 <div className="col-md-6 col-lg-6 pd-left-0">
                   <CoreoTimePicker
@@ -629,6 +655,10 @@ goBackToParticularPage = () => {
                     minTime={moment().hours(0).minutes(0)}
                     maxTime={moment().hours(23).minutes(30)}
                   />
+                  {!this.state.startTime && this.state.onVisitEdit &&
+                    <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                      Please select Start Time
+                            </span>}
                 </div>
                 <div className="col-md-6 col-lg-6">
                   <CoreoTimePicker
@@ -640,20 +670,24 @@ goBackToParticularPage = () => {
                     minTime={moment().hours(moment(this.state.startTime).format("hh")).minutes(moment(this.state.startTime).format("mm"))}
                     maxTime={moment().hours(23).minutes(30)}
                   />
+                  {!this.state.endTime && this.state.onVisitEdit &&
+                    <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
+                      Please select End Time
+                            </span>}
                 </div>
               </div>
               <div className="top-search-blocksp">
-              <h2 class="ServicesTitle">Assign Service Provider</h2>
-              <div className="search-block_SP">
-                <Search
-                  toggleSearch={this.toggleSearch}
-                  searchOpen={this.state.searchOpen}
-                  searchKeyword={this.state.searchKeyword}
-                  handleSearchkeyword={this.handleSearchkeyword}
-                  handleSearchData={this.handleSearchData}
-                  closeSearch={this.toggleSearch}
-                />
-              </div>
+                <h2 class="ServicesTitle">Assign Service Provider</h2>
+                <div className="search-block_SP">
+                  <Search
+                    toggleSearch={this.toggleSearch}
+                    searchOpen={this.state.searchOpen}
+                    searchKeyword={this.state.searchKeyword}
+                    handleSearchkeyword={this.handleSearchkeyword}
+                    handleSearchData={this.handleSearchData}
+                    closeSearch={this.toggleSearch}
+                  />
+                </div>
               </div>
               <AssignServiceProvider
                 entityServiceProvidersList={this.props.entityServiceProvidersList}
@@ -715,10 +749,10 @@ goBackToParticularPage = () => {
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
     let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : this.props.VisitServiceDetails.statusId === 38 ? true : false;
-    let updatedTabdata = this.props.ServiceRequestId === 0 ? 
-                         tabdata.slice(1, tabdata.length) : 
-                         isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
-  
+    let updatedTabdata = this.props.ServiceRequestId === 0 ?
+      tabdata.slice(1, tabdata.length) :
+      isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
+
     return (
       <Fragment>
         <AsideScreenCover>
