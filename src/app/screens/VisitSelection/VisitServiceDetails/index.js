@@ -120,7 +120,7 @@ export class VisitServiceDetails extends Component {
     }
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
-      this.props.getServiceRequestList(this.props.ServiceRequestId);
+      this.props.getServiceRequestList(this.props.patientId);
       this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId);
       this.props.getSchedulesList(this.props.patientId);
       this.props.getDays();

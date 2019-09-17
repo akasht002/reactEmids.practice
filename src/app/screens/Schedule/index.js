@@ -84,7 +84,8 @@ export class Schedule extends Component {
             phoneNumberModal: false,
             phoneNumber: '',
             isAssessmentEdit: false,
-            isDefaultAddress: false
+            isDefaultAddress: false,
+            planTypeAlertPopup: false
         }
         this.serviceTypes = [];
         this.categoryId = SERVICE_CATEGORY.adl.id;
@@ -176,7 +177,7 @@ export class Schedule extends Component {
         this.setState({
             assessmentId: data.assessmentId,
             checkedServiceCategoryId: data.categoryId,
-            startDate: moment(data.startDate),
+            startDate: data.startDate,
             endDate: data.endDate,
             startTime: moment(data.startTime, 'h:mm a'),
             endTime: moment(data.endTime, 'h:mm a'),
@@ -247,7 +248,20 @@ export class Schedule extends Component {
     }
 
     handleChangePlanType = (id) => {
-        this.setState({ planType: id })
+        this.setState({ planTypeId: id })
+        if (this.isDataEntered) {
+            this.setState({ planTypeAlertPopup: true })
+        } else {
+            this.setState({
+                planType: id,
+                planTypeAlertPopup: false
+            })
+        }
+    }
+
+    handelTypeChange = () => {
+        this.isDataEntered = false
+        this.handleChangePlanType(this.state.planTypeId);
     }
 
     handleServiceCategory = (id) => {
@@ -740,7 +754,7 @@ export class Schedule extends Component {
     }
 
     onClickCancel = () => {
-        if(this.isDataEntered){
+        if(this.isDataEntered) {
             this.setState({ isModalOpen: true })
         }else{
             this.goToServicedetails();
@@ -890,17 +904,17 @@ export class Schedule extends Component {
                             </div>
                             <div className="ServiceTypesWidget PostSR">
                                 <div className="top-search-blocksp">
-                                <h2 className='ServicesTitle'>Assign Service Provider</h2>
-                                <div className="search-block_SP">
-                                    <Search
-                                        toggleSearch={this.toggleSearch}
-                                        searchOpen={this.state.searchOpen}
-                                        searchKeyword={this.state.searchKeyword}
-                                        handleSearchkeyword={this.handleSearchkeyword}
-                                        handleSearchData={this.handleSearchData}
-                                        closeSearch={this.toggleSearch}
-                                    />
-                                </div>
+                                    <h2 className='ServicesTitle'>Assign Service Provider</h2>
+                                    <div className="search-block_SP">
+                                        <Search
+                                            toggleSearch={this.toggleSearch}
+                                            searchOpen={this.state.searchOpen}
+                                            searchKeyword={this.state.searchKeyword}
+                                            handleSearchkeyword={this.handleSearchkeyword}
+                                            handleSearchData={this.handleSearchData}
+                                            closeSearch={this.toggleSearch}
+                                        />
+                                    </div>
                                 </div>
                                 <AssignServiceProvider
                                     entityServiceProvidersList={this.props.entityServiceProvidersList}
@@ -949,6 +963,15 @@ export class Schedule extends Component {
                         OkButtonTitle={'Ok'}
                         isOpen={this.state.phoneNumberModal}
                         onAcceptClick={() => this.setState({ phoneNumberModal: false })}
+                    />
+                    <AlertPopup
+                        message='Do you want to discard the changes?'
+                        OkButtonTitle={'Yes'}
+                        CancelButtonTitle={'No'}
+                        isCancel={true}
+                        isOpen={this.state.planTypeAlertPopup}
+                        closePopup={() => this.setState({ planTypeAlertPopup: false })}
+                        onAcceptClick={() => this.handelTypeChange()}
                     />
                 </Scrollbars>
             </AsideScreenCover>

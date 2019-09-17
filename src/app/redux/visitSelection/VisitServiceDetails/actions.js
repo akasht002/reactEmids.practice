@@ -479,11 +479,11 @@ export function getEntityServiceProviderListSearch(data) {
   }
 }
 
-export function getServiceRequestList(ServiceRequestId) {
+export function getServiceRequestList(patientId) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch) => {
     dispatch(startLoading());
-    ServiceRequestGet(API.getNewServiceRequestList + `${ServiceRequestId}/${serviceProviderId}`).then((resp) => {
+    ServiceRequestGet(API.getNewServiceRequestList + `${patientId}/${serviceProviderId}`).then((resp) => {
       dispatch(getServiceRequestListSuccess(resp.data))
       dispatch(endLoading());
     }).catch((err) => {
