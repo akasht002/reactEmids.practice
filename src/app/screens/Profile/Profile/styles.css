@@ -295,7 +295,6 @@ list-style-type: none;
 }
 
 .SPAffiliatedList:after{
-    /* content: '____'; */
     display: block;
     color: #7a329f;
 }
