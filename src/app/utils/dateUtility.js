@@ -90,7 +90,7 @@ export function getDiffTime(startTimes, endTimes) {
 }
 
  export function getHourMin(data) {
-    return data ? moment(data, DATE_FORMATS.hh_mm).format(DATE_FORMATS.hh_mm) : ''
+    return data ? moment(data).format(DATE_FORMATS.hh_mm) : ''
 }
 
 export function formateMDYY(date) {

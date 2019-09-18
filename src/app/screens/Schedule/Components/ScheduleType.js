@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Calendar, CoreoTimePicker } from '../../../components/LevelOne';
 import { formateStateDateValue } from "../../../utils/validations";
-import { getDiffTime } from "../../../utils/dateUtility";
+import { getDiffTime, getHourMin } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS,SCHEDULE_TYPE_OPTIONS } from '../../../constants/constants'
@@ -15,6 +15,12 @@ export const ScheduleType = props => {
     let weekRecurrings = props.weekRecurring.map(type => {
         return <Item className='ListItem CTDashboard' key={type.id}>{type.value}</Item>;
     });
+
+    let now = moment()
+
+    let minStartTime = moment().minutes(now.minutes()+5).seconds(0)
+    let minEndTime = props.minEndTime || moment(props.startTime).seconds(0).add("minutes", 5)
+
 
     return (
         <Fragment>
@@ -68,7 +74,7 @@ export const ScheduleType = props => {
                                     handleChange={props.handleChangeStartTime}
                                     value={props.startTime}
                                     label="Start Time"
-                                    minTime={moment().hours(0).minutes(0)}
+                                    minTime={minStartTime}
                                     maxTime={moment().hours(23).minutes(30)}
                                     placeholderText={'Start Time'}
                                 />
@@ -85,7 +91,7 @@ export const ScheduleType = props => {
                                     minDate={props.startTime}
                                     label="End Time"
                                     disabled={!props.startTime}
-                                    minTime={moment().hours(moment(props.startTime).format("hh")).minutes(moment(props.startTime).format("mm"))}
+                                    minTime={minEndTime}
                                     maxTime={moment().hours(23).minutes(30)}
                                     placeholderText={'End Time'}
                                 />

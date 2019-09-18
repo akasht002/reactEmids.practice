@@ -426,11 +426,17 @@ export class Schedule extends Component {
 
     handleChangeStartTime = (event) => {
         this.formatedStartTime = getHourMin(event)
-        this.setState({ startTime: event });
+        let endTime = this.state.endTime
+        if(this.formatedStartTime === this.formatedEndTime){
+            endTime = moment(this.state.startTime).add("minutes", 60)
+            this.formatedEndTime = getHourMin(endTime)
+        }
+        this.setState({ startTime: event, endTime });
         this.isDataEntered = true;
     }
 
     handleChangeEndTime = (event) => {
+
         this.formatedEndTime = getHourMin(event)
         this.setState({ endTime: event });
         this.isDataEntered = true;
@@ -622,7 +628,11 @@ export class Schedule extends Component {
                 this.savePlan();
             }
         } else {
-            this.saveAssessment()
+            let saveAssesment = this.validate(validate.assessment)
+                
+            if(!saveAssesment){
+                this.saveAssessment()
+            }
         }
     }
 
