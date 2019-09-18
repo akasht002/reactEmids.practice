@@ -134,7 +134,7 @@ export class VisitServiceDetails extends Component {
     if(!isEntityUser()){
       this.props.getfirstlastvisitdate(getISPVisitDate)
     }else{
-      this.props.getfirstlastvisitdate(getEuVisitDate)
+      !this.props.isEntityDashboard && this.props.getfirstlastvisitdate(getEuVisitDate)
     }
     this.props.getServiceCategory();
     this.props.ServiceRequestStatus();
@@ -938,7 +938,8 @@ export function mapStateToProps(state) {
     activeTab: VisitServiceDetailsState.activeTab,
     daysType: VisitServiceDetailsState.daysType,
     visitDate: VisitServiceDetailsState.visitDate,
-    isAddNewScheduleClicked: VisitServiceDetailsState.isAddNewScheduleClicked
+    isAddNewScheduleClicked: VisitServiceDetailsState.isAddNewScheduleClicked,
+    isEntityDashboard: VisitServiceDetailsState.isEntityDashboard
   }
 }
 
