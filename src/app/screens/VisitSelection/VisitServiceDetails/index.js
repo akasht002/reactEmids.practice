@@ -45,7 +45,10 @@ import {
   VISIT_STATUS,
   DEFAULT_PAGE_SIZE,
   VISIT_TYPE,
-  SERVICE_REQUEST_DETAILS_TAB
+  SERVICE_REQUEST_DETAILS_TAB,
+  USERTYPES,
+  CONTACT_NOT_FOUND,
+  PHONE_NUMBER_TEXT
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
@@ -68,6 +71,9 @@ import { formDirty } from '../../../redux/visitHistory/VisitServiceDetails/actio
 import { formDirtyFeedback } from '../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions'
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { isEntityUser } from '../../../utils/userUtility'
+import { formatPhoneNumber } from '../../../utils/formatName';
+import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
+import { saveContextData, createDataStore } from '../../../redux/telehealth/actions';
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -94,7 +100,9 @@ export class VisitServiceDetails extends Component {
       isAcceptAlertPopupOpen: false,
       isCancelAlertPopupOpen: false,
       isEngageAlertPopupOpen: false,
-      entityServiceProviders: []
+      entityServiceProviders: [],
+      conversationsModal: false,
+      conversationErrMsg: ''
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -603,6 +611,62 @@ goBackToParticularPage = () => {
   }
 }
 
+showPhoneNumber = () => {
+  if (this.props.VisitServiceDetails.statusId !== 38) {
+    this.setState({
+      conversationsModal: true,
+      conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
+    })
+  } else {
+    let data = this.props.VisitServiceDetails;
+    let phoneNumber = data.patient ? data.patient.phoneNumber : ''
+    this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+  }
+};
+
+onClickConversation = () => {
+  if (this.props.VisitServiceDetails.statusId !== 38) {
+    this.setState({
+      conversationsModal: true,
+      conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
+    })
+  } else {
+    let item = this.props.VisitServiceDetails;
+    let selectedParticipants = [{
+      userId: item.patient.coreoHomeUserId,
+      participantType: USERTYPES.PATIENT,
+      participantId: item.patient.patientId
+    }];
+    let data = {
+      participantList: selectedParticipants,
+      title: '',
+      context: item.patient.patientId
+    };
+    this.props.createNewConversation(data);
+  }
+};
+
+onClickVideoConference = () => {
+  if (this.props.VisitServiceDetails.statusId !== 38) {
+    this.setState({
+      conversationsModal: true,
+      conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
+    })
+  } else {
+    let item = this.props.VisitServiceDetails;
+    let selectedParticipants = [{
+      userId: item.patient.coreoHomeUserId,
+      participantType: USERTYPES.PATIENT,
+      participantId: item.patient.patientId,
+      firstName: item.patient.firstName,
+      lastName: item.patient.lastName,
+      thumbNail: item.patient.imageString
+    }];
+    this.props.saveContextData(item.patient.patientId);
+    this.props.createDataStore(selectedParticipants);
+  }
+};
+
   render() {
     let modalContent =
       <div className="row">
@@ -799,7 +863,11 @@ goBackToParticularPage = () => {
                   disableShowmore={this.props.disableShowmore}
                   visitDate={this.props.visitDate}
                 />
-                <PatientProfileTab />
+                <PatientProfileTab 
+                  showPhoneNumber={this.showPhoneNumber}
+                  onClickConversation={this.onClickConversation}
+                  onClickVideoConference={this.onClickVideoConference}
+                />
               </TabContent>
             </div>
             <ProfileModalPopup
@@ -862,6 +930,32 @@ goBackToParticularPage = () => {
               closePopup={() => this.setState({ isEngageAlertPopupOpen: false })}
               onAcceptClick={() => this.engage()}
             />
+            <ModalPopup
+              isOpen={this.state.conversationsModal}
+              ModalBody={<span> {this.state.conversationErrMsg} </span>}
+              btn1='OK'
+              className='modal-sm'
+              headerFooter='d-none'
+              footer='d-none'
+              centered='centered'
+              onConfirm={() =>
+                this.setState({
+                  conversationsModal: false
+                })}
+            />
+            <AlertPopup
+              message={<span> {this.state.phoneNumber
+                === null
+                ? CONTACT_NOT_FOUND
+                : `${PHONE_NUMBER_TEXT}
+                ${formatPhoneNumber(this.state.phoneNumber)}`} </span>}
+              isOpen={this.state.phoneNumberModal}
+              onAcceptClick={() =>
+                this.setState({
+                  phoneNumberModal: false
+                })}
+              okButtonAlignment='float-center'  
+            />
           </Scrollbars>
         </AsideScreenCover>
 
@@ -913,7 +1007,10 @@ export function mapDispatchToProps(dispatch) {
     getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data)),
     goToVisitList: () => dispatch(push(Path.visitServiceList)),
     setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data)),
-    setActiveTab: data => dispatch(setActiveTab(data))
+    setActiveTab: data => dispatch(setActiveTab(data)),
+    createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
+    saveContextData: (data) => dispatch(saveContextData(data)),
+    createDataStore: (data) => dispatch(createDataStore(data))
   }
 }
 

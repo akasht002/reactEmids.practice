@@ -8,6 +8,7 @@ import {
 import { ProfileImage } from '../../../components'
 import { formatPhoneNumber } from '../../../utils/formatName'
 import './index.css'
+import { communicationData } from './communicationData';
 
 class PersonalDetail extends React.PureComponent {
 
@@ -15,6 +16,19 @@ class PersonalDetail extends React.PureComponent {
     this.props.getPersonalDetail()
     this.props.getImage()
     this.props.getProfilePercentage();
+  }
+
+  performActionBasedOnTitle = title => {
+    switch (title) {
+      case 'Phone Call':
+        return this.props.showPhoneNumber()
+      case 'Conversation':
+        return this.props.onClickConversation()
+      case 'Video Conference':
+        return this.props.onClickVideoConference()
+      default:
+        return ''
+    }
   }
 
   render () {
@@ -78,6 +92,13 @@ class PersonalDetail extends React.PureComponent {
                 </span>
               </div>
             </div>
+            <div className="d-flex">
+              {
+                communicationData.map(item =>
+                  <i className={item.className} title={item.title} onClick={() => this.performActionBasedOnTitle(item.title)}/>
+                )
+              }
+          </div>
           </div>
         </div>
       </Fragment>

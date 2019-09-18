@@ -625,11 +625,6 @@ class PersonalDetail extends React.PureComponent {
               </span>
             </div>
           </div>
-          <div className="d-flex">
-          <i className='iconPhone' title='Phone Call'/>
-          <i className='iconConversation' title='Conversation'/>
-          <i className='iconVideoCon' title='Video Conference'/> 
-          </div>
         </div>
         {this.props.isUser &&
           <i
