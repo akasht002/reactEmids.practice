@@ -41,7 +41,6 @@ export class VisitSummary extends React.Component {
     this.props.ServiceRequestId
       ? this.props.getVisitServiceHistoryByIdDetail(this.props.ServiceRequestId)
       : this.props.history.push(Path.visitHistory)
-    this.props.getVisitServiceHistoryByIdDetail(this.props.ServiceRequestId)
   }
 
   handelBack = () => {
@@ -70,7 +69,7 @@ export class VisitSummary extends React.Component {
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='primaryColor m-0'>
-              Service Request
+              View Request
             </h5>
           </div>
         </div>

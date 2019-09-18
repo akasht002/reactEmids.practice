@@ -10,6 +10,7 @@ export const List = props => {
                         <Item
                             item={item}
                             handelDetails={props.handelDetails}
+                            serviceRequestId={props.serviceRequestId}
                         />
                     )
                 })

@@ -820,7 +820,7 @@ a.ProfileCardHeaderLink:hover{
 
 .ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
     /* height: calc(100vh - 397px); */
-    height: 339px;
+    height: 280px;
 }
 
 .BoardContainer{
@@ -1199,7 +1199,6 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
     a.NoServiceReq{
         padding: 40px 20px;
-        max-width: 210px;
     }
 
     a.NoServiceReq .NoInfoText{
@@ -2938,7 +2937,8 @@ background:#f2ebf3;
 .schedule-listblock fieldset
 {
 width: 100%;
-display: table;
+display: block;
+position:relative;
 }
 
 .schedule-listblock fieldset input
@@ -2947,7 +2947,7 @@ display: table;
 }
 .schedule-listblock fieldset label.SR-types-label
 {
-    width: 85%;
+    width: 90% !important;
     clear: both;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
@@ -2961,7 +2961,7 @@ display: table;
 
 .schedule-listblock fieldset span.SR-cat
 {
-    width: 85%;
+    width: 90% !important;
     clear: both;
     position: relative;
     display: block;
@@ -3414,22 +3414,39 @@ background-color: #fff;
 
   .edit-block
   {
-    width: 15%;
-    display: inline-block;
-    position: absolute;
-    right: 0;
-    padding-top: 6px;
-    cursor: pointer;
+width: 10% !important;
+display: inline-block;
+position: absolute;
+right: -8px !important;
+padding-top: 6px;
+cursor: pointer;
+margin-top: -46px !important;
   }
 
-  .edit-block img
+.edit-block img
   {
-    width: 14px;
-    float: right;
-    display: block;
-    height: auto;
-    max-width: 100%;
+width: 14px;
+float: right;
+display: block;
+height: auto;
+max-width: 100%;
   }
+
+.edit-block button
+{
+background:url("../../../assets/images/edit-new.png") no-repeat center;
+width:16px;
+height: 16px !important;
+display: block;
+background-size:contain;
+height: auto;
+border: none;
+margin: 0 auto;
+color: transparent;
+z-index: 10;
+cursor: pointer;
+padding: 0px;
+}
 
   .full-block-view
   {
@@ -3473,7 +3490,19 @@ background-color: #fff;
     z-index: 0;
     width: 100%;
     }
+    
+    .right-tablelist .FilterWidget
+    {
+    position: fixed;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+    }
 
+    .right-customewidth .right-tablelist .table-result-block
+    {
+        padding-left: 18px;   
+    }
+ 
 
        /*IE_11_&_IE_10*/
        @media all and (-ms-high-contrast:none)
@@ -3505,6 +3534,11 @@ background-color: #fff;
         max-height: calc(100vh - 600px);
     }
 
+    .right-customewidth .right-tablelist .table-result-block
+    {
+        padding-left: 36px;   
+    }
+    
 }
 
 .ServiceRequestsWidget .ServiceRequestBoard{

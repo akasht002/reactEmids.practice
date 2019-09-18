@@ -2,16 +2,12 @@ import React from 'react'
 
 export const ServiceRequestDefault = () => {
     return (
-      <div className='NoInformationServiceProvider'>
-        <span>
-          <img
-            alt={'N'}
-            src={require('../../../assets/images/NoServiceRequest.svg')}
-          />
-        </span>
-        <span className='NoSRText'>
-          View Request
-        </span>
+      <div class="no-blockinfo-top">
+      <a class="NoServiceReq NewSPReq" href="#/Visitservicelist">
+      <span class="NoInfoText">
+      <span class="NoServiceInfoLink primaryColor">View Request</span>
+      </span>
+      </a>
       </div>
     )
   }

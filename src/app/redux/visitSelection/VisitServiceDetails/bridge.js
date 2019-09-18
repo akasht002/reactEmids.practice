@@ -24,5 +24,10 @@ export const VisitServiceDetails = {
     disableShowmore: 'disableShowmore/visitservicedetails',
     clearESPList: 'clearESPList/visitservicedetails',
     getEntityServiceProviderListSuccess: 'getEntityServiceProviderListSuccess/visitservicedetails',
-    setActiveTab: 'setActiveTab/visitservicedetails'
+    setActiveTab: 'setActiveTab/visitservicedetails',
+    getfirstlastvisitdateSuccess: 'getfirstlastvisitdateSuccess/visitservicedetails',
+    saveScheduleType: 'saveScheduleType/visitservicedetails',
+    setAddNewScheduledClicked: 'setAddNewScheduledClicked/visitservicedetails',
+    setVisitDate: 'setVisitDate/visitservicedetails',
+    setEntityDashboard: 'setEntityDashboard/visitservicedetails'
   }

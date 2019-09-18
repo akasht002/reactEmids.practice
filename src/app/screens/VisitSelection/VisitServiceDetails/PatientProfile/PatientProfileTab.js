@@ -4,6 +4,7 @@ import PersonalDetail from '../../../PatientProfile/PersonalDetail';
 import PointService from '../../../PatientProfile/PointService';
 import Languages from '../../../PatientProfile/Languages';
 import ClinicalCondition from '../../../PatientProfile/ClinicalCondition';
+import VitalDetails from '../../../PatientProfile/VitalDetails';
 
 export const PatientProfileTab = () => {
     return (
@@ -12,6 +13,7 @@ export const PatientProfileTab = () => {
             <div className="colorblock"></div>
              <div className="my-patientblock">   
             <PersonalDetail />
+            <VitalDetails />
             <ClinicalCondition />
             <PointService />
             <Languages />

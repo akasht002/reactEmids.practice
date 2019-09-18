@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_FORMAT_MONTH,DATE_FORMATS, DATE_YEAR, serviceTypesImage, serviceCategoriesImage,DEFAULT_CATEGORY_IMAGE  } from '../constants/constants'
+import { DATE_FORMAT, DATE_FORMAT_MONTH,DATE_FORMATS, DATE_YEAR, serviceTypesImage, serviceCategoriesImage,DEFAULT_CATEGORY_IMAGE, VISIT_PROCESSING_STATUS  } from '../constants/constants'
 import _ from 'lodash'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
@@ -231,7 +231,7 @@ export function formatDateValue(date, dateFormat, outputFormat) {
 
 
 export const checkEmpty = (data) => {
-  return (typeof(data) === 'undefined' || data === null || data.length === 0 ) ? true : false
+  return (typeof(data) === 'undefined' || data === null || data.length === 0 || data === undefined ) ? true : false
 }
 
 export const formatContactNumber = data => {
@@ -265,4 +265,28 @@ export const getServiceCategoryImage = (serviceCategoryId) => {
 
 export function formattedTimeMoment(date) {
   return date ? moment(new Date(date.toString())).format(DATE_FORMATS.hh_mm) : null
+}
+
+export function divideIfNotZero(numerator, denominator) {
+  if (denominator === 0 || isNaN(denominator)) {
+        return 0;
+  }
+  else {
+        return  Math.round(numerator / denominator *100)
+  }
+}
+
+export function getEntityProcessingStatus(data) {
+  if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.scheduled.id)
+    return 'Start Visit'
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.inProgress.id)
+    return 'In Progress'
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.paymentPending.id && !data.isPaymentModeEnabled)
+    return 'In Progress'
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.paymentPending.id && data.isPaymentModeEnabled)
+    return 'Payment Pending'
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.completed.id)
+    return 'Visit Summary'
+  else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.cancelled.id)
+    return 'Cancelled'
 }

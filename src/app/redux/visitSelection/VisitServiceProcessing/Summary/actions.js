@@ -113,6 +113,7 @@ export function getSummaryDetail(data) {
         })
     }
 };
+
 /* Added By Vimal on 24/12/2018 */
 export function updateVisitProcessingUpdateBilledDuration(data, visitId) {
     let calculate = (data / 1000) / 60

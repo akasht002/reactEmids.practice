@@ -6,7 +6,6 @@ import Moment from 'react-moment';
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup, Preloader } from '../../../../components';
 import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration, calculationActualData } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
-import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
@@ -16,6 +15,7 @@ import { checkNumber, getFields } from '../../../../utils/validations';
 import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
+import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 
 export class Summary extends Component {
 
@@ -275,6 +275,8 @@ export class Summary extends Component {
             </form>
         }
 
+        let isEntity = this.props.patientDetails.serviceProvider && this.props.patientDetails.serviceProvider.isEntityUser;
+        let updatedIndicatorData = visitProcessingNavigationData(isEntity)
 
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
@@ -318,7 +320,7 @@ export class Summary extends Component {
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
                                 <div className="col col-md-8 WizardContent">
-                                    <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={2} />
+                                    <DashboardWizFlow VisitProcessingNavigationData={updatedIndicatorData} activeFlowId={2} />
                                 </div>
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">
@@ -368,30 +370,29 @@ export class Summary extends Component {
                                                 }
                                                 <div className="col-md-8 CostTableContainer Label">
                                                     <p><span>Total Chargeable Time (HH:MM)</span>
-                                                        <span>Hourly Rate</span></p>
-                                                    <p className="TaxLabel"><span>Total Visit Cost </span>
-                                                        <span>Taxes and Fees</span></p>
+                                            {!isEntity && <span>Hourly Rate</span>}</p>
+                                            {!isEntity && <p className="TaxLabel"><span>Total Visit Cost </span>
+                                                        <span>Taxes and Fees</span></p>}
                                                 </div>
                                                 <div className="col-md-4 CostTableContainer Cost">
                                                     <p>
                                                         <span>{this.props.CalculationsData.totalChargableTime}</span>
-                                                        {this.props.SummaryDetails.hourlyRate === 0 ?
+                                                        {!isEntity && <span>{this.props.SummaryDetails.hourlyRate === 0 ?
                                                             <span>$0.00</span>
                                                             :
                                                             <span>
                                                                 ${this.props.SummaryDetails.hourlyRate &&
                                                                     this.props.SummaryDetails.hourlyRate.toFixed(2)}
                                                             </span>
-                                                        }
-                                                        {/* <span>${this.props.SummaryDetails.hourlyRate && this.props.SummaryDetails.hourlyRate.toFixed(2)}</span> */}
+                                                        }</span>}                                                  
                                                     </p>
-                                                    <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
-                                                        <span>${(this.props.CalculationsData.taxes)}</span></p>
+                                                    {!isEntity && <p className="TaxCost"><span>${this.props.CalculationsData.totalVisitCost}</span>
+                                                        <span>${(this.props.CalculationsData.taxes)}</span></p>}
                                                 </div>
-                                                <div className="col-md-12 CostTableContainer Total">
+                                                {!isEntity && <div className="col-md-12 CostTableContainer Total">
                                                     <p className="TotalLabel"><span>Total Cost </span></p>
                                                     <p className="TotalCost"><span>${(this.props.CalculationsData.grandTotalAmount)}</span></p>
-                                                </div>
+                                                </div>}
                                             </div>
 
                                             {getUserInfo().isEntityServiceProvider ?
@@ -417,7 +418,7 @@ export class Summary extends Component {
                                                     </div>
                                                 </div>
                                             }
-                                            <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that any claim is an estimate pending the claim process</p>
+                                            {!isEntity && <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that any claim is an estimate pending the claim process</p>}
                                         </div>
                                     </div>
                                     <div className="RightWidget">

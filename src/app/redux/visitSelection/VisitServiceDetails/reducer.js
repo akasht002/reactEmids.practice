@@ -26,7 +26,11 @@ const defaultState = {
     entityServiceProvidersList: [],
     disableShowmore: false,
     patientId: 0,
-    activeTab: serviceRequestDetailsTab.request
+    activeTab: serviceRequestDetailsTab.request,
+    visitDate: {},
+    savedScheduleType: '',
+    isAddNewScheduleClicked: false,
+    isEntityDashboard: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -168,6 +172,31 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         return {
             ...state,
             activeTab: action.data
+        };
+        case VisitServiceDetails.getfirstlastvisitdateSuccess:
+        return {
+            ...state,
+            visitDate: action.data
+        };
+        case VisitServiceDetails.saveScheduleType:
+        return {
+            ...state,
+            savedScheduleType: action.data
+        };
+        case VisitServiceDetails.setAddNewScheduledClicked:
+        return {
+            ...state,
+            isAddNewScheduleClicked: action.data
+        };
+        case VisitServiceDetails.setVisitDate:
+        return {
+            ...state,
+            visitDate: action.data
+        };
+        case VisitServiceDetails.setEntityDashboard:
+        return {
+            ...state,
+            isEntityDashboard: action.data
         };
         default:
             return state;

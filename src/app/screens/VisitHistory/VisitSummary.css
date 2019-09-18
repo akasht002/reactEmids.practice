@@ -317,6 +317,25 @@ button.btn.CancelSignature{
     text-align: left;
 }
 
+.VisitSummaryWidget .LeftWidget .FeedbackQuestionWidget
+{
+padding: 0px 0px 15px;
+}
+
+.VisitSummaryWidget .LeftWidget .FeedbackQuestionWidget .FeedbackAnswerWidget .form-radio
+{
+flex: 0 0 33.333333%;
+max-width: 33.333333%;
+position: relative;
+width: 100%;
+}
+
+.VisitSummaryWidget .LeftWidget .bottomTaskCompletedRange
+{
+background-color: #7A329F;
+}
+
+
 /*********************************************************************************************************************/
 
 @media (max-width: 1920px){

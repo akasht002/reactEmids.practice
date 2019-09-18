@@ -1,28 +1,41 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import DatePicker from 'react-datepicker';
 import { DATE_FORMATS } from '../../../constants/constants'
 
-export const CoreoTimePicker = props => {
-    return (
-        <Fragment>
+class CoreoTimePicker extends Component {
+    
+    clickOutside = () => {
+        this.calendar.cancelFocusInput();
+        this.calendar.setOpen(false);
+    }
+
+    render() {
+        return(
+            <Fragment>
             <div className="form-group">
-                <label className="width100"> {props.label}
+                <label className="width100" onClick={e => this.calendar.state.open && e.preventDefault()}> {this.props.label}
                     <DatePicker
-                        selected={props.startTime}
-                        onChange={props.handleChange}
-                        disabled={props.disabled}
+                        selected={this.props.startTime}
+                        onChange={this.props.handleChange}
+                        disabled={this.props.disabled}
                         showTimeSelect
                         showTimeSelectOnly
                         timeIntervals={30}
-                        dateFormat={props.dateFormat ? props.dateFormat : DATE_FORMATS.timeh_mm_a}
+                        dateFormat={this.props.dateFormat ? this.props.dateFormat : DATE_FORMATS.timeh_mm_a}
                         timeCaption="Time"
-                        timeFormat={props.dateFormat ? props.dateFormat : DATE_FORMATS.timeh_mm_a}
-                        value={props.startTime}
-                        minTime={props.minTime}
-                        maxTime={props.maxTime}
+                        timeFormat={this.props.dateFormat ? this.props.dateFormat : DATE_FORMATS.timeh_mm_a}
+                        value={this.props.startTime}
+                        minTime={this.props.minTime}
+                        maxTime={this.props.maxTime}
+                        onClickOutside={this.clickOutside}
+                        ref={r => this.calendar = r}
+                        placeholderText={this.props.placeholderText}
                     />
                 </label>
             </div>
         </Fragment>
-    )
+        );
+    }
 }
+
+export default CoreoTimePicker;

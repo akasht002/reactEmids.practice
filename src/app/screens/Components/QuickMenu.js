@@ -8,7 +8,7 @@ import { isFutureDay} from '../../utils/dateUtility'
 import { isEntityServiceProvider, getUserInfo } from '../../utils/userUtility';
 import { ModalPopup } from '../../components'
 import { formatPhoneNumber } from "../../utils/formatName"
-import { CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT } from "../../constants/constants";
+import { CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT,VISIT_TYPE } from "../../constants/constants";
 import { SERVICE_VISIT_STATUS,START_VISIT } from '../../redux/constants/constants';
 import { IN_PROGRESS } from '../Dashboard/constant'
 import { USERTYPES } from "../../constants/constants";
@@ -21,10 +21,13 @@ import {
     updateEntityServiceVisit,
     getEntityServiceProviderListSearch,
     setServiceVisitDate,
-    goToServiceVisitProcessing
+    goToServiceVisitProcessing,
+    goToAssessmentVisitProcessing
   } from "../../redux/dashboard/Dashboard/actions";
   import { saveContextData } from "../../redux/telehealth/actions";
   import { createDataStore } from '../../redux/telehealth/actions'
+  import { getEntityProcessingStatus } from '../../utils/validations'
+  import { saveScheduleType } from '../../redux/visitSelection/VisitServiceDetails/actions';
 
 
 class QuickMenu extends Component {
@@ -57,11 +60,16 @@ class QuickMenu extends Component {
 
 
     goToServiceVisits = (data) => {
+        this.props.saveScheduleType(data.visitTypeId)
         this.props.setServiceVisitDate(moment(this.state.reportDay))
         if((data.visitStatusId === START_VISIT || data.visitStatusId === IN_PROGRESS) && ( this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy)) {
           this.setState({ standByModeAlertMsg: true })
         }
-        else this.props.goToServiceVisitProcessing(data)
+        else  data.visitTypeId !== VISIT_TYPE.assessment 
+        ? 
+        this.props.goToServiceVisitProcessing(data)
+         : 
+        this.props.goToAssessmentVisitProcessing(data)
       }
 
     onClickServiceVisitAction = (conversations) => {
@@ -100,11 +108,15 @@ class QuickMenu extends Component {
     })
     let list = visitList.length > 0 ? visitList[0] : SERVICE_VISIT_STATUS[0]
     let options = [];
+    const data = {
+      visitStatusId: conversations.visitStatusId,
+      isPaymentModeEnabled: conversations.isPaymentModeEnabled,
+    }
     if(isEntityServiceProvider()){
         options = [
           <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
             onClick={(e) => this.onClickServiceVisitAction(conversations)}>
-            <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
+            <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {getEntityProcessingStatus(data)} 
           </Item>,
           <Item className='ListItem CTDashboard' key='item-1'
           onClick={(e) => { this.handlePhoneNumber(conversations) }}>
@@ -124,12 +136,13 @@ class QuickMenu extends Component {
           onClick={(e) => { this.onClickVideoConference(conversations) }}>
           <i className='iconVideoCon' /> Video Conference
       </Item>]
-      
+
         !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
         options = [ 
           <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
           onClick={(e) => this.onClickServiceVisitAction(conversations)}>
-                <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {list.label}
+                <i className={conversations.visitStatusId && list.iconImage} />
+                {getEntityProcessingStatus(data)} 
           </Item>,   
           ...commonOptions,    
         ]
@@ -200,6 +213,8 @@ function mapDispatchToProps(dispatch) {
         saveContextData: (data) => dispatch(saveContextData(data)),
         createNewConversation: data => dispatch(onCreateNewConversation(data)),
         createDataStore: data => dispatch(createDataStore(data)),
+        goToAssessmentVisitProcessing: data => dispatch(goToAssessmentVisitProcessing(data)),
+        saveScheduleType: (data) => dispatch(saveScheduleType(data))
     }
 };
 

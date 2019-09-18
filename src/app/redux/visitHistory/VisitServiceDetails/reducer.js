@@ -22,7 +22,8 @@ const defaultState = {
     historyListCount: '',
     VisitFeedback: [],
     PatientForServiceproviders: [],
-    isLoading: false
+    isLoading: false,
+    assessmentQuestionsList: []
 };
 
 const vistServiceHistoryState = (state = defaultState, action) => {
@@ -106,6 +107,11 @@ const vistServiceHistoryState = (state = defaultState, action) => {
             return {
                 ...state,
                 isLoading: action.data
+            };
+        case vistServiceHistoryDetails.getAssessmentQuestionsListSuccess:
+            return {
+                ...state,
+                assessmentQuestionsList: action.data
             };
         default:
             return state;

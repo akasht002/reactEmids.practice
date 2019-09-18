@@ -4,7 +4,10 @@ import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
+import {getUpdatedPerformTasksList} from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import _ from 'lodash';
+import { isEntityUser } from '../../../utils/userUtility';
+import { logError } from '../../../utils/logError';
 
 export const vistServiceHistoryDetails = {
     getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
@@ -23,7 +26,8 @@ export const vistServiceHistoryDetails = {
     getAllPatientForServiceProviders: "getAllPatientForServiceProviders/visitHistory",
     clearPatientForServiceProviders: "clearPatientForServiceProviders/visitHistory",
     formDirty: 'formDirty/visitHistory',
-    visitHistoryLoading: 'visitHistoryLoading/visitHistory'
+    visitHistoryLoading: 'visitHistoryLoading/visitHistory',
+    getAssessmentQuestionsListSuccess: 'getAssessmentQuestionsListSuccess/visitHistory'
 };
 
 export const visitHistoryLoading = (data) => {
@@ -72,7 +76,7 @@ export const getServiceProviders = (data) => {
 export const getVisitServiceHistoryByIdDetailSuccess = (data) => {
     return {
         type: vistServiceHistoryDetails.getVisitServiceHistoryByIdDetailSuccess,
-        data
+        data : getUpdatedPerformTasksList(data)
     }
 }
 
@@ -147,7 +151,8 @@ export function getVisitServiceHistoryByIdDetail(data) {
     return (dispatch) => {
         dispatch(getServiceRequestId(data))
         dispatch(visitHistoryLoading(true));
-        ServiceRequestGet(API.getServiceVisitsHistoryById + data).then((resp) => {
+        let getServiceVisitsHistoryById = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getSummaryDetailsForEsp : API.getServiceVisitsHistoryById
+        ServiceRequestGet(getServiceVisitsHistoryById + data).then((resp) => {
             dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data))
             resp.data && dispatch(push(Path.visitSummaryDetail))
             dispatch(visitHistoryLoading(false));
@@ -186,8 +191,10 @@ export function getSort(data) {
 
 export function getServiceProviderRating(data) {
     return (dispatch, getState) => {
+        let getRatingAndFeedback = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? 
+        API.getVisitFeedbackForEntity : API.getRatingAndFeedback
         dispatch(startLoading())
-        ServiceRequestGet(API.getRatingAndFeedback + data).then((resp) => {
+        ServiceRequestGet(getRatingAndFeedback + data).then((resp) => {
             dispatch(getSubmittedResponse(resp.data))
             dispatch(endLoading)
         }).catch((err) => {
@@ -230,7 +237,6 @@ export const getServiceTypeSuccess = (data) => {
 export function getServiceType(data) {
     return (dispatch) => {
         let serviceCategoryId = data;
-        dispatch(startLoading());
         ServiceRequestGet(API.servicerequest + `ServiceType/${serviceCategoryId}`).then((resp) => {
             let data = resp.data.map((type, index) => {
                 if (index === 0) {
@@ -242,9 +248,8 @@ export function getServiceType(data) {
                 return type;
             });
             dispatch(getServiceTypeSuccess(data))
-            dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            logError(err)
         })
 
     }
@@ -284,9 +289,11 @@ export function getHistoryListCount() {
 }
 
 export function getVisitFeedBack(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        let getVisitFeedback = (getUserInfo().isEntityServiceProvider || isEntityUser())? 
+        API.getVisitFeedbackForEntity : API.getVisitFeedback
         dispatch(startLoading());
-        ServiceRequestGet(API.getVisitFeedback + data).then((resp) => {
+        ServiceRequestGet(getVisitFeedback + data).then((resp) => {
             dispatch(getVisitFeedBackSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -313,3 +320,24 @@ export const getAllPatientForServiceProvidersSuccess = (data) => {
         data
     }
 }
+
+export const getAssessmentQuestionsListSuccess = data => {
+    return {
+        type: vistServiceHistoryDetails.getAssessmentQuestionsListSuccess,
+        data
+    }
+}
+
+export function getAssessmentQuestionsList(data) {
+    return dispatch => {
+      dispatch(startLoading())
+      return ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${data.serviceProviderId}/${data.visitId}`)
+        .then(resp => {
+          dispatch(getAssessmentQuestionsListSuccess(resp.data));
+          dispatch(endLoading())
+        })
+        .catch(err => {
+          dispatch(endLoading())
+        })
+    }
+  }

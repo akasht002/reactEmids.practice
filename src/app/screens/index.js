@@ -40,7 +40,7 @@ import Assessment from './VisitSelection/AssessmentVisitProcessing/Assessment'
 import AssessmentFeedback from './VisitSelection/AssessmentVisitProcessing/AssessmentFeedback'
 import AssessmentSummary from './VisitSelection/AssessmentVisitProcessing/AssessmentSummary'
 import Schedule from './Schedule'
-  
+import EntityDashboard from './Dashboard/EntityDashboard'
 export {
   Welcome,
   VerifyContact,
@@ -77,5 +77,6 @@ export {
   Assessment,
   AssessmentFeedback,
   AssessmentSummary,
-  Schedule
+  Schedule,
+  EntityDashboard
 }

@@ -1259,6 +1259,28 @@ color:#444;
 color: #444;
 }
 
+.vital-block
+{
+padding: 0 30px 20px 30px;
+}
+
+.vital-block p
+{
+font-size:14px;
+color:#444;
+margin-top: 0px;
+}
+
+.vital-block .CoreoAssociationHeader
+{
+font-weight:600;
+font-size: 16px;
+}
+
+.vital-block-title
+{
+padding-bottom:10px;
+}
 
 @media only screen and (max-width: 1024px) {
     .BlackoutModal .modal-content .modal-body {

@@ -12,11 +12,12 @@ import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
-import { checkNumber, getFields } from '../../../../utils/validations';
+import { checkNumber, getFields,divideIfNotZero } from '../../../../utils/validations';
 import { formatDateSingle,getSecondsFromTime } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { DATE_FORMATS,ERROR_MSG } from '../../../../constants/constants'
+import { VISIT_SUMMARY } from '../../../../redux/constants/constants'
 
 export class AssessmentSummary extends Component {
 
@@ -47,8 +48,8 @@ export class AssessmentSummary extends Component {
 
     componentDidMount() {
         if (this.props.ServiceRequestVisitId) {
-            this.props.getSummaryDetail(this.props.patientDetails.serviceRequestVisitId);
-            this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
+            this.props.getSummaryDetail(this.props.ServiceRequestVisitId);
+            this.props.getSavedSignature(this.props.ServiceRequestVisitId);
         } else {
             this.props.history.push(Path.visitServiceList)
         }
@@ -92,11 +93,12 @@ export class AssessmentSummary extends Component {
     saveSignature = () => {
         const data = this.signaturePad.toDataURL();
         if (data !== '') {
-            this.signaturePad()
+            this.setState({ isSaveBtnShown: false })
+            this.signaturePad.off();
         }
         let signatureData = {
             "patientId": this.state.summaryDetails.patient.patientId,
-            "serviceRequestVisitId": this.state.summaryDetails.serviceRequestVisitId,
+            "serviceRequestVisitId": this.state.summaryDetails.servicePlanVisitId,
             "serviceRequestId": this.state.summaryDetails.serviceRequestId,
             "rating": 0,
             "signature": data,
@@ -123,7 +125,7 @@ export class AssessmentSummary extends Component {
 
         if (this.state.signatureImage) {
             const data = {
-                serviceRequestVisitId: this.state.summaryDetails.serviceRequestVisitId,
+                serviceRequestVisitId: this.state.summaryDetails.servicePlanVisitId,
                 serviceProviderId: this.state.summaryDetails.serviceProviderId,
                 serviceRequestId: this.state.summaryDetails.serviceRequestId,
                 hourlyRate: this.state.summaryDetails.hourlyRate,
@@ -198,7 +200,7 @@ export class AssessmentSummary extends Component {
             validationContent = <span>Please save the customer signature.</span>
         }
 
-        let completedTaskPercent = Math.round((this.props.SummaryDetails.totalTaskCompleted / this.props.SummaryDetails.totalTask) * 100);
+        let completedTaskPercent =divideIfNotZero(this.props.SummaryDetails.totalTaskCompleted,this.props.SummaryDetails.totalTask) 
 
         let hour = this.props.SummaryDetails.originalTotalDuration && this.props.SummaryDetails.originalTotalDuration.substr(0, 2);
         let minutes = this.props.SummaryDetails.originalTotalDuration && this.props.SummaryDetails.originalTotalDuration.substr(3, 2);
@@ -259,7 +261,7 @@ export class AssessmentSummary extends Component {
                 {this.props.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='primaryColor m-0'>Visit Processing</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -315,18 +317,15 @@ export class AssessmentSummary extends Component {
                                 <div className="VisitSummaryWidget">
                                     <div className="LeftWidget">
                                         <div className="LeftContent">
-                                            <p className="SummaryContentTitle">Service Visit Details</p>
+                                            <p className="SummaryContentTitle">Service Details</p>
                                             <div className="row">
                                                 <div className="col-md-8">
                                                     <p className="CategoryName">
                                                         <span className="CategoryTitle">
-                                                            {this.props.SummaryDetails.serviceRequestTypeVisits &&
-                                                                getFields(
-                                                                    this.props.SummaryDetails.serviceRequestTypeVisits,
-                                                                    "serviceTypeDescription"
-                                                                )}
+                                                            Assessment
                                                         </span>
-                                                        <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span></p>
+                                                        <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span>
+                                                    </p>
                                                 </div>
                                                 <div className="col-md-4 SummaryRange">
                                                     <span className="bottomTaskName">Tasks</span>
@@ -336,10 +335,26 @@ export class AssessmentSummary extends Component {
                                                     <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                 </div>
                                             </div>
-                                            <p className="SummaryContentTitle">Payment Details</p>                                         
+                                            <p className="SummaryContentTitle">Visit Details</p>                                         
 
                                            
-                                            <p className="DisclaimerText">Disclaimer - I authorize this payment recognizing that any claim is an estimate pending the claim process</p>
+                                           <div className="row CostTableWidget">
+                                                {this.props.SummaryDetails.visitStatusId !== VISIT_SUMMARY  ?
+                                                    <span className="EditIcon" onClick={this.adjustTime} />
+                                                    :
+                                                    ''
+                                                } 
+                                                <div className="col-md-8 CostTableContainer Label">
+                                                    <p>
+                                                        <span>Total Chargeable Time (HH:MM)</span>
+                                                    </p>
+                                                </div>
+                                                <div className="col-md-4 CostTableContainer Cost">
+                                                    <p>
+                                                        <span>{this.props.SummaryDetails.originalTotalDuration}</span>                                                       
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="RightWidget">
@@ -352,7 +367,7 @@ export class AssessmentSummary extends Component {
                                                     <SignaturePad ref={ref => this.signaturePad = ref} />
                                                 }
                                             </div>
-                                            { (this.state.signatureImage === 'data:image/jpeg;base64,' || this.state.signatureImage === '') ?
+                                            { (this.props.signatureImage.signature === 'data:image/jpeg;base64,' || this.props.signatureImage.signature === '' || this.props.signatureImage.signature === null) ?
                                                 <div className="SignatureButtons">
                                                     <button className="btn btn-outline-primary CancelSignature" disabled={this.state.disableSignatureBtn} onClick={this.saveSignature}>Save</button>
                                                     <button className="btn btn-outline-primary ResetSignature" onClick={this.resetSignature}>Reset Signature</button>
@@ -363,14 +378,15 @@ export class AssessmentSummary extends Component {
                                         </div>
                                     </div>
                                 </div>
+                                {this.props.SummaryDetails.visitStatusId !== VISIT_SUMMARY  ? 
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         {getUserInfo().isEntityServiceProvider &&
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>                                           
                                         }
-                                    </div>
-                                </div>
+                                    </div> 
+                                </div> : '' }
                             </div>
                         </div>
                         
@@ -458,11 +474,13 @@ function mapStateToProps(state) {
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
         CalculationsData: state.visitSelectionState.VisitServiceProcessingState.SummaryState.CalculationsData,
         actualTimeDiff: state.visitSelectionState.VisitServiceProcessingState.SummaryState.actualTimeDiff,
-        patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
+        patientDetails: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.planDetails,
+        requestDetails: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.requestDetails,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,
         eligibilityCheck: state.visitSelectionState.VisitServiceDetailsState.VisitServiceElibilityStatus,
         signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature,
+        taskPercentage: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.taskPercentage,
     };
 };
 
