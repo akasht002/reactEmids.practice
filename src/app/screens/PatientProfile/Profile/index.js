@@ -101,8 +101,7 @@ function mapStateToProps(state) {
     showTelehealthInvite: state.telehealthState.isInvitationCame,
     patientId: state.patientProfileState.patientId,
     isLoading: state.loadingState.isLoading,
-    userType: state.patientProfileState.userType,
-    isLoading: state.loadingState.isLoading,
+    userType: state.patientProfileState.userType
   };
 };
 
