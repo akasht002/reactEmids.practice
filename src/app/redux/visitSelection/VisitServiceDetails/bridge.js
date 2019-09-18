@@ -27,5 +27,7 @@ export const VisitServiceDetails = {
     setActiveTab: 'setActiveTab/visitservicedetails',
     getfirstlastvisitdateSuccess: 'getfirstlastvisitdateSuccess/visitservicedetails',
     saveScheduleType: 'saveScheduleType/visitservicedetails',
-    setAddNewScheduledClicked: 'setAddNewScheduledClicked/visitservicedetails'
+    setAddNewScheduledClicked: 'setAddNewScheduledClicked/visitservicedetails',
+    setVisitDate: 'setVisitDate/visitservicedetails',
+    setEntityDashboard: 'setEntityDashboard/visitservicedetails'
   }

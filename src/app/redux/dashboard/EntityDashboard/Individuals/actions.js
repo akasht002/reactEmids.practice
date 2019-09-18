@@ -134,7 +134,7 @@ export function getIndividualsList(data) {
 export function getIndividualsFeedbackList(data) {
     return (dispatch) => {
         dispatch(startLoadingFeedbackList());
-        return Get(`${API.getindividualsFeedbackList}${data.patientId}/${data.serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
+        return Post(API.getindividualsFeedbackList, data).then((resp) => {
             let data = resp.data.map(res => {
                 return {
                     ...res,

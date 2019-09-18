@@ -1,17 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { getUserInfo } from '../../../utils/userUtility'
-import { isFutureDay } from '../../../utils/dateUtility'
 import { setESP } from "../../../redux/patientProfile/actions";
 import { ModalPopup, Input } from '../../../components'
 import {
-  getEntityServiceProviderList,
-  getEntityServiceProviderListSearch,
+  getEntityServiceProviderListSearch
 } from "../../../redux/dashboard/Dashboard/actions";
 import { Path } from "../../../routes";
 import { push } from "../../../redux/navigation/actions";
-import { VISIT_STATUS_ID, SERVICE_REQ_STATUS, DEFAULT_VISIT_START_TIME } from '../../../constants/constants'
+import { SERVICE_REQ_STATUS } from '../../../constants/constants'
 import _ from 'lodash'
 
 class AssignServiceProvider extends Component {

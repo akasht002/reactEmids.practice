@@ -1,7 +1,6 @@
 import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
 import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
-import _ from "lodash";
 import { SERVICE_REQ_STATUS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../utils/dateUtility';
 import { SERVICE_REQUEST_STATUS } from '../../constants/constants';
