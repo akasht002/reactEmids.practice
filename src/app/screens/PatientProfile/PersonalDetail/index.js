@@ -92,7 +92,7 @@ class PersonalDetail extends React.PureComponent {
                 </span>
               </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex profile-action-block">
               {
                 communicationData.map(item =>
                   <i className={item.className} title={item.title} onClick={() => this.performActionBasedOnTitle(item.title)}/>

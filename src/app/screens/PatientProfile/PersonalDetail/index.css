@@ -33,3 +33,8 @@ img.crop{
  }  
 .preview{border-radius: 100%;}
 .UploadProfileImageContainer > div{margin:auto;}
+
+.profile-action-block i
+{
+cursor:pointer;
+}
