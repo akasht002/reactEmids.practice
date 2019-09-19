@@ -73,7 +73,7 @@ class QuickMenu extends Component {
       }
 
     onClickServiceVisitAction = (conversations) => {
-        (!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : this.goToServiceVisits(conversations)
+        return (!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT) ? '' : this.goToServiceVisits(conversations)
       }
 
     handlePhoneNumber = data => {

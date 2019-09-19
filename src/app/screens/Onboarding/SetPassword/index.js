@@ -6,7 +6,6 @@ import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
 import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalUserAgreement, ModalPopup } from '../../../components';
 import { checkPassword } from '../../../utils/validations'
-import { endUserAgreement } from '../../../assets/templates/EndUserAgreement';
 import '../styles.css';
 import { USERTYPES } from "../../../constants/constants";
 import {getEulaContent} from '../../../redux/auth/UserAgreement/actions'
