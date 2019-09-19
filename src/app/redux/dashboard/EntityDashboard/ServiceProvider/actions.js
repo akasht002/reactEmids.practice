@@ -1,5 +1,5 @@
 import { API } from '../../../../services/api'
-import { Post, Get } from '../../../../services/http'
+import { Post } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions';
 import { VisitServiceProviderList } from './bridge';
 import { logError } from '../../../../utils/logError';
