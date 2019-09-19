@@ -680,3 +680,17 @@ export const setAddNewScheduledClicked = data => {
     data
   }
 }
+
+export const setVisitDate = data => {
+  return {
+    type: VisitServiceDetails.setVisitDate,
+    data
+  }
+}
+
+export const  setEntityDashboard = data => {
+  return {
+    type: VisitServiceDetails.setEntityDashboard,
+    data
+  }
+}
