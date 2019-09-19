@@ -5,6 +5,7 @@ import { Input } from "../../../components/Base";
 import { Locationsettings } from "../../../constants/config"
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
+import { formatContactNumberValue } from "../../../utils/validations";
 
 let elem1 = ''; let elem2 = '';
 
@@ -167,7 +168,7 @@ export class PointOfService extends Component {
                             maxlength={5}
                             type="text"
                             placeholder="Enter Zip"
-                            value={this.props.zip}
+                            value={formatContactNumberValue(this.props.zip)}
                             textChange={this.props.handelNewAddress}
                             className={
                                 'form-control ' +

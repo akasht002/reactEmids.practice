@@ -217,7 +217,7 @@ export function getStates() {
     }
 };
 
-export function getValidPatientAddress(data) {
+export function getValidPatientAddress(data,addressCallback) {
     return (dispatch, getState) => {
         let modelData = getModal(data)
         dispatch(startLoading())
@@ -228,9 +228,11 @@ export function getValidPatientAddress(data) {
             .then(resp => {
                 if (validateCoordinates(resp.data.lat, resp.data.lon)) {
                     dispatch(getValidPatientAddressSuccess(true))
+                    addressCallback(true)
                 }
                 else {
                     dispatch(getValidPatientAddressSuccess(false))
+                    addressCallback(false)
                     dispatch(setSelectedPos(0))
                 }
                 dispatch(endLoading())

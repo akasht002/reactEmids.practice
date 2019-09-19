@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import _ from 'lodash'
 import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearVisitServiceList, keywordSearchServiceRequest }
     from '../../../redux/visitSelection/VisitServiceList/actions';
-import { getServiceRequestId, setActiveTab } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getServiceRequestId, setActiveTab, resetServiceDetails } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import Search from './Search'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
@@ -17,7 +17,8 @@ import {
     VISIT_SERVICE_STATUS_NOT_HIRED,
     DEFAULT_FROM_DATE,
     DEFAULT_TO_DATE,
-    DEFAULT_PAGE_NUMBER
+    DEFAULT_PAGE_NUMBER,
+    SERVICE_REQ_STATUS
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import {
@@ -486,6 +487,10 @@ export class VisitServiceList extends Component {
         }
     }
 
+    componentWillUnmount () {
+        this.props.resetData()
+    }
+
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? (
             this.props.visitServiceList.map(serviceList => {
@@ -517,8 +522,8 @@ export class VisitServiceList extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"BlockProfileContainer " + (serviceList.serviceRequestStatus === 'Engaged' ? '' : 'noArrow')} onClick={() => {
-                                if (serviceList.serviceRequestStatus === 'Engaged') {
+                            <div className={"BlockProfileContainer " + (serviceList.statusId == SERVICE_REQ_STATUS.HIRED ? '' : 'noArrow')} onClick={() => {
+                                if (serviceList.statusId == SERVICE_REQ_STATUS.HIRED) {
                                     this.props.setPatient(serviceList.patientId)
                                     this.props.goToPatientProfile()
                                 }
@@ -694,7 +699,9 @@ function mapDispatchToProps(dispatch) {
         keywordSearchServiceRequest: data => dispatch(keywordSearchServiceRequest(data)),
         getSearchDataCount: data => dispatch(getSearchDataCount(data)),
         getSearchDataCountSuccess: () => dispatch(getSearchDataCountSuccess(DEFAULT_SEARCH_COUNT)),
-        setActiveTab: data => dispatch(setActiveTab(data))
+        setActiveTab: data => dispatch(setActiveTab(data)),
+        resetData: () => dispatch(resetServiceDetails())
+
     }
 };
 

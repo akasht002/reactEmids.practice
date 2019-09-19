@@ -10,7 +10,7 @@ import PointOfService from './Components/PointOfService';
 import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
-import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty } from "../../utils/validations";
+import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty, formatContactNumber } from "../../utils/validations";
 import { checkLength, allEqual, numbersOnly } from '../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../utils/formatName'
 import {
@@ -247,7 +247,7 @@ export class Schedule extends Component {
     }
 
     handleChangePlanType = (id) => {
-        this.setState({ planType: id })
+        this.setState({ planType: id, isInvalidAddress: false })
     }
 
     handleServiceCategory = (id) => {
@@ -297,6 +297,7 @@ export class Schedule extends Component {
             selectedOptionState: null,
             isDefaultAddress: true
         });
+        this.setState({isInvalidAddress: false})
         this.props.setSelectedPos(e.target.value)
         if (e.target.value === '0') {
             this.props.getValidPatientAddressSuccess(false)
@@ -329,14 +330,17 @@ export class Schedule extends Component {
             stateName: e.stateName,
             zip: e.zip
         }
+        this.setState({isInvalidAddress: false})
         this.props.setSelectedPos(e.addressId)
         this.props.getValidPatientAddressSuccess(validateCoordinates(e.latitude, e.longitude))
         this.isDataEntered = true;
     }
 
     handelNewAddress = (e) => {
+        let key = e.target.id
+        let value = key === "zip" ? formatContactNumber(e.target.value) : e.target.value
         this.setState({
-            [e.target.id]: e.target.value,
+            [key]: value,
             isDefaultAddress: true
         })
         this.address = {
@@ -670,11 +674,17 @@ export class Schedule extends Component {
             assessmentId: assessmentId
         }
 
-        this.props.getValidPatientAddress({ address: this.address })
-        if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
-            this.props.createOrEditAssessment({ data, address: this.address });
-        }
 
+            if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
+                this.props.createOrEditAssessment({ data, address: this.address });
+                this.setState({
+                    isInvalidAddress:false
+                })
+            }else{
+                this.setState({
+                    isInvalidAddress:true
+                })
+            }
     }
 
     savePlan = () => {
@@ -974,7 +984,7 @@ export function mapDispatchToProps(dispatch) {
         getStates: () => dispatch(getStates()),
         setSelectedPos: (data) => dispatch(setSelectedPos(data)),
         getValidPatientAddressSuccess: (data) => dispatch(getValidPatientAddressSuccess(data)),
-        getValidPatientAddress: (data) => dispatch(getValidPatientAddress(data)),
+        getValidPatientAddress: (data,addressCallback) => dispatch(getValidPatientAddress(data,addressCallback)),
         getEntityServiceProviderList: (data, selectedESPId) => dispatch(getEntityServiceProviderList(data, selectedESPId)),
         getRecurringPattern: () => dispatch(getRecurringPattern()),
         getDays: (data) => dispatch(getDays(data)),

@@ -187,6 +187,12 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             ...state,
             isAddNewScheduleClicked: action.data
         };
+        case VisitServiceDetails.resetState:
+        return{
+            ...state,
+            VisitServiceDetails: [],
+            VisitServiceSchedule: [],
+        }
         default:
             return state;
     }
