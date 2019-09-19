@@ -240,7 +240,7 @@ class PersonalDetail extends React.PureComponent {
     })
   }
 
-  togglePersonalDetails = (action, e) => {
+  togglePersonalDetails = () => {
     let checkStatus = this.checkAffiliationValue(this.state.affiliationName);
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
@@ -423,7 +423,7 @@ class PersonalDetail extends React.PureComponent {
         {ProfileDetail}
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
-          toggle={() => this.togglePersonalDetails(this, modalType)}
+          toggle={() => this.togglePersonalDetails()}
           ModalBody={modalContent}
           className='modal-lg asyncModal CertificationModal'
           modalTitle={modalTitle}
@@ -585,9 +585,11 @@ class PersonalDetail extends React.PureComponent {
                 </span>}
             </div>
           </div>
-          <div className={'width100'}>
-            {(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
-              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails.bind(this)}>Edit your profile here</span>}
+          <div className={'width100 description-block-profile'}>
+          <span className={'primaryColor'}>Description</span>
+
+            <span>{(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
+              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails()}>Edit your profile here</span>}</span>
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
@@ -630,7 +632,7 @@ class PersonalDetail extends React.PureComponent {
           <i
             name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
             className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
-            onClick={this.togglePersonalDetails}
+            onClick={this.togglePersonalDetails()}
           />}
       </div>
     )
