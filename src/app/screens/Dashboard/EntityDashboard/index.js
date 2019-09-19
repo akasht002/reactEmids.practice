@@ -91,7 +91,8 @@ class EntityDashboard extends Component {
   }
 
   render() {
-    let disableDate = (this.props.activeStatus === ENTITY_DASHBOARD_STATUS.individuals.statCard.all) &&
+    let disableDate = ((this.props.activeStatus === ENTITY_DASHBOARD_STATUS.individuals.statCard.all) ||
+    (this.props.activeStatus === ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.lowRating)) &&
       (this.state.activeTab === entityDashboardTab.individuals || this.state.activeTab === entityDashboardTab.serviceProviders)
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>

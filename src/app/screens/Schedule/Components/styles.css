@@ -1,1774 +1,1706 @@
-
 /*careteam-dashboard-filter-height*/
-.entity-height .FilterWidget.true
-{
-margin-top: 60px;
-position: fixed;
-height: calc(100vh - 60px);
+.entity-height .FilterWidget.true {
+  margin-top: 60px;
+  position: fixed;
+  height: calc(100vh - 60px);
 }
-.entity-height .ServiceRequestsWidget
-{
-height: calc(100vh - 180px);
+
+.entity-height .ServiceRequestsWidget {
+  height: calc(100vh - 180px);
 }
-.update-viewcolor
-{
-color: #8c8c8c;
-font-size: 14px;
+
+.update-viewcolor {
+  color: #8c8c8c;
+  font-size: 14px;
 }
 
 /*Update-UI-css-july2019*/
-.Plan-typebar
-{
-background: #fff;
-min-height: 60px;
-display: -ms-flexbox;
-display: flex;
--ms-flex-direction: row;
-flex-direction: row;
--ms-flex-align: center;
-align-items: center;
-margin-bottom: 20px;
--webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
+.Plan-typebar {
+  background: #fff;
+  min-height: 60px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
 }
 
-.Plan-typebar fieldset
-{
-width: 50%;
-justify-content: center;
-line-height:normal;
-vertical-align: middle;
+.Plan-typebar fieldset {
+  width: 50%;
+  justify-content: center;
+  line-height: normal;
+  vertical-align: middle;
 }
 
-.Plan-typebar fieldset label
-{
-font-size: 18px;
-color:#444;
-font-weight: 500;
-border: none;
-padding: 14px 25px 14px 50px;
-line-height: 20px;
+.Plan-typebar fieldset label {
+  font-size: 18px;
+  color: #444;
+  font-weight: 500;
+  border: none;
+  padding: 14px 25px 14px 50px;
+  line-height: 20px;
 }
 
-.Plan-typebar fieldset label .RadioBoxIcon
-{
-top: 17px;
+.Plan-typebar fieldset label .RadioBoxIcon {
+  top: 17px;
 }
 
-.Plan-typebar fieldset label:hover
-{
+.Plan-typebar fieldset label:hover {
   border: none;
 }
 
-.Plan-typebar fieldset .form-radio-input:checked ~ .form-radio-label
-{
-border: none !important;
-color:#7a329f;
+.Plan-typebar fieldset .form-radio-input:checked~.form-radio-label {
+  border: none !important;
+  color: #7a329f;
 }
 
-.Plan-typebar fieldset  .Midddle-Viewtab
-{
-width: 40%;
-display: block;
-margin: 0 auto;
-position: relative;
+.Plan-typebar fieldset .Midddle-Viewtab {
+  width: 40%;
+  display: block;
+  margin: 0 auto;
+  position: relative;
 }
 
-.Service-Cat-Typesblock
-{
-background: #fff;
-display: block;
-margin-bottom: 20px;
--webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-padding: 30px;  
-float: left;
-width: 100%;
+.Service-Cat-Typesblock {
+  background: #fff;
+  display: block;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  padding: 30px;
+  float: left;
+  width: 100%;
 }
 
 
-.Service-Cat-Typesblock .slick-list .slick-track
-{
-display:flex;
-flex-direction: row;
-justify-content:flex-start;
+.Service-Cat-Typesblock .slick-list .slick-track {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
-.Service-Cat-Typesblock-Edit{
-pointer-events: none;
-cursor: context-menu;
+.Service-Cat-Typesblock-Edit {
+  pointer-events: none;
+  cursor: context-menu;
 }
 
 .Service-Cat-Typesblock .ServicesTitle {
-font-size: 18px;
-font-weight: 400;
-color: #7a329f;
-margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #7a329f;
+  margin-bottom: 15px;
 }
 
-.Midddle-Viewtab-Edit{
-pointer-events: none;
-cursor: context-menu;
+.Midddle-Viewtab-Edit {
+  pointer-events: none;
+  cursor: context-menu;
 }
 
 .ServiceCategory .slick-slider .slick-list {
-width: 100%;
+  width: 100%;
 }
 
-.ServiceCatList input+label:hover, .Service-Cat-Typesblock .ServiceCatList input:checked+label {
-background-color: #7a329f;
+.ServiceCatList input+label:hover,
+.Service-Cat-Typesblock .ServiceCatList input:checked+label {
+  background-color: #7a329f;
 }
 
 .ServiceCatLink.CardBoxes {
-width: 160px;
-height: 170px;
-padding: 20px;
+  width: 160px;
+  height: 170px;
+  padding: 20px;
 }
+
 .ServiceCatLink {
-display: -ms-flexbox;
-display: flex;
--ms-flex-pack: center;
-justify-content: center;
--ms-flex-align: end;
-align-items: flex-end;
-text-align: center;
-font-size: 16px;
-font-weight: 600;
-margin: 0 10px;
-color: #fff;
-border-radius: 8px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 10px;
+  color: #fff;
+  border-radius: 8px;
 }
 
-.ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input+label.ServiceCatLink.CardBoxes:hover:before, .ServiceCatList input:checked+label.ServiceCatLink:before, .ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before {
-background-color: #7a329f;
-opacity: .7;
-background-image: none;
+.ServiceCatList input+label.ServiceCatLink:hover:before,
+.ServiceCatList input+label.ServiceCatLink.CardBoxes:hover:before,
+.ServiceCatList input:checked+label.ServiceCatLink:before,
+.ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before {
+  background-color: #7a329f;
+  opacity: .7;
+  background-image: none;
 }
 
-.ServiceCatList input:checked + label.ServiceCatLink.CardBoxes:before, .ServiceCatList input:checked + label.ServiceCatLink.CardBoxes:hover:before{
-background-color: #7a329f;
+.ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before,
+.ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:hover:before {
+  background-color: #7a329f;
 }
 
-.ServiceCatList input:checked + label, .ServiceCatList input + label:hover {
-background-color: #7a329f;
+.ServiceCatList input:checked+label,
+.ServiceCatList input+label:hover {
+  background-color: #7a329f;
 }
 
-.ServiceCatList input:checked + label.ServiceCatLink.CardBoxes:after{
-content: '';
-position: absolute;
-border: 1px solid #fff;
-height: calc(100% - 14px);
-width: calc(100% - 14px);
-top: 7px;
-left: 7px;
-border-radius: 5px;
--ms-border-radius: 5px;
--moz-border-radius: 5px;
--webkit-border-radius: 5px;
-z-index: 2;
+.ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:after {
+  content: '';
+  position: absolute;
+  border: 1px solid #fff;
+  height: calc(100% - 14px);
+  width: calc(100% - 14px);
+  top: 7px;
+  left: 7px;
+  border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  z-index: 2;
 }
 
 .ServiceCatLink.CardBoxes:before {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-image: -webkit-gradient(linear,left top,left bottom,from(transparent),color-stop(transparent),color-stop(rgba(0,0,0,.3)),to(rgba(0,0,0,.6)));
-background-image: -webkit-linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
-background-image: -o-linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
-background-image: linear-gradient(transparent,transparent,rgba(0,0,0,.3),rgba(0,0,0,.6));
-z-index: 1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(transparent), color-stop(rgba(0, 0, 0, .3)), to(rgba(0, 0, 0, .6)));
+  background-image: -webkit-linear-gradient(transparent, transparent, rgba(0, 0, 0, .3), rgba(0, 0, 0, .6));
+  background-image: -o-linear-gradient(transparent, transparent, rgba(0, 0, 0, .3), rgba(0, 0, 0, .6));
+  background-image: linear-gradient(transparent, transparent, rgba(0, 0, 0, .3), rgba(0, 0, 0, .6));
+  z-index: 1;
 }
 
 .ServiceCatLink.CardBoxes .SliderBtnImg {
-height: 100%;
-width: auto;
-opacity: 1;
+  height: 100%;
+  width: auto;
+  opacity: 1;
 }
 
 .SliderBtnImg {
-position: absolute;
-top: 0;
-left: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .ServiceCatLink>span {
-position: relative;
-z-index: 2;
+  position: relative;
+  z-index: 2;
 }
 
 
 
 .Service-Cat-Typesblock .slick-list:before {
-background-image: -webkit-gradient(linear,left top,right top,from(hsla(0,0%,100%,0)),to(#fff));
-background-image: -webkit-linear-gradient(left,hsla(0,0%,100%,0),#fff);
-background-image: -o-linear-gradient(left,hsla(0,0%,100%,0),#fff);
-background-image: linear-gradient(90deg,hsla(0,0%,100%,0),#fff);
+  background-image: -webkit-gradient(linear, left top, right top, from(hsla(0, 0%, 100%, 0)), to(#fff));
+  background-image: -webkit-linear-gradient(left, hsla(0, 0%, 100%, 0), #fff);
+  background-image: -o-linear-gradient(left, hsla(0, 0%, 100%, 0), #fff);
+  background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #fff);
 }
 
-.ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input:checked+label.ServiceCatLink:before, .ServiceCatList input:checked+label.ServiceCatLink:before {
-background-color: #7a329f;
-opacity: .7;
-background-image: none;
+.ServiceCatList input+label.ServiceCatLink:hover:before,
+.ServiceCatList input+label.ServiceCatLink:hover:before,
+.ServiceCatList input:checked+label.ServiceCatLink:before,
+.ServiceCatList input:checked+label.ServiceCatLink:before {
+  background-color: #7a329f;
+  opacity: .7;
+  background-image: none;
 }
 
-.ServiceCatList input+label:hover, .ServiceCatList input:checked+label {
-background-color: #7a329f;
+.ServiceCatList input+label:hover,
+.ServiceCatList input:checked+label {
+  background-color: #7a329f;
 }
 
 .ServiceCatLink {
-position: relative;
-overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
-.ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input+label.ServiceCatLink:hover:before, .ServiceCatList input:checked+label.ServiceCatLink:before, .ServiceCatList input:checked+label.ServiceCatLink:before {
-background-color: #7a329f;
-opacity: .7;
-background-image: none;
+.ServiceCatList input+label.ServiceCatLink:hover:before,
+.ServiceCatList input+label.ServiceCatLink:hover:before,
+.ServiceCatList input:checked+label.ServiceCatLink:before,
+.ServiceCatList input:checked+label.ServiceCatLink:before {
+  background-color: #7a329f;
+  opacity: .7;
+  background-image: none;
 }
 
 .ServiceCatList input:checked+label.ServiceCatLink:after {
-content: "";
-position: absolute;
-border: 1px solid #fff;
-height: calc(100% - 14px);
-width: calc(100% - 14px);
-top: 7px;
-left: 7px;
-border-radius: 5px;
--ms-border-radius: 5px;
--moz-border-radius: 5px;
--webkit-border-radius: 5px;
-z-index: 2;
+  content: "";
+  position: absolute;
+  border: 1px solid #fff;
+  height: calc(100% - 14px);
+  width: calc(100% - 14px);
+  top: 7px;
+  left: 7px;
+  border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  z-index: 2;
 }
 
-.Service-Cat-Typesblock .ServiceCategory
-{
-margin-bottom: 30px;
+.Service-Cat-Typesblock .ServiceCategory {
+  margin-bottom: 30px;
 }
 
-.Service-typesTitle
-{
-width: 100%;
-display: block;
-float: left;
+.Service-typesTitle {
+  width: 100%;
+  display: block;
+  float: left;
 }
 
-.Service-typesTitle span:nth-child(1){
-float: left;
-width: 40%;
+.Service-typesTitle span:nth-child(1) {
+  float: left;
+  width: 40%;
 }
 
-.Service-typesTitle  span:nth-child(2)
-{
-float: right;
-width: 14%;
+.Service-typesTitle span:nth-child(2) {
+  float: right;
+  width: 14%;
 }
 
-.Service-typesTitle span h5
-{
-display: inline-block;
-font-size: 13px;
-font-weight: 400;
-color: #7a329f;
-text-decoration: underline;
-cursor: pointer;
-width:50%;
-text-align: right;    
+.Service-typesTitle span h5 {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 400;
+  color: #7a329f;
+  text-decoration: underline;
+  cursor: pointer;
+  width: 50%;
+  text-align: right;
 }
 
-.ProfileContentWidget .ServiceTypesWidget.PostSR
-{
-width: 100%;
-display: block;
-float: left;
+.ProfileContentWidget .ServiceTypesWidget.PostSR {
+  width: 100%;
+  display: block;
+  float: left;
 }
 
 .ServiceTypeLink {
-width: 100%;
-padding: 90px 10px 20px;
-background-color: #fff;
-border: 1px solid #d1d1d1;
-border-radius: 6px;
+  width: 100%;
+  padding: 90px 10px 20px;
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  border-radius: 6px;
 }
 
 .ServiceTypeImg img {
-height: 100%;
-width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
-.ServiceTypeIcon:after, .ServiceTypeImg {
-position: absolute;
-width: 40px;
-height: 40px;
-top: 40px;
-margin: 0 auto;
-left: 0;
-right: 0;
+.ServiceTypeIcon:after,
+.ServiceTypeImg {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 40px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 }
 
-.schdule-postblock
-{
-background: #fff;
-display: block;
-margin-bottom: 20px;
--webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-padding: 30px;  
-float: left;
-width: 100%;  
+.schdule-postblock {
+  background: #fff;
+  display: block;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  padding: 30px;
+  float: left;
+  width: 100%;
 }
 
-.ServiceTypesSlider .slick-list .ServiceTypeList
-{
-height:170px;
-margin-bottom: 0px;
+.ServiceTypesSlider .slick-list .ServiceTypeList {
+  height: 170px;
+  margin-bottom: 0px;
 }
 
-.ServicesTitle
-{
-font-size: 18px;
-font-weight: 400;
-color: #7a329f;
-margin-bottom: 25px;
+.ServicesTitle {
+  font-size: 18px;
+  font-weight: 400;
+  color: #7a329f;
+  margin-bottom: 25px;
 }
 
-.schdule-typeblock
-{
-display: block;
-float: left;
-position: relative; 
-margin-bottom: 25px;
+.schdule-typeblock {
+  display: block;
+  float: left;
+  position: relative;
+  margin-bottom: 25px;
 }
 
 
-.schdule-typeblock.col-md-6:last-child
-{
-padding-right: 0px;
+.schdule-typeblock.col-md-6:last-child {
+  padding-right: 0px;
 }
 
-.schdule-typeblock fieldset
-{
-width:100%;
-position: relative;
+.schdule-typeblock fieldset {
+  width: 100%;
+  position: relative;
 }
 
-fieldset  .form-radio {
-margin: 0;
+fieldset .form-radio {
+  margin: 0;
 }
 
-.form-radio-input:checked ~ .RadioBoxIcon, .form-radio-input:checked ~ .form-radio-label {
-border: 1px solid #7a329f !important;
+.form-radio-input:checked~.RadioBoxIcon,
+.form-radio-input:checked~.form-radio-label {
+  border: 1px solid #7a329f !important;
 }
 
-.form-radio-input:checked~.form-radio-label,  .form-radio-input:checked~label .RadioBoxIcon, .form-radio-label:hover~label .RadioBoxIcon {
-border: 1px solid #7a329f;
+.form-radio-input:checked~.form-radio-label,
+.form-radio-input:checked~label .RadioBoxIcon,
+.form-radio-label:hover~label .RadioBoxIcon {
+  border: 1px solid #7a329f;
 }
+
 .form-radio label .RadioBoxIcon {
-position: absolute;
-height: 15px;
-width: 15px;
-left: 20px;
-top: 20px;
-border: 1px solid #707070;
-background-color: #fff;
-border-radius: 100%;
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  left: 20px;
+  top: 20px;
+  border: 1px solid #707070;
+  background-color: #fff;
+  border-radius: 100%;
 }
 
 .form-radio-input:checked~label .RadioBoxIcon:before {
-content: "";
-position: relative;
-height: 7px;
-width: 7px;
-top: 3px;
-left: 3px;
-display: block;
-background-color: #7a329f;
-border-radius: 100%;
+  content: "";
+  position: relative;
+  height: 7px;
+  width: 7px;
+  top: 3px;
+  left: 3px;
+  display: block;
+  background-color: #7a329f;
+  border-radius: 100%;
 }
 
 
 
-.form-radio-label:hover, .ServiceCatLink:hover, .ServiceTasks label:hover, .ServiceTypeLink:hover {
-cursor: pointer;
+.form-radio-label:hover,
+.ServiceCatLink:hover,
+.ServiceTasks label:hover,
+.ServiceTypeLink:hover {
+  cursor: pointer;
 }
 
 .RadioBoxIcon {
-position: absolute;
-height: 15px;
-width: 15px;
-left: 20px;
-top: 19px;
-border: 1px solid #707070;
-background-color: #fff;
-border-radius: 100%;
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  left: 20px;
+  top: 19px;
+  border: 1px solid #707070;
+  background-color: #fff;
+  border-radius: 100%;
 }
 
 .form-radio-input {
-position: absolute;
-left: 0;
-opacity: 0;
-z-index: 1000;
-} 
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  z-index: 1000;
+}
 
 .form-radio-label:hover {
-border: 1px solid #7a329f;
+  border: 1px solid #7a329f;
 }
 
-.full-block-scheduleDate
-{
-width: 100%;
-display: flex;
-clear: both;
-flex-direction: row;
-justify-content: flex-start;
-align-items: center;
-border: 1px solid #e1e1e1;
-border-radius: 4px;
--moz-border-radius: 4px;
--webkit-border-radius: 4px;
-padding: 30px 30px;
-padding-bottom:0px;
-margin-top: 0px;
-margin-left: 15px;
-margin-right: 15px;
-margin-bottom: 5px;
+.full-block-scheduleDate {
+  width: 100%;
+  display: flex;
+  clear: both;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  padding: 30px 30px;
+  padding-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 5px;
 }
 
-.full-block-scheduleDate .react-datepicker__header--time
-{
-display:none;
+.full-block-scheduleDate .react-datepicker__header--time {
+  display: none;
 }
 
 
-.form-radio-input:checked ~ label .RadioBoxIcon:before {
-content: '';
-position: relative;
-height: 7px;
-width: 7px;
-top: 3px;
-left: 3px;
-display: block;
-background-color: #7a329f;
-border-radius: 100%;
+.form-radio-input:checked~label .RadioBoxIcon:before {
+  content: '';
+  position: relative;
+  height: 7px;
+  width: 7px;
+  top: 3px;
+  left: 3px;
+  display: block;
+  background-color: #7a329f;
+  border-radius: 100%;
 }
 
-.date-blockview
-{
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-align-items: flex-start;
+.date-blockview {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-.full-block-scheduleDate .form-group:nth-child(1)
-{
-width: 100%;
-display: block;
-max-width: 50%;
-flex: inherit;
+.full-block-scheduleDate .form-group:nth-child(1) {
+  width: 100%;
+  display: block;
+  max-width: 50%;
+  flex: inherit;
 }
 
-.form-group2block
-{
-display: flex;
-flex-direction: row;
-justify-content: flex-start;
-align-items: center;
-clear: both;
-margin-top: 0px;
-width: 50%;
-flex-wrap: wrap;
+.form-group2block {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  clear: both;
+  margin-top: 0px;
+  width: 50%;
+  flex-wrap: wrap;
 }
 
-.form-group2block .form-group
-{
-flex: 0 0 33.333333%;
-max-width: 33.333333%;
+.form-group2block .form-group {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
 }
 
-.date-blockview .form-group2block .form-group
-{
-flex:initial !important;
-max-width:100% !important;
+.date-blockview .form-group2block .form-group {
+  flex: initial !important;
+  max-width: 100% !important;
 }
 
-.start-rightdate .full-block .form-group
-{
-flex:initial !important;
-max-width:100% !important;
+.start-rightdate .full-block .form-group {
+  flex: initial !important;
+  max-width: 100% !important;
 }
 
-.form-group2block .form-group:nth-child(3)
-{
-margin-right: 0px; 
+.form-group2block .form-group:nth-child(3) {
+  margin-right: 0px;
 }
 
-.form-group2block  .react-datepicker-wrapper
-{
-margin-top: 15px;
+.form-group2block .react-datepicker-wrapper {
+  margin-top: 15px;
 }
 
-.form-group2block .form-group .react-datepicker__input-container
-{
-background-image: none;
-padding-left: 25px;
+.form-group2block .form-group .react-datepicker__input-container {
+  background-image: none;
+  padding-left: 25px;
 }
 
-.form-group2block .form-group h4
-{
-color: #444444;
-display: inline-block;
-margin-bottom: 0.5rem;
-width: 100%;
-font-weight: 600;
-font-size: 1rem;
-line-height: 1.5;
-text-align: left;
-font-family: 'Open Sans', sans-serif !important;
+.form-group2block .form-group h4 {
+  color: #444444;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: left;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
-.form-group2block .form-group h5
-{
-color: #444444;
-display: block;
-font-weight: 400;
-font-size: 16px;
-line-height: 1.5;
-text-align: left;
-font-family: 'Open Sans', sans-serif !important;
-white-space: nowrap;
+.form-group2block .form-group h5 {
+  color: #444444;
+  display: block;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+  font-family: 'Open Sans', sans-serif !important;
+  white-space: nowrap;
 }
 
-.form-group2block .form-group .react-datepicker__input-container input, .form-group2block .form-group .react-datepicker__input-container input:focus
-{
-outline: none;
-border: none;
-border-bottom: 1px solid #e1e1e1;
-width: 100%;
-font-size: 15px;
-line-height: 35px;
+.form-group2block .form-group .react-datepicker__input-container input,
+.form-group2block .form-group .react-datepicker__input-container input:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #e1e1e1;
+  width: 100%;
+  font-size: 15px;
+  line-height: 35px;
 }
 
-.form-group2block .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list
-{
-padding: 0px;
+.form-group2block .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
+  padding: 0px;
 }
 
-.form-group2block .react-datepicker__current-month, .react-datepicker-time__header
-{
-color: #ffffff;
+.form-group2block .react-datepicker__current-month,
+.react-datepicker-time__header {
+  color: #ffffff;
 }
 
-.form-group2block .form-group .react-datepicker-wrapper .react-datepicker__input-container:before
-{
-content: '';
-width: 16px;
-height: 16px;
-position: absolute;
-left: 0px;
-opacity: 0.5;
-margin-top: 9px;
-background: url('../../../assets/images/timer-icon.svg') no-repeat center;
+.form-group2block .form-group .react-datepicker-wrapper .react-datepicker__input-container:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 0px;
+  opacity: 0.5;
+  margin-top: 9px;
+  background: url('../../../assets/images/timer-icon.svg') no-repeat center;
 }
 
-.form-group2block .form-group .react-datepicker-wrapper .react-datepicker__input-container:after
-{
-content: '';
-width: 15px;
-height: 15px;
-position: absolute;
-right: -2px;
-opacity: 0.5;
-background: url('../../../assets/images/drop-down-arrow.png') no-repeat center;
-cursor: pointer;
+.form-group2block .form-group .react-datepicker-wrapper .react-datepicker__input-container:after {
+  content: '';
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: -2px;
+  opacity: 0.5;
+  background: url('../../../assets/images/drop-down-arrow.png') no-repeat center;
+  cursor: pointer;
 }
 
-.full-block-scheduleDate  .start-rightdate .form-group
-{
-width: 100% !important;
-max-width: 100%;
+.full-block-scheduleDate .start-rightdate .form-group {
+  width: 100% !important;
+  max-width: 100%;
 }
 
 /*left-recurringpattern*/
-.left-recurringpattern
-{
-width: 100%;
-display: block;
+.left-recurringpattern {
+  width: 100%;
+  display: block;
 }
 
-.left-recurringpattern span.width100
-{
-font-weight: 600;
-color: #444;
-margin-bottom: 0.5rem;
-display: block;
-margin-bottom: 15px;
+.left-recurringpattern span.width100 {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.5rem;
+  display: block;
+  margin-bottom: 15px;
 }
 
-.recurr_pattern_radioblock
-{
-display: table-cell;
-padding-right: 20px;
-padding-bottom: 15px;
-width: auto;
+.recurr_pattern_radioblock {
+  display: table-cell;
+  padding-right: 20px;
+  padding-bottom: 15px;
+  width: auto;
 }
 
 
-.recurr_pattern_radioblock fieldset label
-{
-color:#8c8c8c;
-font-size: 15px;
-font-family: 'Open Sans', sans-serif !important;
-font-weight: 500;
-padding-left: 40px;
-border: none;
+.recurr_pattern_radioblock fieldset label {
+  color: #8c8c8c;
+  font-size: 15px;
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 500;
+  padding-left: 40px;
+  border: none;
 }
 
-.every-dayblock
-{
-display: flex;
-width: 100%;
-justify-content: flex-start;
-align-items: center;
-flex-direction: row;
-padding-left:26px;
+.every-dayblock {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 26px;
 }
 
-.every-dayblock fieldset label
-{
-color:#444;
-font-size: 15px;
-font-family: 'Open Sans', sans-serif !important;
-font-weight: 500;
-padding-left: 15px;
-padding-right: 15px;
+.every-dayblock fieldset label {
+  color: #444;
+  font-size: 15px;
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 500;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-.every-dayblock input, .right-monthblock input
-{
-outline: none;
-border: none;
-border-bottom: 1px solid #e1e1e1;
-width:auto;
-text-align: center;
-font-weight: 600;
-font-size: 15px;
+.every-dayblock input,
+.right-monthblock input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #e1e1e1;
+  width: auto;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
 }
 
-.every-dayblock input:focus, .right-monthblock input:focus
-{
-border-bottom: 1px solid #7a329f;
+.every-dayblock input:focus,
+.right-monthblock input:focus {
+  border-bottom: 1px solid #7a329f;
 }
 
-.right-monthblock input
-{
-margin: 0;
-z-index: 1000;
+.right-monthblock input {
+  margin: 0;
+  z-index: 1000;
 }
 
-.week-column
-{
-display: block;
-width: 100%;
-margin-top: 20px;
-float: left;
+.week-column {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  float: left;
 }
 
-.parent-col
-{
-display: block !important;
-width: 100% !important;
-border-radius: 0px !important;
-border: navajowhite !important;
-margin-right: 0px !important;
-height: auto !important; 
-float: none;
+.parent-col {
+  display: block !important;
+  width: 100% !important;
+  border-radius: 0px !important;
+  border: navajowhite !important;
+  margin-right: 0px !important;
+  height: auto !important;
+  float: none;
 }
 
-.week-column fieldset
-{
-display: block;
-margin-right: 18px;
-float: left;
-cursor: pointer;
-position: relative;
+.week-column fieldset {
+  display: block;
+  margin-right: 18px;
+  float: left;
+  cursor: pointer;
+  position: relative;
 }
 
-.ServiceTypesWidget.PostSR
-{
-background: #fff;
-margin-bottom: 20px;
--webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-padding: 30px;
+.ServiceTypesWidget.PostSR {
+  background: #fff;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  padding: 30px;
 }
 
-.ServiceTypesWidget.PostSR .ServiceType.WhiteBG
-{
-margin-bottom: 0px;
-margin-top: 10px;
+.ServiceTypesWidget.PostSR .ServiceType.WhiteBG {
+  margin-bottom: 0px;
+  margin-top: 10px;
 }
 
 .POSAddressSlider .slick-list .AddressCardWidget .AddressPOS span {
-display: table;
+  display: table;
 }
 
 .POSAddressSlider .slick-list .AddressCardWidget .AddressPOS span i {
-display: table-cell;
+  display: table-cell;
 }
 
 .POSAddressSlider .slick-list .AddressCardWidget .AddressPOS span i {
-min-width: 100px;
+  min-width: 100px;
 }
 
 /*Pont-of-service-css*/
 .updateBigAddress {
-width: 100%;
-overflow-x: hidden;
-white-space: nowrap;
-height: auto;
--o-text-overflow: ellipsis;
-text-overflow: ellipsis;
-display: table;
-font-family: Open Sans,sans-serif;
-color: #444;
-font-size: 14px;
+  width: 100%;
+  overflow-x: hidden;
+  white-space: nowrap;
+  height: auto;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  display: table;
+  font-family: Open Sans, sans-serif;
+  color: #444;
+  font-size: 14px;
 }
 
 .updateBigAddress i {
-display: table-cell;
-min-width: 100px;
-font-weight: 600;
-font-style: normal;
+  display: table-cell;
+  min-width: 100px;
+  font-weight: 600;
+  font-style: normal;
 }
 
 .updateBigAddress div {
-width: 188px;
-overflow-x: hidden;
-white-space: nowrap;
-height: auto;
--o-text-overflow: ellipsis;
-text-overflow: ellipsis;
+  width: 188px;
+  overflow-x: hidden;
+  white-space: nowrap;
+  height: auto;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
-.AddressCardWidget .AddressPOS span, .WizardList .WizardItems {
-font-family: Open Sans,sans-serif;
+.AddressCardWidget .AddressPOS span,
+.WizardList .WizardItems {
+  font-family: Open Sans, sans-serif;
 }
 
-.CustomPOS .form-group, .OccurrencesContent .form-group {
-margin-top: 0!important;
+.CustomPOS .form-group,
+.OccurrencesContent .form-group {
+  margin-top: 0 !important;
 }
 
 .posAddressValidationError {
-Font-size: 17px;
-Color: #c04e59;
-Font-weight: 600;
-display: block;
-margin-top: 7px;
-margin-bottom: 16px;
-padding-left: 26px;
+  Font-size: 17px;
+  Color: #c04e59;
+  Font-weight: 600;
+  display: block;
+  margin-top: 7px;
+  margin-bottom: 16px;
+  padding-left: 26px;
 }
 
 .ServiceTypesWidget.PostSR .POSAddressSlider {
-margin-bottom:20px;
+  margin-bottom: 20px;
 }
 
 .feedbackDesc {
-color: #8c8c8c;
-font-size: 14px;
+  color: #8c8c8c;
+  font-size: 14px;
 }
 
-.ServiceTypesWidget .feedbackForm .form-group label
-{
-display: none;
+.ServiceTypesWidget .feedbackForm .form-group label {
+  display: none;
 }
 
-.bottom-blockbtn
-{
-display: flex !important;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-background: none!important;
-box-shadow: none !important;
-padding-top: 0px !important;
-padding-left: 0px !important;
-padding-right: 0px !important;
+.bottom-blockbtn {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: none !important;
+  box-shadow: none !important;
+  padding-top: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
-.Service-Cat-Typesblock .ServiceTypesWidget.PostSR
-{
-padding: 0;
-box-shadow: none;
-width: 100%;
-background: none;
-float: left;
-display: block;
-margin-bottom: 0;
+.bottom-blockbtn .ml-auto .btn {
+  padding: 6px 24px !important;
 }
 
-.left-block1-shedule
-{
-width: 50% !important;
-margin-right:20px;
-padding-bottom:7px !important;
-height: calc(100% - 358px);
+.Service-Cat-Typesblock .ServiceTypesWidget.PostSR {
+  padding: 0;
+  box-shadow: none;
+  width: 100%;
+  background: none;
+  float: left;
+  display: block;
+  margin-bottom: 0;
 }
 
-.right-block2-shedule
-{
-width: 48% !important;
-padding-bottom:0px !important;
+.left-block1-shedule {
+  width: 50% !important;
+  margin-right: 20px;
+  padding-bottom: 7px !important;
+  height: calc(100% - 358px);
 }
 
-.right-block2-shedule .slick-list .slick-track
-{
-display:flex;
-flex-direction:row;
-justify-content:flex-start;
+.right-block2-shedule {
+  width: 48% !important;
+  padding-bottom: 0px !important;
+}
+
+.right-block2-shedule .slick-list .slick-track {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 .form-radio-label {
-position: relative;
-font-size: 16px;
-color: #444;
-width: 100%;
-padding: 15px 25px 15px 50px;
-border: 1px solid #e1e1e1;
-border-radius: 4px;
--webkit-touch-callout: none;
--webkit-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+  position: relative;
+  font-size: 16px;
+  color: #444;
+  width: 100%;
+  padding: 15px 25px 15px 50px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .recurr_pattern_radioblock .form-radio-input:checked~.form-radio-label {
-border: none!important;
+  border: none !important;
 }
 
 .recurr_pattern_radioblock .form-radio-label {
-color: #444;
-font-family: Open Sans,sans-serif;
+  color: #444;
+  font-family: Open Sans, sans-serif;
 }
 
-.recurr_pattern_radioblock .RadioBoxIcon
-{
-left: 0px;
+.recurr_pattern_radioblock .RadioBoxIcon {
+  left: 0px;
 }
 
-.recurr_pattern_radioblock  .form-radio-label:hover {
-border:none;
+.recurr_pattern_radioblock .form-radio-label:hover {
+  border: none;
 }
 
 
 .form-radio-input:checked~label .RadioBoxIcon:before {
-content: "";
-position: relative;
-height: 7px;
-width: 7px;
-top: 3px;
-left: 3px;
-display: block;
-background-color: #7a329f;
-border-radius: 100%;
+  content: "";
+  position: relative;
+  height: 7px;
+  width: 7px;
+  top: 3px;
+  left: 3px;
+  display: block;
+  background-color: #7a329f;
+  border-radius: 100%;
 }
 
-.right-monthblock .left-radioblock, .last-block-monthwise .left-radioblock  
-{
-position: relative;
-margin-bottom: 35px;
+.right-monthblock .left-radioblock,
+.last-block-monthwise .left-radioblock {
+  position: relative;
+  margin-bottom: 35px;
 }
 
-.right-monthblock, .last-block-monthwise
-{
-max-width: 100%;
-width: 100%;
-display: flex;
-position: relative;
-margin-bottom: 15px;
-margin-top: 15px;
-flex-direction: row;
-justify-content: space-between;
-align-items: flex-start;
+.right-monthblock,
+.last-block-monthwise {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.last-block-monthwise fieldset label, .last-block-monthwise fieldset .text__c-txt___14ptu, .last-block-monthwise fieldset input
-{
-max-width: 16%;
-display: block;
-float: left;
-position: relative;
-margin-right: 18px;
-font-size: 15px;
-} 
-
-.last-block-monthwise fieldset :last-child
-{
-margin-right: 0px;
+.last-block-monthwise fieldset label,
+.last-block-monthwise fieldset .text__c-txt___14ptu,
+.last-block-monthwise fieldset input {
+  max-width: 16%;
+  display: block;
+  float: left;
+  position: relative;
+  margin-right: 18px;
+  font-size: 15px;
 }
 
-.last-block-monthwise fieldset .text__c-txt___14ptu .onBoardingSelect
-{
-padding: 0px 80px;
-min-height: 25px;
-text-align: center;
-padding-left: 0;
-font-size: 14px;
-line-height: 22px;
+.last-block-monthwise fieldset :last-child {
+  margin-right: 0px;
 }
 
-.last-block-monthwise fieldset .text__c-txt___14ptu .onBoardingSelect .Select-placeholder
-{
-line-height: 25px;
-font-size: 14px;
-font-weight: 400;
-color: #8c8c8c;
-text-align:left;
+.last-block-monthwise fieldset .text__c-txt___14ptu .onBoardingSelect {
+  padding: 0px 80px;
+  min-height: 25px;
+  text-align: center;
+  padding-left: 0;
+  font-size: 14px;
+  line-height: 22px;
 }
 
-.last-block-monthwise fieldset input
-{
-outline: none;
-border: none;
-border-bottom: 1px solid #e1e1e1;
-width:auto;
-text-align: center;
-font-weight: 600;
-font-size: 15px;
-max-width: 10%;
-cursor: pointer;
+.last-block-monthwise fieldset .text__c-txt___14ptu .onBoardingSelect .Select-placeholder {
+  line-height: 25px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #8c8c8c;
+  text-align: left;
 }
 
-.last-block-monthwise fieldset input:focus
-{
-border-bottom: 1px solid #7a329f;
+.last-block-monthwise fieldset input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #e1e1e1;
+  width: auto;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  max-width: 10%;
+  cursor: pointer;
 }
 
-.right-monthblock fieldset label, .last-block-monthwise fieldset label
-{
-color: #444;
-font-size: 14px;
-font-family: 'Open Sans', sans-serif !important;
-font-weight: 500;
-border: none;
+.last-block-monthwise fieldset input:focus {
+  border-bottom: 1px solid #7a329f;
 }
 
-.right-monthblock fieldset, .last-block-monthwise fieldset
-{
-width: 100%;
-display: table;
-vertical-align: top;
+.right-monthblock fieldset label,
+.last-block-monthwise fieldset label {
+  color: #444;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 500;
+  border: none;
 }
 
-.right-colblock input
-{
-max-width: 110px;
+.right-monthblock fieldset,
+.last-block-monthwise fieldset {
+  width: 100%;
+  display: table;
+  vertical-align: top;
 }
 
-fieldset.right-colblock
-{
-margin-left: 27px;
+.right-colblock input {
+  max-width: 110px;
 }
 
-fieldset.right-colblock2
-{
-margin-left: 0px;  
+fieldset.right-colblock {
+  margin-left: 27px;
 }
 
-.left-radioblock fieldset .form-radio-label
-{
-padding: 13px;
-border: none;
+fieldset.right-colblock2 {
+  margin-left: 0px;
 }
 
-.left-radioblock fieldset .form-radio-input:checked~.form-radio-label
-{
-border: none !important;
+.left-radioblock fieldset .form-radio-label {
+  padding: 13px;
+  border: none;
 }
 
-.left-radioblock fieldset .form-radio-label:hover
-{
-border: none !important;
+.left-radioblock fieldset .form-radio-input:checked~.form-radio-label {
+  border: none !important;
 }
 
-.left-radioblock fieldset .RadioBoxIcon
-{
-left: 0;
-right: 0;
-margin-left: 0;
-display: block;
-position: absolute;
-top: 5px;
-cursor: pointer;
+.left-radioblock fieldset .form-radio-label:hover {
+  border: none !important;
 }
 
-.last-block-monthwise fieldset .text__c-txt__input--select___7_VcN:not(select):before
-{
-top: 4px;
-width: 8px;
+.left-radioblock fieldset .RadioBoxIcon {
+  left: 0;
+  right: 0;
+  margin-left: 0;
+  display: block;
+  position: absolute;
+  top: 5px;
+  cursor: pointer;
 }
 
-.last-block-monthwise fieldset .form-radio-label
-{
-margin-top: -14px;
+.last-block-monthwise fieldset .text__c-txt__input--select___7_VcN:not(select):before {
+  top: 4px;
+  width: 8px;
 }
 
-.clearfix
-{
-clear: both;
+.last-block-monthwise fieldset .form-radio-label {
+  margin-top: -14px;
+}
+
+.clearfix {
+  clear: both;
 }
 
 /*my-plan-view*/
-.shadow-style
-{
-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
--webkit-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
--moz-box-shadow: 0 0 10px rgba(0,0,0, 0.09);
-padding: 20px;
-background: #fff;
+.shadow-style {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+  padding: 20px;
+  background: #fff;
 }
 
-.schedule-listblock
-{
-display: block;
-background: #f7f7f7;
-padding: 10px;
-border-radius: 4px;
-margin-bottom: 10px;
-cursor: pointer;
+.schedule-listblock {
+  display: block;
+  background: #f7f7f7;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 
-.schedule-listblock:hover
-{
-background:#f2ebf3;
+.schedule-listblock:hover {
+  background: #f2ebf3;
 }
 
-.schedule-listblock fieldset
-{
-width: 100%;
-display: block;
+.schedule-listblock fieldset {
+  width: 100%;
+  display: block;
 }
 
-.schedule-listblock fieldset input
-{
-position: absolute;
+.schedule-listblock fieldset input {
+  position: absolute;
 }
 
-.schedule-listblock fieldset label.SR-types-label
-{
-width: 85%;
-clear: both;
--o-text-overflow: ellipsis;
-text-overflow: ellipsis;
-overflow: hidden;
-white-space: nowrap;
-font-size:14px;
-color: #7a329f;
-font-weight: 600;
-margin-bottom: 0px;
+.schedule-listblock fieldset label.SR-types-label {
+  width: 85%;
+  clear: both;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 14px;
+  color: #7a329f;
+  font-weight: 600;
+  margin-bottom: 0px;
 }
 
-.schedule-listblock fieldset span.SR-cat
-{
-width: 85%;
-clear: both;
-position: relative;
-display: block;
-float: left;
-margin-left: 0;
-font-size:14px;
-color: #8c8c8c;
-font-weight: 500;  
+.schedule-listblock fieldset span.SR-cat {
+  width: 85%;
+  clear: both;
+  position: relative;
+  display: block;
+  float: left;
+  margin-left: 0;
+  font-size: 14px;
+  color: #8c8c8c;
+  font-weight: 500;
 }
 
-.schedule-listblock fieldset span label
-{
-width: 100% !important;
+.schedule-listblock fieldset span label {
+  width: 100% !important;
 }
 
 /*assign-SP-card*/
 
-.assign-sp-block
-{
-display: flex;
-flex-wrap: wrap;
-margin-right: -15px !important;
-margin-left: -15px !important;
-max-height: calc(100vh - 300px);
-overflow-y: auto
-}
-.assign-SP-card
-{
-flex: 0 0 33.333333%;
-max-width: 33.333333%;
-position: relative;
-width: 100%;
-padding-right: 15px;
-padding-left: 15px;
-margin-bottom: 15px;
+.assign-sp-block {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px !important;
+  margin-left: -15px !important;
+  max-height: calc(100vh - 300px);
+  overflow-y: auto
 }
 
-.assign-SP-card .card
-{
-padding: 15px;
-z-index: 1000;
-cursor: pointer;
-border-radius: 0px;
-border: 1px solid #7a329f !important;
+.assign-SP-card {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-bottom: 15px;
 }
 
-.assign-SP-card fieldset
-{
-display: block;
-width: 100%;
-position: relative;
-cursor: pointer;
-z-index: 1000;
-}
-.assign-SP-card  .checkblock
-{
-float: left;
-display: block;
+.assign-SP-card .card {
+  padding: 15px;
+  z-index: 1000;
+  cursor: pointer;
+  border-radius: 0px;
+  border: 1px solid #7a329f !important;
 }
 
-.assign-SP-card .Spname-image-block
-{
-width: 80%;
-float: left;
-display: flex;
-padding-left: 50px;
-flex-direction: row;
-justify-content: flex-start;
-align-content: center;
--o-text-overflow: ellipsis;
-text-overflow: ellipsis;
-overflow: hidden;
-white-space: nowrap;
+.assign-SP-card fieldset {
+  display: block;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+  z-index: 1000;
 }
 
-.assign-SP-card fieldset .Spname-image-block label
-{
-color: #212529;
-font-size: 15px;
-font-family: 'Open Sans', sans-serif !important;
-font-weight: 600;
-border: none;
-padding-left: 15px;
-display: block;
-text-overflow: ellipsis;
-overflow: hidden;
-white-space: nowrap;
-margin-bottom: 5px;
+.assign-SP-card .checkblock {
+  float: left;
+  display: block;
 }
 
-.assign-SP-card fieldset .Spname-image-block img
-{
-width: 67px;
-height: 67px;
-max-width: 100%;
-position: relative;
-border-radius: 50%;
--moz-border-radius: 50%;
--webkit-border-radius: 50%;
-display: block;
+.assign-SP-card .Spname-image-block {
+  width: 80%;
+  float: left;
+  display: flex;
+  padding-left: 50px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.assign-SP-card fieldset .Spname-image-block label {
+  color: #212529;
+  font-size: 15px;
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 600;
+  border: none;
+  padding-left: 15px;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+
+.assign-SP-card fieldset .Spname-image-block img {
+  width: 67px;
+  height: 67px;
+  max-width: 100%;
+  position: relative;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: block;
 
 }
 
-.assign-SP-card fieldset .SP-actionblock
-{
-width: 10%;
-float: left;
-display: block;
+.assign-SP-card fieldset .SP-actionblock {
+  width: 10%;
+  float: left;
+  display: block;
 }
 
 
-.SP-nameblock
-{
-position: relative;
-text-overflow: ellipsis;
-overflow: hidden;
-white-space: nowrap;
-padding-top: 10px;
+.SP-nameblock {
+  position: relative;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-top: 10px;
 }
 
-.SP-nameblock span
-{
-display: block;
-padding-left: 15px;
+.SP-nameblock span {
+  display: block;
+  padding-left: 15px;
 }
+
 /*default-css-for-radiobox-checkbox*/
-.checkblock input{
-position: absolute;
-opacity: 0;
-z-index: 1000;
-cursor: pointer;
-width: 100%;
-height: 100%;
+.checkblock input {
+  position: absolute;
+  opacity: 0;
+  z-index: 1000;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
-.checkblock .RadioBoxIcon
-{
-left: 0;
-top: 0;
-margin-top: 25px;
-margin-left: 7px;
-z-index: 1000;
-cursor: pointer;
+
+.checkblock .RadioBoxIcon {
+  left: 0;
+  top: 0;
+  margin-top: 25px;
+  margin-left: 7px;
+  z-index: 1000;
+  cursor: pointer;
 }
 
 .checkblock .form-radio-input:checked~label .RadioBoxIcon:before {
-content: '';
-position: absolute;
-height:20px;
-width: 20px;
-top: -4px;
-left: -3px;
-display: block;
-border: none;
-background-image: url('../../../assets/images/checked.svg');
-background-size: 60%;
-background-position: center;
-background-repeat: no-repeat;
-border-radius: 100%;
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  top: -4px;
+  left: -3px;
+  display: block;
+  border: none;
+  background-image: url('../../../assets/images/checked.svg');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 100%;
 }
 
-.checkblock .form-radio-input:checked ~ .RadioBoxIcon{
-  border:none !important;
+.checkblock .form-radio-input:checked~.RadioBoxIcon {
+  border: none !important;
 }
 
 /*end-default-css-for-radiobox-checkbox*/
 
-.week-column .parent-col fieldset .form-radio-label
-{
-width: 50px;
-height: 50px;
-border-radius: 50%;
-display: block;
-padding: 0;
-text-align: center;
-line-height: 50px;
-cursor: pointer;
+.week-column .parent-col fieldset .form-radio-label {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: block;
+  padding: 0;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
 }
 
-.week-column .parent-col .form-radio-input:checked ~ .form-radio-label {
-border: 1px solid #7a329f !important;
-color: #fff;
-background: #793a95;
+.week-column .parent-col .form-radio-input:checked~.form-radio-label {
+  border: 1px solid #7a329f !important;
+  color: #fff;
+  background: #793a95;
 }
 
 .left-radioblock .form-radio-input:checked~.form-radio-label {
-border: none!important;
-}
-.left-radioblock  .RadioBoxIcon {
-left: 0px;
-right: 0;
-margin-left: 0;
-display: block;
-position: absolute;
-top: 5px;
-cursor: pointer;
+  border: none !important;
 }
 
-.left-radioblock  label.form-radio-label {
-font-size: 15px;
-font-family: 'Open Sans', sans-serif !important;
-font-weight: 500;
-padding-left: 0px;
-border: none;
+.left-radioblock .RadioBoxIcon {
+  left: 0px;
+  right: 0;
+  margin-left: 0;
+  display: block;
+  position: absolute;
+  top: 5px;
+  cursor: pointer;
 }
 
-.left-radioblock  input {
-margin: 0;
-z-index: 1000;
+.left-radioblock label.form-radio-label {
+  font-size: 15px;
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 500;
+  padding-left: 0px;
+  border: none;
 }
 
-.left-radioblock  input {
-outline: none;
-border: none;
-border-bottom: 1px solid #e1e1e1;
-width: auto;
-text-align: center;
-font-weight: 600;
-font-size: 15px;
-cursor: pointer;
+.left-radioblock input {
+  margin: 0;
+  z-index: 1000;
+}
+
+.left-radioblock input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #e1e1e1;
+  width: auto;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
 }
 
 .options {
-top: 12px;
-cursor: pointer;
+  top: 12px;
+  cursor: pointer;
 }
 
-.options:before{
-content: "...";
-position: absolute;
-color: #9f9f9f;
-right: -15px;
-top: -9px;
-font-size: 24px;
--webkit-transform: rotate(90deg);
--ms-transform: rotate(90deg);
-transform: rotate(90deg);
+.options:before {
+  content: "...";
+  position: absolute;
+  color: #9f9f9f;
+  right: -15px;
+  top: -9px;
+  font-size: 24px;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .options div.SelectDropDown {
-background-color: transparent;
-font-size: 0;
-border: 0;
-width: 50px;
-padding: 0;
+  background-color: transparent;
+  font-size: 0;
+  border: 0;
+  width: 50px;
+  padding: 0;
 }
 
 .options div.SelectDropDown:before {
-top: 4px;
+  top: 4px;
 }
 
 .options div.SelectDropDown:after {
-content: "";
-position: absolute;
-width: 100%;
-height: 100%;
-top: 0;
-left: 0;
-font-size: 14px;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  font-size: 14px;
 }
 
-.search-block_SP
-{
-display: flex;
-align-items: center;
-height: 30px;
-color: #7a329f;
-font-size: 14px;
-margin-bottom: 25px;
-padding-left: 10px;
+.search-block_SP {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  color: #7a329f;
+  font-size: 14px;
+  margin-bottom: 25px;
+  padding-left: 10px;
 }
 
-.search-block_SP span.ProfileIconSearch
-{
-position: absolute;
-display: block;
-right: 0px;
-margin-right: 33px;
+.search-block_SP span.ProfileIconSearch {
+  position: absolute;
+  display: block;
+  right: 0px;
+  margin-right: 33px;
 }
 
 .search-block_SP div.ProfileSearchContainer.true {
-width: calc(100% - 66px);
-right: 35px;
-background:#fff;
+  width: calc(100% - 66px);
+  right: 35px;
+  background: #fff;
 }
 
-.search-block_SP div.ProfileSearchContainer.true input
-{
-background:#fff;
+.search-block_SP div.ProfileSearchContainer.true input {
+  background: #fff;
 }
 
-.search-block_SP .ProfileSearchContainer .closeBtn
-{
-background:#fff;
+.search-block_SP .ProfileSearchContainer .closeBtn {
+  background: #fff;
 }
 
-.full-block-scheduleDate .MsgWithIcon:before
-{
-margin-top: 2px;
+.full-block-scheduleDate .MsgWithIcon:before {
+  margin-top: 2px;
 }
 
-.full-block-scheduleDate .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item
-{
-padding: 5px 0px;
-text-align: center;
+.full-block-scheduleDate .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
+  padding: 5px 0px;
+  text-align: center;
 }
 
-.pd-left-0
-{
-padding-left: 0px !important;
+.pd-left-0 {
+  padding-left: 0px !important;
 }
 
-.full-block-scheduleDate .react-datepicker__time-container
-{
-width: 80px; 
+.full-block-scheduleDate .react-datepicker__time-container {
+  width: 80px;
 }
 
-.full-block-scheduleDate  .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box
-{
-width: 80px; 
+.full-block-scheduleDate .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+  width: 80px;
 }
 
-.tab-content .card.SPDetails
-{
-margin-top: 20px;
+.tab-content .card.SPDetails {
+  margin-top: 20px;
 }
 
-.my-patientblock
-{
-width: 86%;
-display: block;
-position: relative;
-margin: 0 auto;
-margin-top: -126px;
+.my-patientblock {
+  width: 86%;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  margin-top: -126px;
 }
 
-.colorblock
-{
-width: 100%;
-display: block;
-background:#682d8b;
-margin:0 auto;
-height: 131px;
-position: relative;
+.colorblock {
+  width: 100%;
+  display: block;
+  background: #682d8b;
+  margin: 0 auto;
+  height: 131px;
+  position: relative;
 }
 
-.left-block1-shedule .full-block-scheduleDate
-{
-padding: 0;
-border: none;
+.left-block1-shedule .full-block-scheduleDate {
+  padding: 0;
+  border: none;
 }
 
-.left-block1-shedule .full-block-scheduleDate .form-group:nth-child(1)
-{
-max-width: 100%;
+.left-block1-shedule .full-block-scheduleDate .form-group:nth-child(1) {
+  max-width: 100%;
 }
 
-.left-block1-shedule .form-group2block
-{
-width: 100%;
+.left-block1-shedule .form-group2block {
+  width: 100%;
 }
 
-.form-group2block .form-group .react-datepicker__input-container input:disabled
-{
-background-color: #fff;
+.form-group2block .form-group .react-datepicker__input-container input:disabled {
+  background-color: #fff;
 }
 
 .customechk {
-display: block;
-position: relative;
-padding-left: 35px;
-margin-bottom: 0px;
-cursor: pointer;
-font-size: 14px;
--webkit-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 0px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .customechk input {
-position: absolute;
-opacity: 0;
-cursor: pointer;
-height: 0;
-width:100%;
-height: 100%;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .checkmark {
-position: absolute;
-top: 3px;
-left: 0;
-height: 17px;
-width: 17px;
-border-radius: 4px;
-border: 1px solid #7a329f;
-background: #fff;
+  position: absolute;
+  top: 3px;
+  left: 0;
+  height: 17px;
+  width: 17px;
+  border-radius: 4px;
+  border: 1px solid #7a329f;
+  background: #fff;
 }
 
 
-.customechk input:checked ~ .checkmark {
-background-color: #fff;
+.customechk input:checked~.checkmark {
+  background-color: #fff;
 }
 
 .checkmark:after {
-content: "";
-position: absolute;
-display: none;
+  content: "";
+  position: absolute;
+  display: none;
 }
 
-.customechk input:checked ~ .checkmark:after {
-display: block;
+.customechk input:checked~.checkmark:after {
+  display: block;
 }
 
 .customechk .checkmark:after {
-left: 5px;
-top: 2px;
-width: 5px;
-height: 10px;
-border: solid #7a329f;
-border-width: 0 2px 2px 0;
--webkit-transform: rotate(45deg);
--ms-transform: rotate(45deg);
-transform: rotate(45deg);
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid #7a329f;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
-.edit-block
-{
-width: 15%;
-display: inline-block;
-position: absolute;
-right: 0;
-padding-top: 6px;
-cursor: pointer;
+.edit-block {
+  width: 15%;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  padding-top: 6px;
+  cursor: pointer;
 }
 
-.edit-block img
-{
-width: 14px;
-float: right;
-display: block;
-height: auto;
-max-width: 100%;
+.edit-block img {
+  width: 14px;
+  float: right;
+  display: block;
+  height: auto;
+  max-width: 100%;
 }
 
-.full-block-view
-{
-display: block;
-width: 100%;
-float: left;
+.full-block-view {
+  display: block;
+  width: 100%;
+  float: left;
 }
 
-.customechk .BlockImageDetailsName
-{
-font-size: 14px;
-font-weight: 600;
-padding-bottom: 0px;
-line-height: 20px;
-}
-  /*my-plan-edit-model*/
-
-.my-plan-editmodel .full-block-scheduleDate
-{
-padding: 0;
-margin: 0;
-border: none;
+.customechk .BlockImageDetailsName {
+  font-size: 14px;
+  font-weight: 600;
+  padding-bottom: 0px;
+  line-height: 20px;
 }
 
-.my-plan-editmodel .full-block-scheduleDate .form-group:nth-child(1)
-{
-max-width: 100%;
+/*my-plan-edit-model*/
+
+.my-plan-editmodel .full-block-scheduleDate {
+  padding: 0;
+  margin: 0;
+  border: none;
 }
 
-.my-plan-editmodel .date-blockview .form-group2block
-{
-width: 100%;
+.my-plan-editmodel .full-block-scheduleDate .form-group:nth-child(1) {
+  max-width: 100%;
 }
 
-.my-plan-editmodel  .form-group2block .react-datepicker-wrapper
-{
-margin-top: 5px;
+.my-plan-editmodel .date-blockview .form-group2block {
+  width: 100%;
 }
 
-.my-plan-editmodel .assign-SP-card
-{
-flex: 0 0 50%;
-max-width: 50%;
+.my-plan-editmodel .form-group2block .react-datepicker-wrapper {
+  margin-top: 5px;
 }
 
-.my-plan-editmodel .assign-sp-block
-{
-z-index: 0;
-width:100%;
+.my-plan-editmodel .assign-SP-card {
+  flex: 0 0 50%;
+  max-width: 50%;
 }
 
-.form-group2block .react-datepicker-wrapper
-{
-margin-top: 5px;  
-}
-.full-block-scheduleDate .react-datepicker-popper
-{
-z-index:10000;
+.my-plan-editmodel .assign-sp-block {
+  z-index: 0;
+  width: 100%;
 }
 
-.full-block-scheduleDate .react-datepicker--time-only
-{
-right: -100px;
+.form-group2block .react-datepicker-wrapper {
+  margin-top: 5px;
 }
 
-.top-search-blocksp
-{
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-width:100%;
+.full-block-scheduleDate .react-datepicker-popper {
+  z-index: 10000;
 }
 
-.my-plan-editmodel .search-block_SP div.ProfileSearchContainer.true
-{
-width: 100%;
-right: 0;
+.full-block-scheduleDate .react-datepicker--time-only {
+  right: -100px;
+}
+
+.top-search-blocksp {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.my-plan-editmodel .search-block_SP div.ProfileSearchContainer.true {
+  width: 100%;
+  right: 0;
 }
 
 
-.full-block-view .form-check textarea
-{
-color:#444;
+.full-block-view .form-check textarea {
+  color: #444;
 }
 
 .CustomPOS input.form-control::placeholder {
-color:#8c8c8c;
-font-size:16px;
-opacity: 1;
+  color: #8c8c8c;
+  font-size: 16px;
+  opacity: 1;
 }
 
-.CustomPOS  input.form-control:-ms-input-placeholder {
-color:#8c8c8c;
+.CustomPOS input.form-control:-ms-input-placeholder {
+  color: #8c8c8c;
 }
 
-.CustomPOS  input.::-ms-input-placeholder { 
-color:#8c8c8c;
+.CustomPOS input.::-ms-input-placeholder {
+  color: #8c8c8c;
 }
 
 
 .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
-color: #8c8c8c;
-opacity: 1;
-font-size:16px;
+  color: #8c8c8c;
+  opacity: 1;
+  font-size: 16px;
 }
 
 .full-block-scheduleDate .react-datepicker__input-container input:-ms-input-placeholder {
-color: #8c8c8c;
+  color: #8c8c8c;
 }
 
-.full-block-scheduleDate .react-datepicker__input-container input::-ms-input-placeholder { 
-color: #8c8c8c;
+.full-block-scheduleDate .react-datepicker__input-container input::-ms-input-placeholder {
+  color: #8c8c8c;
 }
 
 /*IE_11_&_IE_10*/
-@media all and (-ms-high-contrast:none)
-{
-.bottom-blockbtn { display: block !important;  } /* IE10 */
-*::-ms-backdrop,  .bottom-blockbtn { display: block !important;  } /* IE11 */
+@media all and (-ms-high-contrast:none) {
+  .bottom-blockbtn {
+    display: block !important;
+  }
 
-.bottom-blockbtn .pull-left{ float: left !important;  }
-*::-ms-backdrop, .bottom-blockbtn .pull-left{ float: left !important;  }
+  /* IE10 */
+  *::-ms-backdrop,
+  .bottom-blockbtn {
+    display: block !important;
+  }
 
-.full-block-scheduleDate :nth-child(1).form-group{ flex:none !important}
-*::-ms-backdrop, .full-block-scheduleDate :nth-child(1).form-group{flex:none !important;}
+  /* IE11 */
 
-.form-group2block .react-datepicker__input-container input {height:calc(2.25rem + 2px);} 
-*::-ms-backdrop, .form-group2block .react-datepicker__input-container input{height:calc(2.25rem + 2px);} 
+  .bottom-blockbtn .pull-left {
+    float: left !important;
+  }
 
-.bottom-blockbtn .ml-auto {float:right;} 
-*::-ms-backdrop, .bottom-blockbtn .ml-auto {float:right;} 
+  *::-ms-backdrop,
+  .bottom-blockbtn .pull-left {
+    float: left !important;
+  }
 
-.last-block-monthwise .left-radioblock  fieldset .form-radio-input {margin-right:0px;} 
-*::-ms-backdrop, .last-block-monthwise .left-radioblock  fieldset .form-radio-input {margin-right:0px;} 
+  .full-block-scheduleDate :nth-child(1).form-group {
+    flex: none !important
+  }
 
-.last-block-monthwise .right-colblock2 {padding-left:18px; margin-top: -10px;} 
-*::-ms-backdrop, .last-block-monthwise .right-colblock2 {padding-left:18px; margin-top: -10px;} 
+  *::-ms-backdrop,
+  .full-block-scheduleDate :nth-child(1).form-group {
+    flex: none !important;
+  }
 
-} 
+  .form-group2block .react-datepicker__input-container input {
+    height: calc(2.25rem + 2px);
+  }
 
+  *::-ms-backdrop,
+  .form-group2block .react-datepicker__input-container input {
+    height: calc(2.25rem + 2px);
+  }
 
-.ServiceRequestsWidget .ServiceRequestBoard{
-width: 50%;
+  .bottom-blockbtn .ml-auto {
+    float: right;
+  }
+
+  *::-ms-backdrop,
+  .bottom-blockbtn .ml-auto {
+    float: right;
+  }
+
+  .last-block-monthwise .left-radioblock fieldset .form-radio-input {
+    margin-right: 0px;
+  }
+
+  *::-ms-backdrop,
+  .last-block-monthwise .left-radioblock fieldset .form-radio-input {
+    margin-right: 0px;
+  }
+
+  .last-block-monthwise .right-colblock2 {
+    padding-left: 18px;
+    margin-top: -10px;
+  }
+
+  *::-ms-backdrop,
+  .last-block-monthwise .right-colblock2 {
+    padding-left: 18px;
+    margin-top: -10px;
+  }
+
 }
 
-ul.show-more-assignSP
-{
-margin: 0 auto;
-padding-left: 0;
-width: 100%;
+
+.ServiceRequestsWidget .ServiceRequestBoard {
+  width: 50%;
 }
 
-ul.show-more-assignSP li
-{
-height: 40px;
-display: block;
-line-height: 40px;
-padding: 0;
-text-align: center;
-width: 100%;
+ul.show-more-assignSP {
+  margin: 0 auto;
+  padding-left: 0;
+  width: 100%;
 }
 
-.CustomPOS .MsgWrongIcon:before
-{
-margin-top: 3px;
+ul.show-more-assignSP li {
+  height: 40px;
+  display: block;
+  line-height: 40px;
+  padding: 0;
+  text-align: center;
+  width: 100%;
 }
 
-
-.full-block-scheduleDate .col-md-6 .MsgWrongIcon
-{
-clear: both;
+.CustomPOS .MsgWrongIcon:before {
+  margin-top: 3px;
 }
 
 
-.full-block-scheduleDate .react-datepicker__input-container input
-{
-font-size:15px;
+.full-block-scheduleDate .col-md-6 .MsgWrongIcon {
+  clear: both;
 }
 
-.top-search-blocksp .ServicesTitle
-{
-margin-bottom:10px;  
+
+.full-block-scheduleDate .react-datepicker__input-container input {
+  font-size: 15px;
 }
 
-.top-search-blocksp .search-block_SP
-{
-padding-top: 20px;
+.top-search-blocksp .ServicesTitle {
+  margin-bottom: 10px;
 }
 
-.right-block2-shedule .CustomPOS
-{
-margin:0 auto;
+.top-search-blocksp .search-block_SP {
+  padding-top: 20px;
 }
+
+.right-block2-shedule .CustomPOS {
+  margin: 0 auto;
+}
+
 .assign-SP-card .options {
-top: 15px;
-position: absolute;
-right: 29px;
-display: block;
-height: 24px;
-width: 10px;
-overflow: hidden;
-background: none;
-list-style: none;
-z-index: 1000;;
+  top: 15px;
+  position: absolute;
+  right: 29px;
+  display: block;
+  height: 24px;
+  width: 10px;
+  overflow: hidden;
+  background: none;
+  list-style: none;
+  z-index: 1000;
+  ;
 }
 
-.assign-SP-card .options:before{
-content: "...";
-position: absolute;
-color: #9f9f9f;
-left: 0;
-top: -6px;
-font-size: 24px;
--webkit-transform: rotate(90deg);
--ms-transform: rotate(90deg);
-transform: rotate(90deg);
+.assign-SP-card .options:before {
+  content: "...";
+  position: absolute;
+  color: #9f9f9f;
+  left: 0;
+  top: -6px;
+  font-size: 24px;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
-.add-new-scheduleblock .scrollarea-content 
-{
-height:100%;
-overflow-y:auto;
+.add-new-scheduleblock .scrollarea-content {
+  height: 100%;
+  overflow-y: auto;
 }
+
 /*1920-screen-or-other-screens*/
-@media (min-width: 1367px)
-{
-.assign-sp-block {
-max-height: calc(100vh - 417px);
-}
+@media (min-width: 1367px) {
+  .assign-sp-block {
+    max-height: calc(100vh - 417px);
+  }
 
-.left-block1-shedule
-{
-height: calc(100% - 671px);
-}
+  .left-block1-shedule {
+    height: calc(100% - 671px);
+  }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

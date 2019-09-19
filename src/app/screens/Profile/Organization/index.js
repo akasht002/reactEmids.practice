@@ -411,7 +411,9 @@ export class Organization extends React.PureComponent {
                 <a href={'https://' + this.props.personalDetail.entity.websiteUrl} target="_blank">{this.props.personalDetail.entity.websiteUrl}</a> : ''}
             </h3>
           </div>
-          <div className={'width100'}>
+          <div className={'width100 description-block-profile'}>
+          <span className={'primaryColor'}>Description</span>
+          <span>
             {this.props.personalDetail &&
               this.props.personalDetail.description !== ''
               ? this.props.personalDetail.description
@@ -422,6 +424,7 @@ export class Organization extends React.PureComponent {
               >
                 Edit your profile here
                 </span>}
+             </span>   
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
