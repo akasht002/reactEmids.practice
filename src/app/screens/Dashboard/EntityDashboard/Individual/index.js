@@ -51,6 +51,7 @@ import {
 import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
 import Search from '../Components/Search'
+import { setServiceProviderFeedbackTab } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 
 export class Individuals extends Component {
   constructor(props) {
@@ -309,10 +310,6 @@ export class Individuals extends Component {
     })
   }
 
-  goToPgVisitSummary = (data) => {
-    this.props.getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId)
-  }
-
   pageNumberChangeFeedback = (pageNumber) => {
     this.setState({ activePageFeedback: pageNumber })
     const model = {
@@ -372,6 +369,7 @@ export class Individuals extends Component {
   }
 
   goToPgVisitSummary = (data) => {
+    this.props.setServiceProviderFeedbackTab(false)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
@@ -633,7 +631,8 @@ export function mapDispatchToProps(dispatch) {
     resetContracts: data => dispatch(resetContracts(data)),
     clearStates: () => dispatch(clearStates()),
     setVisitDate: data => dispatch(setVisitDate(data)),
-    setEntityDashboard: data => dispatch(setEntityDashboard(data))
+    setEntityDashboard: data => dispatch(setEntityDashboard(data)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data))
   }
 }
 

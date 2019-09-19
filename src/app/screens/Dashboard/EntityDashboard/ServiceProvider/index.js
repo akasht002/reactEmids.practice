@@ -8,7 +8,8 @@ import {
   setActiveSubTab,
   getPointofServicedata,
   getFeedbackAlertDetails,
-  savePaginationNumber
+  savePaginationNumber,
+  setServiceProviderFeedbackTab
 } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions'
 import { setActiveStatusForAllTab, getGender, clearGenderType } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
@@ -308,6 +309,7 @@ export class ServiceProvider extends Component {
   }
 
   goToSpVisitSummary = (data) => {
+    this.props.setServiceProviderFeedbackTab(true)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
@@ -589,6 +591,7 @@ function mapDispatchToProps(dispatch) {
     setESP: data => dispatch(setESP(data)),
     getGender: () => dispatch(getGender()),
     clearGenderType: data => dispatch(clearGenderType(data)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data))
   }
 }
 

@@ -7,7 +7,8 @@ const defaultState = {
     geologicalPosition: [],
     feedbackServiceVisits: [],
     isLoadingFeedbackList: false,
-    savedPaginationNumber: 1
+    savedPaginationNumber: 1,
+    isServiceProviderFeedbackTab: false
 };
 
 const VisitServiceProviderState = (state = defaultState, action) => {
@@ -59,7 +60,12 @@ const VisitServiceProviderState = (state = defaultState, action) => {
             return {
                 ...state,
                 savedPaginationNumber: action.data
-            };    
+            };  
+        case VisitServiceProviderList.setServiceProviderFeedbackTab:
+        return {
+            ...state,
+            isServiceProviderFeedbackTab: action.data
+        };      
         default:
             return state;
     }
