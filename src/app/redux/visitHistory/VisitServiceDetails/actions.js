@@ -7,6 +7,7 @@ import { Path } from '../../../routes';
 import {getUpdatedPerformTasksList} from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import _ from 'lodash';
 import { isEntityUser } from '../../../utils/userUtility';
+import { logError } from '../../../utils/logError';
 
 export const vistServiceHistoryDetails = {
     getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
@@ -236,7 +237,6 @@ export const getServiceTypeSuccess = (data) => {
 export function getServiceType(data) {
     return (dispatch) => {
         let serviceCategoryId = data;
-        dispatch(startLoading());
         ServiceRequestGet(API.servicerequest + `ServiceType/${serviceCategoryId}`).then((resp) => {
             let data = resp.data.map((type, index) => {
                 if (index === 0) {
@@ -248,9 +248,8 @@ export function getServiceType(data) {
                 return type;
             });
             dispatch(getServiceTypeSuccess(data))
-            dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            logError(err)
         })
 
     }

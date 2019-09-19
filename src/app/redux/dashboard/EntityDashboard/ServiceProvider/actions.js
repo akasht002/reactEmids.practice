@@ -6,6 +6,7 @@ import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
+import { formatPhoneNumber } from '../../../../utils/formatName';
 
 export const setActiveSubTab = data => {
   return {
@@ -78,7 +79,8 @@ export function getVisitServiceProviderTableList(data) {
           let data = resp.data.map(res => {
             return {
               ...res,
-              name: `${res.firstName} ${res.lastName}`
+              name: `${res.firstName} ${res.lastName}`,
+              phoneNumber: formatPhoneNumber(res.phoneNumber)
             }
           })
           dispatch(getServiceProviderTableListSuccess(data))
@@ -123,7 +125,7 @@ export const getGeologicalPositionSuccess = data => {
 export function getFeedbackAlertDetails(data) {
   return dispatch => {
     dispatch(startFeedbackAlertLoading())
-    return Get(`${API.getServiceProviderFeedbackList}${data.serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
+    return Post(API.getServiceProviderFeedbackList, data)
       .then(resp => {
         if (resp && resp.data) {
           dispatch(getFeedbackAlertDetailsSuccess(resp.data))

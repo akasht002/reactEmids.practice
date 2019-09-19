@@ -37,7 +37,9 @@ import { allIndividuals, feedbackIndividuals, visitIndividuals } from './gridHea
 import { CoreoPagination } from '../../../../components/LevelOne/CoreoPagination'
 import {
   getServiceRequestId,
-  setActiveTab
+  setActiveTab,
+  setVisitDate,
+  setEntityDashboard
 } from '../../../../redux/visitSelection/VisitServiceDetails/actions'
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
@@ -330,6 +332,12 @@ export class Individuals extends Component {
         this.props.setPatient(data.patientId)
         this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
         this.props.goToVisitServiceDetails();
+        let visitDate = {
+          startVisitDateForWeb: this.props.fromDate,
+          endVisitDateForWeb: this.props.toDate
+        }
+        this.props.setEntityDashboard(true)
+        this.props.setVisitDate(visitDate)
         break;
       case caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.feedback):
         const model = {
@@ -623,7 +631,9 @@ export function mapDispatchToProps(dispatch) {
     getGender: () => dispatch(getGender()),
     clearGenderType: data => dispatch(clearGenderType(data)),
     resetContracts: data => dispatch(resetContracts(data)),
-    clearStates: () => dispatch(clearStates())
+    clearStates: () => dispatch(clearStates()),
+    setVisitDate: data => dispatch(setVisitDate(data)),
+    setEntityDashboard: data => dispatch(setEntityDashboard(data))
   }
 }
 

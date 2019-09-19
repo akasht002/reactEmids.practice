@@ -29,7 +29,8 @@ const defaultState = {
     activeTab: serviceRequestDetailsTab.request,
     visitDate: {},
     savedScheduleType: '',
-    isAddNewScheduleClicked: false
+    isAddNewScheduleClicked: false,
+    isEntityDashboard: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -186,6 +187,16 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         return {
             ...state,
             isAddNewScheduleClicked: action.data
+        };
+        case VisitServiceDetails.setVisitDate:
+        return {
+            ...state,
+            visitDate: action.data
+        };
+        case VisitServiceDetails.setEntityDashboard:
+        return {
+            ...state,
+            isEntityDashboard: action.data
         };
         default:
             return state;
