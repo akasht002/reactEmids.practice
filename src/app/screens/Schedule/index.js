@@ -68,7 +68,7 @@ export class Schedule extends Component {
             monthlyMonthsSecond: '',
             selectedDaysLabel: '',
             selectedWeeksLabel: '',
-            planType: 1,
+            planType: this.props.scheduleList && this.props.scheduleList.length > 0 ? SCHEDULE_TYPE_OPTIONS.standard : SCHEDULE_TYPE_OPTIONS.assessment, 
             serviceTypeSelected: false,
             startDateSelected: false,
             pageNumber: PAGE_NO,
@@ -254,8 +254,18 @@ export class Schedule extends Component {
         } else {
             this.setState({
                 planType: id,
-                planTypeAlertPopup: false
+                planTypeAlertPopup: false,
+                isRecurring: false,
+                startDate: '',
+                endDate: '',
+                startTime: null,
+                endTime: null,
+                durationTime: null
             })
+            this.serviceTypes = [];
+            this.categoryId = SERVICE_CATEGORY.adl.id;
+            this.address = {}
+            this.espId = '';
         }
     }
 
@@ -1022,7 +1032,8 @@ export function mapStateToProps(state) {
         individualSchedulesDetails: scheduleState.individualSchedulesDetails,
         isIndividualScheduleEdit: scheduleState.isIndividualScheduleEdit,
         isAssessmentEdit: scheduleState.isAssessmentEdit,
-        assessmentDetails: scheduleState.assessmentDetails
+        assessmentDetails: scheduleState.assessmentDetails,
+        scheduleList: state.visitSelectionState.VisitServiceDetailsState.scheduleList
     }
 }
 

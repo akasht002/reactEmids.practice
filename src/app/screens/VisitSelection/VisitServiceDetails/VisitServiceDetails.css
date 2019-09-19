@@ -337,11 +337,30 @@ justify-content: left;
 {
 width:100%;
 }
-
-.right-block-view .ServiceCategoryContent
+.right_statusview
 {
-margin-top:-50px;
+position:absolute;
+right:0;
+margin-right:15px;
 }
+
+.right-block-view .btn-right-view
+{
+position: absolute;
+right: 0px;
+display:flex;
+flex-direction:row;
+justify-content:flex-start;
+}
+
+.right-block-view .btn-right-view .right_statusview
+{
+position: relative;
+right: 0px;
+margin-right: 15px;
+margin-left: 10px;
+}
+
 
 .label_viewstatus
 {
@@ -541,8 +560,18 @@ padding: 0px 25px 25px 25px;
 
 .individual-spblock-full .btn-right-view 
 {
-display: block;
-width: 100%;
+display: flex;
+width:auto;
+flex-direction: row;
+position: absolute;
+right: 0;
+padding-right:10px;
+z-index:9999;
+}
+
+.individual-spblock-full .btn-right-view .right_statusview 
+{
+position: relative;
 }
 
 .individual-spblock-full .btn-right-view .btn

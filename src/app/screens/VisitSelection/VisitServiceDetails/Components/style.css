@@ -512,3 +512,17 @@ width: 100% !important;
 max-width: 100% !important;
 flex: 0 0 100% !important;
 }
+
+.status-view-btn
+{
+border:none;
+cursor:context-menu !important;
+color:#7a329f;
+font-weight:600;
+}
+
+.status-view-btn:hover
+{
+background:transparent !important;
+color:#7a329f;
+}

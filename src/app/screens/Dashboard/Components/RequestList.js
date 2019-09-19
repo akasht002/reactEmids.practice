@@ -10,12 +10,9 @@ export const ServiceProviderRequestDetails = props => {
       .slice(props.minVal, props.maxVal)
       .map((sp, index) => {
         let patientImage = '';
-        let patientLastName = '';
         if (sp.statusId === SERVICE_REQUEST.hiredId) {
           patientImage = sp && sp.image ? sp.image : require('../../../assets/images/Blank_Profile_icon.png');
-          patientLastName = sp && sp.patientLastName;
         } else {
-          patientLastName = sp && sp.patientLastName && sp.patientLastName.charAt(0);
           patientImage = require('../../../assets/images/Blank_Profile_icon.png');
         }
         return (

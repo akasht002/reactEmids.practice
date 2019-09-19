@@ -1,7 +1,6 @@
 import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
 import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
-import _ from "lodash";
 import { SERVICE_REQ_STATUS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../utils/dateUtility';
 import { SERVICE_REQUEST_STATUS } from '../../constants/constants';
@@ -25,7 +24,7 @@ export const ServiceRequestFiltersList = {
 
 export const clearServiceRequestStatus = (data) => {
         data.map(item => {
-          item.isChecked = !(item.keyValue === SERVICE_REQUEST_STATUS.closed.keyValue || item.keyValue === SERVICE_REQUEST_STATUS.all.keyValue)              
+          return item.isChecked = !(item.keyValue === SERVICE_REQUEST_STATUS.closed.keyValue || item.keyValue === SERVICE_REQUEST_STATUS.all.keyValue)              
         })
         return {
         type: ServiceRequestFiltersList.clearServiceRequestStatus,

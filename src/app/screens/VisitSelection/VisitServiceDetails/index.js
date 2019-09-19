@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { TabContent } from 'reactstrap'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
-import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, Preloader, ModalPopup, AlertPopup } from '../../../components';
+import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, ModalPopup, AlertPopup } from '../../../components';
 import {
   getServiceRequestList,
   getVisitServiceDetails,
@@ -56,7 +56,6 @@ import Search from '../VisitServiceList/Search';
 import { getUserInfo } from '../../../services/http';
 import {
   getVisitServiceHistoryByIdDetail,
-  clearVisitServiceHistoryByIdDetail,
   getAssessmentQuestionsList
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import {
@@ -756,12 +755,6 @@ export class VisitServiceDetails extends Component {
     return (
       <Fragment>
         <AsideScreenCover>
-          {/* <div className='ProfileHeaderWidget'>
-            <div className='ProfileHeaderTitle'>
-              <h5 className='primaryColor m-0'>View Request</h5>
-            </div>
-          </div> */}
-          {this.props.isLoading && <Preloader />}
           <Scrollbars speed={2}
             smoothScrolling
             horizontal={false}

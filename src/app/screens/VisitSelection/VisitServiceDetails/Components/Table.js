@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 import { DATE_FORMATS } from '../../../../constants/constants';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
-import { PAGE_SIZE_OPTIONS, VISIT_STATUS } from '../../../../constants/constants'
+import { PAGE_SIZE_OPTIONS, VISIT_STATUS, VISIT_PROCESSING_STATUS } from '../../../../constants/constants'
 import { getServiceTypeImage } from '../../../../utils/validations'
 import { isEntityUser } from '../../../../utils/userUtility';
 import { getUserInfo } from '../../../../services/http'
@@ -58,6 +58,27 @@ const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => 
     }
 }
 
+const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
+    const data = {
+        visitStatusId: visitStatusId,
+        isPaymentModeEnabled: isPaymentModeEnabled,
+    }
+    switch (visitStatusId) {
+        case VISIT_PROCESSING_STATUS.scheduled.id:
+            return VISIT_PROCESSING_STATUS.scheduled.title
+        case VISIT_PROCESSING_STATUS.inProgress.id:
+            return VISIT_PROCESSING_STATUS.inProgress.title
+        case VISIT_PROCESSING_STATUS.completed.id:
+            return VISIT_STATUS.completed.keyValue
+        case VISIT_PROCESSING_STATUS.paymentPending.id:
+            return getEntityProcessingStatus(data)
+        case VISIT_PROCESSING_STATUS.cancelled.id:
+            return VISIT_PROCESSING_STATUS.cancelled.title
+        default:
+            return null
+    }
+}
+
 export const Table = props => {
     let isEntity = isEntityUser()
     let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
@@ -69,6 +90,8 @@ export const Table = props => {
                         {props.header.map(item => {
                             return <th>{item.label}</th>
                         })}
+                        {isEntity &&
+                            <th></th>}
                         {isEntity &&
                             <th></th>}
                         {!isEntity && <th></th>}
@@ -107,12 +130,21 @@ export const Table = props => {
                                     />
                                 </td>
                             }
-                            {!isEntity &&
+                            {!isEntity ?
                                 <td>
                                     <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
                                         onClick={() => props.navigateToparticularPageBasedonId(item)}
                                     >{renderStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}</button></div>
-                                </td>}
+                                </td>
+                                :
+                                <td>
+                                    <div class="ScheduleRowButton">
+                                        <span class={item.visitStatusId === 45 ? "btn btn-outline-primary" : "status-view-btn"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
+                                            {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
+                                        </span>
+                                    </div>
+                                </td>
+                            }
                             {
                                 isEntity && item.visitStatusId === VISIT_STATUS.startVisit.id ?
                                     <td>

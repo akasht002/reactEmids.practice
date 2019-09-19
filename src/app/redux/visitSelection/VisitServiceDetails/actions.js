@@ -111,7 +111,7 @@ export function updateServiceRequestByServiceProvider(data) {
     applyOrNotInterested: data.type
   }
   return dispatch => {
-    dispatch(startLoading())
+    //dispatch(startLoading())
     ServiceRequestPost(
       API.applyServiceRequestByServiceProvider,
       modelData
@@ -135,7 +135,7 @@ export function cancelServiceRequestByServiceProvider(data) {
     cancelledDescription: data.cancelledDescription
   }
   return dispatch => {
-    dispatch(startLoading())
+    //dispatch(startLoading())
     ServiceRequestPut(API.cancelServiceRequestByServiceProvider, model)
       .then(resp => {
         dispatch(endLoading())
@@ -154,7 +154,7 @@ export function getVisitServiceDetails(data) {
     let serviceProviderId = getUserInfo().isEntityServiceProvider ? currstate.visitSelectionState.VisitServiceDetailsState.entityServiceProviderId
       : getUserInfo().serviceProviderId
     dispatch(getServiceRequestId(data));
-    dispatch(startLoading())
+    //dispatch(startLoading())
     ServiceRequestGet(API.getServiceRequestDetails + `${data}/${serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data));
@@ -169,6 +169,10 @@ export function getVisitServiceDetails(data) {
 
 export function clearVisitServiceSchedule() {
   return dispatch => dispatch(getVisitServiceScheduleSuccess([]))
+}
+
+export function clearServiceDetails() {
+  return dispatch => dispatch(getVisitServiceDetailsSuccess([]))
 }
 
 
@@ -221,12 +225,12 @@ export function getVisitServiceSchedule(data, pageNumber, isUpdateEntitySP = fal
 
 export function getVisitServiceEligibilityStatus(data) {
   return (dispatch) => {
-    dispatch(startLoading());
+    //dispatch(startLoading());
     ThirdPartyPost(API.getServiceRequestEligibilityStatus, data).then((resp) => {
       dispatch(getVisitServiceEligibityStatusSuccess(resp.data))
-      dispatch(endLoading());
+      //dispatch(endLoading());
     }).catch((err) => {
-      dispatch(endLoading());
+      //dispatch(endLoading());
     })
   }
 };
@@ -240,12 +244,12 @@ export const getDaysSuccess = (data) => {
 
 export function getDays() {
   return (dispatch) => {
-    dispatch(startLoading());
+    //dispatch(startLoading());
     ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
       dispatch(getDaysSuccess(resp.data))
-      dispatch(endLoading());
+      //dispatch(endLoading());
     }).catch((err) => {
-      dispatch(endLoading());
+      //dispatch(endLoading());
     })
   }
 };
@@ -261,7 +265,7 @@ export function cancelInvitedServiceProvider(data) {
     cancelledDescription: data.cancelledDescription
   }
   return dispatch => {
-    dispatch(startLoading())
+    //dispatch(startLoading())
     ServiceRequestPut(API.cancelInvitedServiceProvider, model)
       .then(resp => {
         dispatch(endLoading())
@@ -283,7 +287,7 @@ export function cancelAppliedServiceProvider(data) {
     cancelledDescription: data.cancelledDescription
   }
   return dispatch => {
-    dispatch(startLoading())
+    //dispatch(startLoading())
     ServiceRequestPut(API.cancelAppliedServiceProvider + `${data.serviceRequestId}/${serviceProviderId}`, model)
       .then(resp => {
         dispatch(endLoading())
@@ -340,12 +344,12 @@ export function acceptservicerequest(data) {
 export function canInitiateConversation(data) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch) => {
-    dispatch(startLoading());
+    //dispatch(startLoading());
     ThirdPartyGet(API.canInitiateConversation + `${serviceProviderId}/${data.patient.patientId}`).then((resp) => {
       dispatch(canInitiateConversationSuccess(resp.data))
-      dispatch(endLoading());
+      //dispatch(endLoading());
     }).catch((err) => {
-      dispatch(endLoading());
+      //dispatch(endLoading());
     })
   }
 };
@@ -438,7 +442,7 @@ export function selectESP(espId) {
 
 export function getEntityServiceProviderList(data, selectedESPId = '') {
   return (dispatch, getState) => {
-      dispatch(startLoading())
+      //dispatch(startLoading())
       Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
           .then(resp => {
               let oldEspList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
@@ -482,7 +486,7 @@ export function getEntityServiceProviderListSearch(data) {
 export function getServiceRequestList(patientId) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch) => {
-    dispatch(startLoading());
+    //dispatch(startLoading());
     ServiceRequestGet(API.getNewServiceRequestList + `${patientId}/${serviceProviderId}`).then((resp) => {
       dispatch(getServiceRequestListSuccess(resp.data))
       dispatch(endLoading());
@@ -494,7 +498,7 @@ export function getServiceRequestList(patientId) {
 
 export function getSchedulesList(patientId) {
   return (dispatch) => {
-    dispatch(startLoading());
+    //dispatch(startLoading());
     let serviceProviderId = getUserInfo().serviceProviderId;
     ServiceRequestGet(API.getSchedulesList + `${patientId}/${serviceProviderId}`)
       .then(resp => {
@@ -541,7 +545,7 @@ export function getVisitList(data) {
 export function getVisitListCount(data) {
   let getVisitListCount = getUserInfo().isEntityServiceProvider ? API.getEspVisitListCount : (isEntityUser() ? API.getVisitListCount : API.getIspVisitListCount)
   return (dispatch) => {
-    dispatch(startLoading());
+    //dispatch(startLoading());
     ServiceRequestPost(getVisitListCount, data)
       .then(resp => {
         dispatch(getVisitListCountSuccess(resp.data))
@@ -555,7 +559,7 @@ export function getVisitListCount(data) {
 
 export function getVisitStatus() {
   return (dispatch) => {
-    dispatch(startLoading());
+    //dispatch(startLoading());
     ServiceRequestGet(API.getVisitStatus).then((resp) => {
       resp.data.forEach(obj => {
         let listToDelete = [61, 60];
@@ -574,7 +578,7 @@ export function getVisitStatus() {
         });
         dispatch(getVisitStatusSuccess(data))
       })
-      dispatch(endLoading());
+      //dispatch(endLoading());
     }).catch((err) => {
       dispatch(endLoading());
     })
@@ -587,7 +591,7 @@ export function updateHireStatusForServiceRequest(data) {
     engagedBy: USERTYPES.SERVICE_PROVIDER
   }
   return dispatch => {
-    dispatch(startLoading())
+    //dispatch(startLoading())
     ServiceRequestPut(API.hireServiceProvider, model)
       .then(resp => {
         dispatch(endLoading())
@@ -611,7 +615,7 @@ export function updateServiceVisit(data) {
     endTime: data.endTime
   }
   return dispatch => {
-    dispatch(startLoading())
+    //dispatch(startLoading())
     ServiceRequestPut(API.updateServiceVisit, model)
       .then(resp => {
         dispatch(endLoading())
@@ -658,11 +662,11 @@ export const setActiveTab = data => {
 
 export function getfirstlastvisitdate(data) {
   return (dispatch) => {
-    dispatch(startLoading());
+    //dispatch(startLoading());
     ServiceRequestPost(API.getfirstlastvisitdate, data)
       .then(resp => {
         dispatch(getfirstlastvisitdateSuccess(resp.data))
-        dispatch(endLoading());
+        //dispatch(endLoading());
       })
   }
 };

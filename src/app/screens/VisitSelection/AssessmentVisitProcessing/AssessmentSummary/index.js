@@ -12,7 +12,7 @@ import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
-import { checkNumber, getFields,divideIfNotZero } from '../../../../utils/validations';
+import { checkNumber,divideIfNotZero } from '../../../../utils/validations';
 import { formatDateSingle,getSecondsFromTime } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
@@ -367,7 +367,7 @@ export class AssessmentSummary extends Component {
                                                     <SignaturePad ref={ref => this.signaturePad = ref} />
                                                 }
                                             </div>
-                                            { (this.props.signatureImage.signature === 'data:image/jpeg;base64,' || this.props.signatureImage.signature === '' || this.props.signatureImage.signature === null) ?
+                                            { this.state.isSaveBtnShown && (this.props.signatureImage.signature === 'data:image/jpeg;base64,' || this.props.signatureImage.signature === '' || this.props.signatureImage.signature === null) ?
                                                 <div className="SignatureButtons">
                                                     <button className="btn btn-outline-primary CancelSignature" disabled={this.state.disableSignatureBtn} onClick={this.saveSignature}>Save</button>
                                                     <button className="btn btn-outline-primary ResetSignature" onClick={this.resetSignature}>Reset Signature</button>

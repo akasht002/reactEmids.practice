@@ -110,7 +110,7 @@ export const ScheduleType = props => {
                 </div>
             }
 
-            {props.selectedType &&
+            {props.selectedType && parseInt(props.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                 <div className="full-block-scheduleDate">
                     <div className="col-md-6  p-6">
                         <div className="left-recurringpattern">
