@@ -210,5 +210,6 @@ export const API = {
     getServiceStatus: 'ServiceRequest/LookUp/servicerequeststatus',
     getServiceProviderVisitStatus: 'ServiceProviderLookUp/visitstatus',
     getPatientVitals: 'patient/get-patient-coreo-association/',
-    getPlanVisitFeedBack: 'feedback/patient/feedbackdetails/'
+    getPlanVisitFeedBack: 'feedback/patient/feedbackdetails/',
+    getPaymentAvailability: 'Common/LookupConfig/PaymentAvailability'
 }

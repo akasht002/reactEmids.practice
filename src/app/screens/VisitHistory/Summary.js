@@ -483,7 +483,7 @@ export class VistSummary extends React.Component {
             </div>
             <div className="RightWidget">
               <div className="RightContent">
-                {!isEntity &&
+                {(!isEntity && this.props.isPaymentAvailable) &&
                   <Fragment>
                     <p className="SummaryContentTitle">Payment Details</p>
                     <div className="row CostTableWidget">
@@ -649,7 +649,8 @@ export function mapStateToProps(state) {
       .VisitFeedback,
     isLoading: state.visitHistoryState.vistServiceHistoryState.isLoading,
     savedScheduleType: state.visitSelectionState.VisitServiceDetailsState.savedScheduleType,
-    assessmentQuestionsList: state.visitHistoryState.vistServiceHistoryState.assessmentQuestionsList
+    assessmentQuestionsList: state.visitHistoryState.vistServiceHistoryState.assessmentQuestionsList,
+    isPaymentAvailable: state.visitSelectionState.VisitServiceDetailsState.isPaymentAvailable
   };
 }
 

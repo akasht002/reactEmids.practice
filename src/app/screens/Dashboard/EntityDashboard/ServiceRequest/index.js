@@ -398,7 +398,7 @@ export class ServiceRequest extends Component {
       case ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all:
         return filterTabs;
       default:
-        return filterTabs.filter(item => item.id !== '8');
+        return filterTabs.filter(item => (item.id !== '8' && item.id !== '9'));
     }
   }
 

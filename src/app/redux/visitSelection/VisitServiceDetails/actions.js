@@ -694,3 +694,22 @@ export const  setEntityDashboard = data => {
     data
   }
 }
+
+export function getPaymentAvailability() { 
+  return (dispatch) => {
+      ThirdPartyGet(API.getPaymentAvailability)          
+        .then(resp => {
+          dispatch(getPaymentAvailabilitySuccess(resp.data));
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+}
+
+export const getPaymentAvailabilitySuccess = data => {
+  return {
+      type: VisitServiceDetails.getPaymentAvailabilitySuccess,
+      data
+  }
+}

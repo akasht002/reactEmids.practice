@@ -56,11 +56,9 @@ import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat } from '../../../
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
-import './customStyle.css'
 import { getUserInfo } from '../../../services/http';
 import {
   getVisitServiceHistoryByIdDetail,
-  clearVisitServiceHistoryByIdDetail,
   getAssessmentQuestionsList
 } from '../../../redux/visitHistory/VisitServiceDetails/actions'
 import {

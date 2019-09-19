@@ -29,5 +29,6 @@ export const VisitServiceDetails = {
     saveScheduleType: 'saveScheduleType/visitservicedetails',
     setAddNewScheduledClicked: 'setAddNewScheduledClicked/visitservicedetails',
     setVisitDate: 'setVisitDate/visitservicedetails',
-    setEntityDashboard: 'setEntityDashboard/visitservicedetails'
+    setEntityDashboard: 'setEntityDashboard/visitservicedetails',
+    getPaymentAvailabilitySuccess: 'getPaymentAvailabilitySuccess/visitservicedetails'
   }
