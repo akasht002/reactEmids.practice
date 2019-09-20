@@ -4,6 +4,7 @@
     left: 0;
     height: 90px !important;
 }
+
 .circle {
     stroke: #2ab498;
     fill: none;
@@ -17,42 +18,65 @@
     stroke-width: 1;
     animation: progress 1s ease-out forwards;
 }
-.ReactCrop__crop-selection{
+
+.ReactCrop__crop-selection {
     border-radius: 50%;
-    width:100%;
+    width: 100%;
 }
 
-.ReactCrop__crop-selection:before{
-	content: "";
+.ReactCrop__crop-selection:before {
+    content: "";
     display: block;
-    padding-top: 100%!important;
- }  
-.preview{border-radius: 50%;}
-.UploadProfileImageContainer > div{margin:auto;}
-
-.SPDescriptionNone{
-    color:#989892;
+    padding-top: 100% !important;
 }
-.dark-font
-{
+
+.preview {
+    border-radius: 50%;
+}
+
+.UploadProfileImageContainer>div {
+    margin: auto;
+}
+
+.SPDescriptionNone {
+    color: #989892;
+}
+
+.dark-font {
     font-weight: 600;
 }
 
-.iconFilledStar:before{
+.iconFilledStar:before {
     width: 100%;
     height: 100%;
     background-image: url("../../../assets/images/RatingFilledStar.svg");
 }
 
 
-.UploadProfileImageContainer > div{margin:0 auto; display: block;}
-.ReactCrop
-{
+.UploadProfileImageContainer>div {
+    margin: 0 auto;
+    display: block;
+}
+
+.ReactCrop {
     margin: 0 auto;
     display: block;
     background: transparent;
 }
-.ReactCrop__image
-{
+
+.ReactCrop__image {
     margin: 0 auto;
+}
+
+.description-block-profile .primaryColor {
+    font-weight: 600;
+    display: block;
+}
+
+.description-block-profile span:nth-child(2) {
+    display: block;
+    font-weight: 400;
+    text-align: left;
+    color: #444;
+    margin-top: 10px;
 }
