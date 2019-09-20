@@ -895,7 +895,7 @@ export class Schedule extends Component {
                                 <h2 className='ServicesTitle'>Point of Service</h2>
                                 <PointOfService
                                     patientAddressList={this.props.patientAddressList}
-                                    patientAddressId={this.state.selectedPOS}
+                                    patientAddressId={this.props.individualSchedulesDetails && this.props.individualSchedulesDetails.patientAddressId}
                                     stateList={this.props.stateList}
                                     handlePatientAddress={this.handlePatientAddress}
                                     handlePOSAddress={this.handlePOSAddress}

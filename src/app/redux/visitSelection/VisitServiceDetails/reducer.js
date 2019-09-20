@@ -30,7 +30,8 @@ const defaultState = {
     visitDate: {},
     savedScheduleType: '',
     isAddNewScheduleClicked: false,
-    isEntityDashboard: false
+    isEntityDashboard: false,
+    isLoadingESPList : false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -197,6 +198,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         return {
             ...state,
             isEntityDashboard: action.data
+        };
+        case VisitServiceDetails.loadingESPList:
+        return {
+            ...state,
+            isLoadingESPList: action.data
         };
         default:
             return state;

@@ -139,7 +139,7 @@ export const Table = props => {
                                 :
                                 <td>
                                     <div class="ScheduleRowButton">
-                                        <span class={item.visitStatusId === 45 ? "btn btn-outline-primary" : "status-view-btn"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
+                                        <span class={item.visitStatusId === VISIT_PROCESSING_STATUS.completed.id ? "btn btn-outline-primary" : "status-view-btn"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
                                             {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
                                         </span>
                                     </div>

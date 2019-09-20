@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Calendar, CoreoTimePicker } from '../../../components/LevelOne';
 import { formateStateDateValue } from "../../../utils/validations";
-import { getDiffTime } from "../../../utils/dateUtility";
+import { getDiffTime, timeDropDownFormat, defaultStartTime, defaultEndTime } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS, SCHEDULE_TYPE_OPTIONS } from '../../../constants/constants'
@@ -68,8 +68,8 @@ export const ScheduleType = props => {
                                     handleChange={props.handleChangeStartTime}
                                     value={props.startTime}
                                     label="Start Time"
-                                    minTime={moment().hours(0).minutes(0)}
-                                    maxTime={props.endTime ? moment().hours(moment(props.endTime).format("HH")).minutes(moment(props.endTime).format("mm")) : moment().hours(23).minutes(30)}
+                                    minTime={defaultStartTime()}
+                                    maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
                                     placeholderText={'Start Time'}
                                 />
                                 {!props.startTime && props.onClickSave &&
@@ -85,8 +85,8 @@ export const ScheduleType = props => {
                                     minDate={props.startTime}
                                     label="End Time"
                                     disabled={!props.startTime}
-                                    minTime={moment().hours(moment(props.startTime).format("HH")).minutes(moment(props.startTime).format("mm"))}
-                                    maxTime={moment().hours(23).minutes(30)}
+                                    minTime={timeDropDownFormat(props.startTime)}
+                                    maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
                                 />
                                 {!props.endTime && props.onClickSave &&
@@ -342,8 +342,8 @@ export const ScheduleType = props => {
                                     handleChange={props.handleChangeStartTime}
                                     value={props.startTime}
                                     label="Start Time"
-                                    minTime={moment().hours(0).minutes(0)}
-                                    maxTime={props.endTime ? moment().hours(moment(props.endTime).format("HH")).minutes(moment(props.endTime).format("mm")) : moment().hours(23).minutes(30)}
+                                    minTime={defaultStartTime()}
+                                    maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
                                 />
                                 {!props.startTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -357,8 +357,8 @@ export const ScheduleType = props => {
                                     value={props.endTime}
                                     disabled={!props.startTime}
                                     label="End Time"
-                                    minTime={moment().hours(moment(props.startTime).format("HH")).minutes(moment(props.startTime).format("mm"))}
-                                    maxTime={moment().hours(23).minutes(30)}
+                                    minTime={timeDropDownFormat(props.startTime)}
+                                    maxTime={defaultEndTime()}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>

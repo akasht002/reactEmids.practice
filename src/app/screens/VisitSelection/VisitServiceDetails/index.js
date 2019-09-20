@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { TabContent } from 'reactstrap'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
-import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, ModalPopup, AlertPopup } from '../../../components';
+import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, ModalPopup, AlertPopup, Preloader } from '../../../components';
 import {
   getServiceRequestList,
   getVisitServiceDetails,
@@ -49,7 +49,7 @@ import {
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue, checkEmpty } from "../../../utils/validations";
-import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat } from '../../../utils/dateUtility'
+import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat, timeDropDownFormat, defaultEndTime, defaultStartTime } from '../../../utils/dateUtility'
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
@@ -652,8 +652,8 @@ export class VisitServiceDetails extends Component {
                     handleChange={this.handleChangeStartTime}
                     value={this.state.startTime}
                     label="Start Time"
-                    minTime={moment().hours(0).minutes(0)}
-                    maxTime={moment().hours(23).minutes(30)}
+                    minTime={defaultStartTime()}
+                    maxTime={this.state.endTime ? timeDropDownFormat(this.state.endTime) : defaultEndTime()}
                   />
                   {!this.state.startTime && this.state.onVisitEdit &&
                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -667,15 +667,15 @@ export class VisitServiceDetails extends Component {
                     value={this.state.endTime}
                     disabled={this.state.startTime ? false : true}
                     label="End Time"
-                    minTime={moment().hours(moment(this.state.startTime).format("hh")).minutes(moment(this.state.startTime).format("mm"))}
-                    maxTime={moment().hours(23).minutes(30)}
+                    minTime={timeDropDownFormat(this.state.startTime)}
+                    maxTime={defaultEndTime()}
                   />
                   {!this.state.endTime && this.state.onVisitEdit &&
                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
                       Please select End Time
                             </span>}
                 </div>
-              </div>
+              </div>           
               <div className="top-search-blocksp">
                 <h2 class="ServicesTitle">Assign Service Provider</h2>
                 <div className="search-block_SP">
@@ -689,9 +689,11 @@ export class VisitServiceDetails extends Component {
                   />
                 </div>
               </div>
+              {this.props.isLoadingESPList && <Preloader />}
               <AssignServiceProvider
                 entityServiceProvidersList={this.props.entityServiceProvidersList}
                 handleAssignServiceProvider={this.handleAssignServiceProvider}
+                isLoadingESPList={this.props.isLoadingESPList}
               />
               {!this.props.disableShowmore &&
                 <ul className="show-more-assignSP">
@@ -967,7 +969,8 @@ export function mapStateToProps(state) {
     daysType: VisitServiceDetailsState.daysType,
     visitDate: VisitServiceDetailsState.visitDate,
     isAddNewScheduleClicked: VisitServiceDetailsState.isAddNewScheduleClicked,
-    isEntityDashboard: VisitServiceDetailsState.isEntityDashboard
+    isEntityDashboard: VisitServiceDetailsState.isEntityDashboard,
+    isLoadingESPList: VisitServiceDetailsState.isLoadingESPList
   }
 }
 

@@ -1,10 +1,12 @@
 import React from 'react';
 import { getStartRatings } from '../../../../utils/arrayUtility';
+import {Preloader} from '../../../../components'
 
 export const AssignServiceProvider = props => {
     return (
         props.entityServiceProvidersList.length > 0 ?
             <div className="assign-sp-block">
+             {/* {props.isLoadingESPList && <p>...LLLLLLLLLLLLLLLLLL</p>} */}
                 {
                     props.entityServiceProvidersList.map(item => {
                         let espImage = item.thumbnail ? item.thumbnail : require('../../../../assets/images/Blank_Profile_icon.png');
