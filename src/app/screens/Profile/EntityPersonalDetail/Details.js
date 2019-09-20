@@ -66,7 +66,9 @@ export const Details = props => {
             </span>
           </div>
         </div>
-        <div className={'width100'}>
+        <div className={'width100 description-block-profile'}>
+        <span className={'primaryColor'}>Description</span>
+        <span>
           {props.personalDetail &&
             props.personalDetail.description !== ''
             ? props.personalDetail.description
@@ -77,6 +79,7 @@ export const Details = props => {
               >
                 Edit your profile here
               </span>}
+         </span>      
         </div>
       </div>
       <div className={'SPDetailsContainer SPAddressWidget'}>
