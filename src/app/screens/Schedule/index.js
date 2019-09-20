@@ -247,7 +247,7 @@ export class Schedule extends Component {
     }
 
     handleChangePlanType = (id) => {
-        this.setState({ planType: id, isInvalidAddress: false })
+        this.setState({ planType: id })
     }
 
     handleServiceCategory = (id) => {
@@ -297,7 +297,6 @@ export class Schedule extends Component {
             selectedOptionState: null,
             isDefaultAddress: true
         });
-        this.setState({isInvalidAddress: false})
         this.props.setSelectedPos(e.target.value)
         if (e.target.value === '0') {
             this.props.getValidPatientAddressSuccess(false)
@@ -330,7 +329,6 @@ export class Schedule extends Component {
             stateName: e.stateName,
             zip: e.zip
         }
-        this.setState({isInvalidAddress: false})
         this.props.setSelectedPos(e.addressId)
         this.props.getValidPatientAddressSuccess(validateCoordinates(e.latitude, e.longitude))
         this.isDataEntered = true;
@@ -674,16 +672,8 @@ export class Schedule extends Component {
             assessmentId: assessmentId
         }
 
-
             if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
                 this.props.createOrEditAssessment({ data, address: this.address });
-                this.setState({
-                    isInvalidAddress:false
-                })
-            }else{
-                this.setState({
-                    isInvalidAddress:true
-                })
             }
     }
 
