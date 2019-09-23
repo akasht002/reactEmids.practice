@@ -484,21 +484,28 @@ export class Schedule extends Component {
 
     handleChangeOccurrenceFields = (e, fieldId) => {
         this.isDataEntered = true;
+        let fieldValue;
         if (disableZeroInFirstChar(e)) {
             switch (fieldId) {
                 case SCHEDULE_RECURRENCE_FIELD.dailyDay:
-                    return this.setState({ dailyDayOccurence: numbersOnly(e.target.value) });
+                    fieldValue = { dailyDayOccurence: numbersOnly(e.target.value) };
+                    break;
                 case SCHEDULE_RECURRENCE_FIELD.weeklyDay:
-                    return this.setState({ weeklyDayOccurence: numbersOnly(e.target.value) });
+                    fieldValue = { weeklyDayOccurence: numbersOnly(e.target.value) };
+                    break;
                 case SCHEDULE_RECURRENCE_FIELD.monthlyDay:
-                    return this.setState({ monthlyDay: numbersOnly(e.target.value) });
+                    fieldValue = { monthlyDay: numbersOnly(e.target.value) };
+                    break;
                 case SCHEDULE_RECURRENCE_FIELD.monthlyMonths:
-                    return this.setState({ monthlyMonths: numbersOnly(e.target.value) });
+                    fieldValue = { monthlyMonths: numbersOnly(e.target.value) };
+                    break;
                 case SCHEDULE_RECURRENCE_FIELD.monthlyMonthsSecond:
-                    return this.setState({ monthlyMonthsSecond: numbersOnly(e.target.value) });
+                    fieldValue = { monthlyMonthsSecond: numbersOnly(e.target.value) };
+                    break;
                 default:
                     return null
             }
+            this.setState(fieldValue);
         }
     }
 
@@ -853,7 +860,6 @@ export class Schedule extends Component {
                                         handleChangeRecurringPattern={this.handleChangeRecurringPattern}
                                         handleSelectDailyOptionField={this.handleSelectDailyOptionField}
                                         handleSelectWeeklyOptionField={this.handleSelectWeeklyOptionField}
-                                        handleChangeDailyDayOccurence={this.handleChangeDailyDayOccurence}
                                         dailyDayOccurence={this.state.dailyDayOccurence}
                                         selectedRecurringType={this.state.selectedRecurringType}
                                         daysList={this.props.daysList}
@@ -862,8 +868,6 @@ export class Schedule extends Component {
                                         handleChangeMonthlySelectionSecond={this.handleChangeMonthlySelectionSecond}
                                         monthlyDay={this.state.monthlyDay}
                                         monthlyMonths={this.state.monthlyMonths}
-                                        handleChangeMonthlyDay={this.handleChangeMonthlyDay}
-                                        handleChangeMonthlyMonths={this.handleChangeMonthlyMonths}
                                         selectedWeeks={this.state.selectedWeeksId}
                                         selectedWeeksLabel={this.state.selectedWeeksLabel}
                                         selectedDays={this.state.selectedDaysId}
@@ -871,7 +875,6 @@ export class Schedule extends Component {
                                         handleChangeSelectedDays={this.handleChangeSelectedDays}
                                         handleChangeSelectedWeeks={this.handleChangeSelectedWeeks}
                                         weekRecurring={weekRecurring}
-                                        handleChangeWeeklyDayOccurence={this.handleChangeWeeklyDayOccurence}
                                         weeklyDayOccurence={this.state.weeklyDayOccurence}
                                         handleChangeMonthlyMonthsSecond={this.handleChangeMonthlyMonthsSecond}
                                         monthlyMonthsSecond={this.state.monthlyMonthsSecond}
