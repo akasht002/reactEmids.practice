@@ -53,7 +53,6 @@ import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat } from '../../../
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
-import './customStyle.css'
 import { getUserInfo } from '../../../services/http';
 import {
   getVisitServiceHistoryByIdDetail,
@@ -812,6 +811,9 @@ goBackToParticularPage = () => {
               disabled={this.state.disabledSaveBtn}
               centered={true}
               onClick={this.updateServiceVisits}
+              discardBtn={true}
+              discardbuttonLabel={'Cancel'}
+              onDiscard={() => this.setState({editModal: !this.state.editModal})}
             />
             <ModalPopup
               isOpen={this.state.standByModeAlertMsg}
