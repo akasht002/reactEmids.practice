@@ -6,13 +6,17 @@ import Languages from '../../../PatientProfile/Languages';
 import ClinicalCondition from '../../../PatientProfile/ClinicalCondition';
 import VitalDetails from '../../../PatientProfile/VitalDetails';
 
-export const PatientProfileTab = () => {
+export const PatientProfileTab = props => {
     return (
         <Fragment>
             <TabPane tabId='3' className='TabBody'>
             <div className="colorblock"></div>
              <div className="my-patientblock">   
-            <PersonalDetail />
+            <PersonalDetail 
+             showPhoneNumber={props.showPhoneNumber}
+             onClickConversation={props.onClickConversation}
+             onClickVideoConference={props.onClickVideoConference}
+            />
             <VitalDetails />
             <ClinicalCondition />
             <PointService />

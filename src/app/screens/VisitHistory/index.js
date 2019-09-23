@@ -29,9 +29,10 @@ import '../../styles/SelectDropdown.css'
 import { push } from '../../redux/navigation/actions';
 import { Path } from "../../routes";
 import { getTimeZoneOffset } from '../../utils/dateUtility';
-import { getServiceRequestId, saveScheduleType }
+import { getServiceRequestId, saveScheduleType, getPaymentAvailability }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
 import {DEFAULT_FROM_DATE, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, VISIT_TYPE} from '../../constants/constants'
+import { setServiceProviderFeedbackTab } from '../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 export class VisitHistory extends Component {
   constructor(props) {
     super(props)
@@ -62,6 +63,8 @@ export class VisitHistory extends Component {
     this.props.getAllPatientForServiceProviders(data)
     this.props.getServiceCategory()
     this.props.getHistoryListCount()
+    this.props.setServiceProviderFeedbackTab(true)
+    this.props.getPaymentAvailability()
   }
 
   getModel = (data) => {
@@ -325,7 +328,9 @@ export function mapDispatchToProps(dispatch) {
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
     getServiceRequestId: data => dispatch(getServiceRequestId(data)),
     saveScheduleType: (data) => dispatch(saveScheduleType(data)),
-    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data))
+    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
+    getPaymentAvailability: () => dispatch(getPaymentAvailability())
   }
 }
 

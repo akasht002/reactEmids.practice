@@ -550,3 +550,18 @@ export const SCHEDULE_RECURRENCE_FIELD = {
     monthlyMonths: 4,
     monthlyMonthsSecond: 5
 }
+
+export const SR_FILTER_TABS = {
+    categoryAndType: {
+        id: '7',
+        name: 'Category & Type'
+    },
+    status: {
+        id: '8',
+        name: 'Request Status'
+    },
+    scheduleType: {
+        id: '9',
+        name: 'One Time / Recurring'
+    }
+}

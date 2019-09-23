@@ -14,6 +14,6 @@ export const formatPhoneNumber = phoneNumberString => {
 
 
   export const removeHyphenInPhoneNumber = phoneNumberString => {
-    return phoneNumberString.replace(/-/g, '');
+    return phoneNumberString && phoneNumberString.replace(/-/g, '');
   }
   
