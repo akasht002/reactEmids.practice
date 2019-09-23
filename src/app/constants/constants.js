@@ -542,3 +542,18 @@ export const FEEDBACK_QUESTION_TYPE = {
     CHOICEBASED: 'ChoiceBased',
     OPENTEXT: 'OpenText'
 }
+
+export const SR_FILTER_TABS = {
+    categoryAndType: {
+        id: '7',
+        name: 'Category & Type'
+    },
+    status: {
+        id: '8',
+        name: 'Request Status'
+    },
+    scheduleType: {
+        id: '9',
+        name: 'One Time / Recurring'
+    }
+}

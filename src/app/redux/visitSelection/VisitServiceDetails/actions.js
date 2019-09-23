@@ -16,6 +16,7 @@ import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST } from '../../../constants/consta
 import { isEntityUser} from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy, uniqBy } from 'lodash'
+import { logError } from '../../../utils/logError';
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -692,5 +693,24 @@ export const  setEntityDashboard = data => {
   return {
     type: VisitServiceDetails.setEntityDashboard,
     data
+  }
+}
+
+export function getPaymentAvailability() { 
+  return (dispatch) => {
+      ThirdPartyGet(API.getPaymentAvailability)          
+        .then(resp => {
+          dispatch(getPaymentAvailabilitySuccess(resp.data));
+        })
+        .catch(err => {
+          logError(err)
+        })
+    }
+}
+
+export const getPaymentAvailabilitySuccess = data => {
+  return {
+      type: VisitServiceDetails.getPaymentAvailabilitySuccess,
+      data
   }
 }

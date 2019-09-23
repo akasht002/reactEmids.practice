@@ -30,7 +30,8 @@ const defaultState = {
     visitDate: {},
     savedScheduleType: '',
     isAddNewScheduleClicked: false,
-    isEntityDashboard: false
+    isEntityDashboard: false,
+    isPaymentAvailable: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -197,6 +198,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         return {
             ...state,
             isEntityDashboard: action.data
+        };
+        case VisitServiceDetails.getPaymentAvailabilitySuccess:
+        return {
+            ...state,
+            isPaymentAvailable: ((action.data && action.data[0].value) === '1') ? true : false
         };
         default:
             return state;
