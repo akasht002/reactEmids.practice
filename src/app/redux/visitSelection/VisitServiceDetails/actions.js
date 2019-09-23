@@ -16,6 +16,7 @@ import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST } from '../../../constants/consta
 import { isEntityUser} from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy, uniqBy } from 'lodash'
+import { logError } from '../../../utils/logError';
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -702,7 +703,7 @@ export function getPaymentAvailability() {
           dispatch(getPaymentAvailabilitySuccess(resp.data));
         })
         .catch(err => {
-          console.log(err);
+          logError(err)
         })
     }
 }
