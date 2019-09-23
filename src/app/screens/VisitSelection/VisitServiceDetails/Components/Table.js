@@ -149,7 +149,7 @@ export const Table = props => {
                             {
                                 isEntity && item.visitStatusId === VISIT_STATUS.startVisit.id ?
                                     <td>
-                                        <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId)}>Edit</button>
+                                        <button className="edit-rightico" onClick={() => props.toggleEditModal(item.servicePlanVisitId, item.assignedServiceProviderId)}>Edit</button>
                                     </td>
                                     :
                                     (isEntity ? <td></td> : null)

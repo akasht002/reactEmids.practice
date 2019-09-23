@@ -11,7 +11,7 @@ import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
 import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty } from "../../utils/validations";
-import { checkLength, allEqual, numbersOnly } from '../../utils/arrayUtility';
+import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar } from '../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../utils/formatName'
 import {
     getServiceCategory,
@@ -68,7 +68,7 @@ export class Schedule extends Component {
             monthlyMonthsSecond: '',
             selectedDaysLabel: '',
             selectedWeeksLabel: '',
-            planType: this.props.scheduleList && this.props.scheduleList.length > 0 ? SCHEDULE_TYPE_OPTIONS.standard : SCHEDULE_TYPE_OPTIONS.assessment, 
+            planType: this.props.scheduleList && this.props.scheduleList.length > 0 ? SCHEDULE_TYPE_OPTIONS.standard : SCHEDULE_TYPE_OPTIONS.assessment,
             serviceTypeSelected: false,
             startDateSelected: false,
             pageNumber: PAGE_NO,
@@ -416,9 +416,8 @@ export class Schedule extends Component {
 
     dateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
-        const formattedMDYY = formateMDYY(formattedDate)
         this.setState({
-            startDate: formattedMDYY
+            startDate: formattedDate
         });
         this.isDataEntered = true;
     }
@@ -433,9 +432,8 @@ export class Schedule extends Component {
 
     todateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
-        const formattedMDYY = formateMDYY(formattedDate)
         this.setState({
-            endDate: formattedMDYY
+            endDate: formattedDate
         });
         this.isDataEntered = true;
     }
@@ -484,13 +482,17 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleChangeDailyDayOccurence = (data) => {
-        this.setState({ dailyDayOccurence: numbersOnly(data) })
+    handleChangeDailyDayOccurence = (e) => {
+        if (disableZeroInFirstChar(e)) {
+            this.setState({ dailyDayOccurence: numbersOnly(e.target.value) })
+        }
         this.isDataEntered = true;
     }
 
-    handleChangeWeeklyDayOccurence = (data) => {
-        this.setState({ weeklyDayOccurence: numbersOnly(data) })
+    handleChangeWeeklyDayOccurence = (e) => {
+        if (disableZeroInFirstChar(e)) {
+            this.setState({ weeklyDayOccurence: numbersOnly(e.target.value) })
+        }
         this.isDataEntered = true;
     }
 
@@ -528,13 +530,17 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleChangeMonthlyDay = (data) => {
-        this.setState({ monthlyDay: numbersOnly(data) })
+    handleChangeMonthlyDay = (e) => {
+        if (disableZeroInFirstChar(e)) {
+            this.setState({ monthlyDay: numbersOnly(e.target.value) })
+        }
         this.isDataEntered = true;
     }
 
-    handleChangeMonthlyMonths = (data) => {
-        this.setState({ monthlyMonths: numbersOnly(data) })
+    handleChangeMonthlyMonths = (e) => {
+        if (disableZeroInFirstChar(e)) {
+            this.setState({ monthlyMonths: numbersOnly(e.target.value) })
+        }
         this.isDataEntered = true;
     }
 
@@ -568,8 +574,10 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleChangeMonthlyMonthsSecond = (data) => {
-        this.setState({ monthlyMonthsSecond: numbersOnly(data) })
+    handleChangeMonthlyMonthsSecond = (e) => {
+        if (disableZeroInFirstChar(e)) {
+            this.setState({ monthlyMonthsSecond: numbersOnly(e.target.value) })
+        }
         this.isDataEntered = true;
     }
 
@@ -764,9 +772,9 @@ export class Schedule extends Component {
     }
 
     onClickCancel = () => {
-        if(this.isDataEntered) {
+        if (this.isDataEntered) {
             this.setState({ isModalOpen: true })
-        }else{
+        } else {
             this.goToServicedetails();
         }
     }

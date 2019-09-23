@@ -35,7 +35,6 @@ export class PointOfService extends Component {
     }
 
     render() {
-        console.log('dddddddddddddd', this.props)
         let AddresTemplate = this.props.patientAddressList && this.props.patientAddressList.map((address, index) => {
             let catNum = index + 1;
             return (

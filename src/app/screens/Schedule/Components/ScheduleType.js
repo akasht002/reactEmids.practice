@@ -150,7 +150,7 @@ export const ScheduleType = props => {
                                                     value={props.dailyDayOccurence}
                                                     maxLength={2}
                                                     autoComplete='off'
-                                                    onChange={(e) => { props.handleChangeDailyDayOccurence(e.target.value) }}
+                                                    onChange={(e) => { props.handleChangeDailyDayOccurence(e)}}                                                                                                                                                      
                                                 />
                                                 <label>{'Day(s)'}</label>
                                             </fieldset>
@@ -171,7 +171,7 @@ export const ScheduleType = props => {
                                                     value={props.weeklyDayOccurence}
                                                     maxLength={2}
                                                     autoComplete='off'
-                                                    onChange={(e) => { props.handleChangeWeeklyDayOccurence(e.target.value) }}
+                                                    onChange={(e) => { props.handleChangeWeeklyDayOccurence(e) }}
                                                 />
                                                 <label>{'Week(s)'}</label>
                                             </fieldset>
@@ -225,7 +225,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyDay}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyDay(e.target.value) }}
+                                                onChange={(e) => { props.handleChangeMonthlyDay(e) }}
                                             />
                                             <label>of every</label>
                                             <input
@@ -234,7 +234,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyMonths}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyMonths(e.target.value) }}
+                                                onChange={(e) => { props.handleChangeMonthlyMonths(e) }}
                                             />
                                             <label>Month(s)</label>
                                         </fieldset>
@@ -290,7 +290,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyMonthsSecond}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyMonthsSecond(e.target.value) }}
+                                                onChange={(e) => { props.handleChangeMonthlyMonthsSecond(e) }}
                                             />
                                             <label>Month(s)</label>
                                         </fieldset>
