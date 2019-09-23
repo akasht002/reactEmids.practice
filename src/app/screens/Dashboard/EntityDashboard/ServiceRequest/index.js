@@ -93,11 +93,12 @@ export class ServiceRequest extends Component {
     this.props.getScheduleType()
   }
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props, state) {
     return {
       fromDate: props.fromDate,
       toDate: props.toDate,
-      rowCount: props.paginationCount
+      rowCount: props.paginationCount,
+      rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
     }
   }
 
@@ -136,7 +137,7 @@ export class ServiceRequest extends Component {
     let rowMaxValue = pageSize;
     await this.setState({
       status: e.target.value,
-      pageSize: this.state.pageSize,
+      pageSize: DEFAULT_PAGE_SIZE,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
       rowMax: rowMaxValue,
