@@ -28,6 +28,7 @@ export const VisitServiceDetails = {
     getfirstlastvisitdateSuccess: 'getfirstlastvisitdateSuccess/visitservicedetails',
     saveScheduleType: 'saveScheduleType/visitservicedetails',
     setAddNewScheduledClicked: 'setAddNewScheduledClicked/visitservicedetails',
+    resetState:"visitServiceDetails/resetState",
     setVisitDate: 'setVisitDate/visitservicedetails',
     setEntityDashboard: 'setEntityDashboard/visitservicedetails',
     loadingESPList: 'loadingESPList/visitservicedetails',

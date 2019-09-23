@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Calendar, CoreoTimePicker } from '../../../components/LevelOne';
 import { formateStateDateValue } from "../../../utils/validations";
-import { getDiffTime, timeDropDownFormat, defaultStartTime, defaultEndTime } from "../../../utils/dateUtility";
+import { getDiffTime, timeDropDownFormat, defaultStartTime, defaultEndTime, getHourMin } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS, SCHEDULE_TYPE_OPTIONS, SCHEDULE_RECURRENCE_FIELD } from '../../../constants/constants'
@@ -15,6 +15,7 @@ export const ScheduleType = props => {
     let weekRecurrings = props.weekRecurring.map(type => {
         return <Item className='ListItem CTDashboard' key={type.id}>{type.value}</Item>;
     });
+
 
     return (
         <Fragment>

@@ -186,10 +186,16 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 savedScheduleType: action.data
             };
         case VisitServiceDetails.setAddNewScheduledClicked:
-            return {
-                ...state,
-                isAddNewScheduleClicked: action.data
-            };
+        return {
+            ...state,
+            isAddNewScheduleClicked: action.data
+        };
+        case VisitServiceDetails.resetState:
+        return{
+            ...state,
+            VisitServiceDetails: [],
+            VisitServiceSchedule: [],
+        }
         case VisitServiceDetails.setVisitDate:
             return {
                 ...state,

@@ -290,9 +290,7 @@ export class VisitServiceDetails extends Component {
 
   toggleFilter = () => {
     this.setState({
-      filterOpen: !this.state.filterOpen,
-      startDate: this.props.visitDate.startVisitDateForWeb,
-      endDate: this.props.visitDate.endVisitDateForWeb
+      filterOpen: !this.state.filterOpen
     })
   }
 

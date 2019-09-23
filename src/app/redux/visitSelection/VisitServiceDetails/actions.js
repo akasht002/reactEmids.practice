@@ -112,6 +112,12 @@ export function formDirtyVisitServiceDetails() {
   }
 }
 
+export function resetServiceDetails() {
+  return {
+    type:VisitServiceDetails.resetState
+  }
+}
+
 export function updateServiceRequestByServiceProvider(data) {
   let modelData = {
     serviceRequestId: data.serviceRequestId,

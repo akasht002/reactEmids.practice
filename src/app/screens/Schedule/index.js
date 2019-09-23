@@ -10,7 +10,7 @@ import PointOfService from './Components/PointOfService';
 import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
-import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty } from "../../utils/validations";
+import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty, formatContactNumber } from "../../utils/validations";
 import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar } from '../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../utils/formatName'
 import {
@@ -34,7 +34,7 @@ import {
     isScheduleEdit,
     isAssessmentEdit
 } from '../../redux/schedule/actions';
-import { getDiffTime, getHourMin, formateMDYY } from "../../utils/dateUtility";
+import { getDiffTime, getHourMin } from "../../utils/dateUtility";
 import './Components/styles.css'
 import { PlanTypeData, ScheduleTypeData, weekRecurring } from './data/index'
 import { validate } from './data/validate'
@@ -359,8 +359,10 @@ export class Schedule extends Component {
     }
 
     handelNewAddress = (e) => {
+        let key = e.target.id
+        let value = key === "zip" ? formatContactNumber(e.target.value) : e.target.value
         this.setState({
-            [e.target.id]: e.target.value,
+            [key]: value,
             isDefaultAddress: true
         })
         this.address = {
@@ -448,11 +450,17 @@ export class Schedule extends Component {
 
     handleChangeStartTime = (event) => {
         this.formatedStartTime = getHourMin(event)
-        this.setState({ startTime: event });
+        let endTime = this.state.endTime
+        if(this.formatedStartTime === this.formatedEndTime){
+            endTime = moment(this.state.startTime).add("minutes", 60)
+            this.formatedEndTime = getHourMin(endTime)
+        }
+        this.setState({ startTime: event, endTime });
         this.isDataEntered = true;
     }
 
     handleChangeEndTime = (event) => {
+
         this.formatedEndTime = getHourMin(event)
         this.setState({ endTime: event });
         this.isDataEntered = true;
@@ -646,7 +654,11 @@ export class Schedule extends Component {
                 this.savePlan();
             }
         } else {
-            this.saveAssessment()
+            let saveAssesment = this.validate(validate.assessment)
+                
+            if(!saveAssesment){
+                this.saveAssessment()
+            }
         }
     }
 
@@ -684,11 +696,9 @@ export class Schedule extends Component {
             assessmentId: assessmentId
         }
 
-        this.props.getValidPatientAddress({ address: this.address })
-        if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
-            this.props.createOrEditAssessment({ data, address: this.address });
-        }
-
+            if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
+                this.props.createOrEditAssessment({ data, address: this.address });
+            }
     }
 
     savePlan = () => {
@@ -994,7 +1004,7 @@ export function mapDispatchToProps(dispatch) {
         getStates: () => dispatch(getStates()),
         setSelectedPos: (data) => dispatch(setSelectedPos(data)),
         getValidPatientAddressSuccess: (data) => dispatch(getValidPatientAddressSuccess(data)),
-        getValidPatientAddress: (data) => dispatch(getValidPatientAddress(data)),
+        getValidPatientAddress: (data,addressCallback) => dispatch(getValidPatientAddress(data,addressCallback)),
         getEntityServiceProviderList: (data, selectedESPId) => dispatch(getEntityServiceProviderList(data, selectedESPId)),
         getRecurringPattern: () => dispatch(getRecurringPattern()),
         getDays: (data) => dispatch(getDays(data)),
