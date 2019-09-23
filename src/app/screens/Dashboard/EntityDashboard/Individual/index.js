@@ -14,7 +14,9 @@ import {
   getAllContracts,
   clearGenderType,
   resetContracts,
-  clearStates
+  clearStates,
+  setGenderId,
+  setFilterApplied
 } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   DEFAULT_PAGE_NUMBER,
@@ -61,7 +63,7 @@ export class Individuals extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
       clinicalConditions: [],
-      genderId: 0,
+      genderId: this.props.genderId,
       cohorts: [],
       ageRange: {
         minimumAge: 0,
@@ -89,7 +91,7 @@ export class Individuals extends Component {
       searchOpen: false
     }
     this.gridHeader = allIndividuals
-    this.filterApplied = false
+    this.filterApplied = this.props.filterApplied
   }
 
   componentDidMount() {
@@ -101,7 +103,7 @@ export class Individuals extends Component {
     this.props.getGender()
     this.props.getClinicalCondition()
     this.props.getAllContracts()
-    this.props.getIndividualsCountList(count, this.filterApplied)
+    this.props.getIndividualsCountList(count, this.props.filterApplied)
     this.props.getIndividualsList(list)
   }
 
@@ -184,8 +186,8 @@ export class Individuals extends Component {
       "clinicalCondition": this.state.clinicalConditions,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.individuals.statCard.all : this.state.status,
-      "gender": this.state.genderId,
+      "tab": this.props.filterApplied ? ENTITY_DASHBOARD_STATUS.individuals.statCard.all : this.state.status,
+      "gender": this.props.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
       "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
@@ -204,7 +206,7 @@ export class Individuals extends Component {
       "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
       "toDate": data.toDate ? data.toDate : this.state.toDate,
       "tab": data.status ? data.status : this.state.status,
-      "gender": this.state.genderId,
+      "gender": this.props.genderId,
       "minimumAge": this.state.ageRange.minimumAge,
       "maximumAge": this.state.ageRange.maximumAge,
       "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
@@ -236,6 +238,7 @@ export class Individuals extends Component {
       pageNumber: DEFAULT_PAGE_NUMBER,
       searchOpen: false
     })
+    this.props.setGenderId(0)
     let data = this.getFilterData({
       sortName: sortName,
       sortOrder: sortOrder,
@@ -250,7 +253,7 @@ export class Individuals extends Component {
       toDate: this.props.toDate
     })
     count.tab = ENTITY_DASHBOARD_STATUS.individuals.statCard.all
-    await this.props.getIndividualsCountList(count, this.filterApplied)
+    await this.props.getIndividualsCountList(count, this.props.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -417,10 +420,12 @@ export class Individuals extends Component {
       genderLabel: data.name,
       genderId: data.id
     })
+    this.props.setGenderId(data.id)
   }
 
   applyFilter = async () => {
-    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
+    let filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
+    this.props.setFilterApplied(filterApplied)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER,
     })
@@ -433,7 +438,7 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getIndividualsCountList(count, this.filterApplied)
+    await this.props.getIndividualsCountList(count, this.props.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -455,6 +460,7 @@ export class Individuals extends Component {
       rowMax: DEFAULT_PAGE_SIZE,
       filterOpen: false
     })
+    this.props.setGenderId(0)
     await this.props.resetContracts(
       this.props.contracts
     )
@@ -479,7 +485,8 @@ export class Individuals extends Component {
   }
 
   handleSearchData = async (e) => {
-    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
+    let filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.individuals.statCard.all)
+    this.props.setFilterApplied(filterApplied)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -491,7 +498,7 @@ export class Individuals extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getIndividualsCountList(count, this.filterApplied)
+    await this.props.getIndividualsCountList(count, this.props.filterApplied)
     await this.props.getIndividualsList(data)
   }
 
@@ -599,7 +606,7 @@ export class Individuals extends Component {
           contracts={this.props.contracts}
           handleContracts={this.handleContracts}
           ageRange={this.state.ageRange}
-          genderId={this.state.genderId}
+          genderId={this.props.genderId}
           memberContractId={this.state.memberContractId}
           filterTabs={filterTabs}
         />
@@ -632,7 +639,9 @@ export function mapDispatchToProps(dispatch) {
     clearStates: () => dispatch(clearStates()),
     setVisitDate: data => dispatch(setVisitDate(data)),
     setEntityDashboard: data => dispatch(setEntityDashboard(data)),
-    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data))
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
+    setGenderId: data => dispatch(setGenderId(data)),
+    setFilterApplied: data => dispatch(setFilterApplied(data))
   }
 }
 
@@ -651,7 +660,9 @@ export function mapStateToProps(state) {
     clinicalConditionList: state.dashboardState.individualsListState.clincalCondition,
     contracts: state.dashboardState.individualsListState.contracts,
     genderType: state.dashboardState.individualsListState.genderType,
-    isLoaded: state.dashboardState.individualsListState.isLoaded
+    isLoaded: state.dashboardState.individualsListState.isLoaded,
+    genderId: state.dashboardState.individualsListState.genderId,
+    filterApplied: state.dashboardState.individualsListState.filterApplied 
   }
 }
 

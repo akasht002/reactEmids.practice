@@ -193,7 +193,7 @@ export function getServiceProviderRating(data) {
     return (dispatch, getState) => {
         let {isServiceProviderFeedbackTab} = getState().dashboardState.VisitServiceProviderState
         let getRatingAndFeedback = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? 
-        (isServiceProviderFeedbackTab ? API.getVisitFeedbackForEntity : API.getPlanVisitFeedBack) : API.getRatingAndFeedback
+        (isServiceProviderFeedbackTab ? API.getPlanVisitFeedBack : API.getVisitFeedbackForEntity) : API.getRatingAndFeedback
         dispatch(startLoading())
         ServiceRequestGet(getRatingAndFeedback + data).then((resp) => {
             dispatch(getSubmittedResponse(resp.data))
@@ -293,7 +293,7 @@ export function getVisitFeedBack(data) {
     return (dispatch, getState) => {
         let {isServiceProviderFeedbackTab} = getState().dashboardState.VisitServiceProviderState
         let getVisitFeedback = (getUserInfo().isEntityServiceProvider || isEntityUser())? 
-        (isServiceProviderFeedbackTab ? API.getVisitFeedbackForEntity : API.getPlanVisitFeedBack) : API.getVisitFeedback
+        (isServiceProviderFeedbackTab ? API.getPlanVisitFeedBack : API.getVisitFeedbackForEntity) : API.getVisitFeedback
         dispatch(startLoading());
         ServiceRequestGet(getVisitFeedback + data).then((resp) => {
             dispatch(getVisitFeedBackSuccess(resp.data))

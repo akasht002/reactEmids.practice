@@ -272,3 +272,17 @@ export const resetContracts = contracts => {
         contracts
     }
 }
+
+export const setGenderId = data => {
+    return {
+        type: IndividualsList.setGenderId,
+        data
+    } 
+}
+
+export const setFilterApplied = data => {
+    return {
+        type: IndividualsList.setFilterApplied,
+        data
+    }  
+}

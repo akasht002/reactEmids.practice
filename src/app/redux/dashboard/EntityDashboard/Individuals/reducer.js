@@ -21,7 +21,9 @@ const defaultState = {
     toDate: moment().toDate(),
     activeStatus: 'All',
     clincalCondition: [],
-    genderType: []
+    genderType: [],
+    genderId: 0,
+    filterApplied: false
 };
 
 const individualsListState = (state = defaultState, action) => {
@@ -150,7 +152,17 @@ const individualsListState = (state = defaultState, action) => {
             return {
                 ...state,
                 genderType: action.data
-            }                
+            } 
+        case IndividualsList.setGenderId:
+        return {
+            ...state,
+            genderId: action.data
+        }   
+        case IndividualsList.setFilterApplied:
+        return {
+            ...state,
+            filterApplied: action.data
+        }                   
         default:
             return state;
     }
