@@ -6,7 +6,8 @@ import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
-import { formatPhoneNumber } from '../../../../utils/formatName';
+import { formatPhoneNumber, removeHyphenInPhoneNumber } from '../../../../utils/formatName';
+import { checkNumber } from '../../../../utils/validations';
 
 export const setActiveSubTab = data => {
   return {
@@ -68,6 +69,8 @@ export function getVisitServiceProviderCountList(data, isFilterApplied = false) 
 }
 
 export function getVisitServiceProviderTableList(data) {
+  let searchText = removeHyphenInPhoneNumber(data.searchText)
+  data.searchText = (checkNumber(searchText) ? searchText : data.searchText)
   return dispatch => {
     dispatch(startLoading())
     return Post(
