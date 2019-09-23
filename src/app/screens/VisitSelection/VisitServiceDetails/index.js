@@ -48,7 +48,8 @@ import {
   SERVICE_REQUEST_DETAILS_TAB,
   USERTYPES,
   CONTACT_NOT_FOUND,
-  PHONE_NUMBER_TEXT
+  PHONE_NUMBER_TEXT,
+  SERVICE_VISIT_STATUS
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue } from "../../../utils/validations";
@@ -611,7 +612,7 @@ goBackToParticularPage = () => {
 }
 
 showPhoneNumber = () => {
-  if (this.props.VisitServiceDetails.statusId !== 38) {
+  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
     this.setState({
       conversationsModal: true,
       conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
@@ -624,7 +625,7 @@ showPhoneNumber = () => {
 };
 
 onClickConversation = () => {
-  if (this.props.VisitServiceDetails.statusId !== 38) {
+  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
     this.setState({
       conversationsModal: true,
       conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
@@ -646,7 +647,7 @@ onClickConversation = () => {
 };
 
 onClickVideoConference = () => {
-  if (this.props.VisitServiceDetails.statusId !== 38) {
+  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
     this.setState({
       conversationsModal: true,
       conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
@@ -929,18 +930,14 @@ onClickVideoConference = () => {
               closePopup={() => this.setState({ isEngageAlertPopupOpen: false })}
               onAcceptClick={() => this.engage()}
             />
-            <ModalPopup
+            <AlertPopup
               isOpen={this.state.conversationsModal}
-              ModalBody={<span> {this.state.conversationErrMsg} </span>}
-              btn1='OK'
-              className='modal-sm'
-              headerFooter='d-none'
-              footer='d-none'
-              centered='centered'
-              onConfirm={() =>
+              message={this.state.conversationErrMsg}
+              onAcceptClick={() =>
                 this.setState({
                   conversationsModal: false
                 })}
+              okButtonAlignment='float-center' 
             />
             <AlertPopup
               message={<span> {this.state.phoneNumber
