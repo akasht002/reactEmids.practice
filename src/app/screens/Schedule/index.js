@@ -42,7 +42,7 @@ import Search from '../VisitSelection/VisitServiceList/Search'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
 import moment from 'moment'
-import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, SERVICE_CATEGORY } from '../../constants/constants'
+import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, SERVICE_CATEGORY, SCHEDULE_RECURRENCE_FIELD } from '../../constants/constants'
 
 export class Schedule extends Component {
     constructor(props) {
@@ -482,18 +482,24 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleChangeDailyDayOccurence = (e) => {
-        if (disableZeroInFirstChar(e)) {
-            this.setState({ dailyDayOccurence: numbersOnly(e.target.value) })
-        }
+    handleChangeOccurrenceFields = (e, fieldId) => {
         this.isDataEntered = true;
-    }
-
-    handleChangeWeeklyDayOccurence = (e) => {
         if (disableZeroInFirstChar(e)) {
-            this.setState({ weeklyDayOccurence: numbersOnly(e.target.value) })
+            switch (fieldId) {
+                case SCHEDULE_RECURRENCE_FIELD.dailyDay:
+                    return this.setState({ dailyDayOccurence: numbersOnly(e.target.value) });
+                case SCHEDULE_RECURRENCE_FIELD.weeklyDay:
+                    return this.setState({ weeklyDayOccurence: numbersOnly(e.target.value) });
+                case SCHEDULE_RECURRENCE_FIELD.monthlyDay:
+                    return this.setState({ monthlyDay: numbersOnly(e.target.value) });
+                case SCHEDULE_RECURRENCE_FIELD.monthlyMonths:
+                    return this.setState({ monthlyMonths: numbersOnly(e.target.value) });
+                case SCHEDULE_RECURRENCE_FIELD.monthlyMonthsSecond:
+                    return this.setState({ monthlyMonthsSecond: numbersOnly(e.target.value) });
+                default:
+                    return null
+            }
         }
-        this.isDataEntered = true;
     }
 
     handleChangeDaysSelection = (e) => {
@@ -530,20 +536,6 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleChangeMonthlyDay = (e) => {
-        if (disableZeroInFirstChar(e)) {
-            this.setState({ monthlyDay: numbersOnly(e.target.value) })
-        }
-        this.isDataEntered = true;
-    }
-
-    handleChangeMonthlyMonths = (e) => {
-        if (disableZeroInFirstChar(e)) {
-            this.setState({ monthlyMonths: numbersOnly(e.target.value) })
-        }
-        this.isDataEntered = true;
-    }
-
     handleChangeSelectedWeeks = (selectedOptionId) => {
         let selectedValue = '';
         let valueData = parseInt(selectedOptionId, 10);
@@ -571,13 +563,6 @@ export class Schedule extends Component {
             selectedDaysLabel: selectedValue
         });
         this.selectedDaysLabel = selectedValue;
-        this.isDataEntered = true;
-    }
-
-    handleChangeMonthlyMonthsSecond = (e) => {
-        if (disableZeroInFirstChar(e)) {
-            this.setState({ monthlyMonthsSecond: numbersOnly(e.target.value) })
-        }
         this.isDataEntered = true;
     }
 
@@ -895,6 +880,7 @@ export class Schedule extends Component {
                                         formatedStartTime={this.formatedStartTime}
                                         weeklySelectedDays={this.weeklySelectedDays}
                                         planType={this.state.planType}
+                                        handleChangeOccurrenceFields={this.handleChangeOccurrenceFields}
                                     />
 
                                 </div>

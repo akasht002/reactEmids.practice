@@ -542,3 +542,11 @@ export const FEEDBACK_QUESTION_TYPE = {
     CHOICEBASED: 'ChoiceBased',
     OPENTEXT: 'OpenText'
 }
+
+export const SCHEDULE_RECURRENCE_FIELD = {
+    dailyDay: 1,
+    weeklyDay: 2,
+    monthlyDay: 3,
+    monthlyMonths: 4,
+    monthlyMonthsSecond: 5
+}

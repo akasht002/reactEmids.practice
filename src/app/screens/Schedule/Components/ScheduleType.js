@@ -4,7 +4,7 @@ import { formateStateDateValue } from "../../../utils/validations";
 import { getDiffTime, timeDropDownFormat, defaultStartTime, defaultEndTime } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
-import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS, SCHEDULE_TYPE_OPTIONS } from '../../../constants/constants'
+import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS, SCHEDULE_TYPE_OPTIONS, SCHEDULE_RECURRENCE_FIELD } from '../../../constants/constants'
 import moment from 'moment';
 
 export const ScheduleType = props => {
@@ -150,7 +150,7 @@ export const ScheduleType = props => {
                                                     value={props.dailyDayOccurence}
                                                     maxLength={2}
                                                     autoComplete='off'
-                                                    onChange={(e) => { props.handleChangeDailyDayOccurence(e)}}                                                                                                                                                      
+                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.dailyDay)}}                                                                                                                                                      
                                                 />
                                                 <label>{'Day(s)'}</label>
                                             </fieldset>
@@ -171,7 +171,7 @@ export const ScheduleType = props => {
                                                     value={props.weeklyDayOccurence}
                                                     maxLength={2}
                                                     autoComplete='off'
-                                                    onChange={(e) => { props.handleChangeWeeklyDayOccurence(e) }}
+                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.weeklyDay) }}
                                                 />
                                                 <label>{'Week(s)'}</label>
                                             </fieldset>
@@ -225,7 +225,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyDay}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyDay(e) }}
+                                                onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.monthlyDay) }}
                                             />
                                             <label>of every</label>
                                             <input
@@ -234,7 +234,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyMonths}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyMonths(e) }}
+                                                onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.monthlyMonths) }}
                                             />
                                             <label>Month(s)</label>
                                         </fieldset>
@@ -290,7 +290,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyMonthsSecond}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyMonthsSecond(e) }}
+                                                onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.monthlyMonthsSecond) }}
                                             />
                                             <label>Month(s)</label>
                                         </fieldset>

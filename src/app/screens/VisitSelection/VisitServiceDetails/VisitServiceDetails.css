@@ -311,12 +311,31 @@
     width: 100%;
 }
 
-.right-block-view .ServiceCategoryContent {
-    margin-top: -50px;
+.my-plan-editmodel .Loader {
+    position: absolute;
+    width: 100% !important;
+    height: calc(100vh - 250px);
+    top: 40%;
 }
 
 .label_viewstatus {
     padding-left: 5px;
+}
+
+.right-block-view .btn-right-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    float:right;
+}
+
+.right-block-view .btn-right-view .right_statusview {
+    position: relative;
+}
+.right-block-view .right_statusview {
+    position: absolute;
+    right: 0;
+    margin-right: 15px;
 }
 
 .ServiceTypesSlider.Summary .ServiceTypesSlider {
