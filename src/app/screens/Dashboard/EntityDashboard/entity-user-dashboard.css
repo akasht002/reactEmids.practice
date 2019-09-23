@@ -424,48 +424,60 @@ span.no-recoord-table {
 }
 
 .profile-icon-search:after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: 100%;
-    background-image: url('../../../assets/images/Search.svg');
+content: "";
+position: absolute;
+width: 20px;
+height: 20px;
+background-repeat: no-repeat;
+background-position: 50%;
+background-size: 100%;
+background-image: url('../../../assets/images/Search.svg');
 }
 
-.search-container-block {
-    right: 0px;
-    background-color: #f8f8f8;
-    position: absolute;
-    height: 30px;
-    margin: 0;
-    width: 0;
-    overflow: hidden;
-    -webkit-transition: all .3s linear;
-    -o-transition: all linear .3s;
-    transition: all .3s linear;
+.search-container-block
+{
+right:0px;
+background-color: #f8f8f8;
+position: absolute;
+height: 30px;
+margin: 0;
+width: 0;
+overflow: hidden;
+-webkit-transition: all .3s linear;
+-o-transition: all linear .3s;
+transition: all .3s linear;
 }
 
-.search-container-block .form-block {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 40px;
+.search-container-block .form-block
+{
+display: flex;
+align-items: center;
+width: 100%;
+height: 40px;
 }
 
-.search-container-block .form-block input {
-    background-color: #f8f8f8;
+.search-container-block .form-block input
+{
+background-color: #f8f8f8;
 }
 
-.search-container-block .btn {
-    font-size: 14px;
-    padding: 5px 10px !important;
-    height: 30px;
-    margin: 0 10px;
-    line-height: 14px !important;
-    cursor: pointer;
+.search-container-block .btn
+{
+font-size: 14px;
+padding: 5px 10px!important;
+height: 30px;
+margin: 0 10px;
+line-height: 14px!important;
+cursor:pointer;
+white-space: normal;
 }
+
+.search-container-block .btn:hover
+{
+background-color: #3b1a53;
+color:#fff;
+}
+
 
 .search-container-block .close-btn {
     display: inline;
@@ -522,12 +534,14 @@ span.no-recoord-table {
     position: absolute;
 }
 
-
 table.individuals-tableblock th:nth-child(1),
 table.individuals-tableblock td:nth-child(1) {
     width: 14%;
 }
 
+.top-view-margin {
+    margin-top: 30px;
+}
 
 @media (min-width: 1367px) {
     table.individuals-tableblock tbody {

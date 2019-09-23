@@ -108,7 +108,7 @@ export const Details = props => {
                     <p className='ScheduleTypeTitle'>
                         {props.details.serviceCategoryDescription}
                     </p>
-                    <h2 className='ServicesTitle mt-4'>Service Types</h2>
+                    <h2 className='ServicesTitle'>Service Types</h2>
                     <div className='ServiceType visit-srq-slider WhiteBG'>
                         <div className='ServiceTypesSlider Summary'>
                             <Carousel className="ServiceTypesSlider">
@@ -119,7 +119,7 @@ export const Details = props => {
                     <h2 className='ServicesTitle'>
                         Additional Information
                           </h2>
-                    <p className='AdditionInfo mt-3 mb-4'>
+                    <p className='AdditionInfo  mb-4'>
                         {props.details.serviceRequestDescription}
                     </p>
                     <h2 className='ServicesTitle'>

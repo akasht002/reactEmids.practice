@@ -266,7 +266,7 @@ export const ScheduleType = props => {
                                                         selectedValue={props.selectedDays}
                                                         className='onBoardingSelect'
                                                     >
-                                                        {props.selectedDaysLabel ? props.selectedDaysLabel : <span className="Select-placeholder pl-0">Select weekly</span>}
+                                                        {props.selectedDaysLabel ? props.selectedDaysLabel : <span className="Select-placeholder pl-0">Select</span>}
                                                     </Select>
                                                 </SelectField>
                                             </ThemeProvider>
@@ -279,7 +279,7 @@ export const ScheduleType = props => {
                                                         selectedValue={props.selectedWeeks}
                                                         className='onBoardingSelect'
                                                     >
-                                                        {props.selectedWeeksLabel ? props.selectedWeeksLabel : <span className="Select-placeholder pl-0">Select Day</span>}
+                                                        {props.selectedWeeksLabel ? props.selectedWeeksLabel : <span className="Select-placeholder pl-0">Select</span>}
                                                     </Select>
                                                 </SelectField>
                                             </ThemeProvider>
@@ -344,6 +344,7 @@ export const ScheduleType = props => {
                                     label="Start Time"
                                     minTime={defaultStartTime()}
                                     maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
+                                    placeholderText={'Start Time'}
                                 />
                                 {!props.startTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -359,6 +360,7 @@ export const ScheduleType = props => {
                                     label="End Time"
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
+                                    placeholderText={'End Time'}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>

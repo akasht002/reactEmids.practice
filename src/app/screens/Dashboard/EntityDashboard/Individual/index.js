@@ -505,7 +505,7 @@ export class Individuals extends Component {
 
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state;
-
+    const noResultsFoundcss = (this.props.individualsList.length === 0) ? 'top-view-margin' : ''
     const FeedbackAlertContent = (
       <FeedbackAlert
         feedbackServiceVisits={this.props.individualsFeedbackList}
@@ -558,7 +558,7 @@ export class Individuals extends Component {
             </div> : ''
           }
           </div>
-          <div className="tab-table-view">
+          <div className={`tab-table-view ${noResultsFoundcss}`}>
             <div className="full-block-tableview">
               <Grid
                 data={this.props.individualsList}

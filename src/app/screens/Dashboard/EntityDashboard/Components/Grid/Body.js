@@ -28,7 +28,7 @@ export const Body = props => {
                                         {`${item[key]} %`}
                                     </div></td>
                             default:
-                                return <td>{item[key]}</td>
+                                return <td title={item[key]}>{item[key]}</td>
                         }
                     })}
                 </tr>
