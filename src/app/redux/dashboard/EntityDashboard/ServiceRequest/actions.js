@@ -90,7 +90,6 @@ export function getServiceRequestTableList(data) {
       })
       .catch((err) => {
         logError(err)
-        dispatch(getServiceRequestTableListSuccess([]))
         dispatch(endLoading())
       })
   }

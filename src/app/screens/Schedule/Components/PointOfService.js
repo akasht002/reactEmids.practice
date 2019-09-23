@@ -49,7 +49,9 @@ export class PointOfService extends Component {
                         onChange={(e) => {
                             this.props.handlePatientAddress(address)
                         }}       
-                        checked={this.props.selectedPOS === address.addressId}        
+                        checked={this.props.selectedPOS === address.addressId}  
+                        // checked={this.props.patientAddressId === address.addressId}     
+                        //checked={this.props.patientAddressId === 0 ? this.props.selectedPOS === address.addressId : this.props.patientAddressId === address.addressId}        
                     />
                     <label className="form-radio-label AddressPOS"
                         htmlFor={"AddressPOS" + catNum}>

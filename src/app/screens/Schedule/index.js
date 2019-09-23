@@ -11,7 +11,7 @@ import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
 import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty, formatContactNumber } from "../../utils/validations";
-import { checkLength, allEqual, numbersOnly } from '../../utils/arrayUtility';
+import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar } from '../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../utils/formatName'
 import {
     getServiceCategory,
@@ -34,7 +34,7 @@ import {
     isScheduleEdit,
     isAssessmentEdit
 } from '../../redux/schedule/actions';
-import { getDiffTime, getHourMin, formateMDYY } from "../../utils/dateUtility";
+import { getDiffTime, getHourMin } from "../../utils/dateUtility";
 import './Components/styles.css'
 import { PlanTypeData, ScheduleTypeData, weekRecurring } from './data/index'
 import { validate } from './data/validate'
@@ -42,7 +42,7 @@ import Search from '../VisitSelection/VisitServiceList/Search'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
 import moment from 'moment'
-import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, SERVICE_CATEGORY } from '../../constants/constants'
+import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, SERVICE_CATEGORY, SCHEDULE_RECURRENCE_FIELD } from '../../constants/constants'
 
 export class Schedule extends Component {
     constructor(props) {
@@ -68,7 +68,7 @@ export class Schedule extends Component {
             monthlyMonthsSecond: '',
             selectedDaysLabel: '',
             selectedWeeksLabel: '',
-            planType: 1,
+            planType: this.props.scheduleList && this.props.scheduleList.length > 0 ? SCHEDULE_TYPE_OPTIONS.standard : SCHEDULE_TYPE_OPTIONS.assessment,
             serviceTypeSelected: false,
             startDateSelected: false,
             pageNumber: PAGE_NO,
@@ -84,7 +84,8 @@ export class Schedule extends Component {
             phoneNumberModal: false,
             phoneNumber: '',
             isAssessmentEdit: false,
-            isDefaultAddress: false
+            isDefaultAddress: false,
+            planTypeAlertPopup: false
         }
         this.serviceTypes = [];
         this.categoryId = SERVICE_CATEGORY.adl.id;
@@ -176,7 +177,7 @@ export class Schedule extends Component {
         this.setState({
             assessmentId: data.assessmentId,
             checkedServiceCategoryId: data.categoryId,
-            startDate: moment(data.startDate),
+            startDate: data.startDate,
             endDate: data.endDate,
             startTime: moment(data.startTime, 'h:mm a'),
             endTime: moment(data.endTime, 'h:mm a'),
@@ -247,7 +248,30 @@ export class Schedule extends Component {
     }
 
     handleChangePlanType = (id) => {
-        this.setState({ planType: id })
+        this.setState({ planTypeId: id })
+        if (this.isDataEntered) {
+            this.setState({ planTypeAlertPopup: true })
+        } else {
+            this.setState({
+                planType: id,
+                planTypeAlertPopup: false,
+                isRecurring: false,
+                startDate: '',
+                endDate: '',
+                startTime: null,
+                endTime: null,
+                durationTime: null
+            })
+            this.serviceTypes = [];
+            this.categoryId = SERVICE_CATEGORY.adl.id;
+            this.address = {}
+            this.espId = '';
+        }
+    }
+
+    handelTypeChange = () => {
+        this.isDataEntered = false
+        this.handleChangePlanType(this.state.planTypeId);
     }
 
     handleServiceCategory = (id) => {
@@ -394,9 +418,8 @@ export class Schedule extends Component {
 
     dateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
-        const formattedMDYY = formateMDYY(formattedDate)
         this.setState({
-            startDate: formattedMDYY
+            startDate: formattedDate
         });
         this.isDataEntered = true;
     }
@@ -411,9 +434,8 @@ export class Schedule extends Component {
 
     todateChanged = (date) => {
         const formattedDate = formattedDateMoment(date);
-        const formattedMDYY = formateMDYY(formattedDate)
         this.setState({
-            endDate: formattedMDYY
+            endDate: formattedDate
         });
         this.isDataEntered = true;
     }
@@ -468,14 +490,31 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleChangeDailyDayOccurence = (data) => {
-        this.setState({ dailyDayOccurence: numbersOnly(data) })
+    handleChangeOccurrenceFields = (e, fieldId) => {
         this.isDataEntered = true;
-    }
-
-    handleChangeWeeklyDayOccurence = (data) => {
-        this.setState({ weeklyDayOccurence: numbersOnly(data) })
-        this.isDataEntered = true;
+        let fieldValue;
+        if (disableZeroInFirstChar(e)) {
+            switch (fieldId) {
+                case SCHEDULE_RECURRENCE_FIELD.dailyDay:
+                    fieldValue = { dailyDayOccurence: numbersOnly(e.target.value) };
+                    break;
+                case SCHEDULE_RECURRENCE_FIELD.weeklyDay:
+                    fieldValue = { weeklyDayOccurence: numbersOnly(e.target.value) };
+                    break;
+                case SCHEDULE_RECURRENCE_FIELD.monthlyDay:
+                    fieldValue = { monthlyDay: numbersOnly(e.target.value) };
+                    break;
+                case SCHEDULE_RECURRENCE_FIELD.monthlyMonths:
+                    fieldValue = { monthlyMonths: numbersOnly(e.target.value) };
+                    break;
+                case SCHEDULE_RECURRENCE_FIELD.monthlyMonthsSecond:
+                    fieldValue = { monthlyMonthsSecond: numbersOnly(e.target.value) };
+                    break;
+                default:
+                    return null
+            }
+            this.setState(fieldValue);
+        }
     }
 
     handleChangeDaysSelection = (e) => {
@@ -512,16 +551,6 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleChangeMonthlyDay = (data) => {
-        this.setState({ monthlyDay: numbersOnly(data) })
-        this.isDataEntered = true;
-    }
-
-    handleChangeMonthlyMonths = (data) => {
-        this.setState({ monthlyMonths: numbersOnly(data) })
-        this.isDataEntered = true;
-    }
-
     handleChangeSelectedWeeks = (selectedOptionId) => {
         let selectedValue = '';
         let valueData = parseInt(selectedOptionId, 10);
@@ -549,11 +578,6 @@ export class Schedule extends Component {
             selectedDaysLabel: selectedValue
         });
         this.selectedDaysLabel = selectedValue;
-        this.isDataEntered = true;
-    }
-
-    handleChangeMonthlyMonthsSecond = (data) => {
-        this.setState({ monthlyMonthsSecond: numbersOnly(data) })
         this.isDataEntered = true;
     }
 
@@ -750,9 +774,9 @@ export class Schedule extends Component {
     }
 
     onClickCancel = () => {
-        if(this.isDataEntered){
+        if (this.isDataEntered) {
             this.setState({ isModalOpen: true })
-        }else{
+        } else {
             this.goToServicedetails();
         }
     }
@@ -780,7 +804,7 @@ export class Schedule extends Component {
                 <Scrollbars speed={2}
                     smoothScrolling
                     horizontal={false}
-                    className='ProfileContentWidget'>
+                    className='ProfileContentWidget add-new-scheduleblock'>
                     <div className="full-block-view">
                         <div className="Plan-typebar">
                             <PlanType
@@ -846,7 +870,6 @@ export class Schedule extends Component {
                                         handleChangeRecurringPattern={this.handleChangeRecurringPattern}
                                         handleSelectDailyOptionField={this.handleSelectDailyOptionField}
                                         handleSelectWeeklyOptionField={this.handleSelectWeeklyOptionField}
-                                        handleChangeDailyDayOccurence={this.handleChangeDailyDayOccurence}
                                         dailyDayOccurence={this.state.dailyDayOccurence}
                                         selectedRecurringType={this.state.selectedRecurringType}
                                         daysList={this.props.daysList}
@@ -855,8 +878,6 @@ export class Schedule extends Component {
                                         handleChangeMonthlySelectionSecond={this.handleChangeMonthlySelectionSecond}
                                         monthlyDay={this.state.monthlyDay}
                                         monthlyMonths={this.state.monthlyMonths}
-                                        handleChangeMonthlyDay={this.handleChangeMonthlyDay}
-                                        handleChangeMonthlyMonths={this.handleChangeMonthlyMonths}
                                         selectedWeeks={this.state.selectedWeeksId}
                                         selectedWeeksLabel={this.state.selectedWeeksLabel}
                                         selectedDays={this.state.selectedDaysId}
@@ -864,7 +885,6 @@ export class Schedule extends Component {
                                         handleChangeSelectedDays={this.handleChangeSelectedDays}
                                         handleChangeSelectedWeeks={this.handleChangeSelectedWeeks}
                                         weekRecurring={weekRecurring}
-                                        handleChangeWeeklyDayOccurence={this.handleChangeWeeklyDayOccurence}
                                         weeklyDayOccurence={this.state.weeklyDayOccurence}
                                         handleChangeMonthlyMonthsSecond={this.handleChangeMonthlyMonthsSecond}
                                         monthlyMonthsSecond={this.state.monthlyMonthsSecond}
@@ -873,6 +893,7 @@ export class Schedule extends Component {
                                         formatedStartTime={this.formatedStartTime}
                                         weeklySelectedDays={this.weeklySelectedDays}
                                         planType={this.state.planType}
+                                        handleChangeOccurrenceFields={this.handleChangeOccurrenceFields}
                                     />
 
                                 </div>
@@ -881,7 +902,7 @@ export class Schedule extends Component {
                                 <h2 className='ServicesTitle'>Point of Service</h2>
                                 <PointOfService
                                     patientAddressList={this.props.patientAddressList}
-                                    patientAddressId={this.state.selectedPOS}
+                                    patientAddressId={this.props.individualSchedulesDetails && this.props.individualSchedulesDetails.patientAddressId}
                                     stateList={this.props.stateList}
                                     handlePatientAddress={this.handlePatientAddress}
                                     handlePOSAddress={this.handlePOSAddress}
@@ -900,17 +921,17 @@ export class Schedule extends Component {
                             </div>
                             <div className="ServiceTypesWidget PostSR">
                                 <div className="top-search-blocksp">
-                                <h2 className='ServicesTitle'>Assign Service Provider</h2>
-                                <div className="search-block_SP">
-                                    <Search
-                                        toggleSearch={this.toggleSearch}
-                                        searchOpen={this.state.searchOpen}
-                                        searchKeyword={this.state.searchKeyword}
-                                        handleSearchkeyword={this.handleSearchkeyword}
-                                        handleSearchData={this.handleSearchData}
-                                        closeSearch={this.toggleSearch}
-                                    />
-                                </div>
+                                    <h2 className='ServicesTitle'>Assign Service Provider</h2>
+                                    <div className="search-block_SP">
+                                        <Search
+                                            toggleSearch={this.toggleSearch}
+                                            searchOpen={this.state.searchOpen}
+                                            searchKeyword={this.state.searchKeyword}
+                                            handleSearchkeyword={this.handleSearchkeyword}
+                                            handleSearchData={this.handleSearchData}
+                                            closeSearch={this.toggleSearch}
+                                        />
+                                    </div>
                                 </div>
                                 <AssignServiceProvider
                                     entityServiceProvidersList={this.props.entityServiceProvidersList}
@@ -959,6 +980,15 @@ export class Schedule extends Component {
                         OkButtonTitle={'Ok'}
                         isOpen={this.state.phoneNumberModal}
                         onAcceptClick={() => this.setState({ phoneNumberModal: false })}
+                    />
+                    <AlertPopup
+                        message='Do you want to discard the changes?'
+                        OkButtonTitle={'Yes'}
+                        CancelButtonTitle={'No'}
+                        isCancel={true}
+                        isOpen={this.state.planTypeAlertPopup}
+                        closePopup={() => this.setState({ planTypeAlertPopup: false })}
+                        onAcceptClick={() => this.handelTypeChange()}
                     />
                 </Scrollbars>
             </AsideScreenCover>
@@ -1009,7 +1039,8 @@ export function mapStateToProps(state) {
         individualSchedulesDetails: scheduleState.individualSchedulesDetails,
         isIndividualScheduleEdit: scheduleState.isIndividualScheduleEdit,
         isAssessmentEdit: scheduleState.isAssessmentEdit,
-        assessmentDetails: scheduleState.assessmentDetails
+        assessmentDetails: scheduleState.assessmentDetails,
+        scheduleList: state.visitSelectionState.VisitServiceDetailsState.scheduleList
     }
 }
 

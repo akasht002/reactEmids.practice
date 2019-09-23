@@ -30,5 +30,7 @@ export const VisitServiceDetails = {
     setAddNewScheduledClicked: 'setAddNewScheduledClicked/visitservicedetails',
     resetState:"visitServiceDetails/resetState",
     setVisitDate: 'setVisitDate/visitservicedetails',
-    setEntityDashboard: 'setEntityDashboard/visitservicedetails'
+    setEntityDashboard: 'setEntityDashboard/visitservicedetails',
+    loadingESPList: 'loadingESPList/visitservicedetails',
+    getPaymentAvailabilitySuccess: 'getPaymentAvailabilitySuccess/visitservicedetails'
   }

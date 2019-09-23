@@ -1,12 +1,13 @@
 import { API } from '../../../../services/api'
-import { Post, Get } from '../../../../services/http'
+import { Post } from '../../../../services/http'
 import { startLoading, endLoading } from '../../../loading/actions';
 import { VisitServiceProviderList } from './bridge';
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
-import { formatPhoneNumber } from '../../../../utils/formatName';
+import { formatPhoneNumber, removeHyphenInPhoneNumber } from '../../../../utils/formatName';
+import { checkNumber } from '../../../../utils/validations';
 
 export const setActiveSubTab = data => {
   return {
@@ -68,6 +69,8 @@ export function getVisitServiceProviderCountList(data, isFilterApplied = false) 
 }
 
 export function getVisitServiceProviderTableList(data) {
+  let searchText = removeHyphenInPhoneNumber(data.searchText)
+  data.searchText = (checkNumber(searchText) ? searchText : data.searchText)
   return dispatch => {
     dispatch(startLoading())
     return Post(
@@ -161,6 +164,13 @@ export const endFeedbackAlertLoading = () => {
 export const savePaginationNumber = data => {
   return {
     type: VisitServiceProviderList.savePaginationNumber,
+    data
+  }
+} 
+
+export const setServiceProviderFeedbackTab = data => {
+  return {
+    type: VisitServiceProviderList.setServiceProviderFeedbackTab,
     data
   }
 } 

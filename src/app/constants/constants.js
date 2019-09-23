@@ -489,7 +489,7 @@ export const VISIT_PROCESSING_STATUS = {
     },
     inProgress: {
         id: 44,
-        title: 'InProgress'
+        title: 'In Progress'
     },
     completed: {
         id: 45,
@@ -541,4 +541,27 @@ export const SCHEDULE_TYPE = {
 export const FEEDBACK_QUESTION_TYPE = {
     CHOICEBASED: 'ChoiceBased',
     OPENTEXT: 'OpenText'
+}
+
+export const SCHEDULE_RECURRENCE_FIELD = {
+    dailyDay: 1,
+    weeklyDay: 2,
+    monthlyDay: 3,
+    monthlyMonths: 4,
+    monthlyMonthsSecond: 5
+}
+
+export const SR_FILTER_TABS = {
+    categoryAndType: {
+        id: '7',
+        name: 'Category & Type'
+    },
+    status: {
+        id: '8',
+        name: 'Request Status'
+    },
+    scheduleType: {
+        id: '9',
+        name: 'One Time / Recurring'
+    }
 }

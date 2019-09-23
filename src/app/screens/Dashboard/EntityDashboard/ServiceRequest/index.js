@@ -10,7 +10,8 @@ import {
   SERVICE_REQUEST_DETAILS_TAB,
   ENTITY_DASHBOARD_STATUS,
   NO_RECORDS_FOUND,
-  SCHEDULE_TYPE
+  SCHEDULE_TYPE,
+  SR_FILTER_TABS
 } from '../../../../constants/constants'
 import {
   getServiceRequestCountList,
@@ -93,11 +94,12 @@ export class ServiceRequest extends Component {
     this.props.getScheduleType()
   }
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props, state) {
     return {
       fromDate: props.fromDate,
       toDate: props.toDate,
-      rowCount: props.paginationCount
+      rowCount: props.paginationCount,
+      rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
     }
   }
 
@@ -136,7 +138,7 @@ export class ServiceRequest extends Component {
     let rowMaxValue = pageSize;
     await this.setState({
       status: e.target.value,
-      pageSize: this.state.pageSize,
+      pageSize: DEFAULT_PAGE_SIZE,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
       rowMax: rowMaxValue,
@@ -398,7 +400,7 @@ export class ServiceRequest extends Component {
       case ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all:
         return filterTabs;
       default:
-        return filterTabs.filter(item => item.id !== '8');
+        return filterTabs.filter(item => (item.id !== SR_FILTER_TABS.status.id && item.id !== SR_FILTER_TABS.scheduleType.id));
     }
   }
 

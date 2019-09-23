@@ -7,5 +7,6 @@ export const VisitServiceProviderList = {
     getFeedbackAlertDetailsSuccess: 'getFeedbackAlertDetailsSuccess/visitserviceprovider',
     startFeedbackAlertLoading: 'startFeedbackAlertLoading/visitserviceprovider',
     endFeedbackAlertLoading: 'endFeedbackAlertLoading/visitserviceprovider',
-    savePaginationNumber: 'savePaginationNumber/visitserviceprovider'
+    savePaginationNumber: 'savePaginationNumber/visitserviceprovider',
+    setServiceProviderFeedbackTab: 'setServiceProviderFeedbackTab/visitserviceprovider'
   }

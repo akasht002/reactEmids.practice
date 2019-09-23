@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { Calendar, CoreoTimePicker } from '../../../components/LevelOne';
 import { formateStateDateValue } from "../../../utils/validations";
-import { getDiffTime, getHourMin } from "../../../utils/dateUtility";
+import { getDiffTime, timeDropDownFormat, defaultStartTime, defaultEndTime, getHourMin } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
-import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS,SCHEDULE_TYPE_OPTIONS } from '../../../constants/constants'
+import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS, SCHEDULE_TYPE_OPTIONS, SCHEDULE_RECURRENCE_FIELD } from '../../../constants/constants'
 import moment from 'moment';
 
 export const ScheduleType = props => {
@@ -16,15 +16,10 @@ export const ScheduleType = props => {
         return <Item className='ListItem CTDashboard' key={type.id}>{type.value}</Item>;
     });
 
-    let now = moment()
-
-    let minStartTime = moment().minutes(now.minutes()+5).seconds(0)
-    let minEndTime = props.minEndTime || moment(props.startTime).seconds(0).add("minutes", 5)
-
 
     return (
         <Fragment>
-           { parseInt(props.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&            
+            {parseInt(props.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                 props.options.map(item => {
                     return (
 
@@ -74,8 +69,8 @@ export const ScheduleType = props => {
                                     handleChange={props.handleChangeStartTime}
                                     value={props.startTime}
                                     label="Start Time"
-                                    minTime={minStartTime}
-                                    maxTime={moment().hours(23).minutes(30)}
+                                    minTime={defaultStartTime()}
+                                    maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
                                     placeholderText={'Start Time'}
                                 />
                                 {!props.startTime && props.onClickSave &&
@@ -91,8 +86,8 @@ export const ScheduleType = props => {
                                     minDate={props.startTime}
                                     label="End Time"
                                     disabled={!props.startTime}
-                                    minTime={minEndTime}
-                                    maxTime={moment().hours(23).minutes(30)}
+                                    minTime={timeDropDownFormat(props.startTime)}
+                                    maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
                                 />
                                 {!props.endTime && props.onClickSave &&
@@ -116,7 +111,7 @@ export const ScheduleType = props => {
                 </div>
             }
 
-            {props.selectedType &&
+            {props.selectedType && parseInt(props.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                 <div className="full-block-scheduleDate">
                     <div className="col-md-6  p-6">
                         <div className="left-recurringpattern">
@@ -146,7 +141,7 @@ export const ScheduleType = props => {
 
                                 <Fragment>
                                     <div className="right-monthblock">
-                                        
+
                                         <div className="every-dayblock">
                                             <fieldset>
                                                 <label>Every</label>
@@ -155,8 +150,8 @@ export const ScheduleType = props => {
                                                     name={'recurringPattern'}
                                                     value={props.dailyDayOccurence}
                                                     maxLength={2}
-                                                    autoComplete='off'                           
-                                                    onChange={(e) => { props.handleChangeDailyDayOccurence(e.target.value) }}
+                                                    autoComplete='off'
+                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.dailyDay)}}                                                                                                                                                      
                                                 />
                                                 <label>{'Day(s)'}</label>
                                             </fieldset>
@@ -167,7 +162,7 @@ export const ScheduleType = props => {
                             {props.selectedRecurringType === RECURRING_PATTERN_OPTIONS.weekly &&
                                 <Fragment>
                                     <div class="right-monthblock">
-                                       
+
                                         <div className="every-dayblock">
                                             <fieldset>
                                                 <label>Every</label>
@@ -177,7 +172,7 @@ export const ScheduleType = props => {
                                                     value={props.weeklyDayOccurence}
                                                     maxLength={2}
                                                     autoComplete='off'
-                                                    onChange={(e) => { props.handleChangeWeeklyDayOccurence(e.target.value) }}
+                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.weeklyDay) }}
                                                 />
                                                 <label>{'Week(s)'}</label>
                                             </fieldset>
@@ -231,7 +226,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyDay}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyDay(e.target.value) }}
+                                                onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.monthlyDay) }}
                                             />
                                             <label>of every</label>
                                             <input
@@ -240,7 +235,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyMonths}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyMonths(e.target.value) }}
+                                                onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.monthlyMonths) }}
                                             />
                                             <label>Month(s)</label>
                                         </fieldset>
@@ -272,7 +267,7 @@ export const ScheduleType = props => {
                                                         selectedValue={props.selectedDays}
                                                         className='onBoardingSelect'
                                                     >
-                                                        {props.selectedDaysLabel ? props.selectedDaysLabel : <span className="Select-placeholder pl-0">Select weekly</span>}
+                                                        {props.selectedDaysLabel ? props.selectedDaysLabel : <span className="Select-placeholder pl-0">Select</span>}
                                                     </Select>
                                                 </SelectField>
                                             </ThemeProvider>
@@ -285,7 +280,7 @@ export const ScheduleType = props => {
                                                         selectedValue={props.selectedWeeks}
                                                         className='onBoardingSelect'
                                                     >
-                                                        {props.selectedWeeksLabel ? props.selectedWeeksLabel : <span className="Select-placeholder pl-0">Select Day</span>}
+                                                        {props.selectedWeeksLabel ? props.selectedWeeksLabel : <span className="Select-placeholder pl-0">Select</span>}
                                                     </Select>
                                                 </SelectField>
                                             </ThemeProvider>
@@ -296,7 +291,7 @@ export const ScheduleType = props => {
                                                 value={props.monthlyMonthsSecond}
                                                 maxLength={2}
                                                 autoComplete='off'
-                                                onChange={(e) => { props.handleChangeMonthlyMonthsSecond(e.target.value) }}
+                                                onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.monthlyMonthsSecond) }}
                                             />
                                             <label>Month(s)</label>
                                         </fieldset>
@@ -318,6 +313,7 @@ export const ScheduleType = props => {
                             label="Start Date"
                             dateFormat={DATE_FORMATS.m_d_yy}
                             placeholderText={DATE_FORMATS.m_d_yy}
+                            maxDate={props.endDate && formateStateDateValue(props.endDate)}
                         />
                         {!props.startDate && props.onClickSave &&
                             <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -328,12 +324,13 @@ export const ScheduleType = props => {
                             onDateChange={props.todateChanged}
                             onDateChangeRaw={props.todateChangedRaw}
                             mandatory={false}
-                            minDate={props.startDate && formateStateDateValue(props.startDate)}
+                            minDate={props.startDate ? formateStateDateValue(props.startDate) : moment()}
                             value={props.endDate}
                             className={"form-control datePicker"}
                             label="End Date"
                             dateFormat={DATE_FORMATS.m_d_yy}
                             placeholderText={DATE_FORMATS.m_d_yy}
+                            disabled={!props.startDate}
                         />
                         {!props.endDate && props.onClickSave &&
                             <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -346,6 +343,9 @@ export const ScheduleType = props => {
                                     handleChange={props.handleChangeStartTime}
                                     value={props.startTime}
                                     label="Start Time"
+                                    minTime={defaultStartTime()}
+                                    maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
+                                    placeholderText={'Start Time'}
                                 />
                                 {!props.startTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -359,8 +359,9 @@ export const ScheduleType = props => {
                                     value={props.endTime}
                                     disabled={!props.startTime}
                                     label="End Time"
-                                    minTime={moment().hours(moment(props.startTime).format("hh")).minutes(moment(props.startTime).format("mm"))}
-                                    maxTime={moment().hours(23).minutes(30)}
+                                    minTime={timeDropDownFormat(props.startTime)}
+                                    maxTime={defaultEndTime()}
+                                    placeholderText={'End Time'}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>

@@ -30,7 +30,9 @@ const defaultState = {
     visitDate: {},
     savedScheduleType: '',
     isAddNewScheduleClicked: false,
-    isEntityDashboard: false
+    isEntityDashboard: false,
+    isLoadingESPList: false,
+    isPaymentAvailable: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -46,7 +48,7 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 entityServiceProviderId: action.data && action.data.serviceProviderId,
-                patientId: action.data && action.data.patientId 
+                patientId: action.data && action.data.patientId
             };
 
         case VisitServiceDetails.updateServiceRequestByServiceProviderSuccess:
@@ -169,20 +171,20 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 // disableShowmore: false
             };
         case VisitServiceDetails.setActiveTab:
-        return {
-            ...state,
-            activeTab: action.data
-        };
+            return {
+                ...state,
+                activeTab: action.data
+            };
         case VisitServiceDetails.getfirstlastvisitdateSuccess:
-        return {
-            ...state,
-            visitDate: action.data
-        };
+            return {
+                ...state,
+                visitDate: action.data
+            };
         case VisitServiceDetails.saveScheduleType:
-        return {
-            ...state,
-            savedScheduleType: action.data
-        };
+            return {
+                ...state,
+                savedScheduleType: action.data
+            };
         case VisitServiceDetails.setAddNewScheduledClicked:
         return {
             ...state,
@@ -195,15 +197,25 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             VisitServiceSchedule: [],
         }
         case VisitServiceDetails.setVisitDate:
-        return {
-            ...state,
-            visitDate: action.data
-        };
+            return {
+                ...state,
+                visitDate: action.data
+            };
         case VisitServiceDetails.setEntityDashboard:
-        return {
-            ...state,
-            isEntityDashboard: action.data
-        };
+            return {
+                ...state,
+                isEntityDashboard: action.data
+            };
+        case VisitServiceDetails.loadingESPList:
+            return {
+                ...state,
+                isLoadingESPList: action.data
+            }
+        case VisitServiceDetails.getPaymentAvailabilitySuccess:
+            return {
+                ...state,
+                isPaymentAvailable: ((action.data && action.data[0].value) === '1') ? true : false
+            };
         default:
             return state;
     }

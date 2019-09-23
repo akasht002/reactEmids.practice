@@ -37,7 +37,6 @@ export let overDueServiceVisits = {
     patientFullName: 'Individuals',
     visitStatus: 'Status',
     schedule: 'Schedule',
-    task: 'Task',
     providerFullName: 'Entity Provider',
     icon: 'Actions'
 }

@@ -51,6 +51,7 @@ import {
 import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
 import Search from '../Components/Search'
+import { setServiceProviderFeedbackTab } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 
 export class Individuals extends Component {
   constructor(props) {
@@ -309,10 +310,6 @@ export class Individuals extends Component {
     })
   }
 
-  goToPgVisitSummary = (data) => {
-    this.props.getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId)
-  }
-
   pageNumberChangeFeedback = (pageNumber) => {
     this.setState({ activePageFeedback: pageNumber })
     const model = {
@@ -356,7 +353,7 @@ export class Individuals extends Component {
         })
         break;
       default:
-        this.props.getServiceRequestId(0);
+        this.props.getServiceRequestId(SERVICE_REQUEST_DETAILS_TAB.request);
         this.props.setPatient(data.patientId)
         this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPatient)
         this.props.goToVisitServiceDetails();
@@ -372,6 +369,7 @@ export class Individuals extends Component {
   }
 
   goToPgVisitSummary = (data) => {
+    this.props.setServiceProviderFeedbackTab(false)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
@@ -505,7 +503,7 @@ export class Individuals extends Component {
 
   render() {
     const { pageSize, activePage, rowMin, rowMax, rowCount, status } = this.state;
-
+    const noResultsFoundcss = (this.props.individualsList.length === 0) ? 'top-view-margin' : ''
     const FeedbackAlertContent = (
       <FeedbackAlert
         feedbackServiceVisits={this.props.individualsFeedbackList}
@@ -558,7 +556,7 @@ export class Individuals extends Component {
             </div> : ''
           }
           </div>
-          <div className="tab-table-view">
+          <div className={`tab-table-view ${noResultsFoundcss}`}>
             <div className="full-block-tableview">
               <Grid
                 data={this.props.individualsList}
@@ -633,7 +631,8 @@ export function mapDispatchToProps(dispatch) {
     resetContracts: data => dispatch(resetContracts(data)),
     clearStates: () => dispatch(clearStates()),
     setVisitDate: data => dispatch(setVisitDate(data)),
-    setEntityDashboard: data => dispatch(setEntityDashboard(data))
+    setEntityDashboard: data => dispatch(setEntityDashboard(data)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data))
   }
 }
 

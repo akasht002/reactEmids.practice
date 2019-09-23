@@ -8,7 +8,8 @@ import {
   setActiveSubTab,
   getPointofServicedata,
   getFeedbackAlertDetails,
-  savePaginationNumber
+  savePaginationNumber,
+  setServiceProviderFeedbackTab
 } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions'
 import { setActiveStatusForAllTab, getGender, clearGenderType } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
@@ -41,6 +42,7 @@ import FeedbackAlert from "../Components/FeedbackAlert/FeedbackAlert";
 import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
 import Search from '../Components/Search';
+import { saveScheduleType } from '../../../../redux/visitSelection/VisitServiceDetails/actions';
  
 export class ServiceProvider extends Component {
   constructor(props) {
@@ -308,6 +310,8 @@ export class ServiceProvider extends Component {
   }
 
   goToSpVisitSummary = (data) => {
+    this.props.setServiceProviderFeedbackTab(true)
+    this.props.saveScheduleType(data.scheduleTypeId)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
@@ -589,6 +593,8 @@ function mapDispatchToProps(dispatch) {
     setESP: data => dispatch(setESP(data)),
     getGender: () => dispatch(getGender()),
     clearGenderType: data => dispatch(clearGenderType(data)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
+    saveScheduleType: (data) => dispatch(saveScheduleType(data))
   }
 }
 

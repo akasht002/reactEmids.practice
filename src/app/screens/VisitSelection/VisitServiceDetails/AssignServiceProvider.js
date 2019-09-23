@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setESP } from "../../../redux/patientProfile/actions";
 import { ModalPopup, Input } from '../../../components'
-import {
-  getEntityServiceProviderListSearch
-} from "../../../redux/dashboard/Dashboard/actions";
+import { getEntityServiceProviderListSearch } from "../../../redux/dashboard/Dashboard/actions";
 import { Path } from "../../../routes";
 import { push } from "../../../redux/navigation/actions";
 import { SERVICE_REQ_STATUS } from '../../../constants/constants'
