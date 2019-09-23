@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
-import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
-import { Link } from "react-router-dom";
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader } from '../../../../components';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";

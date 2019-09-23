@@ -47,3 +47,11 @@ export const visitProcessingNavigationData = isEntity => {
     return isEntity ? VisitProcessingNavigationData.slice(0, 3) : VisitProcessingNavigationData;
 }
 
+export const disableZeroInFirstChar = e => {
+    if (e.target.value.length === 1 && e.target.value === '0') {
+        return false
+    } else {
+        return true
+    }
+}
+

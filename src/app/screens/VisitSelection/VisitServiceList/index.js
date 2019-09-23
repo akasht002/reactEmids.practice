@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import _ from 'lodash'
 import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearVisitServiceList, keywordSearchServiceRequest }
     from '../../../redux/visitSelection/VisitServiceList/actions';
-import { getServiceRequestId, setActiveTab } from '../../../redux/visitSelection/VisitServiceDetails/actions';
+import { getServiceRequestId, setActiveTab, clearServiceDetails } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
 import Search from './Search'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
@@ -120,7 +120,8 @@ export class VisitServiceList extends Component {
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
         this.props.getServiceArea();
-        this.props.clearServiceType()
+        this.props.clearServiceType();
+        this.props.clearServiceDetails();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -291,7 +292,8 @@ export class VisitServiceList extends Component {
             isValid: true,
             selectedOption: '',
             activePage: 1,
-            ServiceAreas: {}
+            ServiceAreas: {},
+            filterOpen: !this.state.filterOpen
         })
         this.isStatusChanged = false
         this.props.clearServiceCategory(this.props.ServiceType);
@@ -694,7 +696,8 @@ function mapDispatchToProps(dispatch) {
         keywordSearchServiceRequest: data => dispatch(keywordSearchServiceRequest(data)),
         getSearchDataCount: data => dispatch(getSearchDataCount(data)),
         getSearchDataCountSuccess: () => dispatch(getSearchDataCountSuccess(DEFAULT_SEARCH_COUNT)),
-        setActiveTab: data => dispatch(setActiveTab(data))
+        setActiveTab: data => dispatch(setActiveTab(data)),
+        clearServiceDetails: () => dispatch(clearServiceDetails())
     }
 };
 

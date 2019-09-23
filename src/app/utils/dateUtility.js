@@ -125,3 +125,15 @@ export function formateMDYY(date) {
 export const getHHMMformat = (data) => {
     return moment(data).format(DATE_FORMATS.hh_mm)
 }
+
+export const timeDropDownFormat = (data) => {
+    return data ? moment().hours(moment(data).format("HH")).minutes(moment(data).format("mm")) : ''
+}
+
+export const defaultStartTime = () => {
+    return moment().hours(0).minutes(0)
+}
+
+export const defaultEndTime = () => {
+    return moment().hours(23).minutes(30)
+}

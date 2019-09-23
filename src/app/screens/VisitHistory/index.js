@@ -193,7 +193,7 @@ export class VisitHistory extends Component {
   }
 
   applyReset = () => {
-    this.setState({ selectedOption: '', serviceTypeIds: [], isFilterApplied: false, activePage: DEFAULT_PAGE_NUMBER })
+    this.setState({ selectedOption: '', serviceTypeIds: [], isFilterApplied: false, activePage: DEFAULT_PAGE_NUMBER, filterOpen: !this.state.filterOpen })
     this.props.clearServiceTypes();
     this.props.clearServiceProviders(this.props.serviceProviders);
     this.props.clearPatientForServiceProviders(this.props.PatientForServiceproviders);

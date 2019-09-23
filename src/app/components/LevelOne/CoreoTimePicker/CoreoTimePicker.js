@@ -30,6 +30,7 @@ class CoreoTimePicker extends Component {
                         onClickOutside={this.clickOutside}
                         ref={r => this.calendar = r}
                         placeholderText={this.props.placeholderText}
+                        readOnly={true}
                     />
                 </label>
             </div>
