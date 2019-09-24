@@ -157,7 +157,9 @@ export class VisitServiceDetails extends Component {
     this.setState({
       startDateEdit: nextProps.serviceVisitDetails.visitDate,
       startTime: moment(nextProps.serviceVisitDetails.startTime, 'h:mm a'),
-      endTime: moment(nextProps.serviceVisitDetails.endTime, 'h:mm a')
+      endTime: moment(nextProps.serviceVisitDetails.endTime, 'h:mm a'),
+      startDate: this.props.visitDate && this.props.visitDate.startVisitDateForWeb,
+      endDate: this.props.visitDate && this.props.visitDate.endVisitDateForWeb
     })
   }
 

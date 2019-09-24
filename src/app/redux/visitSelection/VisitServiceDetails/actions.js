@@ -521,7 +521,7 @@ export function getSchedulesList(patientId) {
           entityServiceProviders: []
         }
         dispatch(getSchedulesListSuccess(resp.data))
-        //dispatch(getVisitList(model))
+        dispatch(getVisitList(model))
       })
       .catch(err => {
 
