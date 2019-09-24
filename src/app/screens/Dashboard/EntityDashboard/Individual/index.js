@@ -353,7 +353,7 @@ export class Individuals extends Component {
         })
         break;
       default:
-        this.props.getServiceRequestId(SERVICE_REQUEST_DETAILS_TAB.request);
+        this.props.getServiceRequestId(0);
         this.props.setPatient(data.patientId)
         this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPatient)
         this.props.goToVisitServiceDetails();
