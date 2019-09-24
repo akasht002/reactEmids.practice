@@ -32,7 +32,8 @@ import {
   CARETEAM_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
-  SERVICE_REQUEST_DETAILS_TAB
+  SERVICE_REQUEST_DETAILS_TAB,
+  entityDashboardTab
 } from '../../../../constants/constants'
 import { getUserInfo } from '../../../../utils/userUtility';
 import { ProfileModalPopup, RowPerPage, Preloader } from '../../../../components'
@@ -66,16 +67,6 @@ export class Individuals extends Component {
       status: this.props.activeSubTab,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
-      // clinicalConditions: this.props.clincalCondition,
-      // genderId: this.props.genderId,
-      // cohorts: [],
-      // ageRange: {
-      //   minimumAge: 0,
-      //   maximumAge: 120,
-      //   isChanged: false
-      // },
-      // ageRange: this.props.ageRange,
-      // memberContractId: this.props.memberContractId,
       data: [],
       activePage: this.props.savedPageNumber,
       pageNumber: this.props.savedPageNumber,
@@ -122,6 +113,9 @@ export class Individuals extends Component {
   }
 
   componentWillUnmount() {
+    // if(this.props.activeTab !== entityDashboardTab.individuals) {
+    //   this.props.setGenderId(0)
+    // }
     this.props.clearStates()
   }
 
@@ -230,16 +224,6 @@ export class Individuals extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
       searchKeyword: 'default',
-      // clinicalConditions: [],
-      // cohorts: [],
-      // memberContractId: 0,
-      // genderId: 0,
-      // ageRange: {
-      //   ...this.state.ageRange,
-      //   minimumAge: 0,
-      //   maximumAge: 120,
-      //   isChanged: false
-      // },
       pageNumber: DEFAULT_PAGE_NUMBER,
       searchOpen: false
     })
@@ -415,22 +399,11 @@ export class Individuals extends Component {
         clinicalConditions.splice(index, 1)
       }
     }
-    // this.setState({
-    //   clinicalConditions: clinicalConditions
-    // })
     await this.props.checkClinicalCondition(this.props.clinicalConditionList, item.attributeId, e.target.checked)
     await this.props.setClinicalConditions(clinicalConditions)
   }
 
   onChangeSlider = data => {
-    // this.setState({
-    //   ageRange: {
-    //     ...this.state.ageRange,
-    //     minimumAge: data.min,
-    //     maximumAge: data.max,
-    //     isChanged: true
-    //   }
-    // })
     let ageRange = {
       minimumAge: data.min,
       maximumAge: data.max
@@ -439,10 +412,6 @@ export class Individuals extends Component {
   }
 
   handleGenderType = data => {
-    this.setState({
-      genderLabel: data.name,
-      genderId: data.id
-    })
     this.props.setGenderId(data.id)
   }
 
@@ -469,14 +438,6 @@ export class Individuals extends Component {
     await this.setState({
       attributedProviders: [],
       clinicalConditions: [],
-      // memberContractId: 0,
-      // genderId: 0,
-      // ageRange: {
-      //   ...this.state.ageRange,
-      //   minimumAge: 0,
-      //   maximumAge: 120,
-      //   isChanged: false
-      // },
       pageNumber: DEFAULT_PAGE_NUMBER,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: DEFAULT_PAGE_NUMBER,
@@ -700,7 +661,8 @@ export function mapStateToProps(state) {
     filterApplied: state.dashboardState.individualsListState.filterApplied,
     memberContractId: state.dashboardState.individualsListState.memberContractId,
     ageRange: state.dashboardState.individualsListState.ageRange,
-    clinicalConditions: state.dashboardState.individualsListState.clinicalConditions
+    clinicalConditions: state.dashboardState.individualsListState.clinicalConditions,
+    activeTab: state.dashboardState.individualsListState.activeTab
   }
 }
 

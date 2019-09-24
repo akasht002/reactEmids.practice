@@ -9,7 +9,8 @@ import {
   getPointofServicedata,
   getFeedbackAlertDetails,
   savePaginationNumber,
-  setServiceProviderFeedbackTab
+  setServiceProviderFeedbackTab,
+  setGenderId
 } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions'
 import { setActiveStatusForAllTab, getGender, clearGenderType } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
@@ -59,7 +60,7 @@ export class ServiceProvider extends Component {
       minExperience: 0,
       skillTypes: [],
       skillId: [],
-      genderId: 0,
+      // genderId: 0,
       activePage: this.props.savedPageNumber,
       pageNumber: this.props.savedPageNumber,
       itemsCountPerPage: DEFAULT_PAGE_SIZE,
@@ -143,7 +144,7 @@ export class ServiceProvider extends Component {
 
   getCountData = data => {
     return {
-      "gender": this.state.genderId,
+      "gender": this.props.genderId,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
       "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all : this.state.status,
@@ -176,7 +177,7 @@ export class ServiceProvider extends Component {
       "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
       "toDate": data.toDate ? data.toDate : this.state.toDate,
       "tab": data.status ? data.status : this.state.status,
-      "gender": this.state.genderId,
+      "gender": this.props.genderId,
       "minimumExperience": this.state.minExperience,
       "maximumExperience": this.state.maxExperience,
       "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
@@ -202,10 +203,11 @@ export class ServiceProvider extends Component {
       minExperience: 0,
       skillTypes: [],
       skillId: [],
-      genderId: 0,
+      // genderId: 0,
       rating: 0,
       searchKeyword: 'default'
     })
+    this.props.setGenderId(0)
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     let count = this.getCountData({
@@ -343,10 +345,11 @@ export class ServiceProvider extends Component {
   }
 
   handleGenderType = data => {
-    this.setState({
-      genderLabel: data.name,
-      genderId: data.id
-    })
+    // this.setState({
+    //   genderLabel: data.name,
+    //   genderId: data.id
+    // })
+    this.props.setGenderId(data.id)
   }
 
   onChangeExperinceSlider = data => {
@@ -387,7 +390,7 @@ export class ServiceProvider extends Component {
       toDate: this.props.toDate,
       maxExperience: 50,
       minExperience: 0,
-      genderId: 0,
+      // genderId: 0,
       rating: 0,
       status: this.state.status,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -397,6 +400,7 @@ export class ServiceProvider extends Component {
       filterOpen: false
     })
     this.serviceTypeId = []
+    this.props.setGenderId(0)
     await this.props.clearGenderType(this.props.genderType)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -562,7 +566,7 @@ export class ServiceProvider extends Component {
               handleSelectedRating={this.handleSelectedRating}
               checked={this.state.isChecked}
               rating={this.state.rating}
-              genderId={this.state.genderId}
+              genderId={this.props.genderId}
               minExperience={this.state.minExperience}
               maxExperience={this.state.maxExperience}
               filterTabs={filterTabs}
@@ -594,7 +598,8 @@ function mapDispatchToProps(dispatch) {
     getGender: () => dispatch(getGender()),
     clearGenderType: data => dispatch(clearGenderType(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
-    saveScheduleType: (data) => dispatch(saveScheduleType(data))
+    saveScheduleType: (data) => dispatch(saveScheduleType(data)),
+    setGenderId: data => dispatch(setGenderId(data))
   }
 }
 
@@ -613,7 +618,8 @@ function mapStateToProps(state) {
     isLoadingFeedbackList: VisitServiceProviderState
       .isLoadingFeedbackList,
     savedPageNumber: VisitServiceProviderState.savedPaginationNumber,
-    genderType: state.dashboardState.individualsListState.genderType
+    genderType: state.dashboardState.individualsListState.genderType,
+    genderId: state.dashboardState.individualsListState.genderId
   }
 }
 

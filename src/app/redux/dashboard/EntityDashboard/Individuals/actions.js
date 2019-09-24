@@ -200,28 +200,26 @@ export const getAllContractsSuccess = (data) => {
 }
 
 export function getClinicalCondition () {
-    return dispatch => {
+    return (dispatch, getState) => {
+     let {filterApplied} = getState().dashboardState.individualsListState
       PatientGet(API.getAllClinicalCondition)
         .then(resp => {
-          dispatch(getClinicalConditionSuccess(resp.data))
+          dispatch(getClinicalConditionSuccess(resp.data, filterApplied))
         })
         .catch(err => {
         })
     }
 }
 
-export const getClinicalConditionSuccess = data => {
-    return getState => {
-        // let {filterApplied} = getState().dashboardState.individualsListState
-        // !filterApplied &&
+export const getClinicalConditionSuccess = (data, filterApplied) => {
+        !filterApplied &&
         data.forEach(function (obj) {
             obj.isChecked = false
         })
         return {
             type: IndividualsList.getClinicalConditionSuccess,
             data
-        }        
-    }
+    }        
 }
 
 export function getGender () {

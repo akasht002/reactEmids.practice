@@ -174,3 +174,10 @@ export const setServiceProviderFeedbackTab = data => {
     data
   }
 } 
+
+export const setGenderId = data => {
+  return {
+      type: VisitServiceProviderList.setGenderId,
+      data
+  } 
+}

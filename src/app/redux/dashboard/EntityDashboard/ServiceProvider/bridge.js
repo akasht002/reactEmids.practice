@@ -8,5 +8,6 @@ export const VisitServiceProviderList = {
     startFeedbackAlertLoading: 'startFeedbackAlertLoading/visitserviceprovider',
     endFeedbackAlertLoading: 'endFeedbackAlertLoading/visitserviceprovider',
     savePaginationNumber: 'savePaginationNumber/visitserviceprovider',
-    setServiceProviderFeedbackTab: 'setServiceProviderFeedbackTab/visitserviceprovider'
+    setServiceProviderFeedbackTab: 'setServiceProviderFeedbackTab/visitserviceprovider',
+    setGenderId: 'setGenderId/visitserviceprovider'
   }

@@ -8,7 +8,8 @@ const defaultState = {
     feedbackServiceVisits: [],
     isLoadingFeedbackList: false,
     savedPaginationNumber: 1,
-    isServiceProviderFeedbackTab: false
+    isServiceProviderFeedbackTab: false,
+    genderId: 0
 };
 
 const VisitServiceProviderState = (state = defaultState, action) => {
@@ -65,7 +66,12 @@ const VisitServiceProviderState = (state = defaultState, action) => {
         return {
             ...state,
             isServiceProviderFeedbackTab: action.data
-        };      
+        }; 
+        case VisitServiceProviderList.setGenderId:
+        return {
+            ...state,
+            genderId: action.data
+        }       
         default:
             return state;
     }
