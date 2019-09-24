@@ -21,14 +21,15 @@ import {
   ENTITY_DASHBOARD_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
-  DATE_FORMATS
+  DATE_FORMATS,
+  VISIT_TYPE
 } from '../../../../constants/constants'
 import { createVideoConference } from '../../../../redux/telehealth/actions'
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
 import { getUserInfo } from '../../../../utils/userUtility';
 import {
-  getVisitServiceHistoryByIdDetail,
+  getVisitServiceHistoryByIdDetail, getAssessmentQuestionsList,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import { SORT_NAME } from './constants'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
@@ -82,6 +83,7 @@ export class ServiceProvider extends Component {
     this.serviceTypeId = []
     this.gridHeader = allServiceProivders
     this.filterApplied = false
+    this.serviceProviderId = 0
   }
 
   componentDidMount() {
@@ -311,6 +313,13 @@ export class ServiceProvider extends Component {
 
   goToSpVisitSummary = (data) => {
     this.props.setServiceProviderFeedbackTab(true)
+    const model = {
+      serviceProviderId: this.serviceProviderId,
+      visitId: data.servicePlanVisitId
+    }
+    if(data.scheduleTypeId === VISIT_TYPE.assessment){
+      this.props.getAssessmentQuestionsList(model)
+    }
     this.props.saveScheduleType(data.scheduleTypeId)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
@@ -325,6 +334,7 @@ export class ServiceProvider extends Component {
     }
     this.props.getFeedbackAlertDetails(model)
     if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack)) {
+      this.serviceProviderId = data.serviceProviderId
       this.setState({
         feedbackAlertModal: !this.state.feedbackAlertModal,
         serviceProviderId: data.serviceProviderId
@@ -594,7 +604,8 @@ function mapDispatchToProps(dispatch) {
     getGender: () => dispatch(getGender()),
     clearGenderType: data => dispatch(clearGenderType(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
-    saveScheduleType: (data) => dispatch(saveScheduleType(data))
+    saveScheduleType: (data) => dispatch(saveScheduleType(data)),
+    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data))
   }
 }
 
