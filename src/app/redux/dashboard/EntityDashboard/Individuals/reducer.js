@@ -23,7 +23,13 @@ const defaultState = {
     clincalCondition: [],
     genderType: [],
     genderId: 0,
-    filterApplied: false
+    filterApplied: false,
+    memberContractId: 0,
+    ageRange: {
+       minimumAge: 0,
+       maximumAge: 120
+    },
+    clinicalConditions: []
 };
 
 const individualsListState = (state = defaultState, action) => {
@@ -162,7 +168,22 @@ const individualsListState = (state = defaultState, action) => {
         return {
             ...state,
             filterApplied: action.data
-        }                   
+        }
+        case IndividualsList.setMemberContractId:
+        return {
+            ...state,
+            memberContractId: action.data
+        }  
+        case IndividualsList.setAgeRange:
+        return {
+            ...state,
+            ageRange: action.data
+        }
+        case IndividualsList.setClinicalConditions:
+        return {
+            ...state,
+            clinicalConditions: action.data
+        }                       
         default:
             return state;
     }

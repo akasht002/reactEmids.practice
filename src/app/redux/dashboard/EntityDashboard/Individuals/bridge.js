@@ -25,5 +25,8 @@ export const IndividualsList = {
     clearGenderType: 'clear_genderType/serviceprovidersfilters',
     resetContracts: 'resetContracts/individual',
     setGenderId: 'setGenderId/individual',
-    setFilterApplied: 'setFilterApplied/individual'
+    setFilterApplied: 'setFilterApplied/individual',
+    setMemberContractId: 'setMemberContractId/individual',
+    setAgeRange: 'setAgeRange/individual',
+    setClinicalConditions: 'setClinicalConditions/individual'
 }

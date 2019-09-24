@@ -16,7 +16,11 @@ import {
   resetContracts,
   clearStates,
   setGenderId,
-  setFilterApplied
+  setFilterApplied,
+  setMemberContractId,
+  setAgeRange,
+  setClinicalConditions,
+  checkClinicalCondition
 } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   DEFAULT_PAGE_NUMBER,
@@ -62,15 +66,16 @@ export class Individuals extends Component {
       status: this.props.activeSubTab,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
-      clinicalConditions: [],
-      genderId: this.props.genderId,
-      cohorts: [],
-      ageRange: {
-        minimumAge: 0,
-        maximumAge: 120,
-        isChanged: false
-      },
-      memberContractId: 0,
+      // clinicalConditions: this.props.clincalCondition,
+      // genderId: this.props.genderId,
+      // cohorts: [],
+      // ageRange: {
+      //   minimumAge: 0,
+      //   maximumAge: 120,
+      //   isChanged: false
+      // },
+      // ageRange: this.props.ageRange,
+      // memberContractId: this.props.memberContractId,
       data: [],
       activePage: this.props.savedPageNumber,
       pageNumber: this.props.savedPageNumber,
@@ -183,22 +188,22 @@ export class Individuals extends Component {
 
   getCountData = data => {
     return {
-      "clinicalCondition": this.state.clinicalConditions,
+      "clinicalCondition": this.props.clinicalConditions,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
       "tab": this.props.filterApplied ? ENTITY_DASHBOARD_STATUS.individuals.statCard.all : this.state.status,
       "gender": this.props.genderId,
-      "minimumAge": this.state.ageRange.minimumAge,
-      "maximumAge": this.state.ageRange.maximumAge,
+      "minimumAge": this.props.ageRange && this.props.ageRange.minimumAge,
+      "maximumAge": this.props.ageRange && this.props.ageRange.maximumAge,
       "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
-      "contractId": this.state.memberContractId
+      "contractId": this.props.memberContractId
     }
   }
 
   getFilterData = data => {
     return {
-      "clinicalCondition": this.state.clinicalConditions,
+      "clinicalCondition": this.props.clinicalConditions,
       "pageNumber": data.pageNumber ? data.pageNumber : this.state.pageNumber,
       "pageSize": data.pageSize ? data.pageSize: this.state.pageSize,
       "sortColumn": data.sortName ? data.sortName : this.state.sortName,
@@ -207,11 +212,11 @@ export class Individuals extends Component {
       "toDate": data.toDate ? data.toDate : this.state.toDate,
       "tab": data.status ? data.status : this.state.status,
       "gender": this.props.genderId,
-      "minimumAge": this.state.ageRange.minimumAge,
-      "maximumAge": this.state.ageRange.maximumAge,
+      "minimumAge": this.props.ageRange && this.props.ageRange.minimumAge,
+      "maximumAge": this.props.ageRange && this.props.ageRange.maximumAge,
       "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
-      "contractId": this.state.memberContractId
+      "contractId": this.props.memberContractId
     }
   }
 
@@ -225,19 +230,26 @@ export class Individuals extends Component {
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: ROW_MIN,
       searchKeyword: 'default',
-      clinicalConditions: [],
-      cohorts: [],
-      memberContractId: 0,
-      genderId: 0,
-      ageRange: {
-        ...this.state.ageRange,
-        minimumAge: 0,
-        maximumAge: 120,
-        isChanged: false
-      },
+      // clinicalConditions: [],
+      // cohorts: [],
+      // memberContractId: 0,
+      // genderId: 0,
+      // ageRange: {
+      //   ...this.state.ageRange,
+      //   minimumAge: 0,
+      //   maximumAge: 120,
+      //   isChanged: false
+      // },
       pageNumber: DEFAULT_PAGE_NUMBER,
       searchOpen: false
     })
+    let ageRange = {
+      minimumAge: 0,
+      maximumAge: 120
+    }
+    this.props.setClinicalConditions([])
+    this.props.setAgeRange(ageRange)
+    this.props.setMemberContractId(0)
     this.props.setGenderId(0)
     let data = this.getFilterData({
       sortName: sortName,
@@ -387,10 +399,14 @@ export class Individuals extends Component {
       membershipName: data.membershipName,
       memberContractId: data.membershipId
     })
+    this.props.setMemberContractId(data.membershipId)
   }
 
-  handleClinicalConditions = (item, e) => {
-    let clinicalConditions = this.state.clinicalConditions
+  handleClinicalConditions = async (item, e) => {
+    let clinicalConditions = this.props.clinicalConditions
+    this.setState({
+      isChecked: !this.state.isChecked
+  })
     if (e.target.checked) {
       clinicalConditions.push(item.attributeId)
     } else {
@@ -399,20 +415,27 @@ export class Individuals extends Component {
         clinicalConditions.splice(index, 1)
       }
     }
-    this.setState({
-      clinicalConditions: clinicalConditions
-    })
+    // this.setState({
+    //   clinicalConditions: clinicalConditions
+    // })
+    await this.props.checkClinicalCondition(this.props.clinicalConditionList, item.attributeId, e.target.checked)
+    await this.props.setClinicalConditions(clinicalConditions)
   }
 
   onChangeSlider = data => {
-    this.setState({
-      ageRange: {
-        ...this.state.ageRange,
-        minimumAge: data.min,
-        maximumAge: data.max,
-        isChanged: true
-      }
-    })
+    // this.setState({
+    //   ageRange: {
+    //     ...this.state.ageRange,
+    //     minimumAge: data.min,
+    //     maximumAge: data.max,
+    //     isChanged: true
+    //   }
+    // })
+    let ageRange = {
+      minimumAge: data.min,
+      maximumAge: data.max
+    }
+    this.props.setAgeRange(ageRange)
   }
 
   handleGenderType = data => {
@@ -446,20 +469,27 @@ export class Individuals extends Component {
     await this.setState({
       attributedProviders: [],
       clinicalConditions: [],
-      memberContractId: 0,
-      genderId: 0,
-      ageRange: {
-        ...this.state.ageRange,
-        minimumAge: 0,
-        maximumAge: 120,
-        isChanged: false
-      },
+      // memberContractId: 0,
+      // genderId: 0,
+      // ageRange: {
+      //   ...this.state.ageRange,
+      //   minimumAge: 0,
+      //   maximumAge: 120,
+      //   isChanged: false
+      // },
       pageNumber: DEFAULT_PAGE_NUMBER,
       activePage: DEFAULT_PAGE_NUMBER,
       rowMin: DEFAULT_PAGE_NUMBER,
       rowMax: DEFAULT_PAGE_SIZE,
       filterOpen: false
     })
+    let ageRange = {
+      minimumAge: 0,
+      maximumAge: 120
+    }
+    this.props.setClinicalConditions([])
+    this.props.setAgeRange(ageRange)
+    this.props.setMemberContractId(0)
     this.props.setGenderId(0)
     await this.props.resetContracts(
       this.props.contracts
@@ -605,10 +635,11 @@ export class Individuals extends Component {
           checked={this.state.isChecked}
           contracts={this.props.contracts}
           handleContracts={this.handleContracts}
-          ageRange={this.state.ageRange}
+          ageRange={this.props.ageRange}
           genderId={this.props.genderId}
-          memberContractId={this.state.memberContractId}
+          memberContractId={this.props.memberContractId}
           filterTabs={filterTabs}
+          isChecked={this.state.isChecked}
         />
       </div>
     )
@@ -641,7 +672,11 @@ export function mapDispatchToProps(dispatch) {
     setEntityDashboard: data => dispatch(setEntityDashboard(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
     setGenderId: data => dispatch(setGenderId(data)),
-    setFilterApplied: data => dispatch(setFilterApplied(data))
+    setFilterApplied: data => dispatch(setFilterApplied(data)),
+    setMemberContractId: data => dispatch(setMemberContractId(data)),
+    setAgeRange: data => dispatch(setAgeRange(data)),
+    setClinicalConditions: data => dispatch(setClinicalConditions(data)),
+    checkClinicalCondition: (data, id, checked) => dispatch(checkClinicalCondition(data, id, checked))
   }
 }
 
@@ -662,7 +697,10 @@ export function mapStateToProps(state) {
     genderType: state.dashboardState.individualsListState.genderType,
     isLoaded: state.dashboardState.individualsListState.isLoaded,
     genderId: state.dashboardState.individualsListState.genderId,
-    filterApplied: state.dashboardState.individualsListState.filterApplied 
+    filterApplied: state.dashboardState.individualsListState.filterApplied,
+    memberContractId: state.dashboardState.individualsListState.memberContractId,
+    ageRange: state.dashboardState.individualsListState.ageRange,
+    clinicalConditions: state.dashboardState.individualsListState.clinicalConditions
   }
 }
 

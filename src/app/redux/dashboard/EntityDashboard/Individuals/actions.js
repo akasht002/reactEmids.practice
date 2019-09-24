@@ -211,13 +211,17 @@ export function getClinicalCondition () {
 }
 
 export const getClinicalConditionSuccess = data => {
-data.forEach(function (obj) {
-    obj.isChecked = false
-})
-return {
-    type: IndividualsList.getClinicalConditionSuccess,
-    data
-}
+    return getState => {
+        // let {filterApplied} = getState().dashboardState.individualsListState
+        // !filterApplied &&
+        data.forEach(function (obj) {
+            obj.isChecked = false
+        })
+        return {
+            type: IndividualsList.getClinicalConditionSuccess,
+            data
+        }        
+    }
 }
 
 export function getGender () {
@@ -273,6 +277,15 @@ export const resetContracts = contracts => {
     }
 }
 
+export const checkClinicalCondition = (data, id, checked) => {
+    var foundIndex = data.findIndex(element => element.attributeId === id);
+    data[foundIndex].isChecked = checked;
+    return {
+        type: IndividualsList.getClinicalConditionSuccess,
+        data
+    }
+}
+
 export const setGenderId = data => {
     return {
         type: IndividualsList.setGenderId,
@@ -285,4 +298,25 @@ export const setFilterApplied = data => {
         type: IndividualsList.setFilterApplied,
         data
     }  
+}
+
+export const setMemberContractId = data => {
+    return {
+        type: IndividualsList.setMemberContractId,
+        data
+    } 
+}
+
+export const setAgeRange = data => {
+    return {
+        type: IndividualsList.setAgeRange,
+        data
+    } 
+}
+
+export const setClinicalConditions = data => {
+    return {
+        type: IndividualsList.setClinicalConditions,
+        data
+    } 
 }
