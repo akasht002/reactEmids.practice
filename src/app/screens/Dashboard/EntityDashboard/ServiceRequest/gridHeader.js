@@ -13,7 +13,6 @@ export let cancelledServiceRequests = {
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
     status: 'Status',
-    provider: 'Service Provider',
     icon: 'Actions'
 }
 
