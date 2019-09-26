@@ -9,5 +9,13 @@ export const VisitServiceRequestList = {
     getServiceRequestApprovalStatus: 'get_approval_status/visitservicerequest',
     getDiagnosisCodeSuccess: 'getDiagnosisCodeSuccess/visitservicerequest',
     setPaginationRowCountSuccess: 'set_pagination_row_count_success/visitservicerequest',
-    setActiveSubTab: 'setActiveSubTab/visitservicerequest'
+    setActiveSubTab: 'setActiveSubTab/visitservicerequest',
+    checkServiceType: 'checkServiceType/visitservicerequest',
+    setServiceType: 'setServiceType/visitservicerequest',
+    setFilterApplied: 'setFilterApplied/visitservicerequest',
+    setServiceRequestStatus: 'setServiceRequestStatus/visitservicerequest',
+    resetFilter: 'resetFilter/visitservicerequest',
+    setScheduleType: 'setScheduleType/visitservicerequest',
+    setImpersinated: 'setImpersinated/visitservicerequest',
+    setServiceCategory: 'setServiceCategory/visitservicerequest'
   }

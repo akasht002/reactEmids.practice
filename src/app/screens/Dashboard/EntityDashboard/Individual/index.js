@@ -20,7 +20,9 @@ import {
   setMemberContractId,
   setAgeRange,
   setClinicalConditions,
-  checkClinicalCondition
+  checkClinicalCondition,
+  setImpersinated,
+  resetFilter
 } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   DEFAULT_PAGE_NUMBER,
@@ -90,7 +92,7 @@ export class Individuals extends Component {
     this.filterApplied = this.props.filterApplied
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
@@ -99,8 +101,9 @@ export class Individuals extends Component {
     this.props.getGender()
     this.props.getClinicalCondition()
     this.props.getAllContracts()
-    this.props.getIndividualsCountList(count, this.props.filterApplied)
-    this.props.getIndividualsList(list)
+    await this.props.getIndividualsCountList(count, this.props.filterApplied)
+    await this.props.getIndividualsList(list)
+    this.props.setImpersinated(false)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -112,11 +115,11 @@ export class Individuals extends Component {
     }
   }
 
-  componentWillUnmount() {
-    // if(this.props.activeTab !== entityDashboardTab.individuals) {
-    //   this.props.setGenderId(0)
-    // }
-    this.props.clearStates()
+  async componentWillUnmount() {
+    if(!this.props.isImpersinated) {
+      await this.props.resetFilter()
+      await this.props.clearClinicalCondition(this.props.clinicalConditionList)
+    }
   }
 
   closeSearch = async () => {
@@ -321,7 +324,8 @@ export class Individuals extends Component {
     this.props.getIndividualsFeedbackList(model);
   }
 
-  impersinateIndividual = data => {
+  impersinateIndividual = async data => {
+    this.props.setImpersinated(true)
     switch (true) {
       case caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.visit):
         this.props.getServiceRequestId(0);
@@ -593,7 +597,6 @@ export class Individuals extends Component {
           onChangeSlider={this.onChangeSlider}
           clinicalConditionList={this.props.clinicalConditionList}
           handleClinicalConditions={this.handleClinicalConditions}
-          checked={this.state.isChecked}
           contracts={this.props.contracts}
           handleContracts={this.handleContracts}
           ageRange={this.props.ageRange}
@@ -637,7 +640,9 @@ export function mapDispatchToProps(dispatch) {
     setMemberContractId: data => dispatch(setMemberContractId(data)),
     setAgeRange: data => dispatch(setAgeRange(data)),
     setClinicalConditions: data => dispatch(setClinicalConditions(data)),
-    checkClinicalCondition: (data, id, checked) => dispatch(checkClinicalCondition(data, id, checked))
+    checkClinicalCondition: (data, id, checked) => dispatch(checkClinicalCondition(data, id, checked)),
+    setImpersinated: data => dispatch(setImpersinated(data)),
+    resetFilter: () => dispatch(resetFilter())
   }
 }
 
@@ -662,7 +667,8 @@ export function mapStateToProps(state) {
     memberContractId: state.dashboardState.individualsListState.memberContractId,
     ageRange: state.dashboardState.individualsListState.ageRange,
     clinicalConditions: state.dashboardState.individualsListState.clinicalConditions,
-    activeTab: state.dashboardState.individualsListState.activeTab
+    activeTab: state.dashboardState.individualsListState.activeTab,
+    isImpersinated: state.dashboardState.individualsListState.isImpersinated
   }
 }
 

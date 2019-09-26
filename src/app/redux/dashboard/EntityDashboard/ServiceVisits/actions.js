@@ -13,6 +13,8 @@ import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
+import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/actions';
+import { VisitServiceRequestList } from '../ServiceRequest/bridge';
 
 export const setActiveSubTab = data => {
     return {
@@ -42,8 +44,9 @@ export const setPaginationRowCountSuccess = data => {
     }
 }
 
-export function getVisitServiceCountList(data, isFilterApplied = false) {
+export function getVisitServiceCountList(data, isFilterApplied = false, onSuccess) {
     return (dispatch, getState) => {
+        dispatch(startLoading())
         Post(API.getVisitServiceCount, data).then((resp) => {
             if (resp && resp.data) {
                 let {activeSubTab, visitServiceCountList} = getState().dashboardState.VisitServiceCountListState
@@ -59,8 +62,12 @@ export function getVisitServiceCountList(data, isFilterApplied = false) {
                         dispatch(getVisitsCountListSuccess(updateCountList(visitServiceCountList, resp)))
                     }
                 }
+                onSuccess && onSuccess()
+                !onSuccess && dispatch(endLoading())
+
         }).catch((err) => {
             logError(err)
+            dispatch(endLoading())
         })
     }
 }
@@ -93,3 +100,62 @@ export function getVisitServiceTableList(data) {
         })
     }
 }
+
+export const checkServiceType = (data, id, checked) => {
+    var foundIndex = data.findIndex(element => element.serviceTypeId === id);
+    data[foundIndex].isChecked = checked;
+      return {
+        type: vistServiceHistoryDetails.getServiceTypeSuccess,
+        data
+    }
+  }
+  
+  export const setServiceType = data => {
+    return {
+        type: VisitServiceList.setServiceType,
+        data
+    } 
+  }
+  
+  export const setFilterApplied = data => {
+    return {
+        type: VisitServiceList.setFilterApplied,
+        data
+    }  
+  }
+  
+  export const checkServiceRequestStatus = (data, id, checked) => {
+    var foundIndex = data.findIndex(element => element.id === id);
+    data[foundIndex].isActive = checked;
+    return {
+      type: VisitServiceRequestList.getServiceRequestStatusSuccess,
+      data
+    }
+  }
+  
+  export const setServiceRequestStatus = data => {
+    return {
+        type: VisitServiceList.setServiceRequestStatus,
+        data
+    } 
+  }
+  
+  export const resetFilter = () => {
+    return {
+        type: VisitServiceList.resetFilter
+    }   
+  }
+
+  export const setImpersinated = data => {
+    return {
+        type: VisitServiceList.setImpersinated,
+        data
+    } 
+  }
+
+  export const setServiceCategory = data => {
+    return {
+        type: VisitServiceList.setServiceCategory,
+        data
+    } 
+  }

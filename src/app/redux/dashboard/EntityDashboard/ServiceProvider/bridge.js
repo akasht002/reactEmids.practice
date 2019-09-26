@@ -9,5 +9,10 @@ export const VisitServiceProviderList = {
     endFeedbackAlertLoading: 'endFeedbackAlertLoading/visitserviceprovider',
     savePaginationNumber: 'savePaginationNumber/visitserviceprovider',
     setServiceProviderFeedbackTab: 'setServiceProviderFeedbackTab/visitserviceprovider',
-    setGenderId: 'setGenderId/visitserviceprovider'
+    setGenderId: 'setGenderId/visitserviceprovider',
+    setExperience: 'setExperience/visitserviceprovider',
+    setRating: 'setRating/visitserviceprovider',
+    resetFilter: 'resetFilter/visitserviceprovider',
+    setImpersinated: 'setImpersinated/visitserviceprovider',
+    setFilterApplied: 'setFilterApplied/visitserviceprovider'
   }

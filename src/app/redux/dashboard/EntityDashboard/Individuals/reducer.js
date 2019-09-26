@@ -29,7 +29,8 @@ const defaultState = {
        minimumAge: 0,
        maximumAge: 120
     },
-    clinicalConditions: []
+    clinicalConditions: [],
+    isImpersinated: false
 };
 
 const individualsListState = (state = defaultState, action) => {
@@ -66,16 +67,16 @@ const individualsListState = (state = defaultState, action) => {
                 ...state,
                 contracts: action.data
             }
-        case IndividualsList.resetFilter:
-            return {
-                ...state,
-                contracts: action.contracts
-            }
+        case IndividualsList.resetContracts:
+        return {
+            ...state,
+            contracts: action.contracts
+        }
         case IndividualsList.setPaginationRowCountSuccess:
-            return {
-                ...state,
-                paginationCount: action.data
-            }
+        return {
+            ...state,
+            paginationCount: action.data
+        }
         case IndividualsList.getStatesSuccess:
             return {
                 ...state,
@@ -94,8 +95,7 @@ const individualsListState = (state = defaultState, action) => {
         case IndividualsList.clearState:
             return {
                 ...state,
-                fromDate: moment().subtract(3, 'months'),
-                toDate: moment().toDate()
+                genderId: 0
             };
         case IndividualsList.setActiveSubTab:
             return {
@@ -184,6 +184,22 @@ const individualsListState = (state = defaultState, action) => {
             ...state,
             clinicalConditions: action.data
         }                       
+        case IndividualsList.setImpersinated:
+        return {
+            ...state,
+            isImpersinated: action.data
+        }     
+        case IndividualsList.resetFilter:
+        return {
+            ...state,
+            genderId: 0,
+            clinicalConditions: [],
+            memberContractId: 0,
+            ageRange: {
+               minimumAge: 0,
+               maximumAge: 120
+            }
+        }                   
         default:
             return state;
     }

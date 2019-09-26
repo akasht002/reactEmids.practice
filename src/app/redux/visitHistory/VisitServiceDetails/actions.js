@@ -228,7 +228,8 @@ export function getServiceCategory() {
     }
 }
 
-export const getServiceTypeSuccess = (data) => {
+export const getServiceTypeSuccess = (data, filterApplied) => {
+    !filterApplied && _.forEach(data, function (obj) { obj.isChecked = false; });
     return {
         type: vistServiceHistoryDetails.getServiceTypeSuccess,
         data
@@ -236,8 +237,9 @@ export const getServiceTypeSuccess = (data) => {
 }
 
 export function getServiceType(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         let serviceCategoryId = data;
+        let {filterApplied} = getState().dashboardState.VisitServiceRequestState
         ServiceRequestGet(API.servicerequest + `ServiceType/${serviceCategoryId}`).then((resp) => {
             let data = resp.data.map((type, index) => {
                 if (index === 0) {
@@ -248,11 +250,10 @@ export function getServiceType(data) {
                 }
                 return type;
             });
-            dispatch(getServiceTypeSuccess(data))
+            dispatch(getServiceTypeSuccess(data, filterApplied))
         }).catch((err) => {
             logError(err)
         })
-
     }
 }
 

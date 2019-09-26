@@ -28,5 +28,6 @@ export const IndividualsList = {
     setFilterApplied: 'setFilterApplied/individual',
     setMemberContractId: 'setMemberContractId/individual',
     setAgeRange: 'setAgeRange/individual',
-    setClinicalConditions: 'setClinicalConditions/individual'
+    setClinicalConditions: 'setClinicalConditions/individual',
+    setImpersinated: 'setImpersinated/individual'
 }

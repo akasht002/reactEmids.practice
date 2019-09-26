@@ -318,3 +318,16 @@ export const setClinicalConditions = data => {
         data
     } 
 }
+
+export const setImpersinated = data => {
+    return {
+        type: IndividualsList.setImpersinated,
+        data
+    } 
+}
+
+export const resetFilter = () => {
+    return {
+        type: IndividualsList.resetFilter
+    }   
+}

@@ -5,6 +5,7 @@ import { Avatar } from "../../../../../components";
 export const StatCard = props => {
     let cardList = props.countList && props.countList.map((item) => {
         let image_url = ENTITY_CARD_IMAGE[`${item.subtext}${item.statusName}`] ? ENTITY_CARD_IMAGE[`${item.subtext}${item.statusName}`] : 'visits_in_period.svg'
+        console.log("count", item.totalCount)
         return (
             <div className="filter-card-content">
                 <input id={item.statusName + item.subtext} name={item.subtext} className="card-filter-input" type="radio" value={item.statusName}
