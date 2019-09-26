@@ -1002,7 +1002,7 @@ div.AddressCardWidget {
     display: flex;
     display: -moz-flex;
     flex-direction: column;
-    height: 160px;
+    height: 140px;
 }
 
 .AddressPOS span {
