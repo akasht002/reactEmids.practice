@@ -98,12 +98,11 @@ export class ServiceVisits extends Component {
     this.props.setImpersinated(false)
   }
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props) {
     return {
       fromDate: props.fromDate,
       toDate: props.toDate,
-      rowCount: props.paginationCount,
-      rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
+      rowCount: props.paginationCount
     }
   }
 
@@ -224,7 +223,7 @@ export class ServiceVisits extends Component {
     }
   }
 
-  pageNumberChange = pageNumber => {
+  pageNumberChange = async pageNumber => {
     const { pageSize, rowCount } = this.state
     let pageValue = pageNumber - 1
     let rowMinValue = (pageSize * pageValue) + 1
@@ -238,8 +237,8 @@ export class ServiceVisits extends Component {
       sortOrder: this.props.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
       pageSize: pageSize
     })
-    this.props.getVisitServiceTableList(list)
-    this.setState({
+    await this.props.getVisitServiceTableList(list)
+    await this.setState({
       activePage: pageNumber,
       pageNumber: pageNumber,
       rowMin: rowMinValue,
