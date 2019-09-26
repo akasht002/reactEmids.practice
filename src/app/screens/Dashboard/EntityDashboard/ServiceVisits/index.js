@@ -397,7 +397,6 @@ export class ServiceVisits extends Component {
     })
     if(this.state.searchKeyword !== '') {
       await this.props.getVisitServiceCountList(count, false, () =>  this.onSuccess(data))
-      await this.props.getVisitServiceTableList(data)  
     }
     await this.setState({
       searchOpen: !this.state.searchOpen,
