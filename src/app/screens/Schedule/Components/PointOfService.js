@@ -5,6 +5,7 @@ import { Input } from "../../../components/Base";
 import { Locationsettings } from "../../../constants/config"
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
+import { formatContactNumberValue } from "../../../utils/validations";
 
 let elem1 = ''; let elem2 = '';
 
@@ -48,7 +49,9 @@ export class PointOfService extends Component {
                         onChange={(e) => {
                             this.props.handlePatientAddress(address)
                         }}       
-                        checked={this.props.selectedPOS === address.addressId}        
+                        checked={this.props.selectedPOS === address.addressId}  
+                        // checked={this.props.patientAddressId === address.addressId}     
+                        //checked={this.props.patientAddressId === 0 ? this.props.selectedPOS === address.addressId : this.props.patientAddressId === address.addressId}        
                     />
                     <label className="form-radio-label AddressPOS"
                         htmlFor={"AddressPOS" + catNum}>
@@ -167,7 +170,7 @@ export class PointOfService extends Component {
                             maxlength={5}
                             type="text"
                             placeholder="Enter Zip"
-                            value={this.props.zip}
+                            value={formatContactNumberValue(this.props.zip)}
                             textChange={this.props.handelNewAddress}
                             className={
                                 'form-control ' +

@@ -1,7 +1,6 @@
 import { API } from '../../../../services/api';
 import { Post } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
-import _ from 'lodash';
 import { DATE_FORMATS, API_RESPONSE } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../../utils/dateUtility';
 import { getValue } from '../../../../utils/userUtility'

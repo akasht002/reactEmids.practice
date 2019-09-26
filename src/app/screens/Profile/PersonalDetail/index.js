@@ -423,7 +423,7 @@ class PersonalDetail extends React.PureComponent {
         {ProfileDetail}
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
-          toggle={() => this.togglePersonalDetails()}
+          toggle={this.togglePersonalDetails}
           ModalBody={modalContent}
           className='modal-lg asyncModal CertificationModal'
           modalTitle={modalTitle}
@@ -589,7 +589,7 @@ class PersonalDetail extends React.PureComponent {
           <span className={'primaryColor'}>Description</span>
 
             <span>{(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
-              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails()}>Edit your profile here</span>}</span>
+              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails}>Edit your profile here</span>}</span>
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
@@ -632,7 +632,7 @@ class PersonalDetail extends React.PureComponent {
           <i
             name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE}
             className={'SPIconMedium SPIconEdit SPIconEditPersonalDetails'}
-            onClick={this.togglePersonalDetails()}
+            onClick={this.togglePersonalDetails}
           />}
       </div>
     )

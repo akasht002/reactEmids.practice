@@ -27,14 +27,15 @@ import {
   ENTITY_DASHBOARD_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
-  DATE_FORMATS
+  DATE_FORMATS,
+  VISIT_TYPE
 } from '../../../../constants/constants'
 import { createVideoConference } from '../../../../redux/telehealth/actions'
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
 import { getUserInfo } from '../../../../utils/userUtility';
 import {
-  getVisitServiceHistoryByIdDetail,
+  getVisitServiceHistoryByIdDetail, getAssessmentQuestionsList,
 } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import { SORT_NAME } from './constants'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
@@ -61,11 +62,8 @@ export class ServiceProvider extends Component {
       serviceCategoryIds: 0,
       category: '',
       serviceArea: '',
-      // maxExperience: 50,
-      // minExperience: 0,
       skillTypes: [],
       skillId: [],
-      // genderId: 0,
       activePage: this.props.savedPageNumber,
       pageNumber: this.props.savedPageNumber,
       itemsCountPerPage: DEFAULT_PAGE_SIZE,
@@ -73,7 +71,6 @@ export class ServiceProvider extends Component {
       pageSize: DEFAULT_PAGE_SIZE,
       rowMin: DEFAULT_PAGE_NUMBER,
       rowMax: DEFAULT_PAGE_SIZE,
-      // rating: 0,
       rowCount: 0,
       searchOpen: false,
       searchKeyword: 'default',
@@ -148,8 +145,7 @@ export class ServiceProvider extends Component {
     return {
       fromDate: props.fromDate,
       toDate: props.toDate,
-      rowCount: props.paginationCount,
-      rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
+      rowCount: props.paginationCount
     }
   }
 
@@ -210,16 +206,12 @@ export class ServiceProvider extends Component {
       toDate: this.props.toDate,
       serviceCategoryIds: [],
       serviceArea: '',
-      // maxExperience: 50,
-      // minExperience: 0,
       skillTypes: [],
       skillId: [],
-      // genderId: 0,
       rating: 0,
       searchKeyword: 'default'
     })
     this.props.resetFilter()
-    // this.props.setGenderId(0)
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     let count = this.getCountData({
@@ -273,7 +265,7 @@ export class ServiceProvider extends Component {
     }
   }
 
-  pageNumberChange = pageNumber => {
+  pageNumberChange = async pageNumber => {
     this.props.savePaginationNumber(pageNumber)
     const { pageSize, rowCount, status } = this.state
     let sortName = this.getSortNameAndOrderBasedOnStatus(status).sortName;
@@ -291,7 +283,7 @@ export class ServiceProvider extends Component {
       sortOrder: sortOrder,
     })
     this.props.getVisitServiceProviderTableList(list)
-    this.setState({
+    await this.setState({
       activePage: pageNumber,
       pageNumber: pageNumber,
       rowMin: rowMinValue,
@@ -325,6 +317,13 @@ export class ServiceProvider extends Component {
 
   goToSpVisitSummary = (data) => {
     this.props.setServiceProviderFeedbackTab(true)
+    const model = {
+      serviceProviderId: this.serviceProviderId,
+      visitId: data.servicePlanVisitId
+    }
+    if(data.scheduleTypeId === VISIT_TYPE.assessment){
+      this.props.getAssessmentQuestionsList(model)
+    }
     this.props.saveScheduleType(data.scheduleTypeId)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
@@ -340,6 +339,7 @@ export class ServiceProvider extends Component {
     }
     this.props.getFeedbackAlertDetails(model)
     if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack)) {
+      this.serviceProviderId = data.serviceProviderId
       this.setState({
         feedbackAlertModal: !this.state.feedbackAlertModal,
         serviceProviderId: data.serviceProviderId
@@ -358,10 +358,6 @@ export class ServiceProvider extends Component {
   }
 
   handleGenderType = data => {
-    // this.setState({
-    //   genderLabel: data.name,
-    //   genderId: data.id
-    // })
     this.props.setGenderId(data.id)
   }
 
@@ -622,7 +618,8 @@ function mapDispatchToProps(dispatch) {
     setRating: data => dispatch(setRating(data)),
     resetFilter: () => dispatch(resetFilter()),
     setImpersinated: data => dispatch(setImpersinated(data)),
-    setFilterApplied: data => dispatch(setFilterApplied(data))
+    setFilterApplied: data => dispatch(setFilterApplied(data)),
+    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data))
   }
 }
 

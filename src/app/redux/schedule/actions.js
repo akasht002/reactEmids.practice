@@ -152,10 +152,8 @@ export function getServiceType(id, selectedData = []) {
         let serviceCategoryId = id;
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
-            let type = resp.data.filter((type, i) => {
-                if (type.serviceCategoryId === serviceCategoryId) {
-                    return type
-                }
+            let type = resp.data.filter((type) => {
+                return type.serviceCategoryId === serviceCategoryId;
             });
             data = type[0].serviceTypeTaskViewModel.map((type, index) => {
                 return {
@@ -179,9 +177,7 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
             let type = resp.data.filter((type) => {
-                if (type.serviceCategoryId === serviceCategoryId) {
-                    return type
-                }
+                    return type.serviceCategoryId === serviceCategoryId
             });
 
             data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, selected: isSelectAll }))
@@ -217,7 +213,7 @@ export function getStates() {
     }
 };
 
-export function getValidPatientAddress(data) {
+export function getValidPatientAddress(data,addressCallback) {
     return (dispatch, getState) => {
         let modelData = getModal(data)
         dispatch(startLoading())
@@ -228,9 +224,11 @@ export function getValidPatientAddress(data) {
             .then(resp => {
                 if (validateCoordinates(resp.data.lat, resp.data.lon)) {
                     dispatch(getValidPatientAddressSuccess(true))
+                    addressCallback(true)
                 }
                 else {
                     dispatch(getValidPatientAddressSuccess(false))
+                    addressCallback(false)
                     dispatch(setSelectedPos(0))
                 }
                 dispatch(endLoading())

@@ -24,7 +24,7 @@ export const ServiceRequestFiltersList = {
 
 export const clearServiceRequestStatus = (data) => {
         data.map(item => {
-          item.isChecked = !(item.keyValue === SERVICE_REQUEST_STATUS.closed.keyValue || item.keyValue === SERVICE_REQUEST_STATUS.all.keyValue)              
+          return item.isChecked = !(item.keyValue === SERVICE_REQUEST_STATUS.closed.keyValue || item.keyValue === SERVICE_REQUEST_STATUS.all.keyValue)              
         })
         return {
         type: ServiceRequestFiltersList.clearServiceRequestStatus,
