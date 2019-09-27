@@ -700,7 +700,7 @@ export class Schedule extends Component {
             endDate: endDate ? endDate : startDate,
             startTime: isAssessmentEdit ? getHourMin(startTime) : this.formatedStartTime,
             endTime: isAssessmentEdit ? getHourMin(endTime) : this.formatedEndTime,
-            duration: isAssessmentEdit ? duration : getDiffTime(startTime, endTime),
+            duration: getDiffTime(startTime, endTime),
             additionalDescription: additionalDescription,
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
