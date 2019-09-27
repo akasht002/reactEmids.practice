@@ -145,6 +145,7 @@ export class VisitServiceList extends Component {
         this.props.clearVisitServiceList()
         this.props.setDefaultFilteredStatus()
         this.props.formDirty()
+        this.props.resetData()
     }
 
     handleClick = (requestId, patientId) => {
@@ -487,10 +488,6 @@ export class VisitServiceList extends Component {
             this.props.getVisitServiceList(data);
             this.props.getServiceRequestCount()
         }
-    }
-
-    componentWillUnmount () {
-        this.props.resetData()
     }
 
     render() {

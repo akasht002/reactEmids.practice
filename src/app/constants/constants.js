@@ -565,3 +565,14 @@ export const SR_FILTER_TABS = {
         name: 'One Time / Recurring'
     }
 }
+
+export const SCHEDULE_TYPES = {
+    assessment: {
+        id: 1,
+        name: 'Assessment'
+    },
+    Standard: {
+        id: 2,
+        name: 'Standard'
+    }
+}

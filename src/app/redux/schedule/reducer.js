@@ -12,8 +12,9 @@ const defaultState = {
     daysList: [],
     disableShowmore: false, assessmentDetails: {},
     assessmentSuccess: false,
-    individualSchedulesDetails: '',
-    isAssessmentEdit: ''
+    individualSchedulesDetails: {},
+    isAssessmentEdit: false,
+    isIndividualScheduleEdit: false
 };
 
 const scheduleState = (state = defaultState, action) => {
@@ -102,17 +103,23 @@ const scheduleState = (state = defaultState, action) => {
             return {
                 ...state,
                 individualSchedulesDetails: action.data
-            }; 
+            };
 
         case Schedule.isScheduleEdit:
             return {
                 ...state,
                 isIndividualScheduleEdit: action.data
-            }; 
+            };
         case Schedule.isAssessmentEdit:
             return {
                 ...state,
                 isAssessmentEdit: action.data
+            };
+        case Schedule.clearServiceDetails:
+            return {
+                ...state,
+                assessmentDetails: {},
+                individualSchedulesDetails: {}
             };
 
         default:

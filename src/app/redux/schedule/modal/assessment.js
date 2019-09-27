@@ -1,4 +1,4 @@
-import { VISIT_TYPE,DEFAULT_ADDRESS_ID,LATITUDE,LONGITUDE } from '../../../constants/constants'
+import { VISIT_TYPE,LATITUDE,LONGITUDE } from '../../../constants/constants'
 
  export const formatAssessmentData = (data) =>{
   return {
@@ -6,12 +6,12 @@ import { VISIT_TYPE,DEFAULT_ADDRESS_ID,LATITUDE,LONGITUDE } from '../../../const
     startDate: data.data.startDate,
     startTime: data.data.startTime,
     endTime: data.data.endTime,
-    duration: parseFloat(data.data.duration,10),
+    duration: data.data.duration,
     addInformation: data.data.additionalDescription,
     assessmentId: data.data.assessmentId,
     patientAddress: {
       patientId: data.data.patientId,
-      patientAddressId: data.address.patientAddressId ?  data.address.patientAddressId : DEFAULT_ADDRESS_ID,
+      patientAddressId: data.address.patientAddressId ?  data.address.patientAddressId : 0,
       streetAddress: data.address.streetAddress ? data.address.streetAddress : '',
       city: data.address.city,
       stateName: data.address.stateName,
