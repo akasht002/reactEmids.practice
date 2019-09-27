@@ -73,8 +73,9 @@ class ServiceRequest extends React.Component {
     this.props.getPatientServiceRequestDetail(e.id)
   }
 
-  handleClick = requestId => {
-    this.props.getServiceRequestId(requestId)
+  handleClick = data => {
+    this.props.getServiceRequestId(data.serviceRequestId)
+    this.props.setPatient(data.patientId)
     this.props.goToServiceRequestDetailsPage();
   }
 
@@ -112,7 +113,7 @@ class ServiceRequest extends React.Component {
     serviceRequestItem = serviceRequest? getLength(serviceRequest) > 0
       ? <ServiceProviderRequestDetails
         serviceRequest={serviceRequest}
-        handleClick={requestId => this.handleClick(requestId)}
+        handleClick={sp => this.handleClick(sp)}
         minVal={this.state.min}
         maxVal={this.state.max}
         goToPatientProfile={data => {

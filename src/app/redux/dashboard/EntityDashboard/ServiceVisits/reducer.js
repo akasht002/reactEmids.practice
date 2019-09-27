@@ -6,7 +6,12 @@ const defaultState = {
     serviceVisitStatusList: [],
     serviceType: [],
     paginationCount: 0,
-    activeSubTab: 'All'
+    activeSubTab: 'All',
+    filterApplied: false,
+    serviceTypeIds: [],
+    serviceRequestStatus: [],
+    isImpersinated: false,
+    selectedOption: ''
 };
 
 const VisitServiceCountListState = (state = defaultState, action) => {
@@ -42,7 +47,39 @@ const VisitServiceCountListState = (state = defaultState, action) => {
             return {
                 ...state,
                 activeSubTab: action.data
-            };   
+            };
+        case VisitServiceList.setServiceType:
+        return {
+            ...state,
+            serviceTypeIds: action.data
+        }
+        case VisitServiceList.setFilterApplied:
+        return {
+            ...state,
+            filterApplied: action.data
+        }
+        case VisitServiceList.setServiceRequestStatus:
+        return {
+            ...state,
+            serviceRequestStatus: action.data
+        } 
+        case VisitServiceList.setImpersinated:
+        return {
+            ...state,
+            isImpersinated: action.data
+        }
+        case VisitServiceList.setServiceCategory:
+        return {
+            ...state,
+            selectedOption: action.data
+        }
+        case VisitServiceList.resetFilter:
+        return {
+            ...state,
+            serviceTypeIds: [],
+            serviceRequestStatus: [],
+            selectedOption: ''
+        } 
         default:
             return state;
     }

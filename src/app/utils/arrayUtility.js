@@ -21,6 +21,10 @@ export const checkLength = data => {
     return data.length > 0 ? false : true
 }
 
+export const checkLengthOfZip = data => {
+    return  data && data.length < 5 ? true : false
+}
+
 export const getStartRatings = data => {
     var ratings = []
     for (var i = 0; i < data; i++) {

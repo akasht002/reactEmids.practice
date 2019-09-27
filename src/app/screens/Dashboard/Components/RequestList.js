@@ -28,7 +28,7 @@ export const ServiceProviderRequestDetails = props => {
               <div
                 className='ProfileSkillServices'
                 onClick={() => {
-                  props.handleClick(sp.serviceRequestId)
+                  props.handleClick(sp)
                 }}
               >
                 <span className='ServicesTitle'>

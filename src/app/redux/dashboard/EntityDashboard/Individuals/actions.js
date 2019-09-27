@@ -200,24 +200,26 @@ export const getAllContractsSuccess = (data) => {
 }
 
 export function getClinicalCondition () {
-    return dispatch => {
+    return (dispatch, getState) => {
+     let {filterApplied} = getState().dashboardState.individualsListState
       PatientGet(API.getAllClinicalCondition)
         .then(resp => {
-          dispatch(getClinicalConditionSuccess(resp.data))
+          dispatch(getClinicalConditionSuccess(resp.data, filterApplied))
         })
         .catch(err => {
         })
     }
 }
 
-export const getClinicalConditionSuccess = data => {
-data.forEach(function (obj) {
-    obj.isChecked = false
-})
-return {
-    type: IndividualsList.getClinicalConditionSuccess,
-    data
-}
+export const getClinicalConditionSuccess = (data, filterApplied) => {
+        !filterApplied &&
+        data.forEach(function (obj) {
+            obj.isChecked = false
+        })
+        return {
+            type: IndividualsList.getClinicalConditionSuccess,
+            data
+    }        
 }
 
 export function getGender () {
@@ -271,4 +273,61 @@ export const resetContracts = contracts => {
         type: IndividualsList.resetContracts,
         contracts
     }
+}
+
+export const checkClinicalCondition = (data, id, checked) => {
+    var foundIndex = data.findIndex(element => element.attributeId === id);
+    data[foundIndex].isChecked = checked;
+    return {
+        type: IndividualsList.getClinicalConditionSuccess,
+        data
+    }
+}
+
+export const setGenderId = data => {
+    return {
+        type: IndividualsList.setGenderId,
+        data
+    } 
+}
+
+export const setFilterApplied = data => {
+    return {
+        type: IndividualsList.setFilterApplied,
+        data
+    }  
+}
+
+export const setMemberContractId = data => {
+    return {
+        type: IndividualsList.setMemberContractId,
+        data
+    } 
+}
+
+export const setAgeRange = data => {
+    return {
+        type: IndividualsList.setAgeRange,
+        data
+    } 
+}
+
+export const setClinicalConditions = data => {
+    return {
+        type: IndividualsList.setClinicalConditions,
+        data
+    } 
+}
+
+export const setImpersinated = data => {
+    return {
+        type: IndividualsList.setImpersinated,
+        data
+    } 
+}
+
+export const resetFilter = () => {
+    return {
+        type: IndividualsList.resetFilter
+    }   
 }

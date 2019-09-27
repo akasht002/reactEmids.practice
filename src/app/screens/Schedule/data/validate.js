@@ -8,7 +8,7 @@ export const validate = {
             { key: 'street', validation: 'required', isState: true },
             { key: 'city', validation: 'required', isState: true },
             { key: 'state', validation: 'required', isState: true },
-            { key: 'zip', validation: 'required', isState: true }
+            { key: 'zip', validation: 'checkLengthOfZip', isState: true }
         ],
     recurring:
     {
@@ -22,7 +22,7 @@ export const validate = {
                 { key: 'serviceTypes', validation: 'checkLength', isState: false },
                 { key: 'street', validation: 'required', isState: true },
                 { key: 'city', validation: 'required', isState: true },
-                { key: 'zip', validation: 'required', isState: true },
+                { key: 'zip', validation: 'checkLengthOfZip', isState: true },
                 { key: 'state', validation: 'required', isState: true }
             ],
 
@@ -37,7 +37,7 @@ export const validate = {
                 { key: 'serviceTypes', validation: 'checkLength', isState: false },
                 { key: 'street', validation: 'required', isState: true },
                 { key: 'city', validation: 'required', isState: true },
-                { key: 'zip', validation: 'required', isState: true },
+                { key: 'zip', validation: 'checkLengthOfZip', isState: true },
                 { key: 'state', validation: 'required', isState: true }
             ],
 
@@ -53,7 +53,7 @@ export const validate = {
                 { key: 'serviceTypes', validation: 'checkLength', isState: false },
                 { key: 'street', validation: 'required', isState: true },
                 { key: 'city', validation: 'required', isState: true },
-                { key: 'zip', validation: 'required', isState: true },
+                { key: 'zip', validation: 'checkLengthOfZip', isState: true },
                 { key: 'state', validation: 'required', isState: true }
             ],
             second: [
@@ -67,7 +67,7 @@ export const validate = {
                 { key: 'serviceTypes', validation: 'checkLength', isState: false },
                 { key: 'street', validation: 'required', isState: true },
                 { key: 'city', validation: 'required', isState: true },
-                { key: 'zip', validation: 'required', isState: true },
+                { key: 'zip', validation: 'checkLengthOfZip', isState: true },
                 { key: 'state', validation: 'required', isState: true }
             ]
         }
@@ -79,7 +79,7 @@ export const validate = {
         { key: 'street', validation: 'required', isState: true },
         { key: 'city', validation: 'required', isState: true },
         { key: 'state', validation: 'required', isState: true },
-        { key: 'zip', validation: 'required', isState: true }
+        { key: 'zip', validation: 'checkLengthOfZip', isState: true }
     ],
     assessment_edit :[
         { key: 'startDate', validation: 'required', isState: true }
