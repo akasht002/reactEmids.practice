@@ -186,7 +186,11 @@ export class Schedule extends Component {
             additionalDescription: data.addInformation,
             patientAddressId: data.patientAddressId,
             addressType: '',
-            selectedPOS: data.patientAddressId
+            selectedPOS: data.patientAddressId,
+            street: data && data.streetAddress,
+            city: data && data.city,
+            zip: data && data.zipCode,
+            state: data && data.stateId
         })
         this.address = {
             patientAddressId: data.patientAddressId,
@@ -199,15 +203,6 @@ export class Schedule extends Component {
             latitude: data.latitude,
             longitude: data.longitude
         }
-        this.setState({
-            addressType: this.state.addressType,
-            street: data && data.streetAddress,
-            city: data && data.city,
-            zip: data && data.zipCode,
-            state: data && data.stateId,
-            statelabel: data && data.stateName,
-            isDefaultAddress: true
-        })
         this.espId = data.serviceProviderId;
     }
 
@@ -225,6 +220,10 @@ export class Schedule extends Component {
             checkedServiceCategoryId: data.categoryId,
             startDate: data.startDate,
             endDate: data.endDate,
+            street: data.address && data.address.streetAddress,
+            city: data.address && data.address.city,
+            zip: data.address && data.address.zip,
+            state: data.address && data.address.stateId,
             startTime: moment(data.startTime, 'h:mm a'),
             endTime: moment(data.endTime, 'h:mm a'),
             additionalDescription: data.description,
@@ -255,16 +254,6 @@ export class Schedule extends Component {
             longitude: data.address && data.address.longitude,
             addressType: this.state.addressType
         }
-
-        this.setState({
-            addressType: this.state.addressType,
-            street: data.address && data.address.streetAddress,
-            city: data.address && data.address.city,
-            zip: data.address && data.address.zip,
-            state: data.address && data.address.stateId,
-            statelabel: data.address && data.address.stateName,
-            isDefaultAddress: true
-        })
     }
 
     handleChangePlanType = (id) => {
@@ -667,7 +656,6 @@ export class Schedule extends Component {
     }
 
     checkValidAddress = () => {
-
         this.setState({ onClickSave: true })
         if (parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard) {
 
@@ -792,15 +780,10 @@ export class Schedule extends Component {
                 }
             }
         }
-        if (isIndividualScheduleEdit) {
-            this.props.getValidPatientAddress(data, (isValid) => {
-                isValid && this.props.editSchedule(data)
-            });
-        } else {
-            this.props.getValidPatientAddress(data, (isValid) => {
-                isValid && this.props.createSchedule(data);
-            });
-        }
+
+        this.props.getValidPatientAddress(data, (isValid) => {
+            isValid && (isIndividualScheduleEdit ? this.props.editSchedule(data) : this.props.createSchedule(data))
+        });
     }
 
     clickShowMore = () => {

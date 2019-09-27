@@ -39,6 +39,12 @@ export const cancelHiredRequest = data => {
   }
 }
 
+export const editIndividualEditPopup = data => {
+  return {
+    type: VisitServiceDetails.editIndividualEditPopup,
+    data
+  }
+}
 
 export const setEntityServiceProviderSuccess = data => {
   return {
@@ -632,6 +638,7 @@ export function getServiceVisitDetails(visitId) {
     ServiceRequestGet(API.getServiceVisitDetails + `${visitId}`)
       .then(resp => {
         dispatch(getServiceVisitDetailsSuccess(resp.data))
+        dispatch(editIndividualEditPopup(true))
         dispatch(endLoading())
       })
       .catch(err => {

@@ -22,7 +22,8 @@ import {
   saveScheduleType,
   setAddNewScheduledClicked,
   setActiveTab,
-  resetServiceDetails
+  resetServiceDetails,
+  editIndividualEditPopup
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
@@ -143,12 +144,15 @@ export class VisitServiceDetails extends Component {
     this.props.resetServiceDetails()
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      startDateEdit: nextProps.serviceVisitDetails.visitDate,
-      startTime: moment(nextProps.serviceVisitDetails.startTime, 'h:mm a'),
-      endTime: moment(nextProps.serviceVisitDetails.endTime, 'h:mm a')
-    })
+  componentDidUpdate() {
+    if (this.props.isEditIndividualEditPopup) {
+      this.setState({
+        startDateEdit: this.props.serviceVisitDetails.visitDate,
+        startTime: moment(this.props.serviceVisitDetails.startTime, 'h:mm a'),
+        endTime: moment(this.props.serviceVisitDetails.endTime, 'h:mm a')
+      })
+      this.props.editIndividualEditPopup(false)
+    }
   }
 
   getVisitFirstAndLastDate = () => {
@@ -1062,7 +1066,8 @@ export function mapDispatchToProps(dispatch) {
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
     saveContextData: (data) => dispatch(saveContextData(data)),
     createDataStore: (data) => dispatch(createDataStore(data)),
-    resetServiceDetails: () => dispatch(resetServiceDetails())
+    resetServiceDetails: () => dispatch(resetServiceDetails()),
+    editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data))
   }
 }
 
@@ -1089,7 +1094,8 @@ export function mapStateToProps(state) {
     visitDate: VisitServiceDetailsState.visitDate,
     isAddNewScheduleClicked: VisitServiceDetailsState.isAddNewScheduleClicked,
     isEntityDashboard: VisitServiceDetailsState.isEntityDashboard,
-    isLoadingESPList: VisitServiceDetailsState.isLoadingESPList
+    isLoadingESPList: VisitServiceDetailsState.isLoadingESPList,
+    isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup
   }
 }
 
