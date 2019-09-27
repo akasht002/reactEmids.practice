@@ -10,7 +10,13 @@ const defaultState = {
   approvalStatus: '',
   diagnosisCode: [],
   paginationCount: '',
-  activeSubTab: 'All'
+  activeSubTab: 'All',
+  serviceTypeIds: [],
+  filterApplied: false,
+  serviceRequestStatus: [],
+  scheduleTypes: 'both',
+  isImpersinated: false,
+  selectedOption: ''
 }
 
 const VisitServiceRequestState = (state = defaultState, action) => {
@@ -72,6 +78,44 @@ const VisitServiceRequestState = (state = defaultState, action) => {
           ...state,
           activeSubTab: action.data
       }; 
+    case VisitServiceRequestList.setServiceType:
+    return {
+        ...state,
+        serviceTypeIds: action.data
+    }
+    case VisitServiceRequestList.setFilterApplied:
+    return {
+        ...state,
+        filterApplied: action.data
+    }
+    case VisitServiceRequestList.setServiceRequestStatus:
+    return {
+        ...state,
+        serviceRequestStatus: action.data
+    } 
+    case VisitServiceRequestList.setScheduleType:
+    return {
+        ...state,
+        scheduleTypes: action.data
+    }
+    case VisitServiceRequestList.setImpersinated:
+    return {
+        ...state,
+        isImpersinated: action.data
+    }
+    case VisitServiceRequestList.setServiceCategory:
+    return {
+        ...state,
+        selectedOption: action.data
+    }
+    case VisitServiceRequestList.resetFilter:
+    return {
+        ...state,
+        serviceTypeIds: [],
+        serviceRequestStatus: [],
+        scheduleTypes: 'both',
+        selectedOption: ''
+    } 
     default:
       return state
   }

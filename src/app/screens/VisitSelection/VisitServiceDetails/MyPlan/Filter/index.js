@@ -101,7 +101,7 @@ export class Filter extends Component {
 
                                 <TabPane tabId="2">
                                     <div className="form-group">
-                                        <label>Visit Status</label>
+                                        <label>Select the status of Service Requests</label>
                                     </div>
                                     <ServiceRequestsStatus
                                         id="Service Requests Status"

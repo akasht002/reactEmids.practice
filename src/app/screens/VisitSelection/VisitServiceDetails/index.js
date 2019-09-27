@@ -745,7 +745,7 @@ export class VisitServiceDetails extends Component {
                       Please select Start Time
                             </span>}
                 </div>
-                <div className="col-md-6 col-lg-6">
+                <div className="col-md-6 col-lg-6 pd-right-0">
                   <CoreoTimePicker
                     startTime={moment(this.state.endTime, 'h:mm a')}
                     handleChange={this.handleChangeEndTime}

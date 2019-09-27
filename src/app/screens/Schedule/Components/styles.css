@@ -579,6 +579,8 @@ fieldset .form-radio {
 .left-recurringpattern {
   width: 100%;
   display: block;
+  position: absolute;
+  margin-top: -140px;
 }
 
 .left-recurringpattern span.width100 {
@@ -1060,19 +1062,32 @@ fieldset.right-colblock2 {
 }
 
 .assign-SP-card .card {
-  padding: 15px;
   z-index: 1000;
   cursor: pointer;
   border-radius: 0px;
+}
+
+.assign-SP-card .card .checkblock label {
+  width: 100%;
+  z-index: 10000;
+  position: absolute;
+  height: 100%;
+  cursor: pointer;
+}
+
+
+.selected-box-border {
   border: 1px solid #7a329f !important;
 }
 
 .assign-SP-card fieldset {
   display: block;
+  padding:15px;
   width: 100%;
   position: relative;
   cursor: pointer;
   z-index: 1000;
+  border: 1px solid #d1d1d1;
 }
 
 .assign-SP-card .checkblock {
@@ -1604,13 +1619,13 @@ fieldset.right-colblock2 {
   }
 
   .last-block-monthwise .right-colblock2 {
-    padding-left: 18px;
+    padding-left: 15px;
     margin-top: -10px;
   }
 
   *::-ms-backdrop,
   .last-block-monthwise .right-colblock2 {
-    padding-left: 18px;
+    padding-left: 15px;
     margin-top: -10px;
   }
 
@@ -1691,6 +1706,19 @@ ul.show-more-assignSP li {
 .add-new-scheduleblock .scrollarea-content {
   height: 100%;
   overflow-y: auto;
+}
+
+/*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+  .last-block-monthwise fieldset input {
+    margin-right: 0px;
+  }
+  fieldset.right-colblock2
+  {
+   padding-left: 15px;
+   margin-top: -11px;
+  }
 }
 
 /*1920-screen-or-other-screens*/

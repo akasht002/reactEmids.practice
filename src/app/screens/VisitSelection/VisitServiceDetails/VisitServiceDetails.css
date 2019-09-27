@@ -375,6 +375,7 @@
     margin-right: 15px;
     line-height: 34px;
     cursor: pointer;
+    font-size:14px;
 }
 
 .filter-block button {
@@ -648,6 +649,22 @@
     width: 70px;
     margin: 0 auto;
     display: block !important;
+}
+
+.my-plan-editmodel .pd-right-0 {
+    padding-right: 0px !important;
+}
+
+.my-plan-editmodel  .search-block_SP span.ProfileIconSearch
+{
+    margin-right:0px;
+}
+
+.my-plan-editmodel .assign-sp-block
+{
+    position: relative;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 
 /*IE_11_&_IE_10*/
