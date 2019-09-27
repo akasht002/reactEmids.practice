@@ -171,7 +171,7 @@ export function getVisitServiceDetails(data) {
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data));
         dispatch(canInitiateConversation(resp.data));
-        dispatch(endLoading())
+        //dispatch(endLoading())
       })
       .catch(err => {
         dispatch(endLoading())

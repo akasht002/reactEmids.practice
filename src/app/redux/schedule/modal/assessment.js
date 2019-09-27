@@ -11,7 +11,7 @@ import { VISIT_TYPE,DEFAULT_ADDRESS_ID,LATITUDE,LONGITUDE } from '../../../const
     assessmentId: data.data.assessmentId,
     patientAddress: {
       patientId: data.data.patientId,
-      patientAddressId: data.address.patientAddressId ?  data.address.patientAddressId : DEFAULT_ADDRESS_ID,
+      patientAddressId: data.address.patientAddressId ?  data.address.patientAddressId : 0,
       streetAddress: data.address.streetAddress ? data.address.streetAddress : '',
       city: data.address.city,
       stateName: data.address.stateName,

@@ -34,6 +34,13 @@ export const getServiceTypeSuccess = (data) => {
     }
 }
 
+export const clearServiceDetails = (data) => {
+    return {
+        type: Schedule.clearServiceDetails,
+        data
+    }
+}
+
 export const getPatientAddressSuccess = (data) => {
     return {
         type: Schedule.getPatientAddressSuccess,
@@ -135,12 +142,12 @@ export const isAssessmentEdit = (data) => {
 
 
 
-export function getServiceCategory(id, selectedData) {
+export function getServiceCategory(id, selectedData, isEditable) {
     return (dispatch) => {
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             dispatch(getServiceCategorySuccess(resp.data));
             let categoryId = id ? id : 1
-            dispatch(getServiceType(categoryId, selectedData))
+            !isEditable && dispatch(getServiceType(categoryId, selectedData))
         }).catch((err) => {
         })
     }
@@ -164,7 +171,7 @@ export function getServiceType(id, selectedData = []) {
                 }
             });
 
-            dispatch(getServiceTypeSuccess(data))
+           dispatch(getServiceTypeSuccess(data))
         }).catch((err) => {
         })
     }
@@ -172,7 +179,7 @@ export function getServiceType(id, selectedData = []) {
 
 export function selectOrClearAllServiceType(data, isSelectAll) {
     return (dispatch) => {
-        dispatch(getServiceTypeSuccess([]))
+        //dispatch(getServiceTypeSuccess([]))
         let serviceCategoryId = data;
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
@@ -224,12 +231,12 @@ export function getValidPatientAddress(data,addressCallback) {
             .then(resp => {
                 if (validateCoordinates(resp.data.lat, resp.data.lon)) {
                     dispatch(getValidPatientAddressSuccess(true))
-                    addressCallback(true)
+                    addressCallback(false)
+                    dispatch(setSelectedPos(0))                    
                 }
                 else {
                     dispatch(getValidPatientAddressSuccess(false))
-                    addressCallback(false)
-                    dispatch(setSelectedPos(0))
+                    addressCallback(true)
                 }
                 dispatch(endLoading())
             })

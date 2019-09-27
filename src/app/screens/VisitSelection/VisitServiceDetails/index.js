@@ -21,7 +21,8 @@ import {
   getfirstlastvisitdate,
   saveScheduleType,
   setAddNewScheduledClicked,
-  setActiveTab
+  setActiveTab,
+  resetServiceDetails
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
@@ -48,8 +49,7 @@ import {
   SERVICE_REQUEST_DETAILS_TAB,
   USERTYPES,
   CONTACT_NOT_FOUND,
-  PHONE_NUMBER_TEXT,
-  SERVICE_VISIT_STATUS
+  PHONE_NUMBER_TEXT
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue, checkEmpty } from "../../../utils/validations";
@@ -110,6 +110,7 @@ export class VisitServiceDetails extends Component {
     }
     this.selectedSchedules = [];
     this.espId = '';
+    this.filterApplied = false
   }
 
   componentDidMount() {
@@ -117,16 +118,7 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.pageNumber,
       pageSize: this.state.pageSize
     }
-    let getISPVisitDate = {
-      serviceRequestId: this.props.ServiceRequestId,
-      patientId: this.props.patientId,
-      serviceProviderId: getUserInfo().serviceProviderId
-    }
-    let getEuVisitDate = {
-      serviceRequestId: 0,
-      patientId: this.props.patientId,
-      serviceProviderId: getUserInfo().serviceProviderId
-    }
+
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       this.props.getServiceRequestList(this.props.patientId);
@@ -137,27 +129,36 @@ export class VisitServiceDetails extends Component {
     else {
       if (this.props.ServiceRequestId === 0) {
         this.props.getSchedulesList(this.props.patientId)
-        this.getVisitList()
       } else {
         this.props.history.push(Path.visitServiceList)
       }
     }
-
-    if (!isEntityUser()) {
-      this.props.getfirstlastvisitdate(getISPVisitDate)
-    } else {
-      !this.props.isEntityDashboard && this.props.getfirstlastvisitdate(getEuVisitDate)
-    }
     this.props.getServiceCategory();
     this.props.ServiceRequestStatus();
     this.props.getVisitStatus();
+    this.getVisitFirstAndLastDate();
+  }
+
+  componentWillUnmount() {
+    this.props.resetServiceDetails()
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       startDateEdit: nextProps.serviceVisitDetails.visitDate,
       startTime: moment(nextProps.serviceVisitDetails.startTime, 'h:mm a'),
-      endTime: moment(nextProps.serviceVisitDetails.endTime, 'h:mm a'),
+      endTime: moment(nextProps.serviceVisitDetails.endTime, 'h:mm a')
+    })
+  }
+
+  getVisitFirstAndLastDate = () => {
+    let getISPVisitDate = {
+      serviceRequestId: isEntityUser ? 0 : this.props.ServiceRequestId,
+      patientId: this.props.patientId,
+      serviceProviderId: getUserInfo().serviceProviderId
+    }
+    !this.props.isEntityDashboard && this.props.getfirstlastvisitdate(getISPVisitDate)
+    this.setState({
       startDate: this.props.visitDate && this.props.visitDate.startVisitDateForWeb,
       endDate: this.props.visitDate && this.props.visitDate.endVisitDateForWeb
     })
@@ -251,8 +252,8 @@ export class VisitServiceDetails extends Component {
       serviceTypes: isReset ? [] : this.state.serviceTypes,
       pageNumber: pageNumber,
       pageSize: pageSize,
-      startDate: isReset ? null : this.state.startDate,
-      endDate: isReset ? null : this.state.endDate,
+      startDate: this.filterApplied ? this.state.startDate : null,
+      endDate: this.filterApplied ? this.state.endDate : null,
       entityServiceProviders: isReset ? [] : this.state.entityServiceProviders,
       patientId: this.props.patientId
     }
@@ -385,7 +386,8 @@ export class VisitServiceDetails extends Component {
       filterApplied: true,
       rowPageSize: DEFAULT_PAGE_SIZE
     })
-    this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE)
+    this.filterApplied = true
+    this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, false, true)
   }
 
   applyReset = () => {
@@ -399,8 +401,10 @@ export class VisitServiceDetails extends Component {
       activePage: PAGE_NO,
       entityServiceProviders: [],
       selectedOption: '',
-      pageNumberESP: PAGE_NO
+      pageNumberESP: PAGE_NO,
+      filterApplied: false
     })
+    this.filterApplied = false
     let data = {
       pageNumber: PAGE_NO,
       pageSize: DEFAULT_PAGE_SIZE
@@ -646,61 +650,61 @@ export class VisitServiceDetails extends Component {
     })
   };
 
-showPhoneNumber = () => {
-  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
-    this.setState({
-      conversationsModal: true,
-      conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
-    })
-  } else {
-    let data = this.props.VisitServiceDetails;
-    let phoneNumber = data.patient ? data.patient.phoneNumber : ''
-    this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
-  }
-};
+  showPhoneNumber = () => {
+    if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
+      this.setState({
+        conversationsModal: true,
+        conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
+      })
+    } else {
+      let data = this.props.VisitServiceDetails;
+      let phoneNumber = data.patient ? data.patient.phoneNumber : ''
+      this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    }
+  };
 
-onClickConversation = () => {
-  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
-    this.setState({
-      conversationsModal: true,
-      conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
-    })
-  } else {
-    let item = this.props.VisitServiceDetails;
-    let selectedParticipants = [{
-      userId: item.patient.coreoHomeUserId,
-      participantType: USERTYPES.PATIENT,
-      participantId: item.patient.patientId
-    }];
-    let data = {
-      participantList: selectedParticipants,
-      title: '',
-      context: item.patient.patientId
-    };
-    this.props.createNewConversation(data);
-  }
-};
+  onClickConversation = () => {
+    if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
+      this.setState({
+        conversationsModal: true,
+        conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
+      })
+    } else {
+      let item = this.props.VisitServiceDetails;
+      let selectedParticipants = [{
+        userId: item.patient.coreoHomeUserId,
+        participantType: USERTYPES.PATIENT,
+        participantId: item.patient.patientId
+      }];
+      let data = {
+        participantList: selectedParticipants,
+        title: '',
+        context: item.patient.patientId
+      };
+      this.props.createNewConversation(data);
+    }
+  };
 
-onClickVideoConference = () => {
-  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
-    this.setState({
-      conversationsModal: true,
-      conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
-    })
-  } else {
-    let item = this.props.VisitServiceDetails;
-    let selectedParticipants = [{
-      userId: item.patient.coreoHomeUserId,
-      participantType: USERTYPES.PATIENT,
-      participantId: item.patient.patientId,
-      firstName: item.patient.firstName,
-      lastName: item.patient.lastName,
-      thumbNail: item.patient.imageString
-    }];
-    this.props.saveContextData(item.patient.patientId);
-    this.props.createDataStore(selectedParticipants);
-  }
-};
+  onClickVideoConference = () => {
+    if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
+      this.setState({
+        conversationsModal: true,
+        conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
+      })
+    } else {
+      let item = this.props.VisitServiceDetails;
+      let selectedParticipants = [{
+        userId: item.patient.coreoHomeUserId,
+        participantType: USERTYPES.PATIENT,
+        participantId: item.patient.patientId,
+        firstName: item.patient.firstName,
+        lastName: item.patient.lastName,
+        thumbNail: item.patient.imageString
+      }];
+      this.props.saveContextData(item.patient.patientId);
+      this.props.createDataStore(selectedParticipants);
+    }
+  };
 
   render() {
     let modalContent =
@@ -911,7 +915,7 @@ onClickVideoConference = () => {
                   disableShowmore={this.props.disableShowmore}
                   visitDate={this.props.visitDate}
                 />
-                <PatientProfileTab 
+                <PatientProfileTab
                   showPhoneNumber={this.showPhoneNumber}
                   onClickConversation={this.onClickConversation}
                   onClickVideoConference={this.onClickVideoConference}
@@ -929,7 +933,7 @@ onClickVideoConference = () => {
               onClick={this.updateServiceVisits}
               discardBtn={true}
               discardbuttonLabel={'Cancel'}
-              onDiscard={() => this.setState({editModal: !this.state.editModal})}
+              onDiscard={() => this.setState({ editModal: !this.state.editModal })}
             />
             <ModalPopup
               isOpen={this.state.standByModeAlertMsg}
@@ -988,7 +992,7 @@ onClickVideoConference = () => {
                 this.setState({
                   conversationsModal: false
                 })}
-              okButtonAlignment='float-center' 
+              okButtonAlignment='float-center'
             />
             <AlertPopup
               message={<span> {this.state.phoneNumber
@@ -1001,7 +1005,7 @@ onClickVideoConference = () => {
                 this.setState({
                   phoneNumberModal: false
                 })}
-              okButtonAlignment='float-center'  
+              okButtonAlignment='float-center'
             />
           </Scrollbars>
         </AsideScreenCover>
@@ -1057,7 +1061,8 @@ export function mapDispatchToProps(dispatch) {
     setActiveTab: data => dispatch(setActiveTab(data)),
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
     saveContextData: (data) => dispatch(saveContextData(data)),
-    createDataStore: (data) => dispatch(createDataStore(data))
+    createDataStore: (data) => dispatch(createDataStore(data)),
+    resetServiceDetails: () => dispatch(resetServiceDetails())
   }
 }
 
