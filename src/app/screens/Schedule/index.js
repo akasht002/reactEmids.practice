@@ -194,11 +194,20 @@ export class Schedule extends Component {
             city: data && data.city,
             stateId: data && data.stateId,
             stateName: data && data.stateName,
-            zip: data && data.zip,
+            zip: data && data.zipCode,
             addressType: this.state.addressType,
             latitude: data.latitude,
             longitude: data.longitude
         }
+        this.setState({
+            addressType: this.state.addressType,
+            street: data && data.streetAddress,
+            city: data && data.city,
+            zip: data && data.zipCode,
+            state: data && data.stateId,
+            statelabel: data && data.stateName,
+            isDefaultAddress: true
+        })
         this.espId = data.serviceProviderId;
     }
 
@@ -246,6 +255,16 @@ export class Schedule extends Component {
             longitude: data.address && data.address.longitude,
             addressType: this.state.addressType
         }
+
+        this.setState({
+            addressType: this.state.addressType,
+            street: data.address && data.address.streetAddress,
+            city: data.address && data.address.city,
+            zip: data.address && data.address.zip,
+            state: data.address && data.address.stateId,
+            statelabel: data.address && data.address.stateName,
+            isDefaultAddress: true
+        })
     }
 
     handleChangePlanType = (id) => {
@@ -670,7 +689,7 @@ export class Schedule extends Component {
                 this.savePlan();
             }
         } else {
-            let saveAssesment = this.validate(validate.assessment)
+            let saveAssesment = this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit)
 
             if (!saveAssesment && this.state.latitude !== 0 && this.state.longitude !== 0) {
                 this.saveAssessment()
@@ -711,12 +730,10 @@ export class Schedule extends Component {
             longitude: longitude,
             assessmentId: assessmentId
         }
-
-        if (!(this.state.assessmentId === 0 ? this.validate(validate.assessment) : this.validate(validate.assessment_edit))) {
-            this.props.getValidPatientAddress(data, (isValid) => {
-                isValid && this.props.createOrEditAssessment({ data, address: this.address });
-            });
-        }
+        
+        this.props.getValidPatientAddress(data, (isValid) => {
+            isValid && this.props.createOrEditAssessment({ data, address: this.address });
+        });
     }
 
     savePlan = () => {
