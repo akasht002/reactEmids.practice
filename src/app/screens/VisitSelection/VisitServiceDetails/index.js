@@ -281,8 +281,8 @@ export class VisitServiceDetails extends Component {
       serviceTypes: [],
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
+      startDate: this.filterApplied ? this.state.startDate : null,
+      endDate: this.filterApplied ? this.state.endDate : null,
       patientId: this.props.patientId,
       entityServiceProviders: this.state.entityServiceProviders
     }
