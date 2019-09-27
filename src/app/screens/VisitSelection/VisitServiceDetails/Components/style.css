@@ -40,7 +40,7 @@ span.title-view {
 .plan-tableview th {
     color: #7a329f;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-right: 0px;
@@ -338,12 +338,16 @@ span.title-view {
     cursor: pointer;
 }
 
+.table-result-block .select-wrap-dahboard span
+{
+    padding-right: 10px;
+}
+
 .edit-rightico {
     background: url("../../../../assets/images/edit-new.png") no-repeat center;
-    width: 20px;
-    height: 20px;
+    width:100%;
     display: block;
-    background-size: contain;
+    background-size:12px;
     height: auto;
     border: none;
     margin: 0 auto;
@@ -351,7 +355,7 @@ span.title-view {
     z-index: 10;
     cursor: pointer;
     position: relative;
-    right: -50px;
+    right: 0px;
 }
 
 /*tool-tip-view*/

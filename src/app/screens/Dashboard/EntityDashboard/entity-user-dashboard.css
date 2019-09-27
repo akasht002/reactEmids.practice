@@ -243,6 +243,7 @@ span.life-map-btn .btn:hover {
     width: 100%;
     height: auto;
     margin-bottom: 30px;
+    padding-top:30px;
 }
 
 .filter-card-content {
@@ -398,10 +399,29 @@ span.life-map-btn .btn:hover {
 }
 
 span.no-recoord-table {
-    display: block;
-    color: #444;
-    padding: 20px;
+    position: absolute;
+    background: hsla(0,0%,100%,.8);
+    -webkit-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    pointer-events: none;
+    display: flex;
+    left: 50%;
+    top: 60%!important;
+    height: calc(100% - 60px);
     text-align: center;
+    width: 100%;
+    margin-top: 5px;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 1;
+    padding: 20px;
+    color: rgba(0,0,0,.5);
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 .search-block-right {
@@ -421,6 +441,7 @@ span.no-recoord-table {
     margin-right: 10px;
     right: 44px;
     position: absolute;
+    cursor: pointer;
 }
 
 .profile-icon-search:after {
@@ -525,8 +546,9 @@ color:#fff;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    position: relative;
+    position: absolute;
     width: 100%;
+    float: left;
 }
 
 .feedback-alertmodl .Loader {
@@ -542,6 +564,54 @@ table.individuals-tableblock td:nth-child(1) {
 .top-view-margin {
     margin-top: 30px;
 }
+
+
+.FilterMiddleRight .Select-placeholder,
+.FilterMiddleContent.FilterMiddleRight .Select--single>.Select-control .Select-value {
+    color: #8c8c8c !important;
+}
+
+.FilterMiddleRight .Select.is-focused:not(.is-open)>.Select-control {
+    border-color: #fff !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #acacac !important;
+}
+
+.FilterMiddleRight .FeedbackAnswerWidget label.form-radio-label
+{
+    padding: 15px 20px 15px 40px;
+}
+
+
+/*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+    span.no-recoord-table {
+        margin: 0 auto;
+        left:0;
+        right: 0;
+        transform:translate(0%, -50%);
+    }
+  }
+
+@media all and (-ms-high-contrast:none) {
+    span.no-recoord-table {
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        transform: translate(0%, -50%);
+    }
+    /* IE10 */
+    *::-ms-backdrop,
+    span.no-recoord-table {
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        transform: translate(0%, -50%);
+    }
+    /* IE11 */
+}
+  
 
 @media (min-width: 1367px) {
     table.individuals-tableblock tbody {
