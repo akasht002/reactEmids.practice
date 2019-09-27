@@ -9,7 +9,13 @@ import {
   getPointofServicedata,
   getFeedbackAlertDetails,
   savePaginationNumber,
-  setServiceProviderFeedbackTab
+  setServiceProviderFeedbackTab,
+  setGenderId,
+  setExperience,
+  setRating,
+  resetFilter,
+  setImpersinated,
+  setFilterApplied
 } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions'
 import { setActiveStatusForAllTab, getGender, clearGenderType } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
@@ -56,11 +62,8 @@ export class ServiceProvider extends Component {
       serviceCategoryIds: 0,
       category: '',
       serviceArea: '',
-      maxExperience: 50,
-      minExperience: 0,
       skillTypes: [],
       skillId: [],
-      genderId: 0,
       activePage: this.props.savedPageNumber,
       pageNumber: this.props.savedPageNumber,
       itemsCountPerPage: DEFAULT_PAGE_SIZE,
@@ -68,11 +71,9 @@ export class ServiceProvider extends Component {
       pageSize: DEFAULT_PAGE_SIZE,
       rowMin: DEFAULT_PAGE_NUMBER,
       rowMax: DEFAULT_PAGE_SIZE,
-      rating: 0,
       rowCount: 0,
       searchOpen: false,
       searchKeyword: 'default',
-      resetFilter: true,
       feedbackAlertModal: false,
       pageNumberFeedback: DEFAULT_PAGE_NUMBER,
       pageSizeFeedback: DEFAULT_PAGE_SIZE,
@@ -82,11 +83,16 @@ export class ServiceProvider extends Component {
     this.serviceTypes = []
     this.serviceTypeId = []
     this.gridHeader = allServiceProivders
-    this.filterApplied = false
-    this.serviceProviderId = 0
+    this.filterApplied = this.props.filterApplied
   }
 
-  componentDidMount() {
+  async componentWillUnmount() {
+    if(!this.props.isImpersinated) {
+      await this.props.resetFilter()
+    }
+  }
+
+  async componentDidMount() {
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
@@ -94,9 +100,10 @@ export class ServiceProvider extends Component {
       sortName: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortName,
       sortOrder: this.getSortNameAndOrderBasedOnStatus(this.props.activeSubTab).sortOrder,
     })
-    this.props.getVisitServiceProviderCountList(count, this.filterApplied)
-    this.props.getVisitServiceProviderTableList(list)
+    await this.props.getVisitServiceProviderCountList(count, this.props.filterApplied)
+    await this.props.getVisitServiceProviderTableList(list)
     this.props.getGender()
+    this.props.setImpersinated(false)
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -138,20 +145,19 @@ export class ServiceProvider extends Component {
     return {
       fromDate: props.fromDate,
       toDate: props.toDate,
-      rowCount: props.paginationCount,
-      rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
+      rowCount: props.paginationCount
     }
   }
 
   getCountData = data => {
     return {
-      "gender": this.state.genderId,
+      "gender": this.props.genderId,
       "fromDate": data.fromDate,
       "toDate": data.toDate,
-      "tab": this.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all : this.state.status,
-      "rating": this.state.rating,
-      "minimumExperience": this.state.minExperience,
-      "maximumExperience": this.state.maxExperience,
+      "tab": this.props.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all : this.state.status,
+      "rating": this.props.rating,
+      "minimumExperience": this.props.minExperience,
+      "maximumExperience": this.props.maxExperience,
       "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId
     }
@@ -178,12 +184,12 @@ export class ServiceProvider extends Component {
       "fromDate": data.fromDate ? data.fromDate : this.state.fromDate,
       "toDate": data.toDate ? data.toDate : this.state.toDate,
       "tab": data.status ? data.status : this.state.status,
-      "gender": this.state.genderId,
-      "minimumExperience": this.state.minExperience,
-      "maximumExperience": this.state.maxExperience,
+      "gender": this.props.genderId,
+      "minimumExperience": this.props.minExperience,
+      "maximumExperience": this.props.maxExperience,
       "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
-      "rating": this.state.rating
+      "rating": this.props.rating
     }
   }
 
@@ -200,14 +206,12 @@ export class ServiceProvider extends Component {
       toDate: this.props.toDate,
       serviceCategoryIds: [],
       serviceArea: '',
-      maxExperience: 50,
-      minExperience: 0,
       skillTypes: [],
       skillId: [],
-      genderId: 0,
       rating: 0,
       searchKeyword: 'default'
     })
+    this.props.resetFilter()
     this.props.setActiveStatusForAllTab(this.state.status)
     this.props.setActiveSubTab(this.state.status)
     let count = this.getCountData({
@@ -221,7 +225,7 @@ export class ServiceProvider extends Component {
       pageNumber: DEFAULT_PAGE_NUMBER,
       pageSize: DEFAULT_PAGE_SIZE
     })
-    await this.props.getVisitServiceProviderCountList(count, this.filterApplied)
+    await this.props.getVisitServiceProviderCountList(count, this.props.filterApplied)
     await this.props.getVisitServiceProviderTableList(data)
 
   }
@@ -261,7 +265,7 @@ export class ServiceProvider extends Component {
     }
   }
 
-  pageNumberChange = pageNumber => {
+  pageNumberChange = async pageNumber => {
     this.props.savePaginationNumber(pageNumber)
     const { pageSize, rowCount, status } = this.state
     let sortName = this.getSortNameAndOrderBasedOnStatus(status).sortName;
@@ -279,7 +283,7 @@ export class ServiceProvider extends Component {
       sortOrder: sortOrder,
     })
     this.props.getVisitServiceProviderTableList(list)
-    this.setState({
+    await this.setState({
       activePage: pageNumber,
       pageNumber: pageNumber,
       rowMin: rowMinValue,
@@ -325,6 +329,7 @@ export class ServiceProvider extends Component {
   }
 
   impersinateServiceProvider = data => {
+    this.props.setImpersinated(true)
     const model = {
       serviceProviderId: data.serviceProviderId,
       pageNumber: this.state.pageNumberFeedback,
@@ -353,10 +358,7 @@ export class ServiceProvider extends Component {
   }
 
   handleGenderType = data => {
-    this.setState({
-      genderLabel: data.name,
-      genderId: data.id
-    })
+    this.props.setGenderId(data.id)
   }
 
   onChangeExperinceSlider = data => {
@@ -365,16 +367,23 @@ export class ServiceProvider extends Component {
       maxExperience: data.max,
       isExperienceChanged: true
     })
+    let expRange = {
+      minExperience: data.min,
+      maxExperience: data.max,
+    }
+    this.props.setExperience(expRange)
   }
 
-  handleSelectedRating = item => {
+  handleSelectedRating = async item => {
     this.setState({
       rating: parseInt(item.target.value, 10)
     })
+    await this.props.setRating(parseInt(item.target.value, 10))
   }
 
   applyFilter = async () => {
-    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all)
+    let filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all)
+    this.props.setFilterApplied(filterApplied)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER,
     })
@@ -387,7 +396,7 @@ export class ServiceProvider extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getVisitServiceProviderCountList(count, this.filterApplied)
+    await this.props.getVisitServiceProviderCountList(count, this.props.filterApplied)
     await this.props.getVisitServiceProviderTableList(data);
   }
 
@@ -395,9 +404,6 @@ export class ServiceProvider extends Component {
     await this.setState({
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
-      maxExperience: 50,
-      minExperience: 0,
-      genderId: 0,
       rating: 0,
       status: this.state.status,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -407,6 +413,7 @@ export class ServiceProvider extends Component {
       filterOpen: false
     })
     this.serviceTypeId = []
+    this.props.resetFilter()
     await this.props.clearGenderType(this.props.genderType)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -427,7 +434,8 @@ export class ServiceProvider extends Component {
   }
 
   handleSearchData = async (e) => {
-    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all)
+    let filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all)
+    this.props.setFilterApplied(filterApplied)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -439,7 +447,7 @@ export class ServiceProvider extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getVisitServiceProviderCountList(count, this.filterApplied)
+    await this.props.getVisitServiceProviderCountList(count, this.props.filterApplied)
     await this.props.getVisitServiceProviderTableList(data)
   }
 
@@ -571,10 +579,10 @@ export class ServiceProvider extends Component {
               onChangeExperinceSlider={this.onChangeExperinceSlider}
               handleSelectedRating={this.handleSelectedRating}
               checked={this.state.isChecked}
-              rating={this.state.rating}
-              genderId={this.state.genderId}
-              minExperience={this.state.minExperience}
-              maxExperience={this.state.maxExperience}
+              rating={this.props.rating}
+              genderId={this.props.genderId}
+              minExperience={this.props.minExperience}
+              maxExperience={this.props.maxExperience}
               filterTabs={filterTabs}
             />
           </div>
@@ -605,6 +613,12 @@ function mapDispatchToProps(dispatch) {
     clearGenderType: data => dispatch(clearGenderType(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
     saveScheduleType: (data) => dispatch(saveScheduleType(data)),
+    setGenderId: data => dispatch(setGenderId(data)),
+    setExperience: data => dispatch(setExperience(data)),
+    setRating: data => dispatch(setRating(data)),
+    resetFilter: () => dispatch(resetFilter()),
+    setImpersinated: data => dispatch(setImpersinated(data)),
+    setFilterApplied: data => dispatch(setFilterApplied(data)),
     getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data))
   }
 }
@@ -624,7 +638,13 @@ function mapStateToProps(state) {
     isLoadingFeedbackList: VisitServiceProviderState
       .isLoadingFeedbackList,
     savedPageNumber: VisitServiceProviderState.savedPaginationNumber,
-    genderType: state.dashboardState.individualsListState.genderType
+    genderType: state.dashboardState.individualsListState.genderType,
+    genderId: state.dashboardState.VisitServiceProviderState.genderId,
+    minExperience: state.dashboardState.VisitServiceProviderState.minExperience,
+    maxExperience: state.dashboardState.VisitServiceProviderState.maxExperience,
+    isImpersinated: state.dashboardState.VisitServiceProviderState.isImpersinated,
+    rating: state.dashboardState.VisitServiceProviderState.rating,
+    filterApplied: state.dashboardState.VisitServiceProviderState.filterApplied
   }
 }
 

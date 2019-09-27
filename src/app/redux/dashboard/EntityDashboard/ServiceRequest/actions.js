@@ -12,6 +12,7 @@ import { updateCountList, checkDataCount } from '../utilActions';
 import { ENTITY_SR_STATUS, RECURRING_OPTIONS, entityDashboardTab, ENTITY_SV_STATUS } from '../../../../constants/constants';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
+import { getServiceTypeSuccess, vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/actions';
 
 export const setActiveSubTab = data => {
   return {
@@ -96,10 +97,11 @@ export function getServiceRequestTableList(data) {
 }
 
 export function getScheduleType() {
-  return dispatch => {
+  return (dispatch, getState) => {
+    let {filterApplied} = getState().dashboardState.VisitServiceRequestState
     return PatientGet(API.getScheduleType)
       .then(resp => {
-        dispatch(getScheduleTypeSuccess(resp.data))
+        dispatch(getScheduleTypeSuccess(resp.data, filterApplied))
       })
       .catch(err => {
         logError(err)
@@ -107,8 +109,8 @@ export function getScheduleType() {
   }
 }
 
-export const getScheduleTypeSuccess = data => {
-  data.forEach(obj => {
+export const getScheduleTypeSuccess = (data, filterApplied) => {
+  !filterApplied && data.forEach(obj => {
     obj.isChecked = false
   })
   let updatedData = data.filter(itemX => RECURRING_OPTIONS.includes(itemX.id));
@@ -131,10 +133,13 @@ export const clearScheduleType = data => {
 export function getServiceRequestStatus() {
   return (dispatch, getState) => {
     let {activeTab} = getState().dashboardState.individualsListState
-    let get = (activeTab === entityDashboardTab.serviceRequests) ? ServiceRequestGet(API.getServiceStatus) : Get(API.getServiceProviderVisitStatus)
+    let serviceRequestTab = (activeTab === entityDashboardTab.serviceRequests)
+    let {filterApplied} = serviceRequestTab ? getState().dashboardState.VisitServiceRequestState :
+    getState().dashboardState.VisitServiceCountListState
+    let get = serviceRequestTab ? ServiceRequestGet(API.getServiceStatus) : Get(API.getServiceProviderVisitStatus)
     return get
       .then(resp => {
-        dispatch(getServiceRequestStatusSuccess(getUpdatedStatusForSrSv(resp.data, activeTab)))
+        dispatch(getServiceRequestStatusSuccess(getUpdatedStatusForSrSv(resp.data, activeTab, filterApplied)))
       })
       .catch(err => {
         logError(err)
@@ -142,12 +147,12 @@ export function getServiceRequestStatus() {
   }
 }
 
-export const getUpdatedStatusForSrSv = (data, activeTab) => {
+export const getUpdatedStatusForSrSv = (data, activeTab, filterApplied) => {
   let isServiceRequestTab = (activeTab === entityDashboardTab.serviceRequests)
   let statusToFilter = isServiceRequestTab ? ENTITY_SR_STATUS : ENTITY_SV_STATUS
-
-  _.forEach(data, function (obj) { 
-    obj.isActive = false; 
+  
+   _.forEach(data, function (obj) { 
+    !filterApplied && (obj.isActive = false); 
       if(!isServiceRequestTab) {
         obj.keyValue = obj.name
       }
@@ -173,4 +178,80 @@ export const clearRequestStatus = data => {
     type: VisitServiceRequestList.clearRequestStatus,
     data
   }
+}
+
+export const checkServiceType = (data, id, checked) => {
+  var foundIndex = data.findIndex(element => element.serviceTypeId === id);
+  data[foundIndex].isChecked = checked;
+    return {
+      type: vistServiceHistoryDetails.getServiceTypeSuccess,
+      data
+  }
+}
+
+export const setServiceType = data => {
+  return {
+      type: VisitServiceRequestList.setServiceType,
+      data
+  } 
+}
+
+export const setFilterApplied = data => {
+  return {
+      type: VisitServiceRequestList.setFilterApplied,
+      data
+  }  
+}
+
+export const checkServiceRequestStatus = (data, id, checked) => {
+  var foundIndex = data.findIndex(element => element.id === id);
+  data[foundIndex].isActive = checked;
+  return {
+    type: VisitServiceRequestList.getServiceRequestStatusSuccess,
+    data
+  }
+}
+
+export const setServiceRequestStatus = data => {
+  return {
+      type: VisitServiceRequestList.setServiceRequestStatus,
+      data
+  } 
+}
+
+export const resetFilter = () => {
+  return {
+      type: VisitServiceRequestList.resetFilter
+  }   
+}
+
+
+export const checkScheduleType = (data, id, checked) => {
+  var foundIndex = data.findIndex(element => element.id === id);
+  data[foundIndex].isChecked = checked;
+  return {
+    type: VisitServiceRequestList.getScheduleTypeSuccess,
+    data
+  }
+}
+
+export const setScheduleType = data => {
+  return {
+      type: VisitServiceRequestList.setScheduleType,
+      data
+  } 
+}
+
+export const setImpersinated = data => {
+  return {
+      type: VisitServiceRequestList.setImpersinated,
+      data
+  } 
+}
+
+export const setServiceCategory = data => {
+  return {
+      type: VisitServiceRequestList.setServiceCategory,
+      data
+  } 
 }

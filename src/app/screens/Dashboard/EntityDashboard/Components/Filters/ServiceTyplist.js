@@ -11,7 +11,7 @@ const ServiceTypeList = (props) => {
                     className="ServiceCheckbox"
                     name={"CTServiceRequest"}
                     id={"CTServiceRequest" + catNum}
-                    checked={props.checked}
+                    checked={item.isChecked}
                     value={props.serviceType}
                     onChange = {(e) => {props.handleServiceType (item,e)}} />
                 <label htmlFor={"CTServiceRequest" + catNum}>{item.serviceTypeDescription}</label>
