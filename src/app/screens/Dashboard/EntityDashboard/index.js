@@ -101,6 +101,8 @@ class EntityDashboard extends Component {
               <h5 className='primaryColor m-0'>Dashboard</h5>
             </div>
             <div className='ProfileHeaderRight'>
+              {
+                !disableDate && 
               <div>
                 <div className='entity-date-filter'>
                   <Calendar
@@ -138,7 +140,7 @@ class EntityDashboard extends Component {
                     Today
                   </button>
                 </div>
-              </div>
+              </div>}
             </div>
           </div>
         </div>
