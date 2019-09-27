@@ -8,7 +8,13 @@ const defaultState = {
     feedbackServiceVisits: [],
     isLoadingFeedbackList: false,
     savedPaginationNumber: 1,
-    isServiceProviderFeedbackTab: false
+    isServiceProviderFeedbackTab: false,
+    genderId: 0,
+    maxExperience: 50,
+    minExperience: 0,
+    rating: 0,
+    isImpersinated: false,
+    filterApplied: false
 };
 
 const VisitServiceProviderState = (state = defaultState, action) => {
@@ -65,7 +71,41 @@ const VisitServiceProviderState = (state = defaultState, action) => {
         return {
             ...state,
             isServiceProviderFeedbackTab: action.data
-        };      
+        }; 
+        case VisitServiceProviderList.setGenderId:
+        return {
+            ...state,
+            genderId: action.data
+        }       
+        case VisitServiceProviderList.setExperience:
+        return {
+            ...state,
+            minExperience: action.data.minExperience,
+            maxExperience: action.data.maxExperience
+        } 
+        case VisitServiceProviderList.setRating:
+        return {
+            ...state,
+            rating: action.data
+        }      
+        case VisitServiceProviderList.resetFilter:
+        return {
+            ...state,
+            genderId: 0,
+            rating: 0,
+            minExperience: 0,
+            maxExperience: 50
+        }   
+        case VisitServiceProviderList.setImpersinated:
+        return {
+            ...state,
+            isImpersinated: action.data
+        }
+        case VisitServiceProviderList.setFilterApplied:
+        return {
+            ...state,
+            filterApplied: action.data
+        }
         default:
             return state;
     }

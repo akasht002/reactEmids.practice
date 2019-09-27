@@ -174,3 +174,44 @@ export const setServiceProviderFeedbackTab = data => {
     data
   }
 } 
+
+export const setGenderId = data => {
+  return {
+      type: VisitServiceProviderList.setGenderId,
+      data
+  } 
+}
+
+export const setExperience = data => {
+  return {
+      type: VisitServiceProviderList.setExperience,
+      data
+  } 
+}
+
+export const setRating = data => {
+  return {
+      type: VisitServiceProviderList.setRating,
+      data
+  } 
+}
+
+export const resetFilter = () => {
+  return {
+      type: VisitServiceProviderList.resetFilter
+  }   
+}
+
+export const setImpersinated = data => {
+  return {
+      type: VisitServiceProviderList.setImpersinated,
+      data
+  } 
+}
+
+export const setFilterApplied = data => {
+  return {
+      type: VisitServiceProviderList.setFilterApplied,
+      data
+  }  
+}

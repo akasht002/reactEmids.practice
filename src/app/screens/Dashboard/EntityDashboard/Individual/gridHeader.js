@@ -26,12 +26,12 @@ export let visitIndividuals = {
 export let feedbackIndividuals = {
     mpi: 'MPI',
     name: 'Name',
-    alerts: 'Alert(s)',
     gender: 'Gender',
     age: 'Age',
     contracts: 'Contracts',
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
+    alerts: 'Alert(s)',
     button: 'Life Map',
     icon: 'Action'
 }

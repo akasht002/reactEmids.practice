@@ -16,7 +16,15 @@ import {
 import {
   getVisitServiceCountList,
   getVisitServiceTableList,
-  setActiveSubTab
+  setActiveSubTab,
+  setImpersinated,
+  setServiceRequestStatus,
+  checkServiceType,
+  setServiceType,
+  setFilterApplied,
+  checkServiceRequestStatus,
+  setServiceCategory,
+  resetFilter
 } from '../../../../redux/dashboard/EntityDashboard/ServiceVisits/actions'
 import { Path } from '../../../../routes';
 import { push } from '../../../../redux/navigation/actions';
@@ -57,7 +65,7 @@ export class ServiceVisits extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
       serviceTypeIds: [],
-      serviceRequestStatus: [],
+      serviceRequestStatus: this.props.serviceRequestStatus,
       serviceTypes: [],
       activePage: DEFAULT_PAGE_NUMBER,
       pageNumber: DEFAULT_PAGE_NUMBER,
@@ -71,31 +79,37 @@ export class ServiceVisits extends Component {
       searchKeyword: 'default',
       filterOpen: false
     }
-    this.serviceTypeIds = []
+    this.serviceTypeIds = this.props.serviceTypeIds
     this.gridHeader = allServiceVisits
-    this.filterApplied = false
+    this.filterApplied = this.props.filterApplied
   }
 
   async componentDidMount() {
     const count = this.getCountData(this.state)
-    this.setState({ status: this.props.activeSubTab })
+    await this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
       status: this.props.activeSubTab,
       sortName: this.props.activeSubTab === LOWTASK ? LOWTASK : this.state.sortName,
       sortOrder: this.props.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
     })
-    await this.props.getVisitServiceCountList(count, this.filterApplied)
-    await this.props.getVisitServiceTableList(list)
     this.props.getServiceCategory()
     this.props.getServiceRequestStatus()
+    await this.props.getVisitServiceCountList(count, this.props.filterApplied, () =>  this.onSuccess(list))
+    this.props.setImpersinated(false)
   }
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props) {
     return {
       fromDate: props.fromDate,
       toDate: props.toDate,
-      rowCount: props.paginationCount,
-      rowMax: state.pageSize > props.paginationCount ? props.paginationCount : state.pageSize
+      rowCount: props.paginationCount
+    }
+  }
+
+  async componentWillUnmount() {
+    if(!this.props.isImpersinated) {
+      await this.props.resetFilter()
+      await this.props.clearServiceTypes()
     }
   }
 
@@ -125,8 +139,7 @@ export class ServiceVisits extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
-      await this.props.getVisitServiceCountList(count)
-      await this.props.getVisitServiceTableList(list)
+      await this.props.getVisitServiceCountList(count, false, () =>  this.onSuccess(list))
       await this.setState({
         rowMin: DEFAULT_PAGE_NUMBER,
         activePage: DEFAULT_PAGE_NUMBER})
@@ -138,10 +151,10 @@ export class ServiceVisits extends Component {
       fromDate: data.fromDate,
       toDate: data.toDate,
       serviceProviderId: getUserInfo().serviceProviderId,
-      serviceTypeIds: this.serviceTypeIds,
-      visitStatus: this.state.serviceRequestStatus,
+      serviceTypeIds: this.props.serviceTypeIds,
+      visitStatus: this.props.serviceRequestStatus,
       searchText: data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
-      tab: this.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all : this.state.status
+      tab: this.props.filterApplied ? ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all : this.state.status
     }
   }
 
@@ -156,8 +169,8 @@ export class ServiceVisits extends Component {
       "tab": data.status ? data.status : this.state.status,
       "searchText": data.searchKeyword ? data.searchKeyword : this.state.searchKeyword,
       "serviceProviderId": getUserInfo().serviceProviderId,
-      "serviceTypeIds": this.serviceTypeIds,
-      "visitStatus": this.state.serviceRequestStatus
+      "serviceTypeIds": this.props.serviceTypeIds,
+      "visitStatus": this.props.serviceRequestStatus
     }
   }
 
@@ -174,6 +187,7 @@ export class ServiceVisits extends Component {
       searchOpen: false
     })
     this.serviceTypeIds = []
+    this.props.resetFilter()
     this.props.clearServiceTypes()
     this.props.clearRequestStatus(this.props.serviceProviderVisitStatus)
     this.gridHeader = this.getHeaderBasedOnStatus(this.state.status)
@@ -189,8 +203,11 @@ export class ServiceVisits extends Component {
       toDate: this.props.toDate
     })
     count.tab = ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all
-    await this.props.getVisitServiceCountList(count, this.filterApplied)
-    await this.props.getVisitServiceTableList(data)
+    await this.props.getVisitServiceCountList(count, this.props.filterApplied, () =>  this.onSuccess(data))
+  }
+
+  onSuccess = (data) => {
+     this.props.getVisitServiceTableList(data)
   }
 
   getHeaderBasedOnStatus = status => {
@@ -206,7 +223,7 @@ export class ServiceVisits extends Component {
     }
   }
 
-  pageNumberChange = pageNumber => {
+  pageNumberChange = async pageNumber => {
     const { pageSize, rowCount } = this.state
     let pageValue = pageNumber - 1
     let rowMinValue = (pageSize * pageValue) + 1
@@ -220,8 +237,8 @@ export class ServiceVisits extends Component {
       sortOrder: this.props.activeSubTab === LOWTASK ? SORT_ORDER.ASC : this.state.sortOrder,
       pageSize: pageSize
     })
-    this.props.getVisitServiceTableList(list)
-    this.setState({
+    await this.props.getVisitServiceTableList(list)
+    await this.setState({
       activePage: pageNumber,
       pageNumber: pageNumber,
       rowMin: rowMinValue,
@@ -249,6 +266,7 @@ export class ServiceVisits extends Component {
   }
 
   impersinateServiceVisit = data => {
+    this.props.setImpersinated(true)
     if (this.state.status === 'LowTaskCompletions') {
       this.props.getServiceRequestId(0)
       this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
@@ -268,8 +286,11 @@ export class ServiceVisits extends Component {
 
   handleServiceRequestStatus = (item, e) => {
     this.setState({
-      serviceRequestStatus: pushSpliceHandler(this.state.serviceRequestStatus, item.id)
-    })
+      isActive: !this.state.isActive
+     })
+    let serviceRequestStatus = pushSpliceHandler(this.props.serviceRequestStatus, item.id)
+    this.props.checkServiceRequestStatus(this.props.serviceProviderVisitStatus, item.id, e.target.checked)
+    this.props.setServiceRequestStatus(serviceRequestStatus)
   }
 
   
@@ -279,16 +300,21 @@ export class ServiceVisits extends Component {
       selectedOption: selectedOption,
     })
     this.serviceTypeIds = []
+    this.props.setServiceCategory(selectedOption)
+    this.props.setServiceType([])
     this.props.clearServiceTypes()
     this.props.getServiceType(selectedOption.value)
   }
 
   handleServiceType  = (item, e) => {
-    this.serviceTypeIds = pushSpliceHandler(this.serviceTypeIds, item.serviceTypeId)
+    let serviceTypeIds = pushSpliceHandler(this.props.serviceTypeIds, item.serviceTypeId)
+    this.props.checkServiceType(this.props.serviceType, item.serviceTypeId, e.target.checked)
+    this.props.setServiceType(serviceTypeIds)
   }
 
   applyFilter = async () => {
-    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all)
+    let filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all)
+    await this.props.setFilterApplied(filterApplied)
     let data = this.getFilterData({
       pageNumber: DEFAULT_PAGE_NUMBER
     })
@@ -301,8 +327,7 @@ export class ServiceVisits extends Component {
       fromDate: this.props.fromDate,
       toDate: this.props.toDate
     })
-    await this.props.getVisitServiceCountList(count, this.filterApplied)
-    await this.props.getVisitServiceTableList(data)  
+    await this.props.getVisitServiceCountList(count, this.props.filterApplied, () =>  this.onSuccess(data))
   }
 
   applyReset = async () => {
@@ -316,6 +341,7 @@ export class ServiceVisits extends Component {
       filterOpen: false
     })
     this.serviceTypeIds = []
+    this.props.resetFilter()
     this.props.clearServiceTypes()
     this.props.clearRequestStatus(this.props.serviceProviderVisitStatus)
     const data = this.getFilterData({
@@ -325,8 +351,7 @@ export class ServiceVisits extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-    await this.props.getVisitServiceCountList(count)
-    await this.props.getVisitServiceTableList(data)
+    await this.props.getVisitServiceCountList(count, false, () =>  this.onSuccess(data))
   }
 
   toggleSearch = () => {
@@ -337,7 +362,8 @@ export class ServiceVisits extends Component {
   }
 
   handleSearchData = async (e) => {
-    this.filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all)
+    let filterApplied = (this.state.status === ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all)
+    this.props.setFilterApplied(filterApplied)
     e.preventDefault();
     await this.setState({
       activePage: DEFAULT_PAGE_NUMBER,
@@ -349,8 +375,7 @@ export class ServiceVisits extends Component {
       fromDate: this.state.fromDate,
       toDate: this.state.toDate
     })
-   await this.props.getVisitServiceCountList(count, this.filterApplied)
-   await this.props.getVisitServiceTableList(data)
+   await this.props.getVisitServiceCountList(count, this.props.filterApplied, () =>  this.onSuccess(data))
   }
 
   handleSearchkeyword = e => {
@@ -370,8 +395,7 @@ export class ServiceVisits extends Component {
       searchKeyword: 'default'
     })
     if(this.state.searchKeyword !== '') {
-      await this.props.getVisitServiceCountList(count)
-      await this.props.getVisitServiceTableList(data)  
+      await this.props.getVisitServiceCountList(count, false, () =>  this.onSuccess(data))
     }
     await this.setState({
       searchOpen: !this.state.searchOpen,
@@ -451,7 +475,7 @@ export class ServiceVisits extends Component {
             serviceCategory={this.props.serviceCategory}
             getServiceType={this.props.getServiceType}
             handleChangeServiceCategory={this.handleChangeServiceCategory}
-            selectedOption={this.state.selectedOption}
+            selectedOption={this.props.selectedOption}
             serviceType={this.props.serviceType}
             handleServiceType ={this.handleServiceType }
             applyFilter={this.applyFilter}
@@ -459,6 +483,7 @@ export class ServiceVisits extends Component {
             applyReset={this.applyReset}
             status={this.state.status}
             filterTabs={filterTabs}
+            isActive={this.state.isActive}
         />
         </div>
       </div>
@@ -468,7 +493,7 @@ export class ServiceVisits extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getVisitServiceCountList: (data, filterApplied) => dispatch(getVisitServiceCountList(data, filterApplied)),
+    getVisitServiceCountList: (data, filterApplied, onSuccess) => dispatch(getVisitServiceCountList(data, filterApplied, onSuccess)),
     getVisitServiceTableList: data => dispatch(getVisitServiceTableList(data)),
     goToVisitServiceDetails: () => dispatch(push(Path.visitServiceDetails)),
     setActiveStatusForAllTab: data => dispatch(setActiveStatusForAllTab(data)),
@@ -482,7 +507,15 @@ function mapDispatchToProps(dispatch) {
     clearRequestStatus: data => dispatch(clearRequestStatus(data)),
     getServiceType: (data) => dispatch(getServiceType(data)),
     clearServiceTypes: (data) => dispatch(clearServiceTypes(data)),
-    getServiceCategory: () => dispatch(getServiceCategory())
+    getServiceCategory: () => dispatch(getServiceCategory()),
+    setImpersinated: data => dispatch(setImpersinated(data)),
+    setServiceCategory: data => dispatch(setServiceCategory(data)),
+    checkServiceType: (data, id, checked) => dispatch(checkServiceType(data, id, checked)),
+    setServiceType: data => dispatch(setServiceType(data)),
+    setFilterApplied: data => dispatch(setFilterApplied(data)),
+    checkServiceRequestStatus: (data, id, checked) => dispatch(checkServiceRequestStatus(data, id, checked)),
+    setServiceRequestStatus: data => dispatch(setServiceRequestStatus(data)),
+    resetFilter: () => dispatch(resetFilter()),
   }
 }
 
@@ -496,7 +529,12 @@ function mapStateToProps(state) {
     paginationCount: state.dashboardState.VisitServiceCountListState.paginationCount,
     serviceProviderVisitStatus: state.dashboardState.VisitServiceRequestState.serviceRequestStatusList,
     serviceCategory: state.visitSelectionState.ServiceRequestFilterState.ServiceCategory,
-    serviceType: state.visitHistoryState.vistServiceHistoryState.typeList
+    serviceType: state.visitHistoryState.vistServiceHistoryState.typeList,
+    isImpersinated: state.dashboardState.VisitServiceCountListState.isImpersinated,
+    selectedOption: state.dashboardState.VisitServiceCountListState.selectedOption,
+    serviceTypeIds: state.dashboardState.VisitServiceCountListState.serviceTypeIds,
+    filterApplied: state.dashboardState.VisitServiceCountListState.filterApplied,
+    serviceRequestStatus: state.dashboardState.VisitServiceCountListState.serviceRequestStatus
   }
 }
 

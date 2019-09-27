@@ -21,7 +21,16 @@ const defaultState = {
     toDate: moment().toDate(),
     activeStatus: 'All',
     clincalCondition: [],
-    genderType: []
+    genderType: [],
+    genderId: 0,
+    filterApplied: false,
+    memberContractId: 0,
+    ageRange: {
+       minimumAge: 0,
+       maximumAge: 120
+    },
+    clinicalConditions: [],
+    isImpersinated: false
 };
 
 const individualsListState = (state = defaultState, action) => {
@@ -58,16 +67,16 @@ const individualsListState = (state = defaultState, action) => {
                 ...state,
                 contracts: action.data
             }
-        case IndividualsList.resetFilter:
-            return {
-                ...state,
-                contracts: action.contracts
-            }
+        case IndividualsList.resetContracts:
+        return {
+            ...state,
+            contracts: action.contracts
+        }
         case IndividualsList.setPaginationRowCountSuccess:
-            return {
-                ...state,
-                paginationCount: action.data
-            }
+        return {
+            ...state,
+            paginationCount: action.data
+        }
         case IndividualsList.getStatesSuccess:
             return {
                 ...state,
@@ -86,8 +95,7 @@ const individualsListState = (state = defaultState, action) => {
         case IndividualsList.clearState:
             return {
                 ...state,
-                fromDate: moment().subtract(3, 'months'),
-                toDate: moment().toDate()
+                genderId: 0
             };
         case IndividualsList.setActiveSubTab:
             return {
@@ -150,7 +158,48 @@ const individualsListState = (state = defaultState, action) => {
             return {
                 ...state,
                 genderType: action.data
-            }                
+            } 
+        case IndividualsList.setGenderId:
+        return {
+            ...state,
+            genderId: action.data
+        }   
+        case IndividualsList.setFilterApplied:
+        return {
+            ...state,
+            filterApplied: action.data
+        }
+        case IndividualsList.setMemberContractId:
+        return {
+            ...state,
+            memberContractId: action.data
+        }  
+        case IndividualsList.setAgeRange:
+        return {
+            ...state,
+            ageRange: action.data
+        }
+        case IndividualsList.setClinicalConditions:
+        return {
+            ...state,
+            clinicalConditions: action.data
+        }                       
+        case IndividualsList.setImpersinated:
+        return {
+            ...state,
+            isImpersinated: action.data
+        }     
+        case IndividualsList.resetFilter:
+        return {
+            ...state,
+            genderId: 0,
+            clinicalConditions: [],
+            memberContractId: 0,
+            ageRange: {
+               minimumAge: 0,
+               maximumAge: 120
+            }
+        }                   
         default:
             return state;
     }
