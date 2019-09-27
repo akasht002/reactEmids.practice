@@ -45,7 +45,7 @@ export const ScheduleType = props => {
             {!props.selectedType &&
 
                 <div className="full-block-scheduleDate">
-                    <div className="col-md-12  p-0 date-blockview">
+                    <div className="col-md-12   date-blockview">
                         <Calendar
                             startDate={props.startDate && formateStateDateValue(props.startDate)}
                             onDateChange={props.dateChanged}
