@@ -1055,23 +1055,10 @@ div.scrollarea .scrollbar-container.vertical {
 
 .cropper-style {
     width: 300px;
-    ;
     height: auto;
     max-height: 300px;
 }
 
 .topProfile .ProfileCardBody .topPalette {
     margin-bottom: 15px;
-}
-
-.FilterMiddleRight .Select-placeholder,
-.FilterMiddleContent.FilterMiddleRight .Select--single>.Select-control .Select-value {
-    color: #8c8c8c !important;
-}
-
-.FilterMiddleRight .Select.is-focused:not(.is-open) > .Select-control
-{
-border-color:#fff !important;
-box-shadow: none !important;
-border-bottom: 1px solid #acacac !important;
 }
