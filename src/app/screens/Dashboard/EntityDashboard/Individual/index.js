@@ -61,6 +61,7 @@ import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
 import Search from '../Components/Search'
 import { setServiceProviderFeedbackTab } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
+import { pushSpliceHandler } from '../../../../utils/stringHelper';
 
 export class Individuals extends Component {
   constructor(props) {
@@ -391,18 +392,10 @@ export class Individuals extends Component {
   }
 
   handleClinicalConditions = async (item, e) => {
-    let clinicalConditions = this.props.clinicalConditions
     this.setState({
       isChecked: !this.state.isChecked
   })
-    if (e.target.checked) {
-      clinicalConditions.push(item.attributeId)
-    } else {
-      let index = clinicalConditions.indexOf(item.attributeId)
-      if (index > -1) {
-        clinicalConditions.splice(index, 1)
-      }
-    }
+    let clinicalConditions = pushSpliceHandler(this.props.clinicalConditions, item.attributeId)
     await this.props.checkClinicalCondition(this.props.clinicalConditionList, item.attributeId, e.target.checked)
     await this.props.setClinicalConditions(clinicalConditions)
   }
