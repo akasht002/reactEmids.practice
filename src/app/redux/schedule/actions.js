@@ -179,7 +179,6 @@ export function getServiceType(id, selectedData = []) {
 
 export function selectOrClearAllServiceType(data, isSelectAll) {
     return (dispatch) => {
-        //dispatch(getServiceTypeSuccess([]))
         let serviceCategoryId = data;
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
