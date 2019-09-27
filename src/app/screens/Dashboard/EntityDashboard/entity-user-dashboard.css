@@ -583,7 +583,35 @@ table.individuals-tableblock td:nth-child(1) {
 }
 
 
+/*IE-Edge*/
 
+@supports (-ms-ime-align: auto) {
+    span.no-recoord-table {
+        margin: 0 auto;
+        left:0;
+        right: 0;
+        transform:translate(0%, -50%);
+    }
+  }
+
+@media all and (-ms-high-contrast:none) {
+    span.no-recoord-table {
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        transform: translate(0%, -50%);
+    }
+    /* IE10 */
+    *::-ms-backdrop,
+    span.no-recoord-table {
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        transform: translate(0%, -50%);
+    }
+    /* IE11 */
+}
+  
 
 @media (min-width: 1367px) {
     table.individuals-tableblock tbody {
