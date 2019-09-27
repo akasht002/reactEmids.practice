@@ -1,1456 +1,1481 @@
 body {
-width: 100%;
-height: 100%;
-overflow: hidden;
-background-color: #f8f8f8 !important;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f8f8f8 !important;
 }
 
 section .ProfileRightWidget {
-width: calc(100% - 170px);
-padding: 0;
+    width: calc(100% - 170px);
+    padding: 0;
 }
 
 .ProfileRightContainer {
-display: block;
-position: relative;
-height: 100%;
-overflow: hidden;
-background-color: #f8f8f8 !important;
+    display: block;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f8f8f8 !important;
 }
 
-.dropdown.nav-item{
-list-style: none;
-display: block;
-position: relative;
-height: 35px;
-width: 35px;
-margin: 0 0 0 8px;
+.dropdown.nav-item {
+    list-style: none;
+    display: block;
+    position: relative;
+    height: 35px;
+    width: 35px;
+    margin: 0 0 0 8px;
 }
 
-a.ProfileIcon{
-display: block;
-position: relative;
-width: 100%;
-height: 100%;
-padding: 0;
+a.ProfileIcon {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
 }
 
-.ProfileIcon img{
-width: 100%;
-height: 100%;
+.ProfileIcon img {
+    width: 100%;
+    height: 100%;
 }
 
-li div.dropdown-menu a{
-color: #444444;
-font-size: 14px;
+li div.dropdown-menu a {
+    color: #444444;
+    font-size: 14px;
 }
 
-li div.dropdown-menu a:hover{
-background-color: #f3f3f3;
+li div.dropdown-menu a:hover {
+    background-color: #f3f3f3;
 }
 
-li div.dropdown-menu{
-padding: 0;
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
-border: 1px solid #d1d1d1;
-transform:translate3d(-80%,40px,0) !important
+li div.dropdown-menu {
+    padding: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #d1d1d1;
+    transform: translate3d(-80%, 40px, 0) !important
 }
 
 .ProfileHeaderWidget {
-display: flex;
-display: -moz-flex;
-flex-direction: row;
-justify-content: space-between;
-margin: 0 30px;
-height: 60px;
-align-items: center;
+    display: flex;
+    display: -moz-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 30px;
+    height: 60px;
+    align-items: center;
 }
 
-.ProfileHeaderButton a.btn, .ProfileHeaderButton span.btn, .ProfileHeaderButton button.btn {
-font-size: 14px;
-line-height: 14px;
-height: 30px;
-font-weight: normal !important;
-padding: 7px 15px !important;
+.ProfileHeaderButton a.btn,
+.ProfileHeaderButton span.btn,
+.ProfileHeaderButton button.btn {
+    font-size: 14px;
+    line-height: 14px;
+    height: 30px;
+    font-weight: normal !important;
+    padding: 7px 15px !important;
 }
 
 .ProfileHeaderTitle h5 {
-font-size: 20px;
-font-weight: 600;
+    font-size: 20px;
+    font-weight: 600;
 }
 
-.ProfileHeaderOptions{
-color: #7a329f;
-font-size: 14px;
+.ProfileHeaderOptions {
+    color: #7a329f;
+    font-size: 14px;
 }
 
-.ProfileHeaderOptions a:hover{
-text-decoration: none;
+.ProfileHeaderOptions a:hover {
+    text-decoration: none;
 }
 
-.ProfileHeaderSort{
-margin-right: 42px;
+.ProfileHeaderSort {
+    margin-right: 42px;
 }
 
-.ProfileHeaderRight{
-display: flex;
-display: -moz-flex;
-height: 18px;
+.ProfileHeaderRight {
+    display: flex;
+    display: -moz-flex;
+    height: 18px;
 }
 
 .ProfileHeaderButton a.btn {
-font-size: 14px;
-line-height: 14px;
-font-weight: normal !important;
-padding: 7px 15px !important;
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: normal !important;
+    padding: 7px 15px !important;
 }
 
-.ProfileHeaderRight span{
-position: relative;
-margin-left: 15px;
-top: 2px;
-font-size: 14px;
-line-height: 14px;
+.ProfileHeaderRight span {
+    position: relative;
+    margin-left: 15px;
+    top: 2px;
+    font-size: 14px;
+    line-height: 14px;
 }
 
-.ProfileHeaderRight span:hover{
-cursor: pointer;
+.ProfileHeaderRight span:hover {
+    cursor: pointer;
 }
 
 .ProfileHeaderTitle h5 {
-font-size: 20px;
-font-weight: 600;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .ProfileHeaderTitle h5 span {
-font-size: 16px;
-font-weight: 400;
+    font-size: 16px;
+    font-weight: 400;
 }
 
-.ProfileHeaderOptions{
-display: flex;
-display: -moz-flex;
-align-items: center;
-height: 18px;
-color: #7a329f;
-font-size: 14px;
+.ProfileHeaderOptions {
+    display: flex;
+    display: -moz-flex;
+    align-items: center;
+    height: 18px;
+    color: #7a329f;
+    font-size: 14px;
 }
 
-.ProfileHeaderOptions span:hover{
-text-decoration: none;
+.ProfileHeaderOptions span:hover {
+    text-decoration: none;
 }
 
-.ProfileIconSearch:hover, .ProfileHeaderFilter:hover, .ProfileSearchContainer .closeBtn{
-cursor: pointer;
+.ProfileIconSearch:hover,
+.ProfileHeaderFilter:hover,
+.ProfileSearchContainer .closeBtn {
+    cursor: pointer;
 }
 
-.ProfileIconSearch{
-display: inline-block;
-position: relative;
-width: 20px;
-height: 20px;
-margin-right: 10px;
+.ProfileIconSearch {
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
-.ProfileIconSearch:after{
-content: '';
-position: absolute;
-width: 20px;
-height: 20px;
-background-repeat: no-repeat;
-background-position: center;
-background-size: 100%;
-background-image: url('../../assets/images/Search.svg');
+.ProfileIconSearch:after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-image: url('../../assets/images/Search.svg');
 }
 
-.ProfileHeaderSort{
-margin-right: 42px;
+.ProfileHeaderSort {
+    margin-right: 42px;
 }
 
-.ProfileHeaderSort:after{
-content: '';
-position: absolute;
-right: 84px;
-top: 22px;
-width: 12px;
-height: 20px;
-background-image: url("../../assets/images/Caret_Dropdown_Purple.svg");
-background-position: center;
-background-size: 100%;
-background-repeat: no-repeat;
--webkit-transform: rotate(0);
--moz-transform: rotate(0);
--ms-transform: rotate(0);
--o-transform: rotate(0);
-transform: rotate(0);
--webkit-transition: all linear .3s;
--moz-transition: all linear .3s;
--o-transition: all linear .3s;
-transition: all linear .3s;
+.ProfileHeaderSort:after {
+    content: '';
+    position: absolute;
+    right: 84px;
+    top: 22px;
+    width: 12px;
+    height: 20px;
+    background-image: url("../../assets/images/Caret_Dropdown_Purple.svg");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
 }
 
-.ProfileContentWidget, .SPContentWidget, .ServiceRequestsWidget {
-position: relative;
-width: 100%;
-height: calc(100vh - 120px);
-padding: 0 20px;
+.ProfileContentWidget,
+.SPContentWidget,
+.ServiceRequestsWidget {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 120px);
+    padding: 0 20px;
 }
 
-.ProfileContentWidget.ScrollBar, .SPContentWidget.ScrollBar {
-overflow: auto;
+.ProfileContentWidget.ScrollBar,
+.SPContentWidget.ScrollBar {
+    overflow: auto;
 }
 
 .SPContentWidget .ProfileContainer {
-width: calc(50% - 20px);
-float: left;
-margin: 0 10px;
+    width: calc(50% - 20px);
+    float: left;
+    margin: 0 10px;
 }
 
 .SPContentWidget .ProfileContainer.topProfile {
-height: 620px;
-margin-bottom: 20px;
-width: calc(55% - 20px);
+    height: 620px;
+    margin-bottom: 20px;
+    width: calc(55% - 20px);
 }
 
 .SPContentWidget .ProfileContainer .card {
-width: 100%;
-margin: 0 0 20px 0;
+    width: 100%;
+    margin: 0 0 20px 0;
 }
 
 .SPContentWidget .bottomProfile {
-flex-direction: column;
+    flex-direction: column;
 }
 
 .ServiceRequestsWidget .ProfileContainer {
-width: calc(100% - 20px);
-float: left;
-height: 100%;
+    width: calc(100% - 20px);
+    float: left;
+    height: 100%;
 }
 
-.ServiceRequestsWidget .ProfileCardHeader{
-border-bottom: 1px solid #dcdcdc;
-height: 76px;
+.ServiceRequestsWidget .ProfileCardHeader {
+    border-bottom: 1px solid #dcdcdc;
+    height: 76px;
 }
 
-.ServiceRequestsWidget .ProfileHeaderButton{
-margin-right: 16px;
+.ServiceRequestsWidget .ProfileHeaderButton {
+    margin-right: 16px;
 }
 
-.ServiceCategoryWidget{
-padding: 0 0 30px 0;
+.ServiceCategoryWidget {
+    padding: 0 0 30px 0;
 }
 
 .PostedByImageContainer {
-display: flex;
-padding: 10px 0;
-border-bottom: 1px solid #dcdcdc;
-flex-direction: row;
-align-items: center;
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #dcdcdc;
+    flex-direction: row;
+    align-items: center;
 }
 
-.PostedByImageContainer .ProfileImage{
-width: 40px;
-height: 40px;
-display: inline-block;
-overflow: hidden;
+.PostedByImageContainer .ProfileImage {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    overflow: hidden;
 }
 
-.BlockImageDetails{
-display: inline-block;
-vertical-align: middle;
-width: calc(100% - 40px);
-line-height: 16px;
-padding: 0 0 0 20px;
+.BlockImageDetails {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 40px);
+    line-height: 16px;
+    padding: 0 0 0 20px;
 }
 
-.BlockImageDetailsName{
-font-size: 16px;
-line-height: 16px;
-color: #444444;
-margin: 0;
-padding-bottom: 10px;
-overflow: hidden;
-white-space: nowrap;
-text-overflow: ellipsis;
+.BlockImageDetailsName {
+    font-size: 16px;
+    line-height: 16px;
+    color: #444444;
+    margin: 0;
+    padding-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.BlockImageDetailsActivity{
-font-size: 14px;
-line-height: 14px;
-color: #8c8c8c;
-margin: 0;
-word-wrap: break-word;
-text-transform: capitalize;
-overflow: hidden;
-white-space: nowrap;
-text-overflow: ellipsis;
-padding: 0 0 8px 0;
+.BlockImageDetailsActivity {
+    font-size: 14px;
+    line-height: 14px;
+    color: #8c8c8c;
+    margin: 0;
+    word-wrap: break-word;
+    text-transform: capitalize;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0 0 8px 0;
 }
 
-.BlockImageDetailsDate{
-position: relative;
-font-size: 14px;
-color: #444444;
+.BlockImageDetailsDate {
+    position: relative;
+    font-size: 14px;
+    color: #444444;
 }
 
-.BlockImageDetailsDate:after{
-opacity: 0.5;
-content: '';
-position: absolute;
-top: 0;
-right: -26px;
-width: 12px;
-height: 20px;
-background-image: url("../../assets/images/Caret.svg");
-background-position: center;
-background-size: 100%;
-background-repeat: no-repeat;
--webkit-transform: rotate(180deg);
--moz-transform: rotate(180deg);
--ms-transform: rotate(180deg);
--o-transform: rotate(180deg);
-transform: rotate(180deg);
--webkit-transition: all linear .3s;
--moz-transition: all linear .3s;
--o-transition: all linear .3s;
-transition: all linear .3s;
+.BlockImageDetailsDate:after {
+    opacity: 0.5;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -26px;
+    width: 12px;
+    height: 20px;
+    background-image: url("../../assets/images/Caret.svg");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
 }
 
-.BlockProfileDetails{
-display: inline-block;
-padding: 0 20px 0 0;
-vertical-align: middle;
-width: calc(100% - 125px);
+.BlockProfileDetails {
+    display: inline-block;
+    padding: 0 20px 0 0;
+    vertical-align: middle;
+    width: calc(100% - 125px);
 }
 
-.BlockProfileDetailsName{
-font-size: 14px;
-color: #444444;
-margin: 0;
-padding: 0 0 5px 0;
-width: 100%;
-white-space: nowrap;
-text-overflow: ellipsis;
-overflow: hidden;
+.BlockProfileDetailsName {
+    font-size: 14px;
+    color: #444444;
+    margin: 0;
+    padding: 0 0 5px 0;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
-.BlockProfileContainer > img:hover, .BlockProfileDetailsActivity > span:hover, .BlockProfileDetailsName > span:hover{
-cursor: pointer;
+.BlockProfileContainer>img:hover,
+.BlockProfileDetailsActivity>span:hover,
+.BlockProfileDetailsName>span:hover {
+    cursor: pointer;
 }
 
-.BlockProfileContainer.noArrow > img:hover,
-.BlockProfileContainer.noArrow .BlockProfileDetailsActivity > span:hover,
-.BlockProfileContainer.noArrow .BlockProfileDetailsName > span:hover,
+.BlockProfileContainer.noArrow>img:hover,
+.BlockProfileContainer.noArrow .BlockProfileDetailsActivity>span:hover,
+.BlockProfileContainer.noArrow .BlockProfileDetailsName>span:hover,
 .BlockProfileContainer.noArrow .BlockProfileDetailsStatus a.btn-open:hover,
-.BlockProfileContainer.noArrow .BlockProfileDetailsStatus span.btn-open:hover{
-cursor: auto;
+.BlockProfileContainer.noArrow .BlockProfileDetailsStatus span.btn-open:hover {
+    cursor: auto;
 }
 
-.BlockProfileDetailsActivity{
-font-size: 12px;
-line-height: 12px;
-color: #8c8c8c;
-margin-bottom: 4px;
+.BlockProfileDetailsActivity {
+    font-size: 12px;
+    line-height: 12px;
+    color: #8c8c8c;
+    margin-bottom: 4px;
 }
 
-.BlockProfileDetailsStatus{
-width: 65px;
-text-align: right;
+.BlockProfileDetailsStatus {
+    width: 70px;
+    text-align: right;
 }
 
-span.btn-hired, span.btn-hired:hover{
-color: #7a329f !important;
-font-size: 12px !important;
-padding: 5px !important;
-line-height: 12px !important;
-cursor: auto;
+span.btn-hired,
+span.btn-hired:hover {
+    color: #7a329f !important;
+    font-size: 12px !important;
+    padding: 5px !important;
+    line-height: 12px !important;
+    cursor: auto;
 }
 
-span.btn-applied, span.btn-applied:hover{
-color: #8c8c8c !important;
-font-size: 12px !important;
-padding: 5px !important;
-line-height: 12px !important;
-cursor: auto !important;
+span.btn-applied,
+span.btn-applied:hover {
+    color: #8c8c8c !important;
+    font-size: 12px !important;
+    padding: 5px !important;
+    line-height: 12px !important;
+    cursor: auto !important;
 }
 
-span.btn-invited, span.btn-invited:hover{
-color: #7a329f !important;
-font-size: 12px !important;
-padding: 5px !important;
-line-height: 12px !important;
-cursor: auto !important;
+span.btn-invited,
+span.btn-invited:hover {
+    color: #7a329f !important;
+    font-size: 12px !important;
+    padding: 5px !important;
+    line-height: 12px !important;
+    cursor: auto !important;
 }
 
-.BlockProfileMatching{
-font-size: 12px;
-line-height: 12px;
-display: inline-block;
-color: #8c8c8c;
+.BlockProfileMatching {
+    font-size: 12px;
+    line-height: 12px;
+    display: inline-block;
+    color: #8c8c8c;
 }
 
-.BlockProfileContainer.noArrow:after{
-display:none;
+.BlockProfileContainer.noArrow:after {
+    display: none;
 }
 
-.BlockProfileContainer:after{
-opacity: 0.5;
-content: '';
-position: absolute;
-right: 12px;
-width: 12px;
-height: 20px;
-top: 26px;
-background-image: url("../../assets/images/Caret.svg");
-background-position: center;
-background-size: 100%;
-background-repeat: no-repeat;
--webkit-transform: rotate(180deg);
--moz-transform: rotate(180deg);
--ms-transform: rotate(180deg);
--o-transform: rotate(180deg);
-transform: rotate(180deg);
--webkit-transition: all linear .3s;
--moz-transition: all linear .3s;
--o-transition: all linear .3s;
-transition: all linear .3s;
+.BlockProfileContainer:after {
+    opacity: 0.5;
+    content: '';
+    position: absolute;
+    right: 12px;
+    width: 12px;
+    height: 20px;
+    top: 26px;
+    background-image: url("../../assets/images/Caret.svg");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    transition: all linear .3s;
 }
 
-.BlockProfileContainer.noArrow .BlockProfileDetailsStatus{
-right: 0;
-width: 90px;
+.BlockProfileContainer.noArrow .BlockProfileDetailsStatus {
+    right: 0;
+    width: 90px;
 }
 
-.BlockProfileContainer.noArrow .BlockProfileDetailsStatus .BlockProfileMatching{
-padding: 0;
-margin: 0;
+.BlockProfileContainer.noArrow .BlockProfileDetailsStatus .BlockProfileMatching {
+    padding: 0;
+    margin: 0;
 }
 
-.BlockImageContainer{
-padding: 25px 40px 25px 20px;
-border-bottom: 1px solid rgba(60,16,83,0.1);
+.BlockImageContainer {
+    padding: 25px 40px 25px 20px;
+    border-bottom: 1px solid rgba(60, 16, 83, 0.1);
 }
 
-.BlockImageContainer .ProfileImage{
-width: 40px;
-height: 40px;
-display: inline-block;
+.BlockImageContainer .ProfileImage {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
 }
 
-.BlockProfileContainer{
-display: flex;
-display: -moz-flex;
-align-items: center;
-position: relative;
-padding: 15px 20px;
+.BlockProfileContainer {
+    display: flex;
+    display: -moz-flex;
+    align-items: center;
+    position: relative;
+    padding: 15px 20px;
 }
 
-.BlockProfileContainer .ProfileImage, .BlockImageContainer .ServiceImage{
-width: 40px;
-height: 40px;
-display: inline-block;
+.BlockProfileContainer .ProfileImage,
+.BlockImageContainer .ServiceImage {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
 }
 
-.PostedByProfileDetails{
-display: inline-block;
-margin: 8px 10px;
-vertical-align: middle;
+.PostedByProfileDetails {
+    display: inline-block;
+    margin: 8px 10px;
+    vertical-align: middle;
 }
 
-.ProfileDetailsName{
-font-size: 16px;
-color: #444444;
+.ProfileDetailsName {
+    font-size: 16px;
+    color: #444444;
 }
 
-.ProfileDetailsDate{
-font-size: 14px;
-color: rgba(68, 68, 68, 0.7);
+.ProfileDetailsDate {
+    font-size: 14px;
+    color: rgba(68, 68, 68, 0.7);
 }
 
-.ProfileIcon{
-display: inline-block;
-position: relative;
-height: 24px;
-width: 24px;
-background-repeat: no-repeat;
-background-position: center;
-background-size: 100%;
+.ProfileIcon {
+    display: inline-block;
+    position: relative;
+    height: 24px;
+    width: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
 }
 
-.ProfileIconDetails{
-display: flex;
-display: -moz-flex;
-flex-direction: row;
-align-items: center;
-font-size: 14px;
-color: #371047;
+.ProfileIconDetails {
+    display: flex;
+    display: -moz-flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 14px;
+    color: #371047;
 }
 
 .ProfileContainer {
-position: relative;
-display: flex;
-display: -moz-flex;
-height: calc(100vh - 540px);
+    position: relative;
+    display: flex;
+    display: -moz-flex;
+    height: calc(100vh - 540px);
 }
 
-.IconCall{
-background-image: url("../../assets/images/Call_Purple.svg");
+.IconCall {
+    background-image: url("../../assets/images/Call_Purple.svg");
 }
 
-.IconConversations{
-background-image: url("../../assets/images/Message_Purple.svg");
+.IconConversations {
+    background-image: url("../../assets/images/Message_Purple.svg");
 }
 
-.IconVideo{
-background-image: url("../../assets/images/TeleHealth_Purple.svg");
+.IconVideo {
+    background-image: url("../../assets/images/TeleHealth_Purple.svg");
 }
 
-.PaletteTabs{
-border: none !important;
+.PaletteTabs {
+    border: none !important;
 }
 
-.PaletteTabs .nav-item .nav-link{
-font-size: 16px;
-margin-bottom: 0;
-padding: 0 0 5px 0 !important;
-margin-right: 26px;
-border-top: 0;
-border-left: 0;
-border-right: 0;
-border-bottom: 1px solid rgba(0,0,0,0);
+.PaletteTabs .nav-item .nav-link {
+    font-size: 16px;
+    margin-bottom: 0;
+    padding: 0 0 5px 0 !important;
+    margin-right: 26px;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 
-.PaletteTabs .nav-item .nav-link:hover{
-cursor: pointer;
-border-color: rgba(0,0,0,0);
+.PaletteTabs .nav-item .nav-link:hover {
+    cursor: pointer;
+    border-color: rgba(0, 0, 0, 0);
 }
 
-.PaletteTabs .nav-item .active.nav-link{
-color: #7a329f;
-border: none;
-border-bottom: 1px solid #7a329f;
+.PaletteTabs .nav-item .active.nav-link {
+    color: #7a329f;
+    border: none;
+    border-bottom: 1px solid #7a329f;
 }
 
-.TabBody{
-margin-top: 20px;
+.TabBody {
+    margin-top: 20px;
 }
 
-.ScheduleRowButton a{
-font-size: 14px !important;
-margin: 13px;
-padding: 0px 10px !important;
-float: right;
-height: 30px;
-line-height: 30px;
+.ScheduleRowButton a {
+    font-size: 14px !important;
+    margin: 13px;
+    padding: 0px 10px !important;
+    float: right;
+    height: 30px;
+    line-height: 30px;
 }
 
-.TabBody .ServiceCategoryContent{
-padding: 10px 0;
+.TabBody .ServiceCategoryContent {
+    padding: 10px 0;
 }
 
-.TabBody .ServiceTypesSlider div:first-child{
-margin-left: 0;
+.TabBody .ServiceTypesSlider div:first-child {
+    margin-left: 0;
 }
 
-.TabBody .ServiceTypesSlider div:last-child{
-margin-right: 0;
+.TabBody .ServiceTypesSlider div:last-child {
+    margin-right: 0;
 }
 
-.TabBody .ServiceTypeList{
-height: 184px;
+.TabBody .ServiceTypeList {
+    height: 184px;
 }
 
-.TabBody .ServiceTasks.Summary{
-margin: 30px 0;
+.TabBody .ServiceTasks.Summary {
+    margin: 30px 0;
 }
 
-a.ProfileCardHeaderLink:hover{
-text-decoration: none;
+a.ProfileCardHeaderLink:hover {
+    text-decoration: none;
 }
 
 .ProfileCard {
-width: calc(50% - 20px);
-margin: 0 10px 20px 10px;
-padding: 0;
-float: left;
--webkit-transition: all linear .2s;
--moz-transition: all linear .2s;
--ms-transition: all linear .2s;
--o-transition: all linear .2s;
-transition: all linear .2s;
+    width: calc(50% - 20px);
+    margin: 0 10px 20px 10px;
+    padding: 0;
+    float: left;
+    -webkit-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    transition: all linear .2s;
 }
 
 .ProfileCard .list-group .list-group-item {
-display: flex;
-align-items: center;
-padding: 0;
-justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    justify-content: center;
 }
 
-.ProfileCard > .list-group {
-height: 40px;
+.ProfileCard>.list-group {
+    height: 40px;
 }
 
-.ProfileCard.extended > .list-group {
-height: 40px;
+.ProfileCard.extended>.list-group {
+    height: 40px;
 }
 
-.ProfileCard > .list-group > .list-group-item {
-height: 40px;
+.ProfileCard>.list-group>.list-group-item {
+    height: 40px;
 }
 
-.myConversationContainer.list-group-item:focus, .myConversationContainer.list-group-item:hover, .mySPContainer.list-group-item:hover, .mySPContainer.list-group-item:focus {
-z-index: auto;
+.myConversationContainer.list-group-item:focus,
+.myConversationContainer.list-group-item:hover,
+.mySPContainer.list-group-item:hover,
+.mySPContainer.list-group-item:focus {
+    z-index: auto;
 }
 
 .ProfileCardBody {
-padding: 20px 0 0 0;
+    padding: 20px 0 0 0;
 }
 
-.ProfileCardBody > div {
-padding: 0 20px;
+.ProfileCardBody>div {
+    padding: 0 20px;
 }
 
 .ProfileCard.extended {
 
-height: 683px;
-z-index: 9;
+    height: 683px;
+    z-index: 9;
 }
 
 .SPContentWidget .topProfile .ProfileCard {
-height: 100%;
-z-index: 9;
+    height: 100%;
+    z-index: 9;
 }
 
-.SPContentWidget .topProfile .ProfileCard > .list-group {
-display: none;
+.SPContentWidget .topProfile .ProfileCard>.list-group {
+    display: none;
 }
 
 .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
 
-height: 470px;
+    height: 470px;
 }
 
 .ProfileCard.extended .ProfileCardBody .bottomPalette {
-max-height: calc(100vh - 324px);
-overflow-y: hidden;
-height: auto;
+    max-height: calc(100vh - 324px);
+    overflow-y: hidden;
+    height: auto;
 }
 
 .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content {
-height: 100%;
+    height: 100%;
 }
 
-.ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
-height: auto;
+.ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content,
+.SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
+    height: auto;
 }
 
 .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
-height: 172px;
+    height: 172px;
 }
 
 .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-/* max-height: calc(100vh - 276px); */
-max-height: 547px;
-height: 100%;
+    /* max-height: calc(100vh - 276px); */
+    max-height: 547px;
+    height: 100%;
 }
 
-.ProfileCard.extended .ProfileCardBody, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
-height: 100%;
+.ProfileCard.extended .ProfileCardBody,
+.SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
+    height: 100%;
 }
 
 .ProfileShowMore {
-font-size: 12px;
-color: #b286bc;
--webkit-transition: all linear .2s;
--moz-transition: all linear .2s;
--ms-transition: all linear .2s;
--o-transition: all linear .2s;
-transition: all linear .2s;
+    font-size: 12px;
+    color: #b286bc;
+    -webkit-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    transition: all linear .2s;
 }
 
 .ProfileIconShowMore {
-display: inline-block;
-position: relative;
-height: 10px;
-width: 10px;
-top: 1px;
-margin-left: 10px;
-background-repeat: no-repeat;
-background-image: url("../../assets/images/Caret_Dropdown_Purple.svg");
-background-size: 100%;
-background-position: center;
+    display: inline-block;
+    position: relative;
+    height: 10px;
+    width: 10px;
+    top: 1px;
+    margin-left: 10px;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/images/Caret_Dropdown_Purple.svg");
+    background-size: 100%;
+    background-position: center;
 }
 
 .ProfileCard.extended .ProfileIconShowMore {
-transform: rotate(180deg);
--ms-transform: rotate(180deg);
--moz-transform: rotate(180deg);
--webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
 }
 
 .ProfileShowMore:hover {
-color: #7a329f;
-cursor: pointer;
-background-color: #f1e7f7;
-text-decoration: none;
+    color: #7a329f;
+    cursor: pointer;
+    background-color: #f1e7f7;
+    text-decoration: none;
 }
 
 .ProfileCard form {
-height: 100%;
+    height: 100%;
 }
 
-.ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
-height: 290px;
+.ProfileContainer.topProfile,
+.bottomProfile .innerWidget:first-child {
+    height: 290px;
 }
 
-.BoardContainer{
-display: flex !important;
-flex-wrap: wrap;
-width: 100%;
+.BoardContainer {
+    display: flex !important;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
-.ServiceRequestBoard{
-width: 50%;
-margin-bottom: 20px;
-padding: 0 10px;
+.ServiceRequestBoard {
+    width: 50%;
+    margin-bottom: 20px;
+    padding: 0 10px;
 }
 
-.BlockImageContainer:hover{
-cursor: pointer;
+.BlockImageContainer:hover {
+    cursor: pointer;
 }
 
-.DetailsDateSeperator{
-color: #a6a6a6;
-margin: 0 10px;
+.DetailsDateSeperator {
+    color: #a6a6a6;
+    margin: 0 10px;
 }
 
 .ProfileContainer.bottomProfile {
-min-height: 300px;
-height: auto;
-z-index: 0;
+    min-height: 300px;
+    height: auto;
+    z-index: 0;
 }
 
 div.scrollarea .scrollbar-container.vertical {
-width: 8px;
+    width: 8px;
 }
 
 .scrollarea-content {
-min-height: 100%;
+    min-height: 100%;
 }
 
 .ProfileHeaderButton .standBy {
-font-size: 14px;
-color: #444444;
-margin-right: 15px;
+    font-size: 14px;
+    color: #444444;
+    margin-right: 15px;
 }
 
 .hiddenScreen {
-position: fixed;
-height: 100%;
-width: calc(100% - 180px);
-background: rgba(0, 0, 0, .4);
-opacity: 0;
-visibility: hidden;
-z-index: 100;
+    position: fixed;
+    height: 100%;
+    width: calc(100% - 180px);
+    background: rgba(0, 0, 0, .4);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 100;
 }
 
-.hiddenScreen, .ProfileLeftWidget {
--webkit-transition: all ease-in-out 0.2s;
--moz-transition: all ease-in-out 0.2s;
--ms-transition: all ease-in-out 0.2s;
--o-transition: all ease-in-out 0.2s;
-transition: all ease-in-out 0.2s;
+.hiddenScreen,
+.ProfileLeftWidget {
+    -webkit-transition: all ease-in-out 0.2s;
+    -moz-transition: all ease-in-out 0.2s;
+    -ms-transition: all ease-in-out 0.2s;
+    -o-transition: all ease-in-out 0.2s;
+    transition: all ease-in-out 0.2s;
 }
 
 .hiddenScreen.true {
-opacity: 1;
-visibility: visible;
+    opacity: 1;
+    visibility: visible;
 }
 
-.slick-initialized .slick-slide{
-margin-left: 6px;
+.slick-initialized .slick-slide {
+    margin-left: 6px;
 }
 
-.ProfileIconEye{
-display: inline-block;
-position: relative;
-height: 20px;
-width: 20px;
-top: 5px;
-margin-right: 5px;
-background-size: 100%;
-background-position: center;
-background-repeat: no-repeat;
-background-image: url("../../assets/images/ViewEye.svg");
+.ProfileIconEye {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    top: 5px;
+    margin-right: 5px;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/images/ViewEye.svg");
 }
 
-div.ProfileSearchContainer form{
-display: flex;
-display: -moz-flex;
-align-items: center;
-width: 100%;
-height: 30px;
+div.ProfileSearchContainer form {
+    display: flex;
+    display: -moz-flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
 }
 
-div.ProfileSearchContainer{
-position: absolute;
-right: 75px;
-height: 30px;
-margin: 0;
-width: 0;
-overflow: hidden;
--webkit-transition: all linear 0.3s;
--moz-transition: all linear 0.3s;
--o-transition: all linear 0.3s;
-transition: all linear 0.3s;
+div.ProfileSearchContainer {
+    position: absolute;
+    right: 75px;
+    height: 30px;
+    margin: 0;
+    width: 0;
+    overflow: hidden;
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    transition: all linear 0.3s;
 }
 
-div.ProfileSearchContainer.true{
-width: calc(100% - 175px);
-right: 145px;
+div.ProfileSearchContainer.true {
+    width: calc(100% - 175px);
+    right: 145px;
 }
 
-div.ProfileSearchContainer.true div
-{
-height: 30px;
-display: -ms-flexbox;
-display: flex;
-display: -moz-flex;
--ms-flex-align: center;
-align-items: center;
-width: 100%;
+div.ProfileSearchContainer.true div {
+    height: 30px;
+    display: -ms-flexbox;
+    display: flex;
+    display: -moz-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
 }
 
-.ProfileSearchContainer .btn{
-font-size: 14px;
-padding: 5px 10px !important;
-height: 30px;
-margin: 0 10px;
-line-height: 14px;
+.ProfileSearchContainer .btn {
+    font-size: 14px;
+    padding: 5px 10px !important;
+    height: 30px;
+    margin: 0 10px;
+    line-height: 14px;
 }
 
-.ProfileSearchContainer .form-control{
-height: 100%;
+.ProfileSearchContainer .form-control {
+    height: 100%;
 }
 
-div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearchContainer .form-control:focus, .ProfileSearchContainer .closeBtn{
-background-color: #f8f8f8;
+div.ProfileSearchContainer,
+.ProfileSearchContainer .form-control,
+.ProfileSearchContainer .form-control:focus,
+.ProfileSearchContainer .closeBtn {
+    background-color: #f8f8f8;
 }
 
-.ProfileSearchContainer .closeBtn{
-display: inline;
-position: relative;
-width: 18px;
-height: 18px;
-border: 0;
-padding: 0;
+.ProfileSearchContainer .closeBtn {
+    display: inline;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border: 0;
+    padding: 0;
 }
 
-.ProfileSearchContainer .closeBtn:after{
-content: '';
-position: absolute;
-height: 100%;
-width: 100%;
-top: 0;
-left: 0;
-background-repeat: no-repeat;
-background-position: center;
-background-size: 100%;
-background-image: url("../../assets/images/remove.png");
+.ProfileSearchContainer .closeBtn:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-image: url("../../assets/images/remove.png");
 }
 
-.NoInformation .myConversationContent{
-justify-content: center;
-align-items: center;
+.NoInformation .myConversationContent {
+    justify-content: center;
+    align-items: center;
 }
 
-.NoInformation .myConversationContent .avatarContainer{
-position: relative;
-width: 32px !important;
+.NoInformation .myConversationContent .avatarContainer {
+    position: relative;
+    width: 32px !important;
 }
 
-.NoInformation .myConversationContent .avatarContainer:before, .NoInformation .myConversationContent .avatarContainer:after{
-content: '';
-position: absolute;
-height: 32px;
-width: 32px;
-background-color: #e8e8e8;
--webkit-border-radius: 100%;
--moz-border-radius: 100%;
-border-radius: 100%;
+.NoInformation .myConversationContent .avatarContainer:before,
+.NoInformation .myConversationContent .avatarContainer:after {
+    content: '';
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    background-color: #e8e8e8;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
 }
 
-.NoInformation .myConversationContent .avatarContainer:before{
-left: 30px;
+.NoInformation .myConversationContent .avatarContainer:before {
+    left: 30px;
 }
 
-.NoInformation .myConversationContent .avatarContainer:after{
-right: 0;
+.NoInformation .myConversationContent .avatarContainer:after {
+    right: 0;
 }
 
-.innerWidget .card.extended
-{
-height:620px;
+.innerWidget .card.extended {
+    height: 620px;
 }
 
 @media (min-width: 1367px) {
-.SPContentWidget .ProfileContainer.topProfile {
-height: 713px !important;
-}
+    .SPContentWidget .ProfileContainer.topProfile {
+        height: 713px !important;
+    }
 
-.SPContentWidget .ProfileContainer .ProfileCard.extended
-{
-height: 713px !important;   
-}
+    .SPContentWidget .ProfileContainer .ProfileCard.extended {
+        height: 713px !important;
+    }
 
-.SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-height: 533px;
-}
+    .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
+        height: 533px;
+    }
 
-.bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-height: 380px;
-}
+    .bottomProfile .innerWidget:first-child,
+    .ProfileContainer.topProfile {
+        height: 380px;
+    }
 
-.bottomProfile.ServiceProvider .innerWidget:first-child, .ProfileContainer.topProfile {
-height: 485px;
-}
+    .bottomProfile.ServiceProvider .innerWidget:first-child,
+    .ProfileContainer.topProfile {
+        height: 485px;
+    }
 
-div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-padding: 22px 20px;
-}
+    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
+        padding: 22px 20px;
+    }
 
-div.ServiceProvider div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
-padding: 14px 20px;
-}
+    div.ServiceProvider div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
+        padding: 14px 20px;
+    }
 
-div.ProfileCardBody .ServiceRequestPalette {
-/* height: calc(100vh - 623px); */
-height: 200px;
-}
+    div.ProfileCardBody .ServiceRequestPalette {
+        /* height: calc(100vh - 623px); */
+        height: 200px;
+    }
 
-div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-/* height: calc(100vh - 585px); */
-height: 240px;
-}
+    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
+        /* height: calc(100vh - 585px); */
+        height: 240px;
+    }
 
-.ServiceProvider .ProfileCardBody .ServiceRequestPalette {
-height: 325px;
-}
+    .ServiceProvider .ProfileCardBody .ServiceRequestPalette {
+        height: 325px;
+    }
 
-.ProfileSkillServices.ServiceRequest .ServicesDesc{
-margin: 5px 0;
-}
+    .ProfileSkillServices.ServiceRequest .ServicesDesc {
+        margin: 5px 0;
+    }
 
-.bottomPalette {
-height: 274px;
-}
+    .bottomPalette {
+        height: 274px;
+    }
 
-div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
-margin-top: 0;
-}
+    div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
+        margin-top: 0;
+    }
 
 }
 
 @media (max-width: 1366px) {
 
-.innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-max-height: 485px;
-height: 100%;
-}
+    .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
+        max-height: 485px;
+        height: 100%;
+    }
 
-div.ProfileCardBody .ServiceRequestPalette {
-height: 170px;
-}
+    div.ProfileCardBody .ServiceRequestPalette {
+        height: 170px;
+    }
 
-div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-height: 210px;
-}
+    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
+        height: 210px;
+    }
 
-.ProfileSkillServices.ServiceRequest .ServicesDesc{
-margin: 3px 0;
-}
+    .ProfileSkillServices.ServiceRequest .ServicesDesc {
+        margin: 3px 0;
+    }
 
-div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-padding: 12px 20px;
-}
+    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
+        padding: 12px 20px;
+    }
 
-.ProfileConversationWidget {
-height: 230px;
-}
+    .ProfileConversationWidget {
+        height: 230px;
+    }
 
-.ProfileConversationWidget.ServiceProvider {
-height: 198px;
-}
+    .ProfileConversationWidget.ServiceProvider {
+        height: 198px;
+    }
 
 }
 
 .scrollarea {
-position: relative;
-overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 /*Ui-bugs-issue-fixed*/
-.ProfileRightWidget .navbarProfile
-{
-width:inherit;
-position: absolute;
-padding: 15px 30px;
+.ProfileRightWidget .navbarProfile {
+    width: inherit;
+    position: absolute;
+    padding: 15px 30px;
 }
 
-.ProfileRightContainer
-{
-clear: both;
-width: auto;
-margin-top: 60px;
-height: calc(100% - 120px)
+.ProfileRightContainer {
+    clear: both;
+    width: auto;
+    margin-top: 60px;
+    height: calc(100% - 120px)
 }
 
-.bottomProfile .innerWidget .ProfileCardBody
-{
-z-index: 0;
+.bottomProfile .innerWidget .ProfileCardBody {
+    z-index: 0;
 }
 
 /*update-uit-fixes*/
 .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-height: calc(100% - 200px) !important;
+    height: calc(100% - 200px) !important;
 }
 
-@media (max-width: 1920px) 
-{
-.innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-max-height: 475px;
-height: auto;
-overflow-y: auto;
-}
+@media (max-width: 1920px) {
+    .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
+        max-height: 475px;
+        height: auto;
+        overflow-y: auto;
+    }
 
-.innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar {
-width: 7px;
-}
+    .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar {
+        width: 7px;
+    }
 
-.innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar-thumb {
-background:#8c8c8c; 
-}
+    .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar-thumb {
+        background: #8c8c8c;
+    }
 
-.innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar-thumb:hover {
-background: #8c8c8c; 
-}
+    .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette::-webkit-scrollbar-thumb:hover {
+        background: #8c8c8c;
+    }
 
 }
 
 /*updated-scroll-design-dashboard*/
 .mainWidgetOverflow::-webkit-scrollbar {
-width: 6px;
+    width: 6px;
 }
 
 .mainWidgetOverflow::-webkit-scrollbar-thumb {
-background:#8c8c8c; 
+    background: #8c8c8c;
 }
 
 .mainWidgetOverflow::-webkit-scrollbar-thumb:hover {
-background: #8c8c8c; 
+    background: #8c8c8c;
 }
 
 .SPContentWidget .ProfileContainer.bottomProfile {
-min-height:auto;
-height: 620px;
-z-index: 0;
-margin-bottom: 20px;
-width: calc(45% - 20px)
+    min-height: auto;
+    height: 620px;
+    z-index: 0;
+    margin-bottom: 20px;
+    width: calc(45% - 20px)
 }
 
-.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget .card.ProfileCard
-{
-height:100%;
+.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget .card.ProfileCard {
+    height: 100%;
 }
 
-.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget
-{
-height: 100%;
+.SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget {
+    height: 100%;
 }
 
-@media (min-width: 1367px)
-{
-.SPContentWidget .ProfileContainer.bottomProfile {
-height: 713px !important;
-}
+@media (min-width: 1367px) {
+    .SPContentWidget .ProfileContainer.bottomProfile {
+        height: 713px !important;
+    }
 
-.SPContentWidget .ProfileContainer.bottomProfile .topPalette.ProfileConversation 
-{
-margin-bottom: 14px;
-}
+    .SPContentWidget .ProfileContainer.bottomProfile .topPalette.ProfileConversation {
+        margin-bottom: 14px;
+    }
 
-.SPContentWidget .ProfileContainer .ProfileCard.extended
-{
-height: 713px !important;
-}
+    .SPContentWidget .ProfileContainer .ProfileCard.extended {
+        height: 713px !important;
+    }
 
 }
 
 /*IE_11_&_IE_10*/
 
-@media all and (-ms-high-contrast:none)
-{
-.ProfileConversationWidget {height: auto; } /* IE10 */
-*::-ms-backdrop,  .ProfileConversationWidget {height: auto; }  /* IE11 */
+@media all and (-ms-high-contrast:none) {
+    .ProfileConversationWidget {
+        height: auto;
+    }
+
+    /* IE10 */
+    *::-ms-backdrop,
+    .ProfileConversationWidget {
+        height: auto;
+    }
+
+    /* IE11 */
 }
 
 /*IE-Edge*/
 @supports (-ms-ime-align: auto) {
-.ProfileConversationWidget {height: auto; }  
+    .ProfileConversationWidget {
+        height: auto;
+    }
 
 }
 
 /*cross-browser*/
-.rightPalette .TabBody .ScheduleTableRow .EntityUServiceProf
-{
-position: relative;
-display: inline-block;
-left: 0px;
-line-height: 36px;
-vertical-align: middle;
+.rightPalette .TabBody .ScheduleTableRow .EntityUServiceProf {
+    position: relative;
+    display: inline-block;
+    left: 0px;
+    line-height: 36px;
+    vertical-align: middle;
 }
 
 
 /*IE_11_&_IE_10*/
 
-@media all and (-ms-high-contrast:none)
-{
-.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf {display: table; max-width: calc(100% - 240px); } /* IE10 */
-*::-ms-backdrop, .bottomPalette .VisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf { display: table; max-width: calc(100% - 240px);} /* IE11 */
+@media all and (-ms-high-contrast:none) {
+    .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf {
+        display: table;
+        max-width: calc(100% - 240px);
+    }
+
+    /* IE10 */
+    *::-ms-backdrop,
+    .bottomPalette .VisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf {
+        display: table;
+        max-width: calc(100% - 240px);
+    }
+
+    /* IE11 */
 }
 
-@media all and (-ms-high-contrast:none)
-{
-.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf  .ProfileCardImageContainer{display:table-cell;} /* IE10 */
-*::-ms-backdrop, .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf .ProfileCardNameContainer { display: table-cell;} /* IE11 */
+@media all and (-ms-high-contrast:none) {
+    .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf .ProfileCardImageContainer {
+        display: table-cell;
+    }
+
+    /* IE10 */
+    *::-ms-backdrop,
+    .bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileServices .EntityUServiceProf .ProfileCardNameContainer {
+        display: table-cell;
+    }
+
+    /* IE11 */
 }
 
 
 
-@media all and (-ms-high-contrast:none)
-{
-.bottomProfile .ProfileCard .list-group .list-group-item.ProfileShowMore {z-index: 1000 !important;} 
-*::-ms-backdrop, .bottomProfile .ProfileCard .list-group .list-group-item.ProfileShowMore {z-index: 1000 !important;}  
+@media all and (-ms-high-contrast:none) {
+    .bottomProfile .ProfileCard .list-group .list-group-item.ProfileShowMore {
+        z-index: 1000 !important;
+    }
+
+    *::-ms-backdrop,
+    .bottomProfile .ProfileCard .list-group .list-group-item.ProfileShowMore {
+        z-index: 1000 !important;
+    }
 }
 
 
 
 /*IE-Edge*/
 @supports (-ms-ime-align: auto) {
-.SPContentWidget .ProfileContainer.topProfile {
-    height:650px;
-}
+    .SPContentWidget .ProfileContainer.topProfile {
+        height: 650px;
+    }
 }
 
 /*IE-Edge*/
 @supports (-ms-ime-align: auto) {
-.SPContentWidget .ProfileContainer.bottomProfile {
-height:650px;
-}
+    .SPContentWidget .ProfileContainer.bottomProfile {
+        height: 650px;
+    }
 }
 
 /*cross-browser-fixes-mozila*/
 @-moz-document url-prefix() {
-.SPContentWidget .ProfileContainer.topProfile 
-{
-height:650px;
-}
-.SPContentWidget .ProfileContainer.bottomProfile 
-{
-height:650px;
-}
+    .SPContentWidget .ProfileContainer.topProfile {
+        height: 650px;
+    }
 
-.FilterWidgetForm .scrollbar-container.vertical 
-{
-display: none;
-}
-.FilterWidgetForm .scrollbar-container.vertical .scrollbar
-{
-display: none;
-}
+    .SPContentWidget .ProfileContainer.bottomProfile {
+        height: 650px;
+    }
+
+    .FilterWidgetForm .scrollbar-container.vertical {
+        display: none;
+    }
+
+    .FilterWidgetForm .scrollbar-container.vertical .scrollbar {
+        display: none;
+    }
 }
 
 /*IE_11_&_IE_10*/
 
-@media all and (-ms-high-contrast:none)
-{
-.topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu { min-width:128px !important; display:block !important; } /* IE10 */
-*::-ms-backdrop, .topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu { min-width:128px !important; display:block !important; } /* IE11 */
+@media all and (-ms-high-contrast:none) {
+    .topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu {
+        min-width: 128px !important;
+        display: block !important;
+    }
+
+    /* IE10 */
+    *::-ms-backdrop,
+    .topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu {
+        min-width: 128px !important;
+        display: block !important;
+    }
+
+    /* IE11 */
 }
 
 /*cross-browser-fixes-mozila*/
 @-moz-document url-prefix() {
-.topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu
-{
-min-width:128px !important; display:block !important;
-}    
+    .topProfile .topPalette .ProfileMonthList .Select-menu-outer .Select-menu {
+        min-width: 128px !important;
+        display: block !important;
+    }
 }
 
 /*dashboard-loader*/
-.bottomProfile  .Loader
-{
-width:100% !important;
-position: absolute;
-right: 0;
-height: 100%;
-width: 100%;
-background-position:center;
-margin: 0 auto;
-display: block;
-padding-top: 60px;
+.bottomProfile .Loader {
+    width: 100% !important;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    margin: 0 auto;
+    display: block;
+    padding-top: 60px;
 }
 
-.topProfile  .Loader
-{
-width:100% !important;
-position: absolute;
-right: 0;
-width: 100%;
-background-position:center;
-margin: 0 auto;
-display: block;
+.topProfile .Loader {
+    width: 100% !important;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    background-position: center;
+    margin: 0 auto;
+    display: block;
 }
 
 /*loading-bug_fixes*/
 
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2)
-{
-height:340px;
-width: 100%;
-display: block;
-margin-top: 12px;
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) {
+    height: 340px;
+    width: 100%;
+    display: block;
+    margin-top: 12px;
 }
 
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .card.ProfileCard
-{
-height: 100%;
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .card.ProfileCard {
+    height: 100%;
 }
 
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
-{
-display: block;
-width: 100%;
-overflow-y: auto;
+.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation {
+    display: block;
+    width: 100%;
+    overflow-y: auto;
 }
 
-@media (min-width: 1367px)
-{
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader
-{
-max-height: 265px !important;
-}
+@media (min-width: 1367px) {
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .Loader {
+        max-height: 265px !important;
+    }
 
-.ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation
-{
-display: block;
-width: 100%;
-height: 265px !important;
-overflow-y: auto;
-}
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2) .topPalette.ProfileConversation {
+        display: block;
+        width: 100%;
+        height: 265px !important;
+        overflow-y: auto;
+    }
 
 }
 
 /*IE-Edge*/
 @supports (-ms-ime-align: auto) {
-.ProfileContainer.bottomProfile :nth-child(2).innerWidget .topPalette.ProfileConversation
-{
-height:100%;
-}
+    .ProfileContainer.bottomProfile :nth-child(2).innerWidget .topPalette.ProfileConversation {
+        height: 100%;
+    }
 
 }
 
 /*cross-browser-fixes-mozila*/
 @-moz-document url-prefix() {
-.ProfileContainer.bottomProfile :nth-child(2).innerWidget .topPalette.ProfileConversation
-{
-height:100%;
-}
+    .ProfileContainer.bottomProfile :nth-child(2).innerWidget .topPalette.ProfileConversation {
+        height: 100%;
+    }
 
 }
 
-.ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate
-{
-font-size: 14px;
-line-height: 14px;
-color: #8c8c8c;
-margin-bottom: 0px;
+.ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate {
+    font-size: 14px;
+    line-height: 14px;
+    color: #8c8c8c;
+    margin-bottom: 0px;
 }
 
-.ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate:after
-{
-margin-top: -12px;
-right: -25px;
+.ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsDate:after {
+    margin-top: -12px;
+    right: -25px;
 }
 
-.ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsName
-{
-line-height: 19px;
+.ServiceRequestsWidget .ServiceRequestBoard .BlockImageDetailsName {
+    line-height: 19px;
 }
 
-.ServiceRequestsWidget .ServiceRequestBoard  .BlockImageContainer
-{
-display: flex;
-flex-direction: row;
-justify-content: center;
-vertical-align: middle;
+.ServiceRequestsWidget .ServiceRequestBoard .BlockImageContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    vertical-align: middle;
 }
 
 /*Update-css-july2019-dashboard*/
-.bottomProfile .card.ProfileCard ul.list-group-flush
-{
-height: 40px;
-position: absolute;
-width: 100%;
-bottom: 0;
-clear: both;
+.bottomProfile .card.ProfileCard ul.list-group-flush {
+    height: 40px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    clear: both;
 }
 
-.bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle
-{
-color:#444;
-margin-bottom:0px;
+.bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span.ServicesTitle {
+    color: #444;
+    margin-bottom: 0px;
 }
 
-.bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span
-{
-color: #86868a;
-padding-top: 2px;
+.bottomProfile .bottomPalette .ProfileServicesVisitList .ProfileSkillServices span {
+    color: #86868a;
+    padding-top: 2px;
 }
 
 /*july2019-UI_fixes_dashboard*/
-.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent
-{
-flex-direction: row;
-align-items: left;
-justify-content: space-between;
-align-items: center;
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent {
+    flex-direction: row;
+    align-items: left;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.DashboardViewFirst
-{
-display:flex;
-flex-direction:row;
-justify-content:flex-start;
-align-items:center;
-width:55%;
-text-overflow: ellipsis;
-overflow-x:hidden;
-white-space:nowrap;
-cursor:pointer;
-padding-right:12px;
-padding-left:23px
+.DashboardViewFirst {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 55%;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    padding-right: 12px;
+    padding-left: 23px
 }
 
-.DashboardViewFirst .ServicesCalendarWidget:hover span
-{
-color:#444444;
+.DashboardViewFirst .ServicesCalendarWidget:hover span {
+    color: #444444;
 }
 
-.DashboardViewFirst .ServicesTitle
-{
-margin-bottom:0px;
+.DashboardViewFirst .ServicesTitle {
+    margin-bottom: 0px;
 }
 
-.DashboardViewFirst .ProfileServices
-{
-max-width: 100%;
-width: 100%;
-margin-right:0px;
+.DashboardViewFirst .ProfileServices {
+    max-width: 100%;
+    width: 100%;
+    margin-right: 0px;
 }
 
-.profile-card-viewblock
-{
-width:25%;
-display:flex;
-flex-direction:row;
-justify-content:flex-start;
-align-items:center;
+.profile-card-viewblock {
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
-{
-width:20%;
-min-width: auto;
-cursor: pointer;
-text-align: center;
-border-right: 1px solid rgba(140,140,140, 0.3);
-line-height: 60px;
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime {
+    width: 20%;
+    min-width: auto;
+    cursor: pointer;
+    text-align: center;
+    border-right: 1px solid rgba(140, 140, 140, 0.3);
+    line-height: 60px;
 }
 
-.topProfile .bottomPalette .ProfileServicesVisitContent .options
-{
-top: 0px;
-margin-left: 10px;
+.topProfile .bottomPalette .ProfileServicesVisitContent .options {
+    top: 0px;
+    margin-left: 10px;
 }
 
-.DashboardViewFirst .ProfileServices
-{
-margin-right:0px;
+.DashboardViewFirst .ProfileServices {
+    margin-right: 0px;
 }
 
-.DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle
-{
-margin-bottom:0px;
+.DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle {
+    margin-bottom: 0px;
 }
 
-.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span
-{
-color: #444;
-font-weight: 600;
-font-size: 14px;
-padding-right:10px;
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileCardNameContainer span {
+    color: #444;
+    font-weight: 600;
+    font-size: 14px;
+    padding-right: 10px;
 }
 
-.topProfile .bottomPalette .ProfileServicesVisitList .ProfileShowMore
-{
-line-height: 40px; 
-border-top: none;
+.topProfile .bottomPalette .ProfileServicesVisitList .ProfileShowMore {
+    line-height: 40px;
+    border-top: none;
 }
 
 .bottomPalette .ProfileConversationWidget .mySPContainer .options {
-position: absolute;
-right: 22px;
+    position: absolute;
+    right: 22px;
 }
 
 .bottomPalette .ProfileConversationWidget .mySPContainer:first-child .options {
-top: 12px;
+    top: 12px;
 }
 
-.bottomPalette .options:before, .ProfileServicesVisitContent .options:before, .ProfileSubOptions .Select-control .Select-arrow-zone .Select-arrow:before {
-content: "...";
-position: absolute;
-color: #9f9f9f;
-left: 0px;
-top: -6px;
-font-size: 24px;
--webkit-transform: rotate(90deg);
--ms-transform: rotate(90deg);
-transform: rotate(90deg);
+.bottomPalette .options:before,
+.ProfileServicesVisitContent .options:before,
+.ProfileSubOptions .Select-control .Select-arrow-zone .Select-arrow:before {
+    content: "...";
+    position: absolute;
+    color: #9f9f9f;
+    left: 0px;
+    top: -6px;
+    font-size: 24px;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
-.bottomPalette  .options div.SelectDropDown {
-background-color: transparent;
-font-size: 0;
-border: 0;
-width: 50px;
-padding: 0;
+.bottomPalette .options div.SelectDropDown {
+    background-color: transparent;
+    font-size: 0;
+    border: 0;
+    width: 50px;
+    padding: 0;
 }
 
 .bottomPalette div.SelectDropDown:after {
-content: "";
-position: absolute;
-width: 100%;
-height: 100%;
-top: 0;
-left: 0;
-font-size: 14px;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    font-size: 14px;
 }
 
-.bottomProfile .ProfileCardBody .bottomPalette
-{
-margin-top: 0px;
+.bottomProfile .ProfileCardBody .bottomPalette {
+    margin-top: 0px;
 }
-

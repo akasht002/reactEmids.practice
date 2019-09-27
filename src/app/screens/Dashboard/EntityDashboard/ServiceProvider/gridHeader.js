@@ -10,14 +10,14 @@ export let visitServiceProviders = {
     name: 'Service Provider',
     phoneNumber: 'Contact',
     gender: 'Gender',
-    visitCount: 'Visits',
+    visitCount: 'Visit(s)',
     rating: 'Rating',
     icon: 'Actions'
 }
 
 export let feedbackServiceProviders = {
     name: 'Service Provider',
-    feedbackCount: 'Alerts',
+    feedbackCount: 'Alert(s)',
     phoneNumber: 'Contact',
     gender: 'Gender',
     rating: 'Rating',

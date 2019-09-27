@@ -543,6 +543,23 @@ table.individuals-tableblock td:nth-child(1) {
     margin-top: 30px;
 }
 
+
+.FilterMiddleRight .Select-placeholder,
+.FilterMiddleContent.FilterMiddleRight .Select--single>.Select-control .Select-value {
+    color: #8c8c8c !important;
+}
+
+.FilterMiddleRight .Select.is-focused:not(.is-open)>.Select-control {
+    border-color: #fff !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #acacac !important;
+}
+
+.FilterMiddleRight .FeedbackAnswerWidget label.form-radio-label
+{
+    padding: 15px 20px 15px 40px;
+}
+
 @media (min-width: 1367px) {
     table.individuals-tableblock tbody {
         height: calc(100vh - 420px) !important;

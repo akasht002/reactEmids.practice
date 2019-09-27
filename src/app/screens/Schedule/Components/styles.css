@@ -1619,13 +1619,13 @@ fieldset.right-colblock2 {
   }
 
   .last-block-monthwise .right-colblock2 {
-    padding-left: 18px;
+    padding-left: 15px;
     margin-top: -10px;
   }
 
   *::-ms-backdrop,
   .last-block-monthwise .right-colblock2 {
-    padding-left: 18px;
+    padding-left: 15px;
     margin-top: -10px;
   }
 
@@ -1706,6 +1706,19 @@ ul.show-more-assignSP li {
 .add-new-scheduleblock .scrollarea-content {
   height: 100%;
   overflow-y: auto;
+}
+
+/*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+  .last-block-monthwise fieldset input {
+    margin-right: 0px;
+  }
+  fieldset.right-colblock2
+  {
+   padding-left: 15px;
+   margin-top: -11px;
+  }
 }
 
 /*1920-screen-or-other-screens*/
