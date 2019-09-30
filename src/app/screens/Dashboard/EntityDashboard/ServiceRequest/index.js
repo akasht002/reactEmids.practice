@@ -54,6 +54,7 @@ import { filterTabs } from './filterTabs';
 import Search from '../Components/Search';
 import { RowPerPage } from '../../../../components';
 import { pushSpliceHandler } from '../../../../utils/stringHelper';
+import { restrictSpecialChars } from '../../../../utils/validations';
 
 export class ServiceRequest extends Component {
   constructor(props) {
@@ -395,7 +396,7 @@ export class ServiceRequest extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: e.target.value
+      searchKeyword: restrictSpecialChars(e.target.value)
     })
   }
 

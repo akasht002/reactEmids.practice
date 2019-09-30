@@ -290,3 +290,7 @@ export function getEntityProcessingStatus(data) {
   else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.cancelled.id)
     return 'Cancelled'
 }
+
+export const restrictSpecialChars = data => {
+  return data.replace(/[*|":<>[\]{}`\\()';@&$!.]/, '')
+}

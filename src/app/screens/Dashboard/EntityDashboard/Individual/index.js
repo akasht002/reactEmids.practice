@@ -62,6 +62,7 @@ import { filterTabs } from './filterTabs';
 import Search from '../Components/Search'
 import { setServiceProviderFeedbackTab } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 import { pushSpliceHandler } from '../../../../utils/stringHelper';
+import { restrictSpecialChars } from '../../../../utils/validations';
 
 export class Individuals extends Component {
   constructor(props) {
@@ -492,7 +493,7 @@ export class Individuals extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: e.target.value
+      searchKeyword: restrictSpecialChars(e.target.value)
     })
   }
 

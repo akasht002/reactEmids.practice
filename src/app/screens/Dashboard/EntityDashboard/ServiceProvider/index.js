@@ -50,6 +50,7 @@ import Filter from '../Components/Filters'
 import { filterTabs } from './filterTabs';
 import Search from '../Components/Search';
 import { saveScheduleType } from '../../../../redux/visitSelection/VisitServiceDetails/actions';
+import { restrictSpecialChars } from '../../../../utils/validations';
  
 export class ServiceProvider extends Component {
   constructor(props) {
@@ -453,7 +454,7 @@ export class ServiceProvider extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: e.target.value
+      searchKeyword: restrictSpecialChars(e.target.value)
     })
   }
 

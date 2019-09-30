@@ -57,6 +57,7 @@ import Search from '../Components/Search';
 
 import { RowPerPage } from '../../../../components';
 import { pushSpliceHandler } from '../../../../utils/stringHelper';
+import { restrictSpecialChars } from '../../../../utils/validations';
 export class ServiceVisits extends Component {
   constructor(props) {
     super(props)
@@ -380,7 +381,7 @@ export class ServiceVisits extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: e.target.value
+      searchKeyword: restrictSpecialChars(e.target.value)
     })
   }
 
