@@ -314,8 +314,8 @@
 .my-plan-editmodel .Loader {
     position: absolute;
     width: 100% !important;
-    height: calc(100vh - 250px);
-    top: 40%;
+    height: calc(100% - 250px);
+    margin-top: 38%;
 }
 
 .label_viewstatus {
@@ -671,7 +671,6 @@
     border-color: #d1d1d1;
     cursor: context-menu;
 }
-
 
 
 /*IE_11_&_IE_10*/
