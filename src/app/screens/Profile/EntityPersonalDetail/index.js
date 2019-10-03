@@ -361,7 +361,7 @@ class EntityPersonalDetail extends React.PureComponent {
     return (
       <div className='row'>
         <div className='col-md-12'>
-          <h4 className='primaryColor text-left editProfileHeader'>
+          <h4 className='theme-primary text-left editProfileHeader'>
             Introduction
           </h4>
         </div>
@@ -574,7 +574,7 @@ class EntityPersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Address
               </h4>
             </div>
@@ -706,7 +706,7 @@ class EntityPersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Phone
               </h4>
             </div>

@@ -49,7 +49,7 @@ class Education extends React.Component {
         return (
             <div className="col-md-12 card CardWidget SPCertificate">
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Education</h4>                    
+                    <h4 className="theme-primary">Education</h4>                    
                 </div>
                 <div className="SPCertificateContainer width100">
                     

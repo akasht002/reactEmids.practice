@@ -28,7 +28,7 @@ export default class SelectPatient extends Component {
 
         return (
             <div className="form-group">
-                <label className='primaryColor'>Select Individual</label>
+                <label className='theme-primary'>Select Individual</label>
                     <UserAvatarMultiSelect
                     listItems={this.state.Patients}
                     multi={false}

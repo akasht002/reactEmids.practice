@@ -54,7 +54,7 @@ class VisitNotificationSettings extends React.Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileCardBody NotificationsSettingsBody'>
                     <div className='ProfileCardHeader'>
-                        <span className='NotificationsHeaderTitle primaryColor'>My Settings</span>
+                        <span className='NotificationsHeaderTitle theme-primary'>My Settings</span>
                     </div>
                     <div className='NotificationsSettingsContainer'>
                         <h6 className='NotificationsListHeader'>Notifications</h6>

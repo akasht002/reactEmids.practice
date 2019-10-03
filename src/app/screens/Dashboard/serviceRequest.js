@@ -131,16 +131,16 @@ class ServiceRequest extends React.Component {
       >
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
-            <span className='ProfileCardHeaderTitle primaryColor'>
+            <span className='ProfileCardHeaderTitle theme-primary'>
               Service Requests
             </span>
             {getLength(serviceRequest) > VIEW_ALL_COUNT &&
-            <span className='ProfileCardHeaderLink'
+            <span className='ProfileCardHeaderLink theme-primary'
             onClick={e => this.handleViewAll()}
             >View all</span>
             }
           </div>
-          <div className='topPalette'>
+          <div className='topPalette theme-primary'>
             <div className='monthPalette'>
               <Select
                 menuRenderer={this.menuRenderer}
@@ -181,7 +181,7 @@ class ServiceRequest extends React.Component {
         {getLength(serviceRequest) > 2 &&
           <ul className='list-group list-group-flush'>
             <li
-              className='list-group-item ProfileShowMore'
+              className='list-group-item ProfileShowMore theme-primary-hover'
               onClick={this.clickShowMore}
             >
              {this.toggleName} <i className='ProfileIconShowMore' />

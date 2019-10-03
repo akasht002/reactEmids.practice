@@ -188,7 +188,7 @@ export class PerformTasks extends Component {
                 {this.state.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -317,7 +317,7 @@ export class PerformTasks extends Component {
                                 <div className='bottomButton'>
                                     <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                                         <span className="bottomTaskName">Tasks</span>
-                                        <span className="bottomTaskRange">
+                                        <span className="bottomTaskRange theme-primary">
                                             <i style={{ width: this.percentageCompletion && this.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
                                         </span>
                                         <span className="bottomTaskPercentage">{this.percentageCompletion && this.percentageCompletion}%</span>

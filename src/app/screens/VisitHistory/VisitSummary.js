@@ -85,7 +85,7 @@ export class VisitSummary extends React.Component {
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>
+            <h5 className='theme-primary m-0'>
               View Request
             </h5>
           </div>

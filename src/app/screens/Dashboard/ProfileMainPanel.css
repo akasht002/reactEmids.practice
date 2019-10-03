@@ -1308,7 +1308,7 @@ text-align: center;
 color: #7a329f;
 }
 
-.topProfile .ProfileCardHeaderTitle.primaryColor
+.topProfile .ProfileCardHeaderTitle.theme-primary
 {
 padding-left: 20px;
 }

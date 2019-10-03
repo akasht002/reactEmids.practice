@@ -821,7 +821,7 @@ export class Schedule extends Component {
             <AsideScreenCover>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Add New Schedule</h5>
+                        <h5 className='theme-primary m-0'>Add New Schedule</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2}
@@ -843,7 +843,7 @@ export class Schedule extends Component {
                                 parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                                 <div className={this.state.isIndividualScheduleEdit ? 'Service-Cat-Typesblock Service-Cat-Typesblock-Edit' : "Service-Cat-Typesblock"}>
                                     <div>
-                                        <h2 className='ServicesTitle'>Service Category</h2>
+                                        <h2 className='ServicesTitle theme-primary'>Service Category</h2>
                                         <ServiceCategory
                                             categoryList={this.props.serviceCategoryList}
                                             handleServiceCategory={this.handleServiceCategory}
@@ -853,7 +853,7 @@ export class Schedule extends Component {
                                     </div>
                                     <div className="Service-typesTitle">
                                         <span>
-                                            <h2 className='ServicesTitle'>Service Types</h2>
+                                            <h2 className='ServicesTitle theme-primary'>Service Types</h2>
                                         </span>
                                         <span>
                                             <h5 onClick={() => this.selectAllTypes(true)}>Select All</h5>
@@ -873,7 +873,7 @@ export class Schedule extends Component {
                                 </div>
                             }
                             <div className={"ServiceTypesWidget PostSR schdule-postblock " + (parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.assessment && 'left-block1-shedule')}>
-                                <h2 className='ServicesTitle'>Schedule</h2>
+                                <h2 className='ServicesTitle theme-primary'>Schedule</h2>
                                 <div className="row">
                                     <ScheduleType
                                         options={ScheduleTypeData}
@@ -922,7 +922,7 @@ export class Schedule extends Component {
                                 </div>
                             </div>
                             <div className={"ServiceTypesWidget PostSR " + (parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.assessment && 'right-block2-shedule')}>
-                                <h2 className='ServicesTitle'>Point of Service</h2>
+                                <h2 className='ServicesTitle theme-primary'>Point of Service</h2>
                                 <PointOfService
                                     patientAddressList={this.props.patientAddressList}
                                     patientAddressId={this.props.individualSchedulesDetails && this.props.individualSchedulesDetails.patientAddressId}
@@ -944,7 +944,7 @@ export class Schedule extends Component {
                             </div>
                             <div className="ServiceTypesWidget PostSR">
                                 <div className="top-search-blocksp">
-                                    <h2 className='ServicesTitle'>Assign Service Provider</h2>
+                                    <h2 className='ServicesTitle theme-primary'>Assign Service Provider</h2>
                                     <div className="search-block_SP">
                                         <Search
                                             toggleSearch={this.toggleSearch}
@@ -964,7 +964,7 @@ export class Schedule extends Component {
                                 {!this.props.disableShowmore &&
                                     <ul className="show-more-assignSP">
                                         <li
-                                            class="list-group-item ProfileShowMore"
+                                            class="list-group-item ProfileShowMore theme-primary-hover"
                                             onClick={this.clickShowMore}
                                             disabled={this.props.disableShowmore}
                                         >
@@ -974,7 +974,7 @@ export class Schedule extends Component {
                                     </ul>}
                             </div>
                             <div className="ServiceTypesWidget PostSR">
-                                <h2 className='ServicesTitle'>Additional Information</h2>
+                                <h2 className='ServicesTitle theme-primary'>Additional Information</h2>
                                 <AdditionalInformation
                                     handleAdditionInfo={this.handleAdditionInfo}
                                     additionalDescription={this.state.additionalDescription}

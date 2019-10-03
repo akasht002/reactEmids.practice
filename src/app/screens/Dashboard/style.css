@@ -1802,7 +1802,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
 }
 
-.topProfile .ProfileCardHeaderTitle.primaryColor
+.topProfile .ProfileCardHeaderTitle.theme-primary
 {
 padding-left: 20px;
 }

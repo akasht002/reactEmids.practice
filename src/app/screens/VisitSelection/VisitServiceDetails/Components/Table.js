@@ -85,7 +85,7 @@ export const Table = props => {
     let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
     return (
         <Fragment>
-            <table className="table-responsive plan-tableview" cellpadding="6" cellspacing="6">
+            <table className="table-responsive plan-tableview theme-primary" cellpadding="6" cellspacing="6">
                 <thead>
                     <tr>
                         {props.header.map(item => {
@@ -110,7 +110,7 @@ export const Table = props => {
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
-                                    {item.serviceTypes.length > 3 && <div className="service-typesview-more tooltip">3+
+                                    {item.serviceTypes.length > 3 && <div className="service-typesview-more tooltip theme-primary">3+
                                         <div class="bottom">
                                             <h3>Service Types</h3>
                                             <div className="inner-block-SRtypes">

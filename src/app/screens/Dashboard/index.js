@@ -165,7 +165,7 @@ class Dashboard extends React.Component {
       >
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Dashboard</h5>
+            <h5 className='theme-primary m-0'>Dashboard</h5>
           </div>
           {
             (!entityUser && getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) ?
@@ -175,7 +175,7 @@ class Dashboard extends React.Component {
                   <input type='checkbox' checked={this.state.isChecked}
                     onChange={this.onValueChange}
                   />
-                  <span className='sliderSwitch round' />
+                  <span className='sliderSwitch round theme-primary' />
                 </label>
               </div>
               :

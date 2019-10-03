@@ -1,0 +1,128 @@
+.theme-primary-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#1e3d5c), to(#315477));
+    background-image: -webkit-linear-gradient(bottom, #1e3d5c, #315477);
+    background-image: -o-linear-gradient(bottom, #1e3d5c, #315477);
+    background-image: linear-gradient(to top, #1e3d5c, #315477);
+}
+
+.theme-primary {
+    color: #1e3d5c !important;
+}
+
+
+.theme-primary .ProfileMonthList .Select-control .Select-value .Select-value-label,
+.theme-primary .ProfileCardTodayLink.btn,
+.theme-primary.plan-tableview th,
+.modal-title,
+table.individuals-tableblock.theme-primary thead th,
+.entity-date-filter.theme-primary .form-group label {
+    color: #1e3d5c !important;
+}
+
+.datePalette .dateRow input:checked+label {
+    border: 1px solid #1e3d5c;
+    color: #1e3d5c !important;
+}
+
+.theme-primary-hover {
+    color: #1e3d5c !important;
+}
+
+.theme-primary-hover:hover {
+    background-color: #e0f1fb;
+}
+
+.ProfileHeaderButton .sliderSwitch:before,
+.service-typesview-plan .service-typesview-more.theme-primary, .form-radio-input:checked~label .RadioBoxIcon:before {
+    background-color: #1e3d5c;
+}
+
+span.btn-hired {
+    color: #1e3d5c !important;
+}
+
+.theme-primary .pagination li.PaginationItem.active a,
+.pagination li.PaginationItem a:hover,
+.theme-primary .bottomTaskCompletedRange,
+.VisitSummaryWidget .LeftWidget .bottomTaskCompletedRange {
+    background-color: #1e3d5c;
+}
+
+.btn-primary {
+    background-color: #1e3d5c !important;
+    border: #1e3d5c !important;
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+    background-color: #315477 !important;
+    color: #fff !important;
+}
+
+.btn-outline-primary {
+    border: 1px solid #1e3d5c !important;
+    color: #1e3d5c !important;
+}
+
+.active-tabview,
+.theme-primary-light .SPAvailItems.active,
+.modal-header {
+    background-color: #e0f1fb;
+}
+
+.FilterMiddleContent.FilterMiddleLeft span.active,
+.FilterMiddleContent.FilterMiddleLeft span:hover,
+.CheckSet.theme-primary-light input:checked~label {
+    background-color: #f0f6fa;
+}
+
+.CheckboxSet input:checked~label:before {
+    background-color: #1e3d5c !important;
+    border: #1e3d5c !important;
+}
+
+.CheckboxSet:hover label:before,
+.CheckboxSet:focus label:before,
+.SPAvailWidget.Summary .SPAvailContainer,
+.dashboard-tab-content .tab-filter-card .filter-card-content input:checked~label.theme-primary-light,
+.form-radio-input:checked~label .RadioBoxIcon,
+.form-radio-input:checked~.form-radio-label, .form-radio-label:hover {
+    border: 1px solid #1e3d5c !important;
+}
+
+.theme-primary.plan-tableview tbody tr:hover {
+    background: #e0f1fb;
+    border-left: 3px solid #1e3d5c;
+    border-top: 1px solid #e0f1fb;
+    border-bottom: 1px solid #e0f1fb;
+    cursor: pointer;
+}
+
+.service-typesview-more.tooltip.theme-primary {
+    background-color: #1e3d5c !important;
+    color: #fff !important;
+}
+
+.theme-primary .service-typesview-more.tooltip .bottom h3,
+.FilterTop.theme-primary-light {
+    background-color: #e0f1fb;
+    color: #1e3d5c;
+}
+
+.SPIconServicesCheckbox.theme-primary-light.selectType input:checked+label,
+.visitListNavigation.theme-primary:hover,
+.dashboard-tab-content .tab-filter-card .filter-card-content input:checked~label.theme-primary-light,
+table.individuals-tableblock.theme-primary tbody tr:hover {
+    background-color: #e0f1fb;
+}
+
+.tab-link .nav-item .active.nav-link {
+    color: #1e3d5c !important;
+    border-bottom: 1px solid #1e3d5c !important;
+}
+
+table.individuals-tableblock.theme-primary tbody tr:hover {
+    border-left: 3px solid #1e3d5c;
+}

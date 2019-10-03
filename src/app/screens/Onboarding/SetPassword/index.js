@@ -136,7 +136,7 @@ class SetPassword extends React.Component {
                                         <label className="form-check-label license-agreespan">
                                             <input className="form-check-input" type="checkbox" value={this.state.userAgreement} id="defaultCheck1" onChange={(e) => this.setState({ userAgreement: e.target.checked })} />
                                             <span className="CheckboxIcon"></span>
-                                            By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} className="primaryColor" onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
+                                            By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} className="theme-primary" onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
                                         </label>
                                     </div>
                                     {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match.</span>}

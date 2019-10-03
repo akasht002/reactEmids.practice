@@ -36,7 +36,7 @@ class Filter extends Component {
             <div className={"FilterWidget " + this.props.isOpen}>
                 
                 <div className="FilterWidgetForm">
-                    <div className="FilterContainer FilterTop">
+                    <div className="FilterContainer FilterTop theme-primary-light">
                         <span>Filters</span>
                         <span className="FilterCloseIcon" onClick={this.props.toggle} />
                     </div>

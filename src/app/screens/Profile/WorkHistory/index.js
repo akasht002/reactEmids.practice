@@ -523,7 +523,7 @@ class WorkHistory extends Component {
                 return (
             <div className="col-md-12 card CardWidget SPWorkHistory">
                         <div className="SPCardTitle d-flex">
-                            <h4 className="primaryColor">Work History</h4>
+                            <h4 className="theme-primary">Work History</h4>
                             {this.props.isUser &&
                                 <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                                     onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} />}

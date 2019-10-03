@@ -47,7 +47,7 @@ export class Filter extends Component {
             <div className={"FilterWidget " + this.props.isOpen}>
 
                 <div className="FilterWidgetForm my-plan-filter">
-                    <div className="FilterContainer FilterTop">
+                    <div className="FilterContainer FilterTop theme-primary-light">
                         <span>Filters</span>
                         <span className="FilterCloseIcon" onClick={this.props.toggle} />
                     </div>
@@ -144,7 +144,7 @@ export class Filter extends Component {
                                     />
                                     <ul className="show-more-assignSP">
                                         <li
-                                            class="list-group-item ProfileShowMore"
+                                            class="list-group-item ProfileShowMore theme-primary-hover"
                                             onClick={this.props.clickShowMore}
                                             disabled={this.props.disableShowmore}
                                         >

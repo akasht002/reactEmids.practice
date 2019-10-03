@@ -67,7 +67,7 @@ export const Details = props => {
           </div>
         </div>
         <div className={'width100 description-block-profile'}>
-        <span className={'primaryColor'}>Description</span>
+        <span className={'theme-primary'}>Description</span>
         <span>
           {props.personalDetail &&
             props.personalDetail.description !== ''
@@ -85,7 +85,7 @@ export const Details = props => {
       <div className={'SPDetailsContainer SPAddressWidget'}>
         <div className={'SPAddressContent'}>
           <div className={'width100 SPAddressTitle d-flex'}>
-            <span className={'SPAddressText primaryColor'}>Address</span>
+            <span className={'SPAddressText theme-primary'}>Address</span>
           </div>
           <div className={'width100 d-flex'}>
             <span className={'AddressContentLabel'}>Street</span>
@@ -114,7 +114,7 @@ export const Details = props => {
         </div>
         <div className={'SPAddressContent'}>
           <div className={'width100 SPAddressTitle d-flex'}>
-            <span className={'SPAddressText primaryColor'}>Phone</span>
+            <span className={'SPAddressText theme-primary'}>Phone</span>
           </div>
           <div className={'width100 d-flex'}>
             <span>

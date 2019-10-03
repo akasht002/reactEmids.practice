@@ -54,7 +54,7 @@ class VisitNotification extends React.Component {
                             visitNotification={this.props.visitNotification}
                         />
                         {this.state.rowCount >= 10 &&
-                            <ul className="list-group list-group-flush notify" onClick={() => this.pageNumberChange(this.state.pageNumber)}><li className="list-group-item ProfileShowMore">Show more <i className="ProfileIconShowMore"></i></li></ul>
+                            <ul className="list-group list-group-flush notify" onClick={() => this.pageNumberChange(this.state.pageNumber)}><li className="list-group-item ProfileShowMore theme-primary-hover">Show more <i className="ProfileIconShowMore"></i></li></ul>
                         }
                     </Scrollbars>
                 </form>

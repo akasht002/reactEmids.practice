@@ -432,7 +432,7 @@ class Education extends React.Component {
         return (
             <div className="col-md-12 card CardWidget SPCertificate">
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Education</h4>
+                    <h4 className="theme-primary">Education</h4>
                     {this.props.isUser && 
                     <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                         onClick={() => this.setState({IsEducationModalOpen: true,isAdd: true})} />}
