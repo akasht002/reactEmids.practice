@@ -89,6 +89,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
+                                    className={!props.startTime ? "disable-pointer": ""}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -362,6 +363,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
+                                    className={!props.startTime ? "disable-pointer": ""}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
