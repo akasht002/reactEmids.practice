@@ -220,7 +220,6 @@ export const getHeader = () => {
     let authHeader = token ? {
         Authorization: 'Bearer ' + token,
         offset: getTimeZoneOffset(),
-        authType: 'oauth'
     } : {}
     return {
         headers: authHeader
