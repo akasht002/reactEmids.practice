@@ -24,7 +24,9 @@ import {
   setActiveTab,
   setActivePage,
   setServicePlanVisitId,
-  setPlanScheduleId
+  setPlanScheduleId,
+  resetServiceDetails,
+  editIndividualEditPopup
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
@@ -113,6 +115,7 @@ export class VisitServiceDetails extends Component {
     }
     this.selectedSchedules = [];
     this.espId = '';
+    this.filterApplied = false
   }
 
   componentDidMount() {
@@ -120,16 +123,7 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.pageNumber,
       pageSize: this.state.pageSize
     }
-    let getISPVisitDate = {
-      serviceRequestId: this.props.ServiceRequestId,
-      patientId: this.props.patientId,
-      serviceProviderId: getUserInfo().serviceProviderId
-    }
-    let getEuVisitDate = {
-      serviceRequestId: 0,
-      patientId: this.props.patientId,
-      serviceProviderId: getUserInfo().serviceProviderId
-    }
+
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       this.props.getServiceRequestList(this.props.patientId);
@@ -140,27 +134,39 @@ export class VisitServiceDetails extends Component {
     else {
       if (this.props.ServiceRequestId === 0) {
         this.props.getSchedulesList(this.props.patientId)
-        this.getVisitList()
       } else {
         this.props.history.push(Path.visitServiceList)
       }
     }
-
-    if (!isEntityUser()) {
-      this.props.getfirstlastvisitdate(getISPVisitDate)
-    } else {
-      !this.props.isEntityDashboard && this.props.getfirstlastvisitdate(getEuVisitDate)
-    }
     this.props.getServiceCategory();
     this.props.ServiceRequestStatus();
     this.props.getVisitStatus();
+    this.getVisitFirstAndLastDate();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillUnmount() {
+    this.props.resetServiceDetails()
+  }
+
+  componentDidUpdate() {
+    if (this.props.isEditIndividualEditPopup) {
+      this.setState({
+        startDateEdit: this.props.serviceVisitDetails.visitDate,
+        startTime: moment(this.props.serviceVisitDetails.startTime, 'h:mm a'),
+        endTime: moment(this.props.serviceVisitDetails.endTime, 'h:mm a')
+      })
+      this.props.editIndividualEditPopup(false)
+    }
+  }
+
+  getVisitFirstAndLastDate = () => {
+    let getISPVisitDate = {
+      serviceRequestId: isEntityUser ? 0 : this.props.ServiceRequestId,
+      patientId: this.props.patientId,
+      serviceProviderId: getUserInfo().serviceProviderId
+    }
+    !this.props.isEntityDashboard && this.props.getfirstlastvisitdate(getISPVisitDate)
     this.setState({
-      startDateEdit: nextProps.serviceVisitDetails.visitDate,
-      startTime: moment(nextProps.serviceVisitDetails.startTime, 'h:mm a'),
-      endTime: moment(nextProps.serviceVisitDetails.endTime, 'h:mm a'),
       startDate: this.props.visitDate && this.props.visitDate.startVisitDateForWeb,
       endDate: this.props.visitDate && this.props.visitDate.endVisitDateForWeb
     })
@@ -260,8 +266,8 @@ export class VisitServiceDetails extends Component {
       serviceTypes: isReset ? [] : this.state.serviceTypes,
       pageNumber: pageNumber,
       pageSize: pageSize,
-      startDate: isReset ? null : this.state.startDate,
-      endDate: isReset ? null : this.state.endDate,
+      startDate: this.filterApplied ? this.state.startDate : null,
+      endDate: this.filterApplied ? this.state.endDate : null,
       entityServiceProviders: isReset ? [] : this.state.entityServiceProviders,
       patientId: this.props.patientId
     }
@@ -286,8 +292,8 @@ export class VisitServiceDetails extends Component {
       serviceTypes: [],
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
+      startDate: this.filterApplied ? this.state.startDate : null,
+      endDate: this.filterApplied ? this.state.endDate : null,
       patientId: this.props.patientId,
       entityServiceProviders: this.state.entityServiceProviders
     }
@@ -397,7 +403,8 @@ export class VisitServiceDetails extends Component {
       rowPageSize: DEFAULT_PAGE_SIZE
     })
     this.props.setActivePage(DEFAULT_PAGE_NUMBER)
-    this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE)
+    this.filterApplied = true
+    this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, false, true)
   }
 
   applyReset = () => {
@@ -411,8 +418,10 @@ export class VisitServiceDetails extends Component {
       activePage: PAGE_NO,
       entityServiceProviders: [],
       selectedOption: '',
-      pageNumberESP: PAGE_NO
+      pageNumberESP: PAGE_NO,
+      filterApplied: false
     })
+    this.filterApplied = false
     let data = {
       pageNumber: PAGE_NO,
       pageSize: DEFAULT_PAGE_SIZE
@@ -660,61 +669,61 @@ export class VisitServiceDetails extends Component {
     })
   };
 
-showPhoneNumber = () => {
-  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
-    this.setState({
-      conversationsModal: true,
-      conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
-    })
-  } else {
-    let data = this.props.VisitServiceDetails;
-    let phoneNumber = data.patient ? data.patient.phoneNumber : ''
-    this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
-  }
-};
+  showPhoneNumber = () => {
+    if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
+      this.setState({
+        conversationsModal: true,
+        conversationErrMsg: 'You will be able to view a Phone Number once you are hired.'
+      })
+    } else {
+      let data = this.props.VisitServiceDetails;
+      let phoneNumber = data.patient ? data.patient.phoneNumber : ''
+      this.setState({ phoneNumber: phoneNumber, phoneNumberModal: !this.state.phoneNumberModal })
+    }
+  };
 
-onClickConversation = () => {
-  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
-    this.setState({
-      conversationsModal: true,
-      conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
-    })
-  } else {
-    let item = this.props.VisitServiceDetails;
-    let selectedParticipants = [{
-      userId: item.patient.coreoHomeUserId,
-      participantType: USERTYPES.PATIENT,
-      participantId: item.patient.patientId
-    }];
-    let data = {
-      participantList: selectedParticipants,
-      title: '',
-      context: item.patient.patientId
-    };
-    this.props.createNewConversation(data);
-  }
-};
+  onClickConversation = () => {
+    if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
+      this.setState({
+        conversationsModal: true,
+        conversationErrMsg: 'You will be able to initiate a conversation once you are hired.'
+      })
+    } else {
+      let item = this.props.VisitServiceDetails;
+      let selectedParticipants = [{
+        userId: item.patient.coreoHomeUserId,
+        participantType: USERTYPES.PATIENT,
+        participantId: item.patient.patientId
+      }];
+      let data = {
+        participantList: selectedParticipants,
+        title: '',
+        context: item.patient.patientId
+      };
+      this.props.createNewConversation(data);
+    }
+  };
 
-onClickVideoConference = () => {
-  if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
-    this.setState({
-      conversationsModal: true,
-      conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
-    })
-  } else {
-    let item = this.props.VisitServiceDetails;
-    let selectedParticipants = [{
-      userId: item.patient.coreoHomeUserId,
-      participantType: USERTYPES.PATIENT,
-      participantId: item.patient.patientId,
-      firstName: item.patient.firstName,
-      lastName: item.patient.lastName,
-      thumbNail: item.patient.imageString
-    }];
-    this.props.saveContextData(item.patient.patientId);
-    this.props.createDataStore(selectedParticipants);
-  }
-};
+  onClickVideoConference = () => {
+    if (this.props.VisitServiceDetails.statusId !== VISIT_STATUS.hired.id) {
+      this.setState({
+        conversationsModal: true,
+        conversationErrMsg: 'You will be able to initiate a video call once you are hired.'
+      })
+    } else {
+      let item = this.props.VisitServiceDetails;
+      let selectedParticipants = [{
+        userId: item.patient.coreoHomeUserId,
+        participantType: USERTYPES.PATIENT,
+        participantId: item.patient.patientId,
+        firstName: item.patient.firstName,
+        lastName: item.patient.lastName,
+        thumbNail: item.patient.imageString
+      }];
+      this.props.saveContextData(item.patient.patientId);
+      this.props.createDataStore(selectedParticipants);
+    }
+  };
 
 highlightVisit = data => {
   this.props.setPlanScheduleId(data.planScheduleId)
@@ -756,7 +765,7 @@ highlightVisit = data => {
                       Please select Start Time
                             </span>}
                 </div>
-                <div className="col-md-6 col-lg-6">
+                <div className="col-md-6 col-lg-6 pd-right-0">
                   <CoreoTimePicker
                     startTime={moment(this.state.endTime, 'h:mm a')}
                     handleChange={this.handleChangeEndTime}
@@ -933,7 +942,7 @@ highlightVisit = data => {
                   planScheduleId={this.props.planScheduleId}
                   highlightVisit={this.highlightVisit}
                 />
-                <PatientProfileTab 
+                <PatientProfileTab
                   showPhoneNumber={this.showPhoneNumber}
                   onClickConversation={this.onClickConversation}
                   onClickVideoConference={this.onClickVideoConference}
@@ -951,7 +960,7 @@ highlightVisit = data => {
               onClick={this.updateServiceVisits}
               discardBtn={true}
               discardbuttonLabel={'Cancel'}
-              onDiscard={() => this.setState({editModal: !this.state.editModal})}
+              onDiscard={() => this.setState({ editModal: !this.state.editModal })}
             />
             <ModalPopup
               isOpen={this.state.standByModeAlertMsg}
@@ -1010,7 +1019,7 @@ highlightVisit = data => {
                 this.setState({
                   conversationsModal: false
                 })}
-              okButtonAlignment='float-center' 
+              okButtonAlignment='float-center'
             />
             <AlertPopup
               message={<span> {this.state.phoneNumber
@@ -1023,7 +1032,7 @@ highlightVisit = data => {
                 this.setState({
                   phoneNumberModal: false
                 })}
-              okButtonAlignment='float-center'  
+              okButtonAlignment='float-center'
             />
           </Scrollbars>
         </AsideScreenCover>
@@ -1082,7 +1091,9 @@ export function mapDispatchToProps(dispatch) {
     createDataStore: (data) => dispatch(createDataStore(data)),
     setActivePage: data => dispatch(setActivePage(data)),
     setServicePlanVisitId: data => dispatch(setServicePlanVisitId(data)),
-    setPlanScheduleId: data => dispatch(setPlanScheduleId(data))
+    setPlanScheduleId: data => dispatch(setPlanScheduleId(data)),
+    resetServiceDetails: () => dispatch(resetServiceDetails()),
+    editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data))
   }
 }
 
@@ -1112,7 +1123,8 @@ export function mapStateToProps(state) {
     isLoadingESPList: VisitServiceDetailsState.isLoadingESPList,
     servicePlanVisitId: VisitServiceDetailsState.servicePlanVisitId,
     activePage: VisitServiceDetailsState.activePage,
-    planScheduleId: VisitServiceDetailsState.planScheduleId
+    planScheduleId: VisitServiceDetailsState.planScheduleId,
+    isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup
   }
 }
 

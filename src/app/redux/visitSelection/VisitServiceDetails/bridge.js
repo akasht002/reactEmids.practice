@@ -35,5 +35,6 @@ export const VisitServiceDetails = {
     getPaymentAvailabilitySuccess: 'getPaymentAvailabilitySuccess/visitservicedetails',
     setServicePlanVisitId: 'setServicePlanVisitId/visitServiceDetails',
     setActivePage: 'setActivePage/visitServiceDetails',
-    setPlanScheduleId: 'setPlanScheduleId/visitservicedetails'
+    setPlanScheduleId: 'setPlanScheduleId/visitservicedetails',
+    editIndividualEditPopup: 'editIndividualEditPopup/visitservicedetails'
   }

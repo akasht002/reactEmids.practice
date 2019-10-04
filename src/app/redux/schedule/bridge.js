@@ -14,5 +14,6 @@ export const Schedule = {
     getAssessmentDetailSuccess: 'Schedule/getAssessmentDetailSuccess',
     getIndividualSchedulesDetailsSuccess: 'getIndividualSchedulesDetailsSuccess/Schedule',
     isScheduleEdit: 'isScheduleEdit/Schedule',
-    isAssessmentEdit:'isAssessmentEdit/Schedule'
+    isAssessmentEdit:'isAssessmentEdit/Schedule',
+    clearServiceDetails: 'clearServiceDetails/Schedule'
 };

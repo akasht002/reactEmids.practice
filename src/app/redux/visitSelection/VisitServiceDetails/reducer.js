@@ -36,7 +36,8 @@ const defaultState = {
     isPaymentAvailable: false,
     servicePlanVisitId: 0,
     activePage: DEFAULT_PAGE_NUMBER,
-    planScheduleId: 0
+    planScheduleId: 0,
+    editIndividualEditPopup: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -190,16 +191,16 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 savedScheduleType: action.data
             };
         case VisitServiceDetails.setAddNewScheduledClicked:
-        return {
-            ...state,
-            isAddNewScheduleClicked: action.data
-        };
+            return {
+                ...state,
+                isAddNewScheduleClicked: action.data
+            };
         case VisitServiceDetails.resetState:
-        return{
-            ...state,
-            VisitServiceDetails: [],
-            VisitServiceSchedule: [],
-        }
+            return {
+                ...state,
+                VisitServiceDetails: [],
+                VisitServiceSchedule: [],
+            }
         case VisitServiceDetails.setVisitDate:
             return {
                 ...state,
@@ -235,6 +236,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             ...state,
             planScheduleId: action.data
         };
+        case VisitServiceDetails.editIndividualEditPopup:
+            return {
+                ...state,
+                editIndividualEditPopup: action.data
+            }
         default:
             return state;
     }

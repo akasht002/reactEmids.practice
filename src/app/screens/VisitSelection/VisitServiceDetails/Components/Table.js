@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Moment from 'react-moment';
-import { DATE_FORMATS } from '../../../../constants/constants';
+import { DATE_FORMATS, SCHEDULE_TYPES } from '../../../../constants/constants';
 import AssignServiceProvider from '../AssignServiceProvider'
 import RowPerPage from './RowPerPage';
 import { PAGE_SIZE_OPTIONS, VISIT_STATUS, VISIT_PROCESSING_STATUS } from '../../../../constants/constants'
@@ -10,13 +10,14 @@ import { getUserInfo } from '../../../../services/http'
 import { convert24To12Hrs } from "../../../../utils/dateUtility";
 import { getEntityProcessingStatus } from '../../../../utils/validations'
 import './style.css';
+import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 
 const renderServiceTypeImages = serviceTypes => {
     let updatedServiceTypes = serviceTypes.length > 3 ? serviceTypes.slice(0, 2) : serviceTypes
     return (
         updatedServiceTypes.slice(0, 3).map(type =>
             <div>
-                <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />
+                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
             </div>
         ))
 }

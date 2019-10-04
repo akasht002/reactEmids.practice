@@ -10,7 +10,7 @@ export const MenuData = [
     },
     {
         id: 1,
-        title: 'Service Requests',
+        title: 'View Requests',
         iconName: 'iconProfile iconProfileServiceRequest',
         link: '/Visitservicelist',
         name: SCREENS.SERVICE_REQUEST
