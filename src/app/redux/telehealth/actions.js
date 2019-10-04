@@ -7,6 +7,7 @@ import { USERTYPES } from '../../constants/constants';
 import { setMenuClicked } from '../auth/user/actions';
 import { onLogout } from '../auth/logout/actions';
 import { goBack } from '../navigation/actions';
+import { logError } from '../../utils/logError';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
@@ -354,12 +355,10 @@ export function rejectConference() {
 
 export function getLinkedPatients() {
     return (dispatch) => {
-          dispatch(startLoading());
           AsyncGet(API.getContext +  getUserInfo().coreoHomeUserId).then((resp) => {
               dispatch(getLinkedPatientsSuccess(resp.data));
-              dispatch(endLoading());
           }).catch((err) => {
-              dispatch(endLoading());
+              logError(err)
           })
       }
   };

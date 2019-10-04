@@ -137,3 +137,7 @@ export const defaultStartTime = () => {
 export const defaultEndTime = () => {
     return moment().hours(23).minutes(30)
 }
+
+export const convert24To12Hrs = (data) => {
+    return moment(data, "hh:mm").format('LT')
+}

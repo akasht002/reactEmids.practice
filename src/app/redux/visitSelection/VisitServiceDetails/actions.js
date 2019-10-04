@@ -17,6 +17,7 @@ import { isEntityUser} from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy, uniqBy } from 'lodash'
 import { logError } from '../../../utils/logError';
+import _ from 'lodash'
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -503,9 +504,10 @@ export function getServiceRequestList(patientId) {
 };
 
 export function getSchedulesList(patientId) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     
     let serviceProviderId = getUserInfo().serviceProviderId;
+    let {servicePlanVisitId, visitDate, isEntityDashboard} = getState().visitSelectionState.VisitServiceDetailsState
     ServiceRequestGet(API.getSchedulesList + `${patientId}/${serviceProviderId}`)
       .then(resp => {
         let id = resp.data.map(item => item.planScheduleId);
@@ -515,16 +517,17 @@ export function getSchedulesList(patientId) {
           serviceTypes: [],
           pageNumber: 1,
           pageSize: 10,
-          startDate: null,
-          endDate: null,
+          startDate: isEntityDashboard ? visitDate.startVisitDateForWeb : null,
+          endDate: isEntityDashboard ? visitDate.endVisitDateForWeb : null,
           patientId: patientId,
-          entityServiceProviders: []
+          entityServiceProviders: [],
+          servicePlanVisitId: servicePlanVisitId 
         }
         dispatch(getSchedulesListSuccess(resp.data))
         dispatch(getVisitList(model))
       })
       .catch(err => {
-
+        logError(err)
       })
   }
 };
@@ -534,16 +537,20 @@ export function getVisitList(data) {
   let getVisitList = isEntityServiceProvider ? API.getEspVisitList : (isEntityUser() ? API.getVisitList : API.getIspVisitList)
   data.serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch, getState) => {
+    let {servicePlanVisitId} = getState().visitSelectionState.VisitServiceDetailsState
     !isEntityUser() &&
       (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
     dispatch(startLoading());
     ServiceRequestPost(getVisitList, data)
       .then(resp => {
+        let pageNumber = resp && resp.data.length > 0 && resp.data[0].pageNumber
+        dispatch(getPlanScheduleId(resp.data, servicePlanVisitId))
         dispatch(getVisitListSuccess(resp.data))
         dispatch(getVisitListCount(data))
+        dispatch(setActivePage(pageNumber))
       })
       .catch(err => {
-
+        logError(err)
       })
   }
 };
@@ -716,5 +723,40 @@ export const getPaymentAvailabilitySuccess = data => {
   return {
       type: VisitServiceDetails.getPaymentAvailabilitySuccess,
       data
+  }
+}
+
+export const setServicePlanVisitId = data => {
+  return {
+    type: VisitServiceDetails.setServicePlanVisitId,
+    data
+  }
+}
+
+export const setActivePage = data => {
+  return {
+    type: VisitServiceDetails.setActivePage,
+    data
+  }
+}
+
+export const setPlanScheduleId = data => {
+  return {
+    type: VisitServiceDetails.setPlanScheduleId,
+    data
+  }
+}
+
+export const getPlanScheduleId = (data, servicePlanVisitId) => {
+  let planScheduleId = 0
+    _.forEach(data, function (item) {
+      if (item.servicePlanVisitId === servicePlanVisitId) {
+        planScheduleId = item.planScheduleId
+        return false;
+      }
+    })
+  return {
+    type: VisitServiceDetails.setPlanScheduleId,
+    data: planScheduleId
   }
 }

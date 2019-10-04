@@ -32,5 +32,8 @@ export const VisitServiceDetails = {
     setVisitDate: 'setVisitDate/visitservicedetails',
     setEntityDashboard: 'setEntityDashboard/visitservicedetails',
     loadingESPList: 'loadingESPList/visitservicedetails',
-    getPaymentAvailabilitySuccess: 'getPaymentAvailabilitySuccess/visitservicedetails'
+    getPaymentAvailabilitySuccess: 'getPaymentAvailabilitySuccess/visitservicedetails',
+    setServicePlanVisitId: 'setServicePlanVisitId/visitServiceDetails',
+    setActivePage: 'setActivePage/visitServiceDetails',
+    setPlanScheduleId: 'setPlanScheduleId/visitservicedetails'
   }

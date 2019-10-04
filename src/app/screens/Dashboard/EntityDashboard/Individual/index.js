@@ -34,8 +34,7 @@ import {
   CARETEAM_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
-  SERVICE_REQUEST_DETAILS_TAB,
-  entityDashboardTab
+  SERVICE_REQUEST_DETAILS_TAB
 } from '../../../../constants/constants'
 import { getUserInfo } from '../../../../utils/userUtility';
 import { ProfileModalPopup, RowPerPage, Preloader } from '../../../../components'

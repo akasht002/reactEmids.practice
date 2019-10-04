@@ -21,7 +21,10 @@ import {
   getfirstlastvisitdate,
   saveScheduleType,
   setAddNewScheduledClicked,
-  setActiveTab
+  setActiveTab,
+  setActivePage,
+  setServicePlanVisitId,
+  setPlanScheduleId
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
@@ -49,7 +52,7 @@ import {
   USERTYPES,
   CONTACT_NOT_FOUND,
   PHONE_NUMBER_TEXT,
-  SERVICE_VISIT_STATUS
+  DEFAULT_PAGE_NUMBER
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue, checkEmpty } from "../../../utils/validations";
@@ -163,6 +166,10 @@ export class VisitServiceDetails extends Component {
     })
   }
 
+  componentWillMount() {
+   this.props.setServicePlanVisitId(0)
+  }
+
   toggleToolTip = () => {
     this.setState({
       tooltipOpen: !this.state.tooltipOpen
@@ -177,10 +184,11 @@ export class VisitServiceDetails extends Component {
       serviceTypes: [],
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
-      startDate: null,
-      endDate: null,
+      startDate: this.props.isEntityDashboard ? this.props.visitDate.startVisitDateForWeb : null,
+      endDate: this.props.isEntityDashboard ? this.props.visitDate.endVisitDateForWeb : null,
       patientId: this.props.patientId,
-      entityServiceProviders: this.state.entityServiceProviders
+      entityServiceProviders: this.state.entityServiceProviders,
+      servicePlanVisitId: this.props.servicePlanVisitId
     }
     this.props.getVisitList(data);
   }
@@ -189,6 +197,7 @@ export class VisitServiceDetails extends Component {
     this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     if (this.state.activeTab !== tab) {
       this.setState({ activeTab: tab, activePage: 1 })
+      this.props.setActivePage(DEFAULT_PAGE_NUMBER)
     }
     if (tab === SERVICE_REQUEST_DETAILS_TAB.myPlan) {
       this.getVisitList()
@@ -261,6 +270,7 @@ export class VisitServiceDetails extends Component {
 
   handleChangeSchedule = (e) => {
     this.setState({ activePage: 1 })
+    this.props.setActivePage(DEFAULT_PAGE_NUMBER)
     if (e.target.checked) {
       this.selectedSchedules.push(parseInt(e.target.id, 0))
     }
@@ -287,6 +297,7 @@ export class VisitServiceDetails extends Component {
   pageNumberChange = (pageNumber) => {
     this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     this.setState({ activePage: pageNumber })
+    this.props.setActivePage(pageNumber)
     this.getModalData(pageNumber, this.state.rowPageSize)
   }
 
@@ -385,6 +396,7 @@ export class VisitServiceDetails extends Component {
       filterApplied: true,
       rowPageSize: DEFAULT_PAGE_SIZE
     })
+    this.props.setActivePage(DEFAULT_PAGE_NUMBER)
     this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE)
   }
 
@@ -405,6 +417,7 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: DEFAULT_PAGE_SIZE
     }
+    this.props.setActivePage(DEFAULT_PAGE_NUMBER)
     this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, true);
     this.props.clearESPList();
     this.props.getVisitStatus();
@@ -477,7 +490,7 @@ export class VisitServiceDetails extends Component {
   onSubmitAssignServiceProvider = async (data) => {
     this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     await this.props.assignESP(data)
-    await this.getModalData(this.state.activePage, this.state.rowPageSize)
+    await this.getModalData(this.props.activePage, this.state.rowPageSize)
   }
 
   toggleSearch = () => {
@@ -525,6 +538,7 @@ export class VisitServiceDetails extends Component {
 
   rowPageChange = (pageSize) => {
     this.setState({ rowPageSize: pageSize, activePage: 1 })
+    this.props.setActivePage(DEFAULT_PAGE_NUMBER)
     this.getModalData(PAGE_NO, pageSize)
   }
 
@@ -634,7 +648,7 @@ export class VisitServiceDetails extends Component {
     this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     if (!saveVisitEdit) {
       await this.props.updateServiceVisit(model)
-      await this.getModalData(this.state.activePage, this.state.rowPageSize)
+      await this.getModalData(this.props.activePage, this.state.rowPageSize)
       await this.setState({ editModal: false, onVisitEdit: false })
     }
   }
@@ -701,6 +715,11 @@ onClickVideoConference = () => {
     this.props.createDataStore(selectedParticipants);
   }
 };
+
+highlightVisit = data => {
+  this.props.setPlanScheduleId(data.planScheduleId)
+  this.props.setServicePlanVisitId(data.servicePlanVisitId)
+}
 
   render() {
     let modalContent =
@@ -877,7 +896,7 @@ onClickVideoConference = () => {
                   espList={this.props.entityServiceProvidersList}
                   pageCount={this.props.visitListCount}
                   pageNumberChange={this.pageNumberChange}
-                  activePage={this.state.activePage}
+                  activePage={this.props.activePage}
                   isOpen={this.state.filterOpen}
                   toggle={this.toggleFilter}
                   applyFilter={this.applyFilter}
@@ -910,6 +929,9 @@ onClickVideoConference = () => {
                   clickShowMore={this.clickShowMore}
                   disableShowmore={this.props.disableShowmore}
                   visitDate={this.props.visitDate}
+                  servicePlanVisitId={this.props.servicePlanVisitId}
+                  planScheduleId={this.props.planScheduleId}
+                  highlightVisit={this.highlightVisit}
                 />
                 <PatientProfileTab 
                   showPhoneNumber={this.showPhoneNumber}
@@ -1057,7 +1079,10 @@ export function mapDispatchToProps(dispatch) {
     setActiveTab: data => dispatch(setActiveTab(data)),
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
     saveContextData: (data) => dispatch(saveContextData(data)),
-    createDataStore: (data) => dispatch(createDataStore(data))
+    createDataStore: (data) => dispatch(createDataStore(data)),
+    setActivePage: data => dispatch(setActivePage(data)),
+    setServicePlanVisitId: data => dispatch(setServicePlanVisitId(data)),
+    setPlanScheduleId: data => dispatch(setPlanScheduleId(data))
   }
 }
 
@@ -1084,7 +1109,10 @@ export function mapStateToProps(state) {
     visitDate: VisitServiceDetailsState.visitDate,
     isAddNewScheduleClicked: VisitServiceDetailsState.isAddNewScheduleClicked,
     isEntityDashboard: VisitServiceDetailsState.isEntityDashboard,
-    isLoadingESPList: VisitServiceDetailsState.isLoadingESPList
+    isLoadingESPList: VisitServiceDetailsState.isLoadingESPList,
+    servicePlanVisitId: VisitServiceDetailsState.servicePlanVisitId,
+    activePage: VisitServiceDetailsState.activePage,
+    planScheduleId: VisitServiceDetailsState.planScheduleId
   }
 }
 

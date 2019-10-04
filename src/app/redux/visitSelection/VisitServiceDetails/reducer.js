@@ -2,6 +2,7 @@ import {
     VisitServiceDetails
 } from './bridge'
 import { serviceRequestDetailsTab } from '../../constants/constants'
+import { DEFAULT_PAGE_NUMBER } from '../../../constants/constants';
 const defaultState = {
     VisitServiceDetails: [],
     VisitServiceSchedule: [],
@@ -32,7 +33,10 @@ const defaultState = {
     isAddNewScheduleClicked: false,
     isEntityDashboard: false,
     isLoadingESPList: false,
-    isPaymentAvailable: false
+    isPaymentAvailable: false,
+    servicePlanVisitId: 0,
+    activePage: DEFAULT_PAGE_NUMBER,
+    planScheduleId: 0
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -216,6 +220,21 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 ...state,
                 isPaymentAvailable: ((action.data && action.data[0].value) === '1') ? true : false
             };
+        case VisitServiceDetails.setServicePlanVisitId:
+        return {
+            ...state,
+            servicePlanVisitId: action.data
+        };
+        case VisitServiceDetails.setActivePage:
+        return {
+            ...state,
+            activePage: action.data
+        };
+        case VisitServiceDetails.setPlanScheduleId:
+        return {
+            ...state,
+            planScheduleId: action.data
+        };
         default:
             return state;
     }

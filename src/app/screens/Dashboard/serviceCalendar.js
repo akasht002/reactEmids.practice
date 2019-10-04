@@ -463,37 +463,29 @@ export class ServiceCalendar extends Component {
     else this.props.goToServiceVisitProcessing(data)
   }
 
+  getYears=(type,start)=>{
+    let data = []
+    let i ;
+    let temp;
+    for(i=start;i<=3;i++){
+       temp = type ? moment(moment(today).format()).add(i, 'months').endOf('month').format('MMM YYYY'):
+       moment(moment(today).format()).subtract(i, 'months').endOf('month').format('MMM YYYY');
+       data.push({ label: temp, value: temp.substring(0, 3) })
+    }
+    return data
+  }
+
   render() {
     const visitCount = this.props.serviceVistCount;
-    let pervious_months = []
     let dates = this.getDates(this.state.startDate)
     let optionChecked = this.state.reportDay
     let count = this.state.width > '1280' ? 7 : 5
 
-    let current_month = new Date().getMonth();
-    let pervious_month = moment.months().splice(current_month - 3, PREVIOUS_MONTH);
+    let previousList = this.getYears(false,0).reverse()
+    let nextList = this.getYears(true,1) 
 
-    if(pervious_month.length < 3 )
-      {
-        let len_month = PREVIOUS_MONTH - pervious_month.length
-        let months = moment.months("MMM YYYY").splice(current_month - len_month, NEXT_MONTH)
-        pervious_months =  pervious_month.concat(months)
-      }else{
-        pervious_months =  pervious_month
-      }
+    let monthList = previousList.concat(nextList) ;
 
-    let next_month_list = moment.months().splice(current_month - 1, NEXT_MONTH);
-
-    let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month, 10)])
-    let nextMonthLists = current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
-
-    let monthLists = _.uniq(pervious_months.concat(nextMonthLists))
-
-    let monthList = monthLists.map(month => {
-      let selectMonth = moment().month(month).format(M_FORMAT)
-      let year = this.getYear(selectMonth)
-      return { label: month.substring(0, 3) + ' ' + year, value: month };
-    });
     let dateList = dates.map((daysMapping, i) => {
       let className = "";
       if (daysMapping.date.format() === moment(today).format()) {

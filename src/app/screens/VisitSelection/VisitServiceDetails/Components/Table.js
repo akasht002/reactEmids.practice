@@ -7,7 +7,7 @@ import { PAGE_SIZE_OPTIONS, VISIT_STATUS, VISIT_PROCESSING_STATUS } from '../../
 import { getServiceTypeImage } from '../../../../utils/validations'
 import { isEntityUser } from '../../../../utils/userUtility';
 import { getUserInfo } from '../../../../services/http'
-import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { convert24To12Hrs } from "../../../../utils/dateUtility";
 import { getEntityProcessingStatus } from '../../../../utils/validations'
 import './style.css';
 
@@ -99,10 +99,11 @@ export const Table = props => {
                 </thead>
                 <tbody>
                     {props.visitList.map(item => {
-                        let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : getUTCFormatedDate(item.visitStartTime, DATE_FORMATS.hh_mm_a)
+                        let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : convert24To12Hrs(item.visitStartTime)
                         let duration = (isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)
                         let isIndividualServiceProvider = !((item.visitStatusId === VISIT_STATUS.startVisit.id) && isEntity && isEntityServiceProvider)
-                        return <tr>
+                        let activeRowClass = (props.servicePlanVisitId === item.servicePlanVisitId) ? 'active-row-view' : ''
+                        return <tr className={activeRowClass} onClick={() => props.highlightVisit(item)}>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
                             <td>{isIndividualServiceProvider && startTime}</td>
                             <td>{isIndividualServiceProvider && duration}</td>
