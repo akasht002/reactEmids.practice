@@ -146,6 +146,7 @@ export class VisitServiceDetails extends Component {
 
   componentWillUnmount() {
     this.props.resetServiceDetails()
+    this.props.setServicePlanVisitId(0)
   }
 
   componentDidUpdate() {
@@ -170,10 +171,6 @@ export class VisitServiceDetails extends Component {
       startDate: this.props.visitDate && this.props.visitDate.startVisitDateForWeb,
       endDate: this.props.visitDate && this.props.visitDate.endVisitDateForWeb
     })
-  }
-
-  componentWillMount() {
-   this.props.setServicePlanVisitId(0)
   }
 
   toggleToolTip = () => {
