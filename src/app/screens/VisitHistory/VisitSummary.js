@@ -100,7 +100,7 @@ export class VisitSummary extends React.Component {
             <div className='CardContainers TitleWizardWidget'>
               <div className='TitleContainer'>
                 <a
-                  className='TitleContent backProfileIcon'
+                  className='TitleContent backProfileIcon theme-primary-light'
                   onClick={this.handelBack}
                 />
 

@@ -35,7 +35,7 @@ class VisitServiceProcessing extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <Link className="TitleContent backProfileIcon" to="/" />
+                                <Link className="TitleContent backProfileIcon theme-primary-light" to="/" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'>Sun, 24 Aug, Morning</i>VID97531</span>

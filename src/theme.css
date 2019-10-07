@@ -15,7 +15,9 @@
 .theme-primary.plan-tableview th,
 .modal-title,
 table.individuals-tableblock.theme-primary thead th,
-.entity-date-filter.theme-primary .form-group label {
+.entity-date-filter.theme-primary .form-group label,
+.theme-primary h4,
+.AboutModalContent .AboutContentContainer .LinkCard a {
     color: #1e3d5c !important;
 }
 
@@ -33,7 +35,9 @@ table.individuals-tableblock.theme-primary thead th,
 }
 
 .ProfileHeaderButton .sliderSwitch:before,
-.service-typesview-plan .service-typesview-more.theme-primary, .form-radio-input:checked~label .RadioBoxIcon:before {
+.service-typesview-plan .service-typesview-more.theme-primary,
+.form-radio-input:checked~label .RadioBoxIcon:before,
+.addImageBtn.theme-primary {
     background-color: #1e3d5c;
 }
 
@@ -44,8 +48,8 @@ span.btn-hired {
 .theme-primary .pagination li.PaginationItem.active a,
 .pagination li.PaginationItem a:hover,
 .theme-primary .bottomTaskCompletedRange,
-.VisitSummaryWidget .LeftWidget .bottomTaskCompletedRange {
-    background-color: #1e3d5c;
+.VisitSummaryWidget .LeftWidget .bottomTaskCompletedRange, .react-datepicker__header, .react-datepicker__day--keyboard-selected, .react-datepicker__day--keyboard-selected:hover, .react-datepicker__day--selected {
+    background-color: #1e3d5c !important;
 }
 
 .btn-primary {
@@ -68,7 +72,7 @@ span.btn-hired {
 
 .active-tabview,
 .theme-primary-light .SPAvailItems.active,
-.modal-header {
+.modal-header, .backProfileIcon.theme-primary-light:hover{
     background-color: #e0f1fb;
 }
 
@@ -78,7 +82,8 @@ span.btn-hired {
     background-color: #f0f6fa;
 }
 
-.CheckboxSet input:checked~label:before {
+.CheckboxSet input:checked~label:before,
+.form-check-input:checked~.CheckboxIcon:before {
     background-color: #1e3d5c !important;
     border: #1e3d5c !important;
 }
@@ -88,8 +93,13 @@ span.btn-hired {
 .SPAvailWidget.Summary .SPAvailContainer,
 .dashboard-tab-content .tab-filter-card .filter-card-content input:checked~label.theme-primary-light,
 .form-radio-input:checked~label .RadioBoxIcon,
-.form-radio-input:checked~.form-radio-label, .form-radio-label:hover {
+.form-radio-input:checked~.form-radio-label,
+.form-radio-label:hover, .CheckSet input:checked ~ label {
     border: 1px solid #1e3d5c !important;
+}
+
+input.form-control:focus {
+    border-color: #1e3d5c !important;
 }
 
 .theme-primary.plan-tableview tbody tr:hover {
@@ -100,7 +110,14 @@ span.btn-hired {
     cursor: pointer;
 }
 
-.service-typesview-more.tooltip.theme-primary {
+.SPTabHeader:hover,
+.SPTabHeader.true {
+    cursor: pointer;
+    background-color: #e0f1fb;
+}
+
+.service-typesview-more.tooltip.theme-primary,
+.SPServiceCount.theme-primary {
     background-color: #1e3d5c !important;
     color: #fff !important;
 }
@@ -114,7 +131,7 @@ span.btn-hired {
 .SPIconServicesCheckbox.theme-primary-light.selectType input:checked+label,
 .visitListNavigation.theme-primary:hover,
 .dashboard-tab-content .tab-filter-card .filter-card-content input:checked~label.theme-primary-light,
-table.individuals-tableblock.theme-primary tbody tr:hover {
+table.individuals-tableblock.theme-primary tbody tr:hover, .accordion__item .ServicesLink:before {
     background-color: #e0f1fb;
 }
 
@@ -125,4 +142,17 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 
 table.individuals-tableblock.theme-primary tbody tr:hover {
     border-left: 3px solid #1e3d5c;
+}
+
+.DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle {
+    color: #444 !important;
+}
+
+.ratePerHour.theme-primary {
+    border: 2px solid #1e3d5c;
+}
+
+.NotificationsListHeader.theme-primary
+{
+    border-bottom: 1px solid #1e3d5c;
 }

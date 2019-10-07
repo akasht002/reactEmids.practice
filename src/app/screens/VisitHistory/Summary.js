@@ -571,7 +571,7 @@ export class VistSummary extends React.Component {
                 <div className="feedbackContainer">
                   {getLength(this.props.VisitFeedback) > 0 ? (
                     <span
-                      className="FeedbackLink"
+                      className="FeedbackLink theme-primary"
                       onClick={this.toggleShowFeedbackDetails.bind(this)}
                     >
                       Show Feedback

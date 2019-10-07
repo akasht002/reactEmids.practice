@@ -498,7 +498,7 @@ export class Organization extends React.PureComponent {
             />
             <span className='editDpImage' />
             <div className='uploadWidget'>
-              <i className='addImageBtn' onClick={this.handleChange} />
+              <i className='addImageBtn theme-primary' onClick={this.handleChange} />
             </div>
           </div>
         </div>
