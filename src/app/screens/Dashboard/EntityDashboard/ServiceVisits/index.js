@@ -61,7 +61,7 @@ import Search from '../Components/Search';
 
 import { RowPerPage } from '../../../../components';
 import { pushSpliceHandler } from '../../../../utils/stringHelper';
-import { restrictSpecialChars } from '../../../../utils/validations';
+import { restrictSpecialChars, restrictMultipleSpace } from '../../../../utils/validations';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 export class ServiceVisits extends Component {
   constructor(props) {
@@ -393,7 +393,7 @@ export class ServiceVisits extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: restrictSpecialChars(e.target.value)
+      searchKeyword: restrictSpecialChars(restrictMultipleSpace(e.target.value))
     })
   }
 

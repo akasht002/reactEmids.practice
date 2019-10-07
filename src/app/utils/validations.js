@@ -294,3 +294,7 @@ export function getEntityProcessingStatus(data) {
 export const restrictSpecialChars = data => {
   return data.replace(/[*|":<>[\]{}`\\()';@&$!.]/, '')
 }
+
+export const restrictMultipleSpace = data => {
+  return data.replace(/^\s+|\s+$/g, " ")
+}
