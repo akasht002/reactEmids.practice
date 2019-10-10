@@ -40,7 +40,8 @@ class AsideScreenCover extends React.Component {
             routeUrlLink: '/',
             isInvitationCame: false,
             isTelehealthMediaAvailable: false,
-            isCreateVideoConference: false
+            isCreateVideoConference: false,
+            dropdownOpen: false
         }
     }
 
@@ -223,7 +224,9 @@ class AsideScreenCover extends React.Component {
                             : require('../../../assets/images/Blank_Profile_icon.png')}
                         toggle={this.props.toggle}
                         onClick={(link) => this.checkIsFormDirty(link)}
-                        dashboardMessageCount={this.props.dashboardMessageCount} />
+                        dashboardMessageCount={this.props.dashboardMessageCount} 
+                        dropdownOpen={this.state.dropdownOpen}
+                        />
 
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />

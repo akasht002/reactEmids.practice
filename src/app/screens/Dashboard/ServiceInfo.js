@@ -7,6 +7,7 @@ import { getFields } from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
 import { SERVICE_REQUEST } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
+import { Link } from 'react-router-dom'
 
 export const ServiceCalendarInfo = props => {
   return props.Servicelist.slice(0, 3).map((conversations, index) => {
@@ -243,7 +244,7 @@ export const MyConversionDetail = props => {
   })
 }
 
-export const MyConversionDefault = () => {
+export const MyConversionDefault = (props) => {
   let style = {
     display: 'none'
   };
@@ -255,11 +256,13 @@ export const MyConversionDefault = () => {
             <div className='avatarContainer' />
           </div>
           <div className='MsgThreadContent m-auto'>
+          <Link to='/messagesummary'>
           <div class="no-blockinfo-top">
           <div className="NoProfileServices No-Coverastion-Block">
           <span class="NoInfoText"><span class="NoServiceInfoLink primaryColor">New Coverastion</span></span>
           </div>
            </div>
+           </Link>
           </div>
         </div>
       </li>
