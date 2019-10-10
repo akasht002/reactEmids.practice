@@ -3,7 +3,8 @@ export let allServiceProivders = {
     phoneNumber: 'Contact',
     gender: 'Gender',
     rating: 'Rating',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'all-serviceProviders-tableblock'
 }
 
 export let visitServiceProviders = {
@@ -12,7 +13,8 @@ export let visitServiceProviders = {
     gender: 'Gender',
     rating: 'Rating',
     visitCount: 'Visit(s)',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'visit-serviceProviders-tableblock'
 }
 
 export let feedbackServiceProviders = {
@@ -21,7 +23,8 @@ export let feedbackServiceProviders = {
     gender: 'Gender',
     rating: 'Rating',
     feedbackCount: 'Alert(s)',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'feedback-serviceProviders-tableblock'
 }
 
 export let lowRatingServiceProivders = {
@@ -29,7 +32,8 @@ export let lowRatingServiceProivders = {
     phoneNumber: 'Contact',
     gender: 'Gender',
     rating: 'Rating',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'lowrating-serviceProviders-tableblock'
 }
 
 export let lowTaskServiceProivders = {
@@ -38,5 +42,6 @@ export let lowTaskServiceProivders = {
     phoneNumber: 'Contact',
     gender: 'Gender',
     rating: 'Rating',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'lowtask-serviceProviders-tableblock'
 }

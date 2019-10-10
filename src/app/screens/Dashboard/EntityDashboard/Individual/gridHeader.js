@@ -8,8 +8,11 @@ export let allIndividuals =
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
     button: 'Life Map',
-    icon: 'Action'
+    icon: 'Action',
+    className: 'all-individuals-tableblock'
 }
+
+
 export let visitIndividuals = {
     mpi: 'MPI',
     name: 'Name',
@@ -20,7 +23,8 @@ export let visitIndividuals = {
     cohorts: 'Cohort',
     visitCount: 'Visit(s)',
     button: 'Life Map',
-    icon: 'Action'
+    icon: 'Action',
+    className: 'visit-individuals-tableblock'
 }
 
 export let feedbackIndividuals = {
@@ -33,5 +37,6 @@ export let feedbackIndividuals = {
     cohorts: 'Cohort',
     alerts: 'Alert(s)',
     button: 'Life Map',
-    icon: 'Action'
+    icon: 'Action',
+    className: 'feedback-individuals-tableblock'
 }

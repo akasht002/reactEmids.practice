@@ -553,6 +553,7 @@ export class Individuals extends Component {
           </div>
           <div className={`tab-table-view ${noResultsFoundcss}`}>
             <div className="full-block-tableview">
+             
               <Grid
                 data={this.props.individualsList}
                 header={this.getHeaderBasedOnStatus(this.state.status)}
