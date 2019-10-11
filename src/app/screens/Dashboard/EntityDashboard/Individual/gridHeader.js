@@ -1,7 +1,7 @@
 export let allIndividuals =
 {
     mpi: 'MPI',
-    name: 'Name',
+    name: 'Individuals',
     gender: 'Gender',
     age: 'Age',
     contracts: 'Contracts',
@@ -15,7 +15,7 @@ export let allIndividuals =
 
 export let visitIndividuals = {
     mpi: 'MPI',
-    name: 'Name',
+    name: 'Individuals',
     gender: 'Gender',
     age: 'Age',
     contracts: 'Contracts',
@@ -29,7 +29,7 @@ export let visitIndividuals = {
 
 export let feedbackIndividuals = {
     mpi: 'MPI',
-    name: 'Name',
+    name: 'Individuals',
     gender: 'Gender',
     age: 'Age',
     contracts: 'Contracts',
