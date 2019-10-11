@@ -428,9 +428,13 @@ span.no-recoord-table {
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 1;
+    z-index: 1000;
     width: 100%;
     justify-content: flex-end;
+}
+
+.table-search-block .select-wrap-dahboard {
+    z-index: 100;
 }
 
 .profile-icon-search {
