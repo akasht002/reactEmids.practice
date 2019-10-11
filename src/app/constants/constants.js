@@ -518,7 +518,7 @@ export const FilterActiveTab = {
     "recurring": '9' 
 }
 
-export const ENTITY_SR_STATUS = ['Open', 'Engaged'];
+export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Cancelled'];
 
 export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'InProgress', 'OverDue'];
 
