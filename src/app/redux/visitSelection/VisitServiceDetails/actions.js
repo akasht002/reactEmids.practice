@@ -246,7 +246,7 @@ export function getVisitServiceEligibilityStatus(data) {
       dispatch(getVisitServiceEligibityStatusSuccess(resp.data))
 
     }).catch((err) => {
-
+      logError(err);
     })
   }
 };
@@ -264,7 +264,7 @@ export function getDays() {
       dispatch(getDaysSuccess(resp.data))
 
     }).catch((err) => {
-
+      logError(err);
     })
   }
 };
@@ -362,7 +362,7 @@ export function canInitiateConversation(data) {
       dispatch(canInitiateConversationSuccess(resp.data))
 
     }).catch((err) => {
-
+      logError(err);
     })
   }
 };
@@ -531,7 +531,7 @@ export function getSchedulesList(patientId) {
         dispatch(getVisitList(model));
       })
       .catch(err => {
-
+        logError(err);
       })
   }
 };

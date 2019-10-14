@@ -737,3 +737,41 @@
     }
 
 }
+
+.empty-planblock {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin: 0 auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+.empty-planblock img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.empty-planblock span {
+    color: #7a329f;
+    font-size: 14px;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding-right: 22px;
+}
+
+.empty-planblock p {
+    color: #444;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    display: block;
+    margin-bottom: 30px;
+}

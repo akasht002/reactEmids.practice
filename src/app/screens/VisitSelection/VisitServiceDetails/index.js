@@ -919,6 +919,7 @@ export class VisitServiceDetails extends Component {
                   clickShowMore={this.clickShowMore}
                   disableShowmore={this.props.disableShowmore}
                   visitDate={this.props.visitDate}
+                  visitServiceDetails={this.props.VisitServiceDetails}
                 />
                 <PatientProfileTab
                   showPhoneNumber={this.showPhoneNumber}
