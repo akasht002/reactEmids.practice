@@ -219,8 +219,7 @@ export const getHeader = () => {
     let token = userState && userState.userData && userState.userData.access_token;
     let authHeader = token ? {
         Authorization: 'Bearer ' + token,
-        offset: getTimeZoneOffset(),
-        authType: "oauth"
+        offset: getTimeZoneOffset()
     } : {}
     return {
         headers: authHeader
