@@ -729,7 +729,6 @@ export class Schedule extends Component {
             latitude,
             longitude,
             assessmentId,
-            duration,
             isAssessmentEdit
         } = this.state
 
