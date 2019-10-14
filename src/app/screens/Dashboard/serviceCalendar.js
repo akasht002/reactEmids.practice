@@ -468,8 +468,8 @@ export class ServiceCalendar extends Component {
     let i ;
     let temp;
     for(i=start;i<=3;i++){
-       temp = type ? moment(moment(today).format()).add(i, 'months').endOf('month').format('MMM YYYY'):
-       moment(moment(today).format()).subtract(i, 'months').endOf('month').format('MMM YYYY');
+       temp = type ? moment(moment(today).format()).add(i, 'months').endOf('month').format(DATE_FORMATS.mmmyyy):
+       moment(moment(today).format()).subtract(i, 'months').endOf('month').format(DATE_FORMATS.mmmyyy);
        data.push({ label: temp, value: temp.substring(0, 3) })
     }
     return data

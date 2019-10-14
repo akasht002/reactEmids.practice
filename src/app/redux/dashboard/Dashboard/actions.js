@@ -79,7 +79,6 @@ export const getServiceVisitCountSuccess = data => {
 
 export function getServiceVisitCount (data) {
   return (dispatch, getState) => {
-    //dispatch(startLoading())
     return ServiceRequestGet(
       API.getServiceVisitsCount +
         getUserInfo().serviceProviderId +
@@ -90,7 +89,6 @@ export function getServiceVisitCount (data) {
     )
       .then(resp => {
         dispatch(getServiceVisitCountSuccess(resp.data))
-        //dispatch(endLoading())
       })
       .catch(err => {
         logError(err)
@@ -197,21 +195,18 @@ export const getServiceProviderDetailSuccess = data => {
 }
 export function updateEntityServiceVisit (data, pageNo) {
   return (dispatch, getState) => {
-    //dispatch(startLoading())
     return ServiceRequestPost(API.assignServiceVisit, data)
       .then(resp => {
         dispatch(getVisitServiceSchedule(data.serviceRequestId, pageNo, true))
-        //dispatch(endLoading())
       })
       .catch(err => {
-        //dispatch(endLoading())
+        logError(err)
       })
   }
 }
 
 export function getServiceProviderDetail (data) {
-  return (dispatch, getState) => {
-    //dispatch(startLoading())
+  return (dispatch) => {
     return ServiceRequestGet(
       API.getServiceProviders +
         getUserInfo().serviceProviderId +
@@ -224,10 +219,8 @@ export function getServiceProviderDetail (data) {
     )
       .then(resp => {
         dispatch(getServiceProviderDetailSuccess(resp.data))
-        //dispatch(endLoading())
       })
       .catch(err => {
-        //dispatch(endLoading())
       })
   }
 }
@@ -264,11 +257,8 @@ export function getConversationDetail (data) {
 
 export function updateStandByMode (data) {
   return dispatch => {
-    //dispatch(startLoading())
-
     return Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
-        //dispatch(endLoading())
       })
       .catch(err => {
         try {
@@ -281,7 +271,7 @@ export function updateStandByMode (data) {
           } else {
           }
         }
-        console.log(err)
+        logError(err)
       })
   }
 }
