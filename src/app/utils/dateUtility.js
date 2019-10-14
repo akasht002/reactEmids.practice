@@ -80,9 +80,9 @@ export const getSecondsFromTime = (data) =>{
     return data.split(':')
 }
 export function getDiffTime(startTimes, endTimes) {
-    let startTime = moment(startTimes, DATE_FORMATS.hh_mm);
-    let endTime = moment(endTimes, DATE_FORMATS.hh_mm);
-    let seconds = endTime.diff(startTime, 'seconds');
+    let startTime = moment(startTimes, DATE_FORMATS.hh_mm).seconds(0);
+    let endTime = moment(endTimes, DATE_FORMATS.hh_mm).seconds(0);
+    let seconds = endTime.diff(startTime, 'seconds') + 1;
     let format = val => `0${Math.floor(val)}`.slice(-2)
     let hours = seconds / 3600
     let minutes = (seconds % 3600) / 60

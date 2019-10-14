@@ -65,6 +65,7 @@ export const PlanTab = props => {
                             toggleToolTip={props.toggleToolTip}
                             navigateToparticularPageBasedonId={props.navigateToparticularPageBasedonId}
                         />
+                        {props.visitList.length !== 0 &&
                         <CoreoPagination
                             activePage={props.activePage}
                             itemsCountPerPage={props.rowPageSize}
@@ -77,6 +78,7 @@ export const PlanTab = props => {
                             itemClassNext='PaginationIcon Next'
                             itemClassLast='PaginationIcon Last'
                         />
+                        }
                         <Filter
                             isOpen={props.isOpen}
                             toggle={props.toggle}
