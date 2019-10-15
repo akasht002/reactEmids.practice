@@ -20,9 +20,11 @@ import {
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
-import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE } from '../../constants/constants'
+import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE, entityDashboardTab, ENTITY_DASHBOARD_STATUS } from '../../constants/constants'
 import Moment from 'react-moment'
 import { Assessment } from "./assessment";
+import { caseInsensitiveComparer } from "../../utils/comparerUtility";
+import { setServiceProviderFeedbackTab } from "../../redux/dashboard/EntityDashboard/ServiceProvider/actions";
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -52,6 +54,7 @@ export class VistSummary extends React.Component {
     } else {
       this.props.history.push(Path.visitHistory)
     }
+    //this.props.setServiceProviderFeedbackTab(true)
   }
 
 
@@ -209,6 +212,17 @@ export class VistSummary extends React.Component {
     this.props.onSubmitFeedback();
   };
 
+  getQuestionHiglight = (isAlerted) => {
+    if (isAlerted
+      && (this.props.entityDashboardActiveTab === entityDashboardTab.serviceProviders
+        || caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack))
+      ) {
+      return `FeedbackQuestion question-higlight`
+    } else {
+      return `FeedbackQuestion`
+    }
+  }
+
   getFeedback = () => {
     return (
       <div className="FeedbackWidget py-4">
@@ -327,7 +341,7 @@ export class VistSummary extends React.Component {
               this.props.VisitFeedback.map((questionList, i) => {
                 return (
                   <div className='FeedbackQuestionWidget' key={i}>
-                    <p className='FeedbackQuestion'>
+                    <p className={this.getQuestionHiglight(questionList.feedbackAlertStatus)}>
                       {i + 1}. {questionList.question}
                     </p>
                     <div className='FeedbackAnswerWidget'>
@@ -631,7 +645,8 @@ export function mapDispatchToProps(dispatch) {
     saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data)),
     getServiceProviderRating: data => dispatch(getServiceProviderRating(data)),
     getVisitFeedBack: data => dispatch(getVisitFeedBack(data)),
-    goToSummary: () => dispatch(push(Path.summary))
+    goToSummary: () => dispatch(push(Path.summary)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data))
   };
 }
 
@@ -650,7 +665,9 @@ export function mapStateToProps(state) {
     isLoading: state.visitHistoryState.vistServiceHistoryState.isLoading,
     savedScheduleType: state.visitSelectionState.VisitServiceDetailsState.savedScheduleType,
     assessmentQuestionsList: state.visitHistoryState.vistServiceHistoryState.assessmentQuestionsList,
-    isPaymentAvailable: state.visitSelectionState.VisitServiceDetailsState.isPaymentAvailable
+    isPaymentAvailable: state.visitSelectionState.VisitServiceDetailsState.isPaymentAvailable,
+    entityDashboardActiveTab: state.dashboardState.individualsListState.activeTab,
+    activeSubTab: state.dashboardState.VisitServiceProviderState.activeSubTab
   };
 }
 
