@@ -137,3 +137,11 @@ export const defaultStartTime = () => {
 export const defaultEndTime = () => {
     return moment().hours(23).minutes(30)
 }
+
+export const getHours = (time) => {
+    return time && parseInt(time.split(':')[0], 10);
+}
+
+export const getMinutes = (time) => {
+    return time && parseInt(time.split(':')[1], 10);
+}

@@ -17,6 +17,7 @@ import { isEntityUser } from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy, uniqBy } from 'lodash'
 import { logError } from '../../../utils/logError';
+import { pushSpliceHandler } from '../../../utils/stringHelper';
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -734,18 +735,9 @@ export const getPlanId = (data) => {
   }
 }
 
-export const modifiedPlanId = (actualData, selectedData, isChecked) => {
-  let selectedSchedules = actualData;
-  if (isChecked) {
-    selectedSchedules.push(parseInt(selectedData, 0))
-  }
-  else {
-    selectedSchedules.splice(actualData.findIndex(function (item) {
-      return item === parseInt(selectedData, 0);
-    }), 1);
-  }
+export const modifiedPlanId = (actualData, selectedData) => {
   return {
     type: VisitServiceDetails.getPlanId,
-    selectedSchedules
+    data: pushSpliceHandler(actualData, parseInt(selectedData, 10))
   }
 }

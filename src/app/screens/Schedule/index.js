@@ -35,7 +35,7 @@ import {
     isAssessmentEdit,
     clearServiceDetails
 } from '../../redux/schedule/actions';
-import { getDiffTime, getHourMin } from "../../utils/dateUtility";
+import { getDiffTime, getHourMin, getMinutes, getHours } from "../../utils/dateUtility";
 import './Components/styles.css'
 import { PlanTypeData, ScheduleTypeData, weekRecurring } from './data/index'
 import { validate } from './data/validate'
@@ -504,14 +504,12 @@ export class Schedule extends Component {
     }
 
     handleChangeDuration = (selectedOption) => {
-        let secondsToMinutes = selectedOption;
-        let hours = parseInt(secondsToMinutes.split(':')[0], 10);
-        let minutes = parseInt(secondsToMinutes.split(':')[1], 10);
+        let hours = getHours(selectedOption)
+        let minutes = getMinutes(selectedOption)
         this.selectedDuration = selectedOption;
-        this.setState({ selectedDuration: selectedOption });
         const endTime = moment(this.state.startTime).add(hours, 'hours').add(minutes, 'minutes');
         this.formatedEndTime = getHourMin(endTime)
-        this.setState({ endTime });
+        this.setState({ endTime, selectedDuration: selectedOption });
         this.isDataEntered = true;
     }
 

@@ -79,6 +79,7 @@ import { allEqual } from '../../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../../utils/formatName';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { saveContextData, createDataStore } from '../../../redux/telehealth/actions';
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -127,7 +128,7 @@ export class VisitServiceDetails extends Component {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       this.props.getServiceRequestList(this.props.patientId);
       this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId);
-      (this.props.activeTab === SERVICE_REQUEST_DETAILS_TAB.myPlan) && this.props.getSchedulesList(this.props.patientId);
+      (caseInsensitiveComparer(this.props.activeTab, SERVICE_REQUEST_DETAILS_TAB.myPlan)) && this.props.getSchedulesList(this.props.patientId);
       this.props.getDays();
     }
     else {
@@ -273,8 +274,8 @@ export class VisitServiceDetails extends Component {
     this.props.getVisitList(data);
   }
 
-  handleChangeSchedule = (e) => {
-    modifiedPlanId(this.props.planId, e.target.id, e.target.checked)
+  handleChangeSchedule = async (e) => {
+    await this.props.modifiedPlanId(this.props.planId, e.target.id)
     this.setState({ activePage: 1 })
     const data = {
       planScheduleIds: this.props.planId,
@@ -287,7 +288,7 @@ export class VisitServiceDetails extends Component {
       patientId: this.props.patientId,
       entityServiceProviders: this.state.entityServiceProviders
     }
-    this.props.getVisitList(data);
+    await this.props.getVisitList(data);
   }
 
   pageNumberChange = (pageNumber) => {
@@ -473,16 +474,14 @@ export class VisitServiceDetails extends Component {
 
   handleChangeEndTime = (event) => {
     this.formatedEndTime = getHourMin(event)
-    this.setState({ endTime: event });
     let selectedDuration = getDiffTime(this.state.startTime, this.formatedEndTime);
-    this.setState({selectedDuration: selectedDuration});
+    this.setState({endTime: event, selectedDuration: selectedDuration});
   }
 
   handleChangeStartTime = (event) => {
     this.formatedStartTime = getHourMin(event)
-    this.setState({ startTime: event });
     let selectedDuration = getDiffTime(this.formatedStartTime,this.state.endTime);
-    this.setState({selectedDuration: selectedDuration});
+    this.setState({startTime: event, selectedDuration: selectedDuration});
   }
 
   onSubmitAssignServiceProvider = async (data) => {
@@ -1070,7 +1069,9 @@ export function mapDispatchToProps(dispatch) {
     createDataStore: (data) => dispatch(createDataStore(data)),
     resetServiceDetails: () => dispatch(resetServiceDetails()),
     editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data)),
-    setEntityDashboard: data => dispatch(setEntityDashboard(data))
+    setEntityDashboard: data => dispatch(setEntityDashboard(data)),
+    modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData))
+
   }
 }
 

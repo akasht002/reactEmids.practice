@@ -6,13 +6,15 @@ import { CoreoPagination } from '../../../../components';
 import { isEntityUser } from '../../../../utils/userUtility'
 import Filter from "./Filter/index";
 import { VISIT_STATUS } from '../../../../constants/constants';
+import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 
 export const PlanTab = props => {
     let isEntity = isEntityUser()
-    let renderPLanDetailsClass = !isEntity ? 'full-block-requestplan' : ''
+    let renderPLanDetailsClass = !isEntity ? 'full-block-requestplan' : '';
+    let defaultImage = (caseInsensitiveComparer(props.visitServiceDetails.statusName, VISIT_STATUS.requested.keyValue) || caseInsensitiveComparer(props.visitServiceDetails.statusName, VISIT_STATUS.open.keyValue))
     return (
         <TabPane tabId='2' className='TabBody'>
-            {(props.visitServiceDetails.statusName === VISIT_STATUS.requested.keyValue || props.visitServiceDetails.statusName === VISIT_STATUS.open.keyValue) ?
+            { defaultImage && !isEntity ?
                 <div className="empty-planblock">
                     <img src={require('../../../../assets/images/blankPlan.png')} alt="service plan" />
                     <span>No Results</span>
