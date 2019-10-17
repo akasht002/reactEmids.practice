@@ -272,9 +272,9 @@ export class Assessment extends Component {
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerStarted running">{ timerBtn }</span>
                                         </div>
-                                        <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                        {visitStatus !== SERVICE_STATES.YET_TO_START && <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.requestDetails.startedTime, "hh:mm a")}</span>
-                                        </div>
+                                        </div>}
                                     </div>
                                 </div>
                             </div>

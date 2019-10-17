@@ -537,11 +537,13 @@ export class VisitServiceDetails extends Component {
   }
 
 
-  visitProcessing = data => {
+  visitProcessing = (data, scheduleTypeId) => {
+    let isAssessmentVisit = scheduleTypeId === VISIT_TYPE.assessment;
+    let startOrStop = true;
     this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy ?
       this.setState({ standByModeAlertMsg: true })
       :
-      this.props.getPerformTasksList(data, true)
+      this.props.getPerformTasksList(data, startOrStop, isAssessmentVisit)
     this.props.formDirty();
     this.props.formDirtyFeedback();
     this.props.formDirtyPerformTask();
@@ -580,9 +582,9 @@ export class VisitServiceDetails extends Component {
     let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
     switch (visitList.visitStatusId) {
       case VISIT_STATUS.startVisit.id:
-        return this.visitProcessing(visitId)
+        return this.visitProcessing(visitId, visitList.scheduleTypeId)
       case VISIT_STATUS.inProgress.id:
-        return this.visitProcessing(visitId)
+        return this.visitProcessing(visitId, visitList.scheduleTypeId)
       case VISIT_STATUS.completed.id:
         return this.visitSummary(visitId, visitList.assignedServiceProviderId, visitList.scheduleTypeId)
       case VISIT_STATUS.paymentPending.id:
@@ -1040,7 +1042,7 @@ export function mapDispatchToProps(dispatch) {
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
     getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data)),
     getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
-    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
+    getPerformTasksList: (data, startOrStop, isAssessmentVisit) => dispatch(getPerformTasksList(data, startOrStop, isAssessmentVisit)),
     formDirty: () => dispatch(formDirty()),
     formDirtyFeedback: () => dispatch(formDirtyFeedback()),
     formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),

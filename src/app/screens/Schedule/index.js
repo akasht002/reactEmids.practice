@@ -106,7 +106,7 @@ export class Schedule extends Component {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
         }
-        
+
         if (this.props.patientId) {
             await this.props.getServiceCategory(this.categoryId, [], this.props.isIndividualScheduleEdit);
             this.props.getPatientAddress(this.props.patientId);
@@ -150,8 +150,22 @@ export class Schedule extends Component {
                 zip: validAddress.zip,
                 state: validAddress.stateId,
                 statelabel: validAddress.stateName,
+                latitude: validAddress.latitude,
+                longitude: validAddress.longitude,
                 isDefaultAddress: true
             })
+
+            this.address = {
+                addressType: validAddress.addressType,
+                streetAddress: validAddress.street,
+                city: validAddress.city,
+                zip: validAddress.zip,
+                stateId: validAddress.stateId,
+                stateName: validAddress.stateName,
+                latitude: validAddress.latitude,
+                longitude: validAddress.longitude,
+                patientAddressId: validAddress.addressId,
+            }
         }
     }
 
@@ -718,7 +732,7 @@ export class Schedule extends Component {
             longitude: longitude,
             assessmentId: assessmentId
         }
-        
+
         this.props.getValidPatientAddress(data, (isValid) => {
             isValid && this.props.createOrEditAssessment({ data, address: this.address });
         });
