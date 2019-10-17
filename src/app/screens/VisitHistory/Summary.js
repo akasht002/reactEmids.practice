@@ -214,7 +214,7 @@ export class VistSummary extends React.Component {
 
   getQuestionHiglight = (isAlerted) => {
     if (isAlerted
-      && (this.props.entityDashboardActiveTab === entityDashboardTab.serviceProviders
+      && ((this.props.entityDashboardActiveTab === entityDashboardTab.serviceProviders)
         || caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack))
       ) {
       return `FeedbackQuestion question-higlight`
