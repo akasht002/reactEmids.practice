@@ -1629,6 +1629,15 @@ fieldset.right-colblock2 {
     margin-top: -10px;
   }
 
+  .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
+    color: #8c8c8c;
+  }
+
+  *::-ms-backdrop,
+  .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
+    color: #8c8c8c;
+  }
+
 }
 
 
