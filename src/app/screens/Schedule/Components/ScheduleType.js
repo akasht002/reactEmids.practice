@@ -179,7 +179,7 @@ export const ScheduleType = props => {
                                         </div>
                                     </div>
                                     <div className="week-column">
-                                        <fieldset className="parent-col">
+                                        <fieldset className="parent-col theme-primary">
                                             {props.daysList.map(item => {
                                                 return (
                                                     <fieldset>

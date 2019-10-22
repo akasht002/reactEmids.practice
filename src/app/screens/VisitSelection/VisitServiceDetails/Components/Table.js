@@ -17,7 +17,7 @@ const renderServiceTypeImages = serviceTypes => {
     return (
         updatedServiceTypes.slice(0, 3).map(type =>
             <div>
-                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
+                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn theme-primary"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
             </div>
         ))
 }
@@ -141,7 +141,7 @@ export const Table = props => {
                                 :
                                 <td>
                                     <div class="ScheduleRowButton">
-                                        <span class={item.visitStatusId === VISIT_PROCESSING_STATUS.completed.id ? "btn btn-outline-primary" : "status-view-btn"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
+                                        <span class={item.visitStatusId === VISIT_PROCESSING_STATUS.completed.id ? "btn btn-outline-primary" : "status-view-btn theme-primary"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
                                             {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
                                         </span>
                                     </div>

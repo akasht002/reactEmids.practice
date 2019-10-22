@@ -25,7 +25,8 @@ export const PlanTab = props => {
                         <div className="full-block filter-block">
                             <span className='profile-header-filter theme-primary' onClick={props.toggle}>Filters</span>
                             {isEntity &&
-                                <button 
+                                <button
+                                    className="btn btn-outline-primary" 
                                     onClick={() => props.addSchedule()}
                                     disabled={!props.isDisabledAddSchedule}
                                     > 

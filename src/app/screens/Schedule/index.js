@@ -855,7 +855,7 @@ export class Schedule extends Component {
                                         <span>
                                             <h2 className='ServicesTitle theme-primary'>Service Types</h2>
                                         </span>
-                                        <span>
+                                        <span className="theme-primary">
                                             <h5 onClick={() => this.selectAllTypes(true)}>Select All</h5>
                                             <h5 onClick={() => this.selectAllTypes(false)}>Clear All</h5>
                                         </span>
