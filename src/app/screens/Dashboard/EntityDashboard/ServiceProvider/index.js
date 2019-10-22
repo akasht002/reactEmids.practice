@@ -317,7 +317,7 @@ export class ServiceProvider extends Component {
   }
 
   goToSpVisitSummary = (data) => {
-    this.props.setServiceProviderFeedbackTab(true)
+    this.props.setServiceProviderFeedbackTab(false)
     const model = {
       serviceProviderId: this.serviceProviderId,
       visitId: data.servicePlanVisitId

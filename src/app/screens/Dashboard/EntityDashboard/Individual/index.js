@@ -374,7 +374,7 @@ export class Individuals extends Component {
   }
 
   goToPgVisitSummary = (data) => {
-    this.props.setServiceProviderFeedbackTab(false)
+    this.props.setServiceProviderFeedbackTab(true)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
