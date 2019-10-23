@@ -262,7 +262,7 @@ export class VistSummary extends React.Component {
                             >
                               <input
                                 className="form-radio-input"
-                                id={''+answer.id}
+                                id={answer.id}
                                 type="radio"
                                 value={answer.answerName}
                                 name={"text" + i}
@@ -275,7 +275,7 @@ export class VistSummary extends React.Component {
                               />
                               <label
                                 className="form-radio-label"
-                                htmlFor={''+answer.id}
+                                htmlFor={answer.id}
                               >
                                 {answer.answerName}
                                 <span className="RadioBoxIcon" />
