@@ -333,7 +333,7 @@ export class VistSummary extends React.Component {
   getFeedbackContent = data => {
     return (
       <div className='FeedbackWidget'>
-      {this.props.entityDashboardActiveTab === entityDashboardTab.serviceProviders &&
+      {!this.props.isServiceProviderFeedbackTab &&
           <div className='FeedbackRating'>
             {this.props.summaryDetails.serviceProvider
               ? <p>
@@ -599,7 +599,7 @@ export class VistSummary extends React.Component {
 
                 <p className="SummaryContentTitle mb-4">Feedback</p>
                 <div className="feedbackContainer">
-                {getLength(this.props.VisitFeedback) > 0 && this.props.entityDashboardActiveTab === entityDashboardTab.serviceProviders &&
+                {getLength(this.props.VisitFeedback) > 0 && !this.props.isServiceProviderFeedbackTab &&
                     <p>
                       Submitted rating:
                     {' '}
@@ -694,7 +694,8 @@ export function mapStateToProps(state) {
     isPaymentAvailable: state.visitSelectionState.VisitServiceDetailsState.isPaymentAvailable,
     entityDashboardActiveTab: state.dashboardState.individualsListState.activeTab,
     activeSubTab: state.dashboardState.VisitServiceProviderState.activeSubTab,
-    summaryDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceDetails
+    summaryDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceDetails,
+    isServiceProviderFeedbackTab: state.dashboardState.VisitServiceProviderState.isServiceProviderFeedbackTab
   };
 }
 
