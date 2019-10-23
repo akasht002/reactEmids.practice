@@ -298,3 +298,8 @@ export const restrictSpecialChars = data => {
 export const restrictMultipleSpace = data => {
   return data.replace(/^\s+|\s+$/g, " ")
 }
+
+export const getFieldsFirstValue = (array, field) => {
+  let i = 0;
+  return array[i][field]
+}

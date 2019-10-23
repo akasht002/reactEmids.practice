@@ -8,8 +8,8 @@ import {
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { getFields, getLength, getStatus, getServiceTypeImage, isNull } from "../../utils/validations";
-import { ProfileModalPopup, AlertPopup } from "../../components";
+import { getFields, getLength, getStatus, getServiceTypeImage, isNull, getFieldsFirstValue } from "../../utils/validations";
+import { ProfileModalPopup, AlertPopup, StarRating } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
@@ -333,8 +333,24 @@ export class VistSummary extends React.Component {
   getFeedbackContent = data => {
     return (
       <div className='FeedbackWidget'>
-        <div className='FeedbackRating'>
-        </div>
+      {this.props.entityDashboardActiveTab === entityDashboardTab.serviceProviders &&
+          <div className='FeedbackRating'>
+            {this.props.summaryDetails.serviceProvider
+              ? <p>
+                Rated
+                {' '}
+                {this.props.summaryDetails.serviceProvider.firstName}
+                {' '}
+                {this.props.summaryDetails.serviceProvider.lastName &&
+                  this.props.summaryDetails.serviceProvider.lastName
+                }
+              </p>
+              : ''}
+            <StarRating
+              rating={getLength(this.props.VisitFeedback) > 0 &&
+                getFieldsFirstValue(this.props.VisitFeedback, 'rating')}
+            />
+          </div>}
         {this.props.VisitFeedback.length > 0
           ? <div>
             {this.props.VisitFeedback &&
@@ -583,6 +599,16 @@ export class VistSummary extends React.Component {
 
                 <p className="SummaryContentTitle mb-4">Feedback</p>
                 <div className="feedbackContainer">
+                {getLength(this.props.VisitFeedback) > 0 && this.props.entityDashboardActiveTab === entityDashboardTab.serviceProviders &&
+                    <p>
+                      Submitted rating:
+                    {' '}
+                      <span className='SPRating'>
+                        <i className='Icon iconFilledStar' />{getLength(this.props.VisitFeedback) > 0 &&
+                          getFieldsFirstValue(this.props.VisitFeedback, 'rating')}
+                      </span>
+                    </p>
+                  }
                   {getLength(this.props.VisitFeedback) > 0 ? (
                     <span
                       className="FeedbackLink"
@@ -667,7 +693,8 @@ export function mapStateToProps(state) {
     assessmentQuestionsList: state.visitHistoryState.vistServiceHistoryState.assessmentQuestionsList,
     isPaymentAvailable: state.visitSelectionState.VisitServiceDetailsState.isPaymentAvailable,
     entityDashboardActiveTab: state.dashboardState.individualsListState.activeTab,
-    activeSubTab: state.dashboardState.VisitServiceProviderState.activeSubTab
+    activeSubTab: state.dashboardState.VisitServiceProviderState.activeSubTab,
+    summaryDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceDetails
   };
 }
 
