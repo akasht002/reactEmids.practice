@@ -1,4 +1,4 @@
-/* 
+
  :root {
     --primaryColor: #1e3d5c !important;
     --primaryColorBackground: #1e3d5c !important;
@@ -7,19 +7,7 @@
     --hoverDropdown: #f0f6fa !important;
     --gradientOne: #1e3d5c !important;
     --gradientTwo: #315477 !important;
-}  */
-
-
-
-:root {
-    --primaryColor: red !important;
-    --primaryColorBackground: red !important;
-    --buttonHover: red !important;
-    --lightBackground: red !important;
-    --hoverDropdown: red !important;
-    --gradientOne: red !important;
-    --gradientTwo: red !important;
-}
+}  
 
 .theme-primary-gradient {
     background-image: -webkit-gradient(linear, left bottom, left top, from(var(--gradientOne)), to(var(--gradientTwo)));
