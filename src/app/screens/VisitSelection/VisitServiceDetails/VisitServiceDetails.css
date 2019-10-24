@@ -667,6 +667,26 @@
     margin-right: 0px !important;
 }
 
+.right-block-view .ServiceTypeList .ServiceTypeLink:hover {
+    cursor: context-menu;
+}
+
+.right-block-view .availabilityCheck~label:hover,
+.right-block-view .availabilityCheck:checked~label,
+.right-block-view .SPAvailItems.active {
+    cursor: context-menu !important;
+}
+
+.right-block-view .SPAvailContent .SPAvailItems {
+    cursor: context-menu !important;
+}
+
+.right-block-view .SPAvailTitleText
+{
+    cursor: context-menu !important;
+}
+
+
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
     .individual-spblock-full .sr-feature-pic img {
