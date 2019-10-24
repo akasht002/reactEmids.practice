@@ -298,7 +298,7 @@ export class PerformTasks extends Component {
                                                                         }}
                                                                         disabled={visitStatus === SERVICE_STATES.YET_TO_START}
                                                                     />
-                                                                    <label className='ServicesLink' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
+                                                                    <label className='ServicesLink theme-primary' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
                                                                         <div className='servicesDesc'>
                                                                             <span className='serviceName'>{taskList.serviceTaskDescription}</span>
                                                                         </div>

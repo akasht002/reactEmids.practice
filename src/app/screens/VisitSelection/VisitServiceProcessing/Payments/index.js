@@ -308,11 +308,11 @@ class Payments extends Component {
                         <div className='CardContainers ServiceCategoryWidget'>
                             <div className='VisitPaymentContainer'>
                                 <div className="VisitPaymentWidget">
-                                    <p className="VisitPaymentContentTitle">Make Payment</p>
+                                    <p className="VisitPaymentContentTitle theme-primary">Make Payment</p>
                                     {this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
-                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.copayAmount}</i></p>
+                                        <p className="VisitPaymentAmountPaid theme-primary">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.copayAmount}</i></p>
                                         :
-                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount && this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
+                                        <p className="VisitPaymentAmountPaid theme-primary">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount && this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
                                     }
 
                                     <div className="FeedbackQuestionWidget form-group">

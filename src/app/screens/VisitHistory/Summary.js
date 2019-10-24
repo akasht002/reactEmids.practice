@@ -537,7 +537,7 @@ export class VistSummary extends React.Component {
                         </p>
                       </div>
                     </div>
-                    <div className="row EstimatedCostWidget m-0 mb-4">
+                    <div className="row EstimatedCostWidget m-0 mb-4 theme-primary">
                       <div className="col-md-8 EstimatedCostContainer Label">
                         <p>
                           <span>Estimated Claim</span>

@@ -20,11 +20,11 @@ table.individuals-tableblock.theme-primary thead th,
 .AboutModalContent .AboutContentContainer .LinkCard a,
 .card_view_visit .label_viewstatus span.btn-hired,
 .SP-viewplantable.theme-primary span a,
-.Service-typesTitle span.theme-primary h5 {
+.Service-typesTitle span.theme-primary h5, .WizardList.theme-primary .WizardItems.active, .WizardList.theme-primary .WizardItems.visited, .VisitPaymentAmountPaid.theme-primary i, .EstimatedCostWidget.theme-primary .EstimatedCostContainer p, .webUrl.theme-primary a {
     color: #1e3d5c !important;
 }
 
-.datePalette .dateRow input:checked+label {
+.datePalette .dateRow input:checked+label, .EstimatedCostWidget.theme-primary {
     border: 1px solid #1e3d5c;
     color: #1e3d5c !important;
 }
@@ -39,8 +39,8 @@ table.individuals-tableblock.theme-primary thead th,
 
 .ProfileHeaderButton .sliderSwitch:before,
 .service-typesview-plan .service-typesview-more.theme-primary,
-.form-radio-input:checked~label .RadioBoxIcon:before,
-.addImageBtn.theme-primary {
+.form-radio-input:checked~label .RadioBoxIcon:before, .WizardList.theme-primary .WizardItems.active:after, .WizardList.theme-primary .WizardItems.visited:after,
+.addImageBtn.theme-primary, .ServicesLink.theme-primary:before {
     background-color: #1e3d5c;
 }
 
@@ -91,7 +91,7 @@ span.btn-hired {
 }
 
 .CheckboxSet input:checked~label:before,
-.form-check-input:checked~.CheckboxIcon:before {
+.form-check-input:checked~.CheckboxIcon:before, .ServicesInput:checked ~ .ServicesLink:after {
     background-color: #1e3d5c !important;
     border: #1e3d5c !important;
 }
@@ -211,3 +211,20 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     color: #fff;
     background: #1e3d5c;
 }
+
+.WizardList.theme-primary .WizardItems.active:before
+{
+    background-color: #1e3d5c;
+    -webkit-box-shadow: 0 0 0 2px #1e3d5c;
+    box-shadow: 0 0 0 2px #1e3d5c;
+}
+
+.WizardList.theme-primary .WizardItems.visited:before
+{
+    background-color: #1e3d5c;
+    border: 1px solid #1e3d5c;
+}
+
+
+
+

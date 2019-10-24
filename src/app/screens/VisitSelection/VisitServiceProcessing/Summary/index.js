@@ -398,7 +398,7 @@ export class Summary extends Component {
                                             {getUserInfo().isEntityServiceProvider ?
                                                 ''
                                                 :
-                                                <div className="row EstimatedCostWidget">
+                                                <div className="row EstimatedCostWidget theme-primary">
                                                     <div className="col-md-8 EstimatedCostContainer Label">
                                                         <p><span>Estimated Claim</span>
                                                         </p>

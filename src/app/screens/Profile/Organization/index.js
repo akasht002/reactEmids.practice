@@ -406,7 +406,7 @@ export class Organization extends React.PureComponent {
           </div>
 
           <div className={'width100 url-separator'}>
-            <h3 className={'webUrl'}>
+            <h3 className={'webUrl theme-primary'}>
               {(this.props.personalDetail && this.props.personalDetail.entity) && this.props.personalDetail.entity.websiteUrl ?
                 <a href={'https://' + this.props.personalDetail.entity.websiteUrl} target="_blank">{this.props.personalDetail.entity.websiteUrl}</a> : ''}
             </h3>
