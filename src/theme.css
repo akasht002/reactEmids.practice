@@ -1,12 +1,35 @@
+/* 
+ :root {
+    --primaryColor: #1e3d5c !important;
+    --primaryColorBackground: #1e3d5c !important;
+    --buttonHover: #315477 !important;
+    --lightBackground: #e0f1fb !important;
+    --hoverDropdown: #f0f6fa !important;
+    --gradientOne: #1e3d5c !important;
+    --gradientTwo: #315477 !important;
+}  */
+
+
+
+:root {
+    --primaryColor: red !important;
+    --primaryColorBackground: red !important;
+    --buttonHover: red !important;
+    --lightBackground: red !important;
+    --hoverDropdown: red !important;
+    --gradientOne: red !important;
+    --gradientTwo: red !important;
+}
+
 .theme-primary-gradient {
-    background-image: -webkit-gradient(linear, left bottom, left top, from(#1e3d5c), to(#315477));
-    background-image: -webkit-linear-gradient(bottom, #1e3d5c, #315477);
-    background-image: -o-linear-gradient(bottom, #1e3d5c, #315477);
-    background-image: linear-gradient(to top, #1e3d5c, #315477);
+    background-image: -webkit-gradient(linear, left bottom, left top, from(var(--gradientOne)), to(var(--gradientTwo)));
+    background-image: -webkit-linear-gradient(bottom, var(--gradientOne), var(--gradientTwo));
+    background-image: -o-linear-gradient(bottom, var(--gradientOne), var(--gradientTwo));
+    background-image: linear-gradient(to top, var(--gradientOne), var(--gradientTwo));
 }
 
 .theme-primary {
-    color: #1e3d5c !important;
+    color: var(--primaryColor) !important;
 }
 
 
@@ -20,32 +43,43 @@ table.individuals-tableblock.theme-primary thead th,
 .AboutModalContent .AboutContentContainer .LinkCard a,
 .card_view_visit .label_viewstatus span.btn-hired,
 .SP-viewplantable.theme-primary span a,
-.Service-typesTitle span.theme-primary h5, .WizardList.theme-primary .WizardItems.active, .WizardList.theme-primary .WizardItems.visited, .VisitPaymentAmountPaid.theme-primary i, .EstimatedCostWidget.theme-primary .EstimatedCostContainer p, .webUrl.theme-primary a {
-    color: #1e3d5c !important;
+.Service-typesTitle span.theme-primary h5,
+.WizardList.theme-primary .WizardItems.active,
+.WizardList.theme-primary .WizardItems.visited,
+.VisitPaymentAmountPaid.theme-primary i,
+.EstimatedCostWidget.theme-primary .EstimatedCostContainer p,
+.webUrl.theme-primary a,
+.FeedbackLink {
+    color: var(--primaryColor) !important;
 }
 
-.datePalette .dateRow input:checked+label, .EstimatedCostWidget.theme-primary {
-    border: 1px solid #1e3d5c;
-    color: #1e3d5c !important;
+.datePalette .dateRow input:checked+label,
+.EstimatedCostWidget.theme-primary {
+    border: 1px solid var(--primaryColor);
+    color: var(--primaryColor) !important;
 }
 
 .theme-primary-hover {
-    color: #1e3d5c !important;
+    color: var(--primaryColor) !important;
 }
 
 .theme-primary-hover:hover {
-    background-color: #e0f1fb;
+    background-color: var(--primaryColorBackground);
 }
 
 .ProfileHeaderButton .sliderSwitch:before,
 .service-typesview-plan .service-typesview-more.theme-primary,
-.form-radio-input:checked~label .RadioBoxIcon:before, .WizardList.theme-primary .WizardItems.active:after, .WizardList.theme-primary .WizardItems.visited:after,
-.addImageBtn.theme-primary, .ServicesLink.theme-primary:before {
-    background-color: #1e3d5c;
+.form-radio-input:checked~label .RadioBoxIcon:before,
+.WizardList.theme-primary .WizardItems.active:after,
+.WizardList.theme-primary .WizardItems.visited:after,
+.addImageBtn.theme-primary,
+.ServicesLink.theme-primary:before,
+.input-range__track--active {
+    background-color: var(--primaryColorBackground);
 }
 
 span.btn-hired {
-    color: #1e3d5c !important;
+    color: var(--primaryColor) !important;
 }
 
 .theme-primary .pagination li.PaginationItem.active a,
@@ -55,45 +89,48 @@ span.btn-hired {
 .react-datepicker__header,
 .react-datepicker__day--keyboard-selected,
 .react-datepicker__day--keyboard-selected:hover,
-.react-datepicker__day--selected {
-    background-color: #1e3d5c !important;
+.react-datepicker__day--selected,
+.TeleHealthControlsItem span.TeleHealthOptionLink:hover,
+.TeleHealthControlsItem span.TeleHealthOptionLink.off {
+    background-color: var(--primaryColorBackground) !important;
 }
 
 .btn-primary {
-    background-color: #1e3d5c !important;
-    border: #1e3d5c !important;
+    background-color: var(--primaryColorBackground) !important;
+    border: var(--primaryColor) !important;
     color: #fff;
 }
 
 .btn-primary:hover,
 .btn-outline-primary:hover,
 .btn-outline-primary:active {
-    background-color: #315477 !important;
+    background-color: var(--buttonHover) !important;
     color: #fff !important;
 }
 
 .btn-outline-primary {
-    border: 1px solid #1e3d5c !important;
-    color: #1e3d5c !important;
+    border: 1px solid var(--primaryColor) !important;
+    color: var(--primaryColor) !important;
 }
 
 .active-tabview,
 .theme-primary-light .SPAvailItems.active,
 .modal-header,
 .backProfileIcon.theme-primary-light:hover {
-    background-color: #e0f1fb;
+    background-color: var(--lightBackground);
 }
 
 .FilterMiddleContent.FilterMiddleLeft span.active,
 .FilterMiddleContent.FilterMiddleLeft span:hover,
 .CheckSet.theme-primary-light input:checked~label {
-    background-color: #f0f6fa;
+    background-color: var(--hoverDropdown);
 }
 
 .CheckboxSet input:checked~label:before,
-.form-check-input:checked~.CheckboxIcon:before, .ServicesInput:checked ~ .ServicesLink:after {
-    background-color: #1e3d5c !important;
-    border: #1e3d5c !important;
+.form-check-input:checked~.CheckboxIcon:before,
+.ServicesInput:checked~.ServicesLink:after {
+    background-color: var(--primaryColorBackground) !important;
+    border: var(--primaryColor) !important;
 }
 
 .CheckboxSet:hover label:before,
@@ -106,37 +143,38 @@ span.btn-hired {
 .CheckSet input:checked~label,
 .ServiceTypeList input:checked+label,
 .checkmark.theme-primary {
-    border: 1px solid #1e3d5c !important;
+    border: 1px solid var(--primaryColor) !important;
 }
 
-input.form-control:focus {
-    border-color: #1e3d5c !important;
+input.form-control:focus,
+.input-range__slider {
+    border-color: var(--primaryColor) !important;
 }
 
 .theme-primary.plan-tableview tbody tr:hover {
-    background: #e0f1fb;
-    border-left: 3px solid #1e3d5c;
-    border-top: 1px solid #e0f1fb;
-    border-bottom: 1px solid #e0f1fb;
+    background: var(--lightBackground);
+    border-left: 3px solid var(--primaryColor);
+    border-top: 1px solid var(--lightBackground);
+    border-bottom: 1px solid var(--lightBackground);
     cursor: pointer;
 }
 
 .SPTabHeader:hover,
 .SPTabHeader.true {
     cursor: pointer;
-    background-color: #e0f1fb;
+    background-color: var(--lightBackground);
 }
 
 .service-typesview-more.tooltip.theme-primary,
 .SPServiceCount.theme-primary {
-    background-color: #1e3d5c !important;
+    background-color: var(--primaryColor) !important;
     color: #fff !important;
 }
 
 .theme-primary .service-typesview-more.tooltip .bottom h3,
 .FilterTop.theme-primary-light {
-    background-color: #e0f1fb;
-    color: #1e3d5c;
+    background-color: var(--lightBackground);
+    color: var(--primaryColor);
 }
 
 .SPIconServicesCheckbox.theme-primary-light.selectType input:checked+label,
@@ -147,16 +185,16 @@ table.individuals-tableblock.theme-primary tbody tr:hover,
 .active-card-view.theme-primary-light,
 .card_view_visit:hover,
 .schedule-listblock.theme-primary-light:hover {
-    background-color: #e0f1fb !important;
+    background-color: var(--lightBackground) !important;
 }
 
 .tab-link .nav-item .active.nav-link {
-    color: #1e3d5c !important;
-    border-bottom: 1px solid #1e3d5c !important;
+    color: var(--primaryColor) !important;
+    border-bottom: 1px solid var(--primaryColor) !important;
 }
 
 table.individuals-tableblock.theme-primary tbody tr:hover {
-    border-left: 3px solid #1e3d5c;
+    border-left: 3px solid var(--primaryColor);
 }
 
 .DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle {
@@ -164,15 +202,15 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 }
 
 .ratePerHour.theme-primary {
-    border: 2px solid #1e3d5c;
+    border: 2px solid var(--primaryColor);
 }
 
 .NotificationsListHeader.theme-primary {
-    border-bottom: 1px solid #1e3d5c;
+    border-bottom: 1px solid var(--primaryColor);
 }
 
 .customechk .checkmark.theme-primary:after {
-    border-color: #1e3d5c;
+    border-color: var(--primaryColor);
 }
 
 .ServiceCatList input+label:hover,
@@ -183,7 +221,7 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 .ServiceCatList input+label.ServiceCatLink.CardBoxes:hover:before,
 .ServiceCatList input:checked+label.ServiceCatLink:before,
 .ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before {
-    background-color: #1e3d5c !important;
+    background-color: var(--primaryColorBackground) !important;
     color: #fff !important;
 }
 
@@ -192,39 +230,33 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 }
 
 .ServiceTypeList.theme-primary.selected:before {
-    background-color: #1e3d5c !important;
-    color: #1e3d5c !important;
-    border: 1px solid #1e3d5c;
+    background-color: var(--primaryColorBackground) !important;
+    color: var(--primaryColor) !important;
+    border: 1px solid var(--primaryColor);
 }
 
 .ServiceTypeList.selected.theme-primary label {
     background-color: #fff;
-    border-color: #1e3d5c;
+    border-color: var(--primaryColor);
 }
 
 .ServiceTypeList.theme-primary .ServiceTypeLink:hover {
-    border-color: #1e3d5c;
+    border-color: var(--primaryColor);
 }
 
 .week-column .parent-col.theme-primary .form-radio-input:checked~.form-radio-label {
-    border: 1px solid #1e3d5c !important;
+    border: 1px solid var(--primaryColor) !important;
     color: #fff;
-    background: #1e3d5c;
+    background: var(--primaryColorBackground);
 }
 
-.WizardList.theme-primary .WizardItems.active:before
-{
-    background-color: #1e3d5c;
-    -webkit-box-shadow: 0 0 0 2px #1e3d5c;
-    box-shadow: 0 0 0 2px #1e3d5c;
+.WizardList.theme-primary .WizardItems.active:before {
+    background-color: var(--primaryColorBackground);
+    -webkit-box-shadow: 0 0 0 2px var(--primaryColor);
+    box-shadow: 0 0 0 2px var(--primaryColor);
 }
 
-.WizardList.theme-primary .WizardItems.visited:before
-{
-    background-color: #1e3d5c;
-    border: 1px solid #1e3d5c;
+.WizardList.theme-primary .WizardItems.visited:before {
+    background-color: var(--primaryColorBackground);
+    border: 1px solid var(--primaryColor);
 }
-
-
-
-
