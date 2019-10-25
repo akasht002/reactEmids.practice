@@ -187,7 +187,7 @@ export class Assessment extends Component {
                             stopTimer: !this.state.stopTimer 
                         })
         }        
-        this.props.startOrStopService(this.props.patientDetails, data, convertTime24to12(current_time));
+        this.props.startOrStopService(this.props.requestDetails, data, convertTime24to12(current_time));
     }
 
     render() {
@@ -195,6 +195,7 @@ export class Assessment extends Component {
         let serviceRequestVisitId = this.props.patientDetails.serviceRequestVisitId === 0 ? this.props.patientDetails.servicePlanVisitId : this.props.patientDetails.serviceRequestVisitId
         let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
         let timerBtn;        
+        let requestDetails = this.props.requestDetails;
         const { visitStatus, visitStartTime, visitEndTime, visitTimeDuration } = this.props.requestDetails
         if (visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING) {
             time = <StopWatch
@@ -242,16 +243,16 @@ export class Assessment extends Component {
                                         </span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patientId)}>
-                                        {this.props.patientDetails ?
+                                        {requestDetails.patient ?
                                             <span>
                                                 <img
                                                      src={
-                                                        this.props.patientDetails && this.props.patientDetails.patientImage
-                                                            ? this.props.patientDetails.patientImage
+                                                        requestDetails && requestDetails.patient.imageString
+                                                            ? requestDetails.patient.imageString
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patientFirstName && getFullName(this.props.patientDetails.patientFirstName,this.props.patientDetails.patientLastName)} </i></span>
+                                                <i className='requestName'>{requestDetails.patient.firstName && getFullName(requestDetails.patient.firstName, requestDetails.patient.lastName)} </i></span>
                                             :
                                             ''
                                         }
@@ -273,7 +274,7 @@ export class Assessment extends Component {
                                             <span className="TimerStarted running">{ timerBtn }</span>
                                         </div>
                                         {visitStatus !== SERVICE_STATES.YET_TO_START && <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.requestDetails.startedTime, "hh:mm a")}</span>
+                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "hh:mm a")}</span>
                                         </div>}
                                     </div>
                                 </div>
@@ -433,6 +434,7 @@ function mapStateToProps(state) {
         VisitFeedback: state.visitHistoryState.vistServiceHistoryState.VisitFeedback,
         isLoading: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.isLoading,
         eligibilityIsLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
+        PerformTasksList: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList
     };
 };
 

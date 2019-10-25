@@ -50,7 +50,8 @@ import {
   SERVICE_REQUEST_DETAILS_TAB,
   USERTYPES,
   CONTACT_NOT_FOUND,
-  PHONE_NUMBER_TEXT
+  PHONE_NUMBER_TEXT,
+  SERVICE_REQ_STATUS
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue, checkEmpty } from "../../../utils/validations";
@@ -842,7 +843,7 @@ export class VisitServiceDetails extends Component {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : this.props.VisitServiceDetails.statusId === 38 ? true : false;
+    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : (this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.HIRED || this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.CLOSED) ? true : false;
     let updatedTabdata = this.props.ServiceRequestId === 0 ?
       tabdata.slice(1, tabdata.length) :
       isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
