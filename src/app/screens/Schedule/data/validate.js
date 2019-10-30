@@ -82,7 +82,13 @@ export const validate = {
         { key: 'zip', validation: 'checkLengthOfZip', isState: true }
     ],
     assessment_edit :[
-        { key: 'startDate', validation: 'required', isState: true }
+        { key: 'startDate', validation: 'required', isState: true },
+        { key: 'startTime', validation: 'required', isState: true },
+        { key: 'endTime', validation: 'required', isState: true },
+        { key: 'street', validation: 'required', isState: true },
+        { key: 'city', validation: 'required', isState: true },
+        { key: 'state', validation: 'required', isState: true },
+        { key: 'zip', validation: 'checkLengthOfZip', isState: true }
     ]
 }
 
