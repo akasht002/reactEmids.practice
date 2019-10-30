@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router';
-import { ConnectedRouter } from "react-router-redux";
-import { HashRouter } from 'react-router-dom';
+import { Route, Switch, Router } from 'react-router';
 import Loadable from 'react-loadable';
-import {SCREENS,USER_LOCALSTORAGE, ENTITY_USER} from '../constants/constants';
+import { SCREENS, USER_LOCALSTORAGE, ENTITY_USER } from '../constants/constants';
+import { Security, ImplicitCallback } from '@okta/okta-react';
 import {
   VerifyContact,
   SetPassword,
@@ -37,7 +36,8 @@ import {
   AssessmentFeedback,
   AssessmentSummary,
   Schedule,
-  EntityDashboard
+  EntityDashboard,
+  OktaCallBack
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
@@ -84,36 +84,43 @@ export const Path = {
   patientProfile: '/patientProfile',
   visitNotification: '/visitNotification',
   visitNotificationSettings: '/visitNotificationSettings',
-  ESPProfile:'/espProfile',
-  assessment:'/assessment/processing',
-  assessmentFeedback:'/assessment/feedback',
-  assessmentSummary:'/assessment/summary',
+  ESPProfile: '/espProfile',
+  assessment: '/assessment/processing',
+  assessmentFeedback: '/assessment/feedback',
+  assessmentSummary: '/assessment/summary',
   schedule: '/schedule',
-  entityDashboard: '/entityDashboard'
+  entityDashboard: '/entityDashboard',
+  oktaCallBack: '/oktaCallBack'
 };
 
 class AppStackRoot extends Component {
 
   startPage = (props, context) => {
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
-    if (localStorageData && localStorageData.data && localStorageData.data.access_token) {     
+    if (localStorageData && localStorageData.data && localStorageData.data.access_token) {
       if (localStorageData.data.userInfo.serviceProviderTypeId === ENTITY_USER) {
         return <PrivateRoute path={Path.entityDashboard} component={EntityDashboard} />
       } else {
-      return <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />
-      
-      }      
-    } else{ return <Welcome/>}      
-   }
+        return <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={Dashboard} />
+
+      }
+    } else { return <Welcome /> }
+  }
 
   render() {
     return (
-      <ConnectedRouter history={this.props.history}>
-      
-        <HashRouter>
+      // <ConnectedRouter history={this.props.history}>
+      <Router history={this.props.history}>
+        <Security
+          issuer='https://dev-375875.okta.com/oauth2/default'
+          client_id='0oa1n6z5zsenemyLe357'
+          redirect_uri={window.location.origin + '/implicit/callback'}
+          pkce={false}>
           <Switch>
             <Route exact path={Path.root} component={this.startPage} />
+            <Route path="/implicit/callback" component={ImplicitCallback} /> 
             <Route path={Path.setPassword} component={SetPassword} />
+            <Route path={Path.oktaCallBack} component={OktaCallBack} />
             <Route path={Path.verifyContact} component={VerifyContact} />
             <Route path={Path.verifyContactEntity} component={VerifyContact} />
             <Route path={Path.verifyEmail} component={VerifyUserID} />
@@ -136,8 +143,8 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.profile} permission={SCREENS.PROFILE} component={Profile} />
             <PrivateRoute path={Path.dashboard} permission={SCREENS.DASHBOARD} component={
               JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)) && JSON.parse(localStorage.getItem(USER_LOCALSTORAGE)).data.userInfo.serviceProviderTypeId === ENTITY_USER ? EntityDashboard : Dashboard
-              } />
-            <PrivateRoute path={Path.visitHistory} permission={SCREENS.VISIT_HISTORY} component={VisitHistory}/>            
+            } />
+            <PrivateRoute path={Path.visitHistory} permission={SCREENS.VISIT_HISTORY} component={VisitHistory} />
             <PrivateRoute path={Path.visitSummaryDetail} permission={SCREENS.VISIT_HISTORY} component={VistSummary} />
             <PrivateRoute path={Path.payments} permission={SCREENS.PAYMENT_PROCESSING} component={Payments} />
             <PrivateRoute path={Path.paymentsuccess} permission={SCREENS.PAYMENT_PROCESSING} component={PaymentSuccess} />
@@ -153,8 +160,9 @@ class AppStackRoot extends Component {
             <PrivateRoute path={Path.assessmentSummary} component={AssessmentSummary} />
             <PrivateRoute path={Path.entityDashboard} component={EntityDashboard} />
           </Switch>
-        </HashRouter>
-      </ConnectedRouter>
+        </Security>
+      </Router>
+      // </ConnectedRouter>
     );
   }
 };

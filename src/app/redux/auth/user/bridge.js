@@ -4,5 +4,6 @@ export const USER = {
     clearData: 'clear_data/user',
     setUserRoles: 'set_user_roles/user',
     menuClicked: 'menuClicked/user',
-    setIsFormDirty: 'set_isFormDirty/user'
+    setIsFormDirty: 'set_isFormDirty/user',
+    isSecureLogin: "isSecureLogin/user"
 };

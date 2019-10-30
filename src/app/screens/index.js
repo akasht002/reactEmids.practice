@@ -41,6 +41,7 @@ import AssessmentFeedback from './VisitSelection/AssessmentVisitProcessing/Asses
 import AssessmentSummary from './VisitSelection/AssessmentVisitProcessing/AssessmentSummary'
 import Schedule from './Schedule'
 import EntityDashboard from './Dashboard/EntityDashboard'
+import OktaCallBack from '../screens/Authentication/OktaCallBack/index'
 export {
   Welcome,
   VerifyContact,
@@ -78,5 +79,6 @@ export {
   AssessmentFeedback,
   AssessmentSummary,
   Schedule,
-  EntityDashboard
+  EntityDashboard,
+  OktaCallBack
 }

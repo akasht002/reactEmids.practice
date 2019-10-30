@@ -7,7 +7,7 @@ process.env.NODE_ENV = 'development'
 process.env.REACT_APP_API_URL = 'https://PFTest-sp-api.coreoflowsandbox.com/api/';
 process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
 process.env.REACT_APP_SR_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
-process.env.REACT_APP_UI_URL = 'http://localhost:3001/#/';
+process.env.REACT_APP_UI_URL = 'http://localhost:3001/';
 process.env.REACT_APP_MSG_URL = "https://PFTest-tp-api.coreoflowsandbox.com/api/";
 process.env.REACT_APP_ES_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
 process.env.REACT_APP_TP_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/api/';
@@ -28,7 +28,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = "https://chqa-sp-api.coreoflowsandbox.com/api/";
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
   process.env.REACT_APP_SR_URL = "https://chqa-ui.coreoflowsandbox.com/api/";
-  process.env.REACT_APP_UI_URL = 'http://localhost:3001/#/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3001/';
   process.env.REACT_APP_MSG_URL = "https://chqa-vp-ui.coreoflowsandbox.com/api/";
   process.env.REACT_APP_ES_URL = 'https://chqa-ui.coreoflowsandbox.com/api/';
   process.env.REACT_APP_TP_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/api/';
@@ -39,7 +39,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = 'https://chdevdemo-sp-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
   process.env.REACT_APP_SR_URL = 'https://chdevdemo-sr-api.coreoflowsandbox.com/api/';
-  process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3000/';
   process.env.REACT_APP_MSG_URL = "https://chdevdemo-tp-api.coreoflowsandbox.com/api/";
   process.env.REACT_APP_ES_URL = 'https://chdevdemo-sr-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_TP_URL = 'https://chdevdemo-tp-api.coreoflowsandbox.com/api/';
@@ -50,7 +50,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = 'https://chdemo-sp-api.coreodevserver.com/api/';
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
   process.env.REACT_APP_SR_URL = 'https://chdemo-sr-api.coreodevserver.com/api/';
-  process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3000/';
   process.env.REACT_APP_MSG_URL = "https://chdemo-tp-api.coreodevserver.com/api/";
   process.env.REACT_APP_ES_URL = 'https://chdemo-sr-api.coreodevserver.com/api/';
   process.env.REACT_APP_TP_URL = 'https://chdemo-tp-api.coreodevserver.com/api/';
@@ -61,7 +61,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = 'https://HMSADemo-sp-api.coreodevserver.com/api/';
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
   process.env.REACT_APP_SR_URL = 'https://HMSADemo-sr-api.coreodevserver.com/api/';
-  process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3000/';
   process.env.REACT_APP_MSG_URL = "https://HMSADemo-tp-api.coreodevserver.com/api/";
   process.env.REACT_APP_ES_URL = 'https://HMSADemo-sr-api.coreodevserver.com/api/';
   process.env.REACT_APP_TP_URL = 'https://HMSADemo-tp-api.coreodevserver.com/api/';
@@ -72,7 +72,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = 'https://PFTest-sp-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
   process.env.REACT_APP_SR_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
-  process.env.REACT_APP_UI_URL = 'http://localhost:3001/#/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3001/';
   process.env.REACT_APP_MSG_URL = "https://PFTest-tp-api.coreoflowsandbox.com/api/";
   process.env.REACT_APP_ES_URL = 'https://PFTest-sr-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_TP_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/api/';
@@ -83,7 +83,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = 'https://uat-sp-api.coreodevserver.com/api/';
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
   process.env.REACT_APP_SR_URL = 'https://uat-sr-api.coreodevserver.com/api/';
-  process.env.REACT_APP_UI_URL = 'http://localhost:3000/#/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3000/';
   process.env.REACT_APP_MSG_URL = "https://uat-tp-api.coreodevserver.com/api/";
   process.env.REACT_APP_ES_URL = 'https://uat-sr-api.coreodevserver.com/api/';
   process.env.REACT_APP_TP_URL = 'https://uat-tp-api.coreodevserver.com/api/';
@@ -94,7 +94,7 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_API_URL = 'https://HMSA-UAT-sp-api.coreodevserver.com/api/';
   process.env.REACT_APP_AUTH_URL = 'http://localhost:5000/';
   process.env.REACT_APP_SR_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
-  process.env.REACT_APP_UI_URL = 'http://localhost:3001/#/';
+  process.env.REACT_APP_UI_URL = 'http://localhost:3001/';
   process.env.REACT_APP_MSG_URL = "https://HMSA-UAT-tp-api.coreodevserver.com/api/";
   process.env.REACT_APP_ES_URL = 'https://HMSA-UAT-sr-api.coreodevserver.com/api/';
   process.env.REACT_APP_TP_URL = 'https://HMSA-UAT-tp-api.coreodevserver.com/api/';

@@ -6,6 +6,9 @@ import { ScreenCover, Button } from '../../components';
 import { onLogin } from '../../redux/auth/login/actions';
 import {SLIDER_TIME} from '../../constants/config';
 import './styles.css';
+import { Path } from "../../routes";
+import {withAuth} from '@okta/okta-react'
+import { isSecureLogin } from "../../redux/auth/user/actions";
 
 class Welcome extends Component {
 
@@ -34,7 +37,15 @@ class Welcome extends Component {
         this.interval = setInterval(() => {
             this.nextSlide();
         }, SLIDER_TIME);
+        this.checkAuthentication = this.checkAuthentication.bind(this)
     };
+
+    async checkAuthentication() {
+        const authenticated = await this.props.auth.isAuthenticated();
+        if (authenticated !== this.state.authenticated) {
+          this.setState({ authenticated });
+        }
+      }
 
     prevSlide() {
         this.setState({
@@ -70,10 +81,16 @@ class Welcome extends Component {
         });
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+        this.checkAuthentication()
     }
+
+    async componentDidUpdate(){
+        this.checkAuthentication()
+    }	    
+
 
     componentWillUnmount() {
         if (this.interval) {
@@ -87,7 +104,7 @@ class Welcome extends Component {
     }
 
     onLoginPress = () => {
-        this.props.onLogin();
+        this.props.auth.login(Path.oktaCallBack)
     }
 
     render() {
@@ -162,4 +179,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(Welcome));
+export default withAuth(connect(null, mapDispatchToProps)(Welcome));

@@ -1,10 +1,12 @@
 import { PUSH, REPLACE, GO, GO_BACK, GO_FORWARD, LOCATION_CHANGE } from './constants';
 import { Path } from '../../routes';
 
-export const push = (href) => ({
-  type: PUSH,
-  payload: href,
-});
+export const push = (href) => {
+  return {
+    type: PUSH,
+    payload: href,
+  }
+};
 export const replace = (href) => ({
   type: REPLACE,
   payload: href,

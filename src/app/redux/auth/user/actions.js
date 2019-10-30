@@ -6,9 +6,9 @@ import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
 import { USER_LOCALSTORAGE, ENTITY_USER } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
-import {objectCreationRoles} from '../../../utils/roleUtility';
-import {startLoading, endLoading} from '../../loading/actions';
-import {USER} from './bridge'
+import { objectCreationRoles } from '../../../utils/roleUtility';
+import { startLoading, endLoading } from '../../loading/actions';
+import { USER } from './bridge'
 
 export const setUserRoles = (data) => {
     return {
@@ -30,7 +30,14 @@ export const clearData = () => {
     }
 }
 
-export function onSetUserSuccess(data){
+export function isSecureLogin(data) {
+    return {
+        type: USER.isSecureLogin,
+        data
+    }
+}
+
+export function onSetUserSuccess(data) {
     return (dispatch, getState) => {
         let userData = {
             ...getState().oidc.user
@@ -47,7 +54,7 @@ export const deleteUserSuccess = (userData) => {
     }
 }
 
-export function onLogout(){
+export function onLogout() {
     return (dispatch, getState) => {
         userManager.removeUser();
         dispatch(remove(USER_LOCALSTORAGE, onClear));
@@ -55,32 +62,32 @@ export function onLogout(){
     }
 }
 
-export function onClear(){
+export function onClear() {
     return (dispatch, getState) => {
         dispatch(deleteUserSuccess(null));
         dispatch(push(Path.root));
     }
 }
 
-export function setServiceProviderDetails(emailID, autoLogoutTime){ 
-    return (dispatch, getState) => {           
-        Get(API.getServiceProviderID + emailID )
-          .then(resp => {
-            let userData = {
-                ...getState().oidc.user,
-                userInfo: resp.data,
-                autoLogoutTime: autoLogoutTime
-            };
-            localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
-            localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
-            save(USER_LOCALSTORAGE, userData);
-            dispatch(setUserSuccess(userData))
-            dispatch(getUserRoles(userData))
-          })
-          .catch(err => {
-            console.log(err);
-          })
-      }
+export function setServiceProviderDetails(emailID, autoLogoutTime) {
+    return (dispatch, getState) => {
+        CareTeamGet(API.getUserIdForCT)
+            .then(resp => {
+                let userData = {
+                    ...getState().oidc.user,
+                    userInfo: resp.data,
+                    autoLogoutTime: autoLogoutTime
+                };
+                localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
+                localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
+                save(USER_LOCALSTORAGE, userData);
+                dispatch(setUserSuccess(userData))
+                dispatch(getUserRoles(userData))
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 }
 
 export function getUserRoles(userData) {
@@ -102,9 +109,9 @@ export function getUserRoles(userData) {
             }
             dispatch(endLoading());
         })
-        .catch((error) => {
-            dispatch(endLoading());
-        });
+            .catch((error) => {
+                dispatch(endLoading());
+            });
     }
 }
 
@@ -113,7 +120,7 @@ export function getUserInactiveTimeout(emailID) {
         Get(API.getTimeoutMilliseconds).then((response) => {
             dispatch(setServiceProviderDetails(emailID, parseInt(response.data[0].name, 10)));
         })
-        .catch((error) => { });
+            .catch((error) => { });
     }
 }
 
@@ -130,15 +137,15 @@ export const checkUserData = () => {
     }
 }
 
-export function setMenuClicked(data){
-    return{
+export function setMenuClicked(data) {
+    return {
         type: USER.menuClicked,
         data
     }
 };
 
-export function setIsFormDirty(isDirty){
-    return{
+export function setIsFormDirty(isDirty) {
+    return {
         type: USER.setIsFormDirty,
         data: isDirty
     }

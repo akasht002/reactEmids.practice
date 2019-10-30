@@ -1,4 +1,4 @@
-import {USER} from './bridge'
+import { USER } from './bridge'
 
 const defaultState = {
     userData: {},
@@ -9,7 +9,8 @@ const defaultState = {
     },
     roles: {},
     menuClicked: null,
-    isFormDirty: false
+    isFormDirty: false,
+    isSecureLogin: false
 };
 
 export default (state = defaultState, action) => {
@@ -41,6 +42,11 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 isFormDirty: action.data
+            }
+        case USER.isSecureLogin:
+            return {
+                ...state,
+                isSecureLogin: action.data
             }
         default:
             return state;

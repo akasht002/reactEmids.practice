@@ -29,6 +29,7 @@ import {isIEBrowser, isMobileBrowser} from '../../../utils/browserUtility'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import './style.css'
 import { EntityUserMenuData } from '../../../data/EntityUserMenuData';
+import { withAuth } from "@okta/okta-react";
 
 class AsideScreenCover extends React.Component {
     constructor(props) {
@@ -103,6 +104,10 @@ class AsideScreenCover extends React.Component {
         this.props.onClickOk();
     }
 
+    onSuccess = () => {
+        this.props.auth.logout()
+    }
+
     navigateProfileHeader = (link) => {
         this.props.setIsFormDirty(false);
         switch (link) {
@@ -119,7 +124,7 @@ class AsideScreenCover extends React.Component {
                 this.checkVideoCompatibility(link, false, null)
                 break;
             case 'logout':
-                this.props.onLogout();
+                this.props.onLogout(this.props.isSecureLogin ? this.onSuccess :null);
                 break;
             case 'aboutUs':
                 this.setState({ selectedLink: link })
@@ -180,6 +185,7 @@ class AsideScreenCover extends React.Component {
     }
 
     render() {
+        console.log('this.props', this.props)
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
         if (isEntityServiceProvider()) {
@@ -228,6 +234,7 @@ class AsideScreenCover extends React.Component {
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
                     <div className={'ProfileRightContainer ' + (this.props.match.url === Path.teleHealth ? 'TeleHealth' : '') + ' ' + (this.props.async === 'active' ? 'async' : '')}>
+                    {/* <div className={'ProfileRightContainer'}> */}
                         {this.props.children}
                     </div>
                 </div>
@@ -360,7 +367,7 @@ function mapDispatchToProps(dispatch) {
         getPersonalDetail: () => dispatch(action.getPersonalDetail()),
         navigateProfileHeader: (link) => dispatch(push(link)),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
-        onLogout: () => dispatch(onLogout()),
+        onLogout: (onSuccess) => dispatch(onLogout(onSuccess)),
         clearRoom: () => dispatch(clearRoom()),
         joinVideoConference: () => dispatch(joinVideoConference()),
         rejectConference: () => dispatch(rejectConference()),
@@ -391,10 +398,10 @@ function mapStateToProps(state) {
         telehealthToken: state.telehealthState.token,
         buildVersion: state.aboutUsState.buildVersion,
         isFormDirty: state.authState.userState.isFormDirty,
-        createData: state.telehealthState.createData
+        createData: state.telehealthState.createData,
+        isSecureLogin: state.authState.userState.isSecureLogin
     };
 };
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover)
-)
+    connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover))

@@ -2,7 +2,7 @@
 export const AUTH_CONFIG_IMPLICIT = {
     clientId : "js",
     authority :  process.env.REACT_APP_AUTH_URL,
-    redirectUri : process.env.REACT_APP_UI_URL + "loginCallBack/#",
+    redirectUri : process.env.REACT_APP_UI_URL + "loginCallBack",
     reponseType : "id_token token",
     scope : "openid profile api1",
     postLogoutRedirectUri : process.env.REACT_APP_UI_URL,
