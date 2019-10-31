@@ -194,6 +194,19 @@ class QuickMenu extends Component {
                 }
                 }
             />
+            <ModalPopup
+              isOpen={this.state.standByModeAlertMsg}
+              ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
+              btn1='OK'
+              className='modal-sm'
+              headerFooter='d-none'
+              footer='d-none'
+              centered='centered'
+              onConfirm={() =>
+                this.setState({
+                  standByModeAlertMsg: false
+                })}
+            />
                 </React.Fragment>
             )
     }
