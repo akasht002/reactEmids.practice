@@ -55,7 +55,7 @@ class PersonalDetail extends React.PureComponent {
                   {this.props.personalDetail &&
                     `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
                 </h3>
-                <p className={'SPsubTitle'}>
+                <p className={'SPsubTitle theme-primary'}>
                   <span>
                     {this.props.personalDetail && this.props.personalDetail.gender && this.props.personalDetail.gender.genderName}
                     {' '}

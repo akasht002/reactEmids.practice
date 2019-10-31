@@ -386,7 +386,7 @@ export class Organization extends React.PureComponent {
                 {this.props.personalDetail && this.props.personalDetail.entity &&
                   `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
-              <p className={'SPsubTitle'}>
+              <p className={'SPsubTitle theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.yearOfExperience}

@@ -620,7 +620,7 @@ export class ServiceCalendar extends Component {
             <ul className="list-group ProfileServicesVisitList">
               {visitData}
               {(!this.props.disableShowMore) && <li
-              className="list-group-item ProfileShowMore theme-primary-hover"
+              className="list-group-item ProfileShowMore theme-primary-light"
               onClick={this.clickShowMore}
               >
                 Show more <i className="ProfileIconShowMore" />

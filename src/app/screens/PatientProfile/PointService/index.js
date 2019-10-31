@@ -56,7 +56,7 @@ class PointService extends React.Component {
           <h4 className='theme-primary'>Point of Service</h4>
         </div>
         <div className='SPCertificateContainer width100'>
-          <ul className='SPCertificateList'>
+          <ul className='SPCertificateList theme-primary'>
             {this.props.PointServiceList.length > 0
               ? <div>
                 {PointServiceList}

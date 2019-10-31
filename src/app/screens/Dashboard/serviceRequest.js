@@ -181,7 +181,7 @@ class ServiceRequest extends React.Component {
         {getLength(serviceRequest) > 2 &&
           <ul className='list-group list-group-flush'>
             <li
-              className='list-group-item ProfileShowMore theme-primary-hover'
+              className='list-group-item ProfileShowMore theme-primary-light'
               onClick={this.clickShowMore}
             >
              {this.toggleName} <i className='ProfileIconShowMore' />

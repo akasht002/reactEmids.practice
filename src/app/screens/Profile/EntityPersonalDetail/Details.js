@@ -31,7 +31,7 @@ export const Details = props => {
               {props.personalDetail &&
                 `${props.personalDetail.firstName || ''} ${props.personalDetail.lastName || ''} `}
             </h3>
-            <p className={'SPsubTitle'}>
+            <p className={'SPsubTitle theme-primary'}>
               <span>
                 {props.personalDetail &&
                   props.personalDetail.genderName}

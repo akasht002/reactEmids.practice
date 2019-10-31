@@ -531,8 +531,8 @@ class WorkHistory extends Component {
 
                         <div className="SPCertificateContainer width100">
 
-                            {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
-                                <ul className="SPCertificateList">
+                            {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList theme-primary"> {workhistoryList} </ul> :
+                                <ul className="SPCertificateList theme-primary">
                                     <div className='SPNoInfo'>
                                         <div className='SPNoInfoContent'>
                                             <div className='SPInfoContentImage' />

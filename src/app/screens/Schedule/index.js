@@ -964,7 +964,7 @@ export class Schedule extends Component {
                                 {!this.props.disableShowmore &&
                                     <ul className="show-more-assignSP">
                                         <li
-                                            class="list-group-item ProfileShowMore theme-primary-hover"
+                                            class="list-group-item ProfileShowMore theme-primary-light"
                                             onClick={this.clickShowMore}
                                             disabled={this.props.disableShowmore}
                                         >

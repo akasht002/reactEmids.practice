@@ -167,7 +167,7 @@ class Availability extends Component {
                     </div>
                      <div className={'width100 SPAvailWidget'}>
                         { availableDays && !availableSlot ? availableDays : 
-                            <ul className="SPEducationList width100">
+                            <ul className="SPEducationList width100 theme-primary">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />

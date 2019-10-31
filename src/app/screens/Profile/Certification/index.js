@@ -275,7 +275,7 @@ class Certification extends Component {
                     
                 </div>
                 <div className="SPCertificateContainer width100">
-                    <ul className="SPCertificateList">
+                    <ul className="SPCertificateList theme-primary">
                         {this.props.certificationList.length > 0 ?
                             <div>
                                 {certificationList}

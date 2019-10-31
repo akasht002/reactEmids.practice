@@ -54,7 +54,7 @@ class Education extends React.Component {
                 <div className="SPCertificateContainer width100">
                     
                         {this.props.educationList.length > 0 ? <ul className="SPEducationList"> {educationList} </ul> :
-                        <ul className="SPEducationList">
+                        <ul className="SPEducationList theme-primary">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />                                  

@@ -388,7 +388,7 @@ li div.dropdown-menu{
 }
 
 span.btn-hired, span.btn-hired:hover{
-    color: #7a329f !important;
+    color: #7a329f;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;

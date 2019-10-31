@@ -544,7 +544,7 @@ class PersonalDetail extends React.PureComponent {
                 {this.props.personalDetail &&
                   `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
               </h3>
-              <p className={'SPsubTitle'}>
+              <p className={'SPsubTitle theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.genderName}
@@ -575,7 +575,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'SPAffiliatedList'}>
               {this.props.personalDetail &&
                 this.props.personalDetail.affiliationName &&
-                <span className={'AffiliatedList'}>
+                <span className={'AffiliatedList theme-primary'}>
                   Affiliated to In
                 {' '}
                   <bd>

@@ -37,7 +37,7 @@ table.individuals-tableblock.theme-primary thead th,
 .VisitPaymentAmountPaid.theme-primary i,
 .EstimatedCostWidget.theme-primary .EstimatedCostContainer p,
 .webUrl.theme-primary a,
-.FeedbackLink {
+.FeedbackLink, .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank.theme-primary::after{
     color: var(--primaryColor) !important;
 }
 
@@ -47,14 +47,6 @@ table.individuals-tableblock.theme-primary thead th,
     color: var(--primaryColor) !important;
 }
 
-.theme-primary-hover {
-    color: var(--primaryColor) !important;
-}
-
-.theme-primary-hover:hover {
-    background-color: var(--primaryColorBackground);
-}
-
 .ProfileHeaderButton .sliderSwitch:before,
 .service-typesview-plan .service-typesview-more.theme-primary,
 .form-radio-input:checked~label .RadioBoxIcon:before,
@@ -62,7 +54,8 @@ table.individuals-tableblock.theme-primary thead th,
 .WizardList.theme-primary .WizardItems.visited:after,
 .addImageBtn.theme-primary,
 .ServicesLink.theme-primary:before,
-.input-range__track--active {
+.input-range__track--active, .SPCertificateList.theme-primary .SPSCertificateItems:before, .SPCertificateList.theme-primary .SPWorkHistoryItems:before, .SPCertificateList.theme-primary .SPEducationItems:before, .SPCertificateList.theme-primary .SPAddressItems:before, .SPEducationList.theme-primary .SPEducationItems:before,
+.AffiliatedList.theme-primary:before, .SPsubTitle.theme-primary span:before   {
     background-color: var(--primaryColorBackground);
 }
 
@@ -104,7 +97,7 @@ span.btn-hired {
 .active-tabview,
 .theme-primary-light .SPAvailItems.active,
 .modal-header,
-.backProfileIcon.theme-primary-light:hover {
+.backProfileIcon.theme-primary-light:hover, .No-Coverastion-Block.theme-primary-light, .NoServiceReq.theme-primary-light {
     background-color: var(--lightBackground);
 }
 
@@ -247,4 +240,14 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 .WizardList.theme-primary .WizardItems.visited:before {
     background-color: var(--primaryColorBackground);
     border: 1px solid var(--primaryColor);
+}
+
+.ProfileShowMore.theme-primary-light
+{
+    color: var(--primaryColor) !important;
+}
+
+.ProfileShowMore.theme-primary-light:hover
+{
+    background-color: var(--lightBackground) !important;
 }

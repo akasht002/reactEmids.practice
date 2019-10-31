@@ -208,7 +208,7 @@ class BlackoutDays extends Component {
             </div> :  ""
           }
             <div className={"SPCertificateContainer width100"}>
-              <ul className={"SPCertificateList"}>{blackoutData}</ul>
+              <ul className={"SPCertificateList theme-primary"}>{blackoutData}</ul>
             </div>
           </div>
         </div>

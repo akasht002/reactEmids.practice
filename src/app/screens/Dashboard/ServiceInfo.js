@@ -256,7 +256,7 @@ export const MyConversionDefault = () => {
           </div>
           <div className='MsgThreadContent m-auto'>
           <div class="no-blockinfo-top">
-          <div className="NoProfileServices No-Coverastion-Block">
+          <div className="NoProfileServices No-Coverastion-Block theme-primary-light">
           <span class="NoInfoText"><span class="NoServiceInfoLink theme-primary">New Coverastion</span></span>
           </div>
            </div>

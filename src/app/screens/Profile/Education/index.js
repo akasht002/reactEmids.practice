@@ -439,8 +439,8 @@ class Education extends React.Component {
                 </div>
                 <div className="SPCertificateContainer width100">
                     
-                        {this.props.educationList.length > 0 ? <ul className="SPEducationList"> {educationList} </ul> :
-                       (this.props.isUser && <ul className="SPEducationList">
+                        {this.props.educationList.length > 0 ? <ul className="SPEducationList theme-primary"> {educationList} </ul> :
+                       (this.props.isUser && <ul className="SPEducationList theme-primary">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />

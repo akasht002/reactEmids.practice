@@ -438,7 +438,7 @@ export class ServiceArea extends Component {
           />}
         </div>
         <div className='SPCertificateContainer width100'>
-          <ul className='SPCertificateList'>
+          <ul className='SPCertificateList theme-primary'>
             {this.props.ServiceAreaList.length > 0
               ? <div>
                 {ServiceAreaList}

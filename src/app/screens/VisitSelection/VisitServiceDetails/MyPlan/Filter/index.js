@@ -144,7 +144,7 @@ export class Filter extends Component {
                                     />
                                     <ul className="show-more-assignSP">
                                         <li
-                                            class="list-group-item ProfileShowMore theme-primary-hover"
+                                            class="list-group-item ProfileShowMore theme-primary-light"
                                             onClick={this.props.clickShowMore}
                                             disabled={this.props.disableShowmore}
                                         >
