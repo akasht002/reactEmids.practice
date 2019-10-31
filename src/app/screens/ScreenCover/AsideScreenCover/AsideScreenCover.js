@@ -403,5 +403,5 @@ function mapStateToProps(state) {
     };
 };
 
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover))
+export default withAuth(withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover))) 
