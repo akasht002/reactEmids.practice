@@ -212,5 +212,5 @@ export const API = {
     getPatientVitals: 'patient/get-patient-coreo-association/',
     getPlanVisitFeedBack: 'feedback/patient/feedbackdetails/',
     getPaymentAvailability: 'Common/LookupConfig/PaymentAvailability',
-    getUserIdForCT: 'User/'
+    getUserIdForCT: 'ServiceProviderOnBoarding/'
 }

@@ -71,7 +71,7 @@ export function onClear() {
 
 export function setServiceProviderDetails(emailID, autoLogoutTime) {
     return (dispatch, getState) => {
-        CareTeamGet(API.getUserIdForCT)
+        Get(API.getUserIdForCT)
             .then(resp => {
                 let userData = {
                     ...getState().oidc.user,
