@@ -60,7 +60,7 @@ export const Details = props => {
       </div>
         <div className={'width100'}>
           <div className={'SPAffiliatedList'}>
-            <span className="link-view webUrl">
+            <span className="link-view webUrl theme-primary">
               {props.personalDetail.entity && props.personalDetail.entity.websiteUrl ?
                 <a href={'https://'+props.personalDetail.entity.websiteUrl} target="_blank">{props.personalDetail.entity.websiteUrl}</a> : ''}               
             </span>

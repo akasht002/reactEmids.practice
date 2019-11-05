@@ -4,7 +4,9 @@
     --primaryColorBackground: #1e3d5c !important;
     --buttonHover: #315477 !important;
     --lightBackground: #e0f1fb !important;
+    --commonWhite: #fff !important;
     --hoverDropdown: #f0f6fa !important;
+    --chatMessageBg: #4f82b5 !important;
     --gradientOne: #1e3d5c !important;
     --gradientTwo: #315477 !important;
 }  
@@ -55,14 +57,14 @@ table.individuals-tableblock.theme-primary thead th,
 .addImageBtn.theme-primary,
 .ServicesLink.theme-primary:before,
 .input-range__track--active, .SPCertificateList.theme-primary .SPSCertificateItems:before, .SPCertificateList.theme-primary .SPWorkHistoryItems:before, .SPCertificateList.theme-primary .SPEducationItems:before, .SPCertificateList.theme-primary .SPAddressItems:before, .SPEducationList.theme-primary .SPEducationItems:before,
-.AffiliatedList.theme-primary:before, .SPsubTitle.theme-primary span:before  {
+.AffiliatedList.theme-primary:before, .memT-S, .SPsubTitle.theme-primary span:before  {
     background-color: var(--primaryColorBackground);
 }
 
 .send-btn.theme-primary 
 {
     background-color: var(--primaryColorBackground);
-    color:#fff !important;
+    color: var(--commonWhite) !important;
 }
 
 span.btn-hired {
@@ -85,14 +87,14 @@ span.btn-hired {
 .btn-primary {
     background-color: var(--primaryColorBackground) !important;
     border: var(--primaryColor) !important;
-    color: #fff;
+    color: var(--commonWhite) !important;
 }
 
 .btn-primary:hover,
 .btn-outline-primary:hover,
 .btn-outline-primary:active {
     background-color: var(--buttonHover) !important;
-    color: #fff !important;
+    color: var(--commonWhite) !important;
 }
 
 .btn-outline-primary:focus, .btn-outline-primary:active, .form-radio-input:checked~.RadioBoxIcon, .form-radio-input:checked~.form-radio-label
@@ -108,7 +110,7 @@ span.btn-hired {
 .active-tabview,
 .theme-primary-light .SPAvailItems.active,
 .modal-header,
-.backProfileIcon.theme-primary-light:hover, .No-Coverastion-Block.theme-primary-light, .NoServiceReq.theme-primary-light {
+.backProfileIcon.theme-primary-light:hover, .No-Coverastion-Block.theme-primary-light, .NoServiceReq.theme-primary-light, .ListItem.CTDashboard:hover {
     background-color: var(--lightBackground);
 }
 
@@ -160,7 +162,7 @@ input.form-control:focus,
 .service-typesview-more.tooltip.theme-primary,
 .SPServiceCount.theme-primary {
     background-color: var(--primaryColor) !important;
-    color: #fff !important;
+    color: var(--commonWhite) !important;
 }
 
 .theme-primary .service-typesview-more.tooltip .bottom h3,
@@ -214,11 +216,11 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 .ServiceCatList input:checked+label.ServiceCatLink:before,
 .ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before {
     background-color: var(--primaryColorBackground) !important;
-    color: #fff !important;
+    color: var(--commonWhite) !important;
 }
 
 .ServiceCatLink.theme-primary span {
-    color: #fff !important;
+    color: var(--commonWhite) !important;
 }
 
 .ServiceTypeList.theme-primary.selected:before {
@@ -238,7 +240,7 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 
 .week-column .parent-col.theme-primary .form-radio-input:checked~.form-radio-label {
     border: 1px solid var(--primaryColor) !important;
-    color: #fff;
+    color: var(--commonWhite) !important;
     background: var(--primaryColorBackground);
 }
 
@@ -263,7 +265,12 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     background-color: var(--lightBackground) !important;
 }
 
-
 .sliderContainer .sliderInnerContent.theme-primary-gradient {
     opacity: 0.9;
+}
+
+.chatMessage.yourChat .ChatBubble.theme-primary
+{
+    background-color: var(--chatMessageBg) !important;
+    color: var(--commonWhite) !important;
 }

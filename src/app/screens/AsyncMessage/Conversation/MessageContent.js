@@ -168,7 +168,7 @@ class MessageContent extends Component {
                             <img key={index} alt="i" src={ conversation.createdByThumbnail ? conversation.createdByThumbnail : require("../../../assets/images/Blank_Profile_icon.png")}
                                 className="avatarImage" />
                         </div>
-                        <div className="ChatBubble">
+                        <div className="ChatBubble theme-primary">
                             <div className="bubbleHeader d-flex">
                                 <span className="mr-auto memberName">{conversation.firstName + ' ' + conversation.lastName}</span>
                                 <span className="ml-auto messageTime"><TimeAgo datetime={moment.utc(conversation.createdDate).local().format()} /></span>
