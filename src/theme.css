@@ -55,8 +55,14 @@ table.individuals-tableblock.theme-primary thead th,
 .addImageBtn.theme-primary,
 .ServicesLink.theme-primary:before,
 .input-range__track--active, .SPCertificateList.theme-primary .SPSCertificateItems:before, .SPCertificateList.theme-primary .SPWorkHistoryItems:before, .SPCertificateList.theme-primary .SPEducationItems:before, .SPCertificateList.theme-primary .SPAddressItems:before, .SPEducationList.theme-primary .SPEducationItems:before,
-.AffiliatedList.theme-primary:before, .SPsubTitle.theme-primary span:before   {
+.AffiliatedList.theme-primary:before, .SPsubTitle.theme-primary span:before  {
     background-color: var(--primaryColorBackground);
+}
+
+.send-btn.theme-primary 
+{
+    background-color: var(--primaryColorBackground);
+    color:#fff !important;
 }
 
 span.btn-hired {
@@ -87,6 +93,11 @@ span.btn-hired {
 .btn-outline-primary:active {
     background-color: var(--buttonHover) !important;
     color: #fff !important;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary:active, .form-radio-input:checked~.RadioBoxIcon, .form-radio-input:checked~.form-radio-label
+{
+    border: 1px solid var(--primaryColor) !important; 
 }
 
 .btn-outline-primary {
@@ -250,4 +261,9 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 .ProfileShowMore.theme-primary-light:hover
 {
     background-color: var(--lightBackground) !important;
+}
+
+
+.sliderContainer .sliderInnerContent.theme-primary-gradient {
+    opacity: 0.9;
 }
