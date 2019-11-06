@@ -274,3 +274,8 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     background-color: var(--chatMessageBg) !important;
     color: var(--commonWhite) !important;
 }
+
+.webUrl.theme-primary:before
+{
+    background-color: transparent;
+}
