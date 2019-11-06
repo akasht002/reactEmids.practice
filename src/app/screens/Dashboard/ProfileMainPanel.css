@@ -1279,10 +1279,13 @@ div.ProfileConversation {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 46%;
+    margin: 0 auto;
 }
 
-.topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top .a.NoServiceReq {
+.topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top .NoServiceReq {
     max-height: 100px;
+    width: 100%;
 }
 
 .myPlanBlank {
@@ -1340,6 +1343,7 @@ div.ProfileConversation {
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
     border-radius: 6px;
     font-size: 14px;
+    position: relative;
 }
 
 .No-Coverastion-Block span.NoInfoText {
