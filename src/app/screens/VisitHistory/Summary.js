@@ -25,6 +25,7 @@ import Moment from 'react-moment'
 import { Assessment } from "./assessment";
 import { caseInsensitiveComparer } from "../../utils/comparerUtility";
 import { setServiceProviderFeedbackTab } from "../../redux/dashboard/EntityDashboard/ServiceProvider/actions";
+import { getFullName } from "../../utils/stringHelper";
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -218,9 +219,8 @@ export class VistSummary extends React.Component {
         || caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack))
       ) {
       return `FeedbackQuestion question-higlight`
-    } else {
-      return `FeedbackQuestion`
     }
+      return `FeedbackQuestion`
   }
 
   getFeedback = () => {
@@ -338,12 +338,8 @@ export class VistSummary extends React.Component {
             {this.props.summaryDetails.serviceProvider
               ? <p>
                 Rated
-                {' '}
-                {this.props.summaryDetails.serviceProvider.firstName}
-                {' '}
-                {this.props.summaryDetails.serviceProvider.lastName &&
-                  this.props.summaryDetails.serviceProvider.lastName
-                }
+                {` ${getFullName(this.props.summaryDetails.serviceProvider.firstName, 
+                 this.props.summaryDetails.serviceProvider.lastName)}`}
               </p>
               : ''}
             <StarRating
