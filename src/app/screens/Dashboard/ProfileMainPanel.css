@@ -225,7 +225,7 @@ span.ProfileCardHeaderLink:hover{
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,.08);
-    background: #f0e9f1 url(../../assets/images/edit_pen.svg);
+    background: #f0e9f1 url("../../assets/images/edit_pen.png");
     background-position: 50% 60%;
     background-size: 70%;
     background-repeat: no-repeat;
@@ -1291,9 +1291,9 @@ height: 230px;
 }
 
 .NewSPReq{
-background:#f0e9f1  url("../../assets/images/edit_pen.svg");
-background-position: 50% 60%;
-background-size: 70%;
+background:#f0e9f1  url("../../assets/images/edit_pen.png");
+background-position: 50% 34%;
+background-size: auto;
 background-repeat: no-repeat;
 }
 

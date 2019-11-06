@@ -208,7 +208,7 @@ export const MyConversionDetail = props => {
                 } else if (index === 2) {
                   return (
                     <div className='avatarContainer'>
-                      <div key={index} className='avatarImage totalMembers'>
+                      <div key={index} className='avatarImage totalMembers theme-primary-light'>
                         {'+' + (conversations.participantList.length - 2)}
                       </div>
                     </div>
