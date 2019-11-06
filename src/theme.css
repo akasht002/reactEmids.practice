@@ -58,7 +58,7 @@ table.individuals-tableblock.theme-primary thead th,
 .addImageBtn.theme-primary,
 .ServicesLink.theme-primary:before,
 .input-range__track--active, .SPCertificateList.theme-primary .SPSCertificateItems:before, .SPCertificateList.theme-primary .SPWorkHistoryItems:before, .SPCertificateList.theme-primary .SPEducationItems:before, .SPCertificateList.theme-primary .SPAddressItems:before, .SPEducationList.theme-primary .SPEducationItems:before,
-.AffiliatedList.theme-primary:before, .memT-S, .SPsubTitle.theme-primary span:before  {
+.AffiliatedList.theme-primary:before, .memT-S, .SPsubTitle.theme-primary span:before, .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected  {
     background-color: var(--primaryColorBackground);
 }
 
