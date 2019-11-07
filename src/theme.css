@@ -81,7 +81,7 @@ span.btn-hired {
 .react-datepicker__day--keyboard-selected:hover,
 .react-datepicker__day--selected,
 .TeleHealthControlsItem span.TeleHealthOptionLink:hover,
-.TeleHealthControlsItem span.TeleHealthOptionLink.off {
+.TeleHealthControlsItem span.TeleHealthOptionLink.off, .SPEducationItems:before {
     background-color: #1e3d5c !important;
 }
 
@@ -192,7 +192,7 @@ table.individuals-tableblock.theme-primary tbody tr:hover,
     background-color: #e0f1fb !important;
 }
 
-.tab-link .nav-item .active.nav-link {
+.tab-link .nav-item .active.nav-link, .chatBackButton:after {
     color: #1e3d5c !important;
     border-bottom: 1px solid #1e3d5c !important;
 }
@@ -290,7 +290,7 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     background-color: transparent;
 }
 
-.modal-content .modal-footer .disabled, .modal-content .modal-footer .btn.disabled, .btn-primary.disabled, .btn-primary:disabled, span.life-map-btn .btn
+.modal-content .modal-footer .disabled, .modal-content .modal-footer .btn.disabled, .btn-primary.disabled, .btn-primary:disabled, span.life-map-btn .btn, span.life-map-btn .btn:hover
 {
     background-color: #D0D2D3!important;
 }
