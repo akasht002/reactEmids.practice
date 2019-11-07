@@ -299,3 +299,11 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 {
     color:#fff;
 }
+
+div.Select-menu-outer .Select-option.is-selected{
+    background-color: #e0f1fb !important
+}
+
+div.Select-menu-outer .Select-option:hover{
+    background-color: #e0f1fb !important
+}
