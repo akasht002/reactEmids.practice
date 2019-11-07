@@ -5,9 +5,11 @@ import { VisitServiceProviderList } from './bridge';
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
-import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
+import { ENTITY_DASHBOARD_STATUS, DATE_FORMATS } from '../../../../constants/constants';
 import { formatPhoneNumber, removeHyphenInPhoneNumber } from '../../../../utils/formatName';
 import { checkNumber } from '../../../../utils/validations';
+import { concatCommaWithSpace } from '../../../../utils/stringHelper';
+import moment from 'moment';
 
 export const setActiveSubTab = data => {
   return {
@@ -131,7 +133,14 @@ export function getFeedbackAlertDetails(data) {
     return Post(API.getServiceProviderFeedbackList, data)
       .then(resp => {
         if (resp && resp.data) {
-          dispatch(getFeedbackAlertDetailsSuccess(resp.data))
+          let data = resp.data.map(res => {
+            return {
+                ...res,
+                serviceType: concatCommaWithSpace(res.serviceType),
+                visitDate: moment(res.visitDate).format(DATE_FORMATS.mm_dd_yyy)
+            }
+        })
+          dispatch(getFeedbackAlertDetailsSuccess(data))
         }
         dispatch(endFeedbackAlertLoading())
       })
