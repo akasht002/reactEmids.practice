@@ -40,7 +40,7 @@ table.individuals-tableblock.theme-primary thead th,
 .EstimatedCostWidget.theme-primary .EstimatedCostContainer p,
 .webUrl.theme-primary a,
 .FeedbackLink, .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank.theme-primary::after, .SPAvailTitle:after,
-.Plan-typebar fieldset .form-radio-input:checked~.form-radio-label{
+.Plan-typebar fieldset .form-radio-input:checked~.form-radio-label, .ProfileCardNameContainer span:hover{
     color: #1e3d5c !important;
 }
 
@@ -293,4 +293,9 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 .modal-content .modal-footer .disabled, .modal-content .modal-footer .btn.disabled, .btn-primary.disabled, .btn-primary:disabled, span.life-map-btn .btn, span.life-map-btn .btn:hover
 {
     background-color: #D0D2D3!important;
+}
+
+.login-body span
+{
+    color:#fff;
 }
