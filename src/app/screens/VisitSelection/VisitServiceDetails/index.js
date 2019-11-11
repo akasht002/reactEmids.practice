@@ -81,6 +81,7 @@ import { allEqual } from '../../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../../utils/formatName';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { saveContextData, createDataStore } from '../../../redux/telehealth/actions';
+import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -588,6 +589,7 @@ export class VisitServiceDetails extends Component {
   }
 
   navigateToparticularPageBasedonId = visitList => {
+    this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
     this.props.saveScheduleType(visitList.scheduleTypeId)
     let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
     switch (visitList.visitStatusId) {
