@@ -6,7 +6,7 @@ import { ThemeProvider } from '@zendeskgarden/react-theming'
 import { SelectField, Select,Item } from '@zendeskgarden/react-select'
 import { isFutureDay} from '../../utils/dateUtility'
 import { isEntityServiceProvider, getUserInfo } from '../../utils/userUtility';
-import { ModalPopup } from '../../components'
+import { ModalPopup, AlertPopup } from '../../components'
 import { formatPhoneNumber } from "../../utils/formatName"
 import { CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT,VISIT_TYPE } from "../../constants/constants";
 import { SERVICE_VISIT_STATUS,START_VISIT } from '../../redux/constants/constants';
@@ -151,6 +151,10 @@ class QuickMenu extends Component {
    }
    return options
    }
+
+   closeStandByModeAlertPopup = () => {
+     this.setState({standByModeAlertMsg: false})
+   }
    
     render() {
         let options = this.props.conversations && this.getOptions(this.props.conversations)
@@ -194,18 +198,10 @@ class QuickMenu extends Component {
                 }
                 }
             />
-            <ModalPopup
+            <AlertPopup
+              message='Please turn off the stand-by mode to start the visit.'
               isOpen={this.state.standByModeAlertMsg}
-              ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
-              btn1='OK'
-              className='modal-sm'
-              headerFooter='d-none'
-              footer='d-none'
-              centered='centered'
-              onConfirm={() =>
-                this.setState({
-                  standByModeAlertMsg: false
-                })}
+              onAcceptClick={() => this.closeStandByModeAlertPopup()}
             />
                 </React.Fragment>
             )
