@@ -201,7 +201,7 @@ class QuickMenu extends Component {
             <AlertPopup
               message='Please turn off the stand-by mode to start the visit.'
               isOpen={this.state.standByModeAlertMsg}
-              onAcceptClick={() => this.closeStandByModeAlertPopup()}
+              onAcceptClick={this.closeStandByModeAlertPopup}
             />
                 </React.Fragment>
             )
