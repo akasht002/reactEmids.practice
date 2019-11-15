@@ -483,13 +483,12 @@ export class Schedule extends Component {
         let endTime = this.state.endTime
         if(endTime){
             this.selectedDuration = getDiffTime(this.formatedStartTime, endTime);
-            this.setState({selectedDuration: this.selectedDuration});
         }
         if (this.formatedStartTime === this.formatedEndTime) {
             endTime = moment(this.state.startTime).add("minutes", 60)
             this.formatedEndTime = getHourMin(endTime)
         }
-        this.setState({ startTime: event, endTime });
+        this.setState({ startTime: event, endTime, selectedDuration: this.selectedDuration });
         this.isDataEntered = true;
     }
 

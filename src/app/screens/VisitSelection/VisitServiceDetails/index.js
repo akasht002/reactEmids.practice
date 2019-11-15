@@ -52,7 +52,9 @@ import {
   SERVICE_REQUEST_DETAILS_TAB,
   USERTYPES,
   CONTACT_NOT_FOUND,
-  PHONE_NUMBER_TEXT
+  PHONE_NUMBER_TEXT,
+  DATE_FORMATS,
+  DEFAULT_PAGE_NUMBER
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
 import { formattedDateMoment, formattedDateChange, formateStateDateValue, checkEmpty } from "../../../utils/validations";
@@ -153,8 +155,8 @@ export class VisitServiceDetails extends Component {
     if (this.props.isEditIndividualEditPopup) {
       this.setState({
         startDateEdit: this.props.serviceVisitDetails.visitDate,
-        startTime: moment(this.props.serviceVisitDetails.startTime, 'h:mm a'),
-        endTime: moment(this.props.serviceVisitDetails.endTime, 'h:mm a'),
+        startTime: moment(this.props.serviceVisitDetails.startTime, DATE_FORMATS.timeh_mm_a),
+        endTime: moment(this.props.serviceVisitDetails.endTime, DATE_FORMATS.timeh_mm_a),
         selectedDuration: this.props.serviceVisitDetails.duration
       })
       this.props.editIndividualEditPopup(false)
@@ -196,16 +198,16 @@ export class VisitServiceDetails extends Component {
   }
 
   toggle = (tab) => {
-    if (this.state.activeTab !== tab) {
-      this.setState({ activeTab: tab, activePage: 1 })
-    }
+    let {startVisitDateForWeb, endVisitDateForWeb} = this.props.visitDate;
     if (tab === SERVICE_REQUEST_DETAILS_TAB.myPlan) {
       this.props.getSchedulesList(this.props.patientId);
-      this.setState({
-        startDate: this.props.visitDate && this.props.visitDate.startVisitDateForWeb,
-        endDate: this.props.visitDate && this.props.visitDate.endVisitDateForWeb
-      })
     }
+    this.setState({
+      activeTab: tab, 
+      activePage: DEFAULT_PAGE_NUMBER,
+      startDate: startVisitDateForWeb,
+      endDate: endVisitDateForWeb
+    })
   }
 
   handelDetails = (serviceRequestId) => {

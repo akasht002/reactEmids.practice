@@ -84,11 +84,6 @@ export const PlanTab = props => {
                                         totalItemsCount={props.pageCount}
                                         pageRangeDisplayed={5}
                                         onChange={props.pageNumberChange}
-                                        itemClass='PaginationItem'
-                                        itemClassFirst='PaginationIcon First'
-                                        itemClassPrev='PaginationIcon Prev'
-                                        itemClassNext='PaginationIcon Next'
-                                        itemClassLast='PaginationIcon Last'
                                     />
                                 }
                                 <Filter
