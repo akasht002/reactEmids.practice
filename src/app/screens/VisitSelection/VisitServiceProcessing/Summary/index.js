@@ -16,6 +16,7 @@ import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
+import { DATE_FORMATS } from "../../../../constants/constants";
 
 export class Summary extends Component {
 
@@ -147,13 +148,14 @@ export class Summary extends Component {
     }
 
     timerErrMessage = () => {
-        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");
+        let currentTime = moment(this.props.SummaryDetails.originalTotalDuration, DATE_FORMATS.hhMinSec);
         let hours = formatDateSingle(this.state.updatedHour)
         let minutes = formatDateSingle(this.state.updatedMin)
         let seconds = formatDateSingle(this.state.updatedSec)
         let newTime = hours + ':' + minutes + ':' + seconds
-        var endTime = moment(newTime, "HH:mm:ss");
-        if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
+        let endTime = moment(newTime, DATE_FORMATS.hhMinSec);
+        let time = currentTime.isSameOrAfter(endTime)
+        if (!time) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
@@ -224,6 +226,7 @@ export class Summary extends Component {
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={this.props.CalculationsData.totalHours}
+                            maxlength={2}
                         />
                     </span>
                     <span className="mr-3">
@@ -283,7 +286,7 @@ export class Summary extends Component {
                 {this.props.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -291,7 +294,7 @@ export class Summary extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -339,7 +342,7 @@ export class Summary extends Component {
                                 <div className="VisitSummaryWidget">
                                     <div className="LeftWidget">
                                         <div className="LeftContent">
-                                            <p className="SummaryContentTitle">Service Visit Details</p>
+                                            <p className="SummaryContentTitle theme-primary">Service Visit Details</p>
                                             <div className="row">
                                                 <div className="col-md-8">
                                                     <p className="CategoryName">
@@ -354,13 +357,13 @@ export class Summary extends Component {
                                                 </div>
                                                 <div className="col-md-4 SummaryRange">
                                                     <span className="bottomTaskName">Tasks</span>
-                                                    <span className="bottomTaskRange">
+                                                    <span className="bottomTaskRange theme-primary">
                                                         <i style={{ width: completedTaskPercent + '%' }} className="bottomTaskCompletedRange" />
                                                     </span>
                                                     <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                 </div>
                                             </div>
-                                            <p className="SummaryContentTitle">Payment Details</p>
+                                            <p className="SummaryContentTitle theme-primary">Payment Details</p>
 
                                             <div className="row CostTableWidget">
                                                 {!this.state.signatureImage ?
@@ -398,7 +401,7 @@ export class Summary extends Component {
                                             {getUserInfo().isEntityServiceProvider ?
                                                 ''
                                                 :
-                                                <div className="row EstimatedCostWidget">
+                                                <div className="row EstimatedCostWidget theme-primary">
                                                     <div className="col-md-8 EstimatedCostContainer Label">
                                                         <p><span>Estimated Claim</span>
                                                         </p>
@@ -423,7 +426,7 @@ export class Summary extends Component {
                                     </div>
                                     <div className="RightWidget">
                                         <div className="RightContent">
-                                            <p className="SummaryContentTitle">Customer Signature</p>
+                                            <p className="SummaryContentTitle theme-primary">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 {this.props.signatureImage && this.props.signatureImage.signature ?

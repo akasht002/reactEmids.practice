@@ -461,3 +461,8 @@ width: 100% !important;
 .alertedQuestionnaire{
     color: #c04e59;
 }
+
+.question-higlight {
+    color: #7a329f;
+    font-weight: 600;
+}

@@ -457,7 +457,7 @@ export class ServiceRequest extends Component {
               closeSearch={this.closeSearch}
             />
           <span
-              className='primaryColor profile-header-filter'
+              className='profile-header-filter theme-primary'
               onClick={this.toggleFilter}
             >
               Filters

@@ -17,7 +17,7 @@ const renderServiceTypeImages = serviceTypes => {
     return (
         updatedServiceTypes.slice(0, 3).map(type =>
             <div>
-                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
+                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn theme-primary"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
             </div>
         ))
 }
@@ -85,7 +85,7 @@ export const Table = props => {
     let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
     return (
         <Fragment>
-            <table className="table-responsive plan-tableview" cellpadding="6" cellspacing="6">
+            <table className="table-responsive plan-tableview theme-primary" cellpadding="6" cellspacing="6">
                 <thead>
                     <tr>
                         {props.header.map(item => {
@@ -111,7 +111,7 @@ export const Table = props => {
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
-                                    {item.serviceTypes.length > 3 && <div className="service-typesview-more tooltip">3+
+                                    {item.serviceTypes.length > 3 && <div className="service-typesview-more tooltip theme-primary">3+
                                         <div class="bottom">
                                             <h3>Service Types</h3>
                                             <div className="inner-block-SRtypes">
@@ -142,7 +142,7 @@ export const Table = props => {
                                 :
                                 <td>
                                     <div class="ScheduleRowButton">
-                                        <span class={item.visitStatusId === VISIT_PROCESSING_STATUS.completed.id ? "btn btn-outline-primary" : "status-view-btn"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
+                                        <span class={item.visitStatusId === VISIT_PROCESSING_STATUS.completed.id ? "btn btn-outline-primary" : "status-view-btn theme-primary"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
                                             {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
                                         </span>
                                     </div>
@@ -160,14 +160,16 @@ export const Table = props => {
                     })}
                 </tbody>
             </table>
-            <div className="table-result-block">
-                <RowPerPage
-                    pageSize={props.rowPageSize}
-                    pageSizeChange={props.rowPageChange}
-                    pageSizeOption={PAGE_SIZE_OPTIONS}
-                />
-                <span className="page-result">Total {props.totalResult} results</span>
-            </div>
+            {props.visitList.length !== 0 &&
+                <div className="table-result-block">
+                    <RowPerPage
+                        pageSize={props.rowPageSize}
+                        pageSizeChange={props.rowPageChange}
+                        pageSizeOption={PAGE_SIZE_OPTIONS}
+                    />
+                    <span className="page-result">Total {props.totalResult} results</span>
+                </div>
+            }
         </Fragment>
     )
 }

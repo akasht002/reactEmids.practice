@@ -50,7 +50,7 @@
 }
 
 .Plan-typebar fieldset label:hover {
-  border: none;
+  border: none !important;
 }
 
 .Plan-typebar fieldset .form-radio-input:checked~.form-radio-label {
@@ -434,6 +434,7 @@ fieldset .form-radio {
   margin-left: 15px;
   margin-right: 15px;
   margin-bottom: 5px;
+  padding-left:4px;
 }
 
 .full-block-scheduleDate .react-datepicker__header--time {
@@ -458,6 +459,12 @@ fieldset .form-radio {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding-left:14px !important;
+}
+
+.left-block1-shedule .date-blockview
+{
+  padding-left:0px !important;
 }
 
 .full-block-scheduleDate .form-group:nth-child(1) {
@@ -527,6 +534,7 @@ fieldset .form-radio {
   text-align: left;
   font-family: 'Open Sans', sans-serif !important;
   white-space: nowrap;
+  height:42px;
 }
 
 .form-group2block .form-group .react-datepicker__input-container input,
@@ -535,7 +543,7 @@ fieldset .form-radio {
   border: none;
   border-bottom: 1px solid #e1e1e1;
   width: 100%;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 35px;
 }
 
@@ -833,7 +841,7 @@ fieldset .form-radio {
 }
 
 .recurr_pattern_radioblock .form-radio-label:hover {
-  border: none;
+  border: none !important;
 }
 
 
@@ -875,8 +883,13 @@ fieldset .form-radio {
   display: block;
   float: left;
   position: relative;
-  margin-right: 18px;
+  margin-right: 15px;
   font-size: 15px;
+}
+
+.last-block-monthwise fieldset .text__c-txt___14ptu
+{
+  max-width:20%;
 }
 
 .last-block-monthwise fieldset :last-child {
@@ -894,7 +907,7 @@ fieldset .form-radio {
 
 .last-block-monthwise fieldset .text__c-txt___14ptu .onBoardingSelect .Select-placeholder {
   line-height: 25px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   color: #8c8c8c;
   text-align: left;
@@ -1082,7 +1095,7 @@ fieldset.right-colblock2 {
 
 .assign-SP-card fieldset {
   display: block;
-  padding:15px;
+  padding: 15px;
   width: 100%;
   position: relative;
   cursor: pointer;
@@ -1300,17 +1313,25 @@ fieldset.right-colblock2 {
   padding-left: 10px;
 }
 
-.search-block_SP span.ProfileIconSearch {
+span.ProfileIconSearch .search-block_SP {
   position: absolute;
   display: block;
   right: 0px;
   margin-right: 33px;
 }
 
+.ServiceTypesWidget.PostSR span.ProfileIconSearch {
+  margin-right: 0px;
+}
+
 .search-block_SP div.ProfileSearchContainer.true {
   width: calc(100% - 66px);
   right: 35px;
   background: #fff;
+}
+
+.ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true {
+  width: calc(100% - 84px);
 }
 
 .search-block_SP div.ProfileSearchContainer.true input {
@@ -1540,11 +1561,6 @@ fieldset.right-colblock2 {
   color: #8c8c8c;
 }
 
-.CustomPOS input.::-ms-input-placeholder {
-  color: #8c8c8c;
-}
-
-
 .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
   color: #8c8c8c;
   opacity: 1;
@@ -1629,8 +1645,25 @@ fieldset.right-colblock2 {
     margin-top: -10px;
   }
 
-}
+  .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
+    color: #8c8c8c;
+  }
 
+  *::-ms-backdrop,
+  .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
+    color: #8c8c8c;
+  }
+
+  .ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true {
+    margin-top: -10px;
+  }
+
+  *::-ms-backdrop,
+  .ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true {
+    margin-top: -10px;
+  }
+
+}
 
 .ServiceRequestsWidget .ServiceRequestBoard {
   width: 50%;
@@ -1662,7 +1695,7 @@ ul.show-more-assignSP li {
 
 
 .full-block-scheduleDate .react-datepicker__input-container input {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .top-search-blocksp .ServicesTitle {
@@ -1708,16 +1741,24 @@ ul.show-more-assignSP li {
   overflow-y: auto;
 }
 
+.CustomPOS h6 {
+  color: #444444;
+}
+
+.CustomPOS .Select-placeholder {
+  color: #8c8c8c;
+}
+
 /*IE-Edge*/
 
 @supports (-ms-ime-align: auto) {
   .last-block-monthwise fieldset input {
     margin-right: 0px;
   }
-  fieldset.right-colblock2
-  {
-   padding-left: 15px;
-   margin-top: -11px;
+
+  fieldset.right-colblock2 {
+    padding-left: 15px;
+    margin-top: -11px;
   }
 }
 
@@ -1731,4 +1772,8 @@ ul.show-more-assignSP li {
     height: calc(100% - 671px);
   }
 
+}
+
+.form-group2block .react-datepicker-wrapper .disable-pointer {
+  cursor: context-menu !important;
 }

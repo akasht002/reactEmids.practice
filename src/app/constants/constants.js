@@ -262,7 +262,8 @@ export const DATE_FORMATS = {
     hhMinSec: "HH:mm:ss",
     hh_mm_a: 'hh:mm a',
     visitFormat:'ddd, DD MMM',
-    mm_dd_yyy: 'MM/DD/YYYY'
+    mm_dd_yyy: 'MM/DD/YYYY',
+    mmmyyy: 'MMM YYYY'
 }
 
 
@@ -489,6 +490,7 @@ export const VISIT_PROCESSING_STATUS = {
     },
     inProgress: {
         id: 44,
+        visitId: 40,
         title: 'In Progress'
     },
     completed: {
@@ -518,7 +520,7 @@ export const FilterActiveTab = {
     "recurring": '9' 
 }
 
-export const ENTITY_SR_STATUS = ['Open', 'Engaged'];
+export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Cancelled'];
 
 export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'InProgress', 'OverDue'];
 
@@ -576,3 +578,5 @@ export const SCHEDULE_TYPES = {
         name: 'Standard'
     }
 }
+
+export const CALENDAR_DASHBOARD_LENGTH = 6;

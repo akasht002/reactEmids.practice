@@ -254,11 +254,12 @@ span.title-view {
     margin-right: 10px;
 }
 
-.SP-viewplantable span {
+.plan-tableview .EntityUServiceProf .SP-viewplantable span {
     color: #222;
     font-weight: 500;
     font-size: 14px;
     text-align: left;
+    max-width: calc(100% - 45px);
 }
 
 .SP-viewplantable span a {

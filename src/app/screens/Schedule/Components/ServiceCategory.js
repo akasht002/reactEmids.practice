@@ -20,7 +20,7 @@ function ServiceCategory(props){
                     props.handleServiceCategory(service.serviceCategoryId)
                 }}
                 />
-                <label className='ServiceCatLink CardBoxes' htmlFor={'ServiceCat' + catNum}>
+                <label className='ServiceCatLink CardBoxes theme-primary' htmlFor={'ServiceCat' + catNum}>
                     <img key={index}
                         src={require(`../../../assets/CategoryImages/${image_url}`)}
                         className="SliderBtnImg" alt=''/>

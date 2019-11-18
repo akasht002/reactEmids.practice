@@ -165,11 +165,11 @@ export function getPersonalDetail () {
 }
 
 export function getSpBusyInVisit () {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     Get(API.getSpBusyInVisit + serviceProviderId)
       .then(resp => {
-        dispatch(getSpBusyInVisitSuccess(resp.data))        //dispatch(endLoading())
+        dispatch(getSpBusyInVisitSuccess(resp.data))
       })
       .catch(err => {
         logError(err)

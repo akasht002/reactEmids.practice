@@ -8,8 +8,8 @@ import {
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { getFields, getLength, getStatus, getServiceTypeImage, isNull } from "../../utils/validations";
-import { ProfileModalPopup, AlertPopup } from "../../components";
+import { getFields, getLength, getStatus, getServiceTypeImage, isNull, getFieldsFirstValue } from "../../utils/validations";
+import { ProfileModalPopup, AlertPopup, StarRating } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
   getQuestionsList,
@@ -20,9 +20,12 @@ import {
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
-import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE } from '../../constants/constants'
+import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE, entityDashboardTab, ENTITY_DASHBOARD_STATUS } from '../../constants/constants'
 import Moment from 'react-moment'
 import { Assessment } from "./assessment";
+import { caseInsensitiveComparer } from "../../utils/comparerUtility";
+import { setServiceProviderFeedbackTab } from "../../redux/dashboard/EntityDashboard/ServiceProvider/actions";
+import { getFullName } from "../../utils/stringHelper";
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -209,6 +212,16 @@ export class VistSummary extends React.Component {
     this.props.onSubmitFeedback();
   };
 
+  getQuestionHiglight = (isAlerted) => {
+    if (isAlerted
+      && ((this.props.entityDashboardActiveTab === entityDashboardTab.serviceProviders)
+        || caseInsensitiveComparer(this.props.activeSubTab, ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.feedBack))
+      ) {
+      return `FeedbackQuestion question-higlight`
+    }
+      return `FeedbackQuestion`
+  }
+
   getFeedback = () => {
     return (
       <div className="FeedbackWidget py-4">
@@ -319,15 +332,27 @@ export class VistSummary extends React.Component {
   getFeedbackContent = data => {
     return (
       <div className='FeedbackWidget'>
-        <div className='FeedbackRating'>
-        </div>
+      {!this.props.isServiceProviderFeedbackTab &&
+          <div className='FeedbackRating'>
+            {this.props.summaryDetails.serviceProvider
+              ? <p>
+                Rated
+                {` ${getFullName(this.props.summaryDetails.serviceProvider.firstName, 
+                 this.props.summaryDetails.serviceProvider.lastName)}`}
+              </p>
+              : ''}
+            <StarRating
+              rating={getLength(this.props.VisitFeedback) > 0 &&
+                getFieldsFirstValue(this.props.VisitFeedback, 'rating')}
+            />
+          </div>}
         {this.props.VisitFeedback.length > 0
           ? <div>
             {this.props.VisitFeedback &&
               this.props.VisitFeedback.map((questionList, i) => {
                 return (
                   <div className='FeedbackQuestionWidget' key={i}>
-                    <p className='FeedbackQuestion'>
+                    <p className={this.getQuestionHiglight(questionList.feedbackAlertStatus)}>
                       {i + 1}. {questionList.question}
                     </p>
                     <div className='FeedbackAnswerWidget'>
@@ -397,7 +422,7 @@ export class VistSummary extends React.Component {
           <div className="VisitSummaryWidget">
             <div className="LeftWidget">
               <div className="LeftContent">
-                <p className="SummaryContentTitle">Service Details</p>
+                <p className="SummaryContentTitle theme-primary">Service Details</p>
                 <div className="row mb-3">
                   <div className="col-md-12 SummaryContentTable">
                     <p className="m-0">
@@ -444,7 +469,7 @@ export class VistSummary extends React.Component {
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">Tasks</span>
                       <div className="SummaryRange SummaryRangeWidget">
-                        <span className="bottomTaskRange">
+                        <span className="bottomTaskRange theme-primary">
                           <i
                             style={{
                               width:
@@ -485,7 +510,7 @@ export class VistSummary extends React.Component {
               <div className="RightContent">
                 {(!isEntity && this.props.isPaymentAvailable) &&
                   <Fragment>
-                    <p className="SummaryContentTitle">Payment Details</p>
+                    <p className="SummaryContentTitle theme-primary">Payment Details</p>
                     <div className="row CostTableWidget">
                       <div className="col-md-8 CostTableContainer Label">
                         <p>
@@ -537,7 +562,7 @@ export class VistSummary extends React.Component {
                         </p>
                       </div>
                     </div>
-                    <div className="row EstimatedCostWidget m-0 mb-4">
+                    <div className="row EstimatedCostWidget m-0 mb-4 theme-primary">
                       <div className="col-md-8 EstimatedCostContainer Label">
                         <p>
                           <span>Estimated Claim</span>
@@ -567,11 +592,21 @@ export class VistSummary extends React.Component {
 
 
 
-                <p className="SummaryContentTitle mb-4">Feedback</p>
+                <p className="SummaryContentTitle mb-4 theme-primary">Feedback</p>
                 <div className="feedbackContainer">
+                {getLength(this.props.VisitFeedback) > 0 && !this.props.isServiceProviderFeedbackTab &&
+                    <p>
+                      Submitted rating:
+                    {' '}
+                      <span className='SPRating'>
+                        <i className='Icon iconFilledStar' />{getLength(this.props.VisitFeedback) > 0 &&
+                          getFieldsFirstValue(this.props.VisitFeedback, 'rating')}
+                      </span>
+                    </p>
+                  }
                   {getLength(this.props.VisitFeedback) > 0 ? (
                     <span
-                      className="FeedbackLink"
+                      className="FeedbackLink theme-primary"
                       onClick={this.toggleShowFeedbackDetails.bind(this)}
                     >
                       Show Feedback
@@ -631,7 +666,8 @@ export function mapDispatchToProps(dispatch) {
     saveAnswerFeedback: data => dispatch(saveAnswerFeedback(data)),
     getServiceProviderRating: data => dispatch(getServiceProviderRating(data)),
     getVisitFeedBack: data => dispatch(getVisitFeedBack(data)),
-    goToSummary: () => dispatch(push(Path.summary))
+    goToSummary: () => dispatch(push(Path.summary)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data))
   };
 }
 
@@ -650,7 +686,11 @@ export function mapStateToProps(state) {
     isLoading: state.visitHistoryState.vistServiceHistoryState.isLoading,
     savedScheduleType: state.visitSelectionState.VisitServiceDetailsState.savedScheduleType,
     assessmentQuestionsList: state.visitHistoryState.vistServiceHistoryState.assessmentQuestionsList,
-    isPaymentAvailable: state.visitSelectionState.VisitServiceDetailsState.isPaymentAvailable
+    isPaymentAvailable: state.visitSelectionState.VisitServiceDetailsState.isPaymentAvailable,
+    entityDashboardActiveTab: state.dashboardState.individualsListState.activeTab,
+    activeSubTab: state.dashboardState.VisitServiceProviderState.activeSubTab,
+    summaryDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceDetails,
+    isServiceProviderFeedbackTab: state.dashboardState.VisitServiceProviderState.isServiceProviderFeedbackTab
   };
 }
 

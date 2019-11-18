@@ -31,6 +31,7 @@ class CoreoTimePicker extends Component {
                         ref={r => this.calendar = r}
                         placeholderText={this.props.placeholderText}
                         readOnly={true}
+                        className={this.props.className}
                     />
                 </label>
             </div>

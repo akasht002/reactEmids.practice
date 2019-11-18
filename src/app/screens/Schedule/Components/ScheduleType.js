@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import { Calendar, CoreoTimePicker } from '../../../components/LevelOne';
 import { formateStateDateValue } from "../../../utils/validations";
-import { getDiffTime, timeDropDownFormat, defaultStartTime, defaultEndTime } from "../../../utils/dateUtility";
+import { timeDropDownFormat, defaultStartTime, defaultEndTime } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS, SCHEDULE_TYPE_OPTIONS, SCHEDULE_RECURRENCE_FIELD } from '../../../constants/constants'
 import moment from 'moment';
+import { durationData } from '../data';
 
 export const ScheduleType = props => {
     let days = props.daysList.map(type => {
@@ -14,6 +15,10 @@ export const ScheduleType = props => {
 
     let weekRecurrings = props.weekRecurring.map(type => {
         return <Item className='ListItem CTDashboard' key={type.id}>{type.value}</Item>;
+    });
+
+    let durationDropdownData = durationData.map(type => {
+        return <Item className='ListItem CTDashboard' key={type.label}>{type.value}</Item>;
     });
 
 
@@ -28,7 +33,7 @@ export const ScheduleType = props => {
                                 <input
                                     type="radio"
                                     id={item.value}
-                                    defaultChecked={props.selectedType === item.booleanValue}
+                                    checked={props.selectedType === item.booleanValue ? 'checked' : ''}
                                     name={item.name}
                                     value={item.value}
                                     className="form-radio-input"
@@ -45,7 +50,7 @@ export const ScheduleType = props => {
             {!props.selectedType &&
 
                 <div className="full-block-scheduleDate">
-                    <div className="col-md-12  p-0 date-blockview">
+                    <div className="col-md-12   date-blockview">
                         <Calendar
                             startDate={props.startDate && formateStateDateValue(props.startDate)}
                             onDateChange={props.dateChanged}
@@ -89,6 +94,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
+                                    className={!props.startTime ? "disable-pointer": ""}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -98,12 +104,20 @@ export const ScheduleType = props => {
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <h4>Duration</h4>
-                                    {
-                                        props.endTime ?
-                                            <h5>{getDiffTime(props.startTime, props.endTime)} Hour(s)</h5>
-                                            :
-                                            <h5> 00:00 Hour(s)</h5>
-                                    }
+                                    <ThemeProvider>
+                                        <SelectField>
+                                            <Select
+                                                placement="bottom"
+                                                options={durationDropdownData}
+                                                onChange={props.handleChangeDuration}
+                                                selectedValue={props.selectedDuration}
+                                                className={'onBoardingSelect'}
+                                                disabled={!props.startTime}
+                                            >
+                                                {props.selectedDuration ? props.selectedDuration : <span className="Select-placeholder pl-0">Select Duration</span>}
+                                            </Select>
+                                        </SelectField>
+                                    </ThemeProvider>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +165,7 @@ export const ScheduleType = props => {
                                                     value={props.dailyDayOccurence}
                                                     maxLength={2}
                                                     autoComplete='off'
-                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.dailyDay)}}                                                                                                                                                      
+                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.dailyDay)}}
                                                 />
                                                 <label>{'Day(s)'}</label>
                                             </fieldset>
@@ -179,7 +193,7 @@ export const ScheduleType = props => {
                                         </div>
                                     </div>
                                     <div className="week-column">
-                                        <fieldset className="parent-col">
+                                        <fieldset className="parent-col theme-primary">
                                             {props.daysList.map(item => {
                                                 return (
                                                     <fieldset>
@@ -362,6 +376,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
+                                    className={!props.startTime ? "disable-pointer": ""}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -372,12 +387,20 @@ export const ScheduleType = props => {
 
                                 <div className="form-group">
                                     <h4>Duration</h4>
-                                    {
-                                        props.endTime ?
-                                            <h5>{getDiffTime(props.startTime, props.endTime)} Hour(s)</h5>
-                                            :
-                                            <h5> 00:00 Hour(s)</h5>
-                                    }
+                                    <ThemeProvider>
+                                        <SelectField>
+                                            <Select
+                                                placement="bottom"
+                                                options={durationDropdownData}
+                                                onChange={props.handleChangeDuration}
+                                                selectedValue={props.selectedDuration}
+                                                className={'onBoardingSelect'}
+                                                disabled={!props.startTime}
+                                            >
+                                                {props.selectedDuration ? props.selectedDuration : <span className="Select-placeholder pl-0">Select Duration</span>}
+                                            </Select>
+                                        </SelectField>
+                                    </ThemeProvider>
                                 </div>
                             </div>
 

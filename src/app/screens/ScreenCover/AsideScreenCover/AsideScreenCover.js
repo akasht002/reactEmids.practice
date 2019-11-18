@@ -40,7 +40,8 @@ class AsideScreenCover extends React.Component {
             routeUrlLink: '/',
             isInvitationCame: false,
             isTelehealthMediaAvailable: false,
-            isCreateVideoConference: false
+            isCreateVideoConference: false,
+            dropdownOpen: false
         }
     }
 
@@ -188,7 +189,7 @@ class AsideScreenCover extends React.Component {
         let menuData = (!getUserInfo().isEntityServiceProvider) ? (isEntityUser() ? EntityUserMenuData : MenuData) : EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
-                <div className={"ProfileLeftWidget " + this.props.isOpen}>
+                <div className={"ProfileLeftWidget theme-primary-gradient " + this.props.isOpen}>
                     <div className='BrandNameWidget'>
                         <div className='BrandName'>
                             <span className='BrandLink'>
@@ -223,7 +224,9 @@ class AsideScreenCover extends React.Component {
                             : require('../../../assets/images/Blank_Profile_icon.png')}
                         toggle={this.props.toggle}
                         onClick={(link) => this.checkIsFormDirty(link)}
-                        dashboardMessageCount={this.props.dashboardMessageCount} />
+                        dashboardMessageCount={this.props.dashboardMessageCount} 
+                        dropdownOpen={this.state.dropdownOpen}
+                        />
 
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
@@ -288,7 +291,7 @@ class AsideScreenCover extends React.Component {
                     }}
                     ModalBody={
                         <div>
-                            <span className='ProfileCardHeaderTitle primaryColor'>
+                            <span className='ProfileCardHeaderTitle theme-primary'>
                                 Improve Your Experience
                             </span>
                             <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>
@@ -307,7 +310,7 @@ class AsideScreenCover extends React.Component {
                     }}
                     ModalBody={
                         <div>
-                            <span className='ProfileCardHeaderTitle primaryColor'>
+                            <span className='ProfileCardHeaderTitle theme-primary'>
                                 Improve Your Experience
                             </span>
                             <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>

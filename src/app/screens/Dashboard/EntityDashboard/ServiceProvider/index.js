@@ -317,7 +317,7 @@ export class ServiceProvider extends Component {
   }
 
   goToSpVisitSummary = (data) => {
-    this.props.setServiceProviderFeedbackTab(true)
+    this.props.setServiceProviderFeedbackTab(false)
     const model = {
       serviceProviderId: this.serviceProviderId,
       visitId: data.servicePlanVisitId
@@ -517,7 +517,7 @@ export class ServiceProvider extends Component {
               closeSearch={this.closeSearch}
             />
           <span
-              className='primaryColor profile-header-filter'
+              className='profile-header-filter theme-primary'
               onClick={this.toggleFilter}
             >
               Filters

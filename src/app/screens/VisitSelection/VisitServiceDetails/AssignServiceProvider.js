@@ -148,7 +148,7 @@ class AssignServiceProvider extends Component {
               </div>
             </Fragment>
             :
-            <span className="SP-viewplantable"  onClick={this.togglePersonalDetails}>
+            <span className="SP-viewplantable theme-primary"  onClick={this.togglePersonalDetails}>
               <img alt="" src={require('../../../assets/images/Blank_Profile_icon.png')}></img>
               <span><a>Assign Provider</a></span>
             </span>

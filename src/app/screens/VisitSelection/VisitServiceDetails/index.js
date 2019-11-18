@@ -26,7 +26,9 @@ import {
   setServicePlanVisitId,
   setPlanScheduleId,
   resetServiceDetails,
-  editIndividualEditPopup
+  editIndividualEditPopup,
+  setEntityDashboard,
+  modifiedPlanId
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
@@ -54,6 +56,8 @@ import {
   USERTYPES,
   CONTACT_NOT_FOUND,
   PHONE_NUMBER_TEXT,
+  SERVICE_REQ_STATUS,
+  DATE_FORMATS,
   DEFAULT_PAGE_NUMBER
 } from '../../../constants/constants';
 import './VisitServiceDetails.css';
@@ -81,6 +85,8 @@ import { allEqual } from '../../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../../utils/formatName';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { saveContextData, createDataStore } from '../../../redux/telehealth/actions';
+import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -111,7 +117,8 @@ export class VisitServiceDetails extends Component {
       phoneNumberModal: false,
       phoneNumber: '',
       conversationsModal: false,
-      conversationErrMsg: ''
+      conversationErrMsg: '',
+      selectedDuration: null
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -128,7 +135,7 @@ export class VisitServiceDetails extends Component {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
       this.props.getServiceRequestList(this.props.patientId);
       this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId);
-      this.props.getSchedulesList(this.props.patientId);
+      (caseInsensitiveComparer(this.props.activeTab, SERVICE_REQUEST_DETAILS_TAB.myPlan)) && this.props.getSchedulesList(this.props.patientId);
       this.props.getDays();
     }
     else {
@@ -146,28 +153,29 @@ export class VisitServiceDetails extends Component {
 
   componentWillUnmount() {
     this.props.resetServiceDetails()
-    this.props.setServicePlanVisitId(0)
+    this.props.setEntityDashboard(false)
   }
 
   componentDidUpdate() {
     if (this.props.isEditIndividualEditPopup) {
       this.setState({
         startDateEdit: this.props.serviceVisitDetails.visitDate,
-        startTime: moment(this.props.serviceVisitDetails.startTime, 'h:mm a'),
-        endTime: moment(this.props.serviceVisitDetails.endTime, 'h:mm a')
+        startTime: moment(this.props.serviceVisitDetails.startTime, DATE_FORMATS.timeh_mm_a),
+        endTime: moment(this.props.serviceVisitDetails.endTime, DATE_FORMATS.timeh_mm_a),
+        selectedDuration: this.props.serviceVisitDetails.duration
       })
       this.props.editIndividualEditPopup(false)
     }
   }
 
-  getVisitFirstAndLastDate = () => {
-    let getISPVisitDate = {
-      serviceRequestId: isEntityUser ? 0 : this.props.ServiceRequestId,
+  getVisitFirstAndLastDate = async() => {
+    let getVisitDate = {
+      serviceRequestId: isEntityUser() ? 0 : this.props.ServiceRequestId,
       patientId: this.props.patientId,
       serviceProviderId: getUserInfo().serviceProviderId
     }
-    !this.props.isEntityDashboard && this.props.getfirstlastvisitdate(getISPVisitDate)
-    this.setState({
+    await !this.props.isEntityDashboard && await this.props.getfirstlastvisitdate(getVisitDate)
+    await this.setState({
       startDate: this.props.visitDate && this.props.visitDate.startVisitDateForWeb,
       endDate: this.props.visitDate && this.props.visitDate.endVisitDateForWeb
     })
@@ -180,9 +188,8 @@ export class VisitServiceDetails extends Component {
   }
 
   getVisitList = () => {
-    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     const data = {
-      planScheduleIds: this.selectedSchedules,
+      planScheduleIds: this.props.planId,
       visitStatuses: [],
       serviceTypes: [],
       pageNumber: PAGE_NO,
@@ -197,14 +204,16 @@ export class VisitServiceDetails extends Component {
   }
 
   toggle = (tab) => {
-    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
-    if (this.state.activeTab !== tab) {
-      this.setState({ activeTab: tab, activePage: 1 })
-      this.props.setActivePage(DEFAULT_PAGE_NUMBER)
-    }
+    let {startVisitDateForWeb, endVisitDateForWeb} = this.props.visitDate;
     if (tab === SERVICE_REQUEST_DETAILS_TAB.myPlan) {
-      this.getVisitList()
+      this.props.getSchedulesList(this.props.patientId);
     }
+    this.setState({
+      activeTab: tab, 
+      activePage: DEFAULT_PAGE_NUMBER,
+      startDate: startVisitDateForWeb,
+      endDate: endVisitDateForWeb
+    })
   }
 
   handelDetails = (serviceRequestId) => {
@@ -238,8 +247,10 @@ export class VisitServiceDetails extends Component {
 
   accept = () => {
     let model = {
+      patientId: this.props.patientId,
       serviceRequestId: this.state.serviceRequestId,
     }
+    this.setState({ isAcceptAlertPopupOpen: false })
     this.props.acceptservicerequest(model)
   }
 
@@ -258,7 +269,7 @@ export class VisitServiceDetails extends Component {
 
   getModalData = (pageNumber, pageSize, isReset = false) => {
     let data = {
-      planScheduleIds: this.selectedSchedules,
+      planScheduleIds: this.props.planId,
       visitStatuses: isReset ? [] : this.state.serviceStatus,
       serviceTypes: isReset ? [] : this.state.serviceTypes,
       pageNumber: pageNumber,
@@ -271,20 +282,11 @@ export class VisitServiceDetails extends Component {
     this.props.getVisitList(data);
   }
 
-  handleChangeSchedule = (e) => {
+  handleChangeSchedule = async (e) => {
+    await this.props.modifiedPlanId(this.props.planId, e.target.id)
     this.setState({ activePage: 1 })
-    this.props.setActivePage(DEFAULT_PAGE_NUMBER)
-    if (e.target.checked) {
-      this.selectedSchedules.push(parseInt(e.target.id, 0))
-    }
-    else {
-      this.selectedSchedules.splice(this.selectedSchedules.findIndex(function (item) {
-        return item === parseInt(e.target.id, 0);
-      }), 1);
-    }
-
     const data = {
-      planScheduleIds: this.selectedSchedules,
+      planScheduleIds: this.props.planId,
       visitStatuses: [],
       serviceTypes: [],
       pageNumber: PAGE_NO,
@@ -294,11 +296,10 @@ export class VisitServiceDetails extends Component {
       patientId: this.props.patientId,
       entityServiceProviders: this.state.entityServiceProviders
     }
-    this.props.getVisitList(data);
+    await this.props.getVisitList(data);
   }
 
   pageNumberChange = (pageNumber) => {
-    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     this.setState({ activePage: pageNumber })
     this.props.setActivePage(pageNumber)
     this.getModalData(pageNumber, this.state.rowPageSize)
@@ -392,7 +393,6 @@ export class VisitServiceDetails extends Component {
   }
 
   applyFilter = () => {
-    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     this.setState({
       filterOpen: !this.state.filterOpen,
       activePage: PAGE_NO,
@@ -409,8 +409,8 @@ export class VisitServiceDetails extends Component {
       filterOpen: false,
       serviceStatus: [],
       serviceTypes: [],
-      startDate: null,
-      endDate: null,
+      startDate: this.props.visitDate && this.props.visitDate.startVisitDateForWeb,
+      endDate: this.props.visitDate && this.props.visitDate.endVisitDateForWeb,
       rowPageSize: DEFAULT_PAGE_SIZE,
       activePage: PAGE_NO,
       entityServiceProviders: [],
@@ -485,16 +485,17 @@ export class VisitServiceDetails extends Component {
 
   handleChangeEndTime = (event) => {
     this.formatedEndTime = getHourMin(event)
-    this.setState({ endTime: event });
+    let selectedDuration = getDiffTime(this.state.startTime, this.formatedEndTime);
+    this.setState({endTime: event, selectedDuration: selectedDuration});
   }
 
   handleChangeStartTime = (event) => {
     this.formatedStartTime = getHourMin(event)
-    this.setState({ startTime: event });
+    let selectedDuration = getDiffTime(this.formatedStartTime,this.state.endTime);
+    this.setState({startTime: event, selectedDuration: selectedDuration});
   }
 
   onSubmitAssignServiceProvider = async (data) => {
-    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     await this.props.assignESP(data)
     await this.getModalData(this.props.activePage, this.state.rowPageSize)
   }
@@ -549,11 +550,13 @@ export class VisitServiceDetails extends Component {
   }
 
 
-  visitProcessing = data => {
+  visitProcessing = (data, scheduleTypeId) => {
+    let isAssessmentVisit = scheduleTypeId === VISIT_TYPE.assessment;
+    let startOrStop = true;
     this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy ?
       this.setState({ standByModeAlertMsg: true })
       :
-      this.props.getPerformTasksList(data, true)
+      this.props.getPerformTasksList(data, startOrStop, isAssessmentVisit)
     this.props.formDirty();
     this.props.formDirtyFeedback();
     this.props.formDirtyPerformTask();
@@ -588,13 +591,14 @@ export class VisitServiceDetails extends Component {
   }
 
   navigateToparticularPageBasedonId = visitList => {
+    this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
     this.props.saveScheduleType(visitList.scheduleTypeId)
     let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
     switch (visitList.visitStatusId) {
       case VISIT_STATUS.startVisit.id:
-        return this.visitProcessing(visitId)
+        return this.visitProcessing(visitId, visitList.scheduleTypeId)
       case VISIT_STATUS.inProgress.id:
-        return this.visitProcessing(visitId)
+        return this.visitProcessing(visitId, visitList.scheduleTypeId)
       case VISIT_STATUS.completed.id:
         return this.visitSummary(visitId, visitList.assignedServiceProviderId, visitList.scheduleTypeId)
       case VISIT_STATUS.paymentPending.id:
@@ -651,7 +655,6 @@ export class VisitServiceDetails extends Component {
       endTime: this.formatedEndTime ? this.formatedEndTime : getHHMMformat(this.state.endTime),
       duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime)
     }
-    this.selectedSchedules = this.props.scheduleList.map(data => data.planScheduleId);
     if (!saveVisitEdit) {
       await this.props.updateServiceVisit(model)
       await this.getModalData(this.props.activePage, this.state.rowPageSize)
@@ -732,7 +735,7 @@ highlightVisit = data => {
       <div className="row">
         <div className="col-md-12 mb-2">
           <div className="full-block-scheduleDate">
-            <div className="col-md-12  p-0 date-blockview">
+            <div className="col-md-12 date-blockview">
               <Calendar
                 startDate={this.state.startDateEdit && formateStateDateValue(this.state.startDateEdit)}
                 onDateChange={this.dateChangedEdit}
@@ -779,11 +782,11 @@ highlightVisit = data => {
                 </div>
                 <div className="form-group">
                   <h4>Duration</h4>
-                  <h5>{getDiffTime(this.state.startTime, this.state.endTime)} Hour(s)</h5>
+                  <h5>{this.state.selectedDuration} Hour(s)</h5>
                 </div>
               </div>
               <div className="top-search-blocksp">
-                <h2 class="ServicesTitle">Assign Service Provider</h2>
+                <h2 class="ServicesTitle theme-primary">Assign Service Provider</h2>
                 <div className="search-block_SP">
                   <Search
                     toggleSearch={this.toggleSearch}
@@ -805,7 +808,7 @@ highlightVisit = data => {
               {!this.props.disableShowmore &&
                 <ul className="show-more-assignSP">
                   <li
-                    class="list-group-item ProfileShowMore"
+                    class="list-group-item ProfileShowMore theme-primary-light"
                     onClick={this.clickShowMore}
                     disabled={this.props.disableShowmore}
                   >
@@ -857,7 +860,7 @@ highlightVisit = data => {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : this.props.VisitServiceDetails.statusId === 38 ? true : false;
+    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : (this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.HIRED || this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.CLOSED) ? true : false;
     let updatedTabdata = this.props.ServiceRequestId === 0 ?
       tabdata.slice(1, tabdata.length) :
       isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
@@ -938,6 +941,7 @@ highlightVisit = data => {
                   servicePlanVisitId={this.props.servicePlanVisitId}
                   planScheduleId={this.props.planScheduleId}
                   highlightVisit={this.highlightVisit}
+                  visitServiceDetails={this.props.VisitServiceDetails}
                 />
                 <PatientProfileTab
                   showPhoneNumber={this.showPhoneNumber}
@@ -1060,7 +1064,7 @@ export function mapDispatchToProps(dispatch) {
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
     getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data)),
     getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
-    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
+    getPerformTasksList: (data, startOrStop, isAssessmentVisit) => dispatch(getPerformTasksList(data, startOrStop, isAssessmentVisit)),
     formDirty: () => dispatch(formDirty()),
     formDirtyFeedback: () => dispatch(formDirtyFeedback()),
     formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),
@@ -1090,7 +1094,10 @@ export function mapDispatchToProps(dispatch) {
     setServicePlanVisitId: data => dispatch(setServicePlanVisitId(data)),
     setPlanScheduleId: data => dispatch(setPlanScheduleId(data)),
     resetServiceDetails: () => dispatch(resetServiceDetails()),
-    editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data))
+    editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data)),
+    setEntityDashboard: data => dispatch(setEntityDashboard(data)),
+    modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData))
+
   }
 }
 
@@ -1121,7 +1128,8 @@ export function mapStateToProps(state) {
     servicePlanVisitId: VisitServiceDetailsState.servicePlanVisitId,
     activePage: VisitServiceDetailsState.activePage,
     planScheduleId: VisitServiceDetailsState.planScheduleId,
-    isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup
+    isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup,
+    planId: VisitServiceDetailsState.planId
   }
 }
 

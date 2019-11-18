@@ -317,10 +317,11 @@ export class Individuals extends Component {
     this.setState({ activePageFeedback: pageNumber })
     const model = {
       patientId: this.state.patientId,
-      pageNumber: pageNumber,
+      pageNumber: this.state.pageNumberFeedback,
       pageSize: DEFAULT_PAGE_SIZE,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate,
+      serviceProviderId: getUserInfo().serviceProviderId
     }
     this.props.getIndividualsFeedbackList(model);
   }
@@ -353,7 +354,7 @@ export class Individuals extends Component {
         this.setState({
           feedbackAlertModal: !this.state.feedbackAlertModal,
           feedbackServiceVisits: this.props.individualsFeedbackList,
-          patientId: data.individualId
+          patientId: data.patientId
         })
         break;
       default:
@@ -373,7 +374,7 @@ export class Individuals extends Component {
   }
 
   goToPgVisitSummary = (data) => {
-    this.props.setServiceProviderFeedbackTab(false)
+    this.props.setServiceProviderFeedbackTab(true)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
@@ -531,7 +532,7 @@ export class Individuals extends Component {
               handleSearchData={this.handleSearchData}
               closeSearch={this.closeSearch}
             />
-          <span className='profile-header-filter'
+          <span className='profile-header-filter theme-primary'
               onClick={this.toggleFilter}
             >
               Filters

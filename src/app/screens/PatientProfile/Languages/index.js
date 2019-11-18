@@ -29,7 +29,7 @@ class Languages extends React.Component {
     return (
       <div className='col-md-12 card CardWidget SPLanguages'>
         <div className='SPCardTitle d-flex'>
-          <h4 className='primaryColor'>Languages Spoken</h4>
+          <h4 className='theme-primary'>Languages Spoken</h4>
         </div>
         <div className='SPCertificateContainer width100'>
           {this.props.selectedLanguagesList.languages &&

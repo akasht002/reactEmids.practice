@@ -521,8 +521,8 @@ export class VisitServiceList extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"BlockProfileContainer " + (serviceList.statusId == SERVICE_REQ_STATUS.HIRED ? '' : 'noArrow')} onClick={() => {
-                                if (serviceList.statusId == SERVICE_REQ_STATUS.HIRED) {
+                            <div className={"BlockProfileContainer " + (serviceList.statusId === SERVICE_REQ_STATUS.HIRED ? '' : 'noArrow')} onClick={() => {
+                                if (serviceList.statusId === SERVICE_REQ_STATUS.HIRED) {
                                     this.props.setPatient(serviceList.patientId)
                                     this.props.goToPatientProfile()
                                 }
@@ -553,7 +553,7 @@ export class VisitServiceList extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>               
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>View Requests</h5>
+                        <h5 className='theme-primary m-0'>View Requests</h5>
                     </div>
                     <div className='ProfileHeaderOptions'>
                         {/* <ThemeProvider>
@@ -586,7 +586,7 @@ export class VisitServiceList extends Component {
                             handleSearchData={this.handleSearchData}
                             closeSearch={this.closeSearch}
                         />
-                        <span className='primaryColor ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
+                        <span className='theme-primary ProfileHeaderFilter' onClick={this.toggleFilter}>Filters</span>
                     </div>
                 </div>
                 {this.props.isLoading && <Preloader />}
@@ -595,7 +595,7 @@ export class VisitServiceList extends Component {
                         {visitList}
                     </div>
                     {this.props.visitServiceList.length > 0 && !this.sort && (!this.props.FilterDataCount || this.props.SearchDataCount) && (
-                        <div className="col-md-12 p-0 AsyncConversationPagination">
+                        <div className="col-md-12 p-0 AsyncConversationPagination theme-primary">
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
@@ -610,7 +610,7 @@ export class VisitServiceList extends Component {
                         </div>
                     )}
                     {this.props.visitServiceList.length > 0 && this.sort && !this.props.FilterDataCount && (
-                        <div className="col-md-12 p-0 AsyncConversationPagination">
+                        <div className="col-md-12 p-0 AsyncConversationPagination theme-primary">
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
@@ -625,7 +625,7 @@ export class VisitServiceList extends Component {
                         </div>
                     )}
                     {this.props.visitServiceList.length > 0 && this.props.FilterDataCount && (
-                        <div className="col-md-12 p-0 AsyncConversationPagination">
+                        <div className="col-md-12 p-0 AsyncConversationPagination theme-primary">
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={this.state.pageSize}
