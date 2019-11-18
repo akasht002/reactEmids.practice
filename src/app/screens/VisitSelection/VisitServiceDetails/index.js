@@ -720,7 +720,7 @@ export class VisitServiceDetails extends Component {
       <div className="row">
         <div className="col-md-12 mb-2">
           <div className="full-block-scheduleDate">
-            <div className="col-md-12  p-0 date-blockview">
+            <div className="col-md-12 date-blockview">
               <Calendar
                 startDate={this.state.startDateEdit && formateStateDateValue(this.state.startDateEdit)}
                 onDateChange={this.dateChangedEdit}

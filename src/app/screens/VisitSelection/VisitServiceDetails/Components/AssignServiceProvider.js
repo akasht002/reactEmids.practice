@@ -15,7 +15,7 @@ export const AssignServiceProvider = props => {
                                 <Fragment>
                                     <div className="assign-SP-card">
                                         <div className="card">
-                                            <fieldset>
+                                            <fieldset className={item.selected === true && 'selected-box-border'}>
                                                 <div className="checkblock">
                                                     <input
                                                         type="radio"
