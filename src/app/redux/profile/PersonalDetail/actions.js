@@ -157,9 +157,11 @@ export function getPersonalDetail () {
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
         dispatch(getServiceArea());
+        dispatch(endLoading())
       })
       .catch(err => {
         logError(err)
+        dispatch(endLoading())
       })
   }
 }
