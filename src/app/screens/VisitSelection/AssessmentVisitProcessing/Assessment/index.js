@@ -222,7 +222,7 @@ export class Assessment extends Component {
                 {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Visit Processing</h5>
+                        <h5 className='theme-primary m-0'>Visit Processing</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -230,7 +230,7 @@ export class Assessment extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span>

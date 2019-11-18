@@ -241,7 +241,7 @@ class Profile extends Component {
           <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
             {this.props.isLoading && <Preloader/>}
-            <div className='width100 topWidgetBG' />
+            <div className='width100 topWidgetBG theme-primary-gradient' />
             <div className='container mainProfileContent bgWhite'>
               <div className='row d-flex-view justify-content-center m-auto'>
                 <div className='col-md-12'>

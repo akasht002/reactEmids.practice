@@ -46,10 +46,10 @@ class MyConversation extends React.Component {
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
-            <span className='ProfileCardHeaderTitle primaryColor'>
+            <span className='ProfileCardHeaderTitle theme-primary'>
               My Conversations
             </span>
-           { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>}
+           { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink theme-primary' to='/messagesummary'>View all</Link>}
           </div>
           <div className='topPalette ProfileConversation'>
             <ul className='list-group ProfileConversationWidget'>

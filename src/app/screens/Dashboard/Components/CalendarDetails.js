@@ -27,7 +27,7 @@ export const calenderDetails = (props,conversations,options,index) => {
      <span className="ServicesCalendarWidget" onClick={() => {
          props.handleClick(conversations, SERVICE_REQUEST_DETAILS_TAB.myPlan)
        }}>
-       <span className='ServicesTitle'>
+       <span className='ServicesTitle theme-primary'>
          {conversations.serviceTypes &&
            conversations.serviceTypes.join(', ')}
        </span>      

@@ -7,7 +7,7 @@ export default class Progressbar extends React.Component {
         return (
             <div className='visitListTask'>
                 <span className='bottomTaskName'>Tasks</span>
-                <span className='bottomTaskRange'>
+                <span className='bottomTaskRange theme-primary'>
                     <i
                         style={{ width: progress_bar + '%' }}
                         className='bottomTaskCompletedRange'

@@ -9,9 +9,9 @@ export const StatCard = props => {
             <div className="filter-card-content">
                 <input id={item.statusName + item.subtext} name={item.subtext} className="card-filter-input" type="radio" value={item.statusName}
                     onClick={props.getTable} checked={props.status === item.statusName} />
-                <label htmlFor={item.statusName + item.subtext} className="card-filter-label">
+                <label htmlFor={item.statusName + item.subtext} className="card-filter-label theme-primary-light">
                     <div className="filter-label-content">
-                        <span className="filter-label-title"><i>{item.totalCount}</i> {item.subtext}</span>
+                        <span className="filter-label-title theme-primary"><i>{item.totalCount}</i> {item.subtext}</span>
                         <span className="filter-label-sub">{item.label}</span>
                     </div>
                     <div className="top-tabicons-block">

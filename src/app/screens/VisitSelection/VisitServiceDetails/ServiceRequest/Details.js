@@ -85,7 +85,7 @@ export const Details = props => {
                     <div className={'SPAvailTitle'}>
                         <label className='SPAvailTitleText'>{days.day}</label>
                     </div>
-                    <div className={'SPAvailContent'}>
+                    <div className={'SPAvailContent theme-primary-light'}>
                         <label className={'SPAvailItems ' + (days.slotDescription.includes(MORNING) ? 'active' : '')}>{MORNING}</label>
                         <label className={'SPAvailItems ' + (days.slotDescription.includes(AFTERNOON) ? 'active' : '')}>{AFTERNOON}</label>
                         <label className={'SPAvailItems ' + (days.slotDescription.includes(EVENING) ? 'active' : '')}>{EVENING}</label>
@@ -104,11 +104,11 @@ export const Details = props => {
         <Fragment>
             <div className='ServiceContent'>
                 <div className='ServiceCategoryContent'>
-                    <h2 className='ServicesTitle'>Service Category</h2>
+                    <h2 className='ServicesTitle theme-primary'>Service Category</h2>
                     <p className='ScheduleTypeTitle'>
                         {props.details.serviceCategoryDescription}
                     </p>
-                    <h2 className='ServicesTitle'>Service Types</h2>
+                    <h2 className='ServicesTitle theme-primary'>Service Types</h2>
                     <div className='ServiceType visit-srq-slider WhiteBG'>
                         <div className='ServiceTypesSlider Summary'>
                             <Carousel className="ServiceTypesSlider">
@@ -116,13 +116,13 @@ export const Details = props => {
                             </Carousel>
                         </div>
                     </div>
-                    <h2 className='ServicesTitle'>
+                    <h2 className='ServicesTitle theme-primary'>
                         Additional Information
                           </h2>
                     <p className='AdditionInfo  mb-4'>
                         {props.details.serviceRequestDescription}
                     </p>
-                    <h2 className='ServicesTitle'>
+                    <h2 className='ServicesTitle theme-primary'>
                         Schedule and Frequency
                           </h2>
                     <div className='ContentTitle Summary'>
@@ -172,7 +172,7 @@ export const Details = props => {
                             {availDays}
                         </div>
                     </div>
-                    <h2 className='ServicesTitle'>Point of Service</h2>
+                    <h2 className='ServicesTitle theme-primary'>Point of Service</h2>
                     <div className='SummaryContent POS mb-4'>
                         {props.details.patient &&
                             props.details.patient

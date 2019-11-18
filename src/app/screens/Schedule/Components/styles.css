@@ -50,7 +50,7 @@
 }
 
 .Plan-typebar fieldset label:hover {
-  border: none;
+  border: none !important;
 }
 
 .Plan-typebar fieldset .form-radio-input:checked~.form-radio-label {
@@ -833,7 +833,7 @@ fieldset .form-radio {
 }
 
 .recurr_pattern_radioblock .form-radio-label:hover {
-  border: none;
+  border: none !important;
 }
 
 
