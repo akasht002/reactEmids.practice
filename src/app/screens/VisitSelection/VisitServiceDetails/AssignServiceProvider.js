@@ -32,7 +32,7 @@ class AssignServiceProvider extends Component {
           autoComplete='false'
           required='required'
           type='text'
-          placeholder='search'
+          placeholder='Enter keyword to Search'
           className='form-control searchParticipants'
           textChange={(e) => {
             this.onchangeSearchServiceProvider(e)
@@ -148,7 +148,7 @@ class AssignServiceProvider extends Component {
               </div>
             </Fragment>
             :
-            <span className="SP-viewplantable"  onClick={this.togglePersonalDetails}>
+            <span className="SP-viewplantable theme-primary"  onClick={this.togglePersonalDetails}>
               <img alt="" src={require('../../../assets/images/Blank_Profile_icon.png')}></img>
               <span><a>Assign Provider</a></span>
             </span>

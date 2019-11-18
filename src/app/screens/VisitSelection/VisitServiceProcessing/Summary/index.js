@@ -285,7 +285,7 @@ export class Summary extends Component {
                 {this.props.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -293,7 +293,7 @@ export class Summary extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -341,7 +341,7 @@ export class Summary extends Component {
                                 <div className="VisitSummaryWidget">
                                     <div className="LeftWidget">
                                         <div className="LeftContent">
-                                            <p className="SummaryContentTitle">Service Visit Details</p>
+                                            <p className="SummaryContentTitle theme-primary">Service Visit Details</p>
                                             <div className="row">
                                                 <div className="col-md-8">
                                                     <p className="CategoryName">
@@ -356,13 +356,13 @@ export class Summary extends Component {
                                                 </div>
                                                 <div className="col-md-4 SummaryRange">
                                                     <span className="bottomTaskName">Tasks</span>
-                                                    <span className="bottomTaskRange">
+                                                    <span className="bottomTaskRange theme-primary">
                                                         <i style={{ width: completedTaskPercent + '%' }} className="bottomTaskCompletedRange" />
                                                     </span>
                                                     <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                 </div>
                                             </div>
-                                            <p className="SummaryContentTitle">Payment Details</p>
+                                            <p className="SummaryContentTitle theme-primary">Payment Details</p>
 
                                             <div className="row CostTableWidget">
                                                 {!this.state.signatureImage ?
@@ -400,7 +400,7 @@ export class Summary extends Component {
                                             {getUserInfo().isEntityServiceProvider ?
                                                 ''
                                                 :
-                                                <div className="row EstimatedCostWidget">
+                                                <div className="row EstimatedCostWidget theme-primary">
                                                     <div className="col-md-8 EstimatedCostContainer Label">
                                                         <p><span>Estimated Claim</span>
                                                         </p>
@@ -425,7 +425,7 @@ export class Summary extends Component {
                                     </div>
                                     <div className="RightWidget">
                                         <div className="RightContent">
-                                            <p className="SummaryContentTitle">Customer Signature</p>
+                                            <p className="SummaryContentTitle theme-primary">Customer Signature</p>
                                             <p>Put your signature inside the box</p>
                                             <div id="signatureWidget" className={"SignatureColumn"} onMouseUp={this.onMouseUp} onClick={this.onClickSignaturePad}>
                                                 {this.props.signatureImage && this.props.signatureImage.signature ?

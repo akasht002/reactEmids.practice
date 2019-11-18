@@ -8,7 +8,7 @@ export const Footer = (props) => {
         <div className='bottomButton'>
             <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                 <span className="bottomTaskName">Tasks</span>
-                <span className="bottomTaskRange">
+                <span className="bottomTaskRange theme-primary">
                     <i style={{ width: props.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
                 </span>
                 <span className="bottomTaskPercentage">{props.percentageCompletion && props.percentageCompletion}%</span>

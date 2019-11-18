@@ -769,7 +769,7 @@ export class VisitServiceDetails extends Component {
                 </div>
               </div>
               <div className="top-search-blocksp">
-                <h2 class="ServicesTitle">Assign Service Provider</h2>
+                <h2 class="ServicesTitle theme-primary">Assign Service Provider</h2>
                 <div className="search-block_SP">
                   <Search
                     toggleSearch={this.toggleSearch}
@@ -791,7 +791,7 @@ export class VisitServiceDetails extends Component {
               {!this.props.disableShowmore &&
                 <ul className="show-more-assignSP">
                   <li
-                    class="list-group-item ProfileShowMore"
+                    class="list-group-item ProfileShowMore theme-primary-light"
                     onClick={this.clickShowMore}
                     disabled={this.props.disableShowmore}
                   >

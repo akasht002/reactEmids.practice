@@ -98,11 +98,11 @@ class EntityDashboard extends Component {
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle entity-dashboard-topview'>
             <div className='ProfileHeaderLeft'>
-              <h5 className='primaryColor m-0'>Dashboard</h5>
+              <h5 className='theme-primary m-0'>Dashboard</h5>
             </div>
             <div className='ProfileHeaderRight'>
               <div>
-                <div className='entity-date-filter'>
+                <div className='entity-date-filter theme-primary'>
                   <Calendar
                     startDate={
                       this.state.fromDate &&
@@ -116,7 +116,7 @@ class EntityDashboard extends Component {
                     disabled={disableDate}
                   />
                 </div>
-                <div className='entity-date-filter'>
+                <div className='entity-date-filter theme-primary'>
                   <Calendar
                     startDate={
                       this.state.toDate && formateStateDate(this.state.toDate)
@@ -129,7 +129,7 @@ class EntityDashboard extends Component {
                     disabled={disableDate}
                   />
                 </div>
-                <div className='entity-date-filter'>
+                <div className='entity-date-filter theme-primary'>
                   <button
                     className='btn btn-outline-primary CTHeaderFilterToday'
                     onClick={this.todaysDate}

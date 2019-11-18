@@ -17,7 +17,7 @@ export const ServiceCalendarInfo = props => {
             <i className={'ServicesTime ' + conversations.slotDescription} />
           </div>
           <div className='ProfileServices'>
-            <span className='ServicesTitle'>
+            <span className='ServicesTitle theme-primary'>
               {conversations.serviceTypes &&
                 conversations.serviceTypes.toString()}
             </span>
@@ -91,7 +91,7 @@ export const ServiceProviderRequestDetails = props => {
                 props.handleClick(sp.serviceRequestId)
               }}
             >
-              <span className='ServicesTitle'>
+              <span className='ServicesTitle theme-primary'>
                 {sp.serviceRequestTypeDetails &&
                   getFields(
                     sp.serviceRequestTypeDetails,
@@ -208,7 +208,7 @@ export const MyConversionDetail = props => {
                 } else if (index === 2) {
                   return (
                     <div className='avatarContainer'>
-                      <div key={index} className='avatarImage totalMembers'>
+                      <div key={index} className='avatarImage totalMembers theme-primary-light'>
                         {'+' + (conversations.participantList.length - 2)}
                       </div>
                     </div>
@@ -256,8 +256,8 @@ export const MyConversionDefault = () => {
           </div>
           <div className='MsgThreadContent m-auto'>
           <div class="no-blockinfo-top">
-          <div className="NoProfileServices No-Coverastion-Block">
-          <span class="NoInfoText"><span class="NoServiceInfoLink primaryColor">New Coverastion</span></span>
+          <div className="NoProfileServices No-Coverastion-Block theme-primary-light">
+          <span class="NoInfoText"><span class="NoServiceInfoLink theme-primary">New Coverastion</span></span>
           </div>
            </div>
           </div>

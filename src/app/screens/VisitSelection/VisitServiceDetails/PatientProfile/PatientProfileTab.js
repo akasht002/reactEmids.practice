@@ -10,7 +10,7 @@ export const PatientProfileTab = props => {
     return (
         <Fragment>
             <TabPane tabId='3' className='TabBody'>
-            <div className="colorblock"></div>
+            <div className="colorblock theme-primary-gradient"></div>
              <div className="my-patientblock">   
             <PersonalDetail 
              showPhoneNumber={props.showPhoneNumber}

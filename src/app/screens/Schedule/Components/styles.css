@@ -50,7 +50,7 @@
 }
 
 .Plan-typebar fieldset label:hover {
-  border: none;
+  border: none !important;
 }
 
 .Plan-typebar fieldset .form-radio-input:checked~.form-radio-label {
@@ -535,7 +535,7 @@ fieldset .form-radio {
   border: none;
   border-bottom: 1px solid #e1e1e1;
   width: 100%;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 35px;
 }
 
@@ -833,7 +833,7 @@ fieldset .form-radio {
 }
 
 .recurr_pattern_radioblock .form-radio-label:hover {
-  border: none;
+  border: none !important;
 }
 
 
@@ -894,7 +894,7 @@ fieldset .form-radio {
 
 .last-block-monthwise fieldset .text__c-txt___14ptu .onBoardingSelect .Select-placeholder {
   line-height: 25px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   color: #8c8c8c;
   text-align: left;
@@ -1300,17 +1300,28 @@ fieldset.right-colblock2 {
   padding-left: 10px;
 }
 
-.search-block_SP span.ProfileIconSearch {
+span.ProfileIconSearch
+.search-block_SP  {
   position: absolute;
   display: block;
   right: 0px;
   margin-right: 33px;
 }
 
+.ServiceTypesWidget.PostSR span.ProfileIconSearch
+{
+  margin-right: 0px;
+}
+
 .search-block_SP div.ProfileSearchContainer.true {
   width: calc(100% - 66px);
   right: 35px;
   background: #fff;
+}
+
+.ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true
+{
+  width: calc(100% - 84px);
 }
 
 .search-block_SP div.ProfileSearchContainer.true input {
@@ -1629,6 +1640,15 @@ fieldset.right-colblock2 {
     margin-top: -10px;
   }
 
+  .ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true {
+    margin-top: -10px;
+  }
+
+  *::-ms-backdrop,
+  .ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true {
+    margin-top: -10px;
+  }
+
 }
 
 
@@ -1662,7 +1682,7 @@ ul.show-more-assignSP li {
 
 
 .full-block-scheduleDate .react-datepicker__input-container input {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .top-search-blocksp .ServicesTitle {
@@ -1708,6 +1728,16 @@ ul.show-more-assignSP li {
   overflow-y: auto;
 }
 
+.CustomPOS h6
+{
+  color:#444444;
+}
+
+.CustomPOS .Select-placeholder
+{
+color: #8c8c8c;
+}
+
 /*IE-Edge*/
 
 @supports (-ms-ime-align: auto) {
@@ -1731,4 +1761,8 @@ ul.show-more-assignSP li {
     height: calc(100% - 671px);
   }
 
+}
+
+.form-group2block .react-datepicker-wrapper .disable-pointer{
+  cursor:context-menu !important;
 }
