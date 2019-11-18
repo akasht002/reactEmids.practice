@@ -667,11 +667,24 @@
     margin-right: 0px !important;
 }
 
-.right-block-view .ServiceTypeList input:checked + label, .right-block-view .ServiceTypeLink:hover
-{
-   cursor: context-menu;
-   border-color: #d1d1d1;
+.right-block-view .ServiceTypeList .ServiceTypeLink:hover {
+    cursor: context-menu;
 }
+
+.right-block-view .availabilityCheck~label:hover,
+.right-block-view .availabilityCheck:checked~label,
+.right-block-view .SPAvailItems.active {
+    cursor: context-menu !important;
+}
+
+.right-block-view .SPAvailContent .SPAvailItems {
+    cursor: context-menu !important;
+}
+
+.right-block-view .SPAvailTitleText {
+    cursor: context-menu !important;
+}
+
 
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
@@ -763,7 +776,7 @@
     }
 
     .my-plan-editmodel .assign-sp-block {
-        position:relative;
+        position: relative;
         flex-direction: row;
         justify-content: flex-start;
         clear: both;
@@ -771,20 +784,20 @@
 
     *::-ms-backdrop,
     .my-plan-editmodel .assign-sp-block {
-        position:relative;
+        position: relative;
         flex-direction: row;
         justify-content: flex-start;
         clear: both;
     }
 
     .my-plan-editmodel .assign-sp-block .assign-SP-card {
-        padding-left:10px;
-        padding-right:10px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     *::-ms-backdrop,
     .my-plan-editmodel .assign-sp-block .assign-SP-card {
-        padding-left:10px;
-        padding-right:10px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }

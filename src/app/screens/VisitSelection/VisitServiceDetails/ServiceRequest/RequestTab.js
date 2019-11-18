@@ -31,7 +31,7 @@ export const RequestTab = props => {
                             {statusName === VISIT_STATUS.requested.keyValue &&
                                 <div className="btn-right-view">
                                     <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelReject(props.VisitServiceDetails.serviceRequestId)}>Reject</button>
-                                    <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelAccept(props.VisitServiceDetails.serviceRequestId)}>Accept</button>
+                                    <button class="btn btn-primary right_statusview" onClick={() => props.handelAccept(props.VisitServiceDetails.serviceRequestId)}>Accept</button>
                                 </div>
                             }
                             {statusName === VISIT_STATUS.open.keyValue &&

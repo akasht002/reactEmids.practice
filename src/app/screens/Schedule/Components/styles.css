@@ -1082,7 +1082,7 @@ fieldset.right-colblock2 {
 
 .assign-SP-card fieldset {
   display: block;
-  padding:15px;
+  padding: 15px;
   width: 100%;
   position: relative;
   cursor: pointer;
@@ -1300,16 +1300,14 @@ fieldset.right-colblock2 {
   padding-left: 10px;
 }
 
-span.ProfileIconSearch
-.search-block_SP  {
+span.ProfileIconSearch .search-block_SP {
   position: absolute;
   display: block;
   right: 0px;
   margin-right: 33px;
 }
 
-.ServiceTypesWidget.PostSR span.ProfileIconSearch
-{
+.ServiceTypesWidget.PostSR span.ProfileIconSearch {
   margin-right: 0px;
 }
 
@@ -1319,8 +1317,7 @@ span.ProfileIconSearch
   background: #fff;
 }
 
-.ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true
-{
+.ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true {
   width: calc(100% - 84px);
 }
 
@@ -1551,11 +1548,6 @@ span.ProfileIconSearch
   color: #8c8c8c;
 }
 
-.CustomPOS input.::-ms-input-placeholder {
-  color: #8c8c8c;
-}
-
-
 .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
   color: #8c8c8c;
   opacity: 1;
@@ -1640,6 +1632,15 @@ span.ProfileIconSearch
     margin-top: -10px;
   }
 
+  .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
+    color: #8c8c8c;
+  }
+
+  *::-ms-backdrop,
+  .full-block-scheduleDate .react-datepicker__input-container input::placeholder {
+    color: #8c8c8c;
+  }
+
   .ServiceTypesWidget.PostSR .search-block_SP div.ProfileSearchContainer.true {
     margin-top: -10px;
   }
@@ -1650,7 +1651,6 @@ span.ProfileIconSearch
   }
 
 }
-
 
 .ServiceRequestsWidget .ServiceRequestBoard {
   width: 50%;
@@ -1728,14 +1728,12 @@ ul.show-more-assignSP li {
   overflow-y: auto;
 }
 
-.CustomPOS h6
-{
-  color:#444444;
+.CustomPOS h6 {
+  color: #444444;
 }
 
-.CustomPOS .Select-placeholder
-{
-color: #8c8c8c;
+.CustomPOS .Select-placeholder {
+  color: #8c8c8c;
 }
 
 /*IE-Edge*/
@@ -1744,10 +1742,10 @@ color: #8c8c8c;
   .last-block-monthwise fieldset input {
     margin-right: 0px;
   }
-  fieldset.right-colblock2
-  {
-   padding-left: 15px;
-   margin-top: -11px;
+
+  fieldset.right-colblock2 {
+    padding-left: 15px;
+    margin-top: -11px;
   }
 }
 
@@ -1763,6 +1761,6 @@ color: #8c8c8c;
 
 }
 
-.form-group2block .react-datepicker-wrapper .disable-pointer{
-  cursor:context-menu !important;
+.form-group2block .react-datepicker-wrapper .disable-pointer {
+  cursor: context-menu !important;
 }
