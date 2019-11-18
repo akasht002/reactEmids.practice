@@ -314,8 +314,8 @@
 .my-plan-editmodel .Loader {
     position: absolute;
     width: 100% !important;
-    height: calc(100% - 250px);
-    margin-top: 38%;
+    height: calc(100vh - 250px);
+    top: 63%;
 }
 
 .label_viewstatus {
@@ -387,10 +387,11 @@
     border: 1px solid #7a329f;
     font-size: 15px;
     line-height: 20px;
-    padding: 6px 12px;
+    padding: 6px 12px !important;
     background: #fff;
     color: #7a329f;
     cursor: pointer;
+    height: 35px;
 }
 
 .filter-block button:hover {
@@ -672,7 +673,6 @@
     cursor: context-menu;
 }
 
-
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
     .individual-spblock-full .sr-feature-pic img {
@@ -744,25 +744,47 @@
 
     .plan-tableview .EntityUServiceProf .SP-viewplantable {
         display: table;
-        vertical-align: middle;
     }
 
     *::-ms-backdrop,
     .plan-tableview .EntityUServiceProf .SP-viewplantable {
         display: table;
-        vertical-align: middle;
     }
 
-    .plan-tableview .EntityUServiceProf .SP-viewplantable span,
-    .plan-tableview .EntityUServiceProf .SP-viewplantable img {
+    .plan-tableview .EntityUServiceProf .SP-viewplantable span {
         display: table-cell;
         vertical-align: middle;
     }
 
     *::-ms-backdrop,
-    .plan-tableview .EntityUServiceProf .SP-viewplantable span,
-    .plan-tableview .EntityUServiceProf .SP-viewplantable img {
+    .plan-tableview .EntityUServiceProf .SP-viewplantable span {
         display: table-cell;
         vertical-align: middle;
+    }
+
+    .my-plan-editmodel .assign-sp-block {
+        position: relative;
+        flex-direction: row;
+        justify-content: flex-start;
+        clear: both;
+    }
+
+    *::-ms-backdrop,
+    .my-plan-editmodel .assign-sp-block {
+        position: relative;
+        flex-direction: row;
+        justify-content: flex-start;
+        clear: both;
+    }
+
+    .my-plan-editmodel .assign-sp-block .assign-SP-card {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    *::-ms-backdrop,
+    .my-plan-editmodel .assign-sp-block .assign-SP-card {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }

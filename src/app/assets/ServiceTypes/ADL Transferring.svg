@@ -1,1 +1,24 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90"><defs><style>.cls-1{fill:#e9d9f9;}.cls-2{fill:none;stroke:#7a329f;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title>ADL Transferring</title><path class="cls-1" d="M82.77,81.6a18.32,18.32,0,1,0-36.63,0Z"/><circle class="cls-1" cx="20.22" cy="52.61" r="9.63"/><path class="cls-1" d="M38.54,81.6a18.32,18.32,0,0,0-36.64,0Z"/><circle class="cls-2" cx="23.24" cy="51.47" r="9.63"/><path class="cls-2" d="M41.55,80.46a18.32,18.32,0,1,0-36.63,0Z"/><circle class="cls-1" cx="64.45" cy="52.61" r="9.63"/><path class="cls-2" d="M85.62,80.46a18.32,18.32,0,1,0-36.63,0Z"/><circle class="cls-2" cx="67.31" cy="51.47" r="9.63"/><line class="cls-2" x1="23.8" y1="16.12" x2="67.06" y2="16.12"/><line class="cls-2" x1="63.09" y1="12.16" x2="67.06" y2="16.12"/><line class="cls-2" x1="67.06" y1="16.12" x2="63.09" y2="20.08"/><line class="cls-2" x1="67.06" y1="30.2" x2="23.8" y2="30.2"/><line class="cls-2" x1="27.77" y1="34.16" x2="23.8" y2="30.2"/><line class="cls-2" x1="23.8" y1="30.2" x2="27.77" y2="26.23"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 90 90" style="enable-background:new 0 0 90 90;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#E1F1FB;}
+	.st1{fill:none;stroke:#1E3D5C;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+<title>ADL Transferring</title>
+<path class="st0" d="M82.8,81.6C83,71.5,75,63.1,64.9,62.9s-18.5,7.8-18.7,17.9c0,0.3,0,0.6,0,0.9H82.8z"/>
+<circle class="st0" cx="20.2" cy="52.6" r="9.6"/>
+<path class="st0" d="M38.5,81.6c0-10.1-8.2-18.3-18.3-18.3S1.9,71.5,1.9,81.6l0,0H38.5z"/>
+<circle class="st1" cx="23.2" cy="51.5" r="9.6"/>
+<path class="st1" d="M41.5,80.5c0.2-10.1-7.8-18.5-17.9-18.7S5.2,69.5,4.9,79.6c0,0.3,0,0.6,0,0.9H41.5z"/>
+<circle class="st0" cx="64.4" cy="52.6" r="9.6"/>
+<path class="st1" d="M85.6,80.5c0.2-10.1-7.8-18.5-17.9-18.7S49.2,69.5,49,79.6c0,0.3,0,0.6,0,0.9H85.6z"/>
+<circle class="st1" cx="67.3" cy="51.5" r="9.6"/>
+<line class="st1" x1="23.8" y1="16.1" x2="67.1" y2="16.1"/>
+<line class="st1" x1="63.1" y1="12.2" x2="67.1" y2="16.1"/>
+<line class="st1" x1="67.1" y1="16.1" x2="63.1" y2="20.1"/>
+<line class="st1" x1="67.1" y1="30.2" x2="23.8" y2="30.2"/>
+<line class="st1" x1="27.8" y1="34.2" x2="23.8" y2="30.2"/>
+<line class="st1" x1="23.8" y1="30.2" x2="27.8" y2="26.2"/>
+</svg>

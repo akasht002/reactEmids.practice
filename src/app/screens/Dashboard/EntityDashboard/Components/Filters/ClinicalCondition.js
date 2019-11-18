@@ -11,7 +11,7 @@ const ClinicalCondition = props => {
     let ClinicalTemplate = props.clinicalConditionList && props.clinicalConditionList.map((item, index) => {
         let catNum = index + 1;
         return (
-            <div className="CheckSet" key={catNum}>
+            <div className="CheckSet theme-primary-light" key={catNum}>
                 <CoreoCheckBox
                     className="ClinicalCheckBox"
                     name={"ClinicalList"}
