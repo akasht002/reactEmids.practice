@@ -667,7 +667,9 @@
     margin-right: 0px !important;
 }
 
-.right-block-view .ServiceTypeList .ServiceTypeLink:hover {
+.right-block-view .ServiceTypesSlider.Summary .ServiceTypeList input:checked+label,
+.right-block-view .ServiceTypesSlider.Summary .ServiceTypeLink:hover {
+    border-color: #d1d1d1;
     cursor: context-menu;
 }
 
@@ -795,7 +797,7 @@
     margin-bottom: 30px;
 }
 
-
+/*IE11*/
 @media all and (-ms-high-contrast:none) {
     .plan-tableview .EntityUServiceProf .SP-viewplantable {
         display: table;

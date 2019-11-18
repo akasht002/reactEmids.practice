@@ -4,7 +4,7 @@ import { VISIT_PROCESSING_STATUS, VISIT_STATUS } from "../../../../../constants/
 
 const ServiceRequestStatus = props => {
     let statusTempalte = props.serviceRequestStatusList && props.serviceRequestStatusList.map((item, index) => {
-
+    let statusName = ((item.id === VISIT_PROCESSING_STATUS.inProgress.id) || (item.id === VISIT_PROCESSING_STATUS.inProgress.visitId)) ? VISIT_STATUS.inProgress.keyValue : item.keyValue
         const onChange = (item, e) => {
             item.isActive = e.target.checked;
             props.handleServiceRequestStatus(item, e)
@@ -21,7 +21,7 @@ const ServiceRequestStatus = props => {
                         value={item.keyValue}
                         onChange={(e) => onChange(item, e)}
                     />
-                    <label htmlFor={item.id}>{item.keyValue === VISIT_PROCESSING_STATUS.inProgress.title ? VISIT_STATUS.inProgress.keyValue : item.keyValue}</label>
+                    <label htmlFor={item.id}>{statusName}</label>
                 </div>
             </fieldset>
         )

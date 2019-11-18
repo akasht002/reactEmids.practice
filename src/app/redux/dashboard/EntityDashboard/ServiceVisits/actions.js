@@ -11,7 +11,7 @@ import { VisitServiceList } from './bridge'
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
-import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
+import { ENTITY_DASHBOARD_STATUS, VISIT_PROCESSING_STATUS, VISIT_STATUS } from '../../../../constants/constants';
 import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/actions';
 import { VisitServiceRequestList } from '../ServiceRequest/bridge';
 
@@ -87,6 +87,7 @@ export function getVisitServiceTableList(data) {
                             patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
                             providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
                             schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getUTCFormatedDate(res.visitDate, DATE_FORMATS.hhMinSession)}`,
+                            visitStatus: caseInsensitiveComparer(res.visitStatus, VISIT_PROCESSING_STATUS.inProgress.title) ? VISIT_STATUS.inProgress.keyValue : res.visitStatus
                         }
                     })
                     dispatch(getVisitsTableListSuccess(data))
