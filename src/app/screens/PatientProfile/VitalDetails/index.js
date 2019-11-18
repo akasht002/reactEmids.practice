@@ -48,11 +48,9 @@ class VitalDetails extends React.Component {
 
           <div className='ConnectionsWidget CoreoWidget vital-block'>
             <p className='CoreoAssociationHeader mb-1'>Height</p>
-            <p className="">{this.props.vitalDetails.height}</p>
+            <p className="">{this.props.vitalDetails.height} Inches</p>
             <p className='CoreoAssociationHeader mb-1'>Weight</p>
-            <p className="">{this.props.vitalDetails.weight}</p>
-            <p className='CoreoAssociationHeader mb-1'>Emergency Contact</p>
-            <p className=''>{this.props.vitalDetails.emergencyContact}</p>
+            <p className="">{this.props.vitalDetails.weight} Lbs</p>
           </div>
         </div>
       </Fragment>

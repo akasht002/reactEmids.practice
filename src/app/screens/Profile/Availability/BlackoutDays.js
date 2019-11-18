@@ -208,7 +208,11 @@ class BlackoutDays extends Component {
             </div> :  ""
           }
             <div className={"SPCertificateContainer width100"}>
+              {this.state.blackoutData.length > 0 ? 
               <ul className={"SPCertificateList theme-primary"}>{blackoutData}</ul>
+              :
+              <i className={"SPIconLarge SPIconAdd"} onClick={this.toggleBlackout.bind(this, "add")} />
+            }
             </div>
           </div>
         </div>
