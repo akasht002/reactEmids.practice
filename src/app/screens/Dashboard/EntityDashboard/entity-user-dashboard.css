@@ -548,7 +548,7 @@ span.no-recoord-table {
     position: absolute;
     width: 100%;
     float: left;
-    z-index: 9999;
+    z-index: auto;
 }
 
 .feedback-alertmodl .Loader {
