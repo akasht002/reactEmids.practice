@@ -5,7 +5,6 @@ import { Input } from "../../../components/Base";
 import { Locationsettings } from "../../../constants/config"
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
-import { formatContactNumberValue } from "../../../utils/validations";
 
 let elem1 = ''; let elem2 = '';
 

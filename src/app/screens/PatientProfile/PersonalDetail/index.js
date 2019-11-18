@@ -93,6 +93,19 @@ class PersonalDetail extends React.PureComponent {
                 </span>
               </div>
             </div>
+            <div className={'SPAddressContent'}>
+              <div className={'width100 SPAddressTitle d-flex'}>
+                <span className={'SPAddressText primaryColor'}>
+                  Emergency Contact
+                </span>
+              </div>
+              <div className={'width100 d-flex'}>
+                <span>
+                  {getLength(this.props.personalDetail.emergencyContact) > 0 ?
+                    formatPhoneNumber(this.props.personalDetail.emergencyContact) : ''}
+                </span>
+              </div>
+            </div>
             <div className="d-flex profile-action-block">
               {
                 communicationData.map(item =>
