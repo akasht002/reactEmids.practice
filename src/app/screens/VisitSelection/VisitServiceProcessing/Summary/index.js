@@ -16,6 +16,7 @@ import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
+import { DATE_FORMATS } from "../../../../constants/constants";
 
 export class Summary extends Component {
 
@@ -147,12 +148,12 @@ export class Summary extends Component {
     }
 
     timerErrMessage = () => {
-        let currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");
+        let currentTime = moment(this.props.SummaryDetails.originalTotalDuration, DATE_FORMATS.hhMinSec);
         let hours = formatDateSingle(this.state.updatedHour)
         let minutes = formatDateSingle(this.state.updatedMin)
         let seconds = formatDateSingle(this.state.updatedSec)
         let newTime = hours + ':' + minutes + ':' + seconds
-        let endTime = moment(newTime, "HH:mm:ss");
+        let endTime = moment(newTime, DATE_FORMATS.hhMinSec);
         let time = currentTime.isSameOrAfter(endTime)
         if (!time) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
