@@ -423,7 +423,7 @@ export class VistSummary extends React.Component {
           <div className="VisitSummaryWidget">
             <div className="LeftWidget">
               <div className="LeftContent">
-                <p className="SummaryContentTitle">Service Details</p>
+                <p className="SummaryContentTitle theme-primary">Service Details</p>
                 <div className="row mb-3">
                   <div className="col-md-12 SummaryContentTable">
                     <p className="m-0">
@@ -470,7 +470,7 @@ export class VistSummary extends React.Component {
                     <p className="m-0">
                       <span className="SummaryContentTableTitle">Tasks</span>
                       <div className="SummaryRange SummaryRangeWidget">
-                        <span className="bottomTaskRange">
+                        <span className="bottomTaskRange theme-primary">
                           <i
                             style={{
                               width:
@@ -511,7 +511,7 @@ export class VistSummary extends React.Component {
               <div className="RightContent">
                 {(!isEntity && this.props.isPaymentAvailable) &&
                   <Fragment>
-                    <p className="SummaryContentTitle">Payment Details</p>
+                    <p className="SummaryContentTitle theme-primary">Payment Details</p>
                     <div className="row CostTableWidget">
                       <div className="col-md-8 CostTableContainer Label">
                         <p>
@@ -563,7 +563,7 @@ export class VistSummary extends React.Component {
                         </p>
                       </div>
                     </div>
-                    <div className="row EstimatedCostWidget m-0 mb-4">
+                    <div className="row EstimatedCostWidget m-0 mb-4 theme-primary">
                       <div className="col-md-8 EstimatedCostContainer Label">
                         <p>
                           <span>Estimated Claim</span>
@@ -593,7 +593,7 @@ export class VistSummary extends React.Component {
 
 
 
-                <p className="SummaryContentTitle mb-4">Feedback</p>
+                <p className="SummaryContentTitle mb-4 theme-primary">Feedback</p>
                 <div className="feedbackContainer">
                 {getLength(this.props.VisitFeedback) > 0 && !this.props.isServiceProviderFeedbackTab &&
                     <p>
@@ -607,7 +607,7 @@ export class VistSummary extends React.Component {
                   }
                   {getLength(this.props.VisitFeedback) > 0 ? (
                     <span
-                      className="FeedbackLink"
+                      className="FeedbackLink theme-primary"
                       onClick={this.toggleShowFeedbackDetails.bind(this)}
                     >
                       Show Feedback

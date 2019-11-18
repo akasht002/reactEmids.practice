@@ -44,7 +44,7 @@ class MyConnections extends React.Component {
             <React.Fragment>
                 <div className='col-md-12 card CardWidget SPLanguages'>
                     <div className='SPCardTitle d-flex'>
-                        <h4 className='primaryColor'>My Connections</h4>
+                        <h4 className='theme-primary'>My Connections</h4>
                     </div>
                     <div className="SPAddGuardianContainer width100">
                         <div className='MyConnectionsContent'>

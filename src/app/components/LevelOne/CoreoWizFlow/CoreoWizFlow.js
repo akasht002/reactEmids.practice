@@ -21,7 +21,7 @@ class CoreoWizFlow extends React.Component {
         );
 
         return (
-            <div className="sideContent float-left d-flex align-items-center">
+            <div className="sideContent float-left d-flex align-items-center theme-primary-gradient">
                 <ul className="sideNavigation">
                     {menuList}
                 </ul>

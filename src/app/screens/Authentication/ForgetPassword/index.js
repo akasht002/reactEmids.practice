@@ -70,7 +70,7 @@ export class ForgetPassword extends Component {
                 }
                 <Button
                     type="button"
-                    classname="btn send-btn"
+                    classname="btn send-btn theme-primary"
                     label="Send Link"
                     onClick={this.onClicksendResetPasswordLink}
                     disable={false}

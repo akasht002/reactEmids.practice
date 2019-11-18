@@ -427,7 +427,7 @@ export class ServiceArea extends Component {
     return (
       <div className='col-md-12 card CardWidget SPCertificate'>
         <div className='SPCardTitle d-flex'>
-          <h4 className='primaryColor'>Service Areas</h4>
+          <h4 className='theme-primary'>Service Areas</h4>
           {this.props.isUser && <i
             name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
             className='SPIconLarge SPIconAdd'
@@ -438,7 +438,7 @@ export class ServiceArea extends Component {
           />}
         </div>
         <div className='SPCertificateContainer width100'>
-          <ul className='SPCertificateList'>
+          <ul className='SPCertificateList theme-primary'>
             {this.props.ServiceAreaList.length > 0
               ? <div>
                 {ServiceAreaList}

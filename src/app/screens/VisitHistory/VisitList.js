@@ -78,7 +78,7 @@ export const VisitList = props => {
             </div>
             <div className='visitListContainerRight'>
               <i
-                className='visitListNavigation'
+                className='visitListNavigation theme-primary'
                 onClick={() =>
                   props.handleClicks(vistList)}
               />

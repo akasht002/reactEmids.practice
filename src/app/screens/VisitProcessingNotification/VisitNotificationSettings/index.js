@@ -54,15 +54,15 @@ class VisitNotificationSettings extends React.Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileCardBody NotificationsSettingsBody'>
                     <div className='ProfileCardHeader'>
-                        <span className='NotificationsHeaderTitle primaryColor'>My Settings</span>
+                        <span className='NotificationsHeaderTitle theme-primary'>My Settings</span>
                     </div>
                     <div className='NotificationsSettingsContainer'>
-                        <h6 className='NotificationsListHeader'>Notifications</h6>
+                        <h6 className='NotificationsListHeader theme-primary'>Notifications</h6>
                         {this.props.isLoading && <Preloader/>}
                         <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='NotificationsSettingsWidget'>
                             <div className='card NotificationsSettingsListBox'>
                                 <div className='NotificationsSettingsListItems'>
-                                    <h6>
+                                    <h6 className="theme-primary">
                                         Push Notifications
                                 </h6>
                                     {this.props.pushNotification && this.props.pushNotification.map((pList) => {
@@ -75,7 +75,7 @@ class VisitNotificationSettings extends React.Component {
                                     })}
                                 </div>
                                 <div className='NotificationsSettingsListItems'>
-                                    <h6>
+                                    <h6 className="theme-primary">
                                         Email Notifications
                                 </h6>
                                     {this.props.emailNotification && this.props.emailNotification.map((eList) => {
