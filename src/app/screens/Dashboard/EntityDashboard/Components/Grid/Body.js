@@ -27,6 +27,9 @@ export const Body = props => {
                                         </div>
                                         {`${item[key]} %`}
                                     </div></td>
+                            case HEADER_ACTIONS.rating:
+                                return <td><span className='Rating'><i className='iconFilledStar' /> {item[key]}</span></td>
+        
                             default:
                                 return <td title={item[key]}>{item[key]}</td>
                         }

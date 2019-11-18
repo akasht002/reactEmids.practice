@@ -30,78 +30,74 @@
   </noscript>
   <div id="root">
     <style>
-      .apploader{
-         display: flex;
-         flex-direction: column;
-         width: 350px;
-         height: 280px;
-         background-color:transparent !important;
-         margin:auto;
-       }
-       .apploader img
-       {
-       display: block;
-       margin:  0 auto;
-       max-width:100%;
-       height: auto;
-       }
-       /*IE_11_&_IE_10*/
- @media all and (-ms-high-contrast:none)
-      {
-         .apploader {  width: 350px !important;
-     height: 120px !important;
-    flex-direction: column;
-     align-items: center;
-     justify-content: center; } /* IE10 */
-      *::-ms-backdrop, .apploader {   width: 350px !important;
-     height: 120px !important;
-    flex-direction: column;
-     align-items: center;
-     justify-content: center; } /* IE11 */
+      .apploader {
+        display: block;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width:100%;
+        background-color: rgba(255, 255, 255, 10);
+        background-image: url('/loader.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 99999;
+        margin: 0 auto;
+
       }
-    
-      @media all and (-ms-high-contrast:none)
-      {
-         .apploader img {  display: none;  } /* IE10 */
-      *::-ms-backdrop, .apploader img{   display: none; } /* IE11 */
+
+      /*IE_11_&_IE_10*/
+
+      @media all and (-ms-high-contrast:none) {
+        .apploader img {
+          display: none;
+        }
+        /* IE10 */
+        *::-ms-backdrop,
+        .apploader img {
+          display: none;
+        }
       }
 
 
-    
-      @media all and (-ms-high-contrast:none)
-      {
-         .apploader  {   background-image: url("/loadingimg.gif") !important; background-repeat: no-repeat;
-                   background-position: top;  } /* IE10 */
-      *::-ms-backdrop, .apploader {   background-image: url("/loadingimg.gif") !important; background-repeat:  no-repeat;
-                   background-position: top; } /* IE11 */
+
+      @media all and (-ms-high-contrast:none) {
+        .apploader {
+          background-image: url("/loading-gif.gif") !important;
+          background-repeat: no-repeat;
+        }
+        /* IE10 */
+        *::-ms-backdrop,
+        .apploader {
+          background-image: url("/loading-gif.gif") !important;
+        }
       }
-    
- /*IE-Edge*/
- @supports (-ms-ime-align: auto) {
-   .apploader
-   {
-     width: 350px !important;
-     height: 120px !important;
-    flex-direction: column;
-     align-items: center;
-     justify-content: center;
-   }
- 
-   .apploader  img{
-   display: none !important;
-   }
-   .apploader  {   
-     background-image: url("/loadingimg.gif") !important; 
-     background-repeat: no-repeat;
-     background-position: top;                   
- }
+
+      /*IE-Edge*/
+
+      @supports (-ms-ime-align: auto) {
+        .apploader {
+          width: 350px !important;
+          height: 120px !important;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .apploader img {
+          display: none !important;
+        }
+        .apploader {
+          background-image: url("/loading-gif.gif") !important;
+          background-repeat: no-repeat;
+          background-position: top;
+        }
 
 
- }
-     </style>
-    <div style="width:90vw; height:90vh;display:flex; margin:auto;">
+      }
+    </style>
+    <div style="width:100%; height:100%;display:flex; align-items: center; margin:0 auto;">
       <div class="apploader">
-        <img src="apploader.svg" alt=""/>
       </div>
     </div>
   </div>

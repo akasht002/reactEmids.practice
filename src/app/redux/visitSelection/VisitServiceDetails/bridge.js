@@ -33,6 +33,9 @@ export const VisitServiceDetails = {
     setEntityDashboard: 'setEntityDashboard/visitservicedetails',
     loadingESPList: 'loadingESPList/visitservicedetails',
     getPaymentAvailabilitySuccess: 'getPaymentAvailabilitySuccess/visitservicedetails',
+    setServicePlanVisitId: 'setServicePlanVisitId/visitServiceDetails',
+    setActivePage: 'setActivePage/visitServiceDetails',
+    setPlanScheduleId: 'setPlanScheduleId/visitservicedetails',
     editIndividualEditPopup: 'editIndividualEditPopup/visitservicedetails',
     getPlanId: 'planId/visitservicedetails'
   }

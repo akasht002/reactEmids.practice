@@ -41,7 +41,6 @@ class Dashboard extends React.Component {
 
   }
   componentDidMount() {
-    this.props.getPersonalDetail();
     this.props.getSpBusyInVisit();
     this.props.clearSbMode();
     this.props.getProfilePercentage();
