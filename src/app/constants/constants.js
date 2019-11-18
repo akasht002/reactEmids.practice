@@ -578,3 +578,5 @@ export const SCHEDULE_TYPES = {
         name: 'Standard'
     }
 }
+
+export const CALENDAR_DASHBOARD_LENGTH = 6;

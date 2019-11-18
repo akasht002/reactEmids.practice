@@ -29,8 +29,8 @@ import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FOR
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
-import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
-import { PREVIOUS_MONTH,NEXT_MONTH, START_VISIT, IN_PROGRESS } from './constant'
+import { IN_MAX_ARRAY, CALENDAR_DASHBOARD_LENGTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
+import { START_VISIT, IN_PROGRESS } from './constant'
 import { Preloader } from '../../components'
 const today = new Date();
 
@@ -110,8 +110,7 @@ export class ServiceCalendar extends Component {
   }
 
   MonthChange = e => {
-    let selectMonth = moment().month(e.value).format(M_FORMAT)
-    let year = this.getYear(selectMonth)
+    let year = e.label.split(" ")[1];
     let curDate = moment(year + '-' + moment().month(e.value).format(M_FORMAT) + '- 01', DATE_FORMATS.yyyy_mm_dd)
     this.setState({
       startDate: moment(curDate).format(),
@@ -463,14 +462,12 @@ export class ServiceCalendar extends Component {
     else this.props.goToServiceVisitProcessing(data)
   }
 
-  getYears=(type,start)=>{
+  getYears=()=>{
     let data = []
-    let i ;
-    let temp;
-    for(i=start;i<=3;i++){
-       temp = type ? moment(moment(today).format()).add(i, 'months').endOf('month').format(DATE_FORMATS.mmmyyy):
-       moment(moment(today).format()).subtract(i, 'months').endOf('month').format(DATE_FORMATS.mmmyyy);
-       data.push({ label: temp, value: temp.substring(0, 3) })
+    let startMonth = moment(moment(today).format()).subtract(3, 'months')
+    for(let i=0;i<=CALENDAR_DASHBOARD_LENGTH;i++){      
+      let monthName = moment(moment(startMonth).format()).add(i, 'months').endOf('month').format(DATE_FORMATS.mmmyyy)
+       data.push({ label: monthName, value: monthName.substring(0, 3) })
     }
     return data
   }
@@ -481,10 +478,7 @@ export class ServiceCalendar extends Component {
     let optionChecked = this.state.reportDay
     let count = this.state.width > '1280' ? 7 : 5
 
-    let previousList = this.getYears(false,0).reverse()
-    let nextList = this.getYears(true,1) 
-
-    let monthList = previousList.concat(nextList) ;
+    let monthList = this.getYears();
 
     let dateList = dates.map((daysMapping, i) => {
       let className = "";
