@@ -53,6 +53,7 @@ import {
   USERTYPES,
   CONTACT_NOT_FOUND,
   PHONE_NUMBER_TEXT,
+  SERVICE_REQ_STATUS,
   DATE_FORMATS,
   DEFAULT_PAGE_NUMBER
 } from '../../../constants/constants';
@@ -540,11 +541,13 @@ export class VisitServiceDetails extends Component {
   }
 
 
-  visitProcessing = data => {
+  visitProcessing = (data, scheduleTypeId) => {
+    let isAssessmentVisit = scheduleTypeId === VISIT_TYPE.assessment;
+    let startOrStop = true;
     this.props.isStandByModeOn && this.props.isStandByModeOn.isServiceProviderInStandBy ?
       this.setState({ standByModeAlertMsg: true })
       :
-      this.props.getPerformTasksList(data, true)
+      this.props.getPerformTasksList(data, startOrStop, isAssessmentVisit)
     this.props.formDirty();
     this.props.formDirtyFeedback();
     this.props.formDirtyPerformTask();
@@ -583,9 +586,9 @@ export class VisitServiceDetails extends Component {
     let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
     switch (visitList.visitStatusId) {
       case VISIT_STATUS.startVisit.id:
-        return this.visitProcessing(visitId)
+        return this.visitProcessing(visitId, visitList.scheduleTypeId)
       case VISIT_STATUS.inProgress.id:
-        return this.visitProcessing(visitId)
+        return this.visitProcessing(visitId, visitList.scheduleTypeId)
       case VISIT_STATUS.completed.id:
         return this.visitSummary(visitId, visitList.assignedServiceProviderId, visitList.scheduleTypeId)
       case VISIT_STATUS.paymentPending.id:
@@ -842,7 +845,7 @@ export class VisitServiceDetails extends Component {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : this.props.VisitServiceDetails.statusId === 38 ? true : false;
+    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : (this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.HIRED || this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.CLOSED) ? true : false;
     let updatedTabdata = this.props.ServiceRequestId === 0 ?
       tabdata.slice(1, tabdata.length) :
       isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
@@ -1043,7 +1046,7 @@ export function mapDispatchToProps(dispatch) {
     getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
     getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data)),
     getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
-    getPerformTasksList: data => dispatch(getPerformTasksList(data, true)),
+    getPerformTasksList: (data, startOrStop, isAssessmentVisit) => dispatch(getPerformTasksList(data, startOrStop, isAssessmentVisit)),
     formDirty: () => dispatch(formDirty()),
     formDirtyFeedback: () => dispatch(formDirtyFeedback()),
     formDirtyPerformTask: () => dispatch(formDirtyPerformTask()),

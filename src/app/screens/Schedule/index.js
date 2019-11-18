@@ -151,8 +151,22 @@ export class Schedule extends Component {
                 zip: validAddress.zip,
                 state: validAddress.stateId,
                 statelabel: validAddress.stateName,
+                latitude: validAddress.latitude,
+                longitude: validAddress.longitude,
                 isDefaultAddress: true
             })
+
+            this.address = {
+                addressType: validAddress.addressType,
+                streetAddress: validAddress.street,
+                city: validAddress.city,
+                zip: validAddress.zip,
+                stateId: validAddress.stateId,
+                stateName: validAddress.stateName,
+                latitude: validAddress.latitude,
+                longitude: validAddress.longitude,
+                patientAddressId: validAddress.addressId,
+            }
         }
     }
 
