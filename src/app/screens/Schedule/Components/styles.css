@@ -1749,6 +1749,11 @@ ul.show-more-assignSP li {
   color: #8c8c8c;
 }
 
+.form-group2block .form-group .onBoardingSelect {
+  background: #fff;
+  top: -8px;
+}
+
 /*IE-Edge*/
 
 @supports (-ms-ime-align: auto) {
