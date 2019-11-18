@@ -772,17 +772,11 @@ export const setPlanScheduleId = data => {
 
 export const getPlanScheduleId = (data, servicePlanVisitId) => {
   let planScheduleId = 0
-    // _.forEach(data, function (item) {
-    //   if (item.servicePlanVisitId === servicePlanVisitId) {
-    //     planScheduleId = item.planScheduleId
-    //     return false;
-    //   }
-    // })
-    data.filter(item => {
+    _.forEach(data, function (item) {
       if (item.servicePlanVisitId === servicePlanVisitId) {
         planScheduleId = item.planScheduleId
+        return false;
       }
-      return false;
     })
   return {
     type: VisitServiceDetails.setPlanScheduleId,
