@@ -794,6 +794,9 @@
     display: block;
     margin-bottom: 30px;
 }
+
+
+@media all and (-ms-high-contrast:none) {
     .plan-tableview .EntityUServiceProf .SP-viewplantable {
         display: table;
     }
@@ -839,3 +842,4 @@
         padding-left: 10px;
         padding-right: 10px;
     }
+}

@@ -45,7 +45,7 @@ table.individuals-tableblock.theme-primary thead th,
 }
 
 .datePalette .dateRow input:checked+label,
-.EstimatedCostWidget.theme-primary {
+.EstimatedCostWidget.theme-primary, .filter-block button  {
     border: 1px solid #1e3d5c;
     color: #1e3d5c !important;
 }
@@ -94,7 +94,7 @@ span.btn-hired {
 .btn-primary:hover,
 .btn-outline-primary:hover,
 .btn-outline-primary:active,
-.btn-primary:focus  {
+.btn-primary:focus, .filter-block button:hover  {
     background-color: #315477 !important;
     color: #fff !important;
 }
@@ -114,7 +114,7 @@ span.btn-hired {
 .theme-primary-light .SPAvailItems.active,
 .modal-header,
 .backProfileIcon.theme-primary-light:hover, .No-Coverastion-Block.theme-primary-light, .NoServiceReq.theme-primary-light, .ListItem.CTDashboard:hover,
-.SPIconServicesCheckbox.theme-primary-light label.form-check-label:hover, .availabilityModal .availabilityCheck ~ label:hover, .BlockProfileContainer .ProfileImage{
+.SPIconServicesCheckbox.theme-primary-light label.form-check-label:hover, .availabilityModal .availabilityCheck ~ label:hover, .BlockProfileContainer .ProfileImage, .avatarImage{
     background-color: #e0f1fb;
 }
 
@@ -303,4 +303,8 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
 div.Select-menu-outer .Select-option.is-selected, div.Select-menu-outer .Select-option:hover, 
 div.Select-menu-outer .Select-option:focus, div.Select-menu-outer  .Select-option.is-focused{
     background-color: #e0f1fb !important
+}
+
+.avatarImageBorder {
+    border-color: #e0f1fb;
 }
