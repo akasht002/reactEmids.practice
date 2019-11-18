@@ -58,6 +58,7 @@ export const PlanTab = props => {
                                         handleChangeSchedule={props.handleChangeSchedule}
                                         handelEditShedule={props.handelEditShedule}
                                         handelEditAssessment={props.handelEditAssessment}
+                                        planScheduleId={props.planScheduleId}
                                     />
                                 </div>
                             </div>}
@@ -76,6 +77,8 @@ export const PlanTab = props => {
                                     tooltipOpen={props.tooltipOpen}
                                     toggleToolTip={props.toggleToolTip}
                                     navigateToparticularPageBasedonId={props.navigateToparticularPageBasedonId}
+                                    servicePlanVisitId={props.servicePlanVisitId}
+                                    highlightVisit={props.highlightVisit}
                                 />
                                 {props.visitList.length !== 0 &&
                                     <CoreoPagination

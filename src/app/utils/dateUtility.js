@@ -138,6 +138,9 @@ export const defaultEndTime = () => {
     return moment().hours(23).minutes(30)
 }
 
+export const convert24To12Hrs = (data) => {
+    return moment(data, "hh:mm").format('LT')
+}
 export const getHours = (time) => {
     return time && parseInt(time.split(':')[0], 10);
 }

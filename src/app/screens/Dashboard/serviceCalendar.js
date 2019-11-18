@@ -29,8 +29,8 @@ import { USERTYPES, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, STANDBY_MODE_MSG,M_FOR
 import { onCreateNewConversation } from "../../redux/asyncMessages/actions";
 import { createVideoConference, saveContextData } from "../../redux/telehealth/actions";
 import { ModalPopup } from '../../components'
-import { MAX_MONTH_LIMIT, IN_MAX_ARRAY, COUNT_BASED_MONTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
-import { PREVIOUS_MONTH,NEXT_MONTH, START_VISIT, IN_PROGRESS } from './constant'
+import { IN_MAX_ARRAY, CALENDAR_DASHBOARD_LENGTH, LAST_MONTH_ARRAY, END_MONTH,DEFAULT_TIME} from '../../constants/constants'
+import { START_VISIT, IN_PROGRESS } from './constant'
 import { Preloader } from '../../components'
 const today = new Date();
 
@@ -110,8 +110,7 @@ export class ServiceCalendar extends Component {
   }
 
   MonthChange = e => {
-    let selectMonth = moment().month(e.value).format(M_FORMAT)
-    let year = this.getYear(selectMonth)
+    let year = e.label.split(" ")[1];
     let curDate = moment(year + '-' + moment().month(e.value).format(M_FORMAT) + '- 01', DATE_FORMATS.yyyy_mm_dd)
     this.setState({
       startDate: moment(curDate).format(),
@@ -463,37 +462,24 @@ export class ServiceCalendar extends Component {
     else this.props.goToServiceVisitProcessing(data)
   }
 
+  getYears=()=>{
+    let data = []
+    let startMonth = moment(moment(today).format()).subtract(3, 'months')
+    for(let i=0;i<=CALENDAR_DASHBOARD_LENGTH;i++){      
+      let monthName = moment(moment(startMonth).format()).add(i, 'months').endOf('month').format(DATE_FORMATS.mmmyyy)
+       data.push({ label: monthName, value: monthName.substring(0, 3) })
+    }
+    return data
+  }
+
   render() {
     const visitCount = this.props.serviceVistCount;
-    let pervious_months = []
     let dates = this.getDates(this.state.startDate)
     let optionChecked = this.state.reportDay
     let count = this.state.width > '1280' ? 7 : 5
 
-    let current_month = new Date().getMonth();
-    let pervious_month = moment.months().splice(current_month - 3, PREVIOUS_MONTH);
+    let monthList = this.getYears();
 
-    if(pervious_month.length < 3 )
-      {
-        let len_month = PREVIOUS_MONTH - pervious_month.length
-        let months = moment.months("MMM YYYY").splice(current_month - len_month, NEXT_MONTH)
-        pervious_months =  pervious_month.concat(months)
-      }else{
-        pervious_months =  pervious_month
-      }
-
-    let next_month_list = moment.months().splice(current_month - 1, NEXT_MONTH);
-
-    let nextYearMonth = current_month > MAX_MONTH_LIMIT && moment.months("MMM YYYY").splice(0, COUNT_BASED_MONTH[parseInt(current_month, 10)])
-    let nextMonthLists = current_month > MAX_MONTH_LIMIT ? next_month_list.concat(nextYearMonth) : next_month_list
-
-    let monthLists = _.uniq(pervious_months.concat(nextMonthLists))
-
-    let monthList = monthLists.map(month => {
-      let selectMonth = moment().month(month).format(M_FORMAT)
-      let year = this.getYear(selectMonth)
-      return { label: month.substring(0, 3) + ' ' + year, value: month };
-    });
     let dateList = dates.map((daysMapping, i) => {
       let className = "";
       if (daysMapping.date.format() === moment(today).format()) {

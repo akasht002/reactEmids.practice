@@ -41,6 +41,14 @@ class ProfileHeader extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.dropdownOpen !== prevProps.dropdownOpen) {
+          this.setState({
+            dropdownOpen: this.props.dropdownOpen
+          })
+        }
+    }
+    
     render() {
         let {headerMenu} = this.props;
         const menuList =headerMenu.map((menu) => {

@@ -653,6 +653,18 @@
     display: block !important;
 }
 
+.active-row-view
+{
+    background: #f2ebf3;
+    border-left: 3px solid #702d8e !important;
+    border-top: 1px solid #bd9fcb !important;
+    border-bottom: 1px solid #bd9fcb !important;
+    cursor: pointer;
+}
+
+.active-listblock{
+    background: #f2ebf3 !important;
+}    
 .my-plan-editmodel .pd-right-0 {
     padding-right: 0px !important;
 }

@@ -34,8 +34,7 @@ import {
   CARETEAM_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
-  SERVICE_REQUEST_DETAILS_TAB,
-  entityDashboardTab
+  SERVICE_REQUEST_DETAILS_TAB
 } from '../../../../constants/constants'
 import { getUserInfo } from '../../../../utils/userUtility';
 import { ProfileModalPopup, RowPerPage, Preloader } from '../../../../components'
@@ -62,6 +61,7 @@ import { filterTabs } from './filterTabs';
 import Search from '../Components/Search'
 import { setServiceProviderFeedbackTab } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 import { pushSpliceHandler } from '../../../../utils/stringHelper';
+import { restrictSpecialChars, restrictMultipleSpace } from '../../../../utils/validations';
 
 export class Individuals extends Component {
   constructor(props) {
@@ -317,10 +317,11 @@ export class Individuals extends Component {
     this.setState({ activePageFeedback: pageNumber })
     const model = {
       patientId: this.state.patientId,
-      pageNumber: pageNumber,
+      pageNumber: this.state.pageNumberFeedback,
       pageSize: DEFAULT_PAGE_SIZE,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate,
+      serviceProviderId: getUserInfo().serviceProviderId
     }
     this.props.getIndividualsFeedbackList(model);
   }
@@ -353,7 +354,7 @@ export class Individuals extends Component {
         this.setState({
           feedbackAlertModal: !this.state.feedbackAlertModal,
           feedbackServiceVisits: this.props.individualsFeedbackList,
-          patientId: data.individualId
+          patientId: data.patientId
         })
         break;
       default:
@@ -373,7 +374,7 @@ export class Individuals extends Component {
   }
 
   goToPgVisitSummary = (data) => {
-    this.props.setServiceProviderFeedbackTab(false)
+    this.props.setServiceProviderFeedbackTab(true)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
@@ -492,7 +493,7 @@ export class Individuals extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: e.target.value
+      searchKeyword: restrictSpecialChars(restrictMultipleSpace(e.target.value))
     })
   }
 

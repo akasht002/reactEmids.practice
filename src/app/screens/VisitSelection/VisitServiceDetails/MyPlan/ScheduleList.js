@@ -7,8 +7,9 @@ export const ScheduleList = props => {
         <Fragment>
             {
                 props.list.map(item => {
+                    let activeListBlockClass = (props.planScheduleId === item.planScheduleId) ? 'active-listblock' : ''
                     return (
-                        <div className="schedule-listblock theme-primary-light">
+                        <div className={`schedule-listblock ${activeListBlockClass}`}>
                             <fieldset>
                                 <label className="customechk">
                                     <input

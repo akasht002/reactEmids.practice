@@ -22,6 +22,9 @@ import {
   saveScheduleType,
   setAddNewScheduledClicked,
   setActiveTab,
+  setActivePage,
+  setServicePlanVisitId,
+  setPlanScheduleId,
   resetServiceDetails,
   editIndividualEditPopup,
   setEntityDashboard,
@@ -82,6 +85,7 @@ import { allEqual } from '../../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../../utils/formatName';
 import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { saveContextData, createDataStore } from '../../../redux/telehealth/actions';
+import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
 import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 export class VisitServiceDetails extends Component {
   constructor(props) {
@@ -190,10 +194,11 @@ export class VisitServiceDetails extends Component {
       serviceTypes: [],
       pageNumber: PAGE_NO,
       pageSize: this.state.rowPageSize,
-      startDate: null,
-      endDate: null,
+      startDate: this.props.isEntityDashboard ? this.props.visitDate.startVisitDateForWeb : null,
+      endDate: this.props.isEntityDashboard ? this.props.visitDate.endVisitDateForWeb : null,
       patientId: this.props.patientId,
-      entityServiceProviders: this.state.entityServiceProviders
+      entityServiceProviders: this.state.entityServiceProviders,
+      servicePlanVisitId: this.props.servicePlanVisitId
     }
     this.props.getVisitList(data);
   }
@@ -296,6 +301,7 @@ export class VisitServiceDetails extends Component {
 
   pageNumberChange = (pageNumber) => {
     this.setState({ activePage: pageNumber })
+    this.props.setActivePage(pageNumber)
     this.getModalData(pageNumber, this.state.rowPageSize)
   }
 
@@ -393,6 +399,7 @@ export class VisitServiceDetails extends Component {
       filterApplied: true,
       rowPageSize: DEFAULT_PAGE_SIZE
     })
+    this.props.setActivePage(DEFAULT_PAGE_NUMBER)
     this.filterApplied = true
     this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, false, true)
   }
@@ -416,6 +423,7 @@ export class VisitServiceDetails extends Component {
       pageNumber: PAGE_NO,
       pageSize: DEFAULT_PAGE_SIZE
     }
+    this.props.setActivePage(DEFAULT_PAGE_NUMBER)
     this.getModalData(PAGE_NO, DEFAULT_PAGE_SIZE, true);
     this.props.clearESPList();
     this.props.getVisitStatus();
@@ -489,7 +497,7 @@ export class VisitServiceDetails extends Component {
 
   onSubmitAssignServiceProvider = async (data) => {
     await this.props.assignESP(data)
-    await this.getModalData(this.state.activePage, this.state.rowPageSize)
+    await this.getModalData(this.props.activePage, this.state.rowPageSize)
   }
 
   toggleSearch = () => {
@@ -537,6 +545,7 @@ export class VisitServiceDetails extends Component {
 
   rowPageChange = (pageSize) => {
     this.setState({ rowPageSize: pageSize, activePage: 1 })
+    this.props.setActivePage(DEFAULT_PAGE_NUMBER)
     this.getModalData(PAGE_NO, pageSize)
   }
 
@@ -582,6 +591,7 @@ export class VisitServiceDetails extends Component {
   }
 
   navigateToparticularPageBasedonId = visitList => {
+    this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
     this.props.saveScheduleType(visitList.scheduleTypeId)
     let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
     switch (visitList.visitStatusId) {
@@ -647,7 +657,7 @@ export class VisitServiceDetails extends Component {
     }
     if (!saveVisitEdit) {
       await this.props.updateServiceVisit(model)
-      await this.getModalData(this.state.activePage, this.state.rowPageSize)
+      await this.getModalData(this.props.activePage, this.state.rowPageSize)
       await this.setState({ editModal: false, onVisitEdit: false })
     }
   }
@@ -714,6 +724,11 @@ export class VisitServiceDetails extends Component {
       this.props.createDataStore(selectedParticipants);
     }
   };
+
+highlightVisit = data => {
+  this.props.setPlanScheduleId(data.planScheduleId)
+  this.props.setServicePlanVisitId(data.servicePlanVisitId)
+}
 
   render() {
     let modalContent =
@@ -890,7 +905,7 @@ export class VisitServiceDetails extends Component {
                   espList={this.props.entityServiceProvidersList}
                   pageCount={this.props.visitListCount}
                   pageNumberChange={this.pageNumberChange}
-                  activePage={this.state.activePage}
+                  activePage={this.props.activePage}
                   isOpen={this.state.filterOpen}
                   toggle={this.toggleFilter}
                   applyFilter={this.applyFilter}
@@ -923,6 +938,9 @@ export class VisitServiceDetails extends Component {
                   clickShowMore={this.clickShowMore}
                   disableShowmore={this.props.disableShowmore}
                   visitDate={this.props.visitDate}
+                  servicePlanVisitId={this.props.servicePlanVisitId}
+                  planScheduleId={this.props.planScheduleId}
+                  highlightVisit={this.highlightVisit}
                   visitServiceDetails={this.props.VisitServiceDetails}
                 />
                 <PatientProfileTab
@@ -1072,6 +1090,9 @@ export function mapDispatchToProps(dispatch) {
     createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
     saveContextData: (data) => dispatch(saveContextData(data)),
     createDataStore: (data) => dispatch(createDataStore(data)),
+    setActivePage: data => dispatch(setActivePage(data)),
+    setServicePlanVisitId: data => dispatch(setServicePlanVisitId(data)),
+    setPlanScheduleId: data => dispatch(setPlanScheduleId(data)),
     resetServiceDetails: () => dispatch(resetServiceDetails()),
     editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data)),
     setEntityDashboard: data => dispatch(setEntityDashboard(data)),
@@ -1104,6 +1125,9 @@ export function mapStateToProps(state) {
     isAddNewScheduleClicked: VisitServiceDetailsState.isAddNewScheduleClicked,
     isEntityDashboard: VisitServiceDetailsState.isEntityDashboard,
     isLoadingESPList: VisitServiceDetailsState.isLoadingESPList,
+    servicePlanVisitId: VisitServiceDetailsState.servicePlanVisitId,
+    activePage: VisitServiceDetailsState.activePage,
+    planScheduleId: VisitServiceDetailsState.planScheduleId,
     isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup,
     planId: VisitServiceDetailsState.planId
   }

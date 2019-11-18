@@ -295,7 +295,7 @@ export class VisitServiceList extends Component {
             selectedOption: '',
             activePage: 1,
             ServiceAreas: {},
-            filterOpen: !this.state.filterOpen
+            filterOpen: false
         })
         this.isStatusChanged = false
         this.props.clearServiceCategory(this.props.ServiceType);
