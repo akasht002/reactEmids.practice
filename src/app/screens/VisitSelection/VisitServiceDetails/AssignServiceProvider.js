@@ -32,7 +32,7 @@ class AssignServiceProvider extends Component {
           autoComplete='false'
           required='required'
           type='text'
-          placeholder='search'
+          placeholder='Enter keyword to Search'
           className='form-control searchParticipants'
           textChange={(e) => {
             this.onchangeSearchServiceProvider(e)
