@@ -8,7 +8,7 @@ export const ScheduleList = props => {
             {
                 props.list.map(item => {
                     return (
-                        <div className="schedule-listblock">
+                        <div className="schedule-listblock theme-primary-light">
                             <fieldset>
                                 <label className="customechk">
                                     <input
@@ -19,12 +19,12 @@ export const ScheduleList = props => {
                                         onChange={(e) => { props.handleChangeSchedule(e) }}
                                         defaultChecked={true}
                                     />
-                                    <label className='SR-types-label'>
+                                    <label className='SR-types-label theme-primary'>
                                         {item.serviceTypes &&
                                             getFields(item.serviceTypes, 'serviceTypeDescription')}
                                     </label>
                                     <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.schedulePatternType}</label></span>
-                                    <span class="checkmark"></span>
+                                    <span class="checkmark theme-primary"></span>
                                 </label>
 
                                 <div className="edit-block">

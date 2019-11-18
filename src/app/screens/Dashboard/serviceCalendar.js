@@ -570,7 +570,8 @@ export class ServiceCalendar extends Component {
         }
       >
         <div className="ProfileCardBody">
-          <div className="topPalette">
+        <span class="ProfileCardHeaderTitle theme-primary">Service Visits</span>
+          <div className="topPalette theme-primary">
             <div className="monthPalette">
             <span>From :</span>
               <Select
@@ -584,7 +585,7 @@ export class ServiceCalendar extends Component {
               />
               {/* <span>{this.state.startYear}</span> */}
             </div>
-            <div className="todayPalette">
+            <div className="todayPalette theme-primary">
               <span
                 className="btn ProfileCardTodayLink"
                 onClick={this.todayDate}
@@ -619,7 +620,7 @@ export class ServiceCalendar extends Component {
             <ul className="list-group ProfileServicesVisitList">
               {visitData}
               {(!this.props.disableShowMore) && <li
-              className="list-group-item ProfileShowMore"
+              className="list-group-item ProfileShowMore theme-primary-light"
               onClick={this.clickShowMore}
               >
                 Show more <i className="ProfileIconShowMore" />

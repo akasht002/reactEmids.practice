@@ -228,7 +228,7 @@ export class VisitHistory extends Component {
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Visit History</h5>
+            <h5 className='theme-primary m-0'>Visit History</h5>
           </div>
           <div className='ProfileHeaderRight'>
             {/* <ThemeProvider>
@@ -254,7 +254,7 @@ export class VisitHistory extends Component {
               </SelectField>
             </ThemeProvider> */}
             <span
-              className='primaryColor'
+              className='theme-primary'
               onClick={this.toggleFilter}
             >
               Filters
@@ -273,7 +273,7 @@ export class VisitHistory extends Component {
             handelPatientProfile={this.handelPatientProfile}
           />
           {this.props.VisitServiceHistory.length > 0 && (
-            <div class="col-md-12 p-0 AsyncConversationPagination">
+            <div class="col-md-12 p-0 AsyncConversationPagination theme-primary">
               <Pagination
                 activePage={this.state.activePage}
                 itemsCountPerPage={DEFAULT_PAGE_SIZE}

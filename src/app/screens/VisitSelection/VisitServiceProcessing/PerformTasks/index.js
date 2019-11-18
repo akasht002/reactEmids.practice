@@ -188,7 +188,7 @@ export class PerformTasks extends Component {
                 {this.state.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -196,7 +196,7 @@ export class PerformTasks extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitNumber}</span>
@@ -298,7 +298,7 @@ export class PerformTasks extends Component {
                                                                         }}
                                                                         disabled={visitStatus === SERVICE_STATES.YET_TO_START}
                                                                     />
-                                                                    <label className='ServicesLink' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
+                                                                    <label className='ServicesLink theme-primary' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
                                                                         <div className='servicesDesc'>
                                                                             <span className='serviceName'>{taskList.serviceTaskDescription}</span>
                                                                         </div>
@@ -317,7 +317,7 @@ export class PerformTasks extends Component {
                                 <div className='bottomButton'>
                                     <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                                         <span className="bottomTaskName">Tasks</span>
-                                        <span className="bottomTaskRange">
+                                        <span className="bottomTaskRange theme-primary">
                                             <i style={{ width: this.percentageCompletion && this.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
                                         </span>
                                         <span className="bottomTaskPercentage">{this.percentageCompletion && this.percentageCompletion}%</span>

@@ -53,10 +53,10 @@ class PointService extends React.Component {
     return (
       <div className='col-md-12 card CardWidget SPCertificate'>
         <div className='SPCardTitle d-flex'>
-          <h4 className='primaryColor'>Point of Service</h4>
+          <h4 className='theme-primary'>Point of Service</h4>
         </div>
         <div className='SPCertificateContainer width100'>
-          <ul className='SPCertificateList'>
+          <ul className='SPCertificateList theme-primary'>
             {this.props.PointServiceList.length > 0
               ? <div>
                 {PointServiceList}

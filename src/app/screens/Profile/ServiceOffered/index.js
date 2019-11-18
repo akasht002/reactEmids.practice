@@ -110,7 +110,7 @@ class ServiceOffered extends React.Component {
             <div>
 
                 <div className={"SPCardTitle d-flex"}>
-                    <h4 className={"primaryColor"}>Services Offered</h4>
+                    <h4 className={"theme-primary"}>Services Offered</h4>
                     {this.props.isUser && <div>
                         { this.props.serviceOfferedList && this.props.serviceOfferedList.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editServiceOffered} />

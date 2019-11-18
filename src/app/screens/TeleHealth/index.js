@@ -55,7 +55,7 @@ class TeleHealth extends Component {
             <AsideScreenCover>
                 <div className='TeleHealth ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Video Conference</h5>
+                        <h5 className='theme-primary m-0'>Video Conference</h5>
                         <span className="TeleHealthViewParticipants" onClick={() => { }} />
                     </div>
                 </div>
