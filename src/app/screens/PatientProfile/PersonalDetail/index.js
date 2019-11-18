@@ -95,7 +95,7 @@ class PersonalDetail extends React.PureComponent {
             </div>
             <div className={'SPAddressContent'}>
               <div className={'width100 SPAddressTitle d-flex'}>
-                <span className={'SPAddressText primaryColor'}>
+                <span className={'SPAddressText primaryColor theme-primary'}>
                   Emergency Contact
                 </span>
               </div>

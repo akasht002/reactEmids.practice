@@ -809,48 +809,51 @@
     margin-bottom: 30px;
 }
 
-.plan-tableview .EntityUServiceProf .SP-viewplantable {
-    display: table;
-}
+/*IE11*/
+@media all and (-ms-high-contrast:none) {
+    .plan-tableview .EntityUServiceProf .SP-viewplantable {
+        display: table;
+    }
 
-*::-ms-backdrop,
-.plan-tableview .EntityUServiceProf .SP-viewplantable {
-    display: table;
-}
+    *::-ms-backdrop,
+    .plan-tableview .EntityUServiceProf .SP-viewplantable {
+        display: table;
+    }
 
-.plan-tableview .EntityUServiceProf .SP-viewplantable span {
-    display: table-cell;
-    vertical-align: middle;
-}
+    .plan-tableview .EntityUServiceProf .SP-viewplantable span {
+        display: table-cell;
+        vertical-align: middle;
+    }
 
-*::-ms-backdrop,
-.plan-tableview .EntityUServiceProf .SP-viewplantable span {
-    display: table-cell;
-    vertical-align: middle;
-}
+    *::-ms-backdrop,
+    .plan-tableview .EntityUServiceProf .SP-viewplantable span {
+        display: table-cell;
+        vertical-align: middle;
+    }
 
-.my-plan-editmodel .assign-sp-block {
-    position: relative;
-    flex-direction: row;
-    justify-content: flex-start;
-    clear: both;
-}
+    .my-plan-editmodel .assign-sp-block {
+        position: relative;
+        flex-direction: row;
+        justify-content: flex-start;
+        clear: both;
+    }
 
-*::-ms-backdrop,
-.my-plan-editmodel .assign-sp-block {
-    position: relative;
-    flex-direction: row;
-    justify-content: flex-start;
-    clear: both;
-}
+    *::-ms-backdrop,
+    .my-plan-editmodel .assign-sp-block {
+        position: relative;
+        flex-direction: row;
+        justify-content: flex-start;
+        clear: both;
+    }
 
-.my-plan-editmodel .assign-sp-block .assign-SP-card {
-    padding-left: 10px;
-    padding-right: 10px;
-}
+    .my-plan-editmodel .assign-sp-block .assign-SP-card {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 
-*::-ms-backdrop,
-.my-plan-editmodel .assign-sp-block .assign-SP-card {
-    padding-left: 10px;
-    padding-right: 10px;
+    *::-ms-backdrop,
+    .my-plan-editmodel .assign-sp-block .assign-SP-card {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }

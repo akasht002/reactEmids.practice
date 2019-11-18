@@ -1,5 +1,5 @@
-
- :root {
+/*Please-don't remove this code it will be usefull for future theme-updation*/
+/* :root {
     --primaryColor: #1e3d5c !important;
     --primaryColorBackground: #1e3d5c !important;
     --buttonHover: #315477 !important;
@@ -9,7 +9,7 @@
     --chatMessageBg: #4f82b5 !important;
     --gradientOne: #1e3d5c !important;
     --gradientTwo: #315477 !important;
-}  
+}   */
 
 .theme-primary-gradient {
     background-image: -webkit-gradient(linear, left bottom, left top, from(#1e3d5c), to(#315477));
@@ -45,7 +45,8 @@ table.individuals-tableblock.theme-primary thead th,
 }
 
 .datePalette .dateRow input:checked+label,
-.EstimatedCostWidget.theme-primary {
+.EstimatedCostWidget.theme-primary,
+.filter-block button {
     border: 1px solid #1e3d5c;
     color: #1e3d5c !important;
 }
@@ -57,13 +58,20 @@ table.individuals-tableblock.theme-primary thead th,
 .WizardList.theme-primary .WizardItems.visited:after,
 .addImageBtn.theme-primary,
 .ServicesLink.theme-primary:before,
-.input-range__track--active, .SPCertificateList.theme-primary .SPSCertificateItems:before, .SPCertificateList.theme-primary .SPWorkHistoryItems:before, .SPCertificateList.theme-primary .SPEducationItems:before, .SPCertificateList.theme-primary .SPAddressItems:before, .SPEducationList.theme-primary .SPEducationItems:before,
-.AffiliatedList.theme-primary:before, .memT-S, .SPsubTitle.theme-primary span:before, .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected  {
+.input-range__track--active,
+.SPCertificateList.theme-primary .SPSCertificateItems:before,
+.SPCertificateList.theme-primary .SPWorkHistoryItems:before,
+.SPCertificateList.theme-primary .SPEducationItems:before,
+.SPCertificateList.theme-primary .SPAddressItems:before,
+.SPEducationList.theme-primary .SPEducationItems:before,
+.AffiliatedList.theme-primary:before,
+.memT-S,
+.SPsubTitle.theme-primary span:before,
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
     background-color: #1e3d5c;
 }
 
-.send-btn.theme-primary 
-{
+.send-btn.theme-primary {
     background-color: #1e3d5c;
     color: #fff !important;
 }
@@ -81,7 +89,8 @@ span.btn-hired {
 .react-datepicker__day--keyboard-selected:hover,
 .react-datepicker__day--selected,
 .TeleHealthControlsItem span.TeleHealthOptionLink:hover,
-.TeleHealthControlsItem span.TeleHealthOptionLink.off, .SPEducationItems:before {
+.TeleHealthControlsItem span.TeleHealthOptionLink.off,
+.SPEducationItems:before {
     background-color: #1e3d5c !important;
 }
 
@@ -94,15 +103,19 @@ span.btn-hired {
 .btn-primary:hover,
 .btn-outline-primary:hover,
 .btn-outline-primary:active,
-.btn-primary:focus  {
+.btn-primary:focus,
+.filter-block button:hover {
     background-color: #315477 !important;
     color: #fff !important;
 }
 
-.btn-outline-primary:focus, .btn-outline-primary:active, .form-radio-input:checked~.RadioBoxIcon, .form-radio-input:checked~.form-radio-label, .availabilityModal .SPAvailContainer.trueAvailable,
-.selected-box-border
-{
-    border: 1px solid #1e3d5c !important; 
+.btn-outline-primary:focus,
+.btn-outline-primary:active,
+.form-radio-input:checked~.RadioBoxIcon,
+.form-radio-input:checked~.form-radio-label,
+.availabilityModal .SPAvailContainer.trueAvailable,
+.selected-box-border {
+    border: 1px solid #1e3d5c !important;
 }
 
 .btn-outline-primary {
@@ -113,13 +126,20 @@ span.btn-hired {
 .active-tabview,
 .theme-primary-light .SPAvailItems.active,
 .modal-header,
-.backProfileIcon.theme-primary-light:hover, .No-Coverastion-Block.theme-primary-light, .NoServiceReq.theme-primary-light, .ListItem.CTDashboard:hover,
-.SPIconServicesCheckbox.theme-primary-light label.form-check-label:hover, .availabilityModal .availabilityCheck ~ label:hover, .BlockProfileContainer .ProfileImage, .active-listblock, .schedule-listblock:hover{
-    background-color: #e0f1fb !important;
+.backProfileIcon.theme-primary-light:hover,
+.No-Coverastion-Block.theme-primary-light,
+.NoServiceReq.theme-primary-light,
+.ListItem.CTDashboard:hover,
+.SPIconServicesCheckbox.theme-primary-light label.form-check-label:hover,
+.availabilityModal .availabilityCheck~label:hover,
+.BlockProfileContainer .ProfileImage,
+.avatarImage,
+.active-listblock,
+.schedule-listblock:hover {
+    background-color: #e0f1fb;
 }
 
-.availabilityModal .AvailabilityWidget .SPAvailWidget .trueAvailable .SPAvailTitle .SPAvailTitleText:after 
-{
+.availabilityModal .AvailabilityWidget .SPAvailWidget .trueAvailable .SPAvailTitle .SPAvailTitleText:after {
     border-color: #1e3d5c;
     background-color: #e0f1fb;
 }
@@ -155,7 +175,8 @@ input.form-control:focus,
     border-color: #1e3d5c !important;
 }
 
-.theme-primary.plan-tableview tbody tr:hover, .active-row-view {
+.theme-primary.plan-tableview tbody tr:hover,
+.active-row-view {
     background: #e0f1fb;
     border-left: 3px solid #1e3d5c !important;
     border-top: 1px solid #e0f1fb !important;
@@ -188,11 +209,14 @@ table.individuals-tableblock.theme-primary tbody tr:hover,
 .accordion__item .ServicesLink:before,
 .active-card-view.theme-primary-light,
 .card_view_visit:hover,
-.schedule-listblock.theme-primary-light:hover, .avatarImage.totalMembers.theme-primary-light, .participants.myChat {
+.schedule-listblock.theme-primary-light:hover,
+.avatarImage.totalMembers.theme-primary-light,
+.participants.myChat {
     background-color: #e0f1fb !important;
 }
 
-.tab-link .nav-item .active.nav-link, .chatBackButton:after {
+.tab-link .nav-item .active.nav-link,
+.chatBackButton:after {
     color: #1e3d5c !important;
     border-bottom: 1px solid #1e3d5c !important;
 }
@@ -213,7 +237,9 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     border-bottom: 1px solid #1e3d5c;
 }
 
-.customechk .checkmark.theme-primary:after, textarea.form-control:focus, .Select.is-searchable.is-focused:not(.is-open) > .Select-control  {
+.customechk .checkmark.theme-primary:after,
+textarea.form-control:focus,
+.Select.is-searchable.is-focused:not(.is-open)>.Select-control {
     border-color: #1e3d5c !important;
 }
 
@@ -244,7 +270,10 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     border-color: #1e3d5c;
 }
 
-.ServiceTypeList.theme-primary .ServiceTypeLink:hover, .every-dayblock input:focus, .right-monthblock input:focus, .last-block-monthwise fieldset input:focus {
+.ServiceTypeList.theme-primary .ServiceTypeLink:hover,
+.every-dayblock input:focus,
+.right-monthblock input:focus,
+.last-block-monthwise fieldset input:focus {
     border-color: #1e3d5c;
 }
 
@@ -265,13 +294,11 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     border: 1px solid #1e3d5c;
 }
 
-.ProfileShowMore.theme-primary-light
-{
+.ProfileShowMore.theme-primary-light {
     color: #1e3d5c !important;
 }
 
-.ProfileShowMore.theme-primary-light:hover
-{
+.ProfileShowMore.theme-primary-light:hover {
     background-color: #e0f1fb !important;
 }
 
@@ -279,28 +306,35 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     opacity: 0.9;
 }
 
-.chatMessage.yourChat .ChatBubble.theme-primary
-{
+.chatMessage.yourChat .ChatBubble.theme-primary {
     background-color: #4f82b5 !important;
     color: #fff !important;
 }
 
-.webUrl.theme-primary:before
-{
+.webUrl.theme-primary:before {
     background-color: transparent;
 }
 
-.modal-content .modal-footer .disabled, .modal-content .modal-footer .btn.disabled, .btn-primary.disabled, .btn-primary:disabled, span.life-map-btn .btn, span.life-map-btn .btn:hover
-{
-    background-color: #D0D2D3!important;
+.modal-content .modal-footer .disabled,
+.modal-content .modal-footer .btn.disabled,
+.btn-primary.disabled,
+.btn-primary:disabled,
+span.life-map-btn .btn,
+span.life-map-btn .btn:hover {
+    background-color: #D0D2D3 !important;
 }
 
-.login-body span
-{
-    color:#fff;
+.login-body span {
+    color: #fff;
 }
 
-div.Select-menu-outer .Select-option.is-selected, div.Select-menu-outer .Select-option:hover, 
-div.Select-menu-outer .Select-option:focus, div.Select-menu-outer  .Select-option.is-focused{
+div.Select-menu-outer .Select-option.is-selected,
+div.Select-menu-outer .Select-option:hover,
+div.Select-menu-outer .Select-option:focus,
+div.Select-menu-outer .Select-option.is-focused {
     background-color: #e0f1fb !important
+}
+
+.avatarImageBorder {
+    border-color: #e0f1fb;
 }
