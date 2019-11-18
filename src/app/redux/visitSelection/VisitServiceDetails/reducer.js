@@ -33,7 +33,8 @@ const defaultState = {
     isEntityDashboard: false,
     isLoadingESPList: false,
     isPaymentAvailable: false,
-    editIndividualEditPopup: false
+    editIndividualEditPopup: false,
+    planId: []
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -221,6 +222,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 editIndividualEditPopup: action.data
+            }
+        case VisitServiceDetails.getPlanId:
+            return {
+                ...state,
+                planId: action.data
             }
         default:
             return state;
