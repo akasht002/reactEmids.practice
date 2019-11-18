@@ -175,11 +175,19 @@ input.form-control:focus,
     border-color: #1e3d5c !important;
 }
 
-.theme-primary.plan-tableview tbody tr:hover,
+.theme-primary.plan-tableview tbody tr:hover, 
 .active-row-view {
     background: #e0f1fb;
     border-left: 3px solid #1e3d5c !important;
     border-top: 1px solid #e0f1fb !important;
+    border-bottom: 1px solid #e0f1fb !important;
+    cursor: pointer;
+}
+
+table.individuals-tableblock tbody tr:hover
+{
+    background: #e0f1fb;
+    border-left: 3px solid #1e3d5c !important;
     border-bottom: 1px solid #e0f1fb !important;
     cursor: pointer;
 }
