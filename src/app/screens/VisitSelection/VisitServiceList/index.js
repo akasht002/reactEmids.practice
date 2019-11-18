@@ -521,8 +521,8 @@ export class VisitServiceList extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"BlockProfileContainer " + (serviceList.statusId == SERVICE_REQ_STATUS.HIRED ? '' : 'noArrow')} onClick={() => {
-                                if (serviceList.statusId == SERVICE_REQ_STATUS.HIRED) {
+                            <div className={"BlockProfileContainer " + (serviceList.statusId === SERVICE_REQ_STATUS.HIRED ? '' : 'noArrow')} onClick={() => {
+                                if (serviceList.statusId === SERVICE_REQ_STATUS.HIRED) {
                                     this.props.setPatient(serviceList.patientId)
                                     this.props.goToPatientProfile()
                                 }

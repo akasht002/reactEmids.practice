@@ -490,6 +490,7 @@ export const VISIT_PROCESSING_STATUS = {
     },
     inProgress: {
         id: 44,
+        visitId: 40,
         title: 'In Progress'
     },
     completed: {

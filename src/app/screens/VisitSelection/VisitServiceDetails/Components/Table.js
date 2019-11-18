@@ -160,14 +160,16 @@ export const Table = props => {
                     })}
                 </tbody>
             </table>
-            <div className="table-result-block">
-                <RowPerPage
-                    pageSize={props.rowPageSize}
-                    pageSizeChange={props.rowPageChange}
-                    pageSizeOption={PAGE_SIZE_OPTIONS}
-                />
-                <span className="page-result">Total {props.totalResult} results</span>
-            </div>
+            {props.visitList.length !== 0 &&
+                <div className="table-result-block">
+                    <RowPerPage
+                        pageSize={props.rowPageSize}
+                        pageSizeChange={props.rowPageChange}
+                        pageSizeOption={PAGE_SIZE_OPTIONS}
+                    />
+                    <span className="page-result">Total {props.totalResult} results</span>
+                </div>
+            }
         </Fragment>
     )
 }

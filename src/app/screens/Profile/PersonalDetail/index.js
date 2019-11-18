@@ -387,7 +387,6 @@ class PersonalDetail extends React.PureComponent {
 
     let modalContent
     let modalTitle = 'Edit Personal Details'
-    let modalType = ''
     const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
       return { label: city.name, value: city.id + '-' + city.name }
     });

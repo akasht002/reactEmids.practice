@@ -142,16 +142,17 @@ export class Filter extends Component {
                                         entityServiceProvidersList={this.props.entityServiceProvidersList}
                                         handleEsp={this.props.handleEsp}
                                     />
-                                    <ul className="show-more-assignSP">
-                                        <li
-                                            class="list-group-item ProfileShowMore theme-primary-light"
-                                            onClick={this.props.clickShowMore}
-                                            disabled={this.props.disableShowmore}
-                                        >
-                                            Show more
-                                        <i class="ProfileIconShowMore"></i>
-                                        </li>
-                                    </ul>
+                                    {!this.props.disableShowmore &&
+                                        <ul className="show-more-assignSP">
+                                            <li
+                                                class="list-group-item ProfileShowMore theme-primary-light"
+                                                onClick={this.props.clickShowMore}
+                                                disabled={this.props.disableShowmore}
+                                            >
+                                                Show more
+                                            <i class="ProfileIconShowMore"></i>
+                                            </li>
+                                        </ul>}
                                 </TabPane>
                             </TabContent>
                         </Scrollbars>

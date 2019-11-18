@@ -36,5 +36,6 @@ export const VisitServiceDetails = {
     setServicePlanVisitId: 'setServicePlanVisitId/visitServiceDetails',
     setActivePage: 'setActivePage/visitServiceDetails',
     setPlanScheduleId: 'setPlanScheduleId/visitservicedetails',
-    editIndividualEditPopup: 'editIndividualEditPopup/visitservicedetails'
+    editIndividualEditPopup: 'editIndividualEditPopup/visitservicedetails',
+    getPlanId: 'planId/visitservicedetails'
   }

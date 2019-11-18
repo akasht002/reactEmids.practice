@@ -16,6 +16,7 @@ import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
+import { DATE_FORMATS } from "../../../../constants/constants";
 
 export class Summary extends Component {
 
@@ -147,13 +148,14 @@ export class Summary extends Component {
     }
 
     timerErrMessage = () => {
-        var currentTime = moment(this.props.SummaryDetails.originalTotalDuration, "HH:mm:ss");
+        let currentTime = moment(this.props.SummaryDetails.originalTotalDuration, DATE_FORMATS.hhMinSec);
         let hours = formatDateSingle(this.state.updatedHour)
         let minutes = formatDateSingle(this.state.updatedMin)
         let seconds = formatDateSingle(this.state.updatedSec)
         let newTime = hours + ':' + minutes + ':' + seconds
-        var endTime = moment(newTime, "HH:mm:ss");
-        if (currentTime.isBefore(endTime) || this.state.updatedMin > 59 || this.state.updatedSec > 59) {
+        let endTime = moment(newTime, DATE_FORMATS.hhMinSec);
+        let time = currentTime.isSameOrAfter(endTime)
+        if (!time) {
             this.setState({ timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.' })
         } else if (this.state.updatedHour === '' || this.state.updatedMin === '' || this.state.updatedMin === '') {
             this.setState({ emptyErrMessage: 'Time field(s) cannot be empty.' })
@@ -224,6 +226,7 @@ export class Summary extends Component {
                             style={{ width: 10 + '%' }}
                             min={0}
                             max={this.props.CalculationsData.totalHours}
+                            maxlength={2}
                         />
                     </span>
                     <span className="mr-3">

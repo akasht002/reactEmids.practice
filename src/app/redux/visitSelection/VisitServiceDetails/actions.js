@@ -13,11 +13,12 @@ import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
 import { VisitServiceDetails } from './bridge'
 import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST } from '../../../constants/constants'
-import { isEntityUser} from '../../../utils/userUtility'
+import { isEntityUser } from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy, uniqBy } from 'lodash'
 import { logError } from '../../../utils/logError';
 import _ from 'lodash'
+import { pushSpliceHandler } from '../../../utils/stringHelper';
 
 export const getVisitServiceDetailsSuccess = data => {
   return {
@@ -121,7 +122,7 @@ export function formDirtyVisitServiceDetails() {
 
 export function resetServiceDetails() {
   return {
-    type:VisitServiceDetails.resetState
+    type: VisitServiceDetails.resetState
   }
 }
 
@@ -131,7 +132,7 @@ export function updateServiceRequestByServiceProvider(data) {
     serviceProviderId: getUserInfo().serviceProviderId,
     applyOrNotInterested: data.type
   }
-  return dispatch => {    
+  return dispatch => {
     ServiceRequestPost(
       API.applyServiceRequestByServiceProvider,
       modelData
@@ -154,7 +155,7 @@ export function cancelServiceRequestByServiceProvider(data) {
     patientId: data.patientId,
     cancelledDescription: data.cancelledDescription
   }
-  return dispatch => {    
+  return dispatch => {
     ServiceRequestPut(API.cancelServiceRequestByServiceProvider, model)
       .then(resp => {
         dispatch(endLoading())
@@ -173,7 +174,7 @@ export function getVisitServiceDetails(data) {
     let serviceProviderId = getUserInfo().isEntityServiceProvider ? currstate.visitSelectionState.VisitServiceDetailsState.entityServiceProviderId
       : getUserInfo().serviceProviderId
     dispatch(getServiceRequestId(data));
-    
+
     ServiceRequestGet(API.getServiceRequestDetails + `${data}/${serviceProviderId}`)
       .then(resp => {
         dispatch(getVisitServiceDetailsSuccess(resp.data));
@@ -245,9 +246,9 @@ export function getVisitServiceEligibilityStatus(data) {
   return (dispatch) => {
     ThirdPartyPost(API.getServiceRequestEligibilityStatus, data).then((resp) => {
       dispatch(getVisitServiceEligibityStatusSuccess(resp.data))
-      
+
     }).catch((err) => {
-      
+      logError(err);
     })
   }
 };
@@ -263,9 +264,9 @@ export function getDays() {
   return (dispatch) => {
     ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
       dispatch(getDaysSuccess(resp.data))
-      
+
     }).catch((err) => {
-      
+      logError(err);
     })
   }
 };
@@ -347,7 +348,8 @@ export function acceptservicerequest(data) {
     dispatch(startLoading(true))
     ServiceRequestPut(API.acceptservicerequest, model)
       .then(resp => {
-        dispatch(push(Path.visitServiceList))
+        dispatch(getVisitServiceDetails(data.serviceRequestId));
+        dispatch(getSchedulesList(data.patientId));
       })
       .catch(err => {
         dispatch(push(Path.visitServiceList))
@@ -360,9 +362,9 @@ export function canInitiateConversation(data) {
   return (dispatch) => {
     ThirdPartyGet(API.canInitiateConversation + `${serviceProviderId}/${data.patient.patientId}`).then((resp) => {
       dispatch(canInitiateConversationSuccess(resp.data))
-      
+
     }).catch((err) => {
-      
+      logError(err);
     })
   }
 };
@@ -455,28 +457,28 @@ export function selectESP(espId) {
 
 export function getEntityServiceProviderList(data, selectedESPId = '') {
   return (dispatch, getState) => {
-      dispatch(loadingESPList(true))
-      Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
-          .then(resp => {
-              let oldEspList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
-              let modifiedList = [...oldEspList, ...resp.data];
-              let selectedESP = modifiedList.map((type, index) => {
-                  return {
-                      ...type,
-                      selected: type.serviceProviderId === selectedESPId
-                  }
-              });
+    dispatch(loadingESPList(true))
+    Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
+      .then(resp => {
+        let oldEspList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
+        let modifiedList = [...oldEspList, ...resp.data];
+        let selectedESP = modifiedList.map((type, index) => {
+          return {
+            ...type,
+            selected: type.serviceProviderId === selectedESPId
+          }
+        });
 
-              let espList = uniqBy(selectedESP, function (x) {
-                return x.serviceProviderId;
-              });
-              dispatch(getEntityServiceProviderListSuccess(espList))
-              dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
-              dispatch(loadingESPList(false))
-          })
-          .catch(err => {
-              dispatch(loadingESPList(false))
-          })
+        let espList = uniqBy(selectedESP, function (x) {
+          return x.serviceProviderId;
+        });
+        dispatch(getEntityServiceProviderListSuccess(espList))
+        dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
+        dispatch(loadingESPList(false))
+      })
+      .catch(err => {
+        dispatch(loadingESPList(false))
+      })
   }
 }
 
@@ -528,11 +530,12 @@ export function getSchedulesList(patientId) {
           entityServiceProviders: [],
           servicePlanVisitId: servicePlanVisitId 
         }
+        dispatch(getPlanId(id))
         dispatch(getSchedulesListSuccess(resp.data))
-        dispatch(getVisitList(model))
+        dispatch(getVisitList(model));
       })
       .catch(err => {
-        logError(err)
+        logError(err);
       })
   }
 };
@@ -594,7 +597,7 @@ export function getVisitStatus() {
         });
         dispatch(getVisitStatusSuccess(data))
       })
-      
+
     }).catch((err) => {
       dispatch(endLoading());
     })
@@ -680,15 +683,15 @@ export function getfirstlastvisitdate(data) {
     ServiceRequestPost(API.getfirstlastvisitdate, data)
       .then(resp => {
         dispatch(getfirstlastvisitdateSuccess(resp.data))
-        
+
       })
   }
 };
 
 export const saveScheduleType = data => {
   return {
-      type: VisitServiceDetails.saveScheduleType,
-      data
+    type: VisitServiceDetails.saveScheduleType,
+    data
   }
 }
 
@@ -706,29 +709,43 @@ export const setVisitDate = data => {
   }
 }
 
-export const  setEntityDashboard = data => {
+export const setEntityDashboard = data => {
   return {
     type: VisitServiceDetails.setEntityDashboard,
     data
   }
 }
 
-export function getPaymentAvailability() { 
+export function getPaymentAvailability() {
   return (dispatch) => {
-      ThirdPartyGet(API.getPaymentAvailability)          
-        .then(resp => {
-          dispatch(getPaymentAvailabilitySuccess(resp.data));
-        })
-        .catch(err => {
-          logError(err)
-        })
-    }
+    ThirdPartyGet(API.getPaymentAvailability)
+      .then(resp => {
+        dispatch(getPaymentAvailabilitySuccess(resp.data));
+      })
+      .catch(err => {
+        logError(err)
+      })
+  }
 }
 
 export const getPaymentAvailabilitySuccess = data => {
   return {
-      type: VisitServiceDetails.getPaymentAvailabilitySuccess,
-      data
+    type: VisitServiceDetails.getPaymentAvailabilitySuccess,
+    data
+  }
+}
+
+export const getPlanId = (data) => {
+  return {
+    type: VisitServiceDetails.getPlanId,
+    data
+  }
+}
+
+export const modifiedPlanId = (actualData, selectedData) => {
+  return {
+    type: VisitServiceDetails.getPlanId,
+    data: pushSpliceHandler(actualData, parseInt(selectedData, 10))
   }
 }
 

@@ -35,7 +35,7 @@ import {
     isAssessmentEdit,
     clearServiceDetails
 } from '../../redux/schedule/actions';
-import { getDiffTime, getHourMin } from "../../utils/dateUtility";
+import { getDiffTime, getHourMin, getMinutes, getHours } from "../../utils/dateUtility";
 import './Components/styles.css'
 import { PlanTypeData, ScheduleTypeData, weekRecurring } from './data/index'
 import { validate } from './data/validate'
@@ -98,7 +98,8 @@ export class Schedule extends Component {
         this.formatedEndTime = "";
         this.selectedDaysLabel = "";
         this.selectedWeeksLabel = "";
-        this.isDataEntered = false
+        this.isDataEntered = false;
+        this.selectedDuration = ''
     }
 
     async componentDidMount() {
@@ -106,7 +107,7 @@ export class Schedule extends Component {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
         }
-        
+
         if (this.props.patientId) {
             await this.props.getServiceCategory(this.categoryId, [], this.props.isIndividualScheduleEdit);
             this.props.getPatientAddress(this.props.patientId);
@@ -150,8 +151,22 @@ export class Schedule extends Component {
                 zip: validAddress.zip,
                 state: validAddress.stateId,
                 statelabel: validAddress.stateName,
+                latitude: validAddress.latitude,
+                longitude: validAddress.longitude,
                 isDefaultAddress: true
             })
+
+            this.address = {
+                addressType: validAddress.addressType,
+                streetAddress: validAddress.street,
+                city: validAddress.city,
+                zip: validAddress.zip,
+                stateId: validAddress.stateId,
+                stateName: validAddress.stateName,
+                latitude: validAddress.latitude,
+                longitude: validAddress.longitude,
+                patientAddressId: validAddress.addressId,
+            }
         }
     }
 
@@ -190,7 +205,8 @@ export class Schedule extends Component {
             street: data && data.streetAddress,
             city: data && data.city,
             zip: data && data.zipCode,
-            state: data && data.stateId
+            state: data && data.stateId,
+            selectedDuration: data.duration
         })
         this.address = {
             patientAddressId: data.patientAddressId,
@@ -204,6 +220,7 @@ export class Schedule extends Component {
             longitude: data.longitude
         }
         this.espId = data.serviceProviderId;
+        this.selectedDuration = data.duration
     }
 
 
@@ -239,10 +256,12 @@ export class Schedule extends Component {
             selectedDaysLabel: this.selectedDaysLabel,
             selectedWeeks: data.monthly !== null && data.monthly.weekDayMonth && data.monthly.weekDayMonth.week,
             selectedWeeksLabel: this.selectedWeeksLabel,
-            monthlyMonthsSecond: data.monthly !== null && data.monthly.weekDayMonth && data.monthly.weekDayMonth.month
+            monthlyMonthsSecond: data.monthly !== null && data.monthly.weekDayMonth && data.monthly.weekDayMonth.month,
+            selectedDuration: data.duration
         })
         this.weeklySelectedDays = data.weekly ? data.weekly.days : [];
         this.espId = data.serviceProviderId;
+        this.selectedDuration = data.duration
         this.address = {
             patientAddressId: data.patientAddressId,
             streetAddress: data.address && data.address.streetAddress,
@@ -373,7 +392,13 @@ export class Schedule extends Component {
         this.setState({
             [key]: value,
             isDefaultAddress: true
+        }, () => {
+            this.setAddress()
         })
+        this.isDataEntered = true;
+    }
+
+    setAddress() {
         this.address = {
             patientAddressId: 0,
             streetAddress: this.state.street,
@@ -383,7 +408,6 @@ export class Schedule extends Component {
             zip: this.state.zip,
             addressType: this.state.addressType
         }
-        this.isDataEntered = true;
     }
 
     statehandleChange = (selectedOptionState) => {
@@ -432,6 +456,7 @@ export class Schedule extends Component {
             startTime: null,
             endTime: null
         })
+        this.selectedDuration = ''
         this.isDataEntered = true;
     }
 
@@ -470,18 +495,34 @@ export class Schedule extends Component {
     handleChangeStartTime = (event) => {
         this.formatedStartTime = getHourMin(event)
         let endTime = this.state.endTime
+        if(endTime){
+            this.selectedDuration = getDiffTime(this.formatedStartTime, endTime);
+        }
         if (this.formatedStartTime === this.formatedEndTime) {
             endTime = moment(this.state.startTime).add("minutes", 60)
             this.formatedEndTime = getHourMin(endTime)
         }
-        this.setState({ startTime: event, endTime });
+        this.setState({ startTime: event, endTime, selectedDuration: this.selectedDuration });
         this.isDataEntered = true;
     }
 
     handleChangeEndTime = (event) => {
-
         this.formatedEndTime = getHourMin(event)
         this.setState({ endTime: event });
+        this.selectedDuration = getDiffTime(this.state.startTime, this.formatedEndTime);
+        this.setState({
+            selectedDuration: this.selectedDuration
+        });
+        this.isDataEntered = true;
+    }
+
+    handleChangeDuration = (selectedOption) => {
+        let hours = getHours(selectedOption)
+        let minutes = getMinutes(selectedOption)
+        this.selectedDuration = selectedOption;
+        const endTime = moment(this.state.startTime).add(hours, 'hours').add(minutes, 'minutes');
+        this.formatedEndTime = getHourMin(endTime)
+        this.setState({ endTime, selectedDuration: selectedOption });
         this.isDataEntered = true;
     }
 
@@ -497,8 +538,10 @@ export class Schedule extends Component {
             monthlyMonthsSecond: '',
             selectedDaysLabel: '',
             selectedWeeksLabel: '',
+            selectedDuration: ''
         })
         this.isDataEntered = true;
+        this.selectedDuration = ''
     }
 
     handleSelectDailyOptionField = (id) => {
@@ -697,7 +740,6 @@ export class Schedule extends Component {
             latitude,
             longitude,
             assessmentId,
-            duration,
             isAssessmentEdit
         } = this.state
 
@@ -718,7 +760,7 @@ export class Schedule extends Component {
             longitude: longitude,
             assessmentId: assessmentId
         }
-        
+
         this.props.getValidPatientAddress(data, (isValid) => {
             isValid && this.props.createOrEditAssessment({ data, address: this.address });
         });
@@ -917,6 +959,8 @@ export class Schedule extends Component {
                                         weeklySelectedDays={this.weeklySelectedDays}
                                         planType={this.state.planType}
                                         handleChangeOccurrenceFields={this.handleChangeOccurrenceFields}
+                                        handleChangeDuration={this.handleChangeDuration}
+                                        selectedDuration={this.selectedDuration}
                                     />
 
                                 </div>

@@ -37,7 +37,8 @@ const defaultState = {
     servicePlanVisitId: 0,
     activePage: DEFAULT_PAGE_NUMBER,
     planScheduleId: 0,
-    editIndividualEditPopup: false
+    editIndividualEditPopup: false,
+    planId: []
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -240,6 +241,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 editIndividualEditPopup: action.data
+            }
+        case VisitServiceDetails.getPlanId:
+            return {
+                ...state,
+                planId: action.data
             }
         default:
             return state;
