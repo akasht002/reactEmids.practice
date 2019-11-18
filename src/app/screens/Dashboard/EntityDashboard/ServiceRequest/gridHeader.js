@@ -4,7 +4,8 @@ export let allServiceRequests = {
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
     status: 'Status',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'all-serviceRequests-tableblock'
 }
 
 export let cancelledServiceRequests = {
@@ -13,7 +14,8 @@ export let cancelledServiceRequests = {
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
     status: 'Status',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'cancelled-serviceRequests-tableblock'
 }
 
 export let openServiceRequests = {
@@ -22,5 +24,6 @@ export let openServiceRequests = {
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
     status: 'Status',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'open-serviceRequests-tableblock'
 }

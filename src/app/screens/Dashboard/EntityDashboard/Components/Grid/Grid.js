@@ -5,7 +5,7 @@ import { Body } from './Body';
 export const Grid = props => {
     return (
         <Fragment>
-            <table className="table-responsive individuals-tableblock theme-primary" cellpadding="4" cellspacing="4">
+            <table className={`table-responsive individuals-tableblock ${props.header.className}`} cellpadding="4" cellspacing="4">
                 <Header {...props} />
                 <Body {...props} />
             </table>
