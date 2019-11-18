@@ -543,7 +543,7 @@ class PersonalDetail extends React.PureComponent {
                 {this.props.personalDetail &&
                   `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
               </h3>
-              <p className={'SPsubTitle'}>
+              <p className={'SPsubTitle theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.genderName}
@@ -562,7 +562,7 @@ class PersonalDetail extends React.PureComponent {
               </p>
             </div>
             <div className={'col p-0'}>
-              <h3 className={'ratePerHour primaryColor'}>
+              <h3 className={'ratePerHour theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.hourlyRate}
@@ -574,7 +574,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'SPAffiliatedList'}>
               {this.props.personalDetail &&
                 this.props.personalDetail.affiliationName &&
-                <span className={'AffiliatedList'}>
+                <span className={'AffiliatedList theme-primary'}>
                   Affiliated to In
                 {' '}
                   <bd>
@@ -585,7 +585,7 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>
           <div className={'width100 description-block-profile'}>
-          <span className={'primaryColor'}>Description</span>
+          <span className={'theme-primary'}>Description</span>
 
             <span>{(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
               : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails}>Edit your profile here</span>}</span>
@@ -594,7 +594,7 @@ class PersonalDetail extends React.PureComponent {
         <div className={'SPDetailsContainer SPAddressWidget'}>
           <div className={'SPAddressContent'}>
             <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Address</span>
+              <span className={'SPAddressText theme-primary'}>Address</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
@@ -617,7 +617,7 @@ class PersonalDetail extends React.PureComponent {
           </div>
           <div className={'SPAddressContent'}>
             <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Phone</span>
+              <span className={'SPAddressText theme-primary'}>Phone</span>
             </div>
             <div className={'width100 d-flex'}>
               <span>
@@ -640,7 +640,7 @@ class PersonalDetail extends React.PureComponent {
     return (
       <div className='row'>
         <div className='col-md-12'>
-          <h4 className='primaryColor text-left editProfileHeader'>
+          <h4 className='theme-primary text-left editProfileHeader'>
             Introduction
           </h4>
         </div>
@@ -656,7 +656,7 @@ class PersonalDetail extends React.PureComponent {
             />
             <span className='editDpImage' />
             <div className='uploadWidget' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>
-              <i className='addImageBtn' onClick={this.handleChange} />
+              <i className='addImageBtn theme-primary' onClick={this.handleChange} />
             </div>
           </div>
         </div>
@@ -929,7 +929,7 @@ class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Address
               </h4>
             </div>
@@ -1055,7 +1055,7 @@ class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Phone
               </h4>
             </div>

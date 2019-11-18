@@ -255,7 +255,7 @@ class Payments extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -264,7 +264,7 @@ class Payments extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -308,11 +308,11 @@ class Payments extends Component {
                         <div className='CardContainers ServiceCategoryWidget'>
                             <div className='VisitPaymentContainer'>
                                 <div className="VisitPaymentWidget">
-                                    <p className="VisitPaymentContentTitle">Make Payment</p>
+                                    <p className="VisitPaymentContentTitle theme-primary">Make Payment</p>
                                     {this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false ?
-                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.copayAmount}</i></p>
+                                        <p className="VisitPaymentAmountPaid theme-primary">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.copayAmount}</i></p>
                                         :
-                                        <p className="VisitPaymentAmountPaid">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount && this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
+                                        <p className="VisitPaymentAmountPaid theme-primary">Amount to be paid <i>${this.props.summaryAmount.CalculationsData.grandTotalAmount && this.props.summaryAmount.CalculationsData.grandTotalAmount}</i></p>
                                     }
 
                                     <div className="FeedbackQuestionWidget form-group">

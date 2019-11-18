@@ -47,7 +47,7 @@ class Filter extends Component {
             <div className={"CTFilter FilterWidget entity-filter-block " + this.props.isOpen}>
                 <div className="filterOverlay individual"></div>
                 <div className="FilterWidgetForm">
-                    <div className="FilterContainer FilterTop">
+                    <div className="FilterContainer FilterTop theme-primary-light">
                         <span>Filters</span>
                         <span className="FilterCloseIcon" onClick={this.props.toggle} />
                     </div>

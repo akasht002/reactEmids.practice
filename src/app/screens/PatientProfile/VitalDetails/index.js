@@ -43,7 +43,7 @@ class VitalDetails extends React.Component {
       <Fragment>
         <div className='col-md-12 card CardWidget SPLanguages'>
           <div className='SPCardTitle d-flex vital-block-title'>
-            <h4 className='primaryColor'>Vital</h4>
+            <h4 className='theme-primary'>Vital</h4>
           </div>
 
           <div className='ConnectionsWidget CoreoWidget vital-block'>

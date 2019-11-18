@@ -134,7 +134,7 @@ class VerifyContact extends React.Component {
                         </div>
                         <div className="row mt-auto verify-msgie11">
                             {this.state.passCodeSentMsg && <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been {this.state.clickHereResent && <span>re</span>}sent to your registered Contact Number.</span>}
-                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickReSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <a href = {Help} target = "_blank" className="primaryColor px-1">Support</a></span>
+                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="theme-primary px-1" onClick={this.onClickReSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <a href = {Help} target = "_blank" className="theme-primary px-1">Support</a></span>
                         </div>
                     </div>
                 </CoreoWizScreen>

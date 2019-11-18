@@ -268,14 +268,14 @@ class Certification extends Component {
         return (
             <div>
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Certification and License(s)</h4>
+                    <h4 className="theme-primary">Certification and License(s)</h4>
                     {this.props.isUser &&
                     <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                     onClick={() => this.setState({ certificationModal: true, isAdd: true })} />}
                     
                 </div>
                 <div className="SPCertificateContainer width100">
-                    <ul className="SPCertificateList">
+                    <ul className="SPCertificateList theme-primary">
                         {this.props.certificationList.length > 0 ?
                             <div>
                                 {certificationList}

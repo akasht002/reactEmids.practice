@@ -22,7 +22,7 @@ function DashboardWizFlow(props) {
     );
 
     return (
-        <ul className="WizardList">
+        <ul className="WizardList theme-primary">
             {menuList}
         </ul>
     )

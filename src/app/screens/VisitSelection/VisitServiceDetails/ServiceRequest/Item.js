@@ -9,7 +9,7 @@ export const Item = props => {
     return (
         <div onClick={() => props.handelDetails(props.item.serviceRequestId)}>
             <div class="card_view_block">
-                <div class={props.serviceRequestId === props.item.serviceRequestId ? "card_view_visit active-card-view" : "card_view_visit"}>
+                <div class={props.serviceRequestId === props.item.serviceRequestId ? "card_view_visit active-card-view theme-primary-light" : "card_view_visit"}>
                     <div class="visit_iconview">
                         <img src={require(`../../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                     </div>
@@ -32,7 +32,7 @@ export const Item = props => {
 
                     <div class="status_view_arrow">
                         <div class="label_viewstatus">
-                            <span class="btn btn-hired">{props.item.serviceRequestStatus}</span>
+                            <span class="btn btn-hired theme-primary">{props.item.serviceRequestStatus}</span>
                         </div>
                     </div>
                 </div>

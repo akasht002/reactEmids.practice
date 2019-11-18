@@ -188,7 +188,7 @@ class AsideScreenCover extends React.Component {
         let menuData = (!getUserInfo().isEntityServiceProvider) ? (isEntityUser() ? EntityUserMenuData : MenuData) : EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
-                <div className={"ProfileLeftWidget " + this.props.isOpen}>
+                <div className={"ProfileLeftWidget theme-primary-gradient " + this.props.isOpen}>
                     <div className='BrandNameWidget'>
                         <div className='BrandName'>
                             <span className='BrandLink'>
@@ -288,7 +288,7 @@ class AsideScreenCover extends React.Component {
                     }}
                     ModalBody={
                         <div>
-                            <span className='ProfileCardHeaderTitle primaryColor'>
+                            <span className='ProfileCardHeaderTitle theme-primary'>
                                 Improve Your Experience
                             </span>
                             <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>
@@ -307,7 +307,7 @@ class AsideScreenCover extends React.Component {
                     }}
                     ModalBody={
                         <div>
-                            <span className='ProfileCardHeaderTitle primaryColor'>
+                            <span className='ProfileCardHeaderTitle theme-primary'>
                                 Improve Your Experience
                             </span>
                             <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>

@@ -386,10 +386,11 @@
     border: 1px solid #7a329f;
     font-size: 15px;
     line-height: 20px;
-    padding: 6px 12px;
+    padding: 6px 12px !important;
     background: #fff;
     color: #7a329f;
     cursor: pointer;
+    height: 35px;
 }
 
 .filter-block button:hover {

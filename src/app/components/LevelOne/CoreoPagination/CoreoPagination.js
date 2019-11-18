@@ -5,7 +5,7 @@ import './style.css';
 class CoreoPagination extends Component {
     render() {
         return(
-            <div className='col-md-12 p-0 CoreoPagination'>
+            <div className='col-md-12 p-0 CoreoPagination theme-primary'>
                 <Pagination
                     activePage={this.props.activePage}
                     itemsCountPerPage={this.props.itemsCountPerPage}

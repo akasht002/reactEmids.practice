@@ -531,7 +531,7 @@ export class Individuals extends Component {
               handleSearchData={this.handleSearchData}
               closeSearch={this.closeSearch}
             />
-          <span className='profile-header-filter'
+          <span className='profile-header-filter theme-primary'
               onClick={this.toggleFilter}
             >
               Filters

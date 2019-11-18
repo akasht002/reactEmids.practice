@@ -8,7 +8,7 @@ function ServiceTypes(props) {
         const j = Object.values(serviceTypes);
         let image_url = getServiceTypeImage(serviceTypes.serviceTypeId);
         return (
-            <div className={'ServiceTypeList ' + (serviceTypes.selected ? 'selected' : '')} key={catNum}
+            <div className={'ServiceTypeList theme-primary ' + (serviceTypes.selected ? 'selected' : '')} key={catNum}
                 onClick={(e) => {
                     props.handleServiceType(serviceTypes, e)
                 }}

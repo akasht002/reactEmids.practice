@@ -55,7 +55,7 @@ class PersonalDetail extends React.PureComponent {
                   {this.props.personalDetail &&
                     `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
                 </h3>
-                <p className={'SPsubTitle'}>
+                <p className={'SPsubTitle theme-primary'}>
                   <span>
                     {this.props.personalDetail && this.props.personalDetail.gender && this.props.personalDetail.gender.genderName}
                     {' '}
@@ -72,7 +72,7 @@ class PersonalDetail extends React.PureComponent {
               <div className={'SPAffiliatedList'} />
             </div>
             <div className={'width100 description-block-profile'}>
-            <span className={'primaryColor'}>Description</span>
+            <span className={'theme-primary'}>Description</span>
               <div className='SPDesc'>
                 {this.props.personalDetail &&
                   this.props.personalDetail.description}
@@ -82,7 +82,7 @@ class PersonalDetail extends React.PureComponent {
           <div className={'SPDetailsContainer SPAddressWidget'}>
             <div className={'SPAddressContent'}>
               <div className={'width100 SPAddressTitle d-flex'}>
-                <span className={'SPAddressText primaryColor'}>
+                <span className={'SPAddressText theme-primary'}>
                   Primary Phone Number
                 </span>
               </div>
