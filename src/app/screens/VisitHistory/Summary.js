@@ -55,7 +55,6 @@ export class VistSummary extends React.Component {
     } else {
       this.props.history.push(Path.visitHistory)
     }
-    //this.props.setServiceProviderFeedbackTab(true)
   }
 
 
