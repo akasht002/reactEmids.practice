@@ -861,10 +861,11 @@ highlightVisit = data => {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : (this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.HIRED || this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.CLOSED) ? true : false;
+    let shouldPatientProfile = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : (this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.HIRED || this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.CLOSED) ? true : false;
     let updatedTabdata = this.props.ServiceRequestId === 0 ?
       tabdata.slice(1, tabdata.length) :
-      isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
+      shouldPatientProfile ? tabdata : tabdata.slice(0, 2);
+    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 && this.props.scheduleList[0].isAnyAvailableHiredCard;
 
     return (
       <Fragment>
