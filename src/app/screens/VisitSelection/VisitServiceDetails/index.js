@@ -154,6 +154,7 @@ export class VisitServiceDetails extends Component {
   componentWillUnmount() {
     this.props.resetServiceDetails()
     this.props.setEntityDashboard(false)
+    this.applyReset();
   }
 
   componentDidUpdate() {

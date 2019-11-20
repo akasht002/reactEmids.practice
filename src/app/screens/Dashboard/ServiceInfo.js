@@ -259,7 +259,7 @@ export const MyConversionDefault = (props) => {
           <Link to='/messagesummary'>
           <div class="no-blockinfo-top">
           <div className="NoProfileServices No-Coverastion-Block theme-primary-light">
-          <span class="NoInfoText"><span class="NoServiceInfoLink theme-primary">New Coverastion</span></span>
+          <span class="NoInfoText"><span class="NoServiceInfoLink theme-primary">New Conversation</span></span>
           </div>
            </div>
            </Link>

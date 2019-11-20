@@ -293,7 +293,9 @@ export class Schedule extends Component {
             this.serviceTypes = [];
             this.categoryId = SERVICE_CATEGORY.adl.id;
             this.address = {}
-            this.espId = '';
+            this.selectedDuration = ''
+            this.handleAssignServiceProvider(null, true);
+            this.handleServiceCategory(SERVICE_CATEGORY.adl.id, true)
         }
     }
 
@@ -302,11 +304,13 @@ export class Schedule extends Component {
         this.handleChangePlanType(this.state.planTypeId);
     }
 
-    handleServiceCategory = (id) => {
+    handleServiceCategory = (id, clearServiceTypes = false) => {
         this.categoryId = id;
         this.serviceTypes = [];
         this.props.getServiceType(id);
-        this.isDataEntered = true;
+        if(!clearServiceTypes){
+            this.isDataEntered = true;
+        }
         this.setState({ checkedServiceCategoryId: id, serviceTypeSelected: false })
     }
 
@@ -436,10 +440,12 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleAssignServiceProvider = (id) => {
+    handleAssignServiceProvider = (id, clearSelectedESP = false) => {
         this.espId = parseInt(id, 0);
         this.props.selectESP(id)
-        this.isDataEntered = true;
+        if(!clearSelectedESP){
+            this.isDataEntered = true;
+        }
     }
 
     handleAdditionInfo = e => {

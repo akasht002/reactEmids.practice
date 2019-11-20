@@ -402,12 +402,14 @@ export class Individuals extends Component {
   }
 
   onChangeSlider = data => {
+    if(data.min >= 0 && data.max<=120){
     let ageRange = {
       minimumAge: data.min,
       maximumAge: data.max
     }
     this.props.setAgeRange(ageRange)
   }
+}
 
   handleGenderType = data => {
     this.props.setGenderId(data.id)
