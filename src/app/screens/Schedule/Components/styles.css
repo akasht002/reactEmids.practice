@@ -269,7 +269,7 @@
 
 .Service-typesTitle span h5 {
   display: inline-block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   color: #7a329f;
   text-decoration: underline;
@@ -803,7 +803,7 @@ fieldset .form-radio {
 
 .right-block2-shedule {
   width: 48% !important;
-  padding-bottom: 0px !important;
+  padding-bottom: 9px !important;
 }
 
 .right-block2-shedule .slick-list .slick-track {
@@ -1752,6 +1752,26 @@ ul.show-more-assignSP li {
 .form-group2block .form-group .onBoardingSelect {
   background: #fff;
   top: -8px;
+  color: #444444;
+  padding-top: 14px;
+}
+
+.form-group2block .form-group .onBoardingSelect:not(select):before {
+  top: 19px;
+}
+
+.start-rightdate .form-group2block .form-group .onBoardingSelect:not(select):before {
+  top: 18px;
+}
+
+.form-group2block .form-group .onBoardingSelect .Select-placeholder {
+  color: #8c8c8c;
+  font-size: 16px;
+}
+
+.right-block2-shedule .padding-less-10
+{
+   padding-right: 5px;
 }
 
 /*IE-Edge*/

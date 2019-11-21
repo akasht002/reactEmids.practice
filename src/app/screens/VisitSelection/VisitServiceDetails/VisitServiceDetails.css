@@ -45,7 +45,6 @@
     cursor: pointer;
     border-right: 1px solid #dcdcdc;
     cursor: pointer;
-    line-height: 55px;
     margin-bottom: 0 !important;
 }
 
@@ -76,7 +75,7 @@
     display: block;
     padding: 0px 30px;
     font-size: 16px;
-    line-height: 54px;
+    line-height: 53px;
 }
 
 .active-tabview {

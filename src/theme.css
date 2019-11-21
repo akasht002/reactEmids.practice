@@ -346,3 +346,11 @@ div.Select-menu-outer .Select-option.is-focused {
 .avatarImageBorder {
     border-color: #e0f1fb;
 }
+
+.tab_view_list .active-tabview.nav-link, .tab_view_list .active-tabview.nav-link:hover {
+    border-bottom: 2px solid #1e3d5c !important;
+}
+
+.tab_view_list .nav-link:hover {
+    border-color: transparent !important;
+}
