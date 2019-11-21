@@ -26,6 +26,7 @@ import { Assessment } from "./assessment";
 import { caseInsensitiveComparer } from "../../utils/comparerUtility";
 import { setServiceProviderFeedbackTab } from "../../redux/dashboard/EntityDashboard/ServiceProvider/actions";
 import { getFullName } from "../../utils/stringHelper";
+import { isEntityUser } from "../../utils/userUtility";
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -332,7 +333,7 @@ export class VistSummary extends React.Component {
   getFeedbackContent = data => {
     return (
       <div className='FeedbackWidget'>
-      {!this.props.isServiceProviderFeedbackTab &&
+      {(isEntityUser() && !this.props.isServiceProviderFeedbackTab) &&
           <div className='FeedbackRating'>
             {this.props.summaryDetails.serviceProvider
               ? <p>
@@ -594,7 +595,7 @@ export class VistSummary extends React.Component {
 
                 <p className="SummaryContentTitle mb-4 theme-primary">Feedback</p>
                 <div className="feedbackContainer">
-                {getLength(this.props.VisitFeedback) > 0 && !this.props.isServiceProviderFeedbackTab &&
+                {getLength(this.props.VisitFeedback) > 0 && (isEntityUser() && !this.props.isServiceProviderFeedbackTab) &&
                     <p>
                       Submitted rating:
                     {' '}
