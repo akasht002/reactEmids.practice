@@ -506,7 +506,7 @@
     padding: 0px 25px 25px 25px;
 }
 
-.individual-spblock-full .ServiceTypeLink {
+.individual-spblock-full .visit-srq-slider .ServiceTypeLink {
     border: 1px solid #d1d1d1 !important;
     cursor: context-menu !important;
 }
@@ -573,6 +573,7 @@
 
 .individual-spblock-full .ServiceCategoryContent .SPAvailContainer.Available {
     margin-bottom: 10px;
+    border-color: #d1d1d1!important;
 }
 
 .individual-spblock-full .ContentTitle.Summary span.ContentTitle.Summary {
@@ -680,8 +681,9 @@
 }
 
 .right-block-view .ServiceTypesSlider.Summary .ServiceTypeList input:checked+label,
-.right-block-view .ServiceTypesSlider.Summary .ServiceTypeLink:hover {
-    border-color: #d1d1d1;
+.right-block-view .ServiceTypesSlider.Summary .ServiceTypeLink:hover,
+.right-block-view .ServiceCategoryContent .SPAvailContainer.Available {
+    border-color: #d1d1d1 !important;
     cursor: context-menu;
 }
 
@@ -699,7 +701,10 @@
     cursor: context-menu !important;
 }
 
-
+.individual-spblock-full .ServiceContent .AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitleText,
+.individual-spblock-full .ServiceCategoryContent .SPAvailContainer.Available .SPAvailContent label.SPAvailItems:hover {
+    cursor: context-menu !important;
+}
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
     .individual-spblock-full .sr-feature-pic img {
