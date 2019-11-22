@@ -215,6 +215,7 @@ export class ServiceRequest extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all
       await this.props.getServiceRequestCountList(count)
       await this.props.getServiceRequestTableList(list)
       await this.setState({

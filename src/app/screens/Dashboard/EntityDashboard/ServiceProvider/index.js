@@ -134,6 +134,7 @@ export class ServiceProvider extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all
       await this.props.getVisitServiceProviderCountList(count)
       await this.props.getVisitServiceProviderTableList(list)
       await this.setState({

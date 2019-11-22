@@ -145,6 +145,7 @@ export class ServiceVisits extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all
       await this.props.getVisitServiceCountList(count, false, () =>  this.onSuccess(list))
       await this.setState({
         rowMin: DEFAULT_PAGE_NUMBER,

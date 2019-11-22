@@ -176,6 +176,7 @@ export class Individuals extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.individuals.statCard.all
       await this.props.getIndividualsCountList(count)
       await this.props.getIndividualsList(list)
       await this.setState({
