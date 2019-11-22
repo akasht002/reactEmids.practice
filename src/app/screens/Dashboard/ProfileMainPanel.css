@@ -1250,19 +1250,6 @@ div.ProfileConversation {
     display: block;
 }
 
-.topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank::after {
-    content: 'No Result';
-    position: absolute;
-    display: block;
-    font-size: 14px;
-    color: #7a329f;
-    font-weight: 500;
-    left: 0;
-    right: 18px;
-    top: 48%;
-    text-align: center;
-}
-
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider span.clickView {
     display: block;
     text-align: center;
@@ -1289,11 +1276,18 @@ div.ProfileConversation {
 }
 
 .myPlanBlank {
-    background-image: url("../../assets/images/my_plan_blank.png");
-    background-position: center;
-    background-size: 70%;
-    background-repeat: no-repeat;
     height: 230px;
+    display: block;
+    clear: both;
+    position: relative;
+    width: 100%;
+}
+
+.myPlanBlank img
+{
+    max-width: 100%;
+    height:auto;
+    display: block;
 }
 
 .NewSPReq {
@@ -1315,13 +1309,6 @@ div.ProfileConversation {
 
 .topProfile .ProfileCardHeaderTitle.theme-primary {
     padding-left: 20px;
-}
-
-@media only screen and (min-width: 1367px) {
-    .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank::after {
-        right: 33px;
-        top: 52%;
-    }
 }
 
 .No-Coverastion-Block {
