@@ -318,7 +318,7 @@ export class Individuals extends Component {
     this.setState({ activePageFeedback: pageNumber })
     const model = {
       patientId: this.state.patientId,
-      pageNumber: this.state.pageNumberFeedback,
+      pageNumber: pageNumber,
       pageSize: DEFAULT_PAGE_SIZE,
       fromDate: this.props.fromDate,
       toDate: this.props.toDate,
@@ -505,7 +505,7 @@ export class Individuals extends Component {
       <FeedbackAlert
         feedbackServiceVisits={this.props.individualsFeedbackList}
         goToVisitSummary={this.goToPgVisitSummary}
-        pageCount={this.props.individualsFeedbackList.length > 0 && this.props.individualsFeedbackList[0].pageCount}
+        pageCount={this.props.feedBackCount}
         pageNumberChangeFeedback={this.pageNumberChangeFeedback}
         activePageFeedback={this.state.activePageFeedback}
         isLoaded={this.props.isLoadingFeedbackList}
@@ -664,7 +664,8 @@ export function mapStateToProps(state) {
     ageRange: state.dashboardState.individualsListState.ageRange,
     clinicalConditions: state.dashboardState.individualsListState.clinicalConditions,
     activeTab: state.dashboardState.individualsListState.activeTab,
-    isImpersinated: state.dashboardState.individualsListState.isImpersinated
+    isImpersinated: state.dashboardState.individualsListState.isImpersinated,
+    feedBackCount: state.dashboardState.individualsListState.feedBackCount
   }
 }
 

@@ -14,5 +14,6 @@ export const VisitServiceProviderList = {
     setRating: 'setRating/visitserviceprovider',
     resetFilter: 'resetFilter/visitserviceprovider',
     setImpersinated: 'setImpersinated/visitserviceprovider',
-    setFilterApplied: 'setFilterApplied/visitserviceprovider'
+    setFilterApplied: 'setFilterApplied/visitserviceprovider',
+    setFeedbackCount: 'setFeedbackCount/visitserviceprovider'
   }

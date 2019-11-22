@@ -30,7 +30,8 @@ const defaultState = {
        maximumAge: 120
     },
     clinicalConditions: [],
-    isImpersinated: false
+    isImpersinated: false,
+    feedBackCount: 0
 };
 
 const individualsListState = (state = defaultState, action) => {
@@ -199,7 +200,12 @@ const individualsListState = (state = defaultState, action) => {
                minimumAge: 0,
                maximumAge: 120
             }
-        }                   
+        } 
+        case IndividualsList.setFeedbackCount:
+        return {
+            ...state,
+            feedBackCount: action.data
+        };                  
         default:
             return state;
     }
