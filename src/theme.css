@@ -76,7 +76,7 @@ table.individuals-tableblock.theme-primary thead th,
     color: #fff !important;
 }
 
-span.btn-hired {
+span.btn-hired, span.btn-hired:hover, .BlockProfileContainer .BlockProfileDetailsStatus .BlockProfileMatching  {
     color: #1e3d5c !important;
 }
 
