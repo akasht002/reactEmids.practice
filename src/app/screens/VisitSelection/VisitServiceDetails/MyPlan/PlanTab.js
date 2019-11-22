@@ -17,7 +17,7 @@ export const PlanTab = props => {
             { defaultImage && !isEntity ?
                 <div className="empty-planblock">
                     <img src={require('../../../../assets/images/blankPlan.png')} alt="service plan" />
-                    <span>No Results</span>
+                    <span className="theme-primary">No Results</span>
                     <p>Lorem ipsum dolar sit amet,consectetuer adipiscing elit, sed diam nonummy.
                     Lorem ipsum dolar sit amet,consectetuer adipiscing elit.</p>
                 </div>
