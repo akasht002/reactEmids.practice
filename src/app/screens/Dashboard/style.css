@@ -5,10 +5,6 @@ body {
     background-color: #f8f8f8 !important;
 }
 
-.navbar-brand {
-    /* display: none !important; */
-}
-
 section .ProfileRightWidget {
     width: calc(100% - 170px);
     padding: 0;
@@ -17,10 +13,9 @@ section .ProfileRightWidget {
 .ProfileRightContainer {
     display: block;
     position: relative;
-    /*height: 100%;*/
 }
 
-.dropdown.nav-item{
+.dropdown.nav-item {
     list-style: none;
     display: block;
     position: relative;
@@ -29,7 +24,7 @@ section .ProfileRightWidget {
     margin: 0 0 0 8px;
 }
 
-a.ProfileIcon{
+a.ProfileIcon {
     display: block;
     position: relative;
     width: 100%;
@@ -37,27 +32,27 @@ a.ProfileIcon{
     padding: 0;
 }
 
-.ProfileIcon img{
+.ProfileIcon img {
     width: 100%;
     height: 100%;
 }
 
-li div.dropdown-menu a{
+li div.dropdown-menu a {
     color: #444444;
     font-size: 14px;
 }
 
-li div.dropdown-menu a:hover{
+li div.dropdown-menu a:hover {
     background-color: #f3f3f3;
 }
 
-li div.dropdown-menu{
+li div.dropdown-menu {
     padding: 0;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
     border: 1px solid #d1d1d1;
-    transform:translate3d(-80%,40px,0) !important
+    transform: translate3d(-80%, 40px, 0) !important
 }
 
 .ProfileHeaderWidget {
@@ -70,7 +65,7 @@ li div.dropdown-menu{
     align-items: center;
 }
 
-.ProfileHeaderRight{
+.ProfileHeaderRight {
     display: flex;
     display: -moz-flex;
     height: 18px;
@@ -83,7 +78,7 @@ li div.dropdown-menu{
     padding: 7px 15px !important;
 }
 
-.ProfileHeaderRight span{
+.ProfileHeaderRight span {
     position: relative;
     margin-left: 15px;
     top: 2px;
@@ -91,7 +86,7 @@ li div.dropdown-menu{
     line-height: 14px;
 }
 
-.ProfileHeaderRight span:hover{
+.ProfileHeaderRight span:hover {
     cursor: pointer;
 }
 
@@ -105,7 +100,7 @@ li div.dropdown-menu{
     font-weight: 400;
 }
 
-.ProfileHeaderOptions{
+.ProfileHeaderOptions {
     display: flex;
     display: -moz-flex;
     align-items: center;
@@ -114,30 +109,34 @@ li div.dropdown-menu{
     font-size: 14px;
 }
 
-.ProfileHeaderOptions span:hover{
+.ProfileHeaderOptions span:hover {
     text-decoration: none;
 }
 
-.ProfileHeaderFilter, div.ProfileSelectSorting{
+.ProfileHeaderFilter,
+div.ProfileSelectSorting {
     margin-left: 15px;
 }
 
-.ProfileIconSearch:hover, .ProfileHeaderFilter:hover, .ProfileSearchContainer .closeBtn{
+.ProfileIconSearch:hover,
+.ProfileHeaderFilter:hover,
+.ProfileSearchContainer .closeBtn {
     cursor: pointer;
 }
 
-.ProfileIconSearch{
+.ProfileIconSearch {
     display: inline-block;
     position: relative;
     width: 20px;
     height: 20px;
 }
 
-.nav-tabs .nav-item.show a.nav-link, .nav-tabs a.nav-link.active{
-    background-color: rgba(0,0,0,0);
+.nav-tabs .nav-item.show a.nav-link,
+.nav-tabs a.nav-link.active {
+    background-color: rgba(0, 0, 0, 0);
 }
 
-.ProfileIconSearch:after{
+.ProfileIconSearch:after {
     content: '';
     position: absolute;
     width: 20px;
@@ -148,11 +147,11 @@ li div.dropdown-menu{
     background-image: url('../../../assets/images/Search.svg');
 }
 
-.ProfileHeaderSort{
+.ProfileHeaderSort {
     margin-right: 42px;
 }
 
-.ProfileHeaderSort:after{
+.ProfileHeaderSort:after {
     content: '';
     position: absolute;
     right: 84px;
@@ -174,7 +173,9 @@ li div.dropdown-menu{
     transition: all linear .3s;
 }
 
-.ProfileContentWidget, .SPContentWidget, .ServiceRequestsWidget {
+.ProfileContentWidget,
+.SPContentWidget,
+.ServiceRequestsWidget {
     position: relative;
     width: 100%;
     height: calc(100vh - 120px);
@@ -182,7 +183,8 @@ li div.dropdown-menu{
     padding: 0 20px;
 }
 
-.ProfileContentWidget.ScrollBar, .SPContentWidget.ScrollBar {
+.ProfileContentWidget.ScrollBar,
+.SPContentWidget.ScrollBar {
     overflow: auto;
 }
 
@@ -193,7 +195,7 @@ li div.dropdown-menu{
 }
 
 .SPContentWidget .ProfileContainer.topProfile {
-    /* height: calc(100vh - 140px); */
+
     height: 620px;
 }
 
@@ -212,20 +214,20 @@ li div.dropdown-menu{
     height: 100%;
 }
 
-.ServiceRequestsWidget .ProfileCardHeader{
+.ServiceRequestsWidget .ProfileCardHeader {
     border-bottom: 1px solid #dcdcdc;
     height: 76px;
 }
 
-.ServiceRequestsWidget .ProfileHeaderButton{
+.ServiceRequestsWidget .ProfileHeaderButton {
     margin-right: 16px;
 }
 
-.HeaderRequestLabelID{
+.HeaderRequestLabelID {
     color: #444444;
 }
 
-.HeaderBackButton{
+.HeaderBackButton {
     display: inline-block;
     position: relative;
     height: 15px;
@@ -236,17 +238,17 @@ li div.dropdown-menu{
     background-position: center;
 }
 
-.HeaderRequestLabel{
+.HeaderRequestLabel {
     padding: 0 20px;
     font-size: 18px;
 }
 
-.HeaderBackWrapper{
+.HeaderBackWrapper {
     border-right: 1px solid #dcdcdc;
     padding: 27px 25px;
 }
 
-.LeftPalette{
+.LeftPalette {
     width: 275px;
     border-radius: 8px;
     -webkit-border-radius: 8px;
@@ -257,11 +259,11 @@ li div.dropdown-menu{
     float: left;
 }
 
-.LeftPaletteHeader{
+.LeftPaletteHeader {
     font-size: 18px;
 }
 
-.rightPalette{
+.rightPalette {
     margin: 30px 30px 0 15px;
     float: left;
     width: calc(100% - 365px);
@@ -276,14 +278,14 @@ li div.dropdown-menu{
     align-items: center;
 }
 
-.PostedByImageContainer .ProfileImage{
+.PostedByImageContainer .ProfileImage {
     width: 40px;
     height: 40px;
     display: inline-block;
     overflow: hidden;
 }
 
-.BlockImageDetails{
+.BlockImageDetails {
     display: inline-block;
     vertical-align: middle;
     width: calc(100% - 40px);
@@ -291,7 +293,7 @@ li div.dropdown-menu{
     padding: 0 0 0 20px;
 }
 
-.BlockImageDetailsName{
+.BlockImageDetailsName {
     font-size: 16px;
     line-height: 16px;
     color: #444444;
@@ -302,7 +304,7 @@ li div.dropdown-menu{
     text-overflow: ellipsis;
 }
 
-.BlockImageDetailsActivity{
+.BlockImageDetailsActivity {
     font-size: 14px;
     line-height: 14px;
     color: #8c8c8c;
@@ -315,13 +317,13 @@ li div.dropdown-menu{
     padding: 0 0 8px 0;
 }
 
-.BlockImageDetailsDate{
+.BlockImageDetailsDate {
     position: relative;
     font-size: 14px;
     color: #444444;
 }
 
-.BlockImageDetailsDate:after{
+.BlockImageDetailsDate:after {
     opacity: 0.5;
     content: '';
     position: absolute;
@@ -344,14 +346,14 @@ li div.dropdown-menu{
     transition: all linear .3s;
 }
 
-.BlockProfileDetails{
+.BlockProfileDetails {
     display: inline-block;
     padding: 0 20px;
     vertical-align: middle;
     width: calc(100% - 125px);
 }
 
-.BlockProfileDetailsName{
+.BlockProfileDetailsName {
     font-size: 14px;
     color: #444444;
     margin: 0;
@@ -362,96 +364,101 @@ li div.dropdown-menu{
     overflow: hidden;
 }
 
-.BlockProfileContainer > img:hover, .BlockProfileDetailsActivity > span:hover, .BlockProfileDetailsName > span:hover{
+.BlockProfileContainer>img:hover,
+.BlockProfileDetailsActivity>span:hover,
+.BlockProfileDetailsName>span:hover {
     cursor: pointer;
 }
 
-.BlockProfileContainer.noArrow > img:hover,
-.BlockProfileContainer.noArrow .BlockProfileDetailsActivity > span:hover,
-.BlockProfileContainer.noArrow .BlockProfileDetailsName > span:hover,
+.BlockProfileContainer.noArrow>img:hover,
+.BlockProfileContainer.noArrow .BlockProfileDetailsActivity>span:hover,
+.BlockProfileContainer.noArrow .BlockProfileDetailsName>span:hover,
 .BlockProfileContainer.noArrow .BlockProfileDetailsStatus a.btn-open:hover,
-.BlockProfileContainer.noArrow .BlockProfileDetailsStatus span.btn-open:hover{
+.BlockProfileContainer.noArrow .BlockProfileDetailsStatus span.btn-open:hover {
     cursor: auto;
 }
 
-.BlockProfileDetailsActivity{
+.BlockProfileDetailsActivity {
     font-size: 12px;
     line-height: 12px;
     color: #8c8c8c;
     margin-bottom: 4px;
 }
 
-.BlockProfileDetailsStatus{
-    width: 65px;
+.BlockProfileDetailsStatus {
+    width: 70px;
     text-align: right;
 
 }
 
-span.btn-hired, span.btn-hired:hover{
-    color: #007f84 !important;
-    /* border-color: #007f84 !important; */
+span.btn-hired,
+span.btn-hired:hover {
+    color: #7a329f;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
     cursor: auto;
 }
 
-span.btn-applied, span.btn-applied:hover{
-    color: #3089df !important;
-    /* border-color: #3089df !important; */
+span.btn-applied,
+span.btn-applied:hover {
+    color: #8c8c8c !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
     cursor: auto !important;
 }
 
-a.btn-open, span.btn-open, a.btn-open:hover, span.btn-open:hover{
-    color: #ef6f48 !important;
-    /* border-color: #ef6f48 !important; */
+a.btn-open,
+span.btn-open,
+a.btn-open:hover,
+span.btn-open:hover {
+    color: #8c8c8c !important;
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
 }
 
-.btn-closed, .btn-closed:hover{
+.btn-closed,
+.btn-closed:hover {
     color: #c80047 !important;
-    /* border-color: #c80047 !important; */
+
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
 }
 
-span.btn-invited, span.btn-invited:hover{
+span.btn-invited,
+span.btn-invited:hover {
     color: #7a329f !important;
-    /* border-color: #7a329f !important; */
     font-size: 12px !important;
     padding: 5px !important;
     line-height: 12px !important;
     cursor: auto;
 }
 
-.BlockProfileMatching{
+.BlockProfileMatching {
     font-size: 12px;
     line-height: 12px;
     display: inline-block;
-    color: #444444;
+    color: #8c8c8c;
 }
 
-.ProfileHeaderOptions a.NewSRBtn{
+.ProfileHeaderOptions a.NewSRBtn {
     padding: 8px 10px !important;
     line-height: 14px;
     font-size: 14px;
     margin-left: 15px;
 }
 
-.OpenServiceProviders{
+.OpenServiceProviders {
     display: inline;
     font-size: 14px;
     position: relative;
     color: #7a329f;
 }
 
-.OpenServiceProviders:before{
+.OpenServiceProviders:before {
     content: '';
     position: absolute;
     right: -20px;
@@ -469,20 +476,20 @@ span.btn-invited, span.btn-invited:hover{
     transform: rotate(180deg);
 }
 
-.BlockProfileContainer.open{
+.BlockProfileContainer.open {
     height: 70px;
 }
 
-.BlockProfileContainer.open .BlockProfileDetails{
+.BlockProfileContainer.open .BlockProfileDetails {
     padding: 0;
     width: calc(100% - 65px);
 }
 
-.BlockProfileContainer.open:after{
+.BlockProfileContainer.open:after {
     display: none;
 }
 
-.BlockProfileContainer:after{
+.BlockProfileContainer:after {
     opacity: 0.5;
     content: '';
     position: absolute;
@@ -505,18 +512,18 @@ span.btn-invited, span.btn-invited:hover{
     transition: all linear .3s;
 }
 
-.BlockImageContainer{
+.BlockImageContainer {
     padding: 25px 40px 25px 20px;
-    border-bottom: 1px solid rgba(60,16,83,0.1);
+    border-bottom: 1px solid rgba(60, 16, 83, 0.1);
 }
 
-.BlockImageContainer .ProfileImage{
+.BlockImageContainer .ProfileImage {
     width: 40px;
     height: 40px;
     display: inline-block;
 }
 
-.BlockProfileContainer{
+.BlockProfileContainer {
     display: flex;
     display: -moz-flex;
     align-items: center;
@@ -524,29 +531,30 @@ span.btn-invited, span.btn-invited:hover{
     padding: 15px 20px;
 }
 
-.BlockProfileContainer .ProfileImage, .BlockImageContainer .ServiceImage{
+.BlockProfileContainer .ProfileImage,
+.BlockImageContainer .ServiceImage {
     width: 40px;
     height: 40px;
     display: inline-block;
 }
 
-.PostedByProfileDetails{
+.PostedByProfileDetails {
     display: inline-block;
     margin: 8px 10px;
     vertical-align: middle;
 }
 
-.ProfileDetailsName{
+.ProfileDetailsName {
     font-size: 16px;
     color: #444444;
 }
 
-.ProfileDetailsDate{
+.ProfileDetailsDate {
     font-size: 14px;
     color: rgba(68, 68, 68, 0.7);
 }
 
-.ProfileIcon{
+.ProfileIcon {
     display: inline-block;
     position: relative;
     height: 24px;
@@ -556,7 +564,7 @@ span.btn-invited, span.btn-invited:hover{
     background-size: 100%;
 }
 
-.ProfileIconDetails{
+.ProfileIconDetails {
     display: flex;
     display: -moz-flex;
     flex-direction: row;
@@ -572,23 +580,23 @@ span.btn-invited, span.btn-invited:hover{
     height: calc(100vh - 540px);
 }
 
-.IconCall{
+.IconCall {
     background-image: url("../../../assets/images/Call_Purple.svg");
 }
 
-.IconConversations{
+.IconConversations {
     background-image: url("../../../assets/images/Message_Purple.svg");
 }
 
-.IconVideo{
+.IconVideo {
     background-image: url("../../../assets/images/TeleHealth_Purple.svg");
 }
 
-.PaletteTabs{
+.PaletteTabs {
     border: none !important;
 }
 
-.PaletteTabs .nav-item .nav-link{
+.PaletteTabs .nav-item .nav-link {
     font-size: 16px;
     margin-bottom: 0;
     padding: 0 0 5px 0 !important;
@@ -596,21 +604,21 @@ span.btn-invited, span.btn-invited:hover{
     border-top: 0;
     border-left: 0;
     border-right: 0;
-    border-bottom: 1px solid rgba(0,0,0,0);
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 
-.PaletteTabs .nav-item .nav-link:hover{
+.PaletteTabs .nav-item .nav-link:hover {
     cursor: pointer;
-    border-color: rgba(0,0,0,0);
+    border-color: rgba(0, 0, 0, 0);
 }
 
-.PaletteTabs .nav-item .active.nav-link{
+.PaletteTabs .nav-item .active.nav-link {
     color: #7a329f;
     border: none;
     border-bottom: 1px solid #7a329f;
 }
 
-.TabBody{
+.TabBody {
     margin-top: 20px;
 }
 
@@ -622,24 +630,21 @@ span.btn-invited, span.btn-invited:hover{
     clear: both;
 }
 
-.ScheduleTableHeader{
+.ScheduleTableHeader {
     padding: 0;
     height: 60px;
     border-bottom: 1px solid #dcdcdc;
     clear: both;
 }
 
-
-
-
-
-.ScheduleTableRow > div > span, .ScheduleTableHeader > div > span{
+.ScheduleTableRow>div>span,
+.ScheduleTableHeader>div>span {
     padding: 20px;
     display: block;
     white-space: nowrap;
 }
 
-.ScheduleRowButton a{
+.ScheduleRowButton a {
     font-size: 14px !important;
     margin: 13px;
     padding: 5px 10px !important;
@@ -647,35 +652,27 @@ span.btn-invited, span.btn-invited:hover{
     height: 33px;
 }
 
-.TabBody .ServiceCategoryContent{
+.TabBody .ServiceCategoryContent {
     padding: 10px 0;
 }
 
-.TabBody .ServiceTypesSlider div:first-child{
+.TabBody .ServiceTypesSlider div:first-child {
     margin-left: 0;
 }
 
-.TabBody .ServiceTypesSlider div:last-child{
+.TabBody .ServiceTypesSlider div:last-child {
     margin-right: 0;
 }
 
-.TabBody .ServiceTypeList{
+.TabBody .ServiceTypeList {
     height: 184px;
 }
 
-.TabBody .ServiceTasks.Summary{
+.TabBody .ServiceTasks.Summary {
     margin: 52px 0;
 }
 
-.TabBody .SPAvailWidget div:first-child{
-    /* margin-left: 0; */
-}
-
-.TabBody .SPAvailWidget div:last-child{
-    /* margin-right: 0; */
-}
-
-a.ProfileCardHeaderLink:hover{
+a.ProfileCardHeaderLink:hover {
     text-decoration: none;
     color: #7a329f;
 }
@@ -699,19 +696,22 @@ a.ProfileCardHeaderLink:hover{
     justify-content: center;
 }
 
-.ProfileCard > .list-group {
+.ProfileCard>.list-group {
     height: 40px;
 }
 
-.ProfileCard.extended > .list-group {
+.ProfileCard.extended>.list-group {
     height: 40px;
 }
 
-.ProfileCard > .list-group > .list-group-item {
+.ProfileCard>.list-group>.list-group-item {
     height: 40px;
 }
 
-.myConversationContainer.list-group-item:focus, .myConversationContainer.list-group-item:hover, .mySPContainer.list-group-item:hover, .mySPContainer.list-group-item:focus {
+.myConversationContainer.list-group-item:focus,
+.myConversationContainer.list-group-item:hover,
+.mySPContainer.list-group-item:hover,
+.mySPContainer.list-group-item:focus {
     z-index: auto;
 }
 
@@ -719,12 +719,12 @@ a.ProfileCardHeaderLink:hover{
     padding: 20px 0 0 0;
 }
 
-.ProfileCardBody > div {
+.ProfileCardBody>div {
     padding: 0 20px;
 }
 
 .ProfileCard.extended {
-    /* height: calc(100vh - 140px); */
+
     height: 683px;
     z-index: 9;
 }
@@ -734,12 +734,12 @@ a.ProfileCardHeaderLink:hover{
     z-index: 9;
 }
 
-.SPContentWidget .topProfile .ProfileCard > .list-group {
+.SPContentWidget .topProfile .ProfileCard>.list-group {
     display: none;
 }
 
 .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-    /* height: calc(100vh - 292px); */
+
     height: 470px;
 }
 
@@ -753,7 +753,8 @@ a.ProfileCardHeaderLink:hover{
     height: 100%;
 }
 
-.ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
+.ProfileCard.extended .ProfileCardBody .bottomPalette .scrollarea-content,
+.SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
     height: auto;
 }
 
@@ -767,7 +768,8 @@ a.ProfileCardHeaderLink:hover{
     height: 100%;
 }
 
-.ProfileCard.extended .ProfileCardBody, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
+.ProfileCard.extended .ProfileCardBody,
+.SPContentWidget .topProfile .ProfileCard .ProfileCardBody {
     height: 100%;
 }
 
@@ -805,31 +807,32 @@ a.ProfileCardHeaderLink:hover{
     height: 100%;
 }
 
-.ProfileContainer.topProfile, .bottomProfile .innerWidget:first-child {
+.ProfileContainer.topProfile,
+.bottomProfile .innerWidget:first-child {
     /* height: calc(100vh - 430px); */
     height: 330px;
 }
 
-.BoardContainer{
+.BoardContainer {
     display: flex !important;
     flex-wrap: wrap;
     width: 100%;
 }
 
-.ServiceRequestBoard{
+.ServiceRequestBoard {
     width: 33.33%;
     margin-bottom: 20px;
     padding: 0 10px;
 }
 
-.BlockImageContainer:hover{
+.BlockImageContainer:hover {
     cursor: pointer;
 }
 
 .NewBoard {
-    border-width:2px 0;
-    position:absolute;
-    display:block;
+    border-width: 2px 0;
+    position: absolute;
+    display: block;
     font-size: 10px;
     font-weight: 600;
     color: #7a329f;
@@ -856,9 +859,9 @@ a.ProfileCardHeaderLink:hover{
 
 .NewBoard:before {
     content: "";
-    display:inline-block;
-    border-bottom-width:2px;
-    border-left-width:2px;
+    display: inline-block;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
     -webkit-transform: rotate(-135deg);
     -moz-transform: rotate(-135deg);
     -ms-transform: rotate(-135deg);
@@ -878,7 +881,7 @@ a.ProfileCardHeaderLink:hover{
     height: 24px;
 }
 
-.DetailsDateSeperator{
+.DetailsDateSeperator {
     color: #a6a6a6;
     margin: 0 10px;
 }
@@ -912,7 +915,8 @@ div.scrollarea .scrollbar-container.vertical {
     z-index: 100;
 }
 
-.hiddenScreen, .ProfileLeftWidget {
+.hiddenScreen,
+.ProfileLeftWidget {
     -webkit-transition: all ease-in-out 0.2s;
     -moz-transition: all ease-in-out 0.2s;
     -ms-transition: all ease-in-out 0.2s;
@@ -925,7 +929,8 @@ div.scrollarea .scrollbar-container.vertical {
     visibility: visible;
 }
 
-.ScheduleTableHeader, .ScheduleTableRow{
+.ScheduleTableHeader,
+.ScheduleTableRow {
     display: flex;
     display: -moz-flex;
     align-items: center;
@@ -933,59 +938,64 @@ div.scrollarea .scrollbar-container.vertical {
     flex-wrap: wrap;
 }
 
-.ScheduleTableRow{
-    border-left: 3px solid rgba(0,0,0,0);
+.ScheduleTableRow {
+    border-left: 3px solid rgba(0, 0, 0, 0);
 }
 
-.ScheduleTableRow:hover{
+.ScheduleTableRow:hover {
     cursor: pointer;
     border-left: 3px solid #7a329f;
     background-color: #f4ecfc;
 }
 
-.ScheduleTableRow:hover i{
+.ScheduleTableRow:hover i {
     filter: brightness(100%);
 }
 
-.ScheduleTableHeader > div > span, .ScheduleTableRow > div > span{
+.ScheduleTableHeader>div>span,
+.ScheduleTableRow>div>span {
     padding: 5px 10px;
     white-space: normal;
 }
 
-.ScheduleTableHeader > div.ScheduleContentDate, .ScheduleTableRow > div.ScheduleContentDate{
+.ScheduleTableHeader>div.ScheduleContentDate,
+.ScheduleTableRow>div.ScheduleContentDate {
     width: 14%;
 }
 
-.ScheduleTableHeader > div.ScheduleContentTime{
+.ScheduleTableHeader>div.ScheduleContentTime {
     width: 20%;
 }
 
-.ScheduleTableRow > div.ScheduleContentTime{
+.ScheduleTableRow>div.ScheduleContentTime {
     font-size: 12px;
     width: 16%;
 }
 
-.ScheduleTableHeader > div.ScheduleContentSession, .ScheduleTableRow > div.ScheduleContentSession{
+.ScheduleTableHeader>div.ScheduleContentSession,
+.ScheduleTableRow>div.ScheduleContentSession {
     width: 20%;
 }
 
-.ScheduleTableRow > div.ScheduleContentSession{
+.ScheduleTableRow>div.ScheduleContentSession {
     font-size: 12px;
 }
 
-.ScheduleTableHeader > div.ScheduleContentStatus, .ScheduleTableRow > div.ScheduleContentStatus{
+.ScheduleTableHeader>div.ScheduleContentStatus,
+.ScheduleTableRow>div.ScheduleContentStatus {
     width: 20%;
 }
 
-.ScheduleTableHeader > div.ScheduleContentButton, .ScheduleTableRow > div.ScheduleContentButton{
+.ScheduleTableHeader>div.ScheduleContentButton,
+.ScheduleTableRow>div.ScheduleContentButton {
     width: 30%;
 }
 
-.slick-initialized .slick-slide{
+.slick-initialized .slick-slide {
     margin-left: 15px;
 }
 
-.ProfileIconEye{
+.ProfileIconEye {
     display: inline-block;
     position: relative;
     height: 20px;
@@ -998,7 +1008,7 @@ div.scrollarea .scrollbar-container.vertical {
     background-image: url("../../../assets/images/ViewEye.svg");
 }
 
-div.ProfileSearchContainer form{
+div.ProfileSearchContainer form {
     display: flex;
     display: -moz-flex;
     align-items: center;
@@ -1006,7 +1016,7 @@ div.ProfileSearchContainer form{
     height: 30px;
 }
 
-div.ProfileSearchContainer{
+div.ProfileSearchContainer {
     position: absolute;
     right: 75px;
     height: 30px;
@@ -1019,12 +1029,12 @@ div.ProfileSearchContainer{
     transition: all linear 0.3s;
 }
 
-div.ProfileSearchContainer.true{
+div.ProfileSearchContainer.true {
     width: calc(100% - 110px);
     right: 80px;
 }
 
-.ProfileSearchContainer .btn{
+.ProfileSearchContainer .btn {
     font-size: 14px;
     padding: 5px 10px !important;
     height: 30px;
@@ -1032,15 +1042,18 @@ div.ProfileSearchContainer.true{
     line-height: 14px;
 }
 
-.ProfileSearchContainer .form-control{
+.ProfileSearchContainer .form-control {
     height: 100%;
 }
 
-div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearchContainer .form-control:focus, .ProfileSearchContainer .closeBtn{
+div.ProfileSearchContainer,
+.ProfileSearchContainer .form-control,
+.ProfileSearchContainer .form-control:focus,
+.ProfileSearchContainer .closeBtn {
     background-color: #f8f8f8;
 }
 
-.ProfileSearchContainer .closeBtn{
+.ProfileSearchContainer .closeBtn {
     display: inline;
     position: relative;
     width: 18px;
@@ -1049,7 +1062,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     padding: 0;
 }
 
-.ProfileSearchContainer .closeBtn:after{
+.ProfileSearchContainer .closeBtn:after {
     content: '';
     position: absolute;
     height: 100%;
@@ -1064,25 +1077,25 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
-        /* height: calc(100vh - 143px); */
+
         height: 620px;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-        /* height: calc(100vh - 290px); */
         height: 533px;
     }
 
-    .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile {
-        /* height: calc(100vh - 465px); */
+    .bottomProfile .innerWidget:first-child,
+    .ProfileContainer.topProfile {
         height: 380px;
     }
 
-    .bottomProfile.ServiceProvider .innerWidget:first-child, .ProfileContainer.topProfile {
+    .bottomProfile.ServiceProvider .innerWidget:first-child,
+    .ProfileContainer.topProfile {
         height: 485px;
     }
 
-    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
+    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
         padding: 16px 20px;
     }
 
@@ -1091,12 +1104,10 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
-        /* height: calc(100vh - 623px); */
         height: 200px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        /* height: calc(100vh - 585px); */
         height: 240px;
     }
 
@@ -1104,7 +1115,7 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         height: 325px;
     }
 
-    .ProfileSkillServices.ServiceRequest .ServicesDesc{
+    .ProfileSkillServices.ServiceRequest .ServicesDesc {
         margin: 5px 0;
     }
 
@@ -1120,31 +1131,28 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 @media (min-width: 1366px) {
 
     .innerWidget .card.extended {
-        /* height: calc(100vh - 140px); */
+
         height: 596px;
     }
 
     .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        /* height: calc(100vh - 276px); */
         max-height: 485px;
         height: 100%;
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
-        /* height: calc(100vh - 590px); */
         height: 170px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        /* height: calc(100vh - 550px); */
         height: 210px;
     }
 
-    .ProfileSkillServices.ServiceRequest .ServicesDesc{
+    .ProfileSkillServices.ServiceRequest .ServicesDesc {
         margin: 3px 0;
     }
 
-    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
+    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
         padding: 12px 20px;
     }
 
@@ -1156,636 +1164,8 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
         height: 198px;
     }
 
-    .ServiceRequestBoard{
+    .ServiceRequestBoard {
         width: 33.33%;
-    }
-}
-
-@media (max-width: 1024px) {
-    .ProfileLeftWidget {
-        width: 150px;
-    }
-
-    .profileSideNavigationLink {
-        font-size: 12px;
-        padding: 6px 0;
-    }
-
-    section .ProfileRightWidget {
-        width: calc(100% - 150px);
-    }
-
-    .SPContentWidget .ProfileContainer.topProfile {
-        /* height: calc(100vh - 140px); */
-        height: 620px;
-    }
-
-    .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-        height: calc(100vh - 295px);
-    }
-
-    div.ProfileCardBody .ServiceRequestPalette{
-        /* height: calc(100vh - 575px); */
-        height: 191px;
-    }
-
-    div.ProfileCardBody .ServiceRequestPalette.EmptySR {
-        /* height: calc(100vh - 530px); */
-        height: 230px;
-    }
-
-    .ProfileSkillServices {
-        max-width: calc(100% - 210px);
-    }
-
-    .ProfileApplicationNumbers.Avatar {
-        max-width: 140px;
-        min-width: 120px;
-    }
-
-    .bottomProfile .innerWidget:first-child, .ProfileContainer.topProfile{
-        /* height: calc(100vh - 410px); */
-        height: 380px;
-    }
-
-    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-        padding: 23px 20px;
-    }
-
-    .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content{
-        height: 100%;
-    }
-
-    .innerWidget .ProfileCard.extended .ProfileCardBody .ServiceRequestPalette {
-        /* max-height: calc(100vh - 276px); */
-        max-height: 485px;
-        overflow: auto;
-    }
-
-    .innerWidget .card.extended {
-        /* height: calc(100vh - 140px); */
-        height: 596px;
-    }
-
-    .ProfileCardNameContainer {
-        width: 80px;
-        cursor: pointer;
-    }
-
-    .ProfileServices {
-        max-width: calc(100% - 155px);
-        cursor: pointer;
-    }
-
-    .ProfileServices .ServicesTitle, .ProfileSkillServices .ServicesTitle, .SPThreadContent .SPIndiTitle {
-        font-size: 14px;
-    }
-
-    .ProfileServices .ServicesDesc, .ProfileSkillServices .ServicesDesc, .SPThreadContent .SPContent {
-        font-size: 12px;
-    }
-
-    .SPThreadContent .SPContent span {
-        margin: 0 9px;
-    }
-
-    .SPThreadContent .SPContent span:before {
-        left: -13px;
-    }
-
-    .SPThreadContent {
-        line-height: 22px;
-        width: calc(100% - 160px);
-    }
-
-    .SPAvatarWidget {
-        margin: 0 10px 0 0;
-    }
-
-    .SPCount .SPRate {
-        line-height: 22px;
-    }
-
-    .SPCount .SPRate span {
-        font-size: 16px;
-    }
-
-    .SPCount {
-        width: 70px;
-    }
-
-    .dateRow label {
-        margin: 0;
-    }
-
-    .ProfileConversationWidget.ServiceProvider {
-        height: 178px;
-    }
-
-    .ProfileConversationWidget {
-        height: 210px;
-    }
-
-    .LeftPalette {
-        width: 230px;
-        padding: 20px;
-    }
-
-    .tab-content>.TabBody {
-        margin-top: 15px;
-    }
-
-    .rightPalette {
-        width: calc(100% - 320px);
-    }
-
-    .ScheduleRowButton a {
-        margin: 10px 5px;
-    }
-
-    .ScheduleTableHeader, .ScheduleTableRow{
-        display: flex;
-        display: -moz-flex;
-        align-items: center;
-        height: auto;
-        flex-wrap: wrap;
-    }
-
-    .ScheduleTableHeader > div{
-        font-size: 14px;
-    }
-
-    .ScheduleTableHeader > div, .ScheduleTableRow > div{
-        width: auto;
-    }
-
-    .ScheduleTableHeader > div > span, .ScheduleTableRow > div > span{
-        padding: 5px 10px;
-        white-space: normal;
-    }
-
-    .ScheduleTableHeader > div.ScheduleContentDate, .ScheduleTableRow > div.ScheduleContentDate{
-        width: 14%;
-    }
-
-    .ScheduleTableHeader > div.ScheduleContentTime{
-        width: 20%;
-    }
-
-    .ScheduleTableRow > div.ScheduleContentTime{
-        font-size: 12px;
-        width: 16%;
-    }
-
-    .ScheduleTableHeader > div.ScheduleContentSession, .ScheduleTableRow > div.ScheduleContentSession{
-        width: 20%;
-    }
-
-    .ScheduleTableRow > div.ScheduleContentSession{
-        font-size: 12px;
-    }
-
-    .ScheduleTableHeader > div.ScheduleContentStatus, .ScheduleTableRow > div.ScheduleContentStatus{
-        width: 20%;
-    }
-
-    .ScheduleTableHeader > div.ScheduleContentButton, .ScheduleTableRow > div.ScheduleContentButton{
-        width: 30%;
-    }
-
-    .ServiceRequestBoard{
-        width: 50%;
-    }
-}
-
-@media (max-width: 768px) {
-    .ProfileLeftWidget {
-        position: fixed;
-        height: 100%;
-    }
-
-    section .ProfileRightWidget {
-        margin: 0 0 0 150px;
-    }
-
-    nav.navbarProfile {
-        width: calc(100% - 150px);
-        height: 60px !important;
-        padding: 10px;
-    }
-
-    .card > .list-group {
-        display: none;
-    }
-
-    .ProfileHeaderWidget {
-        margin: 0 20px;
-    }
-
-    .ProfileContentWidget, .SPContentWidget {
-        padding: 0 10px;
-    }
-
-    .ProfileRightContainer {
-        margin-top: 60px;
-    }
-
-    .ProfileContentWidget .ProfileContainer, .SPContentWidget .ProfileContainer {
-        flex-direction: column;
-        height: 100%;
-    }
-
-    .SPContentWidget .ProfileContainer {
-        width: calc(100% - 20px);
-    }
-
-    .ProfileContentWidget .ProfileContainer {
-        width: 100%;
-    }
-
-    .SPContentWidget .ProfileContainer.topProfile, .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette, .bottomProfile .innerWidget:first-child, .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content, .ProfileCardBody .ServiceRequestPalette, .bottomPalette, .ProfileCard .ProfileCardBody .bottomPalette .scrollarea-content {
-        height: auto !important;
-    }
-
-    .ProfileCardNameContainer {
-        width: 110px;
-        cursor: pointer;
-    }
-
-    div.ServiceRequestPalette .ProfileServicesVisitList .ProfileServicesVisitContent {
-        padding: 15px 20px;
-    }
-
-    .ProfileServices {
-        max-width: calc(100% - 240px);
-        cursor: pointer;
-    }
-
-    .ProfileServicesVisitList {
-        padding: 15px 0;
-      
-    }
-
-    .ProfileCard {
-        width: calc(100% - 20px);
-    }
-    .rightPalette{
-        width: 100%;
-        padding: 30px 20px 20px 20px;
-        margin: 0;
-        height: 100%;
-    }
-
-    .ScheduleTableRow > div, .ScheduleTableRow{
-        display: flex;
-        display: -moz-flex;
-        flex-wrap: wrap;
-        height: auto;
-        align-items: center;
-    }
-
-    .ServiceCategoryWidget{
-        padding: 0;
-    }
-
-    .ScheduleTableRow{
-        border: 1px solid #dcdcdc;
-        margin-bottom: 15px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-    }
-
-    .ProfileConversationWidget.ServiceProvider {
-        height: auto;
-    }
-
-    .ProfileConversationWidget {
-        height: auto;
-    }
-
-    .tab-content > .TabBody{
-        margin-top: 15px;
-    }
-
-    .ScheduleRowButton a{
-        margin: 0;
-    }
-
-    .ScheduleTableRow > div{
-        padding: 10px 15px;
-    }
-
-    .ScheduleTableRow > div > span{
-        padding: 0;
-    }
-
-    .ScheduleTableRow > div.ScheduleContentDate{
-        width: 50%;
-        order: 1;
-    }
-
-    .ScheduleTableRow > div.ScheduleContentTime{
-        justify-content: flex-end;
-        width: 50%;
-        order: 2;
-    }
-
-    .ScheduleTableRow > div.ScheduleContentSession{
-        border-bottom: 1px solid #dcdcdc;
-        width: 100%;
-        order: 3;
-    }
-
-    .ScheduleTableRow > div.ScheduleContentStatus{
-        width: 50%;
-        order: 4;
-    }
-
-    .ScheduleTableRow > div.ScheduleContentButton{
-        justify-content: flex-end;
-        width: 50%;
-        order: 5;
-    }
-
-    .LeftPalette {
-        width: 100%;
-        padding: 20px 20px 0 20px;
-        margin: 0;
-        border: 0;
-    }
-
-    .LeftPostedBy{
-        display: flex;
-        display: -moz-flex;
-        flex-wrap: wrap;
-    }
-
-    .LeftPostedBy .PostedByImageContainer:first-child{
-        width: 70%;
-        justify-content: flex-start;
-    }
-
-    .LeftPostedBy .PostedByImageContainer{
-        width: 10%;
-        display: flex;
-        display: -moz-flex;
-        justify-content: center;
-    }
-
-    .LeftPostedBy .PostedByImageContainer:first-child .PostedByProfileDetails{
-        display: inline-block;
-    }
-
-    .LeftPostedBy .PostedByImageContainer .PostedByProfileDetails{
-        display: none;
-    }
-
-    .PostedByImageContainer .ProfileIconDetails{
-        font-size: 0;
-    }
-
-    .ProfileIconDetails .ProfileIcon{
-        margin: 0;
-    }
-
-    .BoardContainer{
-        flex-direction: column;
-    }
-
-    .ServiceRequestBoard{
-        width: 100%;
-        height: auto;
-    }
-
-    .ServiceRequestBoard{
-        padding: 0 10px 0 0;
-    }
-
-    div.ProfileSearchContainer.true {
-        width: calc(100% - 90px);
-        right: 70px;
-    }
-}
-
-@media (max-width: 480px) {
-
-    .iconProfile{
-        margin: 0 10px 0 15px;
-    }
-
-    .navbar-brand {
-        display: inline-block !important;
-        margin: 0 0 0 10px;
-    }
-
-    nav.navbarProfile {
-        padding: 10px 20px;
-    }
-
-    section .ProfileRightWidget {
-        margin: 0;
-        width: 100%;
-    }
-
-    nav.navbarProfile {
-        width: 100%;
-    }
-
-    .profileSideNavigationLink {
-        font-size: 14px;
-        padding: 8px 0;
-    }
-
-    .ProfileRightContainer {
-        margin-bottom: 60px;
-    }
-
-    .ProfileLeftWidget {
-        z-index: 101;
-        width: 180px;
-        left: calc(70px - 100%);
-    }
-
-    .ProfileLeftWidget.true {
-        left: 0;
-    }
-
-    .ProfileServicesVisitContent{
-
-    }
-
-    div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent{
-        display: inline-block;
-        height: auto;
-    }
-
-    .ServicesTimeContainer{
-        float: right;
-        margin: 0 0 6px 0;
-        width: 48px;
-    }
-
-    .ProfileServices{
-        width: 100%;
-        float: left;
-        max-width: calc(100% - 60px);
-        margin: 0 0 6px 0;
-        height: 48px;
-        justify-content: center;
-        display: flex !important;
-        flex-direction: column;
-    }
-
-    .ServicesTimeContainer .ServicesTime{
-        width: 48px;
-        height: 48px;
-    }
-
-    .ProfileCardImageContainer{
-        height: 40px;
-        width: 40px;
-        display: inline-block;
-        float: left;
-        margin: 0 0 0 10px;
-    }
-
-    .ProfileCardNameContainer{
-        display: flex;
-        height: 40px;
-        justify-content: center;
-        flex-direction: column;
-        width: calc(100% - 70px);
-        float: left;
-        font-weight: 600;
-    }
-
-    .VisitScheduleTitle{
-        margin: 0;
-    }
-
-    .ProfileSubOptions{
-        display: flex;
-        float: right;
-        height: 40px;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    .ServicesTypeContainer{
-        width: 40px;
-        float: left;
-    }
-
-    .ProfileSkillServices{
-        width: 100%;
-        max-width: calc(100% - 60px);
-    }
-
-    .ProfileApplicationNumbers {
-        margin: 8px 0 0 55px;
-        padding: 6px 0 0 0;
-        border-top: 1px solid #eaeaea;
-    }
-
-    div.avatarWidget{
-        width: 80px !important;
-    }
-
-    .ProfileCardBody>div {
-        padding: 0 15px;
-    }
-
-    .avatarContainer {
-        width: 20px!important;
-    }
-
-    .MsgCount {
-        width: 72px!important;
-    }
-
-    .MsgThreadContent {
-        max-width: calc(100% - 152px);
-    }
-
-    .ProfileConversation .ProfileConversationWidget li.myConversationContainer, .ProfileConversation .ProfileConversationWidget li.mySPContainer {
-        padding: 15px;
-    }
-
-    .mySPContent{
-        display: block;
-    }
-    .requestNameContent.Request {
-        display: block;
-        text-align: center;
-        padding: 15px 20px 0 20px;
-        order: 0;
-    }
-
-    .SPAvatarWidget{
-        float: left;
-    }
-
-    .SPThreadContent{
-        width: calc(100% - 80px);
-    }
-
-    .SPCount{
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        padding: 0;
-        height: 25px;
-        margin: 25px 0 0 0;
-        align-items: center;
-        justify-content: space-around;
-    }
-
-    .SPCount .SPRate, .SPFavouriteIcon{
-        display: block;
-        margin: 0 auto;
-        bottom: 0;
-    }
-
-    .SPCount .SPRate{
-
-    }
-
-    .ProfileConversationWidget.ServiceProvider {
-        height: auto;
-    }
-
-    .ProfileConversationWidget {
-        height: auto;
-    }
-
-    .LeftPostedBy .PostedByImageContainer:first-child{
-        width: 100%;
-        justify-content: flex-start;
-    }
-
-    .LeftPostedBy .PostedByImageContainer{
-        width: 33.33%;
-        display: flex;
-        display: -moz-flex;
-        justify-content: center;
-    }
-
-
-    div.ServiceTypesSlider.Summary {
-        flex-direction: inherit;
-    }
-
-    .hiddenScreen {
-        width: 100%;
-    }
-
-    div.mainProfileCard{
-        margin: 0 0 20px 0;
-    }
-
-    .AvailabilityWidget .SPAvailWidget .Available, .AvailabilityWidget .SPAvailWidget .trueAvailable{
-        margin: 0 0 15px !important;
     }
 }
 
@@ -1793,17 +1173,29 @@ div.ProfileSearchContainer, .ProfileSearchContainer .form-control, .ProfileSearc
 
 /*IE_11_&_IE_10*/
 
-@media all and (-ms-high-contrast:none)
-     {
-        .ProfileConversationWidget {height: auto; } /* IE10 */
-     *::-ms-backdrop,  .ProfileConversationWidget {height: auto; }  /* IE11 */
-     }
+@media all and (-ms-high-contrast:none) {
+    .ProfileConversationWidget {
+        height: auto;
+    }
+
+    /* IE10 */
+    *::-ms-backdrop,
+    .ProfileConversationWidget {
+        height: auto;
+    }
+
+    /* IE11 */
+}
 
 /*IE-Edge*/
 
 @supports (-ms-ime-align: auto) {
-    .ProfileConversationWidget {height: auto; }  
+    .ProfileConversationWidget {
+        height: auto;
+    }
 
 }
 
-
+.topProfile .ProfileCardHeaderTitle.theme-primary {
+    padding-left: 20px;
+}

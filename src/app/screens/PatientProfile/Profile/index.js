@@ -13,6 +13,7 @@ import './styles.css'
 import { Path } from '../../../routes';
 import {clearState} from '../../../redux/patientProfile/actions';
 import { USERTYPES} from '../../../constants/constants';
+import VitalDetails from '../VitalDetails';
 
 export class Profile extends Component {
 
@@ -44,7 +45,7 @@ export class Profile extends Component {
           <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
             {this.props.isLoading && <Preloader/>}
-            <div className='width100 topWidgetBG' />
+            <div className='width100 topWidgetBG theme-primary-gradient' />
             <div className='container mainProfileContent bgWhite'>
               <div className='row d-flex justify-content-center m-auto'>
                 <div className='col-md-12'>
@@ -59,6 +60,7 @@ export class Profile extends Component {
                 { (this.props.userType === USERTYPES.GUARDIAN || this.props.userType === USERTYPES.PATIENT_AND_GUARDIAN) ? 
                 <PersonalDetail /> : <div>
                   <PersonalDetail />
+                  <VitalDetails />
                   <ClinicalCondition />
                   <PointService />
                   <Languages />
@@ -99,8 +101,7 @@ export function mapStateToProps(state) {
     showTelehealthInvite: state.telehealthState.isInvitationCame,
     patientId: state.patientProfileState.patientId,
     isLoading: state.loadingState.isLoading,
-    userType: state.patientProfileState.userType,
-    isLoading: state.loadingState.isLoading,
+    userType: state.patientProfileState.userType
   };
 };
 

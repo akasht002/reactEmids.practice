@@ -1,0 +1,356 @@
+/*Please-don't remove this code it will be usefull for future theme-updation*/
+/* :root {
+    --primaryColor: #1e3d5c !important;
+    --primaryColorBackground: #1e3d5c !important;
+    --buttonHover: #315477 !important;
+    --lightBackground: #e0f1fb !important;
+    --commonWhite: #fff !important;
+    --hoverDropdown: #f0f6fa !important;
+    --chatMessageBg: #4f82b5 !important;
+    --gradientOne: #1e3d5c !important;
+    --gradientTwo: #315477 !important;
+}   */
+
+.theme-primary-gradient {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#1e3d5c), to(#315477));
+    background-image: -webkit-linear-gradient(bottom, #1e3d5c, #315477);
+    background-image: -o-linear-gradient(bottom, #1e3d5c, #315477);
+    background-image: linear-gradient(to top, #1e3d5c, #315477);
+}
+
+.theme-primary {
+    color: #1e3d5c !important;
+}
+
+
+.theme-primary .ProfileMonthList .Select-control .Select-value .Select-value-label,
+.theme-primary .ProfileCardTodayLink.btn,
+.theme-primary.plan-tableview th,
+.modal-title,
+table.individuals-tableblock.theme-primary thead th,
+.entity-date-filter.theme-primary .form-group label,
+.theme-primary h4,
+.AboutModalContent .AboutContentContainer .LinkCard a,
+.card_view_visit .label_viewstatus span.btn-hired,
+.SP-viewplantable.theme-primary span a,
+.Service-typesTitle span.theme-primary h5,
+.WizardList.theme-primary .WizardItems.active,
+.WizardList.theme-primary .WizardItems.visited,
+.VisitPaymentAmountPaid.theme-primary i,
+.EstimatedCostWidget.theme-primary .EstimatedCostContainer p,
+.webUrl.theme-primary a,
+.FeedbackLink, .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank.theme-primary::after, .SPAvailTitle:after,
+.Plan-typebar fieldset .form-radio-input:checked~.form-radio-label, .ProfileCardNameContainer span:hover, table.individuals-tableblock thead th, .GetStartedBtnContainer .btn:hover, .LoginButton.btn:hover{
+    color: #1e3d5c !important;
+}
+
+.datePalette .dateRow input:checked+label,
+.EstimatedCostWidget.theme-primary,
+.filter-block button {
+    border: 1px solid #1e3d5c;
+    color: #1e3d5c !important;
+}
+
+.ProfileHeaderButton .sliderSwitch:before,
+.service-typesview-plan .service-typesview-more.theme-primary,
+.form-radio-input:checked~label .RadioBoxIcon:before,
+.WizardList.theme-primary .WizardItems.active:after,
+.WizardList.theme-primary .WizardItems.visited:after,
+.addImageBtn.theme-primary,
+.ServicesLink.theme-primary:before,
+.input-range__track--active,
+.SPCertificateList.theme-primary .SPSCertificateItems:before,
+.SPCertificateList.theme-primary .SPWorkHistoryItems:before,
+.SPCertificateList.theme-primary .SPEducationItems:before,
+.SPCertificateList.theme-primary .SPAddressItems:before,
+.SPEducationList.theme-primary .SPEducationItems:before,
+.AffiliatedList.theme-primary:before,
+.memT-S,
+.SPsubTitle.theme-primary span:before,
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+    background-color: #1e3d5c;
+}
+
+.send-btn.theme-primary {
+    background-color: #1e3d5c;
+    color: #fff !important;
+}
+
+span.btn-hired, span.btn-hired:hover, .BlockProfileContainer .BlockProfileDetailsStatus .BlockProfileMatching  {
+    color: #1e3d5c !important;
+}
+
+.theme-primary .pagination li.PaginationItem.active a,
+.pagination li.PaginationItem a:hover,
+.theme-primary .bottomTaskCompletedRange,
+.VisitSummaryWidget .LeftWidget .bottomTaskCompletedRange,
+.react-datepicker__header,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__day--keyboard-selected:hover,
+.react-datepicker__day--selected,
+.TeleHealthControlsItem span.TeleHealthOptionLink:hover,
+.TeleHealthControlsItem span.TeleHealthOptionLink.off,
+.SPEducationItems:before {
+    background-color: #1e3d5c !important;
+}
+
+.btn-primary {
+    background-color: #1e3d5c !important;
+    border: #1e3d5c !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-primary:focus,
+.filter-block button:hover {
+    background-color: #315477 !important;
+    color: #fff !important;
+}
+
+.btn-outline-primary:focus,
+.btn-outline-primary:active,
+.form-radio-input:checked~.RadioBoxIcon,
+.form-radio-input:checked~.form-radio-label,
+.availabilityModal .SPAvailContainer.trueAvailable,
+.selected-box-border {
+    border: 1px solid #1e3d5c !important;
+}
+
+.btn-outline-primary {
+    border: 1px solid #1e3d5c !important;
+    color: #1e3d5c !important;
+}
+
+.active-tabview,
+.theme-primary-light .SPAvailItems.active,
+.modal-header,
+.backProfileIcon.theme-primary-light:hover,
+.No-Coverastion-Block.theme-primary-light,
+.NoServiceReq.theme-primary-light,
+.ListItem.CTDashboard:hover,
+.SPIconServicesCheckbox.theme-primary-light label.form-check-label:hover,
+.availabilityModal .availabilityCheck~label:hover,
+.BlockProfileContainer .ProfileImage,
+.avatarImage,
+.active-listblock,
+.schedule-listblock:hover {
+    background-color: #e0f1fb !important;
+}
+
+.availabilityModal .AvailabilityWidget .SPAvailWidget .trueAvailable .SPAvailTitle .SPAvailTitleText:after {
+    border-color: #1e3d5c;
+    background-color: #e0f1fb;
+}
+
+.FilterMiddleContent.FilterMiddleLeft span.active,
+.FilterMiddleContent.FilterMiddleLeft span:hover,
+.CheckSet.theme-primary-light input:checked~label {
+    background-color: #f0f6fa;
+}
+
+.CheckboxSet input:checked~label:before,
+.form-check-input:checked~.CheckboxIcon:before,
+.ServicesInput:checked~.ServicesLink:after {
+    background-color: #1e3d5c !important;
+    border: #1e3d5c !important;
+}
+
+.CheckboxSet:hover label:before,
+.CheckboxSet:focus label:before,
+.SPAvailWidget.Summary .SPAvailContainer,
+.dashboard-tab-content .tab-filter-card .filter-card-content input:checked~label.theme-primary-light,
+.form-radio-input:checked~label .RadioBoxIcon,
+.form-radio-input:checked~.form-radio-label,
+.form-radio-label:hover,
+.CheckSet input:checked~label,
+.ServiceTypeList input:checked+label,
+.checkmark.theme-primary {
+    border: 1px solid #1e3d5c !important;
+}
+
+input.form-control:focus,
+.input-range__slider {
+    border-color: #1e3d5c !important;
+}
+
+.theme-primary.plan-tableview tbody tr:hover, 
+.active-row-view {
+    background: #e0f1fb;
+    border-left: 3px solid #1e3d5c !important;
+    border-top: 1px solid #e0f1fb !important;
+    border-bottom: 1px solid #e0f1fb !important;
+    cursor: pointer;
+}
+
+table.individuals-tableblock tbody tr:hover
+{
+    background: #e0f1fb;
+    border-left: 3px solid #1e3d5c !important;
+    border-bottom: 1px solid #e0f1fb !important;
+    cursor: pointer;
+}
+
+.SPTabHeader:hover,
+.SPTabHeader.true {
+    cursor: pointer;
+    background-color: #e0f1fb;
+}
+
+.service-typesview-more.tooltip.theme-primary,
+.SPServiceCount.theme-primary {
+    background-color: #1e3d5c !important;
+    color: #fff !important;
+}
+
+.theme-primary .service-typesview-more.tooltip .bottom h3,
+.FilterTop.theme-primary-light {
+    background-color: #e0f1fb;
+    color: #1e3d5c;
+}
+
+.SPIconServicesCheckbox.theme-primary-light.selectType input:checked+label,
+.visitListNavigation.theme-primary:hover,
+.dashboard-tab-content .tab-filter-card .filter-card-content input:checked~label.theme-primary-light,
+table.individuals-tableblock.theme-primary tbody tr:hover,
+.accordion__item .ServicesLink:before,
+.active-card-view.theme-primary-light,
+.card_view_visit:hover,
+.schedule-listblock.theme-primary-light:hover,
+.avatarImage.totalMembers.theme-primary-light,
+.participants.myChat {
+    background-color: #e0f1fb !important;
+}
+
+.tab-link .nav-item .active.nav-link,
+.chatBackButton:after {
+    color: #1e3d5c !important;
+    border-bottom: 1px solid #1e3d5c !important;
+}
+
+table.individuals-tableblock.theme-primary tbody tr:hover {
+    border-left: 3px solid #1e3d5c;
+}
+
+.DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle {
+    color: #444 !important;
+}
+
+.ratePerHour.theme-primary {
+    border: 2px solid #1e3d5c;
+}
+
+.NotificationsListHeader.theme-primary {
+    border-bottom: 1px solid #1e3d5c;
+}
+
+.customechk .checkmark.theme-primary:after,
+textarea.form-control:focus,
+.Select.is-searchable.is-focused:not(.is-open)>.Select-control {
+    border-color: #1e3d5c !important;
+}
+
+.ServiceCatList input+label:hover,
+.Service-Cat-Typesblock .ServiceCatList input:checked+label,
+.ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before,
+.ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:hover:before,
+.ServiceCatList input+label.ServiceCatLink:hover:before,
+.ServiceCatList input+label.ServiceCatLink.CardBoxes:hover:before,
+.ServiceCatList input:checked+label.ServiceCatLink:before,
+.ServiceCatList input:checked+label.ServiceCatLink.CardBoxes:before {
+    background-color: #1e3d5c !important;
+    color: #fff !important;
+}
+
+.ServiceCatLink.theme-primary span {
+    color: #fff !important;
+}
+
+.ServiceTypeList.theme-primary.selected:before {
+    background-color: #1e3d5c !important;
+    color: #1e3d5c !important;
+    border: 1px solid #1e3d5c;
+}
+
+.ServiceTypeList.selected.theme-primary label {
+    background-color: #fff;
+    border-color: #1e3d5c;
+}
+
+.ServiceTypeList.theme-primary .ServiceTypeLink:hover,
+.every-dayblock input:focus,
+.right-monthblock input:focus,
+.last-block-monthwise fieldset input:focus {
+    border-color: #1e3d5c;
+}
+
+.week-column .parent-col.theme-primary .form-radio-input:checked~.form-radio-label {
+    border: 1px solid #1e3d5c !important;
+    color: #fff !important;
+    background: #1e3d5c;
+}
+
+.WizardList.theme-primary .WizardItems.active:before {
+    background-color: #1e3d5c;
+    -webkit-box-shadow: 0 0 0 2px #1e3d5c;
+    box-shadow: 0 0 0 2px #1e3d5c;
+}
+
+.WizardList.theme-primary .WizardItems.visited:before {
+    background-color: #1e3d5c;
+    border: 1px solid #1e3d5c;
+}
+
+.ProfileShowMore.theme-primary-light {
+    color: #1e3d5c !important;
+}
+
+.ProfileShowMore.theme-primary-light:hover {
+    background-color: #e0f1fb !important;
+}
+
+.sliderContainer .sliderInnerContent.theme-primary-gradient {
+    opacity: 0.9;
+}
+
+.chatMessage.yourChat .ChatBubble.theme-primary {
+    background-color: #4f82b5 !important;
+    color: #fff !important;
+}
+
+.webUrl.theme-primary:before {
+    background-color: transparent;
+}
+
+.modal-content .modal-footer .disabled,
+.modal-content .modal-footer .btn.disabled,
+.btn-primary.disabled,
+.btn-primary:disabled,
+span.life-map-btn .btn,
+span.life-map-btn .btn:hover {
+    background-color: #D0D2D3 !important;
+}
+
+.login-body span {
+    color: #fff;
+}
+
+div.Select-menu-outer .Select-option.is-selected,
+div.Select-menu-outer .Select-option:hover,
+div.Select-menu-outer .Select-option:focus,
+div.Select-menu-outer .Select-option.is-focused {
+    background-color: #e0f1fb !important
+}
+
+.avatarImageBorder {
+    border-color: #e0f1fb;
+}
+
+.tab_view_list .active-tabview.nav-link, .tab_view_list .active-tabview.nav-link:hover {
+    border-bottom: 2px solid #1e3d5c !important;
+}
+
+.tab_view_list .nav-link:hover {
+    border-color: transparent !important;
+}

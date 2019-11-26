@@ -1,0 +1,1230 @@
+.TitleWizardWidget .TitleContainer, .backProfileIcon, .requestImageContent{
+    height: 70px;
+}
+
+.backProfileIcon{
+    display: block;
+    position: relative;
+    width: 60px;
+    background-image: url("../../../assets/images/navigation/arrow_back_purple.svg");
+    background-position: center;
+    background-size: 18px;
+    background-repeat: no-repeat;
+}
+
+.TitleWizardWidget{
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.TitleWizardWidget .TitleContainer, .requestContent{
+    display: flex;
+    display: -moz-flex;
+}
+
+.requestContent{
+    width: 100%;
+    flex-direction: row;
+}
+
+.TitleContent{
+    border-right: 1px solid #d7d7d7;
+}
+
+.TitleContent:hover {
+    cursor: pointer;
+    background-color: #f0e6f2;
+}
+
+.requestNameContent, .requestImageContent{
+    position: relative;
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 30px 20px 20px;
+    color: #444444;
+}
+
+.requestNameContent .requestName{
+    display: block;
+    color: #444444;
+    font-style: normal;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.requestImageContent{
+    margin-left: auto;
+}
+
+.requestImageContent span .avatarImage{
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    border: 0;
+    overflow: hidden;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.requestImageContent span .requestName{
+    color: #444444;
+    font-weight: 600;
+    font-style: normal;
+    margin-left: 15px;
+}
+
+.rightTimerContent span.TimerStarted{
+    position: absolute;
+    bottom: 6px;
+    font-size: 14px;
+    color: #444444;
+}
+
+.mainProfileCard .WizardWidget{
+    padding: 0;
+}
+
+.WizardWidget .row{
+    margin: 0;
+}
+
+.WizardWidget .col{
+    padding: 0;
+}
+
+.WizardWidget .WizardContent{
+    padding: 20px;
+    border-right: 1px solid #d7d7d7;
+}
+
+.rightTimerWidget{
+
+}
+
+div.rightTimerContainer{
+    margin: 0;
+    height: 100%;
+}
+
+.rightTimerContainer .rightTimerContent{
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.rightTimerContainer .rightTimerContent a.btn{
+    padding: 10px 0 !important;
+    width: 130px;
+    font-size: 16px;
+}
+
+.rightTimerContent span{
+    font-size: 14px;
+    color: #8c8c8c;
+}
+
+span.TimerContent{
+    font-size: 22px;
+    font-weight: 600;
+    color: #444444;
+}
+
+span.TimerContent.running{
+    color: #d1d1d1;
+}
+
+.rightTimerContent span.TimerStarted.running{
+    position: relative;
+    bottom: 0;
+}
+
+.rightTimerWidget.running{
+    padding: 0 15px 0 0;
+}
+
+span.TimerContent i{
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    top: -5px;
+    position: relative;
+    margin: 0 5px;
+    display: inline-block;
+}
+
+div.bottomTaskbar{
+    padding: 0;
+    top: 6px;
+}
+
+.bottomTaskName, .bottomTaskRange{
+    margin-right: 20px;
+}
+
+.bottomTaskRange{
+    position: relative;
+    display: block;
+    background-color: #e0e0e0;
+    height: 10px;
+    top: 8px;
+    overflow: hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width: 215px;
+}
+
+.bottomTaskCompletedRange{
+    display: block;
+    position: absolute;
+    background-color: #b286bc;
+    left: 0;
+    width: 10%;
+    height: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    transition: all linear 0.3s;
+}
+
+a.btn-primary{
+    color: #ffffff !important;
+}
+
+@media(max-width: 1024px){
+    div.rightTimerContainer{
+        flex-direction: column;
+    }
+
+    .rightTimerContainer div.rightTimerContent{
+        width: 100%;
+        max-width: 100%;
+        padding: 0 30px;
+        display: block;
+    }
+
+    .rightTimerContainer .rightTimerContent a.btn{
+        width: 100%;
+    }
+
+    .rightTimerContent span.TimerStarted {
+        left: 0;
+        width: 100%;
+    }
+
+    span.TimerContent {
+        top: 6px;
+        position: relative;
+    }
+
+    .WizardItems:after {
+        left: -150px;
+    }
+}
+
+@media(max-width: 768px){
+    .WizardItems {
+        padding: 50px 20px 0;
+    }
+
+    .WizardItems.active:before {
+        top: 6px;
+        width: 26px;
+        height: 26px;
+    }
+
+    .WizardItems.visited:before {
+        height: 32px;
+        width: 32px;
+        top: 3px;
+    }
+
+    .WizardItems:after {
+        left: -100px;
+    }
+
+    div.bottomTaskbar {
+        width: 60%;
+        max-width: 60%;
+    }
+
+    .WizardWidget .WizardContent {
+        width: 70%;
+        max-width: 70%;
+    }
+
+    .col.rightTimerWidget{
+        width: 30%;
+        max-width: 30%;
+    }
+
+    .rightTimerContainer div.rightTimerContent{
+        padding: 0 0 0 20px;
+    }
+    .rightTimerContainer .rightTimerContent a.btn {
+        font-size: 14px;
+    }
+    .rightTimerContent span.TimerStarted{
+        right: 0;
+        font-size: 12px;
+        padding: 0 0 0 20px;
+    }
+}
+
+@media (max-width: 480px){
+
+    .requestImageContent span .requestName{
+        margin-left: 10px;
+    }
+
+    .TitleWizardWidget .TitleContainer{
+        height: 100%;
+    }
+
+    .TitleContent{
+        height: 80px;
+        float: left;
+    }
+
+    .requestImageContent, .requestNameContent{
+        float: right;
+        width: 100%;
+    }
+
+    .requestImageContent{
+        padding: 10px 20px 0 20px;
+        margin: 0;
+        height: 50px;
+        order: 1;
+    }
+
+    .requestNameContent{
+        padding: 0 20px 10px 64px;
+        order: 2;
+        top: -5px;
+    }
+
+    .requestContent{
+        flex-direction: column;
+    }
+
+    .requestNameContent span{
+        font-size: 14px;
+    }
+
+    .requestNameContent .requestName{
+        margin: 0;
+        font-size: 12px;
+    }
+
+    .WizardWidget > .row{
+        flex-direction: column;
+    }
+
+    .WizardWidget .WizardContent, .WizardWidget .ServiceCategoryWidget, .col.rightTimerWidget{
+        width: 100%;
+        max-width: 100%;
+        flex-basis: auto;
+    }
+
+    .col.rightTimerWidget{
+        margin-top: 15px;
+    }
+
+    div.rightTimerContainer{
+        flex-direction: row;
+    }
+
+    .rightTimerContainer div.rightTimerContent{
+        width: 50%;
+        padding: 0 20px;
+    }
+
+    .WizardWidget .WizardContent{
+        padding: 0;
+        border: 0;
+    }
+
+    .rightTimerContent span.TimerStarted {
+        position: relative;
+        width: 100%;
+        display: block;
+        bottom: 0;
+        padding: 5px 0 0 0;
+    }
+
+    .WizardItems {
+        padding: 40px 20px 0;
+    }
+
+    .WizardWidget{
+        padding: 20px 0;
+    }
+
+    div.rightTimerContainer div.FeedbackTimer{
+        top: 0;
+        display: flex;
+    }
+
+    .TabContainer{
+        height: 75px;
+        padding: 15px 50px 15px 20px;
+    }
+
+    .TabContainer .ServiceTasksImg{
+        height: 45px;
+        margin-right: 10px;
+    }
+
+    .ServicesLink {
+        padding: 15px 40px 15px 0;
+        margin: 0 20px 0 75px;
+    }
+
+    .ServicesLink:after {
+        top: 13px;
+        height: 26px;
+        width: 26px;
+    }
+
+    .ServiceList:before {
+        left: 39px;
+    }
+
+    .ServicesLink:before {
+        top: 20px;
+    }
+
+    .bottomTaskName, .bottomTaskRange{
+        margin-right: 10px;
+    }
+
+    .requestNameContent span{
+        font-size: 0;
+    }
+}
+
+.mainProfileCard {
+    margin: 0 10px 20px 10px;
+    overflow: hidden;
+}
+
+.SearchWidget{
+    display: none !important;
+}
+
+.WizardWidget {
+    padding: 20px;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.ServiceCatLink:hover, .ServiceTypeLink:hover, .ServiceTasks label:hover, .form-radio-label:hover {
+    cursor: pointer;
+}
+
+.ServiceCategoryContent {
+    padding: 20px;
+}
+
+.ServiceContent .ServicesTitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: #7a329f;
+}
+
+.ServiceCatLink {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 10px;
+    color: #ffffff;
+    background-color: #404040;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    padding: 10px 20px;
+}
+
+.ServiceCatLink:first-child {
+    margin-left: 0;
+}
+
+.ServiceCatList input, .ServiceTypeList input {
+    position: absolute;
+    opacity: 0;
+}
+
+.ServiceCategory, .ServiceType {
+    margin: 25px 0 5px 0;
+}
+
+.ServiceCategory {
+    margin-bottom: 50px;
+}
+
+.ServiceCatList input:checked + label {
+    background-color: #7a329f;
+}
+
+.ServiceTypeList {
+    position: relative;
+    height: 190px;
+    width: 160px !important;
+    margin: 0 15px 20px 15px;
+    text-align: center;
+}
+
+.ServiceTypeLink {
+    width: 100%;
+    padding: 102px 10px 30px 10px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.ServiceTypeList input:checked + label, .ServiceTypeLink:hover {
+    border-color: #7a329f;
+}
+
+.ServiceTypeList input:checked + label {
+    /*background-color: #f0e6f2;*/
+}
+
+.ServiceTypeList.selected label {
+    background-color: #f0e6f2;
+    border-color: #7a329f;
+}
+
+.ServiceTypeList.selected input:checked + label:before, .ServiceTypeList input:checked + label:before, .ServiceTypeList label:hover:before, .ServiceTypeList .ServiceIndicatorBottom:after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 20px;
+    height: 20px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.ServiceTypeList label:hover:before,
+.ServiceTypeList:hover .ServiceIndicatorBottom:after,
+.ServiceTypeList input:checked ~ .ServiceIndicatorBottom:after {
+    background-color: #ffffff;
+}
+
+.ServiceIndicatorBottom:after {
+    bottom: -9px;
+}
+
+.ServiceTypeList label:before,
+.ServiceTypeList input:checked + label:before {
+    bottom: -10px;
+    border: 1px solid #7a329f;
+}
+
+.ServiceTypeList.selected:hover .ServiceIndicatorBottom:after,
+.ServiceTypeList.selected input:checked ~ .ServiceIndicatorBottom:after,
+.ServiceTypeList.selected:hover input:checked ~ .ServiceIndicatorBottom:after {
+    background-color: #f0e6f2;
+}
+
+.ServiceTypeList.selected label:before,
+.ServiceTypeList.selected input:checked + label:before {
+    background-color: #f0e6f2;
+    border: 1px solid #7a329f;
+}
+
+.ServiceTypeList:before {
+    content: '';
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #e0e0e0;
+    top: 10px;
+    right: 10px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.ServiceTypeList.selected:before {
+    content: '';
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #7a329f;
+    top: 10px;
+    right: 10px;
+    background-image: url("../../../assets/images/checked.svg");
+    background-size: 60%;
+    background-color: #7a329f;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.ServiceTypeIcon:after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 40px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.serviceTypeDesc {
+}
+
+.serviceTypeDesc .serviceName {
+    display: block;
+    width: 100%;
+    height: 50px;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.serviceTypeDesc .taskNum {
+    display: inline-block;
+    font-size: 12px;
+    padding: 2px 8px;
+    margin-top: 8px;
+    border: 1px solid #7a329f;
+    color: #7a329f;
+    width: auto;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.ServiceTasks {
+    padding: 0 40px;
+    margin: 0 20px 50px 20px;
+}
+
+.CustomPOS {
+    margin: 0 20px;
+}
+
+div.CustomPOS h6 {
+    margin-bottom: 20px;
+}
+
+.CustomPOS h6, .ServiceTasks h6 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.ServiceTasks label .CheckboxIcon:before {
+    height: 20px;
+    width: 20px;
+    top: 2px;
+}
+
+.ServiceTasks .form-check-input:checked ~ .CheckboxIcon:before {
+    background-size: 13px;
+    border-color: #7a329f;
+}
+
+.ServiceTasks .form-check {
+    margin-bottom: 15px;
+}
+
+.feedbackWidget {
+    padding: 0 20px 60px 20px;
+}
+
+.feedbackWidget .feedbackTitle {
+    font-size: 18px;
+    color: #7a329f;
+    margin-bottom: 20px;
+}
+
+.feedbackWidget .feedbackDesc {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+div.feedbackForm {
+    padding: 0;
+}
+
+.feedbackForm textarea {
+    padding: 20px;
+    resize: none;
+}
+
+.ServiceContent .bottomButton {
+    display: flex;
+    display: -moz-flex;
+    padding: 20px 30px;
+    /*border-top: 1px solid #f1f1f1;
+    box-shadow: 0 5px 10px 5px rgba(0,0,0,0.08);*/
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+.ServiceContent .bottomButton a.btn {
+    padding: 6px 20px !important;
+}
+
+.ScheduleType {
+    padding-top: 25px;
+}
+
+.ScheduleType .ScheduleTypeTitle, .ScheduleTypeContent .ScheduleTypeTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #444444;
+}
+
+.ScheduleTypeContainer {
+    display: flex;
+    display: -moz-flex;
+    padding: 15px 0;
+}
+
+.form-radio {
+    position: relative;
+    margin-right: 30px;
+}
+
+.form-radio-label {
+    position: relative;
+    font-size: 16px;
+    color: #444444;
+    width: 100%;
+    padding: 15px 25px 15px 50px;
+    border: 1px solid #e1e1e1;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.form-radio-label:hover {
+    border: 1px solid #7a329f;
+}
+
+.form-radio input {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+}
+
+.form-radio .RadioBoxIcon {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    left: 20px;
+    top: 20px;
+    border: 1px solid #707070;
+    background-color: #ffffff;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.form-radio-label:hover ~ label .RadioBoxIcon {
+    border: 1px solid #7a329f;
+}
+
+.form-radio-input:checked ~ label .RadioBoxIcon, .form-radio-input:checked ~ .form-radio-label {
+    border: 1px solid #7a329f !important;
+}
+
+.form-radio-input:checked ~ label .RadioBoxIcon:before {
+    content: '';
+    position: relative;
+    height: 7px;
+    width: 7px;
+    top: 3px;
+    left: 3px;
+    display: block;
+    background-color: #7a329f;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.cardBottom {
+    display: block;
+    height: 30px;
+    width: 100%;
+}
+
+button.react-datepicker__navigation {
+    font-size: 0;
+    width: 5px;
+    height: 5px;
+}
+
+.ServiceRequestSelect .Select-control {
+    height: 38px;
+    border-width: 0 0 1px 0;
+    border-color: #acacac;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.ServiceRequestSelect .Select-menu-outer {
+    top: 40px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.ServiceRequestSelect .Select-control .Select-placeholder {
+    padding-left: 0;
+}
+
+.ServiceRequestSelect .Select-control .Select-arrow-zone .Select-arrow {
+    top: 0;
+}
+
+.MonthlyPicker .form-group label.DatePickerLabel {
+    display: none;
+}
+
+label.form-check-label {
+    margin-left: 10px;
+}
+
+.recurrencePicker {
+    margin-top: 10px;
+}
+
+.RecurrenceEnd {
+    margin-top: 10px;
+    height: 100%;
+}
+
+.RecurrenceEnd .form-group {
+    margin: 0;
+}
+
+.RecurrenceEnd .form-group label {
+    display: none;
+}
+
+.recurrenceEndPicker {
+
+}
+
+.OccurrencesContent {
+    display: flex;
+    display: -moz-flex;
+    height: 100%;
+    top: 10px;
+}
+
+.OccurrencesContent input {
+    display: block;
+    text-align: center;
+    width: 70px;
+}
+
+.OccurrencesContent span {
+    display: block;
+    margin: 10px;
+}
+
+.SPAvailWidget {
+    display: flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.SPAvailContainer.trueAvailable {
+    border: 1px solid #7a329f;
+    margin-left:0px;
+}
+
+.SPAvailContainer {
+    width: 190px;
+    height: 190px;
+    border: 1px solid #e2e2e2;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    margin: 0 15px 30px;
+}
+
+.SPAvailTitle {
+    display: block;
+    position: relative;
+}
+.SPAvailTitle:after{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    color: #7a329f;
+}
+.SPAvailTitleText{
+    position: relative;
+    font-size: 16px;
+    color: #494949;
+    font-weight: 600;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 0;
+}
+
+.SPAvailTitleText:after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: block;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #e0e0e0;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.SPAvailContent {
+    display: block;
+    position: relative;
+    padding: 0;
+}
+
+.SPAvailItems{
+    display: block;
+    position: relative;
+    padding: 5px 15px 5px 40px;
+    list-style: none;
+    font-size: 16px;
+    margin: 0;
+    color: #444444;
+    border-top: 1px solid #eaeaea;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.availabilityCheck:checked ~ label, .SPAvailItems.active {
+    background-color: #f0e6f2;
+    color: #4f4f4f;
+}
+
+.availabilityCheck:checked ~ label:before, .SPAvailItems.active:before {
+    content: '';
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    left: 16px;
+    top: 12px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #39ae99;
+}
+
+.SPAvailItems:hover {
+    cursor: pointer;
+}
+
+.availabilityCheck {
+    position: absolute;
+    opacity: 0;
+}
+
+.availabilityCheck~label:before, .SPAvailItems:before {
+    content: "";
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    left: 16px;
+    top: 12px;
+    border-radius: 50%;
+    background-color: #eaeaea;
+}
+
+.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText:hover, .addImageBtn:hover, .UploadImageBtn:hover, .addImageInput:hover {
+    cursor: pointer;
+}
+
+.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText input {
+    opacity: 0;
+}
+
+.AvailabilityWidget .SPAvailWidget .trueAvailable .SPAvailTitle .SPAvailTitleText:after {
+    background-image: url("../../../assets/images/checked.svg");
+    background-position: center;
+    background-color: #7a329f;
+    border-color: #7a329f;
+    background-size: 12px;
+    background-repeat: no-repeat;
+}
+
+div.AddressCardWidget {
+    width: 350px !important;
+    min-height: 160px;
+}
+
+.AddressPOS {
+    display: flex;
+    display: -moz-flex;
+    flex-direction: column;
+    height: 140px;
+}
+
+.AddressPOS span {
+    color: #444444;
+    font-size: 14px;
+}
+
+.AddressPOS span.POSTitle {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.AddressPOS span i {
+    width: 50px;
+    font-weight: 600;
+    display: inline-block;
+    font-style: normal;
+}
+
+.POSAddressSlider {
+    margin: 25px 0 40px 0;
+}
+
+.ServiceTypesSlider.Summary {
+    display: flex;
+    display: -moz-flex;
+}
+
+.ServiceTypesSlider.Summary .ServiceTypeList:before {
+    display: none;
+}
+
+.ServiceTasks.Summary {
+    padding: 0;
+}
+
+.ServiceTasks.Summary ul.SelectedTask {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.ServiceTasks.Summary ul.SelectedTask li i {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 14px;
+    background-color: #7a329f;
+    color: #fff;
+    padding: 0 7px;
+    height: 21px;
+    width: 21px;
+    display: inline-block;
+    font-style: normal;
+    margin-right: 8px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.ServiceTasks.Summary ul.SelectedTask li {
+    margin-bottom: 20px;
+    padding-left: 30px;
+    position: relative;
+}
+
+.ContentTitle.Summary span {
+    display: block;
+}
+
+.ContentTitle.Summary span.ContentTitle.Summary {
+    font-weight: 600;
+    margin: 20px 0 5px 0;
+}
+
+.SPAvailWidget.Summary .SPAvailTitleText:after {
+    display: none;
+}
+
+.SPAvailWidget.Summary .SPAvailContainer {
+    border-color: #7a329f;
+    height: auto;
+}
+
+.SummaryContent p {
+    margin: 0;
+}
+
+.SummaryContent.POS p {
+    font-size: 14px;
+    margin-bottom: 0px;
+    color: #444;
+    
+}
+
+.SummaryContent p.ContentTitle.Summary {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.SummaryContent > p > span {
+    display: inline-block;
+    width: 100px;
+    font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+    div.form-radio {
+        max-width: 100%;
+    }
+
+    label.form-radio-label {
+        white-space: nowrap;
+    }
+
+    .form-radio-label.AddressPOS {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 768px) {
+
+    div.ScheduleTypeContainer {
+        flex-wrap: wrap;
+    }
+
+    div.AddressCardWidget {
+        width: 270px !important;
+    }
+
+    div.RangeSliderWidget {
+        max-width: 60%;
+    }
+
+    label.ServiceCatLink{
+        margin: 0 5px;
+    }
+
+    div.ServiceTypeList{
+        margin: 0 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ScheduleTypeContainer .form-radio{
+        margin: 0;
+    }
+
+    div.AddressCardWidget {
+        width: 100% !important;
+        margin: 0;
+    }
+
+    .POSAddressSlider .slick-next, .POSAddressSlider .slick-prev{
+        display: none !important;
+    }
+
+    .POSAddressSlider .slick-track{
+        width: 100% !important;
+        -webkit-transform: translateZ(0) !important;
+        -moz-transform: translateZ(0) !important;
+        -ms-transform: translateZ(0) !important;
+        -o-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+
+    .slick-next, .slick-prev{
+        margin: 0;
+    }
+
+    .ServiceContent .ServiceTasks{
+        padding: 0;
+    }
+
+    .ServiceTasks.Summary{
+        margin: 0;
+    }
+
+    .POSAddressSlider .slick-slide{
+        width: 100%;
+    }
+
+    .POSAddressSlider .slick-list:before{
+        display: none;
+    }
+
+    .SPAvailWidget{
+        height: 100%;
+    }
+
+    .OccurrencesContent {
+        top: 0;
+        margin-bottom: 15px;
+    }
+
+    div.ServiceRequestSelect {
+        padding: 0 15px !important;
+    }
+
+    .AvailabilityWidget .SPAvailWidget .Available, .AvailabilityWidget .SPAvailWidget .trueAvailable {
+        width: 100%;
+        margin: 0 15px 15px;
+    }
+
+    .ServiceContent .bottomButton{
+        padding: 20px;
+    }
+
+    .ServiceContent .bottomButton a.btn {
+        padding: 6px 10px!important;
+    }
+
+    .ServiceTypesSlider.Summary{
+        flex-direction: column;
+    }
+}
+
+
+/*filter-address*/
+.FilterMiddleRight .tab-pane .AddressCardWidget .AddressPOS
+{
+    height: 130px;
+    padding-bottom: 10px;
+}

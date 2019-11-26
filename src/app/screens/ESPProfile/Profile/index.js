@@ -77,7 +77,7 @@ export class Profile extends Component {
             ]}
           />
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
-            <div className='width100 topWidgetBG' />
+            <div className='width100 topWidgetBG theme-primary-gradient' />
             <div className='container mainProfileContent bgWhite'>
               <div className='row d-flex-view justify-content-center m-auto'>
                 <div className='col-md-12'>

@@ -82,12 +82,12 @@ export class MyServiceProviders extends React.Component {
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
-            <span className='ProfileCardHeaderTitle primaryColor'>
+            <span className='ProfileCardHeaderTitle theme-primary'>
               Service Providers
             </span>
-            <Link className='ProfileCardHeaderLink' to='/'>View all</Link>
+            <Link className='ProfileCardHeaderLink theme-primary' to='/'>View all</Link>
           </div>
-          <div className='topPalette'>
+          <div className='topPalette theme-primary'>
             <div className='monthPalette'>
               <Select
                 id='ProfileMonth'

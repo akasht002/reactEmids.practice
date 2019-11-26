@@ -4,10 +4,31 @@ import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
+import {getUpdatedPerformTasksList} from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions'
 import _ from 'lodash';
-import {
-    vistServiceHistoryDetails
-} from './bridge';
+import { isEntityUser } from '../../../utils/userUtility';
+import { logError } from '../../../utils/logError';
+
+export const vistServiceHistoryDetails = {
+    getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
+    getVisitServiceHistoryDetailsSuccess: 'getVisitServiceHistoryDetailsSuccess/visitHistory',
+    getVisitServiceHistoryByIdDetailSuccess: 'getVisitServiceHistoryByIdDetailSuccess/visitHistory',
+    updateVisitHistoryFilter: 'updateVisitHistoryFilter/visitHistory',
+    getServiceCategorySuccess: "getServiceCategorySuccess/VisitHistory",
+    getSubmittedResponse: "getSubmittedResponse/visitHistory",
+    getAllServiceProviders: "getServiceProviders/visitHistory",
+    getServiceRequestId: 'getServiceRequestId/visitHistory',
+    getServiceTypeSuccess: 'get_type_success/visitHistory',
+    clearServiceTypes: 'clearServiceTypes/visitHistory',
+    clearServiceProviders: 'clearServiceProviders/visitHistory',
+    getHistoryListCountSuccess: 'getHistoryListCountSuccess/visitHistory',
+    getVisitFeedBack: 'getVisitFeedBack/visit',
+    getAllPatientForServiceProviders: "getAllPatientForServiceProviders/visitHistory",
+    clearPatientForServiceProviders: "clearPatientForServiceProviders/visitHistory",
+    formDirty: 'formDirty/visitHistory',
+    visitHistoryLoading: 'visitHistoryLoading/visitHistory',
+    getAssessmentQuestionsListSuccess: 'getAssessmentQuestionsListSuccess/visitHistory'
+};
 
 export const visitHistoryLoading = (data) => {
     return {
@@ -55,7 +76,7 @@ export const getServiceProviders = (data) => {
 export const getVisitServiceHistoryByIdDetailSuccess = (data) => {
     return {
         type: vistServiceHistoryDetails.getVisitServiceHistoryByIdDetailSuccess,
-        data
+        data : getUpdatedPerformTasksList(data)
     }
 }
 
@@ -130,9 +151,10 @@ export function getVisitServiceHistoryByIdDetail(data) {
     return (dispatch) => {
         dispatch(getServiceRequestId(data))
         dispatch(visitHistoryLoading(true));
-        return ServiceRequestGet(API.getServiceVisitsHistoryById + data).then((resp) => {
+        let getServiceVisitsHistoryById = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getSummaryDetailsForEsp : API.getServiceVisitsHistoryById
+        ServiceRequestGet(getServiceVisitsHistoryById + data).then((resp) => {
             dispatch(getVisitServiceHistoryByIdDetailSuccess(resp.data))
-            dispatch(push(Path.visitSummaryDetail))
+            resp.data && dispatch(push(Path.visitSummaryDetail))
             dispatch(visitHistoryLoading(false));
         }).catch((err) => {
             dispatch(visitHistoryLoading(false));
@@ -169,8 +191,11 @@ export function getSort(data) {
 
 export function getServiceProviderRating(data) {
     return (dispatch, getState) => {
+        let {isServiceProviderFeedbackTab} = getState().dashboardState.VisitServiceProviderState
+        let getRatingAndFeedback = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? 
+        (isServiceProviderFeedbackTab ? API.getVisitFeedbackForEntity : API.getPlanVisitFeedBack) : API.getRatingAndFeedback
         dispatch(startLoading())
-        return ServiceRequestGet(API.getRatingAndFeedback + data).then((resp) => {
+        ServiceRequestGet(getRatingAndFeedback + data).then((resp) => {
             dispatch(getSubmittedResponse(resp.data))
             dispatch(endLoading)
         }).catch((err) => {
@@ -203,7 +228,8 @@ export function getServiceCategory() {
     }
 }
 
-export const getServiceTypeSuccess = (data) => {
+export const getServiceTypeSuccess = (data, filterApplied) => {
+    !filterApplied && _.forEach(data, function (obj) { obj.isChecked = false; });
     return {
         type: vistServiceHistoryDetails.getServiceTypeSuccess,
         data
@@ -211,10 +237,10 @@ export const getServiceTypeSuccess = (data) => {
 }
 
 export function getServiceType(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         let serviceCategoryId = data;
-        dispatch(startLoading());
-        return ServiceRequestGet(API.servicerequest + `ServiceType/${serviceCategoryId}`).then((resp) => {
+        let {filterApplied} = getState().dashboardState.VisitServiceRequestState
+        ServiceRequestGet(API.servicerequest + `ServiceType/${serviceCategoryId}`).then((resp) => {
             let data = resp.data.map((type, index) => {
                 if (index === 0) {
                     return {
@@ -224,12 +250,10 @@ export function getServiceType(data) {
                 }
                 return type;
             });
-            dispatch(getServiceTypeSuccess(data))
-            dispatch(endLoading());
+            dispatch(getServiceTypeSuccess(data, filterApplied))
         }).catch((err) => {
-            dispatch(endLoading());
+            logError(err)
         })
-
     }
 }
 
@@ -267,9 +291,12 @@ export function getHistoryListCount() {
 }
 
 export function getVisitFeedBack(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        let {isServiceProviderFeedbackTab} = getState().dashboardState.VisitServiceProviderState
+        let getVisitFeedback = (getUserInfo().isEntityServiceProvider || isEntityUser())? 
+        (isServiceProviderFeedbackTab ? API.getVisitFeedbackForEntity : API.getPlanVisitFeedBack) : API.getVisitFeedback
         dispatch(startLoading());
-        return ServiceRequestGet(API.getVisitFeedback + data).then((resp) => {
+        ServiceRequestGet(getVisitFeedback + data).then((resp) => {
             dispatch(getVisitFeedBackSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -296,3 +323,24 @@ export const getAllPatientForServiceProvidersSuccess = (data) => {
         data
     }
 }
+
+export const getAssessmentQuestionsListSuccess = data => {
+    return {
+        type: vistServiceHistoryDetails.getAssessmentQuestionsListSuccess,
+        data
+    }
+}
+
+export function getAssessmentQuestionsList(data) {
+    return dispatch => {
+      dispatch(startLoading())
+      return ServiceRequestGet(API.getAssessmentQuestionsByEntityServiceProviderId + `${data.serviceProviderId}/${data.visitId}`)
+        .then(resp => {
+          dispatch(getAssessmentQuestionsListSuccess(resp.data));
+          dispatch(endLoading())
+        })
+        .catch(err => {
+          dispatch(endLoading())
+        })
+    }
+  }

@@ -6,7 +6,7 @@ export const DATE_YEAR = "YYYY";
 export const VISIT_SERVICE_STATUS_OPEN = "Open";
 export const VISIT_SERVICE_STATUS_APPLIED = "Applied";
 export const VISIT_SERVICE_STATUS_INVITED = "Invited";
-export const VISIT_SERVICE_STATUS_HIRED = "Hired";
+export const VISIT_SERVICE_STATUS_HIRED = "Engaged";
 export const MORNING = "Morning";
 export const AFTERNOON = "Afternoon";
 export const EVENING = "Evening";
@@ -27,13 +27,24 @@ export const ENTITY_USER = 2
 export const MONTH_LENGTH = 12
 export const MAX_MONTH_LIMIT = 9
 export const IN_MAX_ARRAY = [1, 2, 3]
-export const LAST_MONTH_ARRAY = [10, 11, 12]
+export const LAST_MONTH_ARRAY = [13]
 export const START_MONTH = [0, 1, 2]
 export const END_MONTH = [9, 10, 11]
 
 export const COUNT_BASED_MONTH = { 9: 1, 10: 2, 11: 3 }
 export const PAGE_NO = 1;
-export const SERVICE_REQUEST_PAGE_SIZE = 15
+export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
+export const SERVICE_REQUEST_PAGE_SIZE = 10
+
+
+export const VISIT_TYPE = {
+    assessment: 114,
+    scheduled: 115
+}
+
+export const SERVICE_REQUEST = {
+    hiredId: 38
+}
 
 export const RESPONSE_STATUS = {
     VALID: "Valid",
@@ -168,6 +179,7 @@ export const serviceTypesImage = {
 export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_TIME = 200
+export const PAGE_RANGE = 5;
 
 export const SERVICE_REQ_STATUS = {
     OPEN: 35,
@@ -178,13 +190,17 @@ export const SERVICE_REQ_STATUS = {
     IN_PROGRESS: 40,
     COMPLETED: 41,
     CLOSED: 42,
-    PROGRESS : 43,
+    PROGRESS: 43,
     CANCELLED: 47,
     NOT_INTERESTED: 58,
     PENDING_APPROVAL: 106,
     DECLINED: 107
 }
 
+export const ERROR_MSG = {
+    timeErrMessage: 'Updated time cannot be greater than Maximum adjustable time.',
+    emptyErrMessage: 'Time field(s) cannot be empty.'
+}
 export const SERVICE_REQUEST_STATUS = ["Open", "Invited", "Applied", "Hired", "Not Hired", "InProgress", "Closed", "Cancelled", "Completed", "Not Interested"];
 
 export const DEFAULT_FROM_DATE = '1900-01-01';
@@ -208,8 +224,359 @@ export const DEFAULT_SEARCH_COUNT = '';
 
 export const STANDBY_MODE_MSG = 'Please turn off the stand-by mode to start the visit.';
 
-export const DD_FORMAT  = 'DD'
+export const DD_FORMAT = 'DD'
 export const M_FORMAT = "M"
 export const MM_FORMAT = "M"
 export const MMM_FORMAT = 'MMM'
-export const YYYY_MM_DD_FORMAT= 'YYYY-MM-DD'
+export const YYYY_MM_DD_FORMAT = 'YYYY-MM-DD'
+export const MMMDD_FORMAT = "MMM DD";
+
+
+export const QUESTION_TYPE = {
+    ChoiceBased: 'ChoiceBased',
+    OpenText: 'OpenText'
+}
+
+export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
+
+export const serviceCategoriesImage = {
+    1: 'ADL_1.jpg',
+    3: 'Food Delivery_1.jpg',
+    2: 'Housekeeping_1.jpg',
+    4: 'Transportation_1.jpg',
+}
+
+export const DATE_FORMATS = {
+    monDD: "MMM DD",
+    hhMinSession: "hh:mm A",
+    yyyy_mm_dd: 'YYYY-MM-DD',
+    mm: "MM",
+    mmm: "MMM",
+    yyyy: 'YYYY',
+    month: 'month',
+    days: 'days',
+    dd: 'DD',
+    timeh_mm_a: 'h:mm a',
+    m_d_yy: 'M/D/YY',
+    hh_mm: 'HH:mm',
+    hhMinSec: "HH:mm:ss",
+    hh_mm_a: 'hh:mm a',
+    visitFormat:'ddd, DD MMM',
+    mm_dd_yyy: 'MM/DD/YYYY',
+    mmmyyy: 'MMM YYYY'
+}
+
+
+export const RECURRING_PATTERN_OPTIONS = {
+    daily: 17,
+    weekly: 18,
+    monthly: 19
+}
+
+export const SCHEDULE_TYPE_OPTIONS = {
+    assessment: 1,
+    standard: 2
+}
+
+export const DEFAULT_CATEGORY_IMAGE = {
+    ADL: 'ADL_1.jpg'
+}
+
+export const VISIT_STATUS = {
+    all: {
+        "id": 0,
+        "keyValue": "All"
+    },
+    open: {
+        "id": 35,
+        "keyValue": "Open"
+    },
+    invited: {
+        "id": 36,
+        "keyValue": "Invited"
+    },
+    applied: {
+        "id": 37,
+        "keyValue": "Applied"
+    },
+    hired: {
+        "id": 38,
+        "keyValue": "Hired"
+    },
+    requested: {
+        "id": 38,
+        "keyValue": "Requested"
+    },
+    engaged: {
+        "id": 38,
+        "keyValue": "Engaged"
+    },
+    notHired: {
+        "id": 39,
+        "keyValue": "Not Hired"
+    },
+    inProgress: {
+        "id": 44,
+        "keyValue": "In-progress"
+    },
+    completed: {
+        "id": 45,
+        "keyValue": "Visit Summary"
+    },
+    closed: {
+        "id": 42,
+        "keyValue": "Closed"
+    },
+    cancelled: {
+        "id": 46,
+        "keyValue": "Cancelled"
+    },
+    notInerested: {
+        "id": 58,
+        "keyValue": "Not Interested"
+    },
+    pendingApproval: {
+        "id": 106,
+        "keyValue": "Pending Approval"
+    },
+    declined: {
+        "id": 107,
+        "keyValue": "Declined"
+    },
+    startVisit: {
+        "id": 43,
+        "keyValue": "Start Visit"
+    },
+    paymentPending: {
+        "id": 90,
+        "keyValue": "Payment Pending"
+    }
+}
+
+export const DEFAULT_ADDRESS_ID = 1
+
+export const LATITUDE = 0.0
+
+export const LONGITUDE = 0.0
+
+
+export const SERVICE_REQUEST_DETAILS_TAB = {
+    request: '1',
+    myPlan: '2',
+    myPatient: '3'
+}
+
+export const IndividualFilterActiveTab = {
+    "contracts": '1',
+    "cohorts": '2',
+    "attributedProviders": '3',
+    "clinicalConditions": '4',
+    "age": '5',
+    "gender": '6',
+    "location": '7'
+}
+
+export const NO_RECORDS_FOUND = 'No results found for the current criteria'
+
+export const ROW_MIN = 1;
+export const ROW_MAX = 10;
+
+export const ENTITY_CARD_IMAGE = {
+    'IndividualsAll': 'individuals.svg',
+    'IndividualsInvalid': 'ind_ccard.svg',
+    'IndividualsVisit': 'ind_visits_in_period.svg',
+    'ProvidersAll': 'service_providers.svg',
+    'ProvidersLowRating': 'ind_low_rating.svg',
+    'ProvidersFeedback': 'ind_feedback_alerts.svg',
+    'ProvidersVisit': 'ind_visits_in_period.svg',
+    'ProvidersLowTaskCompletions': 'visits_low_task_completion.svg',
+    'RequestsCancelled': 'requests_cancelled.svg',
+    'RequestsAll': 'requests_low_matches.svg',
+    'RequestsOpen': 'requests_open_status.svg',
+    'RequestsNeedApproval': 'requests_needing_approval.svg',
+    'VisitsAll': 'visits_in_period.svg',
+    'VisitsCancel': 'visits_cancelled.svg',
+    'VisitsLowTask': 'visits_low_task_completion.svg',
+    'VisitsOverdue': 'visits_overdue.svg'
+}
+
+export const entityDashboardTab = {
+    "individuals": '1',
+    "serviceProviders": '2',
+    "serviceRequests": '3',
+    "serviceVisits": '4'
+}
+
+export const KEYPRESS_ENTER = 13;
+
+export const ENTITY_DASHBOARD_STATUS = {
+    serviceProvider: {
+        statCard: {
+            feedBack: 'Feedback',
+            all: 'All',
+            lowRating: 'LowRating',
+            lowTaskCompletions: 'LowTaskCompletions',
+            visit: 'Visit',
+        }
+    },
+    individuals: {
+        statCard: {
+            all: 'All',
+            invalid: 'Invalid',
+            visit: 'Visit',
+            feedback: 'Feedback'
+        },
+    },    
+    serviceRequests: {
+        statCard: {
+            all: 'All',
+            open: 'Open',
+            cancelled: 'Cancelled'
+        }    
+    },
+    serviceVisits: {
+        statCard: {
+            all: 'All',
+            lowTaskCompletions: 'LowTaskCompletions',
+            cancelled: 'Cancelled',
+            overDue: 'Overdue'
+        }    
+    }
+}
+
+export const GENDER_TYPE = {
+    notDisclosed: 'Not Disclosed',
+    other: 'Other'
+}
+
+export const CARETEAM_STATUS = {
+    FEEDBACK: 'feedback',
+    PENDING: 'Pending',
+    NEED_APPROVAL: 'Needing Approval'
+}
+
+export const SORT_ORDER = {
+    ASC: 'asc',
+    DESC: 'desc'
+}
+
+export const DEFAULT_SERVICE_CATEGORY = 0
+
+export const LOWTASK = 'LowTask';
+
+export const SERVICE_CATEGORY = {
+    adl: {
+        "id": 1,
+        "keyValue": "Activities of Daily Living"
+    },
+    helpAtHome: {
+        "id": 2,
+        "keyValue": "Help at Home"
+    },
+    groceriesAndNutrition: {
+        "id": 3,
+        "keyValue": "Groceries and Nutrition"
+    },
+    transportation: {
+        "id": 4,
+        "keyValue": "Transportation"
+    }
+}
+
+export const VISIT_PROCESSING_STATUS = {
+    scheduled: {
+        id: 43,
+        title: 'Scheduled'
+    },
+    inProgress: {
+        id: 44,
+        visitId: 40,
+        title: 'In Progress'
+    },
+    completed: {
+        id: 45,
+        title: 'Completed'
+    },
+    cancelled: {
+        id: 46,
+        title: 'Cancelled'
+    },
+    paymentPending: {
+        "id": 90,
+        "keyValue": "Payment Pending"
+    }
+}
+
+
+export const FilterActiveTab = {
+    "contracts": '2',
+    "clinicalConditions": '4',
+    "age": '3',
+    "rating": '6',
+    "experience": '5',
+    "gender": '1',
+    "categories": '7',
+    "status": '8',
+    "recurring": '9' 
+}
+
+export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Cancelled'];
+
+export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'InProgress', 'OverDue'];
+
+export const RECURRING_OPTIONS = [31, 32]
+
+export const SCHEDULE_TYPE = {
+    oneTime: {
+        id: 31,
+        name: 'One Time',
+        value: 'no'
+    },
+    recurring: {
+        id: 32,
+        name: 'Recurring',
+        value: 'yes'
+    },
+
+}
+
+export const FEEDBACK_QUESTION_TYPE = {
+    CHOICEBASED: 'ChoiceBased',
+    OPENTEXT: 'OpenText'
+}
+
+export const SCHEDULE_RECURRENCE_FIELD = {
+    dailyDay: 1,
+    weeklyDay: 2,
+    monthlyDay: 3,
+    monthlyMonths: 4,
+    monthlyMonthsSecond: 5
+}
+
+export const SR_FILTER_TABS = {
+    categoryAndType: {
+        id: '7',
+        name: 'Category & Type'
+    },
+    status: {
+        id: '8',
+        name: 'Request Status'
+    },
+    scheduleType: {
+        id: '9',
+        name: 'One Time / Recurring'
+    }
+}
+
+export const SCHEDULE_TYPES = {
+    assessment: {
+        id: 1,
+        name: 'Assessment'
+    },
+    Standard: {
+        id: 2,
+        name: 'Standard'
+    }
+}
+
+export const CALENDAR_DASHBOARD_LENGTH = 6;

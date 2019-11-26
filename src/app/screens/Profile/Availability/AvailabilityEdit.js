@@ -104,7 +104,7 @@ export class AvailabilityEdit extends Component {
                         <div className={'SPAvailTitle'}>
                             <span className={'SPAvailTitleText'}>{day.dayName}</span>
                         </div>
-                        <div className={'SPAvailContent'}>
+                        <div className={'SPAvailContent theme-primary-light'}>
                             {this.getSlots(day, i)}
                         </div>
                     </div>
@@ -149,7 +149,7 @@ export class AvailabilityEdit extends Component {
            <React.Fragment>
              <div className={'AvailabilityWidget'}>
                 <div className={"SPCardTitle"}>
-                    <h4 className={"primaryColor"}>Available Days</h4>
+                    <h4 className={"theme-primary"}>Available Days</h4>
                 </div>
                 <div className={'width100 SPAvailWidget'}>
                     {availableDays}

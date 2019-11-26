@@ -47,7 +47,8 @@ const defaultState = {
     getAllPatientForServiceProviders: jest.fn(),
     clearPatientForServiceProviders: jest.fn(),
     setPatient: jest.fn(),
-    goToPatientProfile: jest.fn()
+    goToPatientProfile: jest.fn(),
+    getServiceRequestId: jest.fn()
 };
 
 store = mockStore(defaultState);
@@ -164,6 +165,13 @@ describe("Certification", function () {
     it('Check the handelPatientProfile  ', () => {
         let data = 1;
         shallowWrapper.instance().handelPatientProfile(data);
+    });
+
+    it('Check the handleClick', () => {
+        let data = {
+            serviceRequestVisitId: 0
+        }
+        shallowWrapper.instance().handleClick(data);
     });
 
 

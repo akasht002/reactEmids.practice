@@ -8,7 +8,10 @@ import {
   Input,
   Preloader,
   Scrollbars,
-  ToggleSwitch
+  ToggleSwitch,
+  Avatar,
+  CoreoCheckBox,
+  CoreoRadio
 } from './Base'
 import {
     Calendar, 
@@ -40,7 +43,11 @@ import {
     UserAvatarMultiSelect,
     Carousel,
     ImageCropView,
-    AlertPopup
+    AlertPopup,
+    CoreoPagination,
+    CoreoTimePicker,
+    RowPerPage,
+    PageResultCount
 } from './LevelOne';
 import {
     CarouselComp,
@@ -95,5 +102,12 @@ export {
     UserAvatarMultiSelect,
     Carousel,
     ImageCropView,
-    AlertPopup
+    AlertPopup,
+    Avatar,
+    CoreoPagination,
+    CoreoTimePicker,
+    CoreoCheckBox,
+    RowPerPage,
+    PageResultCount,
+    CoreoRadio
 };

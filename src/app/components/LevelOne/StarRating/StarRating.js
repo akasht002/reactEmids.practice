@@ -1,26 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './styles.css';
+import { ratingValues } from './ratingValues'
 
-class StarRating extends React.Component {
-    render() {
-        return (
-            <div className="FeedbackContent">
-                <fieldset className="rating" onChange={this.props.handleSelectedRating}>
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label className="full" htmlFor="star5" />
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label className="full" htmlFor="star4" />
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label className="full" htmlFor="star3" />
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label className="full" htmlFor="star2" />
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label className="full" htmlFor="star1" />
-                </fieldset>
-            </div>
-        );
-    }
-};
+const StarRating = props => {
+    return (
+        <div className="FeedbackContent">
+            <fieldset className="rating" onChange={props.handleSelectedRating}>
+                {ratingValues.map(rating =>
+                    <Fragment>
+                        <input type="radio" id={rating.id} name="rating" value={rating.value} checked={props.rating === parseInt(rating.value, 10)} />
+                        <label className="full" htmlFor={rating.id} />
+                    </Fragment>
+                )}
+            </fieldset>
+        </div>
+    )
+}
 
 export default StarRating;
 

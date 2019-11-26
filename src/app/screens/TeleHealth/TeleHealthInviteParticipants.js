@@ -59,7 +59,7 @@ export class TeleHealthInviteParticipants extends Component {
         return (
             <div className={"TeleHealthParticipantInvite " + this.props.AddParticipants}>
                 <div className="TeleHealthParticipantListHeader">
-                    <span className="sideParticipantsTitle primaryColor">Invite Participants</span>
+                    <span className="sideParticipantsTitle theme-primary">Invite Participants</span>
                     <span onClick={this.onClearParticipantContainer}><i className="ParticipantClose" /></span>
                 </div>
                 <form>

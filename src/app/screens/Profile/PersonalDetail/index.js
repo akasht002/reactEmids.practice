@@ -240,7 +240,7 @@ export class PersonalDetail extends React.PureComponent {
     })
   }
 
-  togglePersonalDetails = (action, e) => {
+  togglePersonalDetails = () => {
     let checkStatus = this.checkAffiliationValue(this.state.affiliationName);
     this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal,
@@ -387,7 +387,6 @@ export class PersonalDetail extends React.PureComponent {
 
     let modalContent
     let modalTitle = 'Edit Personal Details'
-    let modalType = ''
     const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
       return { label: city.name, value: city.id + '-' + city.name }
     });
@@ -423,7 +422,7 @@ export class PersonalDetail extends React.PureComponent {
         {ProfileDetail}
         <ProfileModalPopup
           isOpen={this.state.EditPersonalDetailModal}
-          toggle={() => this.togglePersonalDetails(this, modalType)}
+          toggle={this.togglePersonalDetails}
           ModalBody={modalContent}
           className='modal-lg asyncModal CertificationModal'
           modalTitle={modalTitle}
@@ -544,7 +543,7 @@ export class PersonalDetail extends React.PureComponent {
                 {this.props.personalDetail &&
                   `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
               </h3>
-              <p className={'SPsubTitle'}>
+              <p className={'SPsubTitle theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.genderName}
@@ -563,7 +562,7 @@ export class PersonalDetail extends React.PureComponent {
               </p>
             </div>
             <div className={'col p-0'}>
-              <h3 className={'ratePerHour primaryColor'}>
+              <h3 className={'ratePerHour theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.hourlyRate}
@@ -575,7 +574,7 @@ export class PersonalDetail extends React.PureComponent {
             <div className={'SPAffiliatedList'}>
               {this.props.personalDetail &&
                 this.props.personalDetail.affiliationName &&
-                <span className={'AffiliatedList'}>
+                <span className={'AffiliatedList theme-primary'}>
                   Affiliated to In
                 {' '}
                   <bd>
@@ -585,15 +584,17 @@ export class PersonalDetail extends React.PureComponent {
                 </span>}
             </div>
           </div>
-          <div className={'width100'}>
-            {(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
-              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails.bind(this)}>Edit your profile here</span>}
+          <div className={'width100 description-block-profile'}>
+          <span className={'theme-primary'}>Description</span>
+
+            <span>{(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
+              : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails}>Edit your profile here</span>}</span>
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
           <div className={'SPAddressContent'}>
             <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Address</span>
+              <span className={'SPAddressText theme-primary'}>Address</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
@@ -616,7 +617,7 @@ export class PersonalDetail extends React.PureComponent {
           </div>
           <div className={'SPAddressContent'}>
             <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Phone</span>
+              <span className={'SPAddressText theme-primary'}>Phone</span>
             </div>
             <div className={'width100 d-flex'}>
               <span>
@@ -639,7 +640,7 @@ export class PersonalDetail extends React.PureComponent {
     return (
       <div className='row'>
         <div className='col-md-12'>
-          <h4 className='primaryColor text-left editProfileHeader'>
+          <h4 className='theme-primary text-left editProfileHeader'>
             Introduction
           </h4>
         </div>
@@ -655,7 +656,7 @@ export class PersonalDetail extends React.PureComponent {
             />
             <span className='editDpImage' />
             <div className='uploadWidget' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>
-              <i className='addImageBtn' onClick={this.handleChange} />
+              <i className='addImageBtn theme-primary' onClick={this.handleChange} />
             </div>
           </div>
         </div>
@@ -928,7 +929,7 @@ export class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Address
               </h4>
             </div>
@@ -1054,7 +1055,7 @@ export class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Phone
               </h4>
             </div>

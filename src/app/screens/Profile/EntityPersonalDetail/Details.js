@@ -31,7 +31,7 @@ export const Details = props => {
               {props.personalDetail &&
                 `${props.personalDetail.firstName || ''} ${props.personalDetail.lastName || ''} `}
             </h3>
-            <p className={'SPsubTitle'}>
+            <p className={'SPsubTitle theme-primary'}>
               <span>
                 {props.personalDetail &&
                   props.personalDetail.genderName}
@@ -60,13 +60,15 @@ export const Details = props => {
       </div>
         <div className={'width100'}>
           <div className={'SPAffiliatedList'}>
-            <span className="link-view webUrl">
+            <span className="link-view webUrl theme-primary">
               {props.personalDetail.entity && props.personalDetail.entity.websiteUrl ?
                 <a href={'https://'+props.personalDetail.entity.websiteUrl} target="_blank">{props.personalDetail.entity.websiteUrl}</a> : ''}               
             </span>
           </div>
         </div>
-        <div className={'width100'}>
+        <div className={'width100 description-block-profile'}>
+        <span className={'theme-primary'}>Description</span>
+        <span>
           {props.personalDetail &&
             props.personalDetail.description !== ''
             ? props.personalDetail.description
@@ -77,12 +79,13 @@ export const Details = props => {
               >
                 Edit your profile here
               </span>}
+         </span>      
         </div>
       </div>
       <div className={'SPDetailsContainer SPAddressWidget'}>
         <div className={'SPAddressContent'}>
           <div className={'width100 SPAddressTitle d-flex'}>
-            <span className={'SPAddressText primaryColor'}>Address</span>
+            <span className={'SPAddressText theme-primary'}>Address</span>
           </div>
           <div className={'width100 d-flex'}>
             <span className={'AddressContentLabel'}>Street</span>
@@ -111,7 +114,7 @@ export const Details = props => {
         </div>
         <div className={'SPAddressContent'}>
           <div className={'width100 SPAddressTitle d-flex'}>
-            <span className={'SPAddressText primaryColor'}>Phone</span>
+            <span className={'SPAddressText theme-primary'}>Phone</span>
           </div>
           <div className={'width100 d-flex'}>
             <span>

@@ -12,10 +12,11 @@ import {
 import './VisitSummary.css'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import Summary from './Summary'
-import { setPatient } from '../../redux/patientProfile/actions';
+import { setPatient, setESP } from '../../redux/patientProfile/actions';
 import {paymentPathValid } from '../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 
 import './visitProcessing.css'
+import { getFullName } from '../../utils/stringHelper';
 
 export class VisitSummary extends React.Component {
   constructor(props) {
@@ -57,19 +58,43 @@ export class VisitSummary extends React.Component {
   }
 
   handelPatientProfile = (data) => {
-    this.props.setPatient(data)
-    this.props.goToPatientProfile()
+    if(this.props.isServiceProviderFeedbackTab) {
+      this.props.setPatient(data)
+      this.props.goToPatientProfile()  
+    }
+    else {
+      this.props.setESP(data)
+      this.props.goToESPProfile()
+    }
   }
 
   render() {
     let visitSummary = this.props.Visits.VisitServiceDetails
+    let profileData;
+    let defaultImage = require('../../assets/images/Blank_Profile_icon.png');
+    if(this.props.isServiceProviderFeedbackTab) {
+      profileData = {
+        image: visitSummary.patient && visitSummary.patient.imageString ?
+        visitSummary.patient.imageString : defaultImage,
+        fullName: visitSummary.patient && getFullName(visitSummary.patient.firstName, visitSummary.patient.lastName), 
+        id: visitSummary.patient && visitSummary.patient.patientId
+      }
+    }
+    else {
+       profileData = {
+       image: visitSummary.serviceProvider && visitSummary.serviceProvider.image ?
+       visitSummary.serviceProvider.image : defaultImage,
+       fullName: visitSummary.serviceProvider && getFullName(visitSummary.serviceProvider.firstName, visitSummary.serviceProvider.lastName),
+       id: visitSummary.serviceProvider && visitSummary.serviceProvider.serviceProviderId 
+      }
+    }
 
     return (
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>
-              Service Request
+            <h5 className='theme-primary m-0'>
+              View Request
             </h5>
           </div>
         </div>
@@ -83,7 +108,7 @@ export class VisitSummary extends React.Component {
             <div className='CardContainers TitleWizardWidget'>
               <div className='TitleContainer'>
                 <a
-                  className='TitleContent backProfileIcon'
+                  className='TitleContent backProfileIcon theme-primary-light'
                   onClick={this.handelBack}
                 />
 
@@ -92,25 +117,15 @@ export class VisitSummary extends React.Component {
                     <span>
                       <i className='requestName'><Moment format="ddd, DD MMM">{visitSummary.visitDate}</Moment>, {visitSummary.slotDescription}</i>{visitSummary.serviceRequestVisitNumber}</span>
                   </div>
-                  <div className='requestImageContent' onClick={() => this.handelPatientProfile(visitSummary.patient && visitSummary.patient.patientId)}>
+                  <div className='requestImageContent' onClick={() => this.handelPatientProfile(profileData.id)}>
                     <span className='IndividualName'>
                       <img
                         alt={'NO_IMAGE'}
-                        src={
-                          visitSummary.patient &&
-                          visitSummary.patient.imageString
-                              ? visitSummary.patient.imageString
-                              : require('../../assets/images/Blank_Profile_icon.png')
-                      }
+                        src={profileData.image}
                         className='avatarImage avatarImageBorder'
                       />
                       <i className='requestName'>
-                        {visitSummary.patient &&
-                          visitSummary.patient.firstName}
-                        {' '}
-                        {' '}
-                        {visitSummary.patient &&
-                          visitSummary.patient.lastName}
+                        {profileData.fullName}
                       </i>
                     </span>
                   </div>
@@ -139,7 +154,9 @@ export function mapDispatchToProps(dispatch) {
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
     goToDetailsPage: () => dispatch(push(Path.visitServiceDetails)),
-    paymentPathValid: (data) => dispatch(paymentPathValid(data))
+    paymentPathValid: (data) => dispatch(paymentPathValid(data)),
+    goToESPProfile: () => dispatch(push(Path.ESPProfile)),
+    setESP: data => dispatch(setESP(data)),
   }
 }
 
@@ -148,7 +165,8 @@ export function mapStateToProps(state) {
     Visits: state.visitHistoryState.vistServiceHistoryState,
     ServiceRequestId: state.visitHistoryState.vistServiceHistoryState
       .ServiceRequestId,
-    isPaymentPathValid: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.isPaymentPathValid
+    isPaymentPathValid: state.visitSelectionState.VisitServiceProcessingState.PaymentsState.isPaymentPathValid,
+    isServiceProviderFeedbackTab: state.dashboardState.VisitServiceProviderState.isServiceProviderFeedbackTab
   }
 }
 

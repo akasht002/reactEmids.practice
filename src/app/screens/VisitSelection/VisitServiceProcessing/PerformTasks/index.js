@@ -4,8 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { Link } from "react-router-dom";
-import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getPerformTasksList, addPerformedTask, startOrStopService, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button, Preloader } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
@@ -17,6 +15,8 @@ import { push, goBack } from '../../../../redux/navigation/actions';
 import { getServiceTypeImage } from '../../../../utils/validations';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
+import { getUserInfo } from "../../../../services/http";
+import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 
 export class PerformTasks extends Component {
 
@@ -160,11 +160,9 @@ export class PerformTasks extends Component {
 
     render() {
         let startService = 1;
-        // let stopService = 0;
         let time = <span className="TimerContent running">HH<i>:</i>MM<i>:</i>SS</span>
         let timerBtn;
         const { visitStatus, visitStartTime, visitEndTime, visitTimeDuration } = this.props.PerformTasksList
-
         if (visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING) {
             time = <StopWatch
                 stopTimer={visitStatus === SERVICE_STATES.COMPLETED || visitStatus === SERVICE_STATES.PAYMENT_PENDING}
@@ -172,7 +170,7 @@ export class PerformTasks extends Component {
                 endTime={visitEndTime}
                 duration={visitTimeDuration}
             />
-        }
+         }
 
         if (visitStatus === SERVICE_STATES.YET_TO_START) {
             timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, this.state.taskList.serviceRequestVisitId) }}>Start Service</a>
@@ -182,12 +180,15 @@ export class PerformTasks extends Component {
             timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
         }
 
+        let isEntity = getUserInfo().isEntityServiceProvider;
+        let updatedIndicatorData = visitProcessingNavigationData(isEntity)
+
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} >
                 {this.state.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -195,7 +196,7 @@ export class PerformTasks extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitNumber}</span>
@@ -218,7 +219,7 @@ export class PerformTasks extends Component {
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
                                 <div className="col col-md-8 WizardContent">
-                                    <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={0} />
+                                    <DashboardWizFlow VisitProcessingNavigationData={updatedIndicatorData} activeFlowId={0} />
                                 </div>
 
                                 {visitStatus === SERVICE_STATES.PAYMENT_PENDING || visitStatus === SERVICE_STATES.COMPLETED ?
@@ -297,7 +298,7 @@ export class PerformTasks extends Component {
                                                                         }}
                                                                         disabled={visitStatus === SERVICE_STATES.YET_TO_START}
                                                                     />
-                                                                    <label className='ServicesLink' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
+                                                                    <label className='ServicesLink theme-primary' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
                                                                         <div className='servicesDesc'>
                                                                             <span className='serviceName'>{taskList.serviceTaskDescription}</span>
                                                                         </div>
@@ -316,7 +317,7 @@ export class PerformTasks extends Component {
                                 <div className='bottomButton'>
                                     <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                                         <span className="bottomTaskName">Tasks</span>
-                                        <span className="bottomTaskRange">
+                                        <span className="bottomTaskRange theme-primary">
                                             <i style={{ width: this.percentageCompletion && this.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
                                         </span>
                                         <span className="bottomTaskPercentage">{this.percentageCompletion && this.percentageCompletion}%</span>

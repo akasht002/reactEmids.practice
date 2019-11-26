@@ -18,6 +18,10 @@ export const EVENING =  'Evening'
 export const STATUS  = 0
 export const DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD  = 0
 
+export const Pagination = {
+    pageSize: 10
+};
+
 export const RESPONSE_STATUS = {
     LINK_ACTIVE: 'Link Active',
     OK: 'OK',
@@ -41,3 +45,97 @@ export const IN_PROGRESS = 44
 export const VISIT_SUMMARY = 45
 
 export const PAYMENT_PENDING = 90
+
+export const SERVICE_REQUEST_STATUS = {
+    all : {  
+       "id":0,
+       "keyValue":"All"
+    },
+    open: {  
+       "id":35,
+       "keyValue":"Open"
+    },
+    invited: {  
+       "id":36,
+       "keyValue":"Invited"
+    },
+    applied: {  
+       "id":37,
+       "keyValue":"Applied"
+    },
+    hired: {  
+       "id":38,    
+       "keyValue":"Hired"
+    },
+    notHired: {  
+       "id":39,     
+       "keyValue":"Not Hired"
+    },
+    indProgress:{  
+       "id":40,     
+       "keyValue":"InProgress"
+    },
+    completed: {  
+       "id":41,    
+       "keyValue":"Completed"
+    },
+    closed: {  
+       "id":42,     
+       "keyValue":"Closed"
+    },
+    cancelled: {  
+       "id":47,    
+       "keyValue":"Cancelled"
+    },
+    notInerested: {  
+       "id":58,    
+       "keyValue":"Not Interested"
+    },
+    pendingApproval:{  
+       "id":106,    
+       "keyValue":"Pending Approval"
+    },
+    declined: {  
+       "id":107,     
+       "keyValue":"Declined"
+    }
+  }
+
+  export const SELECTED_POS_ERROR_MSG = 'Please select valid address details.';
+
+ export const NEW_POS_ERROR_MSG = 'Please enter valid address details.'; 
+
+ export const API_ERROR_CODE = {
+    badRequest: 400
+}
+
+export const DEFAULT_PAGE_SIZE_ESP_LIST = 9
+
+export const serviceRequestDetailsTab = {
+    request: '1',
+    myPlan: '2'
+}
+
+export const CARETEAM_SV_STATUS = ['ALL', 'Completed', 'Not Started', 'Over Due', 'Cancelled'];
+
+export const DATE_FORMATS = {
+    monDD: "MMM DD",
+    hhMinSession: "hh:mm A",
+    yyyy_mm_dd: 'YYYY-MM-DD',
+    mm: "MM",
+    mmm: "MMM",
+    yyyy: 'YYYY',
+    month: 'month',
+    days: 'days',
+    dd: 'DD',
+    timeh_mm_a: 'h:mm a',
+    m_d_yy: 'M/D/YY',
+    hh_mm: 'HH:mm',
+    hhMinSec: "HH:mm:ss",
+    mm_dd_yyy: "MM-DD-YYYY",
+    ddmm: "DD MMM",
+}
+
+export const API_RESPONSE = {
+    statusText: 'No Content'
+}

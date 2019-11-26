@@ -7,8 +7,35 @@ export const VisitServiceDetails = {
     getDaysSuccess: 'getDaysSuccess/visitservicedetails',
     updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails',
     setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
-    canInitiateConversationSuccess: 'canInitiateConversationSuccess/visitservicedetails',
+    canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails',
     formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails',
     isScheduleLoading: 'isScheduleLoading/visitservicedetails',
-    cancelHiredRequest: 'cancelHiredRequest/visitservicedetails'
-}
+    cancelHiredRequest: 'cancelHiredRequest/visitservicedetails',
+
+    //New Integration
+    getServiceRequestListSuccess: 'getServiceRequestListSuccess/visitservicedetails',
+    getSchedulesListSuccess: 'getSchedulesListSuccess/visitservicedetails',
+    getVisitListSuccess: 'getVisitListSuccess/visitservicedetails',
+    getVisitListCountSuccess: 'getVisitListCountSuccess/visitservicedetails',
+    getVisitStatusSuccess: 'getVisitStatusSuccess/visitservicedetails',
+    getServiceVisitDetailsSuccess: 'getServiceVisitDetailsSuccess/visitservicedetails',
+    startLoading: 'startLoading/visitservicedetails',
+    endLoading: 'endLoading/visitservicedetails',
+    disableShowmore: 'disableShowmore/visitservicedetails',
+    clearESPList: 'clearESPList/visitservicedetails',
+    getEntityServiceProviderListSuccess: 'getEntityServiceProviderListSuccess/visitservicedetails',
+    setActiveTab: 'setActiveTab/visitservicedetails',
+    getfirstlastvisitdateSuccess: 'getfirstlastvisitdateSuccess/visitservicedetails',
+    saveScheduleType: 'saveScheduleType/visitservicedetails',
+    setAddNewScheduledClicked: 'setAddNewScheduledClicked/visitservicedetails',
+    resetState:"visitServiceDetails/resetState",
+    setVisitDate: 'setVisitDate/visitservicedetails',
+    setEntityDashboard: 'setEntityDashboard/visitservicedetails',
+    loadingESPList: 'loadingESPList/visitservicedetails',
+    getPaymentAvailabilitySuccess: 'getPaymentAvailabilitySuccess/visitservicedetails',
+    setServicePlanVisitId: 'setServicePlanVisitId/visitServiceDetails',
+    setActivePage: 'setActivePage/visitServiceDetails',
+    setPlanScheduleId: 'setPlanScheduleId/visitservicedetails',
+    editIndividualEditPopup: 'editIndividualEditPopup/visitservicedetails',
+    getPlanId: 'planId/visitservicedetails'
+  }

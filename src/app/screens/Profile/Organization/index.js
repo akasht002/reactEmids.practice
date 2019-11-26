@@ -386,7 +386,7 @@ export class Organization extends React.PureComponent {
                 {this.props.personalDetail && this.props.personalDetail.entity &&
                   `${this.props.personalDetail.entity.organization || ''} `}
               </h3>
-              <p className={'SPsubTitle'}>
+              <p className={'SPsubTitle theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.yearOfExperience}
@@ -396,7 +396,7 @@ export class Organization extends React.PureComponent {
               </p>
             </div>
             {/* <div className={'col p-0'}>
-              <h3 className={'ratePerHour primaryColor'}>
+              <h3 className={'ratePerHour theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.hourlyRate}
@@ -406,12 +406,14 @@ export class Organization extends React.PureComponent {
           </div>
 
           <div className={'width100 url-separator'}>
-            <h3 className={'webUrl'}>
+            <h3 className={'webUrl theme-primary'}>
               {(this.props.personalDetail && this.props.personalDetail.entity) && this.props.personalDetail.entity.websiteUrl ?
                 <a href={'https://' + this.props.personalDetail.entity.websiteUrl} target="_blank">{this.props.personalDetail.entity.websiteUrl}</a> : ''}
             </h3>
           </div>
-          <div className={'width100'}>
+          <div className={'width100 description-block-profile'}>
+          <span className={'theme-primary'}>Description</span>
+          <span>
             {this.props.personalDetail &&
               this.props.personalDetail.description !== ''
               ? this.props.personalDetail.description
@@ -422,12 +424,13 @@ export class Organization extends React.PureComponent {
               >
                 Edit your profile here
                 </span>}
+             </span>   
           </div>
         </div>
         <div className={'SPDetailsContainer SPAddressWidget'}>
           <div className={'SPAddressContent'}>
             <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Address</span>
+              <span className={'SPAddressText theme-primary'}>Address</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
@@ -456,7 +459,7 @@ export class Organization extends React.PureComponent {
           </div>
           <div className={'SPAddressContent'}>
             <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Phone</span>
+              <span className={'SPAddressText theme-primary'}>Phone</span>
             </div>
             <div className={'width100 d-flex'}>
               <span>
@@ -478,7 +481,7 @@ export class Organization extends React.PureComponent {
     return (
       <div className='row'>
         <div className='col-md-12'>
-          <h4 className='primaryColor text-left editProfileHeader'>
+          <h4 className='theme-primary text-left editProfileHeader'>
             Introduction
           </h4>
         </div>
@@ -495,7 +498,7 @@ export class Organization extends React.PureComponent {
             />
             <span className='editDpImage' />
             <div className='uploadWidget'>
-              <i className='addImageBtn' onClick={this.handleChange} />
+              <i className='addImageBtn theme-primary' onClick={this.handleChange} />
             </div>
           </div>
         </div>
@@ -633,7 +636,7 @@ export class Organization extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Address
               </h4>
             </div>
@@ -767,7 +770,7 @@ export class Organization extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Phone
               </h4>
             </div>

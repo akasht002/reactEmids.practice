@@ -132,7 +132,7 @@ export class ParticipantsContainer extends Component {
                 Please select an Individual to continue.
             </span>}
 
-            <p className="primaryColor mb-0 mt-4">Add Participants</p>
+            <p className="theme-primary mb-0 mt-4">Add Participants</p>
             <ParticipantsList
                 selectedParticipants={this.state.selectedParticipants}
                 conversationId={conversationId}

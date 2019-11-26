@@ -1,0 +1,503 @@
+span.title-view {
+    display: block;
+    text-align: left;
+    color: #7a329f;
+    padding: 12px 0px;
+    font-size: 16px;
+}
+
+.plan-viewblock-full {
+    display: block;
+    position: relative;
+    width: 100%;
+    background: #fff;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+    margin-top: 15px;
+    padding: 25px 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 25px;
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.plan-tableview {
+    display: table !important;
+}
+
+.plan-tableview thead {
+    border-bottom: 1px solid #f1f1f1;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+
+.plan-tableview th {
+    color: #7a329f;
+    font-weight: 500;
+    font-size: 16px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 0px;
+    padding-left: 0px;
+    text-align: center;
+}
+
+.plan-tableview tbody {
+    display: block;
+    overflow-y: auto;
+    height: calc(100vh - 313px);
+    width: 100%;
+}
+
+.plan-tableview tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-bottom: 1px solid #f1f1f1;
+    border-top: 1px solid #fff;
+    border-left: 3px solid #fff;
+}
+
+.plan-tableview td {
+    color: #222;
+    font-weight: 500;
+    font-size: 14px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.plan-tableview tbody tr:hover {
+    background: #f2ebf3;
+    border-left: 3px solid #702d8e;
+    border-top: 2px solid #bd9fcb;
+    border-bottom: 2px solid #bd9fcb;
+    border-top: 1px solid #bd9fcb;
+    border-bottom: 1px solid #bd9fcb;
+    cursor: pointer;
+}
+
+.plan-tableview th:nth-child(1),
+.plan-tableview td:nth-child(1) {
+    width: 9%;
+}
+
+.plan-tableview th:nth-child(2),
+.plan-tableview th:nth-child(3),
+.plan-tableview td:nth-child(2),
+.plan-tableview td:nth-child(3) {
+    width: 12%;
+}
+
+.plan-tableview th:nth-child(4),
+.plan-tableview th:nth-child(5),
+.plan-tableview td:nth-child(4),
+.plan-tableview td:nth-child(5),
+.plan-tableview th:nth-child(6),
+.plan-tableview td:nth-child(6) {
+    width: 20%;
+}
+
+.plan-tableview th:nth-child(7),
+.plan-tableview td:nth-child(7) {
+    width: 7%;
+}
+
+.plan-tableview td:nth-child(1) time {
+    padding-left: 0px;
+}
+
+.plan-tableview td:nth-child(1) time {
+    width: 24%;
+    padding-left: 14px;
+}
+
+.plan-tableview .EntityUServiceProf {
+    flex-direction: row;
+    justify-content: flex-start;
+    max-width: 130px;
+    margin: 0 auto;
+    padding-top: 0px;
+}
+
+.plan-tableview .EntityUServiceProf .ProfileCardImageContainer {
+    margin-left: 0;
+    margin-right: 0px;
+}
+
+.plan-tableview .EntityUServiceProf .ProfileCardImageContainer img {
+    margin-right: 0;
+}
+
+.plan-tableview .EntityUServiceProf .ProfileCardNameContainer {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.plan-tableview .EntityUServiceProf .ProfileCardNameContainer span {
+    white-space: pre !important;
+}
+
+.service-typesview {
+    display: flex;
+    max-width: 130px;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.service-typesview span.SR-typesimg {
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+}
+
+.service-typesview span.more-SRTypes {
+    width: 25px;
+    height: 25px;
+    display: block;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    color: #fff;
+    font-size: 14px;
+    line-height: 25px;
+    background: #7a329f;
+}
+
+.service-typesview span.SR-typesimg img {
+    width: 30px;
+    height: auto;
+    display: block;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+.visit-viewbtn {
+    display: block;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    width: 119px;
+    line-height: 25px;
+    text-align: center;
+    color: #7a329f;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #7a329f;
+    background: #fff;
+}
+
+.service-typesview-plan {
+    display: flex;
+    max-width: 100%;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.service-typesview-plan img {
+    width: 28px;
+    height: 28px;
+    display: block;
+    max-width: 100%;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.service-typesview-plan .service-typesview-more {
+    display: block;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    background: #7a329f;
+}
+
+.SP-viewplantable {
+    display: flex;
+    max-width: 100%;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.SP-viewplantable img {
+    width: 28px;
+    height: 28px;
+    display: block;
+    max-width: 100%;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.plan-tableview .EntityUServiceProf .SP-viewplantable span {
+    color: #222;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: left;
+    max-width: calc(100% - 45px);
+}
+
+.SP-viewplantable span a {
+    cursor: pointer;
+    color: #7a329f !important;
+    display: block;
+    text-decoration: underline !important;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: pre;
+}
+
+.left-customewidth {
+    max-width: 30% !important;
+    flex: 0 0 30% !important;
+    padding-right: 0px !important;
+}
+
+.right-customewidth {
+    max-width: 70% !important;
+    flex: 0 0 70% !important;
+}
+
+.right-customewidth .right-tablelist {
+    padding: 0px 0px 20px 0px;
+}
+
+.right-customewidth .right-tablelist .ScheduleRowButton {
+    margin: 0 auto;
+    display: block;
+    max-width: 140px;
+}
+
+.right-customewidth .right-tablelist .ScheduleRowButton .btn {
+    float: none;
+    margin: 0 auto;
+    display: block;
+    padding: 5px 0px !important;
+    font-size: 14px !important;
+    height: 30px;
+    white-space: pre;
+    line-height: 18px;
+    width: 100%;
+}
+
+.right-customewidth .right-tablelist .CoreoPagination {
+    width: 100%;
+}
+
+.right-customewidth .right-tablelist .CoreoPagination ul.pagination {
+    float: right;
+}
+
+.right-customewidth .right-tablelist .CoreoPagination,
+.right-customewidth .right-tablelist .table-result-block {
+    display: block;
+    width: 50%;
+    max-width: 50%;
+    float: left;
+    position: relative;
+    padding-top: 20px !important;
+    font-size: 14px;
+    color: #222;
+}
+
+.table-result-block .select-wrap-dahboard,
+.table-result-block .page-result {
+    display: table-cell;
+    padding-right: 30px;
+}
+
+.table-result-block .select-wrap-dahboard select {
+    border: none;
+    padding-left: 10px;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+.table-result-block .select-wrap-dahboard span
+{
+    padding-right: 10px;
+}
+
+.edit-rightico {
+    background: url("../../../../assets/images/edit-new.png") no-repeat center;
+    width:100%;
+    display: block;
+    background-size:12px;
+    height: auto;
+    border: none;
+    margin: 0 auto;
+    color: transparent;
+    z-index: 10;
+    cursor: pointer;
+    position: relative;
+    right: 0px;
+}
+
+/*tool-tip-view*/
+.service-typesview-more.tooltip {
+    display: block;
+    position: relative;
+    text-align: center;
+    z-index: auto;
+    opacity: 10;
+}
+
+.service-typesview-more.tooltip .bottom {
+    min-width: 200px;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0;
+    color: #444444;
+    background-color: #fff;
+    font-weight: normal;
+    font-size: 13px;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 99999999;
+    box-sizing: border-box;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    border: 1px solid rgba(140, 140, 140, 0.4);
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    cursor: pointer;
+}
+
+.service-typesview-more.tooltip:hover .bottom {
+    display: block;
+}
+
+.service-typesview-more.tooltip .bottom h3 {
+    display: block;
+    color: #7a329f;
+    font-size: 14px;
+    background: #f2ebf3;
+    text-align: left;
+    padding: 10px 15px;
+    line-height: 20px;
+    margin-bottom: 0px;
+}
+
+.service-typesview-more.tooltip .bottom i {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -12px;
+    width: 24px;
+    height: 12px;
+    overflow: hidden;
+}
+
+.service-typesview-more.tooltip .bottom i::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 50%;
+    transform: translate(-50%, 50%) rotate(45deg);
+    background-color: #fff;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.service-typesview-more.tooltip:hover>.inner-block-SRtypes {
+    pointer-events: auto;
+    opacity: 1.0;
+}
+
+.inner-block-SRtypes {
+    display: block;
+    width: 100%;
+    position: relative;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.service-typesview-more.tooltip .bottom ul {
+    display: block;
+    padding-left: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.service-typesview-more.tooltip .bottom ul li {
+    display: block;
+    border-bottom: 1px solid #f1f1f1;
+    line-height: 40px;
+    font-size: 14px;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+.service-typesview-more.tooltip .bottom ul li span {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.service-typesview-more.tooltip .bottom ul li span img {
+    display: block;
+    width: 25px;
+    height: 25px;
+    max-width: 100%;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.service-typesview-more.tooltip .bottom ul li span .SR-types-tooltip {
+    overflow: hidden;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    width: 140px;
+    text-align: left;
+}
+
+.full-block-requestplan {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+}
+
+.status-view-btn {
+    border: none;
+    cursor: context-menu !important;
+    color: #7a329f;
+    font-weight: 600;
+}
+
+.status-view-btn:hover {
+    background: transparent !important;
+    color: #7a329f;
+}

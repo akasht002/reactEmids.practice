@@ -205,7 +205,7 @@ export class VisitFilter extends Component {
     return (
       <div className={'FilterWidget ' + this.props.isOpen}>
         <form className='FilterWidgetForm'>
-          <div className='FilterContainer FilterTop'>
+          <div className='FilterContainer FilterTop theme-primary-light'>
             <span>Filters</span>
             <span className='FilterCloseIcon' onClick={this.props.toggle} />
           </div>

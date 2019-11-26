@@ -6,6 +6,10 @@ import { FloatLabelInput, Input, SearchInput } from './Input'
 import { Preloader } from './Preloader'
 import { Scrollbars } from './CSB'
 import { ToggleSwitch } from './ToggleSwitch'
+import { Avatar } from './Avatar'
+import{CoreoCheckBox} from './CoreoCheckBox'
+import CustomTextArea from "./CustomTextArea";
+import{CoreoRadio} from './CoreoRadio'
 
 export {
   FloatLabelInput,
@@ -17,5 +21,9 @@ export {
   Input,
   Preloader,
   Scrollbars,
-  ToggleSwitch
+  ToggleSwitch,
+  Avatar,
+  CustomTextArea,
+  CoreoCheckBox,
+  CoreoRadio
 }

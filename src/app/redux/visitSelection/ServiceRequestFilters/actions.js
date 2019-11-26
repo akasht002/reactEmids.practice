@@ -1,9 +1,9 @@
 import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
 import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
-import _ from "lodash";
 import { SERVICE_REQ_STATUS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../utils/dateUtility';
+import { SERVICE_REQUEST_STATUS } from '../../constants/constants';
 
 export const ServiceRequestFiltersList = {
     getServiceCategoryListSuccess: 'get_service_request_filters_list_success/servicerequestfilters',
@@ -23,10 +23,10 @@ export const ServiceRequestFiltersList = {
 };
 
 export const clearServiceRequestStatus = (data) => {
-    data.map((item) => {
-        return item.isChecked = true;
-    })
-    return {
+        data.map(item => {
+          return item.isChecked = !(item.keyValue === SERVICE_REQUEST_STATUS.closed.keyValue || item.keyValue === SERVICE_REQUEST_STATUS.all.keyValue)              
+        })
+        return {
         type: ServiceRequestFiltersList.clearServiceRequestStatus,
         data
     }
@@ -121,9 +121,7 @@ export function getServiceCategory() {
 };
 
 export function getServiceType(data) {
-    data.isChecked = false;
     return (dispatch) => {
-
         dispatch(startLoading());
         let serviceCategoryId = data.value;
         elasticSearchGet(API.getServiceType + `${serviceCategoryId}`).then((resp) => {
@@ -139,17 +137,17 @@ export function getServiceType(data) {
 export function ServiceRequestStatus() {
     return (dispatch) => {
         elasticSearchGet(API.getServiceRequestStatus).then((resp) => {
-            let newArr = _.map(resp.data, function (element) {
-                return _.extend({}, element, { isChecked: true });
-            });
+         resp.data.forEach(obj => {
+            obj.isChecked = !(obj.keyValue === SERVICE_REQUEST_STATUS.closed.keyValue || obj.keyValue === SERVICE_REQUEST_STATUS.all.keyValue)              
             let listToDelete = [SERVICE_REQ_STATUS.PENDING_APPROVAL, SERVICE_REQ_STATUS.DECLINED,  
                                     SERVICE_REQ_STATUS.IN_PROGRESS];
-            let data = newArr.filter(obj => !listToDelete.includes(obj.id));
+            let data = resp.data.filter(obj => !listToDelete.includes(obj.id));
             dispatch(getServiceRequestStatusSuccess(data))
-        }).catch((err) => {
         })
-    }
-};
+    }).catch((err) => {
+    })
+}
+}
 
 export function getServiceArea(data) {
     return (dispatch) => {

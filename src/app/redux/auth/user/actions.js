@@ -4,7 +4,7 @@ import { push } from '../../navigation/actions';
 import { save } from '../../../utils/storage';
 import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
-import { USER_LOCALSTORAGE } from '../../../constants/constants';
+import { USER_LOCALSTORAGE, ENTITY_USER } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
 import {objectCreationRoles} from '../../../utils/roleUtility';
 import {startLoading, endLoading} from '../../loading/actions';
@@ -84,7 +84,7 @@ export function setServiceProviderDetails(emailID, autoLogoutTime){
 }
 
 export function getUserRoles(userData) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(startLoading());
         return CareTeamGet(API.getUserRoles).then((response) => {
             if (response.data.length > 0) {
@@ -93,7 +93,13 @@ export function getUserRoles(userData) {
             }
             save(USER_LOCALSTORAGE, userData);
             dispatch(setUserSuccess(userData))
-            dispatch(push(Path.dashboard));
+            if (getState().authState.userState.userData.userInfo) {
+                if (getState().authState.userState.userData.userInfo.serviceProviderTypeId === ENTITY_USER) {
+                    dispatch(push(Path.entityDashboard))
+                } else {
+                    dispatch(push(Path.dashboard))
+                }
+            }
             dispatch(endLoading());
         })
         .catch((error) => {

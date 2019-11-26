@@ -7,7 +7,28 @@ import { USERTYPES } from '../../constants/constants';
 import { setMenuClicked } from '../auth/user/actions';
 import { onLogout } from '../auth/logout/actions';
 import { goBack } from '../navigation/actions';
-import { TeleHealth } from './bridge'
+import { logError } from '../../utils/logError';
+
+export const TeleHealth = {
+    generateTokenSuccess: 'generate_token_success/telehealth',
+    setLinkedParticipants: 'set_linked_participants/telehealth',
+    setLinkedPatients: 'set_linked_patients/telehealth',
+    clearLinkedParticipants: 'clear_linked_participants/telehealth',
+    getRoomIdSuccess: 'getRoomIdSuccess/telehealth',
+    getParticipantByConfernceIdSuccess: 'get_participant_by_confernceId_success/telehealth',
+    getAllParticipantsSuccess: 'get_all_participants_success/telehealth',
+    setRoomId : 'set_roomId/telehealth',
+    clearRoom: 'clear_room/telehealth',
+    invitaionCame: 'invitaion_came/telehealth',
+    clearInvitaion: 'clear_invitaion/telehealth',
+    setInitiator: 'setInitiator/telehealth',
+    saveContextData: 'saveContextData/telehealth',
+    setInvitedRoomId: 'setInvitedRoomId/telehealth',
+    clearExistingRoom: 'clearExistingRoom/telehealth',
+    newRequestCame: 'NewRequestCame/telehealth',
+    clearInitiator: 'clearInitiator/telehealth',
+    createDataStore: 'createDataStore/telehealth'
+};
 
 export const setInvitedRoomId = data =>{
     return{
@@ -334,12 +355,10 @@ export function rejectConference() {
 
 export function getLinkedPatients() {
     return (dispatch) => {
-          dispatch(startLoading());
-          return AsyncGet(API.getContext +  getUserInfo().coreoHomeUserId).then((resp) => {
+          AsyncGet(API.getContext +  getUserInfo().coreoHomeUserId).then((resp) => {
               dispatch(getLinkedPatientsSuccess(resp.data));
-              dispatch(endLoading());
           }).catch((err) => {
-              dispatch(endLoading());
+              logError(err)
           })
       }
   };

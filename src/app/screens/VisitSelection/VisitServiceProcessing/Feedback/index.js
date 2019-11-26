@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
-import { Link } from "react-router-dom";
-import { VisitProcessingNavigationData } from '../../../../data/VisitProcessingWizNavigationData'
 import { getQuestionsList, saveAnswers } from '../../../../redux/visitSelection/VisitServiceProcessing/Feedback/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader } from '../../../../components';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
@@ -17,6 +15,8 @@ import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import './style.css'
 import { isNull } from '../../../../utils/validations'
+import { getUserInfo } from "../../../../utils/userUtility";
+import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 
 export class Feedback extends Component {
 
@@ -134,13 +134,16 @@ export class Feedback extends Component {
     }
 
     render() {
+        let isEntity = getUserInfo().isEntityServiceProvider;
+        let updatedIndicatorData = visitProcessingNavigationData(isEntity)
+
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 {/* {this.state.isLoading && <Preloader />} */}
                 {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -148,7 +151,7 @@ export class Feedback extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -174,7 +177,7 @@ export class Feedback extends Component {
                         <div className='CardContainers WizardWidget'>
                             <div className="row">
                                 <div className="col col-md-8 WizardContent">
-                                    <DashboardWizFlow VisitProcessingNavigationData={VisitProcessingNavigationData} activeFlowId={1} />
+                                    <DashboardWizFlow VisitProcessingNavigationData={updatedIndicatorData} activeFlowId={1} />
                                 </div>
                                 <div className="col col-md-4 rightTimerWidget running">
                                     <div className="row rightTimerContainer">

@@ -287,7 +287,7 @@ export class ParticipantContent extends Component {
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
-                        <span className="mr-auto primaryColor sideParticipantsTitle">Participants</span>
+                        <span className="mr-auto theme-primary sideParticipantsTitle">Participants</span>
                         <span className="ml-auto d-flex">
                             { accesDenied && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
                             <button className="ParticipantClose" onClick={this.props.toggleParticipantList} />
@@ -313,7 +313,7 @@ export class ParticipantContent extends Component {
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
-                        <span className="mr-auto primaryColor sideParticipantsTitle">Add Participants</span>
+                        <span className="mr-auto theme-primary sideParticipantsTitle">Add Participants</span>
                         <span className="ml-auto">
                             <i className="ParticipantOptionOpen" onClick={this.toggleAddParticipantsView} /></span>
                     </div>

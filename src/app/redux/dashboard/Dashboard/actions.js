@@ -12,11 +12,12 @@ import { formatDate } from '../../../utils/validations'
 import {
   PAGE_NO,
   PAGE_SIZE,
-  DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD
+  DEFAULT_SERVICE_REQUIEST_STATUS_DASHBOARD,Pagination
 } from '../../constants/constants'
 import {
   DashboardConversationPagination,
-  USERTYPES
+  USERTYPES,
+  VISIT_TYPE
 } from '../../../constants/constants'
 import { getUnreadMessageCounts } from '../../asyncMessages/actions'
 import { getUserInfo } from '../../../services/http'
@@ -26,14 +27,18 @@ import {
 import {
   getPerformTasksList,
   formDirtyPerformTask,
-  getServiceVisitId
+  getServiceVisitId,
+  getServiceRequestVisitId
 } from '../../visitSelection/VisitServiceProcessing/PerformTasks/actions';
-import { formDirty, getVisitServiceHistoryByIdDetail } from '../../visitHistory/VisitServiceDetails/actions';
+import { push } from '../../navigation/actions';
+import { Path } from '../../../routes';
+import { DashboardDetail } from './bridge'
+import { formDirty, getVisitServiceHistoryByIdDetail, getAssessmentQuestionsList } from '../../visitHistory/VisitServiceDetails/actions';
 import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/Feedback/actions';
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../visitSelection/VisitServiceProcessing/Summary/actions';
 import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
-
-import { DashboardDetail } from './bridge'
+import { dispatchToAssessmentProcessing,getServiceRequestVisitDeatilsSuccess } from '../../visitSelection/VisitServiceProcessing/Assessment/actions'
+import { logError } from '../../../utils/logError';
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -48,7 +53,7 @@ export function getServiceStatusDetail () {
     return ServiceRequestGet(API.getServiceRequestStatus)
       .then(resp => {
         console.log(resp.data)
-        dispatch(getServiceStatusSuccess(resp.data.slice(0, 5)))
+        dispatch(getServiceStatusSuccess(resp.data.slice(0, 3)))
         dispatch(setServiceRequestLoader(false))
       })
       .catch(err => {
@@ -57,12 +62,11 @@ export function getServiceStatusDetail () {
   }
 }
 
-// export const updateStandByModeSuccess = () => {}
-
-export const getPatientVisitDetailSuccess = data => {
+export const getPatientVisitDetailSuccess = (data,disableShowMore) => {
   return {
     type: DashboardDetail.get_patient_visit_detail_success,
-    data
+    data,    
+    disableShowMore
   }
 }
 
@@ -75,7 +79,6 @@ export const getServiceVisitCountSuccess = data => {
 
 export function getServiceVisitCount (data) {
   return (dispatch, getState) => {
-    dispatch(startLoading())
     return ServiceRequestGet(
       API.getServiceVisitsCount +
         getUserInfo().serviceProviderId +
@@ -86,10 +89,9 @@ export function getServiceVisitCount (data) {
     )
       .then(resp => {
         dispatch(getServiceVisitCountSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        logError(err)
       })
   }
 }
@@ -103,14 +105,11 @@ export const getEntityServiceProviderListSuccess = data => {
 
 export function getEntityServiceProviderList () {
   return (dispatch, getState) => {
-    // dispatch(startLoading())
     return Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
       .then(resp => {
         dispatch(getEntityServiceProviderListSuccess(resp.data))
-        // dispatch(endLoading())
       })
       .catch(err => {
-        // dispatch(endLoading())
       })
   }
 }
@@ -141,17 +140,21 @@ export function getEntityServiceProviderListSearch (data) {
   }
 }
 
-export function getServiceProviderVists (data) {
+export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
   return (dispatch, getState) => {
     dispatch(setServiceVisitLoader(true))
     return ServiceRequestGet(
-      API.getServiceProviderVists + getUserInfo().serviceProviderId + '/' + data
+      `${ API.getServiceProviderVisits}${getUserInfo().serviceProviderId}/${data}/${pageNumber}/${Pagination.pageSize}`
     )
       .then(resp => {
-        dispatch(getPatientVisitDetailSuccess(resp.data))
+        let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];       
+        let modifiedList = [...serviceVists,...resp.data];
+        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;          
+        dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
         dispatch(setServiceVisitLoader(false))
       })
       .catch(err => {
+        dispatch(getPatientVisitDetailSuccess([],true))
         dispatch(setServiceVisitLoader(false))
       })
   }
@@ -192,21 +195,18 @@ export const getServiceProviderDetailSuccess = data => {
 }
 export function updateEntityServiceVisit (data, pageNo) {
   return (dispatch, getState) => {
-    dispatch(startLoading())
     return ServiceRequestPost(API.assignServiceVisit, data)
       .then(resp => {
         dispatch(getVisitServiceSchedule(data.serviceRequestId, pageNo, true))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        logError(err)
       })
   }
 }
 
 export function getServiceProviderDetail (data) {
-  return (dispatch, getState) => {
-    dispatch(startLoading())
+  return (dispatch) => {
     return ServiceRequestGet(
       API.getServiceProviders +
         getUserInfo().serviceProviderId +
@@ -219,10 +219,8 @@ export function getServiceProviderDetail (data) {
     )
       .then(resp => {
         dispatch(getServiceProviderDetailSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
       })
   }
 }
@@ -259,12 +257,8 @@ export function getConversationDetail (data) {
 
 export function updateStandByMode (data) {
   return dispatch => {
-    dispatch(startLoading())
-
     return Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
-        // dispatch(updateStandByModeSuccess())
-        dispatch(endLoading())
       })
       .catch(err => {
         try {
@@ -277,7 +271,7 @@ export function updateStandByMode (data) {
           } else {
           }
         }
-        console.log(err)
+        logError(err)
       })
   }
 }
@@ -345,31 +339,69 @@ export const setServiceVisitLoader =(data) =>{
 
 export function goToServiceVisitProcessing(data){
   return (dispatch) => {
+    let visitId = data.serviceRequestVisitId === 0 ? data.servicePlanVisitId : data.serviceRequestVisitId
     switch (data.visitStatusId) {      
       case START_VISIT :       
-        dispatch(getPerformTasksList(data.serviceRequestVisitId, true))
+        dispatch(getPerformTasksList(visitId, true))
         dispatch(formDirty());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case IN_PROGRESS :        
-        dispatch(getPerformTasksList(data.serviceRequestVisitId, true));
+        dispatch(getPerformTasksList(visitId, true));
         dispatch(formDirty());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case PAYMENT_PENDING :
-        dispatch(getServiceVisitId(data.serviceRequestVisitId, true));
-        dispatch(getSummaryDetails(data.serviceRequestVisitId));
-        dispatch(getSavedSignature(data.serviceRequestVisitId));
+        dispatch(getServiceVisitId(visitId, true));
+        dispatch(getSummaryDetails(visitId));
+        dispatch(getSavedSignature(visitId));
         dispatch(formDirtySummaryDetails());
         dispatch(formDirtyFeedback());
         dispatch(formDirtyPerformTask());
         break;
       case VISIT_SUMMARY :
-        dispatch(getVisitServiceHistoryByIdDetail(data.serviceRequestVisitId))
+        dispatch(getVisitServiceHistoryByIdDetail(visitId))
+        const assessmentQuestionList = {
+          serviceProviderId: parseInt(data.providerId, 10),
+          visitId: visitId
+        }
+        if(data.visitTypeId === VISIT_TYPE.assessment){
+          dispatch(getAssessmentQuestionsList(assessmentQuestionList))
+        }
         break;
       default:
     }
+  }
+}
+
+export function goToAssessmentVisitProcessing(data){
+  let visitID = data.serviceRequestVisitId !==0 ? data.serviceRequestVisitId : data.servicePlanVisitId
+  return (dispatch) => {
+    dispatch(getServiceRequestVisitDeatilsSuccess(data))
+    dispatch(getServiceRequestVisitId(visitID))
+    switch (data.visitStatusId) { 
+      case START_VISIT :       
+        dispatch(dispatchToAssessmentProcessing(visitID))
+      break;  
+      case IN_PROGRESS :       
+       dispatch(dispatchToAssessmentProcessing(visitID))
+      break; 
+      case PAYMENT_PENDING :       
+        dispatch(push(Path.assessmentSummary))
+      break; 
+      case VISIT_SUMMARY :       
+        dispatch(getVisitServiceHistoryByIdDetail(visitID))
+        const assessmentQuestionList = {
+          serviceProviderId: parseInt(data.providerId, 10),
+          visitId: visitID
+        }
+        if(data.visitTypeId === VISIT_TYPE.assessment){
+          dispatch(getAssessmentQuestionsList(assessmentQuestionList))
+        }
+      break; 
+      default:
+     }
   }
 }

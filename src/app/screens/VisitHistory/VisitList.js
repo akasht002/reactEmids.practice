@@ -2,15 +2,16 @@ import React from 'react'
 import { getFields, getServiceTypeImage } from '../../utils/validations'
 import Moment from 'react-moment'
 import { Progressbar } from '../../components'
+import { VISIT_TYPE } from '../../constants/constants';
 
 export const VisitList = props => {
   let visitHistoryList = props.visitHistoryList
   let visitHistoryListItem = ''
   if (visitHistoryList) {
     visitHistoryListItem = visitHistoryList.length > 0 ? visitHistoryList.map((vistList, index) => {
-      let visitId = getServiceTypeImage(vistList.serviceTypes && vistList.serviceTypes[0].serviceTypeId);
+      let visitId = getServiceTypeImage(vistList.serviceTypes && vistList.serviceTypes.length > 0 && vistList.serviceTypes[0].serviceTypeId);
       return (
-        <div className='card mainProfileCard' key={index}>
+        <div className='card mainProfileCard' key={index} test-visitList='test-visitList'>
           <div className='visitListWidget' key={index}>
             <div className='visitListContainerLeft'>
               <div className='visitListTop'>
@@ -37,16 +38,11 @@ export const VisitList = props => {
                         />
                       </div>
                       <div className='visitListNameContainer'>
-                        <div className='visitListType'>
-                          {vistList.serviceTypes &&
-                            getFields(
-                              vistList.serviceTypes,
-                              'serviceTypeDescription'
-                            )}
-                        </div>
-                        <div className='visitListCategory'>
-                          {vistList.serviceCategory}
-                        </div>
+                        {vistList.visitTypeId !== VISIT_TYPE.assessment ?
+                          vistList.serviceTypes && getFields(vistList.serviceTypes, 'serviceTypeDescription')
+                          :
+                          vistList.visitType
+                        }
                         <Progressbar
                           totaltask={vistList.totalTask}
                           taskCompleted={vistList.totalTaskCompleted}
@@ -82,17 +78,17 @@ export const VisitList = props => {
             </div>
             <div className='visitListContainerRight'>
               <i
-                className='visitListNavigation'
+                className='visitListNavigation theme-primary'
                 onClick={() =>
-                  props.handleClicks(vistList.serviceRequestVisitId)}
+                  props.handleClicks(vistList)}
               />
             </div>
           </div>
 
         </div>
       )
-    }) : 
-        <span className="no-resultblock">No results found for the current criteria</span>
+    }) :
+      <span className="no-resultblock">No results found for the current criteria</span>
   }
   return visitHistoryListItem
 }

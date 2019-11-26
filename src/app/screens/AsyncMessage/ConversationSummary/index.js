@@ -108,7 +108,7 @@ export class ConversationSummary extends Component {
             <AsideScreenCover >
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 class="primaryColor m-0">Conversation Summary</h5>
+                        <h5 class="theme-primary m-0">Conversation Summary</h5>
                     </div>
                     {!isEntityServiceProvider() &&
                         <div class="ProfileHeaderButton">
@@ -122,7 +122,7 @@ export class ConversationSummary extends Component {
                         gotoConversations={this.onClickConversation}
                         getUnreadMsgCounts={this.props.unreadMsgCounts} />
                 <div className="row"> 
-                    <div className="col-md-12 p-0 AsyncConversationPagination">
+                    <div className="col-md-12 p-0 AsyncConversationPagination theme-primary">
                         {this.props.conversation.length > 0 &&
                             <Pagination
                                 activePage={this.state.activePage}

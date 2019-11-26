@@ -156,7 +156,7 @@ export class Languages extends React.Component {
         return (
             <div>
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Languages Spoken</h4>
+                    <h4 className="theme-primary">Languages Spoken</h4>
                     {this.props.isUser && <div>
                         { this.props.selectedLanguagesList.languages && this.props.selectedLanguagesList.languages.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editLanguages} />

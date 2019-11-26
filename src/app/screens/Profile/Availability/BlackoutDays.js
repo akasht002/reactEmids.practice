@@ -200,7 +200,7 @@ export class BlackoutDays extends Component {
           <div className="col-md-12 card CardWidget SPBlackoutDays">
           { !this.props.showBalckout ? 
             <div className="SPCardTitle d-flex">
-                 <h4 className={"primaryColor"}>Blackout Days</h4>
+                 <h4 className={"theme-primary"}>Blackout Days</h4>
                   <i
                     className={"SPIconLarge SPIconAdd"}
                     onClick={this.toggleBlackout.bind(this, "add")}
@@ -208,7 +208,11 @@ export class BlackoutDays extends Component {
             </div> :  ""
           }
             <div className={"SPCertificateContainer width100"}>
-              <ul className={"SPCertificateList"}>{blackoutData}</ul>
+              {this.state.blackoutData.length > 0 ? 
+              <ul className={"SPCertificateList theme-primary"}>{blackoutData}</ul>
+              :
+              <i className={"SPIconLarge SPIconAdd"} onClick={this.toggleBlackout.bind(this, "add")} />
+            }
             </div>
           </div>
         </div>

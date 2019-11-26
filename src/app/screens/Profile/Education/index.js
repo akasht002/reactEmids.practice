@@ -432,15 +432,15 @@ export class Education extends React.Component {
         return (
             <div className="col-md-12 card CardWidget SPCertificate">
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Education</h4>
+                    <h4 className="theme-primary">Education</h4>
                     {this.props.isUser && 
                     <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                         onClick={() => this.setState({IsEducationModalOpen: true,isAdd: true})} />}
                 </div>
                 <div className="SPCertificateContainer width100">
                     
-                        {this.props.educationList.length > 0 ? <ul className="SPEducationList"> {educationList} </ul> :
-                       (this.props.isUser && <ul className="SPEducationList">
+                        {this.props.educationList.length > 0 ? <ul className="SPEducationList theme-primary"> {educationList} </ul> :
+                       (this.props.isUser && <ul className="SPEducationList theme-primary">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />

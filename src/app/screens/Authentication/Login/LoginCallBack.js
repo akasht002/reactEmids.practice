@@ -4,10 +4,7 @@ import { CallbackComponent } from "redux-oidc";
 import userManager from "../../../utils/userManager";
 import { ScreenCover, Preloader } from '../../../components';
 import { onLoginSuccess, onLoginFail } from '../../../redux/auth/login/actions';
-import {
-  Navbar,
-  NavbarBrand } from 'reactstrap';
-  import './styles.css';
+import './styles.css';
 
 export class LoginCallBack extends Component {
   render() {

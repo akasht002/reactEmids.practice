@@ -23,6 +23,7 @@ export class AlertPopup extends Component {
   }
 
   render() {
+    let okButtonAlignment = this.props.okButtonAlignment ? this.props.okButtonAlignment : 'mx-2 float-right'
     return (
       <Modal
         isOpen={this.state.isOpen}
@@ -35,7 +36,7 @@ export class AlertPopup extends Component {
           <p className='text-right mt-5'>
             <Button
               type='button'
-              classname={'btn outline btn-primary mx-2 float-right'}
+              classname={`btn outline btn-primary ${okButtonAlignment}`}
               label={this.props.OkButtonTitle ? this.props.OkButtonTitle : "OK"}
               onClick={this.props.onAcceptClick}
             />
@@ -44,7 +45,7 @@ export class AlertPopup extends Component {
                 type='button'
                 classname={'btn outline btn-outline-primary mx-2 float-right'}
                 label={this.props.CancelButtonTitle ? this.props.CancelButtonTitle : "CANCEL"}
-                onClick={this.closePopup}
+                onClick={this.props.closePopup}
               />}
           </p>
         </ModalBody>

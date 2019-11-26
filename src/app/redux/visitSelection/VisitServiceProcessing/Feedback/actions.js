@@ -1,14 +1,15 @@
 import { API } from '../../../../services/api'
 import {
   ServiceRequestGet,
-  ServiceRequestPost
+  ServiceRequestPost,
+  getUserInfo
 } from '../../../../services/http'
-import { startLoading, endLoading } from '../../../loading/actions'
 import { push } from '../../../navigation/actions'
 import { Path } from '../../../../routes'
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { visitHistoryLoading } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import {QuestionsList} from './bridge'
+import { isEntityUser } from '../../../../utils/userUtility';
 
 export const getQuestionsListSuccess = data => {
   return {
@@ -51,9 +52,16 @@ export function getQuestionsList() {
 }
 
 export function saveAnswers(data) {
+  let isPlan = (getUserInfo().isEntityServiceProvider || isEntityUser())
+  let  saveAnswers  = isPlan ? API.saveAnswersForEsp : API.saveAnswers
+  let model = isPlan ? {
+    servicePlanVisitId: data.serviceRequestVisitId,
+    serviceProviderId: data.serviceProviderId,
+    answers: data.answers
+  } : data
   return dispatch => {
     dispatch(startLoadingProcessing())
-    return ServiceRequestPost(API.saveAnswers, data)
+    ServiceRequestPost(saveAnswers, model)
       .then(resp => {
         dispatch(getSummaryDetails(data.serviceRequestVisitId));
         dispatch(getSavedSignature(data.serviceRequestVisitId));
@@ -65,9 +73,13 @@ export function saveAnswers(data) {
   }
 }
 export function saveAnswerFeedback(data) {
-  return dispatch => {
+  return (dispatch) => {
+    let isPlan = (getUserInfo().isEntityServiceProvider || isEntityUser()) 
+    let  saveAnswers  = isPlan ? API.saveAnswersForEsp : API.saveAnswers
+    data.servicePlanVisitId = isPlan && data.serviceRequestVisitId
+    data.serviceProviderId = getUserInfo().serviceProviderId 
     dispatch(visitHistoryLoading(true))
-    return ServiceRequestPost(API.saveAnswers, data)
+    ServiceRequestPost(saveAnswers, data)
       .then(resp => {
         dispatch(visitHistoryLoading(false))
       })

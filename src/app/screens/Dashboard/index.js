@@ -21,7 +21,6 @@ import './styles/toggleSwitch.css'
 import './EntitySP/EntitySPDashboard.css'
 import moment from 'moment'
 import { createDataStore } from '../../redux/telehealth/actions'
-import { Preloader } from '../../components/Base'
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -42,7 +41,6 @@ export class Dashboard extends React.Component {
 
   }
   componentDidMount() {
-    this.props.getPersonalDetail();
     this.props.getSpBusyInVisit();
     this.props.clearSbMode();
     this.props.getProfilePercentage();
@@ -166,7 +164,7 @@ export class Dashboard extends React.Component {
       >
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Dashboard</h5>
+            <h5 className='theme-primary m-0'>Dashboard</h5>
           </div>
           {
             (!entityUser && getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) ?
@@ -176,7 +174,7 @@ export class Dashboard extends React.Component {
                   <input type='checkbox' checked={this.state.isChecked}
                     onChange={this.onValueChange}
                   />
-                  <span className='sliderSwitch round' />
+                  <span className='sliderSwitch round theme-primary' />
                 </label>
               </div>
               :
@@ -188,7 +186,7 @@ export class Dashboard extends React.Component {
             <div className='ProfileContainer topProfile'>
               <ServiceCalendar createDataStore={this.props.createDataStore}/>
             </div>
-            <div className='ProfileContainer bottomProfile'>
+            <div className={entityUser ? "ProfileContainer bottomProfile entity-sp-block" : 'ProfileContainer bottomProfile'}>
               {serviceRequestTemplate}
               <div className='innerWidget'>
                 <MyConversation />

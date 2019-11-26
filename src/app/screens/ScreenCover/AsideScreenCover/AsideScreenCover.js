@@ -15,7 +15,7 @@ import AboutContent from '../../AboutUs/aboutContent';
 import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/actions';
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { extractRole, authorizePermission } from '../../../utils/roleUtility';
-import { isEntityServiceProvider } from '../../../utils/userUtility';
+import { isEntityServiceProvider, isEntityUser } from '../../../utils/userUtility';
 import { SCREENS } from '../../../constants/constants';
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
@@ -28,6 +28,7 @@ import { setMenuClicked, setIsFormDirty } from '../../../redux/auth/user/actions
 import {isIEBrowser, isMobileBrowser} from '../../../utils/browserUtility'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import './style.css'
+import { EntityUserMenuData } from '../../../data/EntityUserMenuData';
 
 export class AsideScreenCover extends React.Component {
     constructor(props) {
@@ -39,7 +40,8 @@ export class AsideScreenCover extends React.Component {
             routeUrlLink: '/',
             isInvitationCame: false,
             isTelehealthMediaAvailable: false,
-            isCreateVideoConference: false
+            isCreateVideoConference: false,
+            dropdownOpen: false
         }
     }
 
@@ -184,10 +186,10 @@ export class AsideScreenCover extends React.Component {
         if (isEntityServiceProvider()) {
             headerMenu = EntitySPProfileHeaderMenu;
         };
-        let menuData = (!getUserInfo().isEntityServiceProvider) ? MenuData : EntityMenuData;
+        let menuData = (!getUserInfo().isEntityServiceProvider) ? (isEntityUser() ? EntityUserMenuData : MenuData) : EntityMenuData;
         return (
             <ScreenCover isLoading={this.props.isLoading}>
-                <div className={"ProfileLeftWidget " + this.props.isOpen}>
+                <div className={"ProfileLeftWidget theme-primary-gradient " + this.props.isOpen}>
                     <div className='BrandNameWidget'>
                         <div className='BrandName'>
                             <span className='BrandLink'>
@@ -222,7 +224,9 @@ export class AsideScreenCover extends React.Component {
                             : require('../../../assets/images/Blank_Profile_icon.png')}
                         toggle={this.props.toggle}
                         onClick={(link) => this.checkIsFormDirty(link)}
-                        dashboardMessageCount={this.props.dashboardMessageCount} />
+                        dashboardMessageCount={this.props.dashboardMessageCount} 
+                        dropdownOpen={this.state.dropdownOpen}
+                        />
 
                     <a ref={(el) => { this.helpDocEl = el }} href={Help} target="_blank"></a>
                     <div className={'hiddenScreen ' + this.props.isOpen} onClick={this.props.toggle} />
@@ -287,7 +291,7 @@ export class AsideScreenCover extends React.Component {
                     }}
                     ModalBody={
                         <div>
-                            <span className='ProfileCardHeaderTitle primaryColor'>
+                            <span className='ProfileCardHeaderTitle theme-primary'>
                                 Improve Your Experience
                             </span>
                             <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>
@@ -306,7 +310,7 @@ export class AsideScreenCover extends React.Component {
                     }}
                     ModalBody={
                         <div>
-                            <span className='ProfileCardHeaderTitle primaryColor'>
+                            <span className='ProfileCardHeaderTitle theme-primary'>
                                 Improve Your Experience
                             </span>
                             <span>To begin using this feature, please use Google Chrome on a PC/Mac or the Coreo Home Mobile Application on an iOS or Android Mobile Device.</span>

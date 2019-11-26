@@ -45,7 +45,7 @@ export class MessageList extends Component {
                         return (
                             <div key={index} className="avatarContainer">
                                 <div
-                                    className="avatarImage totalMembers">
+                                    className="avatarImage totalMembers theme-primary-light">
                                     {"+" + extraParticipants}
                                 </div>
                             </div>

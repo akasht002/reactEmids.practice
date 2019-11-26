@@ -8,6 +8,7 @@ import {
 import { ProfileImage } from '../../../components'
 import { formatPhoneNumber } from '../../../utils/formatName'
 import './index.css'
+import { communicationData } from './communicationData';
 
 export class PersonalDetail extends React.PureComponent {
 
@@ -15,6 +16,19 @@ export class PersonalDetail extends React.PureComponent {
     this.props.getPersonalDetail()
     this.props.getImage()
     this.props.getProfilePercentage();
+  }
+
+  performActionBasedOnTitle = title => {
+    switch (title) {
+      case 'Phone Call':
+        return this.props.showPhoneNumber()
+      case 'Conversation':
+        return this.props.onClickConversation()
+      case 'Video Conference':
+        return this.props.onClickVideoConference()
+      default:
+        return ''
+    }
   }
 
   render () {
@@ -41,7 +55,7 @@ export class PersonalDetail extends React.PureComponent {
                   {this.props.personalDetail &&
                     `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
                 </h3>
-                <p className={'SPsubTitle'}>
+                <p className={'SPsubTitle theme-primary'}>
                   <span>
                     {this.props.personalDetail && this.props.personalDetail.gender && this.props.personalDetail.gender.genderName}
                     {' '}
@@ -57,7 +71,8 @@ export class PersonalDetail extends React.PureComponent {
             <div className={'width100'}>
               <div className={'SPAffiliatedList'} />
             </div>
-            <div className={'width100'}>
+            <div className={'width100 description-block-profile'}>
+            <span className={'theme-primary'}>Description</span>
               <div className='SPDesc'>
                 {this.props.personalDetail &&
                   this.props.personalDetail.description}
@@ -67,7 +82,7 @@ export class PersonalDetail extends React.PureComponent {
           <div className={'SPDetailsContainer SPAddressWidget'}>
             <div className={'SPAddressContent'}>
               <div className={'width100 SPAddressTitle d-flex'}>
-                <span className={'SPAddressText primaryColor'}>
+                <span className={'SPAddressText theme-primary'}>
                   Primary Phone Number
                 </span>
               </div>
@@ -78,6 +93,26 @@ export class PersonalDetail extends React.PureComponent {
                 </span>
               </div>
             </div>
+            <div className={'SPAddressContent'}>
+              <div className={'width100 SPAddressTitle d-flex'}>
+                <span className={'SPAddressText primaryColor theme-primary'}>
+                  Emergency Contact
+                </span>
+              </div>
+              <div className={'width100 d-flex'}>
+                <span>
+                  {getLength(this.props.personalDetail.emergencyContact) > 0 ?
+                    formatPhoneNumber(this.props.personalDetail.emergencyContact) : ''}
+                </span>
+              </div>
+            </div>
+            <div className="d-flex profile-action-block">
+              {
+                communicationData.map(item =>
+                  <i className={item.className} title={item.title} onClick={() => this.performActionBasedOnTitle(item.title)}/>
+                )
+              }
+          </div>
           </div>
         </div>
       </Fragment>

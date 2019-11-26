@@ -7,9 +7,11 @@ import { CSS_PROPS } from './css-data-props'
 import { Scrollbars } from '../../components'
 import {VIEW_ALL_COUNT} from '../../constants/constants'
 import {
-  ServiceProviderRequestDetails,
+  ServiceProviderRequestDetails
+} from './Components/RequestList'
+import {
   ServiceRequestDefault
-} from './ServiceInfo'
+} from './Components/RequestDefault'
 import './ProfileMainPanel.css'
 import {
   getPatientServiceRequestDetail,
@@ -71,8 +73,9 @@ export class ServiceRequest extends React.Component {
     this.props.getPatientServiceRequestDetail(e.id)
   }
 
-  handleClick = requestId => {
-    this.props.getServiceRequestId(requestId)
+  handleClick = data => {
+    this.props.getServiceRequestId(data.serviceRequestId)
+    this.props.setPatient(data.patientId)
     this.props.goToServiceRequestDetailsPage();
   }
 
@@ -110,7 +113,7 @@ export class ServiceRequest extends React.Component {
     serviceRequestItem = serviceRequest? getLength(serviceRequest) > 0
       ? <ServiceProviderRequestDetails
         serviceRequest={serviceRequest}
-        handleClick={requestId => this.handleClick(requestId)}
+        handleClick={sp => this.handleClick(sp)}
         minVal={this.state.min}
         maxVal={this.state.max}
         goToPatientProfile={data => {
@@ -128,16 +131,16 @@ export class ServiceRequest extends React.Component {
       >
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
-            <span className='ProfileCardHeaderTitle primaryColor'>
+            <span className='ProfileCardHeaderTitle theme-primary'>
               Service Requests
             </span>
             {getLength(serviceRequest) > VIEW_ALL_COUNT &&
-            <span className='ProfileCardHeaderLink'
+            <span className='ProfileCardHeaderLink theme-primary'
             onClick={e => this.handleViewAll()}
             >View all</span>
             }
           </div>
-          <div className='topPalette'>
+          <div className='topPalette theme-primary'>
             <div className='monthPalette'>
               <Select
                 menuRenderer={this.menuRenderer}
@@ -178,7 +181,7 @@ export class ServiceRequest extends React.Component {
         {getLength(serviceRequest) > 2 &&
           <ul className='list-group list-group-flush'>
             <li
-              className='list-group-item ProfileShowMore'
+              className='list-group-item ProfileShowMore theme-primary-light'
               onClick={this.clickShowMore}
             >
              {this.toggleName} <i className='ProfileIconShowMore' />

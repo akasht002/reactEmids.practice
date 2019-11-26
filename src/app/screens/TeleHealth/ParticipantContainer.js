@@ -91,7 +91,7 @@ export class ParticipantsContainer extends Component {
                 patients={this.props.patients} />
                 <div className="view-fullheight">
                 {this.props.contextId ? <div className="block-selectview">
-                    <p className="primaryColor mb-0 mt-4">Invite Participants</p>
+                    <p className="theme-primary mb-0 mt-4">Invite Participants</p>
                     <p className="selctview">{this.state.selectedParticipants.length} selected</p>
                 </div> : null}
                 {this.props.contextId ? <ParticipantList

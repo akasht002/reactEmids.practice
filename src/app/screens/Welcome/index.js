@@ -122,7 +122,7 @@ export class Welcome extends Component {
                                                 return (
                                                     <div style={style1}
                                                         className={index + 1 === this.state.activeIndex ? 'sliderItem slide1' : 'hide slide1'}>
-                                                        <div className="sliderInnerContent">
+                                                        <div className="sliderInnerContent theme-primary-gradient">
                                                             <h1 className="sliderTitleText">{item.title}</h1>
                                                             <span className="sliderLabelText">{item.label}</span>
                                                         </div>

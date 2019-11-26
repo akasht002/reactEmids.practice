@@ -8,12 +8,24 @@ import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
 import { updateServiceRequestId } from '../Payments/actions';
 import { getDoubleDigitTime } from '../../../../utils/dateUtility'
-import {SummaryDetails} from './bridge'
+import { getUpdatedPerformTasksList } from '../PerformTasks/actions'
+
+export const SummaryDetails = {
+    getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
+    getCalculationsData: 'get_calculations_data/summarydetails',
+    saveOriginalTimeDiff: 'save_original_time_diff/summarydetails',
+    saveActualTimeDiff: 'save_actual_time_diff/summarydetails',
+    getSavedSignatureSuccess: 'getSavedSignatureSuccess/summarydetails',
+    formDirtySummaryDetails: 'formDirtySummaryDetails/summarydetails',
+    getVisitServiceEligibityStatusSuccess: 'getVisitServiceEligibityStatusSuccess/summarydetails',
+    startLoading: 'startLoading/visitservice',
+    endLoading: 'endLoading/visitservice'
+};
 
 export const getSummaryDetailsSuccess = (data) => {
     return {
         type: SummaryDetails.getSummaryDetailsSuccess,
-        data
+        data : getUpdatedPerformTasksList(data)
     }
 }
 
@@ -72,13 +84,16 @@ export const formDirtySummaryDetails = () => {
 }
 
 export function getSummaryDetails(data) {
+    let getSummaryDetails = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getSummaryDetails
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        return ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
+        ServiceRequestGet(getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
+            //This one we need when we have to give demo.
             // dispatch(calculationsFirstTime(resp.data));
-            dispatch(getVisitServiceEligibilityStatus(resp.data))
-            // dispatch(push(Path.summary))
+           // dispatch(getVisitServiceEligibilityStatus(resp.data))
+           dispatch(calculationsFirstTime(resp.data));
+           dispatch(push(Path.summary))
             // dispatch(endLoadingProcessing());
         }).catch((err) => {
             dispatch(endLoadingProcessing());
@@ -87,9 +102,10 @@ export function getSummaryDetails(data) {
 };
 
 export function getSummaryDetail(data) {
+    let getSummaryDetails = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getSummaryDetails
     return (dispatch) => {
         dispatch(startLoading());
-        return ServiceRequestGet(API.getSummaryDetails + data).then((resp) => {
+        ServiceRequestGet(getSummaryDetails + data).then((resp) => {
             dispatch(getSummaryDetailsSuccess(resp.data));
             dispatch(endLoading());
         }).catch((err) => {
@@ -97,12 +113,19 @@ export function getSummaryDetail(data) {
         })
     }
 };
+
 /* Added By Vimal on 24/12/2018 */
 export function updateVisitProcessingUpdateBilledDuration(data, visitId) {
     let calculate = (data / 1000) / 60
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let model = isEntityServiceProvider ? {
+        servicePlanVisitId: visitId,
+        billedDuration: calculate
+    } : {} 
+    let visitProcessingUpdateBilledDuration = isEntityServiceProvider ? API.visitProcessingUpdateBilledDurationForEsp : API.visitProcessingUpdateBilledDuration + `/${visitId}/${calculate}`
     return (dispatch) => {
         dispatch(startLoading());
-        return ServiceRequestPut(API.visitProcessingUpdateBilledDuration + `/${visitId}/${calculate}`).then((resp) => {
+        ServiceRequestPut(visitProcessingUpdateBilledDuration, model).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -224,9 +247,15 @@ export function onUpdateTime(data, visitId) {
 }
 
 export function saveSummaryDetails(data) {
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let saveSummaryDetails = isEntityServiceProvider ? API.saveSummaryDetailsForEsp : `${API.saveSummaryDetails}${data.serviceRequestVisitId}`
+    let model = isEntityServiceProvider ? {
+        ...data,
+        servicePlanVisitId: data.serviceRequestVisitId
+    } : data
     return (dispatch) => {
         dispatch(startLoading());
-        return ServiceRequestPut(API.saveSummaryDetails + data.serviceRequestVisitId, data).then((resp) => {
+        ServiceRequestPut(saveSummaryDetails, model).then((resp) => {
             if (getUserInfo().isEntityServiceProvider) {
                 dispatch(push(Path.visitServiceDetails))
             } else {
@@ -241,9 +270,15 @@ export function saveSummaryDetails(data) {
 };
 
 export function saveSignature(data) {
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let saveSignature = isEntityServiceProvider ? API.saveSignatureForEsp : API.saveSignature
+    let model = isEntityServiceProvider ? {
+        ...data,
+        servicePlanVisitId: data.serviceRequestVisitId
+    } : data
     return (dispatch) => {
         dispatch(startLoading());
-        return ServiceRequestPost(API.saveSignature, data).then((resp) => {
+        ServiceRequestPost(saveSignature, model).then((resp) => {
             dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
@@ -252,9 +287,11 @@ export function saveSignature(data) {
 };
 
 export function getSavedSignature(data) {
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let getSavedSignature = isEntityServiceProvider ? API.getSavedSignatureForEsp : API.getSavedSignature
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        return ServiceRequestGet(API.getSavedSignature + data).then((resp) => {
+        ServiceRequestGet(getSavedSignature + data).then((resp) => {
             dispatch(getSavedSignatureSuccess(resp.data));
             dispatch(endLoadingProcessing());
         }).catch((err) => {

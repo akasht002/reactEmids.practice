@@ -284,7 +284,7 @@ export class Conversation extends Component {
                 {this.props.isLoading && <Preloader />}
                     <div className='ProfileHeaderWidget'>
                         <div className='ProfileHeaderTitle'>
-                            <h5 className='primaryColor m-0'>My Conversations</h5>
+                            <h5 className='theme-primary m-0'>My Conversations</h5>
                         </div>
                     </div>
                     <div className="container-fluid SPContentWidget MessageCardWidget">

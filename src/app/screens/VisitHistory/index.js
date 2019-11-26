@@ -16,7 +16,8 @@ import {
   getFilteredData,
   getHistoryListCount,
   getAllPatientForServiceProviders,
-  clearPatientForServiceProviders
+  clearPatientForServiceProviders,
+  getAssessmentQuestionsList
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { VisitList } from './VisitList'
 import Filter from './VisitHistoryFilter'
@@ -28,7 +29,10 @@ import '../../styles/SelectDropdown.css'
 import { push } from '../../redux/navigation/actions';
 import { Path } from "../../routes";
 import { getTimeZoneOffset } from '../../utils/dateUtility';
-
+import { getServiceRequestId, saveScheduleType, getPaymentAvailability }
+  from "../../redux/visitSelection/VisitServiceDetails/actions";
+import {DEFAULT_FROM_DATE, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, VISIT_TYPE} from '../../constants/constants'
+import { setServiceProviderFeedbackTab } from '../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 export class VisitHistory extends Component {
   constructor(props) {
     super(props)
@@ -37,26 +41,45 @@ export class VisitHistory extends Component {
       filterOpen: false,
       selectedKey: 'item-1',
       serviceTypeIds: [],
-      activePage: 1,
+      activePage: DEFAULT_PAGE_NUMBER,
       sortByOrder: 'asc',
-      pageNumber: 1,
-      sort: true
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      isFilterApplied: false
     }
     this.selectedData = ''
   }
 
   componentDidMount() {
-    let data = {
-      pageNumber: 1,
-      pageSize: 10,
-      sortOrder: 'asc',
-      sortName: 'visitdate'
-    }
-    this.props.getVisitServiceLists(data)
+    const data = this.getModel({
+      fromDate: null,
+      toDate: null,
+      serviceTypeList: [],
+      serviceProviderList: [],
+      individualList: [],
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    this.props.getFilteredData(data)
     this.props.getAllServiceProviders()
     this.props.getAllPatientForServiceProviders(data)
     this.props.getServiceCategory()
     this.props.getHistoryListCount()
+    this.props.setServiceProviderFeedbackTab(true)
+    this.props.getPaymentAvailability()
+  }
+
+  getModel = (data) => {
+    return ({
+      fromDate: data.fromDate,
+      toDate: data.toDate,
+      serviceTypeList: data.serviceTypeList,
+      status: [],
+      serviceProviderList: data.serviceProviderList,
+      individualList: data.individualList,
+      serviceProviderId: 0,
+      pageNumber: data.pageNumber,
+      pageSize: DEFAULT_PAGE_SIZE,
+      offset: getTimeZoneOffset()
+    })
   }
 
   toggle = () => {
@@ -78,8 +101,18 @@ export class VisitHistory extends Component {
     })
   }
 
-  handleClick = requestId => {
-    this.props.getVisitServiceHistoryByIdDetail(requestId)
+  handleClick = data => {
+    this.props.saveScheduleType(data.visitTypeId)
+    let serviceRequestVisitId = (data.serviceRequestVisitId === 0) ? data.servicePlanVisitId : data.serviceRequestVisitId
+    this.props.getServiceRequestId(data.serviceRequestId)
+    this.props.getVisitServiceHistoryByIdDetail(serviceRequestVisitId)
+    const model = {
+      serviceProviderId: data.assignedProviderId,
+      visitId: serviceRequestVisitId
+    }
+    if(data.visitTypeId === VISIT_TYPE.assessment){
+      this.props.getAssessmentQuestionsList(model)
+    }
   }
 
   handleChangeServiceCategory = (selectedOption) => {
@@ -107,49 +140,52 @@ export class VisitHistory extends Component {
 
   applyFilter = (selectedData) => {
     this.selectedData = selectedData;
-    const data = {
-      fromDate: selectedData.searchData.startDate ? selectedData.searchData.startDate : '1900-01-01',
+    const data = this.getModel({
+      fromDate: selectedData.searchData.startDate ? selectedData.searchData.startDate : DEFAULT_FROM_DATE,
       toDate: selectedData.searchData.endDate ? selectedData.searchData.endDate : moment().toDate(),
       serviceCategory: this.state.serviceCategoryId,
       serviceTypeList: this.state.serviceTypeIds,
-      status: [],
       serviceProviderList: selectedData.serviceProviderArray,
       individualList: selectedData.individualList,
-      serviceProviderId: 0,
-      pageNumber: 1,
-      pageSize: 10,
-      offset: getTimeZoneOffset()
-    }
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
     this.props.getFilteredData(data)
     this.setState({
       filterOpen: !this.state.filterOpen,
-      sort: false,
-      activePage: 1
+      isFilterApplied: true,
+      activePage: DEFAULT_PAGE_NUMBER
     })
   }
 
-  handlePageChange = (pageNumber) => {
-    this.setState({ pageNumber: pageNumber, activePage: pageNumber })
-    const data = {
-      fromDate: this.selectedData.searchData.startDate ? this.selectedData.searchData.startDate : '1900-01-01',
+  handlePageChange = async (pageNumber) => {
+    await this.setState({ pageNumber: pageNumber, activePage: pageNumber })
+    let data = {}
+    this.state.isFilterApplied ?
+     data = this.getModel({
+      fromDate: this.selectedData.searchData.startDate ? this.selectedData.searchData.startDate : DEFAULT_FROM_DATE,
       toDate: this.selectedData.searchData.endDate ? this.selectedData.searchData.endDate : moment().toDate(),
       serviceCategory: this.state.serviceCategoryId,
       serviceTypeList: this.state.serviceTypeIds,
-      status: [],
       serviceProviderList: this.selectedData.serviceProviderArray,
       individualList: this.selectedData.individualList,
-      serviceProviderId: 0,
+      pageNumber: pageNumber
+    }) :
+    data = this.getModel({
+      fromDate: null,
+      toDate: null,
+      serviceTypeList: [],
+      serviceProviderList: [],
+      individualList: [],
       pageNumber: pageNumber,
-      pageSize: 10
-    }
-    this.props.getFilteredData(data)
+    })
+    await this.props.getFilteredData(data)
   }
 
   handlePageChangeList = (pageNumber) => {
     this.setState({ pageNumber: pageNumber, activePage: pageNumber })
     let data = {
       pageNumber: pageNumber,
-      pageSize: 10,
+      pageSize: DEFAULT_PAGE_SIZE,
       sortOrder: this.state.sortByOrder,
       sortName: 'visitdate'
     }
@@ -157,24 +193,25 @@ export class VisitHistory extends Component {
   }
 
   applyReset = () => {
-    this.setState({ selectedOption: '', serviceTypeIds: [], sort: true, activePage: 1 })
+    this.setState({ selectedOption: '', serviceTypeIds: [], isFilterApplied: false, activePage: DEFAULT_PAGE_NUMBER, filterOpen: !this.state.filterOpen })
     this.props.clearServiceTypes();
     this.props.clearServiceProviders(this.props.serviceProviders);
     this.props.clearPatientForServiceProviders(this.props.PatientForServiceproviders);
-    let data = {
-      pageNumber: 1,
-      pageSize: 10,
-      sortOrder: "asc",
-      sortName: "visitdate"
-    };
-    this.props.getVisitServiceLists(data);
-    this.props.getHistoryListCount();
+    const data = this.getModel({
+      fromDate: null,
+      toDate: null,
+      serviceTypeList: [],
+      serviceProviderList: [],
+      individualList: [],
+      pageNumber: DEFAULT_PAGE_NUMBER,
+    })
+    this.props.getFilteredData(data)
   }
 
   selectedSort = (selectedKey) => {
     let data = {
       pageNumber: this.state.pageNumber,
-      pageSize: 10,
+      pageSize: DEFAULT_PAGE_SIZE,
       sortOrder: selectedKey,
       sortName: 'visitdate'
     }
@@ -191,7 +228,7 @@ export class VisitHistory extends Component {
       <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Visit History</h5>
+            <h5 className='theme-primary m-0'>Visit History</h5>
           </div>
           <div className='ProfileHeaderRight'>
             {/* <ThemeProvider>
@@ -217,7 +254,7 @@ export class VisitHistory extends Component {
               </SelectField>
             </ThemeProvider> */}
             <span
-              className='primaryColor'
+              className='theme-primary'
               onClick={this.toggleFilter}
             >
               Filters
@@ -235,27 +272,11 @@ export class VisitHistory extends Component {
             handleClicks={this.handleClick}
             handelPatientProfile={this.handelPatientProfile}
           />
-          {this.props.VisitServiceHistory.length > 0 && this.state.sort === true && (
-            <div class="col-md-12 p-0 AsyncConversationPagination">
+          {this.props.VisitServiceHistory.length > 0 && (
+            <div class="col-md-12 p-0 AsyncConversationPagination theme-primary">
               <Pagination
                 activePage={this.state.activePage}
-                itemsCountPerPage={10}
-                totalItemsCount={this.props.historyListCount}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChangeList}
-                itemClass="PaginationItem"
-                itemClassFirst="PaginationIcon First"
-                itemClassPrev="PaginationIcon Prev"
-                itemClassNext="PaginationIcon Next"
-                itemClassLast="PaginationIcon Last"
-              />
-            </div>
-          )}
-          {this.props.VisitServiceHistory.length > 0 && this.state.sort === false && (
-            <div class="col-md-12 p-0 AsyncConversationPagination">
-              <Pagination
-                activePage={this.state.activePage}
-                itemsCountPerPage={10}
+                itemsCountPerPage={DEFAULT_PAGE_SIZE}
                 totalItemsCount={this.props.VisitServiceHistory[0].dataCount}
                 pageRangeDisplayed={5}
                 onChange={this.handlePageChange}
@@ -305,7 +326,11 @@ export function mapDispatchToProps(dispatch) {
     clearPatientForServiceProviders: (data) => dispatch(clearPatientForServiceProviders(data)),
     setPatient: (data) => dispatch(setPatient(data)),
     goToPatientProfile: () => dispatch(push(Path.patientProfile)),
-
+    getServiceRequestId: data => dispatch(getServiceRequestId(data)),
+    saveScheduleType: (data) => dispatch(saveScheduleType(data)),
+    getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
+    getPaymentAvailability: () => dispatch(getPaymentAvailability())
   }
 }
 
