@@ -123,7 +123,6 @@ export class Schedule extends Component {
 
     componentWillUnmount() {
         this.props.clearServiceDetails();
-        this.props.setAddNewScheduledClicked(false);
     }
 
     getPrimaryAddress = () => {
@@ -849,6 +848,7 @@ export class Schedule extends Component {
             this.setState({ isModalOpen: true })
         } else {
             this.goToServicedetails();
+            this.props.setAddNewScheduledClicked(true);
         }
     }
 

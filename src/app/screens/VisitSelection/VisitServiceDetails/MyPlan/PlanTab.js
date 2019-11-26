@@ -34,12 +34,11 @@ export const PlanTab = props => {
                                 <span className="title-view theme-primary">Visit(s)</span>
                             </div>
                             <div className="pull-right">
-                                <div className="full-block filter-block">
-                                {isEntity && props.isDisabledAddSchedule && 
-                                <Fragment><span className='primaryColor profile-header-filter theme-primary' onClick={props.toggle}>Filters</span>
-                                        <button onClick={() => props.addSchedule()}>
+                                <div className="full-block filter-block">                            
+                                <span className='primaryColor profile-header-filter theme-primary' onClick={props.toggle}>Filters</span>
+                                {isEntity && props.isDisabledAddSchedule && <button onClick={() => props.addSchedule()}>
                                             <span>+</span>Add New Schedule
-                                </button></Fragment>}
+                                </button>}
                                 </div>
                             </div>
                         </div>

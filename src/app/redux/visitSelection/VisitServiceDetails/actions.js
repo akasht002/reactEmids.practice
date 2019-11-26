@@ -12,7 +12,7 @@ import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
 import { VisitServiceDetails } from './bridge'
-import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST } from '../../../constants/constants'
+import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST, VISIT_TYPE } from '../../../constants/constants'
 import { isEntityUser } from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy, uniqBy } from 'lodash'
@@ -386,9 +386,21 @@ export const getSchedulesListSuccess = (data) => {
 }
 
 export const getVisitListSuccess = (data) => {
+  let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+  let updatedData = data.map(res => {
+    return {
+        ...res,
+        serviceTypes: res.serviceTypes.map((type, index) => {
+          return {
+            ...type,
+            serviceTypeDescription: isEntityServiceProvider ? ((res.scheduleTypeId === VISIT_TYPE.assessment) ? res.scheduleType : type.serviceTypeDescription) : type.serviceTypeDescription
+          }
+      })
+    }
+})
   return {
     type: VisitServiceDetails.getVisitListSuccess,
-    data
+    updatedData
   }
 }
 

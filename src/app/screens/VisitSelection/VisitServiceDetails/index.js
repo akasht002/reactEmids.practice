@@ -246,13 +246,14 @@ export class VisitServiceDetails extends Component {
     this.setState({ isEngageAlertPopupOpen: true, serviceRequestId: serviceRequestId })
   }
 
-  accept = () => {
+  accept = async() => {
     let model = {
       patientId: this.props.patientId,
       serviceRequestId: this.state.serviceRequestId,
     }
     this.setState({ isAcceptAlertPopupOpen: false })
-    this.props.acceptservicerequest(model)
+    await this.props.acceptservicerequest(model);
+    await this.props.getServiceRequestList(this.props.patientId);
   }
 
   engage = () => {
