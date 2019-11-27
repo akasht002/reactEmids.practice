@@ -53,4 +53,13 @@ describe("Filter", function () {
     it('Check the resetToDefaultTab  function', () => {
         wrapper.instance().resetToDefaultTab()
     });
+
+    it('should return btn-outline-primary', () => {
+        expect(wrapper.find('.btn-outline-primary').props().onClick())
+    })
+
+    it('should return btn-primary', () => {
+        expect(wrapper.find('.btn-primary').props().onClick())
+    })
+
 });
