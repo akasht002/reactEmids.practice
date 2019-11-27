@@ -48,4 +48,11 @@ describe('Details ', () => {
         })
         expect(wrapper).toBeDefined();
     })
+
+    it('should return Details ', () => {
+        wrapper.setProps({
+            details: {occurence : 0}
+        })
+        expect(wrapper).toBeDefined();
+    })
 }); 	
