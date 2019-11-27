@@ -269,7 +269,7 @@ export class AssessmentSummary extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
+                                <span onClick={() => this.props.goBack()} test-goBack='test-goBack' className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -410,6 +410,7 @@ export class AssessmentSummary extends Component {
                         ModalBody={validationContent}
                         btn1="OK"
                         className="modal-sm"
+                        test-alertPopup='test-alertPopup'
                         headerFooter="d-none"
                         centered={true}
                         onConfirm={() => this.setState({
@@ -422,6 +423,7 @@ export class AssessmentSummary extends Component {
                         ModalBody={<span>Do you want to proceed for payment?</span>}
                         btn1="Yes"
                         btn2="No"
+                        test-paymentPopup='test-paymentPopup'
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
@@ -437,6 +439,7 @@ export class AssessmentSummary extends Component {
                         ModalBody={<span>Do you want to discard the changes?</span>}
                         btn1='Yes'
                         btn2='No'
+                        test-discardPopup='test-discardPopup'
                         className='modal-sm'
                         headerFooter='d-none'
                         centered='centered'
@@ -452,7 +455,7 @@ export class AssessmentSummary extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getSummaryDetail: (data) => dispatch(getSummaryDetail(data)),
         onUpdateTime: (data, visitId) => dispatch(onUpdateTime(data, visitId)),
@@ -468,7 +471,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         isLoading: state.visitSelectionState.VisitServiceProcessingState.SummaryState.isLoading,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.SummaryState.SummaryDetails,
