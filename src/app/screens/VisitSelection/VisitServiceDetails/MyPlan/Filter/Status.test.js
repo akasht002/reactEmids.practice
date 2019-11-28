@@ -2,7 +2,7 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon';
-import ServiceRequestsStatus from '../Status'
+import ServiceRequestsStatus from './Status'
 
 Enzyme.configure({ adapter: new Adapter() })
 

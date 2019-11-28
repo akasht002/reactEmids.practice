@@ -2,15 +2,15 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon';
-import { Filter } from '../index'
+import { Filter } from './index'
 
-jest.mock('../../../../../../services/http', () => ({
+jest.mock('../../../../../services/http', () => ({
     getUserInfo: () => ({
         isEntityServiceProvider: 2
     })
 }))
 
-jest.mock('../../../../../../utils/userUtility', () => ({
+jest.mock('../../../../../utils/userUtility', () => ({
     isEntityUser: () => ({})
 }))
 
