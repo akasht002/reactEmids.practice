@@ -1,7 +1,6 @@
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
-import sinon from 'sinon';
 
 import  { isStatusInArray, isDisableInArray, ServiceStatus  }  from './ServiceRequestStatus';
 
@@ -46,5 +45,4 @@ describe("VisitSelection - ServiceRequestStatus", function () {
         })
         expect(shallowWrapper.find('[label="Apply"]').props().onClick());
     })
-
 });

@@ -5,7 +5,7 @@ function Search(props){
         <Fragment>
         <span className='ProfileIconSearch' onClick={props.toggleSearch}/>
         <div className={'ProfileSearchContainer form-group ' + props.searchOpen}>
-        <form onSubmit={(e)=>props.handleSearchData(e)}>
+        <form test-onSubmit="test-onSubmit" onSubmit={(e)=>props.handleSearchData(e)}>
                 <input className='form-control' type='text' value={props.searchKeyword} 
                  onChange={(e)=>props.handleSearchkeyword(e)} placeholder='Enter keyword for global search'
                 />
