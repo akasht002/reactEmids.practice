@@ -178,6 +178,19 @@ describe("VisitServiceProcessing - Summary", function () {
     });
 
     it('Check the saveSignature', () => {
+        shallowWrapper.instance().setState({
+            summaryDetails: {
+                patient: {
+                    patientId: 1000,
+                },
+                serviceRequestVisitId: 10,
+                serviceRequestId: 20
+            }
+        })
+        shallowWrapper.instance().signaturePad = {
+            toDataURL: jest.fn(),
+            off: jest.fn()
+        }
         shallowWrapper.instance().saveSignature()
     });
 
@@ -186,6 +199,9 @@ describe("VisitServiceProcessing - Summary", function () {
     });
 
     it('Check the resetSignature', () => {
+        shallowWrapper.instance().signaturePad = {
+            clear: jest.fn()
+        }
         shallowWrapper.instance().resetSignature()
     });
 

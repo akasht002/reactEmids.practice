@@ -16,6 +16,12 @@ jest.mock('../../../../redux/navigation/actions', () => ({
     push: jest.fn()
 }))
 
+jest.mock('../../../../services/http', () => ({
+    getUserInfo: () => ({
+        isEntityServiceProvider: true
+    }),
+}))
+
 Enzyme.configure({ adapter: new Adapter() })
 
 let store;
@@ -50,7 +56,7 @@ const defaultState = {
     SummaryDetails: {
         originalTotalDuration: 500
     },
-    isLoading : true,
+    isLoading: true,
     goBack: jest.fn()
 }
 
@@ -173,7 +179,7 @@ describe("PerformTasks", function () {
                     patientId: 1213,
                     imageString: 'asdas/afasf/afs'
                 }
-            } 
+            }
         })
         expect(shallowWrapper.find('.backProfileIcon').props().onClick());
         expect(shallowWrapper.find('.requestImageContent').props().onClick());
@@ -183,25 +189,49 @@ describe("PerformTasks", function () {
         expect(shallowWrapper.find('[test-proceedModal="test-proceedModal"]').props().onConfirm());
     });
 
+    it('Check the componentDidMount', () => {
+        shallowWrapper.setProps({
+            PerformTasksList: {
+                visitStatus: "YET_TO_START"
+            }
+        })
+        expect(shallowWrapper).toBeDefined();
+    });
+
+    
+    it('Check the componentDidMount', () => {
+        shallowWrapper.setProps({
+            PerformTasksList: {
+                visitStatus: "IN_PROGRESS"
+            }
+        })
+        expect(shallowWrapper).toBeDefined();
+    });
+
     it('Check the mapDispatchToProps fn()', () => {
+        let data = { serviceRequestTypeTaskVisits: [{ id: 1, name: 'test' }] }
         const dispatch = jest.fn();
-        mapDispatchToProps(dispatch).getPerformTasksList({});
+        mapDispatchToProps(dispatch).getPerformTasksList(123, true);
         expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).addPerformedTask({});
+        mapDispatchToProps(dispatch).addPerformedTask(
+            data
+            , 0);
         expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).getSummaryDetails({});
+        mapDispatchToProps(dispatch).getSummaryDetails(123);
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).startOrStopService({}, 12, 23);
         expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).setPatient({});
+        mapDispatchToProps(dispatch).setPatient(1000);
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).goToPatientProfile();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).goBack();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        // mapDispatchToProps(dispatch).goBack();
+        // expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 
     it('should test mapStateToProps state', () => {
         expect(mapStateToProps(defaultState)).toBeDefined();
     });
+
+
 }); 

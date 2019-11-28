@@ -54,7 +54,7 @@ const defaultState = {
     scheduleState: {
         serviceCategoryList: [],
         serviceTypeList: [],
-        patientAddressList: [],
+        patientAddressList: [{}],
         stateList: [],
         posErrorMessage: '',
         isPosAddressValid: '',
@@ -62,7 +62,11 @@ const defaultState = {
         recurringPatternList: [],
         daysList: [],
         disableShowmore: false,
-        individualSchedulesDetails: {},
+        individualSchedulesDetails: {
+            weekly:{
+                days:[]
+            }
+        },
         isIndividualScheduleEdit: true,
         isAssessmentEdit: true,
         assessmentDetails: {}
@@ -92,8 +96,10 @@ const defaultState = {
     clearESPListSchedule: jest.fn(),
     selectOrClearAllServiceType: jest.fn(),
     createOrEditAssessment: jest.fn(),
+    clearServiceDetails:jest.fn(),
     isScheduleEdit: jest.fn(),
-    assessmentEdit: jest.fn()
+    assessmentEdit: jest.fn(),
+    setAddNewScheduledClicked:jest.fn()
 }
 
 store = mockStore(defaultState)
@@ -107,6 +113,25 @@ describe('ServiceRequestDetail', function () {
     })
 
     it('Check the componentDidMount', () => {
+        expect(shallowWrapper).toBeDefined()
+    });
+
+    it('Check the componentWillUnmount', () => {
+        shallowWrapper.instance().componentWillUnmount();
+    });
+
+    // it('Check the getPrimaryAddress', () => {
+    //     shallowWrapper.setState({isDefaultAddress:false})
+    //     shallowWrapper.setProps({isAddNewScheduleClicked:true})
+    //     shallowWrapper.instance().getPrimaryAddress();
+    // });
+
+    it('Check the componentDidMount', () => {
+        shallowWrapper.instance().componentDidMount();
+    });
+
+    it('Check the componentDidMount', () => {
+        shallowWrapper.setProps({patientId:false})
         shallowWrapper.instance().componentDidMount();
     });
 
@@ -317,8 +342,7 @@ describe('ServiceRequestDetail', function () {
 
     it('Check the goToServicedetails        ', () => {
         shallowWrapper.instance().goToServicedetails();
-    });
-
+    });    
 
     it('Check the showPhoneNumber        ', () => {
         shallowWrapper.instance().showPhoneNumber();

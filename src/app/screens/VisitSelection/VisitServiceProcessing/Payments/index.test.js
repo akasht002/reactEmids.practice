@@ -6,19 +6,19 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { Payments } from './index.js';
+import { Payments, mapDispatchToProps, mapStateToProps } from './index.js';
 
- jest.mock('../../../ScreenCover/AsideScreenCover', () => ({
+jest.mock('../../../ScreenCover/AsideScreenCover', () => ({
     AsideScreenCover: 'mockAsideScreenCover'
 }))
 
- jest.mock('../../../../redux/navigation/actions', () => ({
+jest.mock('../../../../redux/navigation/actions', () => ({
     push: jest.fn()
 }))
 
- Enzyme.configure({ adapter: new Adapter() })
+Enzyme.configure({ adapter: new Adapter() })
 
- let store;
+let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
@@ -31,7 +31,7 @@ const defaultState = {
         authorizationRequired: false
     },
     SummaryDetails: {
-        patient:{
+        patient: {
             patientId: 1
         }
     },
@@ -42,7 +42,7 @@ const defaultState = {
         },
         SummaryDetails: {
             serviceRequestId: 1,
-            patient:{
+            patient: {
                 patientId: 1
             }
         }
@@ -70,13 +70,35 @@ const defaultState = {
     ServiceRequestVisitId: 12,
     CardList: [{
         coreoHomeStripeCustomerId: 45,
-        ccType: 'aadsa'
-    }]
+        ccType: 'visa'
+    }],
+    visitSelectionState: {
+        VisitServiceProcessingState: {
+            PerformTasksState: {
+                PerformTasksList: [],
+                startedTime: '',
+                SummaryDetails: {},
+                ServiceRequestVisitId: 1000
+            },
+            SummaryState: {
+
+            },
+            PaymentsState: {
+                CardList: [],
+                isLoading: true,
+                errorMessage: 'Test'
+            }
+        },
+        VisitServiceDetailsState: {
+            VisitServiceElibilityStatus: []
+        },
+    }
+
 }
 
- store = mockStore(defaultState);
+store = mockStore(defaultState);
 
- const setUp = (props = {}) => {
+const setUp = (props = {}) => {
     const wrapper = mount(
         <Provider store={store}>
             <MemoryRouter>
@@ -87,10 +109,10 @@ const defaultState = {
     return wrapper;
 };
 
- describe("Feedback", function () {
+describe("Feedback", function () {
     let wrapper, shallowWrapper;
 
-     beforeEach(() => {
+    beforeEach(() => {
         const props = defaultState;
         wrapper = setUp(props);
         shallowWrapper = shallow(
@@ -98,22 +120,49 @@ const defaultState = {
         )
     });
 
-     it('Check the Payments form body', () => {
+    it('Check the Payments form body', () => {
         expect(wrapper.find('.ProfileHeaderWidget').length).toEqual(1);
     });
 
-     it('Check the toggle', () => {
+    it('Check the toggle', () => {
         shallowWrapper.instance().toggle();
     });
 
-     it('Check the toggleCardSelection', () => {
+    it('Check the toggleCardSelection', () => {
         shallowWrapper.instance().toggleCardSelection({ target: { value: 'TEST' } }, 1);
     });
 
     it('Check the componentDidMount', () => {
         shallowWrapper.instance().componentDidMount();
     });
+
     
+    it('Check the payByAuthorizedCard ', () => {
+        shallowWrapper.instance().payByAuthorizedCard ();
+    });
+
+
+    it('Check the componentDidMount', () => {
+        shallowWrapper.setProps({
+            ServiceRequestVisitId: null
+        })
+        shallowWrapper.instance().componentDidMount();
+    });
+
+    it('Check the events', () => {
+        shallowWrapper.instance().setState({
+            SelectedCard: '1'
+        })
+        expect(shallowWrapper.find('[test-firstInput="test-firstInput"]').props().onClick());
+        // expect(shallowWrapper.find('.requestImageContent').props().onClick());
+        // expect(shallowWrapper.find('[test-feedback="test-feedback"]').props().onConfirm());
+        // expect(shallowWrapper.find('[test-discard="test-discard"]').props().onConfirm());
+        // expect(shallowWrapper.find('[test-feedback="test-feedback"]').props().onCancel());
+        // expect(shallowWrapper.find('[test-discard="test-discard"]').props().onCancel());
+        // expect(shallowWrapper.find('[test-input="test-input"]').props().onChange(e));
+        // expect(enzymeWrapper.find('[name="newPass"]').props().onPaste(e));
+    });
+
     it('Check the componentWillReceiveProps', () => {
         let nextProps = {
             CardList: [{
@@ -127,32 +176,90 @@ const defaultState = {
         shallowWrapper.instance().componentWillReceiveProps(nextProps);
     });
 
-     it('Check the visitSummary', () => {
+    it('Check the visitSummary', () => {
         shallowWrapper.instance().visitSummary(1);
     });
 
-     it('Check the handleChange', () => {
+    it('Check the handleChange', () => {
         shallowWrapper.instance().handleChange({ target: { value: 'TEST' } }, 1);
     });
 
-     it('Check the handelPatientProfile', () => {
+    it('Check the handelPatientProfile', () => {
         shallowWrapper.instance().handelPatientProfile(1);
     });
 
-     it('Check the handleClick', () => {
+    it('Check the handleClick', () => {
+        shallowWrapper.setProps({
+            eligibilityCheck: {
+                active: false,
+                authorizationRequired: true
+            }
+        })
         shallowWrapper.instance().handleClick();
     });
 
-     it('Check the payByAuthorizedCardOption', () => {
+    it('Check the handleClick', () => {
+        shallowWrapper.setProps({
+            eligibilityCheck: {
+                active: true,
+                authorizationRequired: false
+            }
+        })
+        shallowWrapper.instance().handleClick();
+    });
+
+    it('Check the payByAuthorizedCardOption', () => {
+        shallowWrapper.setProps({
+            eligibilityCheck: {
+                active: false,
+                authorizationRequired: true
+            }
+        })
         shallowWrapper.instance().payByAuthorizedCardOption();
     });
 
-     it('Check the captureAmount', () => {
+    it('Check the payByAuthorizedCardOption', () => {
+        shallowWrapper.setProps({
+            eligibilityCheck: {
+                active: true,
+                authorizationRequired: false
+            }
+        })
+        shallowWrapper.instance().payByAuthorizedCardOption();
+    });
+
+    it('Check the captureAmount', () => {
         shallowWrapper.instance().captureAmount();
     });
 
-     it('Check the paymentsMethods', () => {
+    it('Check the paymentsMethods', () => {
         shallowWrapper.instance().paymentsMethods();
     });
 
- }); 
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getpaymentsCardList(1);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).chargeByCustomerId(1, {});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).claimsSubmission({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).captureAmount(1, {});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setPatient(123);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).paymentCheck(null);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getVisitServiceHistoryByIdDetail(123);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).isPaymentPathValid(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+
+    it('should test mapStateToProps state', () => {
+        expect(mapStateToProps(defaultState)).toBeDefined();
+    });
+
+}); 

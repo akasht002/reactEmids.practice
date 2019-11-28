@@ -22,7 +22,9 @@ const defaultState = {
                 userInfo: {}
             }
         }
-    }
+    },
+    applyReset:jest.fn(),
+    applyFilter:jest.fn()
 }
 
  store = mockStore(defaultState);
@@ -54,13 +56,13 @@ const defaultState = {
     });
 
      it('Check the toggle true', () => {
-        shallowWrapper.instance().toggle();
+        shallowWrapper.instance().toggle('2342432');
     });
 
      it('Check the toggle false', () => {
-        shallowWrapper.instance().toggle(1);
-        shallowWrapper.instance().toggle(2);
-        shallowWrapper.instance().toggle(3);
+        shallowWrapper.instance().toggle('1');
+        shallowWrapper.instance().toggle('2');
+        shallowWrapper.instance().toggle('3');
     });
 
      it('Check the dateFromChanged true', () => {
@@ -100,51 +102,33 @@ const defaultState = {
     });
 
      it('Check the dateChangedRaw', () => {
-        shallowWrapper.instance().dateChangedRaw({ target: { value: 1 } });
+        shallowWrapper.instance().dateChangedRaw({ target: { value: "456566556565" },preventDefault:jest.fn() });
     });
 
      it('Check the dateChangedRawEndDate', () => {
-        shallowWrapper.instance().dateChangedRawEndDate({ target: { value: 1 } });
+        shallowWrapper.instance().dateChangedRawEndDate({ target: { value: "456566556565" },preventDefault:jest.fn() });
     });
 
-     // it('Check the reset', () => {
-    //     shallowWrapper.instance().reset();
-    // });
+    it('Check the events', () => {
+        shallowWrapper.setState({
+            searchData:{
+                endDate:null
+            }
+        })
+        expect(shallowWrapper.find('[test-Reset="test-Reset"]').props().onClick())
+        expect(shallowWrapper.find('[test-Apply="test-Apply"]').props().onClick())
+        expect(shallowWrapper.find('[test-dob1="test-dob1"]').props().onBlur())
+        expect(shallowWrapper.find('[test-dob="test-dob"]').props().onBlur())
+        // expect(shallowWrapper.find('[test-stopButton="test-stopButton"]').props().onClick())
+    });
 
-     // it('Check the toggleCertification', () => {
-    //     shallowWrapper.instance().toggleCertification();
-    // });
-
-     // it('Check the checkValidation true', () => {
-    //     shallowWrapper.instance().checkValidation(true, 'VTU', 'BE', '123');
-    // });
-
-     // it('Check the checkValidation false', () => {
-    //     shallowWrapper.instance().checkValidation(true, '', '', '');
-    // });
-
-     // it('Check the addCertification', () => {
-    //     shallowWrapper.instance().addCertification();
-    // });
-
-     // it('Check the showModalOnDelete', () => {
-    //     shallowWrapper.instance().showModalOnDelete({ target: { id: 1 } });
-    // });
-
-     // it('Check the editCertification', () => {
-    //     shallowWrapper.instance().editCertification({ target: { id: 1 } });
-    // });
-
-     // it('Check the updateCertification', () => {
-    //     shallowWrapper.instance().updateCertification();
-    // });
-
-     // it('Check the deleteCertification', () => {
-    //     shallowWrapper.instance().deleteCertification();
-    // });
-
-     // it('Check the CertificationModal form body', () => {
-    //     expect(wrapper.find('.CertificationModal').length).toEqual(1);
-    // });
+    it('Check the events', () => {
+        shallowWrapper.setState({
+            searchData:{
+                endDate:""
+            }
+        })
+        expect(shallowWrapper.find('[test-dob1="test-dob1"]').props().onBlur())
+    })
 
  }); 
