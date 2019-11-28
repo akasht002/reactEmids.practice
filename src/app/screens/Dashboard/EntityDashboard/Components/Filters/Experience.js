@@ -29,6 +29,7 @@ class Experience extends React.Component {
                 </div>
                 <div className='RangeSliderContent'>
                     <InputRange
+                        test-input='test-input'
                         maxValue={50}
                         minValue={0}
                         formatLabel={value => `${value}`}

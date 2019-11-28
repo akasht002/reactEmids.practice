@@ -593,7 +593,7 @@ export class ServiceProvider extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceProviderCountList: (data, filterApplied) =>
       dispatch(getVisitServiceProviderCountList(data, filterApplied)),
@@ -624,7 +624,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   let VisitServiceProviderState = state.dashboardState && state.dashboardState.VisitServiceProviderState
   return {
     visitServiceProviderCountList: VisitServiceProviderState.visitServiceProviderCountList,

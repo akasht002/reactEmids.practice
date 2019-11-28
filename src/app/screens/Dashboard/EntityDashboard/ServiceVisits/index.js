@@ -504,7 +504,7 @@ export class ServiceVisits extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceCountList: (data, filterApplied, onSuccess) => dispatch(getVisitServiceCountList(data, filterApplied, onSuccess)),
     getVisitServiceTableList: data => dispatch(getVisitServiceTableList(data)),
@@ -535,7 +535,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     visitServiceCountList: state.dashboardState.VisitServiceCountListState
       .visitServiceCountList,

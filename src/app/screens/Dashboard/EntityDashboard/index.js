@@ -19,7 +19,7 @@ import { createDataStore } from '../../../redux/telehealth/actions'
 import './entity-user-dashboard.css'
 import { Tabs } from './Components/Tabs/Tabs';
 
-class EntityDashboard extends Component {
+export class EntityDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -201,7 +201,7 @@ class EntityDashboard extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     setActiveTab: data => dispatch(setActiveTab(data)),
     getBuildVersion: () => dispatch(getBuildVersion()),
@@ -213,7 +213,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     activeTab: state.dashboardState.individualsListState.activeTab,
     fromDate: state.dashboardState.individualsListState.fromDate,
