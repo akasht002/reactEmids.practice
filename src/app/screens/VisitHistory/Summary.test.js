@@ -5,6 +5,7 @@ import configureStore from 'redux-mock-store'
 import sinon from 'sinon';
 import { VistSummary, mapDispatchToProps, mapStateToProps } from './Summary';
 
+
 Enzyme.configure({ adapter: new Adapter() })
 
 jest.mock('../../services/http', () => ({
@@ -26,9 +27,56 @@ const defaultState = {
     patientDetails: [],
     ServiceRequestId: 12,
     VisitFeedback: [],
+    serviceProvider:{
+        firstName:'',
+        lastName:''
+    },
+    serviceRequestTypeVisits :{},
     SummaryDetails: {
         serviceRequestTypeVisits: [],
-        serviceRequestVisitId: 155
+        serviceRequestVisitId: 155,
+        serviceProvider:{
+            firstName:'',
+            lastName:''
+        }
+    },
+    visitSelectionState:{
+            VisitServiceProcessingState:{
+                FeedbackState:{
+                    QuestionsList:[]
+                },
+                PerformTasksState:{
+                    PerformTasksList:[]
+                }
+            },
+            VisitServiceDetailsState:{
+                savedScheduleType:{},
+                isPaymentAvailable:true
+            }
+    },
+    dashboardState:{
+        individualsListState:{
+            activeTab:1
+        },
+        VisitServiceProviderState:{
+            activeTab:1
+        },
+        isServiceProviderFeedbackTab:true
+    },
+    visitHistoryState:{
+        vistServiceHistoryState:{
+            isLoading:true,
+            VisitFeedback:[],
+            ServiceRequestId:345,
+            assessmentQuestionsList:[],
+            VisitServiceDetails:{
+                serviceProvider:{
+                    firstName:'',
+                    lastName:''
+                },
+                serviceRequestTypeVisits :[]
+            }
+        }
     },
     isLoading: false,
     serviceProviderId: 100,
