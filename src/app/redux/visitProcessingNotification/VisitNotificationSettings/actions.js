@@ -37,7 +37,7 @@ export function getVisitNotificationSettings() {
     return (dispatch) => {
         let userId = getUserInfo().serviceProviderId;
         dispatch(startLoadingNotification());
-        Get(API.getNotificationSettings + userId).then((resp) => {
+        return Get(API.getNotificationSettings + userId).then((resp) => {
             dispatch(getVisitNotificationSettingsSuccess(resp.data))
             dispatch(endLoadingNotification());
         }).catch((err) => {
@@ -51,7 +51,7 @@ export function updateVisitNotificationSettings(data) {
     return (dispatch) => {
         let userId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
-        Post(API.updateNotificationSettings + userId, data).then((resp) => {
+        return Post(API.updateNotificationSettings + userId, data).then((resp) => {
             dispatch(updateVisitNotificationSettingsSuccess(resp.data))
             dispatch(getVisitNotificationSettings())
             dispatch(endLoading());

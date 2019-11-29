@@ -124,18 +124,7 @@ describe('ServiceRequestDetail', function () {
 
     it('Check the componentWillUnmount', () => {
         shallowWrapper.instance().componentWillUnmount();
-    });
-
-    it('Check the getPrimaryAddress', () => {
-        shallowWrapper.instance().setState({ isDefaultAddress: true })
-        shallowWrapper.setProps({ isAddNewScheduleClicked: true })
-        shallowWrapper.setProps({ patientAddressList: [{ "patientId": 1022, "addressId": 531, "stateName": "New York", "state": null, "city": "Albany", "zip": 12205, "street": "Washington Ave Extension", "isPrimaryAddress": true, "isActive": true, "addressTypeId": null, "stateId": 32, "rowVersionId": null, "latitude": 42.70351, "longitude": -73.8559341 }] })
-        shallowWrapper.instance().getPrimaryAddress();
-    });
-
-    it('Check the componentDidMount', () => {
-        shallowWrapper.instance().componentDidMount();
-    });
+    });   
 
     it('Check the componentDidUpdate', () => {
         shallowWrapper.setProps({ isIndividualScheduleEdit: true })

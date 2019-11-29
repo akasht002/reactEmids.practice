@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon';
-import {Body }  from './Body'
+import { Header }  from './Header'
 
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -23,9 +23,9 @@ const defaultState = {
     }]
 }
 
-describe("Body", function () {
+describe("Header", function () {
     let wrapper;
-    it("Grid Body",()=>{
-        expect(Body(defaultState)).toBeDefined();
+    it("Header Body",()=>{
+        expect(Header(defaultState)).toBeDefined();
     });
 });

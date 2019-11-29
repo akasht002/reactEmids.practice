@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon';
-import {Body }  from './Body'
+import Search  from './index'
 
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -13,19 +13,25 @@ const mockStore = configureStore();
 const dispatch = sinon.spy();
 
 const defaultState = {
-    header:"",
-    searchable:true,
+    id:"",
+    searchOpen:true,
     placeholder:'',
     className:'',
-    onClickSave :jest.fn(),
-    data:[{
-        
-    }]
+    toggleSearch :jest.fn(),
+    handleSearchkeyword:jest.fn(),
+    closeSearch:jest.fn()
 }
 
-describe("Body", function () {
+describe("Search", function () {
     let wrapper;
-    it("Grid Body",()=>{
-        expect(Body(defaultState)).toBeDefined();
+
+    wrapper = shallow(
+        <Search dispatch={dispatch} store={store} {...defaultState} />
+    )  
+
+    it('Check the Search Details body', () => {
+        expect(wrapper).toBeDefined()
     });
+
+    
 });

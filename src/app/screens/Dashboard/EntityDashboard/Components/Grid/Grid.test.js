@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon';
-import {Body }  from './Body'
+import { Grid }  from './Body'
 
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -15,6 +15,7 @@ const dispatch = sinon.spy();
 const defaultState = {
     header:"",
     searchable:true,
+    prototype:{},
     placeholder:'',
     className:'',
     onClickSave :jest.fn(),
@@ -23,9 +24,16 @@ const defaultState = {
     }]
 }
 
-describe("Body", function () {
+describe("Grid", function () {
     let wrapper;
-    it("Grid Body",()=>{
-        expect(Body(defaultState)).toBeDefined();
+
+    wrapper = shallow(
+        <Grid dispatch={dispatch} store={store} {...defaultState} />
+    )  
+
+    it('Check the PointOfService Details body', () => {
+        wrapper.setState({
+        })
+        expect(wrapper).toBeDefined()
     });
 });

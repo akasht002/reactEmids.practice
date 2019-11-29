@@ -1,6 +1,6 @@
 import {
     ServiceRequestFiltersList
-} from './actions'
+} from './bridge'
 
 const defaultState = {
     ServiceCategory: [],
