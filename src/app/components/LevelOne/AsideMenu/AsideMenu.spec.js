@@ -41,4 +41,8 @@ describe('AsideMenu', () => {
         expect(wrapper.find('.profileSideNavigationList').length).toEqual(1)
     })
 
+    it('should return profileSideNavigationLink', () => {
+        expect(wrapper.find('.profileSideNavigationLink').props().onClick())
+    })
+
 }); 	

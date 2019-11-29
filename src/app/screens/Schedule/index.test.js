@@ -14,6 +14,12 @@ let store
 const mockStore = configureStore()
 const dispatch = sinon.spy()
 const defaultState = {
+    visitSelectionState: {
+        VisitServiceDetailsState: {
+            scheduleList: [],
+            isAddNewScheduleClicked: false
+        }
+    },
     serviceCategoryList: [],
     serviceTypeList: [],
     patientAddressList: [
@@ -40,10 +46,10 @@ const defaultState = {
     recurringPatternList: [],
     daysList: [],
     disableShowmore: false,
-    individualSchedulesDetails: {},
+    individualSchedulesDetails: {"planScheduleId":686,"name":null,"categoryId":1,"startDate":"11/29/2019","endDate":"11/29/2019","startTime":"1:00PM","endTime":"1:30PM","duration":"00:30","isRecurring":false,"description":"","serviceProviderId":14,"serviceTypes":[{"serviceTypeId":1,"serviceTypeDescription":"Ambulation and Mobility","planVisitTypeDetailsId":0,"planServiceTypeDetailsId":0,"serviceTask":[{"serviceTaskId":1,"serviceTaskDescription":"Locate transfer devices","isDefault":false,"serviceTypeId":1,"planVistTypeTaskDetailsId":0,"taskStatusId":0},{"serviceTaskId":2,"serviceTaskDescription":"Assist with transfer(s)","isDefault":false,"serviceTypeId":1,"planVistTypeTaskDetailsId":0,"taskStatusId":0}]}],"patientAddressId":716,"patientId":1022,"address":{"streetAddress":"Washington Ave Extension","city":"Albany","stateId":32,"stateName":"New York","zip":12205,"latitue":0.0,"longitude":-73.8559341},"schedulePattern":31,"daily":null,"weekly":null,"monthly":null,"recurringDetails":null,"scheduleType":null,"scheduleTypeId":115,"schedulePatternType":"OneTime","isAnyAvailableHiredCard":false,"isAnyAvailableScheduleVisit":false},
     isIndividualScheduleEdit: true,
     isAssessmentEdit: true,
-    assessmentDetails: {},
+    assessmentDetails: {"assessmentId":674,"scheduleTypeId":114,"startDate":"11/27/2019","startTime":"7:00PM","endTime":"7:30PM","duration":30.0,"patientId":1022,"patientAddressId":622,"streetAddress":"9100 Westwood  shores","city":"Fort worth","stateName":"Texas","stateId":43,"zipCode":"76179","isActive":true,"latitude":0.0,"longitude":0.0,"serviceProviderId":13,"thumbnailImage":"data:image/"},
     userType: 0,
     patientId: 1022,
     authState: {
@@ -63,13 +69,13 @@ const defaultState = {
         daysList: [],
         disableShowmore: false,
         individualSchedulesDetails: {
-            weekly:{
-                days:[]
+            weekly: {
+                days: []
             }
         },
         isIndividualScheduleEdit: true,
         isAssessmentEdit: true,
-        assessmentDetails: {}
+        assessmentDetails: {"assessmentId":674,"scheduleTypeId":114,"startDate":"11/27/2019","startTime":"7:00PM","endTime":"7:30PM","duration":30.0,"patientId":1022,"patientAddressId":622,"streetAddress":"9100 Westwood  shores","city":"Fort worth","stateName":"Texas","stateId":43,"zipCode":"76179","isActive":true,"latitude":0.0,"longitude":0.0,"serviceProviderId":13,"thumbnailImage":"data:image/"}
     },
     patientProfileState: {
         patientId: 1022
@@ -96,10 +102,10 @@ const defaultState = {
     clearESPListSchedule: jest.fn(),
     selectOrClearAllServiceType: jest.fn(),
     createOrEditAssessment: jest.fn(),
-    clearServiceDetails:jest.fn(),
+    clearServiceDetails: jest.fn(),
     isScheduleEdit: jest.fn(),
     assessmentEdit: jest.fn(),
-    setAddNewScheduledClicked:jest.fn()
+    setAddNewScheduledClicked: jest.fn()
 }
 
 store = mockStore(defaultState)
@@ -120,18 +126,24 @@ describe('ServiceRequestDetail', function () {
         shallowWrapper.instance().componentWillUnmount();
     });
 
-    // it('Check the getPrimaryAddress', () => {
-    //     shallowWrapper.setState({isDefaultAddress:false})
-    //     shallowWrapper.setProps({isAddNewScheduleClicked:true})
-    //     shallowWrapper.instance().getPrimaryAddress();
-    // });
+    it('Check the getPrimaryAddress', () => {
+        shallowWrapper.instance().setState({ isDefaultAddress: true })
+        shallowWrapper.setProps({ isAddNewScheduleClicked: true })
+        shallowWrapper.setProps({ patientAddressList: [{ "patientId": 1022, "addressId": 531, "stateName": "New York", "state": null, "city": "Albany", "zip": 12205, "street": "Washington Ave Extension", "isPrimaryAddress": true, "isActive": true, "addressTypeId": null, "stateId": 32, "rowVersionId": null, "latitude": 42.70351, "longitude": -73.8559341 }] })
+        shallowWrapper.instance().getPrimaryAddress();
+    });
 
     it('Check the componentDidMount', () => {
         shallowWrapper.instance().componentDidMount();
     });
 
+    it('Check the componentDidUpdate', () => {
+        shallowWrapper.setProps({ isIndividualScheduleEdit: true })
+        shallowWrapper.instance().componentDidUpdate();
+    });
+
     it('Check the componentDidMount', () => {
-        shallowWrapper.setProps({patientId:false})
+        shallowWrapper.setProps({ patientId: null })
         shallowWrapper.instance().componentDidMount();
     });
 
@@ -342,7 +354,7 @@ describe('ServiceRequestDetail', function () {
 
     it('Check the goToServicedetails        ', () => {
         shallowWrapper.instance().goToServicedetails();
-    });    
+    });
 
     it('Check the showPhoneNumber        ', () => {
         shallowWrapper.instance().showPhoneNumber();
@@ -407,37 +419,15 @@ describe('ServiceRequestDetail', function () {
 
         mapDispatchToProps(dispatch).assessmentEdit({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).clearServiceDetails({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setAddNewScheduledClicked(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 
     it('Check mapStateToProps', () => {
-        const initialState = {
-            scheduleState: {
-                serviceCategoryList: [],
-                serviceTypeList: [],
-                patientAddressList: [],
-                stateList: [],
-                posErrorMessage: '',
-                isPosAddressValid: '',
-                entityServiceProvidersList: [],
-                recurringPatternList: [],
-                daysList: [],
-                disableShowmore: false,
-                individualSchedulesDetails: {},
-                isIndividualScheduleEdit: true,
-                isAssessmentEdit: true,
-                assessmentDetails: {}
-            },
-            patientProfileState: {
-                patientId: ''
-            },
-            authState: {
-                userState: {
-                    userData: {
-                        userInfo: {}
-                    }
-                }
-            }
-        };
-        expect(mapStateToProps(initialState)).toBeDefined();
+        expect(mapStateToProps(defaultState)).toBeDefined();
     });
 })

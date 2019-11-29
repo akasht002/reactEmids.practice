@@ -103,7 +103,7 @@ class ProfileHeader extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onLogout: () => dispatch(onLogout())
     }

@@ -1,10 +1,10 @@
 import React from 'react';
-import {ProfileImage} from './index';
+import CoreoWizFooter from './CoreoWizFooter';
 import renderer from 'react-test-renderer';
 
-test('ProfileImage Component testing', () => {
+test('CoreoWizFooter Component testing', () => {
     const component = renderer.create(
-      <ProfileImage></ProfileImage>,
+      <CoreoWizFooter></CoreoWizFooter>,
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();
