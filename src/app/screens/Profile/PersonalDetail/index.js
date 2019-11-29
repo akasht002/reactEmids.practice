@@ -436,6 +436,7 @@ export class PersonalDetail extends React.PureComponent {
           ModalBody={<span>Do you want to discard the changes?</span>}
           btn1='YES'
           btn2='NO'
+          test-discardPopup='test-discardPopup'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -455,6 +456,7 @@ export class PersonalDetail extends React.PureComponent {
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
+          test-sizePopup='test-sizePopup'
           onConfirm={() =>
             this.setState({
               isAlertModalOpen: false
@@ -470,6 +472,7 @@ export class PersonalDetail extends React.PureComponent {
           ModalBody={<span>Do you want to discard the changes?</span>}
           btn1='YES'
           btn2='NO'
+          test-savePopup='test-savePopup'
           className='modal-sm'
           headerFooter='d-none'
           footer='d-none'
@@ -495,6 +498,7 @@ export class PersonalDetail extends React.PureComponent {
           uploadedImageFile={this.state.uploadedImageFile}
           crop={this.state.crop}
           onCropChange={this.onCropChange}
+          test-crop='test-crop'
           changeCroppedImage={(croppedImage) => {
             this.setState({ croppedImageUrl: croppedImage })
           }}
@@ -731,6 +735,7 @@ export class PersonalDetail extends React.PureComponent {
                   options={genderDetail}
                   simpleValue
                   placeholder='Select Gender'
+                  test-gender='test-gender'
                   onChange={value => {
                     this.setState({
                       selectedGender: value,

@@ -1,15 +1,19 @@
 import React from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
-import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
-import { Provider } from 'react-redux';
 
  import { PersonalDetail, mapDispatchToProps, mapStateToProps  } from './index.js';
 
  jest.mock('../../../components', () => ({
     ScreenCover: 'mockScreenCover'
+}))
+
+jest.mock('../../../services/http', () => ({
+    getUserInfo: () => ({
+        serviceProviderId: 12
+    })
 }))
 
  Enzyme.configure({ adapter: new Adapter() })
@@ -18,7 +22,6 @@ import { Provider } from 'react-redux';
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    personalDetail: {},
     updatePersonalDetailSuccess: false,
     cityDetail: [{}],
     imageData: '',
@@ -64,28 +67,33 @@ const defaultState = {
     getCityDetail: jest.fn(),
     uploadImg: jest.fn(),
     getImage: jest.fn(),
-    getGender: jest.fn()
+    getGender: jest.fn(),
+    personalDetail: {
+        firstName:'',
+        lastName:'',
+        address:[{
+            city:'city',
+            streetAddress:'streetAddress',
+            zipCode:'zipCode',
+            state:{name:'sasa', id: 1},
+        }],
+        age:'',
+        affiliationName: '',
+        organization: '',
+        yearOfExperience: 23,
+        description: 'sad',
+        hourlyRate: 12,
+        genderName:'',
+        addressTypeId: 2
+    }
 }
 
  store = mockStore(defaultState);
 
- const setUp = (props = {}) => {
-    const wrapper = mount(
-        <Provider store={store}>
-            <MemoryRouter>
-                <PersonalDetail dispatch={dispatch} store={store} {...props} />
-            </MemoryRouter>
-        </Provider>
-    )
-    return wrapper;
-};
-
  describe("PersonalDetail", function () {
-    let wrapper, shallowWrapper;
+    let wrapper;
 
      beforeEach(() => {
-        const props = defaultState;
-        // wrapper = setUp(props);
         wrapper = shallow(
             <PersonalDetail dispatch={dispatch} store={store} {...defaultState} />
         )
@@ -99,15 +107,21 @@ const defaultState = {
 
     it('Check the mapDispatchToProps fn()', () => {
         const dispatch = jest.fn();
+        let data = {
+            selectedGender: {
+                value: 'male'
+            },
+            description: [{id: 1}]
+        }
         mapDispatchToProps(dispatch).getPersonalDetail();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getAffiliationDetail();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).updatePersonalDetail();
+        mapDispatchToProps(dispatch).updatePersonalDetail(data);
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getCityDetail();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).uploadImg();
+        mapDispatchToProps(dispatch).uploadImg({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();        
         mapDispatchToProps(dispatch).getImage();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
@@ -123,17 +137,25 @@ const defaultState = {
         wrapper.isImageSave = false
         const nextProps = {
             profileImgData:{ 
-                image :'',
+                image :''
+            },
+            personalDetail: {
                 firstName:'',
                 lastName:'',
-                age:'',
-                genderName:'',
                 address:[{
                     city:'city',
                     streetAddress:'streetAddress',
                     zipCode:'zipCode',
-                    state:{name:''},
-                }]
+                    state:{name:'sasa', id: 1},
+                }],
+                age:'',
+                affiliationName: '',
+                organization: '',
+                yearOfExperience: 23,
+                description: 'sad',
+                hourlyRate: 12,
+                genderName:'',
+                addressTypeId: 2
             }
         }
         wrapper.instance().componentWillReceiveProps(nextProps)
@@ -143,17 +165,25 @@ const defaultState = {
     wrapper.isImageSave = true
     const nextProps = {
         profileImgData:{ 
-            image :'',
+            image :''
+        },
+        personalDetail: {
             firstName:'',
             lastName:'',
-            age:'',
-            genderName:'',
             address:[{
                 city:'city',
                 streetAddress:'streetAddress',
                 zipCode:'zipCode',
-                state:{name:''},
-            }]
+                state:{name:'sasa', id: 1},
+            }],
+            age:'',
+            affiliationName: '',
+            organization: '',
+            yearOfExperience: 23,
+            description: 'sad',
+            hourlyRate: 12,
+            genderName:'',
+            addressTypeId: 2
         }
     }
     wrapper.instance().componentWillReceiveProps(nextProps)
@@ -203,7 +233,11 @@ const defaultState = {
 
     it('Check the saveImageUpload function', () => {
         wrapper.setState({
-            croppedImageUrl:'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest'
+            croppedImageUrl: 10200
+        })
+        wrapper.instance().saveImageUpload()
+        wrapper.setState({
+            croppedImageUrl: 2097152
         })
         wrapper.instance().saveImageUpload()
     })
@@ -225,7 +259,9 @@ const defaultState = {
     });
 
      it('Check the textChangeContactNumber', () => {
-        wrapper.instance().textChangeContactNumber({ target: { value: 122222222 } });
+        wrapper.instance().textChangeContactNumber({ target: { value: '122222222' } });
+        wrapper.instance().textChangeContactNumber({ target: { value: '12222221231232' } });
+        wrapper.instance().textChangeContactNumber({ target: { value: '1234567890' } });
     });
 
      it('Check the reset', () => {
@@ -244,5 +280,13 @@ const defaultState = {
         wrapper.instance().renderDetails()
     })
 
+    it('Check the events', () => {
+        expect(wrapper.find('[test-discardPopup="test-discardPopup"]').props().onConfirm())
+        expect(wrapper.find('[test-discardPopup="test-discardPopup"]').props().onCancel())
+        expect(wrapper.find('[test-sizePopup="test-sizePopup"]').props().onConfirm())
+        expect(wrapper.find('[test-sizePopup="test-sizePopup"]').props().onCancel())
+        expect(wrapper.find('[test-savePopup="test-savePopup"]').props().onConfirm())
+        expect(wrapper.find('[test-savePopup="test-savePopup"]').props().onCancel())
+    })
 
  }); 
