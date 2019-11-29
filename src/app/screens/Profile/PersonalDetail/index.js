@@ -436,6 +436,7 @@ export class PersonalDetail extends React.PureComponent {
           ModalBody={<span>Do you want to discard the changes?</span>}
           btn1='YES'
           btn2='NO'
+          test-reset='test-reset'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -452,6 +453,7 @@ export class PersonalDetail extends React.PureComponent {
           toggle={this.reset}
           ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG, PNG, GIF.</span>}
           btn1='OK'
+          test-image='test-image'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -670,6 +672,7 @@ export class PersonalDetail extends React.PureComponent {
                 required='required'
                 type='text'
                 maxlength='100'
+                test-firstName = "test-firstName"
                 value={this.state.firstName}
                 className={"form-control custome-placeholder " + (this.state.firstNameInvaild && 'inputFailure')}
                 textChange={e => {

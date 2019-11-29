@@ -34,7 +34,10 @@ const defaultState = {
     profileImgData:'',
     profileState: {
         PersonalDetailState: {
-            personalDetail: [],
+            personalDetail: {
+                firstName:'',
+
+            },
             updatePersonalDetailSuccess: false,
             cityDetail: [{id :'',name:''}],
             imageData: '',
@@ -81,7 +84,7 @@ const defaultState = {
 };
 
  describe("PersonalDetail", function () {
-    let wrapper, shallowWrapper;
+    let wrapper;
 
      beforeEach(() => {
         const props = defaultState;
@@ -98,19 +101,20 @@ const defaultState = {
     }); 
 
     it('Check the mapDispatchToProps fn()', () => {
+        wrapper.setProps({
+            selectedAffiliation:{
+                label: "",
+                value: ""
+      
+            }
+        })
         const dispatch = jest.fn();
         mapDispatchToProps(dispatch).getPersonalDetail();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getAffiliationDetail();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).updatePersonalDetail();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getCityDetail();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-        mapDispatchToProps(dispatch).uploadImg();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();        
+        mapDispatchToProps(dispatch).uploadImg();       
         mapDispatchToProps(dispatch).getImage();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getGender();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
@@ -119,7 +123,7 @@ const defaultState = {
         expect(mapStateToProps(defaultState)).toBeDefined();
     });
 
-    it('Check the componentWillReceiveProps function', () => {
+    it('Check the componentWillReceiveProps1 function', () => {
         wrapper.isImageSave = false
         const nextProps = {
             profileImgData:{ 
@@ -134,12 +138,23 @@ const defaultState = {
                     zipCode:'zipCode',
                     state:{name:''},
                 }]
+            },
+            personalDetail:{
+                affiliationName:'',
+                affiliationId:234,
+
+                address:[{
+                    city:'city',
+                    streetAddress:'streetAddress',
+                    zipCode:'zipCode',
+                    state:{name:''},
+                }]
             }
         }
         wrapper.instance().componentWillReceiveProps(nextProps)
    }); 
 
-   it('Check the componentWillReceiveProps function', () => {
+   it('Check the componentWillReceiveProps2 function', () => {
     wrapper.isImageSave = true
     const nextProps = {
         profileImgData:{ 
@@ -148,6 +163,44 @@ const defaultState = {
             lastName:'',
             age:'',
             genderName:'',
+            address:[{
+                city:'city',
+                streetAddress:'streetAddress',
+                zipCode:'zipCode',
+                state:{name:''},
+            }]
+        },
+        personalDetail:{
+            address:[{
+                city:'city',
+                streetAddress:'streetAddress',
+                zipCode:'zipCode',
+                state:{name:''},
+            }]
+        }
+    }
+    wrapper.instance().componentWillReceiveProps(nextProps)
+}); 
+
+   it('Check the componentWillReceiveProps3 function', () => {
+    wrapper.isImageSave = true
+    const nextProps = {
+        profileImgData:{ 
+            image :'',
+            firstName:'',
+            lastName:'',
+            age:'',
+            genderName:'',
+            address:[{
+                city:'city',
+                streetAddress:'streetAddress',
+                zipCode:'zipCode',
+                state:{name:''},
+            }]
+        },
+        personalDetail:{
+            affiliationName:'',
+            affiliationId:234,
             address:[{
                 city:'city',
                 streetAddress:'streetAddress',
@@ -163,19 +216,19 @@ const defaultState = {
         wrapper.instance().handleChange();
     });
 
-     it('Check the reUpload', () => {
+     it('Check the reUpload1', () => {
         wrapper.instance().reUpload({ target: { files: [{name:'.jpg'}] } });
     });
 
-    it('Check the reUpload', () => {
+    it('Check the reUpload2', () => {
         wrapper.instance().reUpload({ target: { files: [{name:'.jepg'}] } });
     });
 
-    it('Check the onSubmit function', () => {
+    it('Check the onSubmit1 function', () => {
         wrapper.instance().onSubmit()
        })
     
-    it('Check the onSubmit function', () => {
+    it('Check the onSubmit2 function', () => {
         wrapper.setState({
             firstName :"test", lastName:"test", phoneNumber :123456789, city:"test", zipCode:78967, streetAddress:"test", selectedState:'test'
         })
@@ -189,8 +242,20 @@ const defaultState = {
         wrapper.instance().onSubmit()
     })
 
+    it('Check the onSubmit function', () => {
+        wrapper.setState({
+            firstName :"dsf", lastName:"df", phoneNumber :123456789, city:"sdf", zipCode:44444, streetAddress:"sdf", selectedState:'sdf'
+        })
+        wrapper.instance().onSubmit()
+    })
+
     it('Check the closeImageUpload function', () => {
         wrapper.isChangePhoto  = false
+        wrapper.instance().closeImageUpload()
+    })
+
+    it('Check the closeImageUpload function', () => {
+        wrapper.setProps({profileImgData:{image:"sdfsdfsdf"}})
         wrapper.instance().closeImageUpload()
     })
 
@@ -204,6 +269,13 @@ const defaultState = {
     it('Check the saveImageUpload function', () => {
         wrapper.setState({
             croppedImageUrl:'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest'
+        })
+        wrapper.instance().saveImageUpload()
+    })
+
+    it('Check the saveImageUpload function', () => {
+        wrapper.setState({
+            croppedImageUrl:''
         })
         wrapper.instance().saveImageUpload()
     })
@@ -225,7 +297,11 @@ const defaultState = {
     });
 
      it('Check the textChangeContactNumber', () => {
-        wrapper.instance().textChangeContactNumber({ target: { value: 122222222 } });
+        wrapper.instance().textChangeContactNumber({ target: { value: 123456789 } });
+    });
+
+    it('Check the textChangeContactNumber', () => {
+        wrapper.instance().textChangeContactNumber({ target: { value: 1234567892 } });
     });
 
      it('Check the reset', () => {
@@ -243,6 +319,17 @@ const defaultState = {
     it('Check the renderDetails function', () => {
         wrapper.instance().renderDetails()
     })
+
+    it('Check the events', () => {
+        expect(wrapper.find('[test-reset="test-reset"]').props().onConfirm())
+        expect(wrapper.find('[test-reset="test-reset"]').props().onCancel())
+        // expect(shallowWrapper.find('[test-alertPopup="test-alertPopup"]').props().onConfirm())
+        // expect(shallowWrapper.find('[test-alertPopup="test-alertPopup"]').props().onCancel())
+        // expect(shallowWrapper.find('.form-radio-input').props().onChange({target:{checked: true}}))
+        // expect(shallowWrapper.find('.requestImageContent').props().onClick())
+        // expect(shallowWrapper.find('[test-goBack="test-goBack"]').props().onClick())
+        // expect(shallowWrapper.find('[test-stopButton="test-stopButton"]').props().onClick())
+    });
 
 
  }); 

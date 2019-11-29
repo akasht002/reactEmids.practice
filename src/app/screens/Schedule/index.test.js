@@ -118,17 +118,7 @@ describe('ServiceRequestDetail', function () {
 
     it('Check the componentWillUnmount', () => {
         shallowWrapper.instance().componentWillUnmount();
-    });
-
-    // it('Check the getPrimaryAddress', () => {
-    //     shallowWrapper.setState({isDefaultAddress:false})
-    //     shallowWrapper.setProps({isAddNewScheduleClicked:true})
-    //     shallowWrapper.instance().getPrimaryAddress();
-    // });
-
-    it('Check the componentDidMount', () => {
-        shallowWrapper.instance().componentDidMount();
-    });
+    });   
 
     it('Check the componentDidMount', () => {
         shallowWrapper.setProps({patientId:false})
