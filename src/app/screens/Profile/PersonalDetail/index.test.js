@@ -37,7 +37,10 @@ const defaultState = {
     profileImgData:'',
     profileState: {
         PersonalDetailState: {
-            personalDetail: [],
+            personalDetail: {
+                firstName:'',
+
+            },
             updatePersonalDetailSuccess: false,
             cityDetail: [{id :'',name:''}],
             imageData: '',
@@ -106,6 +109,13 @@ const defaultState = {
     }); 
 
     it('Check the mapDispatchToProps fn()', () => {
+        wrapper.setProps({
+            selectedAffiliation:{
+                label: "",
+                value: ""
+      
+            }
+        })
         const dispatch = jest.fn();
         let data = {
             selectedGender: {
@@ -114,7 +124,6 @@ const defaultState = {
             description: [{id: 1}]
         }
         mapDispatchToProps(dispatch).getPersonalDetail();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getAffiliationDetail();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).updatePersonalDetail(data);
@@ -124,7 +133,6 @@ const defaultState = {
         mapDispatchToProps(dispatch).uploadImg({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();        
         mapDispatchToProps(dispatch).getImage();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).getGender();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
@@ -133,7 +141,7 @@ const defaultState = {
         expect(mapStateToProps(defaultState)).toBeDefined();
     });
 
-    it('Check the componentWillReceiveProps function', () => {
+    it('Check the componentWillReceiveProps1 function', () => {
         wrapper.isImageSave = false
         const nextProps = {
             profileImgData:{ 
@@ -161,7 +169,35 @@ const defaultState = {
         wrapper.instance().componentWillReceiveProps(nextProps)
    }); 
 
-   it('Check the componentWillReceiveProps function', () => {
+   it('Check the componentWillReceiveProps2 function', () => {
+    wrapper.isImageSave = true
+    const nextProps = {
+        profileImgData:{ 
+            image :'',
+            firstName:'',
+            lastName:'',
+            age:'',
+            genderName:'',
+            address:[{
+                city:'city',
+                streetAddress:'streetAddress',
+                zipCode:'zipCode',
+                state:{name:''},
+            }]
+        },
+        personalDetail:{
+            address:[{
+                city:'city',
+                streetAddress:'streetAddress',
+                zipCode:'zipCode',
+                state:{name:''},
+            }]
+        }
+    }
+    wrapper.instance().componentWillReceiveProps(nextProps)
+}); 
+
+   it('Check the componentWillReceiveProps3 function', () => {
     wrapper.isImageSave = true
     const nextProps = {
         profileImgData:{ 
@@ -193,19 +229,19 @@ const defaultState = {
         wrapper.instance().handleChange();
     });
 
-     it('Check the reUpload', () => {
+     it('Check the reUpload1', () => {
         wrapper.instance().reUpload({ target: { files: [{name:'.jpg'}] } });
     });
 
-    it('Check the reUpload', () => {
+    it('Check the reUpload2', () => {
         wrapper.instance().reUpload({ target: { files: [{name:'.jepg'}] } });
     });
 
-    it('Check the onSubmit function', () => {
+    it('Check the onSubmit1 function', () => {
         wrapper.instance().onSubmit()
        })
     
-    it('Check the onSubmit function', () => {
+    it('Check the onSubmit2 function', () => {
         wrapper.setState({
             firstName :"test", lastName:"test", phoneNumber :123456789, city:"test", zipCode:78967, streetAddress:"test", selectedState:'test'
         })
@@ -219,8 +255,20 @@ const defaultState = {
         wrapper.instance().onSubmit()
     })
 
+    it('Check the onSubmit function', () => {
+        wrapper.setState({
+            firstName :"dsf", lastName:"df", phoneNumber :123456789, city:"sdf", zipCode:44444, streetAddress:"sdf", selectedState:'sdf'
+        })
+        wrapper.instance().onSubmit()
+    })
+
     it('Check the closeImageUpload function', () => {
         wrapper.isChangePhoto  = false
+        wrapper.instance().closeImageUpload()
+    })
+
+    it('Check the closeImageUpload function', () => {
+        wrapper.setProps({profileImgData:{image:"sdfsdfsdf"}})
         wrapper.instance().closeImageUpload()
     })
 
@@ -238,6 +286,13 @@ const defaultState = {
         wrapper.instance().saveImageUpload()
         wrapper.setState({
             croppedImageUrl: 2097152
+        })
+        wrapper.instance().saveImageUpload()
+    })
+
+    it('Check the saveImageUpload function', () => {
+        wrapper.setState({
+            croppedImageUrl:''
         })
         wrapper.instance().saveImageUpload()
     })
