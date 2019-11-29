@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
-import { PersonalDetail, mapDispatchToProps, mapStateToProps } from './index.js';
+import { VitalDetails, mapDispatchToProps, mapStateToProps } from './index.js';
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -18,7 +18,7 @@ const defaultState = {
         imageData:{
             image:''
         },
-        personalDetail: {
+        vitalDetails: {
             phoneNumber:3245345345,
             emergencyContact:3456345345345
         },
@@ -30,7 +30,7 @@ const defaultState = {
     profileImgData: {
         image: ''
     },
-    personalDetail: {
+    vitalDetails: {
         phoneNumber:3245345345,
         emergencyContact:3456345345345,
         gender:{
@@ -44,12 +44,8 @@ const defaultState = {
             }
         }
     },
-    getPersonalDetail: jest.fn(),
-    getImage: jest.fn(),
-    getProfilePercentage: jest.fn(),
-    showPhoneNumber:jest.fn(),
-    onClickConversation:jest.fn(),
-    onClickVideoConference:jest.fn()
+    getPatientVitals: jest.fn(),
+    updatePatientVitals:jest.fn()
 }
 
 store = mockStore(defaultState);
@@ -58,25 +54,25 @@ const setUp = (props = {}) => {
     const wrapper = mount(
         <Provider store={store}>
             <MemoryRouter>
-                <PersonalDetail dispatch={dispatch} store={store} {...props} />
+                <VitalDetails dispatch={dispatch} store={store} {...props} />
             </MemoryRouter>
         </Provider>
     )
     return wrapper;
 };
 
-describe("Languages", function () {
+describe("VitalDetails", function () {
     let wrapper, shallowWrapper;
 
     beforeEach(() => {
         const props = defaultState;
         wrapper = setUp(props);
         shallowWrapper = shallow(
-            <PersonalDetail dispatch={dispatch} store={store} {...defaultState} />
+            <VitalDetails dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
-    it('Check the Languages form body', () => {
+    it('Check the VitalDetails form body', () => {
         expect(wrapper).toBeDefined()
     });
 
@@ -84,44 +80,29 @@ describe("Languages", function () {
         shallowWrapper.instance().componentDidMount();
     });
 
-    it('Check the Empty', () => {
-        shallowWrapper.setProps({
-            personalDetail: {},
-            profileImgData: '',
-            patientProfilePercentage: ''
+    it('Check the onSubmit', () => {
+        shallowWrapper.setState({
+            height :''
         })
+        shallowWrapper.instance().onSubmit();
     });
 
-    it('Check the languageList', () => {
-        shallowWrapper.setProps({
-            personalDetail: {},
-            profileImgData: 'TTTTTTEEEEEEEEEE',
-            patientProfilePercentage: 100
+    it('Check the onSubmit', () => {
+        shallowWrapper.setState({
+            height :456,
+            heightInvalid :false,
+            weight: 456,
+            phoneNumber: 45645645645645,
+            weightInvalid : false,
+            phoneNumberInvalid: false
         })
+        shallowWrapper.instance().onSubmit();
     });
 
-    it('Check performActionBasedOnTitle',()=>{
-        shallowWrapper.instance().performActionBasedOnTitle('Phone Call')
-    })
-
-    it('Check performActionBasedOnTitle',()=>{
-        shallowWrapper.instance().performActionBasedOnTitle('Conversation')
-    })
-
-    it('Check performActionBasedOnTitle',()=>{
-        shallowWrapper.instance().performActionBasedOnTitle('Video Conference')
-    })
-
-    it('Check performActionBasedOnTitle',()=>{
-        shallowWrapper.instance().performActionBasedOnTitle()
-    })
-
-    it('Check maptoprops', () => {
+    it('Check maptoprops', () => {        
         const initialState = {
             patientProfileState: {
-                personalDetail: {},
-                profileImgData: '',
-                patientProfilePercentage: 100
+                vitalDetails: {}
             }
         }
         expect(mapStateToProps(initialState)).toBeDefined();
@@ -129,9 +110,7 @@ describe("Languages", function () {
 
     it('Check mapDispatchToProps', () => {
         const dispatch = jest.fn();
-        mapDispatchToProps(dispatch).getPersonalDetail();
-        mapDispatchToProps(dispatch).getImage();
-        mapDispatchToProps(dispatch).getProfilePercentage();
+        mapDispatchToProps(dispatch).getPatientVitals();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 
