@@ -19,7 +19,16 @@ const defaultState = {
     className:'',
     onClickSave :jest.fn(),
     data:[{
-        
+        mpi: 'MPI',
+        name: 'Individuals',
+        gender: 'Gender',
+        age: 'Age',
+        contracts: 'Contracts',
+        attributedProviders: 'Attributed Provider',
+        cohorts: 'Cohort',
+        button: 'Life Map',
+        icon: 'Action',
+        className: 'all-individuals-tableblock'
     }]
 }
 

@@ -13,7 +13,11 @@ jest.mock('../../../services/http', () => ({
     getUserInfo: () => ({
         serviceProviderId: 12,
         isEntityServiceProvider: true
-    })
+    }),
+    ServiceRequestGet: jest.fn(),
+    ServiceRequestPost: jest.fn(),
+    ServiceRequestPut: jest.fn(),
+    ThirdPartyGet: jest.fn()
 }))
 
 describe('actions', () => {
@@ -380,6 +384,20 @@ describe('async actions', () => {
         let data = ''
         return store.dispatch(actions.updateServiceRequestByServiceProvider(data)).then((resp) => {
             store.dispatch(actions.getQuestionsListSuccess(resp.data))
+            expect(store.getActions()).toBeDefined()
+        }).catch(err => {
+        })
+    })
+
+    it('creates getPaymentAvailability when fetching service content has been done', () => {
+        fetchMock.get(API.getPaymentAvailability, {
+            body: { data: [] },
+            headers: { 'content-type': 'application/json' },
+            resp: { data: [{ name: '' }] }
+        })
+        const store = mockStore({})
+        let data = ''
+        return store.dispatch(actions.getPaymentAvailabilitySuccess(data)).then((resp) => {
             expect(store.getActions()).toBeDefined()
         }).catch(err => {
         })

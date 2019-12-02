@@ -1,17 +1,17 @@
 import React from 'react'
-import Enzyme, { shallow} from 'enzyme'
+import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon'
-import {TeleHealthWidget,mapDispatchToProps, mapStateToProps} from './TeleHealthWidget'
+import { TeleHealthWidget, mapDispatchToProps, mapStateToProps } from './TeleHealthWidget'
 
 jest.mock('../../utils/userUtility', () => ({
-  getPatientData: () => ({
-    userType: 'I'
-  }),
-  getUserInfo:()=>({
-    serviceProviderTypeId :23
-  })
+    getPatientData: () => ({
+        userType: 'I'
+    }),
+    getUserInfo: () => ({
+        serviceProviderTypeId: 23
+    })
 }))
 
 
@@ -20,7 +20,7 @@ let store
 const mockStore = configureStore()
 const dispatch = sinon.spy()
 const defaultState = {
-    userType : 0,
+    userType: 0,
     isServiceVisitLoading: false,
     isServiceRequestLoading: false,
     isServiceProviderLoading: false,
@@ -29,41 +29,41 @@ const defaultState = {
     addParticipantsToConference: jest.fn(),
     endConference: jest.fn(),
     getParticipantByConferenceId: jest.fn(),
-    goToDashBoard:jest.fn(),
+    goToDashBoard: jest.fn(),
     setMenuClicked: jest.fn(),
     clearLinkedParticipants: jest.fn(),
     telehealthState: {
-        participantsByConferenceId:76,
-        linkedParticipants:[{}],
-        initiator:'',
-        contextId:'',
-        token:''
+        participantsByConferenceId: 76,
+        linkedParticipants: [{}],
+        initiator: '',
+        contextId: '',
+        token: ''
     },
-    authState:{
+    authState: {
         userState: {
-            menuClicked:true
+            menuClicked: true
         }
     },
-    roomId:45,
-    detachTracks:jest.fn(),
-    track : { 
-        attach:jest.fn() ,
-        stop:jest.fn()
+    roomId: 45,
+    detachTracks: jest.fn(),
+    track: {
+        attach: jest.fn(),
+        stop: jest.fn()
     },
     existingParticipantList: [{
-        identity:23,
-        userId:23
+        identity: 23,
+        userId: 23
     }]
 }
 
 store = mockStore(defaultState)
 
 describe('TeleHealthWidget ', function () {
-  let shallowWrapper;
-    beforeEach(() => {      
-      shallowWrapper = shallow(
-        <TeleHealthWidget  dispatch={dispatch} store={store} {...defaultState} />
-    )
+    let shallowWrapper;
+    beforeEach(() => {
+        shallowWrapper = shallow(
+            <TeleHealthWidget dispatch={dispatch} store={store} {...defaultState} />
+        )
     })
 
     it('Check the TeleHealthWidget  Details body', () => {
@@ -73,7 +73,7 @@ describe('TeleHealthWidget ', function () {
     it('should test initial state', () => {
         const initialState = defaultState
         expect(mapStateToProps(initialState)).toBeDefined();
-    }); 
+    });
 
     it('Check mapDispatchToProps', () => {
         const dispatch = jest.fn();
@@ -93,134 +93,145 @@ describe('TeleHealthWidget ', function () {
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).clearLinkedParticipants();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
-    }) 
-   
+    })
+
 
     it('Check the componentWillUnmount function', () => {
-      shallowWrapper.instance().componentWillUnmount()
-   }); 
-   
-   it('Check the componentWillUnmount function', () => {
-    shallowWrapper.instance().setState({
-        previewTracks:[{
-            stop : () => {}
-        }],
-        hasJoinedRoom:true,       
-    })
-   
-    shallowWrapper.instance().componentWillUnmount()
-   }); 
-  
-   it('Check the joinRoom  function', () => {
-    shallowWrapper.instance().setState({
-        previewTracks:true,
-        hasJoinedRoom:true
-    })
-     shallowWrapper.instance().joinRoom()
-   });
-
-   it('Check the attachTracks  function', () => {
-       let  data = [{
-        attach:() => {},
-        stop:() => {}
-       }]
-       let container = { appendChild:(data) => {} }
-       shallowWrapper.instance().attachTracks(data,container)
-   });
-
-   it('Check the attachParticipantTracks function', () => {
-    let  data = {
-        tracks : {
-            values : () => {}
-        }
-       }
-     let container = { appendChild:(data) => {} }   
-     shallowWrapper.instance().attachParticipantTracks(data,container)
-   });
-
-  
-
-   it('Check the detachTracks function', () => {   
-         shallowWrapper.instance().detachTracks([{}])
-   });
-
-   it('Check the detachParticipantTracks function', () => {   
-        shallowWrapper.instance().detachParticipantTracks({tracks:{
-            values:()=>{}
-        }})
-   });
-
-   it('Check the leaveRoom  function', () => {  
-     shallowWrapper.setProps({
-        telehealthToken:true,
-        initiator:true
-       }) 
-       shallowWrapper.instance().setState({
-        activeRoom:true
-       })
-      shallowWrapper.instance().leaveRoom ([{}])
-   });
-
-   it('Check the leaveRoom  function', () => {  
-    shallowWrapper.setProps({
-        telehealthToken:true,
-        initiator:false
-        }) 
-        shallowWrapper.instance().setState({
-        activeRoom:true
-        })
-       shallowWrapper.instance().leaveRoom([{}])
+        shallowWrapper.instance().componentWillUnmount()
     });
 
-    it('Check the detachParticipantTracks function', () => {   
-        shallowWrapper.instance().detachParticipantTracks({tracks:{
-            values:()=>{}
-        }})
+    it('Check the componentWillUnmount function', () => {
+        shallowWrapper.instance().setState({
+            previewTracks: [{
+                stop: () => { }
+            }],
+            hasJoinedRoom: true,
+        })
+
+        shallowWrapper.instance().componentWillUnmount()
+    });
+
+    it('Check the joinRoom  function', () => {
+        shallowWrapper.instance().setState({
+            previewTracks: true,
+            hasJoinedRoom: true
+        })
+        shallowWrapper.instance().joinRoom()
+    });
+
+    it('Check the attachTracks  function', () => {
+        let data = [{
+            attach: () => { },
+            stop: () => { }
+        }]
+        let container = { appendChild: (data) => { } }
+        shallowWrapper.instance().attachTracks(data, container)
+    });
+
+    it('Check the attachParticipantTracks function', () => {
+        let data = {
+            tracks: {
+                values: () => { }
+            }
+        }
+        let container = { appendChild: (data) => { } }
+        shallowWrapper.instance().attachParticipantTracks(data, container)
+    });
+
+
+
+    it('Check the detachTracks function', () => {
+        shallowWrapper.instance().detachTracks([{}])
+    });
+
+    it('Check the detachParticipantTracks function', () => {
+        shallowWrapper.instance().detachParticipantTracks({
+            tracks: {
+                values: () => { }
+            }
+        })
+    });
+
+    it('Check the leaveRoom  function', () => {
+        shallowWrapper.instance().setState({
+            activeRoom: 'Test'
+        })
+        shallowWrapper.instance().leaveRoom([{}])
+    });
+
+
+    it('Check the leaveRoom  function', () => {
+        shallowWrapper.setProps({
+            telehealthToken: 'Test',
+            initiator: true
+        })
+        shallowWrapper.instance().leaveRoom([{}])
+    });
+
+    it('Check the leaveRoom  function', () => {
+        shallowWrapper.setProps({
+            telehealthToken: 'Test',
+            initiator: false
+        })
+        shallowWrapper.instance().leaveRoom([{}])
+    });
+
+    it('Check the detachParticipantTracks function', () => {
+        shallowWrapper.instance().detachParticipantTracks({
+            tracks: {
+                values: () => { }
+            }
+        })
     });
 
     it('Check the endConference function', () => {
         shallowWrapper.instance().setState({
-            activeRoom:{
-                disconnect:()=>{} 
+            activeRoom: {
+                disconnect: () => { }
             }
-        })   
+        })
         shallowWrapper.instance().endConference([{}])
     });
 
-    it('Check the roomJoined function', () => {        
+    it('Check the roomJoined function', () => {
         shallowWrapper.instance().roomJoined('')
     });
 
-    it('Check the DisplayInviteParticipantsList function', () => {        
+    it('Check the DisplayInviteParticipantsList function', () => {
         shallowWrapper.instance().DisplayInviteParticipantsList('')
     });
 
-    it('Check the closeInviteParticipants function', () => {        
+    it('Check the closeInviteParticipants function', () => {
         shallowWrapper.instance().closeInviteParticipants('')
     });
 
-    it('Check the ToggleFullScreen  function', () => {        
+    it('Check the ToggleFullScreen  function', () => {
         shallowWrapper.instance().ToggleFullScreen('')
     });
 
-    it('Check the controlAudio  function', () => {   
+    it('Check the controlAudio  function', () => {
         shallowWrapper.instance().setState({
-            isHiddenVideo : true,           
-        })  
+            isHiddenVideo: true,
+        })
         shallowWrapper.instance().controlAudio('')
     });
 
-    it('Check the controlVideo  function', () => {        
+    it('Check the controlVideo  function', () => {
         shallowWrapper.instance().controlVideo('')
     });
 
-    it('Check the participantClick function', () => {    
+    it('Check the participantClick function', () => {
         shallowWrapper.setProps({
-            
-        })    
+
+        })
         shallowWrapper.instance().participantClick(23)
     });
 
-   
+    it('Check the componentDidMount function', () => {
+        shallowWrapper.setProps({
+            roomId: null
+        })
+        shallowWrapper.instance().componentDidMount()
+    });
 
 });

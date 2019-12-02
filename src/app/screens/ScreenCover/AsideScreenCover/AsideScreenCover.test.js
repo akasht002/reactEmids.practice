@@ -11,6 +11,11 @@ jest.mock('../../../components', () => ({
     ScreenCover: 'mockScreenCover'
 }))
 
+jest.mock('../../../utils/browserUtility', () => ({
+    isIEBrowser:'mockisIEBrowser',
+    isMobileBrowser: 'mockisMobileBrowser'
+}))
+
 jest.mock('../../../utils/userUtility', () => ({
     isEntityServiceProvider: () => ({
         getUserInfo: () => ({
@@ -124,152 +129,185 @@ describe("VisitSummary", function () {
         shallowWrapper.instance().componentWillReceiveProps(nextProps);
     });
 
+    it('Check the componentWillReceiveProps function', () => {
+        shallowWrapper.setProps({
+            createData: 1
+        })
+        const nextProps = {
+            createData: 2
+        }
+        shallowWrapper.instance().componentWillReceiveProps(nextProps);
+    });
+
     it('Check the successCallbackOnDeviceStatus  function', () => {
         shallowWrapper.instance().successCallbackOnDeviceStatus(true, null, null);
         shallowWrapper.instance().successCallbackOnDeviceStatus(null, true, null);
-        shallowWrapper.instance().successCallbackOnDeviceStatus(null, null, true);
-    });
+        shallowWrapper.instance().successCallbackOnDeviceStatus(null, null, {
+            id: 1, name: 'Test'});
+        });
 
-    it('Check the errorCallbackOnDeviceStatus   function', () => {
-        shallowWrapper.instance().errorCallbackOnDeviceStatus(true, null, null);
-        shallowWrapper.instance().errorCallbackOnDeviceStatus(null, true, null);
-        shallowWrapper.instance().errorCallbackOnDeviceStatus(null, null, true);
-    });
+        it('Check the errorCallbackOnDeviceStatus   function', () => {
+            shallowWrapper.instance().errorCallbackOnDeviceStatus(true, null, null);
+            shallowWrapper.instance().errorCallbackOnDeviceStatus(null, true, null);
+            shallowWrapper.instance().errorCallbackOnDeviceStatus(null, null, true);
+        });
 
-    it('Check the checkDeviceStatus    function', () => {
-        shallowWrapper.instance().checkDeviceStatus(true, null, null);
-        shallowWrapper.instance().checkDeviceStatus(null, true, null);
-        shallowWrapper.instance().checkDeviceStatus(null, null, true);
-    });
+        it('Check the checkDeviceStatus    function', () => {
+            shallowWrapper.instance().checkDeviceStatus(true, null, null);
+            shallowWrapper.instance().checkDeviceStatus(null, true, null);
+            shallowWrapper.instance().checkDeviceStatus(null, null, true);
+        });
 
-    it('Check the navigateProfileHeader  function', () => {
-        shallowWrapper.instance().navigateProfileHeader('visitNotification');
-        shallowWrapper.instance().navigateProfileHeader('messagesummary');
-        shallowWrapper.instance().navigateProfileHeader('contact');
-        shallowWrapper.instance().navigateProfileHeader('telehealth');
-        shallowWrapper.instance().navigateProfileHeader('logout');
-        shallowWrapper.instance().navigateProfileHeader('aboutUs');
-        shallowWrapper.instance().navigateProfileHeader('profile');
-    });
+        it('Check the onClickOk     function', () => {
+            shallowWrapper.instance().onClickOk ();
+        });
 
-    it('Check the checkIsFormDirty true function', () => {
-        shallowWrapper.setProps({ isFormDirty: false })
-        shallowWrapper.instance().checkIsFormDirty('messagesummary');
-        shallowWrapper.instance().checkIsFormDirty('logout');
-        shallowWrapper.instance().checkIsFormDirty('profile');
-    });
+        it('Check the navigateProfileHeader  function', () => {
+            shallowWrapper.instance().helpDocEl = {
+                click: jest.fn()
+            }
+            shallowWrapper.instance().checkVideoCompatibility = jest.fn()
+            shallowWrapper.instance().navigateProfileHeader('visitNotification');
+            shallowWrapper.instance().navigateProfileHeader('messagesummary');
+            shallowWrapper.instance().navigateProfileHeader('contact');
+            shallowWrapper.instance().navigateProfileHeader('telehealth');
+            shallowWrapper.instance().navigateProfileHeader('logout');
+            shallowWrapper.instance().navigateProfileHeader('aboutUs');
+            shallowWrapper.instance().navigateProfileHeader('profile');
+            shallowWrapper.instance().navigateProfileHeader();
+        });
 
-    it('Check the checkIsFormDirty false function', () => {
-        shallowWrapper.setProps({ isFormDirty: false })
-        shallowWrapper.instance().checkIsFormDirty('aboutUs');
-    });
+        it('Check the checkIsFormDirty true function', () => {
+            shallowWrapper.setProps({ isFormDirty: false })
+            shallowWrapper.instance().checkIsFormDirty('messagesummary');
+            shallowWrapper.instance().checkIsFormDirty('logout');
+            shallowWrapper.instance().checkIsFormDirty('profile');
+        });
 
-    it('Check the checkIsFormDirty true function', () => {
-        shallowWrapper.setProps({ isFormDirty: true })
-    });
+        it('Check the checkIsFormDirty false function', () => {
+            shallowWrapper.setProps({ isFormDirty: false })
+            shallowWrapper.instance().checkIsFormDirty('aboutUs');
+        });
 
-    it('Check the goToProfile  false function', () => {
-        shallowWrapper.setProps({ roomId: '' })
-        shallowWrapper.instance().goToProfile();
-    });
+        it('Check the checkIsFormDirty true function', () => {
+            shallowWrapper.setProps({ isFormDirty: true })
+            shallowWrapper.instance().checkIsFormDirty('aboutUs');
+        });
 
-    it('Check the goToProfile  true function', () => {
-        shallowWrapper.setProps({ roomId: 111 })
-        shallowWrapper.instance().goToProfile();
-    });
+        it('Check the goToProfile  false function', () => {
+            shallowWrapper.setProps({ roomId: '' })
+            shallowWrapper.instance().goToProfile();
+        });
 
-    it('Check the onErrorJoiningVideo function', () => {
-        shallowWrapper.setState({ isInvitationCame: true })
-        shallowWrapper.instance().onErrorJoiningVideo();
-    });
+        it('Check the goToProfile  true function', () => {
+            shallowWrapper.setProps({ roomId: 111 })
+            shallowWrapper.instance().goToProfile();
+        });
 
-    it('Check the onSuccessJoiningVideo  function', () => {
-        shallowWrapper.setState({ isInvitationCame: true, isTelehealthMediaAvailable: true })
-        shallowWrapper.instance().onSuccessJoiningVideo();
-    });
+        it('Check the onErrorJoiningVideo function', () => {
+            shallowWrapper.setState({ isInvitationCame: true })
+            shallowWrapper.instance().onErrorJoiningVideo();
+        });
 
-    it('Check the checkVideoCompatibility     function', () => {
-        shallowWrapper.instance().checkVideoCompatibility(true, null, null);
-        shallowWrapper.instance().checkVideoCompatibility(null, true, null);
-        shallowWrapper.instance().checkVideoCompatibility(null, null, true);
-    });
+        it('Check the onSuccessJoiningVideo  function', () => {
+            shallowWrapper.setState({ isInvitationCame: true, isTelehealthMediaAvailable: true })
+            shallowWrapper.instance().onSuccessJoiningVideo();
+        });
 
-    it('Check mapDispatchToProps', () => {
-        const dispatch = jest.fn();
-        mapDispatchToProps(dispatch).getImage();
-        mapDispatchToProps(dispatch).onClickOk();
-        mapDispatchToProps(dispatch).goToProfile();
-        mapDispatchToProps(dispatch).getPersonalDetail();
-        mapDispatchToProps(dispatch).navigateProfileHeader();
-        mapDispatchToProps(dispatch).canServiceProviderCreateMessage();
-        mapDispatchToProps(dispatch).onLogout();
-        mapDispatchToProps(dispatch).clearRoom();
-        mapDispatchToProps(dispatch).joinVideoConference();
-        mapDispatchToProps(dispatch).rejectConference();
-        mapDispatchToProps(dispatch).getDashboardMessageCount();
-        mapDispatchToProps(dispatch).setMenuClicked();
-        mapDispatchToProps(dispatch).setIsFormDirty();
-        mapDispatchToProps(dispatch).createVideoConference();
-        mapDispatchToProps(dispatch).createDataStore();
-        mapDispatchToProps(dispatch).getProfilePercentage();
-        expect(dispatch.mock.calls[0][0]).toBeDefined();
-    });
+        it('ModalUserAgreement',()=>{
+            expect(shallowWrapper.find('.EULA').props().onClick());
+        })
 
-    it('Check mapStateToProps', () => {
-        const initialState = {
-            profileImgData: {
-                image: ''
-            },
-            isFormDirty: true,
-            roomId: 10,
-            profileState: {
-                progressIndicatorState: {
-                    profilePercentage: 10
+        it('Check the checkVideoCompatibility     function', () => {
+            shallowWrapper.instance().checkVideoCompatibility(true, null, null);
+            shallowWrapper.instance().checkVideoCompatibility(null, true, null);
+            shallowWrapper.instance().checkVideoCompatibility(null, null, true);
+        });
+
+        it('Check mapDispatchToProps', () => {
+            const dispatch = jest.fn();
+            mapDispatchToProps(dispatch).getImage();
+            mapDispatchToProps(dispatch).onClickOk();
+            mapDispatchToProps(dispatch).goToProfile();
+            mapDispatchToProps(dispatch).getPersonalDetail();
+            mapDispatchToProps(dispatch).navigateProfileHeader();
+            mapDispatchToProps(dispatch).canServiceProviderCreateMessage();
+            mapDispatchToProps(dispatch).onLogout();
+            mapDispatchToProps(dispatch).clearRoom();
+            mapDispatchToProps(dispatch).joinVideoConference();
+            mapDispatchToProps(dispatch).rejectConference();
+            mapDispatchToProps(dispatch).getDashboardMessageCount();
+            mapDispatchToProps(dispatch).setMenuClicked();
+            mapDispatchToProps(dispatch).setIsFormDirty();
+            mapDispatchToProps(dispatch).createVideoConference();
+            mapDispatchToProps(dispatch).createDataStore();
+            mapDispatchToProps(dispatch).getProfilePercentage();
+            expect(dispatch.mock.calls[0][0]).toBeDefined();
+        });
+
+        it('Check mapStateToProps', () => {
+            const initialState = {
+                profileImgData: {
+                    image: ''
                 },
-                PersonalDetailState: {
-                    imageData: '',
-                    personalDetail: [],
-                    serviceProviderTypeId: 2
-                }
-            },
-            personalDetail: {
-                serviceProviderTypeId: 2
-            },
-            authState: {
-                userAgreementState: {
-                    isEulaUpdated: true,
-                    eulaContent: ''
-                },
-                userState: {
-                    isFormDirty: true
-                }
-            },
-            match: {
-                url: ''
-            },
-            aboutUsState: {
-                aboutUsContent: '',
-                buildVersion: 10
-            },
-            loadingState: {
-                isLoading: true
-            },
-            asyncMessageState: {
-                canCreateConversation: true,
-                dashboardMessageCount: 100
-            },
-        
-            telehealthState: {
-                isInvitationCame: false,
-                initiatorFirstName: 'TEST',
-                initiatorLastName: 'TEST',
+                isFormDirty: true,
                 roomId: 10,
-                token: '',
-                createData: true
-            },
-        }
-        expect(mapStateToProps(initialState)).toBeDefined();
-    });
+                profileState: {
+                    progressIndicatorState: {
+                        profilePercentage: 10
+                    },
+                    PersonalDetailState: {
+                        imageData: '',
+                        personalDetail: [],
+                        serviceProviderTypeId: 2
+                    }
+                },
+                personalDetail: {
+                    serviceProviderTypeId: 2
+                },
+                authState: {
+                    userAgreementState: {
+                        isEulaUpdated: true,
+                        eulaContent: ''
+                    },
+                    userState: {
+                        isFormDirty: true
+                    }
+                },
+                match: {
+                    url: ''
+                },
+                aboutUsState: {
+                    aboutUsContent: '',
+                    buildVersion: 10
+                },
+                loadingState: {
+                    isLoading: true
+                },
+                asyncMessageState: {
+                    canCreateConversation: true,
+                    dashboardMessageCount: 100
+                },
 
+                telehealthState: {
+                    isInvitationCame: false,
+                    initiatorFirstName: 'TEST',
+                    initiatorLastName: 'TEST',
+                    roomId: 10,
+                    token: '',
+                    createData: true
+                },
+            }
+            expect(mapStateToProps(initialState)).toBeDefined();
+        });
 
-})
+        
+        it('ModalUserAgreement',()=>{
+            expect(shallowWrapper.find('.EULA').props().onClick());
+        })
+
+        it('edge-view-block',()=>{
+            expect(shallowWrapper.find('.edge-view-block').props().onConfirm());
+        })
+
+    })

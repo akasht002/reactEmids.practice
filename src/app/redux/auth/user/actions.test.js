@@ -38,6 +38,13 @@ describe('actions', () => {
         expect(actions.deleteUserSuccess()).toEqual(expectedAction)
     })
 
+    it('should create an action to setUserRoles  ', () => {
+        const expectedAction = {
+            type: USER.setUserRoles 
+        }
+        expect(actions.setUserRoles ()).toEqual(expectedAction)
+    })
+
     it('should create an action to clearData ', () => {
         const expectedAction = {
             type: USER.clearData
@@ -69,6 +76,11 @@ describe('actions', () => {
 describe('async actions', () => {
     afterEach(() => {
         fetchMock.restore()
+    })
+
+    it('creates onLogout when fetching service content has been done', () => {
+        const store = mockStore({})
+        store.dispatch(actions.deleteUserSuccess())
     })
 
     it('creates onSetUserSuccess fn', () => {
