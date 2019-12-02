@@ -115,4 +115,11 @@ const defaultState = {
         }
         shallowWrapper.instance().componentWillReceiveProps(nextProps)
     })
+
+    
+    it('check the events', () => {
+        expect(shallowWrapper.find('[className="modal-sm"]').props().onConfirm())
+        expect(shallowWrapper.find('[className="modal-sm"]').props().onCancel())
+    })
+
 });
