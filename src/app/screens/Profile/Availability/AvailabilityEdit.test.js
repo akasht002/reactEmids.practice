@@ -134,18 +134,19 @@ describe("AvailabilityEdit", function () {
                         slotName: 'evening'
                     }
                     ],
-                    dayName: 'Monday' 
+                    dayName: 'Monday'
                 }
             ],
             isSetData: true
         })
         shallowWrapper.setProps({
-            existingAvailableDays: [
-                {
-                    dayName: 'Monday',
-                    slotName: 'morning'
-                }
-            ],
+            existingAvailableDays: {
+                days:
+                    [{
+                        dayName: 'Monday',
+                        slotName: 'morning'
+                    }]
+            }
         })
         shallowWrapper.instance().combineExistingAvailableData()
     })

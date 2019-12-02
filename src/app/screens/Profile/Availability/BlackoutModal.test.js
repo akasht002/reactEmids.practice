@@ -39,10 +39,9 @@ const defaultState = {
 
 
  describe("AvailabilityEdit", function () {
-    let wrapper, shallowWrapper;
+    let shallowWrapper;
 
      beforeEach(() => {
-        const props = defaultState;
         shallowWrapper = shallow(
             <BlackoutModal dispatch={dispatch} store={store} {...defaultState} />
         )
@@ -61,7 +60,15 @@ const defaultState = {
     })
 
     it('Check the dateChangedRaw  function', () => {
-        shallowWrapper.instance().dateChangedRaw('fromDate',{target:{value:23}})
+        let e = {
+            preventDefault (){},
+            target:{value:'11/12/2019'}
+        }
+        shallowWrapper.instance().dateChangedRaw('fromDate',e)
+        let e1 = {
+            target:{value:undefined}
+        }
+        shallowWrapper.instance().dateChangedRaw('fromDate',e1)
     })
 
     it('Check the remarksChange function', () => {
@@ -94,5 +101,17 @@ const defaultState = {
     
     it('Check the reset function', () => {
         shallowWrapper.instance().reset()
-    })  
+    }) 
+    
+        
+    it('check the events', () => {
+        shallowWrapper.setState({
+            fromDate :'2019-09-09',
+            toDate:'2019-09-09'
+        })
+        expect(shallowWrapper.find('[label="To Date"]').props().onBlur())
+        expect(shallowWrapper.find('[label="From Date"]').props().onBlur())
+        expect(shallowWrapper.find('[className="modal-sm"]').props().onCancel())
+        expect(shallowWrapper.find('[className="modal-sm"]').props().onConfirm())
+    })
  }); 

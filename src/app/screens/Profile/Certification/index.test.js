@@ -7,6 +7,7 @@ import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
 import { Certification, mapDispatchToProps, mapStateToProps } from './index.js';
+import { CSS_PROPS } from '../../Dashboard/css-data-props.js';
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -27,6 +28,16 @@ const defaultState = {
             }
         }
     },
+    profileState: {
+        CertificationState: {
+            certificationList: [],
+            addCertificationSuccess: true,
+            certificationFieldDetails: {}
+        },
+        PersonalDetailState: {
+            isUser: true
+        }
+    },
     getCertification: jest.fn(),
     addCertification: jest.fn(),
     editCertification: jest.fn(),
@@ -36,36 +47,46 @@ const defaultState = {
 
 store = mockStore(defaultState);
 
-const setUp = (props = {}) => {
-    const wrapper = mount(
-        <Provider store={store}>
-            <MemoryRouter>
-                <Certification dispatch={dispatch} store={store} {...props} />
-            </MemoryRouter>
-        </Provider>
-    )
-    return wrapper;
-};
-
 describe("Certification", function () {
-    let wrapper, shallowWrapper;
+    let shallowWrapper;
 
     beforeEach(() => {
-        const props = defaultState;
-        wrapper = setUp(props);
         shallowWrapper = shallow(
             <Certification dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
     it('Check the Certification form body', () => {
-        expect(wrapper.find('.SPCardTitle').length).toEqual(1);
+        expect(shallowWrapper.find('[test-certification="test-certification"]').length).toEqual(1);
     });
 
     it('should test mapStateToProps state', () => {
         expect(mapStateToProps(defaultState)).toBeDefined();
      });
   
+     it('check the events', () => {   
+         shallowWrapper.setProps({
+            isUser: true,
+            certificationList: [{
+                certificationId: 1,
+                certificationName: 'asd ada',
+                authority: 'ada ad'
+            }]
+         })
+         let e = {
+             target: {
+                 value: 'cxzx'
+             }
+         }
+        expect(shallowWrapper.find('[test-discard="test-discard"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-discard="test-discard"]').props().onCancel());
+        expect(shallowWrapper.find('[test-remove="test-remove"]').props().onConfirm());
+        expect(shallowWrapper.find('[test-remove="test-remove"]').props().onCancel());
+        expect(shallowWrapper.find('[test-addIcon="test-addIcon"]').props().onClick());
+        expect(shallowWrapper.find('[test-showModalOnDelete="test-showModalOnDelete"]').props().onClick(e));
+        expect(shallowWrapper.find('[test-editCertification="test-editCertification"]').props().onClick(e));        
+     });
+
     it('Check the mapDispatchToProps fn()', () => {
         const dispatch = jest.fn();
         mapDispatchToProps(dispatch).getCertification();
@@ -81,7 +102,7 @@ describe("Certification", function () {
     });
 
     it('Check the componentWillReceiveProps function', () => {
-        wrapper.isImageSave = false
+        shallowWrapper.isImageSave = false
         const nextProps = {
             certificationFieldDetails:{ 
                 certificationName :'',
@@ -90,7 +111,7 @@ describe("Certification", function () {
                 certificationId:''
             }
         }
-        wrapper.instance().componentWillReceiveProps(nextProps)
+        shallowWrapper.instance().componentWillReceiveProps(nextProps)
    });
 
     it('Check the componentDidMount', () => {
@@ -115,6 +136,12 @@ describe("Certification", function () {
 
     it('Check the addCertification', () => {
         shallowWrapper.instance().addCertification();
+        shallowWrapper.setState({
+            certificationName: ' asaawd aa',
+            certificationAuthority: ' fdfgdf asda',
+            certificateLicenceNumber : '123saasas'
+        })
+        shallowWrapper.instance().addCertification();
     });
 
     it('Check the showModalOnDelete', () => {
@@ -127,6 +154,12 @@ describe("Certification", function () {
 
     it('Check the updateCertification', () => {
         shallowWrapper.instance().updateCertification();
+        shallowWrapper.setState({
+            certificationName: 'asaawd',
+            certificationAuthority: 'fdfgdf',
+            certificateLicenceNumber : '123saasas'
+        })
+        shallowWrapper.instance().updateCertification();
     });
 
     it('Check the deleteCertification', () => {
@@ -134,7 +167,7 @@ describe("Certification", function () {
     });
 
     it('Check the CertificationModal form body', () => {
-        expect(wrapper.find('.CertificationModal').length).toEqual(1);
+        expect(shallowWrapper.find('.CertificationModal').length).toEqual(1);
     });
 
 }); 
