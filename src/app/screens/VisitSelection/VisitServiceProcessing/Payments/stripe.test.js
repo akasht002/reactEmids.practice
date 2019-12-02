@@ -5,7 +5,6 @@ import configureStore from 'redux-mock-store'
 import sinon from 'sinon';
 
 import { CheckoutForm, mapDispatchToProps, mapStateToProps } from './stripe';
-
 jest.mock('../../../ScreenCover/AsideScreenCover', () => ({
     AsideScreenCover: 'mockAsideScreenCover'
 }))
@@ -31,7 +30,11 @@ const defaultState = {
             VisitServiceElibilityStatus: 'sadas'
         }
     },
-    createCharge: jest.fn()
+    createCharge: jest.fn(),
+    eligibilityCheck: {
+        active: true,
+        authorizationRequired: true
+    }
 }
 store = mockStore(defaultState);
 
@@ -57,4 +60,16 @@ describe("CheckoutForm", function () {
     it('should test mapStateToProps state', () => {
         expect(mapStateToProps(defaultState)).toBeDefined();
     });
+
+    it('Check the chargeData function', () => {
+        shallowWrapper.instance().chargeData()
+        shallowWrapper.setProps({
+            eligibilityCheck: {
+                active: true,
+                authorizationRequired: false
+            }
+        })
+        shallowWrapper.instance().chargeData()
+    });
+
 });

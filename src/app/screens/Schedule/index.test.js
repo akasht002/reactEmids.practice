@@ -69,8 +69,13 @@ const defaultState = {
         daysList: [],
         disableShowmore: false,
         individualSchedulesDetails: {
-            weekly: {
-                days: []
+            weekly:{
+                days:[]
+            },
+            monthly: {
+                weekDayMonth: {
+                    day: 'monday'
+                }
             }
         },
         isIndividualScheduleEdit: true,
@@ -105,7 +110,17 @@ const defaultState = {
     clearServiceDetails: jest.fn(),
     isScheduleEdit: jest.fn(),
     assessmentEdit: jest.fn(),
-    setAddNewScheduledClicked: jest.fn()
+    setAddNewScheduledClicked:jest.fn(),
+    individualSchedulesDetails: {
+        weekly:{
+            days:[]
+        },
+        monthly: {
+            weekDayMonth: {
+                day: 'monday'
+            }
+        }
+    }
 }
 
 store = mockStore(defaultState)
@@ -119,13 +134,19 @@ describe('ServiceRequestDetail', function () {
     })
 
     it('Check the componentDidMount', () => {
-        expect(shallowWrapper).toBeDefined()
+        expect(shallowWrapper.find('.ProfileHeaderWidget').length).toEqual(1);
     });
 
     it('Check the componentWillUnmount', () => {
         shallowWrapper.instance().componentWillUnmount();
     });   
 
+    it('Check the getPrimaryAddress', () => {
+        // shallowWrapper.setState({isDefaultAddress:false})
+        // shallowWrapper.setProps({isAddNewScheduleClicked:true})
+        shallowWrapper.instance().getPrimaryAddress();
+    });
+    
     it('Check the componentDidUpdate', () => {
         shallowWrapper.setProps({ isIndividualScheduleEdit: true })
         shallowWrapper.instance().componentDidUpdate();
@@ -237,7 +258,12 @@ describe('ServiceRequestDetail', function () {
     });
 
     it('Check the dateChangedRaw', () => {
-        shallowWrapper.instance().dateChangedRaw("09/04/2019");
+        let event = {
+            target: {
+                value: "09/04/2019"
+            }
+        }
+        shallowWrapper.instance().dateChangedRaw(event);
     });
 
     it('Check the todateChanged', () => {
@@ -245,7 +271,12 @@ describe('ServiceRequestDetail', function () {
     });
 
     it('Check the todateChangedRaw', () => {
-        shallowWrapper.instance().todateChangedRaw("09/04/2019");
+        let event = {
+            target: {
+                value: "09/04/2019"
+            }
+        }
+        shallowWrapper.instance().todateChangedRaw(event);
     });
 
     it('Check the handleChangeStartTime', () => {
@@ -264,14 +295,6 @@ describe('ServiceRequestDetail', function () {
         shallowWrapper.instance().handleSelectDailyOptionField(2);
     });
 
-    it('Check the handleChangeDailyDayOccurence', () => {
-        shallowWrapper.instance().handleChangeDailyDayOccurence(1);
-    });
-
-    it('Check the handleChangeWeeklyDayOccurence     ', () => {
-        shallowWrapper.instance().handleChangeWeeklyDayOccurence(2);
-    });
-
     it('Check the handleChangeDaysSelection  ', () => {
         shallowWrapper.instance().handleChangeDaysSelection({ target: { checked: true } });
     });
@@ -284,14 +307,6 @@ describe('ServiceRequestDetail', function () {
         shallowWrapper.instance().handleChangeMonthlySelectionSecond(222);
     });
 
-    it('Check the handleChangeMonthlyDay    ', () => {
-        shallowWrapper.instance().handleChangeMonthlyDay(222);
-    });
-
-    it('Check the handleChangeMonthlyMonths     ', () => {
-        shallowWrapper.instance().handleChangeMonthlyMonths(222);
-    });
-
     it('Check the handleChangeSelectedWeeks      ', () => {
         shallowWrapper.instance().handleChangeSelectedWeeks(222);
     });
@@ -300,27 +315,26 @@ describe('ServiceRequestDetail', function () {
         shallowWrapper.instance().handleChangeSelectedDays(222);
     });
 
-    it('Check the handleChangeMonthlyMonthsSecond       ', () => {
-        shallowWrapper.instance().handleChangeMonthlyMonthsSecond(222);
-    });
-
-    it('Check the toggleSearch        ', () => {
+    it('Check the toggleSearch', () => {
         shallowWrapper.instance().toggleSearch(222);
     });
 
-    it('Check the handleSearchkeyword   ', () => {
+    it('Check the handleSearchkeyword', () => {
         shallowWrapper.instance().handleSearchkeyword({ target: { checked: true } });
     });
 
-    it('Check the handleSearchData   ', () => {
-        shallowWrapper.instance().handleSearchData();
+    it('Check the handleSearchData ', () => {
+        let e= {
+            preventDefault (){}
+        }
+        shallowWrapper.instance().handleSearchData(e);
     });
 
-    it('Check the validate    ', () => {
+    it('Check the validate', () => {
         shallowWrapper.instance().validate();
     });
 
-    it('Check the checkValidAddress     ', () => {
+    it('Check the checkValidAddress', () => {
         shallowWrapper.instance().checkValidAddress();
     });
 
@@ -352,10 +366,10 @@ describe('ServiceRequestDetail', function () {
 
     it('Check mapDispatchToProps actions', () => {
         const dispatch = jest.fn();
-        mapDispatchToProps(dispatch).getServiceCategory({});
+        mapDispatchToProps(dispatch).getServiceCategory({}, {}, true);
         expect(dispatch.mock.calls[0][0]).toBeDefined();
 
-        mapDispatchToProps(dispatch).getServiceType({});
+        mapDispatchToProps(dispatch).getServiceType({}, {});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
 
         mapDispatchToProps(dispatch).getPatientAddress({});
@@ -409,14 +423,53 @@ describe('ServiceRequestDetail', function () {
         mapDispatchToProps(dispatch).assessmentEdit({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
 
-        mapDispatchToProps(dispatch).clearServiceDetails({});
+        mapDispatchToProps(dispatch).goToServicedetails();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
 
-        mapDispatchToProps(dispatch).setAddNewScheduledClicked(true);
+        
+        mapDispatchToProps(dispatch).clearServiceDetails();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        
+        mapDispatchToProps(dispatch).setAddNewScheduledClicked({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 
     it('Check mapStateToProps', () => {
-        expect(mapStateToProps(defaultState)).toBeDefined();
+        const initialState = {
+            scheduleState: {
+                serviceCategoryList: [],
+                serviceTypeList: [],
+                patientAddressList: [],
+                stateList: [],
+                posErrorMessage: '',
+                isPosAddressValid: '',
+                entityServiceProvidersList: [],
+                recurringPatternList: [],
+                daysList: [],
+                disableShowmore: false,
+                individualSchedulesDetails: {},
+                isIndividualScheduleEdit: true,
+                isAssessmentEdit: true,
+                assessmentDetails: {}
+            },
+            patientProfileState: {
+                patientId: ''
+            },
+            authState: {
+                userState: {
+                    userData: {
+                        userInfo: {}
+                    }
+                }
+            },
+            visitSelectionState: {
+                VisitServiceDetailsState: {
+                    scheduleList: [],
+                    isAddNewScheduleClicked: true
+                }
+            }
+        };
+        expect(mapStateToProps(initialState)).toBeDefined();
     });
 })

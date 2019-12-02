@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 
- import { VisitNotificationSettings } from './index.js';
+ import { VisitNotificationSettings, mapDispatchToProps, mapStateToProps } from './index.js';
 
  jest.mock('../../ScreenCover/AsideScreenCover', () => ({
     AsideScreenCover: 'mockAsideScreenCover'
@@ -24,9 +24,16 @@ const defaultState = {
     authState: {
         userState: {
             userData: {
-                userInfo: {}
+                userInfo: {serviceProviderId: 12}
             }
         }
+    },
+    visitNotificationState: {
+        VisitNotificationSettingsState: {
+            pushNotification: [],
+            emailNotification: [],
+            isLoading: true 
+        }  
     },
     getVisitNotificationSettings: jest.fn(),
     updateVisitNotificationSettings: jest.fn(),
@@ -82,6 +89,24 @@ const defaultState = {
 
      it('Check the onClickSave', () => {
         shallowWrapper.instance().onClickSave();
+    });
+
+    it('Check mapStateToProps', () => {
+        expect(mapStateToProps(defaultState)).toBeDefined();
+    });
+
+    it('Check mapDispatchToProps actions', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getVisitNotificationSettings();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).updateVisitNotificationSettings({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).handlePushChange([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).handleEmailChange([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setIsFormDirty({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 
  }); 
