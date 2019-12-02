@@ -54,6 +54,14 @@ describe("ScreenCover", function () {
         shallowWrapper.instance().componentDidUpdate(prevProps, prevState);
     });
 
+    it('Check the handleNavigation ', () => {
+        shallowWrapper.instance().handleNavigation({ target: { title: 'logout' } });
+    });
+
+    it('Check the handleNavigation ', () => {
+        shallowWrapper.instance().handleNavigation({ target: { title: 'logout1' } });
+    });
+
     it('Check mapDispatchToProps actions', () => {
         const dispatch = jest.fn();
         mapDispatchToProps(dispatch).onLogout({});
