@@ -82,6 +82,23 @@ describe("Education", function () {
 
     it('Check the toggleEducation', () => {
         shallowWrapper.instance().toggleEducation();
+        shallowWrapper.setProps({
+            educationalDetails: {
+                school: '',
+                degree: '',
+                fieldOfStudy: '',
+                startYear: '',
+                endYear:''
+            }
+        })
+        shallowWrapper.setState({
+            school: '',
+            degree: '',
+            fieldOfStudy: '',
+            startYear: '',
+            endYear: ''
+        })
+        shallowWrapper.instance().toggleEducation();
     });
 
     it('Check the checkValidation true', () => {
@@ -182,6 +199,5 @@ describe("Education", function () {
         expect(shallowWrapper.find('[test-addIcon="test-addIcon"]').props().onClick());
         expect(shallowWrapper.find('[test-showModalOnDelete="test-showModalOnDelete"]').props().onClick(e));
         expect(shallowWrapper.find('[test-editEducation="test-editEducation"]').props().onClick(e));
-        expect(shallowWrapper.find('[test-educationModalOpen="test-educationModalOpen"]').props().onClick());
     });
 }); 
