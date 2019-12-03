@@ -4,8 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon';
 
-import ProfileHeader from './ProfileHeader';
-import { mapDispatchToProps } from './ProfileHeader'
+import { ProfileHeader,mapDispatchToProps } from './ProfileHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -46,7 +45,7 @@ describe("ScreenCover", function () {
 
     it('Check the componentDidUpdate', () => {
         let prevProps = {
-            dropdownOpen: true
+            dropdownOpen: true 
         }
         let prevState = {
             dropdownOpen: false
