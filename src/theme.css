@@ -40,7 +40,7 @@ table.individuals-tableblock.theme-primary thead th,
 .EstimatedCostWidget.theme-primary .EstimatedCostContainer p,
 .webUrl.theme-primary a,
 .FeedbackLink, .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank.theme-primary::after, .SPAvailTitle:after,
-.Plan-typebar fieldset .form-radio-input:checked~.form-radio-label, .ProfileCardNameContainer span:hover, table.individuals-tableblock thead th{
+.Plan-typebar fieldset .form-radio-input:checked~.form-radio-label, .ProfileCardNameContainer span:hover, table.individuals-tableblock thead th, .GetStartedBtnContainer .btn:hover, .LoginButton.btn:hover{
     color: #1e3d5c !important;
 }
 
@@ -76,7 +76,7 @@ table.individuals-tableblock.theme-primary thead th,
     color: #fff !important;
 }
 
-span.btn-hired {
+span.btn-hired, span.btn-hired:hover, .BlockProfileContainer .BlockProfileDetailsStatus .BlockProfileMatching  {
     color: #1e3d5c !important;
 }
 
@@ -136,7 +136,7 @@ span.btn-hired {
 .avatarImage,
 .active-listblock,
 .schedule-listblock:hover {
-    background-color: #e0f1fb;
+    background-color: #e0f1fb !important;
 }
 
 .availabilityModal .AvailabilityWidget .SPAvailWidget .trueAvailable .SPAvailTitle .SPAvailTitleText:after {
@@ -345,4 +345,12 @@ div.Select-menu-outer .Select-option.is-focused {
 
 .avatarImageBorder {
     border-color: #e0f1fb;
+}
+
+.tab_view_list .active-tabview.nav-link, .tab_view_list .active-tabview.nav-link:hover {
+    border-bottom: 2px solid #1e3d5c !important;
+}
+
+.tab_view_list .nav-link:hover {
+    border-color: transparent !important;
 }
