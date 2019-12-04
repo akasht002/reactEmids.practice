@@ -91,6 +91,7 @@ export class ServiceRequest extends Component {
   }
 
   async componentDidMount() {
+    this.filterTabs = this.getFilterTabBasedOnStatus(this.state.status)
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
