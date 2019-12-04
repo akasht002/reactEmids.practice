@@ -1709,9 +1709,14 @@ top:10px !important;
 bottom: auto !important
 }
 
+.chatHeader .chatBackButton:before {
+    cursor: pointer;
+    z-index:1000;
+}
 
-
-
+.chatHeader .chatBackButton:after {
+    cursor:none;
+}
 
 /*microsoft-edge-detection*/
 @supports (-ms-ime-align: auto) {
