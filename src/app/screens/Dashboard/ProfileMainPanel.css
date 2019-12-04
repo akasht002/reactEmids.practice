@@ -857,11 +857,6 @@ div.ProfileConversation {
     -webkit-transition: all linear .2s;
 }
 
-.myConversationContainer .myConversationContent:hover {
-    cursor: pointer;
-    background-color: #f9f8f8;
-}
-
 .myConversationContent .avatarWidget {
     width: 140px;
 }
@@ -1245,8 +1240,7 @@ div.ProfileConversation {
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider {
     background: #f7f7f7;
     border-radius: 4px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 18px 0px 50px 0px;
     display: block;
 }
 
@@ -1258,7 +1252,7 @@ div.ProfileConversation {
     font-size: 15px;
     font-weight: 500;
     padding-bottom: 30px;
-    margin-top: 70px;
+    margin-top: 10px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top {
@@ -1273,6 +1267,19 @@ div.ProfileConversation {
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top .NoServiceReq {
     max-height: 100px;
     width: 100%;
+}
+
+.topProfile .bottomPalette .NoRequestServiceProvider .NoInfoText .NoServiceInfoLink {
+    margin-top: -11px;
+}
+
+.topProfile .bottomPalette .NoRequestServiceProvider .myPlanBlank
+{
+height: auto;
+}
+
+.bottomProfile .NoInformation .myConversationContent {
+    background: #f7f7f7;
 }
 
 .myPlanBlank {
