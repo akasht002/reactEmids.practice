@@ -13,9 +13,9 @@ function EntityUserMyConversionDefault(){
               <div className="avatarContainer"/>
             </div>
             <div className="MsgThreadContent m-auto">
-            <div class="no-blockinfo-top">
+            <div className="no-blockinfo-top">
           <div className="NoProfileServices No-Coverastion-Block theme-primary-light">
-          <span class="NoInfoText"><span class="NoServiceInfoLink theme-primary">No Coverastions</span></span>
+          <span className="NoInfoText"><span className="NoServiceInfoLink theme-primary">No Coverastions</span></span>
           </div>
            </div>
             </div>
