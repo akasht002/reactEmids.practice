@@ -202,7 +202,7 @@ class MessageContent extends Component {
                             <td className="chatHeader align-middle" ref={this.setChatHeaderRef}>
                                 <div className="Content d-flex">
                                     <div className="chatHeaderTextWidgetLeft mr-auto d-flex">
-                                        <span className="chatBackButton" onClick={this.backToMessageSummary}></span>
+                                        <div className="chatBackButton" onClick={this.backToMessageSummary}></div>
                                         <div className={"titleWidget" + editTitleClass}>
                                             <span className="MsgIndiTitle chatHeaderText">
                                                 {this.props.title ? this.props.title : "Add Title"}
