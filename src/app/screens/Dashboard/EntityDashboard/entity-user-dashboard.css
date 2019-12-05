@@ -577,6 +577,21 @@ span.no-recoord-table {
     padding: 15px 20px 15px 40px;
 }
 
+.feedback-alertmodl .individuals-tableblock {
+    padding: 30px;
+    padding-top: 5px;
+    margin-top: 0px;
+    padding-bottom: 15px;
+}
+
+.feedback-alertmodl .individuals-tableblock td:nth-child(1) {
+   padding-left:10px;
+}
+
+.feedback-alertmodl table.individuals-tableblock thead th {
+    font-size: 16px;
+}
+
 /*grid-alignment-indvidulas-1st-tab*/
 .all-individuals-tableblock th:nth-child(1),
 .all-individuals-tableblock td:nth-child(1),
