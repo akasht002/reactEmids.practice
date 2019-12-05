@@ -103,11 +103,12 @@ export const Table = props => {
                         let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : convert24To12Hrs(item.visitStartTime)
                         let duration = (isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)
                         let isIndividualServiceProvider = !((item.visitStatusId === VISIT_STATUS.startVisit.id) && isEntity && isEntityServiceProvider)
+                        let isStartVisit = (item.visitStatusId === VISIT_STATUS.startVisit.id) && !(isEntity || isEntityServiceProvider)
                         let activeRowClass = (props.servicePlanVisitId === item.servicePlanVisitId) ? 'active-row-view' : ''
                         return <tr className={activeRowClass} onClick={() => props.highlightVisit(item)}>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
                             <td>{isIndividualServiceProvider && startTime}</td>
-                            <td>{isIndividualServiceProvider && duration}</td>
+                            <td>{isStartVisit ? '': duration}</td>
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}

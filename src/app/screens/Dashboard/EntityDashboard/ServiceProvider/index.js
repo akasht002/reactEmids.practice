@@ -134,6 +134,7 @@ export class ServiceProvider extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.serviceProvider.statCard.all
       await this.props.getVisitServiceProviderCountList(count)
       await this.props.getVisitServiceProviderTableList(list)
       await this.setState({
@@ -489,7 +490,7 @@ export class ServiceProvider extends Component {
       <FeedbackAlert
         feedbackServiceVisits={this.props.feedbackServiceVisits}
         goToVisitSummary={this.goToSpVisitSummary}
-        pageCount={this.props.feedbackServiceVisits.length > 0 && this.props.feedbackServiceVisits[0].pageCount}
+        pageCount={this.props.feedBackCount}
         pageNumberChangeFeedback={this.pageNumberChangeFeedback}
         activePageFeedback={this.state.activePageFeedback}
         isLoaded={this.props.isLoadingFeedbackList}
@@ -645,7 +646,8 @@ function mapStateToProps(state) {
     maxExperience: state.dashboardState.VisitServiceProviderState.maxExperience,
     isImpersinated: state.dashboardState.VisitServiceProviderState.isImpersinated,
     rating: state.dashboardState.VisitServiceProviderState.rating,
-    filterApplied: state.dashboardState.VisitServiceProviderState.filterApplied
+    filterApplied: state.dashboardState.VisitServiceProviderState.filterApplied,
+    feedBackCount: state.dashboardState.VisitServiceProviderState.feedBackCount
   }
 }
 

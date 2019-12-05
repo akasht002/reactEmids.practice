@@ -91,6 +91,7 @@ export class ServiceRequest extends Component {
   }
 
   async componentDidMount() {
+    this.filterTabs = this.getFilterTabBasedOnStatus(this.state.status)
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
@@ -215,6 +216,7 @@ export class ServiceRequest extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all
       await this.props.getServiceRequestCountList(count)
       await this.props.getServiceRequestTableList(list)
       await this.setState({

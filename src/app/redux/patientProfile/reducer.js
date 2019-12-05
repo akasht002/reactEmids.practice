@@ -92,7 +92,23 @@ const patientProfileState = (state = defaultState, action) => {
         vitalDetails: action.data
       }  
     case PatientProfile.clearState:
-      return defaultState
+      return {
+        ...state,
+        profilePercentage: '',
+        personalDetail: {},
+        imageData: {},
+        pointOfServiceList: [],
+        myConnectionList: [],
+        languageList: [],
+        clinicalConditionList: [],
+        espID: null,
+        espPatient: {},
+        espimageData: {},
+        espEducation: [],
+        userType: '',
+        patientProfilePercentage:0,
+        vitalDetails: {}
+      }
     default:
       return state
   }

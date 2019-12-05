@@ -9,7 +9,7 @@ import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { forEach } from 'lodash'
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility'
-import { ENTITY_DASHBOARD_STATUS, DATE_FORMATS } from '../../../../constants/constants';
+import { ENTITY_DASHBOARD_STATUS, DATE_FORMATS, DEFAULT_PAGE_NUMBER } from '../../../../constants/constants';
 import moment from 'moment';
 
 export const startLoadingFeedbackList = () => {
@@ -134,7 +134,12 @@ export function getIndividualsList(data) {
 export function getIndividualsFeedbackList(data) {
     return (dispatch) => {
         dispatch(startLoadingFeedbackList());
+        let pageNumber = data.pageNumber
         return Post(API.getindividualsFeedbackList, data).then((resp) => {
+            if(pageNumber === DEFAULT_PAGE_NUMBER) {
+                let feedBackCount = resp.data.length > 0 && resp.data[0].pageCount
+                dispatch(setFeedbackCount(feedBackCount))    
+            }
             let data = resp.data.map(res => {
                 return {
                     ...res,
@@ -330,4 +335,11 @@ export const resetFilter = () => {
     return {
         type: IndividualsList.resetFilter
     }   
+}
+
+export const setFeedbackCount = data => {
+    return {
+        type: IndividualsList.setFeedbackCount,
+        data
+    }
 }

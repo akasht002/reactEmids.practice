@@ -14,7 +14,8 @@ const defaultState = {
     minExperience: 0,
     rating: 0,
     isImpersinated: false,
-    filterApplied: false
+    filterApplied: false,
+    feedBackCount: 0
 };
 
 const VisitServiceProviderState = (state = defaultState, action) => {
@@ -106,6 +107,11 @@ const VisitServiceProviderState = (state = defaultState, action) => {
             ...state,
             filterApplied: action.data
         }
+        case VisitServiceProviderList.setFeedbackCount:
+        return {
+            ...state,
+            feedBackCount: action.data
+        }; 
         default:
             return state;
     }

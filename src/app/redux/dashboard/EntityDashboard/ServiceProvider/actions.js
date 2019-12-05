@@ -5,7 +5,7 @@ import { VisitServiceProviderList } from './bridge';
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
-import { ENTITY_DASHBOARD_STATUS, DATE_FORMATS } from '../../../../constants/constants';
+import { ENTITY_DASHBOARD_STATUS, DATE_FORMATS, DEFAULT_PAGE_NUMBER } from '../../../../constants/constants';
 import { formatPhoneNumber, removeHyphenInPhoneNumber } from '../../../../utils/formatName';
 import { checkNumber } from '../../../../utils/validations';
 import { concatCommaWithSpace } from '../../../../utils/stringHelper';
@@ -129,10 +129,15 @@ export const getGeologicalPositionSuccess = data => {
 
 export function getFeedbackAlertDetails(data) {
   return dispatch => {
+    let pageNumber = data.pageNumber
     dispatch(startFeedbackAlertLoading())
     return Post(API.getServiceProviderFeedbackList, data)
       .then(resp => {
         if (resp && resp.data) {
+          if(pageNumber === DEFAULT_PAGE_NUMBER) {
+            let feedBackCount = resp.data.length > 0 && resp.data[0].pageCount
+            dispatch(setFeedbackCount(feedBackCount))    
+          }
           let data = resp.data.map(res => {
             return {
                 ...res,
@@ -223,4 +228,11 @@ export const setFilterApplied = data => {
       type: VisitServiceProviderList.setFilterApplied,
       data
   }  
+}
+
+export const setFeedbackCount = data => {
+  return {
+      type: VisitServiceProviderList.setFeedbackCount,
+      data
+  }
 }
