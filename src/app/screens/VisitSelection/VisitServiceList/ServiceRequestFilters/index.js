@@ -100,7 +100,7 @@ class Filter extends Component {
                                 </TabPane>
                                 <TabPane tabId="2" id="Service_Area_tab">
                                     <div className="form-group">
-                                        <label className="mb-3">Select Service Area</label>
+                                        <label className="mb-3">Select Point Of Service</label>
                                     </div>
                                     <ServiceArea
                                         id="Service Area"

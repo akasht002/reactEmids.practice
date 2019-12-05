@@ -127,7 +127,7 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         case VisitServiceDetails.getVisitListSuccess:
             return {
                 ...state,
-                visitList: action.data
+                visitList: action.updatedData
             };
 
         case VisitServiceDetails.getVisitListCountSuccess:

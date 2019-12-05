@@ -82,3 +82,7 @@ li.SPAvailItems.disabled:hover{
 {
     display: none;
 }
+
+.modal-body .SPBlackoutDays .SPCertificateList li:first-child {
+    margin-top: 15px;
+}

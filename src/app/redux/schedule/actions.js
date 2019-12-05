@@ -265,6 +265,7 @@ export function getEntityServiceProviderList(data, selectedESPId = '') {
                     return x.serviceProviderId;
                 });
                 dispatch(getEntityServiceProviderListSuccess(espList))
+                dispatch(selectESP(selectedESPId))
                 dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
                 dispatch(endLoading())
             })

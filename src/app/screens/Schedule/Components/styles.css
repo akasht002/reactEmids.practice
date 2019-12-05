@@ -423,7 +423,6 @@ fieldset .form-radio {
   clear: both;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
   border: 1px solid #e1e1e1;
   border-radius: 4px;
   -moz-border-radius: 4px;
@@ -471,7 +470,6 @@ fieldset .form-radio {
   width: 100%;
   display: block;
   max-width: 50%;
-  flex: inherit;
 }
 
 .form-group2block {
@@ -583,12 +581,17 @@ fieldset .form-radio {
   max-width: 100%;
 }
 
+.full-block-scheduleDate .recurring-msg {
+  position: absolute;
+  bottom: 0px;
+}
+
 /*left-recurringpattern*/
 .left-recurringpattern {
   width: 100%;
   display: block;
+  height:100%;
   position: absolute;
-  margin-top: -140px;
 }
 
 .left-recurringpattern span.width100 {
@@ -1804,4 +1807,8 @@ ul.show-more-assignSP li {
 
 .form-group2block .react-datepicker-wrapper .disable-pointer {
   cursor: context-menu !important;
+}
+
+.recurring-msg{
+  margin-bottom: 30px
 }
