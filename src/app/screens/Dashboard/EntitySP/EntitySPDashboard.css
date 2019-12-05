@@ -1,14 +1,15 @@
-.NoInformation .myConversationContent{
+.NoInformation .myConversationContent {
     justify-content: center;
     align-items: center;
 }
 
-.NoInformation .myConversationContent .avatarContainer{
+.NoInformation .myConversationContent .avatarContainer {
     position: relative;
     width: 32px !important;
 }
 
-.NoInformation .myConversationContent .avatarContainer:before, .NoInformation .myConversationContent .avatarContainer:after{
+.NoInformation .myConversationContent .avatarContainer:before,
+.NoInformation .myConversationContent .avatarContainer:after {
     content: '';
     position: absolute;
     height: 32px;
@@ -19,50 +20,47 @@
     border-radius: 100%;
 }
 
-.NoInformation .myConversationContent .avatarContainer:before{
+.NoInformation .myConversationContent .avatarContainer:before {
     left: 30px;
 }
 
-.NoInformation .myConversationContent .avatarContainer:after{
+.NoInformation .myConversationContent .avatarContainer:after {
     right: 0;
 }
-.assign-serviceproblock
-{
+
+.assign-serviceproblock {
     display: block;
     width: 100%;
 }
 
-.assign-serviceproblock .form-group .form-control.searchParticipants
-{
-    background-color: #efefef!important;
+.assign-serviceproblock .form-group .form-control.searchParticipants {
+    background-color: #efefef !important;
 }
 
-.assign-serviceproblock .form-group
-{
+.assign-serviceproblock .form-group {
     margin-bottom: 25px;
 }
 
-.assign-serviceproblock .form-group label.m-0
-{
-display: block;
+.assign-serviceproblock .form-group label.m-0 {
+    display: block;
 }
-.assign-serviceproblock .participantsSearchList
-{
-padding: 0;
-display: block;
-width: 100%;
+
+.assign-serviceproblock .participantsSearchList {
+    padding: 0;
+    display: block;
+    width: 100%;
 }
-.assign-serviceproblock .participantsSearchList .CheckboxSet 
-{
+
+.assign-serviceproblock .participantsSearchList .CheckboxSet {
     width: 100%;
     display: flex;
     flex-direction: row;
 }
 
-.assign-serviceproblock .participantsSearchList .CheckboxSet label
-{
-    padding: 8px 30px 18px 13px!important;
+.assign-serviceproblock .participantsSearchList .CheckboxSet label {
+    padding: 8px 30px 18px 13px !important;
 }
+
 .assign-serviceproblock .participantsSearchList .CheckboxSet label:before {
     right: 0;
     left: initial;
@@ -72,13 +70,12 @@ width: 100%;
     background-size: 15px;
 }
 
-.assign-serviceproblock .participantsSearchList .CheckboxSet .avatarContainer
-{
-width: 6%;
-float: none;
+.assign-serviceproblock .participantsSearchList .CheckboxSet .avatarContainer {
+    width: 6%;
+    float: none;
 }
-.assign-serviceproblock .participantsSearchList .CheckboxSet label
-{
+
+.assign-serviceproblock .participantsSearchList .CheckboxSet label {
     width: 92%;
     display: flex;
     font-size: 14px;
@@ -86,7 +83,7 @@ float: none;
     color: #2b2b2b;
 }
 
-.assign-serviceproblock>.form-group small:before{
+.assign-serviceproblock>.form-group small:before {
     content: "";
     position: absolute;
     display: block;
@@ -100,10 +97,12 @@ float: none;
     background-repeat: no-repeat;
 }
 
-@media screen and (max-width: 1024px){
-    .assign-serviceproblock .form-group label.m-0
-    {
-    display:block;
-    margin-top: 15px !important;
-    }
+.NoInformation .avatarWidget 
+{
+display: none;
+}
+
+.NoInformation .myConversationContent{
+    cursor: pointer;
+    background-color: #f9f8f8;
 }

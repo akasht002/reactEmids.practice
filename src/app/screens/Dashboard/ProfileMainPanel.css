@@ -857,11 +857,6 @@ div.ProfileConversation {
     -webkit-transition: all linear .2s;
 }
 
-.myConversationContainer .myConversationContent:hover {
-    cursor: pointer;
-    background-color: #f9f8f8;
-}
-
 .myConversationContent .avatarWidget {
     width: 140px;
 }

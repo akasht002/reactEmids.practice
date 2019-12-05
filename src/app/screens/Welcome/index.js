@@ -117,7 +117,7 @@ class Welcome extends Component {
                                                 const style1 = {
                                                     width: this.state.sliderWidth + 'px',
                                                     height: this.state.sliderHeight + 'px',
-                                                    backgroundImage: 'linear-gradient(rgba(60, 16, 83, .35), rgba(102, 48, 127, .35)), url(' + require("../../assets/images/home/coverImg" + this.state.activeIndex + ".jpg") + ')'
+                                                    backgroundImage: 'linear-gradient(rgba(30, 61, 92, .3), rgba(49, 84, 119, .3)), url(' + require("../../assets/images/home/coverImg" + this.state.activeIndex + ".jpg") + ')'
                                                 };
                                                 return (
                                                     <div style={style1}
