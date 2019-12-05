@@ -40,7 +40,8 @@ table.individuals-tableblock.theme-primary thead th,
 .EstimatedCostWidget.theme-primary .EstimatedCostContainer p,
 .webUrl.theme-primary a,
 .FeedbackLink, .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank.theme-primary::after, .SPAvailTitle:after,
-.Plan-typebar fieldset .form-radio-input:checked~.form-radio-label, .ProfileCardNameContainer span:hover, table.individuals-tableblock thead th, .GetStartedBtnContainer .btn:hover, .LoginButton.btn:hover{
+.Plan-typebar fieldset .form-radio-input:checked~.form-radio-label, .ProfileCardNameContainer span:hover, table.individuals-tableblock thead th, .GetStartedBtnContainer .btn:hover, .LoginButton.btn:hover,
+.toDay label, .mainWidgetOnboarding .mainContent .verify-title{
     color: #1e3d5c !important;
 }
 
@@ -104,7 +105,7 @@ span.btn-hired, span.btn-hired:hover, .BlockProfileContainer .BlockProfileDetail
 .btn-outline-primary:hover,
 .btn-outline-primary:active,
 .btn-primary:focus,
-.filter-block button:hover {
+.filter-block button:hover, .btn-outline-primary.ResetSignature:focus {
     background-color: #315477 !important;
     color: #fff !important;
 }
@@ -353,4 +354,8 @@ div.Select-menu-outer .Select-option.is-focused {
 
 .tab_view_list .nav-link:hover {
     border-color: transparent !important;
+}
+
+.onBoardSuccessWidget {
+    background-image: linear-gradient(rgba(30, 61, 92, .8), rgba(49, 84, 119, .8)), url("../src/app/assets/images/home/coverImg1.jpg") !important;
 }

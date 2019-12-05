@@ -1055,6 +1055,9 @@ fieldset.right-colblock2 {
 
 /*assign-SP-card*/
 
+.ServiceTypesWidget .assign-sp-block .assign-SP-card {
+  z-index: 0;
+}
 .assign-sp-block {
   display: flex;
   flex-wrap: wrap;
