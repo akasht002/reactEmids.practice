@@ -17,7 +17,6 @@ import { isEntityUser } from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy, uniqBy } from 'lodash'
 import { logError } from '../../../utils/logError';
-import _ from 'lodash'
 import { pushSpliceHandler } from '../../../utils/stringHelper';
 
 export const getVisitServiceDetailsSuccess = data => {

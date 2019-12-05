@@ -526,7 +526,7 @@ export class ServiceCalendar extends Component {
     let start_day_month = parseInt(dates[0].date.format('MM'), 10)
     let end_day_month = parseInt(dates[(count - 1)].date.format('MM'), 10)
     let selectedMonth = parseInt(this.state.selectedMonths, 10)
-    let visitData = this.props.serviceVist.length > 0 ? (
+    let visitData = this.props.isServiceVisitLoading ?<Preloader/>:this.props.serviceVist.length > 0 ? (
       <ServiceCalendarList
         onClickConversation={data => this.onClickConversation(data)}
         onClickVideoConference={data => this.onClickVideoConference(data)}
