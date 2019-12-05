@@ -41,6 +41,9 @@ export const ScheduleType = props => {
         }
     }
 
+    const handelMonthlyOptions = (e) => {
+        props.handleChangeMonthlySelectionFirst(e.target.value)
+    }
 
     return (
         <Fragment>
@@ -114,7 +117,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
-                                    className={!props.startTime ? "disable-pointer": ""}
+                                    className={!props.startTime ? "disable-pointer" : ""}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -185,7 +188,7 @@ export const ScheduleType = props => {
                                                     value={props.dailyDayOccurence}
                                                     maxLength={2}
                                                     autoComplete='off'
-                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.dailyDay)}}
+                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.dailyDay) }}
                                                 />
                                                 <label>{'Day(s)'}</label>
                                             </fieldset>
@@ -248,7 +251,7 @@ export const ScheduleType = props => {
                                                     name="monthly"
                                                     value={1}
                                                     className="form-radio-input"
-                                                    onChange={(e) => { props.handleChangeMonthlySelectionFirst(e.target.value) }}
+                                                    onChange={handelMonthlyOptions}
                                                 />
                                                 <label className="form-radio-label" htmlFor={'month'}><span className="RadioBoxIcon" /></label>
                                             </fieldset>
@@ -288,7 +291,7 @@ export const ScheduleType = props => {
                                                     name="monthly"
                                                     value={2}
                                                     className="form-radio-input"
-                                                    onChange={(e) => { props.handleChangeMonthlySelectionFirst(e.target.value) }}
+                                                    onChange={handelMonthlyOptions}
                                                 />
                                                 <label className="form-radio-label" htmlFor={'day'}><span className="RadioBoxIcon" /></label>
                                             </fieldset>
@@ -406,7 +409,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
-                                    className={!props.startTime ? "disable-pointer": ""}
+                                    className={!props.startTime ? "disable-pointer" : ""}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
