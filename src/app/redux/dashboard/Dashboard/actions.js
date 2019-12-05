@@ -7,7 +7,7 @@ import {
   MessageURLGet
 } from '../../../services/http'
 import { API } from '../../../services/api'
-import { startLoading, endLoading } from '../../loading/actions'
+import { endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
 import {
   PAGE_NO,

@@ -222,7 +222,6 @@ export class Feedback extends Component {
                                                                                 value={answer.answerName}
                                                                                 name={questionList.feedbackQuestionnaireId}
                                                                                 onChange={(e) => {
-                                                                                    answer.checked = e.target.checked;
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
                                                                                 checked={answer.checked}

@@ -87,7 +87,8 @@ export class Schedule extends Component {
             phoneNumber: '',
             isAssessmentEdit: false,
             isDefaultAddress: false,
-            planTypeAlertPopup: false
+            planTypeAlertPopup: false,
+            monthlyOptions: 1
         }
         this.serviceTypes = [];
         this.categoryId = SERVICE_CATEGORY.adl.id;
@@ -123,7 +124,7 @@ export class Schedule extends Component {
 
     componentWillUnmount() {
         this.props.clearServiceDetails();
-        this.props.setAddNewScheduledClicked(false);
+        this.props.getValidPatientAddressSuccess(false)
     }
 
     getPrimaryAddress = () => {
@@ -257,7 +258,8 @@ export class Schedule extends Component {
             selectedWeeks: data.monthly !== null && data.monthly.weekDayMonth && data.monthly.weekDayMonth.week,
             selectedWeeksLabel: this.selectedWeeksLabel,
             monthlyMonthsSecond: data.monthly !== null && data.monthly.weekDayMonth && data.monthly.weekDayMonth.month,
-            selectedDuration: data.duration
+            selectedDuration: data.duration,
+            monthlyOptions: data.monthly !== null && data.monthly.dayMonth ? 1 : 2
         })
         this.weeklySelectedDays = data.weekly ? data.weekly.days : [];
         this.espId = data.serviceProviderId;
@@ -293,7 +295,9 @@ export class Schedule extends Component {
             this.serviceTypes = [];
             this.categoryId = SERVICE_CATEGORY.adl.id;
             this.address = {}
-            this.espId = '';
+            this.selectedDuration = ''
+            this.handleAssignServiceProvider(null, true);
+            this.handleServiceCategory(SERVICE_CATEGORY.adl.id, true)
         }
     }
 
@@ -302,11 +306,13 @@ export class Schedule extends Component {
         this.handleChangePlanType(this.state.planTypeId);
     }
 
-    handleServiceCategory = (id) => {
+    handleServiceCategory = (id, clearServiceTypes = false) => {
         this.categoryId = id;
         this.serviceTypes = [];
         this.props.getServiceType(id);
-        this.isDataEntered = true;
+        if(!clearServiceTypes){
+            this.isDataEntered = true;
+        }
         this.setState({ checkedServiceCategoryId: id, serviceTypeSelected: false })
     }
 
@@ -436,10 +442,12 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handleAssignServiceProvider = (id) => {
+    handleAssignServiceProvider = (id, clearSelectedESP = false) => {
         this.espId = parseInt(id, 0);
         this.props.selectESP(id)
-        this.isDataEntered = true;
+        if(!clearSelectedESP){
+            this.isDataEntered = true;
+        }
     }
 
     handleAdditionInfo = e => {
@@ -537,11 +545,9 @@ export class Schedule extends Component {
             weeklyDayOccurence: '',
             monthlyMonthsSecond: '',
             selectedDaysLabel: '',
-            selectedWeeksLabel: '',
-            selectedDuration: ''
+            selectedWeeksLabel: ''
         })
         this.isDataEntered = true;
-        this.selectedDuration = ''
     }
 
     handleSelectDailyOptionField = (id) => {
@@ -593,12 +599,15 @@ export class Schedule extends Component {
 
     handleChangeMonthlySelectionFirst = (id) => {
         this.setState({
-            monthlyOptions: id,
+            monthlyOptions: parseInt(id, 10),
             selectedDaysLabel: '',
             selectedWeeksLabel: '',
             selectedDaysId: '',
             selectedWeeks: '',
-            monthlyMonthsSecond: ''
+            monthlyMonthsSecond: '',
+
+            monthlyDay: '',
+            monthlyMonths: '',
         })
         this.selectedDaysLabel = "";
         this.selectedWeeksLabel = "";
@@ -607,7 +616,7 @@ export class Schedule extends Component {
 
     handleChangeMonthlySelectionSecond = (id) => {
         this.setState({
-            monthlyOptions: id,
+            monthlyOptions: parseInt(id, 10),
             monthlyDay: '',
             monthlyMonths: '',
             monthlyMonthsSecond: ''
@@ -652,7 +661,7 @@ export class Schedule extends Component {
                 pageNumber: this.state.pageNumber,
                 pageSize: this.state.pageSize
             }
-            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
+            this.props.getEntityServiceProviderList(data, this.espId);
         }
         this.setState({
             searchOpen: !this.state.searchOpen,
@@ -834,7 +843,7 @@ export class Schedule extends Component {
                 pageNumber: this.state.pageNumber,
                 pageSize: this.state.pageSize
             }
-            this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId)
+            this.props.getEntityServiceProviderList(data, this.espId)
         })
     }
 
@@ -843,6 +852,7 @@ export class Schedule extends Component {
             this.setState({ isModalOpen: true })
         } else {
             this.goToServicedetails();
+            this.props.setAddNewScheduledClicked(true);
         }
     }
 
@@ -961,6 +971,8 @@ export class Schedule extends Component {
                                         handleChangeOccurrenceFields={this.handleChangeOccurrenceFields}
                                         handleChangeDuration={this.handleChangeDuration}
                                         selectedDuration={this.selectedDuration}
+                                        monthlyOptions={this.state.monthlyOptions}
+                                        validate={this.validate}
                                     />
 
                                 </div>
@@ -1102,7 +1114,7 @@ export function mapStateToProps(state) {
         isPosAddressValid: scheduleState.isPosAddressValid,
         entityServiceProvidersList: scheduleState.entityServiceProvidersList,
         recurringPatternList: scheduleState.recurringPatternList,
-        daysList: scheduleState.daysList,
+        daysList: state.visitSelectionState.VisitServiceDetailsState.daysType,
         patientId: state.patientProfileState.patientId,
         disableShowmore: scheduleState.disableShowmore,
         individualSchedulesDetails: scheduleState.individualSchedulesDetails,

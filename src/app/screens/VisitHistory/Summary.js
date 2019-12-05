@@ -509,7 +509,7 @@ export class VistSummary extends React.Component {
             </div>
             <div className="RightWidget">
               <div className="RightContent">
-                {(!isEntity && this.props.isPaymentAvailable) &&
+                {!isEntity &&
                   <Fragment>
                     <p className="SummaryContentTitle theme-primary">Payment Details</p>
                     <div className="row CostTableWidget">

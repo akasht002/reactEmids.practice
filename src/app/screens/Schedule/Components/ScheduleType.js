@@ -4,9 +4,10 @@ import { formateStateDateValue } from "../../../utils/validations";
 import { timeDropDownFormat, defaultStartTime, defaultEndTime } from "../../../utils/dateUtility";
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
-import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS, SCHEDULE_TYPE_OPTIONS, SCHEDULE_RECURRENCE_FIELD } from '../../../constants/constants'
+import { DATE_FORMATS, RECURRING_PATTERN_OPTIONS, SCHEDULE_TYPE_OPTIONS, SCHEDULE_RECURRENCE_FIELD, RECURRING_PATTERN_VALIDATION_MSG, MONTHLY_RECURRING_OPTIONS } from '../../../constants/constants'
 import moment from 'moment';
 import { durationData } from '../data';
+import { recurringPatternValidate } from '../data/validate'
 
 export const ScheduleType = props => {
     let days = props.daysList.map(type => {
@@ -21,6 +22,29 @@ export const ScheduleType = props => {
         return <Item className='ListItem CTDashboard' key={type.label}>{type.value}</Item>;
     });
 
+    const recurringPatternValidation = (recurringPatternType) => {
+        switch (recurringPatternType) {
+            case RECURRING_PATTERN_OPTIONS.daily:
+                let daily = props.validate(recurringPatternValidate.recurring.daily)
+                return daily && RECURRING_PATTERN_VALIDATION_MSG
+            case RECURRING_PATTERN_OPTIONS.weekly:
+                let weekly = props.validate(recurringPatternValidate.recurring.weekly)
+                return weekly && RECURRING_PATTERN_VALIDATION_MSG
+            case RECURRING_PATTERN_OPTIONS.monthly:
+                let data;
+                props.monthlyOptions === MONTHLY_RECURRING_OPTIONS.days ?
+                    data = props.validate(recurringPatternValidate.recurring.monthly.first)
+                    :
+                    data = props.validate(recurringPatternValidate.recurring.monthly.second)
+                return data && RECURRING_PATTERN_VALIDATION_MSG
+            default:
+                return ''
+        }
+    }
+
+    const handelMonthlyOptions = (e) => {
+        props.handleChangeMonthlySelectionFirst(e.target.value)
+    }
 
     return (
         <Fragment>
@@ -94,7 +118,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
-                                    className={!props.startTime ? "disable-pointer": ""}
+                                    className={!props.startTime ? "disable-pointer" : ""}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -165,7 +189,7 @@ export const ScheduleType = props => {
                                                     value={props.dailyDayOccurence}
                                                     maxLength={2}
                                                     autoComplete='off'
-                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.dailyDay)}}
+                                                    onChange={(e) => { props.handleChangeOccurrenceFields(e, SCHEDULE_RECURRENCE_FIELD.dailyDay) }}
                                                 />
                                                 <label>{'Day(s)'}</label>
                                             </fieldset>
@@ -222,20 +246,22 @@ export const ScheduleType = props => {
                                         <div className="left-radioblock clearfix">
                                             <fieldset>
                                                 <input
-                                                    id={'Pattern3'}
+                                                    checked={props.monthlyOptions === MONTHLY_RECURRING_OPTIONS.days ? 'checked' : ''}
+                                                    id={'month'}
                                                     type="radio"
                                                     name="monthly"
                                                     value={1}
                                                     className="form-radio-input"
-                                                    onChange={(e) => { props.handleChangeMonthlySelectionFirst(e.target.id) }}
+                                                    onChange={handelMonthlyOptions}
                                                 />
-                                                <label className="form-radio-label" htmlFor={'Pattern3'}><span className="RadioBoxIcon" /></label>
+                                                <label className="form-radio-label" htmlFor={'month'}><span className="RadioBoxIcon" /></label>
                                             </fieldset>
                                         </div>
                                         <fieldset className="right-colblock">
                                             <label>Day</label>
                                             <input
                                                 type="text"
+                                                disabled={props.monthlyOptions === MONTHLY_RECURRING_OPTIONS.months}
                                                 name={'recurringPattern'}
                                                 value={props.monthlyDay}
                                                 maxLength={2}
@@ -245,6 +271,7 @@ export const ScheduleType = props => {
                                             <label>of every</label>
                                             <input
                                                 type="text"
+                                                disabled={props.monthlyOptions === MONTHLY_RECURRING_OPTIONS.months}
                                                 name={'recurringPattern'}
                                                 value={props.monthlyMonths}
                                                 maxLength={2}
@@ -259,14 +286,15 @@ export const ScheduleType = props => {
                                         <div className="left-radioblock clearfix">
                                             <fieldset>
                                                 <input
-                                                    id={'Pattern4'}
+                                                    checked={props.monthlyOptions === MONTHLY_RECURRING_OPTIONS.months ? 'checked' : ''}
+                                                    id={'day'}
                                                     type="radio"
                                                     name="monthly"
                                                     value={2}
                                                     className="form-radio-input"
-                                                    onChange={(e) => { props.handleChangeMonthlySelectionSecond(e.target.id) }}
+                                                    onChange={handelMonthlyOptions}
                                                 />
-                                                <label className="form-radio-label" htmlFor={'Pattern4'}><span className="RadioBoxIcon" /></label>
+                                                <label className="form-radio-label" htmlFor={'day'}><span className="RadioBoxIcon" /></label>
                                             </fieldset>
                                         </div>
 
@@ -280,6 +308,7 @@ export const ScheduleType = props => {
                                                         onChange={props.handleChangeSelectedDays}
                                                         selectedValue={props.selectedDays}
                                                         className='onBoardingSelect'
+                                                        disabled={props.monthlyOptions === MONTHLY_RECURRING_OPTIONS.days}
                                                     >
                                                         {props.selectedDaysLabel ? props.selectedDaysLabel : <span className="Select-placeholder pl-0">Select</span>}
                                                     </Select>
@@ -293,6 +322,7 @@ export const ScheduleType = props => {
                                                         onChange={props.handleChangeSelectedWeeks}
                                                         selectedValue={props.selectedWeeks}
                                                         className='onBoardingSelect'
+                                                        disabled={props.monthlyOptions === MONTHLY_RECURRING_OPTIONS.days}
                                                     >
                                                         {props.selectedWeeksLabel ? props.selectedWeeksLabel : <span className="Select-placeholder pl-0">Select</span>}
                                                     </Select>
@@ -301,6 +331,7 @@ export const ScheduleType = props => {
                                             <label>of every</label>
                                             <input
                                                 type="text"
+                                                disabled={props.monthlyOptions === MONTHLY_RECURRING_OPTIONS.days}
                                                 name={'recurringPattern'}
                                                 value={props.monthlyMonthsSecond}
                                                 maxLength={2}
@@ -312,6 +343,9 @@ export const ScheduleType = props => {
                                     </div>}
                                 </Fragment>
                             }
+                            {props.onClickSave && <span className='text-danger d-block mb-2 recurring-msg'>
+                                {recurringPatternValidation(props.selectedRecurringType)}
+                            </span>}
                         </div>
                     </div>
 
@@ -376,7 +410,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
-                                    className={!props.startTime ? "disable-pointer": ""}
+                                    className={!props.startTime ? "disable-pointer" : ""}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
