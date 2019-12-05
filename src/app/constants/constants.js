@@ -426,13 +426,13 @@ export const ENTITY_DASHBOARD_STATUS = {
             visit: 'Visit',
             feedback: 'Feedback'
         },
-    },    
+    },
     serviceRequests: {
         statCard: {
             all: 'All',
             open: 'Open',
             cancelled: 'Cancelled'
-        }    
+        }
     },
     serviceVisits: {
         statCard: {
@@ -440,7 +440,7 @@ export const ENTITY_DASHBOARD_STATUS = {
             lowTaskCompletions: 'LowTaskCompletions',
             cancelled: 'Cancelled',
             overDue: 'Overdue'
-        }    
+        }
     }
 }
 
@@ -517,7 +517,7 @@ export const FilterActiveTab = {
     "gender": '1',
     "categories": '7',
     "status": '8',
-    "recurring": '9' 
+    "recurring": '9'
 }
 
 export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Cancelled'];
@@ -577,6 +577,11 @@ export const SCHEDULE_TYPES = {
         id: 2,
         name: 'Standard'
     }
+}
+
+export const MONTHLY_RECURRING_OPTIONS = {
+    days: 1,
+    months: 2
 }
 
 export const CALENDAR_DASHBOARD_LENGTH = 6;
