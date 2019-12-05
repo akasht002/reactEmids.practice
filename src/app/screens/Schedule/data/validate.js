@@ -61,8 +61,8 @@ export const validate = {
                 { key: 'endDate', validation: 'required', isState: true },
                 { key: 'startTime', validation: 'required', isState: true },
                 { key: 'endTime', validation: 'required', isState: true },
-                { key: 'selectedDays', validation: 'required', isState: true },
-                { key: 'selectedWeeks', validation: 'required', isState: true },
+                { key: 'selectedDaysId', validation: 'required', isState: true },
+                { key: 'selectedWeeksId', validation: 'required', isState: true },
                 { key: 'monthlyMonthsSecond', validation: 'required', isState: true },
                 { key: 'serviceTypes', validation: 'checkLength', isState: false },
                 { key: 'street', validation: 'required', isState: true },
@@ -72,7 +72,7 @@ export const validate = {
             ]
         }
     },
-    assessment :[
+    assessment: [
         { key: 'startDate', validation: 'required', isState: true },
         { key: 'startTime', validation: 'required', isState: true },
         { key: 'endTime', validation: 'required', isState: true },
@@ -81,7 +81,7 @@ export const validate = {
         { key: 'state', validation: 'required', isState: true },
         { key: 'zip', validation: 'checkLengthOfZip', isState: true }
     ],
-    assessment_edit :[
+    assessment_edit: [
         { key: 'startDate', validation: 'required', isState: true },
         { key: 'startTime', validation: 'required', isState: true },
         { key: 'endTime', validation: 'required', isState: true },
@@ -90,5 +90,36 @@ export const validate = {
         { key: 'state', validation: 'required', isState: true },
         { key: 'zip', validation: 'checkLengthOfZip', isState: true }
     ]
+}
+
+export const recurringPatternValidate = {
+    recurring:
+    {
+        daily:
+            [
+                { key: 'dailyDayOccurence', validation: 'required', isState: true },
+            ],
+
+        weekly:
+            [
+                { key: 'weeklyDayOccurence', validation: 'required', isState: true },
+                { key: 'weeklySelectedDays', validation: 'checkLength', isState: false },
+            ],
+
+        monthly:
+        {
+            first: [
+                { key: 'monthlyDay', validation: 'required', isState: true },
+                { key: 'monthlyMonths', validation: 'required', isState: true },
+                { key: 'monthlyOptions', validation: 'required', isState: true }
+            ],
+            second: [
+                { key: 'selectedDaysId', validation: 'required', isState: true },
+                { key: 'selectedWeeksId', validation: 'required', isState: true },
+                { key: 'monthlyMonthsSecond', validation: 'required', isState: true },
+                { key: 'monthlyOptions', validation: 'required', isState: true }
+            ]
+        }
+    },
 }
 

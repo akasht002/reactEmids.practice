@@ -580,3 +580,5 @@ export const SCHEDULE_TYPES = {
 }
 
 export const CALENDAR_DASHBOARD_LENGTH = 6;
+
+export const RECURRING_PATTERN_VALIDATION_MSG = 'Please Select the recurring pattern';
