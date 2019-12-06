@@ -144,6 +144,7 @@ export const isAssessmentEdit = (data) => {
 
 export function getServiceCategory(id, selectedData, isEditable) {
     return (dispatch) => {
+        dispatch(startLoading());
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             dispatch(getServiceCategorySuccess(resp.data));
             let categoryId = id ? id : 1
@@ -200,7 +201,6 @@ export function getPatientAddress(patientId) {
         var url = API.getPatientAddress + `${patientId}/PatientAddress`
         PatientGet(url).then((resp) => {
             dispatch(getPatientAddressSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -212,7 +212,6 @@ export function getStates() {
         dispatch(startLoading());
         Get(API.getState).then((resp) => {
             dispatch(getStateSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -309,7 +308,6 @@ export function getRecurringPattern() {
         dispatch(startLoading());
         return ServiceRequestGet(API.servicerequest + `LookUp/RecurringPattern`).then((resp) => {
             dispatch(getRecurringPatternSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -328,7 +326,6 @@ export function getDays(selectedDaysId = []) {
                 })
             })
             dispatch(getDaysSuccess(data))
-            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })

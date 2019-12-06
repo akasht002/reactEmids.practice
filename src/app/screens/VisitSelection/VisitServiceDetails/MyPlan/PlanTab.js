@@ -8,7 +8,7 @@ import Filter from "./Filter/index";
 import { VISIT_STATUS } from '../../../../constants/constants';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 
-export const PlanTab = props => {
+export const PlanTab = props => { 
     let isEntity = isEntityUser()
     let renderPLanDetailsClass = !isEntity ? 'full-block-requestplan' : '';
     let defaultImage = (caseInsensitiveComparer(props.visitServiceDetails.statusName, VISIT_STATUS.requested.keyValue) || caseInsensitiveComparer(props.visitServiceDetails.statusName, VISIT_STATUS.open.keyValue))

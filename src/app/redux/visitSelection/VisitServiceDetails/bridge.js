@@ -8,8 +8,7 @@ export const VisitServiceDetails = {
     updateServiceRequestByServiceProviderSuccess: 'updateServiceRequestByServiceProviderSuccess/visitservicedetails',
     setEntityServiceProviderSuccess: 'getDaysSuccess/setEntityServiceProvider',
     canInitiateConversationSuccess:'canInitiateConversationSuccess/visitservicedetails',
-    formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails',
-    isScheduleLoading: 'isScheduleLoading/visitservicedetails',
+    formDirtyVisitServiceDetails: 'formDirtyVisitServiceDetails/visitservicedetails',    
     cancelHiredRequest: 'cancelHiredRequest/visitservicedetails',
 
     //New Integration
@@ -37,5 +36,9 @@ export const VisitServiceDetails = {
     setActivePage: 'setActivePage/visitServiceDetails',
     setPlanScheduleId: 'setPlanScheduleId/visitservicedetails',
     editIndividualEditPopup: 'editIndividualEditPopup/visitservicedetails',
-    getPlanId: 'planId/visitservicedetails'
+    getPlanId: 'planId/visitservicedetails',
+    isScheduleLoading: 'isScheduleLoading/visitservicedetails',
+    isVisitservicedetailLoading: 'isVisitservicedetailLoading/visitservicedetails',
+    isServiceRequestListLoading: 'isServiceRequestListLoading/visitservicedetails',
+    isEntityServiceProviderListLoading: 'isEntityServiceProviderListLoading/visitservicedetails',
   }

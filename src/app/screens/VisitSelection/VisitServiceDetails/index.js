@@ -882,6 +882,7 @@ highlightVisit = data => {
                 activeTab={this.state.activeTab}
                 goBack={() => this.goBackToParticularPage()}
               />
+              {(this.props.isScheduleLoading || this.props.isServiceRequestListLoading || this.props.isVisitservicedetailLoading) && <Preloader />}
               <TabContent activeTab={this.state.activeTab}>
                 {
                   this.props.ServiceRequestId !== 0 &&
@@ -1107,6 +1108,9 @@ export function mapDispatchToProps(dispatch) {
 export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
   return {
+    isScheduleLoading:VisitServiceDetailsState.isScheduleLoading,
+    isServiceRequestListLoading:VisitServiceDetailsState.isServiceRequestListLoading,
+    isVisitservicedetailLoading:VisitServiceDetailsState.isVisitservicedetailLoading,
     visitServiceList: VisitServiceDetailsState.visitserviceList,
     ServiceRequestId: VisitServiceDetailsState.ServiceRequestId,
     VisitServiceDetails: VisitServiceDetailsState.VisitServiceDetails,
