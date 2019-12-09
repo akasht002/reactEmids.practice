@@ -221,7 +221,6 @@ export function getStates() {
 export function getValidPatientAddress(data,addressCallback) {
     return (dispatch, getState) => {
         let modelData = getModal(data)
-        dispatch(startLoading())
         ServiceRequestPost(
             API.getValidPatientAddress,
             modelData
@@ -236,10 +235,8 @@ export function getValidPatientAddress(data,addressCallback) {
                     dispatch(getValidPatientAddressSuccess(false))
                     addressCallback(true)
                 }
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
                 err.response && err.response.status === API_ERROR_CODE.badRequest && dispatch(getValidPatientAddressSuccess(true))
 
             })
