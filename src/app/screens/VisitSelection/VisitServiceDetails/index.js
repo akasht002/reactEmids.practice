@@ -38,9 +38,12 @@ import {
   clearServiceType,
   clearServiceCategory
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+
+import { getUserInfo } from '../../../services/http'
 import {
   goToAssessmentVisitProcessing
 } from "../../../redux/dashboard/Dashboard/actions";
+import { setServiceProviderFeedbackTab } from "../../../redux/dashboard/EntityDashboard/ServiceProvider/actions"
 import { Path } from '../../../routes';
 import { push, goBack } from '../../../redux/navigation/actions';
 import { TabHeader } from './Components/TabHeader';
@@ -66,7 +69,6 @@ import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat, timeDropDownForm
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
-import { getUserInfo } from '../../../services/http';
 import {
   getVisitServiceHistoryByIdDetail,
   getAssessmentQuestionsList
@@ -577,6 +579,9 @@ export class VisitServiceDetails extends Component {
     const model = {
       serviceProviderId: parseInt(espId, 10),
       visitId: data
+    }  
+    if(!getUserInfo().isEntityServiceProvider && getUserInfo().serviceProviderTypeId === 1) {
+      this.props.setServiceProviderFeedbackTab(true)
     }
     this.props.getVisitServiceHistoryByIdDetail(data)
     if (scheduleTypeId === VISIT_TYPE.assessment) {
@@ -1100,8 +1105,8 @@ export function mapDispatchToProps(dispatch) {
     resetServiceDetails: () => dispatch(resetServiceDetails()),
     editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data)),
     setEntityDashboard: data => dispatch(setEntityDashboard(data)),
-    modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData))
-
+    modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData)),
+    setServiceProviderFeedbackTab : data => dispatch(setServiceProviderFeedbackTab(data))
   }
 }
 
