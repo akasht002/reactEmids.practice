@@ -28,7 +28,8 @@ import {
   resetServiceDetails,
   editIndividualEditPopup,
   setEntityDashboard,
-  modifiedPlanId
+  modifiedPlanId,
+  clearVisitList
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
 import {
@@ -153,6 +154,7 @@ export class VisitServiceDetails extends Component {
   }
 
   componentWillUnmount() {
+    this.props.clearVisitList()
     this.props.resetServiceDetails()
     this.props.setEntityDashboard(false)
   }
@@ -1099,7 +1101,8 @@ export function mapDispatchToProps(dispatch) {
     editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data)),
     setEntityDashboard: data => dispatch(setEntityDashboard(data)),
     modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData)),
-    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data))
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
+    clearVisitList: () => dispatch(clearVisitList())
   }
 }
 

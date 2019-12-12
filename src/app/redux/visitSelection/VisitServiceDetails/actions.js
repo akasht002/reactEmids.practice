@@ -782,3 +782,9 @@ export const getPlanScheduleId = (data, servicePlanVisitId) => {
     data: planScheduleId
   }
 }
+
+export const clearVisitList = () => {
+  return {
+    type: VisitServiceDetails.clearVisitList
+  }
+}
