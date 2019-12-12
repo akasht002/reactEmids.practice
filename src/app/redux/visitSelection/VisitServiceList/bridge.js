@@ -5,4 +5,5 @@ export const VisitServiceList = {
     startLoading: 'startLoading/visitservice',
     endLoading: 'endLoading/visitservice',
     setServiceRequestStatus: 'setServiceRequestStatus/visitservice',
+    setPageNumber: 'setPageNumber/visitservice'
 };

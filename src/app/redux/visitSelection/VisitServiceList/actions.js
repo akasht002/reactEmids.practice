@@ -112,3 +112,10 @@ export const setServiceRequestStatusSuccess = (data) => {
         data
     }
 }
+
+export const setPageNumber = (data) => {
+    return {
+        type: VisitServiceList.setPageNumber,
+        data
+    }
+};

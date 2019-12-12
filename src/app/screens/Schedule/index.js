@@ -17,7 +17,6 @@ import {
     getServiceCategory,
     getServiceType,
     selectOrClearAllServiceType,
-    getPatientAddress,
     getStates,
     setSelectedPos,
     getValidPatientAddressSuccess,
@@ -111,7 +110,6 @@ export class Schedule extends Component {
 
         if (this.props.patientId) {
             await this.props.getServiceCategory(this.categoryId, [], this.props.isIndividualScheduleEdit);
-            this.props.getPatientAddress(this.props.patientId);
             await this.props.getStates();
             await this.props.getEntityServiceProviderList(data);
             await this.props.getRecurringPattern();
@@ -294,7 +292,7 @@ export class Schedule extends Component {
             })
             this.serviceTypes = [];
             this.categoryId = SERVICE_CATEGORY.adl.id;
-            this.address = {}
+            //this.address = {}
             this.selectedDuration = ''
             this.handleAssignServiceProvider(null, true);
             this.handleServiceCategory(SERVICE_CATEGORY.adl.id, true)
@@ -503,7 +501,7 @@ export class Schedule extends Component {
     handleChangeStartTime = (event) => {
         this.formatedStartTime = getHourMin(event)
         let endTime = this.state.endTime
-        if(endTime){
+        if (endTime) {
             this.selectedDuration = getDiffTime(this.formatedStartTime, endTime);
         }
         if (this.formatedStartTime === this.formatedEndTime) {
@@ -684,7 +682,7 @@ export class Schedule extends Component {
             pageNumber: this.state.pageNumber,
             pageSize: this.state.pageSize
         }
-        this.props.getEntityServiceProviderListSearch(data)
+        this.props.getEntityServiceProviderListSearch(data, this.espId)
     }
 
     validate = (data) => {
@@ -1079,7 +1077,6 @@ export function mapDispatchToProps(dispatch) {
     return {
         getServiceCategory: (data, selectedData, isEditable) => dispatch(getServiceCategory(data, selectedData, isEditable)),
         getServiceType: (data, selectedData) => dispatch(getServiceType(data, selectedData)),
-        getPatientAddress: (data) => dispatch(getPatientAddress(data)),
         getStates: () => dispatch(getStates()),
         setSelectedPos: (data) => dispatch(setSelectedPos(data)),
         getValidPatientAddressSuccess: (data) => dispatch(getValidPatientAddressSuccess(data)),
@@ -1090,7 +1087,7 @@ export function mapDispatchToProps(dispatch) {
         createSchedule: (data) => dispatch(createSchedule(data)),
         editSchedule: (data) => dispatch(editSchedule(data)),
         goToServicedetails: () => dispatch(push(Path.visitServiceDetails)),
-        getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
+        getEntityServiceProviderListSearch: (data, selectedESPId) => dispatch(getEntityServiceProviderListSearch(data, selectedESPId)),
         selectESP: (data) => dispatch(selectESP(data)),
         clearESPListSchedule: () => dispatch(clearESPListSchedule()),
         selectOrClearAllServiceType: (data, isSelectAll) => dispatch(selectOrClearAllServiceType(data, isSelectAll)),

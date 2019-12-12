@@ -30,7 +30,7 @@ import {
   setEntityDashboard,
   modifiedPlanId
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule } from '../../../redux/schedule/actions';
+import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule, getPatientAddress } from '../../../redux/schedule/actions';
 import {
   getServiceCategory,
   getServiceType,
@@ -148,6 +148,7 @@ export class VisitServiceDetails extends Component {
     this.props.getServiceCategory();
     this.props.ServiceRequestStatus();
     this.props.getVisitStatus();
+    this.props.getPatientAddress(this.props.patientId);
     this.getVisitFirstAndLastDate();
   }
 
@@ -509,7 +510,7 @@ export class VisitServiceDetails extends Component {
         pageNumber: this.state.pageNumberESP,
         pageSize: this.state.pageSizeESP
       }
-      this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId);
+      this.props.getEntityServiceProviderList(data, this.espId);
     }
     this.setState({
       searchOpen: !this.state.searchOpen,
@@ -532,7 +533,7 @@ export class VisitServiceDetails extends Component {
       pageNumber: this.state.pageNumberESP,
       pageSize: this.state.pageSizeESP
     }
-    this.props.getEntityServiceProviderListSearch(data)
+    this.props.getEntityServiceProviderListSearch(data, this.espId)
   }
 
   clickShowMore = () => {
@@ -541,7 +542,7 @@ export class VisitServiceDetails extends Component {
         pageNumber: this.state.pageNumberESP,
         pageSize: this.state.pageSizeESP
       }
-      this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId)
+      this.props.getEntityServiceProviderList(data, this.espId)
     })
   }
 
@@ -1064,7 +1065,7 @@ export function mapDispatchToProps(dispatch) {
     assignESP: (data) => dispatch(assignESP(data)),
     selectESP: (data) => dispatch(selectESP(data)),
     clearESPList: () => dispatch(clearESPList()),
-    getEntityServiceProviderListSearch: (data) => dispatch(getEntityServiceProviderListSearch(data)),
+    getEntityServiceProviderListSearch: (data, selectedESPId) => dispatch(getEntityServiceProviderListSearch(data, selectedESPId)),
     getIndividualSchedulesDetails: (data) => dispatch(getIndividualSchedulesDetails(data)),
     getVisitServiceHistoryByIdDetail: (data) => dispatch(getVisitServiceHistoryByIdDetail(data)),
     getPerformTasksList: (data, startOrStop, isAssessmentVisit) => dispatch(getPerformTasksList(data, startOrStop, isAssessmentVisit)),
@@ -1099,8 +1100,8 @@ export function mapDispatchToProps(dispatch) {
     resetServiceDetails: () => dispatch(resetServiceDetails()),
     editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data)),
     setEntityDashboard: data => dispatch(setEntityDashboard(data)),
-    modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData))
-
+    modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData)),
+    getPatientAddress: (data) => dispatch(getPatientAddress(data))
   }
 }
 

@@ -501,3 +501,15 @@ span.title-view {
     background: transparent !important;
     color: #7a329f;
 }
+
+.disable-assign-provider {
+    cursor: context-menu !important;
+    z-index: 10000;
+}
+
+.disable-assign-provider .EntityUServiceProf, .disable-assign-provider .SP-viewplantable, .disable-assign-provider .SP-viewplantable span a 
+{
+    cursor: context-menu !important;
+    pointer-events: none;
+    z-index: 10000;
+}
