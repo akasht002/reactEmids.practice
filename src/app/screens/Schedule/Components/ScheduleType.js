@@ -82,7 +82,7 @@ export const ScheduleType = props => {
                             mandatory={false}
                             minDate={moment()}
                             value={props.startDate}
-                            className={"form-control datePicker"}
+                            className={!props.startDate && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
                             label="Start Date"
                             dateFormat={DATE_FORMATS.m_d_yy}
                             placeholderText={DATE_FORMATS.m_d_yy}
@@ -101,6 +101,7 @@ export const ScheduleType = props => {
                                     minTime={defaultStartTime()}
                                     maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
                                     placeholderText={'Start Time'}
+                                    className={!props.startTime && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
                                 />
                                 {!props.startTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -118,7 +119,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
-                                    className={!props.startTime ? "disable-pointer" : ""}
+                                    className={!props.endTime && props.onClickSave ? 'form-control datePicker inputFailure disable-pointer' : 'form-control datePicker'}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -357,7 +358,7 @@ export const ScheduleType = props => {
                             mandatory={false}
                             minDate={moment()}
                             value={props.startDate}
-                            className={"form-control datePicker"}
+                            className={!props.startDate && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
                             label="Start Date"
                             dateFormat={DATE_FORMATS.m_d_yy}
                             placeholderText={DATE_FORMATS.m_d_yy}
@@ -374,7 +375,7 @@ export const ScheduleType = props => {
                             mandatory={false}
                             minDate={props.startDate ? formateStateDateValue(props.startDate) : moment()}
                             value={props.endDate}
-                            className={"form-control datePicker"}
+                            className={!props.endDate && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
                             label="End Date"
                             dateFormat={DATE_FORMATS.m_d_yy}
                             placeholderText={DATE_FORMATS.m_d_yy}
@@ -394,6 +395,7 @@ export const ScheduleType = props => {
                                     minTime={defaultStartTime()}
                                     maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
                                     placeholderText={'Start Time'}
+                                    className={!props.startTime && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
                                 />
                                 {!props.startTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -410,7 +412,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
-                                    className={!props.startTime ? "disable-pointer" : ""}
+                                    className={!props.startTime && props.onClickSave ? 'form-control datePicker inputFailure disable-pointer' : 'form-control datePicker'}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>

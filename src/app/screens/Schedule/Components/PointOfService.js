@@ -171,7 +171,7 @@ export class PointOfService extends Component {
                             textChange={this.props.handelNewAddress}
                             className={
                                 'form-control ' +
-                                (this.props.nextClicked &&
+                                (this.props.onClickSave &&
                                     !this.props.zip &&
                                     'inputFailure')
                             }
