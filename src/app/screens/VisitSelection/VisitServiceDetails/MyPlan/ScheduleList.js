@@ -26,7 +26,7 @@ export const ScheduleList = props => {
                                     </label>
                                     <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.schedulePatternType}</label></span>
                                     <span class="checkmark theme-primary"></span>
-                                </label>
+                               
 
                                 <div className="edit-block">
                                 {item.isAnyAvailableScheduleVisit && <button onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
@@ -35,6 +35,7 @@ export const ScheduleList = props => {
                                     Edit
                                 </button>}
                                 </div>
+                                </label>
                             </fieldset>
                           
                         </div>

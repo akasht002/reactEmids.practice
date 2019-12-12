@@ -384,7 +384,7 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border: 1px solid #7a329f;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 20px;
     padding: 6px 12px !important;
     background: #fff;
@@ -581,11 +581,13 @@
 
 .edit-block {
     width: 10% !important;
-    margin-top: -31px !important;
+    margin-top: -3px !important;
+    z-index: 9999;
 }
 
 .schedule-listblock fieldset {
     position: relative;
+    padding:10px;
 }
 
 .edit-block button {
