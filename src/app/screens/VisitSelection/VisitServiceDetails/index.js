@@ -854,7 +854,7 @@ highlightVisit = data => {
       },
       {
         id: '4',
-        label: 'Services Types'
+        label: 'Service Types'
       },
       {
         id: '5',
