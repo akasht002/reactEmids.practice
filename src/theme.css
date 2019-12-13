@@ -172,7 +172,7 @@ span.btn-hired, span.btn-hired:hover, .BlockProfileContainer .BlockProfileDetail
 }
 
 input.form-control:focus,
-.input-range__slider {
+.input-range__slider, .list-group-item table:hover:before {
     border-color: #1e3d5c !important;
 }
 
