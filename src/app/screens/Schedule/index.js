@@ -110,7 +110,6 @@ export class Schedule extends Component {
 
         if (this.props.patientId) {
             await this.props.getServiceCategory(this.categoryId, [], this.props.isIndividualScheduleEdit);
-            this.props.getPatientAddress(this.props.patientId);
             await this.props.getStates();
             await this.props.getEntityServiceProviderList(data);
             await this.props.getRecurringPattern();
