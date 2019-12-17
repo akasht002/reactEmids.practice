@@ -410,6 +410,14 @@
 }
 
 .left-listblock {
+    height: 100%;
+}
+
+.right-tablelist {
+    height: 100%;
+}
+
+.left-listblock {
     max-height: calc(100vh - 210px);
     background: #fff;
     overflow-y: auto;
@@ -474,19 +482,19 @@
 @media (min-width: 1367px) {
 
     .tab_content_block {
-        max-height: calc(100vh - 260px);
+        max-height: calc(100vh - 200px);
     }
 
     .left-listblock {
-        max-height: calc(100vh - 292px);
+        max-height: calc(100vh - 230px);
     }
 
     .right-tablelist {
-        max-height: calc(100vh - 260px);
+        max-height: calc(100vh - 230px);
     }
 
     .plan-tableview tbody {
-        height: calc(100vh - 400px) !important;
+        height: calc(100vh - 345px) !important;
     }
 
     .right-customewidth .right-tablelist .table-result-block {
