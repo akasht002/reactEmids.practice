@@ -144,7 +144,8 @@ export const isAssessmentEdit = (data) => {
 
 export function getServiceCategory(id, selectedData, isEditable) {
     return (dispatch) => {
-        return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
+        dispatch(startLoading());
+        ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             dispatch(getServiceCategorySuccess(resp.data));
             let categoryId = id ? id : 1
             !isEditable && dispatch(getServiceType(categoryId, selectedData))
@@ -200,7 +201,6 @@ export function getPatientAddress(patientId) {
         var url = API.getPatientAddress + `${patientId}/PatientAddress`
         return PatientGet(url).then((resp) => {
             dispatch(getPatientAddressSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -212,7 +212,6 @@ export function getStates() {
         dispatch(startLoading());
         return Get(API.getState).then((resp) => {
             dispatch(getStateSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -222,8 +221,7 @@ export function getStates() {
 export function getValidPatientAddress(data, addressCallback) {
     return (dispatch, getState) => {
         let modelData = getModal(data)
-        dispatch(startLoading())
-        return ServiceRequestPost(
+        ServiceRequestPost(
             API.getValidPatientAddress,
             modelData
         )
@@ -237,10 +235,8 @@ export function getValidPatientAddress(data, addressCallback) {
                     dispatch(getValidPatientAddressSuccess(false))
                     addressCallback(true)
                 }
-                dispatch(endLoading())
             })
             .catch(err => {
-                dispatch(endLoading())
                 err.response && err.response.status === API_ERROR_CODE.badRequest && dispatch(getValidPatientAddressSuccess(true))
 
             })
@@ -323,7 +319,6 @@ export function getRecurringPattern() {
         dispatch(startLoading());
         return ServiceRequestGet(API.servicerequest + `LookUp/RecurringPattern`).then((resp) => {
             dispatch(getRecurringPatternSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -342,7 +337,6 @@ export function getDays(selectedDaysId = []) {
                 })
             })
             dispatch(getDaysSuccess(data))
-            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })

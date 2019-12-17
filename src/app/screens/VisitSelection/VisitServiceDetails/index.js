@@ -39,9 +39,12 @@ import {
   clearServiceType,
   clearServiceCategory
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+
+import { getUserInfo } from '../../../services/http'
 import {
   goToAssessmentVisitProcessing
 } from "../../../redux/dashboard/Dashboard/actions";
+import { setServiceProviderFeedbackTab } from "../../../redux/dashboard/EntityDashboard/ServiceProvider/actions"
 import { Path } from '../../../routes';
 import { push, goBack } from '../../../redux/navigation/actions';
 import { TabHeader } from './Components/TabHeader';
@@ -67,7 +70,6 @@ import { getHourMin, getUtcTimeDiffInHHMMformat, getHHMMformat, timeDropDownForm
 import moment from 'moment';
 import { AssignServiceProvider } from '../VisitServiceDetails/Components/AssignServiceProvider';
 import Search from '../VisitServiceList/Search';
-import { getUserInfo } from '../../../services/http';
 import {
   getVisitServiceHistoryByIdDetail,
   getAssessmentQuestionsList
@@ -88,7 +90,7 @@ import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { saveContextData, createDataStore } from '../../../redux/telehealth/actions';
 import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
 import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
-import { setServiceProviderFeedbackTab } from '../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
+import { USER_TYPE } from '../../../constants/constants'
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -581,6 +583,9 @@ export class VisitServiceDetails extends Component {
     const model = {
       serviceProviderId: parseInt(espId, 10),
       visitId: data
+    }  
+    if(!getUserInfo().isEntityServiceProvider && getUserInfo().serviceProviderTypeId === USER_TYPE.INDIVIDUAL_SERVICE_PROVIDER) {
+      this.props.setServiceProviderFeedbackTab(true)
     }
     this.props.setServiceProviderFeedbackTab(true)
     this.props.getVisitServiceHistoryByIdDetail(data)
@@ -887,6 +892,7 @@ highlightVisit = data => {
                 activeTab={this.state.activeTab}
                 goBack={() => this.goBackToParticularPage()}
               />
+              {(this.props.isScheduleLoading || this.props.isServiceRequestListLoading || this.props.isVisitservicedetailLoading) && <Preloader />}
               <TabContent activeTab={this.state.activeTab}>
                 {
                   this.props.ServiceRequestId !== 0 &&
@@ -1114,6 +1120,9 @@ export function mapDispatchToProps(dispatch) {
 export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
   return {
+    isScheduleLoading:VisitServiceDetailsState.isScheduleLoading,
+    isServiceRequestListLoading:VisitServiceDetailsState.isServiceRequestListLoading,
+    isVisitservicedetailLoading:VisitServiceDetailsState.isVisitservicedetailLoading,
     visitServiceList: VisitServiceDetailsState.visitserviceList,
     ServiceRequestId: VisitServiceDetailsState.ServiceRequestId,
     VisitServiceDetails: VisitServiceDetailsState.VisitServiceDetails,

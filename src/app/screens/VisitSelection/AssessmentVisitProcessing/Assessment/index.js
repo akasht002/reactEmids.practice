@@ -5,7 +5,7 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData'
 import { getQuestionsList, saveAnswers,startOrStopService,getServicePlanVisitSummaryDetails,
-    saveTaskPercentage,getQuestionsListSuccess } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
+    saveTaskPercentage,getQuestionsListSuccess,saveStartedTime } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch} from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
@@ -97,6 +97,10 @@ export class Assessment extends Component {
         
     }
 
+    async componentWillMount(){
+        await this.props.saveStartedTime("");
+    }
+
     handelPatientProfile = (data) => {
         this.props.setPatient(data)
         this.props.goToPatientProfile()
@@ -166,12 +170,12 @@ export class Assessment extends Component {
         this.setState({ isModalOpen: false })
     }
    
-    startService = (data, visitId) => {
+    startService = async (data, visitId) => {
         let startServiceAction = 1;
         let current_time;
         if (data === startServiceAction) {
             current_time = new moment().format("HH:mm");
-            this.setState({ startedTime: current_time, 
+            await this.setState({ startedTime: current_time, 
                             disabled: false, 
                             disableCheckbox: false, 
                             backDisabled: true,
@@ -180,14 +184,14 @@ export class Assessment extends Component {
                          })
         } else {
             current_time = this.state.startedTime;
-            this.setState({ stopTime: true, 
+            await this.setState({ stopTime: true, 
                             startService: true,
                             disabled: false,
                             backDisabled: true,
-                            stopTimer: !this.state.stopTimer 
+                            stopTimer: !this.state.stopTimer  
                         })
         }        
-        this.props.startOrStopService(this.props.requestDetails, data, convertTime24to12(current_time));
+        await this.props.startOrStopService(this.props.requestDetails, data, convertTime24to12(current_time));
     }
 
     render() {
@@ -205,6 +209,8 @@ export class Assessment extends Component {
                 duration={visitTimeDuration}
             />
         }
+
+        let startedTimes = this.props.startedTime.length > 0 ? this.props.startedTime: getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "hh:mm a")
 
         if (visitStatus === SERVICE_STATES.YET_TO_START) {
             timerBtn = <a className="btn btn-primary" test-startButton='test-startButton' onClick={() => { this.startService(startService, serviceRequestVisitId) }}>Start Service</a>
@@ -273,8 +279,8 @@ export class Assessment extends Component {
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerStarted running">{ timerBtn }</span>
                                         </div>
-                                        {visitStatus !== SERVICE_STATES.YET_TO_START && <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "hh:mm a")}</span>
+                                        {visitStatus !== SERVICE_STATES.YET_TO_START && startedTimes.length > 0 && <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {startedTimes}</span>
                                         </div>}
                                     </div>
                                 </div>
@@ -421,7 +427,8 @@ export function mapDispatchToProps(dispatch) {
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime)),
         getServicePlanVisitSummaryDetails:(data) => dispatch(getServicePlanVisitSummaryDetails(data)),
         saveTaskPercentage:(data) => dispatch(saveTaskPercentage(data)),
-        getQuestionsListSuccess:(data) => dispatch(getQuestionsListSuccess(data))
+        getQuestionsListSuccess:(data) => dispatch(getQuestionsListSuccess(data)),
+        saveStartedTime: data => dispatch(saveStartedTime(data))
     }
 };
 

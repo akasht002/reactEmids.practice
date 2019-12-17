@@ -149,7 +149,8 @@ export const DashboardConversationPagination = {
 
 
 export const USER_TYPE = {
-    SERVICE_PROVIDER_TYPE_ID: 2
+    SERVICE_PROVIDER_TYPE_ID: 2,
+    INDIVIDUAL_SERVICE_PROVIDER:1
 }
 
 export const SERVICE_PROVIDER_TYPES = {

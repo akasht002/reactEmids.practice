@@ -33,6 +33,27 @@ export const scheduleLoading = data => {
   }
 }
 
+export const isVisitservicedetailLoading = data => {
+  return {
+    type: VisitServiceDetails.isVisitservicedetailLoading,
+    data
+  }
+}
+
+export const isServiceRequestListLoading = data => {
+  return {
+    type: VisitServiceDetails.isServiceRequestListLoading,
+    data
+  }
+}
+
+export const isEntityServiceProviderListLoading = data => {
+  return {
+    type: VisitServiceDetails.isEntityServiceProviderListLoading,
+    data
+  }
+}
+
 export const cancelHiredRequest = data => {
   return {
     type: VisitServiceDetails.cancelHiredRequest,
@@ -176,11 +197,13 @@ export function getVisitServiceDetails(data) {
 
     ServiceRequestGet(API.getServiceRequestDetails + `${data}/${serviceProviderId}`)
       .then(resp => {
+        dispatch(isVisitservicedetailLoading(true))
         dispatch(getVisitServiceDetailsSuccess(resp.data));
         dispatch(canInitiateConversation(resp.data));
+        dispatch(isVisitservicedetailLoading(false))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(isVisitservicedetailLoading(false))
       })
   }
 }
@@ -525,11 +548,12 @@ export function getEntityServiceProviderListSearch(data, selectedESPId = null) {
 export function getServiceRequestList(patientId) {
   let serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch) => {
+    dispatch(isServiceRequestListLoading(true));
     ServiceRequestGet(API.getNewServiceRequestList + `${patientId}/${serviceProviderId}`).then((resp) => {
       dispatch(getServiceRequestListSuccess(resp.data))
-      dispatch(endLoading());
+      dispatch(isServiceRequestListLoading(false));
     }).catch((err) => {
-      dispatch(endLoading());
+      dispatch(isServiceRequestListLoading(false));
     })
   }
 };
@@ -557,8 +581,10 @@ export function getSchedulesList(patientId) {
         dispatch(getPlanId(id))
         dispatch(getSchedulesListSuccess(resp.data))
         dispatch(getVisitList(model));
+        dispatch(scheduleLoading(false));
       })
       .catch(err => {
+        dispatch(scheduleLoading(false));
         logError(err);
       })
   }
@@ -574,7 +600,7 @@ export function getVisitList(data) {
     data.endDate = isEntityDashboard ? visitDate.endVisitDateForWeb : data.startDate
     !isEntityUser() &&
       (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
-    dispatch(startLoading());
+    dispatch(isServiceRequestListLoading(true));
     ServiceRequestPost(getVisitList, data)
       .then(resp => {
         let pageNumber = resp && resp.data.length > 0 && resp.data[0].pageNumber
@@ -585,6 +611,7 @@ export function getVisitList(data) {
       })
       .catch(err => {
         logError(err)
+        dispatch(isServiceRequestListLoading(false));
       })
   }
 };
@@ -592,13 +619,14 @@ export function getVisitList(data) {
 export function getVisitListCount(data) {
   let getVisitListCount = getUserInfo().isEntityServiceProvider ? API.getEspVisitListCount : (isEntityUser() ? API.getVisitListCount : API.getIspVisitListCount)
   return (dispatch) => {
+    dispatch(isServiceRequestListLoading(true));
     ServiceRequestPost(getVisitListCount, data)
       .then(resp => {
         dispatch(getVisitListCountSuccess(resp.data))
-        dispatch(endLoading());
+        dispatch(isServiceRequestListLoading(false));
       })
       .catch(err => {
-        dispatch(endLoading());
+        dispatch(isServiceRequestListLoading(false));
       })
   }
 };
@@ -671,14 +699,15 @@ export function updateServiceVisit(data) {
 
 export function getServiceVisitDetails(visitId) {
   return (dispatch) => {
+    dispatch(isVisitservicedetailLoading(true))
     ServiceRequestGet(API.getServiceVisitDetails + `${visitId}`)
       .then(resp => {
         dispatch(getServiceVisitDetailsSuccess(resp.data))
         dispatch(editIndividualEditPopup(true))
-        dispatch(endLoading())
+        dispatch(isVisitservicedetailLoading(false))
       })
       .catch(err => {
-        dispatch(endLoading())
+        dispatch(isVisitservicedetailLoading(false))
       })
   }
 };

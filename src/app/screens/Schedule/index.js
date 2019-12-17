@@ -110,11 +110,13 @@ export class Schedule extends Component {
 
         if (this.props.patientId) {
             await this.props.getServiceCategory(this.categoryId, [], this.props.isIndividualScheduleEdit);
+            this.props.getPatientAddress(this.props.patientId);
             await this.props.getStates();
             await this.props.getEntityServiceProviderList(data);
             await this.props.getRecurringPattern();
             await this.props.getDays(this.props.individualSchedulesDetails.weekly && this.props.individualSchedulesDetails.weekly.days);
-            await this.getPrimaryAddress();
+            await this.props.getEntityServiceProviderList(data);
+            await this.getPrimaryAddress();            
         } else {
             this.props.history.push(Path.visitServiceList)
         }
