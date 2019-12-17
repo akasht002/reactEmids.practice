@@ -90,7 +90,6 @@ import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { saveContextData, createDataStore } from '../../../redux/telehealth/actions';
 import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
 import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
-import { setServiceProviderFeedbackTab } from '../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 import { USER_TYPE } from '../../../constants/constants'
 export class VisitServiceDetails extends Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import { API } from '../../../../services/api';
 import { Post } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { DATE_FORMATS, API_RESPONSE } from '../../../constants/constants';
-import { getTimeZoneOffset } from '../../../../utils/dateUtility';
+import { getTimeZoneOffset, getHHMinSession } from '../../../../utils/dateUtility';
 import { getValue } from '../../../../utils/userUtility'
 import { getFullName } from '../../../../utils/stringHelper'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
