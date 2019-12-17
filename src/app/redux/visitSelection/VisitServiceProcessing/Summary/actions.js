@@ -141,7 +141,7 @@ export function getVisitServiceEligibilityStatus(data) {
     }
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
+        return ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
             dispatch(getVisitServiceEligibityStatusSuccess(resp.data));
             dispatch(calculationsFirstTime(data));
             dispatch(push(Path.summary))
@@ -290,7 +290,6 @@ export function getSavedSignature(data) {
     let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
     let getSavedSignature = isEntityServiceProvider ? API.getSavedSignatureForEsp : API.getSavedSignature
     return (dispatch) => {
-        dispatch(startLoadingProcessing());
         ServiceRequestGet(getSavedSignature + data).then((resp) => {
             dispatch(getSavedSignatureSuccess(resp.data));
             dispatch(endLoadingProcessing());

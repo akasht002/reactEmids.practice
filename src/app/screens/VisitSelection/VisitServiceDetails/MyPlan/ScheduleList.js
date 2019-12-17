@@ -19,6 +19,7 @@ export const ScheduleList = props => {
                                         value={item.planScheduleId}
                                         onChange={(e) => { props.handleChangeSchedule(e) }}
                                         defaultChecked={true}
+                                        className= {'Test'}
                                     />
                                     <label className='SR-types-label theme-primary'>
                                         {item.serviceTypes &&
@@ -29,7 +30,7 @@ export const ScheduleList = props => {
                                
 
                                 <div className="edit-block">
-                                {item.isAnyAvailableScheduleVisit && <button onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
+                                {item.isAnyAvailableScheduleVisit && <button className= {'TestBtn'} onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
                                                 props.handelEditShedule(item.planScheduleId): 
                                                 props.handelEditAssessment(item.planScheduleId)}>
                                     Edit

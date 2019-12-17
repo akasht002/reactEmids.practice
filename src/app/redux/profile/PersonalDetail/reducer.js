@@ -1,4 +1,4 @@
-import { PersonalDetails } from './actions'
+import { PersonalDetails } from './bridge';
 
 const defaultState = {
   personalDetail: [],

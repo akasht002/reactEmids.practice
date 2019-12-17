@@ -9,6 +9,7 @@ export const Tabs = props => {
             {dashboardTabs.map(tab =>
                 <NavItem>
                     <NavLink
+                        test-tabs='test-tabs'
                         className={classnames({
                             active: props.activeTab === tab.id
                         })}

@@ -327,7 +327,7 @@ export class Individuals extends Component {
     this.props.getIndividualsFeedbackList(model);
   }
 
-  impersinateIndividual = async data => {
+  impersinateIndividual = data => {
     this.props.setImpersinated(true)
     switch (true) {
       case caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.visit):

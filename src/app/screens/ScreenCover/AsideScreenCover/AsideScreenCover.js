@@ -30,7 +30,7 @@ import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/a
 import './style.css'
 import { EntityUserMenuData } from '../../../data/EntityUserMenuData';
 
-class AsideScreenCover extends React.Component {
+export class AsideScreenCover extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -355,7 +355,7 @@ class AsideScreenCover extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getImage: () => dispatch(action.getImage()),
         onClickOk: () => dispatch(updateEula()),
@@ -376,7 +376,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         profilePercentage: state.profileState.progressIndicatorState.profilePercentage,
         profileImgData: state.profileState.PersonalDetailState.imageData,

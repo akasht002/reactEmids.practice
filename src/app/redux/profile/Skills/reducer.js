@@ -1,6 +1,4 @@
-import {
-    Skills
-} from './actions'
+import { Skills } from './bridge';
 
 const defaultState = {
     SkillsList: [],

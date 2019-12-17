@@ -39,6 +39,7 @@ import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '.
 import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
 import { dispatchToAssessmentProcessing,getServiceRequestVisitDeatilsSuccess } from '../../visitSelection/VisitServiceProcessing/Assessment/actions'
 import { logError } from '../../../utils/logError';
+import { setServiceProviderFeedbackTab } from '../EntityDashboard/ServiceProvider/actions';
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -296,7 +297,7 @@ export function getConversationSummaryDashboardSignalR (conversationId) {
   }
 }
 
-const getConversationSummaryItemSignalRSuceess = data => {
+export const getConversationSummaryItemSignalRSuceess = data => {
   return (dispatch, getState) => {
     let state = getState()
     let conversationSummaryData = [
@@ -362,6 +363,7 @@ export function goToServiceVisitProcessing(data){
         dispatch(formDirtyPerformTask());
         break;
       case VISIT_SUMMARY :
+        dispatch(setServiceProviderFeedbackTab(true))
         dispatch(getVisitServiceHistoryByIdDetail(visitId))
         const assessmentQuestionList = {
           serviceProviderId: parseInt(data.providerId, 10),
@@ -392,6 +394,7 @@ export function goToAssessmentVisitProcessing(data){
         dispatch(push(Path.assessmentSummary))
       break; 
       case VISIT_SUMMARY :       
+        dispatch(setServiceProviderFeedbackTab(true))
         dispatch(getVisitServiceHistoryByIdDetail(visitID))
         const assessmentQuestionList = {
           serviceProviderId: parseInt(data.providerId, 10),

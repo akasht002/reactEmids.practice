@@ -5,7 +5,7 @@ import { Input } from '../../components';
 import { NO_RESULT_FOUND, NO_PARTICIPANTS_FOUND_CONFERENCE   } from '../../constants/constants';
 import './styles.css';
 
-class ParticipantsList extends Component {
+export class ParticipantsList extends Component {
 
     participants = () => {
         if (this.props.participantList && this.props.participantList.length > 0) {

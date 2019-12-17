@@ -4,7 +4,7 @@ export const Tabs = props => {
     return (
         <div className="FilterMiddleContent FilterMiddleLeft">
             {props.filterTabs.map(tab =>
-                <span className={props.activeTab === tab.id ? 'active' : ''}
+                <span test-span='test.span' className={props.activeTab === tab.id ? 'active' : ''}
                     onClick={() => {
                         props.toggleTabs(tab.id);
                     }}>

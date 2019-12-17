@@ -14,7 +14,7 @@ import {getUnreadMessageCounts} from '../../redux/asyncMessages/actions';
 import { getUserInfo } from '../../services/http';
 import { Preloader } from '../../components';
 
-class MyConversation extends React.Component {
+export class MyConversation extends React.Component {
   componentDidMount() {
     let data = {
       page_no: '1',
@@ -63,7 +63,7 @@ class MyConversation extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getConversationDetail: (data) => dispatch(getConversationDetail(data)),
     getUnreadMessageCounts: () => dispatch(getUnreadMessageCounts()),
@@ -71,7 +71,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     conversationDetail: state.dashboardState.dashboardState.conversationDetail,
     loggedInUser: state.authState.userState.userData.userInfo,

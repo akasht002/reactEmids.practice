@@ -1,11 +1,9 @@
 import React from 'react';
-import Enzyme, { shallow, mount } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom'
 import sinon from 'sinon';
-import { ServiceVisits } from './index';
+import { ServiceVisits, mapDispatchToProps, mapStateToProps } from './index';
 
 jest.mock('../Components/Grid/Grid', () => ({
     Grid: 'mockGrid'
@@ -24,7 +22,7 @@ jest.mock('../../../../utils/userUtility', () => ({
 
 Enzyme.configure({ adapter: new Adapter() })
 
-let wrapper, store;
+let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
@@ -62,35 +60,35 @@ const defaultState = {
     }],
     activeSubTab: 'LowTask',
     getServiceRequestStatus: jest.fn(),
-    setActiveStatusForAllTab: jest.fn()
+    setActiveStatusForAllTab: jest.fn(),
+    setImpersinated: jest.fn(),
+    setServiceCategory: jest.fn(),
+    setServicePlanVisitId: jest.fn(),
+    setServiceType: jest.fn(),
+    setEntityDashboard: jest.fn(),
+    serviceTypeIds: [1,2,3],
+    setVisitDate: jest.fn(),
+    serviceRequestStatus: [2,4,6],
+    checkServiceRequestStatus: jest.fn(),
+    setServiceRequestStatus: jest.fn(),
+    checkServiceType: jest.fn(),
+    setFilterApplied: jest.fn(),
+    resetFilter: jest.fn()
 };
 
 store = mockStore(defaultState);
 
-const setUp = (props = {}) => {
-    const wrapper = mount(
-        <Provider store={store}>
-            <MemoryRouter>
-                <ServiceVisits dispatch={dispatch} store={store} {...props} />
-            </MemoryRouter>
-        </Provider>
-    )
-    return wrapper;
-};
-
 describe("ServiceVisits", function () {
-    let wrapper, shallowWrapper;
+    let shallowWrapper;
 
     beforeEach(() => {
-        const props = defaultState
-        wrapper = setUp(props)
         shallowWrapper = shallow(
             <ServiceVisits dispatch={dispatch} store={store} {...defaultState} />
         )
     });
 
     it('Check the ServiceVisitis section', () => {
-        expect(wrapper.find('.parent-fullblock').length).toEqual(1);
+        expect(shallowWrapper.find('.parent-fullblock').length).toEqual(1);
     });
 
     it('Check the componentDidMount function', () => {
@@ -111,26 +109,26 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().componentDidMount()
     });
 
-    it('Check the componentWillReceiveProps function', () => {
-        shallowWrapper.setProps({
-            activeSubTab: '',
-            fromDate: '03/24/2019',
-            toDate: '04/24/2019'
-        })
-        const nextProps = {
-            visitServiceTableList: [{
-                dataCount: 20
-            }],
-            fromDate: '04/24/2019',
-            toDate: '05/24/2019'
+    
+    it('Check the componentDidUpdate  function', () => {
+        let prevProps = {
+            rowCount: 10,
+            fromDate: '11/12/2019'
         }
-        shallowWrapper.instance().componentWillReceiveProps(nextProps)
-        shallowWrapper.setProps({
-            activeSubTab: 'LowTask',
-            fromDate: '03/24/2019',
-            toDate: '04/24/2019'
+        shallowWrapper.setState({
+            rowCount: 20,
+            pageSize: 20
         })
-        shallowWrapper.instance().componentWillReceiveProps(nextProps)
+        shallowWrapper.setProps({
+            paginationCount: 10
+        })
+        shallowWrapper.instance().componentDidUpdate(prevProps)
+        prevProps.rowCount = 20
+        shallowWrapper.instance().componentDidUpdate(prevProps)
+        shallowWrapper.setProps({
+            fromDate: '10/11/2020'
+        })
+        shallowWrapper.instance().componentDidUpdate(prevProps)
     });
 
     it('Check the getTable function', () => {
@@ -223,7 +221,7 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().handleChangeServiceCategory(selectedOption)
     });
 
-    it('Check the handleserviceType  function', () => {
+    it('Check the handleServiceType  function', () => {
         const item = {
             serviceTypeId: 15
         }
@@ -232,7 +230,7 @@ describe("ServiceVisits", function () {
                 checked: true
             }
         }
-        shallowWrapper.instance().handleserviceType(item, e)
+        shallowWrapper.instance().handleServiceType(item, e)
     });
 
     it('Check the applyFilter function', () => {
@@ -254,7 +252,143 @@ describe("ServiceVisits", function () {
         shallowWrapper.instance().handleSearchData(e)
     });
 
+    it('Check the componentWillUnmount function', () => {
+        shallowWrapper.instance().componentWillUnmount()
+        shallowWrapper.setProps({
+            isImpersinated: true
+        })
+        shallowWrapper.instance().componentWillUnmount()
+    });
+
     it('Check the closeSearch function', () => {
         shallowWrapper.instance().closeSearch()
+    });
+
+    it('Check the onSuccess function', () => {
+        shallowWrapper.instance().onSuccess()
+    });
+
+    it('Check the handleSearchkeyword function', () => {
+        shallowWrapper.instance().handleSearchkeyword({target:{value: 'sdassd'}})
+    });
+
+    it('Check the getHeaderBasedOnStatus function', () => {
+        shallowWrapper.instance().getHeaderBasedOnStatus('LowTaskCompletions')
+        shallowWrapper.instance().getHeaderBasedOnStatus('Cancelled')
+        shallowWrapper.instance().getHeaderBasedOnStatus('LowRating')
+        shallowWrapper.instance().getHeaderBasedOnStatus('Overdue')
+    });
+
+    it('Check mapStateToProps', () => {
+        const initialState = {
+            dashboardState: {
+                VisitServiceCountListState: {
+                    visitServiceTableList: [],
+                    attributedProviders: [],
+                    paginationCount: 0,
+                    states: [],
+                    isLoaded: true,
+                    activeSubTab: 1,
+                    ServiceCategory: [],
+                    visitServiceCountList: [],
+                    isLoadingFeedbackList: true,
+                    savedPaginationNumber: 12,
+                    serviceRequestStatusList: [],
+                    genderId: 1,
+                    filterApplied: true,
+                    memberContractId: 12,
+                    minExperience: 20,
+                    scheduleType: [],
+                    activeTab: 1,
+                    typeList: [],
+                    isImpersinated: true,
+                    serviceTypeIds: [],
+                    scheduleTypes: [],
+                    selectedOption: null,
+                    serviceRequestStatus: []
+                },
+                individualsListState: {
+                    genderType: []
+                },
+                VisitServiceRequestState: {
+                    serviceRequestStatusList: []
+                }
+            },
+            visitSelectionState: {
+                ServiceRequestFilterState: {
+                    ServiceCategory: []
+                }    
+            },
+            visitHistoryState: {
+                vistServiceHistoryState: {
+                    typeList: []
+                }
+            },
+            serviceRequestStatusList: {
+                serviceRequestStatusList: []
+            },
+            authState: {
+                userState: {
+                    userData: {
+                        userInfo: {}
+                    }
+                }
+            }
+        };
+        expect(mapStateToProps(initialState)).toBeDefined();
+    });
+
+    it('Check mapDispatchToProps actions', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getVisitServiceCountList({}, true, ()=>{});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getVisitServiceTableList({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToVisitServiceDetails();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getServiceRequestId({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setActiveSubTab(2);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setActiveTab('1');
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setPatient(21);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getVisitServiceHistoryByIdDetail({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getServiceRequestStatus();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setActiveStatusForAllTab('All');
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).clearRequestStatus([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getServiceType({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).clearServiceTypes([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getServiceCategory();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setImpersinated(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setServiceCategory([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).checkServiceType([{isChecked: true, serviceTypeId: 1}], 1, true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setServiceType([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setFilterApplied(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).checkServiceRequestStatus([{isChecked: true, id: 1}], 1, true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setServiceRequestStatus([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).resetFilter();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setServicePlanVisitId(122);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setVisitDate('11/12/2019');
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setEntityDashboard(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 })

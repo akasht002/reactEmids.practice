@@ -5,7 +5,7 @@ import { Input } from '../../../components';
 import { getLinkedParticipantsList } from '../../../redux/asyncMessages/actions';
 import { USERTYPES, NO_PARTICIPANTS_FOUND, NO_RESULT_FOUND, CONVERSATION_SUMMARY } from '../../../constants/constants';
 
-class ParticipantsList extends Component {
+export class ParticipantsList extends Component {
 
     componentDidMount() {
         let userId = this.props.loggedInUser.serviceProviderId;
@@ -64,14 +64,14 @@ class ParticipantsList extends Component {
 };
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getLinkedParticipantsList: (data) => dispatch(getLinkedParticipantsList(data))
     }
 };
 
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         participantList: state.asyncMessageState.linkedParticipants,
         loggedInUser: state.authState.userState.userData.userInfo,

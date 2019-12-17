@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import _ from 'lodash'
-import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearVisitServiceList, keywordSearchServiceRequest }
+import { getVisitServiceList, getServiceRequestCount, formDirtyVisitList, clearVisitServiceList, keywordSearchServiceRequest, setPageNumber }
     from '../../../redux/visitSelection/VisitServiceList/actions';
 import { getServiceRequestId, setActiveTab, resetServiceDetails } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { Scrollbars } from '../../../components';
@@ -67,7 +67,7 @@ export class VisitServiceList extends Component {
             lon: '',
             ServiceAreas: {},
             isChecked: false,
-            activePage: 1,
+            activePage: this.props.pageNumber,
             pageNumber: PAGE_NO,
             pageSize: SERVICE_REQUEST_PAGE_SIZE,
             sort: 'false',
@@ -96,7 +96,7 @@ export class VisitServiceList extends Component {
     }
     componentDidMount() {
         let data = {
-            pageNumber: this.state.pageNumber,
+            pageNumber: this.state.activePage,
             pageSize: this.state.pageSize
         }
         if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
@@ -108,7 +108,7 @@ export class VisitServiceList extends Component {
                 serviceTypes: [],
                 ServiceAreas: {},
                 serviceProviderId: getUserInfo().serviceProviderId,
-                FromPage: PAGE_NO,
+                FromPage: this.state.activePage,
                 ToPage: SERVICE_REQUEST_PAGE_SIZE,
             };
             this.props.getFilter(data)
@@ -245,6 +245,7 @@ export class VisitServiceList extends Component {
         })
         this.props.formDirtyVisitList()
         this.props.getSearchDataCountSuccess()
+        this.props.setPageNumber(1)
     }
 
     handleSortFilterChange = pageNumber => {
@@ -282,6 +283,7 @@ export class VisitServiceList extends Component {
         this.props.getFilterDataCount(data)
         this.setState({ activePage: pageNumber });
         this.props.formDirtyVisitList()
+        this.props.setPageNumber(pageNumber)
     };
 
     applyReset = () => {
@@ -400,6 +402,7 @@ export class VisitServiceList extends Component {
         this.props.getSort(data);
         this.setState({ activePage: pageNumber });
         this.props.formDirtyVisitList()
+        this.props.setPageNumber(pageNumber)
     };
 
     handlePageChange = pageNumber => {
@@ -411,6 +414,7 @@ export class VisitServiceList extends Component {
         this.props.getVisitServiceList(data);
         this.setState({ activePage: pageNumber });
         this.props.formDirtyVisitList()
+        this.props.setPageNumber(pageNumber)
     };
 
     handleSearchPageChange = pageNumber => {
@@ -425,6 +429,7 @@ export class VisitServiceList extends Component {
         }
         this.props.keywordSearchServiceRequest(data)
         this.props.formDirtyVisitList()
+        this.props.setPageNumber(pageNumber)
     };
 
     selectedSort = (selectedKey) => {
@@ -457,6 +462,7 @@ export class VisitServiceList extends Component {
         this.props.getSearchDataCount(data)
         this.props.keywordSearchServiceRequest(data)
         this.applyReset();
+        this.props.setPageNumber(1)
     }
 
     closeSearch = () => {
@@ -671,7 +677,7 @@ export class VisitServiceList extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getVisitServiceList: (data) => dispatch(getVisitServiceList(data)),
         getServiceRequestId: (data) => dispatch(getServiceRequestId(data)),
@@ -699,11 +705,12 @@ function mapDispatchToProps(dispatch) {
         getSearchDataCount: data => dispatch(getSearchDataCount(data)),
         getSearchDataCountSuccess: () => dispatch(getSearchDataCountSuccess(DEFAULT_SEARCH_COUNT)),
         setActiveTab: data => dispatch(setActiveTab(data)),
-        resetData: () => dispatch(resetServiceDetails())
+        resetData: () => dispatch(resetServiceDetails()),
+        setPageNumber: data => dispatch(setPageNumber(data))
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
 
     return {
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,
@@ -718,6 +725,7 @@ function mapStateToProps(state) {
         status: state.visitSelectionState.ServiceRequestFilterState.status,
         isDashboardFilteredStatus: state.visitSelectionState.ServiceRequestFilterState.isDashboardFilteredStatus,
         SearchDataCount: state.visitSelectionState.ServiceRequestFilterState.SearchDataCount,
+        pageNumber: state.visitSelectionState.VisitServiceListState.pageNumber
     };
 };
 

@@ -7,7 +7,7 @@ import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '../../../constants/const
 import { getVisitNotification, getVisitNotificationCount } from '../../../redux/visitProcessingNotification/VisitNotification/actions';
 import './VisitNotification.css';
 
-class VisitNotification extends React.Component {
+export class VisitNotification extends React.Component {
 
     constructor(props) {
         super(props)
@@ -54,7 +54,7 @@ class VisitNotification extends React.Component {
                             visitNotification={this.props.visitNotification}
                         />
                         {this.state.rowCount >= 10 &&
-                            <ul className="list-group list-group-flush notify" onClick={() => this.pageNumberChange(this.state.pageNumber)}><li className="list-group-item ProfileShowMore theme-primary-light">Show more <i className="ProfileIconShowMore"></i></li></ul>
+                            <ul className="list-group list-group-flush notify" test-pageChange='test-pageChange' onClick={() => this.pageNumberChange(this.state.pageNumber)}><li className="list-group-item ProfileShowMore theme-primary-light">Show more <i className="ProfileIconShowMore"></i></li></ul>
                         }
                     </Scrollbars>
                 </form>
@@ -63,14 +63,14 @@ class VisitNotification extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getVisitNotification: (data) => dispatch(getVisitNotification(data)),
         getVisitNotificationCount: () => dispatch(getVisitNotificationCount())
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         visitNotification: state.visitNotificationState.VisitNotificationState.VisitNotification,
         dataCount: state.visitNotificationState.VisitNotificationState.dataCount,

@@ -48,7 +48,7 @@ table.individuals-tableblock thead {
 table.individuals-tableblock thead th {
     color: #7a329f;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
     padding: 12px 0px;
     padding-right: 10px;
     text-align: left;
@@ -575,6 +575,21 @@ span.no-recoord-table {
 
 .FilterMiddleRight .FeedbackAnswerWidget label.form-radio-label {
     padding: 15px 20px 15px 40px;
+}
+
+.feedback-alertmodl .individuals-tableblock {
+    padding: 30px;
+    padding-top: 5px;
+    margin-top: 0px;
+    padding-bottom: 15px;
+}
+
+.feedback-alertmodl .individuals-tableblock td:nth-child(1) {
+   padding-left:10px;
+}
+
+.feedback-alertmodl table.individuals-tableblock thead th {
+    font-size: 16px;
 }
 
 /*grid-alignment-indvidulas-1st-tab*/
