@@ -47,14 +47,14 @@ EmergencyAttorenyContact.propTypes = {
     attorneyContactDetails: PropTypes.object.isRequired
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getEmergencyContactDetails: () => dispatch(getEmergencyContactDetails()),
         getAttorneyContactDetails: () => dispatch(getAttorneyContactDetails()),
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         emergencyContactDetails: state.patientProfileState.emergencyContactDetails,
         attorneyContactDetails: state.patientProfileState.attorneyContactDetails,
