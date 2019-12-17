@@ -142,7 +142,7 @@ export class AssessmentFeedback extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
+                                <span onClick={() => this.props.goBack()} test-goBack='test-goBack' className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -283,6 +283,7 @@ export class AssessmentFeedback extends Component {
                         ModalBody={<span>Your feedback is still incomplete. Are you sure you want to continue?</span>}
                         btn1="Confirm"
                         btn2="Cancel"
+                        test-feedbackPopup='test-feedbackPopup'
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
@@ -300,6 +301,7 @@ export class AssessmentFeedback extends Component {
                         className='modal-sm'
                         headerFooter='d-none'
                         centered='centered'
+                        test-alertPopup='test-alertPopup'
                         onConfirm={() => this.goBackToAssessment()}
                         onCancel={() =>
                             this.setState({
@@ -313,7 +315,7 @@ export class AssessmentFeedback extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getQuestionsList: () => dispatch(getQuestionsList()),
         saveAnswers: (data) => dispatch(saveAnswers(data)),
@@ -328,7 +330,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         questionsList: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.QuestionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,

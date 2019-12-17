@@ -1,7 +1,5 @@
-import { userAgreementState } from './reducer'
-import {
-    UserAgreement
-} from './actions'
+import reducer from './reducer'
+import { UserAgreement } from './bridge'
 
 const defaultState = {
     isEulaUpdated: false,
@@ -12,14 +10,14 @@ const defaultState = {
 describe("UserAgreement Reducers", () => {
 
     it('Should return the initial state', () => {
-        expect(userAgreementState(undefined, {})).toEqual(
+        expect(reducer(undefined, {})).toEqual(
             defaultState
         )
     });
 
     it('should handle the getUserInfoSuccess ', () => {
         expect(
-            userAgreementState([], {
+            reducer([], {
                 type: UserAgreement.getUserInfoSuccess,
                 isEulaUpdated: false,
                 eulaContent: '',
@@ -35,7 +33,7 @@ describe("UserAgreement Reducers", () => {
 
     it('should handle the getEulaContentSuccess ', () => {
         expect(
-            userAgreementState([], {
+            reducer([], {
                 type: UserAgreement.getEulaContentSuccess,
                 isEulaUpdated: false,
                 eulaContent: '',
@@ -50,7 +48,7 @@ describe("UserAgreement Reducers", () => {
 
     it('should handle the updateEulaSuccess ', () => {
         expect(
-            userAgreementState([], {
+            reducer([], {
                 type: UserAgreement.updateEulaSuccess,
                 isEulaUpdated: false,
                 eulaContent: '',

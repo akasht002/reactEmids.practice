@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './styles.css';
 
-export default class TeleHealthVideoControls extends Component {
+export class TeleHealthVideoControls extends Component {
 
     render() {
         return (
@@ -30,3 +30,6 @@ export default class TeleHealthVideoControls extends Component {
         );
     }
 }
+
+
+export default TeleHealthVideoControls

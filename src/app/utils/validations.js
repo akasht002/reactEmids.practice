@@ -280,9 +280,9 @@ export function getEntityProcessingStatus(data) {
   if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.scheduled.id)
     return 'Start Visit'
   else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.inProgress.id)
-    return 'In Progress'
+    return 'In-progress'
   else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.paymentPending.id && !data.isPaymentModeEnabled)
-    return 'In Progress'
+    return 'In-progress'
   else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.paymentPending.id && data.isPaymentModeEnabled)
     return 'Payment Pending'
   else if (data && data.visitStatusId === VISIT_PROCESSING_STATUS.completed.id)

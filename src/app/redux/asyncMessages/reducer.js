@@ -1,6 +1,4 @@
-import {
-    AsyncMessageActions
-} from './actions'
+import { AsyncMessageActions } from './bridge';
 
 const defaultState = {
     conversationSummary: [],

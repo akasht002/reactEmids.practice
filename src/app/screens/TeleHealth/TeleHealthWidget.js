@@ -25,7 +25,7 @@ import {setMenuClicked} from '../../redux/auth/user/actions';
 import { getUserInfo } from '../../utils/userUtility';
 import { SERVICE_PROVIDER_TYPES } from '../../constants/constants';
 
-class TeleHealthWidget extends Component {
+export class TeleHealthWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -477,7 +477,7 @@ class TeleHealthWidget extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         leaveVideoConference: (checkRoute) => dispatch(leaveVideoConference(checkRoute)),
         getAllParticipants: (data) => dispatch(GetAllParticipants(data)),
@@ -490,7 +490,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         existingParticipantList: state.telehealthState.participantsByConferenceId,
         conferenceParticipants: state.telehealthState.linkedParticipants,

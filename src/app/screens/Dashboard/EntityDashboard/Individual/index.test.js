@@ -15,8 +15,8 @@ jest.mock('../../../../utils/userUtility', () => ({
 
 jest.mock('../../../../utils/comparerUtility', () => ({
     caseInsensitiveComparer: () => ({
-        str1: 'feedback',
-        str2: 'feedback'
+        str1: 'Feedback',
+        str2: 'Feedback'
     })
 }))
 
@@ -118,34 +118,35 @@ const defaultState = {
     individualsFeedbackList: [{
         pageCount: 12
     }],
-    setActiveStatusForAllTab: jest.fn()
+    setActiveStatusForAllTab: jest.fn(),
+    setServiceProviderFeedbackTab: jest.fn(),
+    setGenderId: jest.fn(),
+    setAgeRange: jest.fn(),
+    isImpersinated: false,
+    setPatient: jest.fn(),
+    setClinicalConditions: jest.fn(),
+    setMemberContractId: jest.fn(),
+    setImpersinated: jest.fn(),
+    getServiceRequestId: jest.fn(),
+    goToVisitServiceDetails: jest.fn(),
+    setActiveTab: jest.fn(),
+    setEntityDashboard: jest.fn(),
+    setVisitDate: jest.fn(),
+    checkClinicalCondition: jest.fn()
 };
 
 store = mockStore(defaultState);
 
-const setUp = (props = {}) => {
-    const wrapper = mount(
-        <Provider store={store}>
-            <MemoryRouter>
-                <Individuals dispatch={dispatch} store={store} {...props} />
-            </MemoryRouter>
-        </Provider>
-    )
-    return wrapper;
-};
-
 describe("Individuals", function () {
-    let wrapper, shallowWrapper;
+    let shallowWrapper;
 
     beforeEach(() => {
-        const props = defaultState
-        wrapper = setUp(props)
         shallowWrapper = shallow(
             <Individuals dispatch={dispatch} store={store} {...defaultState} />
         )
     });
     it('Check the individuals section', () => {
-        expect(wrapper.find('.parent-fullblock').length).toEqual(1);
+        expect(shallowWrapper.find('.parent-fullblock').length).toEqual(1);
     });
 
     it('Check the getTable function', () => {
@@ -183,15 +184,6 @@ describe("Individuals", function () {
         shallowWrapper.instance().pageSizeChange(10)
     });
 
-    it('Check the toggleFeedbaclAlert function', () => {
-        shallowWrapper.instance().toggleFeedbaclAlert()
-    });
-
-    it('Check the getSortNameAndOrderBasedOnStatus function', () => {
-        shallowWrapper.instance().getSortNameAndOrderBasedOnStatus('Feedback')
-        shallowWrapper.instance().getSortNameAndOrderBasedOnStatus('')
-    });
-
     it('Check the pageNumberChangeFeedback function', () => {
         shallowWrapper.instance().pageNumberChangeFeedback(1)
     });
@@ -212,6 +204,9 @@ describe("Individuals", function () {
         let data = {
             patientId: 12   
         }
+        shallowWrapper.setState({
+            status: 'Visit'
+        })
         shallowWrapper.instance().impersinateIndividual(data)
     });
 
@@ -243,6 +238,27 @@ describe("Individuals", function () {
         shallowWrapper.instance().onChangeSlider(data)
     });
 
+    it('Check the componentDidUpdate  function', () => {
+        let prevProps = {
+            rowCount: 10,
+            fromDate: '11/12/2019'
+        }
+        shallowWrapper.setState({
+            rowCount: 20,
+            pageSize: 20
+        })
+        shallowWrapper.setProps({
+            paginationCount: 10
+        })
+        shallowWrapper.instance().componentDidUpdate(prevProps)
+        prevProps.rowCount = 20
+        shallowWrapper.instance().componentDidUpdate(prevProps)
+        shallowWrapper.setProps({
+            fromDate: '10/11/2020'
+        })
+        shallowWrapper.instance().componentDidUpdate(prevProps)
+    });
+
     it('Check the handleGenderType  function', () => {
         let data = {
             name: 'male',
@@ -251,12 +267,20 @@ describe("Individuals", function () {
         shallowWrapper.instance().handleGenderType(data)
     });
 
-    it('Check the applyFilter  function', () => {
+    it('Check the applyFilter function', () => {
         shallowWrapper.instance().applyFilter()
+    });
+
+    it('Check the componentWillUnmount function', () => {
+        shallowWrapper.instance().componentWillUnmount()
     });
 
     it('Check the applyReset  function', () => {
         shallowWrapper.instance().applyReset()
+    });
+
+    it('Check the toggleFeedbacAlert  function', () => {
+        shallowWrapper.instance().toggleFeedbacAlert()
     });
 
     it('Check the goToPgVisitSummary function', () => {
@@ -264,6 +288,21 @@ describe("Individuals", function () {
             servicePlanVisitId: 12
         }
         shallowWrapper.instance().goToPgVisitSummary(data)
+    });
+
+    it('Check the handleSearchData function', () => {
+        let e = {
+            preventDefault () {}
+        }
+        shallowWrapper.instance().handleSearchData(e)
+    });
+
+    it('Check the handleSearchkeyword function', () => {
+        shallowWrapper.instance().handleSearchkeyword({e:{target:{value:'sfddsf'}}})
+    });
+
+    it('Check the toggleSearch function', () => {
+        shallowWrapper.instance().toggleSearch()
     });
 
     it('Check the getHeaderBasedOnStatus function', () => {
@@ -315,7 +354,18 @@ describe("Individuals", function () {
                     states: [],
                     isLoaded: true,
                     activeSubTab: 1,
-                    individualsFeedbackList: []
+                    individualsFeedbackList: [],
+                    individualsCountList: [],
+                    isLoadingFeedbackList: true,
+                    savedPaginationNumber: 12,
+                    genderType: [],
+                    genderId: 1,
+                    filterApplied: true,
+                    memberContractId: 12,
+                    ageRange: {},
+                    clinicalConditions: [],
+                    activeTab: 1,
+                    isImpersinated: true
                 }
             },
             authState: {
@@ -338,6 +388,58 @@ describe("Individuals", function () {
         mapDispatchToProps(dispatch).setActiveSubTab('1');
         expect(dispatch.mock.calls[0][0]).toBeDefined();
         mapDispatchToProps(dispatch).savePaginationNumber({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setActiveStatusForAllTab({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getServiceRequestId({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setActiveTab(1);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToVisitServiceDetails();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getIndividualsFeedbackList({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getVisitServiceHistoryByIdDetail({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToPatientProfile();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getClinicalCondition();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getAllContracts();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).clearClinicalCondition([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getGender();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).clearGenderType([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).resetContracts([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).clearStates();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setVisitDate({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setEntityDashboard(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setServiceProviderFeedbackTab(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setGenderId(6);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setFilterApplied(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setMemberContractId({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setClinicalConditions({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).checkClinicalCondition([{isChecked: true, attributeId: 1}], 1, true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setImpersinated(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).resetFilter();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setPatient(12);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setAgeRange({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 })

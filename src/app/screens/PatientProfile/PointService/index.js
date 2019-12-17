@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import * as action from '../../../redux/patientProfile/actions'
 
-class PointService extends React.Component {
+export class PointService extends React.Component {
 
   componentDidMount() {
     this.props.getPointService()
@@ -81,13 +81,13 @@ class PointService extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPointService: () => dispatch(action.getPointService())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     PointServiceList: state.patientProfileState.pointOfServiceList
   }

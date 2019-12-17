@@ -5,7 +5,7 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData'
 import { getQuestionsList, saveAnswers,startOrStopService,getServicePlanVisitSummaryDetails,
-    saveTaskPercentage,getQuestionsListSuccess } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
+    saveTaskPercentage,getQuestionsListSuccess,saveStartedTime } from '../../../../redux/visitSelection/VisitServiceProcessing/Assessment/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, Preloader,StopWatch} from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { Path } from '../../../../routes'
@@ -97,6 +97,10 @@ export class Assessment extends Component {
         
     }
 
+    async componentWillMount(){
+        await this.props.saveStartedTime("");
+    }
+
     handelPatientProfile = (data) => {
         this.props.setPatient(data)
         this.props.goToPatientProfile()
@@ -166,12 +170,12 @@ export class Assessment extends Component {
         this.setState({ isModalOpen: false })
     }
    
-    startService = (data, visitId) => {
+    startService = async (data, visitId) => {
         let startServiceAction = 1;
         let current_time;
         if (data === startServiceAction) {
             current_time = new moment().format("HH:mm");
-            this.setState({ startedTime: current_time, 
+            await this.setState({ startedTime: current_time, 
                             disabled: false, 
                             disableCheckbox: false, 
                             backDisabled: true,
@@ -180,14 +184,14 @@ export class Assessment extends Component {
                          })
         } else {
             current_time = this.state.startedTime;
-            this.setState({ stopTime: true, 
+            await this.setState({ stopTime: true, 
                             startService: true,
                             disabled: false,
                             backDisabled: true,
-                            stopTimer: !this.state.stopTimer 
+                            stopTimer: !this.state.stopTimer  
                         })
         }        
-        this.props.startOrStopService(this.props.requestDetails, data, convertTime24to12(current_time));
+        await this.props.startOrStopService(this.props.requestDetails, data, convertTime24to12(current_time));
     }
 
     render() {
@@ -206,12 +210,14 @@ export class Assessment extends Component {
             />
         }
 
+        let startedTimes = this.props.startedTime.length > 0 ? this.props.startedTime: getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "hh:mm a")
+
         if (visitStatus === SERVICE_STATES.YET_TO_START) {
-            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, serviceRequestVisitId) }}>Start Service</a>
+            timerBtn = <a className="btn btn-primary" test-startButton='test-startButton' onClick={() => { this.startService(startService, serviceRequestVisitId) }}>Start Service</a>
         }
 
         if (visitStatus === SERVICE_STATES.IN_PROGRESS) {
-            timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
+            timerBtn = <a className="btn btn-primary" test-stopButton='test-stopButton' onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
         }
         this.checkedTask = this.selectedAnswers.filter((answer) => {
             return !checkEmpty(answer.feedbackQuestionnaireId)
@@ -231,7 +237,7 @@ export class Assessment extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
+                                <span onClick={() => this.props.goBack()} test-goBack='test-goBack' className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span>
@@ -273,8 +279,8 @@ export class Assessment extends Component {
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
                                             <span className="TimerStarted running">{ timerBtn }</span>
                                         </div>
-                                        {visitStatus !== SERVICE_STATES.YET_TO_START && <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "hh:mm a")}</span>
+                                        {visitStatus !== SERVICE_STATES.YET_TO_START && startedTimes.length > 0 && <div className="col-md-5 rightTimerContent FeedbackTimer">
+                                            <span className="TimerStarted running">Started at {startedTimes}</span>
                                         </div>}
                                     </div>
                                 </div>
@@ -378,6 +384,7 @@ export class Assessment extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
+                        test-assessmentPopup='test-assessmentPopup'
                         onConfirm={() => this.onClickConfirm()}
                         onCancel={() => this.setState({
                             isModalOpen: !this.state.isModalOpen,
@@ -388,6 +395,7 @@ export class Assessment extends Component {
                         ModalBody={<span>Do you want to End the Service?</span>}
                         btn1="Yes"
                         btn2="No"
+                        test-alertPopup='test-alertPopup'
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
@@ -404,7 +412,7 @@ export class Assessment extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data, true,true)),
         getQuestionsList: (data) => dispatch(getQuestionsList(data)),
@@ -419,11 +427,12 @@ function mapDispatchToProps(dispatch) {
         startOrStopService: (data, visitId, startedTime) => dispatch(startOrStopService(data, visitId, startedTime)),
         getServicePlanVisitSummaryDetails:(data) => dispatch(getServicePlanVisitSummaryDetails(data)),
         saveTaskPercentage:(data) => dispatch(saveTaskPercentage(data)),
-        getQuestionsListSuccess:(data) => dispatch(getQuestionsListSuccess(data))
+        getQuestionsListSuccess:(data) => dispatch(getQuestionsListSuccess(data)),
+        saveStartedTime: data => dispatch(saveStartedTime(data))
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         questionsList: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.questionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.planDetails,

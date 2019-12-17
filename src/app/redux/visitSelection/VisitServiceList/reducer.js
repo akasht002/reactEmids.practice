@@ -4,7 +4,8 @@ const defaultState = {
     visitServiceList: [],
     serviceRequestCount: 0,
     status: 0,
-    isLoading: false
+    isLoading: false,
+    pageNumber: 1
 };
 
 const VisitServiceListState = (state = defaultState, action) => {
@@ -39,6 +40,11 @@ const VisitServiceListState = (state = defaultState, action) => {
             return {
                 ...state,
                 status: action.data,
+            };
+        case VisitServiceList.setPageNumber:
+            return {
+                ...state,
+                pageNumber: action.data
             };
         default:
             return state;

@@ -3,11 +3,10 @@ import { Get } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import {getUserInfo} from '../../../utils/userUtility';
 import { USERTYPES } from '../../../constants/constants';
+import {
+    VisitNotification
+} from './bridge'
 
-export const VisitNotification = {
-    getVisitNotificationSuccess: 'get_visit_notification_list_success/VisitNotification',
-    getVisitNotificationCountSuccess: 'get_visit_notification_count_success/VisitNotification'
-};
 
 export const getVisitNotificationSuccess = (data) => {
     return {
@@ -30,7 +29,7 @@ export function getVisitNotification(data) {
         let pageNumber = data.data.pageNumber;
         // let rowsPerPage = data.data.pageSize;
         dispatch(startLoading());
-        Get(`${API.getVisitNotification}${userId}/${userType}/${pageNumber}/${data.count}`).then((resp) => {
+        return Get(`${API.getVisitNotification}${userId}/${userType}/${pageNumber}/${data.count}`).then((resp) => {
            
             dispatch(getVisitNotificationSuccess(resp.data))
             dispatch(endLoading());
@@ -45,7 +44,7 @@ export function getVisitNotificationCount() {
         let userType = USERTYPES.SERVICE_PROVIDER;
         let userId = getUserInfo().serviceProviderId;
         dispatch(startLoading());
-        Get(`${API.getVisitNotificationCount}${userId}/${userType}`).then((resp) => {
+        return Get(`${API.getVisitNotificationCount}${userId}/${userType}`).then((resp) => {
             dispatch(getVisitNotificationCountSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

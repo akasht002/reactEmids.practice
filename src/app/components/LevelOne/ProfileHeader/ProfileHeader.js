@@ -16,7 +16,7 @@ import { SearchInput } from "../../../components";
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { makeProperCase } from '../../../utils/stringHelper';
 
-class ProfileHeader extends Component {
+export class ProfileHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -103,7 +103,7 @@ class ProfileHeader extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onLogout: () => dispatch(onLogout())
     }

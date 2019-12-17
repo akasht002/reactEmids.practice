@@ -41,7 +41,7 @@ import {
 } from '../screens';
 import PrivateRoute from './privateRouter';
 
-function Loading({ error }) {
+export function Loading({ error }) {
   if (error) {
     return 'Oh nooess!';
   } else {
@@ -49,7 +49,7 @@ function Loading({ error }) {
   }
 }
 
-const LoginCallBack = Loadable({
+export const LoginCallBack = Loadable({
   loader: () => import('../screens/Authentication/Login/LoginCallBack'),
   loading: Loading
 });
@@ -92,7 +92,7 @@ export const Path = {
   entityDashboard: '/entityDashboard'
 };
 
-class AppStackRoot extends Component {
+export class AppStackRoot extends Component {
 
   startPage = (props, context) => {
     let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));

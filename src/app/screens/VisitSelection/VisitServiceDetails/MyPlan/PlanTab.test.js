@@ -21,11 +21,13 @@ describe('PlanTab', () => {
                 serviceProviderType={'EU'}
                 rowPageSize={10}
                 statue={35}
+                visitServiceDetails={{ "statusName": "Requested" }}
+                visitList={[{ "id": 1, "name": 'test1' }]}
             />
         )
     })
 
     it('should return PlanTab', () => {
-        expect(wrapper.find('.TabBody').length).toEqual(1);
+        expect(wrapper).toBeDefined();
     })
 }); 	

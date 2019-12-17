@@ -2,7 +2,7 @@ import React from "react";
 
 import ServiceOfferedAccordian from '../ServiceOffered/serviceOfferedAccordian'
 
-class ServiceOfferedContent extends React.Component {
+export class ServiceOfferedContent extends React.Component {
 
     constructor(props) {
         super(props);

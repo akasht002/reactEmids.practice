@@ -10,7 +10,7 @@ import { checkEmpty, getLength } from '../../../utils/validations'
 import { DATE_FORMAT } from '../../../constants/constants';
 import { formattedDateMoment, formattedDateMomentValue, newDate, newDateValue, checkDateFormatNumber, checkFormatDate, formateStateDateValue } from '../../../utils/validations';
 
-class BlackoutModal extends Component {
+export class BlackoutModal extends Component {
   constructor(props) {
     super(props);
     this.state = {

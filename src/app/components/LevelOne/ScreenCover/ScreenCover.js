@@ -33,14 +33,14 @@ ScreenCover.propTypes = {
     backgroundColor: PropTypes.string
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         timeForInactivity: state.authState.userState.userData && state.authState.userState.userData.autoLogoutTime,
         accessToken: state.oidc.user && state.oidc.user.access_token
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         inactiveUser: () => dispatch(onLogout())
     }

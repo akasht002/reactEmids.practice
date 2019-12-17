@@ -2,7 +2,7 @@ import { API } from '../../../../services/api';
 import { Post } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { DATE_FORMATS, API_RESPONSE } from '../../../constants/constants';
-import { getTimeZoneOffset } from '../../../../utils/dateUtility';
+import { getTimeZoneOffset, getHHMinSession } from '../../../../utils/dateUtility';
 import { getValue } from '../../../../utils/userUtility'
 import { getFullName } from '../../../../utils/stringHelper'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
@@ -86,7 +86,7 @@ export function getVisitServiceTableList(data) {
                             ...res,
                             patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
                             providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
-                            schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getUTCFormatedDate(res.visitDate, DATE_FORMATS.hhMinSession)}`,
+                            schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getHHMinSession(res.visitDate)}`,
                             visitStatus: caseInsensitiveComparer(res.visitStatus, VISIT_PROCESSING_STATUS.inProgress.title) ? VISIT_STATUS.inProgress.keyValue : res.visitStatus
                         }
                     })

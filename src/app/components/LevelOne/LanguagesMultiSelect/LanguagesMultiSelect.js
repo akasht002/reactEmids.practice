@@ -12,7 +12,7 @@ const stringOrNode = PropTypes.oneOfType([
 
 let AvatarSize = '15';
 
-const GravatarOption = createClass({
+export const GravatarOption = createClass({
     propTypes: {
         children: PropTypes.node,
         className: PropTypes.string,
@@ -50,7 +50,7 @@ const GravatarOption = createClass({
     }
 });
 
-const GravatarValue = createClass({
+export const GravatarValue = createClass({
     propTypes: {
         children: PropTypes.node,
         placeholder: stringOrNode,

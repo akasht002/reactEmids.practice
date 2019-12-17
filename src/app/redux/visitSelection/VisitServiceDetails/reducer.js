@@ -38,7 +38,10 @@ const defaultState = {
     activePage: DEFAULT_PAGE_NUMBER,
     planScheduleId: 0,
     editIndividualEditPopup: false,
-    planId: []
+    planId: [],
+    isVisitservicedetailLoading: false,
+    isServiceRequestListLoading: false,
+    isEntityServiceProviderListLoading: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -48,6 +51,24 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 VisitServiceDetails: action.data
+            };
+
+        case VisitServiceDetails.isVisitservicedetailLoading:
+            return {
+                ...state,
+                isVisitservicedetailLoading: action.data
+            };
+            
+        case VisitServiceDetails.isServiceRequestListLoading:
+            return {
+                ...state,
+                isServiceRequestListLoading: action.data
+            };
+        
+        case VisitServiceDetails.isEntityServiceProviderListLoading:
+            return {
+                ...state,
+                isEntityServiceProviderListLoading: action.data
             };
 
         case VisitServiceDetails.setEntityServiceProviderSuccess:
@@ -247,6 +268,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 ...state,
                 planId: action.data
             }
+        case VisitServiceDetails.clearVisitList:
+        return {
+            ...state,
+            visitList: []
+        }    
         default:
             return state;
     }

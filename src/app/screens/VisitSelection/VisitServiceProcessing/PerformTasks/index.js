@@ -263,7 +263,7 @@ export class PerformTasks extends Component {
                                             <div onClick={() => {
                                                 serviceType.collapse = !serviceType.collapse;
                                                 this.setState({ collapse: !this.state.collapse });
-                                            }} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + serviceType.collapse}>
+                                            }} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + serviceType.collapse} test-tabContainer='test-tabContainer'>
                                                 <img src={require(`../../../../assets/ServiceTypes/${image_url}`)} className="ServiceTasksImg" alt="categoryImage" />
                                                 <div className="TabHeaderContent">
                                                     <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>
@@ -340,6 +340,7 @@ export class PerformTasks extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
+                        test-proceedModal='test-proceedModal'
                         onConfirm={() => this.saveData()}
                         onCancel={() => this.setState({
                             isModalOpen: !this.state.isModalOpen,
@@ -353,6 +354,7 @@ export class PerformTasks extends Component {
                         btn2="No"
                         className="modal-sm"
                         headerFooter="d-none"
+                        test-endModal='test-endModal'
                         centered={true}
                         onConfirm={() => { this.setState({ isStopModalOpen: !this.state.isStopModalOpen }); this.startService(0, this.state.taskList.serviceRequestVisitId) }}
                         onCancel={() => this.setState({
@@ -365,7 +367,7 @@ export class PerformTasks extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data, true)),
         addPerformedTask: (data, startServiceAction) => dispatch(addPerformedTask(data, startServiceAction)),
@@ -377,7 +379,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         PerformTasksList: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,

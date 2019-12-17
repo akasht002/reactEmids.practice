@@ -1,7 +1,7 @@
 import React from "react";
 import './AboutUs.css';
 
-export default class AboutContent extends React.Component {
+export class AboutContent extends React.Component {
     render() {
         return (
             <div className="AboutModalWidget">
@@ -27,3 +27,5 @@ export default class AboutContent extends React.Component {
         )
     }
 }
+
+export default  AboutContent
