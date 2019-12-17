@@ -1008,7 +1008,6 @@ fieldset.right-colblock2 {
 .schedule-listblock {
   display: block;
   background: #f7f7f7;
-  padding: 10px;
   border-radius: 4px;
   margin-bottom: 10px;
   cursor: pointer;
@@ -1414,18 +1413,20 @@ span.ProfileIconSearch .search-block_SP {
   margin-bottom: 0px;
   cursor: pointer;
   font-size: 14px;
+  min-height: 55px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  z-index:1000;
 }
 
 .customechk input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
-  height: 0;
-  width: 100%;
+  z-index:9999;
+  width: 91%;
   height: 100%;
 }
 
