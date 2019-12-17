@@ -224,4 +224,213 @@ describe('Individuals reducer', () => {
         )
     })
 
+    it('should handle resetContracts', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.resetContracts,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                contracts: ["data"]
+            }
+        )
+    })
+
+    it('should handle clearState', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.clearState,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                genderId: ["data"]
+            }
+        )
+    })
+
+    it('should handle savePaginationNumber', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.savePaginationNumber,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                savedPaginationNumber: ["data"]
+            }
+        )
+    })
+
+    it('should handle setFromDate', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setFromDate,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                fromDate: ["data"]
+            }
+        )
+    })
+
+    it('should handle setToDate', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setToDate,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                toDate: ["data"]
+            }
+        )
+    })
+
+    it('should handle setActiveStatusForAllTab', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setActiveStatusForAllTab,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                activeStatus: ["data"]
+            }
+        )
+    })
+
+    it('should handle getClinicalConditionSuccess', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.getClinicalConditionSuccess,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                clincalCondition: ["data"]
+            }
+        )
+    })
+
+    it('should handle getGenderSuccess', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.getGenderSuccess,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                genderType: ["data"]
+            }
+        )
+    })
+
+    it('should handle clearClinicalCondition', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.clearClinicalCondition,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                clincalCondition: ["data"]
+            }
+        )
+    })
+
+    it('should handle clearGenderType', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.clearGenderType,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                genderType: ["data"]
+            }
+        )
+    })
+
+    it('should handle setGenderId', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setGenderId,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                genderId: ["data"]
+            }
+        )
+    })
+
+    it('should handle setFilterApplied', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setFilterApplied,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                filterApplied: ["data"]
+            }
+        )
+    })
+
+    it('should handle setMemberContractId', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setMemberContractId,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                memberContractId: ["data"]
+            }
+        )
+    })
+
+    it('should handle setAgeRange', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setAgeRange,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                ageRange: ["data"]
+            }
+        )
+    })
+
+    
+    it('should handle setClinicalConditions', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setClinicalConditions,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                clinicalConditions: ["data"]
+            }
+        )
+    })
+
+    it('should handle setImpersinated', () => {
+        expect(
+            reducer([], {
+                type: IndividualsList.setImpersinated,
+                data: ["data"]
+            })
+        ).toEqual(
+            {
+                isImpersinated: ["data"]
+            }
+        )
+    })
+
 })

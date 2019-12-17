@@ -1,6 +1,4 @@
-import {
-    LOGOUT
-} from './actions'
+import {LOGOUT} from './bridge'
 
 const defaultState = {
     userData: {

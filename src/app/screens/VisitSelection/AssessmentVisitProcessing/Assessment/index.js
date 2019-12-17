@@ -213,11 +213,11 @@ export class Assessment extends Component {
         let startedTimes = this.props.startedTime.length > 0 ? this.props.startedTime: getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "hh:mm a")
 
         if (visitStatus === SERVICE_STATES.YET_TO_START) {
-            timerBtn = <a className="btn btn-primary" onClick={() => { this.startService(startService, serviceRequestVisitId) }}>Start Service</a>
+            timerBtn = <a className="btn btn-primary" test-startButton='test-startButton' onClick={() => { this.startService(startService, serviceRequestVisitId) }}>Start Service</a>
         }
 
         if (visitStatus === SERVICE_STATES.IN_PROGRESS) {
-            timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
+            timerBtn = <a className="btn btn-primary" test-stopButton='test-stopButton' onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
         }
         this.checkedTask = this.selectedAnswers.filter((answer) => {
             return !checkEmpty(answer.feedbackQuestionnaireId)
@@ -237,7 +237,7 @@ export class Assessment extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
+                                <span onClick={() => this.props.goBack()} test-goBack='test-goBack' className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span>
@@ -384,6 +384,7 @@ export class Assessment extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
+                        test-assessmentPopup='test-assessmentPopup'
                         onConfirm={() => this.onClickConfirm()}
                         onCancel={() => this.setState({
                             isModalOpen: !this.state.isModalOpen,
@@ -394,6 +395,7 @@ export class Assessment extends Component {
                         ModalBody={<span>Do you want to End the Service?</span>}
                         btn1="Yes"
                         btn2="No"
+                        test-alertPopup='test-alertPopup'
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
@@ -410,7 +412,7 @@ export class Assessment extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data, true,true)),
         getQuestionsList: (data) => dispatch(getQuestionsList(data)),
@@ -430,7 +432,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         questionsList: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.questionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.planDetails,

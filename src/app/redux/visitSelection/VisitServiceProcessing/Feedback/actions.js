@@ -40,7 +40,7 @@ export const endLoadingProcessing = () => {
 export function getQuestionsList() {
   return dispatch => {
     dispatch(startLoadingProcessing())
-    ServiceRequestGet(API.getQuestionsList)
+    return ServiceRequestGet(API.getQuestionsList)
       .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
         dispatch(endLoadingProcessing())

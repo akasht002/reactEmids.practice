@@ -146,7 +146,7 @@ export class VisitSummary extends React.Component {
     )
   }
 }
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceHistoryByIdDetail: data =>
       dispatch(getVisitServiceHistoryByIdDetail(data)),
@@ -160,7 +160,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     Visits: state.visitHistoryState.vistServiceHistoryState,
     ServiceRequestId: state.visitHistoryState.vistServiceHistoryState

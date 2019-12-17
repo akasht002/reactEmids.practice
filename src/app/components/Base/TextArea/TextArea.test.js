@@ -1,12 +1,20 @@
 import React from 'react';
-import TextArea from './TextArea';
-import renderer from 'react-test-renderer';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16'
+import { TextArea } from './index';
 
-test('TextArea Component Jest', () => {
-  const component = renderer.create(
-    <TextArea id='1' placeholder='Write Some Thing' shrink={99} rows='5' className='textarea'></TextArea>,
-  );
-  let tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+Enzyme.configure({ adapter: new Adapter() })
+
+describe('SelectBox', () => {
+  it('should return correct component', () => {
+    const wrapper = shallow(
+      <TextArea id='1' placeholder='Write Some Thing' shrink={99} rows='5' className='textarea'></TextArea>,
+    )
+    expect(wrapper).toBeDefined();
+  })
 });
+
+
+
+
 

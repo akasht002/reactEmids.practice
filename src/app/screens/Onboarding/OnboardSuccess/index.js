@@ -6,7 +6,7 @@ import { onLogin } from '../../../redux/auth/login/actions';
 import './styles.css';
 import '../styles.css';
 
-class OnboardSuccess extends React.Component {
+export class OnboardSuccess extends React.Component {
 
     onLoginPress = () => {
         this.props.onLogin();
@@ -15,7 +15,7 @@ class OnboardSuccess extends React.Component {
     render() {
         const menus = ["login"];
         return (
-            <ScreenCover menus={menus}>
+            <ScreenCover menus={menus} test-onboardSuccess="test-onboardSuccess">
                 <div className="container-fluid p-0">
                     <div className="width100 onBoardingWidget">
                         <div className="container-fluid onBoardingContent">
@@ -41,13 +41,13 @@ class OnboardSuccess extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onLogin: () => dispatch(onLogin())
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
 
     };

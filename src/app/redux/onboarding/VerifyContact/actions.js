@@ -5,18 +5,7 @@ import { clearState as verifyUserIdClear } from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import { USERTYPES } from '../../../constants/constants';
-
-export const VerifyContact = {
-    passcodeSentSuccess: 'passcode_sent_success/verifycontact',
-    setPasscodeNotMatch: 'set_passcode_match/verifycontact',
-    setPasscodeMatch: 'set_passCode_match/verifycontact',
-    temporaryPasscodeExpired: 'temporary_password_expired/verifycontact',
-    passcodeVerifySuccess: 'passcode_verify_success/verifycontact',
-    setPasscodeErrorStatus: 'passcode_error_status/verifycontact',
-    onSetUserDetailsCompletion: 'set_user_details/verifycontact',
-    cancelClick: 'cancel_click/verifycontact',
-    formDirty: 'form_dirty/memberdetails',
-};
+import { VerifyContact } from './bridge'
 
 export const onSetUserId = (data) => {
     return {
@@ -89,7 +78,7 @@ export function sendTemporaryPasscode(data) {
             serviceProviderId: data.serviceProviderId,
         }
         dispatch(startLoading());
-        Post(API.sendTemporaryPasscode, modal).then((resp) => {
+        return Post(API.sendTemporaryPasscode, modal).then((resp) => {
             if (resp && resp.data) {
                 dispatch(onPasscodeSent());
                 dispatch(endLoading());
@@ -110,7 +99,7 @@ export function verifyTempPasscode(data) {
             isActive: true
         };
         dispatch(startLoading());
-        Post(API.verifyTemporaryPasscode, modal).then((resp) => {
+        return Post(API.verifyTemporaryPasscode, modal).then((resp) => {
             if (resp && resp.data === 'Otp Matched') {
                 dispatch(verifyPasscodeSuccess());
                 dispatch(temporaryPasscodeSuccess());
@@ -152,7 +141,7 @@ export function getUserData() {
 export function getEntityUserData(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        Get(API.getEntityUserData + data.serviceProviderId + '/' + data.token).then((resp) => {
+        return Get(API.getEntityUserData + data.serviceProviderId + '/' + data.token).then((resp) => {
             let getUserData = {
                 serviceProviderId: resp.data.serviceProviderId,
                 memberId: '',

@@ -153,7 +153,7 @@ export function updateServiceRequestByServiceProvider(data) {
     applyOrNotInterested: data.type
   }
   return dispatch => {
-    ServiceRequestPost(
+    return ServiceRequestPost(
       API.applyServiceRequestByServiceProvider,
       modelData
     )

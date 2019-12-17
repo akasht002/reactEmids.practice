@@ -7,7 +7,7 @@ import {compare,difference} from "../../../utils/comparerUtility";
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 
-class Skills extends Component {
+export class Skills extends Component {
     
     constructor(props) {
         super(props);

@@ -1,4 +1,4 @@
-import { AboutUs } from './actions'
+import { AboutUs } from './bridge'
 
 const defaultState = {
     aboutUsContent: '',

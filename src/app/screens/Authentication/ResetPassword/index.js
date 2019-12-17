@@ -85,7 +85,7 @@ export class ResetPassword extends Component {
     render() {
         return (
             this.props.resetPasswordLinkStatus !== RESPONSE_STATUS.LINK_EXPIRED ?
-                <LoginCover isLoading={this.props.isLoading}>
+                <LoginCover isLoading={this.props.isLoading} test-reset-body='test-reset-body'>
                     <h3>Reset your password?</h3>
                     <p>You have requested to reset password for {this.props.userName}</p>
                     <div className="form-group text-center">
@@ -136,7 +136,7 @@ export class ResetPassword extends Component {
                         <p className="text-danger d-block mt-4 mb-2">Invalid Password. The new password cannot be among the last 6 passwords used.</p>
                     }
                 </LoginCover> :
-                <LoginCover isLoading={this.props.isLoading}>
+                <LoginCover isLoading={this.props.isLoading} test-reset-noBody='test-reset-noBody'>
                     <h3>Link is no longer valid. Please reset your password from the login screen.</h3>
                 </LoginCover>
         )

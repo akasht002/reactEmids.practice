@@ -127,7 +127,7 @@ export class PaymentSuccess extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         goVisitServiceList: () => dispatch(push(Path.visitServiceList)),
         updateServiceRequestId: (data) => dispatch(updateServiceRequestId(data)),
@@ -137,7 +137,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,
