@@ -1273,13 +1273,13 @@ div.ProfileConversation {
     margin-top: -11px;
 }
 
-.topProfile .bottomPalette .NoRequestServiceProvider .myPlanBlank
-{
-height: auto;
+.topProfile .bottomPalette .NoRequestServiceProvider .myPlanBlank {
+    height: auto;
 }
 
 .bottomProfile .NoInformation .myConversationContent {
     background: #f7f7f7;
+    display: block;
 }
 
 .myPlanBlank {
