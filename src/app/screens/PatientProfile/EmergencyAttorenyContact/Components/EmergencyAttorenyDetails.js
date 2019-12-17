@@ -5,21 +5,16 @@ import { formatPhoneNumber } from '../../../../utils/formatName'
 
 const EmergencyAttorenyDetails = ({
     header,
-    details: {
-        firstName,
-        lastName,
-        phoneNumber,
-        relationship,
-        address
-    },
+    details
 }) => {
+    const { firstName, lastName, phoneNumber, relationship, address } = details
     return (
         <Fragment>
             <div className="col-md-6 border-design">
                 <div className='SPCardTitle d-flex vital-block-title'>
                     <h4 className='theme-primary'>{header} Contact</h4>
                 </div>
-                <div className='ConnectionsWidget CoreoWidget vital-block'>
+                {details !== "" ? <div className='ConnectionsWidget CoreoWidget vital-block'>
                     <p className='CoreoAssociationHeader mb-1'>Name</p>
                     <p>{`${firstName} ${lastName}`}</p>
                     <p className='CoreoAssociationHeader mb-1 theme-primary'>Phone Number</p>
@@ -27,13 +22,15 @@ const EmergencyAttorenyDetails = ({
                     <p className='CoreoAssociationHeader mb-1'>Relationship to Individual</p>
                     <p>{relationship}</p>
                     <div className='SummaryContent POS mb-4 emergency-address-block'>
-                    <ul className="SPCertificateList theme-primary">
-                    <li className="SPAddressItems">
-                        {address && <PointOfService pointofservice={address} />}
-                        </li>
+                        <ul className="SPCertificateList theme-primary">
+                            <li className="SPAddressItems">
+                                {address && <PointOfService pointofservice={address} />}
+                            </li>
                         </ul>
                     </div>
                 </div>
+                    :
+                    <span>No Data Available</span>}
             </div>
         </Fragment>
     );
