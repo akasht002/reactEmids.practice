@@ -91,6 +91,7 @@ import { saveContextData, createDataStore } from '../../../redux/telehealth/acti
 import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
 import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 import { setServiceProviderFeedbackTab } from '../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
+import { USER_TYPE } from '../../../constants/constants'
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -584,7 +585,7 @@ export class VisitServiceDetails extends Component {
       serviceProviderId: parseInt(espId, 10),
       visitId: data
     }  
-    if(!getUserInfo().isEntityServiceProvider && getUserInfo().serviceProviderTypeId === 1) {
+    if(!getUserInfo().isEntityServiceProvider && getUserInfo().serviceProviderTypeId === USER_TYPE.INDIVIDUAL_SERVICE_PROVIDER) {
       this.props.setServiceProviderFeedbackTab(true)
     }
     this.props.setServiceProviderFeedbackTab(true)
