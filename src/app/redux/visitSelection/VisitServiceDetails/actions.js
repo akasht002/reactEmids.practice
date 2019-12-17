@@ -469,8 +469,8 @@ export function selectESP(espId) {
 export function getEntityServiceProviderList(data, selectedESPId = null) {
   return (dispatch, getState) => {
     dispatch(loadingESPList(true))
-    let url = selectedESPId !== null ? `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}/${selectedESPId}` :
-      `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`
+    let commonUrl = `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`    
+    let url = selectedESPId !== null ? `${commonUrl}/${selectedESPId}` :  `${commonUrl}`
       Get(`${API.searchESP}` + url)
       .then(resp => {
         let oldEspList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
@@ -498,8 +498,10 @@ export function getEntityServiceProviderList(data, selectedESPId = null) {
 
 export function getEntityServiceProviderListSearch(data, selectedESPId = null) {
   return (dispatch, getState) => {
-    let url = selectedESPId !== null ? `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}/${selectedESPId}?searchtext=${data.searchKeyword}` :
-            `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}?searchtext=${data.searchKeyword}`
+    let commonUrl = `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`
+    let url = selectedESPId !== null ?
+            `${commonUrl}/${selectedESPId}?searchtext=${data.searchKeyword}` :
+            `${commonUrl}?searchtext=${data.searchKeyword}`
             Get(`${API.searchESP}` + url)
       .then(resp => {
         let selectedESP = resp.data.map((type, index) => {
